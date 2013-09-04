@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D4195E42-A754-4BD7-AFFE-FBD7AE4F473A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BL</RootNamespace>
+    <AssemblyName>BL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MapWinGIS">
+      <HintPath>..\MapWinControl\MapWinGIS.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Aggregator\Aggregate.cs" />
+    <Compile Include="BO\BaseSettings.cs" />
+    <Compile Include="BO\Group.cs" />
+    <Compile Include="BO\Layer.cs" />
+    <Compile Include="BO\LayerCollection.cs" />
+    <Compile Include="BO\LayerGroup.cs" />
+    <Compile Include="BO\MainSettings.cs" />
+    <Compile Include="BusinessLogic\GridLogic.cs" />
+    <Compile Include="BusinessLogic\ImageLogic.cs" />
+    <Compile Include="BusinessLogic\LayerLogic.cs" />
+    <Compile Include="BusinessLogic\ProjectFileSettings.cs" />
+    <Compile Include="BusinessLogic\ShapefileLogic.cs" />
+    <Compile Include="DataContracts\MapWinProject.cs" />
+    <Compile Include="Interfaces\ILayerControl.cs" />
+    <Compile Include="PluginManager\BasePlugin.cs" />
+    <Compile Include="PluginManager\IPlugin.cs" />
+    <Compile Include="PluginManager\IPlugin2.cs" />
+    <Compile Include="PluginManager\PluginCompositionHelper.cs" />
+    <Compile Include="PluginManager\PluginEventArgs.cs" />
+    <Compile Include="Utilities\Constants\Constants.cs" />
+    <Compile Include="Utilities\Enums\Enums.cs" />
+    <Compile Include="Utilities\Extensions\SerializationExtensions.cs" />
+    <Compile Include="Interfaces\IMenu.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utilities\GenericCLone.cs" />
+    <Compile Include="Utilities\GenericComparer.cs" />
+    <Compile Include="Utilities\GenericEnumerator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MapWinControl\MapWinControl.csproj">
+      <Project>{62535C55-507D-48C6-8DC0-A7EA0ECEDADF}</Project>
+      <Name>MapWinControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PluginManager\BaseComponents.csproj">
+      <Project>{7B26E82A-A364-4FF0-9C6E-EB473709B2C8}</Project>
+      <Name>BaseComponents</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
