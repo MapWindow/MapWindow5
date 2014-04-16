@@ -1,4 +1,4 @@
-﻿namespace MapWindow
+﻿namespace MapWindow.Forms
 {
     partial class MainForm
     {
@@ -13,9 +13,9 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
             base.Dispose(disposing);
         }
@@ -39,6 +39,7 @@
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.trackBarItem1 = new Syncfusion.Windows.Forms.Tools.TrackBarItem();
             this.toolStripPanelItem1 = new Syncfusion.Windows.Forms.Tools.ToolStripPanelItem();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
@@ -148,7 +149,7 @@
             this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
             this.axMap1.Size = new System.Drawing.Size(560, 456);
             this.axMap1.TabIndex = 0;
-            this.axMap1.FileDropped += new AxMapWinGIS._DMapEvents_FileDroppedEventHandler(this.axMap1_FileDropped);
+            this.axMap1.FileDropped += new AxMapWinGIS._DMapEvents_FileDroppedEventHandler(this.AxMap1FileDropped);
             // 
             // statusStripEx1
             // 
@@ -158,9 +159,10 @@
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
+            this.trackBarItem1,
             this.toolStripPanelItem1,
             this.toolStripProgressBar1});
-            this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
+            this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStripEx1.Location = new System.Drawing.Point(0, 623);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
             this.statusStripEx1.Name = "statusStripEx1";
@@ -180,6 +182,15 @@
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             this.toolStripStatusLabel2.Size = new System.Drawing.Size(90, 15);
             this.toolStripStatusLabel2.Text = "Some other text";
+            // 
+            // trackBarItem1
+            // 
+            this.trackBarItem1.Maximum = 18;
+            this.trackBarItem1.Name = "trackBarItem1";
+            this.trackBarItem1.Size = new System.Drawing.Size(250, 20);
+            this.trackBarItem1.Text = "Scales";
+            this.trackBarItem1.ToolTipText = "Zoom in or out";
+            this.trackBarItem1.Value = 12;
             // 
             // toolStripPanelItem1
             // 
@@ -222,7 +233,7 @@
             this.toolStripButton1.Text = "Clear";
             this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton1.ToolTipText = "Click me";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
             // 
             // MainForm
             // 
@@ -267,6 +278,7 @@
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv Legend;
         private AxMapWinGIS.AxMap axMap1;
+        private Syncfusion.Windows.Forms.Tools.TrackBarItem trackBarItem1;
     }
 }
 

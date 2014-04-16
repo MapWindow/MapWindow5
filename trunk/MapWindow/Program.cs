@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace MapWindow
 {
+    using MapWindow.Forms;
+
     static class Program
     {
         /// <summary>
