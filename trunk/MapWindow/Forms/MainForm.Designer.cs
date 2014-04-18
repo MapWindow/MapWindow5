@@ -37,13 +37,16 @@
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this.axMap1 = new AxMapWinGIS.AxMap();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.trackBarItem1 = new Syncfusion.Windows.Forms.Tools.TrackBarItem();
-            this.toolStripPanelItem1 = new Syncfusion.Windows.Forms.Tools.ToolStripPanelItem();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusStripProjection = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripCoordinates = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripTilesProvider = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStripZoomLevels = new Syncfusion.Windows.Forms.Tools.TrackBarItem();
+            this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.statusStripMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripDivider1 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripDivider2 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Legend)).BeginInit();
             this.dockingClientPanel1.SuspendLayout();
@@ -137,19 +140,23 @@
             this.dockingClientPanel1.Controls.Add(this.axMap1);
             this.dockingClientPanel1.Location = new System.Drawing.Point(155, 59);
             this.dockingClientPanel1.Name = "dockingClientPanel1";
-            this.dockingClientPanel1.Size = new System.Drawing.Size(560, 456);
+            this.dockingClientPanel1.Size = new System.Drawing.Size(738, 563);
             this.dockingClientPanel1.TabIndex = 0;
             // 
             // axMap1
             // 
-            this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.axMap1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.axMap1.Enabled = true;
             this.axMap1.Location = new System.Drawing.Point(0, 0);
             this.axMap1.Name = "axMap1";
             this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(560, 456);
+            this.axMap1.Size = new System.Drawing.Size(738, 563);
             this.axMap1.TabIndex = 0;
+            this.axMap1.MouseMoveEvent += new AxMapWinGIS._DMapEvents_MouseMoveEventHandler(this.AxMap1MouseMoveEvent);
             this.axMap1.FileDropped += new AxMapWinGIS._DMapEvents_FileDroppedEventHandler(this.AxMap1FileDropped);
+            this.axMap1.ExtentsChanged += new System.EventHandler(this.AxMap1ExtentsChanged);
             // 
             // statusStripEx1
             // 
@@ -157,55 +164,62 @@
             this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(893, 22);
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
-            this.trackBarItem1,
-            this.toolStripPanelItem1,
-            this.toolStripProgressBar1});
+            this.statusStripProjection,
+            this.statusStripDivider2,
+            this.statusStripMapUnits,
+            this.statusStripDivider1,
+            this.statusStripCoordinates,
+            this.statusStripTilesProvider,
+            this.statusStripZoomLevels,
+            this.statusStripProgressBar});
             this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStripEx1.Location = new System.Drawing.Point(0, 623);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
             this.statusStripEx1.Name = "statusStripEx1";
+            this.statusStripEx1.ShowItemToolTips = true;
             this.statusStripEx1.Size = new System.Drawing.Size(893, 22);
             this.statusStripEx1.TabIndex = 1;
             this.statusStripEx1.Text = "statusStripEx1";
             this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
             // 
-            // toolStripStatusLabel1
+            // statusStripProjection
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(90, 15);
-            this.toolStripStatusLabel1.Text = "MapWindow v5";
+            this.statusStripProjection.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripProjection.Name = "statusStripProjection";
+            this.statusStripProjection.Size = new System.Drawing.Size(61, 15);
+            this.statusStripProjection.Text = "Projection";
             // 
-            // toolStripStatusLabel2
+            // statusStripCoordinates
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(90, 15);
-            this.toolStripStatusLabel2.Text = "Some other text";
+            this.statusStripCoordinates.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusStripCoordinates.EndOfGroup = true;
+            this.statusStripCoordinates.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripCoordinates.Name = "statusStripCoordinates";
+            this.statusStripCoordinates.Size = new System.Drawing.Size(71, 15);
+            this.statusStripCoordinates.StatusString = "StatusString";
+            this.statusStripCoordinates.Text = "Coordinates";
+            this.statusStripCoordinates.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // trackBarItem1
+            // statusStripTilesProvider
             // 
-            this.trackBarItem1.Maximum = 18;
-            this.trackBarItem1.Name = "trackBarItem1";
-            this.trackBarItem1.Size = new System.Drawing.Size(250, 20);
-            this.trackBarItem1.Text = "Scales";
-            this.trackBarItem1.ToolTipText = "Zoom in or out";
-            this.trackBarItem1.Value = 12;
+            this.statusStripTilesProvider.Name = "statusStripTilesProvider";
+            this.statusStripTilesProvider.Size = new System.Drawing.Size(78, 15);
+            this.statusStripTilesProvider.Text = "Tiles provider";
             // 
-            // toolStripPanelItem1
+            // statusStripZoomLevels
             // 
-            this.toolStripPanelItem1.AutoSize = false;
-            this.toolStripPanelItem1.CausesValidation = false;
-            this.toolStripPanelItem1.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.toolStripPanelItem1.Name = "toolStripPanelItem1";
-            this.toolStripPanelItem1.Size = new System.Drawing.Size(23, 23);
-            this.toolStripPanelItem1.Text = "toolStripPanelItem1";
-            this.toolStripPanelItem1.Transparent = true;
+            this.statusStripZoomLevels.Maximum = 18;
+            this.statusStripZoomLevels.Name = "statusStripZoomLevels";
+            this.statusStripZoomLevels.Size = new System.Drawing.Size(250, 20);
+            this.statusStripZoomLevels.Text = "Scales";
+            this.statusStripZoomLevels.ToolTipText = "Zoom in or out";
+            this.statusStripZoomLevels.Value = 12;
+            this.statusStripZoomLevels.ValueChanged += new System.EventHandler(this.StatusStripZoomLevelsValueChanged);
             // 
-            // toolStripProgressBar1
+            // statusStripProgressBar
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 15);
+            this.statusStripProgressBar.Name = "statusStripProgressBar";
+            this.statusStripProgressBar.Size = new System.Drawing.Size(100, 15);
             // 
             // toolStripEx1
             // 
@@ -235,6 +249,27 @@
             this.toolStripButton1.ToolTipText = "Click me";
             this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
             // 
+            // statusStripMapUnits
+            // 
+            this.statusStripMapUnits.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripMapUnits.Name = "statusStripMapUnits";
+            this.statusStripMapUnits.Size = new System.Drawing.Size(61, 15);
+            this.statusStripMapUnits.Text = "Map Units";
+            // 
+            // statusStripDivider1
+            // 
+            this.statusStripDivider1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripDivider1.Name = "statusStripDivider1";
+            this.statusStripDivider1.Size = new System.Drawing.Size(16, 15);
+            this.statusStripDivider1.Text = " | ";
+            // 
+            // statusStripDivider2
+            // 
+            this.statusStripDivider2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripDivider2.Name = "statusStripDivider2";
+            this.statusStripDivider2.Size = new System.Drawing.Size(16, 15);
+            this.statusStripDivider2.Text = " | ";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +287,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "MapWindow Open Source GIS v5";
+            this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Legend)).EndInit();
             this.dockingClientPanel1.ResumeLayout(false);
@@ -272,13 +308,16 @@
         private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private Syncfusion.Windows.Forms.Tools.StatusStripEx statusStripEx1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        private Syncfusion.Windows.Forms.Tools.ToolStripPanelItem toolStripPanelItem1;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripProgressBar statusStripProgressBar;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv Legend;
         private AxMapWinGIS.AxMap axMap1;
-        private Syncfusion.Windows.Forms.Tools.TrackBarItem trackBarItem1;
+        private Syncfusion.Windows.Forms.Tools.TrackBarItem statusStripZoomLevels;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripProjection;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripCoordinates;
+        private System.Windows.Forms.ToolStripStatusLabel statusStripTilesProvider;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripMapUnits;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider2;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider1;
     }
 }
 
