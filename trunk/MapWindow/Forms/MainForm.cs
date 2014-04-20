@@ -288,7 +288,9 @@ namespace MapWindow.Forms
         /// </param>
         private void ToolButtonAddLayerClick(object sender, EventArgs e)
         {
-            MessageBox.Show(@"A new form will be opened, soon");
+            // TODO prevent multiple opens:
+            var addLayerForm = new AddLayersForm();
+            addLayerForm.Show(this);
         }
     }
 }

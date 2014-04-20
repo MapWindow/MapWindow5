@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection ccbLegend = new Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection();
             Syncfusion.Windows.Forms.Tools.TreeNodeAdv treeNodeAdv1 = new Syncfusion.Windows.Forms.Tools.TreeNodeAdv();
+            Syncfusion.Windows.Forms.CaptionImage captionImage1 = new Syncfusion.Windows.Forms.CaptionImage();
+            Syncfusion.Windows.Forms.CaptionLabel captionLabel1 = new Syncfusion.Windows.Forms.CaptionLabel();
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.Legend = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
@@ -83,7 +85,7 @@
             // Legend
             // 
             this.Legend.BackColor = System.Drawing.Color.White;
-            this.Legend.BeforeTouchSize = new System.Drawing.Size(148, 557);
+            this.Legend.BeforeTouchSize = new System.Drawing.Size(148, 413);
             this.Legend.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
             this.Legend.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Legend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -120,7 +122,7 @@
             this.Legend.SelectedNodeForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             this.Legend.ShowCheckBoxes = true;
             this.Legend.ShowFocusRect = false;
-            this.Legend.Size = new System.Drawing.Size(148, 557);
+            this.Legend.Size = new System.Drawing.Size(148, 413);
             this.Legend.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this.Legend.TabIndex = 3;
             this.Legend.Text = "treeViewAdv1";
@@ -139,9 +141,9 @@
             // dockingClientPanel1
             // 
             this.dockingClientPanel1.Controls.Add(this.axMap1);
-            this.dockingClientPanel1.Location = new System.Drawing.Point(155, 59);
+            this.dockingClientPanel1.Location = new System.Drawing.Point(155, 54);
             this.dockingClientPanel1.Name = "dockingClientPanel1";
-            this.dockingClientPanel1.Size = new System.Drawing.Size(738, 563);
+            this.dockingClientPanel1.Size = new System.Drawing.Size(738, 520);
             this.dockingClientPanel1.TabIndex = 0;
             // 
             // axMap1
@@ -162,7 +164,7 @@
             // statusStripEx1
             // 
             this.statusStripEx1.AutoSize = false;
-            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(893, 22);
+            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(816, 20);
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripProjection,
@@ -174,11 +176,11 @@
             this.statusStripZoomLevels,
             this.statusStripProgressBar});
             this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStripEx1.Location = new System.Drawing.Point(0, 623);
+            this.statusStripEx1.Location = new System.Drawing.Point(0, 479);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
             this.statusStripEx1.Name = "statusStripEx1";
             this.statusStripEx1.ShowItemToolTips = true;
-            this.statusStripEx1.Size = new System.Drawing.Size(893, 22);
+            this.statusStripEx1.Size = new System.Drawing.Size(816, 20);
             this.statusStripEx1.TabIndex = 1;
             this.statusStripEx1.Text = "statusStripEx1";
             this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
@@ -236,7 +238,8 @@
             // 
             this.statusStripZoomLevels.Maximum = 18;
             this.statusStripZoomLevels.Name = "statusStripZoomLevels";
-            this.statusStripZoomLevels.Size = new System.Drawing.Size(250, 20);
+            this.statusStripZoomLevels.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
+            this.statusStripZoomLevels.Size = new System.Drawing.Size(227, 20);
             this.statusStripZoomLevels.Text = "Scales";
             this.statusStripZoomLevels.ToolTipText = "Zoom in or out";
             this.statusStripZoomLevels.Value = 12;
@@ -245,10 +248,12 @@
             // statusStripProgressBar
             // 
             this.statusStripProgressBar.Name = "statusStripProgressBar";
-            this.statusStripProgressBar.Size = new System.Drawing.Size(100, 15);
+            this.statusStripProgressBar.Size = new System.Drawing.Size(100, 14);
             // 
             // toolStripEx1
             // 
+            this.toolStripEx1.BackColor = System.Drawing.Color.Transparent;
+            this.toolStripEx1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
             this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripEx1.Image = null;
@@ -259,14 +264,17 @@
             this.toolStripEx1.Location = new System.Drawing.Point(0, 0);
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.Padding = new System.Windows.Forms.Padding(0);
             this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.ShowItemToolTips = true;
             this.toolStripEx1.ShowLauncher = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(893, 46);
+            this.toolStripEx1.Size = new System.Drawing.Size(816, 46);
+            this.toolStripEx1.Stretch = true;
             this.toolStripEx1.TabIndex = 2;
-            this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
             // 
             // toolButtonNewProject
             // 
+            this.toolButtonNewProject.BackColor = System.Drawing.Color.White;
             this.toolButtonNewProject.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonNewProject.Image")));
             this.toolButtonNewProject.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolButtonNewProject.Name = "toolButtonNewProject";
@@ -278,32 +286,50 @@
             // 
             // toolButtonAddLayer
             // 
+            this.toolButtonAddLayer.BackColor = System.Drawing.Color.White;
             this.toolButtonAddLayer.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonAddLayer.Image")));
             this.toolButtonAddLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolButtonAddLayer.Name = "toolButtonAddLayer";
             this.toolButtonAddLayer.Size = new System.Drawing.Size(33, 43);
             this.toolButtonAddLayer.Text = "Add";
             this.toolButtonAddLayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolButtonAddLayer.ToolTipText = "Add layer";
+            this.toolButtonAddLayer.ToolTipText = "Add layer, opens a new form";
             this.toolButtonAddLayer.Click += new System.EventHandler(this.ToolButtonAddLayerClick);
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderThickness = 2;
             this.CaptionBarColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(158)))), ((int)(((byte)(218)))));
-            this.CaptionBarHeight = 24;
-            this.CaptionFont = new System.Drawing.Font("Arial Black", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ClientSize = new System.Drawing.Size(893, 645);
+            this.CaptionBarHeight = 48;
+            this.CaptionButtonColor = System.Drawing.Color.DimGray;
+            this.CaptionFont = new System.Drawing.Font("Arial Black", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CaptionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            captionImage1.BackColor = System.Drawing.Color.Transparent;
+            captionImage1.Image = ((System.Drawing.Image)(resources.GetObject("captionImage1.Image")));
+            captionImage1.Location = new System.Drawing.Point(6, 0);
+            captionImage1.Name = "CaptionImage2";
+            captionImage1.Size = new System.Drawing.Size(48, 48);
+            this.CaptionImages.Add(captionImage1);
+            captionLabel1.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            captionLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            captionLabel1.Location = new System.Drawing.Point(60, 2);
+            captionLabel1.Name = "CaptionLabel1";
+            captionLabel1.Size = new System.Drawing.Size(400, 46);
+            captionLabel1.Text = "MapWindow Open Source GIS";
+            this.CaptionLabels.Add(captionLabel1);
+            this.ClientSize = new System.Drawing.Size(816, 499);
             this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.statusStripEx1);
             this.Controls.Add(this.dockingClientPanel1);
             this.DoubleBuffered = true;
             this.DropShadow = true;
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MetroColor = System.Drawing.Color.Silver;
             this.Name = "MainForm";
-            this.Text = "MapWindow Open Source GIS v5";
+            this.ShowIcon = false;
             this.Load += new System.EventHandler(this.MainFormLoad);
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Legend)).EndInit();

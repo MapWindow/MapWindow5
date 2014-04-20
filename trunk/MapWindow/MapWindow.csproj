@@ -97,6 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\AddLayersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AddLayersForm.Designer.cs">
+      <DependentUpon>AddLayersForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +111,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Forms\AddLayersForm.resx">
+      <DependentUpon>AddLayersForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,7 +169,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MapWindow.ico" />
+    <Content Include="Resources\layer-add.png" />
     <Content Include="Resources\MapWindow.ico" />
     <Content Include="Resources\project-new.png" />
   </ItemGroup>
