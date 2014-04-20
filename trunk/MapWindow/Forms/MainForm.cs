@@ -13,6 +13,9 @@ namespace MapWindow.Forms
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
+
+    using AxMapWinGIS;
+
     using MapWinGIS;
     using Syncfusion.Windows.Forms.Tools;
 
@@ -166,7 +169,7 @@ namespace MapWindow.Forms
                 int epsgCode;
                 if (geoProjection.TryAutoDetectEpsg(out epsgCode))
                 {
-                    projection = epsgCode.ToString(CultureInfo.InvariantCulture);
+                    projection = "EPSG:" + epsgCode.ToString(CultureInfo.InvariantCulture);
                 }
                 else
                 {
@@ -177,21 +180,10 @@ namespace MapWindow.Forms
                 }
             }
 
-            // Workaround:
-            if (this.axMap1.Projection == tkMapProjection.PROJECTION_GOOGLE_MERCATOR)
-            {
-                projection = "EPSG:3857";
-            }
-
-            if (this.axMap1.Projection == tkMapProjection.PROJECTION_WGS84)
-            {
-                projection = "WGS84";
-            }
-
             this.statusStripProjection.Text = projection;
 
             // MapUnits:
-            this.statusStripMapUnits.Text = this.axMap1.MapUnits.ToString();
+            this.statusStripMapUnits.Text = this.axMap1.MapUnits.ToString().Replace("um", string.Empty);
 
             // Tiles
             var tiles = this.axMap1.Tiles;
@@ -199,8 +191,8 @@ namespace MapWindow.Forms
             {
                 this.statusStripTilesProvider.Text = tiles.ProviderName;
                 this.statusStripZoomLevels.Enabled = true;
-                this.statusStripZoomLevels.Minimum = tiles.minZoom;
-                this.statusStripZoomLevels.Maximum = tiles.maxZoom;
+                this.statusStripZoomLevels.Minimum = tiles.MinZoom;
+                this.statusStripZoomLevels.Maximum = tiles.MaxZoom;
                 this.statusStripZoomLevels.Value = tiles.CurrentZoom;
             }
             else
@@ -249,16 +241,25 @@ namespace MapWindow.Forms
         /// <param name="e">
         /// The e.
         /// </param>
-        private void AxMap1MouseMoveEvent(object sender, AxMapWinGIS._DMapEvents_MouseMoveEvent e)
+        private void AxMap1MouseMoveEvent(object sender, _DMapEvents_MouseMoveEvent e)
         {
-            // TODO Much too slow and wrong coordinates
-            double projX = 0;
-            double projY = 0;
-            this.axMap1.PixelToProj(e.x, e.y, ref projX, ref projY);
-            var coordinates = projX.ToString(CultureInfo.InvariantCulture) + "; "
-                                 + projY.ToString(CultureInfo.InvariantCulture);
+            double lat = 0.0, lon = 0.0;
+            string coordinates;
+            
+            if (this.axMap1.PixelToDegrees(e.x, e.y, ref lon, ref lat))
+            {
+                coordinates = string.Format("{0:0.000}, {1:0.000}", lat, lon);
+            }
+            else
+            {
+                double clientX = 0.0, clientY = 0.0;
+                this.axMap1.PixelToProj(e.x, e.y, ref clientX, ref clientY);
+                coordinates = string.Format("{0:0.00}, {1:0.00}", clientX, clientY);
+            }
 
             this.statusStripCoordinates.Text = coordinates;
+            this.statusStripCoordinates.Invalidate();
+            this.statusStripEx1.Update();
         }
 
         /// <summary>
@@ -274,6 +275,20 @@ namespace MapWindow.Forms
         {
             // Update trackbar:
             this.statusStripZoomLevels.Value = this.axMap1.CurrentZoom;
+        }
+
+        /// <summary>
+        /// The tool button add layer click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void ToolButtonAddLayerClick(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"A new form will be opened, soon");
         }
     }
 }

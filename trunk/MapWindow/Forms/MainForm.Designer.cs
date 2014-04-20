@@ -38,15 +38,16 @@
             this.axMap1 = new AxMapWinGIS.AxMap();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusStripProjection = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripDivider2 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusStripDivider1 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusStripCoordinates = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusStripTilesProvider = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusStripZoomLevels = new Syncfusion.Windows.Forms.Tools.TrackBarItem();
             this.statusStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.statusStripMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusStripDivider1 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusStripDivider2 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.toolButtonNewProject = new System.Windows.Forms.ToolStripButton();
+            this.toolButtonAddLayer = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Legend)).BeginInit();
             this.dockingClientPanel1.SuspendLayout();
@@ -188,6 +189,29 @@
             this.statusStripProjection.Name = "statusStripProjection";
             this.statusStripProjection.Size = new System.Drawing.Size(61, 15);
             this.statusStripProjection.Text = "Projection";
+            this.statusStripProjection.ToolTipText = "The projection of the map";
+            // 
+            // statusStripDivider2
+            // 
+            this.statusStripDivider2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripDivider2.Name = "statusStripDivider2";
+            this.statusStripDivider2.Size = new System.Drawing.Size(16, 15);
+            this.statusStripDivider2.Text = " | ";
+            // 
+            // statusStripMapUnits
+            // 
+            this.statusStripMapUnits.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripMapUnits.Name = "statusStripMapUnits";
+            this.statusStripMapUnits.Size = new System.Drawing.Size(61, 15);
+            this.statusStripMapUnits.Text = "Map Units";
+            this.statusStripMapUnits.ToolTipText = "The map units for the map";
+            // 
+            // statusStripDivider1
+            // 
+            this.statusStripDivider1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripDivider1.Name = "statusStripDivider1";
+            this.statusStripDivider1.Size = new System.Drawing.Size(16, 15);
+            this.statusStripDivider1.Text = " | ";
             // 
             // statusStripCoordinates
             // 
@@ -199,12 +223,14 @@
             this.statusStripCoordinates.StatusString = "StatusString";
             this.statusStripCoordinates.Text = "Coordinates";
             this.statusStripCoordinates.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.statusStripCoordinates.ToolTipText = "The coordinates at the mouse pointer";
             // 
             // statusStripTilesProvider
             // 
             this.statusStripTilesProvider.Name = "statusStripTilesProvider";
             this.statusStripTilesProvider.Size = new System.Drawing.Size(78, 15);
             this.statusStripTilesProvider.Text = "Tiles provider";
+            this.statusStripTilesProvider.ToolTipText = "The tiles provider, double click to change.";
             // 
             // statusStripZoomLevels
             // 
@@ -228,7 +254,8 @@
             this.toolStripEx1.Image = null;
             this.toolStripEx1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1});
+            this.toolButtonNewProject,
+            this.toolButtonAddLayer});
             this.toolStripEx1.Location = new System.Drawing.Point(0, 0);
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
@@ -238,37 +265,27 @@
             this.toolStripEx1.TabIndex = 2;
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
             // 
-            // toolStripButton1
+            // toolButtonNewProject
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(38, 43);
-            this.toolStripButton1.Text = "Clear";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton1.ToolTipText = "Click me";
-            this.toolStripButton1.Click += new System.EventHandler(this.ToolStripButton1Click);
+            this.toolButtonNewProject.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonNewProject.Image")));
+            this.toolButtonNewProject.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolButtonNewProject.Name = "toolButtonNewProject";
+            this.toolButtonNewProject.Size = new System.Drawing.Size(35, 43);
+            this.toolButtonNewProject.Text = "New";
+            this.toolButtonNewProject.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolButtonNewProject.ToolTipText = "New project";
+            this.toolButtonNewProject.Click += new System.EventHandler(this.ToolStripButton1Click);
             // 
-            // statusStripMapUnits
+            // toolButtonAddLayer
             // 
-            this.statusStripMapUnits.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusStripMapUnits.Name = "statusStripMapUnits";
-            this.statusStripMapUnits.Size = new System.Drawing.Size(61, 15);
-            this.statusStripMapUnits.Text = "Map Units";
-            // 
-            // statusStripDivider1
-            // 
-            this.statusStripDivider1.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusStripDivider1.Name = "statusStripDivider1";
-            this.statusStripDivider1.Size = new System.Drawing.Size(16, 15);
-            this.statusStripDivider1.Text = " | ";
-            // 
-            // statusStripDivider2
-            // 
-            this.statusStripDivider2.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusStripDivider2.Name = "statusStripDivider2";
-            this.statusStripDivider2.Size = new System.Drawing.Size(16, 15);
-            this.statusStripDivider2.Text = " | ";
+            this.toolButtonAddLayer.Image = ((System.Drawing.Image)(resources.GetObject("toolButtonAddLayer.Image")));
+            this.toolButtonAddLayer.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolButtonAddLayer.Name = "toolButtonAddLayer";
+            this.toolButtonAddLayer.Size = new System.Drawing.Size(33, 43);
+            this.toolButtonAddLayer.Text = "Add";
+            this.toolButtonAddLayer.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolButtonAddLayer.ToolTipText = "Add layer";
+            this.toolButtonAddLayer.Click += new System.EventHandler(this.ToolButtonAddLayerClick);
             // 
             // MainForm
             // 
@@ -306,7 +323,7 @@
         private Syncfusion.Windows.Forms.Tools.DockingManager dockingManager1;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
         private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolButtonNewProject;
         private Syncfusion.Windows.Forms.Tools.StatusStripEx statusStripEx1;
         private System.Windows.Forms.ToolStripProgressBar statusStripProgressBar;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv Legend;
@@ -318,6 +335,7 @@
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripMapUnits;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider2;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider1;
+        private System.Windows.Forms.ToolStripButton toolButtonAddLayer;
     }
 }
 
