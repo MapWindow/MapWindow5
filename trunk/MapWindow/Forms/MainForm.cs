@@ -9,13 +9,13 @@
 namespace MapWindow.Forms
 {
     using System;
+    using System.Drawing;
     using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Windows.Forms;
-
+ 
     using AxMapWinGIS;
-
     using MapWinGIS;
     using Syncfusion.Windows.Forms.Tools;
 
@@ -31,22 +31,6 @@ namespace MapWindow.Forms
         public MainForm()
         {
             this.InitializeComponent();
-
-            // TODO: Doesn't work:
-            this.axMap1.GlobalCallback = this;
-            this.axMap1.Tiles.GlobalCallback = this;
-
-            // Tiles settings:
-            this.axMap1.Tiles.AutodetectProxy();
-            this.axMap1.Tiles.DoCaching[tkCacheType.Disk] = true;
-
-            // probably better to turn if off otherwise on second run nothing will be downloaded (everything in cache)  
-            this.axMap1.Tiles.UseCache[tkCacheType.Disk] = false;
-            this.axMap1.Tiles.UseServer = true;
-
-            var gs = new GlobalSettingsClass { GridProxyFormat = tkGridProxyFormat.gpfTiffProxy };
-            this.statusStripProgressBar.Minimum = 0;
-            this.statusStripProgressBar.Maximum = 100;
         }
 
         /// <summary>
@@ -62,7 +46,8 @@ namespace MapWindow.Forms
         /// </exception>
         public void Error(string keyOfSender, string errorMsg)
         {
-            MessageBox.Show(errorMsg, @"Error");
+            // MessageBox.Show(errorMsg, @"Error");
+            this.ProgresTextbox.Text += string.Format("{0}***** ERROR! {1}{0}", Environment.NewLine, errorMsg);
         }
 
         /// <summary>
@@ -80,6 +65,58 @@ namespace MapWindow.Forms
         public void Progress(string keyOfSender, int percent, string message)
         {
             this.statusStripProgressBar.Value = percent;
+
+            if (this.statusStripProgressLabel.Text != message)
+            {
+                this.statusStripProgressLabel.Text = message;
+                this.statusStripProgressLabel.Invalidate();
+                this.statusStripEx1.Update();
+            }
+
+            switch (percent)
+            {
+                case 0:
+                    if (message != string.Empty)
+                    {
+                        this.ProgresTextbox.AppendText(message + Environment.NewLine);
+                    }
+
+                    break;
+                case 100:
+                    this.ProgresTextbox.AppendText(message + Environment.NewLine);
+                    break;
+                default:
+                    var msg = percent + @"% ... ";
+                    this.ProgresTextbox.AppendText(msg);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Set default settings.
+        /// </summary>
+        private void SetDefaultSettings()
+        {
+            // Tiles settings:
+            this.axMap1.Tiles.AutodetectProxy();
+            this.axMap1.Tiles.DoCaching[tkCacheType.Disk] = true;
+
+            // probably better to turn if off otherwise on second run nothing will be downloaded (everything in cache)  
+            this.axMap1.Tiles.UseCache[tkCacheType.Disk] = false;
+            this.axMap1.Tiles.UseServer = true;
+
+            var gs = new GlobalSettingsClass { GridProxyFormat = tkGridProxyFormat.gpfTiffProxy };
+            this.statusStripProgressBar.Minimum = 0;
+            this.statusStripProgressBar.Maximum = 100;
+
+            // To enable coordinates in status strip:
+            this.axMap1.SendMouseMove = true;
+
+            // What to show on the map:
+            this.axMap1.ShowCoordinates = tkCoordinatesDisplay.cdmAuto;
+            this.axMap1.ShowRedrawTime = false;
+            this.axMap1.ShowVersionNumber = true;
+            this.axMap1.ShowZoomBar = true;
         }
 
         /// <summary>
@@ -94,6 +131,7 @@ namespace MapWindow.Forms
         private void ToolStripButton1Click(object sender, EventArgs e)
         {
             this.axMap1.Clear();
+            this.statusStripProgressLabel.Text = @"Map cleared";
 
             // Disable tiles:
             this.axMap1.Tiles.Visible = false;
@@ -106,6 +144,9 @@ namespace MapWindow.Forms
                     this.Legend.Nodes[0].Nodes[i].Remove();
                 }
             }
+
+            // Set default settings:
+            this.SetDefaultSettings();
 
             // Reset status strip:
             this.SetStatusstripControls();
@@ -120,10 +161,11 @@ namespace MapWindow.Forms
         /// <param name="e">
         /// The e.
         /// </param>
-        private void AxMap1FileDropped(object sender, AxMapWinGIS._DMapEvents_FileDroppedEvent e)
+        private void AxMap1FileDropped(object sender, _DMapEvents_FileDroppedEvent e)
         {
             this.statusStripProgressBar.Value = 0;
-            this.axMap1.FileManager.GlobalCallback = this;
+
+            this.statusStripProgressLabel.Text = @"Adding " + Path.GetFileName(e.filename);
 
             // TODO use async:
             var hndl = this.axMap1.AddLayerFromFilename(e.filename, tkFileOpenStrategy.fosAutoDetect, true);
@@ -133,6 +175,7 @@ namespace MapWindow.Forms
             }
 
             // Check if a symbology file is present:
+            // TODO: In latest ocx this is no longer necessary:
             var symbFilename = e.filename + ".mwsymb";
             if (File.Exists(symbFilename))
             {
@@ -143,11 +186,27 @@ namespace MapWindow.Forms
             // Redraw map:
             this.axMap1.Redraw2(tkRedrawType.RedrawAll);
 
-            // Add t0 legend:
+            this.AddToLegend(hndl);
+
+            this.SetStatusstripControls();
+
+            this.statusStripProgressLabel.Text = @"Done";
+        }
+
+        /// <summary>
+        /// Add to legend.
+        /// </summary>
+        /// <param name="hndl">
+        /// The handle
+        /// </param>
+        private void AddToLegend(int hndl)
+        {
+            // Add to legend:
             var nodeName = this.axMap1.get_LayerName(hndl);
+            var filename = this.axMap1.get_LayerFilename(hndl);
             if (nodeName == string.Empty)
             {
-                nodeName = Path.GetFileNameWithoutExtension(this.axMap1.get_LayerFilename(hndl));
+                nodeName = Path.GetFileNameWithoutExtension(filename);
             }
 
             var newNode = new TreeNodeAdv(nodeName) { CheckState = CheckState.Checked };
@@ -161,6 +220,16 @@ namespace MapWindow.Forms
         /// </summary>
         private void SetStatusstripControls()
         {
+            if (this.axMap1.Tiles.Visible == false && this.axMap1.NumLayers == 0)
+            {
+                // Nothing loaded so clear all:
+                this.statusStripCoordinates.Text = string.Empty;
+                this.statusStripMapUnits.Text = string.Empty;
+                this.statusStripProjection.Text = string.Empty;
+                this.statusStripTilesProvider.Text = @"No tiles";
+                return;
+            }
+            
             // Projection:
             var projection = this.axMap1.Projection.ToString();
             var geoProjection = this.axMap1.GeoProjection;
@@ -187,19 +256,7 @@ namespace MapWindow.Forms
 
             // Tiles
             var tiles = this.axMap1.Tiles;
-            if (tiles.Visible)
-            {
-                this.statusStripTilesProvider.Text = tiles.ProviderName;
-                this.statusStripZoomLevels.Enabled = true;
-                this.statusStripZoomLevels.Minimum = tiles.MinZoom;
-                this.statusStripZoomLevels.Maximum = tiles.MaxZoom;
-                this.statusStripZoomLevels.Value = tiles.CurrentZoom;
-            }
-            else
-            {
-                this.statusStripTilesProvider.Text = @"Disabled";
-                this.statusStripZoomLevels.Enabled = false;
-            }
+            this.statusStripTilesProvider.Text = tiles.Visible ? tiles.ProviderName : @"No tiles";
         }
 
         /// <summary>
@@ -213,23 +270,34 @@ namespace MapWindow.Forms
         /// </param>
         private void MainFormLoad(object sender, EventArgs e)
         {
+            // To avoid flickering:
+            this.axMap1.LockWindow(tkLockMode.lmLock);
+            this.SuspendLayout();
+
+            // For ICallBack:
+            this.axMap1.GlobalCallback = this;
+            this.axMap1.Tiles.GlobalCallback = this;
+            this.axMap1.FileManager.GlobalCallback = this;
+
+            this.SetDefaultSettings();
+
+            // Get size from settings:
+            this.Size = new Size(
+                Width = Properties.Settings.Default.MainForm_SizeWidth,
+                Height = Properties.Settings.Default.MainForm_SizeHeight);
+
             // Reset status strip:
             this.SetStatusstripControls();
-        }
 
-        /// <summary>
-        /// The status strip zoom levels value changed.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void StatusStripZoomLevelsValueChanged(object sender, EventArgs e)
-        {
-            // update zoomlevel:
-            this.axMap1.ZoomToTileLevel(this.statusStripZoomLevels.Value);
+            this.ResumeLayout();
+
+            // Get zoom level from settings:
+            this.axMap1.CurrentZoom = Properties.Settings.Default.CurrentZoomlevel;
+
+            // TODO: Get lat/long from settings:
+
+            // Enable again:
+            this.axMap1.LockWindow(tkLockMode.lmUnlock);
         }
 
         /// <summary>
@@ -263,21 +331,6 @@ namespace MapWindow.Forms
         }
 
         /// <summary>
-        /// The map extents changed.
-        /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void AxMap1ExtentsChanged(object sender, EventArgs e)
-        {
-            // Update trackbar:
-            this.statusStripZoomLevels.Value = this.axMap1.CurrentZoom;
-        }
-
-        /// <summary>
         /// The tool button add layer click.
         /// </summary>
         /// <param name="sender">
@@ -289,8 +342,71 @@ namespace MapWindow.Forms
         private void ToolButtonAddLayerClick(object sender, EventArgs e)
         {
             // TODO prevent multiple opens:
-            var addLayerForm = new AddLayersForm();
-            addLayerForm.Show(this);
+            var addLayerForm = new AddLayersForm(this.axMap1, this);
+            addLayerForm.ShowDialog(this);
+
+            // get handle of added layer:
+            if (addLayerForm.LayerHandle == -1)
+            {
+                return;
+            }
+
+            // Add to legend
+            this.AddToLegend(addLayerForm.LayerHandle);
+
+            // Update status strip:
+            this.SetStatusstripControls();
+        }
+
+        /// <summary>
+        /// The main form closing.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void MainFormFormClosing(object sender, FormClosingEventArgs e)
+        {
+            // Save the manually settings:
+            Properties.Settings.Default.MainForm_windowState = this.WindowState;
+
+            if (this.WindowState == FormWindowState.Normal)
+            {
+                Properties.Settings.Default.MainForm_SizeHeight = this.Size.Height;
+                Properties.Settings.Default.MainForm_SizeWidth = this.Size.Width;
+            }
+            else
+            {
+                Properties.Settings.Default.MainForm_SizeHeight = this.RestoreBounds.Size.Height;
+                Properties.Settings.Default.MainForm_SizeWidth = this.RestoreBounds.Size.Width;
+            }
+
+            if (this.axMap1.Tiles.Visible)
+            {
+                Properties.Settings.Default.CurrentZoomlevel = this.axMap1.CurrentZoom;
+                // TODO: Set lat/long in settings:
+            }
+
+            // Save the settings:
+            Properties.Settings.Default.Save();
+        }
+
+        /// <summary>
+        /// The status strip tiles provider double click.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void StatusStripTilesProviderDoubleClick(object sender, EventArgs e)
+        {
+            // Enable default tiling again:
+            this.axMap1.Tiles.Visible = true;
+            this.SetStatusstripControls();
         }
     }
 }

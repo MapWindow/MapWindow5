@@ -1,7 +1,27 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MapWindow.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="MainForm_location" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="MainForm_startLocation" Type="System.Windows.Forms.FormStartPosition" Scope="User">
+      <Value Profile="(Default)">WindowsDefaultLocation</Value>
+    </Setting>
+    <Setting Name="MainForm_SizeWidth" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">853</Value>
+    </Setting>
+    <Setting Name="MainForm_SizeHeight" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">603</Value>
+    </Setting>
+    <Setting Name="CurrentZoomlevel" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
+    </Setting>
+    <Setting Name="MainForm_windowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="Setting" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
 </SettingsFile>
