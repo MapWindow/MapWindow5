@@ -382,7 +382,7 @@
         ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUBAAAABERhdGEHAgIAAAAJAwAAAA8DAAAAsQAAAAIB
         AAAAAQAAAAAAAAAAAAAAAJwAAAAxAAsAAUcAALkoAAAAAAAA////AHsUrkfhepQ/AAAzMzMzMzPTPwEB
         AQEBFAAAAAEBAQEAAAAAAADgPwAAAQAAAAAAAAEBAAAAAQAAAAIAAAADAAAABgAAAAEAAAAAAAAAAgAA
-        AIicgpbztzpBjU2Qs/vEQ0GPnGjtedxVQQGsF68Ks1dBAf8AAAAAAAAAAAEBAAAABAAAAAMAAAAL
+        APwNKbhIkEBB7JJHSK+QQEHPFrqZs8dWQcAxxgLRx1ZBAf8AAAAAAAAAAAEBAAAABAAAAAMAAAAL
 </value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1838,10 +1838,10 @@
   <metadata name="Legend.DockLabel" xml:space="preserve">
     <value>Legend</value>
   </metadata>
-  <metadata name="ProgresTextbox.DockLabel" xml:space="preserve">
-    <value>Messages</value>
-  </metadata>
   <metadata name="ProgresTextbox.AutoHideOnLoad" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
+  </metadata>
+  <metadata name="ProgresTextbox.DockLabel" xml:space="preserve">
+    <value>Messages</value>
   </metadata>
 </root>

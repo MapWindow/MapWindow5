@@ -238,7 +238,7 @@ namespace MapWindow.Forms
             var sf = this.OpenShapefile(this.SelectShapefileTextbox.Text);
 
             // For this test use the random coloring:
-            this.ApplyRandomPolygonColors(ref sf);
+            // this.ApplyRandomPolygonColors(ref sf);
 
             // Add to map:
             this.LayerHandle = this.theMap.AddLayer(sf, true);
@@ -256,28 +256,48 @@ namespace MapWindow.Forms
         /// </param>
         private void ApplyRandomPolygonColors(ref Shapefile sf)
         {
+            if (sf.ShapefileType != ShpfileType.SHP_POLYGON && sf.ShapefileType != ShpfileType.SHP_POLYGONM
+                && sf.ShapefileType != ShpfileType.SHP_POLYGONZ)
+            {
+                // Nothing to do:
+                return;
+            }
+
             var scheme = new ColorScheme();
-            scheme.AddBreak(0.0, ColorToUInt(Color.FromArgb(254, 240, 217)));
-            scheme.AddBreak(0.25, ColorToUInt(Color.FromArgb(253, 204, 138)));
-            scheme.AddBreak(0.5, ColorToUInt(Color.FromArgb(252, 141, 89)));
-            scheme.AddBreak(0.75, ColorToUInt(Color.FromArgb(227, 74, 51)));
-            scheme.AddBreak(1.0, ColorToUInt(Color.FromArgb(179, 0, 0)));
+            scheme.AddBreak(0.0, ColorToUInt(Color.FromArgb(254, 240, 217), true));
+            scheme.AddBreak(0.25, ColorToUInt(Color.FromArgb(253, 204, 138), true));
+            scheme.AddBreak(0.5, ColorToUInt(Color.FromArgb(252, 141, 89), true));
+            scheme.AddBreak(0.75, ColorToUInt(Color.FromArgb(227, 74, 51), true));
+            scheme.AddBreak(1.0, ColorToUInt(Color.FromArgb(179, 0, 0), true));
+            
+            // Set transparency first:
+            sf.DefaultDrawingOptions.FillTransparency = 125;
+
+            // Generate unique random polygon colors:
             sf.Categories.GeneratePolygonColors(scheme);
         }
 
         /// <summary>
-        /// Convert color to uint.
+        /// Convert color to unsigned integer.
         /// </summary>
         /// <param name="color">
         /// The color.
         /// </param>
+        /// <param name="swap">
+        /// The swap.
+        /// </param>
         /// <returns>
         /// The <see cref="uint"/>.
         /// </returns>
-        private static uint ColorToUInt(Color color)
+        private static uint ColorToUInt(Color color, bool swap = false)
         {
-            return (uint)((color.A << 24) | (color.R << 16) |
-            (color.G << 8) | (color.B << 0));
+            if (swap)
+            {
+                // Known bug: https://groups.google.com/forum/?hl=sv#!msg/microsoft.public.dotnet.framework.windowsforms/i-_U3jeZ9g4/uYENEX0oOjAJ
+                return (uint)((color.A << 24) | color.R | (color.G << 8) | (color.B << 16));
+            }
+
+            return (uint)((color.A << 24) | (color.R << 16) | (color.G << 8) | (color.B << 0));
         }
 
         /// <summary>
@@ -301,13 +321,151 @@ namespace MapWindow.Forms
             this.theMainform.Progress(string.Empty, 0, "Start opening " + Path.GetFileName(shapefilename));
             if (!sf.Open(shapefilename, this.theMainform))
             {
-                var msg = string.Format("Error opening shapefile: {0}", sf.get_ErrorMsg(sf.LastErrorCode));
+                var msg = string.Format("Error opening shapefile: {0}", sf.ErrorMsg[sf.LastErrorCode]);
                 System.Diagnostics.Debug.WriteLine(msg);
                 this.theMainform.Error(string.Empty, msg);
                 return null;
             }
 
             return sf;
+        }
+
+        private void SelectGridfileButtonClick(object sender, EventArgs e)
+        {
+            SelectGridfile(this.SelectGridfileTextbox, "Select a grid file");
+        }
+
+        /// <summary>Select a grid file</summary>
+        /// <param name="textBox">
+        /// The text box.
+        /// </param>
+        /// <param name="title">
+        /// The title.
+        /// </param>
+        private static void SelectGridfile(TextBox textBox, string title)
+        {
+            var grd = new Grid();
+
+            using (var ofd = new OpenFileDialog
+            {
+                CheckFileExists = true,
+                Filter = grd.CdlgFilter,
+                Multiselect = false,
+                SupportMultiDottedExtensions = true,
+                Title = title
+            })
+            {
+                if (textBox.Text != string.Empty)
+                {
+                    var folder = Path.GetDirectoryName(textBox.Text);
+                    if (folder != null)
+                    {
+                        if (Directory.Exists(folder))
+                        {
+                            ofd.InitialDirectory = folder;
+                        }
+                    }
+                }
+
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    textBox.Text = ofd.FileName;
+                }
+            }
+        }
+
+        private void OpenGridFileButton_Click(object sender, EventArgs e)
+        {
+            // Make form a bit transparent:
+            this.Opacity = 0.5;
+            Application.DoEvents();
+
+            // reset layer handle:
+            this.LayerHandle = -1;
+
+            // Add layer:
+            this.LayerHandle = this.OpenGridfile(this.SelectGridfileTextbox.Text);
+            
+            // Make the grid a little bit transparent:
+
+
+            this.theMainform.Progress(string.Empty, 100, "Done");
+
+            // Close this form:
+            this.Close();
+        }
+
+        private int OpenGridfile(string gridfilename)
+        {
+            if (!File.Exists(gridfilename))
+            {
+                this.theMainform.Error(string.Empty, "Cannot find the file: " + gridfilename);
+                return -1;
+            }
+
+            var hndl = this.theMap.AddLayerFromFilename(gridfilename, tkFileOpenStrategy.fosAutoDetect, true);
+
+            return hndl;
+        }
+
+        /// <summary>
+        /// The select gridfile textbox text changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void SelectGridfileTextboxTextChanged(object sender, EventArgs e)
+        {
+            var gridfilename = this.SelectGridfileTextbox.Text;
+
+            if (!File.Exists(gridfilename))
+            {
+                this.GridfilePropertiesTextbox.Text = @"Cannot find the file: " + gridfilename;
+                return;
+            }
+
+            // Get GDAL info:
+            var utils = new UtilsClass();
+            var gdalInfo = utils.GDALInfo(gridfilename, "-stats -noct -nogcp -nrat -proj4", this.theMainform);
+            if (gdalInfo != null)
+            {
+                this.GridfilePropertiesTextbox.Text = gdalInfo.Replace("\n", Environment.NewLine);
+            }
+        }
+
+        /// <summary>
+        /// The select shapefile textbox text changed.
+        /// </summary>
+        /// <param name="sender">
+        /// The sender.
+        /// </param>
+        /// <param name="e">
+        /// The e.
+        /// </param>
+        private void SelectShapefileTextboxTextChanged(object sender, EventArgs e)
+        {
+            var filename = this.SelectShapefileTextbox.Text;
+            if (!File.Exists(filename))
+            {
+                this.GridfilePropertiesTextbox.Text = @"Cannot find the file: " + filename;
+                return;
+            }
+
+            // Get OGR info:
+            var utils = new UtilsClass();
+            var ogrInfo = utils.OGRInfo(
+                filename,
+                "-so -fields=YES -geom=NO",
+                Path.GetFileNameWithoutExtension(filename),
+                this.theMainform);
+            if (ogrInfo != null)
+            {
+                this.ShapefileInformationTextbox.Text = ogrInfo.Replace("\n", Environment.NewLine);
+            }
+
         }
     }
 }

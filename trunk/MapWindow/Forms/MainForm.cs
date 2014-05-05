@@ -97,6 +97,10 @@ namespace MapWindow.Forms
         /// </summary>
         private void SetDefaultSettings()
         {
+            // TODO: Save in user config file
+            // TODO: Read user config file
+            // TODO: Use form to change
+
             // Tiles settings:
             this.axMap1.Tiles.AutodetectProxy();
             this.axMap1.Tiles.DoCaching[tkCacheType.Disk] = true;
@@ -105,7 +109,21 @@ namespace MapWindow.Forms
             this.axMap1.Tiles.UseCache[tkCacheType.Disk] = false;
             this.axMap1.Tiles.UseServer = true;
 
-            var gs = new GlobalSettingsClass { GridProxyFormat = tkGridProxyFormat.gpfTiffProxy };
+            var gs = new GlobalSettingsClass
+                         {
+                             DefaultColorSchemeForGrids = PredefinedColorScheme.FallLeaves,
+                             GeometryEngine = tkGeometryEngine.engineGeos,
+                             GridProxyFormat = tkGridProxyFormat.gpfTiffProxy,
+                             GridProxyMode = tkGridProxyMode.gpmAuto,
+                             RandomColorSchemeForGrids = true,
+                             RasterOverviewCreation = tkRasterOverviewCreation.rocYes,
+                             RasterOverviewResampling = tkGDALResamplingMethod.grmGauss,
+                             SaveGridColorSchemeToFile = true,
+                             ShapeInputValidationMode = tkShapeValidationMode.TryFixProceedOnFailure,
+                             TiffCompression = tkTiffCompression.tkmJPEG,
+                             ZoomToFirstLayer = true
+                         };
+
             this.statusStripProgressBar.Minimum = 0;
             this.statusStripProgressBar.Maximum = 100;
 
@@ -233,7 +251,23 @@ namespace MapWindow.Forms
             // Projection:
             var projection = this.axMap1.Projection.ToString();
             var geoProjection = this.axMap1.GeoProjection;
-            if (geoProjection != null)
+            if (geoProjection.IsEmpty)
+            {
+                // Could be a grid file
+                // TODO Needs more work:
+                var img = this.axMap1.get_Image(0);
+                if (img != null)
+                {
+                    var grd = img.OpenAsGrid();
+                    if (!grd.Header.GeoProjection.IsEmpty)
+                    {
+                        geoProjection = grd.Header.GeoProjection;
+                    }
+                }
+            }
+
+            // Skip if it is still empty:
+            if (!geoProjection.IsEmpty)
             {
                 int epsgCode;
                 if (geoProjection.TryAutoDetectEpsg(out epsgCode))
@@ -242,10 +276,28 @@ namespace MapWindow.Forms
                 }
                 else
                 {
-                    if (geoProjection.ProjectionName != "unnamed")
+                    if (geoProjection.IsProjected)
                     {
-                        projection = geoProjection.ProjectionName;
+                        if (geoProjection.ProjectionName != "unnamed")
+                        {
+                            projection = geoProjection.ProjectionName;
+                        }
                     }
+
+                    if (geoProjection.IsGeographic)
+                    {
+                        projection = geoProjection.GeogCSName;
+                    }
+
+                    // Try again:
+                    if (geoProjection.ImportFromWKT(geoProjection.ExportToWKT()))
+                    {
+                        if (geoProjection.TryAutoDetectEpsg(out epsgCode))
+                        {
+                            projection = "EPSG:" + epsgCode.ToString(CultureInfo.InvariantCulture);
+                        }
+                    }
+
                 }
             }
 

@@ -141,6 +141,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -187,6 +188,7 @@
   <ItemGroup>
     <Content Include="Resources\layer-add.png" />
     <Content Include="Resources\MapWindow.ico" />
+    <None Include="Resources\mw-ball-48.png" />
     <Content Include="Resources\project-new.png" />
   </ItemGroup>
   <ItemGroup>
