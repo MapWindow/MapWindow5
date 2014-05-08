@@ -47,7 +47,7 @@ namespace MapWindow.Forms
         public void Error(string keyOfSender, string errorMsg)
         {
             // MessageBox.Show(errorMsg, @"Error");
-            this.ProgresTextbox.Text += string.Format("{0}***** ERROR! {1}{0}", Environment.NewLine, errorMsg);
+            this.ProgressTextbox.Text += string.Format("{0}***** ERROR! {1}{0}", Environment.NewLine, errorMsg);
         }
 
         /// <summary>
@@ -78,16 +78,16 @@ namespace MapWindow.Forms
                 case 0:
                     if (message != string.Empty)
                     {
-                        this.ProgresTextbox.AppendText(message + Environment.NewLine);
+                        this.ProgressTextbox.AppendText(message + Environment.NewLine);
                     }
 
                     break;
                 case 100:
-                    this.ProgresTextbox.AppendText(message + Environment.NewLine);
+                    this.ProgressTextbox.AppendText(message + Environment.NewLine);
                     break;
                 default:
                     var msg = percent + @"% ... ";
-                    this.ProgresTextbox.AppendText(msg);
+                    this.ProgressTextbox.AppendText(msg);
                     break;
             }
         }
@@ -189,20 +189,13 @@ namespace MapWindow.Forms
             var hndl = this.axMap1.AddLayerFromFilename(e.filename, tkFileOpenStrategy.fosAutoDetect, true);
             if (hndl == -1)
             {
+                this.ProgressTextbox.AppendText(
+                    "Failed to open datasource: " + this.axMap1.FileManager.ErrorMsg[this.axMap1.FileManager.LastErrorCode]);
                 return;
             }
 
-            // Check if a symbology file is present:
-            // TODO: In latest ocx this is no longer necessary:
-            var symbFilename = e.filename + ".mwsymb";
-            if (File.Exists(symbFilename))
-            {
-                var layerDesc = string.Empty;
-                this.axMap1.LoadLayerOptions(hndl, string.Empty, ref layerDesc);
-            }
-
-            // Redraw map:
-            this.axMap1.Redraw2(tkRedrawType.RedrawAll);
+            // Set main form up front:
+            this.Activate();
 
             this.AddToLegend(hndl);
 

@@ -31,13 +31,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection ccbLegend = new Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection();
-            Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection ccbProgresTextbox = new Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection();
-            Syncfusion.Windows.Forms.Tools.TreeNodeAdv treeNodeAdv1 = new Syncfusion.Windows.Forms.Tools.TreeNodeAdv();
-            Syncfusion.Windows.Forms.CaptionImage captionImage1 = new Syncfusion.Windows.Forms.CaptionImage();
-            Syncfusion.Windows.Forms.CaptionLabel captionLabel1 = new Syncfusion.Windows.Forms.CaptionLabel();
+            Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection ccbProgressTextbox = new Syncfusion.Windows.Forms.Tools.CaptionButtonsCollection();
+            Syncfusion.Windows.Forms.Tools.TreeNodeAdv treeNodeAdv2 = new Syncfusion.Windows.Forms.Tools.TreeNodeAdv();
+            Syncfusion.Windows.Forms.CaptionImage captionImage2 = new Syncfusion.Windows.Forms.CaptionImage();
+            Syncfusion.Windows.Forms.CaptionLabel captionLabel2 = new Syncfusion.Windows.Forms.CaptionLabel();
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.Legend = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
-            this.ProgresTextbox = new System.Windows.Forms.TextBox();
+            this.ProgressTextbox = new System.Windows.Forms.TextBox();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this.axMap1 = new AxMapWinGIS.AxMap();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
@@ -83,16 +83,16 @@
             this.dockingManager1.SetEnableDocking(this.Legend, true);
             ccbLegend.MergeWith(this.dockingManager1.CaptionButtons, false);
             this.dockingManager1.SetCustomCaptionButtons(this.Legend, ccbLegend);
-            this.dockingManager1.SetDockLabel(this.ProgresTextbox, "Messages");
-            this.dockingManager1.SetEnableDocking(this.ProgresTextbox, true);
-            this.dockingManager1.SetAutoHideOnLoad(this.ProgresTextbox, true);
-            ccbProgresTextbox.MergeWith(this.dockingManager1.CaptionButtons, false);
-            this.dockingManager1.SetCustomCaptionButtons(this.ProgresTextbox, ccbProgresTextbox);
+            this.dockingManager1.SetDockLabel(this.ProgressTextbox, "Messages");
+            this.dockingManager1.SetEnableDocking(this.ProgressTextbox, true);
+            this.dockingManager1.SetAutoHideOnLoad(this.ProgressTextbox, true);
+            ccbProgressTextbox.MergeWith(this.dockingManager1.CaptionButtons, false);
+            this.dockingManager1.SetCustomCaptionButtons(this.ProgressTextbox, ccbProgressTextbox);
             // 
             // Legend
             // 
             this.Legend.BackColor = System.Drawing.Color.White;
-            this.Legend.BeforeTouchSize = new System.Drawing.Size(148, 463);
+            this.Legend.BeforeTouchSize = new System.Drawing.Size(148, 612);
             this.Legend.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
             this.Legend.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Legend.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -113,23 +113,23 @@
             this.Legend.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.Legend.MetroScrollBars = true;
             this.Legend.Name = "Legend";
-            treeNodeAdv1.CheckState = System.Windows.Forms.CheckState.Checked;
-            treeNodeAdv1.ChildStyle.EnsureDefaultOptionedChild = true;
-            treeNodeAdv1.EnsureDefaultOptionedChild = true;
-            treeNodeAdv1.Expanded = true;
-            treeNodeAdv1.MultiLine = true;
-            treeNodeAdv1.PlusMinusSize = new System.Drawing.Size(9, 9);
-            treeNodeAdv1.ShowLine = true;
-            treeNodeAdv1.ShowOptionButton = false;
-            treeNodeAdv1.Text = "Layers";
+            treeNodeAdv2.CheckState = System.Windows.Forms.CheckState.Checked;
+            treeNodeAdv2.ChildStyle.EnsureDefaultOptionedChild = true;
+            treeNodeAdv2.EnsureDefaultOptionedChild = true;
+            treeNodeAdv2.Expanded = true;
+            treeNodeAdv2.MultiLine = true;
+            treeNodeAdv2.PlusMinusSize = new System.Drawing.Size(9, 9);
+            treeNodeAdv2.ShowLine = true;
+            treeNodeAdv2.ShowOptionButton = false;
+            treeNodeAdv2.Text = "Layers";
             this.Legend.Nodes.AddRange(new Syncfusion.Windows.Forms.Tools.TreeNodeAdv[] {
-            treeNodeAdv1});
+            treeNodeAdv2});
             this.Legend.ScaleFactor = 1F;
             this.Legend.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this.Legend.SelectedNodeForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             this.Legend.ShowCheckBoxes = true;
             this.Legend.ShowFocusRect = false;
-            this.Legend.Size = new System.Drawing.Size(148, 463);
+            this.Legend.Size = new System.Drawing.Size(148, 612);
             this.Legend.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this.Legend.TabIndex = 3;
             this.Legend.Text = "treeViewAdv1";
@@ -145,21 +145,21 @@
             this.Legend.ToolTipControl.Text = "toolTip";
             this.Legend.TransparentControls = true;
             // 
-            // ProgresTextbox
+            // ProgressTextbox
             // 
-            this.ProgresTextbox.Location = new System.Drawing.Point(1, 19);
-            this.ProgresTextbox.Multiline = true;
-            this.ProgresTextbox.Name = "ProgresTextbox";
-            this.ProgresTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.ProgresTextbox.Size = new System.Drawing.Size(685, 65);
-            this.ProgresTextbox.TabIndex = 5;
+            this.ProgressTextbox.Location = new System.Drawing.Point(1, 19);
+            this.ProgressTextbox.Multiline = true;
+            this.ProgressTextbox.Name = "ProgressTextbox";
+            this.ProgressTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ProgressTextbox.Size = new System.Drawing.Size(912, 65);
+            this.ProgressTextbox.TabIndex = 5;
             // 
             // dockingClientPanel1
             // 
             this.dockingClientPanel1.Controls.Add(this.axMap1);
             this.dockingClientPanel1.Location = new System.Drawing.Point(154, 46);
             this.dockingClientPanel1.Name = "dockingClientPanel1";
-            this.dockingClientPanel1.Size = new System.Drawing.Size(687, 394);
+            this.dockingClientPanel1.Size = new System.Drawing.Size(914, 543);
             this.dockingClientPanel1.SizeToFit = true;
             this.dockingClientPanel1.TabIndex = 0;
             // 
@@ -170,7 +170,7 @@
             this.axMap1.Location = new System.Drawing.Point(0, 0);
             this.axMap1.Name = "axMap1";
             this.axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axMap1.OcxState")));
-            this.axMap1.Size = new System.Drawing.Size(687, 394);
+            this.axMap1.Size = new System.Drawing.Size(914, 543);
             this.axMap1.TabIndex = 0;
             this.axMap1.MouseMoveEvent += new AxMapWinGIS._DMapEvents_MouseMoveEventHandler(this.AxMap1MouseMoveEvent);
             this.axMap1.FileDropped += new AxMapWinGIS._DMapEvents_FileDroppedEventHandler(this.AxMap1FileDropped);
@@ -178,7 +178,7 @@
             // statusStripEx1
             // 
             this.statusStripEx1.AutoSize = false;
-            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(841, 20);
+            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(1068, 20);
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusStripProjection,
@@ -190,11 +190,11 @@
             this.statusStripProgressLabel,
             this.statusStripProgressBar});
             this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStripEx1.Location = new System.Drawing.Point(0, 529);
+            this.statusStripEx1.Location = new System.Drawing.Point(0, 678);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
             this.statusStripEx1.Name = "statusStripEx1";
             this.statusStripEx1.ShowItemToolTips = true;
-            this.statusStripEx1.Size = new System.Drawing.Size(841, 20);
+            this.statusStripEx1.Size = new System.Drawing.Size(1068, 20);
             this.statusStripEx1.TabIndex = 1;
             this.statusStripEx1.Text = "statusStripEx1";
             this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
@@ -280,7 +280,7 @@
             this.toolStripEx1.ShowCaption = false;
             this.toolStripEx1.ShowItemToolTips = true;
             this.toolStripEx1.ShowLauncher = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(841, 46);
+            this.toolStripEx1.Size = new System.Drawing.Size(1068, 46);
             this.toolStripEx1.Stretch = true;
             this.toolStripEx1.TabIndex = 2;
             // 
@@ -318,20 +318,20 @@
             this.CaptionButtonColor = System.Drawing.Color.DimGray;
             this.CaptionFont = new System.Drawing.Font("Arial Black", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CaptionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            captionImage1.BackColor = System.Drawing.Color.Transparent;
-            captionImage1.Image = ((System.Drawing.Image)(resources.GetObject("captionImage1.Image")));
-            captionImage1.Location = new System.Drawing.Point(6, 0);
-            captionImage1.Name = "CaptionImage2";
-            captionImage1.Size = new System.Drawing.Size(48, 48);
-            this.CaptionImages.Add(captionImage1);
-            captionLabel1.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            captionLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            captionLabel1.Location = new System.Drawing.Point(60, 2);
-            captionLabel1.Name = "CaptionLabel1";
-            captionLabel1.Size = new System.Drawing.Size(400, 46);
-            captionLabel1.Text = "MapWindow Open Source GIS";
-            this.CaptionLabels.Add(captionLabel1);
-            this.ClientSize = new System.Drawing.Size(841, 549);
+            captionImage2.BackColor = System.Drawing.Color.Transparent;
+            captionImage2.Image = ((System.Drawing.Image)(resources.GetObject("captionImage2.Image")));
+            captionImage2.Location = new System.Drawing.Point(6, 0);
+            captionImage2.Name = "CaptionImage2";
+            captionImage2.Size = new System.Drawing.Size(48, 48);
+            this.CaptionImages.Add(captionImage2);
+            captionLabel2.Font = new System.Drawing.Font("Arial", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            captionLabel2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            captionLabel2.Location = new System.Drawing.Point(60, 2);
+            captionLabel2.Name = "CaptionLabel1";
+            captionLabel2.Size = new System.Drawing.Size(400, 46);
+            captionLabel2.Text = "MapWindow Open Source GIS";
+            this.CaptionLabels.Add(captionLabel2);
+            this.ClientSize = new System.Drawing.Size(1068, 698);
             this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.statusStripEx1);
             this.Controls.Add(this.dockingClientPanel1);
@@ -379,7 +379,7 @@
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider2;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripDivider1;
         private System.Windows.Forms.ToolStripButton toolButtonAddLayer;
-        private System.Windows.Forms.TextBox ProgresTextbox;
+        private System.Windows.Forms.TextBox ProgressTextbox;
         private System.Windows.Forms.ToolStripStatusLabel statusStripProgressLabel;
     }
 }

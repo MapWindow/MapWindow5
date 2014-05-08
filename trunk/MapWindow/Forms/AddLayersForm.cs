@@ -226,8 +226,10 @@ namespace MapWindow.Forms
         /// <param name="e">
         /// The e.
         /// </param>
-        private void ButtonAdv1Click(object sender, EventArgs e)
+        private void AddShapefileToMapButton(object sender, EventArgs e)
         {
+            // TODO: Check if SelectShapefileTextbox.Text is not empty and if the file exists
+ 
             // Make form a bit transparent:
             this.Opacity = 0.5;
             Application.DoEvents();
@@ -235,6 +237,16 @@ namespace MapWindow.Forms
             // reset layer handle:
             this.LayerHandle = -1;
 
+            // Easy way:
+            this.LayerHandle = this.theMap.AddLayerFromFilename(this.SelectShapefileTextbox.Text, tkFileOpenStrategy.fosAutoDetect, true);
+            if (this.LayerHandle == -1)
+            {
+                this.theMainform.Error(string.Empty, "Failed to open datasource: " + this.theMap.FileManager.ErrorMsg[this.theMap.FileManager.LastErrorCode]);
+                return;
+            }
+
+            /*
+            // More options way:
             var sf = this.OpenShapefile(this.SelectShapefileTextbox.Text);
 
             // For this test use the random coloring:
@@ -242,6 +254,8 @@ namespace MapWindow.Forms
 
             // Add to map:
             this.LayerHandle = this.theMap.AddLayer(sf, true);
+            */ 
+
             this.theMainform.Progress(string.Empty, 100, "Done");
 
             // Close this form:

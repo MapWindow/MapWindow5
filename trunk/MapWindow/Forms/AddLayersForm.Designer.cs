@@ -151,7 +151,7 @@
             this.OpenShapefileButton.Text = "Open selected shapefile";
             this.OpenShapefileButton.UseVisualStyle = true;
             this.OpenShapefileButton.UseVisualStyleBackColor = false;
-            this.OpenShapefileButton.Click += new System.EventHandler(this.ButtonAdv1Click);
+            this.OpenShapefileButton.Click += new System.EventHandler(this.AddShapefileToMapButton);
             // 
             // SelectShapefileButton
             // 
