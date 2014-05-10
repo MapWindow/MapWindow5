@@ -186,9 +186,18 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\settings-24.png" />
+    <None Include="Resources\info-24.png" />
+    <None Include="Resources\go-24.png" />
+    <None Include="Resources\go-32.png" />
+    <None Include="Resources\Folder-Open-32.png" />
+    <None Include="Resources\i-24.png" />
     <Content Include="Resources\layer-add.png" />
     <Content Include="Resources\MapWindow.ico" />
     <None Include="Resources\mw-ball-48.png" />
+    <None Include="Resources\mw-ball-24.png" />
+    <None Include="Resources\open.png" />
+    <None Include="Resources\Navigation-Right.png" />
     <Content Include="Resources\project-new.png" />
   </ItemGroup>
   <ItemGroup>

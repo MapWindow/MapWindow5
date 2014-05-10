@@ -131,7 +131,7 @@ namespace MapWindow.Forms
             this.axMap1.SendMouseMove = true;
 
             // What to show on the map:
-            this.axMap1.ShowCoordinates = tkCoordinatesDisplay.cdmAuto;
+            this.axMap1.ShowCoordinates = tkCoordinatesDisplay.cdmNone;
             this.axMap1.ShowRedrawTime = false;
             this.axMap1.ShowVersionNumber = true;
             this.axMap1.ShowZoomBar = true;
@@ -339,7 +339,9 @@ namespace MapWindow.Forms
             // Get zoom level from settings:
             this.axMap1.CurrentZoom = Properties.Settings.Default.CurrentZoomlevel;
 
-            // TODO: Get lat/long from settings:
+            // Get lat/long from settings:
+            this.axMap1.Longitude = Properties.Settings.Default.CurrentLongitude;
+            this.axMap1.Latitude = Properties.Settings.Default.CurrentLatitude;
 
             // Enable again:
             this.axMap1.LockWindow(tkLockMode.lmUnlock);
@@ -431,7 +433,8 @@ namespace MapWindow.Forms
             if (this.axMap1.Tiles.Visible)
             {
                 Properties.Settings.Default.CurrentZoomlevel = this.axMap1.CurrentZoom;
-                // TODO: Set lat/long in settings:
+                Properties.Settings.Default.CurrentLongitude = this.axMap1.Longitude;
+                Properties.Settings.Default.CurrentLatitude = this.axMap1.Latitude;
             }
 
             // Save the settings:

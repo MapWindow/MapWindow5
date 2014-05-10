@@ -20,8 +20,11 @@
     <Setting Name="MainForm_windowState" Type="System.Windows.Forms.FormWindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
-    <Setting Name="Setting" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="CurrentLatitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">47.181324</Value>
+    </Setting>
+    <Setting Name="CurrentLongitude" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">19.8511734</Value>
     </Setting>
   </Settings>
 </SettingsFile>

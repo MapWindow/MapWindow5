@@ -97,13 +97,25 @@ namespace MapWindow.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Setting {
+        [global::System.Configuration.DefaultSettingValueAttribute("47.181324")]
+        public float CurrentLatitude {
             get {
-                return ((string)(this["Setting"]));
+                return ((float)(this["CurrentLatitude"]));
             }
             set {
-                this["Setting"] = value;
+                this["CurrentLatitude"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("19.8511734")]
+        public float CurrentLongitude {
+            get {
+                return ((float)(this["CurrentLongitude"]));
+            }
+            set {
+                this["CurrentLongitude"] = value;
             }
         }
     }
