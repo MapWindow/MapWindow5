@@ -238,23 +238,58 @@ namespace MapWindow.Forms
             this.LayerHandle = -1;
 
             // Easy way:
+            /*
             this.LayerHandle = this.theMap.AddLayerFromFilename(this.SelectShapefileTextbox.Text, tkFileOpenStrategy.fosAutoDetect, true);
             if (this.LayerHandle == -1)
             {
                 this.theMainform.Error(string.Empty, "Failed to open datasource: " + this.theMap.FileManager.ErrorMsg[this.theMap.FileManager.LastErrorCode]);
                 return;
             }
-
-            /*
+            */
+            
             // More options way:
             var sf = this.OpenShapefile(this.SelectShapefileTextbox.Text);
+            
+            /*
+            // Reproject shapefile:
+            var geoprojection = new GeoProjectionClass();
+            geoprojection.ImportFromEPSG(3857);
+            var reprojectedCount = 0;
+            var sfReprojected = sf.Reproject(geoprojection, ref reprojectedCount);
+            if (sfReprojected == null)
+            {
+                MessageBox.Show(sf.ErrorMsg[sf.LastErrorCode]);
+            }
+            else
+            {
+                var newFilename = this.SelectShapefileTextbox.Text.Replace(".shp", "-3857.shp");
+                if (!sfReprojected.SaveAs(newFilename))
+                {
+                    MessageBox.Show(sfReprojected.ErrorMsg[sfReprojected.LastErrorCode]);
+                }
+                else
+                {
+                    this.theMainform.Progress(null, 0, "Saved as " + newFilename);
+                    File.Copy(this.SelectShapefileTextbox.Text + ".mwsymb", newFilename + ".mwsymb");
+                    this.LayerHandle = this.theMap.AddLayer(sfReprojected, true);
+                }
+
+                this.Close();
+                return;
+            }
+            */
 
             // For this test use the random coloring:
             // this.ApplyRandomPolygonColors(ref sf);
 
             // Add to map:
             this.LayerHandle = this.theMap.AddLayer(sf, true);
-            */ 
+
+            // Apply symbology manually in case the shapefile is reprojected:
+            // TODO: How to check?
+            var description = "Hungary border";
+            this.theMap.LoadLayerOptions(this.LayerHandle, this.SelectShapefileTextbox.Text + ".mwsymb", ref description);
+            this.theMap.Redraw();
 
             this.theMainform.Progress(string.Empty, 100, "Done");
 
@@ -479,6 +514,11 @@ namespace MapWindow.Forms
             {
                 this.ShapefileInformationTextbox.Text = ogrInfo.Replace("\n", Environment.NewLine);
             }
+
+        }
+
+        private void checkBox3_CheckedChanged(object sender, EventArgs e)
+        {
 
         }
     }

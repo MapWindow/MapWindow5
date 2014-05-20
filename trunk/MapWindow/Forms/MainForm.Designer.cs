@@ -319,7 +319,7 @@
             this.CaptionFont = new System.Drawing.Font("Arial Black", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CaptionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             captionImage1.BackColor = System.Drawing.Color.Transparent;
-            captionImage1.Image = ((System.Drawing.Image)(resources.GetObject("captionImage1.Image")));
+            captionImage1.Image = global::MapWindow.Properties.Resources.mw_ball_48;
             captionImage1.Location = new System.Drawing.Point(6, 0);
             captionImage1.Name = "CaptionImage2";
             captionImage1.Size = new System.Drawing.Size(48, 48);
@@ -328,7 +328,7 @@
             captionLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             captionLabel1.Location = new System.Drawing.Point(60, 2);
             captionLabel1.Name = "CaptionLabel1";
-            captionLabel1.Size = new System.Drawing.Size(400, 46);
+            captionLabel1.Size = new System.Drawing.Size(350, 46);
             captionLabel1.Text = "MapWindow Open Source GIS";
             this.CaptionLabels.Add(captionLabel1);
             this.ClientSize = new System.Drawing.Size(1068, 698);

@@ -38,9 +38,8 @@
             this.SelectShapefileButton = new Syncfusion.Windows.Forms.ButtonAdv();
             this.gradientLabel1 = new Syncfusion.Windows.Forms.Tools.GradientLabel();
             this.ShapefileGroupbar = new Syncfusion.Windows.Forms.Tools.GroupBar();
-            this.gradientPanel3 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
-            this.label1 = new System.Windows.Forms.Label();
             this.ShapefileInformationTextbox = new System.Windows.Forms.TextBox();
+            this.gradientPanel3 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.ShapefileInformationItem = new Syncfusion.Windows.Forms.Tools.GroupBarItem();
             this.ShapefileSettingsItem = new Syncfusion.Windows.Forms.Tools.GroupBarItem();
             this.OpenShapefileButton = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -59,6 +58,19 @@
             this.gradientLabel4 = new Syncfusion.Windows.Forms.Tools.GradientLabel();
             this.tabPageWebservice = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.gradientLabel5 = new Syncfusion.Windows.Forms.Tools.GradientLabel();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.buttonAdv1 = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.checkBox6 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageShapefile.SuspendLayout();
@@ -75,6 +87,8 @@
             this.tabPageImage.SuspendLayout();
             this.tabPageDatabase.SuspendLayout();
             this.tabPageWebservice.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAdv1
@@ -209,25 +223,6 @@
             this.ShapefileGroupbar.Text = "groupBar1";
             this.ShapefileGroupbar.VisualStyle = Syncfusion.Windows.Forms.VisualStyle.Metro;
             // 
-            // gradientPanel3
-            // 
-            this.gradientPanel3.BackgroundColor = new Syncfusion.Drawing.BrushInfo(Syncfusion.Drawing.GradientStyle.ForwardDiagonal, System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(211)))), ((int)(((byte)(241))))), System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(229)))), ((int)(((byte)(241))))));
-            this.gradientPanel3.Controls.Add(this.label1);
-            this.gradientPanel3.Location = new System.Drawing.Point(0, 351);
-            this.gradientPanel3.Name = "gradientPanel3";
-            this.gradientPanel3.Size = new System.Drawing.Size(345, 0);
-            this.gradientPanel3.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(55, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(103, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "TODO: Add controls";
-            // 
             // ShapefileInformationTextbox
             // 
             this.ShapefileInformationTextbox.Location = new System.Drawing.Point(0, 22);
@@ -237,6 +232,16 @@
             this.ShapefileInformationTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.ShapefileInformationTextbox.Size = new System.Drawing.Size(345, 307);
             this.ShapefileInformationTextbox.TabIndex = 0;
+            // 
+            // gradientPanel3
+            // 
+            this.gradientPanel3.BackgroundColor = new Syncfusion.Drawing.BrushInfo(Syncfusion.Drawing.GradientStyle.ForwardDiagonal, System.Drawing.Color.FromArgb(((int)(((byte)(182)))), ((int)(((byte)(211)))), ((int)(((byte)(241))))), System.Drawing.Color.FromArgb(((int)(((byte)(219)))), ((int)(((byte)(229)))), ((int)(((byte)(241))))));
+            this.gradientPanel3.Controls.Add(this.groupBox3);
+            this.gradientPanel3.Controls.Add(this.groupBox1);
+            this.gradientPanel3.Location = new System.Drawing.Point(0, 351);
+            this.gradientPanel3.Name = "gradientPanel3";
+            this.gradientPanel3.Size = new System.Drawing.Size(345, 0);
+            this.gradientPanel3.TabIndex = 1;
             // 
             // ShapefileInformationItem
             // 
@@ -501,6 +506,169 @@
             this.gradientLabel5.Text = "Connect to a webservice";
             this.gradientLabel5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.buttonAdv1);
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(335, 84);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Reproject and open instead";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(6, 48);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(285, 22);
+            this.textBox1.TabIndex = 0;
+            // 
+            // buttonAdv1
+            // 
+            this.buttonAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAdv1.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.buttonAdv1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.buttonAdv1.BackgroundImage = global::MapWindow.Properties.Resources.Folder_Open_32;
+            this.buttonAdv1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.buttonAdv1.BeforeTouchSize = new System.Drawing.Size(32, 32);
+            this.buttonAdv1.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonAdv1.ForeColor = System.Drawing.Color.White;
+            this.buttonAdv1.IsBackStageButton = false;
+            this.buttonAdv1.Location = new System.Drawing.Point(297, 42);
+            this.buttonAdv1.Name = "buttonAdv1";
+            this.buttonAdv1.Size = new System.Drawing.Size(32, 32);
+            this.buttonAdv1.TabIndex = 8;
+            this.buttonAdv1.UseVisualStyle = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(6, 16);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(210, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Projection selected shapefile: EPSG-23700";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Black;
+            this.label2.Location = new System.Drawing.Point(6, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(139, 13);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Projection map: EPSG-3857";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox3.Controls.Add(this.checkBox6);
+            this.groupBox3.Controls.Add(this.checkBox5);
+            this.groupBox3.Controls.Add(this.checkBox4);
+            this.groupBox3.Controls.Add(this.checkBox3);
+            this.groupBox3.Controls.Add(this.checkBox2);
+            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Controls.Add(this.comboBox1);
+            this.groupBox3.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(3, 93);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(335, 119);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Shapefile settings";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Select symbology file"});
+            this.comboBox1.Location = new System.Drawing.Point(6, 21);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(285, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox1.ForeColor = System.Drawing.Color.Black;
+            this.checkBox1.Location = new System.Drawing.Point(6, 48);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(94, 17);
+            this.checkBox1.TabIndex = 1;
+            this.checkBox1.Text = "Use fast mode";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox2.ForeColor = System.Drawing.Color.Black;
+            this.checkBox2.Location = new System.Drawing.Point(187, 71);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(106, 17);
+            this.checkBox2.TabIndex = 2;
+            this.checkBox2.Text = "Use spatial index";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox3.ForeColor = System.Drawing.Color.Black;
+            this.checkBox3.Location = new System.Drawing.Point(187, 48);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(104, 17);
+            this.checkBox3.TabIndex = 3;
+            this.checkBox3.Text = "Use hot tracking";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox4.ForeColor = System.Drawing.Color.Black;
+            this.checkBox4.Location = new System.Drawing.Point(6, 71);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(161, 17);
+            this.checkBox4.TabIndex = 4;
+            this.checkBox4.Text = "Apply random polygon colors";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // checkBox5
+            // 
+            this.checkBox5.AutoSize = true;
+            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox5.ForeColor = System.Drawing.Color.Black;
+            this.checkBox5.Location = new System.Drawing.Point(6, 94);
+            this.checkBox5.Name = "checkBox5";
+            this.checkBox5.Size = new System.Drawing.Size(83, 17);
+            this.checkBox5.TabIndex = 5;
+            this.checkBox5.Text = "Show labels";
+            this.checkBox5.UseVisualStyleBackColor = true;
+            // 
+            // checkBox6
+            // 
+            this.checkBox6.AutoSize = true;
+            this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.checkBox6.ForeColor = System.Drawing.Color.Black;
+            this.checkBox6.Location = new System.Drawing.Point(187, 94);
+            this.checkBox6.Name = "checkBox6";
+            this.checkBox6.Size = new System.Drawing.Size(85, 17);
+            this.checkBox6.TabIndex = 6;
+            this.checkBox6.Text = "Show charts";
+            this.checkBox6.UseVisualStyleBackColor = true;
+            // 
             // AddLayersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -545,7 +713,6 @@
             this.ShapefileGroupbar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel3)).EndInit();
             this.gradientPanel3.ResumeLayout(false);
-            this.gradientPanel3.PerformLayout();
             this.tabPageGrid.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).EndInit();
             this.gradientPanel2.ResumeLayout(false);
@@ -558,6 +725,10 @@
             this.tabPageDatabase.PerformLayout();
             this.tabPageWebservice.ResumeLayout(false);
             this.tabPageWebservice.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -587,10 +758,22 @@
         private Syncfusion.Windows.Forms.Tools.GroupBarItem ShapefileInformationItem;
         private Syncfusion.Windows.Forms.Tools.GroupBarItem ShapefileSettingsItem;
         private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel3;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox ShapefileInformationTextbox;
         private Syncfusion.Windows.Forms.Tools.GradientLabel gradientLabel1;
         private Syncfusion.Windows.Forms.ButtonAdv SelectShapefileButton;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox checkBox5;
 
 
     }

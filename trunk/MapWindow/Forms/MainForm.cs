@@ -121,7 +121,9 @@ namespace MapWindow.Forms
                              SaveGridColorSchemeToFile = true,
                              ShapeInputValidationMode = tkShapeValidationMode.TryFixProceedOnFailure,
                              TiffCompression = tkTiffCompression.tkmJPEG,
-                             ZoomToFirstLayer = true
+                             ZoomToFirstLayer = true,
+                             ImageDownsamplingMode = tkInterpolationMode.imBilinear,
+                             ImageUpsamplingMode = tkInterpolationMode.imHighQualityBilinear
                          };
 
             this.statusStripProgressBar.Minimum = 0;
@@ -131,10 +133,12 @@ namespace MapWindow.Forms
             this.axMap1.SendMouseMove = true;
 
             // What to show on the map:
-            this.axMap1.ShowCoordinates = tkCoordinatesDisplay.cdmNone;
+            this.axMap1.ShowCoordinates = tkCoordinatesDisplay.cdmAuto;
             this.axMap1.ShowRedrawTime = false;
             this.axMap1.ShowVersionNumber = true;
             this.axMap1.ShowZoomBar = true;
+            this.axMap1.AnimationOnZooming = tkCustomState.csAuto;
+            this.axMap1.InertiaOnPanning = tkCustomState.csAuto;
         }
 
         /// <summary>
@@ -426,6 +430,12 @@ namespace MapWindow.Forms
             }
             else
             {
+                if (this.WindowState == FormWindowState.Minimized) 
+                {
+                    // Never start minimized
+                    Properties.Settings.Default.MainForm_windowState = FormWindowState.Normal;
+                }
+
                 Properties.Settings.Default.MainForm_SizeHeight = this.RestoreBounds.Size.Height;
                 Properties.Settings.Default.MainForm_SizeWidth = this.RestoreBounds.Size.Width;
             }
@@ -453,6 +463,14 @@ namespace MapWindow.Forms
         private void StatusStripTilesProviderDoubleClick(object sender, EventArgs e)
         {
             // Enable default tiling again:
+            if (this.axMap1.NumLayers == 0)
+            {
+                // Set map projection:
+                var geoprojection = new GeoProjectionClass();
+                geoprojection.ImportFromEPSG(3857);
+                this.axMap1.GeoProjection = geoprojection;
+            }
+
             this.axMap1.Tiles.Visible = true;
             this.SetStatusstripControls();
         }
