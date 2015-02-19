@@ -1,11 +1,10 @@
 ﻿using System;
+using System.Windows.Forms;
 using MW5.Core.Concrete;
 using MW5.Core.Events;
 
 namespace MW5.Core.Interfaces
 {
-
-
     interface IMapControl
     {
         LayerCollection Layers { get; }
@@ -48,7 +47,8 @@ namespace MW5.Core.Interfaces
         bool DegreesToPixel(double degreesLngX, double degreesLatY, out double pixelX, out double pixelY);
         bool DegreesToProj(double degreesLngX, double degreesLatY, out double projX, out double projY);
 
-        //ShapeEditor ShapeEditor { get; }
+        IGeometryEditor GeometryEditor { get; }
+
         //Tiles Tiles { get; }
         //  FileManager FileManager { get; }
         //  object GlobalCallback { get; set; }      // should set to global settings
@@ -133,8 +133,33 @@ namespace MW5.Core.Interfaces
          // int TilesAreInCache(Extents extents, int width, tkTileProvider provider);
          // void Undo();
 
-        event EventHandler<ChooseLayerEventArgs> ChooseLayer;
-
+         event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
+         event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
+         event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
+         event EventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape;
+         event EventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit;
+         event EventHandler<ChooseLayerEventArgs> ChooseLayer;
+         event EventHandler<EventArgs> ExtentsChanged;
+         event EventHandler<FileDroppedEventArgs> FileDropped;
+         event EventHandler<GridOpenedEventArgs> GridOpened;
+         event EventHandler<LayerAddedEventArgs> LayerAdded;
+         event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
+         event EventHandler<LayerRemovedEventArgs> LayerRemoved;
+         event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
+         event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+         event EventHandler<MouseEventArgs> MouseDown;
+         event EventHandler<MouseEventArgs> MouseMove;
+         event EventHandler<MouseEventArgs> MouseUp;
+         event EventHandler<EventArgs> ProjectionChanged;
+         event EventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
+         event EventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
+         event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+         event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
+         event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
+         event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
+         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
+         event EventHandler<EventArgs> UndoListChanged;
+         event EventHandler<ValidateShapeEventArgs> ValidateShape;
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;
         //event _DMapEvents_AfterDrawingEventHandler AfterDrawing;
         //event _DMapEvents_BeforeDrawingEventHandler BeforeDrawing;

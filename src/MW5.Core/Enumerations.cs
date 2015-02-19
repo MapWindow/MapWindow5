@@ -847,4 +847,61 @@
         PointRemoved = 1,
         MesuringStopped = 2,
     }
+
+    public enum AngleDisplay
+    {
+        Azimuth = 0,
+        RussianRhumb = 1,
+        ClockwiseBearing = 2,
+        CounterClockwiseBearing = 3,
+        None = 4,
+    }
+
+    public enum AreaDisplay
+    {
+        Metric = 0,
+        Hectars = 1,
+        None = 2,
+    }
+
+    public enum EditorBehavior
+    {
+        VertexEditor = 0,
+        PartEditor = 1,
+    }
+
+    public enum EditorState
+    {
+        None = 0,
+        Digitize = 1,
+        Edit = 2,
+        DigitizeUnbound = 3,
+        Overlay = 4,
+    }
+
+    public enum LayerSelection
+    {
+        AllLayers = 0,
+        NoLayer = 1,
+        ActiveLayer = 2,
+    }
+
+    public enum LengthDisplay
+    {
+        None = 0,
+        Metric = 1,
+    }
+
+    public enum EditorValidation
+    {
+        Basic = 0,
+        CheckWithGeos = 1,
+        FixWithGeos = 2,
+    }
+
+    public enum EditorOverlay
+    {
+        AddPart = 0,
+        RemovePart = 1,
+    }
 }

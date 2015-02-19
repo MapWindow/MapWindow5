@@ -50,5 +50,10 @@ namespace MW5.Core.Helpers
         {
             return field.InternalObject as LabelCategory;
         }
+
+        public static ShapeDrawingOptions GetInternal(this IGeometryStyle field)
+        {
+            return field.InternalObject as ShapeDrawingOptions;
+        }
     }
 }

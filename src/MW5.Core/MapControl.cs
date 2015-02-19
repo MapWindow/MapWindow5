@@ -305,7 +305,10 @@ namespace MW5.Core
             return _axMap1.DegreesToProj(degreesLngX, degreesLatY, ref projX, ref projY);
         }
 
-
+        public IGeometryEditor GeometryEditor
+        {
+            get { return new GeometryEditor(_axMap1.ShapeEditor); }
+        }
 
         #endregion
 

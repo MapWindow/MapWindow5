@@ -79,6 +79,8 @@
     <Compile Include="Concrete\FieldJoin.cs" />
     <Compile Include="Concrete\FieldJoinCollection.cs" />
     <Compile Include="Concrete\GeoLabel.cs" />
+    <Compile Include="Concrete\GeometryEditor.cs" />
+    <Compile Include="Interfaces\IGeometryEditor.cs" />
     <Compile Include="Concrete\LabelCollection.cs" />
     <Compile Include="Concrete\LabelInfo.cs" />
     <Compile Include="Concrete\LabelStyleList.cs" />
