@@ -823,4 +823,28 @@
         VectorLayer = 4,
         VectorDatasource = 5,
     }
+
+    public enum DeleteTarget
+    {
+        None = 0,
+        Shape = 1,
+        Part = 2,
+        Vertex = 3,
+    }
+
+    public enum UndoOperation
+    {
+        AddShape = 0,
+        RemoveShape = 1,
+        EditShape = 2,
+        MoveShapes = 3,
+        RotateShapes = 4,
+    }
+
+    public enum MeasuringAction
+    {
+        PointAdded = 0,
+        PointRemoved = 1,
+        MesuringStopped = 2,
+    }
 }

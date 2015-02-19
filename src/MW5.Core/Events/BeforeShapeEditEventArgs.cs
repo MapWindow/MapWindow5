@@ -1,15 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using AxMapWinGIS;
 using MapWinGIS;
-using MW5.Core.Concrete;
 
 namespace MW5.Core.Events
 {
-    public class AfterShapeEditEventArgs: EventArgs
+    public class BeforeShapeEditEventArgs : EventArgs
     {
-        private readonly _DMapEvents_AfterShapeEditEvent _args;
+        private readonly _DMapEvents_BeforeShapeEditEvent _args;
 
-        internal AfterShapeEditEventArgs(_DMapEvents_AfterShapeEditEvent args)
+        internal BeforeShapeEditEventArgs(_DMapEvents_BeforeShapeEditEvent args)
         {
             _args = args;
             if (args == null)
@@ -23,9 +26,10 @@ namespace MW5.Core.Events
             get { return _args.layerHandle; }
         }
 
-        public UndoOperation Operation
+        public bool Cancel
         {
-            get { return (UndoOperation)_args.operation; }
+            get { return _args.cancel == tkMwBoolean.blnTrue; }
+            set { _args.cancel = value ? tkMwBoolean.blnTrue : tkMwBoolean.blnFalse; }
         }
 
         public int ShapeIndex

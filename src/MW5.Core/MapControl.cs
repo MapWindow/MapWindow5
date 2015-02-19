@@ -14,7 +14,7 @@ namespace MW5.Core
     //internal class ResFinder { }
     // https ://social.msdn.microsoft.com/Forums/en-US/4bd5a9cd-4730-41f6-a123-cb49b9ea420b/toolboxbitmap-problem?forum=Vsexpressvcs
 
-    [ToolboxBitmap(typeof(MapControl), "Resources.Map.bmp")]
+    [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
     public partial class MapControl : UserControl, IMapControl
     {
         private LayerCollection _layers;
@@ -25,7 +25,36 @@ namespace MW5.Core
             AttachHandlers();
         }
 
+        public event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
+        public event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
+        public event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
+        public event EventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape;
+        public event EventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit;
         public event EventHandler<ChooseLayerEventArgs> ChooseLayer;
+        public event EventHandler<EventArgs> ExtentsChanged;
+        public event EventHandler<FileDroppedEventArgs> FileDropped;
+        public event EventHandler<GridOpenedEventArgs> GridOpened;
+        public event EventHandler<LayerAddedEventArgs> LayerAdded;
+        public event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
+        public event EventHandler<LayerRemovedEventArgs> LayerRemoved;
+        public event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
+        public event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+
+        // TODO: check if these events events override default handlers of UserControl
+        public new event EventHandler<MouseEventArgs> MouseDown;
+        public new event EventHandler<MouseEventArgs> MouseMove;
+        public new event EventHandler<MouseEventArgs> MouseUp;
+
+        public event EventHandler<EventArgs> ProjectionChanged;
+        public event EventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
+        public event EventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
+        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
+        public event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
+        public event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
+        public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
+        public event EventHandler<EventArgs> UndoListChanged;
+        public event EventHandler<ValidateShapeEventArgs> ValidateShape;
 
         #region Hiding Properties from PropertyGrid
 
@@ -39,22 +68,22 @@ namespace MW5.Core
         [Browsable(false)]
         public override System.Drawing.Image BackgroundImage
         {
-	        get { return base.BackgroundImage; }
+            get { return base.BackgroundImage; }
             set { base.BackgroundImage = value; }
         }
 
         [Browsable(false)]
         public override ImageLayout BackgroundImageLayout
         {
-	        get { return base.BackgroundImageLayout; }
-	        set { base.BackgroundImageLayout = value; }
+            get { return base.BackgroundImageLayout; }
+            set { base.BackgroundImageLayout = value; }
         }
 
         [Browsable(false)]
         public override bool AutoScroll
         {
-	        get { return base.AutoScroll; }
-	        set { base.AutoScroll = value; }
+            get { return base.AutoScroll; }
+            set { base.AutoScroll = value; }
         }
 
         [Browsable(false)]
@@ -101,8 +130,8 @@ namespace MW5.Core
 
         public ScalebarUnits ScalebarUnits
         {
-            get { return (ScalebarUnits)_axMap1.ScalebarUnits; }
-            set { _axMap1.ScalebarUnits = (tkScalebarUnits)value; }
+            get { return (ScalebarUnits) _axMap1.ScalebarUnits; }
+            set { _axMap1.ScalebarUnits = (tkScalebarUnits) value; }
         }
 
         public bool ScalebarVisible
@@ -145,8 +174,8 @@ namespace MW5.Core
 
         public KnownExtents KnownExtents
         {
-            get { return (KnownExtents)_axMap1.KnownExtents; }
-            set { _axMap1.KnownExtents = (tkKnownExtents)value; }
+            get { return (KnownExtents) _axMap1.KnownExtents; }
+            set { _axMap1.KnownExtents = (tkKnownExtents) value; }
         }
 
         public float Latitude
@@ -164,20 +193,20 @@ namespace MW5.Core
         [Browsable(false)]
         public SystemCursor SystemCursor
         {
-            get { return (SystemCursor)_axMap1.MapCursor; }
-            set { _axMap1.MapCursor = (tkCursor)value; }
+            get { return (SystemCursor) _axMap1.MapCursor; }
+            set { _axMap1.MapCursor = (tkCursor) value; }
         }
 
         public MapCursor MapCursor
         {
-            get { return (MapCursor)_axMap1.CursorMode; }
-            set { _axMap1.CursorMode = (tkCursorMode)value; }
+            get { return (MapCursor) _axMap1.CursorMode; }
+            set { _axMap1.CursorMode = (tkCursorMode) value; }
         }
 
         public TileProvider TileProvider
         {
-            get { return (TileProvider)_axMap1.TileProvider; }
-            set { _axMap1.TileProvider = (tkTileProvider)value; }
+            get { return (TileProvider) _axMap1.TileProvider; }
+            set { _axMap1.TileProvider = (tkTileProvider) value; }
         }
 
         public void ZoomIn()
@@ -276,9 +305,10 @@ namespace MW5.Core
             return _axMap1.DegreesToProj(degreesLngX, degreesLatY, ref projX, ref projY);
         }
 
-        
+
 
         #endregion
+
     }
 }
 

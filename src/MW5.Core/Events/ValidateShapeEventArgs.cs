@@ -1,4 +1,5 @@
-﻿using AxMapWinGIS;
+﻿using System;
+using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Core.Concrete;
 using MW5.Core.Helpers;
@@ -6,18 +7,18 @@ using MW5.Core.Interfaces;
 
 namespace MW5.Core.Events
 {
-    public class ValidateShapeEventArgs
+    public class ValidateShapeEventArgs : EventArgs
     {
         private readonly _DMapEvents_ValidateShapeEvent _args;
 
         internal ValidateShapeEventArgs(_DMapEvents_ValidateShapeEvent args)
         {
             _args = args;
+            if (args == null)
+            {
+                throw new NullReferenceException("Internal reference is null.");
+            }
         }
-
-        public tkMwBoolean cancel;
-        public int layerHandle;
-        public Shape shape;
 
         public tkMwBoolean Cancel
         {
@@ -28,13 +29,11 @@ namespace MW5.Core.Events
         public int LayerHandle
         {
             get { return _args.layerHandle; }
-            set { _args.layerHandle = value; }
         }
 
         public IGeometry Geometry
         {
             get { return new Geometry(_args.shape); }
-            set { _args.shape = value.GetInternal(); }
         }
     }
 }

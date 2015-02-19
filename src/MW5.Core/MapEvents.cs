@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Windows.Forms;
 using AxMapWinGIS;
 using MW5.Core.Events;
+using MW5.Core.Helpers;
 
 namespace MW5.Core
 {
@@ -72,113 +74,120 @@ namespace MW5.Core
 
         #region Handlers
 
-        void _axMap1_ValidateShape(object sender, _DMapEvents_ValidateShapeEvent e)
+        private void _axMap1_ValidateShape(object sender, _DMapEvents_ValidateShapeEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ValidateShape, new ValidateShapeEventArgs(e));
         }
 
-        void _axMap1_UndoListChanged(object sender, EventArgs e)
+        private void _axMap1_UndoListChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, UndoListChanged, e);
         }
 
-        void _axMap1_TilesLoaded(object sender, _DMapEvents_TilesLoadedEvent e)
+        private void _axMap1_TilesLoaded(object sender, _DMapEvents_TilesLoadedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, TilesLoaded, new TilesLoadedEventArgs(e));
         }
 
-        void _axMap1_ShapeValidationFailed(object sender, _DMapEvents_ShapeValidationFailedEvent e)
+        private void _axMap1_ShapeValidationFailed(object sender, _DMapEvents_ShapeValidationFailedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ShapeValidationFailed, new ShapeValidationFailedEventArgs(e));
         }
 
-        void _axMap1_ShapeIdentified(object sender, _DMapEvents_ShapeIdentifiedEvent e)
+        private void _axMap1_ShapeIdentified(object sender, _DMapEvents_ShapeIdentifiedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ShapeIdentified, new ShapeIdentifiedEventArgs(e));
         }
 
-        void _axMap1_ShapeHighlighted(object sender, _DMapEvents_ShapeHighlightedEvent e)
+        private void _axMap1_ShapeHighlighted(object sender, _DMapEvents_ShapeHighlightedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ShapeHighlighted, new ShapeHightlightedEventArgs(e));
         }
 
-        void _axMap1_SelectionChanged(object sender, _DMapEvents_SelectionChangedEvent e)
+        private void _axMap1_SelectionChanged(object sender, _DMapEvents_SelectionChangedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, SelectionChanged, new SelectionChangedEventArgs(e));
         }
 
-        void _axMap1_SelectBoxFinal(object sender, _DMapEvents_SelectBoxFinalEvent e)
+        private void _axMap1_SelectBoxFinal(object sender, _DMapEvents_SelectBoxFinalEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, SelectBoxFinal, new SelectBoxFinalEventArgs(e));
         }
 
-        void _axMap1_ProjectionMismatch(object sender, _DMapEvents_ProjectionMismatchEvent e)
+        private void _axMap1_ProjectionMismatch(object sender, _DMapEvents_ProjectionMismatchEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ProjectionMismatch, new ProjectionMismatchEventArgs(e));
         }
 
-        void _axMap1_ProjectionChanged(object sender, EventArgs e)
+        private void _axMap1_ProjectionChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ProjectionChanged, e);
         }
 
-        void _axMap1_MouseUpEvent(object sender, _DMapEvents_MouseUpEvent e)
+        private void _axMap1_MouseUpEvent(object sender, _DMapEvents_MouseUpEvent e)
         {
-            throw new NotImplementedException();
+            var button = MouseEventHelper.ParseMouseButton(e.button);
+            var args = new MouseEventArgs(button, 1, e.x, e.y, 0);
+            AssignHandler(sender, MouseUp, args);
         }
 
-        void _axMap1_MouseMoveEvent(object sender, _DMapEvents_MouseMoveEvent e)
+        private void _axMap1_MouseMoveEvent(object sender, _DMapEvents_MouseMoveEvent e)
         {
-            throw new NotImplementedException();
+            var button = MouseEventHelper.ParseMouseButton(e.button);
+            var args = new MouseEventArgs(button, 1, e.x, e.y, 0);
+            AssignHandler(sender, MouseMove, args);
         }
 
-        void _axMap1_MouseDownEvent(object sender, _DMapEvents_MouseDownEvent e)
+        private void _axMap1_MouseDownEvent(object sender, _DMapEvents_MouseDownEvent e)
         {
-            throw new NotImplementedException();
+            var button = MouseEventHelper.ParseMouseButton(e.button);
+            var args = new MouseEventArgs(button, 1, e.x, e.y, 0);
+            AssignHandler(sender, MouseDown, args);
         }
 
-        void _axMap1_MeasuringChanged(object sender, _DMapEvents_MeasuringChangedEvent e)
+        private void _axMap1_MeasuringChanged(object sender, _DMapEvents_MeasuringChangedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, MeasuringChanged, new MeasuringChangedEventArgs(e));
         }
 
-        void _axMap1_LayerReprojected(object sender, _DMapEvents_LayerReprojectedEvent e)
+        private void _axMap1_LayerReprojected(object sender, _DMapEvents_LayerReprojectedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, LayerReprojected, new LayerReprojectedEventArgs(e));
         }
 
-        void _axMap1_LayerRemoved(object sender, _DMapEvents_LayerRemovedEvent e)
+        private void _axMap1_LayerRemoved(object sender, _DMapEvents_LayerRemovedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, LayerRemoved, new LayerRemovedEventArgs(e));
         }
 
-        void _axMap1_LayerProjectionIsEmpty(object sender, _DMapEvents_LayerProjectionIsEmptyEvent e)
+        private void _axMap1_LayerProjectionIsEmpty(object sender, _DMapEvents_LayerProjectionIsEmptyEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, LayerProjectionIsEmpty, new LayerProjectionIsEmptyEventArgs(e));
         }
 
-        void _axMap1_LayerAdded(object sender, _DMapEvents_LayerAddedEvent e)
+        private void _axMap1_LayerAdded(object sender, _DMapEvents_LayerAddedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, LayerAdded, new LayerAddedEventArgs(e));
         }
 
-        void _axMap1_GridOpened(object sender, _DMapEvents_GridOpenedEvent e)
+        private void _axMap1_GridOpened(object sender, _DMapEvents_GridOpenedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, GridOpened, new GridOpenedEventArgs(e));
         }
 
-        void _axMap1_FileDropped(object sender, _DMapEvents_FileDroppedEvent e)
+        private void _axMap1_FileDropped(object sender, _DMapEvents_FileDroppedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, FileDropped, new FileDroppedEventArgs(e));
         }
 
-        void _axMap1_ExtentsChanged(object sender, EventArgs e)
+        private void _axMap1_ExtentsChanged(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, ExtentsChanged, e);
         }
-
-        void _axMap1_DblClick(object sender, EventArgs e)
+        
+        private void _axMap1_DblClick(object sender, EventArgs e)
         {
+            // TODO: investigate how to hide / override events of UserControl
             throw new NotImplementedException();
         }
 
@@ -187,29 +196,29 @@ namespace MW5.Core
             AssignHandler(sender, ChooseLayer, new ChooseLayerEventArgs(e));
         }
 
-        void _axMap1_BeforeShapeEdit(object sender, _DMapEvents_BeforeShapeEditEvent e)
+        private void _axMap1_BeforeShapeEdit(object sender, _DMapEvents_BeforeShapeEditEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, BeforeShapeEdit, new BeforeShapeEditEventArgs(e));
         }
 
-        void _axMap1_BeforeDeleteShape(object sender, _DMapEvents_BeforeDeleteShapeEvent e)
+        private void _axMap1_BeforeDeleteShape(object sender, _DMapEvents_BeforeDeleteShapeEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, BeforeDeleteShape, new BeforeDeleteShapeEventArgs(e));
         }
 
-        void _axMap1_BackgroundLoadingStarted(object sender, _DMapEvents_BackgroundLoadingStartedEvent e)
+        private void _axMap1_BackgroundLoadingStarted(object sender, _DMapEvents_BackgroundLoadingStartedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, BackgroundLoadingStarted, new BackgroundLoadingStartedEventArgs(e));
         }
 
-        void _axMap1_BackgroundLoadingFinished(object sender, _DMapEvents_BackgroundLoadingFinishedEvent e)
+        private void _axMap1_BackgroundLoadingFinished(object sender, _DMapEvents_BackgroundLoadingFinishedEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, BackgroundLoadingFinished, new BackgroundLoadingFinishedEventArgs(e));
         }
 
-        void _axMap1_AfterShapeEdit(object sender, _DMapEvents_AfterShapeEditEvent e)
+        private void _axMap1_AfterShapeEdit(object sender, _DMapEvents_AfterShapeEditEvent e)
         {
-            throw new NotImplementedException();
+            AssignHandler(sender, AfterShapeEdit, new AfterShapeEditEventArgs(e));
         }
 
         #endregion
