@@ -792,7 +792,7 @@
 
     public enum TileProvider
     {
-        ProviderNone = -1,
+        None = -1,
         OpenStreetMap = 0,
         OpenCycleMap = 1,
         OpenTransportMap = 2,
@@ -903,5 +903,31 @@
     {
         AddPart = 0,
         RemovePart = 1,
+    }
+
+    public enum CacheType
+    {
+        Ram = 0,
+        Disk = 1,
+        Both = 2,
+    }
+
+    public enum TileProjection
+    {
+        SphericalMercator = 0,
+        Amersfoort = 1,
+    }
+
+    public enum TileProjectionStatus
+    {
+        Native = 0,
+        Compatible = 1,
+        EmptyOrInvalid = 2,
+    }
+
+    public enum ProxyAuthentication
+    {
+        Basic = 0,
+        Ntlm = 1,
     }
 }

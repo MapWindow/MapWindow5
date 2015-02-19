@@ -13,8 +13,21 @@ namespace MW5.GuiTest
         public Form1()
         {
             InitializeComponent();
-            LoadShapefile();
+            //LoadShapefile();
             //mapControl1.Cursor
+            TestTiles();
+        }
+
+        private void TestTiles()
+        {
+            var providers = mapControl1.Tiles.Providers;
+            foreach (var p in providers)
+            {
+                Debug.Print("Name: " + p.Name);
+                Debug.Print("Url pattern: " + p.UrlPattern);
+                Debug.Print("Version: " + p.Version);
+                Debug.Print("------");
+            }
         }
 
         private void LoadImage()

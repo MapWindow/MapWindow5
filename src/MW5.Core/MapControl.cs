@@ -310,6 +310,11 @@ namespace MW5.Core
             get { return new GeometryEditor(_axMap1.ShapeEditor); }
         }
 
+        public TileManager Tiles
+        {
+            get { return new TileManager(_axMap1.Tiles); }
+        }
+
         #endregion
 
     }

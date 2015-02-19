@@ -80,6 +80,9 @@
     <Compile Include="Concrete\FieldJoinCollection.cs" />
     <Compile Include="Concrete\GeoLabel.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
+    <Compile Include="Concrete\TileManager.cs" />
+    <Compile Include="Concrete\TileProviderInfo.cs" />
+    <Compile Include="Concrete\TileProviderList.cs" />
     <Compile Include="Interfaces\IGeometryEditor.cs" />
     <Compile Include="Concrete\LabelCollection.cs" />
     <Compile Include="Concrete\LabelInfo.cs" />

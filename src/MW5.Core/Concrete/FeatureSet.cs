@@ -26,7 +26,15 @@ namespace MW5.Core.Concrete
             var shpType = GeometryHelper.GeometryType2ShpType(geomType, zValue);
 
             _shapefile = new Shapefile();
-            _shapefile.CreateNew("", shpType);
+
+            if (!addShapeIdField)
+            {
+                _shapefile.CreateNew("", shpType);
+            }
+            else
+            {
+                _shapefile.CreateNewWithShapeID("", shpType);
+            }
         }
 
         /// <summary>

@@ -48,8 +48,8 @@ namespace MW5.Core.Interfaces
         bool DegreesToProj(double degreesLngX, double degreesLatY, out double projX, out double projY);
 
         IGeometryEditor GeometryEditor { get; }
+        TileManager Tiles { get; }
 
-        //Tiles Tiles { get; }
         //  FileManager FileManager { get; }
         //  object GlobalCallback { get; set; }      // should set to global settings
         //  Identifier Identifier { get; }
