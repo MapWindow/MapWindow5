@@ -930,4 +930,21 @@
         Basic = 0,
         Ntlm = 1,
     }
+
+    public enum OpenStrategy
+    {
+        NotSupported = -1,
+        AutoDetect = 0,
+        RgbImage = 1,
+        DirectGrid = 2,
+        ProxyForGrid = 3,
+        VectorLayer = 4,
+        VectorDatasource = 5,
+    }
+
+    public enum SupportType
+    {
+        Gdal = 0,
+        GdalOverviews = 1,
+    }
 }

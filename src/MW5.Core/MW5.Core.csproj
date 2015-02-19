@@ -80,9 +80,14 @@
     <Compile Include="Concrete\FieldJoinCollection.cs" />
     <Compile Include="Concrete\GeoLabel.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
+    <Compile Include="Concrete\GeoSourceManager.cs" />
     <Compile Include="Concrete\TileManager.cs" />
     <Compile Include="Concrete\TileProviderInfo.cs" />
     <Compile Include="Concrete\TileProviderList.cs" />
+    <Compile Include="Concrete\VectorDatasource.cs" />
+    <Compile Include="Concrete\VectorLayer.cs" />
+    <Compile Include="Helpers\LayerSourceHelper.cs" />
+    <Compile Include="Interfaces\IDatasource.cs" />
     <Compile Include="Interfaces\IGeometryEditor.cs" />
     <Compile Include="Concrete\LabelCollection.cs" />
     <Compile Include="Concrete\LabelInfo.cs" />
@@ -157,6 +162,8 @@
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILayerSource.cs" />
     <Compile Include="Interfaces\IMapControl.cs" />
+    <Compile Include="Interfaces\IVectorDatasource.cs" />
+    <Compile Include="Interfaces\IVectorLayer.cs" />
     <Compile Include="Interfaces\IRasterSource.cs" />
     <Compile Include="Interfaces\ISpatialReference.cs" />
     <Compile Include="Interfaces\IComWrapper.cs" />
