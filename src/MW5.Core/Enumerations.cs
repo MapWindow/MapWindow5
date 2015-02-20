@@ -947,4 +947,84 @@
         Gdal = 0,
         GdalOverviews = 1,
     }
+
+    public enum SaveResult
+    {
+        NoChanges = 0,
+        AllSaved = 1,
+        SomeSaved = 2,
+        NoneSaved = 3,
+    }
+
+    public enum SaveType
+    {
+        GeometryOnly = 0,
+        AttributesOnly = 1,
+        SaveAll = 2,
+    }
+
+    public enum LayerCapability
+    {
+        RandomRead = 0,
+        SequentialWrite = 1,
+        RandomWrite = 2,
+        FastSpatialFilter = 3,
+        FastFeatureCount = 4,
+        FastGetExtent = 5,
+        CreateField = 6,
+        DeleteField = 7,
+        ReorderFields = 8,
+        AlterFieldDefn = 9,
+        Transactions = 10,
+        DeleteFeature = 11,
+        FastSetNextByIndex = 12,
+        StringsAsUtf8 = 13,
+        IgnoreFields = 14,
+        CreateGeomField = 15,
+    }
+
+    public enum VectorSourceType
+    {
+        Uninitialized = 0,
+        File = 1,
+        DbTable = 2,
+        Query = 3,
+    }
+
+    public enum DatasourceCapability
+    {
+        CreateLayer = 0,
+        DeleteLayer = 1,
+        CreateGeomFieldAfterCreateLayer = 2,
+        CreateDataSource = 3,
+        DeleteDataSource = 4,
+    }
+
+    public enum ValidationMode
+    {
+        NoValidation = 0,
+        TryFixProceedOnFailure = 1,
+        TryFixSkipOnFailure = 2,
+        TryFixAbortOnFailure = 3,
+        AbortOnErrors = 4,
+    }
+
+    public enum GdalDriverMetadata
+    {
+        Longname = 0,
+        Helptopic = 1,
+        Mimetype = 2,
+        Extension = 3,
+        Extensions = 4,
+        Creationoptionlist = 5,
+        Openoptionlist = 6,
+        Creationdatatypes = 7,
+        Subdatasets = 8,
+        Open = 9,
+        Create = 10,
+        Createcopy = 11,
+        Virtualio = 12,
+        LayerCreationoptionlist = 13,
+        OgrDriver = 14,
+    }
 }

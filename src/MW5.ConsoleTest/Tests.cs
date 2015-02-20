@@ -7,6 +7,26 @@ namespace MW5.ConsoleTest
 {
     public static class Tests
     {
+        public static void TestVectorDatasource()
+        {
+            string connection = "PG:dbname=london host=localhost user=postgres password=1234";
+            var ds = new VectorDatasource(connection);
+            foreach (VectorLayer layer in ds)
+            {
+                Debug.Print("Layer: " + layer.Name);
+            }
+
+            var lyr = ds.GetLayer(0);
+            var fs = lyr.Data.Features;
+            Debug.Print("Number of features: " + fs.Count());
+
+            int count = 0;
+            foreach (var ft in fs)
+            {
+                Debug.Print("Feature: {0}; Number of points: {1}", count++, ft.Geometry.Points.Count);
+            }
+        }
+        
         public static void TestAttributeTable()
         {
             const string filename = @"d:\data\sf\buildings.shp";

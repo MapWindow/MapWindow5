@@ -6,7 +6,7 @@ namespace MW5.Core.Interfaces
     {
         IEnvelope Envelope { get; }
 
-        SpatialReference SpatialReference { get; }
+        ISpatialReference SpatialReference { get; }
 
         bool IsEmpty { get; }
 

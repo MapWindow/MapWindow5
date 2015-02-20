@@ -59,13 +59,13 @@ namespace MW5.Core.Concrete
             return _manager.RemoveProxyForGrid(filename);
         }
 
-        public static IVectorLayer OpenFromDatabase(string connectionString, string layerNameOrQuery)
+        public static VectorLayer OpenFromDatabase(string connectionString, string layerNameOrQuery)
         {
             var layer = _manager.OpenFromDatabase(connectionString, layerNameOrQuery);
             return layer != null ? new VectorLayer(layer) : null;
         }
 
-        public static IVectorLayer OpenVectorLayer(string filename, GeometryType preferedGeometryType = GeometryType.None, bool forUpdate = false)
+        public static VectorLayer OpenVectorLayer(string filename, GeometryType preferedGeometryType = GeometryType.None, bool forUpdate = false)
         {
             var shpType = GeometryHelper.GeometryType2ShpType(preferedGeometryType);
             var layer = _manager.OpenVectorLayer(filename, shpType, forUpdate);

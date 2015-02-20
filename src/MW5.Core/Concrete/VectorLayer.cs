@@ -4,21 +4,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Core.Helpers;
 using MW5.Core.Interfaces;
 
 namespace MW5.Core.Concrete
 {
-    public class VectorLayer: IVectorLayer
+    // TODO: extract interface
+    public class VectorLayer: IVectorLayer, IDisposable
     {
         private readonly OgrLayer _layer;
 
-        public VectorLayer(OgrLayer layer)
+        internal VectorLayer(OgrLayer layer)
         {
             _layer = layer;
             if (layer == null)
             {
                 throw new NullReferenceException("Internal style reference is null.");
             }
+        }
+
+        public VectorLayer(string connectionString, string sql)
+        {
+            _layer = new OgrLayer();
+            if (!_layer.OpenFromQuery(connectionString, sql))
+            {
+                ReportOpenFailure();
+            }
+        }
+
+        public VectorLayer(string connectionString, string layerName, bool forUpdate = false)
+        {
+            _layer = new OgrLayer();
+            if (!_layer.OpenFromDatabase(connectionString, layerName, forUpdate))
+            {
+                ReportOpenFailure();
+            }
+        }
+
+        public VectorLayer(string filename, bool forUpdate = false)
+        {
+            _layer = new OgrLayer();
+            if (!_layer.OpenFromFile(filename, forUpdate))
+            {
+                ReportOpenFailure();
+            }
+        }
+
+        private void ReportOpenFailure()
+        {
+            throw new ApplicationException("Failed to open vector layer: " + _layer.ErrorMsg[_layer.LastErrorCode]);
         }
 
         public object InternalObject
@@ -37,6 +71,11 @@ namespace MW5.Core.Concrete
             set { _layer.Key = value; }
         }
 
+        public bool TestCapability(LayerCapability capability)
+        {
+            return _layer.TestCapability((tkOgrLayerCapability) capability);
+        }
+
         public string Serialize()
         {
             return _layer.Serialize();
@@ -45,6 +84,108 @@ namespace MW5.Core.Concrete
         public bool Deserialize(string state)
         {
             return _layer.Deserialize(state);
+        }
+
+        public int GetNumStyles()
+        {
+            return _layer.GetNumStyles();
+        }
+
+        public bool ClearStyles()
+        {
+            return _layer.ClearStyles();
+        }
+
+        public bool RemoveStyle(string styleName)
+        {
+            return _layer.RemoveStyle(styleName);
+        }
+
+        public string Name
+        {
+            get { return _layer.Name; }
+        }
+
+        public GeometryType GeometryType
+        {
+            get { return GeometryHelper.ShapeType2GeometryType(_layer.ShapeType); }
+        }
+
+        public bool DataIsReprojected
+        {
+            get { return _layer.DataIsReprojected; }
+        }
+
+        public string FidColumnName
+        {
+            get { return _layer.FIDColumnName; }
+        }
+
+        public int UpdateSourceErrorCount
+        {
+            get { return _layer.UpdateSourceErrorCount; }
+        }
+
+        public string get_UpdateSourceErrorMsg(int errorIndex)
+        {
+            return _layer.UpdateSourceErrorMsg[errorIndex];
+        }
+
+        public int get_UpdateSourceErrorGeometryIndex(int errorIndex)
+        {
+            return _layer.UpdateSourceErrorShapeIndex[errorIndex];
+        }
+
+        public int get_FeatureCount(bool forceLoading = false)
+        {
+            return _layer.FeatureCount[forceLoading];
+        }
+
+        public string GeometryColumnName
+        {
+            get { return _layer.GeometryColumnName; }
+        }
+
+        public bool get_SupportsEditing(SaveType editingType)
+        {
+            return _layer.SupportsEditing[(tkOgrSaveType)editingType];
+        }
+
+        public VectorSourceType SourceType
+        {
+            get { return (VectorSourceType)_layer.SourceType; }
+        }
+
+        public string GdalLastErrorMsg
+        {
+            get { return _layer.GdalLastErrorMsg; }
+        }
+
+        public bool DynamicLoading
+        {
+            get { return _layer.DynamicLoading; }
+            set { _layer.DynamicLoading = value; }
+        }
+
+        public int MaxFeatureCount
+        {
+            get { return _layer.MaxFeatureCount; }
+            set { _layer.MaxFeatureCount = value; }
+        }
+
+        public bool SupportsStyles
+        {
+            get { return _layer.SupportsStyles; }
+        }
+
+        public string get_StyleName(int styleIndex)
+        {
+            return _layer.StyleName[styleIndex];
+        }
+
+        public string DriverName
+        {
+            get { return _layer.DriverName; }
         }
 
         public IEnvelope Envelope
@@ -80,12 +221,67 @@ namespace MW5.Core.Concrete
             _layer.Close();
         }
 
+        public IFeatureSet Data
+        {
+            get { return new FeatureSet(_layer.GetBuffer()); }
+        }
+
+        public string ConnectionString
+        {
+            get { return _layer.GetConnectionString(); }
+        }
+
+        public string SourceQuery
+        {
+            get { return _layer.GetSourceQuery(); }
+        }
+
+        public SaveResult SaveChanges(out int savedCount, SaveType saveType = SaveType.SaveAll, bool validateShapes = true)
+        {
+            return (SaveResult)_layer.SaveChanges(out savedCount, (tkOgrSaveType)saveType, validateShapes);
+        }
+
         public string OpenDialogFilter
         {
-            get
-            {
-                return GeoSourceManager.VectorFilter;
-            }
+            get { return GeoSourceManager.VectorFilter; }
         }
+
+        public void Dispose()
+        {
+            _layer.Close();
+        }
+
+        #region Not implemented
+
+        //public bool GenerateCategories(string FieldName, tkClassificationType ClassificationType, int numClasses, tkMapColor colorStart,
+        //   tkMapColor colorEnd, tkColorSchemeType schemeType)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public tkLabelPositioning LabelPosition
+        //{
+        //    get { throw new NotImplementedException(); }
+        //    set { throw new NotImplementedException(); }
+        //}
+
+        //public tkLineLabelOrientation LabelOrientation
+        //{
+        //    get { throw new NotImplementedException(); }
+        //    set { throw new NotImplementedException(); }
+        //}
+
+        //public bool get_Extents(out Extents layerExtents, bool forceLoading = false)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public string LabelExpression
+        //{
+        //    get { throw new NotImplementedException(); }
+        //    set { throw new NotImplementedException(); }
+        //}
+
+        #endregion
     }
 }

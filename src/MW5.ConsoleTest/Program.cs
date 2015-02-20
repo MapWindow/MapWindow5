@@ -9,13 +9,13 @@ namespace MW5.ConsoleTest
         {
             try
             {
-                Tests.TestLabels();
+                Tests.TestVectorDatasource();
             }
             catch(Exception ex)
             {
-                System.Console.WriteLine("Exception occured: " + ex.Message);
+                Console.WriteLine("Exception occured: " + ex.Message);
             }
-            System.Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

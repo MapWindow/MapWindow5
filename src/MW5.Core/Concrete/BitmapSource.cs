@@ -226,7 +226,7 @@ namespace MW5.Core.Concrete
             get { return _image.Filename; }
         }
 
-        public SpatialReference SpatialReference
+        public ISpatialReference SpatialReference
         {
             get { return new SpatialReference(_image.GeoProjection); }
         }

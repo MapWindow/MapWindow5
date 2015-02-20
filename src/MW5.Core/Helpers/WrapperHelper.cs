@@ -46,14 +46,19 @@ namespace MW5.Core.Helpers
             return field.InternalObject as Field;
         }
 
-        public static LabelCategory GetInternal(this ILabelStyle field)
+        public static LabelCategory GetInternal(this ILabelStyle style)
         {
-            return field.InternalObject as LabelCategory;
+            return style.InternalObject as LabelCategory;
         }
 
-        public static ShapeDrawingOptions GetInternal(this IGeometryStyle field)
+        public static ShapeDrawingOptions GetInternal(this IGeometryStyle style)
         {
-            return field.InternalObject as ShapeDrawingOptions;
+            return style.InternalObject as ShapeDrawingOptions;
+        }
+
+        public static Shapefile GetInternal(this IFeatureSet featureSet)
+        {
+            return featureSet.InternalObject as Shapefile;
         }
     }
 }
