@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MW5.Core.Interfaces
 {
     // at least to prevent adding types that are not suppported
-    public interface IDatasource: IComWrapper
+    public interface IDatasource: IComWrapper, IDisposable
     {
         string Filename { get; }
 

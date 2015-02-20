@@ -9,6 +9,6 @@ namespace MW5.Core.Interfaces
         Color GetGraduatedColor(double value);
         Color GetRandomColor(double value);
         void SetColors(Color color1, Color color2);
-        void SetColors(PredefinedColorRamp ramp);
+        void SetColors(PredefinedColors ramp);
     }
 }

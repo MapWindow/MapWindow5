@@ -177,7 +177,7 @@
         FillBackground = 4,
     }
 
-    public enum PredefinedColorRamp
+    public enum PredefinedColors
     {
         FallLeaves = 0,
         SummerMountains = 1,
@@ -1026,5 +1026,78 @@
         Virtualio = 12,
         LayerCreationoptionlist = 13,
         OgrDriver = 14,
+    }
+
+    public enum DataType
+    {
+        InvalidDataType = -1,
+        ShortDataType = 0,
+        LongDataType = 1,
+        FloatDataType = 2,
+        DoubleDataType = 3,
+        UnknownDataType = 4,
+        ByteDataType = 5,
+    }
+
+    public enum GridSourceType
+    {
+        Uninitialized = 0,
+        GdalBased = 1,
+        Native = 2,
+    }
+
+    public enum GridProxyMode
+    {
+        Auto = 0,
+        UseProxy = 1,
+        NoProxy = 2,
+    }
+
+    public enum GridFormat
+    {
+        InvalidGridFileType = -1,
+        Ascii = 0,
+        Binary = 1,
+        Esri = 2,
+        GeoTiff = 3,
+        Sdts = 4,
+        PAux = 5,
+        PciDsk = 6,
+        DTed = 7,
+        Bil = 8,
+        Ecw = 9,
+        MrSid = 10,
+        Flt = 11,
+        Dem = 12,
+        UseExtension = 13,
+    }
+
+    public enum GridSchemeRetrieval
+    {
+        Auto = 0,
+        DiskBased = 1,
+        DiskBasedForProxy = 2,
+        GdalColorTable = 3,
+    }
+
+    public enum GridSchemeGeneration
+    {
+        Gradient = 0,
+        UniqueValues = 1,
+        UniqueValuesOrGradient = 2,
+    }
+
+    public enum GridColoringType
+    {
+        Hillshade = 0,
+        Gradient = 1,
+        Random = 2,
+    }
+
+    public enum GridGradientModel
+    {
+        Logorithmic = 0,
+        Linear = 1,
+        Exponential = 2,
     }
 }

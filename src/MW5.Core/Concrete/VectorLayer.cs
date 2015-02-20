@@ -10,7 +10,7 @@ using MW5.Core.Interfaces;
 namespace MW5.Core.Concrete
 {
     // TODO: extract interface
-    public class VectorLayer: IVectorLayer, IDisposable
+    public class VectorLayer: IVectorLayer
     {
         private readonly OgrLayer _layer;
 
@@ -206,7 +206,7 @@ namespace MW5.Core.Concrete
             get { return _layer.GetConnectionString(); }
         }
 
-        public SpatialReference SpatialReference
+        public ISpatialReference SpatialReference
         {
             get { return new SpatialReference(_layer.GeoProjection); }
         }

@@ -60,5 +60,25 @@ namespace MW5.Core.Helpers
         {
             return featureSet.InternalObject as Shapefile;
         }
+
+        public static GridHeader GetInternal(this GridSourceHeader header)
+        {
+            return header.InternalObject as GridHeader;
+        }
+
+        public static GridColorScheme GetInternal(this GridColorRamp colorRamp)
+        {
+            return colorRamp.InternalObject as GridColorScheme;
+        }
+
+        public static GridColorBreak GetInternal(this GridColorInterval interval)
+        {
+            return interval.InternalObject as GridColorBreak;
+        }
+
+        public static Vector GetInternal(this Vector3D interval)
+        {
+            return interval.InternalObject as Vector;
+        }
     }
 }

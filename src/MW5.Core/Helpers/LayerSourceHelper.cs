@@ -31,8 +31,7 @@ namespace MW5.Core.Helpers
             }
             if (source is Grid)
             {
-                // TODO: implement
-                return null;
+                return new GridSource(source as Grid);
             }
             return null;
         }

@@ -265,5 +265,10 @@ namespace MW5.Core.Concrete
             _image.Deserialize(state);
             return true;
         }
+
+        public void Dispose()
+        {
+            _image.Close();
+        }
     }
 }

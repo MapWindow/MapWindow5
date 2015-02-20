@@ -9,7 +9,7 @@ namespace MW5.Core.Concrete
     /// <summary>
     /// Represents feature bound to particular datasource or unbound, i.e. in-memory one.
     /// </summary>
-    public class FeatureSet : IFeatureSet, IDisposable
+    public class FeatureSet : IFeatureSet
     {
         private Shapefile _shapefile;
 
@@ -112,7 +112,7 @@ namespace MW5.Core.Concrete
             get { return _shapefile.Filename; }
         }
 
-        public SpatialReference SpatialReference
+        public ISpatialReference SpatialReference
         {
             get { return new SpatialReference(_shapefile.GeoProjection); }
         }

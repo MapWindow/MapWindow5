@@ -158,7 +158,7 @@ namespace MW5.Core.Concrete
             _scheme.SetColors(ColorHelper.ColorToUInt(color1), ColorHelper.ColorToUInt(color2));
         }
 
-        public void SetColors(PredefinedColorRamp ramp)
+        public void SetColors(PredefinedColors ramp)
         {
             _scheme.SetColors4((PredefinedColorScheme)ramp);
         }

@@ -81,9 +81,14 @@
     <Compile Include="Concrete\GeoLabel.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeoSourceManager.cs" />
+    <Compile Include="Concrete\GridColorInterval.cs" />
+    <Compile Include="Concrete\GridColorRamp.cs" />
+    <Compile Include="Concrete\GridSource.cs" />
+    <Compile Include="Concrete\GridSourceHeader.cs" />
     <Compile Include="Concrete\TileManager.cs" />
     <Compile Include="Concrete\TileProviderInfo.cs" />
     <Compile Include="Concrete\TileProviderList.cs" />
+    <Compile Include="Concrete\Vector3D.cs" />
     <Compile Include="Concrete\VectorDatasource.cs" />
     <Compile Include="Concrete\VectorLayer.cs" />
     <Compile Include="Helpers\LayerSourceHelper.cs" />
