@@ -80,5 +80,10 @@ namespace MW5.Core.Helpers
         {
             return interval.InternalObject as Vector;
         }
+        
+        public static ChartField GetInternal(this DiagramField interval)
+        {
+            return interval.InternalObject as ChartField;
+        }
     }
 }

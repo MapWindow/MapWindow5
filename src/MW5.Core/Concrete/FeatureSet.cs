@@ -82,8 +82,6 @@ namespace MW5.Core.Concrete
             set { _shapefile.Key = value; }
         }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             if (_shapefile != null)
@@ -92,10 +90,6 @@ namespace MW5.Core.Concrete
                 _shapefile = null;
             }
         }
-
-        #endregion
-
-        #region ILayerSource Members
 
         public object InternalObject
         {
@@ -133,7 +127,6 @@ namespace MW5.Core.Concrete
             get { return "ESRI Shapefiles (*.shp)|*.shp"; }
         }
 
-        #endregion
 
         /// <summary>
         /// Creates a new disk-based shapefile and open it as new feature set.
@@ -169,8 +162,6 @@ namespace MW5.Core.Concrete
             return _shapefile.SaveAs(filename);
         }
 
-        #region IFeatureSet Members
-
         public GeometryType GeometryType
         {
             get { return GeometryHelper.ShapeType2GeometryType(_shapefile.ShapefileType); }
@@ -199,6 +190,11 @@ namespace MW5.Core.Concrete
         public ILabelsLayer Labels
         {
             get { return new LabelsLayer(_shapefile.Labels); }
+        }
+
+        public DiagramsLayer Diagrams
+        {
+            get { return new DiagramsLayer(_shapefile.Charts); }
         }
 
         public bool EditingShapes
@@ -260,8 +256,6 @@ namespace MW5.Core.Concrete
         {
             get { return new FeatureCategoryList(_shapefile.Categories); }
         }
-
-        #endregion
 
         public string Serialize()
         {

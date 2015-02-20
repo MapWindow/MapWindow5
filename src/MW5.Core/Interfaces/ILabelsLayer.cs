@@ -41,7 +41,7 @@ namespace MW5.Core.Interfaces
 
         bool RemoveDuplicates { get; set; }
 
-        LabelPersistence SavingMode { get; set; }
+        PersistenceType SavingMode { get; set; }
 
         bool ScaleLabels { get; set; }
 

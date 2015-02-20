@@ -70,6 +70,9 @@
     <Compile Include="Concrete\Callback.cs" />
     <Compile Include="Concrete\ColorBreak.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
+    <Compile Include="Concrete\Diagram.cs" />
+    <Compile Include="Concrete\DiagramField.cs" />
+    <Compile Include="Concrete\DiagramFieldCollection.cs" />
     <Compile Include="Concrete\DrawingLayer.cs" />
     <Compile Include="Concrete\Envelope.cs" />
     <Compile Include="Concrete\FeatureCategory.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Concrete\VectorDatasource.cs" />
     <Compile Include="Concrete\VectorLayer.cs" />
     <Compile Include="Configuration.cs" />
+    <Compile Include="Concrete\DiagramsLayer.cs" />
     <Compile Include="Helpers\LayerSourceHelper.cs" />
     <Compile Include="Interfaces\IApplicationCallback.cs" />
     <Compile Include="Interfaces\IDatasource.cs" />

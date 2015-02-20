@@ -125,9 +125,9 @@ namespace MW5.Core.Concrete
             set { _labels.RemoveDuplicates = value; }
         }
 
-        public LabelPersistence SavingMode
+        public PersistenceType SavingMode
         {
-            get { return (LabelPersistence)_labels.SavingMode; }
+            get { return (PersistenceType)_labels.SavingMode; }
             set { _labels.SavingMode = (tkSavingMode)value; }
         }
 

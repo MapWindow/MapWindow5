@@ -451,7 +451,7 @@
         None = 7,
     }
 
-    public enum LabelPersistence
+    public enum PersistenceType
     {
         None = 0,
         Standard = 1,
@@ -1196,4 +1196,23 @@
         HighPerformance = 1,
         HighQuality = 2,
     }
+
+    public enum SelectionMode
+    {
+        Intersection = 0,
+        Inclusion = 1,
+    }
+
+    public enum DiagramType
+    {
+        BarChart = 0,
+        PieChart = 1,
+    }
+
+    public enum DiagramValuesStyle
+    {
+        Horizontal = 0,
+        Vertical = 1,
+    }
+
 }
