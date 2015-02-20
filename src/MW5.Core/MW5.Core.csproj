@@ -64,8 +64,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\ApplicationCallback.cs" />
     <Compile Include="Concrete\AttributeTable.cs" />
     <Compile Include="Concrete\BitmapSource.cs" />
+    <Compile Include="Concrete\Callback.cs" />
     <Compile Include="Concrete\ColorBreak.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
     <Compile Include="Concrete\DrawingLayer.cs" />
@@ -91,7 +93,9 @@
     <Compile Include="Concrete\Vector3D.cs" />
     <Compile Include="Concrete\VectorDatasource.cs" />
     <Compile Include="Concrete\VectorLayer.cs" />
+    <Compile Include="Configuration.cs" />
     <Compile Include="Helpers\LayerSourceHelper.cs" />
+    <Compile Include="Interfaces\IApplicationCallback.cs" />
     <Compile Include="Interfaces\IDatasource.cs" />
     <Compile Include="Interfaces\IGeometryEditor.cs" />
     <Compile Include="Concrete\LabelCollection.cs" />

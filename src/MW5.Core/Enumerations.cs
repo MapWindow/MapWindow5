@@ -1100,4 +1100,100 @@
         Linear = 1,
         Exponential = 2,
     }
+
+    public enum GdalError
+    {
+        None = 0,
+        AppDefined = 1,
+        OutOfMemory = 2,
+        FileIo = 3,
+        OpenFailed = 4,
+        IllegalArg = 5,
+        NotSupported = 6,
+        AssertionFailed = 7,
+        NoWriteAccess = 8,
+        UserInterrupt = 9,
+        ObjectNull = 10,
+        Undefined = 11,
+    }
+
+    public enum GdalErrorType
+    {
+        None = 0,
+        Debug = 1,
+        Warning = 2,
+        Failure = 3,
+        Fatal = 4,
+        Undefined = 5,
+    }
+
+    public enum LocalizedStrings
+    {
+        Hectars = 0,
+        Meters = 1,
+        Kilometers = 2,
+        SquareKilometers = 3,
+        SquareMeters = 4,
+        MapUnits = 5,
+        SquareMapUnits = 6,
+        Miles = 7,
+        Feet = 8,
+        Latitude = 9,
+        Longitude = 10,
+    }
+
+    public enum CollisionMode
+    {
+        AllowCollisions = 0,
+        LocalList = 1,
+        GlobalList = 2,
+    }
+
+    public enum GridProxyFormat
+    {
+        BmpProxy = 0,
+        TiffProxy = 1,
+    }
+
+    public enum RasterOverviewCreation
+    {
+        Auto = 0,
+        Yes = 1,
+        No = 2,
+    }
+
+    public enum TiffCompression
+    {
+        Auto = -1,
+        Jpeg = 0,
+        Lzw = 1,
+        Packbits = 2,
+        Deflate = 3,
+        Ccittrle = 4,
+        Ccittfax3 = 5,
+        Ccittfax4 = 6,
+        None = 7,
+    }
+
+    public enum GdalResamplingMethod
+    {
+        None = 0,
+        Nearest = 1,
+        Gauss = 2,
+        Bicubic = 3,
+        Average = 4,
+    }
+
+    public enum OgrEncoding
+    {
+        Utf8 = 0,
+        Ansi = 1,
+    }
+
+    public enum PixelOffsetMode
+    {
+        Default = 0,
+        HighPerformance = 1,
+        HighQuality = 2,
+    }
 }

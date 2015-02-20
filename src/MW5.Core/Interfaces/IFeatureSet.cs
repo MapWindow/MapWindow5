@@ -15,30 +15,30 @@ namespace MW5.Core.Interfaces
         AttributeTable Table { get; }
         ILabelsLayer Labels { get; }
 
-        // Table Table { get; }
+        bool EditingShapes { get; }
+        bool EditingTable { get; }
+        bool InteractiveEditing { get; set; }
+        bool StartEditingShapes(bool startEditTable = true);
+        bool StartEditingTable();
+        bool StopEditingShapes(bool applyChanges = true, bool stopEditTable = true);
+        bool StopEditingTable(bool applyChanges = true);
+
+        #region Not implemented
+
         //Charts Charts { get; set; }
-        // Labels Labels { get; set; }
         //ShapeValidationInfo LastInputValidation { get; }
         //ShapeValidationInfo LastOutputValidation { get; }
         //int GenerateLabels(int FieldIndex, tkLabelPositioning Method, bool LargestPartOnly = false);
 
         //tkCollisionMode CollisionMode { get; set; }
         //ShapeDrawingOptions DefaultDrawingOptions { get; set; }
-        
-        //bool EditingShapes { get; }
-        //bool EditingTable { get; }
-        //bool InteractiveEditing { get; set; }
+
         //bool Snappable { get; set; }
         //bool Volatile { get; set; }
-        //bool StartEditingShapes(bool StartEditTable = true, ICallback cBack = null);
-        //bool StartEditingTable(ICallback cBack = null);
-        //bool StopEditingShapes(bool ApplyChanges = true, bool StopEditTable = true, ICallback cBack = null);
-        //bool StopEditingTable(bool ApplyChanges = true, ICallback cBack = null);
         //bool HasInvalidShapes();
 
         //bool Identifiable { get; set; }
         //tkGeometryEngine GeometryEngine { get; set; }
-
 
         //int MinDrawingSize { get; set; }
         //IStopExecution StopExecution { set; }
@@ -107,6 +107,8 @@ namespace MW5.Core.Interfaces
         //void Deserialize(bool LoadSelection, string newVal);
         //string Serialize(bool SaveSelection);
         //string Serialize2(bool SaveSelection, bool SerializeCategories);
+
+        #endregion
     }
 
     public interface IFeatureCollection : IEnumerable<IFeature>

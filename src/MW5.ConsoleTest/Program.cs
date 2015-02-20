@@ -9,7 +9,7 @@ namespace MW5.ConsoleTest
         {
             try
             {
-                Tests.TestVectorDatasource();
+                Tests.TestCallback();
             }
             catch(Exception ex)
             {

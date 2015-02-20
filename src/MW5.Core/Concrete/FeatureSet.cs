@@ -201,6 +201,42 @@ namespace MW5.Core.Concrete
             get { return new LabelsLayer(_shapefile.Labels); }
         }
 
+        public bool EditingShapes
+        {
+            get { return _shapefile.EditingShapes; }
+        }
+
+        public bool EditingTable
+        {
+            get { return _shapefile.EditingTable; }
+        }
+
+        public bool InteractiveEditing
+        {
+            get { return _shapefile.InteractiveEditing; }
+            set { _shapefile.InteractiveEditing = value; }
+        }
+
+        public bool StartEditingShapes(bool startEditTable = true)
+        {
+            return _shapefile.StartEditingShapes(startEditTable);
+        }
+
+        public bool StartEditingTable()
+        {
+            return _shapefile.StartEditingTable();
+        }
+
+        public bool StopEditingShapes(bool applyChanges = true, bool stopEditTable = true)
+        {
+            return _shapefile.StopEditingShapes(applyChanges, stopEditTable);
+        }
+
+        public bool StopEditingTable(bool applyChanges = true)
+        {
+            return _shapefile.StopEditingTable(applyChanges);
+        }
+
         /// <summary>
         /// Gets underlying feature collection. Collection may additionally implement IFeatureList interface.
         /// </summary>

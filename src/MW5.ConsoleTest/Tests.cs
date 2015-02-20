@@ -7,6 +7,16 @@ namespace MW5.ConsoleTest
 {
     public static class Tests
     {
+        public static void TestCallback()
+        {
+            var cb = new CustomCallback();
+            ApplicationCallback.Attach(cb);
+
+            var fs = new FeatureSet(@"d:\data\sf\buildings.shp");
+            fs.StartEditingShapes();
+            fs.Close();
+        }
+        
         public static void TestVectorDatasource()
         {
             string connection = "PG:dbname=london host=localhost user=postgres password=1234";
