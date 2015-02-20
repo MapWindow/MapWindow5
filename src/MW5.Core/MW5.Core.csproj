@@ -70,6 +70,7 @@
     <Compile Include="Concrete\Callback.cs" />
     <Compile Include="Concrete\ColorBreak.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
+    <Compile Include="Concrete\CompositeLine.cs" />
     <Compile Include="Concrete\Diagram.cs" />
     <Compile Include="Concrete\DiagramField.cs" />
     <Compile Include="Concrete\DiagramFieldCollection.cs" />
@@ -84,12 +85,16 @@
     <Compile Include="Concrete\FieldJoin.cs" />
     <Compile Include="Concrete\FieldJoinCollection.cs" />
     <Compile Include="Concrete\GeoLabel.cs" />
+    <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeoSourceManager.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
     <Compile Include="Concrete\GridColorRamp.cs" />
     <Compile Include="Concrete\GridSource.cs" />
     <Compile Include="Concrete\GridSourceHeader.cs" />
+    <Compile Include="Concrete\HistoryList.cs" />
+    <Compile Include="Concrete\IdentifierSettings.cs" />
+    <Compile Include="Concrete\SimpleLine.cs" />
     <Compile Include="Concrete\TileManager.cs" />
     <Compile Include="Concrete\TileProviderInfo.cs" />
     <Compile Include="Concrete\TileProviderList.cs" />

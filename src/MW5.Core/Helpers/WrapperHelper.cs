@@ -85,5 +85,15 @@ namespace MW5.Core.Helpers
         {
             return interval.InternalObject as ChartField;
         }
+
+        public static LineSegment GetInternal(this SimpleLine interval)
+        {
+            return interval.InternalObject as LineSegment;
+        }
+
+        public static LinePattern GetInternal(this CompositeLine interval)
+        {
+            return interval.InternalObject as LinePattern;
+        }
     }
 }

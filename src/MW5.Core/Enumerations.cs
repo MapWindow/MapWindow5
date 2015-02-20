@@ -1215,4 +1215,21 @@
         Vertical = 1,
     }
 
+    public enum IdentifierMode
+    {
+        AllLayers = 0,
+        SingleLayer = 1,
+    }
+
+    public enum MeasuringType
+    {
+        Distance = 0,
+        Area = 1,
+    }
+
+    public enum LineType
+    {
+        Simple = 0,
+        Marker = 1,
+    }
 }

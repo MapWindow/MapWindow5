@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using MW5.Core.Concrete;
 
 namespace MW5.Core.Interfaces
 {
@@ -10,9 +11,7 @@ namespace MW5.Core.Interfaces
         float Width { get; set; }
         Color Color { get; set; }
         DashStyle DashStyle { get; set; }
-        /*
         bool UseLinePattern { get; set; }
-        LinePattern LinePattern { get; set; }
-         */
+        CompositeLine LinePattern { get; set; }
     }
 }

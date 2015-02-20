@@ -111,6 +111,21 @@ namespace MW5.Core
 
         #region IMapControl Members
 
+        public HistoryList UndoList
+        {
+            get { return new HistoryList(_axMap1.UndoList); }
+        }
+
+        public GeoMeasurer Measuring
+        {
+            get { return new GeoMeasurer(_axMap1.Measuring); }
+        }
+
+        public IdentifierSettings Identifier
+        {
+            get { return new IdentifierSettings(_axMap1.Identifier); }
+        }
+
         [Browsable(false)]
         public LayerCollection Layers
         {

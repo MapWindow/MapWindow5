@@ -49,5 +49,17 @@ namespace MW5.Core.Concrete
             get { return (DashStyle)_style.LineStipple; }
             set { _style.LineStipple = (tkDashStyle)value; }
         }
+
+        public bool UseLinePattern
+        {
+            get { return _style.UseLinePattern; }
+            set { _style.UseLinePattern = value; }
+        }
+
+        public CompositeLine LinePattern
+        {
+            get { return _style.LinePattern != null ? new CompositeLine(_style.LinePattern) : null; }
+            set { _style.LinePattern = value.GetInternal(); }
+        }
     }
 }

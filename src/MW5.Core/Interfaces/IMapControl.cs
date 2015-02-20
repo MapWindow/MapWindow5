@@ -49,13 +49,11 @@ namespace MW5.Core.Interfaces
 
         IGeometryEditor GeometryEditor { get; }
         TileManager Tiles { get; }
+        IdentifierSettings Identifier { get; }
+        GeoMeasurer Measuring { get; }
+        HistoryList UndoList { get; }
 
         //  FileManager FileManager { get; }
-        //  object GlobalCallback { get; set; }      // should set to global settings
-        //  Identifier Identifier { get; }
-        //  Measuring Measuring { get; }
-        //UndoList UndoList { get; }
-
         // double PixelsPerDegree { get; }
          //AutoToggle AnimationOnZooming { get; set; }
          //bool DisableWaitCursor { get; set; }
