@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Windows.Forms;
+using MapWinGIS;
 using MW5.Core.Concrete;
 using MW5.Core.Events;
 
 namespace MW5.Core.Interfaces
 {
-    interface IMapControl
+    interface IMapControl: IComWrapper
     {
         LayerCollection Layers { get; }
-        MapProjection PROJECTION { get; set; }
+        MapProjection Projection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }
         bool ScalebarVisible { get; set; }
@@ -24,8 +25,8 @@ namespace MW5.Core.Interfaces
 
         IEnvelope Extents { get; set; }
         IEnvelope GeographicExtents { get; }
-        // bool SetGeographicExtents(Extents pVal);
-        // bool SetGeographicExtents2(double xLongitude, double yLatitude, double widthKilometers);
+        bool SetGeographicExtents(IEnvelope pVal);
+        bool SetGeographicExtents2(double xLongitude, double yLatitude, double widthKilometers);
 
         void ZoomIn();
         void ZoomOut();
@@ -52,84 +53,43 @@ namespace MW5.Core.Interfaces
         IdentifierSettings Identifier { get; }
         GeoMeasurer Measuring { get; }
         HistoryList UndoList { get; }
+        DrawingLayers Drawing { get; }
 
-        //  FileManager FileManager { get; }
-        // double PixelsPerDegree { get; }
-         //AutoToggle AnimationOnZooming { get; set; }
-         //bool DisableWaitCursor { get; set; }
-         //int ExtentHistory { get; set; }
-         //double ExtentPad { get; set; }
-         //bool GrabProjectionFromData { get; set; }
-         //AutoToggle InertiaOnPanning { get; set; }
-         //bool IsLocked { get; set; }
-         //string Tag { get; set; }
-         //ResizeBehavior ResizeBehavior { get; set; }
-         //UnitsOfMeasure MapUnits { get; set; }
-         //IEnvelope MaxExtents { get; }
-         //double MouseWheelSpeed { get; set; }
-         //bool ReuseTileBuffer { get; set; }
-         
-         //bool SendMouseDown { get; set; }
-         //bool SendMouseMove { get; set; }
-         //bool SendMouseUp { get; set; }
-         //bool SendOnDrawBackBuffer { get; set; }
-         //bool SendSelectBoxDrag { get; set; }
-         //bool SendSelectBoxFinal { get; set; }
-         
-         //tkCoordinatesDisplay ShowCoordinates { get; set; }
-         //bool ShowRedrawTime { get; set; }
-         //bool ShowVersionNumber { get; set; }
-         
-         //bool TrapRMouseDown { get; set; }
-         //int UDCursorHandle { get; set; }
-         
-         //bool UseSeamlessPan { get; set; }
-         //string VersionNumber { get; }
-         
-         //tkZoomBehavior ZoomBehavior { get; set; }
-         //tkZoomBoxStyle ZoomBoxStyle { get; set; }
-         //double ZoomPercent { get; set; }
-         
-         // void Clear();
-         // void ClearDrawing(int drawHandle);
-         // void ClearDrawingLabels(int drawHandle);
-         // void ClearDrawings();
-         
-         // bool DeserializeLayer(int layerHandle, string newVal);
-         // bool DeserializeMapState(string state, bool loadLayers, string basePath);
-         // void DrawBackBuffer(IntPtr hDC, int imageWidth, int imageHeight);
-         
-         // bool FindSnapPoint(double tolerance, double xScreen, double yScreen, ref double xFound, ref double yFound);
-         // double GeodesicArea(Shape polygon);
-         // double GeodesicDistance(double projX1, double projY1, double projX2, double projY2);
-         // double GeodesicLength(Shape polyline);
-         
-         // string get_ErrorMsg(int errorCode);
-         
-         // object GetColorScheme(int layerHandle);
-         // Extents GetKnownExtents(tkKnownExtents extents);
-         // int HWnd();
-         // bool LoadLayerOptions(int layerHandle, string optionsName, ref string description);
-         // bool LoadMapState(string filename, object callback);
-         // void LoadTilesForSnapshot(Extents extents, int width, string key, tkTileProvider provider);
-         // void LockWindow(tkLockMode lockMode);
-         
-         // void Redraw();
-         // void Redraw2(tkRedrawType redrawType);
+        AutoToggle AnimationOnZooming { get; set; }
+        int ExtentHistory { get; set; }
+        double ExtentPad { get; set; }
+        bool GrabProjectionFromData { get; set; }
+        AutoToggle InertiaOnPanning { get; set; }
+        bool IsLocked { get; }
+        ResizeBehavior ResizeBehavior { get; set; }
+        UnitsOfMeasure MapUnits { get; set; }
+        IEnvelope MaxExtents { get; }
+        double MouseWheelSpeed { get; set; }
+        bool ReuseTileBuffer { get; set; }
+        ZoomBehavior ZoomBehavior { get; set; }
+        
+        double ZoomPercent { get; set; }
+        CoordinatesDisplay ShowCoordinates { get; set; }
+        bool ShowRedrawTime { get; set; }
+        bool ShowVersionNumber { get; set; }
+        int UdCursorHandle { get; set; }
+        bool UseSeamlessPan { get; set; }
+        string VersionNumber { get; }
+        IEnvelope GetKnownExtents(KnownExtents extents);
 
-         // void Resize(int width, int height);
-         // bool SaveMapState(string filename, bool relativePaths, bool overwrite);
-         // string SerializeMapState(bool relativePaths, string basePath);
-         
-         // bool SetImageLayerColorScheme(int layerHandle, object colorScheme);
-         // void ShowToolTip(string text, int milliseconds);
-         // Image SnapShot(object boundBox);
-         // Image SnapShot2(int clippingLayerNbr, double zoom, int pWidth);
-         // Image SnapShot3(double left, double right, double top, double bottom, int width);
-         // bool SnapShotToDC(IntPtr hDC, Extents extents, int width);
-         // bool SnapShotToDC2(IntPtr hDC, Extents extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
-         // int TilesAreInCache(Extents extents, int width, tkTileProvider provider);
-         // void Undo();
+        void LockWindow(bool doLock);
+        void Redraw(RedrawType redrawType = RedrawType.All);
+        void Clear();
+        void Undo();
+        bool FindSnapPoint(double tolerance, double xScreen, double yScreen, ref double xFound, ref double yFound);
+
+        double GeodesicArea(IGeometry polygon);
+        double GeodesicDistance(double projX1, double projY1, double projX2, double projY2);
+        double GeodesicLength(IGeometry polyline);
+
+        IImageSource SnapShot(IEnvelope boundBox);
+        IImageSource SnapShot(int clippingLayerHandle, double zoom, int width);
+        IImageSource SnapShot(double left, double right, double top, double bottom, int width);
 
          event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
          event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
@@ -158,10 +118,39 @@ namespace MW5.Core.Interfaces
          event EventHandler<TilesLoadedEventArgs> TilesLoaded;
          event EventHandler<EventArgs> UndoListChanged;
          event EventHandler<ValidateShapeEventArgs> ValidateShape;
+
+         #region Not implemented
+
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;
         //event _DMapEvents_AfterDrawingEventHandler AfterDrawing;
         //event _DMapEvents_BeforeDrawingEventHandler BeforeDrawing;
         //event _DMapEvents_MapStateEventHandler MapState;
         //event _DMapEvents_OnDrawBackBufferEventHandler OnDrawBackBuffer;
+
+        //bool SendMouseDown { get; set; }
+        //bool SendMouseMove { get; set; }
+        //bool SendMouseUp { get; set; }
+        //bool SendOnDrawBackBuffer { get; set; }
+        //bool SendSelectBoxDrag { get; set; }
+        //bool SendSelectBoxFinal { get; set; }
+
+        // bool SetImageLayerColorScheme(int layerHandle, object colorScheme);
+        // void DrawBackBuffer(IntPtr hDC, int imageWidth, int imageHeight);
+        // double PixelsPerDegree { get; }
+        //bool DisableWaitCursor { get; set; }
+        // object GetColorScheme(int layerHandle);
+        // int HWnd();
+        // void Resize(int width, int height);
+        // bool SaveMapState(string filename, bool relativePaths, bool overwrite);
+        // string SerializeMapState(bool relativePaths, string basePath);
+        // void ShowToolTip(string text, int milliseconds);
+        //  FileManager FileManager { get; }
+        // bool DeserializeMapState(string state, bool loadLayers, string basePath);
+        // bool LoadMapState(string filename, object callback);
+        //bool TrapRMouseDown { get; set; }
+        // bool SnapShotToDC(IntPtr hDC, Extents extents, int width);
+        // bool SnapShotToDC2(IntPtr hDC, Extents extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
+        //tkZoomBoxStyle ZoomBoxStyle { get; set; }
+        #endregion
     }
 }

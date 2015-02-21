@@ -74,7 +74,7 @@
     <Compile Include="Concrete\Diagram.cs" />
     <Compile Include="Concrete\DiagramField.cs" />
     <Compile Include="Concrete\DiagramFieldCollection.cs" />
-    <Compile Include="Concrete\DrawingLayer.cs" />
+    <Compile Include="Concrete\DrawingLayers.cs" />
     <Compile Include="Concrete\Envelope.cs" />
     <Compile Include="Concrete\FeatureCategory.cs" />
     <Compile Include="Concrete\FeatureField.cs" />
@@ -97,7 +97,6 @@
     <Compile Include="Concrete\GridSourceHeader.cs" />
     <Compile Include="Concrete\HistoryList.cs" />
     <Compile Include="Concrete\IdentifierSettings.cs" />
-    <Compile Include="Concrete\MapTemp.cs" />
     <Compile Include="Concrete\SimpleLine.cs" />
     <Compile Include="Concrete\StopExecution.cs" />
     <Compile Include="Concrete\TileManager.cs" />

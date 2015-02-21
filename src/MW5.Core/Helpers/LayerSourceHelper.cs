@@ -13,6 +13,15 @@ namespace MW5.Core.Helpers
     {
         public static IDatasource Convert(object source)
         {
+            if (source is OgrDatasource)
+            {
+                return new VectorDatasource(source as OgrDatasource);
+            }
+            return ConvertToLayer(source);
+        }
+
+        public static ILayerSource ConvertToLayer(object source)
+        {
             if (source is Shapefile)
             {
                 return new FeatureSet(source as Shapefile);
@@ -24,10 +33,6 @@ namespace MW5.Core.Helpers
             if (source is OgrLayer)
             {
                 return new VectorLayer(source as OgrLayer);
-            }
-            if (source is OgrDatasource)
-            {
-                return new VectorDatasource(source as OgrDatasource);
             }
             if (source is Grid)
             {

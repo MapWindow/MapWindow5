@@ -1,4 +1,6 @@
-﻿namespace MW5.Core.Interfaces
+﻿using MW5.Core.Concrete;
+
+namespace MW5.Core.Interfaces
 {
     public interface ILayer
     {
@@ -11,5 +13,30 @@
         int MaxVisibleZoom { get; set; }
         string Filename { get; }
         int Position { get; }
+        string Tag { get; set; }
+        double MinVisibleScale { get; set; }
+        double MaxVisibleScale { get; set; }
+        string Description { get; set; }
+        bool LayerVisibleAtCurrentScale { get; }
+
+        IFeatureSet VectorSource { get ; }
+        IImageSource ImageSource { get; }
+        ILayerSource LayerSource { get; }
+        VectorLayer VectorLayer { get; }
+        ILabelsLayer Labels { get; }
+
+        bool RemoveOptions(string optionsName);
+        bool SaveOptions(string optionsName, bool overwrite, string description);
+        bool LoadOptions(string optionsName, ref string description);
+
+        string SerializeLayer();
+        bool DeserializeLayer(string state);
+
+        #region Not implemented
+
+        // bool SkipOnSaving { get; set; }
+        // void ReSourceLayer(int layerHandle, string newSrcPath);
+
+        #endregion
     }
 }

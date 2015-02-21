@@ -49,7 +49,7 @@ namespace MW5.GuiTest
             this.mapControl1.Longitude = 0F;
             this.mapControl1.MapCursor = MapCursor.ZoomIn;
             this.mapControl1.Name = "mapControl1";
-            this.mapControl1.PROJECTION = MapProjection.None;
+            this.mapControl1.Projection = MapProjection.None;
             this.mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this.mapControl1.ScalebarVisible = true;
             this.mapControl1.Size = new System.Drawing.Size(455, 323);

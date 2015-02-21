@@ -293,6 +293,9 @@ namespace MW5.Core.Concrete
         //    get { throw new NotImplementedException(); }
         //    set { throw new NotImplementedException(); }
         //}
+
+        // void LoadTilesForSnapshot(Extents extents, int width, string key, tkTileProvider provider);
+        // int TilesAreInCache(Extents extents, int width, tkTileProvider provider);
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using AxMapWinGIS;
+using MW5.Core.Helpers;
 using MW5.Core.Interfaces;
 
 namespace MW5.Core.Concrete
@@ -85,44 +86,103 @@ namespace MW5.Core.Concrete
             get { return _map.get_LayerPosition(_layerHandle); }
         }
 
-        // object get_GetObject(int layerHandle);
-        // Image get_Image(int layerHandle);
-        // string get_LayerDescription(int layerHandle);
-        // bool get_LayerDynamicVisibility(int layerHandle);
-        // string get_LayerFilename(int layerHandle);
-        // int get_LayerHandle(int layerPosition);
-        // string get_LayerKey(int layerHandle);
-        // Labels get_LayerLabels(int layerHandle);
-        // double get_LayerMaxVisibleScale(int layerHandle);
-        // int get_LayerMaxVisibleZoom(int layerHandle);
-        // double get_LayerMinVisibleScale(int layerHandle);
-        // int get_LayerMinVisibleZoom(int layerHandle);
-        // string get_LayerName(int layerHandle);
-        // int get_LayerPosition(int layerHandle);
-        // bool get_LayerSkipOnSaving(int layerHandle);
-        // bool get_LayerVisible(int layerHandle);
-        // bool get_LayerVisibleAtCurrentScale(int layerHandle);
-        // OgrLayer get_OgrLayer(int layerHandle);
-        // Shapefile get_Shapefile(int layerHandle);
+        public string Tag
+        {
+            get { return _map.get_LayerKey(_layerHandle); }
+            set { _map.set_LayerKey(_layerHandle, value); }
+        }
 
-        // void set_Image(int layerHandle, Image param0);
-        // void set_LayerDescription(int layerHandle, string param0);
-        // void set_LayerDynamicVisibility(int layerHandle, bool param0);
-        // void set_LayerKey(int layerHandle, string param0);
-        // void set_LayerLabels(int layerHandle, Labels param0);
-        // void set_LayerMaxVisibleScale(int layerHandle, double param0);
-        // void set_LayerMaxVisibleZoom(int layerHandle, int param0);
-        // void set_LayerMinVisibleScale(int layerHandle, double param0);
-        // void set_LayerMinVisibleZoom(int layerHandle, int param0);
-        // void set_LayerName(int layerHandle, string param0);
-        // void set_LayerSkipOnSaving(int layerHandle, bool param0);
-        // void set_LayerVisible(int layerHandle, bool param0);
-        // void set_Shapefile(int layerHandle, Shapefile param0);
+        public double MinVisibleScale
+        {
+            get { return _map.get_LayerMinVisibleScale(_layerHandle); }
+            set { _map.set_LayerMinVisibleScale(_layerHandle, value); }
+        }
 
-        // bool RemoveLayerOptions(int layerHandle, string optionsName);
-        // void ReSourceLayer(int layerHandle, string newSrcPath);
-        // bool SaveLayerOptions(int layerHandle, string optionsName, bool overwrite, string description);
-        // string SerializeLayer(int layerHandle);
+        public double MaxVisibleScale
+        {
+            get { return _map.get_LayerMaxVisibleScale(_layerHandle); }
+            set { _map.set_LayerMaxVisibleScale(_layerHandle, value); }
+        }
+
+        public string Description
+        {
+            get { return _map.get_LayerDescription(_layerHandle); }
+            set { _map.set_LayerDescription(_layerHandle, value); }
+        }
+
+        public bool LayerVisibleAtCurrentScale
+        {
+            get { return _map.get_LayerVisibleAtCurrentScale(_layerHandle); }
+        }
+
+        public IFeatureSet VectorSource
+        {
+            get
+            {
+                var sf = _map.get_Shapefile(_layerHandle);
+                return sf != null ? new FeatureSet(sf) : null;
+            }
+        }
+
+        public IImageSource ImageSource
+        {
+            get
+            {
+                var img = _map.get_Image(_layerHandle);
+                return img != null ? BitmapSource.Wrap(img) : null;
+            }
+        }
+
+        public ILayerSource LayerSource
+        {
+            get
+            {
+                return LayerSourceHelper.ConvertToLayer(_map.get_GetObject(_layerHandle));
+            }
+        }
+
+        public VectorLayer VectorLayer
+        {
+            get
+            {
+                var ogr = _map.get_OgrLayer(_layerHandle);
+                return ogr != null ? new VectorLayer(ogr) : null;
+            }
+        }
+
+        public ILabelsLayer Labels
+        {
+            get
+            {
+                var labels = _map.get_LayerLabels(_layerHandle);
+                return labels != null ? new LabelsLayer(labels) : null;
+            }
+        }
+
+        public bool RemoveOptions(string optionsName)
+        {
+            return _map.RemoveLayerOptions(_layerHandle, optionsName);
+        }
+
+        public bool SaveOptions(string optionsName, bool overwrite, string description)
+        {
+            return _map.SaveLayerOptions(_layerHandle, optionsName, overwrite, description);
+        }
+
+        public bool LoadOptions(string optionsName, ref string description)
+        {
+            return _map.LoadLayerOptions(_layerHandle, optionsName, ref description);
+        }
+
+        public string SerializeLayer()
+        {
+            return _map.SerializeLayer(_layerHandle);
+        }
+
+        public bool DeserializeLayer(string state)
+        {
+            return _map.DeserializeLayer(_layerHandle, state);
+        }
 
         #region Deprecated
 

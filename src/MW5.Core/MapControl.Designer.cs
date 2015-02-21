@@ -29,35 +29,35 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapControl));
-            this._axMap1 = new AxMapWinGIS.AxMap();
-            ((System.ComponentModel.ISupportInitialize)(this._axMap1)).BeginInit();
+            this._map = new AxMapWinGIS.AxMap();
+            ((System.ComponentModel.ISupportInitialize)(this._map)).BeginInit();
             this.SuspendLayout();
             // 
-            // _axMap1
+            // _map
             // 
-            this._axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._axMap1.Enabled = true;
-            this._axMap1.Location = new System.Drawing.Point(0, 0);
-            this._axMap1.Name = "_axMap1";
-            this._axMap1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("_axMap1.OcxState")));
-            this._axMap1.Size = new System.Drawing.Size(308, 188);
-            this._axMap1.TabIndex = 0;
+            this._map.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._map.Enabled = true;
+            this._map.Location = new System.Drawing.Point(0, 0);
+            this._map.Name = "_map";
+            this._map.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("_map.OcxState")));
+            this._map.Size = new System.Drawing.Size(308, 188);
+            this._map.TabIndex = 0;
             // 
             // MapControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this._axMap1);
+            this.Controls.Add(this._map);
             this.Name = "MapControl";
             this.Size = new System.Drawing.Size(308, 188);
-            ((System.ComponentModel.ISupportInitialize)(this._axMap1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._map)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private AxMapWinGIS.AxMap _axMap1;
+        private AxMapWinGIS.AxMap _map;
 
     }
 }

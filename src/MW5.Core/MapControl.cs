@@ -113,225 +113,429 @@ namespace MW5.Core
 
         public HistoryList UndoList
         {
-            get { return new HistoryList(_axMap1.UndoList); }
+            get { return new HistoryList(_map.UndoList); }
+        }
+
+        public DrawingLayers Drawing
+        {
+            get { return new DrawingLayers(_map); }
+        }
+
+        public AutoToggle AnimationOnZooming
+        {
+            get { return (AutoToggle)_map.AnimationOnZooming; }
+            set { _map.AnimationOnZooming = (tkCustomState)value; }
+        }
+
+        public int ExtentHistory
+        {
+            get { return _map.ExtentHistory; }
+            set { _map.ExtentHistory = value; }
+        }
+
+        public double ExtentPad
+        {
+            get { return _map.ExtentPad; }
+            set { _map.ExtentPad = value; }
+        }
+
+        public bool GrabProjectionFromData
+        {
+            get { return _map.GrabProjectionFromData; }
+            set { _map.GrabProjectionFromData = value; }
+        }
+
+        public AutoToggle InertiaOnPanning
+        {
+            get { return (AutoToggle)_map.InertiaOnPanning; }
+            set { _map.InertiaOnPanning = (tkCustomState)value; }
+        }
+
+        public bool IsLocked
+        {
+            get { return _map.IsLocked == tkLockMode.lmLock; }
+        }
+
+        public ResizeBehavior ResizeBehavior
+        {
+            get { return (ResizeBehavior)_map.MapResizeBehavior; }
+            set { _map.MapResizeBehavior = (tkResizeBehavior)value; }
+        }
+
+        public UnitsOfMeasure MapUnits
+        {
+            get { return (UnitsOfMeasure)_map.MapUnits; }
+            set { _map.MapUnits = (tkUnitsOfMeasure)value; }
+        }
+
+        public IEnvelope MaxExtents
+        {
+            get { return new Envelope(_map.MaxExtents); }
+        }
+
+        public double MouseWheelSpeed
+        {
+            get { return _map.MouseWheelSpeed; }
+            set { _map.MouseWheelSpeed = value; }
+        }
+
+        public bool ReuseTileBuffer
+        {
+            get { return _map.ReuseTileBuffer; }
+            set { _map.ReuseTileBuffer = value; }
+        }
+
+        public ZoomBehavior ZoomBehavior
+        {
+            get { return (ZoomBehavior)_map.ZoomBehavior; }
+            set { _map.ZoomBehavior = (tkZoomBehavior)value; }
+        }
+
+        public double ZoomPercent
+        {
+            get { return _map.ZoomPercent; }
+            set { _map.ZoomPercent = value; }
+        }
+
+        public CoordinatesDisplay ShowCoordinates
+        {
+            get { return (CoordinatesDisplay)_map.ShowCoordinates; }
+            set { _map.ShowCoordinates = (tkCoordinatesDisplay)value; }
+        }
+
+        public bool ShowRedrawTime
+        {
+            get { return _map.ShowRedrawTime; }
+            set { _map.ShowRedrawTime = value; }
+        }
+
+        public bool ShowVersionNumber
+        {
+            get { return _map.ShowVersionNumber; }
+            set { _map.ShowVersionNumber = value; }
+        }
+
+        public int UdCursorHandle
+        {
+            get { return _map.UDCursorHandle; }
+            set { _map.UDCursorHandle = value; }
+        }
+
+        public bool UseSeamlessPan
+        {
+            get { return _map.UseSeamlessPan; }
+            set { _map.UseSeamlessPan = value; }
+        }
+
+        public string VersionNumber
+        {
+            get { return _map.VersionNumber; }
+        }
+
+        public IEnvelope GetKnownExtents(KnownExtents extents)
+        {
+            return new Envelope(_map.GetKnownExtents((tkKnownExtents)extents));
+        }
+
+        public void LockWindow(bool doLock)
+        {
+            _map.LockWindow(doLock ? tkLockMode.lmLock : tkLockMode.lmUnlock);
+        }
+
+        public void Redraw(RedrawType redrawType = RedrawType.All)
+        {
+            _map.Redraw2((tkRedrawType)redrawType);
+        }
+
+        public void Clear()
+        {
+            _map.Clear();
+        }
+
+        public void Undo()
+        {
+            _map.Undo();
+        }
+
+        public bool FindSnapPoint(double tolerance, double xScreen, double yScreen, ref double xFound, ref double yFound)
+        {
+            return _map.FindSnapPoint(tolerance, xScreen, yScreen, ref xFound, ref yFound);
+        }
+
+        public double GeodesicArea(IGeometry polygon)
+        {
+            return _map.GeodesicArea(polygon.GetInternal());
+        }
+
+        public double GeodesicDistance(double projX1, double projY1, double projX2, double projY2)
+        {
+            return _map.GeodesicDistance(projX1, projY1, projX2, projY2);
+        }
+
+        public double GeodesicLength(IGeometry polyline)
+        {
+            return _map.GeodesicLength(polyline.GetInternal());
+        }
+
+        public IImageSource SnapShot(IEnvelope boundBox)
+        {
+            var img = _map.SnapShot(boundBox.GetInternal());
+            return BitmapSource.Wrap(img);
+        }
+
+        public IImageSource SnapShot(double left, double right, double top, double bottom, int width)
+        {
+            var img = _map.SnapShot3(left, right, top, bottom, width);
+            return BitmapSource.Wrap(img);
+        }
+
+        public IImageSource SnapShot(int clippingLayerHandle, double zoom, int width)
+        {
+            var img = _map.SnapShot2(clippingLayerHandle, zoom, width);
+            return BitmapSource.Wrap(img);
         }
 
         public GeoMeasurer Measuring
         {
-            get { return new GeoMeasurer(_axMap1.Measuring); }
+            get { return new GeoMeasurer(_map.Measuring); }
         }
 
         public IdentifierSettings Identifier
         {
-            get { return new IdentifierSettings(_axMap1.Identifier); }
+            get { return new IdentifierSettings(_map.Identifier); }
         }
 
         [Browsable(false)]
         public LayerCollection Layers
         {
-            get { return _layers = _layers ?? new LayerCollection(_axMap1); }
+            get { return _layers = _layers ?? new LayerCollection(_map); }
         }
 
-        public MapProjection PROJECTION
+        public MapProjection Projection
         {
-            get { return (MapProjection) _axMap1.Projection; }
-            set { _axMap1.Projection = (tkMapProjection) value; }
+            get { return (MapProjection) _map.Projection; }
+            set { _map.Projection = (tkMapProjection) value; }
         }
 
         public ZoomBarSettings ZoomBar
         {
-            get { return new ZoomBarSettings(_axMap1); }
+            get { return new ZoomBarSettings(_map); }
         }
 
         public ScalebarUnits ScalebarUnits
         {
-            get { return (ScalebarUnits) _axMap1.ScalebarUnits; }
-            set { _axMap1.ScalebarUnits = (tkScalebarUnits) value; }
+            get { return (ScalebarUnits) _map.ScalebarUnits; }
+            set { _map.ScalebarUnits = (tkScalebarUnits) value; }
         }
 
         public bool ScalebarVisible
         {
-            get { return _axMap1.ScalebarVisible; }
-            set { _axMap1.ScalebarVisible = value; }
+            get { return _map.ScalebarVisible; }
+            set { _map.ScalebarVisible = value; }
         }
 
         public double CurrentScale
         {
-            get { return _axMap1.CurrentScale; }
-            set { _axMap1.CurrentScale = value; }
+            get { return _map.CurrentScale; }
+            set { _map.CurrentScale = value; }
         }
 
         public int CurrentZoom
         {
-            get { return _axMap1.CurrentZoom; }
-            set { _axMap1.CurrentZoom = value; }
+            get { return _map.CurrentZoom; }
+            set { _map.CurrentZoom = value; }
         }
 
         [Browsable(false)]
         public IEnvelope Extents
         {
-            get { return new Envelope(_axMap1.Extents as Extents); }
-            set { _axMap1.Extents = value.GetInternal(); }
+            get { return new Envelope(_map.Extents as Extents); }
+            set { _map.Extents = value.GetInternal(); }
         }
 
         [Browsable(false)]
         public IEnvelope GeographicExtents
         {
-            get { return new Envelope(_axMap1.GeographicExtents); }
+            get { return new Envelope(_map.GeographicExtents); }
+        }
+
+        public bool SetGeographicExtents(IEnvelope boundingBox)
+        {
+            return _map.SetGeographicExtents(boundingBox.GetInternal());
+        }
+
+        public bool SetGeographicExtents2(double xLongitude, double yLatitude, double widthKilometers)
+        {
+            return _map.SetGeographicExtents2(xLongitude, yLatitude, widthKilometers);
         }
 
         [Browsable(false)]
         public ISpatialReference GeoProjection
         {
-            get { return new SpatialReference(_axMap1.GeoProjection); }
-            set { _axMap1.GeoProjection = value.GetInternal(); }
+            get { return new SpatialReference(_map.GeoProjection); }
+            set { _map.GeoProjection = value.GetInternal(); }
         }
 
         public KnownExtents KnownExtents
         {
-            get { return (KnownExtents) _axMap1.KnownExtents; }
-            set { _axMap1.KnownExtents = (tkKnownExtents) value; }
+            get { return (KnownExtents) _map.KnownExtents; }
+            set { _map.KnownExtents = (tkKnownExtents) value; }
         }
 
         public float Latitude
         {
-            get { return _axMap1.Latitude; }
-            set { _axMap1.Latitude = value; }
+            get { return _map.Latitude; }
+            set { _map.Latitude = value; }
         }
 
         public float Longitude
         {
-            get { return _axMap1.Longitude; }
-            set { _axMap1.Longitude = value; }
+            get { return _map.Longitude; }
+            set { _map.Longitude = value; }
         }
 
         [Browsable(false)]
         public SystemCursor SystemCursor
         {
-            get { return (SystemCursor) _axMap1.MapCursor; }
-            set { _axMap1.MapCursor = (tkCursor) value; }
+            get { return (SystemCursor) _map.MapCursor; }
+            set { _map.MapCursor = (tkCursor) value; }
         }
 
         public MapCursor MapCursor
         {
-            get { return (MapCursor) _axMap1.CursorMode; }
-            set { _axMap1.CursorMode = (tkCursorMode) value; }
+            get { return (MapCursor) _map.CursorMode; }
+            set { _map.CursorMode = (tkCursorMode) value; }
         }
 
         public TileProvider TileProvider
         {
-            get { return (TileProvider) _axMap1.TileProvider; }
-            set { _axMap1.TileProvider = (tkTileProvider) value; }
+            get { return (TileProvider) _map.TileProvider; }
+            set { _map.TileProvider = (tkTileProvider) value; }
         }
 
         public void ZoomIn()
         {
-            _axMap1.ZoomIn(0.3);
+            _map.ZoomIn(0.3);
         }
 
         public void ZoomOut()
         {
-            _axMap1.ZoomOut(0.3);
+            _map.ZoomOut(0.3);
         }
 
         public void ZoomIn(double percent)
         {
-            _axMap1.ZoomIn(percent);
+            _map.ZoomIn(percent);
         }
 
         public void ZoomOut(double percent)
         {
-            _axMap1.ZoomOut(percent);
+            _map.ZoomOut(percent);
         }
 
         public void ZoomToLayer(int layerHandle)
         {
-            _axMap1.ZoomToLayer(layerHandle);
+            _map.ZoomToLayer(layerHandle);
         }
 
         public void ZoomToMaxExtents()
         {
-            _axMap1.ZoomToMaxExtents();
+            _map.ZoomToMaxExtents();
         }
 
         public void ZoomToMaxVisibleExtents()
         {
-            _axMap1.ZoomToMaxVisibleExtents();
+            _map.ZoomToMaxVisibleExtents();
         }
 
         public int ZoomToPrev()
         {
-            return _axMap1.ZoomToPrev();
+            return _map.ZoomToPrev();
         }
 
         public bool ZoomToSelected(int layerHandle)
         {
-            return _axMap1.ZoomToSelected(layerHandle);
+            return _map.ZoomToSelected(layerHandle);
         }
 
         public void ZoomToShape(int layerHandle, int shape)
         {
-            _axMap1.ZoomToShape(layerHandle, shape);
+            _map.ZoomToShape(layerHandle, shape);
         }
 
         public bool ZoomToTileLevel(int zoom)
         {
-            return _axMap1.ZoomToTileLevel(zoom);
+            return _map.ZoomToTileLevel(zoom);
         }
 
         public bool ZoomToWorld()
         {
-            return _axMap1.ZoomToWorld();
+            return _map.ZoomToWorld();
         }
 
         public bool PixelToDegrees(double pixelX, double pixelY, out double degreesLngX, out double degreesLatY)
         {
             degreesLngX = degreesLatY = 0.0;
-            return _axMap1.PixelToDegrees(pixelX, pixelY, ref degreesLngX, ref degreesLatY);
+            return _map.PixelToDegrees(pixelX, pixelY, ref degreesLngX, ref degreesLatY);
         }
 
         public void PixelToProj(double pixelX, double pixelY, out double projX, out double projY)
         {
             projX = projY = 0.0;
-            _axMap1.PixelToProj(pixelX, pixelY, ref projX, ref projY);
+            _map.PixelToProj(pixelX, pixelY, ref projX, ref projY);
         }
 
         public bool ProjToDegrees(double projX, double projY, out double degreesLngX, out double degreesLatY)
         {
             degreesLngX = degreesLatY = 0.0;
-            return _axMap1.ProjToDegrees(projX, projY, ref degreesLngX, ref degreesLatY);
+            return _map.ProjToDegrees(projX, projY, ref degreesLngX, ref degreesLatY);
         }
 
         public void ProjToPixel(double projX, double projY, out double pixelX, out double pixelY)
         {
             pixelX = pixelY = 0.0;
-            _axMap1.ProjToPixel(projX, projY, ref pixelX, ref pixelY);
+            _map.ProjToPixel(projX, projY, ref pixelX, ref pixelY);
         }
 
         public bool DegreesToPixel(double degreesLngX, double degreesLatY, out double pixelX, out double pixelY)
         {
             pixelX = pixelY = 0.0;
-            return _axMap1.DegreesToPixel(degreesLngX, degreesLatY, ref pixelX, ref pixelY);
+            return _map.DegreesToPixel(degreesLngX, degreesLatY, ref pixelX, ref pixelY);
         }
 
         public bool DegreesToProj(double degreesLngX, double degreesLatY, out double projX, out double projY)
         {
             projX = projY = 0.0;
-            return _axMap1.DegreesToProj(degreesLngX, degreesLatY, ref projX, ref projY);
+            return _map.DegreesToProj(degreesLngX, degreesLatY, ref projX, ref projY);
         }
 
         public IGeometryEditor GeometryEditor
         {
-            get { return new GeometryEditor(_axMap1.ShapeEditor); }
+            get { return new GeometryEditor(_map.ShapeEditor); }
         }
 
         public TileManager Tiles
         {
-            get { return new TileManager(_axMap1.Tiles); }
+            get { return new TileManager(_map.Tiles); }
         }
 
         #endregion
 
+        public object InternalObject
+        {
+            get { return _map; }
+        }
+
+        public string LastError
+        {
+            get { return _map.get_ErrorMsg(_map.LastErrorCode); }
+        }
+
+        public new string Tag
+        {
+            get { return _map.Tag.ToString(); }
+            set { _map.Tag = value; }
+        }
     }
 }
 

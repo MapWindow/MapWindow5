@@ -1265,4 +1265,32 @@
         InvalidReturned = 4,
         OperationAborted = 5,
     }
+
+    public enum ZoomBehavior
+    {
+        Default = 0,
+        UseTileLevels = 1,
+    }
+
+    public enum CoordinatesDisplay
+    {
+        None = 0,
+        Auto = 1,
+        Degrees = 2,
+        MapUnits = 3,
+    }
+
+    public enum RedrawType
+    {
+        All = 1,
+        SkipDataLayers = 2,
+        Minimal = 3,
+        SkipAllLayers = 4,
+    }
+
+    public enum DrawReferenceList
+    {
+        ScreenReferencedList = 0,
+        SpatiallyReferencedList = 1,
+    }
 }
