@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapWinGIS;
+﻿using MapWinGIS;
+using MW5.Core.Concrete;
 using MW5.Core.Helpers;
 using MW5.Core.Interfaces;
 
-namespace MW5.Core.Concrete
+namespace MW5.Core.Static
 {
     public static class GeoSourceManager
     {

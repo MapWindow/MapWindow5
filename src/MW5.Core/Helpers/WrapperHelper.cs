@@ -100,5 +100,10 @@ namespace MW5.Core.Helpers
         {
             return operations.InternalObject as FieldStatOperations;
         }
+
+        public static Grid GetInternal(this GridSource operations)
+        {
+            return operations.InternalObject as Grid;
+        }
     }
 }

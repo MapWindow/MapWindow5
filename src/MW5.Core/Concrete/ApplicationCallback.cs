@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Core.Interfaces;
+using MW5.Core.Static;
 
 namespace MW5.Core.Concrete
 {

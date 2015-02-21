@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MapWinGIS;
 using MW5.Core.Helpers;
 using MW5.Core.Interfaces;
+using MW5.Core.Static;
 
 namespace MW5.Core.Concrete
 {

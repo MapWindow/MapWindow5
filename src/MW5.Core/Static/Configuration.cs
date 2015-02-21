@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MapWinGIS;
+﻿using MapWinGIS;
 using MW5.Core.Concrete;
-using MW5.Core.Interfaces;
 
-namespace MW5.Core
+namespace MW5.Core.Static
 {
     public static class Configuration
     {
@@ -270,7 +264,12 @@ namespace MW5.Core
             get { return _settings.BingApiKey; }
             set { _settings.BingApiKey = value; }
         }
-        
+
+        public static string get_ComUsageReport(bool unreleasedOnly)
+        {
+            return new Utils().ComUsageReport[unreleasedOnly];
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea
