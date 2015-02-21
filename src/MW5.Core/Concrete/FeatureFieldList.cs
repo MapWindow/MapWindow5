@@ -128,5 +128,18 @@ namespace MW5.Core.Concrete
         {
             return _table.FieldJoinIndex[fieldIndex];
         }
+
+        #region Shapefile members
+
+        //int EditAddField(string Name, FieldType Type, int Precision, int Width);
+        //int EditDeleteField(int fieldIndex);
+        //bool EditCellValue(int FieldIndex, int ShapeIndex, object newVal);
+        //bool EditInsertField(Field NewField, ref int FieldIndex, ICallback cBack = null);
+        //object get_CellValue(int FieldIndex, int ShapeIndex);
+        //Field get_Field(int FieldIndex);
+        //Field get_FieldByName(string FieldName);
+        //int get_FieldIndexByName(string FieldName);
+
+        #endregion
     }
 }

@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using MapWinGIS;
+using MW5.Core.Helpers;
 using MW5.Core.Interfaces;
 
 namespace MW5.Core.Concrete
 {
-    public class FeatureCollection : IFeatureCollection
+    public class FeatureCollection : IEnumerable<IFeature>
     {
         private readonly Shapefile _shapefile;
 
@@ -35,5 +36,39 @@ namespace MW5.Core.Concrete
         }
 
         #endregion
+
+        public int EditAddShape(IGeometry geometry)
+        {
+            return _shapefile.EditAddShape(geometry.GetInternal());
+        }
+
+        public bool EditClear()
+        {
+            return _shapefile.EditClear();
+        }
+
+        public bool EditDeleteShape(int index)
+        {
+            return _shapefile.EditDeleteShape(index);
+        }
+
+        public bool EditInsertShape(IGeometry geometry, ref int index)
+        {
+            return _shapefile.EditInsertShape(geometry.GetInternal(), ref index);
+        }
+
+        public bool EditUpdateShape(int index, IGeometry geometryNew)
+        {
+            return _shapefile.EditUpdateShape(index, geometryNew.GetInternal());
+        }
+
+        public IGeometry this[int index]
+        {
+            get
+            {
+                var shape = _shapefile.Shape[index];
+                return shape != null ? new Geometry(shape) : null;
+            }
+        }
     }
 }

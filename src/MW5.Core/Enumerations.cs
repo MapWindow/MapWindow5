@@ -1232,4 +1232,37 @@
         Simple = 0,
         Marker = 1,
     }
+
+    public enum GroupOperation
+    {
+        Sum = 0,
+        Min = 1,
+        Max = 2,
+        Avg = 3,
+        WeightedAvg = 4,
+        Mode = 5,
+    }
+
+    public enum FieldOperationValidity
+    {
+        Valid = 0,
+        FieldNotFound = 1,
+        NotSupported = 2,
+    }
+
+    public enum ValidationType
+    {
+        Input = 0,
+        Output = 1,
+    }
+
+    public enum ValidationStatus
+    {
+        WasntValidated = 0,
+        Valid = 1,
+        InvalidFixed = 2,
+        InvalidSkipped = 3,
+        InvalidReturned = 4,
+        OperationAborted = 5,
+    }
 }

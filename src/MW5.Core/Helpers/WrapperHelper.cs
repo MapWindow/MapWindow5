@@ -95,5 +95,10 @@ namespace MW5.Core.Helpers
         {
             return interval.InternalObject as LinePattern;
         }
+
+        public static FieldStatOperations GetInternal(this FieldOperationList operations)
+        {
+            return operations.InternalObject as FieldStatOperations;
+        }
     }
 }

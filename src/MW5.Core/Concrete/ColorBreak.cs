@@ -61,7 +61,7 @@ namespace MW5.Core.Concrete
             }
             if (breakIndex < 0 || breakIndex >= scheme.NumBreaks)
             {
-                throw new ArgumentOutOfRangeException("Color break index is out of range");
+                throw new ArgumentOutOfRangeException("Color break index is out of range.");
             }
             _scheme = scheme;
             _breakIndex = breakIndex;

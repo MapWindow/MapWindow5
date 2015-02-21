@@ -84,9 +84,12 @@
     <Compile Include="Concrete\FeatureSet.cs" />
     <Compile Include="Concrete\FieldJoin.cs" />
     <Compile Include="Concrete\FieldJoinCollection.cs" />
+    <Compile Include="Concrete\FieldOperation.cs" />
+    <Compile Include="Concrete\FieldOperationList.cs" />
     <Compile Include="Concrete\GeoLabel.cs" />
     <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
+    <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Concrete\GeoSourceManager.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
     <Compile Include="Concrete\GridColorRamp.cs" />
@@ -94,7 +97,9 @@
     <Compile Include="Concrete\GridSourceHeader.cs" />
     <Compile Include="Concrete\HistoryList.cs" />
     <Compile Include="Concrete\IdentifierSettings.cs" />
+    <Compile Include="Concrete\MapTemp.cs" />
     <Compile Include="Concrete\SimpleLine.cs" />
+    <Compile Include="Concrete\StopExecution.cs" />
     <Compile Include="Concrete\TileManager.cs" />
     <Compile Include="Concrete\TileProviderInfo.cs" />
     <Compile Include="Concrete\TileProviderList.cs" />
@@ -180,6 +185,7 @@
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILayerSource.cs" />
     <Compile Include="Interfaces\IMapControl.cs" />
+    <Compile Include="Interfaces\IStopExecutionCallback.cs" />
     <Compile Include="Interfaces\IVectorDatasource.cs" />
     <Compile Include="Interfaces\IVectorLayer.cs" />
     <Compile Include="Interfaces\IRasterSource.cs" />
