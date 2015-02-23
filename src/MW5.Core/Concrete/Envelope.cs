@@ -77,8 +77,16 @@ namespace MW5.Core.Concrete
 
         public string Tag
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get
+            {
+                return "";
+                //throw new NotSupportedException(); 
+            }
+            set
+            {
+                //throw new NotSupportedException();
+
+            }
         }
     }
 }

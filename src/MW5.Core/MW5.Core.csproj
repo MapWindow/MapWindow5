@@ -68,7 +68,7 @@
     <Compile Include="Concrete\AttributeTable.cs" />
     <Compile Include="Concrete\BitmapSource.cs" />
     <Compile Include="Concrete\Callback.cs" />
-    <Compile Include="Concrete\ColorBreak.cs" />
+    <Compile Include="Concrete\ColorInterval.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
     <Compile Include="Concrete\CompositeLine.cs" />
     <Compile Include="Concrete\Diagram.cs" />

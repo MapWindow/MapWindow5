@@ -533,8 +533,14 @@ namespace MW5.Core
 
         public new string Tag
         {
-            get { return _map.Tag.ToString(); }
-            set { _map.Tag = value; }
+            get
+            {
+                return ""; //_map.Tag.ToString(); 
+            }
+            set
+            {
+                //_map.Tag = value;
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ using MW5.Core.Concrete;
 
 namespace MW5.Core.Interfaces
 {
-    public interface IColorRamp : IList<ColorBreak>, IComWrapper
+    public interface IColorRamp : IList<ColorInterval>, IComWrapper
     {
         Color GetGraduatedColor(double value);
         Color GetRandomColor(double value);

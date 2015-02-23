@@ -5,7 +5,7 @@ using MW5.Core.Helpers;
 
 namespace MW5.Core.Concrete
 {
-    public class ColorBreak : IEquatable<ColorBreak>
+    public class ColorInterval : IEquatable<ColorInterval>
     {
         // these 2 are used to loop through breaks
         private int _breakIndex = -1;
@@ -47,13 +47,13 @@ namespace MW5.Core.Concrete
             }
         }
 
-        public ColorBreak(double value, Color color)
+        public ColorInterval(double value, Color color)
         {
             _value = value;
             _color = color;
         }
 
-        internal ColorBreak(ColorScheme scheme, int breakIndex)
+        internal ColorInterval(ColorScheme scheme, int breakIndex)
         {
             if (scheme == null)
             {
@@ -67,7 +67,7 @@ namespace MW5.Core.Concrete
             _breakIndex = breakIndex;
         }
 
-        public bool Equals(ColorBreak other)
+        public bool Equals(ColorInterval other)
         {
             // TODO: use tolerance for comparison
             return other.Value == this.Value;
@@ -75,7 +75,7 @@ namespace MW5.Core.Concrete
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as ColorBreak);
+            return Equals(obj as ColorInterval);
         }
 
         public override int GetHashCode()

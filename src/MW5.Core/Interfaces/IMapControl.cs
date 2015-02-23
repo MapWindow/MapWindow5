@@ -6,7 +6,7 @@ using MW5.Core.Events;
 
 namespace MW5.Core.Interfaces
 {
-    interface IMapControl: IComWrapper
+    public interface IMapControl: IComWrapper
     {
         LayerCollection Layers { get; }
         MapProjection Projection { get; set; }

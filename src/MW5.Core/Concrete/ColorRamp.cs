@@ -29,7 +29,7 @@ namespace MW5.Core.Concrete
 
         #region IList implementation
 
-        public IEnumerator<ColorBreak> GetEnumerator()
+        public IEnumerator<ColorInterval> GetEnumerator()
         {
             for (var i = 0; i < Count; i++)
             {
@@ -42,14 +42,14 @@ namespace MW5.Core.Concrete
             }
         }
 
-        public ColorBreak this[int index]
+        public ColorInterval this[int index]
         {
             get
             {
                 if (index >= 0 && index < Count)
                 {
                     var color = ColorHelper.UintToColor(_scheme.BreakColor[index]);
-                    return new ColorBreak(_scheme, index);
+                    return new ColorInterval(_scheme, index);
                 }
                 return null;
             }
@@ -64,7 +64,7 @@ namespace MW5.Core.Concrete
             return GetEnumerator();
         }
 
-        public void Add(ColorBreak item)
+        public void Add(ColorInterval item)
         {
             _scheme.AddBreak(item.Value, ColorHelper.ColorToUInt(item.Color));
         }
@@ -74,12 +74,12 @@ namespace MW5.Core.Concrete
             _scheme.Clear();
         }
 
-        public bool Contains(ColorBreak item)
+        public bool Contains(ColorInterval item)
         {
             return IndexOf(item) != -1;
         }
 
-        public void CopyTo(ColorBreak[] array, int arrayIndex)
+        public void CopyTo(ColorInterval[] array, int arrayIndex)
         {
             ArrayHelper.CheckCopyTo(array, arrayIndex, _scheme.NumBreaks);
             for (int i = 0; i < _scheme.NumBreaks; i++)
@@ -88,7 +88,7 @@ namespace MW5.Core.Concrete
             }
         }
 
-        public bool Remove(ColorBreak item)
+        public bool Remove(ColorInterval item)
         {
             return _scheme.Remove(IndexOf(item));
         }
@@ -103,7 +103,7 @@ namespace MW5.Core.Concrete
             get { return false; }
         }
 
-        public int IndexOf(ColorBreak item)
+        public int IndexOf(ColorInterval item)
         {
             for (int i = 0; i < Count; i++)
             {
@@ -115,7 +115,7 @@ namespace MW5.Core.Concrete
             return -1;
         }
 
-        public void Insert(int index, ColorBreak item)
+        public void Insert(int index, ColorInterval item)
         {
             throw new NotSupportedException("ColorBreakCollection.Insert method isn't supported");
         }
