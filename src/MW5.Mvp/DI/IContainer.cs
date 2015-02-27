@@ -13,8 +13,10 @@ namespace MW5.Mvp.DI
     public interface IContainer
     {
         void Register<TService, TImplementation>() where TImplementation : TService;
+        void RegisterSingleton<TService, TImplementation>() where TImplementation : TService;
         void Register<TService>();
         void RegisterInstance<T>(T instance);
+        void RegisterInstance(Type serviceType, object instance);
         TService Resolve<TService>();
         bool IsRegistered<TService>();
         void Register<TService, TArgument>(Expression<Func<TArgument, TService>> factory);

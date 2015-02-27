@@ -24,9 +24,21 @@ namespace MW5.Mvp.DI
             return this;
         }
 
+        public IApplicationController RegisterInstance(Type type, object instance)
+        {
+            _container.RegisterInstance(type, instance);
+            return this;
+        }
+
         public IApplicationController RegisterService<TService, TImplementation>() where TImplementation : class, TService
         {
             _container.Register<TService, TImplementation>();
+            return this;
+        }
+
+        public IApplicationController RegisterServiceSingleton<TService, TImplementation>() where TImplementation : class, TService
+        {
+            _container.RegisterSingleton<TService, TImplementation>();
             return this;
         }
 
@@ -39,6 +51,11 @@ namespace MW5.Mvp.DI
 
             var presenter = _container.Resolve<TPresenter>();
             presenter.Run(model);
+        }
+
+        public TService Resolve<TService>() where TService: class
+        {
+            return _container.Resolve<TService>();
         }
     }
 }

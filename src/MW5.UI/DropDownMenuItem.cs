@@ -45,5 +45,34 @@ namespace MW5.UI
                 AsParent.Popup -= value;
             }
         }
+
+        public void SetGroupBegins(int index, bool value)
+        {
+            if (index < 0 || index > AsParent.Items.Count)
+            {
+                throw new IndexOutOfRangeException("Item index is out of range.");
+            }
+            var item = AsParent.Items[index];
+            if (value)
+            {
+                AsParent.BeginGroupAt(item);
+            }
+            else
+            {
+                AsParent.RemoveGroupAt(item);
+            }
+            
+        }
+
+        public bool GetGroupBegins(int index)
+        {
+            if (index < 0 || index > AsParent.Items.Count)
+            {
+                throw new IndexOutOfRangeException("Item index is out of range.");
+            }
+            
+            var item = AsParent.Items[index];
+            return AsParent.IsGroupBeginning(item);
+        }
     }
 }

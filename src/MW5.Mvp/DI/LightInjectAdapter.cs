@@ -17,6 +17,11 @@ namespace MW5.Mvp.DI
             _container.Register<TService, TImplementation>();
         }
 
+        public void RegisterSingleton<TService, TImplementation>() where TImplementation : TService
+        {
+            _container.Register<TService, TImplementation>(new PerContainerLifetime());
+        }
+
         public void Register<TService>()
         {
             _container.Register<TService>();
@@ -25,6 +30,11 @@ namespace MW5.Mvp.DI
         public void RegisterInstance<T>(T instance)
         {
             _container.RegisterInstance(instance);
+        }
+
+        public void RegisterInstance(Type serviceType, object instance)
+        {
+            _container.RegisterInstance(serviceType, instance);
         }
 
         public void Register<TService, TArgument>(Expression<Func<TArgument, TService>> factory)

@@ -52,12 +52,6 @@ namespace MW5.UI
             set { _item.Tooltip = value; }
         }
 
-        public bool BeginsGroup
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
         public string Description
         {
             get { throw new NotImplementedException(); }
@@ -99,8 +93,19 @@ namespace MW5.UI
 
         public event EventHandler Click
         {
-            add { _item.Click += value; }
-            remove { _item.Click -= value; }
+            add
+            {
+                _item.Click += (sender, args) => value.Invoke(this, args);
+            }
+            remove
+            {
+                _item.Click -= value;       // TODO: remove handler
+            }
+        }
+
+        public object GetInternalObject()
+        {
+            return _item;
         }
     }
 }

@@ -12,5 +12,6 @@ namespace MW5.Plugins.Interfaces
         IDropDownMenuItem AddDropDown(string text);
         void Insert(IMenuItem item, int index);
         void Remove(int index);
+        void Clear();
     }
 }

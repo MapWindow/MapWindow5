@@ -1,4 +1,5 @@
-﻿using MapWinGIS;
+﻿using System.Collections.Generic;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 
@@ -34,6 +35,22 @@ namespace MW5.Api.Helpers
                 return new GridSource(source as Grid);
             }
             return null;
+        }
+
+        public static IEnumerable<ILayerSource> GetLayers(IDatasource ds)
+        {
+            var vs = ds as VectorDatasource;
+            if (vs != null)
+            {
+                foreach (var layer in vs)
+                {
+                    yield return layer;
+                }
+            }
+            else
+            {
+                yield return ds as ILayerSource;
+            }
         }
     }
 }

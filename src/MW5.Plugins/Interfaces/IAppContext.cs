@@ -8,5 +8,6 @@ namespace MW5.Plugins.Interfaces
         IMainForm Form { get; }
         IMenu Menu { get; }
         bool Initialized { get; }
+        void Init(IMainForm form);
     }
 }

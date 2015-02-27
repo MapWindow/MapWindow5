@@ -27,7 +27,7 @@ namespace MW5.UI
         {
             for (int i = 0; i < _items.Count; i++)
             {
-                yield return new MenuItem(_items[i]);
+                yield return this[i];
             }
         }
 
@@ -44,7 +44,12 @@ namespace MW5.UI
                 {
                     return null;
                 }
-                return new MenuItem(_items[index]);   
+                var item = _items[index];
+                if (item is ParentBarItem)
+                {
+                    return new DropDownMenuItem(item as ParentBarItem);
+                }
+                return new MenuItem(item);   
             }
         }
 
@@ -83,6 +88,11 @@ namespace MW5.UI
                 throw new IndexOutOfRangeException("Menu items index is out of range.");
             }
             _items.RemoveAt(index);
+        }
+
+        public void Clear()
+        {
+            _items.Clear();
         }
     }
 }

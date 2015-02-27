@@ -35,12 +35,6 @@ namespace MW5.Plugins.Interfaces
         string Tooltip { get; set; }
 
         /// <summary>
-        /// Gets/Sets whether or not this item should draw a dividing line between itself and any
-        /// items before this item
-        /// </summary>
-        bool BeginsGroup { get; set; }
-
-        /// <summary>
         /// Gets/Sets the description of this menu item, used in customization of menu by the user
         /// </summary>
         string Description { get; set; }
@@ -69,5 +63,7 @@ namespace MW5.Plugins.Interfaces
 
         // TODO: hide from plugins
         event EventHandler Click;
+
+        object GetInternalObject();
     }
 }

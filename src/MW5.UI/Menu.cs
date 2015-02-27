@@ -51,5 +51,15 @@ namespace MW5.UI
                 return new DropDownMenuItem(item);
             }
         }
+
+        public IDropDownMenuItem Tiles
+        {
+            get
+            {
+                // TODO: make constant
+                var item = _menuManager.MainMenuBar.Items.FindItem("tiles") as ParentBarItem;
+                return new DropDownMenuItem(item);
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Helpers
@@ -13,12 +14,13 @@ namespace MW5.Helpers
             SetBingApiKey = -2,
         }
 
-        public static void Init(ParentBarItem root)
+        public static void Init(IDropDownMenuItem root)
         {
-            root.Items.Clear();
+            root.SubItems.Clear();
 
-            var item = new BarItem("No tiles", item_Click) { Tag = -1 };
-            root.Items.Add(item);
+            var item = root.SubItems.AddButton("No tiles");
+            item.Tag = -1;
+            item.Click += item_Click;
             
             var list = new[]
             {
@@ -28,25 +30,20 @@ namespace MW5.Helpers
                 TileProvider.BingHybrid, TileProvider.BingSatellite
             };
 
-            bool beginGroup = true;
-
             foreach (var p in list)
             {
-                item = new BarItem(p.ToString(), item_Click) { Tag = (int)p };
-                root.Items.Add(item);
-
-                if (beginGroup)
-                {
-                    root.BeginGroupAt(item);
-                    beginGroup = false;
-                }
+                item = root.SubItems.AddButton(p.ToString());
+                item.Tag = (int) p;
+                item.Click += item_Click;
             }
+
+            root.SetGroupBegins(1, true);     // after No tiles
 
             //item = root.DropDownItems.Add("Set Bing Maps API key");
             //item.Click += item_Click;
             //item.Tag = Commands.SetBingApiKey;
 
-            root.Popup += root_DropDownOpening;
+            root.DropDownOpening += root_DropDownOpening;
             //App.Map.Tiles.DoCaching[CacheType.Disk] = true;
             //App.Map.Tiles.UseCache[CacheType.Disk] = true;
         }

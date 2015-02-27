@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp.Sample
 {
@@ -14,9 +16,9 @@ namespace MW5.Mvp.Sample
             Application.Run(this);
         }
 
-        public ToolStripItemCollection[] Menus
+        public IEnumerable<IDropDownMenuItem> Menus
         {
-            get { return new [] { toolStrip1.Items}; }
+            get { return null; }
         }
 
         public void UpdateView(SampleViewModel model)

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Collections.Generic;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
@@ -10,13 +11,15 @@ namespace MW5.Views
 {
     public partial class MainView : Form, IMainView, IMainForm
     {
-        public MainView()
+        private readonly IAppContext _context;
+
+        public MainView(IAppContext context)
         {
+            _context = context;
+
             InitializeComponent();
 
-            AppContext.Init(this);
-
-            
+            context.Init(this);
 
             _dockingManager1.InitDocking(treeViewAdv1, treeViewAdv2, this);
 
@@ -24,8 +27,6 @@ namespace MW5.Views
 
             _mainFrameBarManager1.DockToolbar(_toolbarProject, CommandBarDockState.Left);
             _mainFrameBarManager1.DockToolbar(_toolbarMap, CommandBarDockState.Top);
-
-            TilesHelper.Init(mnuTiles);
 
             FormClosed += MainView_FormClosed;
         }
@@ -40,10 +41,20 @@ namespace MW5.Views
             Application.Run(this);
         }
 
-        public ToolStripItemCollection[] Menus
+        public IEnumerable<IDropDownMenuItem> Menus
         {
-            get { return null; }
+            get
+            {
+                foreach (var item in _context.Menu.Items)
+                {
+                    if (item is IDropDownMenuItem)
+                    {
+                        yield return item as IDropDownMenuItem;
+                    }
+                }
+            }
         }
+
 
         public void UpdateView(MainViewModel model)
         {

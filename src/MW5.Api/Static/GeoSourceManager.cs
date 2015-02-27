@@ -139,7 +139,7 @@ namespace MW5.Api.Static
             return _manager.HasValidProxyForGrid[filename];
         }
 
-        public static string OpenFileFilter
+        public static string FileFilter
         {
             get { return _manager.CdlgFilter; }
         }

@@ -8,34 +8,45 @@ namespace MW5
 {
     public class AppContext: IAppContext
     {
-        private readonly IMainForm _mainForm;
+        private IMainForm _mainForm;
         private Menu _menu;
 
-        public static AppContext _instance;
+        //public static AppContext _instance;     // temp;
 
-        internal static void Init(IMainForm form)
-        {
-            var context = new AppContext(form);
-            _instance = context;
-            PluginHelper.InitPlugins(_instance);
-        }
+        //internal static void Init(IMainForm form)
+        //{
+        //    //var context = new AppContext(form);
+        //    //_instance = context;
+        //    _instance.Form
+        //    //_mainForm = form;
+        //    _menu = new Menu(form.MenuManager);
+        //    TilesHelper.Init(_instance.Menu.Tiles);
+        //    PluginHelper.InitPlugins(_instance);
+        //}
 
-        public static IAppContext Instance
-        {
-            get
-            {
-                if (_instance == null || !_instance.Initialized)
-                {
-                    throw new ApplicationException("Application context is not initialized");
-                }
-                return _instance;
-            }
-        }
+        //public static IAppContext Instance
+        //{
+        //    get
+        //    {
+        //        if (_instance == null || !_instance.Initialized)
+        //        {
+        //            throw new ApplicationException("Application context is not initialized.");
+        //        }
+        //        return _instance;
+        //    }
+        //}
 
-        private AppContext(IMainForm form)
+        //private AppContext(IMainForm form)
+        //{
+
+        //}
+
+        public void Init(IMainForm form)
         {
             _mainForm = form;
             _menu = new Menu(form.MenuManager);
+            TilesHelper.Init(Menu.Tiles);
+            PluginHelper.InitPlugins(this);
         }
 
         public IMapControl Map
@@ -57,5 +68,7 @@ namespace MW5
         {
             get { return _mainForm != null && _mainForm.Map != null; }
         }
+
+       
     }
 }

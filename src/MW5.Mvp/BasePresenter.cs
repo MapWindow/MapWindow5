@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp
 {
@@ -46,9 +47,8 @@ namespace MW5.Mvp
         public abstract void RunCommand(TCommand command);
         protected abstract void CommandNotFound(ToolStripItem item);
 
-        public bool CommandFromName(ToolStripItem item, ref TCommand command)
+        public bool CommandFromName(string itemName, ref TCommand command)
         {
-            string itemName = item.Name;
             itemName = itemName.ToLower();
             var prefixes = new[] { "tool", "mnu", "ctx" };
             foreach (var prefix in prefixes)
@@ -66,33 +66,36 @@ namespace MW5.Mvp
 
             Debug.Print("Command not found: " + itemName);
 
-            var menu = item as ToolStripDropDownItem;
-            if (menu != null && menu.DropDownItems.Count > 0)
-                return false;
+            //var menu = item as ToolStripDropDownItem;
+            //if (menu != null && menu.DropDownItems.Count > 0)
+            //    return false;
 
-            if (item is ToolStripSeparator) return false;
+            //if (item is ToolStripSeparator) return false;
 
-            CommandNotFound(item);
+            //CommandNotFound(item);
             return false;
         }
 
         /// <summary>
         /// Sets event handlers for menu items
         /// </summary>
-        public void InitMenu(ToolStripItemCollection items)
+        public void InitMenu(IDropDownMenuItem parent)
         {
-            if (items == null)
+            if (parent == null)
                 return;
 
-            foreach (ToolStripItem item in items)
+            foreach (var item in parent.SubItems)
             {
-                if (item.Tag == null)
-                    item.Click += ItemClick;
-                var menuItem = item as ToolStripDropDownItem;
-                if (menuItem != null)
-                {
-                    InitMenu(menuItem.DropDownItems);
-                }
+                item.Click += ItemClick;
+                
+                // TODO: make it recursive
+                //if (item.Tag == null)
+                //    item.Click += ItemClick;
+                //var menuItem = item as ToolStripDropDownItem;
+                //if (menuItem != null)
+                //{
+                //    InitMenu(menuItem.DropDownItems);
+                //}
             }
         }
 
@@ -101,11 +104,11 @@ namespace MW5.Mvp
         /// </summary>
         private void ItemClick(object sender, EventArgs e)
         {
-            var item = sender as ToolStripItem;
+            var item = sender as IMenuItem;
             if (item == null)
                 return;
             var command = Activator.CreateInstance<TCommand>();
-            if (CommandFromName(item, ref command))
+            if (CommandFromName(item.Name, ref command))
                 RunCommand(command);
         }
     }

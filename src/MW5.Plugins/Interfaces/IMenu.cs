@@ -12,6 +12,8 @@ namespace MW5.Plugins.Interfaces
 
         IDropDownMenuItem Plugins { get; }
 
+        IDropDownMenuItem Tiles { get; }
+
         /// <summary>
         /// Removes a MenuItem
         /// </summary>

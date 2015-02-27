@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp
 {
@@ -11,7 +12,7 @@ namespace MW5.Mvp
     {
         void ShowView();
         void Close();
-        ToolStripItemCollection[] Menus { get; }
+        IEnumerable<IDropDownMenuItem> Menus { get; }
         void UpdateView(TModel model);
     }
 }
