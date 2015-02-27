@@ -154,3 +154,9 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+
+# Custom ignores
+*GhostDoc.xml
+src/packages/
+!src/packages/repositories.config
+src/MW5.Prototype
