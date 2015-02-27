@@ -88,5 +88,10 @@ namespace MW5.Core.Concrete
 
             }
         }
+
+        public override string ToString()
+        {
+            return _extents.ToDebugString();
+        }
     }
 }
