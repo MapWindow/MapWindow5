@@ -1,4 +1,7 @@
-﻿namespace MW5.Views
+﻿using MW5.Api;
+using MW5.Api.Concrete;
+
+namespace MW5.Views
 {
     partial class PluginTestForm
     {
@@ -28,10 +31,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            MW5.Core.Concrete.Envelope envelope1 = new MW5.Core.Concrete.Envelope();
+            Envelope envelope1 = new Envelope();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnuPlugins = new System.Windows.Forms.ToolStripMenuItem();
-            this._mapControl1 = new MW5.Core.MapControl();
+            this._mapControl1 = new MapControl();
             this.btnLoadPlugins = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -57,7 +60,7 @@
             this._mapControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._mapControl1.AnimationOnZooming = MW5.Core.AutoToggle.Auto;
+            this._mapControl1.AnimationOnZooming = AutoToggle.Auto;
             this._mapControl1.CurrentScale = 11.984013674579206D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.ExtentHistory = 20;
@@ -65,31 +68,31 @@
             envelope1.Tag = "";
             this._mapControl1.Extents = envelope1;
             this._mapControl1.GrabProjectionFromData = true;
-            this._mapControl1.InertiaOnPanning = MW5.Core.AutoToggle.Auto;
-            this._mapControl1.KnownExtents = MW5.Core.KnownExtents.None;
+            this._mapControl1.InertiaOnPanning = AutoToggle.Auto;
+            this._mapControl1.KnownExtents = KnownExtents.None;
             this._mapControl1.Latitude = 0F;
             this._mapControl1.Location = new System.Drawing.Point(22, 38);
             this._mapControl1.Longitude = 0F;
-            this._mapControl1.MapCursor = MW5.Core.MapCursor.ZoomIn;
-            this._mapControl1.MapUnits = MW5.Core.UnitsOfMeasure.Meters;
+            this._mapControl1.MapCursor = MapCursor.ZoomIn;
+            this._mapControl1.MapUnits = UnitsOfMeasure.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
-            this._mapControl1.Projection = MW5.Core.MapProjection.None;
-            this._mapControl1.ResizeBehavior = MW5.Core.ResizeBehavior.Classic;
+            this._mapControl1.Projection = MapProjection.None;
+            this._mapControl1.ResizeBehavior = ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
-            this._mapControl1.ScalebarUnits = MW5.Core.ScalebarUnits.GoogleStyle;
+            this._mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this._mapControl1.ScalebarVisible = true;
-            this._mapControl1.ShowCoordinates = MW5.Core.CoordinatesDisplay.Auto;
+            this._mapControl1.ShowCoordinates = CoordinatesDisplay.Auto;
             this._mapControl1.ShowRedrawTime = false;
             this._mapControl1.ShowVersionNumber = false;
             this._mapControl1.Size = new System.Drawing.Size(547, 375);
-            this._mapControl1.SystemCursor = MW5.Core.SystemCursor.MapDefault;
+            this._mapControl1.SystemCursor = SystemCursor.MapDefault;
             this._mapControl1.TabIndex = 1;
             this._mapControl1.Tag = "";
-            this._mapControl1.TileProvider = MW5.Core.TileProvider.OpenStreetMap;
+            this._mapControl1.TileProvider = TileProvider.OpenStreetMap;
             this._mapControl1.UdCursorHandle = -1079507232;
             this._mapControl1.UseSeamlessPan = false;
-            this._mapControl1.ZoomBehavior = MW5.Core.ZoomBehavior.UseTileLevels;
+            this._mapControl1.ZoomBehavior = ZoomBehavior.UseTileLevels;
             this._mapControl1.ZoomPercent = 0.3D;
             // 
             // btnLoadPlugins
@@ -123,7 +126,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem mnuPlugins;
-        private Core.MapControl _mapControl1;
+        private MapControl _mapControl1;
         private System.Windows.Forms.Button btnLoadPlugins;
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace MW5.Views
+﻿using MW5.Api;
+using MW5.Api.Concrete;
+
+namespace MW5.Views
 {
     partial class MainView
     {
@@ -30,7 +33,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Core.Concrete.Envelope envelope1 = new MW5.Core.Concrete.Envelope();
+            Envelope envelope1 = new Envelope();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -46,7 +49,7 @@
             this.treeViewAdv1 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
-            this._mapControl1 = new MW5.Core.MapControl();
+            this._mapControl1 = new MapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
             this._mainMenu = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MainMenu");
             this.mnuFile = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
@@ -271,7 +274,7 @@
             // 
             // _mapControl1
             // 
-            this._mapControl1.AnimationOnZooming = MW5.Core.AutoToggle.Auto;
+            this._mapControl1.AnimationOnZooming = AutoToggle.Auto;
             this._mapControl1.CurrentScale = 16.918010798186259D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -280,31 +283,31 @@
             envelope1.Tag = "";
             this._mapControl1.Extents = envelope1;
             this._mapControl1.GrabProjectionFromData = true;
-            this._mapControl1.InertiaOnPanning = MW5.Core.AutoToggle.Auto;
-            this._mapControl1.KnownExtents = MW5.Core.KnownExtents.None;
+            this._mapControl1.InertiaOnPanning = AutoToggle.Auto;
+            this._mapControl1.KnownExtents = KnownExtents.None;
             this._mapControl1.Latitude = 0F;
             this._mapControl1.Location = new System.Drawing.Point(0, 0);
             this._mapControl1.Longitude = 0F;
-            this._mapControl1.MapCursor = MW5.Core.MapCursor.ZoomIn;
-            this._mapControl1.MapUnits = MW5.Core.UnitsOfMeasure.Meters;
+            this._mapControl1.MapCursor = MapCursor.ZoomIn;
+            this._mapControl1.MapUnits = UnitsOfMeasure.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
-            this._mapControl1.Projection = MW5.Core.MapProjection.None;
-            this._mapControl1.ResizeBehavior = MW5.Core.ResizeBehavior.Classic;
+            this._mapControl1.Projection = MapProjection.None;
+            this._mapControl1.ResizeBehavior = ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
-            this._mapControl1.ScalebarUnits = MW5.Core.ScalebarUnits.GoogleStyle;
+            this._mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this._mapControl1.ScalebarVisible = true;
-            this._mapControl1.ShowCoordinates = MW5.Core.CoordinatesDisplay.Auto;
+            this._mapControl1.ShowCoordinates = CoordinatesDisplay.Auto;
             this._mapControl1.ShowRedrawTime = false;
             this._mapControl1.ShowVersionNumber = false;
             this._mapControl1.Size = new System.Drawing.Size(366, 294);
-            this._mapControl1.SystemCursor = MW5.Core.SystemCursor.MapDefault;
+            this._mapControl1.SystemCursor = SystemCursor.MapDefault;
             this._mapControl1.TabIndex = 0;
             this._mapControl1.Tag = "";
-            this._mapControl1.TileProvider = MW5.Core.TileProvider.OpenStreetMap;
+            this._mapControl1.TileProvider = TileProvider.OpenStreetMap;
             this._mapControl1.UdCursorHandle = 0;
             this._mapControl1.UseSeamlessPan = false;
-            this._mapControl1.ZoomBehavior = MW5.Core.ZoomBehavior.UseTileLevels;
+            this._mapControl1.ZoomBehavior = ZoomBehavior.UseTileLevels;
             this._mapControl1.ZoomPercent = 0.3D;
             // 
             // _mainFrameBarManager1
@@ -682,7 +685,7 @@
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem parentBarItem3;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv1;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
-        private Core.MapControl _mapControl1;
+        private MapControl _mapControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _mainMenu;

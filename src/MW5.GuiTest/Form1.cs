@@ -2,9 +2,9 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-using MW5.Core;
-using MW5.Core.Concrete;
-using MW5.Core.Events;
+using MW5.Api;
+using MW5.Api.Concrete;
+using MW5.Api.Events;
 
 namespace MW5.GuiTest
 {

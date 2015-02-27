@@ -1,5 +1,5 @@
 ﻿using System.Windows.Forms;
-using MW5.Core.Interfaces;
+using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;

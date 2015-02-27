@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Core.Interfaces;
+using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Interfaces
 {

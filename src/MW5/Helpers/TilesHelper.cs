@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Core;
+using MW5.Api;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Helpers

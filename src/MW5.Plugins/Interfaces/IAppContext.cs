@@ -1,4 +1,4 @@
-﻿using MW5.Core.Interfaces;
+﻿using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Interfaces
 {

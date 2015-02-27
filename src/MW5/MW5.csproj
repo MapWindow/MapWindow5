@@ -134,7 +134,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MW5.Core\MW5.Api.csproj">
+    <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>

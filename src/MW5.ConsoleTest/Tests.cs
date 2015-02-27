@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
-using MW5.Core;
-using MW5.Core.Concrete;
+using MW5.Api;
+using MW5.Api.Concrete;
 
 namespace MW5.ConsoleTest
 {

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Api", "MW5.Core\MW5.Api.csproj", "{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Api", "MW5.Api\MW5.Api.csproj", "{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.GuiTest", "MW5.GuiTest\MW5.GuiTest.csproj", "{757594CB-0699-4931-BF43-35B28E85046E}"
 EndProject

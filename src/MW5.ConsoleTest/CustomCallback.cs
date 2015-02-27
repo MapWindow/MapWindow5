@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.Core.Interfaces;
+using MW5.Api.Interfaces;
 
 namespace MW5.ConsoleTest
 {
