@@ -10,14 +10,16 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp
 {
-    public abstract class BasePresenter<TView, TCommand, TModel> : IPresenter<TModel>
+    public abstract class BasePresenter<TView, TCommand> : IPresenter
         where TCommand : struct, IConvertible
-        where TView: IView<TModel>
-        where TModel: class 
+        where TView: IView
         
     {
         protected TView View { get; private set; }
-        protected TModel Model { get; private set; }
+
+        public abstract void RunCommand(TCommand command);
+
+        protected abstract void CommandNotFound(ToolStripItem item);
 
         protected BasePresenter(TView view)
         {
@@ -32,20 +34,10 @@ namespace MW5.Mvp
             }
         }
 
-        public void Run(TModel model)
+        public void Run()
         {
-            Model = model;
-            
             View.ShowView();
         }
-
-        public void UpdateView()
-        {
-            View.UpdateView(Model);
-        }
-
-        public abstract void RunCommand(TCommand command);
-        protected abstract void CommandNotFound(ToolStripItem item);
 
         public bool CommandFromName(string itemName, ref TCommand command)
         {
@@ -106,10 +98,15 @@ namespace MW5.Mvp
         {
             var item = sender as IMenuItem;
             if (item == null)
+            {
                 return;
+            }
+
             var command = Activator.CreateInstance<TCommand>();
             if (CommandFromName(item.Name, ref command))
+            {
                 RunCommand(command);
+            }
         }
     }
 }

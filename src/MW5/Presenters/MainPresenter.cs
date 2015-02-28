@@ -10,17 +10,12 @@ namespace MW5.Presenters
         Open = 0,
     }
 
-    public interface IMainView : IView<MainViewModel>
+    public interface IMainView : IView
     {
 
     }
 
-    public class MainViewModel
-    {
-        public string Name { get; set; }
-    }
-
-    public class MainPresenter : BasePresenter<IMainView, MainCommand, MainViewModel>
+    public class MainPresenter : BasePresenter<IMainView, MainCommand>
     {
         private readonly IMainView _view;
         private readonly ILayerService _layerService;
@@ -38,7 +33,6 @@ namespace MW5.Presenters
             {
                 case MainCommand.Open:
                     _layerService.AddLayer(LayerType.All);
-                    UpdateView();
                     break;
             }
         }

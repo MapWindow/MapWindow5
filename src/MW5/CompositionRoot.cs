@@ -15,14 +15,13 @@ namespace MW5
 {
     public static class CompositionRoot
     {
-        public static void Compose(IApplicationController controller)
+        public static void Compose(IApplicationContainer container)
         {
-            controller.RegisterView<IMainView, MainView, MainViewModel>()
+            container.RegisterView<IMainView, MainView>()
                 .RegisterServiceSingleton<IAppContext, AppContext>()
-                .RegisterServiceSingleton<ILayerService, LayerService>()
-                .RegisterInstance(new ApplicationContext());
+                .RegisterServiceSingleton<ILayerService, LayerService>();
             
-            Core.CompositionRoot.Compose(controller);
+            Core.CompositionRoot.Compose(container);
         }
     }
 }

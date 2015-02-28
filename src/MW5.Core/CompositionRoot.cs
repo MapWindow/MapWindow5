@@ -12,7 +12,7 @@ namespace MW5.Core
 {
     public static class CompositionRoot
     {
-        public static void Compose(IApplicationController container)
+        public static void Compose(IApplicationContainer container)
         {
             container.RegisterService<IFileDialogService, FileDialogService>()
                      .RegisterService<IMessageService, MessageService>();

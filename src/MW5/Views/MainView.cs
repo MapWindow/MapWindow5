@@ -55,12 +55,6 @@ namespace MW5.Views
             }
         }
 
-
-        public void UpdateView(MainViewModel model)
-        {
-            //throw new NotImplementedException();
-        }
-
         public object MenuManager
         {
             get { return _mainFrameBarManager1; }

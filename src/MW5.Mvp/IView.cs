@@ -8,11 +8,11 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp
 {
-    public interface IView<in TModel>
+    public interface IView
     {
         void ShowView();
         void Close();
         IEnumerable<IDropDownMenuItem> Menus { get; }
-        void UpdateView(TModel model);
+        //void UpdateView(TModel model);
     }
 }

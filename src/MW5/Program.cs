@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MW5.Abstract;
 using MW5.Core.Services;
 using MW5.Core.Services.Abstract;
+using MW5.DI.Castle;
 using MW5.Mvp.DI;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
@@ -21,10 +22,10 @@ namespace MW5
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var controller = new ApplicationController(new LightInjectAdapter());
+            var controller = new WindsorCastleContainer();
             CompositionRoot.Compose(controller);
 
-            controller.Run<MainPresenter, MainViewModel>(new MainViewModel());
+            controller.Run<MainPresenter>();
         }
     }
 }

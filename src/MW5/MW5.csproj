@@ -55,9 +55,6 @@
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
-    <Reference Include="LightInject">
-      <HintPath>..\packages\LightInject.3.0.2.5\lib\net45\LightInject.dll</HintPath>
-    </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4" />
     <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
@@ -122,7 +119,6 @@
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +140,10 @@
     <ProjectReference Include="..\MW5.Core\MW5.Core.csproj">
       <Project>{54bb55da-dbdc-47e5-8dec-de325f35f074}</Project>
       <Name>MW5.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.DI.Castle\MW5.DI.Castle.csproj">
+      <Project>{193010c4-9bde-42a3-a960-0b39700a9de1}</Project>
+      <Name>MW5.DI.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Mvp\MW5.Mvp.csproj">
       <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>

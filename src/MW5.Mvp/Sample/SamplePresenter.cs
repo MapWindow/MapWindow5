@@ -8,7 +8,7 @@ namespace MW5.Mvp.Sample
         OpenLayer = 0,
     }
 
-    public interface ISampleView : IView<SampleViewModel>
+    public interface ISampleView : IView
     {
 
     }
@@ -18,7 +18,7 @@ namespace MW5.Mvp.Sample
         public string Name { get; set; }
     }
 
-    public class SamplePresenter : BasePresenter<ISampleView, SampleCommand, SampleViewModel>
+    public class SamplePresenter : BasePresenter<ISampleView, SampleCommand>
     {
         private readonly ISampleView _view;
 
@@ -39,7 +39,6 @@ namespace MW5.Mvp.Sample
             {
                 case SampleCommand.OpenLayer:
                     MessageBox.Show("Open layer clicked");
-                    UpdateView();
                     break;
             }
         }
