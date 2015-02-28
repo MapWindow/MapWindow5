@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using MW5.Api.Interfaces;
 
-namespace MW5.ConsoleTest
+namespace MW5.API.Test
 {
     internal class CustomCallback: IApplicationCallback
     {

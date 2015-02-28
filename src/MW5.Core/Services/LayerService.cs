@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Abstract;
-using MW5.Api.Concrete;
 using MW5.Api.Helpers;
-using MW5.Api.Interfaces;
 using MW5.Api.Static;
-using MW5.Core.Services.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Services.Abstract;
 
-namespace MW5.Helpers
+namespace MW5.Services
 {
     public class LayerService: ILayerService
     {

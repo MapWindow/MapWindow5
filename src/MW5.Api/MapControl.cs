@@ -306,7 +306,7 @@ namespace MW5.Api
         }
 
         [Browsable(false)]
-        public LayerCollection Layers
+        public ILayerCollection Layers
         {
             get { return _layers = _layers ?? new LayerCollection(_map); }
         }

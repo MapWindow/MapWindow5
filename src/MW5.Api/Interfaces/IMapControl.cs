@@ -7,7 +7,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IMapControl: IComWrapper
     {
-        LayerCollection Layers { get; }
+        ILayerCollection Layers { get; }
         MapProjection Projection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }

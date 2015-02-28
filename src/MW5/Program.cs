@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MW5.Abstract;
-using MW5.Core.Services;
-using MW5.Core.Services.Abstract;
 using MW5.DI.Castle;
 using MW5.Mvp.DI;
 using MW5.Plugins.Interfaces;

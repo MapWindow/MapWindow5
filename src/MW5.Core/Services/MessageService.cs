@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Core.Services.Abstract;
+﻿using System.Windows.Forms;
+using MW5.Services.Abstract;
 
-namespace MW5.Core.Services
+namespace MW5.Services
 {
     public class MessageService: IMessageService
     {

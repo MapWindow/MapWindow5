@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MW5.Core.Services.Abstract
+namespace MW5.Services.Abstract
 {
     public interface IFileDialogService
     {

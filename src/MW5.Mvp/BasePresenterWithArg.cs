@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace MW5.Mvp
 {
-    public abstract class BasePresenter<TView, TCommand> : AbstractPresenter<TView, TCommand>, IPresenter
+    public abstract class PresenterWithArg<TView, TCommand, TArg> : AbstractPresenter<TView, TCommand>, IPresenter<TArg>
         where TCommand : struct, IConvertible
         where TView : IView
     {
-        protected BasePresenter(TView view)
+        protected PresenterWithArg(TView view)
             : base(view)
         {
         }
 
-        public void Run()
+        public void Run(TArg argument)
         {
             View.ShowView();
         }

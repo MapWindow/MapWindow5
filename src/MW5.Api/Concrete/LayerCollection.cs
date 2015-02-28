@@ -7,7 +7,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class LayerCollection : IEnumerable<ILayer>
+    public class LayerCollection : ILayerCollection
     {
         private readonly AxMap _axMap;
 

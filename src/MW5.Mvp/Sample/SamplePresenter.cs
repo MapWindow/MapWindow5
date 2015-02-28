@@ -18,7 +18,7 @@ namespace MW5.Mvp.Sample
         public string Name { get; set; }
     }
 
-    public class SamplePresenter : BasePresenter<ISampleView, SampleCommand>
+    public class SamplePresenter : AbstractPresenter<ISampleView, SampleCommand>
     {
         private readonly ISampleView _view;
 

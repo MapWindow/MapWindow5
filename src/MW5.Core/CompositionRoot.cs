@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LightInject;
-using MW5.Core.Services;
-using MW5.Core.Services.Abstract;
 using MW5.Mvp.DI;
+using MW5.Services;
+using MW5.Services.Abstract;
 
 namespace MW5.Core
 {

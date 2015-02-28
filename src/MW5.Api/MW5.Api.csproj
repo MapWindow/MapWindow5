@@ -90,6 +90,7 @@
     <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
+    <Compile Include="Interfaces\ILayerCollection.cs" />
     <Compile Include="Static\GeoProcessing.cs" />
     <Compile Include="Static\GeoSourceManager.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />

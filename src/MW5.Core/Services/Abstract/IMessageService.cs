@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MW5.Core.Services.Abstract
+﻿namespace MW5.Services.Abstract
 {
     public interface IMessageService
     {
