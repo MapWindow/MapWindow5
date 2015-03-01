@@ -11,5 +11,10 @@ namespace MW5.Services
         {
             MessageBox.Show(message, AppName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
+        public void Info(string message)
+        {
+            MessageBox.Show(message, AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

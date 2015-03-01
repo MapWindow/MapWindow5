@@ -2,11 +2,13 @@
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Helpers
 {
+    // I leave it static, there is no need to inject it anywhere
     internal static class TilesHelper
     {
         private enum Commands
@@ -14,8 +16,12 @@ namespace MW5.Helpers
             SetBingApiKey = -2,
         }
 
-        public static void Init(IDropDownMenuItem root)
+        private static IMapControl _map;
+
+        public static void Init(IMapControl map, IDropDownMenuItem root)
         {
+            _map = map;
+            
             root.SubItems.Clear();
 
             var item = root.SubItems.AddButton("No tiles");
@@ -62,20 +68,19 @@ namespace MW5.Helpers
                 item.Checked = false;
             }
 
-            // TODO: check the right one
-            //Func<ToolStripMenuItem, bool> predicate =
-            //    item => item.Tag != null && ((TileProvider)item.Tag == App.Map.TileProvider);
+            Func<BarItem, bool> predicate =
+                item => item.Tag != null && ((TileProvider)item.Tag == _map.TileProvider);
 
-            //var selectedItem = items.FirstOrDefault(predicate);
-            //if (selectedItem != null)
-            //{
-            //    selectedItem.Checked = true;
-            //}
+            var selectedItem = items.FirstOrDefault(predicate);
+            if (selectedItem != null)
+            {
+                selectedItem.Checked = true;
+            }
         }
 
         private static void item_Click(object sender, EventArgs e)
         {
-            var item = sender as ToolStripItem;
+            var item = sender as IMenuItem;
             if (item != null && item.Tag != null)
             {
                 if ((int)item.Tag == (int)Commands.SetBingApiKey)
@@ -104,8 +109,8 @@ namespace MW5.Helpers
                         //}
                         break;
                 }
-                //App.Map.TileProvider = (TileProvider)item.Tag;
-                //App.Map.Redraw();
+                _map.TileProvider = (TileProvider)item.Tag;
+                _map.Redraw();
             }
         }
 

@@ -33,7 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -74,6 +75,7 @@ namespace MW5.Views
             this.toolZoomToLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolPan = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
+            this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -156,8 +158,8 @@ namespace MW5.Views
             // 
             this.statusProjection.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
             this.statusProjection.Name = "statusProjection";
-            this.statusProjection.Size = new System.Drawing.Size(61, 15);
-            this.statusProjection.Text = "Projection";
+            this.statusProjection.Size = new System.Drawing.Size(87, 15);
+            this.statusProjection.Text = "ProjectionType";
             // 
             // statusStripLabel4
             // 
@@ -281,8 +283,10 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
-            this._mapControl1.Extents = envelope1;
+            envelope2.Tag = "";
+            this._mapControl1.Extents = envelope2;
+            spatialReference2.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference2;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -346,7 +350,8 @@ namespace MW5.Views
             this.toolZoomToLayer,
             this.toolPan,
             this.barItem1,
-            this.barItem6});
+            this.barItem6,
+            this.barItem2});
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
@@ -496,7 +501,7 @@ namespace MW5.Views
             // 
             this.mnuOpenVector.BarName = "mnuOpenVector";
             this.mnuOpenVector.CategoryIndex = 0;
-            this.mnuOpenVector.ID = "OpenVector";
+            this.mnuOpenVector.ID = "toolOpenVector";
             this.mnuOpenVector.ImageIndex = 14;
             this.mnuOpenVector.Padding = new System.Drawing.Point(10, 5);
             this.mnuOpenVector.ShowToolTipInPopUp = false;
@@ -507,7 +512,7 @@ namespace MW5.Views
             // 
             this.mnuOpenRaster.BarName = "mnuOpenRaster";
             this.mnuOpenRaster.CategoryIndex = 0;
-            this.mnuOpenRaster.ID = "Open Raster";
+            this.mnuOpenRaster.ID = "toolOpenRaster";
             this.mnuOpenRaster.ImageIndex = 11;
             this.mnuOpenRaster.Padding = new System.Drawing.Point(10, 5);
             this.mnuOpenRaster.ShowToolTipInPopUp = false;
@@ -559,8 +564,11 @@ namespace MW5.Views
             this.toolZoomOut,
             this.toolZoomToMax,
             this.toolZoomToLayer,
-            this.toolPan});
+            this.toolPan,
+            this.barItem2});
             this._toolbarMap.Manager = this._mainFrameBarManager1;
+            this._toolbarMap.SeparatorIndices.AddRange(new int[] {
+            5});
             // 
             // toolZoomIn
             // 
@@ -658,6 +666,16 @@ namespace MW5.Views
             ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images35")))});
             this._imageListAdv1.ImageSize = new System.Drawing.Size(24, 24);
             // 
+            // barItem2
+            // 
+            this.barItem2.BarName = "barItem2";
+            this.barItem2.CategoryIndex = 1;
+            this.barItem2.ID = "toolSetProjection";
+            this.barItem2.ImageIndex = 2;
+            this.barItem2.ShowToolTipInPopUp = false;
+            this.barItem2.SizeToFit = true;
+            this.barItem2.Text = "Set projection";
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -723,6 +741,7 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuHelp;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem6;
+        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem2;
 
     }
 }

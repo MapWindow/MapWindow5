@@ -3,5 +3,6 @@
     public interface IMessageService
     {
         void Warn(string message);
+        void Info(string message);
     }
 }

@@ -9,6 +9,11 @@ namespace MW5.Api.Concrete
     {
         private readonly GeoProjection _projection;
 
+        public SpatialReference()
+        {
+            _projection = new GeoProjection();
+        }
+
         internal SpatialReference(GeoProjection projection)
         {
             if (projection == null)

@@ -16,11 +16,22 @@ namespace MW5
 
         public void Init(IMainForm form)
         {
+            if (form == null)
+            {
+                throw new NullReferenceException("Main form reference is null.");
+            }
+
             _mainForm = form as IWin32Window;
+            //CompositionRoot.Container.RegisterInstance(typeof(IWin32Window), _mainForm);  
+            
             _map = form.Map;
+            CompositionRoot.Container.RegisterInstance(typeof(IMapControl), _map);  // it's a bit ugly; got ideas how to do it better? 
+
             _menu = UI.Menu.CreateInstance(form.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
-            TilesHelper.Init(Menu.Tiles);
+
+            // TODO: convert to services
+            TilesHelper.Init(_map, Menu.Tiles);
             PluginHelper.InitPlugins(this);
         }
 

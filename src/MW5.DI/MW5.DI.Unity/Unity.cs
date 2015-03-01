@@ -22,7 +22,7 @@ namespace MW5.DI.Unity
 
         public IApplicationContainer RegisterInstance(Type type, object instance)
         {
-            _container.RegisterInstance(instance);
+            _container.RegisterInstance(type, instance);
             return this;
         }
 

@@ -15,6 +15,9 @@ namespace MW5.Presenters
         ZoomOut = 2,
         ZoomMax = 3,
         Pan = 4,
+        OpenVector = 5,
+        OpenRaster = 6,
+        SetProjection = 7,
     }
 
     public interface IMainView : IView
@@ -45,6 +48,12 @@ namespace MW5.Presenters
                 case MainCommand.Open:
                     _layerService.AddLayer(LayerType.All);
                     break;
+                case MainCommand.OpenVector:
+                    _layerService.AddLayer(LayerType.Vector);
+                    break;
+                case MainCommand.OpenRaster:
+                    _layerService.AddLayer(LayerType.Raster);
+                    break;
                 case MainCommand.ZoomIn:
                     SetMapCursor(MapCursor.ZoomIn);
                     break;
@@ -56,6 +65,9 @@ namespace MW5.Presenters
                     break;
                 case MainCommand.Pan:
                     SetMapCursor(MapCursor.Pan);
+                    break;
+                case MainCommand.SetProjection:
+                    CompositionRoot.Container.Run<SetProjectionPresenter>();
                     break;
             }
         }

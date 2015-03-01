@@ -41,6 +41,7 @@ namespace MW5.Mvp
         public bool CommandFromName(string itemName, ref TCommand command)
         {
             itemName = itemName.ToLower();
+            
             var prefixes = new[] { "tool", "mnu", "ctx" };
             foreach (var prefix in prefixes)
             {
@@ -50,7 +51,9 @@ namespace MW5.Mvp
                 }
             }
 
-            var dict = Enum.GetValues(typeof(TCommand)).Cast<TCommand>().ToDictionary(v => v.ToString(CultureInfo.InvariantCulture).ToLower(), v => v);
+            var dict = Enum.GetValues(typeof(TCommand)).Cast<TCommand>()
+                .ToDictionary(v => v.ToString(CultureInfo.InvariantCulture).ToLower(), v => v);
+
             if (dict.ContainsKey(itemName))
             {
                 command = dict[itemName];
@@ -75,6 +78,11 @@ namespace MW5.Mvp
 
             foreach (var item in items)
             {
+                if (item.Tag != null)
+                {
+                    continue;       // those items are handled by somebody else
+                }
+
                 item.Click += ItemClick;
                 
                 var dropDown = item as IDropDownMenuItem;
