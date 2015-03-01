@@ -19,17 +19,21 @@ namespace MW5.Mvp
 
         public abstract void RunCommand(TCommand command);
 
-        protected abstract void CommandNotFound(ToolStripItem item);
+        protected abstract void CommandNotFound(string itemName);
 
         protected AbstractPresenter(TView view)
         {
             View = view;
 
-            if (view.Menus != null)
+            if (view.Toolbars != null)
             {
-                foreach (var menu in view.Menus)
+                Debug.Print("Toolbars count: " + view.Toolbars.Count());
+
+                foreach (var menu in view.Toolbars)
                 {
-                    InitMenu(menu);
+                    Debug.Print(menu.Name);
+                    
+                    InitMenu(menu.Items);
                 }
             }
         }
@@ -41,7 +45,9 @@ namespace MW5.Mvp
             foreach (var prefix in prefixes)
             {
                 if (itemName.StartsWith(prefix) && itemName.Length > prefix.Length)
+                {
                     itemName = itemName.Substring(prefix.Length);
+                }
             }
 
             var dict = Enum.GetValues(typeof(TCommand)).Cast<TCommand>().ToDictionary(v => v.ToString(CultureInfo.InvariantCulture).ToLower(), v => v);
@@ -53,36 +59,29 @@ namespace MW5.Mvp
 
             Debug.Print("Command not found: " + itemName);
 
-            //var menu = item as ToolStripDropDownItem;
-            //if (menu != null && menu.DropDownItems.Count > 0)
-            //    return false;
-
-            //if (item is ToolStripSeparator) return false;
-
-            //CommandNotFound(item);
+            CommandNotFound(itemName);
             return false;
         }
 
         /// <summary>
         /// Sets event handlers for menu items
         /// </summary>
-        public void InitMenu(IDropDownMenuItem parent)
+        public void InitMenu(IMenuItemCollection items)
         {
-            if (parent == null)
+            if (items == null)
+            {
                 return;
+            }
 
-            foreach (var item in parent.SubItems)
+            foreach (var item in items)
             {
                 item.Click += ItemClick;
                 
-                // TODO: make it recursive
-                //if (item.Tag == null)
-                //    item.Click += ItemClick;
-                //var menuItem = item as ToolStripDropDownItem;
-                //if (menuItem != null)
-                //{
-                //    InitMenu(menuItem.DropDownItems);
-                //}
+                var dropDown = item as IDropDownMenuItem;
+                if (dropDown != null)
+                {
+                    InitMenu(dropDown.SubItems);
+                }
             }
         }
 

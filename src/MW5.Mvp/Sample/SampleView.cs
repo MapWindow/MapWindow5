@@ -16,15 +16,14 @@ namespace MW5.Mvp.Sample
             Application.Run(this);
         }
 
-        public IEnumerable<IDropDownMenuItem> Menus
+        public IEnumerable<IToolbar> Toolbars
         {
             get { return null; }
         }
 
-        public void UpdateView(SampleViewModel model)
+        public void UpdateView()
         {
-            textBox1.Text = model.Name;
-            MessageBox.Show("Updating view.");
+            throw new System.NotImplementedException();
         }
     }
 }

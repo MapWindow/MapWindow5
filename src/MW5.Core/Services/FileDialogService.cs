@@ -6,7 +6,7 @@ namespace MW5.Services
 {
     public class FileDialogService : IFileDialogService
     {
-        public bool OpenFile(LayerType layerType, Form parent, out string filename)
+        public bool OpenFile(LayerType layerType, IWin32Window parent, out string filename)
         {
             filename = string.Empty;
             string[] filenames;
@@ -17,12 +17,12 @@ namespace MW5.Services
             return filename != string.Empty;
         }
 
-        public bool OpenFiles(LayerType layerType, Form parent, out string[] filenames)
+        public bool OpenFiles(LayerType layerType, IWin32Window parent, out string[] filenames)
         {
             return OpenFileCore(layerType, parent, true, out filenames);
         }
 
-        private bool OpenFileCore(LayerType layerType, Form parent, bool multiSelect, out string[] filenames)
+        private bool OpenFileCore(LayerType layerType, IWin32Window parent, bool multiSelect, out string[] filenames)
         {
             filenames = null;
             using (var dialog = new OpenFileDialog())

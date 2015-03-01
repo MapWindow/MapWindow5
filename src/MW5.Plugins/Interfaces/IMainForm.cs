@@ -12,6 +12,5 @@ namespace MW5.Plugins.Interfaces
     {
         object MenuManager { get;}
         IMapControl Map { get; }
-        object Form { get; }
     }
 }

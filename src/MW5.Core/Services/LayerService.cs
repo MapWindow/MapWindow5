@@ -23,7 +23,7 @@ namespace MW5.Services
         public void AddLayer(LayerType layerType)
         {
             string[] filenames;
-            if (!_fileDialogService.OpenFiles(layerType, _context.Form as Form, out filenames))
+            if (!_fileDialogService.OpenFiles(layerType, _context.MainWindow, out filenames))
             {
                 return;
             }

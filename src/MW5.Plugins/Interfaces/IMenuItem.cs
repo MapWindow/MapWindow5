@@ -52,7 +52,7 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// Gets the Name of this item
         /// </summary>
-        string Name { get; }
+        string Name { get; set; }
 
         /// <summary>
         /// Gets/Sets the visibility state of this item

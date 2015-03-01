@@ -69,6 +69,7 @@
     <Compile Include="Interfaces\IMenuItemCollection.cs" />
     <Compile Include="Interfaces\IDropDownMenuItem.cs" />
     <Compile Include="Interfaces\IToolbar.cs" />
+    <Compile Include="Interfaces\IToolbarCollection.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

@@ -12,7 +12,13 @@ namespace MW5.UI
     {
         private MainFrameBarManager _menuManager;
 
-        public Menu(object menuManager)
+        public static IMenu CreateInstance(object menuManager)
+        {
+            var menu = new Menu(menuManager);
+            return menu;
+        }
+
+        private Menu(object menuManager)
         {
             _menuManager = menuManager as MainFrameBarManager;
             if (_menuManager == null)
@@ -32,6 +38,12 @@ namespace MW5.UI
                 }
                 return menu;
             }
+        }
+
+        public string Name
+        {
+            get { return _menuManager.MainMenuBar.BarName; }
+            set { _menuManager.MainMenuBar.BarName = value; }
         }
 
         public IMenuItemCollection Items

@@ -72,11 +72,8 @@ namespace MW5.UI
 
         public string Name
         {
-            get
-            {
-                // TODO: is it the same as Name?
-                return _item.BarName;
-            }
+            get { return _item.ID; }
+            set { _item.ID = value; }
         }
 
         public bool Visible

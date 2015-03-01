@@ -28,9 +28,9 @@ namespace MW5.Mvp.Sample
             _view = view;
         }
 
-        protected override void CommandNotFound(ToolStripItem item)
+        protected override void CommandNotFound(string itemName)
         {
-            Debug.Print("Command not found");
+            Debug.Print("Command not found: " + itemName);
         }
 
         public override void RunCommand(SampleCommand command)

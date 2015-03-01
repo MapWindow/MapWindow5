@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface IMenu
+    public interface IMenu: IToolbar
     {
-        IMenuItemCollection Items { get; }
-
         IDropDownMenuItem Plugins { get; }
 
         IDropDownMenuItem Tiles { get; }

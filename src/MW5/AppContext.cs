@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
@@ -8,53 +9,27 @@ namespace MW5
 {
     public class AppContext: IAppContext
     {
-        private IMainForm _mainForm;
-        private Menu _menu;
-
-        //public static AppContext _instance;     // temp;
-
-        //internal static void Init(IMainForm form)
-        //{
-        //    //var context = new AppContext(form);
-        //    //_instance = context;
-        //    _instance.Form
-        //    //_mainForm = form;
-        //    _menu = new Menu(form.MenuManager);
-        //    TilesHelper.Init(_instance.Menu.Tiles);
-        //    PluginHelper.InitPlugins(_instance);
-        //}
-
-        //public static IAppContext Instance
-        //{
-        //    get
-        //    {
-        //        if (_instance == null || !_instance.Initialized)
-        //        {
-        //            throw new ApplicationException("Application context is not initialized.");
-        //        }
-        //        return _instance;
-        //    }
-        //}
-
-        //private AppContext(IMainForm form)
-        //{
-
-        //}
+        private IMapControl _map;
+        private IWin32Window _mainForm;
+        private IMenu _menu;
+        private IToolbarCollection _toolbars;
 
         public void Init(IMainForm form)
         {
-            _mainForm = form;
-            _menu = new Menu(form.MenuManager);
+            _mainForm = form as IWin32Window;
+            _map = form.Map;
+            _menu = UI.Menu.CreateInstance(form.MenuManager);
+            _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
             TilesHelper.Init(Menu.Tiles);
             PluginHelper.InitPlugins(this);
         }
 
         public IMapControl Map
         {
-            get { return _mainForm.Map; }
+            get { return _map; }
         }
 
-        public IMainForm Form
+        public IWin32Window MainWindow
         {
             get { return _mainForm; }
         }
@@ -64,11 +39,14 @@ namespace MW5
             get { return _menu; }
         }
 
-        public bool Initialized
+        public IToolbarCollection Toolbars
         {
-            get { return _mainForm != null && _mainForm.Map != null; }
+            get { return _toolbars; }
         }
 
-       
+        public bool Initialized
+        {
+            get { return _map != null; }
+        }
     }
 }
