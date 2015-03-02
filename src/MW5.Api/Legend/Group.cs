@@ -1,18 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using MW5.Api.Concrete;
+
 namespace MW5.Api.Legend
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using MW5.Api.Concrete;
-
     /// <summary>
     /// Summary description for Group.
     /// </summary>
     public class Group
     {
         private string _caption;
-
         private bool _expanded;
 
         /// <summary>
@@ -21,9 +19,7 @@ namespace MW5.Api.Legend
         protected internal int _handle;
 
         private int _height;
-
         private object _icon;
-
         private Visibility _visibleState;
 
         /// <summary>
@@ -49,15 +45,15 @@ namespace MW5.Api.Legend
         public Group(LegendControl leg)
         {
             // The next line MUST GO FIRST in the constructor
-            this._legend = leg;
+            _legend = leg;
 
             // The previous line MUST GO FIRST in the constructor
-            this.Layers = new List<LegendLayer>();
-            this.Expanded = true;
-            this.VisibleState = Visibility.AllVisible;
-            this._handle = -1;
-            this.Icon = null;
-            this.StateLocked = false;
+            Layers = new List<LegendLayer>();
+            Expanded = true;
+            VisibleState = Visibility.AllVisible;
+            _handle = -1;
+            Icon = null;
+            StateLocked = false;
         }
 
         /// <summary>
@@ -65,15 +61,12 @@ namespace MW5.Api.Legend
         /// </summary>
         public string Text
         {
-            get
-            {
-                return this._caption;
-            }
+            get { return _caption; }
 
             set
             {
-                this._caption = value;
-                this._legend.Redraw();
+                _caption = value;
+                _legend.Redraw();
             }
         }
 
@@ -83,17 +76,14 @@ namespace MW5.Api.Legend
         /// </summary>
         public object Icon
         {
-            get
-            {
-                return this._icon;
-            }
+            get { return _icon; }
 
             set
             {
                 if (LegendHelper.IsSupportedPicture(value))
                 {
-                    this._icon = value;
-                    this._legend.Redraw();
+                    _icon = value;
+                    _legend.Redraw();
                 }
                 else
                 {
@@ -107,10 +97,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public int LayerCount
         {
-            get
-            {
-                return this.Layers.Count;
-            }
+            get { return Layers.Count; }
         }
 
         /// <summary>
@@ -120,9 +107,9 @@ namespace MW5.Api.Legend
         {
             get
             {
-                if (layerPosition >= 0 && layerPosition < this.Layers.Count)
+                if (layerPosition >= 0 && layerPosition < Layers.Count)
                 {
-                    return this.Layers[layerPosition];
+                    return Layers[layerPosition];
                 }
 
                 LegendHelper.LastError = "Invalid Layer Position within Group";
@@ -135,10 +122,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public int Handle
         {
-            get
-            {
-                return this._handle;
-            }
+            get { return _handle; }
         }
 
         /// <summary>
@@ -147,18 +131,15 @@ namespace MW5.Api.Legend
         /// </summary>
         public bool Expanded
         {
-            get
-            {
-                return this._expanded;
-            }
+            get { return _expanded; }
 
             set
             {
-                if (value != this._expanded)
+                if (value != _expanded)
                 {
-                    this._expanded = value;
-                    this.RecalcHeight();
-                    this._legend.Redraw();
+                    _expanded = value;
+                    RecalcHeight();
+                    _legend.Redraw();
                 }
             }
         }
@@ -170,8 +151,8 @@ namespace MW5.Api.Legend
         {
             get
             {
-                this.RecalcHeight();
-                return this._height;
+                RecalcHeight();
+                return _height;
             }
         }
 
@@ -182,20 +163,19 @@ namespace MW5.Api.Legend
         {
             get
             {
-                var NumLayers = this.Layers.Count;
+                var numLayers = Layers.Count;
 
                 // initialize the height to just the height of the group item
-                var Retval = Constants.ItemHeight;
-                LegendLayer lyr;
+                var retval = Constants.ItemHeight;
 
                 // now add all the heights of the Layers
-                for (var i = 0; i < NumLayers; i++)
+                for (var i = 0; i < numLayers; i++)
                 {
-                    lyr = this.Layers[i];
-                    Retval += lyr.CalcHeight(true);
+                    var lyr = Layers[i];
+                    retval += lyr.CalcHeight(true);
                 }
 
-                return Retval;
+                return retval;
             }
         }
 
@@ -206,27 +186,8 @@ namespace MW5.Api.Legend
         /// </summary>
         public bool LayersVisible
         {
-            get
-            {
-                if (this.VisibleState == Visibility.AllHidden)
-                {
-                    return false;
-                }
-
-                return true;
-            }
-
-            set
-            {
-                if (value)
-                {
-                    this.VisibleState = Visibility.AllVisible;
-                }
-                else
-                {
-                    this.VisibleState = Visibility.AllHidden;
-                }
-            }
+            get { return VisibleState == Visibility.AllHidden; }
+            set {  VisibleState = value ? Visibility.AllVisible : Visibility.AllHidden; }
         }
 
         /// <summary>
@@ -235,10 +196,7 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal Visibility VisibleState
         {
-            get
-            {
-                return this._visibleState;
-            }
+            get { return _visibleState; }
 
             set
             {
@@ -248,8 +206,8 @@ namespace MW5.Api.Legend
                     throw new Exception("Invalid [Property set] value: vsPARTIAL_VISIBLE");
                 }
 
-                this._visibleState = value;
-                this.UpdateLayerVisibility();
+                _visibleState = value;
+                UpdateLayerVisibility();
             }
         }
 
@@ -266,11 +224,10 @@ namespace MW5.Api.Legend
         /// <returns>Layer item if successful, null (nothing) on failure</returns>
         protected internal Layer LayerByHandle(int handle)
         {
-            var count = this.Layers.Count;
-            Layer lyr = null;
+            var count = Layers.Count;
             for (var i = 0; i < count; i++)
             {
-                lyr = this.Layers[i];
+                Layer lyr = Layers[i];
                 if (lyr.Handle == handle)
                 {
                     return lyr;
@@ -287,10 +244,10 @@ namespace MW5.Api.Legend
         /// <returns>0-Based index of the Layer on success, -1 on failure</returns>
         protected internal int LayerPositionInGroup(int handle)
         {
-            var count = this.Layers.Count;
+            var count = Layers.Count;
             for (var i = 0; i < count; i++)
             {
-                Layer lyr = this.Layers[i];
+                Layer lyr = Layers[i];
                 if (lyr.Handle == handle)
                 {
                     return i;
@@ -307,9 +264,9 @@ namespace MW5.Api.Legend
         /// <returns>Layer's handle on success, -1 on failure</returns>
         public int LayerHandle(int positionInGroup)
         {
-            if (positionInGroup >= 0 && positionInGroup < this.Layers.Count)
+            if (positionInGroup >= 0 && positionInGroup < Layers.Count)
             {
-                return this.Layers[positionInGroup].Handle;
+                return Layers[positionInGroup].Handle;
             }
 
             LegendHelper.LastError = "Invalid layer position within group";
@@ -321,46 +278,46 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal void RecalcHeight()
         {
-            var numLayers = this.Layers.Count;
+            var numLayers = Layers.Count;
 
             // initialize the height to just the height of the group item
-            this._height = Constants.ItemHeight;
+            _height = Constants.ItemHeight;
 
-            if (this._expanded)
+            if (_expanded)
             {
                 // now add all the heights of the Layers
                 for (var i = 0; i < numLayers; i++)
                 {
-                    var lyr = this.Layers[i];
+                    var lyr = Layers[i];
                     if (!lyr.HideFromLegend)
                     {
-                        this._height += lyr.Height;
+                        _height += lyr.Height;
                     }
                 }
             }
             else
             {
-                this._height = Constants.ItemHeight;
+                _height = Constants.ItemHeight;
             }
         }
 
         private void UpdateLayerVisibility()
         {
-            var numLayers = this.Layers.Count;
-            var visible = this._visibleState == Visibility.AllVisible;
+            var numLayers = Layers.Count;
+            var visible = _visibleState == Visibility.AllVisible;
 
             for (var i = 0; i < numLayers; i++)
             {
-                var lyr = this.Layers[i];
-                var oldState = this._legend._map.get_LayerVisible(lyr.Handle);
+                var lyr = Layers[i];
+                var oldState = _legend._map.get_LayerVisible(lyr.Handle);
 
-                this._legend._map.set_LayerVisible(lyr.Handle, visible);
+                _legend._map.set_LayerVisible(lyr.Handle, visible);
 
                 if (oldState != visible)
                 {
                     var cancel = false;
 
-                    this._legend.FireLayerVisibleChanged(lyr.Handle, visible, ref cancel);
+                    _legend.FireLayerVisibleChanged(lyr.Handle, visible, ref cancel);
                     if (cancel)
                     {
                         lyr.Visible = !visible;
@@ -375,11 +332,11 @@ namespace MW5.Api.Legend
         protected internal void UpdateGroupVisibility()
         {
             var numVisible = 0;
-            var numLayers = this.Layers.Count;
+            var numLayers = Layers.Count;
             for (var i = 0; i < numLayers; i++)
             {
-                Layer lyr = this.Layers[i];
-                if (this._legend._map.get_LayerVisible(lyr.Handle))
+                Layer lyr = Layers[i];
+                if (_legend._map.get_LayerVisible(lyr.Handle))
                 {
                     numVisible++;
                 }
@@ -387,15 +344,15 @@ namespace MW5.Api.Legend
 
             if (numVisible == numLayers)
             {
-                this._visibleState = Visibility.AllVisible;
+                _visibleState = Visibility.AllVisible;
             }
             else if (numVisible == 0)
             {
-                this._visibleState = Visibility.AllHidden;
+                _visibleState = Visibility.AllHidden;
             }
             else
             {
-                this._visibleState = Visibility.PartialVisible;
+                _visibleState = Visibility.PartialVisible;
             }
         }
 
@@ -407,17 +364,16 @@ namespace MW5.Api.Legend
         public Bitmap Snapshot(int imgWidth)
         {
             Bitmap bmp = null; // = new Bitmap(imgWidth,imgHeight);
-            Rectangle rect;
 
             Graphics g;
 
-            bmp = new Bitmap(imgWidth, this.ExpandedHeight);
+            bmp = new Bitmap(imgWidth, ExpandedHeight);
             g = Graphics.FromImage(bmp);
             g.Clear(Color.White);
 
-            rect = new Rectangle(0, 0, imgWidth, this.ExpandedHeight);
+            var rect = new Rectangle(0, 0, imgWidth, ExpandedHeight);
 
-            this._legend.DrawGroup(g, this, rect, true);
+            _legend.DrawGroup(g, this, rect, true);
 
             return bmp;
         }
@@ -427,7 +383,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public SizeF MeasureCaption(Graphics g, Font font, int maxWidth)
         {
-            return g.MeasureString(this.Text, font, maxWidth);
+            return g.MeasureString(Text, font, maxWidth);
         }
 
         /// <summary>
@@ -435,7 +391,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public SizeF MeasureCaption(Graphics g, Font font)
         {
-            return g.MeasureString(this.Text, font);
+            return g.MeasureString(Text, font);
         }
     }
 }

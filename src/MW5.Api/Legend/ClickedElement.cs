@@ -17,14 +17,14 @@
 
         public void Nullify()
         {
-            this.ColorBox = false;
-            this.CheckBox = false;
-            this.ExpansionBox = false;
-            this.Charts = false;
-            this.Label = false;
-            this.ChartFieldIndex = -1;
-            this.CategoryIndex = -1;
-            this.GroupIndex = -1;
+            ColorBox = false;
+            CheckBox = false;
+            ExpansionBox = false;
+            Charts = false;
+            Label = false;
+            ChartFieldIndex = -1;
+            CategoryIndex = -1;
+            GroupIndex = -1;
         }
     }
 }

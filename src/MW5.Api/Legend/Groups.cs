@@ -1,9 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace MW5.Api.Legend
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-
     /// <summary>
     /// Grouping of Layers within the legend
     /// </summary>
@@ -17,7 +17,7 @@ namespace MW5.Api.Legend
         public Groups(LegendControl leg)
         {
             // The next line MUST GO FIRST in the constructor
-            this._legend = leg;
+            _legend = leg;
 
             // The previous line MUST GO FIRST in the constructor	
         }
@@ -27,10 +27,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public int Count
         {
-            get
-            {
-                return this._legend.NumGroups;
-            }
+            get { return _legend.NumGroups; }
         }
 
         /// <summary>
@@ -41,9 +38,9 @@ namespace MW5.Api.Legend
         {
             get
             {
-                if (position >= 0 && position < this.Count)
+                if (position >= 0 && position < Count)
                 {
-                    return this._legend.AllGroups[position];
+                    return _legend.AllGroups[position];
                 }
 
                 LegendHelper.LastError = "Invalid Group Position ( Must be >= 0 and < Count )";
@@ -57,7 +54,7 @@ namespace MW5.Api.Legend
         /// <returns>Handle to the group on success, -1 on failure</returns>
         public int Add()
         {
-            return this._legend.AddGroup("New Group");
+            return _legend.AddGroup("New Group");
         }
 
         /// <summary>
@@ -67,7 +64,7 @@ namespace MW5.Api.Legend
         /// <returns>Handle to the group on success, -1 on failure</returns>
         public int Add(string name)
         {
-            return this._legend.AddGroup(name);
+            return _legend.AddGroup(name);
         }
 
         /// <summary>
@@ -78,7 +75,7 @@ namespace MW5.Api.Legend
         /// <returns>Handle to the group on success, -1 on failure</returns>
         public int Add(string name, int position)
         {
-            return this._legend.AddGroup(name, position);
+            return _legend.AddGroup(name, position);
         }
 
         /// <summary>
@@ -88,7 +85,7 @@ namespace MW5.Api.Legend
         /// <returns>True on success, False on failure</returns>
         public bool Remove(int handle)
         {
-            return this._legend.RemoveGroup(handle);
+            return _legend.RemoveGroup(handle);
         }
 
         /// <summary>
@@ -96,7 +93,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public void Clear()
         {
-            this._legend.ClearGroups();
+            _legend.ClearGroups();
         }
 
         /// <summary>
@@ -116,9 +113,9 @@ namespace MW5.Api.Legend
         /// <returns>A Group object allowing you to read/change properties, null (nothing) on failure</returns>
         public Group ItemByHandle(int handle)
         {
-            if (this._legend.IsValidGroup(handle))
+            if (_legend.IsValidGroup(handle))
             {
-                return this[(int)this._legend.m_GroupPositions[handle]];
+                return this[(int) _legend.m_GroupPositions[handle]];
             }
 
             LegendHelper.LastError = "Invalid Group Handle";
@@ -132,9 +129,9 @@ namespace MW5.Api.Legend
         /// <returns>The Position of the specified group on success, -1 on Failure</returns>
         public int PositionOf(int groupHandle)
         {
-            if (this._legend.IsValidGroup(groupHandle))
+            if (_legend.IsValidGroup(groupHandle))
             {
-                return (int)this._legend.m_GroupPositions[groupHandle];
+                return (int) _legend.m_GroupPositions[groupHandle];
             }
 
             LegendHelper.LastError = "Invalid Group Handle";
@@ -148,7 +145,7 @@ namespace MW5.Api.Legend
         /// <returns>True if the Group still exists, False otherwise</returns>
         public bool IsValidHandle(int handle)
         {
-            return this._legend.IsValidGroup(handle);
+            return _legend.IsValidGroup(handle);
         }
 
         /// <summary>
@@ -159,7 +156,7 @@ namespace MW5.Api.Legend
         /// <returns>True on success, False otherwise</returns>
         public bool MoveGroup(int groupHandle, int newPos)
         {
-            return this._legend.MoveGroup(groupHandle, newPos);
+            return _legend.MoveGroup(groupHandle, newPos);
         }
 
         /// <summary>
@@ -167,16 +164,16 @@ namespace MW5.Api.Legend
         /// </summary>
         public void CollapseAll()
         {
-            this._legend.Lock();
+            _legend.Lock();
             int i;
 
-            var count = this.Count;
+            var count = Count;
             for (i = 0; i < count; i++)
             {
                 this[i].Expanded = false;
             }
 
-            this._legend.Unlock();
+            _legend.Unlock();
         }
 
         /// <summary>
@@ -184,16 +181,16 @@ namespace MW5.Api.Legend
         /// </summary>
         public void ExpandAll()
         {
-            this._legend.Lock();
+            _legend.Lock();
             int i;
 
-            var count = this.Count;
+            var count = Count;
             for (i = 0; i < count; i++)
             {
                 this[i].Expanded = true;
             }
 
-            this._legend.Unlock();
+            _legend.Unlock();
         }
 
         /// <summary>
@@ -209,8 +206,8 @@ namespace MW5.Api.Legend
             var group = this.FirstOrDefault(g => g.Text.ToLower() == groupName.ToLower());
             if (group == null && createIfNotExists)
             {
-                var handle = this.Add(groupName);
-                group = this.ItemByHandle(handle);
+                var handle = Add(groupName);
+                group = ItemByHandle(handle);
             }
 
             return group;
@@ -220,7 +217,7 @@ namespace MW5.Api.Legend
 
         public IEnumerator<Group> GetEnumerator()
         {
-            foreach (var group in this._legend.AllGroups)
+            foreach (var group in _legend.AllGroups)
             {
                 // Return the current element and then on next function call 
                 // resume from next element rather than starting all over again;
@@ -231,7 +228,7 @@ namespace MW5.Api.Legend
         IEnumerator IEnumerable.GetEnumerator()
         {
             // Lets call the generic version here
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         #endregion

@@ -1,12 +1,10 @@
-﻿namespace MW5.Api.Legend
+﻿using System.Drawing;
+using System.Windows.Forms;
+using MapWinGIS;
+using Image = System.Drawing.Image;
+
+namespace MW5.Api.Legend
 {
-    using System.Drawing;
-    using System.Windows.Forms;
-
-    using MapWinGIS;
-
-    using Image = System.Drawing.Image;
-
     public static class LegendHelper
     {
         // temporary
@@ -20,17 +18,17 @@
             }
 
             var picType = picture.GetType();
-            if (typeof(Icon) == picType)
+            if (typeof (Icon) == picType)
             {
                 return true;
             }
 
-            if (typeof(MapWinGIS.Image) == picType)
+            if (typeof (MapWinGIS.Image) == picType)
             {
                 return true;
             }
 
-            if (typeof(Bitmap) == picType)
+            if (typeof (Bitmap) == picType)
             {
                 return true;
             }
@@ -84,7 +82,7 @@
 
         internal static Image GetIcon(this ImageList imageList, LegendIcon icon)
         {
-            return imageList.Images[(int)icon];
+            return imageList.Images[(int) icon];
         }
     }
 }

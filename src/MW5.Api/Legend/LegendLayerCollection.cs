@@ -1,11 +1,9 @@
-﻿namespace MW5.Api.Legend
+﻿using System;
+using AxMapWinGIS;
+using MW5.Api.Concrete;
+
+namespace MW5.Api.Legend
 {
-    using System;
-
-    using AxMapWinGIS;
-
-    using MW5.Api.Concrete;
-
     public class LegendLayerCollection : BaseLayerCollection<LegendLayer>
     {
         private readonly LegendControl _legend;
@@ -13,7 +11,7 @@
         internal LegendLayerCollection(AxMap axMap, LegendControl legend)
             : base(axMap)
         {
-            this._legend = legend;
+            _legend = legend;
             if (legend == null)
             {
                 throw new NullReferenceException("Legend reference is null.");
@@ -24,12 +22,12 @@
         {
             get
             {
-                if (position >= 0 && position < this.Count)
+                if (position >= 0 && position < Count)
                 {
-                    var layerHandle = this._axMap.get_LayerHandle(position);
+                    var layerHandle = _axMap.get_LayerHandle(position);
                     if (layerHandle != -1)
                     {
-                        return new LegendLayer(this._axMap, layerHandle, this._legend);
+                        return new LegendLayer(_axMap, layerHandle, _legend);
                     }
                 }
 
@@ -39,7 +37,7 @@
 
         public override LegendLayer ItemByHandle(int layerHandle)
         {
-            return new LegendLayer(this._axMap, layerHandle, this._legend);
+            return new LegendLayer(_axMap, layerHandle, _legend);
         }
 
         /// <summary>
@@ -51,7 +49,7 @@
         {
             int layerIndex, groupIndex;
 
-            var lyr = this._legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
+            var lyr = _legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
 
             if (lyr != null)
             {
@@ -70,11 +68,11 @@
         {
             int layerIndex, groupIndex;
 
-            var lyr = this._legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
+            var lyr = _legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
 
             if (lyr != null)
             {
-                var grp = this._legend.AllGroups[groupIndex];
+                var grp = _legend.AllGroups[groupIndex];
                 return grp.Handle;
             }
 
@@ -90,7 +88,7 @@
         /// <returns>True on success, False otherwise</returns>
         public bool MoveLayer(int LayerHandle, int TargetGroupHandle, int PositionInGroup)
         {
-            return this._legend.MoveLayer(TargetGroupHandle, LayerHandle, PositionInGroup);
+            return _legend.MoveLayer(TargetGroupHandle, LayerHandle, PositionInGroup);
         }
     }
 }

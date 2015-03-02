@@ -1,26 +1,21 @@
-﻿namespace MW5.Api.Legend
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Drawing;
+using AxMapWinGIS;
+using MapWinGIS;
+using MW5.Api.Concrete;
+using MW5.Api.Legend.Events;
+
+namespace MW5.Api.Legend
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Drawing;
-
-    using AxMapWinGIS;
-
-    using MapWinGIS;
-
-    using MW5.Api.Concrete;
-    using MW5.Api.Legend.Events;
-
     /// <summary>
     /// One layer within the legend
     /// </summary>
     public class LegendLayer : Layer
     {
         private bool _expanded;
-
         private object _icon;
-
         // private SymbologySettings m_symbologySettings = new SymbologySettings();
         // public ShapefileBinding ShapefileBinding;
 
@@ -108,19 +103,19 @@
             : base(map, layerHandle)
         {
             // The next line MUST GO FIRST in the constructor
-            this._legend = legend;
+            _legend = legend;
 
             // The previous line MUST GO FIRST in the constructor
-            this.Expanded = true;
+            Expanded = true;
 
-            this.ColorLegend = new ArrayList();
-            this._icon = null;
-            this.HasTransparency = false;
+            ColorLegend = new ArrayList();
+            _icon = null;
+            HasTransparency = false;
 
-            this.Elements = new List<LayerElement>();
+            Elements = new List<LayerElement>();
 
-            this.CustomObjects = new Hashtable();
-            this.SmallIconWasDrawn = false;
+            CustomObjects = new Hashtable();
+            SmallIconWasDrawn = false;
 
             // ShapefileBinding = new ShapefileBinding();
             // _symbologySettings = new SymbologySettings();
@@ -148,10 +143,7 @@
         /// </summary>
         public object Icon
         {
-            get
-            {
-                return this._icon;
-            }
+            get { return _icon; }
 
             set
             {
@@ -160,16 +152,13 @@
                     throw new Exception("LegendControl Error: Invalid Group Icon type");
                 }
 
-                this._icon = value;
+                _icon = value;
             }
         }
 
         public int Height
         {
-            get
-            {
-                return this.CalcHeight();
-            }
+            get { return CalcHeight(); }
         }
 
         /// <summary>
@@ -178,15 +167,12 @@
         /// </summary>
         public bool Expanded
         {
-            get
-            {
-                return this._expanded;
-            }
+            get { return _expanded; }
 
             set
             {
-                this._expanded = value;
-                this._legend.Redraw();
+                _expanded = value;
+                _legend.Redraw();
             }
         }
 
@@ -200,7 +186,7 @@
         /// </summary>
         public object GetCustomObject(string key)
         {
-            return this.CustomObjects[key];
+            return CustomObjects[key];
         }
 
         /// <summary>
@@ -208,7 +194,7 @@
         /// </summary>
         public void SetCustomObject(object obj, string key)
         {
-            this.CustomObjects[key] = obj;
+            CustomObjects[key] = obj;
         }
 
         /// <summary>
@@ -217,7 +203,7 @@
         /// <returns>Bitmap if successful, null (nothing) otherwise</returns>
         public Bitmap Snapshot()
         {
-            return this._legend.LayerSnapshot(this.Handle);
+            return _legend.LayerSnapshot(Handle);
         }
 
         /// <summary>
@@ -227,7 +213,7 @@
         /// <returns>Bitmap if successful, null (nothing) otherwise</returns>
         public Bitmap Snapshot(int imgWidth)
         {
-            return this._legend.LayerSnapshot(this.Handle, imgWidth);
+            return _legend.LayerSnapshot(Handle, imgWidth);
         }
 
         /// <summary>
@@ -235,7 +221,7 @@
         /// </summary>
         public SizeF MeasureCaption(Graphics g, Font font, int maxWidth)
         {
-            return g.MeasureString(this.Name, font, maxWidth);
+            return g.MeasureString(Name, font, maxWidth);
         }
 
         /// <summary>
@@ -251,7 +237,7 @@
         /// </summary>
         public SizeF MeasureCaption(Graphics g, Font font)
         {
-            return g.MeasureString(this.Name, font);
+            return g.MeasureString(Name, font);
         }
 
         /// <summary>
@@ -268,7 +254,7 @@
         /// </summary>
         public void Refresh()
         {
-            this._legend.Redraw();
+            _legend.Redraw();
         }
 
         /// <summary>
@@ -279,19 +265,19 @@
         protected internal int CalcHeight(bool useExpandedHeight)
         {
             // to affect drawing of the expansion box externally
-            if (this._expanded && this.ExpansionBoxCustomHeightFunction != null)
+            if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
-                var args = new LayerMeasureEventArgs(this._layerHandle, this._legend.Width, Constants.ItemHeight)
-                               {
-                                   Handled
-                                       =
-                                       false
-                               };
-                this.ExpansionBoxCustomHeightFunction.Invoke(this, args);
+                var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ItemHeight)
+                {
+                    Handled
+                        =
+                        false
+                };
+                ExpansionBoxCustomHeightFunction.Invoke(this, args);
 
                 if (args.Handled)
                 {
-                    return args.HeightToDraw + Constants.ItemHeight + (Constants.ExpandBoxTopPad * 2);
+                    return args.HeightToDraw + Constants.ItemHeight + (Constants.ExpandBoxTopPad*2);
                 }
 
                 return Constants.ItemHeight;
@@ -299,49 +285,49 @@
 
             var ret = 0;
 
-            if (this.Type == LegendLayerType.Grid || this.Type == LegendLayerType.Image)
+            if (Type == LegendLayerType.Grid || Type == LegendLayerType.Image)
             {
                 // Our own calculation
-                if (useExpandedHeight == false && (this._expanded == false || this.ColorLegend.Count == 0))
+                if (useExpandedHeight == false && (_expanded == false || ColorLegend.Count == 0))
                 {
                     ret = Constants.ItemHeight;
                 }
                 else
                 {
-                    ret = Constants.ItemHeight + (this.ColorLegend.Count * Constants.CsItemHeight) + 2;
+                    ret = Constants.ItemHeight + (ColorLegend.Count*Constants.CsItemHeight) + 2;
                 }
 
                 // Add in caption space
-                if (useExpandedHeight || this._expanded)
+                if (useExpandedHeight || _expanded)
                 {
-                    ret += (this.ColorSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0)
-                           + (this.StippleSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0);
+                    ret += (ColorSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0)
+                           + (StippleSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0);
                 }
             }
             else
             {
-                var sf = this._map.get_Shapefile(this.Handle);
+                var sf = _map.get_Shapefile(Handle);
 
-                if ((useExpandedHeight || this._expanded) && sf != null)
+                if ((useExpandedHeight || _expanded) && sf != null)
                 {
                     ret = Constants.ItemHeight + 2; // layer name
 
-                    ret += this.GetCategoryHeight(sf.DefaultDrawingOptions) + 2; // default symbology
+                    ret += GetCategoryHeight(sf.DefaultDrawingOptions) + 2; // default symbology
 
                     if (sf.Categories.Count > 0)
                     {
                         ret += Constants.CsItemHeight + 2; // caption
 
                         var categories = sf.Categories;
-                        if (this.Type == LegendLayerType.LineShapefile || this.Type == LegendLayerType.PolygonShapefile)
+                        if (Type == LegendLayerType.LineShapefile || Type == LegendLayerType.PolygonShapefile)
                         {
-                            ret += sf.Categories.Count * (Constants.CsItemHeight + 2);
+                            ret += sf.Categories.Count*(Constants.CsItemHeight + 2);
                         }
                         else
                         {
                             for (var i = 0; i < sf.Categories.Count; i++)
                             {
-                                ret += this.GetCategoryHeight(categories.Item[i].DrawingOptions);
+                                ret += GetCategoryHeight(categories.Item[i].DrawingOptions);
                             }
                         }
 
@@ -354,7 +340,7 @@
                         ret += sf.Charts.IconHeight;
                         ret += 2;
 
-                        ret += sf.Charts.NumFields * (Constants.CsItemHeight + 2);
+                        ret += sf.Charts.NumFields*(Constants.CsItemHeight + 2);
                     }
                 }
                 else
@@ -375,38 +361,38 @@
         /// </summary>
         public int GetCategoryHeight(ShapeDrawingOptions options)
         {
-            if (this.Type == LegendLayerType.PolygonShapefile || this.Type == LegendLayerType.LineShapefile)
+            if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
             {
                 return Constants.CsItemHeight + 2;
             }
 
-            if (this.Type == LegendLayerType.PointShapefile)
+            if (Type == LegendLayerType.PointShapefile)
             {
                 switch (options.PointType)
                 {
                     case tkPointSymbolType.ptSymbolPicture:
-                        {
-                            bool defaultHeight = (options.Picture.Height * options.PictureScaleY) + 2
-                                                 <= Constants.CsItemHeight || options.Picture == null;
-                            return defaultHeight
-                                       ? Constants.CsItemHeight + 2
-                                       : (int)((options.Picture.Height * options.PictureScaleY) + 2);
-                        }
+                    {
+                        var defaultHeight = (options.Picture.Height*options.PictureScaleY) + 2
+                                            <= Constants.CsItemHeight || options.Picture == null;
+                        return defaultHeight
+                            ? Constants.CsItemHeight + 2
+                            : (int) ((options.Picture.Height*options.PictureScaleY) + 2);
+                    }
 
                     case tkPointSymbolType.ptSymbolFontCharacter:
-                        {
-                            var ratio = options.FrameVisible ? 1.4 : 0.9;
-                            return (options.PointSize * ratio) + 2 <= Constants.CsItemHeight
-                                       ? Constants.CsItemHeight
-                                       : (int)(options.PointSize * ratio);
-                        }
+                    {
+                        var ratio = options.FrameVisible ? 1.4 : 0.9;
+                        return (options.PointSize*ratio) + 2 <= Constants.CsItemHeight
+                            ? Constants.CsItemHeight
+                            : (int) (options.PointSize*ratio);
+                    }
 
                     default:
-                        {
-                            return options.PointSize + 2 <= Constants.CsItemHeight
-                                       ? Constants.CsItemHeight + 2
-                                       : (int)options.PointSize + 2;
-                        }
+                    {
+                        return options.PointSize + 2 <= Constants.CsItemHeight
+                            ? Constants.CsItemHeight + 2
+                            : (int) options.PointSize + 2;
+                    }
                 }
             }
 
@@ -419,30 +405,30 @@
         public int GetCategoryWidth(ShapeDrawingOptions options)
         {
             const int maxWidth = 100;
-            if (this.Type == LegendLayerType.PolygonShapefile || this.Type == LegendLayerType.LineShapefile)
+            if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
             {
                 return Constants.IconWidth;
             }
 
-            if (this.Type == LegendLayerType.PointShapefile)
+            if (Type == LegendLayerType.PointShapefile)
             {
                 var width = 0;
                 switch (options.PointType)
                 {
                     case tkPointSymbolType.ptSymbolPicture:
-                        width = options.Picture.Width * options.PictureScaleX <= Constants.IconWidth
+                        width = options.Picture.Width*options.PictureScaleX <= Constants.IconWidth
                                 || options.Picture == null
-                                    ? Constants.IconWidth
-                                    : (int)(options.Picture.Width * options.PictureScaleX);
+                            ? Constants.IconWidth
+                            : (int) (options.Picture.Width*options.PictureScaleX);
                         break;
                     case tkPointSymbolType.ptSymbolFontCharacter:
                         var ratio = options.FrameVisible ? 1.4 : 1.0;
-                        width = options.PointSize * ratio <= Constants.IconWidth
-                                    ? Constants.IconWidth
-                                    : (int)(options.PointSize * ratio);
+                        width = options.PointSize*ratio <= Constants.IconWidth
+                            ? Constants.IconWidth
+                            : (int) (options.PointSize*ratio);
                         break;
                     default:
-                        width = options.PointSize <= Constants.IconWidth ? Constants.IconWidth : (int)options.PointSize;
+                        width = options.PointSize <= Constants.IconWidth ? Constants.IconWidth : (int) options.PointSize;
                         break;
                 }
 
@@ -463,10 +449,10 @@
                 return 0;
             }
 
-            var maxWidth = this.GetCategoryWidth(sf.DefaultDrawingOptions);
+            var maxWidth = GetCategoryWidth(sf.DefaultDrawingOptions);
             for (var i = 0; i < sf.Categories.Count; i++)
             {
-                var width = this.GetCategoryWidth(sf.Categories.Item[i].DrawingOptions);
+                var width = GetCategoryWidth(sf.Categories.Item[i].DrawingOptions);
                 if (width > maxWidth)
                 {
                     maxWidth = width;
@@ -482,7 +468,7 @@
         /// <returns>Height of layer(depends on Expanded state of the layer)</returns>
         protected internal int CalcHeight()
         {
-            return this.CalcHeight(this.Expanded);
+            return CalcHeight(Expanded);
         }
     }
 }

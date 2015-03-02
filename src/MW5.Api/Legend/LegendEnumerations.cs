@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MW5.Api.Legend
+﻿namespace MW5.Api.Legend
 {
     /// <summary>
     /// Enumeration of supported layer types.
@@ -25,7 +19,7 @@ namespace MW5.Api.Legend
         /// Point shapefile layer
         /// </summary>
         PointShapefile = 1,
-        
+
         /// <summary>
         /// Line shapefile layer
         /// </summary>
@@ -61,7 +55,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Mixed Layer Visibility
         /// </summary>
-        PartialVisible = 2,
+        PartialVisible = 2
     }
 
     internal enum LegendIcon
@@ -72,10 +66,10 @@ namespace MW5.Api.Legend
         UnCheckedBox = 3,
         CheckedBoxGray = 4,
         UnCheckedBoxGray = 5,
-        ActiveLabel= 6,
+        ActiveLabel = 6,
         DimmedLabel = 7,
         Editing = 8,
-        Database = 9,
+        Database = 9
     }
 
     /// <summary>
@@ -92,6 +86,6 @@ namespace MW5.Api.Legend
         ChartsCaption = 7,
         Charts = 8,
         ChartField = 9,
-        ChartFieldName = 10,
+        ChartFieldName = 10
     }
 }
