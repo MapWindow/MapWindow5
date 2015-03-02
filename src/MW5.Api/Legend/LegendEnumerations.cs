@@ -62,4 +62,18 @@ namespace MW5.Api.Legend
         /// </summary>
         PartialVisible = 2,
     }
+
+    internal enum LegendIcon
+    {
+        Grid = 0,
+        Image = 1,
+        CheckedBox = 2,
+        UnCheckedBox = 3,
+        CheckedBoxGray = 4,
+        UnCheckedBoxGray = 5,
+        ActiveLabel= 6,
+        DimmedLabel = 7,
+        Editing = 8,
+        Database = 9,
+    }
 }

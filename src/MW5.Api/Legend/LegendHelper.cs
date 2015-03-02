@@ -4,12 +4,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MapWinGIS;
 
 namespace MW5.Api.Legend
 {
     public static class LegendHelper
     {
+        internal static System.Drawing.Image GetIcon(this ImageList imageList, LegendIcon icon)
+        {
+            return imageList.Images[(int) icon];
+        }
+        
         public static bool IsSupportedPicture(object picture)
         {
             if (picture == null)

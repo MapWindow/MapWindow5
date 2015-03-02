@@ -43,18 +43,7 @@ namespace MW5.Api.Legend
     public class LegendControl : UserControl
     {
 
-        // TODO: convert to enumerations
-        private const int cGridIcon = 0;
-        private const int cImageIcon = 1;
-        private const int cCheckedBoxIcon = 2;
-        private const int cUnCheckedBoxIcon = 3;
-        private const int cCheckedBoxGrayIcon = 4;
-        private const int cUnCheckedBoxGrayIcon = 5;
-        private const int cActiveLabelIcon = 6;
-        private const int cDimmedLabelIcon = 7;
-        private const int cEditing = 8;
-        private const int cDatabase = 9;
-
+        // TODO: reimplement
         /// <summary>
         /// Gets or Sets the MapWinGIS.Map associated with this legend control
         /// Note: This property must be set before manipulating layers
@@ -67,9 +56,7 @@ namespace MW5.Api.Legend
 
         public LegendLayer GetLayer(int layerHandle)
         {
-            // TODO: reimplement
-            //return Layers.ItemByHandle(layerHandle);
-            return null;
+            return Layers.ItemByHandle(layerHandle);
         }
 
         private static string m_appName = "";
@@ -271,7 +258,7 @@ namespace MW5.Api.Legend
 
         protected internal void FireLayerVisibleChanged(int layerHandle, bool visible, ref bool cancel)
         {
-            var args = new LayerCancelEventArgs(layerHandle, visible);
+            var args = new LayerCancelEventArgs(layerHandle, visible) { Cancel = cancel };
             FireEvent(this, LayerVisibleChanged, args);
             cancel = args.Cancel;
         }
@@ -1418,24 +1405,17 @@ namespace MW5.Api.Legend
 
         private void DrawCheckBox(Graphics DrawTool, int ItemTop, int ItemLeft, bool DrawCheck, bool DrawGrayBackground)
         {
-            Image icon;
-            int index = 0;
-            if (DrawCheck == true)
+            LegendIcon icon;
+            if (DrawCheck)
             {
-                if (DrawGrayBackground == true)
-                    index = cCheckedBoxGrayIcon;
-                else
-                    index = cCheckedBoxIcon;
+                icon = DrawGrayBackground ? LegendIcon.CheckedBoxGray : LegendIcon.CheckedBox;
             }
             else
             {
-                if (DrawGrayBackground == true)
-                    index = cUnCheckedBoxGrayIcon;
-                else
-                    index = cUnCheckedBoxIcon;
+                icon = DrawGrayBackground ? LegendIcon.UnCheckedBoxGray : LegendIcon.UnCheckedBox;
             }
-            icon = _icons.Images[index];
-            DrawPicture(DrawTool, ItemLeft, ItemTop, Constants.CHECK_BOX_SIZE, Constants.CHECK_BOX_SIZE, icon);
+            var image = _icons.GetIcon(icon);
+            DrawPicture(DrawTool, ItemLeft, ItemTop, Constants.CHECK_BOX_SIZE, Constants.CHECK_BOX_SIZE, image);
         }
 
         /// <summary>
@@ -1560,6 +1540,8 @@ namespace MW5.Api.Legend
         {
         }
 
+        
+
         /// <summary>
         /// Draws a layer onto a given graphics surface
         /// </summary>
@@ -1678,7 +1660,7 @@ namespace MW5.Api.Legend
                 var ogrLayer = lyr.VectorLayer;
                 if (ogrLayer != null)
                 {
-                    icon = _icons.Images[cDatabase];
+                    icon = _icons.GetIcon(LegendIcon.Database);
                     DrawPicture(DrawTool, left, CurTop, Constants.ICON_SIZE, Constants.ICON_SIZE, icon);
                 }
                 else if (lyr.Icon != null)
@@ -1687,12 +1669,12 @@ namespace MW5.Api.Legend
                 }
                 else if (lyr.Type == LegendLayerType.Image)
                 {
-                    icon = _icons.Images[cImageIcon];
+                    icon = _icons.GetIcon(LegendIcon.Image);
                     DrawPicture(DrawTool, left, top, Constants.ICON_SIZE, Constants.ICON_SIZE, icon);
                 }
                 else if (lyr.Type == LegendLayerType.Grid)
                 {
-                    icon = _icons.Images[cGridIcon];
+                    icon = _icons.GetIcon(LegendIcon.Grid);
                     DrawPicture(DrawTool, left, top, Constants.ICON_SIZE, Constants.ICON_SIZE, icon);
                 }
                 else
@@ -1734,7 +1716,7 @@ namespace MW5.Api.Legend
                         double scale = _map.CurrentScale;
                         bool labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible && sf.Labels.Expression.Trim() != "";
                         labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
-                        Image icon2 = labelsVisible ? _icons.Images[cActiveLabelIcon] : _icons.Images[cDimmedLabelIcon];
+                        Image icon2 = _icons.GetIcon(labelsVisible ? LegendIcon.ActiveLabel : LegendIcon.DimmedLabel);
                         DrawPicture(DrawTool, left2, top2, Constants.ICON_SIZE, Constants.ICON_SIZE, icon2);
                     }
                 }
@@ -1747,7 +1729,7 @@ namespace MW5.Api.Legend
                     {
                         int top2 = bounds.Top + Constants.ICON_TOP_PAD;
                         int left2 = bounds.Right - 76;
-                        DrawPicture(DrawTool, left2, top2, Constants.ICON_SIZE, Constants.ICON_SIZE, _icons.Images[cEditing]);
+                        DrawPicture(DrawTool, left2, top2, Constants.ICON_SIZE, Constants.ICON_SIZE, _icons.GetIcon(LegendIcon.Editing));
                     }
                 }
             }
@@ -2101,11 +2083,11 @@ namespace MW5.Api.Legend
                 switch (layer.Type)
                 {
                     case LegendLayerType.Grid:
-                        icon = _icons.Images[cGridIcon];
+                        icon = _icons.GetIcon(LegendIcon.Grid);
                         DrawPicture(DrawTool, LeftPos, TopPos, Constants.ICON_SIZE, Constants.ICON_SIZE, icon);
                         break;
                     case LegendLayerType.Image:
-                        icon = _icons.Images[cImageIcon];
+                        icon = _icons.GetIcon(LegendIcon.Image);
                         DrawPicture(DrawTool, LeftPos, TopPos, Constants.ICON_SIZE, Constants.ICON_SIZE, icon);
                         break;
                     default:
