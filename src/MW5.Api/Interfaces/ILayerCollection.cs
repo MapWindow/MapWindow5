@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MW5.Api.Interfaces
 {
-    public interface ILayerCollection : IEnumerable<ILayer>
+    public interface ILayerCollection<T> : IEnumerable<T> where T : ILayer
     {
-        ILayer this[int position] { get; }
+        T this[int position] { get; }
+        T ItemByHandle(int layerHandle);
         int Count { get; }
         IFeatureSet GetFeatureSet(int layerHandle);
         int Add(ILayerSource layerSource, bool visible = true);
@@ -22,5 +23,6 @@ namespace MW5.Api.Interfaces
         void RemoveAll();
         void Remove(int layerHandle);
         void RemoveWithoutClosing(int layerHandle);
+        bool IsValidHandle(int layerHandle);
     }
 }

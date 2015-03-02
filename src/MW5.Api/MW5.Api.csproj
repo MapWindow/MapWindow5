@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Concrete\ApplicationCallback.cs" />
     <Compile Include="Concrete\AttributeTable.cs" />
+    <Compile Include="Concrete\BaseLayerCollection.cs" />
     <Compile Include="Concrete\BitmapSource.cs" />
     <Compile Include="Concrete\Callback.cs" />
     <Compile Include="Concrete\ColorInterval.cs" />
@@ -90,7 +91,22 @@
     <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
+    <Compile Include="Legend\ClickedElement.cs" />
+    <Compile Include="Legend\ColorInfo.cs" />
+    <Compile Include="Legend\Constants.cs" />
+    <Compile Include="Legend\DragInfo.cs" />
+    <Compile Include="Legend\Group.cs" />
+    <Compile Include="Legend\Groups.cs" />
+    <Compile Include="Legend\LayerElement.cs" />
+    <Compile Include="Legend\LegendControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Interfaces\ILayerCollection.cs" />
+    <Compile Include="Legend\LegendEnumerations.cs" />
+    <Compile Include="Legend\LegendHelper.cs" />
+    <Compile Include="Legend\LegendLayer.cs" />
+    <Compile Include="Legend\LegendLayerCollection.cs" />
+    <Compile Include="Legend\Win32ApiHelper.cs" />
     <Compile Include="Static\GeoProcessing.cs" />
     <Compile Include="Static\GeoSourceManager.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
@@ -235,6 +251,9 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Legend\LegendControl.resx">
+      <DependentUpon>LegendControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MapControl.resx">
       <DependentUpon>MapControl.cs</DependentUpon>
     </EmbeddedResource>

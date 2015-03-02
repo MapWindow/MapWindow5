@@ -7,8 +7,8 @@ namespace MW5.Api.Concrete
 {
     public class Layer: ILayer
     {
-        private readonly int _layerHandle;
-        private readonly AxMap _map;
+        protected readonly int _layerHandle;
+        protected readonly AxMap _map;
 
         public Layer(AxMap map, int layerHandle)
         {
@@ -20,6 +20,11 @@ namespace MW5.Api.Concrete
             {
                 throw new IndexOutOfRangeException("Invalid layer handle.");
             }
+        }
+
+        internal AxMap AxMap
+        {
+            get { return _map; }
         }
 
         public int Handle
@@ -158,6 +163,8 @@ namespace MW5.Api.Concrete
                 return labels != null ? new LabelsLayer(labels) : null;
             }
         }
+
+        public bool HideFromLegend { get; set; }
 
         public bool RemoveOptions(string optionsName)
         {

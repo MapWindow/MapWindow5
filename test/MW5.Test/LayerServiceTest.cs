@@ -22,7 +22,7 @@ namespace MW5.Test
 
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
-        private Mock<ILayerCollection> _layerColection;
+        private Mock<ILayerCollection<ILayer>> _layerColection;
 
         private string[] GetShapefileNames()
         {
@@ -37,7 +37,7 @@ namespace MW5.Test
         [SetUp]
         public void Setup()
         {
-            _layerColection = new Mock<ILayerCollection>();
+            _layerColection = new Mock<ILayerCollection<ILayer>>();
             
             var map = new Mock<IMapControl>();
             map.SetupGet(m => m.Layers).Returns(_layerColection.Object);

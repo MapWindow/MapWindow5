@@ -79,6 +79,8 @@ namespace MW5.Views
 
         public void ShowView()
         {
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            StartPosition = FormStartPosition.CenterParent;
             ShowDialog(_owner as IWin32Window);
         }
 
