@@ -29,176 +29,12 @@ using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Events;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
 
 namespace MW5.Api.Legend
 {
-
-    #region "Event Delegate definitions"
-
-    /// <summary>
-    /// Handler for the event when a layer item is double clicked
-    /// </summary>
-    public delegate void LayerDoubleClick(int Handle);
-    /// <summary>
-    /// Handler for the event when a mouse down event occurs on a Layer item
-    /// </summary>
-    public delegate void LayerMouseDown(int Handle, MouseButtons button);
-
-    /// <summary>
-    /// Handler for the event when a Mouse up event occurs on a Layer item
-    /// </summary>
-    public delegate void LayerMouseUp(int Handle, MouseButtons button);
-
-    /// <summary>
-    /// Handler for the event when a new layer is selected
-    /// </summary>
-    public delegate void LayerSelected(int Handle);
-
-    //Christian Degrassi 2010-02-25: This fixes issue 1622
-    /// <summary>
-    /// Handler for the event when a new layer is added
-    /// </summary>
-    public delegate void LayerAdded(int Handle);
-
-    //Christian Degrassi 2010-02-25: This fixes issue 1622
-    /// <summary>
-    /// Handler for the event when a layer is removed
-    /// </summary>
-    public delegate void LayerRemoved(int Handle);
-
-    /// <summary>
-    /// Handler for the event when a Double Click Event Occurs on a Group
-    /// </summary>
-    public delegate void GroupDoubleClick(int Handle);
-
-    /// <summary>
-    /// Handler for the event when a Mouse down event occurs on a group
-    /// </summary>
-    public delegate void GroupMouseDown(int Handle, MouseButtons button);
-
-    /// <summary>
-    /// Handler for the event when a Mouse up event occurs on a group
-    /// </summary>
-    public delegate void GroupMouseUp(int Handle, MouseButtons button);
-
-    /// <summary>
-    /// Handler for the event when a Mouse click event occurs the control (not on a group nor a layer)
-    /// </summary>
-    public delegate void LegendClick(MouseButtons button, Point Location);
-
-    /// <summary>
-    /// Handler for the event when a Layer is moved
-    /// </summary>
-    public delegate void LayerPositionChanged(int Handle);
-
-    /// <summary>
-    /// Handler for the event when a layer's visibility changes due to a mouse click
-    /// </summary>
-    public delegate void LayerVisibleChanged(int Handle, bool NewState, ref bool Cancel);
-
-    /// <summary>
-    /// Handler for the event when a Group (and all of its Layers) changes positions
-    /// </summary>
-    public delegate void GroupPositionChanged(int Handle);
-
-    //Christian Degrassi 2010-02-25: This fixes issue 1622
-    /// <summary>
-    /// Handler for the event when a Group is Added
-    /// </summary>
-    public delegate void GroupAdded(int Handle);
-
-    //Christian Degrassi 2010-02-25: This fixes issue 1622
-    /// <summary>
-    /// Handler for the event when a Group is Removed
-    /// </summary>
-    public delegate void GroupRemoved(int Handle);
-
-    /// <summary>
-    /// Handler for the event when a group's expaned property changes.
-    /// </summary>
-    public delegate void GroupExpandedChanged(int Handle, bool Expanded);
-
-    /// <summary>
-    /// Fired when a group checkbox is clicked
-    /// </summary>
-    /// <param name="Handle"></param>
-    /// <param name="State"></param>
-    public delegate void GroupCheckboxClicked(int Handle, Visibility State);
-
-    /// <summary>
-    /// Delegate definition for ExpansionBoxCustomRenderFunction.
-    /// </summary>
-    /// <param name="Handle">The layer handle of the layer whose expanded area is being drawn.</param>
-    /// <param name="Bounds">The bounds you're allowed to draw in. Note that HEIGHT is the maximum, you don't have to use it all; please set to what you used. GOH</param>
-    /// <param name="G">The graphics object you should draw with.</param>
-    /// <param name="Handled">If you rendered an expansion box for this layer, set this to true!</param>
-    public delegate void ExpansionBoxCustomRenderer(int Handle, System.Drawing.Rectangle Bounds, ref System.Drawing.Graphics G, ref bool Handled);
-
-    /// <summary>
-    /// Indicates how high your ExpansionBoxCustomRenderFunction will draw, so that
-    /// other layer items can render around it.
-    /// </summary>
-    /// <param name="Handle">The layer handle being rendered/</param>
-    /// <param name="CurrentWidth">The width of the area you will be allowed to draw in.</param>
-    /// <param name="HeightToDraw">How high, based on the width, you plan to draw. This must be exact to look good!</param>
-    /// <param name="Handled">If you handled this function call for this handle, set Handled to true.</param>
-    public delegate void ExpansionBoxCustomHeight(int Handle, int CurrentWidth, ref int HeightToDraw, ref bool Handled);
-
-    /// <summary>
-    /// Fired when a layer checkbox is clicked
-    /// </summary>
-    /// <param name="Handle"></param>
-    /// <param name="NewState"></param>
-    public delegate void LayerCheckboxClicked(int Handle, bool NewState);
-
-    /// <summary>
-    /// Fired when layer colorbox is clicked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param>
-    public delegate void LayerColorboxClicked(int Handle);
-
-    /// <summary>
-    /// Fired when colorbox for one of the shapefiles categories is cliked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param >
-    /// <param name="Category">The index of category</param>
-    public delegate void LayerCategoryClicked(int Handle, int Category);
-
-    /// <summary>
-    /// Fired when chart icon of the shapefile is clicked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param>
-    public delegate void LayerChartClicked(int Handle);
-
-    /// <summary>
-    /// Fired when one of the chart field of the shapefile is clicked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param>
-    /// <param name="FieldIndex">The index of field</param>
-    public delegate void LayerChartFieldClicked(int Handle, int FieldIndex);
-
-    /// <summary>
-    /// Fired when label preview for layer is clicked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param>
-    public delegate void LayerLabelClicked(int Handle);
-
-    /// <summary>
-    /// Fired when label preview for particular label category is clicked
-    /// </summary>
-    /// <param name="Handle">Layer handle</param>
-    /// <param name="Handle">Index of label category</param>
-    public delegate void LayerLabelCategoryClicked(int Handle, int Category);
-
-
-
-
-
-
-    #endregion "Event Delegate definitions"
-    
     /// <summary>
     /// Summary description for LegendControl.
     /// </summary>
@@ -228,7 +64,6 @@ namespace MW5.Api.Legend
         //    get { return _map; }
         //    set { _map = value; }
         //}
-
 
         public LegendLayer GetLayer(int layerHandle)
         {
@@ -288,130 +123,125 @@ namespace MW5.Api.Legend
 
         #region "Events"
 
-        public event EventHandler LayerPropertiesChanged;
+        public event EventHandler<LayerEventArgs> LayerPropertiesChanged;
 
         /// <summary>
         /// Layer Double Click Event
         /// </summary>
-        public event LayerDoubleClick LayerDoubleClick;
+        public event EventHandler<LayerEventArgs> LayerDoubleClick;
         /// <summary>
         /// Layer Mouse Down Click Event
         /// </summary>
-        public event LayerMouseDown LayerMouseDown;
+        public event EventHandler<LayerMouseEventArgs> LayerMouseDown;
 
         /// <summary>
         /// Layer Mouse Up Event
         /// </summary>
-        public event LayerMouseUp LayerMouseUp;
+        public event EventHandler<LayerMouseEventArgs> LayerMouseUp;
 
         /// <summary>
         /// Group Double Click Event
         /// </summary>
-        public event GroupDoubleClick GroupDoubleClick;
+        public event EventHandler<GroupEventArgs> GroupDoubleClick;
 
         /// <summary>
         /// Group Mouse Down Event
         /// </summary>
-        public event GroupMouseDown GroupMouseDown;
+        public event EventHandler<GroupMouseEventArgs> GroupMouseDown;
 
         /// <summary>
         /// Group Mouse Up Event
         /// </summary>
-        public event GroupMouseUp GroupMouseUp;
+        public event EventHandler<GroupMouseEventArgs> GroupMouseUp;
 
         /// <summary>
         /// LegendControl was clicked event (not on Group, nor on Layer)
         /// </summary>
-        public event LegendClick LegendClick;
+        public event EventHandler<LegendClickEventArgs> LegendClick;
 
         /// <summary>
         /// Selected Layer changed event
         /// </summary>
-        public event LayerSelected LayerSelected;
+        public event EventHandler<LayerEventArgs> LayerSelected;
 
         //Christian Degrassi 2010-02-25: This fixes issue 1622
         /// <summary>
         /// Added Layer event
         /// </summary>
-        public event LayerAdded LayerAdded;
+        public event EventHandler<LayerEventArgs> LayerAdded;
 
         //Christian Degrassi 2010-02-25: This fixes issue 1622
         /// <summary>
         /// Removed Layer event
         /// </summary>
-        public event LayerRemoved LayerRemoved;
+        public event EventHandler<LayerEventArgs> LayerRemoved;
 
         /// <summary>
         /// Position of a layer has changed event
         /// </summary>
-        public event LayerPositionChanged LayerPositionChanged;
+        public event EventHandler<PositionChangedEventArgs> LayerPositionChanged;
 
         /// <summary>
         /// Position of a group has changed event
         /// </summary>
-        public event GroupPositionChanged GroupPositionChanged;
+        public event EventHandler<PositionChangedEventArgs> GroupPositionChanged;
 
         //Christian Degrassi 2010-02-25: This fixes issue 1622
         /// <summary>
         /// A Group has been added
         /// </summary>
-        public event GroupAdded GroupAdded;
+        public event EventHandler<GroupEventArgs> GroupAdded;
 
         //Christian Degrassi 2010-02-25: This fixes issue 1622
         /// <summary>
         /// A Group has been removed
         /// </summary>
-        public event GroupRemoved GroupRemoved;
+        public event EventHandler<GroupEventArgs> GroupRemoved;
 
         /// <summary>
         /// The visibility of a layer has changed event
         /// </summary>
-        public event LayerVisibleChanged LayerVisibleChanged;
+        public event EventHandler<LayerCancelEventArgs> LayerVisibleChanged;
 
         /// <summary>
         /// Fires when the Group checkbox is clicked
         /// </summary>
-        public event GroupCheckboxClicked GroupCheckboxClicked;
+        public event EventHandler<GroupEventArgs> GroupCheckboxClicked;
 
         /// <summary>
         /// Fires when the Expanded property of a group changes.
         /// </summary>
-        public event GroupExpandedChanged GroupExpandedChanged;
+        public event EventHandler<GroupEventArgs> GroupExpandedChanged;
 
         /// <summary>
         /// Fires when the layer checkbox is clicked
         /// </summary>
-        public event LayerCheckboxClicked LayerCheckboxClicked;
+        public event EventHandler<LayerEventArgs> LayerCheckboxClicked;
 
         /// <summary>
         /// Fires when layer colorbox is clicked
         /// </summary>
-        public event LayerColorboxClicked LayerColorboxClicked;
+        public event EventHandler<LayerEventArgs> LayerColorboxClicked;
 
         /// <summary>
         /// Fires when one of the shapefile categories is clicked
         /// </summary>
-        public event LayerCategoryClicked LayerCategoryClicked;
+        public event EventHandler<LayerCategoryEventArgs> LayerCategoryClicked;
 
         /// <summary>
         /// Fires when charts icon is clicked
         /// </summary>
-        public event LayerChartClicked LayerChartClicked;
+        public event EventHandler<LayerMouseEventArgs> LayerChartClicked;
 
         /// <summary>
         /// Fires when one of chart fields is clicked
         /// </summary>
-        public event LayerChartFieldClicked LayerChartFieldClicked;
+        public event EventHandler<ChartFieldClickedEventArgs> LayerChartFieldClicked;
 
         /// <summary>
         /// Fired when label preview for layer is clicked
         /// </summary>
-        public event LayerLabelClicked LayerLabelClicked;
-
-        /// <summary>
-        /// Fired when label preview for particular label category is clicked
-        /// </summary>
-        public event LayerLabelCategoryClicked LayerLabelCategoryClicked;
+        public event EventHandler<LayerEventArgs> LayerLabelClicked;
 
         /// <summary>
         /// Fired when labels icon for a layer is clicked
@@ -424,245 +254,27 @@ namespace MW5.Api.Legend
         /// </summary>
         public event LayerLabelsEventArguments LayerLabelsClicked;
 
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        public void FireLayerPropertiesChanged(int handle)
+        #endregion
+
+        protected internal void FireEvent<T>(object sender, EventHandler<T> handler, T args)
         {
-            if (LayerPropertiesChanged != null)
-                LayerPropertiesChanged(this, new EventArgs());
+            if (handler != null)
+            {
+                handler.Invoke(sender, args);
+            }
         }
 
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerVisibleChanged(int Handle, bool NewState, ref bool Cancel)
+        protected internal void FireLayerSelected(int layerHandle)
         {
-            if (LayerVisibleChanged != null)
-                LayerVisibleChanged(Handle, NewState, ref Cancel);
+            FireEvent(this, LayerSelected, new LayerEventArgs(layerHandle));
         }
 
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupPositionChanged(int Handle)
+        protected internal void FireLayerVisibleChanged(int layerHandle, bool visible, ref bool cancel)
         {
-            if (GroupPositionChanged != null)
-                GroupPositionChanged(Handle);
+            var args = new LayerCancelEventArgs(layerHandle, visible);
+            FireEvent(this, LayerVisibleChanged, args);
+            cancel = args.Cancel;
         }
-
-        //Christian Degrassi 2010-02-25: This fixes issue 1622
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupAdded(int Handle)
-        {
-            if (GroupAdded != null)
-                GroupAdded(Handle);
-        }
-
-        //Christian Degrassi 2010-02-25: This fixes issue 1622
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupRemoved(int Handle)
-        {
-            if (GroupRemoved != null)
-                GroupRemoved(Handle);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerPositionChanged(int Handle)
-        {
-            if (LayerPositionChanged != null)
-                LayerPositionChanged(Handle);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerSelected(int Handle)
-        {
-            if (LayerSelected != null)
-                LayerSelected(Handle);
-        }
-
-        //Christian Degrassi 2010-02-25: This fixes issue 1622
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerAdded(int Handle)
-        {
-            if (LayerAdded != null)
-                LayerAdded(Handle);
-        }
-
-        //Christian Degrassi 2010-02-25: This fixes issue 1622
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerRemoved(int Handle)
-        {
-            if (LayerRemoved != null)
-                LayerRemoved(Handle);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLegendClick(MouseButtons button, Point Location)
-        {
-            if (LegendClick != null)
-                LegendClick(button, Location);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupMouseUp(int Handle, MouseButtons button)
-        {
-            if (GroupMouseUp != null)
-                GroupMouseUp(Handle, button);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupMouseDown(int Handle, MouseButtons button)
-        {
-            if (GroupMouseDown != null)
-                GroupMouseDown(Handle, button);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireGroupDoubleClick(int Handle)
-        {
-            if (GroupDoubleClick != null)
-                GroupDoubleClick(Handle);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerMouseUp(int Handle, MouseButtons button)
-        {
-            if (LayerMouseUp != null)
-                LayerMouseUp(Handle, button);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerMouseDown(int Handle, MouseButtons button)
-        {
-            if (LayerMouseDown != null)
-                LayerMouseDown(Handle, button);
-        }
-
-        /// <summary>
-        /// Sends event to any listeners
-        /// </summary>
-        protected internal void FireLayerDoubleClick(int Handle)
-        {
-            if (LayerDoubleClick != null)
-                LayerDoubleClick(Handle);
-        }
-
-        /// <summary>
-        /// Raise GroupCheckboxClicked event if any listeners are attached.
-        /// </summary>
-        protected internal void FireGroupCheckboxClicked(int Handle, Visibility State)
-        {
-            if (null != GroupCheckboxClicked)
-                GroupCheckboxClicked(Handle, State);
-        }
-
-        /// <summary>
-        /// Raise GroupExpandedChanged event if any listeners are attached.
-        /// </summary>
-        protected internal void FireGroupExpandedChanged(int Handle, bool Expanded)
-        {
-            if (null != GroupExpandedChanged)
-                GroupExpandedChanged(Handle, Expanded);
-        }
-
-        /// <summary>
-        /// Raise LayerCheckboxClicked event if any listeners are attached.
-        /// </summary>
-        protected internal void FireLayerCheckboxClicked(int Handle, bool NewState)
-        {
-            if (null != LayerCheckboxClicked)
-                LayerCheckboxClicked(Handle, NewState);
-        }
-
-        /// <summary>
-        /// Raises LayerColorboxClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerColorboxClicked(int Handle)
-        {
-            if (LayerColorboxClicked != null)
-                LayerColorboxClicked(Handle);
-        }
-
-        /// <summary>
-        /// Raises LayerCategoryClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerCategoryClicked(int Handle, int Category)
-        {
-            if (LayerCategoryClicked != null)
-                LayerCategoryClicked(Handle, Category);
-        }
-
-        /// <summary>
-        /// Raises LayerChartClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerChartClicked(int Handle)
-        {
-            if (LayerChartClicked != null)
-                LayerChartClicked(Handle);
-        }
-
-        /// <summary>
-        /// Raises LayerChartFieldClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerChartFieldClicked(int Handle, int Field)
-        {
-            if (LayerChartFieldClicked != null)
-                LayerChartFieldClicked(Handle, Field);
-        }
-
-        /// <summary>
-        /// Raises LayerLabelClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerLabelClicked(int Handle)
-        {
-            if (LayerLabelClicked != null)
-                LayerLabelClicked(Handle);
-        }
-
-        /// <summary>
-        /// Raises LayerLabelClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerLabelCategoryClicked(int Handle, int Category)
-        {
-            if (LayerLabelCategoryClicked != null)
-                LayerLabelCategoryClicked(Handle, Category);
-        }
-
-        /// <summary>
-        /// Raises LayerLabelsClicked event if any listeners are attached
-        /// </summary>
-        protected internal void FireLayerLabelsClicked(int Handle)
-        {
-            if (LayerLabelsClicked != null)
-                this.LayerLabelsClicked(Handle);
-        }
-
-        #endregion "Events"
 
         private System.ComponentModel.IContainer components;
 
@@ -817,7 +429,7 @@ namespace MW5.Api.Legend
             Redraw();
 
             //Christian Degrassi 2010-02-25: This fixes issue 1622
-            FireGroupAdded(grp.Handle);
+            FireEvent(this, GroupAdded, new GroupEventArgs(grp.Handle));
 
             return grp.Handle;
         }
@@ -887,13 +499,13 @@ namespace MW5.Api.Legend
                 {
                     _selectedLayerHandle = (_map.NumLayers > 0 ? _map.get_LayerHandle(_map.NumLayers - 1) : -1);
 
-                    FireLayerSelected(_selectedLayerHandle);
+                    FireEvent(this, LayerSelected, new LayerEventArgs(_selectedLayerHandle));
                 }
 
                 Redraw();
 
                 //Christian Degrassi 2010-02-25: This fixes issue 1622
-                FireGroupRemoved(Handle);
+                FireEvent(this, GroupRemoved, new GroupEventArgs(Handle));
             }
             else
             {
@@ -925,14 +537,14 @@ namespace MW5.Api.Legend
             {
                 _selectedLayerHandle = _map.get_LayerHandle(_map.NumLayers - 1);
 
-                FireLayerSelected(_selectedLayerHandle);
+                FireEvent(this, LayerSelected, new LayerEventArgs(_selectedLayerHandle));
             }
 
             grp.RecalcHeight();
             Redraw();
 
             //Christian Degrassi 2010-02-25: This fixes issue 1622
-            FireLayerRemoved(LayerHandle);
+            FireEvent(this, LayerRemoved, new LayerEventArgs(LayerHandle));
 
             return true;
         }
@@ -1381,7 +993,7 @@ namespace MW5.Api.Legend
                     m_GroupPositions[grp.Handle] = AllGroups.Count - 1;
 
                     //Christian Degrassi 2010-02-25: This fixes issue 1622
-                    FireGroupAdded(grp.Handle);
+                    FireEvent(this, GroupAdded, new GroupEventArgs(grp.Handle));
                 }
                 else
                 {
@@ -1430,7 +1042,7 @@ namespace MW5.Api.Legend
             Redraw();
 
             //Christian Degrassi 2010-02-25: This fixes issue 1622
-            FireLayerAdded(MapLayerHandle);
+            FireEvent(this, LayerAdded, new LayerEventArgs(MapLayerHandle));
 
             return MapLayerHandle;
         }
@@ -2165,8 +1777,17 @@ namespace MW5.Api.Legend
                 //   Draw the expansion box and sub items (if they exist or if we're being forced)
                 // ----------------------------------------------------------
                 bool Handled = false;
+
+                var customRect = new Rectangle(bounds.Left + Constants.CHECK_LEFT_PAD,
+                    lyr.Top + Constants.ITEM_HEIGHT + Constants.EXPAND_BOX_TOP_PAD,
+                    bounds.Width - Constants.TEXT_RIGHT_PAD_NO_ICON - Constants.CS_TEXT_LEFT_INDENT -
+                    Constants.EXPAND_BOX_LEFT_PAD, bounds.Height - lyr.Top);
+
                 if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
-                    lyr.ExpansionBoxCustomRenderFunction(lyr.Handle, new Rectangle(bounds.Left + Constants.CHECK_LEFT_PAD, lyr.Top + Constants.ITEM_HEIGHT + Constants.EXPAND_BOX_TOP_PAD, bounds.Width - Constants.TEXT_RIGHT_PAD_NO_ICON - Constants.CS_TEXT_LEFT_INDENT - Constants.EXPAND_BOX_LEFT_PAD, bounds.Height - lyr.Top), ref DrawTool, ref Handled);
+                {
+                    var args = new LayerPaintEventArgs(lyr.Handle, customRect, DrawTool);
+                    FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
+                }
 
                 // Here, draw the + or - sign according to based on  layer.expanded property
                 if (lyr.ExpansionBoxForceAllowed || lyr.ColorLegend.Count > 0)
@@ -3130,7 +2751,7 @@ namespace MW5.Api.Legend
 
                         try
                         {
-                            FireGroupCheckboxClicked(grp.Handle, grp.VisibleState);
+                            FireEvent(this, GroupCheckboxClicked, new GroupEventArgs(grp.Handle));
                         }
                         catch
                         {
@@ -3145,7 +2766,7 @@ namespace MW5.Api.Legend
                 else if (InExpandBox == true)
                 {
                     grp.Expanded = !grp.Expanded;
-                    FireGroupExpandedChanged(grp.Handle, grp.Expanded);
+                    FireEvent(this, GroupExpandedChanged, new GroupEventArgs(grp.Handle));
                     Redraw();
                     return;
                 }
@@ -3158,7 +2779,7 @@ namespace MW5.Api.Legend
                         //m_DragInfo.StartDrag(pnt.Y,(int)m_GroupPositions[grp.layerHandle],Constants.INVALID_INDEX);
                     }
                 }
-                FireGroupMouseDown(grp.Handle, MouseButtons.Left);
+                FireEvent(this, GroupMouseDown, new GroupMouseEventArgs(grp.Handle, MouseButtons.Left));
                 return;
             }
 
@@ -3175,9 +2796,10 @@ namespace MW5.Api.Legend
                 {
                     bool NewState = !_map.get_LayerVisible(lyr.Handle);
 
-                    bool cancel = false;
-                    FireLayerVisibleChanged(lyr.Handle, NewState, ref cancel);
-                    if (cancel == true)
+                    var args = new LayerCancelEventArgs(lyr.Handle, NewState);
+                    FireEvent(this, LayerVisibleChanged, args);
+                    
+                    if (args.Cancel)
                         return;
 
                     _map.set_LayerVisible(lyr.Handle, NewState);
@@ -3185,7 +2807,7 @@ namespace MW5.Api.Legend
                     grp = (Group)AllGroups[element.GroupIndex];
                     grp.UpdateGroupVisibility();
 
-                    FireLayerCheckboxClicked(lyr.Handle, NewState);
+                    FireEvent(this, LayerCheckboxClicked, new LayerEventArgs(lyr.Handle));
                     Redraw();
                     return;
                 }
@@ -3193,7 +2815,7 @@ namespace MW5.Api.Legend
                 if (element.ExpansionBox)
                 {
                     lyr.Expanded = !lyr.Expanded;
-                    FireLayerPropertiesChanged(lyr.Handle);
+                    FireEvent(this, LayerPropertiesChanged, new LayerEventArgs(lyr.Handle));
                     Redraw();
                     return;
                 }
@@ -3201,63 +2823,59 @@ namespace MW5.Api.Legend
                 if (element.ColorBox && element.CategoryIndex == -1)
                 {
                     // default symbology
-                    FireLayerColorboxClicked(lyr.Handle);
+                    FireEvent(this, LayerColorboxClicked, new LayerEventArgs(lyr.Handle));
                     Redraw();
                     return;
                 }
-                else if (element.LabelsIcon)
+                
+                if (element.LabelsIcon)
                 {
-                    this.FireLayerLabelsClicked(lyr.Handle);
+                    FireEvent(this, LayerLabelClicked, new LayerEventArgs(lyr.Handle));
+                    Redraw();
                     return;
-                    //this.Redraw();
                 }
-                else if (element.ColorBox == true && element.CategoryIndex != -1)
+
+                if (element.ColorBox == true && element.CategoryIndex != -1)
                 {
                     // category symbology
-                    FireLayerCategoryClicked(lyr.Handle, element.CategoryIndex);
+                    FireEvent(this, LayerCategoryClicked, new LayerCategoryEventArgs(lyr.Handle, MouseButtons.Left, element.CategoryIndex));
                     Redraw();
                     return;
                 }
-                else if (element.Charts && element.ChartFieldIndex == -1)
+                
+                if (element.Charts && element.ChartFieldIndex == -1)
                 {
                     // default symbology
-                    FireLayerChartClicked(lyr.Handle);
+                    FireEvent(this, LayerChartClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                     Redraw();
                     return;
                 }
-                else if (element.Charts == true && element.ChartFieldIndex != -1)
+                
+                if (element.Charts && element.ChartFieldIndex != -1)
                 {
                     // category symbology
-                    FireLayerChartFieldClicked(lyr.Handle, element.ChartFieldIndex);
+                    FireEvent(this, LayerChartFieldClicked, new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.ChartFieldIndex));
                     Redraw();
                     return;
                 }
-                else
+                
+                SelectedLayer = lyr.Handle;
+
+                if (AllGroups.Count > 1 || grp.Layers.Count > 1)
                 {
-                    //Christian Degrassi 2010-02-25: Removing this if() fixes issue 1580
-                    ////just select the Layer
-                    //if (lyr.layerHandle != _selectedLayerHandle)
-                    //    FireLayerSelected(lyr.layerHandle);
-
-                    SelectedLayer = lyr.Handle;
-
-                    if (AllGroups.Count > 1 || grp.Layers.Count > 1)
-                    {
-                        m_DragInfo.StartLayerDrag(pnt.Y, (int)m_GroupPositions[grp.Handle], grp.LayerPositionInGroup(lyr.Handle));
-                        //m_DragInfo.StartDrag(pnt.Y,(int)m_GroupPositions[grp.layerHandle],grp.LayerPositionInGroup(lyr.layerHandle));
-                    }
-
-                    FireLayerMouseDown(lyr.Handle, MouseButtons.Left);
-                    return;
+                    m_DragInfo.StartLayerDrag(pnt.Y, (int)m_GroupPositions[grp.Handle], grp.LayerPositionInGroup(lyr.Handle));
                 }
+
+                FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+                return;
             }
 
-            FireLegendClick(MouseButtons.Left, pnt);
+            FireEvent(this, LegendClick, new LegendClickEventArgs(MouseButtons.Left, pnt));
 
             Redraw();
         }
 
-        private void HandleRightMouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void HandleRightMouseDown(object sender, MouseEventArgs e)
         {
             Group grp = null;
             Layer lyr = null;
@@ -3271,7 +2889,7 @@ namespace MW5.Api.Legend
             {
                 if (InCheckBox == false && InExpandBox == false)
                 {
-                    FireGroupMouseDown(grp.Handle, MouseButtons.Right);
+                    FireEvent(this, GroupMouseDown, new GroupMouseEventArgs(grp.Handle, MouseButtons.Right));
                 }
                 return;
             }
@@ -3282,17 +2900,17 @@ namespace MW5.Api.Legend
             {
                 if (element.CheckBox == false && element.ExpansionBox == false)
                 {
-                    FireLayerMouseDown(lyr.Handle, MouseButtons.Right);
+                    FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Right));
                 }
                 else if (element.LabelsIcon)
                 {
-                    this.FireLayerLabelsClicked(lyr.Handle);
+                    FireEvent(this, LayerLabelClicked, new LayerEventArgs(lyr.Handle));
+                    Redraw();
                     return;
-                    //this.Redraw();
                 }
                 return;
             }
-            FireLegendClick(MouseButtons.Right, pnt);
+            FireEvent(this, LegendClick, new LegendClickEventArgs(MouseButtons.Right, pnt));
         }
 
         private void HandleRightMouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -3308,7 +2926,7 @@ namespace MW5.Api.Legend
             {
                 if (InCheckBox == false && InExpandBox == false)
                 {
-                    FireGroupMouseUp(grp.Handle, MouseButtons.Right);
+                    FireEvent(this, GroupMouseUp, new GroupMouseEventArgs(grp.Handle, MouseButtons.Right));
                 }
                 return;
             }
@@ -3320,9 +2938,8 @@ namespace MW5.Api.Legend
             {
                 if (element.CheckBox == false && element.ExpansionBox == false)
                 {
-                    FireLayerMouseUp(lyr.Handle, MouseButtons.Right);
+                    FireEvent(this, LayerMouseUp, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Right));
                 }
-                return;
             }
         }
 
@@ -3425,7 +3042,7 @@ namespace MW5.Api.Legend
             grp = FindClickedGroup(pnt, out InCheck, out InExpansion);
             if (grp != null && InCheck == false && (InExpansion == false || grp.Layers.Count == 0))
             {
-                FireGroupMouseUp(grp.Handle, MouseButtons.Left);
+                FireEvent(this, GroupMouseUp, new GroupMouseEventArgs(grp.Handle, MouseButtons.Left));
                 return;
             }
 
@@ -3435,24 +3052,14 @@ namespace MW5.Api.Legend
             lyr = FindClickedLayer(pnt, out InCheck, out InExpansion);
             if (lyr != null && InCheck == false)
             {
-                if (InExpansion == false)
+                if (InExpansion == false || lyr.ColorLegend.Count == 0)
                 {
-                    FireLayerMouseUp(lyr.Handle, MouseButtons.Left);
-                    return;
-                }
-                else
-                {
-                    if (lyr.ColorLegend.Count == 0)
-                    {
-                        //if the expansion box is hidden, then fire a mouse up
-                        FireLayerMouseUp(lyr.Handle, MouseButtons.Left);
-                        return;
-                    }
+                    FireEvent(this, LayerMouseUp, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                 }
             }
 
             //if no other mouseup event is send, then send the LegendMouseUp
-            FireLegendClick(MouseButtons.Left, pnt);
+            FireEvent(this, LegendClick, new LegendClickEventArgs(MouseButtons.Left, pnt));
         }
 
         private bool IsValidIndex<T>(List<T> list, int index)
@@ -3819,8 +3426,8 @@ namespace MW5.Api.Legend
             try
             {
                 // TODO: restore
-                //if (!m_LayerManager.IsValidHandle(LayerHandle))
-                //    throw new Exception("Invalid layerHandle (LayerHandle)");
+                //if (!m_LayerManager.IsValidHandle(GroupHandle))
+                //    throw new Exception("Invalid layerHandle (GroupHandle)");
 
                 if (!IsValidGroup(TargetGroupHandle))
                     throw new Exception("Invalid layerHandle (TargetGroupHandle)");
@@ -3849,7 +3456,7 @@ namespace MW5.Api.Legend
                     while (CurPos <= EndPos)
                     {
                         CurHandle = _map.get_LayerHandle(CurPos);
-                        FireLayerPositionChanged(CurHandle);
+                        FireEvent(this, LayerPositionChanged, new PositionChangedEventArgs(CurHandle, OldMapPos, NewMapPos));
                         CurPos += 1;
                     }
 
@@ -3908,14 +3515,12 @@ namespace MW5.Api.Legend
                 UpdateGroupPositions();
                 Redraw();
 
-                FireGroupPositionChanged(grp.Handle);
+                FireEvent(this, GroupPositionChanged, new PositionChangedEventArgs(grp.Handle, OldPos, NewPos));
                 return true;
             }
-            else
-            {
-                LegendHelper.LastError = "Invalid Group layerHandle";
-                return false;
-            }
+            
+            LegendHelper.LastError = "Invalid Group layerHandle";
+            return false;
         }
 
         private void Legend_DoubleClick(object sender, System.EventArgs e)
@@ -3933,7 +3538,7 @@ namespace MW5.Api.Legend
             {
                 if (InCheckBox == false && InExpandBox == false)
                 {
-                    FireGroupDoubleClick(grp.Handle);
+                    FireEvent(this, GroupDoubleClick, new GroupEventArgs(grp.Handle));
                 }
                 return;
             }
@@ -3945,9 +3550,8 @@ namespace MW5.Api.Legend
             {
                 if (element.CheckBox == false && element.ExpansionBox == false)
                 {
-                    FireLayerDoubleClick(lyr.Handle);
+                    FireEvent(this, LayerDoubleClick, new LayerEventArgs(lyr.Handle));
                 }
-                return;
             }
         }
 

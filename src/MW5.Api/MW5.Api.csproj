@@ -95,6 +95,17 @@
     <Compile Include="Legend\ColorInfo.cs" />
     <Compile Include="Legend\Constants.cs" />
     <Compile Include="Legend\DragInfo.cs" />
+    <Compile Include="Legend\Events\ChartFieldClickedEventArgs.cs" />
+    <Compile Include="Legend\Events\GroupEventArgs.cs" />
+    <Compile Include="Legend\Events\GroupMouseEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerCancelEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerCategoryEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerMeasureEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerMouseEventArgs.cs" />
+    <Compile Include="Legend\Events\LayerPaintEventArgs.cs" />
+    <Compile Include="Legend\Events\LegendClickEventArgs.cs" />
+    <Compile Include="Legend\Events\PositionChangedEventArgs.cs" />
     <Compile Include="Legend\Group.cs" />
     <Compile Include="Legend\Groups.cs" />
     <Compile Include="Legend\LayerElement.cs" />

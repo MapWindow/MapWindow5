@@ -370,7 +370,8 @@ namespace MW5.Api.Legend
 				if (oldState != visible)
 				{
 					bool cancel = false;
-					_legend.FireLayerVisibleChanged(lyr.Handle,visible, ref cancel);
+					
+                    _legend.FireLayerVisibleChanged(lyr.Handle,visible, ref cancel);
 					if (cancel == true)
 						lyr.Visible = !(visible);
 				}

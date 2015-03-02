@@ -5,6 +5,7 @@ using System.Drawing;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
+using MW5.Api.Legend.Events;
 
 namespace MW5.Api.Legend
 {
@@ -42,13 +43,13 @@ namespace MW5.Api.Legend
         /// Allows you to render the expanded region of a layer yourself. Useful with ExpansionBoxForceAllowed=true.
         /// If you use this, you must also set ExpansionBoxCustomHeightFunction.
         /// </summary>
-        public ExpansionBoxCustomRenderer ExpansionBoxCustomRenderFunction = null;
+        public EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
 
         /// <summary>
         /// Tells the legend how high your custom rendered legend will be, so that it can
         /// arrange items around it.
         /// </summary>
-        public ExpansionBoxCustomHeight ExpansionBoxCustomHeightFunction = null;
+        public EventHandler<LayerMeasureEventArgs> ExpansionBoxCustomHeightFunction = null;
 
         /// <summary>
         /// Stores custom objects associated with layer
@@ -237,12 +238,13 @@ namespace MW5.Api.Legend
             // to affect drawing of the expansion box externally
             if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
-                int ht = Constants.ITEM_HEIGHT;
                 bool handled = false;
-                ExpansionBoxCustomHeightFunction(_layerHandle, _legend.Width, ref ht, ref handled);
-                if (handled)
+                var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ITEM_HEIGHT) { Handled = false};
+                ExpansionBoxCustomHeightFunction.Invoke(this, args);
+
+                if (args.Handled)
                 {
-                    return ht + Constants.ITEM_HEIGHT + Constants.EXPAND_BOX_TOP_PAD*2;
+                    return args.HeightToDraw + Constants.ITEM_HEIGHT + Constants.EXPAND_BOX_TOP_PAD*2;
                 }
                 return Constants.ITEM_HEIGHT;
             }
