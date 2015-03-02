@@ -108,6 +108,7 @@
     <Compile Include="Legend\Events\PositionChangedEventArgs.cs" />
     <Compile Include="Legend\Group.cs" />
     <Compile Include="Legend\Groups.cs" />
+    <Compile Include="Legend\ILegendControl.cs" />
     <Compile Include="Legend\LayerElement.cs" />
     <Compile Include="Legend\LegendControl.cs">
       <SubType>UserControl</SubType>
@@ -264,6 +265,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Legend\LegendControl.resx">
       <DependentUpon>LegendControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="MapControl.resx">
       <DependentUpon>MapControl.cs</DependentUpon>

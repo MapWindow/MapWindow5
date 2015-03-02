@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
@@ -22,9 +23,11 @@ namespace MW5.Views
 
             InitializeComponent();
 
+            _legendControl1.Map = _mapControl1;
+
             context.Init(this);
 
-            _dockingManager1.InitDocking(treeViewAdv1, treeViewAdv2, this);
+            _dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
 
             _mainFrameBarManager1.InitMenus(_mainMenu);
 
@@ -78,6 +81,11 @@ namespace MW5.Views
         IMapControl IMainForm.Map
         {
             get { return _mapControl1; }
+        }
+
+        public ILegendControl Legend
+        {
+            get { return _legendControl1; }
         }
 
         #endregion

@@ -115,7 +115,7 @@ namespace MW5.Api.Legend
         {
             if (_legend.IsValidGroup(handle))
             {
-                return this[(int) _legend.m_GroupPositions[handle]];
+                return this[(int) _legend.GroupPositions[handle]];
             }
 
             LegendHelper.LastError = "Invalid Group Handle";
@@ -131,7 +131,7 @@ namespace MW5.Api.Legend
         {
             if (_legend.IsValidGroup(groupHandle))
             {
-                return (int) _legend.m_GroupPositions[groupHandle];
+                return (int) _legend.GroupPositions[groupHandle];
             }
 
             LegendHelper.LastError = "Invalid Group Handle";

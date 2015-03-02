@@ -6,7 +6,7 @@ namespace MW5.Helpers
 {
     internal static class DockingHelper
     {
-        public static void InitDocking(this DockingManager dockingManager, TreeViewAdv legend, TreeViewAdv preview, Form parent)
+        public static void InitDocking(this DockingManager dockingManager, UserControl legend, TreeViewAdv preview, Form parent)
         {
             // designer support of docking in VS2013 with MetroForm is buggy
             // so better to et layout at runtime

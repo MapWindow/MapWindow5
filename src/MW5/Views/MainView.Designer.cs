@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope12 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference12 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -47,7 +47,6 @@ namespace MW5.Views
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusCoordinates = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this.treeViewAdv1 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.MapControl();
@@ -76,9 +75,9 @@ namespace MW5.Views
             this.toolPan = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
+            this._legendControl1 = new MW5.Api.Legend.LegendControl();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv2)).BeginInit();
             this.dockingClientPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._mainFrameBarManager1)).BeginInit();
@@ -202,38 +201,6 @@ namespace MW5.Views
             this.parentBarItem3.Text = "Trial";
             this.parentBarItem3.WrapLength = 20;
             // 
-            // treeViewAdv1
-            // 
-            this.treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(152, 63);
-            this.treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeViewAdv1.CanSelectDisabledNode = false;
-            // 
-            // 
-            // 
-            this.treeViewAdv1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeViewAdv1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.treeViewAdv1.HelpTextControl.Name = "helpText";
-            this.treeViewAdv1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
-            this.treeViewAdv1.HelpTextControl.TabIndex = 0;
-            this.treeViewAdv1.HelpTextControl.Text = "help text";
-            this.treeViewAdv1.Location = new System.Drawing.Point(85, 162);
-            this.treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.treeViewAdv1.Name = "treeViewAdv1";
-            this.treeViewAdv1.ShowFocusRect = true;
-            this.treeViewAdv1.Size = new System.Drawing.Size(152, 63);
-            this.treeViewAdv1.TabIndex = 2;
-            this.treeViewAdv1.Text = "treeViewAdv1";
-            // 
-            // 
-            // 
-            this.treeViewAdv1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
-            this.treeViewAdv1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.treeViewAdv1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.treeViewAdv1.ToolTipControl.Name = "toolTip";
-            this.treeViewAdv1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
-            this.treeViewAdv1.ToolTipControl.TabIndex = 1;
-            this.treeViewAdv1.ToolTipControl.Text = "toolTip";
-            // 
             // treeViewAdv2
             // 
             this.treeViewAdv2.BeforeTouchSize = new System.Drawing.Size(152, 87);
@@ -283,10 +250,10 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope12.Tag = "";
-            this._mapControl1.Extents = envelope12;
-            spatialReference12.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference12;
+            envelope1.Tag = "";
+            this._mapControl1.Extents = envelope1;
+            spatialReference1.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference1;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -679,22 +646,33 @@ namespace MW5.Views
             ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images35")))});
             this._imageListAdv1.ImageSize = new System.Drawing.Size(24, 24);
             // 
+            // _legendControl1
+            // 
+            this._legendControl1.BackColor = System.Drawing.Color.White;
+            this._legendControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._legendControl1.Location = new System.Drawing.Point(106, 174);
+            this._legendControl1.Name = "_legendControl1";
+            this._legendControl1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this._legendControl1.ShowGroupFolders = true;
+            this._legendControl1.ShowLabels = false;
+            this._legendControl1.Size = new System.Drawing.Size(107, 126);
+            this._legendControl1.TabIndex = 5;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(796, 531);
+            this.Controls.Add(this._legendControl1);
             this.Controls.Add(this.dockingClientPanel1);
             this.Controls.Add(this.treeViewAdv2);
-            this.Controls.Add(this.treeViewAdv1);
             this.Controls.Add(this.statusStripEx1);
             this.Name = "MainView";
             this.Text = "MapWindow 5";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).EndInit();
             this.statusStripEx1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv2)).EndInit();
             this.dockingClientPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._mainFrameBarManager1)).EndInit();
@@ -716,7 +694,6 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusCoordinates;
         private Syncfusion.Windows.Forms.Tools.DockingManager _dockingManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem parentBarItem3;
-        private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv1;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
         private MapControl _mapControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
@@ -745,6 +722,7 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem6;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem2;
+        private Api.Legend.LegendControl _legendControl1;
 
     }
 }

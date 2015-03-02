@@ -131,9 +131,14 @@ namespace MW5.Api.Legend
         {
             get
             {
-                // TODO: implement
                 return LegendLayerType.PointShapefile;
+                // TODO: implement
             }
+        }
+
+        internal bool IsShapefile
+        {
+            get { return LayerType == LayerType.Shapefile; }
         }
 
         /// <summary>

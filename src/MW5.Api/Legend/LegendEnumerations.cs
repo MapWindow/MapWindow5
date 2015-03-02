@@ -69,7 +69,9 @@
         ActiveLabel = 6,
         DimmedLabel = 7,
         Editing = 8,
-        Database = 9
+        Database = 9,
+        Folder = 10,
+        FolderOpened = 11,
     }
 
     /// <summary>
