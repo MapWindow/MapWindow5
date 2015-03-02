@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope12 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference12 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -74,8 +74,8 @@ namespace MW5.Views
             this.toolZoomToMax = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolZoomToLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolPan = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
             this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
+            this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -283,10 +283,10 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope2.Tag = "";
-            this._mapControl1.Extents = envelope2;
-            spatialReference2.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference2;
+            envelope12.Tag = "";
+            this._mapControl1.Extents = envelope12;
+            spatialReference12.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference12;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -391,7 +391,10 @@ namespace MW5.Views
             // 
             this.barItem1.BarName = "barItem1";
             this.barItem1.CategoryIndex = 3;
+            this.barItem1.CustomTextFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.barItem1.ID = "mnuOpen";
+            this.barItem1.ImageSize = new System.Drawing.Size(32, 32);
+            this.barItem1.Padding = new System.Drawing.Point(15, 15);
             this.barItem1.ShowToolTipInPopUp = false;
             this.barItem1.SizeToFit = true;
             this.barItem1.Text = "Open";
@@ -625,6 +628,16 @@ namespace MW5.Views
             this.toolPan.SizeToFit = true;
             this.toolPan.Text = "Pan";
             // 
+            // barItem2
+            // 
+            this.barItem2.BarName = "barItem2";
+            this.barItem2.CategoryIndex = 1;
+            this.barItem2.ID = "toolSetProjection";
+            this.barItem2.ImageIndex = 2;
+            this.barItem2.ShowToolTipInPopUp = false;
+            this.barItem2.SizeToFit = true;
+            this.barItem2.Text = "Set projection";
+            // 
             // _imageListAdv1
             // 
             this._imageListAdv1.Images.AddRange(new System.Drawing.Image[] {
@@ -665,16 +678,6 @@ namespace MW5.Views
             ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images34"))),
             ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images35")))});
             this._imageListAdv1.ImageSize = new System.Drawing.Size(24, 24);
-            // 
-            // barItem2
-            // 
-            this.barItem2.BarName = "barItem2";
-            this.barItem2.CategoryIndex = 1;
-            this.barItem2.ID = "toolSetProjection";
-            this.barItem2.ImageIndex = 2;
-            this.barItem2.ShowToolTipInPopUp = false;
-            this.barItem2.SizeToFit = true;
-            this.barItem2.Text = "Set projection";
             // 
             // MainView
             // 

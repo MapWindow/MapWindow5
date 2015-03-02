@@ -8,7 +8,7 @@ namespace MW5.Mvp.Sample
         OpenLayer = 0,
     }
 
-    public interface ISampleView : IView
+    public interface ISampleView : IComplexView
     {
 
     }
@@ -18,7 +18,7 @@ namespace MW5.Mvp.Sample
         public string Name { get; set; }
     }
 
-    public class SamplePresenter : AbstractPresenter<ISampleView, SampleCommand>
+    public class SamplePresenter : CommandPresenter<ISampleView, SampleCommand>
     {
         private readonly ISampleView _view;
 

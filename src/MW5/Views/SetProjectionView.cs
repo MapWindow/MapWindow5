@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Abstract;
 using MW5.Mvp;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
@@ -14,14 +15,6 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.Views
 {
-    public interface ISetProjectionView : IView
-    {
-        SetProjectionView.ProjectionType Projection { get; }
-        string CustomProjection { get; }
-        int DefaultProjectionIndex { get; }
-        event Action OkClicked;
-    }
-    
     public partial class SetProjectionView : MetroForm, ISetProjectionView
     {
         private readonly IMainView _owner;
@@ -102,14 +95,5 @@ namespace MW5.Views
                 action();
             }
         }
-
-        #region Remove
-
-        public IEnumerable<IToolbar> Toolbars
-        {
-            get { return null; }
-        }
-        
-        #endregion
     }
 }

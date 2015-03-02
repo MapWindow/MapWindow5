@@ -32,8 +32,9 @@ namespace MW5.Views
             _mainFrameBarManager1.DockToolbar(_toolbarMap, CommandBarDockState.Top);
 
             FormClosed += MainView_FormClosed;
-        }
 
+        }
+        
         void MainView_FormClosed(object sender, FormClosedEventArgs e)
         {
             _dockingManager1.SaveLayout();

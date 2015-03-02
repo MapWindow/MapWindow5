@@ -12,8 +12,11 @@ namespace MW5.Mvp
     {
         void ShowView();
         void Close();
-        IEnumerable<IToolbar> Toolbars { get; }
         void UpdateView();
-        //void UpdateView(TModel model);
+    }
+
+    public interface IComplexView: IView
+    {
+        IEnumerable<IToolbar> Toolbars { get; }
     }
 }

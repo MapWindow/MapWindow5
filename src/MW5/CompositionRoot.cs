@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Abstract;
 using MW5.DI.Ninject;
 //using MW5.DI.LightInject;
 //using MW5.DI.Castle;

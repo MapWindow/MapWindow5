@@ -60,9 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasePresenter.cs" />
-    <Compile Include="BasePresenterWithArg.cs" />
     <Compile Include="DI\IApplicationContainer.cs" />
-    <Compile Include="AbstractPresenter.cs" />
+    <Compile Include="CommandPresenter.cs" />
     <Compile Include="IPresenter.cs" />
     <Compile Include="IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

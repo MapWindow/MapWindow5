@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Abstract;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Mvp;
@@ -13,11 +14,7 @@ using MW5.Views;
 
 namespace MW5.Presenters
 {
-    public enum SetProjectionCommand
-    {
-    }
-
-    public class SetProjectionPresenter : BasePresenter<ISetProjectionView, SetProjectionCommand>
+    public class SetProjectionPresenter : BasePresenter<ISetProjectionView>
     {
         private readonly ISetProjectionView _view;
         private readonly IMapControl _map;
@@ -77,18 +74,5 @@ namespace MW5.Presenters
 
             _view.Close();
         }
-
-        #region Unnecessary
-        // TODO: create base presenter without this stuff
-
-        public override void RunCommand(SetProjectionCommand command)
-        {
-        }
-
-        protected override void CommandNotFound(string itemName)
-        {
-        }
-
-        #endregion
     }
 }

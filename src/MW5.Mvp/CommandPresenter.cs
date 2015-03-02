@@ -10,10 +10,9 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Mvp
 {
-    public abstract class AbstractPresenter<TView, TCommand>
+    public abstract class CommandPresenter<TView, TCommand>
         where TCommand : struct, IConvertible
-        where TView: IView
-        
+        where TView: IComplexView
     {
         protected TView View { get; private set; }
 
@@ -21,7 +20,7 @@ namespace MW5.Mvp
 
         protected abstract void CommandNotFound(string itemName);
 
-        protected AbstractPresenter(TView view)
+        protected CommandPresenter(TView view)
         {
             View = view;
 

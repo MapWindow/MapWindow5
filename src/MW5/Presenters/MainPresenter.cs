@@ -20,12 +20,12 @@ namespace MW5.Presenters
         SetProjection = 7,
     }
 
-    public interface IMainView : IView
+    public interface IMainView : IComplexView
     {
         
     }
 
-    public class MainPresenter : BasePresenter<IView, MainCommand>
+    public class MainPresenter : BasePresenter<IMainView, MainCommand>
     {
         private readonly IAppContext _context;
         private readonly IMainView _view;
