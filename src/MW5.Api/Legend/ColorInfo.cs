@@ -1,38 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MW5.Api.Legend
+﻿namespace MW5.Api.Legend
 {
+    using System.Drawing;
+
     internal struct ColorInfo
     {
-        #region "Member Variables"
-
-        public Color StartColor;
-        public Color EndColor;
         public string Caption;
+
+        public Color EndColor;
+
         public bool IsTransparent;
 
-        #endregion
+        public Color StartColor;
 
-        public ColorInfo(Color start, Color end, string pCaption, bool transparent)
+        public ColorInfo(Color start, Color end, string caption, bool transparent)
         {
-            StartColor = start;
-            EndColor = end;
-            Caption = pCaption;
-            IsTransparent = transparent;
+            this.StartColor = start;
+            this.EndColor = end;
+            this.Caption = caption;
+            this.IsTransparent = transparent;
         }
-        public ColorInfo(Color start, Color end, string pCaption)
-        {
-            StartColor = start;
-            EndColor = end;
-            Caption = pCaption;
-            IsTransparent = false;
 
+        public ColorInfo(Color start, Color end, string caption)
+        {
+            this.StartColor = start;
+            this.EndColor = end;
+            this.Caption = caption;
+            this.IsTransparent = false;
         }
     }
-
 }

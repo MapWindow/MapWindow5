@@ -164,8 +164,6 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool HideFromLegend { get; set; }
-
         public bool RemoveOptions(string optionsName)
         {
             return _map.RemoveLayerOptions(_layerHandle, optionsName);

@@ -1,49 +1,46 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AxMapWinGIS;
-using MW5.Api.Concrete;
-using MW5.Api.Interfaces;
-
-namespace MW5.Api.Legend
+﻿namespace MW5.Api.Legend
 {
+    using System;
+
+    using AxMapWinGIS;
+
+    using MW5.Api.Concrete;
+
     public class LegendLayerCollection : BaseLayerCollection<LegendLayer>
     {
         private readonly LegendControl _legend;
 
-        internal LegendLayerCollection(AxMap axMap, LegendControl legend) : base(axMap)
+        internal LegendLayerCollection(AxMap axMap, LegendControl legend)
+            : base(axMap)
         {
-            _legend = legend;
+            this._legend = legend;
             if (legend == null)
             {
                 throw new NullReferenceException("Legend reference is null.");
             }
         }
 
-        public override LegendLayer ItemByHandle(int layerHandle)
-        {
-            return new LegendLayer(_axMap, layerHandle, _legend);
-        }
-
         public override LegendLayer this[int position]
         {
             get
             {
-                if (position >= 0 && position < Count)
+                if (position >= 0 && position < this.Count)
                 {
-                    var layerHandle = _axMap.get_LayerHandle(position);
+                    var layerHandle = this._axMap.get_LayerHandle(position);
                     if (layerHandle != -1)
                     {
-                        return new LegendLayer(_axMap, layerHandle, _legend);
+                        return new LegendLayer(this._axMap, layerHandle, this._legend);
                     }
                 }
+
                 return null;
             }
         }
 
+        public override LegendLayer ItemByHandle(int layerHandle)
+        {
+            return new LegendLayer(this._axMap, layerHandle, this._legend);
+        }
 
         /// <summary>
         /// Gets the position (index) of the specified layer within the group
@@ -52,12 +49,14 @@ namespace MW5.Api.Legend
         /// <returns>0-Based Index into list of layers within group, -1 on failure</returns>
         public int PositionInGroup(int LayerHandle)
         {
-            int LayerIndex, GroupIndex;
+            int layerIndex, groupIndex;
 
-            var lyr = _legend.FindLayerByHandle(LayerHandle, out GroupIndex, out LayerIndex);
+            var lyr = this._legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
 
             if (lyr != null)
-                return LayerIndex;
+            {
+                return layerIndex;
+            }
 
             return -1;
         }
@@ -69,14 +68,13 @@ namespace MW5.Api.Legend
         /// <returns>Group Handle of the group that contains the layer, -1 on failure</returns>
         public int GroupOf(int LayerHandle)
         {
+            int layerIndex, groupIndex;
 
-            int LayerIndex, GroupIndex;
-
-            var lyr = _legend.FindLayerByHandle(LayerHandle, out GroupIndex, out LayerIndex);
+            var lyr = this._legend.FindLayerByHandle(LayerHandle, out groupIndex, out layerIndex);
 
             if (lyr != null)
             {
-                var grp = _legend.AllGroups[GroupIndex];
+                var grp = this._legend.AllGroups[groupIndex];
                 return grp.Handle;
             }
 
@@ -92,7 +90,7 @@ namespace MW5.Api.Legend
         /// <returns>True on success, False otherwise</returns>
         public bool MoveLayer(int LayerHandle, int TargetGroupHandle, int PositionInGroup)
         {
-            return _legend.MoveLayer(TargetGroupHandle, LayerHandle, PositionInGroup);
+            return this._legend.MoveLayer(TargetGroupHandle, LayerHandle, PositionInGroup);
         }
     }
 }

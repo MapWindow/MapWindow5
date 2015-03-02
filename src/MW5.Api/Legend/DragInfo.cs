@@ -1,61 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MW5.Api.Legend
+﻿namespace MW5.Api.Legend
 {
     internal class DragInfo
     {
-        public bool Dragging;
-        public bool MouseDown;
-        public bool LegendLocked;
-        public int DragLayerIndex;
-        public int DragGroupIndex;
-        public int TargetGroupIndex;
-        public int TargetLayerIndex;
-        public int StartY;
-        //public int StopY;
-
         public DragInfo()
         {
-            Reset();
+            this.Reset();
         }
-        public void Reset()
-        {
-            Dragging = false;
-            MouseDown = false;
-            StartY = 0;
-            LegendLocked = false;
-            DragLayerIndex = -1;
-            DragGroupIndex = -1;
-            TargetGroupIndex = -1;
-            TargetLayerIndex = -1;
-        }
+
+        public bool Dragging { get; set; }
+
+        public int DragGroupIndex { get; set; }
+
+        public int DragLayerIndex { get; set; }
+
+        public bool LegendLocked { get; set; }
+
+        public bool MouseDown { get; set; }
+
+        public int StartY { get; set; }
+
+        public int TargetGroupIndex { get; set; }
+
+        public int TargetLayerIndex { get; set; }
 
         public bool DraggingLayer
         {
             get
             {
-                return DragLayerIndex != -1;
+                return this.DragLayerIndex != -1;
             }
+        }
+
+        public void Reset()
+        {
+            this.Dragging = false;
+            this.MouseDown = false;
+            this.StartY = 0;
+            this.LegendLocked = false;
+            this.DragLayerIndex = -1;
+            this.DragGroupIndex = -1;
+            this.TargetGroupIndex = -1;
+            this.TargetLayerIndex = -1;
         }
 
         public void StartGroupDrag(int mouseY, int groupIndex)
         {
-            MouseDown = true;
-            DragGroupIndex = groupIndex;
-            DragLayerIndex = Constants.INVALID_INDEX;
-            StartY = mouseY;
+            this.MouseDown = true;
+            this.DragGroupIndex = groupIndex;
+            this.DragLayerIndex = Constants.InvalidIndex;
+            this.StartY = mouseY;
         }
 
         public void StartLayerDrag(int mouseY, int groupIndex, int layerIndex)
         {
-            MouseDown = true;
-            DragGroupIndex = groupIndex;
-            DragLayerIndex = layerIndex;
-            StartY = mouseY;
+            this.MouseDown = true;
+            this.DragGroupIndex = groupIndex;
+            this.DragLayerIndex = layerIndex;
+            this.StartY = mouseY;
         }
     }
 }

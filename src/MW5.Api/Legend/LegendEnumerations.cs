@@ -11,36 +11,37 @@ namespace MW5.Api.Legend
     /// </summary>
     public enum LegendLayerType
     {
-        /// <summary>Invalid layer type</summary>
+        /// <summary>
+        /// Invalid layer type
+        /// </summary>
         Invalid = -1,
-        /// <summary>Image layer</summary>
+
+        /// <summary>
+        /// Image layer
+        /// </summary>
         Image = 0,
-        /// <summary>Point shapefile layer</summary>
+
+        /// <summary>
+        /// Point shapefile layer
+        /// </summary>
         PointShapefile = 1,
-        /// <summary>Line shapefile layer</summary>
+        
+        /// <summary>
+        /// Line shapefile layer
+        /// </summary>
         LineShapefile = 2,
-        /// <summary>Polygon shapefile layer</summary>
+
+        /// <summary>
+        /// Polygon shapefile layer
+        /// </summary>
         PolygonShapefile = 3,
-        /// <summary>Grid layer</summary>
+
+        /// <summary>
+        /// Grid layer
+        /// </summary>
         Grid = 4
     }
 
-    /// <summary>
-    /// Elements of the layer representation in the legend
-    /// </summary>
-    internal enum LayerElementType
-    {
-        None = 0,
-        Name = 1,
-        Symbol = 2,
-        Label = 3,
-        CategoriesCaption = 4,
-        CategoryName = 5,
-        ChartsCaption = 7,
-        Charts = 8,
-        ChartField = 9,
-        ChartFieldName = 10,
-    }
 
     /// <summary>
     /// Visibility State of a Group
@@ -75,5 +76,22 @@ namespace MW5.Api.Legend
         DimmedLabel = 7,
         Editing = 8,
         Database = 9,
+    }
+
+    /// <summary>
+    /// Elements of the layer representation in the legend
+    /// </summary>
+    internal enum LayerElementType
+    {
+        None = 0,
+        Name = 1,
+        Symbol = 2,
+        Label = 3,
+        CategoriesCaption = 4,
+        CategoryName = 5,
+        ChartsCaption = 7,
+        Charts = 8,
+        ChartField = 9,
+        ChartFieldName = 10,
     }
 }

@@ -1,428 +1,426 @@
-//********************************************************************************************************
-//The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-//you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-//http://www.mozilla.org/MPL/ 
-//Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-//ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-//limitations under the License. 
-//
-//The Original Code is MapWindow Open Source. 
-//
-//The Initial Developer of this version of the Original Code is Daniel P. Ames using portions created by 
-//Utah State University and the Idaho National Engineering and Environmental Lab that were released as 
-//public domain in March 2004.  
-//
-//Contributor(s): (Open source contributors should list themselves and their modifications here). 
-//
-//********************************************************************************************************
-
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using MW5.Api.Concrete;
-
 namespace MW5.Api.Legend
 {
-	/// <summary>
-	/// Summary description for Group.
-	/// </summary>
-	public class Group
-	{
-		#region "Member Variables"
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
 
-		private string _caption;
+    using MW5.Api.Concrete;
 
-		/// <summary>
-		/// A string that a developer can use to hold misc. information about this group
-		/// </summary>
-		public string Tag;
-		private object _icon;
-		private bool _expanded;
-		private int _height;
-		private LegendControl _legend;
+    /// <summary>
+    /// Summary description for Group.
+    /// </summary>
+    public class Group
+    {
+        private string _caption;
 
-		/// <summary>
-		/// The Handle for this Group
-		/// </summary>
-		protected internal int _handle;
+        private bool _expanded;
 
-		/// <summary>
-		/// The top position of this group
-		/// </summary>
-		protected internal int Top;
+        /// <summary>
+        /// The Handle for this Group
+        /// </summary>
+        protected internal int _handle;
 
-		/// <summary>
-		/// List of All Layers contained within this group
-		/// </summary>
-		public List<LegendLayer> Layers;
-		
-		private Visibility _visibleState;
+        private int _height;
 
-        private bool _stateLocked;
+        private object _icon;
 
-		#endregion
+        private Visibility _visibleState;
 
-		/// <summary>
-		/// Constructor
-		/// </summary>
-		public Group(LegendControl leg)
-		{
-			//The next line MUST GO FIRST in the constructor
-			_legend = leg;
-			//The previous line MUST GO FIRST in the constructor
+        /// <summary>
+        /// List of All Layers contained within this group
+        /// </summary>
+        public List<LegendLayer> Layers;
 
-			Layers = new List<LegendLayer>();
-			Expanded = true;
-			VisibleState = Visibility.AllVisible;
-			_handle = -1;
-			Icon = null;
-            _stateLocked = false;
-		}
+        /// <summary>
+        /// A string that a developer can use to hold misc. information about this group
+        /// </summary>
+        public string Tag;
 
-		/// <summary>
-		/// Gets or sets the Text that appears in the legend for this group
-		/// </summary>
-		public string Text
-		{
-			get
-			{
-				return _caption;
-			}
-			set 
-			{
-				_caption = value;
-				_legend.Redraw();
-			}
-		}
+        /// <summary>
+        /// The top position of this group
+        /// </summary>
+        protected internal int Top;
 
-		/// <summary>
-		/// Gets or sets the icon that appears next to this group in the legend.
-		/// Setting this value to null(nothing) removes the icon from the legend
-		/// </summary>
-		public object Icon
-		{
-			get
-			{
-				return _icon;
-			}
-			set 
-			{
-				if(LegendHelper.IsSupportedPicture(value))
-				{
-					_icon = value;
-					_legend.Redraw();
-				}
-				else
-				{
-					throw new System.Exception("LegendControl Error: Invalid Group Icon type");
-				}
-			}
-		}
+        private readonly LegendControl _legend;
 
-		/// <summary>
-		/// Gets the number of layers within this group
-		/// </summary>
-		public int LayerCount
-		{
-			get
-			{
-				return Layers.Count;
-			}
-		}
-		
-		/// <summary>
-		/// 
-		/// </summary>
-		public LegendLayer this[int layerPosition]
-		{
-			get
-			{
-				if(layerPosition >=0 && layerPosition < this.Layers.Count)
-					return Layers[layerPosition];
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public Group(LegendControl leg)
+        {
+            // The next line MUST GO FIRST in the constructor
+            this._legend = leg;
 
-				LegendHelper.LastError = "Invalid Layer Position within Group";
-					return null;
-			}	
-		}
+            // The previous line MUST GO FIRST in the constructor
+            this.Layers = new List<LegendLayer>();
+            this.Expanded = true;
+            this.VisibleState = Visibility.AllVisible;
+            this._handle = -1;
+            this.Icon = null;
+            this.StateLocked = false;
+        }
 
-		/// <summary>
-		/// Gets the Handle (a unique identifier) to this group
-		/// </summary>
-		public int Handle
-		{
-			get
-			{
-				return _handle;
-			}
-		}
+        /// <summary>
+        /// Gets or sets the Text that appears in the legend for this group
+        /// </summary>
+        public string Text
+        {
+            get
+            {
+                return this._caption;
+            }
 
-		/// <summary>
-		/// Looks up a Layer by Handle within this group
-		/// </summary>
-		/// <param name="Handle">Handle of the Layer to lookup</param>
-		/// <returns>Layer item if successful, null (nothing) on failure</returns>
-		protected internal Layer LayerByHandle(int Handle)
-		{
-			int count = Layers.Count;
-			Layer lyr = null;
-			for(int i = 0; i < count; i++)
-			{
-				lyr = (Layer)Layers[i];
-				if (lyr.Handle == Handle)
-					return lyr;
-			}
-			return null;
-		}
+            set
+            {
+                this._caption = value;
+                this._legend.Redraw();
+            }
+        }
 
-		/// <summary>
-		/// Gets the Layer's position (index) within a group
-		/// </summary>
-		/// <param name="Handle">Layer Handle</param>
-		/// <returns>0-Based index of the Layer on success, -1 on failure</returns>
-		protected internal int LayerPositionInGroup(int Handle)
-		{
-			int count = Layers.Count;
-			Layer lyr = null;
-			for(int i = 0; i < count; i++)
-			{
-				lyr = (Layer)Layers[i];
-				if (lyr.Handle == Handle)
-					return i;
-			}
-			return -1;
-		}
+        /// <summary>
+        /// Gets or sets the icon that appears next to this group in the legend.
+        /// Setting this value to null(nothing) removes the icon from the legend
+        /// </summary>
+        public object Icon
+        {
+            get
+            {
+                return this._icon;
+            }
 
-		/// <summary>
-		/// Gets the layer handle of the specified layer
-		/// </summary>
-		/// <param name="PositionInGroup">0 based index into list of layers</param>
-		/// <returns>Layer's handle on success, -1 on failure</returns>
-		public int LayerHandle(int PositionInGroup)
-		{
-			if(PositionInGroup >=0 && PositionInGroup < Layers.Count)
-				return (Layers[PositionInGroup]).Handle;
+            set
+            {
+                if (LegendHelper.IsSupportedPicture(value))
+                {
+                    this._icon = value;
+                    this._legend.Redraw();
+                }
+                else
+                {
+                    throw new Exception("LegendControl Error: Invalid Group Icon type");
+                }
+            }
+        }
 
-			LegendHelper.LastError = "Invalid layer position within group";
-			return -1;
-		}
+        /// <summary>
+        /// Gets the number of layers within this group
+        /// </summary>
+        public int LayerCount
+        {
+            get
+            {
+                return this.Layers.Count;
+            }
+        }
 
-		/// <summary>
-		/// Gets or sets whether or not the group is expanded.  This shows or hides the 
-		/// layers within this group
-		/// </summary>
-		public bool Expanded
-		{
-			get
-			{
-				return _expanded;
-			}
-			set
-			{
-				if(value != _expanded)
-				{
-					_expanded = value;
-					RecalcHeight();
-					_legend.Redraw();
-				}
-			}
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public LegendLayer this[int layerPosition]
+        {
+            get
+            {
+                if (layerPosition >= 0 && layerPosition < this.Layers.Count)
+                {
+                    return this.Layers[layerPosition];
+                }
 
-		/// <summary>
-		/// Gets the drawing height of the group
-		/// </summary>
-		protected internal int Height
-		{
-			get
-			{
-                RecalcHeight();
-				return _height;
-			}
-		}
+                LegendHelper.LastError = "Invalid Layer Position within Group";
+                return null;
+            }
+        }
 
-		/// <summary>
-		/// Calculates the expanded height of the group
-		/// </summary>
-		protected internal int ExpandedHeight
-		{
-			get
-			{
-				int NumLayers = Layers.Count;
-				//initialize the height to just the height of the group item
-				int Retval = Constants.ITEM_HEIGHT;
-				LegendLayer lyr;
+        /// <summary>
+        /// Gets the Handle (a unique identifier) to this group
+        /// </summary>
+        public int Handle
+        {
+            get
+            {
+                return this._handle;
+            }
+        }
 
-				//now add all the heights of the Layers
-				for(int i = 0; i < NumLayers; i++)
-				{
-					lyr = Layers[i];
-					Retval += lyr.CalcHeight(true);
-				}
-				
+        /// <summary>
+        /// Gets or sets whether or not the group is expanded.  This shows or hides the 
+        /// layers within this group
+        /// </summary>
+        public bool Expanded
+        {
+            get
+            {
+                return this._expanded;
+            }
 
-				return Retval;
-			}
-		}
+            set
+            {
+                if (value != this._expanded)
+                {
+                    this._expanded = value;
+                    this.RecalcHeight();
+                    this._legend.Redraw();
+                }
+            }
+        }
 
+        /// <summary>
+        /// Gets the drawing height of the group
+        /// </summary>
+        protected internal int Height
+        {
+            get
+            {
+                this.RecalcHeight();
+                return this._height;
+            }
+        }
 
-		/// <summary>
-		/// Recalculates the Height of the Group
-		/// </summary>
-		protected internal void RecalcHeight()
-		{
-			int NumLayers = Layers.Count;
-			
-            //initialize the height to just the height of the group item
-			_height = Constants.ITEM_HEIGHT;
-			LegendLayer lyr;
+        /// <summary>
+        /// Calculates the expanded height of the group
+        /// </summary>
+        protected internal int ExpandedHeight
+        {
+            get
+            {
+                var NumLayers = this.Layers.Count;
 
-			if(_expanded == true)
-			{
-				//now add all the heights of the Layers
-				for(int i = 0; i < NumLayers; i++)
-				{
-					lyr = Layers[i];
-					if (!lyr.HideFromLegend)
-						_height += lyr.Height;
-				}
-			}
-			else
-			{
-				_height = Constants.ITEM_HEIGHT;
-			}
-		}
+                // initialize the height to just the height of the group item
+                var Retval = Constants.ItemHeight;
+                LegendLayer lyr;
 
-		/// <summary>
-		/// Gets or sets the visibility of the layers within this group.
-		/// Note: When reading this property, it returns true if any layer is visible within
-		/// this group
-		/// </summary>
-		public bool LayersVisible
-		{
-			get
-			{
-				if (VisibleState == Visibility.AllHidden)
-					return false;
-				else
-					return true;
-			}
-			set
-			{
-				if(value == true)
-					VisibleState = Visibility.AllVisible;
-				else
-					VisibleState = Visibility.AllHidden;
-			}
-		}
+                // now add all the heights of the Layers
+                for (var i = 0; i < NumLayers; i++)
+                {
+                    lyr = this.Layers[i];
+                    Retval += lyr.CalcHeight(true);
+                }
 
-		/// <summary>
-		/// Gets or Sets the Visibility State for this group
-		/// Note: Set cannot be vsPARTIAL_VISIBLE
-		/// </summary>
-		protected internal Visibility VisibleState
-		{
-			get
-			{
-				return _visibleState;
-			}
-			set
-			{
-				if(value == Visibility.PartialVisible)
-				{
-					//not allowed
-					throw new System.Exception("Invalid [Property set] value: vsPARTIAL_VISIBLE");					
-				}
-				
-				_visibleState = value;
-				UpdateLayerVisibility();
-			}
-		}
+                return Retval;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the visibility of the layers within this group.
+        /// Note: When reading this property, it returns true if any layer is visible within
+        /// this group
+        /// </summary>
+        public bool LayersVisible
+        {
+            get
+            {
+                if (this.VisibleState == Visibility.AllHidden)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+            set
+            {
+                if (value)
+                {
+                    this.VisibleState = Visibility.AllVisible;
+                }
+                else
+                {
+                    this.VisibleState = Visibility.AllHidden;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or Sets the Visibility State for this group
+        /// Note: Set cannot be vsPARTIAL_VISIBLE
+        /// </summary>
+        protected internal Visibility VisibleState
+        {
+            get
+            {
+                return this._visibleState;
+            }
+
+            set
+            {
+                if (value == Visibility.PartialVisible)
+                {
+                    // not allowed
+                    throw new Exception("Invalid [Property set] value: vsPARTIAL_VISIBLE");
+                }
+
+                this._visibleState = value;
+                this.UpdateLayerVisibility();
+            }
+        }
 
         /// <summary>
         /// gets or sets the locked property, which prevents the user from changing the visual state 
         /// except layer by layer
         /// </summary>
-        public bool StateLocked
+        public bool StateLocked { get; set; }
+
+        /// <summary>
+        /// Looks up a Layer by Handle within this group
+        /// </summary>
+        /// <param name="handle">Handle of the Layer to lookup</param>
+        /// <returns>Layer item if successful, null (nothing) on failure</returns>
+        protected internal Layer LayerByHandle(int handle)
         {
-            get
+            var count = this.Layers.Count;
+            Layer lyr = null;
+            for (var i = 0; i < count; i++)
             {
-                return _stateLocked;
+                lyr = this.Layers[i];
+                if (lyr.Handle == handle)
+                {
+                    return lyr;
+                }
             }
-            set
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the Layer's position (index) within a group
+        /// </summary>
+        /// <param name="handle">Layer Handle</param>
+        /// <returns>0-Based index of the Layer on success, -1 on failure</returns>
+        protected internal int LayerPositionInGroup(int handle)
+        {
+            var count = this.Layers.Count;
+            for (var i = 0; i < count; i++)
             {
-                _stateLocked = value;
+                Layer lyr = this.Layers[i];
+                if (lyr.Handle == handle)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        /// <summary>
+        /// Gets the layer handle of the specified layer
+        /// </summary>
+        /// <param name="positionInGroup">0 based index into list of layers</param>
+        /// <returns>Layer's handle on success, -1 on failure</returns>
+        public int LayerHandle(int positionInGroup)
+        {
+            if (positionInGroup >= 0 && positionInGroup < this.Layers.Count)
+            {
+                return this.Layers[positionInGroup].Handle;
+            }
+
+            LegendHelper.LastError = "Invalid layer position within group";
+            return -1;
+        }
+
+        /// <summary>
+        /// Recalculates the Height of the Group
+        /// </summary>
+        protected internal void RecalcHeight()
+        {
+            var numLayers = this.Layers.Count;
+
+            // initialize the height to just the height of the group item
+            this._height = Constants.ItemHeight;
+
+            if (this._expanded)
+            {
+                // now add all the heights of the Layers
+                for (var i = 0; i < numLayers; i++)
+                {
+                    var lyr = this.Layers[i];
+                    if (!lyr.HideFromLegend)
+                    {
+                        this._height += lyr.Height;
+                    }
+                }
+            }
+            else
+            {
+                this._height = Constants.ItemHeight;
             }
         }
 
+        private void UpdateLayerVisibility()
+        {
+            var numLayers = this.Layers.Count;
+            var visible = this._visibleState == Visibility.AllVisible;
 
-		private void UpdateLayerVisibility()
-		{
-			int numLayers = Layers.Count;
-			LegendLayer lyr = null;
-		    bool visible = _visibleState == Visibility.AllVisible;
+            for (var i = 0; i < numLayers; i++)
+            {
+                var lyr = this.Layers[i];
+                var oldState = this._legend._map.get_LayerVisible(lyr.Handle);
 
-		    for(int i = 0; i < numLayers; i++)
-			{
-                lyr = Layers[i];
-				bool oldState = _legend._map.get_LayerVisible(lyr.Handle);
+                this._legend._map.set_LayerVisible(lyr.Handle, visible);
 
-				_legend._map.set_LayerVisible(lyr.Handle,visible);				
+                if (oldState != visible)
+                {
+                    var cancel = false;
 
-				if (oldState != visible)
-				{
-					bool cancel = false;
-					
-                    _legend.FireLayerVisibleChanged(lyr.Handle,visible, ref cancel);
-					if (cancel == true)
-						lyr.Visible = !(visible);
-				}
-			}
-		}
+                    this._legend.FireLayerVisibleChanged(lyr.Handle, visible, ref cancel);
+                    if (cancel)
+                    {
+                        lyr.Visible = !visible;
+                    }
+                }
+            }
+        }
 
-		/// <summary>
-		/// Updates the Visibility State for this group depending on the visibility of each layer within the group.
-		/// </summary>
-		protected internal void UpdateGroupVisibility()
-		{
-			int NumVisible = 0;
-			int NumLayers = Layers.Count;
-			Layer lyr = null;
-			for(int i = 0; i < NumLayers; i++)
-			{
-				lyr = (Layer)Layers[i];
-				if(_legend._map.get_LayerVisible(lyr.Handle) == true)
-					NumVisible++;
-			}
+        /// <summary>
+        /// Updates the Visibility State for this group depending on the visibility of each layer within the group.
+        /// </summary>
+        protected internal void UpdateGroupVisibility()
+        {
+            var numVisible = 0;
+            var numLayers = this.Layers.Count;
+            for (var i = 0; i < numLayers; i++)
+            {
+                Layer lyr = this.Layers[i];
+                if (this._legend._map.get_LayerVisible(lyr.Handle))
+                {
+                    numVisible++;
+                }
+            }
 
-			if (NumVisible == NumLayers)
-				_visibleState = Visibility.AllVisible;
-			else if (NumVisible == 0)
-				_visibleState = Visibility.AllHidden;
-			else
-				_visibleState = Visibility.PartialVisible;
-		}
+            if (numVisible == numLayers)
+            {
+                this._visibleState = Visibility.AllVisible;
+            }
+            else if (numVisible == 0)
+            {
+                this._visibleState = Visibility.AllHidden;
+            }
+            else
+            {
+                this._visibleState = Visibility.PartialVisible;
+            }
+        }
 
-		/// <summary>
-		/// Returns a snapshot image of this group
-		/// </summary>
-		/// <param name="imgWidth">Width in pixels of the returned image (height is determined by the number of layers in the group)</param>
-		/// <returns>Bitmap of the group and sublayers (expanded)</returns>
-		public System.Drawing.Bitmap Snapshot(int imgWidth)
-		{
-			Bitmap bmp = null;// = new Bitmap(imgWidth,imgHeight);
-			Rectangle rect;
+        /// <summary>
+        /// Returns a snapshot image of this group
+        /// </summary>
+        /// <param name="imgWidth">Width in pixels of the returned image (height is determined by the number of layers in the group)</param>
+        /// <returns>Bitmap of the group and sublayers (expanded)</returns>
+        public Bitmap Snapshot(int imgWidth)
+        {
+            Bitmap bmp = null; // = new Bitmap(imgWidth,imgHeight);
+            Rectangle rect;
 
-			System.Drawing.Graphics g;
-					
-			bmp = new Bitmap(imgWidth,this.ExpandedHeight);
-			g = Graphics.FromImage(bmp);
-			g.Clear(System.Drawing.Color.White);
+            Graphics g;
 
-			rect = new Rectangle(0,0,imgWidth,this.ExpandedHeight);
+            bmp = new Bitmap(imgWidth, this.ExpandedHeight);
+            g = Graphics.FromImage(bmp);
+            g.Clear(Color.White);
 
-			_legend.DrawGroup(g,this,rect,true);
+            rect = new Rectangle(0, 0, imgWidth, this.ExpandedHeight);
 
-			return bmp;
-		}
+            this._legend.DrawGroup(g, this, rect, true);
+
+            return bmp;
+        }
 
         /// <summary>
         /// Measures the size of the layer's name string
@@ -439,5 +437,5 @@ namespace MW5.Api.Legend
         {
             return g.MeasureString(this.Text, font);
         }
-	}
+    }
 }
