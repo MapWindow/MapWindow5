@@ -3,5 +3,6 @@
     public interface ILayerService
     {
         void AddLayer(LayerType layerType);
+        bool RemoveSelectedLayer();
     }
 }

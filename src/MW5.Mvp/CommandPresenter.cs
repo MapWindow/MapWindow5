@@ -26,12 +26,8 @@ namespace MW5.Mvp
 
             if (view.Toolbars != null)
             {
-                Debug.Print("Toolbars count: " + view.Toolbars.Count());
-
                 foreach (var menu in view.Toolbars)
                 {
-                    Debug.Print(menu.Name);
-                    
                     InitMenu(menu.Items);
                 }
             }

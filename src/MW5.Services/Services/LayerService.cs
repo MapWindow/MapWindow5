@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Services.Abstract;
@@ -18,6 +20,24 @@ namespace MW5.Services
             _context = context;
             _fileDialogService = fileDialogService;
             _messageService = messageService;
+        }
+
+        public bool RemoveSelectedLayer()
+        {
+            int layerHandle = _context.Legend.SelectedLayer;
+            if (layerHandle == -1)
+            {
+                _messageService.Info("No selected layer to remove.");
+                return false;
+            }
+
+            var layer = _context.Map.Layers.ItemByHandle(layerHandle);
+            if (_messageService.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
+            {
+                _context.Map.Layers.Remove(layerHandle);
+                return true;
+            }
+            return false;
         }
 
         public void AddLayer(LayerType layerType)

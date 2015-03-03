@@ -50,8 +50,8 @@ namespace MW5.Helpers
             //item.Tag = Commands.SetBingApiKey;
 
             root.DropDownOpening += root_DropDownOpening;
-            //App.Map.Tiles.DoCaching[CacheType.Disk] = true;
-            //App.Map.Tiles.UseCache[CacheType.Disk] = true;
+            _map.Tiles.set_IsCaching(CacheType.Disk, true);
+            _map.Tiles.set_UseCache(CacheType.Disk, true);
         }
 
         private static void root_DropDownOpening(object sender, EventArgs e)

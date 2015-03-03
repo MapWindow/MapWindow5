@@ -18,6 +18,8 @@ namespace MW5.Presenters
         OpenVector = 5,
         OpenRaster = 6,
         SetProjection = 7,
+        ZoomToLayer = 8,
+        RemoveLayer = 9,
     }
 
     public interface IMainView : IComplexView
@@ -68,6 +70,12 @@ namespace MW5.Presenters
                     break;
                 case MainCommand.SetProjection:
                     CompositionRoot.Container.Run<SetProjectionPresenter>();
+                    break;
+                case MainCommand.RemoveLayer:
+                    _layerService.RemoveSelectedLayer();
+                    break;
+                case MainCommand.ZoomToLayer:
+                    _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
                     break;
             }
         }

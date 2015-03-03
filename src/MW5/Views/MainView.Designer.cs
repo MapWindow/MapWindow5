@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -242,7 +242,7 @@ namespace MW5.Views
             this.dockingClientPanel1.Size = new System.Drawing.Size(366, 294);
             this.dockingClientPanel1.TabIndex = 4;
             // 
-            // _mapControl1
+            // _mapControlControl1
             // 
             this._mapControlControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
             this._mapControlControl1.CurrentScale = 16.918010798186259D;
@@ -250,14 +250,15 @@ namespace MW5.Views
             this._mapControlControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControlControl1.ExtentHistory = 20;
             this._mapControlControl1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
-            this._mapControlControl1.Extents = envelope1;
-            spatialReference1.Tag = "";
-            this._mapControlControl1.GeoProjection = spatialReference1;
+            envelope2.Tag = "";
+            this._mapControlControl1.Extents = envelope2;
+            spatialReference2.Tag = "";
+            this._mapControlControl1.GeoProjection = spatialReference2;
             this._mapControlControl1.GrabProjectionFromData = true;
             this._mapControlControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControlControl1.KnownExtents = MW5.Api.KnownExtents.None;
             this._mapControlControl1.Latitude = 0F;
+            this._mapControlControl1.Legend = null;
             this._mapControlControl1.Location = new System.Drawing.Point(0, 0);
             this._mapControlControl1.Longitude = 0F;
             this._mapControlControl1.MapCursor = MW5.Api.MapCursor.ZoomIn;
@@ -515,7 +516,7 @@ namespace MW5.Views
             // 
             this.toolRemoveLayer.BarName = "toolRemoveLayer";
             this.toolRemoveLayer.CategoryIndex = 0;
-            this.toolRemoveLayer.ID = "Remove Layer";
+            this.toolRemoveLayer.ID = "toolRemoveLayer";
             this.toolRemoveLayer.ImageIndex = 12;
             this.toolRemoveLayer.Padding = new System.Drawing.Point(10, 5);
             this.toolRemoveLayer.ShowToolTipInPopUp = false;
@@ -577,7 +578,7 @@ namespace MW5.Views
             // 
             this.toolZoomToLayer.BarName = "toolZoomToLayer";
             this.toolZoomToLayer.CategoryIndex = 1;
-            this.toolZoomToLayer.ID = "ZoomToLayer";
+            this.toolZoomToLayer.ID = "toolZoomToLayer";
             this.toolZoomToLayer.ImageIndex = 33;
             this.toolZoomToLayer.Padding = new System.Drawing.Point(10, 5);
             this.toolZoomToLayer.ShowToolTipInPopUp = false;
