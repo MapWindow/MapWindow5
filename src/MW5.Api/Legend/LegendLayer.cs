@@ -5,6 +5,7 @@ using System.Drawing;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 
 namespace MW5.Api.Legend
@@ -12,134 +13,55 @@ namespace MW5.Api.Legend
     /// <summary>
     /// One layer within the legend
     /// </summary>
-    public class LegendLayer : Layer
+    public class LegendLayer : Layer, ILegendLayer
     {
+        private readonly LegendControl _legend;
+        private readonly List<LayerElement> _elements; // size and positions of elements
+        private readonly Dictionary<string, object> _customObjects;
+
         private bool _expanded;
         private object _icon;
-        // private SymbologySettings m_symbologySettings = new SymbologySettings();
-        // public ShapefileBinding ShapefileBinding;
+        private bool _hideFromLegend;
+
+        internal bool SmallIconWasDrawn;   // temp flag storage during drawing
+        internal int Top;                  // vertical position, is set by the LegendControl
 
         /// <summary>
-        /// Color Scheme information for this layer
+        /// Initializes a new instance of the <see cref="LegendLayer"/> class.
         /// </summary>
-        protected internal ArrayList ColorLegend;
+        internal LegendLayer(AxMap map, LegendControl legend, int layerHandle )
+            : base(map, layerHandle)
+        {
+            _legend = legend;   // must be the first line in constructor
+            _icon = null;
+            _elements = new List<LayerElement>();
+            _customObjects = new Dictionary<string, object>();
+
+            Expanded = true;
+            SmallIconWasDrawn = false;
+            ColorSchemeCaption = "";
+        }
+
+        #region Custom rendering
+        // internal for now; need to see how to (and whether to) expose it to plugins
 
         /// <summary>
-        /// If you wish to display a caption (e.g. "Region") above the legend items for a stipple scheme, set this.
-        /// Set to "" to disable.
+        /// Tells the legend how high your custom rendered legend will be, so that it can  arrange items around it.
         /// </summary>
-        public string ColorSchemeFieldCaption = string.Empty;
-
-        /// <summary>
-        /// Stores custom objects associated with layer
-        /// </summary>
-        public Hashtable CustomObjects;
-
-        internal List<LayerElement> Elements; // size and positions of elements
-
-        /// <summary>
-        /// Tells the legend how high your custom rendered legend will be, so that it can
-        /// arrange items around it.
-        /// </summary>
-        public EventHandler<LayerMeasureEventArgs> ExpansionBoxCustomHeightFunction = null;
+        internal EventHandler<LayerMeasureEventArgs> ExpansionBoxCustomHeightFunction = null;
 
         /// <summary>
         /// Allows you to render the expanded region of a layer yourself. Useful with ExpansionBoxForceAllowed=true.
         /// If you use this, you must also set ExpansionBoxCustomHeightFunction.
         /// </summary>
-        public EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
+        internal EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
 
         /// <summary>
         /// Allows you to force the expansion box option to be shown, e.g. you're planning to use ExpansionBoxCustomRenderFunction.
         /// </summary>
-        public bool ExpansionBoxForceAllowed = false;
-
-        /// <summary>
-        /// If an image layer, this tells us if the layer contains transparency
-        /// </summary>
-        protected internal bool HasTransparency;
-
-        /// <summary>
-        /// Indicates what field index should be used for displaying map tooltips.
-        /// </summary>
-        public int MapTooltipFieldIndex = -1;
-
-        /// <summary>
-        /// Indicates whether map tooltips should be shown for this layer.
-        /// </summary>
-        public bool MapTooltipsEnabled = false;
-
-        /// <summary>
-        /// If you wish to display a caption (e.g. "State Name") above the legend items for a point image scheme, set this.
-        /// Set to "" to disable.
-        /// </summary>
-        public string PointImageFieldCaption = string.Empty;
-
-        internal bool SmallIconWasDrawn;
-
-        /// <summary>
-        /// If you wish to display a caption (e.g. "State Name") above the legend items for a coloring scheme, set this.
-        /// Set to "" to disable.
-        /// </summary>
-        public string StippleSchemeFieldCaption = string.Empty;
-
-        /// <summary>
-        /// Top of this Layer
-        /// </summary>
-        protected internal int Top;
-
-        /// <summary>
-        /// (Doesn't apply to line shapefiles)
-        /// Indicates whether the vertices of a line or polygon are visible.
-        /// </summary>
-        public bool VerticesVisible = false;
-
-        private readonly LegendControl _legend;
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public LegendLayer(AxMap map, int layerHandle, LegendControl legend)
-            : base(map, layerHandle)
-        {
-            // The next line MUST GO FIRST in the constructor
-            _legend = legend;
-
-            // The previous line MUST GO FIRST in the constructor
-            Expanded = true;
-
-            ColorLegend = new ArrayList();
-            _icon = null;
-            HasTransparency = false;
-
-            Elements = new List<LayerElement>();
-
-            CustomObjects = new Hashtable();
-            SmallIconWasDrawn = false;
-
-            // ShapefileBinding = new ShapefileBinding();
-            // _symbologySettings = new SymbologySettings();
-        }
-
-        /// <summary>
-        /// Gets or sets the data type of the layer.
-        /// Note:  This property should only be set when specifying a
-        /// grid layer.  Shapefile layers and image layers are automatically
-        /// set to the correct value
-        /// </summary>
-        public LegendLayerType Type
-        {
-            get
-            {
-                return LegendLayerType.PointShapefile;
-                // TODO: implement
-            }
-        }
-
-        internal bool IsShapefile
-        {
-            get { return LayerType == LayerType.Shapefile; }
-        }
+        internal bool ExpansionBoxForceAllowed = false;
+        
+        #endregion
 
         /// <summary>
         /// Gets or sets the icon that appears next to this layer in the legend.
@@ -148,6 +70,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public object Icon
         {
+            // TODO: limit the type
             get { return _icon; }
 
             set
@@ -156,12 +79,11 @@ namespace MW5.Api.Legend
                 {
                     throw new Exception("LegendControl Error: Invalid Group Icon type");
                 }
-
                 _icon = value;
             }
         }
 
-        public int Height
+        internal int Height
         {
             get { return CalcHeight(); }
         }
@@ -184,14 +106,78 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Indicates whether to skip over the layer when drawing the legend.
         /// </summary>
-        public bool HideFromLegend { get; set; }
+        public bool HideFromLegend
+        {
+            get { return _hideFromLegend; }
+            set
+            {
+                _hideFromLegend = value;
+                _legend.Redraw();
+            }
+        }
+
+        /// <summary>
+        /// If you wish to display a caption (e.g. "Region") above the legend items for the layer. Set "" to disable.
+        /// </summary>
+        public string ColorSchemeCaption { get; set; }
+
+        /// <summary>
+        /// Gets number of items in colors scheme for image or grid
+        /// </summary>
+        internal int ColorSchemeCount
+        {
+            get
+            {
+                // TODO: implement
+                return 0;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the data type of the layer.
+        /// </summary>
+        internal LegendLayerType Type
+        {
+            get
+            {
+                if (LayerType == LayerType.Shapefile)
+                {
+                    var fs = this.VectorSource;
+                    if (fs != null)
+                    {
+                        switch (fs.GeometryType)
+                        {
+                            case GeometryType.Point:
+                            case GeometryType.MultiPoint:
+                                return LegendLayerType.PointShapefile;
+                            case GeometryType.Polyline:
+                                return LegendLayerType.LineShapefile;
+                            case GeometryType.Polygon:
+                                return LegendLayerType.PolygonShapefile;
+                        }
+                    }
+                }
+                else if (LayerType == LayerType.Image)
+                {
+                    // TODO: return grid
+                    return LegendLayerType.Image;
+                }
+                return LegendLayerType.Invalid;
+            }
+        }
+
+        internal bool IsShapefile
+        {
+            get { return LayerType == LayerType.Shapefile; }
+        }
 
         /// <summary>
         /// Returns custom object for specified key
         /// </summary>
         public object GetCustomObject(string key)
         {
-            return CustomObjects[key];
+            // TODO: add constraint that an object is serializable
+            return _customObjects[key];
         }
 
         /// <summary>
@@ -199,7 +185,8 @@ namespace MW5.Api.Legend
         /// </summary>
         public void SetCustomObject(object obj, string key)
         {
-            CustomObjects[key] = obj;
+            // TODO: add constraint that an object is serializable
+            _customObjects[key] = obj;
         }
 
         /// <summary>
@@ -224,7 +211,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Measures the size of the layer's name string
         /// </summary>
-        public SizeF MeasureCaption(Graphics g, Font font, int maxWidth)
+        protected internal SizeF MeasureCaption(Graphics g, Font font, int maxWidth)
         {
             return g.MeasureString(Name, font, maxWidth);
         }
@@ -232,7 +219,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Measures the size of the layer's name string
         /// </summary>
-        public SizeF MeasureCaption(Graphics g, Font font, int maxWidth, string otherName, StringFormat format)
+        protected internal SizeF MeasureCaption(Graphics g, Font font, int maxWidth, string otherName, StringFormat format)
         {
             return g.MeasureString(otherName, font, maxWidth, format);
         }
@@ -240,7 +227,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Measures the size of the layer's name string
         /// </summary>
-        public SizeF MeasureCaption(Graphics g, Font font)
+        protected internal SizeF MeasureCaption(Graphics g, Font font)
         {
             return g.MeasureString(Name, font);
         }
@@ -248,35 +235,24 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Measures the size of the layer's name string
         /// </summary>
-        public SizeF MeasureCaption(Graphics g, Font font, string otherName)
+        protected internal SizeF MeasureCaption(Graphics g, Font font, string otherName)
         {
             return g.MeasureString(otherName, font);
         }
 
         /// <summary>
-        /// Regenerates the Color Scheme associate with this layer and
-        /// causes the control to redraw itself.
-        /// </summary>
-        public void Refresh()
-        {
-            _legend.Redraw();
-        }
-
-        /// <summary>
         /// Calculates the height of the layer
         /// </summary>
-        /// <param name="useExpandedHeight">If True, the height returned is the expanded height. Otherwise, the height is the displayed height of the layer</param>
+        /// <param name="useExpandedHeight">If True, the height returned is the expanded height. 
+        /// Otherwise, the height is the displayed height of the layer</param>
         /// <returns>Height of layer(depends on 'Expanded' state of the layer)</returns>
         protected internal int CalcHeight(bool useExpandedHeight)
         {
-            // to affect drawing of the expansion box externally
             if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
                 var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ItemHeight)
                 {
-                    Handled
-                        =
-                        false
+                    Handled = false
                 };
                 ExpansionBoxCustomHeightFunction.Invoke(this, args);
 
@@ -288,25 +264,24 @@ namespace MW5.Api.Legend
                 return Constants.ItemHeight;
             }
 
-            var ret = 0;
+            int ret;
 
             if (Type == LegendLayerType.Grid || Type == LegendLayerType.Image)
             {
-                // Our own calculation
-                if (useExpandedHeight == false && (_expanded == false || ColorLegend.Count == 0))
+                if (useExpandedHeight == false && (_expanded == false || ColorSchemeCount == 0))
                 {
                     ret = Constants.ItemHeight;
                 }
                 else
                 {
-                    ret = Constants.ItemHeight + (ColorLegend.Count*Constants.CsItemHeight) + 2;
+                    ret = Constants.ItemHeight + (ColorSchemeCount * Constants.CsItemHeight) + 2;
                 }
 
                 // Add in caption space
                 if (useExpandedHeight || _expanded)
                 {
-                    ret += (ColorSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0)
-                           + (StippleSchemeFieldCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0);
+                    ret += (ColorSchemeCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0);
+
                 }
             }
             else
@@ -352,10 +327,6 @@ namespace MW5.Api.Legend
                 {
                     ret = Constants.ItemHeight;
                 }
-
-                // TODO: Add caption space
-                // if (UseExpandedHeight || _expanded)
-                // ret += (ColorSchemeFieldCaption.Trim() != "" ? Constants.CS_ITEM_HEIGHT : 0) + (StippleSchemeFieldCaption.Trim() != "" ? Constants.CS_ITEM_HEIGHT : 0);
             }
 
             return ret;
@@ -364,7 +335,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Calculates the height of the given category
         /// </summary>
-        public int GetCategoryHeight(ShapeDrawingOptions options)
+        protected internal int GetCategoryHeight(ShapeDrawingOptions options)
         {
             if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
             {
@@ -407,7 +378,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Returns the width of icon for specified set of options
         /// </summary>
-        public int GetCategoryWidth(ShapeDrawingOptions options)
+        protected internal int GetCategoryWidth(ShapeDrawingOptions options)
         {
             const int maxWidth = 100;
             if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
@@ -447,7 +418,7 @@ namespace MW5.Api.Legend
         /// Calculates the maximium width of the icon for the layer going through all categories
         /// </summary>
         /// <returns></returns>
-        public int get_MaxIconWidth(Shapefile sf)
+        protected internal int get_MaxIconWidth(Shapefile sf)
         {
             if (sf == null)
             {
@@ -474,6 +445,11 @@ namespace MW5.Api.Legend
         protected internal int CalcHeight()
         {
             return CalcHeight(Expanded);
+        }
+
+        internal List<LayerElement> Elements
+        {
+            get { return _elements; }
         }
     }
 }

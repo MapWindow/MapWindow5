@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Moq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Services;
@@ -22,7 +23,7 @@ namespace MW5.Test
 
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
-        private Mock<ILayerCollection<ILayer>> _layerColection;
+        private Mock<ILayerCollection<ILegendLayer>> _layerColection;
 
         private string[] GetShapefileNames()
         {
@@ -37,9 +38,9 @@ namespace MW5.Test
         [SetUp]
         public void Setup()
         {
-            _layerColection = new Mock<ILayerCollection<ILayer>>();
+            _layerColection = new Mock<ILayerCollection<ILegendLayer>>();
             
-            var map = new Mock<IMapControl>();
+            var map = new Mock<IMap>();
             map.SetupGet(m => m.Layers).Returns(_layerColection.Object);
 
             _context = new Mock<IAppContext>();

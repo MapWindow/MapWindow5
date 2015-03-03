@@ -91,6 +91,11 @@
     <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
+    <Compile Include="Interfaces\IMapWithEvents.cs" />
+    <Compile Include="Legend\Abstract\ILegendGroup.cs" />
+    <Compile Include="Legend\Abstract\ILegendGroups.cs" />
+    <Compile Include="Legend\Abstract\ILegendLayer.cs" />
+    <Compile Include="Legend\Abstract\ILegendWithEvents.cs" />
     <Compile Include="Legend\ClickedElement.cs" />
     <Compile Include="Legend\ColorInfo.cs" />
     <Compile Include="Legend\Constants.cs" />
@@ -106,9 +111,9 @@
     <Compile Include="Legend\Events\LayerPaintEventArgs.cs" />
     <Compile Include="Legend\Events\LegendClickEventArgs.cs" />
     <Compile Include="Legend\Events\PositionChangedEventArgs.cs" />
-    <Compile Include="Legend\Group.cs" />
-    <Compile Include="Legend\Groups.cs" />
-    <Compile Include="Legend\ILegendControl.cs" />
+    <Compile Include="Legend\LegendGroup.cs" />
+    <Compile Include="Legend\LegendGroups.cs" />
+    <Compile Include="Legend\Abstract\ILegend.cs" />
     <Compile Include="Legend\LayerElement.cs" />
     <Compile Include="Legend\LegendControl.cs">
       <SubType>UserControl</SubType>
@@ -213,7 +218,7 @@
     <Compile Include="Interfaces\IImageSource.cs" />
     <Compile Include="Interfaces\ILayer.cs" />
     <Compile Include="Interfaces\ILayerSource.cs" />
-    <Compile Include="Interfaces\IMapControl.cs" />
+    <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\IStopExecutionCallback.cs" />
     <Compile Include="Interfaces\IVectorDatasource.cs" />
     <Compile Include="Interfaces\IVectorLayer.cs" />

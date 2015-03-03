@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
@@ -23,7 +24,8 @@ namespace MW5.Views
 
             InitializeComponent();
 
-            _legendControl1.Map = _mapControl1;
+            _legendControl1.Map = _mapControlControl1;
+            _mapControlControl1.Legend = _legendControl1;
 
             context.Init(this);
 
@@ -64,9 +66,9 @@ namespace MW5.Views
         public void UpdateView()
         {
             // mapControls plays the role of the model here
-            toolZoomIn.Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
-            toolZoomOut.Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
-            toolPan.Checked = _mapControl1.MapCursor == MapCursor.Pan;
+            toolZoomIn.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
+            toolZoomOut.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
+            toolPan.Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
         }
 
         #endregion
@@ -78,12 +80,12 @@ namespace MW5.Views
             get { return _mainFrameBarManager1; }
         }
 
-        IMapControl IMainForm.Map
+        IMap IMainForm.Map
         {
-            get { return _mapControl1; }
+            get { return _mapControlControl1; }
         }
 
-        public ILegendControl Legend
+        public ILegend Legend
         {
             get { return _legendControl1; }
         }

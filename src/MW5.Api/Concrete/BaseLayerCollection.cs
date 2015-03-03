@@ -38,7 +38,7 @@ namespace MW5.Api.Concrete
             return null;
         }
 
-        public int Add(ILayerSource layerSource, bool visible = true)
+        public virtual int Add(ILayerSource layerSource, bool visible = true)
         {
             return _axMap.AddLayer(layerSource.InternalObject, visible);
         }
@@ -78,14 +78,15 @@ namespace MW5.Api.Concrete
             return _axMap.AddLayerFromFilename(filename, (tkFileOpenStrategy)openStrategy, visible);
         }
 
-        public void RemoveAll()
+        public virtual void Clear()
         {
             _axMap.RemoveAllLayers();
         }
 
-        public void Remove(int layerHandle)
+        public virtual bool Remove(int layerHandle)
         {
             _axMap.RemoveLayer(layerHandle);
+            return _axMap.get_LayerPosition(layerHandle) != -1;
         }
 
         public void RemoveWithoutClosing(int layerHandle)

@@ -49,7 +49,7 @@ namespace MW5.Views
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
-            this._mapControl1 = new MW5.Api.MapControl();
+            this._mapControlControl1 = new MW5.Api.MapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
             this._mainMenu = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MainMenu");
             this.mnuFile = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
@@ -236,7 +236,7 @@ namespace MW5.Views
             // dockingClientPanel1
             // 
             this.dockingClientPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.dockingClientPanel1.Controls.Add(this._mapControl1);
+            this.dockingClientPanel1.Controls.Add(this._mapControlControl1);
             this.dockingClientPanel1.Location = new System.Drawing.Point(366, 179);
             this.dockingClientPanel1.Name = "dockingClientPanel1";
             this.dockingClientPanel1.Size = new System.Drawing.Size(366, 294);
@@ -244,43 +244,43 @@ namespace MW5.Views
             // 
             // _mapControl1
             // 
-            this._mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 16.918010798186259D;
-            this._mapControl1.CurrentZoom = -1;
-            this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._mapControl1.ExtentHistory = 20;
-            this._mapControl1.ExtentPad = 0.02D;
+            this._mapControlControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
+            this._mapControlControl1.CurrentScale = 16.918010798186259D;
+            this._mapControlControl1.CurrentZoom = -1;
+            this._mapControlControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._mapControlControl1.ExtentHistory = 20;
+            this._mapControlControl1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this._mapControl1.Extents = envelope1;
+            this._mapControlControl1.Extents = envelope1;
             spatialReference1.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference1;
-            this._mapControl1.GrabProjectionFromData = true;
-            this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
-            this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
-            this._mapControl1.Latitude = 0F;
-            this._mapControl1.Location = new System.Drawing.Point(0, 0);
-            this._mapControl1.Longitude = 0F;
-            this._mapControl1.MapCursor = MW5.Api.MapCursor.ZoomIn;
-            this._mapControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
-            this._mapControl1.MouseWheelSpeed = 0.5D;
-            this._mapControl1.Name = "_mapControl1";
-            this._mapControl1.Projection = MW5.Api.MapProjection.None;
-            this._mapControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
-            this._mapControl1.ReuseTileBuffer = true;
-            this._mapControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
-            this._mapControl1.ScalebarVisible = true;
-            this._mapControl1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
-            this._mapControl1.ShowRedrawTime = false;
-            this._mapControl1.ShowVersionNumber = false;
-            this._mapControl1.Size = new System.Drawing.Size(366, 294);
-            this._mapControl1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
-            this._mapControl1.TabIndex = 0;
-            this._mapControl1.Tag = "";
-            this._mapControl1.TileProvider = MW5.Api.TileProvider.OpenStreetMap;
-            this._mapControl1.UdCursorHandle = 0;
-            this._mapControl1.UseSeamlessPan = false;
-            this._mapControl1.ZoomBehavior = MW5.Api.ZoomBehavior.UseTileLevels;
-            this._mapControl1.ZoomPercent = 0.3D;
+            this._mapControlControl1.GeoProjection = spatialReference1;
+            this._mapControlControl1.GrabProjectionFromData = true;
+            this._mapControlControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
+            this._mapControlControl1.KnownExtents = MW5.Api.KnownExtents.None;
+            this._mapControlControl1.Latitude = 0F;
+            this._mapControlControl1.Location = new System.Drawing.Point(0, 0);
+            this._mapControlControl1.Longitude = 0F;
+            this._mapControlControl1.MapCursor = MW5.Api.MapCursor.ZoomIn;
+            this._mapControlControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
+            this._mapControlControl1.MouseWheelSpeed = 0.5D;
+            this._mapControlControl1.Name = "_mapControlControl1";
+            this._mapControlControl1.Projection = MW5.Api.MapProjection.None;
+            this._mapControlControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
+            this._mapControlControl1.ReuseTileBuffer = true;
+            this._mapControlControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
+            this._mapControlControl1.ScalebarVisible = true;
+            this._mapControlControl1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
+            this._mapControlControl1.ShowRedrawTime = false;
+            this._mapControlControl1.ShowVersionNumber = false;
+            this._mapControlControl1.Size = new System.Drawing.Size(366, 294);
+            this._mapControlControl1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
+            this._mapControlControl1.TabIndex = 0;
+            this._mapControlControl1.Tag = "";
+            this._mapControlControl1.TileProvider = MW5.Api.TileProvider.OpenStreetMap;
+            this._mapControlControl1.UdCursorHandle = 0;
+            this._mapControlControl1.UseSeamlessPan = false;
+            this._mapControlControl1.ZoomBehavior = MW5.Api.ZoomBehavior.UseTileLevels;
+            this._mapControlControl1.ZoomPercent = 0.3D;
             // 
             // _mainFrameBarManager1
             // 
@@ -652,8 +652,8 @@ namespace MW5.Views
             this._legendControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._legendControl1.Location = new System.Drawing.Point(106, 174);
             this._legendControl1.Name = "_legendControl1";
-            this._legendControl1.SelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this._legendControl1.ShowGroupFolders = true;
+            this._legendControl1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+            this._legendControl1.ShowGroupIcons = true;
             this._legendControl1.ShowLabels = false;
             this._legendControl1.Size = new System.Drawing.Size(107, 126);
             this._legendControl1.TabIndex = 5;
@@ -695,7 +695,7 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.DockingManager _dockingManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem parentBarItem3;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
-        private MapControl _mapControl1;
+        private MapControl _mapControlControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _mainMenu;

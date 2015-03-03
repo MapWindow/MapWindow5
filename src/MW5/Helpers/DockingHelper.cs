@@ -29,7 +29,7 @@ namespace MW5.Helpers
             dockingManager.UnlockHostFormUpdate();
 
             var sr = GetSerializer();
-            dockingManager.LoadDockState(sr);
+            //dockingManager.LoadDockState(sr);
         }
 
         public static void SaveLayout(this DockingManager dockingManager)

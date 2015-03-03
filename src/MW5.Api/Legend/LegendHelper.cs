@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 using MapWinGIS;
 using Image = System.Drawing.Image;
@@ -83,6 +84,11 @@ namespace MW5.Api.Legend
         internal static Image GetIcon(this ImageList imageList, LegendIcon icon)
         {
             return imageList.Images[(int) icon];
+        }
+
+        public static bool IsValidIndex<T>(List<T> list, int index)
+        {
+            return index >= 0 && index < list.Count;
         }
     }
 }

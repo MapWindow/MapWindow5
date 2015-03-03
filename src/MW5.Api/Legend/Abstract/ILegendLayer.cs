@@ -1,0 +1,59 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MW5.Api.Interfaces;
+
+namespace MW5.Api.Legend.Abstract
+{
+    public interface ILegendLayer: ILayer
+    {
+        /// <summary>
+        /// Gets or sets the icon that appears next to this layer in the legend.
+        /// Setting this value to null(nothing) removes the icon from the legend
+        /// and sets it back to the default icon.
+        /// </summary>
+        object Icon { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not the Layer is expanded.  This shows or hides the
+        /// layer's Color Scheme (if one exists).
+        /// </summary>
+        bool Expanded { get; set; }
+
+        /// <summary>
+        /// Indicates whether to skip over the layer when drawing the legend.
+        /// </summary>
+        bool HideFromLegend { get; set; }
+
+        /// <summary>
+        /// If you wish to display a caption (e.g. "Region") above the legend items for the layer. Set "" to disable.
+        /// </summary>
+        string ColorSchemeCaption { get; set; }
+
+        /// <summary>
+        /// Returns custom object for specified key
+        /// </summary>
+        object GetCustomObject(string key);
+
+        /// <summary>
+        /// Sets custom object associated with layer
+        /// </summary>
+        void SetCustomObject(object obj, string key);
+
+        /// <summary>
+        /// Gets a snapshot (bitmap) of the layer
+        /// </summary>
+        /// <returns>Bitmap if successful, null (nothing) otherwise</returns>
+        Bitmap Snapshot();
+
+        /// <summary>
+        /// Gets a snapshot (bitmap) of the layer
+        /// </summary>
+        /// <param name="imgWidth">Desired width in pixels of the snapshot</param>
+        /// <returns>Bitmap if successful, null (nothing) otherwise</returns>
+        Bitmap Snapshot(int imgWidth);
+    }
+}

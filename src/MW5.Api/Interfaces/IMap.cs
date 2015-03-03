@@ -2,12 +2,14 @@
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Events;
+using MW5.Api.Legend.Abstract;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IMapControl: IComWrapper
+    public interface IMap: IComWrapper
     {
-        ILayerCollection<ILayer> Layers { get; }
+        ILegend Legend { get; set; }
+        ILayerCollection<ILegendLayer> Layers { get; }
         MapProjection Projection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }
@@ -90,35 +92,7 @@ namespace MW5.Api.Interfaces
         IImageSource SnapShot(int clippingLayerHandle, double zoom, int width);
         IImageSource SnapShot(double left, double right, double top, double bottom, int width);
 
-         event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
-         event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
-         event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
-         event EventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape;
-         event EventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit;
-         event EventHandler<ChooseLayerEventArgs> ChooseLayer;
-         event EventHandler<EventArgs> ExtentsChanged;
-         event EventHandler<FileDroppedEventArgs> FileDropped;
-         event EventHandler<GridOpenedEventArgs> GridOpened;
-         event EventHandler<LayerAddedEventArgs> LayerAdded;
-         event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-         event EventHandler<LayerRemovedEventArgs> LayerRemoved;
-         event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
-         event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
-         event EventHandler<MouseEventArgs> MouseDown;
-         event EventHandler<MouseEventArgs> MouseMove;
-         event EventHandler<MouseEventArgs> MouseUp;
-         event EventHandler<EventArgs> ProjectionChanged;
-         event EventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
-         event EventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
-         event EventHandler<SelectionChangedEventArgs> SelectionChanged;
-         event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
-         event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
-         event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
-         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
-         event EventHandler<EventArgs> UndoListChanged;
-         event EventHandler<ValidateShapeEventArgs> ValidateShape;
-
-         #region Not implemented
+        #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;
         //event _DMapEvents_AfterDrawingEventHandler AfterDrawing;

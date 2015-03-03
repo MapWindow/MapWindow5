@@ -50,6 +50,7 @@ namespace MW5.Api.Legend
         internal int Index { get; set; } // of category or field
         internal int Left { get; set; }
         internal string Text { get; set; } // associated text (name or caption)
+        
         // dimensions for easy click text
         internal int Top { get; set; }
         internal int Width { get; set; }

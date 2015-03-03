@@ -11,8 +11,8 @@ namespace MW5.Api.Legend.Events
         public PositionChangedEventArgs(int handle, int oldPosition, int newPosition)
         {
             Handle = handle;
-            oldPosition = oldPosition;
-            newPosition = newPosition;
+            OldPosition = oldPosition;
+            NewPostion = newPosition;
         }
         
         public int Handle { get; internal set; }

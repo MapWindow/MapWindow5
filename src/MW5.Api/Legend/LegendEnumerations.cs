@@ -55,7 +55,7 @@
         /// <summary>
         /// Mixed Layer Visibility
         /// </summary>
-        PartialVisible = 2
+        PartiallyVisible = 2
     }
 
     internal enum LegendIcon
@@ -89,5 +89,11 @@
         Charts = 8,
         ChartField = 9,
         ChartFieldName = 10
+    }
+
+    public enum LegendRedraw
+    {
+        LegendOnly = 0,
+        LegendAndMap = 1,
     }
 }

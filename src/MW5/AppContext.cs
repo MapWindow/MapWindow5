@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.UI;
@@ -10,11 +11,11 @@ namespace MW5
 {
     public class AppContext: IAppContext
     {
-        private IMapControl _map;
+        private IMap _map;
         private IWin32Window _mainForm;
         private IMenu _menu;
         private IToolbarCollection _toolbars;
-        private ILegendControl _legend;
+        private ILegend _legend;
 
         public void Init(IMainForm form)
         {
@@ -26,7 +27,7 @@ namespace MW5
             _mainForm = form as IWin32Window;
             
             _map = form.Map;
-            CompositionRoot.Container.RegisterInstance(typeof(IMapControl), _map);  // it's a bit ugly; got ideas how to do it better? 
+            CompositionRoot.Container.RegisterInstance(typeof(IMap), _map);  // it's a bit ugly; got ideas how to do it better? 
 
             _legend = form.Legend;
 
@@ -38,12 +39,12 @@ namespace MW5
             PluginHelper.InitPlugins(this);
         }
 
-        public IMapControl Map
+        public IMap Map
         {
             get { return _map; }
         }
 
-        public ILegendControl Legend
+        public ILegend Legend
         {
             get { return _legend; }
         }

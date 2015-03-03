@@ -58,8 +58,7 @@ namespace MW5.Api.Concrete
 
         public void Add(IFeatureCategory item)
         {
-            // TODO: restore
-            //_categories.Add2(item.GetInternal());
+            _categories.Add2(item.GetInternal());
         }
 
         public void Clear()
@@ -102,8 +101,7 @@ namespace MW5.Api.Concrete
 
         public void Insert(int index, IFeatureCategory item)
         {
-            // TODO: restore
-            //_categories.Insert2(index, item.GetInternal());
+            _categories.Insert2(index, item.GetInternal());
         }
 
         public void RemoveAt(int index)

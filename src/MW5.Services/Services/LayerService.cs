@@ -38,8 +38,7 @@ namespace MW5.Services
             _context.Map.ZoomToMaxExtents();
             _context.Map.LockWindow(false);
 
-            _context.Legend.AssignOrphanLayersToNewGroup("Data layers");
-            _context.Legend.FullRedraw();
+            _context.Legend.Redraw();
         }
 
         private void AddLayersFromFilename(string filename)

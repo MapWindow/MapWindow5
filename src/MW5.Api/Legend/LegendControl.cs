@@ -5,11 +5,13 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
@@ -19,30 +21,34 @@ namespace MW5.Api.Legend
     /// <summary>
     /// Legend control for MapWinGIS.
     /// </summary>
-    [ToolboxBitmap(@"C:\Dev\MapWindow4Dev\MapWinInterfaces\MapWinLegend.ico")]
-    [CLSCompliant(false)]
-    public class LegendControl : UserControl, ILegendControl
+    [ToolboxBitmap(typeof(MapControl), "Resources.MapWinLegend.ico")]       // TODO: test it
+    public class LegendControl : UserControl, ILegendWithEvents
     {
-        private const int InvalidGroup = -1;
-        private Image _backBuffer;
-        private Graphics _draw;
-        private Font _font;
-        private Graphics _frontBuffer;
+        private const string CHARTS_CAPTION = "Charts";
+
         private LegendLayerCollection _layers;
-        private uint _lockCount;
-        protected internal AxMap _map;
+        private readonly LegendGroups _groups;
+
+        private Image _backBuffer;
         private Image _midBuffer;
+        private Graphics _draw;
+        private Graphics _frontBuffer;
+        private Font _font;
+        private uint _lockCount;
+        
         private int _selectedGroupHandle;
         private int _selectedLayerHandle;
         private VScrollBar _vScrollBar;
-
-        protected internal List<Group> AllGroups = new List<Group>();  // TODO: encapsulate
         private IContainer components;
-        protected internal ArrayList GroupPositions = new ArrayList();     //Group Position Lookup table (use Group layerHandle as index)
+
         private readonly Font _boldFont;
         private readonly Color _boxLineColor;
         private readonly DragInfo _dragInfo = new DragInfo();
         private readonly ToolTip _toolTip = new ToolTip();
+
+        private IMap _mapControl; 
+        private AxMap _map;
+        
         protected ImageList Icons;
         
         /// <summary>
@@ -51,31 +57,40 @@ namespace MW5.Api.Legend
         /// </summary>
         public LegendControl()
         {
-            ShowLabels = false;
-
-            // This call is required by the Windows.Forms Form Designer.
             InitializeComponent();
 
-            Groups = new Groups(this);
+            _groups = new LegendGroups(this);
 
             _lockCount = 0;
             _selectedLayerHandle = -1;
             _selectedGroupHandle = -1;
             _font = new Font("Arial", 8);
             _boldFont = new Font("Arial", 8, FontStyle.Bold);
-            SelectedColor = Color.FromArgb(255, 240, 240, 240);
             _boxLineColor = Color.Gray;
-            ShowGroupFolders = true;
+            SelectionColor = Color.FromArgb(255, 240, 240, 240);
+            ShowGroupIcons = true;
+            ShowLabels = false;
         }
 
         /// <summary>
         /// Gets or Sets the MapWinGIS.Map associated with this legend control
         /// Note: This property must be set before manipulating layers
         /// </summary>
-        public IMapControl Map
+        public IMap Map
         {
-            //get { return _map as IMapControl; }
-            set { _map = value.InternalObject as AxMap; }
+            get
+            {
+                return _mapControl;
+            }
+            set
+            {
+                _map = value.InternalObject as AxMap;
+                if (_map == null)
+                {
+                    throw new ApplicationException("Invalid map control reference.");
+                }
+                _mapControl = value;
+            }
         }
 
         /// <summary>
@@ -87,7 +102,10 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets the Menu for manipulating Groups
         /// </summary>
-        public Groups Groups { get; private set; }
+        public ILegendGroups Groups
+        {
+            get { return _groups; }
+        }
 
         /// <summary>
         /// Gets the Menu for manipulating Layers (without respect to groups)
@@ -100,12 +118,12 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets or Sets the background color of the selected layer within the legend
         /// </summary>
-        public Color SelectedColor { get; set; }
+        public Color SelectionColor { get; set; }
 
         /// <summary>
         /// Gets or Sets the background color of the selected layer within the legend
         /// </summary>
-        public bool ShowGroupFolders { get; set; }
+        public bool ShowGroupIcons { get; set; }
 
         /// <summary>
         /// Gets or Sets the Selected layer within the legend
@@ -125,7 +143,7 @@ namespace MW5.Api.Legend
                 {
                     // only redraw if the selected layer is changing and the handle is valid
                     _selectedLayerHandle = value;
-                    _selectedGroupHandle = AllGroups[groupIndex].Handle;
+                    _selectedGroupHandle = _groups[groupIndex].Handle;
 
                     FireLayerSelected(value);
 
@@ -134,30 +152,23 @@ namespace MW5.Api.Legend
             }
         }
 
+        internal void SetSelectedGroup(int groupHandle)
+        {
+            _selectedGroupHandle = groupHandle;
+        }
+
+        internal void UpdateSelectedLayer()
+        {
+            int newVal = _map.NumLayers > 0 ? _map.get_LayerHandle(_map.NumLayers - 1) : -1;
+            SelectedLayer = newVal;
+        }
+
         /// <summary>
         /// Gets whether or not the legend is locked.  See Lock() function for description
         /// </summary>
         public bool Locked
         {
             get { return _lockCount > 0; }
-        }
-
-        /// <summary>
-        /// Gets the number of groups that exist in the legend
-        /// </summary>
-        protected internal int NumGroups
-        {
-            get { return AllGroups.Count; }
-        }
-
-        /// <summary>
-        /// The get layer.
-        /// </summary>
-        /// <param name="layerHandle"> The layer handle. </param>
-        /// <returns> The <see cref="LegendLayer"/>. </returns>
-        public LegendLayer GetLayer(int layerHandle)
-        {
-            return Layers.ItemByHandle(layerHandle);
         }
 
         /// <summary>
@@ -194,6 +205,29 @@ namespace MW5.Api.Legend
             var args = new LayerCancelEventArgs(layerHandle, visible) {Cancel = cancel};
             FireEvent(this, LayerVisibleChanged, args);
             cancel = args.Cancel;
+        }
+
+        protected internal void FireGroupAdded(int groupHandle)
+        {
+            FireEvent(this, GroupAdded, new GroupEventArgs(groupHandle));
+        }
+
+        protected internal void FireGroupRemoved(int groupHandle)
+        {
+            FireEvent(this, GroupRemoved, new GroupEventArgs(groupHandle));
+        }
+
+        protected internal void FireLayerAdded(int layerHandle)
+        {
+            FireEvent(this, LayerAdded, new LayerEventArgs(layerHandle));
+        }
+
+        protected internal void FireGroupPositionChanged(int groupHandle, int oldPos, int newPos)
+        {
+            FireEvent(
+                      this,
+                      GroupPositionChanged,
+                      new PositionChangedEventArgs(groupHandle, oldPos, newPos));  
         }
 
         /// <summary>
@@ -266,88 +300,6 @@ namespace MW5.Api.Legend
         #endregion Component Designer generated code
 
         /// <summary>
-        /// Adds a group to the list of all groups
-        /// </summary>
-        /// <param name="name"> Caption shown in legend </param>
-        /// <returns> layerHandle to the Group on success, -1 on failure </returns>
-        protected internal int AddGroup(string name)
-        {
-            return AddGroup(name, -1);
-        }
-
-        /// <summary>
-        /// Adds a group to the list of all groups
-        /// </summary>
-        /// <param name="name"> Caption shown in legend </param>
-        /// <param name="position"> 0-Based index of the new Group </param>
-        /// <returns> layerHandle to the Group on success, -1 on failure </returns>
-        protected internal int AddGroup(string name, int position)
-        {
-            var grp = CreateGroup(name, position);
-            if (grp == null)
-            {
-                // globals.LastError = "Failed to create instance of class 'Group'";
-                return InvalidGroup;
-            }
-
-            Redraw();
-
-            FireEvent(this, GroupAdded, new GroupEventArgs(grp.Handle));
-
-            return grp.Handle;
-        }
-
-        /// <summary>
-        /// Removes a group from the list of groups
-        /// </summary>
-        /// <param name="handle"> layerHandle of the group to remove </param>
-        /// <returns> True on success, False otherwise </returns>
-        protected internal bool RemoveGroup(int handle)
-        {
-            var layerInGroupWasSelected = false;
-
-            // if(IS_VALID_INDEX(_groupPositions,layerHandle) && _groupPositions[layerHandle] != INVALID_GROUP)
-
-            if (IsValidGroup(handle))
-            {
-                var index = (int) GroupPositions[handle];
-                var grp = AllGroups[index];
-
-                // remove any layers within the specified group
-                while (grp.Layers.Count > 0)
-                {
-                    var lyr = grp.Layers[0].Handle;
-                    layerInGroupWasSelected = layerInGroupWasSelected || (_selectedLayerHandle == lyr);
-                    RemoveLayer(lyr);
-                    GC.Collect();
-                }
-
-                AllGroups.RemoveAt(index);
-                UpdateGroupPositions();
-
-                if (layerInGroupWasSelected)
-                {
-                    _selectedLayerHandle = _map.NumLayers > 0
-                        ? _map.get_LayerHandle(_map.NumLayers - 1)
-                        : -1;
-
-                    FireEvent(this, LayerSelected, new LayerEventArgs(_selectedLayerHandle));
-                }
-
-                Redraw();
-
-                FireEvent(this, GroupRemoved, new GroupEventArgs(handle));
-            }
-            else
-            {
-                // globals.LastError = "Invalid Group layerHandle";
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Removes a layer from the list of layers
         /// </summary>
         /// <param name="layerHandle"> layerHandle of layer to be removed </param>
@@ -361,8 +313,8 @@ namespace MW5.Api.Legend
                 return false;
             }
 
-            var grp = AllGroups[groupIndex];
-            grp.Layers.RemoveAt(layerIndex);
+            var grp = _groups.GetGroup(groupIndex);
+            grp.LayersInternal.RemoveAt(layerIndex);
 
             _map.RemoveLayer(layerHandle);
 
@@ -379,62 +331,6 @@ namespace MW5.Api.Legend
             FireEvent(this, LayerRemoved, new LayerEventArgs(layerHandle));
 
             return true;
-        }
-
-        /// <summary>
-        /// The update group positions.
-        /// </summary>
-        private void UpdateGroupPositions()
-        {
-            var grpCount = AllGroups.Count;
-            var handleCount = GroupPositions.Count;
-            int i;
-
-            // reset all positions
-            for (i = 0; i < handleCount; i++)
-            {
-                GroupPositions[i] = InvalidGroup;
-            }
-
-            // set valid group positions for existing groups
-            for (i = 0; i < grpCount; i++)
-            {
-                GroupPositions[AllGroups[i].Handle] = i;
-            }
-        }
-
-        /// <summary>
-        /// The create group.
-        /// </summary>
-        /// <param name="caption">  The caption. </param>
-        /// <param name="position"> The position. </param>
-        /// <returns> The <see cref="Group"/>. </returns>
-        private Group CreateGroup(string caption, int position)
-        {
-            var grp = new Group(this)
-            {
-                Text = caption.Length < 1 ? "New Group" : caption,
-                _handle = GroupPositions.Count
-            };
-
-            GroupPositions.Add(InvalidGroup);
-
-            if (position < 0 || position >= AllGroups.Count)
-            {
-                // put it at the top
-                GroupPositions[grp.Handle] = AllGroups.Count;
-                AllGroups.Add(grp);
-            }
-            else
-            {
-                // put it where they requested
-                GroupPositions[grp.Handle] = position;
-                AllGroups.Insert(position, grp);
-
-                UpdateGroupPositions();
-            }
-
-            return grp;
         }
 
         /// <summary>
@@ -525,7 +421,7 @@ namespace MW5.Api.Legend
         /// <param name="grp"> Group to be drawn </param>
         /// <param name="bounds"> Clipping boundaries for this group </param>
         /// <param name="isSnapshot"> Drawing is handled in special way if this is a Snapshot </param>
-        protected internal void DrawGroup(Graphics drawTool, Group grp, Rectangle bounds, bool isSnapshot)
+        internal protected void DrawGroup(Graphics drawTool, LegendGroup grp, Rectangle bounds, bool isSnapshot)
         {
             int curLeft,
                 curWidth,
@@ -540,7 +436,7 @@ namespace MW5.Api.Legend
             var drawGrayCheckbox = false;
             grp.Top = bounds.Top;
 
-            if (grp.VisibleState == Visibility.AllVisible || grp.VisibleState == Visibility.PartialVisible)
+            if (grp.Visible == Visibility.AllVisible || grp.Visible == Visibility.PartiallyVisible)
             {
                 drawCheck = true;
             }
@@ -554,11 +450,11 @@ namespace MW5.Api.Legend
                     curTop,
                     bounds.Width - Constants.GrpIndent - Constants.ItemRightPad,
                     Constants.ItemHeight);
-                DrawBox(drawTool, rect, _boxLineColor, SelectedColor);
+                DrawBox(drawTool, rect, _boxLineColor, SelectionColor);
             }
 
             // draw the +- box if there are sub items
-            if (grp.Layers.Count > 0 && isSnapshot == false)
+            if (grp.Layers.Any() && isSnapshot == false)
             {
                 DrawExpansionBox(
                     drawTool,
@@ -567,13 +463,13 @@ namespace MW5.Api.Legend
                     grp.Expanded);
             }
 
-            if (grp.VisibleState == Visibility.PartialVisible)
+            if (grp.Visible == Visibility.PartiallyVisible)
             {
                 drawGrayCheckbox = true;
             }
 
             // BoxBackColor = Color.LightGray;
-            if (isSnapshot == false && grp.Expanded && grp.Layers.Count > 0)
+            if (isSnapshot == false && grp.Expanded && grp.Layers.Any())
             {
                 var endY = grp.Top + Constants.ItemHeight;
 
@@ -639,7 +535,7 @@ namespace MW5.Api.Legend
             }
 
              // group icon
-             if (ShowGroupFolders)
+             if (ShowGroupIcons)
              {
                  const int size = 16;
                  Bitmap bmp = Icons.GetIcon(grp.Expanded ? LegendIcon.FolderOpened : LegendIcon.Folder) as Bitmap;
@@ -661,132 +557,133 @@ namespace MW5.Api.Legend
             // set up the boundaries for drawing list items
             curTop = bounds.Top + Constants.ItemHeight;
 
-            if (grp.Expanded || isSnapshot)
+            if (!grp.Expanded && !isSnapshot) return;
+            
+            var itemCount = grp.Layers.Count();
+            var newLeft = bounds.X + Constants.ListItemIndent;
+            var newWidth = bounds.Width - newLeft;
+            rect = new Rectangle(newLeft, curTop, newWidth, bounds.Height - curTop);
+
+            var pen = new Pen(_boxLineColor);
+
+            // now draw each of the subitems
+            for (var i = itemCount - 1; i >= 0; i--)
             {
-                var itemCount = grp.Layers.Count;
-                var newLeft = bounds.X + Constants.ListItemIndent;
-                var newWidth = bounds.Width - newLeft;
-                rect = new Rectangle(newLeft, curTop, newWidth, bounds.Height - curTop);
+                var lyr = grp.LayersInternal[i];
 
-                var pen = new Pen(_boxLineColor);
-
-                // now draw each of the subitems
-                for (var i = itemCount - 1; i >= 0; i--)
+                if (lyr.HideFromLegend)
                 {
-                    var lyr = grp.Layers[i];
+                    continue;
+                }
+                
+                // clipping
+                if (rect.Top + lyr.Height < ClientRectangle.Top && isSnapshot == false)
+                {
+                    // update the rectangle for the next layer
+                    rect.Y += lyr.Height;
+                    rect.Height -= lyr.Height;
 
-                    if (!lyr.HideFromLegend)
+                    // Skip drawing this layer and move onto the next one
+                    continue;
+                }
+
+                DrawLayer(drawTool, lyr, rect, isSnapshot);
+
+                var drawLines = false;
+
+                if (!isSnapshot && drawLines)
+                {
+                    // draw sub-item vertical line
+                    if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
                     {
-                        // clipping
-                        if (rect.Top + lyr.Height < ClientRectangle.Top && isSnapshot == false)
+                        // not the last visible layer
+                        drawTool.DrawLine(
+                            pen,
+                            Constants.VertLineIndent,
+                            lyr.Top,
+                            Constants.VertLineIndent,
+                            lyr.Top + lyr.Height + Constants.ItemPad);
+                    }
+                    else
+                    {
+                        // only draw down to box, not down to next item in list(since there is no next item)
+                        drawTool.DrawLine(
+                            pen,
+                            Constants.VertLineIndent,
+                            lyr.Top,
+                            Constants.VertLineIndent,
+                            (int) (lyr.Top + (.55*Constants.ItemHeight)));
+                    }
+
+                    // draw Horizontal line over to the Vertical Sub-lyr line
+                    curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
+
+                    if (lyr.ColorSchemeCount == 0)
+                    {
+                        // Color or image schemes do not exist with the layer
+
+                        // if the layer is selected
+                        if (lyr.Handle == _selectedLayerHandle)
                         {
-                            // update the rectangle for the next layer
-                            rect.Y += lyr.Height;
-                            rect.Height -= lyr.Height;
-
-                            // Skip drawing this layer and move onto the next one
-                            continue;
-                        }
-
-                        DrawLayer(drawTool, lyr, rect, isSnapshot);
-
-                        var drawLines = false;
-
-                        if (!isSnapshot && drawLines)
-                        {
-                            // draw sub-item vertical line
-                            if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
-                            {
-                                // not the last visible layer
-                                drawTool.DrawLine(
-                                    pen,
-                                    Constants.VertLineIndent,
-                                    lyr.Top,
-                                    Constants.VertLineIndent,
-                                    lyr.Top + lyr.Height + Constants.ItemPad);
-                            }
-                            else
-                            {
-                                // only draw down to box, not down to next item in list(since there is no next item)
-                                drawTool.DrawLine(
-                                    pen,
-                                    Constants.VertLineIndent,
-                                    lyr.Top,
-                                    Constants.VertLineIndent,
-                                    (int) (lyr.Top + (.55*Constants.ItemHeight)));
-                            }
-
-                            // draw Horizontal line over to the Vertical Sub-lyr line
-                            curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
-
-                            if (lyr.ColorLegend == null || lyr.ColorLegend.Count == 0)
-                            {
-                                // Color or image schemes do not exist with the layer
-
-                                // if the layer is selected
-                                if (lyr.Handle == _selectedLayerHandle)
-                                {
-                                    drawTool.DrawLine(
-                                        pen,
-                                        Constants.VertLineIndent,
-                                        curTop,
-                                        rect.Left + Constants.ExpandBoxLeftPad - 3,
-                                        curTop);
-                                }
-                                else
-                                {
-                                    // if the layer is not selected
-                                    drawTool.DrawLine(
-                                        pen,
-                                        Constants.VertLineIndent,
-                                        curTop,
-                                        rect.Left + Constants.CheckLeftPad,
-                                        curTop);
-
-                                    // DrawTool.DrawLine(pen, Constants.VERT_LINE_INDENT, CurTop, rect.Left + Constants.EXPAND_BOX_LEFT_PAD, CurTop);
-                                }
-                            }
-                            else
-                            {
-                                // There is color or image scheme with the layer
-
-                                // if the layer is selected
-                                if (lyr.Handle == _selectedLayerHandle)
-                                {
-                                    drawTool.DrawLine(
-                                        pen,
-                                        Constants.VertLineIndent,
-                                        curTop,
-                                        rect.Left + Constants.ExpandBoxLeftPad - 3,
-                                        curTop);
-                                }
-                                else
-                                {
-                                    // if the layer is not selected
-                                    drawTool.DrawLine(
-                                        pen,
-                                        Constants.VertLineIndent,
-                                        curTop,
-                                        rect.Left + Constants.ExpandBoxLeftPad,
-                                        curTop);
-                                }
-                            }
-
-                            // set up the rectangle for the next layer
-                            rect.Y += lyr.Height;
-                            rect.Height -= lyr.Height;
+                            drawTool.DrawLine(
+                                pen,
+                                Constants.VertLineIndent,
+                                curTop,
+                                rect.Left + Constants.ExpandBoxLeftPad - 3,
+                                curTop);
                         }
                         else
                         {
-                            rect.Y += lyr.CalcHeight(true);
-                            rect.Height -= lyr.CalcHeight(true);
-                        }
+                            // if the layer is not selected
+                            drawTool.DrawLine(
+                                pen,
+                                Constants.VertLineIndent,
+                                curTop,
+                                rect.Left + Constants.CheckLeftPad,
+                                curTop);
 
-                        if (rect.Top >= ClientRectangle.Bottom && isSnapshot == false)
-                        {
-                            break;
+                            // DrawTool.DrawLine(pen, Constants.VERT_LINE_INDENT, CurTop, rect.Left + Constants.EXPAND_BOX_LEFT_PAD, CurTop);
                         }
                     }
+                    else
+                    {
+                        // There is color or image scheme with the layer
+
+                        // if the layer is selected
+                        if (lyr.Handle == _selectedLayerHandle)
+                        {
+                            drawTool.DrawLine(
+                                pen,
+                                Constants.VertLineIndent,
+                                curTop,
+                                rect.Left + Constants.ExpandBoxLeftPad - 3,
+                                curTop);
+                        }
+                        else
+                        {
+                            // if the layer is not selected
+                            drawTool.DrawLine(
+                                pen,
+                                Constants.VertLineIndent,
+                                curTop,
+                                rect.Left + Constants.ExpandBoxLeftPad,
+                                curTop);
+                        }
+                    }
+
+                    // set up the rectangle for the next layer
+                    rect.Y += lyr.Height;
+                    rect.Height -= lyr.Height;
+                }
+                else
+                {
+                    rect.Y += lyr.CalcHeight(true);
+                    rect.Height -= lyr.CalcHeight(true);
+                }
+
+                if (rect.Top >= ClientRectangle.Bottom && isSnapshot == false)
+                {
+                    break;
                 }
             }
         }
@@ -794,11 +691,6 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw text.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="text"> The text. </param>
-        /// <param name="rect"> The rect. </param>
-        /// <param name="font"> The font. </param>
-        /// <param name="penColor"> The pen color. </param>
         private void DrawText(Graphics drawTool, string text, Rectangle rect, Font font, Color penColor)
         {
             var pen = new Pen(penColor);
@@ -808,10 +700,6 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw text.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="text"> The text. </param>
-        /// <param name="rect"> The rect. </param>
-        /// <param name="font"> The font. </param>
         private void DrawText(Graphics drawTool, string text, Rectangle rect, Font font)
         {
             DrawText(drawTool, text, rect, font, Color.Black);
@@ -820,18 +708,9 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The create layer.
         /// </summary>
-        /// <param name="layerHandle"> The layer handle. </param>
-        /// <param name="newLayer"> The new layer. </param>
-        /// <returns> The <see cref="LegendLayer"/>. </returns>
-        private LegendLayer CreateLayer(int layerHandle, object newLayer)
+        internal LegendLayer CreateLayer(int layerHandle, object newLayer)
         {
-            var lyr = new LegendLayer(_map, layerHandle, this);
-            if (lyr.Type == LegendLayerType.Image)
-            {
-                lyr.HasTransparency = HasTransparency(newLayer);
-            }
-
-            return lyr;
+            return new LegendLayer(_map, this, layerHandle);
         }
 
         /// <summary>
@@ -856,12 +735,8 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets a snapshot of all layers within the legend
         /// </summary>
-        /// <param name="visibleLayersOnly">
-        /// Only visible layers used in Snapshot?
-        /// </param>
-        /// <returns>
-        /// Bitmap if successful, null (nothing) otherwise
-        /// </returns>
+        /// <param name="visibleLayersOnly"> Only visible layers used in Snapshot? </param>
+        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
         public Bitmap Snapshot(bool visibleLayersOnly)
         {
             return Snapshot(visibleLayersOnly, 200);
@@ -943,10 +818,7 @@ namespace MW5.Api.Legend
 
             try
             {
-                Graphics g;
-                LegendLayer lyr;
-
-                Bitmap bmp; // = new Bitmap(imgWidth,imgHeight);
+                Bitmap bmp;
                 if (visibleLayersOnly)
                 {
                     var visibleLayers = new List<LegendLayer>();
@@ -954,7 +826,7 @@ namespace MW5.Api.Legend
                     // figure out how big the img needs to be in height
                     for (var i = _layers.Count - 1; i >= 0; i--)
                     {
-                        lyr = _layers[i];
+                        var lyr = _layers[i] as LegendLayer;
                         if (lyr.Visible && !lyr.HideFromLegend)
                         {
                             imgHeight += lyr.CalcHeight(true) - 1;
@@ -965,7 +837,7 @@ namespace MW5.Api.Legend
                     imgHeight += Constants.ItemPad;
 
                     bmp = new Bitmap(imgWidth, imgHeight, CreateGraphics());
-                    g = Graphics.FromImage(bmp);
+                    var g = Graphics.FromImage(bmp);
                     g.Clear(BackColor);
 
                     if (visibleLayers.Count > 0)
@@ -989,7 +861,7 @@ namespace MW5.Api.Legend
                 {
                     // draw all layers
                     var grpCount = Groups.Count;
-                    Group grp;
+                    LegendGroup grp;
                     int lyrCount;
 
                     imgHeight = 0;
@@ -997,11 +869,11 @@ namespace MW5.Api.Legend
                     // figure out how tall the image is going to need to be
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = Groups[i];
+                        grp = _groups.GetGroup(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
-                            lyr = grp.Layers[j];
+                            var lyr = grp.LayersInternal[j];
                             if (!lyr.HideFromLegend)
                             {
                                 imgHeight += lyr.CalcHeight(true) - 1;
@@ -1013,7 +885,7 @@ namespace MW5.Api.Legend
 
                     // create a new bitmap of the right size, then create a graphics object from the bitmap
                     bmp = new Bitmap(imgWidth, imgHeight, CreateGraphics());
-                    g = Graphics.FromImage(bmp);
+                    var g = Graphics.FromImage(bmp);
                     g.Clear(BackColor);
 
                     rect = new Rectangle(2, 2, imgWidth - 4, imgHeight - 1);
@@ -1021,11 +893,11 @@ namespace MW5.Api.Legend
                     // now draw the snapshot
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = Groups[i];
+                        grp = _groups.GetGroup(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
-                            lyr = grp.Layers[j];
+                            var lyr = grp.LayersInternal[j];
                             if (!lyr.HideFromLegend)
                             {
                                 DrawLayer(g, lyr, rect, true);
@@ -1071,16 +943,18 @@ namespace MW5.Api.Legend
                 return null;
             }
 
-            var lyr = Layers.ItemByHandle(layerHandle);
+            var lyr = Layers.ItemByHandle(layerHandle) as LegendLayer;
 
-            Bitmap bmp;
-            Graphics g;
-            var lyrHeight = lyr.CalcHeight(true);
-            bmp = new Bitmap(imgWidth, lyrHeight);
-            g = Graphics.FromImage(bmp);
+            Bitmap bmp = null;
+            if (lyr != null)
+            {
+                var lyrHeight = lyr.CalcHeight(true);
+                bmp = new Bitmap(imgWidth, lyrHeight);
+                var g = Graphics.FromImage(bmp);
 
-            var rect = new Rectangle(0, 0, imgWidth - 1, lyrHeight - 1);
-            DrawLayer(g, lyr, rect, true);
+                var rect = new Rectangle(0, 0, imgWidth - 1, lyrHeight - 1);
+                DrawLayer(g, lyr, rect, true);
+            }
 
             return bmp;
         }
@@ -1111,24 +985,6 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// Tells you if a group exists with the specified handle
-        /// </summary>
-        /// <param name="handle"> layerHandle of the group to check </param>
-        /// <returns> True if the Group extists, False otherwise </returns>
-        protected internal bool IsValidGroup(int handle)
-        {
-            if (handle >= 0 && handle < GroupPositions.Count)
-            {
-                if ((int) GroupPositions[handle] >= 0)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>
         /// Finds a layer given the handle
         /// </summary>
         /// <param name="handle"> layerHandle of the layer to find </param>
@@ -1140,15 +996,16 @@ namespace MW5.Api.Legend
             groupIndex = -1;
             layerIndex = -1;
 
-            var groupCount = AllGroups.Count;
+            var groupCount = _groups.Count;
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = AllGroups[i];
+                var grp = _groups.GetGroup(i);
                 var itemCount = grp.Layers.Count;
+
                 for (var j = 0; j < itemCount; j++)
                 {
-                    var lyr = grp.Layers[j];
+                    var lyr = grp.LayersInternal[j];
                     if (lyr.Handle == handle)
                     {
                         groupIndex = i;
@@ -1346,7 +1203,7 @@ namespace MW5.Api.Legend
         /// <param name="lyr"> Layer object to be drawn </param>
         /// <param name="bounds"> Rectangle oulining the allowable draw area </param>
         /// <param name="isSnapshot"> Drawing is done differently when it is a snapshot we are takeing of this layer </param>
-        protected internal void DrawLayer(Graphics drawTool, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        protected void DrawLayer(Graphics drawTool, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
             lyr.SmallIconWasDrawn = false;
             lyr.Top = bounds.Top;
@@ -1376,7 +1233,7 @@ namespace MW5.Api.Legend
 
                     if (curTop + rect.Height > 0 || curTop < ClientRectangle.Height)
                     {
-                        DrawBox(drawTool, rect, _boxLineColor, SelectedColor);
+                        DrawBox(drawTool, rect, _boxLineColor, SelectionColor);
                     }
                 }
             }
@@ -1389,8 +1246,6 @@ namespace MW5.Api.Legend
                 rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
                 DrawBox(drawTool, rect, _boxLineColor, Color.White);
-
-                // MessageBox.Show("IsSnapshot");
             }
 
             // -------------------------------------------------------
@@ -1488,7 +1343,7 @@ namespace MW5.Api.Legend
                         // drawing category symbol
                         var hdc = drawTool.GetHdc();
                         var clr = (lyr.Handle == _selectedLayerHandle && bounds.Width > 25)
-                            ? SelectedColor
+                            ? SelectionColor
                             : BackColor;
                         var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
 
@@ -1541,7 +1396,6 @@ namespace MW5.Api.Legend
                 // labels link
                 if (bounds.Width > 60 && bounds.Right - curLeft - 62 > textSize.Width)
                 {
-                    // -62
                     var sf = _map.get_Shapefile(lyr.Handle);
                     if (sf != null)
                     {
@@ -1616,7 +1470,7 @@ namespace MW5.Api.Legend
                 }
 
                 // Here, draw the + or - sign according to based on  layer.expanded property
-                if (lyr.ExpansionBoxForceAllowed || lyr.ColorLegend.Count > 0)
+                if (lyr.ExpansionBoxForceAllowed || lyr.ColorSchemeCount > 0)
                 {
                     if (bounds.Width > 17 && isSnapshot == false)
                     {
@@ -1679,8 +1533,7 @@ namespace MW5.Api.Legend
                     bounds,
                     top,
                     string.Empty,
-                    maxWidth,
-                    -1);
+                    maxWidth);
             }
 
             top += height;
@@ -1781,7 +1634,7 @@ namespace MW5.Api.Legend
                 var caption = sf.Charts.Caption;
                 if (caption == string.Empty)
                 {
-                    caption = "Charts";
+                    caption = CHARTS_CAPTION;
                 }
 
                 var left = bounds.Left + Constants.TextLeftPad;
@@ -1853,7 +1706,6 @@ namespace MW5.Api.Legend
         /// <param name="top"> The top. </param>
         /// <param name="name"> The name. </param>
         /// <param name="maxWidth"> The max Width. </param>
-        /// <param name="index"> The index. </param>
         private void DrawShapefileCategory(
             Graphics drawTool,
             ShapeDrawingOptions options,
@@ -1861,8 +1713,7 @@ namespace MW5.Api.Legend
             Rectangle bounds,
             int top,
             string name,
-            int maxWidth,
-            int index)
+            int maxWidth)
         {
             var categoryHeight = layer.GetCategoryHeight(options);
             var categoryWidth = layer.GetCategoryWidth(options);
@@ -2144,17 +1995,17 @@ namespace MW5.Api.Legend
         /// <param name="inCheckbox"> (by reference/out) Indicates whether a group visibilty check box was clicked. </param>
         /// <param name="inExpandbox"> (by reference/out) Indicates whether the expand box next to a group was clicked. </param>
         /// <returns> Returns the group that was clicked on or null/nothing. </returns>
-        public Group FindClickedGroup(Point point, out bool inCheckbox, out bool inExpandbox)
+        public LegendGroup FindClickedGroup(Point point, out bool inCheckbox, out bool inExpandbox)
         {
             // finds the group that was clicked, i.e. heading of group, not subitems
             inExpandbox = false;
             inCheckbox = false;
 
-            var groupCount = AllGroups.Count;
+            var groupCount = _groups.Count;
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = AllGroups[i];
+                var grp = _groups.GetGroup(i);
 
                 // set group header bounds
                 var curLeft = Constants.GrpIndent;
@@ -2211,7 +2062,7 @@ namespace MW5.Api.Legend
         /// <param name="inCheckBox"> (by reference/out) Indicates whether a layer visibilty check box was clicked. </param>
         /// <param name="inExpansionBox"> (by reference/out) Indicates whether the expand box next to a layer was clicked. </param>
         /// <returns> Returns the group that was clicked on or null/nothing. </returns>
-        public LegendLayer FindClickedLayer(Point point, out bool inCheckBox, out bool inExpansionBox)
+        private LegendLayer FindClickedLayer(Point point, out bool inCheckBox, out bool inExpansionBox)
         {
             var element = new ClickedElement();
             var lyr = FindClickedLayer(point, ref element);
@@ -2221,18 +2072,20 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
+        /// Locates the layer that was clicked on in the legend.
         /// </summary>
         /// <param name="point"> The point. </param>
         /// <param name="element"> The Element. </param>
+        /// <returns> The group that was clicked on or null/nothing. </returns>
         public LegendLayer FindClickedLayer(Point point, ref ClickedElement element)
         {
-            var groupCount = AllGroups.Count;
+            var groupCount = _groups.Count;
 
             element.Nullify();
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = AllGroups[i];
+                var grp = _groups.GetGroup(i);
 
                 if (grp.Expanded == false)
                 {
@@ -2243,7 +2096,7 @@ namespace MW5.Api.Legend
 
                 for (var j = 0; j < layerCount; j++)
                 {
-                    var lyr = grp.Layers[j];
+                    var lyr = grp.LayersInternal[j];
 
                     // see if we are inside the current Layer
                     var curLeft = Constants.ListItemIndent;
@@ -2281,9 +2134,8 @@ namespace MW5.Api.Legend
 
                         if (lyr.Type == LegendLayerType.Image || lyr.Type == LegendLayerType.Grid)
                         {
-                            if (bounds.Contains(point) && (lyr.ColorLegend.Count > 0 || lyr.ExpansionBoxForceAllowed))
+                            if (bounds.Contains(point) && (lyr.ColorSchemeCount > 0 || lyr.ExpansionBoxForceAllowed))
                             {
-                                // We are in the Expansion box
                                 element.ExpansionBox = true;
                                 return lyr;
                             }
@@ -2445,39 +2297,28 @@ namespace MW5.Api.Legend
             return null;
         }
 
-        /// <summary>
-        /// Redraw the LegendControl if not locked - See 'Locked' Property for more details
-        /// </summary>
-        protected internal void Redraw()
-        {
-            if (Locked == false)
-            {
-                // Application.DoEvents();
-                Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// The full redraw.
-        /// </summary>
-        public void FullRedraw()
-        {
-            if (Locked == false)
-            {
-                // Application.DoEvents();
-                Invalidate();
-            }
-        }
-
-        /// <summary>
-        /// The redraw legend and map.
-        /// </summary>
-        public void RedrawLegendAndMap()
+        private void RedrawCore()
         {
             if (!Locked)
             {
-                _map.Redraw();
                 Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Redraw the LegendControl if not locked - See 'Locked' Property for more details
+        /// </summary>
+        public void Redraw(LegendRedraw redrawType = LegendRedraw.LegendOnly)
+        {
+            switch (redrawType)
+            {
+                case LegendRedraw.LegendOnly:
+                    RedrawCore();
+                    break;
+                case LegendRedraw.LegendAndMap:
+                    _map.Redraw();
+                    RedrawCore();
+                    break;
             }
         }
 
@@ -2486,12 +2327,13 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal void ClearLayers()
         {
-            var grpCount = AllGroups.Count;
-
-            for (var i = 0; i < grpCount; i++)
+            foreach (var g in _groups)
             {
-                var grp = AllGroups[i];
-                grp.Layers.Clear();
+                var legendGroup = g as LegendGroup;
+                if (legendGroup != null)
+                {
+                    legendGroup.LayersInternal.Clear();
+                }
             }
 
             _map.RemoveAllLayers();
@@ -2506,12 +2348,8 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal void ClearGroups()
         {
-            ClearLayers();
+            _groups.Clear();
             _map.RemoveAllLayers();
-            AllGroups.Clear();
-
-            GroupPositions.Clear();
-
             Redraw();
         }
 
@@ -2521,22 +2359,24 @@ namespace MW5.Api.Legend
         /// <param name="useExpandedHeight"> The use expanded height. </param>
         private int CalcTotalDrawHeight(bool useExpandedHeight)
         {
-            int count = AllGroups.Count, retval = 0;
+            int count = _groups.Count, retval = 0;
 
             if (useExpandedHeight)
             {
                 for (var i = 0; i < count; i++)
                 {
-                    Groups[i].RecalcHeight();
-                    retval += Groups[i].ExpandedHeight;
+                    var g = _groups.GetGroup(i);
+                    g.RecalcHeight();
+                    retval += g.ExpandedHeight;
                 }
             }
             else
             {
                 for (var i = 0; i < count; i++)
                 {
-                    Groups[i].RecalcHeight();
-                    retval += Groups[i].Height + Constants.ItemPad;
+                    var g = _groups.GetGroup(i);
+                    g.RecalcHeight();
+                    retval += g.Height + Constants.ItemPad;
                 }
             }
 
@@ -2552,7 +2392,7 @@ namespace MW5.Api.Legend
             // this is important because the click events use the stored top as
             // the way of figuring out if the item was clicked
             // and if the checkbox or expansion box was clicked
-            var totalHeight = CalcTotalDrawHeight(false);
+            CalcTotalDrawHeight(false);
 
             var curTop = 0;
 
@@ -2561,16 +2401,16 @@ namespace MW5.Api.Legend
                 curTop = -_vScrollBar.Value;
             }
 
-            for (var i = AllGroups.Count - 1; i >= 0; i--)
+            for (var i = _groups.Count - 1; i >= 0; i--)
             {
-                var grp = AllGroups[i];
+                var grp = _groups.GetGroup(i);
                 grp.Top = curTop;
                 if (grp.Expanded)
                 {
                     curTop += Constants.ItemHeight;
                     for (var j = grp.Layers.Count - 1; j >= 0; j--)
                     {
-                        var lyr = grp.Layers[j];
+                        var lyr = grp.LayersInternal[j];
                         if (!lyr.HideFromLegend)
                         {
                             lyr.Top = curTop;
@@ -2621,11 +2461,11 @@ namespace MW5.Api.Legend
 
                 _draw.Clear(Color.White);
 
-                var numGroups = AllGroups.Count;
+                var numGroups = _groups.Count;
 
                 for (var i = numGroups - 1; i >= 0; i--)
                 {
-                    var grp = AllGroups[i];
+                    var grp = _groups.GetGroup(i);
                     if (rect.Top + grp.Height < ClientRectangle.Top)
                     {
                         // update the drawing rectangle
@@ -2699,7 +2539,7 @@ namespace MW5.Api.Legend
                 {
                     if (!grp.StateLocked)
                     {
-                        grp.VisibleState = grp.VisibleState == Visibility.AllVisible
+                        grp.Visible = grp.Visible == Visibility.AllVisible
                             ? Visibility.AllHidden
                             : Visibility.AllVisible;
 
@@ -2727,9 +2567,9 @@ namespace MW5.Api.Legend
                 else
                 {
                     // set up group dragging
-                    if (AllGroups.Count > 1)
+                    if (_groups.Count > 1)
                     {
-                        _dragInfo.StartGroupDrag(pnt.Y, (int) GroupPositions[grp.Handle]);
+                        _dragInfo.StartGroupDrag(pnt.Y, _groups.PositionOf(grp.Handle));
                     }
                 }
 
@@ -2745,7 +2585,7 @@ namespace MW5.Api.Legend
             var lyr = FindClickedLayer(pnt, ref element);
             if (lyr != null)
             {
-                grp = AllGroups[element.GroupIndex];
+                grp = _groups.GetGroup(element.GroupIndex);
                 if (element.CheckBox)
                 {
                     var newState = !_map.get_LayerVisible(lyr.Handle);
@@ -2760,7 +2600,7 @@ namespace MW5.Api.Legend
 
                     _map.set_LayerVisible(lyr.Handle, newState);
 
-                    grp = AllGroups[element.GroupIndex];
+                    grp = _groups.GetGroup(element.GroupIndex);
                     grp.UpdateGroupVisibility();
 
                     FireEvent(this, LayerCheckboxClicked, new LayerEventArgs(lyr.Handle));
@@ -2823,11 +2663,11 @@ namespace MW5.Api.Legend
 
                 SelectedLayer = lyr.Handle;
 
-                if (AllGroups.Count > 1 || grp.Layers.Count > 1)
+                if (_groups.Count > 1 || grp.Layers.Count > 1)
                 {
                     _dragInfo.StartLayerDrag(
                         pnt.Y,
-                        (int) GroupPositions[grp.Handle],
+                        _groups.PositionOf(grp.Handle),
                         grp.LayerPositionInGroup(lyr.Handle));
                 }
 
@@ -2932,7 +2772,7 @@ namespace MW5.Api.Legend
             Capture = false;
             var pnt = new Point(e.X, e.Y);
 
-            Group grp;
+            LegendGroup grp;
 
             _dragInfo.MouseDown = false;
 
@@ -2951,7 +2791,7 @@ namespace MW5.Api.Legend
                     if (_dragInfo.TargetGroupIndex != Constants.InvalidIndex)
                     {
                         var targetGroup = Groups[_dragInfo.TargetGroupIndex];
-                        grp = AllGroups[_dragInfo.DragGroupIndex];
+                        grp = _groups.GetGroup(_dragInfo.DragGroupIndex);
 
                         int newPos;
 
@@ -2989,13 +2829,15 @@ namespace MW5.Api.Legend
                 else
                 {
                     // we are dragging a group
-                    if (IsValidIndex(AllGroups, _dragInfo.DragGroupIndex) == false)
+                    int pos = _dragInfo.DragGroupIndex;
+
+                    if (pos < 0 || pos >= _groups.Count)
                     {
                         _dragInfo.Reset();
                         return;
                     }
 
-                    var grpHandle = AllGroups[_dragInfo.DragGroupIndex].Handle;
+                    var grpHandle = _groups[_dragInfo.DragGroupIndex].Handle;
 
                     // adjust the target group index because we are setting TargetGroupIndex
                     // differently than the MoveGroup Function expects it
@@ -3004,7 +2846,7 @@ namespace MW5.Api.Legend
                         _dragInfo.TargetGroupIndex -= 1;
                     }
 
-                    MoveGroup(grpHandle, _dragInfo.TargetGroupIndex);
+                    _groups.MoveGroup(grpHandle, _dragInfo.TargetGroupIndex);
                 }
 
                 _dragInfo.Reset();
@@ -3025,7 +2867,7 @@ namespace MW5.Api.Legend
             var lyr = FindClickedLayer(pnt, out inCheck, out inExpansion);
             if (lyr != null && inCheck == false)
             {
-                if (inExpansion == false || lyr.ColorLegend.Count == 0)
+                if (inExpansion == false || lyr.ColorSchemeCount == 0)
                 {
                     FireEvent(this, LayerMouseUp, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                 }
@@ -3036,30 +2878,20 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The is valid index.
-        /// </summary>
-        /// <param name="list"> The list. </param>
-        /// <param name="index"> The index. </param>
-        private bool IsValidIndex<T>(List<T> list, int index)
-        {
-            return index >= 0 && index < Layers.Count;
-        }
-
-        /// <summary>
         /// The update map layer positions.
         /// </summary>
-        private void UpdateMapLayerPositions()
+        internal void UpdateMapLayerPositions()
         {
-            var grpCount = AllGroups.Count;
+            var grpCount = _groups.Count;
 
             _map.LockWindow(tkLockMode.lmLock);
             for (var i = grpCount - 1; i >= 0; i--)
             {
-                var grp = AllGroups[i];
+                var grp = _groups.GetGroup(i);
                 var lyrCount = grp.Layers.Count;
                 for (var j = lyrCount - 1; j >= 0; j--)
                 {
-                    Layer lyr = grp.Layers[j];
+                    Layer lyr = grp.LayersInternal[j];
                     var lyrPosition = _map.get_LayerPosition(lyr.Handle);
                     _map.MoveLayerBottom(lyrPosition);
                 }
@@ -3114,21 +2946,21 @@ namespace MW5.Api.Legend
                 FindDropLocation(e.Y);
                 DrawDragLine(_dragInfo.TargetGroupIndex, _dragInfo.TargetLayerIndex);
             }
-
             else
             {
+                // TODO: it's flickering
                 //show a tooltip if the mouse is over a layer
-                bool inCheck, inExpand;
-                var lyr = FindClickedLayer(new Point(e.X, e.Y), out inCheck, out inExpand);
-                if (lyr != null)
-                {
-                    _toolTip.AutoPopDelay = 5000;
-                    _toolTip.InitialDelay = 1000;
-                    _toolTip.ReshowDelay = 500;
-                    _toolTip.ShowAlways = false;
-                    string caption = _map.get_LayerName(lyr.Handle);
-                    _toolTip.SetToolTip(this, caption);
-                }
+                //bool inCheck, inExpand;
+                //var lyr = FindClickedLayer(new Point(e.X, e.Y), out inCheck, out inExpand);
+                //if (lyr != null)
+                //{
+                //    _toolTip.AutoPopDelay = 5000;
+                //    _toolTip.InitialDelay = 1000;
+                //    _toolTip.ReshowDelay = 500;
+                //    _toolTip.ShowAlways = false;
+                //    string caption = _map.get_LayerName(lyr.Handle);
+                //    _toolTip.SetToolTip(this, caption);
+                //}
             }
         }
 
@@ -3139,13 +2971,13 @@ namespace MW5.Api.Legend
         /// <param name="lyrIndex"> The lyr index. </param>
         private void DrawDragLine(int grpIndex, int lyrIndex)
         {
-            Group grp = null;
+            LegendGroup grp = null;
 
             if (_dragInfo.Dragging)
             {
-                if (IsValidIndex(AllGroups, grpIndex))
+                if (grpIndex >= 0 && grpIndex < _groups.Count)
                 {
-                    grp = AllGroups[grpIndex];
+                    grp = _groups.GetGroup(grpIndex);
                 }
 
                 int drawY = 0;
@@ -3160,8 +2992,8 @@ namespace MW5.Api.Legend
 
                     if (layerCount > lyrIndex && lyrIndex >= 0)
                     {
-                        var itemTop = grp.Layers[lyrIndex].Top;
-                        drawY = itemTop + grp.Layers[lyrIndex].Height;
+                        var itemTop = grp.LayersInternal[lyrIndex].Top;
+                        drawY = itemTop + grp.LayersInternal[lyrIndex].Height;
                     }
                     else
                     {
@@ -3172,16 +3004,17 @@ namespace MW5.Api.Legend
                 else
                 {
                     // we are dragging a group
-                    if (grpIndex < 0 || grpIndex >= AllGroups.Count)
+                    if (grpIndex < 0 || grpIndex >= _groups.Count)
                     {
                         // the mouse is either above the top layer or below the bottom layer
                         if (grpIndex < 0)
                         {
-                            drawY = AllGroups[0].Top + AllGroups[0].Height;
+                            var g = _groups.GetGroup(0);
+                            drawY =  g.Top + g.Height;
                         }
                         else
                         {
-                            drawY = AllGroups[AllGroups.Count - 1].Top;
+                            drawY = _groups.GetGroup(_groups.Count - 1).Top;
                         }
                     }
                     else
@@ -3226,25 +3059,23 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The find drop location.
         /// </summary>
-        /// <param name="yPosition">
-        /// The y position.
-        /// </param>
+        /// <param name="yPosition"> The y position. </param>
         private void FindDropLocation(int yPosition)
         {
             _dragInfo.TargetGroupIndex = Constants.InvalidIndex;
             _dragInfo.TargetLayerIndex = Constants.InvalidIndex;
 
-            Group grp;
+            LegendGroup grp;
 
-            var grpCount = AllGroups.Count;
+            var grpCount = _groups.Count;
 
             if (grpCount < 1)
             {
                 return;
             }
 
-            var topGroup = AllGroups[grpCount - 1];
-            var bottomGroup = AllGroups[0];
+            var topGroup = _groups.GetGroup(grpCount - 1);
+            var bottomGroup = _groups.GetGroup(0);
 
             if (_dragInfo.DraggingLayer)
             {
@@ -3269,7 +3100,7 @@ namespace MW5.Api.Legend
                 // not the bottom or the top, so we must search for the correct one
                 for (var i = grpCount - 1; i >= 0; i--)
                 {
-                    grp = AllGroups[i];
+                    grp = _groups.GetGroup(i);
 
                     var grpHeight = grp.Height;
 
@@ -3296,7 +3127,7 @@ namespace MW5.Api.Legend
                     {
                         for (var j = itemCount - 1; j >= 0; j--)
                         {
-                            var lyr = grp.Layers[j];
+                            var lyr = grp.LayersInternal[j];
                             if (yPosition <= (lyr.Top + lyr.Height))
                             {
                                 // drop before this item
@@ -3312,7 +3143,7 @@ namespace MW5.Api.Legend
                                 if (i > 0)
                                 {
                                     // if the group is not the bottom group
-                                    var tempGroup = AllGroups[i - 1];
+                                    var tempGroup = _groups.GetGroup(i - 1);
                                     if (yPosition <= tempGroup.Top && yPosition > lyr.Top + lyr.Height)
                                     {
                                         _dragInfo.TargetGroupIndex = i;
@@ -3365,7 +3196,7 @@ namespace MW5.Api.Legend
                 // we have to compare against all groups because we aren't at the top or bottom
                 for (var i = grpCount - 1; i >= 0; i--)
                 {
-                    grp = AllGroups[i];
+                    grp = _groups.GetGroup(i);
 
                     if (yPosition < grp.Top + grp.Height)
                     {
@@ -3376,48 +3207,7 @@ namespace MW5.Api.Legend
             }
         }
 
-        /// <summary>
-        /// Handles Layer position changes within groups
-        /// </summary>
-        /// <param name="currentPositionInGroup"> The Current Position In Group. </param>
-        /// <param name="sourceGroup"> The Source group </param>
-        /// <param name="targetPositionInGroup"> The Target Position In Group. </param>
-        /// <param name="destinationGroup"> The Destination group. Can be the same as the Source </param>
-        private void ChangeLayerPosition(int currentPositionInGroup, Group sourceGroup, int targetPositionInGroup,
-            Group destinationGroup)
-        {
-            if (currentPositionInGroup < 0 || currentPositionInGroup >= sourceGroup.Layers.Count)
-            {
-                throw new Exception("Invalid Layer Index");
-            }
 
-            var lyr = sourceGroup.Layers[currentPositionInGroup];
-            sourceGroup.Layers.Remove(lyr);
-
-            if (targetPositionInGroup >= destinationGroup.Layers.Count)
-            {
-                destinationGroup.Layers.Add(lyr);
-            }
-            else if (targetPositionInGroup <= 0)
-            {
-                destinationGroup.Layers.Insert(0, lyr);
-            }
-            else
-            {
-                destinationGroup.Layers.Insert(targetPositionInGroup, lyr);
-            }
-
-            sourceGroup.RecalcHeight();
-            sourceGroup.UpdateGroupVisibility();
-
-            if (sourceGroup.Handle != destinationGroup.Handle)
-            {
-                destinationGroup.RecalcHeight();
-                destinationGroup.UpdateGroupVisibility();
-
-                _selectedGroupHandle = destinationGroup.Handle;
-            }
-        }
 
         /// <summary>
         /// Move a layer to a new location and/or group
@@ -3434,26 +3224,26 @@ namespace MW5.Api.Legend
             {
                 if (!Layers.IsValidHandle(layerHandle))
                 {
-                    throw new Exception("Invalid layerHandle (GroupHandle)");    
+                    throw new Exception("Invalid layerHandle.");    
                 }
                 
-                if (!IsValidGroup(targetGroupHandle))
+                if (!_groups.IsValidHandle(targetGroupHandle))
                 {
-                    throw new Exception("Invalid layerHandle (TargetGroupHandle)");
+                    throw new Exception("Invalid target group handle.");
                 }
 
                 int sourceGroupIndex;
                 int currentPositionInGroup;
                 FindLayerByHandle(layerHandle, out sourceGroupIndex, out currentPositionInGroup);
 
-                var sourceGroup = Groups[sourceGroupIndex];
+                var sourceGroup = _groups.GetGroup(sourceGroupIndex);
                 var destinationGroup = Groups.ItemByHandle(targetGroupHandle);
 
                 if (currentPositionInGroup != targetPositionInGroup || sourceGroup.Handle != destinationGroup.Handle)
                 {
                     var oldMapPos = _map.get_LayerPosition(layerHandle);
 
-                    ChangeLayerPosition(
+                    _groups.ChangeLayerPosition(
                         currentPositionInGroup,
                         sourceGroup,
                         targetPositionInGroup,
@@ -3490,62 +3280,7 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// Moves a group to a new location
-        /// </summary>
-        /// <param name="groupHandle"> layerHandle of group to move </param>
-        /// <param name="newPos"> 0-Based index of new location </param>
-        /// <returns> True on success, False otherwise </returns>
-        protected internal bool MoveGroup(int groupHandle, int newPos)
-        {
-            if (IsValidGroup(groupHandle))
-            {
-                var oldPos = (int) GroupPositions[groupHandle];
-
-                if (oldPos == newPos)
-                {
-                    return true;
-                }
-
-                var grp = Groups.ItemByHandle(groupHandle);
-
-                if (newPos < 0)
-                {
-                    newPos = 0;
-                }
-
-                if (newPos >= NumGroups)
-                {
-                    AllGroups.RemoveAt(oldPos);
-                    AllGroups.Add(grp);
-                }
-                else
-                {
-                    AllGroups.RemoveAt(oldPos);
-                    AllGroups.Insert(newPos, grp);
-                }
-
-                if (grp.Layers.Count > 0)
-                {
-                    // now we have to move the layers around
-                    UpdateMapLayerPositions();
-                }
-
-                UpdateGroupPositions();
-                Redraw();
-
-                FireEvent(
-                    this,
-                    GroupPositionChanged,
-                    new PositionChangedEventArgs(grp.Handle, oldPos, newPos));
-                return true;
-            }
-
-            LegendHelper.LastError = "Invalid Group layerHandle";
-            return false;
-        }
-
-        /// <summary>
-        /// The legend_ double click.
+        /// The legend double click.
         /// </summary>
         private void LegendDoubleClick(object sender, EventArgs e)
         {
@@ -3741,6 +3476,29 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
+        /// Assigns all layers outside group to a new group. This allows normal functioning of the legend after map deserialization.
+        /// </summary>
+        /// <param name="groupName"> The group Name. </param>
+        private int AssignOrphanLayersToNewGroup(string groupName)
+        {
+            var g = Groups.GroupByName(groupName) as LegendGroup;
+            if (g == null)
+            {
+                var groupHandle = Groups.Add(groupName);
+                g = Groups.ItemByHandle(groupHandle) as LegendGroup;
+            }
+
+            for (var i = 0; i < _map.NumLayers; i++)
+            {
+                var handle = _map.get_LayerHandle(i);
+                var lyr = CreateLayer(handle, _map.get_GetObject(handle));
+                g.LayersInternal.Add(lyr);
+            }
+
+            return g.Handle;
+        }
+
+        /// <summary>
         /// The layer properties changed.
         /// </summary>
         public event EventHandler<LayerEventArgs> LayerPropertiesChanged;
@@ -3859,171 +3617,5 @@ namespace MW5.Api.Legend
         /// Fired when labels icon for the layer is clicked
         /// </summary>
         public event EventHandler<LayerEventArgs> LayerLabelsClicked;
-
-        /// <summary>
-        /// Adds a layer to the topmost Group
-        /// </summary>
-        /// <param name="newLayer"> object to be added as new layer </param>
-        /// <param name="visible"> Should this layer to be visible? </param>
-        /// <param name="targetGroupHandle"> layerHandle of the group into which this layer should be added </param>
-        /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
-        protected internal int AddLayer(object newLayer, bool visible, int targetGroupHandle)
-        {
-            return AddLayer(newLayer, visible, targetGroupHandle, true);
-        }
-
-        /// <summary>
-        /// Adds a layer to the map, optionally placing it above the currently selected layer (otherwise at top of layer list).
-        /// </summary>
-        /// <param name="newLayer"> The object to add (must be a supported Layer type) </param>
-        /// <param name="visible"> Whether or not the layer is visible upon adding it </param>
-        /// <param name="placeAboveCurrentlySelected"> Whether the layer should be placed above currently selected layer, or at top of layer list. </param>
-        /// <returns> layerHandle of the newly added layer, -1 on failure </returns>
-        protected internal int AddLayer(object newLayer, bool visible, bool placeAboveCurrentlySelected)
-        {
-            var mapLayerHandle = AddLayer(newLayer, visible);
-
-            if (!placeAboveCurrentlySelected)
-            {
-                return mapLayerHandle;
-            }
-
-            if (SelectedLayer != -1)
-            {
-                var addPos = Layers.PositionInGroup(SelectedLayer) + 1;
-                var addGrp = Layers.GroupOf(SelectedLayer);
-                Layers.MoveLayer(mapLayerHandle, addGrp, addPos);
-                return mapLayerHandle;
-            }
-
-            return mapLayerHandle;
-        }
-
-        /// <summary>
-        /// Adds a layer to the topmost Group
-        /// </summary>
-        /// <param name="newLayer"> object to be added as new layer </param>
-        /// <param name="visible"> Should this layer to be visible in the map? </param>
-        /// <param name="targetGroupHandle"> layerHandle of the group into which this layer should be added </param>
-        /// <param name="legendVisible"> Should this layer be visible in the legend? </param>
-        /// <param name="afterLayerHandle"> The after Layer handle. </param>
-        /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
-        protected internal int AddLayer(object newLayer, bool visible, int targetGroupHandle, bool legendVisible,
-            int afterLayerHandle = -1)
-        {
-            Group grp;
-
-            if (_map == null)
-            {
-                throw new Exception("MapWinGIS.Map Object not yet set. Set Map Property before adding layers");
-            }
-
-            _map.LockWindow(tkLockMode.lmLock);
-            var mapLayerHandle = _map.AddLayer(newLayer, visible);
-
-            if (mapLayerHandle < 0)
-            {
-                _map.LockWindow(tkLockMode.lmUnlock);
-                return mapLayerHandle;
-            }
-
-            if (AllGroups.Count == 0 || IsValidGroup(targetGroupHandle) == false)
-            {
-                // we have to create or find a group to put this layer into
-                if (AllGroups.Count == 0)
-                {
-                    grp = CreateGroup("Data Layers", -1);
-                    GroupPositions[grp.Handle] = AllGroups.Count - 1;
-
-                    FireEvent(this, GroupAdded, new GroupEventArgs(grp.Handle));
-                }
-                else
-                {
-                    grp = AllGroups[AllGroups.Count - 1];
-                }
-            }
-            else
-            {
-                grp = AllGroups[(int) GroupPositions[targetGroupHandle]];
-            }
-
-            var lyr = CreateLayer(mapLayerHandle, newLayer);
-            lyr.HideFromLegend = !legendVisible;
-
-            var inserted = false;
-            if (afterLayerHandle != -1)
-            {
-                for (var i = 0; i < grp.Layers.Count; i++)
-                {
-                    if (grp.Layers[i].Handle == afterLayerHandle)
-                    {
-                        grp.Layers.Insert(i, lyr);
-                        inserted = true;
-                        break;
-                    }
-                }
-            }
-
-            if (!inserted)
-            {
-                grp.Layers.Add(lyr);
-            }
-
-            grp.RecalcHeight();
-
-            grp.UpdateGroupVisibility();
-
-            // don't show preview for the large layer by default
-            var sf = newLayer as Shapefile;
-
-            if (legendVisible)
-            {
-                _selectedGroupHandle = grp.Handle;
-                _selectedLayerHandle = mapLayerHandle;
-
-                FireLayerSelected(mapLayerHandle);
-            }
-
-            _map.LockWindow(tkLockMode.lmUnlock);
-            Redraw();
-
-            FireEvent(this, LayerAdded, new LayerEventArgs(mapLayerHandle));
-
-            return mapLayerHandle;
-        }
-
-        /// <summary>
-        /// Adds a layer to the topmost Group
-        /// </summary>
-        /// <param name="newLayer"> object to be added as new layer </param>
-        /// <param name="visible"> Should this layer to be visible? </param>
-        /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
-        protected internal int AddLayer(object newLayer, bool visible)
-        {
-            return AddLayer(newLayer, visible, -1, true);
-        }
-
-        /// <summary>
-        /// Assigns all layers outside group to a new group. This allows normal functioning of the legend after map deserialization.
-        /// </summary>
-        /// <param name="groupName"> The group Name. </param>
-        public int AssignOrphanLayersToNewGroup(string groupName)
-        {
-            var g = Groups.GroupByName(groupName);
-            if (g == null)
-            {
-                var groupHandle = Groups.Add(groupName);
-                g = Groups.ItemByHandle(groupHandle);
-            }
-
-            for (var i = 0; i < _map.NumLayers; i++)
-            {
-                var handle = _map.get_LayerHandle(i);
-                var lyr = CreateLayer(handle, _map.get_GetObject(handle));
-                g.Layers.Add(lyr);
-            }
-
-            return g.Handle;
-        }
     }
 }

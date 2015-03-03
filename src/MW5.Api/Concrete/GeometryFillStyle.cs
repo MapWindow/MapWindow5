@@ -86,11 +86,10 @@ namespace MW5.Api.Concrete
             set { _style.FillHatchStyle = (tkGDIPlusHatchStyle)value; }
         }
 
-        // TODO: wrap
-        public MapWinGIS.Image Texture
+        public IImageSource Texture
         {
-            get { return _style.Picture; }
-            set { _style.Picture = value; }
+            get { return BitmapSource.Wrap(_style.Picture); }
+            set { _style.Picture = value.GetInternal(); }
         }
 
         public void SetGradient(Color color, byte range)

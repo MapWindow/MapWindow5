@@ -7,6 +7,8 @@ using MW5.Api.Concrete;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
+using MW5.Api.Legend.Abstract;
 
 namespace MW5.Api
 {
@@ -15,9 +17,9 @@ namespace MW5.Api
     // https ://social.msdn.microsoft.com/Forums/en-US/4bd5a9cd-4730-41f6-a123-cb49b9ea420b/toolboxbitmap-problem?forum=Vsexpressvcs
 
     [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
-    public partial class MapControl : UserControl, IMapControl
+    public partial class MapControl : UserControl, IMapWithEvents
     {
-        private LayerCollection _layers;
+        private LegendLayerCollection _layers;
 
         public MapControl()
         {
@@ -109,7 +111,7 @@ namespace MW5.Api
 
         #endregion
 
-        #region IMapControl Members
+        #region IMap Members
 
         public HistoryList UndoList
         {
@@ -306,11 +308,36 @@ namespace MW5.Api
         }
 
         [Browsable(false)]
+        public ILegend Legend { get; set; }
+
+        [Browsable(false)]
         public ILayerCollection<ILayer> Layers
         {
-            get { return _layers = _layers ?? new LayerCollection(_map); }
+            get
+            {
+                return new LayerCollection(_map);
+            }
         }
 
+        // TODO: return interface
+        [Browsable(false)]
+        ILayerCollection<ILegendLayer> IMap.Layers
+        {
+            get
+            {
+                if (_layers == null)
+                {
+                    if (Legend == null)
+                    {
+                        throw new NullReferenceException(
+                            "MapControl.Legend property should be set before acceccing layers collection.");
+                    }
+                    _layers = new LegendLayerCollection(_map, Legend);
+                }
+                return _layers;
+            }
+        }
+        
         public MapProjection Projection
         {
             get { return (MapProjection) _map.Projection; }
@@ -531,6 +558,7 @@ namespace MW5.Api
             get { return _map.get_ErrorMsg(_map.LastErrorCode); }
         }
 
+        // TODO: fix it
         public new string Tag
         {
             get

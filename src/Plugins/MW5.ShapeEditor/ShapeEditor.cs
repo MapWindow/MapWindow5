@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
@@ -29,15 +30,12 @@ namespace MW5.Plugins.ShapeEditor
         {
             _context = context;
             MenuHelper.InitMenu(context);
-
-            // TODO: remove; temporary
-            context.Map.ExtentsChanged += Map_ExtentsChanged;
+            //context.Map.ExtentsChanged += Map_ExtentsChanged;
         }
 
         public void Terminate()
         {
-            // TODO: remove; temporary
-            _context.Map.ExtentsChanged -= Map_ExtentsChanged;
+            //_context.Map.ExtentsChanged -= Map_ExtentsChanged;
         }
 
         private void Map_ExtentsChanged(object sender, EventArgs e)

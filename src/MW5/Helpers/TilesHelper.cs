@@ -16,9 +16,9 @@ namespace MW5.Helpers
             SetBingApiKey = -2,
         }
 
-        private static IMapControl _map;
+        private static IMap _map;
 
-        public static void Init(IMapControl map, IDropDownMenuItem root)
+        public static void Init(IMap map, IDropDownMenuItem root)
         {
             _map = map;
             
