@@ -17,10 +17,10 @@ namespace MW5.Presenters
     public class SetProjectionPresenter : BasePresenter<ISetProjectionView>
     {
         private readonly ISetProjectionView _view;
-        private readonly IMap _map;
+        private readonly IMuteMap _map;
         private readonly IMessageService _messageService;
 
-        public SetProjectionPresenter(ISetProjectionView view, IMap map, IMessageService messageService)
+        public SetProjectionPresenter(ISetProjectionView view, IMuteMap map, IMessageService messageService)
             : base(view)
         {
             _view = view;

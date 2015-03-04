@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Services;
@@ -22,21 +23,35 @@ namespace MW5.Plugins
         private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _allPlugins;     // found by MEF
 
         private readonly HashSet<string> _names = new HashSet<string>();
-
         //private Dictionary<string, Lazy<IPlugin, IPluginMetadata>> _plugins;     // currently active
 
-        #region Properties
+        private readonly PluginBroadcaster _broadcaster;
 
-        public List<Lazy<IPlugin, IPluginMetadata>> Plugins
+        public PluginManager()
+        {
+            _broadcaster = new PluginBroadcaster(this);
+        }
+
+        public IEnumerable<BasePlugin> Plugins
         {
             get
             {
-                return _allPlugins.Where(p => _names.Contains(p.Metadata.Name)).ToList();
+                var list = _allPlugins.Where(p => _names.Contains(p.Metadata.Name))
+                            .Select(p => p.Value)
+                            .OfType<BasePlugin>()
+                            .ToList();
+                return list;
             }
         }
 
-        #endregion
+        public PluginBroadcaster Broadcaster
+        {
+            get { return _broadcaster; }
+        }
 
+        /// <summary>
+        /// Searches plugins in plugins folder with MEF.
+        /// </summary>
         public void AssemblePlugins()
         {
             try
@@ -106,6 +121,7 @@ namespace MW5.Plugins
             }
         }
 
+        // TODO: remove all items that plugin has added during unloading
         public void UnloadPlugin(string pluginName)
         {
             var plugin = _allPlugins.FirstOrDefault(p => p.Metadata.Name == pluginName);

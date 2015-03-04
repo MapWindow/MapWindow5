@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Concrete\BasePlugin.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
     <Compile Include="Concrete\MenuIcon.cs" />
     <Compile Include="Interfaces\IMainForm.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Interfaces\IDropDownMenuItem.cs" />
     <Compile Include="Interfaces\IToolbar.cs" />
     <Compile Include="Interfaces\IToolbarCollection.cs" />
+    <Compile Include="PluginBroadcaster.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

@@ -14,6 +14,6 @@ namespace MW5.Plugins.Interfaces
     {
         object MenuManager { get;}
         IMap Map { get; }
-        ILegend Legend { get; }
+        IMuteLegend Legend { get; }
     }
 }

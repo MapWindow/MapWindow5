@@ -7,8 +7,8 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IAppContext
     {
-        IMap Map { get; }
-        ILegend Legend { get; }
+        IMuteMap Map { get; }
+        IMuteLegend Legend { get; }
         IWin32Window MainWindow { get; }
         IMenu Menu { get; }
         IToolbarCollection Toolbars { get; }

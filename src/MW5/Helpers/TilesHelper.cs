@@ -11,20 +11,22 @@ namespace MW5.Helpers
     // I leave it static, there is no need to inject it anywhere
     internal static class TilesHelper
     {
+        private const string NO_TILES_MENU_ITEM_CAPTION = "No tiles";
+
         private enum Commands
         {
             SetBingApiKey = -2,
         }
 
-        private static IMap _map;
+        private static IMuteMap _map;
 
-        public static void Init(IMap map, IDropDownMenuItem root)
+        public static void Init(IMuteMap map, IDropDownMenuItem root)
         {
             _map = map;
             
             root.SubItems.Clear();
 
-            var item = root.SubItems.AddButton("No tiles");
+            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION);
             item.Tag = -1;
             item.Click += item_Click;
             

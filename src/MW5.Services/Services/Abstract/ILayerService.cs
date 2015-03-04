@@ -2,7 +2,8 @@
 {
     public interface ILayerService
     {
-        void AddLayer(LayerType layerType);
+        bool AddLayer(LayerType layerType);
         bool RemoveSelectedLayer();
+        bool AddLayersFromFilename(string filename);
     }
 }

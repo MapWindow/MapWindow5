@@ -1,145 +1,132 @@
-using System;
-using System.Drawing;
-using MW5.Api.Interfaces;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using MW5.Api.Legend.Events;
 
 namespace MW5.Api.Legend.Abstract
 {
-    public interface ILegend
+    public interface ILegend : IMuteLegend
     {
         /// <summary>
-        /// Gets or Sets the MapWinGIS.Map associated with this legend control
-        /// Note: This property must be set before manipulating layers
+        /// The layer properties changed.
         /// </summary>
-        IMap Map { set; }
+        event EventHandler<LayerEventArgs> LayerPropertiesChanged;
 
         /// <summary>
-        /// Gets the Menu for manipulating Groups
+        /// Layer Double Click Event
         /// </summary>
-        ILegendGroups Groups { get; }
+        event EventHandler<LayerEventArgs> LayerDoubleClick;
 
         /// <summary>
-        /// Gets the Menu for manipulating Layers (without respect to groups)
+        /// Layer Mouse Down Click Event
         /// </summary>
-        LegendLayerCollection Layers { get; }
+        event EventHandler<LayerMouseEventArgs> LayerMouseDown;
 
         /// <summary>
-        /// Toggles the label preview visiblity in the legend
+        /// Layer Mouse Up Event
         /// </summary>
-        bool ShowLabels { get; set; }
+        event EventHandler<LayerMouseEventArgs> LayerMouseUp;
 
         /// <summary>
-        /// Gets or Sets the background color of the selected layer within the legend
+        /// Group Double Click Event
         /// </summary>
-        bool ShowGroupIcons { get; set; }
+        event EventHandler<GroupEventArgs> GroupDoubleClick;
 
         /// <summary>
-        /// Gets or Sets the background color of the selected layer within the legend
+        /// Group Mouse Down Event
         /// </summary>
-        Color SelectionColor { get; set; }
-
-        // TODO: perhaps return object
-        /// <summary>
-        /// Gets or Sets the Selected layer within the legend
-        /// </summary>
-        int SelectedLayer { get; set; }
+        event EventHandler<GroupMouseEventArgs> GroupMouseDown;
 
         /// <summary>
-        /// Gets whether or not the legend is locked.  See Lock() function for description
+        /// Group Mouse Up Event
         /// </summary>
-        bool Locked { get; }
+        event EventHandler<GroupMouseEventArgs> GroupMouseUp;
 
         /// <summary>
-        /// Locks the LegendControl, stopping it from redrawing until it is unlocked.
-        /// Use this as a way of adding multiple layers without redrawing between each layer being added.
-        /// Make sure to Unlock the LegendControl when done.
+        /// LegendControl was clicked event (not on Group, nor on Layer)
         /// </summary>
-        void Lock();
+        event EventHandler<LegendClickEventArgs> LegendClick;
 
         /// <summary>
-        /// Unlocks the legend.  See Lock() function for description
+        /// Selected Layer changed event
         /// </summary>
-        void Unlock();
+        event EventHandler<LayerEventArgs> LayerSelected;
 
         /// <summary>
-        /// Locates the group that was clicked on in the legend, based on the coordinate within the legend (0,0) being top left of legend)
+        /// Added Layer event
         /// </summary>
-        /// <param name="point"> The point inside of the legend that was clicked. </param>
-        /// <param name="inCheckbox"> (by reference/out) Indicates whether a group visibilty check box was clicked. </param>
-        /// <param name="inExpandbox"> (by reference/out) Indicates whether the expand box next to a group was clicked. </param>
-        /// <returns> Returns the group that was clicked on or null/nothing. </returns>
-        LegendGroup FindClickedGroup(Point point, out bool inCheckbox, out bool inExpandbox);
+        event EventHandler<LayerEventArgs> LayerAdded;
 
         /// <summary>
-        /// Locates the layer that was clicked on in the legend.
+        /// Removed Layer event
         /// </summary>
-        /// <param name="point"> The point. </param>
-        /// <param name="element"> The Element. </param>
-        /// <returns> The group that was clicked on or null/nothing. </returns>
-        LegendLayer FindClickedLayer(Point point, ref ClickedElement element);
+        event EventHandler<LayerEventArgs> LayerRemoved;
 
         /// <summary>
-        /// Runs redraw of the legend if it's not locked and optionally redraw of the map.
+        /// Position of a layer has changed event
         /// </summary>
-        void Redraw(LegendRedraw redrawType = LegendRedraw.LegendOnly);
+        event EventHandler<PositionChangedEventArgs> LayerPositionChanged;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend
+        /// Position of a group has changed event
         /// </summary>
-        /// <returns>Bitmap if successful, null (nothing) otherwise</returns>
-        Bitmap Snapshot();
+        event EventHandler<PositionChangedEventArgs> GroupPositionChanged;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend
+        /// A Group has been added
         /// </summary>
-        /// <param name="imgWidth"> Width in pixels of the desired Snapshot </param>
-        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
-        Bitmap Snapshot(int imgWidth);
+        event EventHandler<GroupEventArgs> GroupAdded;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend
+        /// A Group has been removed
         /// </summary>
-        /// <param name="visibleLayersOnly">
-        /// Only visible layers used in Snapshot?
-        /// </param>
-        /// <returns>
-        /// Bitmap if successful, null (nothing) otherwise
-        /// </returns>
-        Bitmap Snapshot(bool visibleLayersOnly);
+        event EventHandler<GroupEventArgs> GroupRemoved;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend with specified font.
+        /// The visibility of a layer has changed event
         /// </summary>
-        /// <param name="visibleLayersOnly">  Only visible layers used in Snapshot? </param>
-        /// <param name="useFont"> Which font to use for legend text? </param>
-        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
-        Bitmap Snapshot(bool visibleLayersOnly, Font useFont);
+        event EventHandler<LayerCancelEventArgs> LayerVisibleChanged;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend with specified font and width.
+        /// Fires when the Group checkbox is clicked
         /// </summary>
-        /// <param name="visibleLayersOnly">  Only visible layers used in Snapshot? </param>
-        /// <param name="imgWidth">  Width of the image. </param>
-        /// <param name="useFont">  Which font to use for legend text? </param>
-        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
-        Bitmap Snapshot(bool visibleLayersOnly, int imgWidth, Font useFont);
+        event EventHandler<GroupEventArgs> GroupCheckboxClicked;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend with specified font and width.
+        /// Fires when the Expanded property of a group changes.
         /// </summary>
-        /// <param name="visibleLayersOnly">  Only visible layers used in Snapshot? </param>
-        /// <param name="imgWidth"> Width of the image. </param>
-        /// <param name="useFont"> Which font to use for legend text? </param>
-        /// <param name="foreColor"> The fore Color. </param>
-        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
-        Bitmap Snapshot(bool visibleLayersOnly, int imgWidth, Font useFont, Color foreColor);
+        event EventHandler<GroupEventArgs> GroupExpandedChanged;
 
         /// <summary>
-        /// Gets a snapshot of all layers within the legend
+        /// Fires when the layer checkbox is clicked
         /// </summary>
-        /// <param name="visibleLayersOnly"> Only visible layers used in Snapshot? </param>
-        /// <param name="imgWidth"> Width in pixels of the desired Snapshot </param>
-        /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
-        Bitmap Snapshot(bool visibleLayersOnly, int imgWidth);
+        event EventHandler<LayerEventArgs> LayerCheckboxClicked;
+
+        /// <summary>
+        /// Fires when layer colorbox is clicked
+        /// </summary>
+        event EventHandler<LayerEventArgs> LayerColorboxClicked;
+
+        /// <summary>
+        /// Fires when one of the shapefile categories is clicked
+        /// </summary>
+        event EventHandler<LayerCategoryEventArgs> LayerCategoryClicked;
+
+        /// <summary>
+        /// Fires when charts icon is clicked
+        /// </summary>
+        event EventHandler<LayerMouseEventArgs> LayerChartClicked;
+
+        /// <summary>
+        /// Fires when one of chart fields is clicked
+        /// </summary>
+        event EventHandler<ChartFieldClickedEventArgs> LayerChartFieldClicked;
+
+        /// <summary>
+        /// Fired when labels icon for the layer is clicked
+        /// </summary>
+        event EventHandler<LayerEventArgs> LayerLabelsClicked;
     }
 }

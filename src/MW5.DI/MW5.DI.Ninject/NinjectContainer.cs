@@ -63,5 +63,10 @@ namespace MW5.DI.Ninject
             var presenter = _kernel.Get<TPresenter>();
             presenter.Run();
         }
+
+        public TService Resolve<TService>() where TService : class
+        {
+            return _kernel.Get<TService>();
+        }
     }
 }

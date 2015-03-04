@@ -4,18 +4,23 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
+using MW5.Services.Abstract;
 using MW5.UI;
 
 namespace MW5
 {
+    // Lifetime should be singleton
     public class AppContext: IAppContext
     {
         private IMap _map;
         private IWin32Window _mainForm;
         private IMenu _menu;
         private IToolbarCollection _toolbars;
-        private ILegend _legend;
+        private IMuteLegend _legend;
+        private readonly PluginManager _manager = new PluginManager();
+        private MapListener _mapListener;
 
         public void Init(IMainForm form)
         {
@@ -27,7 +32,9 @@ namespace MW5
             _mainForm = form as IWin32Window;
             
             _map = form.Map;
-            CompositionRoot.Container.RegisterInstance(typeof(IMap), _map);  // it's a bit ugly; got ideas how to do it better? 
+            _map.Initialize();
+
+            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), _map);  // it's a bit ugly; got ideas how to do it better? 
 
             _legend = form.Legend;
 
@@ -36,15 +43,19 @@ namespace MW5
 
             // TODO: convert to services
             TilesHelper.Init(_map, Menu.Tiles);
-            PluginHelper.InitPlugins(this);
+            PluginHelper.InitPlugins(this, _manager);
+
+            // TODO: temporary only, use injection            
+            var layerService = CompositionRoot.Container.Resolve<ILayerService>();
+            _mapListener = new MapListener(_map, this, _manager.Broadcaster, layerService);
         }
 
-        public IMap Map
+        public IMuteMap Map
         {
             get { return _map; }
         }
 
-        public ILegend Legend
+        public IMuteLegend Legend
         {
             get { return _legend; }
         }

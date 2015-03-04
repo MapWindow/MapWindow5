@@ -228,7 +228,7 @@ namespace MW5.Api
             var handler = d;
             if (handler != null)
             {
-                handler.Invoke(sender, args);
+                handler.Invoke(this, args);
             }
         }
     }

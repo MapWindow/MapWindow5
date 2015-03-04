@@ -12,8 +12,10 @@ namespace MW5.Plugins.ShapeEditor
     {
         public static void InitMenu(IAppContext context)
         {
-            var items = context.Menu.Items;
-            items.AddDropDown("Shape Editor");
+            //var items = context.Menu.Items;
+            //items.AddDropDown("Shape Editor");
+
+            context.Toolbars.Add("Shape Editor");
         }
     }
 }

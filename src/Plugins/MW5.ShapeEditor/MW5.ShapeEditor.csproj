@@ -59,6 +59,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapListener.cs" />
     <Compile Include="MenuHelper.cs" />
     <Compile Include="ShapeEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

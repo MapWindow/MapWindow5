@@ -22,7 +22,7 @@ namespace MW5.Api.Legend
     /// Legend control for MapWinGIS.
     /// </summary>
     [ToolboxBitmap(typeof(MapControl), "Resources.MapWinLegend.ico")]       // TODO: test it
-    public class LegendControl : UserControl, ILegendWithEvents
+    public class LegendControl : UserControl, ILegend
     {
         private const string CHARTS_CAPTION = "Charts";
 
@@ -46,7 +46,7 @@ namespace MW5.Api.Legend
         private readonly DragInfo _dragInfo = new DragInfo();
         private readonly ToolTip _toolTip = new ToolTip();
 
-        private IMap _mapControl; 
+        private IMuteMap _mapControl; 
         private AxMap _map;
         
         protected ImageList Icons;
@@ -76,7 +76,7 @@ namespace MW5.Api.Legend
         /// Gets or Sets the MapWinGIS.Map associated with this legend control
         /// Note: This property must be set before manipulating layers
         /// </summary>
-        public IMap Map
+        public IMuteMap Map
         {
             get
             {

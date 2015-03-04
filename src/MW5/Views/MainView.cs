@@ -85,7 +85,7 @@ namespace MW5.Views
             get { return _mapControlControl1; }
         }
 
-        public ILegend Legend
+        public IMuteLegend Legend
         {
             get { return _legendControl1; }
         }

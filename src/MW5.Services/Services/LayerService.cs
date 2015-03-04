@@ -40,28 +40,46 @@ namespace MW5.Services
             return false;
         }
 
-        public void AddLayer(LayerType layerType)
+        public bool AddLayer(LayerType layerType)
         {
             string[] filenames;
             if (!_fileDialogService.OpenFiles(layerType, _context.MainWindow, out filenames))
             {
-                return;
+                return false;
             }
 
             _context.Map.LockWindow(true);
 
+            bool result = false;
             foreach (var name in filenames)
             {
-                AddLayersFromFilename(name);
+                if (AddLayersFromFilename(name))
+                {
+                    result = true;      // currently at least one should be success to return success
+                }
             }
 
-            _context.Map.ZoomToMaxExtents();
             _context.Map.LockWindow(false);
 
             _context.Legend.Redraw();
+
+            return result;
         }
 
-        private void AddLayersFromFilename(string filename)
+        public bool AddLayersFromFilename(string filename)
+        {
+            _context.Map.LockWindow(true);
+
+            bool result = AddLayersFromFilenameCore(filename);
+
+            _context.Map.LockWindow(false);
+
+            _context.Legend.Redraw();
+
+            return result;
+        }
+
+        private bool AddLayersFromFilenameCore(string filename)
         {
             try
             {
@@ -70,17 +88,25 @@ namespace MW5.Services
                 if (ds == null)
                 {
                     _messageService.Warn(string.Format("Failed to open datasource: {0} \n {1}", filename, GeoSourceManager.LastError));
-                    return;
+                    return false;
                 }
 
+                int addedCount = 0;
                 foreach (var layer in LayerSourceHelper.GetLayers(ds))
                 {
-                    _context.Map.Layers.Add(layer);
+                    int layerHandle = _context.Map.Layers.Add(layer);
+                    if (layerHandle != -1)
+                    {
+                        addedCount++;
+                    }
                 }
+
+                return addedCount > 0;  // currently at least one should be success to return success
             }
             catch (Exception ex)
             {
                 _messageService.Warn(string.Format("There was a problem opening layer: {0}. \n Details: {1}", filename, ex.Message));
+                return false;
             }
         }
     }

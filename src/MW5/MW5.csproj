@@ -85,6 +85,8 @@
     <Compile Include="Helpers\CommandBarHelper.cs" />
     <Compile Include="Helpers\DockingHelper.cs" />
     <Compile Include="Helpers\EventHelper.cs" />
+    <Compile Include="Helpers\MapInitializer.cs" />
+    <Compile Include="Helpers\MapListener.cs" />
     <Compile Include="Helpers\TilesHelper.cs" />
     <Compile Include="Helpers\PluginHelper.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />

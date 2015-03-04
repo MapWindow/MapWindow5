@@ -12,7 +12,7 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControl _legend;
 
-        internal LegendLayerCollection(AxMap axMap, ILegend legend)
+        internal LegendLayerCollection(AxMap axMap, IMuteLegend legend)
             : base(axMap)
         {
             _legend = legend as LegendControl;

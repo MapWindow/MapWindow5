@@ -1,46 +1,47 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 
 namespace MW5.Plugins.ShapeEditor
 {
     [PluginExport("MW5.Plugins.ShapeEditor")]
-    public class ShapeEditor: IPlugin
+    public class ShapeEditor: BasePlugin
     {
         private IAppContext _context;
-        
-        public string Author
+        private MapListener _mapListener;
+
+        public ShapeEditor()
+        {
+            _mapListener = new MapListener(this);
+        }
+
+        public override string Author
         {
             get { return "Sergei Leschinski"; }
         }
 
-        public string Description
+        public override string Description
         {
             get { return "Provides tools for editing shapefiles and other vector formats."; }
         }
 
-        public string Name
+        public override string Name
         {
             get { return "Shape Editor"; }
         }
 
-        public void Initialize(IAppContext context)
+        public override void Initialize(IAppContext context)
         {
             _context = context;
             MenuHelper.InitMenu(context);
-            //context.Map.ExtentsChanged += Map_ExtentsChanged;
         }
-
-        public void Terminate()
+        public override void Terminate()
         {
             //_context.Map.ExtentsChanged -= Map_ExtentsChanged;
-        }
-
-        private void Map_ExtentsChanged(object sender, EventArgs e)
-        {
-            ///MessageBox.Show("Shape editor extents changed: " + _context.Map.Extents);
         }
     }
 }

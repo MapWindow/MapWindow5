@@ -23,6 +23,8 @@ namespace MW5.Mvp.DI
 
         void Run<TPresenter>() where TPresenter : class, IPresenter;
 
+        TService Resolve<TService>() where TService : class;
+
         //void Run<TPresenter, TModel>(TModel model)
         //    where TPresenter : class, IPresenter<TModel>
         //    where TModel : class;

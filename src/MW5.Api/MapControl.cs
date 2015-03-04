@@ -17,13 +17,18 @@ namespace MW5.Api
     // https ://social.msdn.microsoft.com/Forums/en-US/4bd5a9cd-4730-41f6-a123-cb49b9ea420b/toolboxbitmap-problem?forum=Vsexpressvcs
 
     [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
-    public partial class MapControl : UserControl, IMapWithEvents
+    public partial class MapControl : UserControl, IMap
     {
         private LegendLayerCollection _layers;
 
         public MapControl()
         {
             InitializeComponent();
+            
+            _map.SendSelectBoxFinal = true;
+            _map.SendMouseDown = true;
+            _map.SendMouseUp = true;
+
             AttachHandlers();
         }
 
@@ -111,7 +116,7 @@ namespace MW5.Api
 
         #endregion
 
-        #region IMap Members
+        #region IMuteMap Members
 
         public HistoryList UndoList
         {
@@ -308,7 +313,7 @@ namespace MW5.Api
         }
 
         [Browsable(false)]
-        public ILegend Legend { get; set; }
+        public IMuteLegend Legend { get; set; }
 
         [Browsable(false)]
         public ILayerCollection<ILayer> Layers
@@ -321,7 +326,7 @@ namespace MW5.Api
 
         // TODO: return interface
         [Browsable(false)]
-        ILayerCollection<ILegendLayer> IMap.Layers
+        ILayerCollection<ILegendLayer> IMuteMap.Layers
         {
             get
             {

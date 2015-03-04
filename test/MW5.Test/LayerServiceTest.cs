@@ -40,7 +40,7 @@ namespace MW5.Test
         {
             _layerColection = new Mock<ILayerCollection<ILegendLayer>>();
             
-            var map = new Mock<IMap>();
+            var map = new Mock<IMuteMap>();
             map.SetupGet(m => m.Layers).Returns(_layerColection.Object);
 
             _context = new Mock<IAppContext>();

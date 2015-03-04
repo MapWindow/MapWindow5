@@ -63,5 +63,10 @@ namespace MW5.DI.Unity
             var p = _container.Resolve<TPresenter>();
             p.Run();
         }
+
+        public TService Resolve<TService>() where TService : class
+        {
+            return _container.Resolve<TService>();
+        }
     }
 }

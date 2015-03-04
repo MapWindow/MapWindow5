@@ -60,5 +60,10 @@ namespace MW5.DI.Castle
             var presenter = _container.Resolve<TPresenter>();
             presenter.Run();
         }
+
+        public TService Resolve<TService>() where TService : class
+        {
+            return _container.Resolve<TService>();
+        }
     }
 }
