@@ -45,7 +45,7 @@ namespace MW5.Plugins
                 var fieldInfo = GetEventField(eventName);
                 if (fieldInfo != null)
                 {
-                    foreach (var p in _manager.Plugins)
+                    foreach (var p in _manager.ActivePlugins)
                     {
                         var del = fieldInfo.GetValue(p) as MulticastDelegate;
                         if (del != null)

@@ -5,6 +5,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,33 +21,70 @@ namespace MW5.Plugins
         private const string PLUGIN_DIRECTORY = "Plugins";
 
         [ImportMany] 
-        private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _allPlugins;     // found by MEF
+        private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _mefPlugins;     // found by MEF
 
-        private readonly HashSet<string> _names = new HashSet<string>();
-        //private Dictionary<string, Lazy<IPlugin, IPluginMetadata>> _plugins;     // currently active
+        private List<BasePlugin> _plugins = new List<BasePlugin>();      // all valid plugins
+
+        private readonly HashSet<PluginIdentity> _active = new HashSet<PluginIdentity>();
 
         private readonly PluginBroadcaster _broadcaster;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PluginManager"/> class.
+        /// </summary>
         public PluginManager()
         {
             _broadcaster = new PluginBroadcaster(this);
         }
 
-        public IEnumerable<BasePlugin> Plugins
+        /// <summary>
+        /// Gets list of all plugins both active and not.
+        /// </summary>
+        public IEnumerable<BasePlugin> AllPlugins
+        {
+            get { return _plugins; }
+        }
+
+        /// <summary>
+        /// Gets list of only active plugins.
+        /// </summary>
+        public IEnumerable<BasePlugin> ActivePlugins
         {
             get
             {
-                var list = _allPlugins.Where(p => _names.Contains(p.Metadata.Name))
-                            .Select(p => p.Value)
-                            .OfType<BasePlugin>()
-                            .ToList();
-                return list;
+                // TODO: cache it each time the list of plugins changes to spare the time on search for each event
+                return _plugins.Where(p => _active.Contains(p.Identity)).ToList();
             }
         }
 
+        /// <summary>
+        /// Gets plugin broadcaster object.
+        /// </summary>
         public PluginBroadcaster Broadcaster
         {
             get { return _broadcaster; }
+        }
+
+        /// <summary>
+        /// Validates the list of plugins loaded by MEF.
+        /// </summary>
+        public void ValidatePlugins()
+        {
+            _plugins.Clear();
+            
+            foreach (var item in _mefPlugins)
+            {
+                var p = item.Value as BasePlugin;
+                if (p == null)
+                {
+                    Debug.Print("Invalid plugin type: plugin must inherit from BasePlugin type.");
+                    continue;
+                }
+
+                p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
+
+                _plugins.Add(p);
+            }
         }
 
         /// <summary>
@@ -64,6 +102,7 @@ namespace MW5.Plugins
 
                 container.ComposeParts(this);
 
+                ValidatePlugins();
             }
             catch (ReflectionTypeLoadException ex)
             {
@@ -71,6 +110,9 @@ namespace MW5.Plugins
             }
         }
 
+        /// <summary>
+        /// Gets the plugin catalog, i.e. directory to look for plugins and filename mask.
+        /// </summary>
         private DirectoryCatalog GetPluginCatalog()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
@@ -80,62 +122,69 @@ namespace MW5.Plugins
             return new DirectoryCatalog(path, "*.dll");
         }
 
-        // TODO: remove; only temporary
-        public void Initialize(IAppContext context)
+        /// <summary>
+        /// Loads a single plugin.
+        /// </summary>
+        /// <param name="identity">Plugin identity.</param>
+        /// <param name="context">Application context.</param>
+        public void LoadPlugin(PluginIdentity identity, IAppContext context)
         {
-            _names.Clear();
-
-            foreach (var plugin in _allPlugins)
+            if (_active.Contains(identity))
             {
-                plugin.Value.Initialize(context);
-                _names.Add(plugin.Metadata.Name);
+                return;     // it's already loaded
             }
-        }
 
-        public void Initialize(IEnumerable<string> activePlugins, IAppContext context)
-        {
-            _names.Clear();
-            
-            var dict = activePlugins.ToDictionary(item => item, item => item);
-            foreach (var plugin in _allPlugins)
+            var plugin = _plugins.FirstOrDefault(p => p.Identity == identity);
+            if (plugin == null)
             {
-                if (dict.ContainsKey(plugin.Metadata.Name))
-                {
-                    plugin.Value.Initialize(context);
-                    _names.Add(plugin.Metadata.Name);
-                }
+                throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
             }
+
+            plugin.Initialize(context);
+            _active.Add(identity);
         }
 
-        public void LoadPlugin(string pluginName, IAppContext context)
+        /// <summary>
+        /// Unloads single plugin and removes associated menus & toolbars
+        /// </summary>
+        /// <param name="identity">Plugin identity.</param>
+        /// <param name="context">Application context.</param>
+        /// <exception cref="System.ApplicationException">Plugin which requested for unloading isn't present in the list.</exception>
+        public void UnloadPlugin(PluginIdentity identity, IAppContext context)
         {
-            if (!_names.Contains(pluginName))
+            var plugin = _plugins.FirstOrDefault(p => p.Identity == identity);
+            if (plugin == null)
             {
-                var plugin = _allPlugins.FirstOrDefault(p => p.Metadata.Name == pluginName);
-                if (plugin != null)
-                {
-                    plugin.Value.Initialize(context);
-                }
-
-                _names.Add(pluginName);
+                throw new ApplicationException("Plugin which requested for unloading isn't present in the list.");
             }
+
+            plugin.Terminate();
+            _active.Remove(identity);
+
+            context.RemovePluginMenus(identity);
         }
 
-        // TODO: remove all items that plugin has added during unloading
-        public void UnloadPlugin(string pluginName)
+        public bool PluginActive(PluginIdentity identity)
         {
-            var plugin = _allPlugins.FirstOrDefault(p => p.Metadata.Name == pluginName);
-            if (plugin != null)
-            {
-                plugin.Value.Terminate();
-            }
-            _names.Remove(pluginName);
+            return _active.Contains(identity);
         }
 
-        public bool PluginActive(string pluginName)
-        {
-            return _names.Contains(pluginName);
-        }
+        #region From prototype
+
+        //public void Initialize(IAppContext context)
+        //{
+            // TODO: fix it
+            // skip initialization on startup for now
+            //return;
+
+            //_names.Clear();
+
+            //foreach (var plugin in _mefPlugins)
+            //{
+            //    plugin.Value.Initialize(context);
+            //    _names.Add(plugin.Metadata.Name);
+            //}
+        //}
 
         //public List<string> AvailablePlugins()
         //{
@@ -233,5 +282,7 @@ namespace MW5.Plugins
         //        }
         //    }
         //}
+
+        #endregion
     }
 }

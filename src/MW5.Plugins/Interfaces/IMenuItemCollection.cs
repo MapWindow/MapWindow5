@@ -10,9 +10,11 @@ namespace MW5.Plugins.Interfaces
     {
         IMenuItem AddButton(string text);
         IMenuItem AddButton(string text, string name);
+        IMenuItem this[int menuItemIndex] { get; }
         IDropDownMenuItem AddDropDown(string text);
         void Insert(IMenuItem item, int index);
         void Remove(int index);
         void Clear();
+
     }
 }

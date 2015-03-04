@@ -16,14 +16,12 @@ namespace MW5.Plugins.ShapeEditor.Menu
     {
         private const string PLUGIN_TOOLBAR_NAME = "Shape Editor";
 
-        public ShapeEditorMenu(IAppContext context): base(context)
+        public ShapeEditorMenu(IAppContext context, BasePlugin plugin): base(context)
         {
-            
-            AddToolbar(PLUGIN_TOOLBAR_NAME);
+            AddToolbar(PLUGIN_TOOLBAR_NAME, plugin);
 
-            // adding menus
-            var items = context.Menu.Items;
-            items.AddDropDown(PLUGIN_TOOLBAR_NAME);
+            // TODO: provide way to add submenus
+            AddMenu(PLUGIN_TOOLBAR_NAME, plugin);
         }
 
         public override IEnumerable<MenuItemData<ShapeEditorCommand>> GetMenuItems(string toolBarName, 
@@ -43,7 +41,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
             switch (command)
             {
                 case ShapeEditorCommand.LayerEdit:
-                    MessageBox.Show("Layer edit clicked");
+                    MessageBox.Show("Layer edit clicked");      // TODO: remove (for testing only)
                     break;
                 case ShapeEditorCommand.LayerSave:
                     break;
@@ -56,7 +54,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
         protected override void CommandNotFound(string itemName)
         {
-            Debug.Print("Command for item not found: " + itemName);
+            MessageBox.Show("Command for item not found: " + itemName);
         }
     }
 }

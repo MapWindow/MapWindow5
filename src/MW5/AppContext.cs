@@ -41,9 +41,11 @@ namespace MW5
             _menu = UI.Menu.CreateInstance(form.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
 
-            // TODO: convert to services
+            // TODO: convert to service
             TilesHelper.Init(_map, Menu.Tiles);
-            PluginHelper.InitPlugins(this, _manager);
+
+            _manager.AssemblePlugins();
+            PluginMenuHelper.InitPlugins(this, _manager);
 
             // TODO: temporary only, use injection            
             var layerService = CompositionRoot.Container.Resolve<ILayerService>();

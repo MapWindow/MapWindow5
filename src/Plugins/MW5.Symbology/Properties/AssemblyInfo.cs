@@ -5,16 +5,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MW5.Plugins")]
+[assembly: AssemblyTitle("SymbologyPlugin")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MW5.Plugins")]
+[assembly: AssemblyProduct("SymbologyPlugin")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly:InternalsVisibleTo("MapWindow")]
-[assembly: InternalsVisibleTo("MW5.Mvp")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -22,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("7d9b5eb9-d89e-4d56-a2a6-2317af6ba02e")]
+[assembly: Guid("4511b339-e291-42f9-b054-644e84a8cc27")]
 
 // Version information for an assembly consists of the following four values:
 //

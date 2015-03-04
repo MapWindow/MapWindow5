@@ -38,7 +38,7 @@ namespace MW5.UI
             return GetEnumerator();
         }
 
-        public MenuItem this[int index]
+        public IMenuItem this[int index]
         {
             get
             {

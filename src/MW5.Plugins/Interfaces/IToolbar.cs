@@ -11,5 +11,7 @@ namespace MW5.Plugins.Interfaces
     {
         string Name { get; set; }
         IMenuItemCollection Items { get; }
+        bool Visible { get; set; }
+        object Tag { get; set; }
     }
 }

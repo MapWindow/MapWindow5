@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 
@@ -83,7 +84,7 @@ namespace MW5.Mvp
 
             foreach (var item in items)
             {
-                if (item.Tag != null)
+                if (item.Tag != null && item.Tag.GetType() != typeof(PluginIdentity))
                 {
                     continue;       // those items are handled by somebody else
                 }

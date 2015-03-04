@@ -80,6 +80,7 @@
     <ProjectReference Include="..\..\MW5.Mvp\MW5.Mvp.csproj">
       <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>
       <Name>MW5.Mvp</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
@@ -89,6 +90,7 @@
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
       <Project>{784a24f2-9a57-46ee-8945-d87869595216}</Project>
       <Name>MW5.UI</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

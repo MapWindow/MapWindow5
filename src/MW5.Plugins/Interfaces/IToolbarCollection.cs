@@ -14,5 +14,9 @@ namespace MW5.Plugins.Interfaces
         /// <param name="name">The name o the toolbar</param>
         /// <returns>True on success.</returns>
         IToolbar Add(string name);
+        
+        void Remove(int toolbarIndex);
+
+        IToolbar this[int toolbarIndex] { get; }
     }
 }

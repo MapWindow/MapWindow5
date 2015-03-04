@@ -88,7 +88,7 @@
     <Compile Include="Helpers\MapInitializer.cs" />
     <Compile Include="Helpers\MapListener.cs" />
     <Compile Include="Helpers\TilesHelper.cs" />
-    <Compile Include="Helpers\PluginHelper.cs" />
+    <Compile Include="Helpers\PluginMenuHelper.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SetProjectionPresenter.cs" />
     <Compile Include="Program.cs" />

@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI
 {
     public class Menu: IMenu
     {
+        private const string PLUGIN_MENU_ITEM = "plugins";
+        private const string TILES_MENU_ITEM = "tiles";
+
         private MainFrameBarManager _menuManager;
 
         public static IMenu CreateInstance(object menuManager)
@@ -54,12 +58,28 @@ namespace MW5.UI
             }
         }
 
+        private CommandBar CommandBar
+        {
+            get { return _menuManager.GetBarControl(_menuManager.MainMenuBar); }
+        }
+
+        public bool Visible
+        {
+            get { return CommandBar.Visible; }
+            set { CommandBar.Visible = true; }
+        }
+
+        public object Tag
+        {
+            get { return CommandBar.Tag; }
+            set { CommandBar.Tag = value; }
+        }
+
         public IDropDownMenuItem Plugins
         {
             get
             {
-                // TODO: make constant
-                var item = _menuManager.MainMenuBar.Items.FindItem("plugins") as ParentBarItem; 
+                var item = _menuManager.MainMenuBar.Items.FindItem(PLUGIN_MENU_ITEM) as ParentBarItem; 
                 return new DropDownMenuItem(item);
             }
         }
@@ -68,8 +88,7 @@ namespace MW5.UI
         {
             get
             {
-                // TODO: make constant
-                var item = _menuManager.MainMenuBar.Items.FindItem("tiles") as ParentBarItem;
+                var item = _menuManager.MainMenuBar.Items.FindItem(TILES_MENU_ITEM) as ParentBarItem;
                 return new DropDownMenuItem(item);
             }
         }

@@ -12,11 +12,33 @@ namespace MW5.Plugins.Concrete
 {
     public abstract class BasePlugin: IPlugin
     {
-        public abstract string Author { get; }
+        private PluginIdentity _identity = null;
+
         public abstract string Description { get; }
-        public abstract string Name { get; }
         public abstract void Initialize(IAppContext context);
         public abstract void Terminate();
+
+        internal PluginIdentity Identity
+        {
+            get
+            {
+                if (_identity == null)
+                {
+                    throw new ApplicationException("Can't access plugin identity before it was initialized");
+                }
+                return _identity;
+            }
+            set
+            {
+                if (_identity != null)
+                {
+                    throw new ApplicationException("Plugin identity may be set only once.");
+                }
+                _identity = value;
+            }
+        }
+
+        #region Backing fields for events (shold be used to attach handlers externally)
 
         internal MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit_;
         internal MapEventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit_;
@@ -26,6 +48,10 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<EventArgs> UndoListChanged_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
+
+        #endregion
+
+        #region Events
 
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
         {
@@ -98,6 +124,6 @@ namespace MW5.Plugins.Concrete
             add { ValidateShape_ += value; }
             remove { ValidateShape_ -= value; }
         }
-
+        #endregion
     }
 }

@@ -21,20 +21,34 @@ namespace MW5.Mvp.Menu
             _context = context;
         }
 
-        public void AddToolbar(string toolBarName)
+        public void AddToolbar(string toolBarName, BasePlugin plugin)
         {
+            if (plugin == null)
+            {
+                throw new NullReferenceException("Plugin reference must not be null.");
+            }
+            
             var toolbar = _context.Toolbars.Add(toolBarName);
+            toolbar.Tag = plugin.Identity;
             var items = GetMenuItems(toolBarName, Create);
             
             foreach (var item in items)
             {
                 var btn = toolbar.Items.AddButton(item.Text, "tool" + item.Command);
                 btn.Picture = new MenuIcon(item.Icon);
+                btn.Tag = plugin.Identity;
             }
 
             _toolbars.Clear();
             _toolbars.Add(toolbar);
             WireUpMenus(this);
+        }
+
+        public void AddMenu(string name, BasePlugin plugin)
+        {
+            var items = _context.Menu.Items;
+            var item = items.AddDropDown(name);
+            item.Tag = plugin.Identity;
         }
 
         public IEnumerable<IToolbar> Toolbars

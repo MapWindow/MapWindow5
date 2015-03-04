@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.UI;
@@ -9,7 +11,7 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Helpers
 {
-    public static class PluginHelper
+    public static class PluginMenuHelper
     {
         private static PluginManager _manager;
         private static IAppContext _context;
@@ -18,20 +20,17 @@ namespace MW5.Helpers
         {
             if (context == null || pluginManager == null)
             {
-                throw new ArgumentNullException("Failed to initialize plugins.");
+                throw new NullReferenceException("Failed to initialize plugins.");
             }
             _context = context;
             _manager = pluginManager;
 
-            _manager.AssemblePlugins();
-            _manager.Initialize(context);
-
             var menuItem = context.Menu.Plugins;
 
-            foreach (var p in _manager.Plugins)
+            foreach (var p in _manager.AllPlugins)
             {
-                var item = menuItem.SubItems.AddButton(p.Name);
-                item.Tag = p;
+                var item = menuItem.SubItems.AddButton(p.Identity.Name);
+                item.Tag = p.Identity;                    
                 item.Click += item_Click;
             }
 
@@ -44,10 +43,10 @@ namespace MW5.Helpers
 
             foreach (var item in menu.SubItems)
             {
-                var plugin = item.Tag as Lazy<IPlugin, IPluginMetadata>;
-                if (plugin != null)
+                var identity = item.Tag as PluginIdentity;
+                if (identity != null)
                 {
-                    item.Checked = _manager.PluginActive(plugin.Metadata.Name);
+                    item.Checked = _manager.PluginActive(identity);
                 }
             }
         }
@@ -57,16 +56,16 @@ namespace MW5.Helpers
             var item = sender as IMenuItem;
             if (item != null)
             {
-                var plugin = item.Tag as Lazy<IPlugin, IPluginMetadata>;
-                if (plugin != null)
+                var identity = item.Tag as PluginIdentity;
+                if (identity != null)
                 {
                     if (item.Checked)
                     {
-                        _manager.UnloadPlugin(plugin.Metadata.Name);
+                        _manager.UnloadPlugin(identity, _context);
                     }
                     else
                     {
-                        _manager.LoadPlugin(plugin.Metadata.Name, _context);
+                        _manager.LoadPlugin(identity, _context);
                     }
                     item.Checked = !item.Checked;
                 }

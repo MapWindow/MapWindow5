@@ -7,16 +7,48 @@ namespace MW5.Plugins.Mef
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property), MetadataAttribute]
     public class PluginExportAttribute : ExportAttribute, IPluginMetadata
     {
-        public PluginExportAttribute(string name)
+        private string _name;
+        private string _author;
+        private string _guid;
+        
+        public PluginExportAttribute(string name,  string author, string guid)
             : base(typeof(IPlugin))
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Plugin requires a name.");
             }
+            if (string.IsNullOrWhiteSpace(author))
+            {
+                throw new ArgumentException("Plugin author is not specified.");
+            }
+            try
+            {
+                var temp = new Guid(guid);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException("Invalid Guid value.");
+            }
 
-            Name = name;
+            _author = author;
+            _name = name;
+            _guid = guid;
         }
-        public string Name { get; private set; }
+
+        public string Name
+        {
+            get { return _name; }
+        }
+
+        public string Author
+        {
+            get { return _author; }
+        }
+
+        public string Guid
+        {
+            get { return _guid; }
+        }
     }
 }

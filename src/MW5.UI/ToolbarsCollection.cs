@@ -44,7 +44,7 @@ namespace MW5.UI
                 {
                     throw new IndexOutOfRangeException("Invalid toolbar index.");
                 }
-                return new Toolbar(_manager.Bars[index]);
+                return new Toolbar(_manager, _manager.Bars[index]);
             }
         }
 
@@ -52,7 +52,12 @@ namespace MW5.UI
         {
             var bar = new Bar(_manager, name);
             int index = _manager.Bars.Add(bar);
-            return new Toolbar(_manager.Bars[index]);
+            return new Toolbar(_manager, _manager.Bars[index]);
+        }
+
+        public void Remove(int toolbarIndex)
+        {
+            _manager.Bars.RemoveAt(toolbarIndex);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
