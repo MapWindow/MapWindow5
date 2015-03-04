@@ -12,6 +12,8 @@ namespace MW5.UI
 {
     public class MenuItemCollection: IMenuItemCollection
     {
+        private const int TOOLBAR_ITEM_PADDING_X = 10;
+        private const int TOOLBAR_ITEM_PADDING_Y = 5;
         private readonly BarItems _items;
 
         internal MenuItemCollection(BarItems items)
@@ -56,6 +58,18 @@ namespace MW5.UI
         public IMenuItem AddButton(string text)
         {
             var item = new BarItem(text);
+            return AddButtonCore(item);
+        }
+
+        public IMenuItem AddButton(string text, string name)
+        {
+            var item = new BarItem(text) {ID = name};
+            return AddButtonCore(item);
+        }
+
+        private IMenuItem AddButtonCore(BarItem item)
+        {
+            item.Padding = new System.Drawing.Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y);
             _items.Add(item);
             return new MenuItem(item);
         }

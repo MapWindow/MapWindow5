@@ -26,7 +26,7 @@ namespace MW5.Helpers
             
             root.SubItems.Clear();
 
-            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION);
+            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, "");
             item.Tag = -1;
             item.Click += item_Click;
             

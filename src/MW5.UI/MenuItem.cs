@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ namespace MW5.UI
 {
     public class MenuItem: IMenuItem
     {
+        private const int ICON_SIZE = 24;
         protected BarItem _item;
 
         internal MenuItem(BarItem item)
@@ -31,7 +33,11 @@ namespace MW5.UI
         public IMenuIcon Picture
         {
             get { return new MenuIcon(_item.Image.GetImage()); }
-            set { _item.Image = new ImageExt(value.Image); }
+            set
+            {
+                _item.Image = new ImageExt(value.Image);
+                _item.ImageSize = new Size(ICON_SIZE, ICON_SIZE);
+            }
         }
 
         public string Category

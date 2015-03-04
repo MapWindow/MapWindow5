@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
 {
@@ -13,6 +14,7 @@ namespace MW5.Plugins.ShapeEditor
     {
         private IAppContext _context;
         private MapListener _mapListener;
+        private ShapeEditorMenu _menu;
 
         public ShapeEditor()
         {
@@ -37,7 +39,7 @@ namespace MW5.Plugins.ShapeEditor
         public override void Initialize(IAppContext context)
         {
             _context = context;
-            MenuHelper.InitMenu(context);
+            _menu = new ShapeEditorMenu(context);
         }
         public override void Terminate()
         {

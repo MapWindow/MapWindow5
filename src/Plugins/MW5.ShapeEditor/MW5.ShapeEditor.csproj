@@ -51,6 +51,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -60,15 +61,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapListener.cs" />
-    <Compile Include="MenuHelper.cs" />
+    <Compile Include="Menu\ShapeEditorMenu.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ShapeEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Menu\ShapeEditorCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Mvp\MW5.Mvp.csproj">
+      <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>
+      <Name>MW5.Mvp</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
@@ -79,6 +90,64 @@
       <Project>{784a24f2-9a57-46ee-8945-d87869595216}</Project>
       <Name>MW5.UI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_redo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_attributes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_create.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_erase_by_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_merge.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_rotate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_split.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\geometry_split_by_polyline.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_create.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vertex_editor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

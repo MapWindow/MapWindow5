@@ -22,12 +22,7 @@ namespace MW5.Plugins.ShapeEditor
 
         private void plugin_ExtentsChanged(IMuteMap sender, EventArgs e)
         {
-            Debug.Print("Shape editor: map extents changed");
+            
         }
-
-        //void plugin_ExtentsChanged(object sender, EventArgs e)
-        //{
-        //    Debug.Print("Shape editor: map extents changed");
-        //}
     }
 }

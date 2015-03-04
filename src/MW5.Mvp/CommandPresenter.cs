@@ -8,11 +8,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 
+
 namespace MW5.Mvp
 {
     public abstract class CommandPresenter<TView, TCommand>
         where TCommand : struct, IConvertible
-        where TView: IComplexView
+        where TView: IMenuProvider
     {
         protected TView View { get; private set; }
 
@@ -20,10 +21,19 @@ namespace MW5.Mvp
 
         protected abstract void CommandNotFound(string itemName);
 
+        protected CommandPresenter()
+        {
+            
+        }
+
         protected CommandPresenter(TView view)
         {
             View = view;
+            WireUpMenus(view);
+        }
 
+        protected void WireUpMenus(IMenuProvider view)
+        {
             if (view.Toolbars != null)
             {
                 foreach (var menu in view.Toolbars)
@@ -33,7 +43,7 @@ namespace MW5.Mvp
             }
         }
 
-        public bool CommandFromName(string itemName, ref TCommand command)
+        private bool CommandFromName(string itemName, ref TCommand command)
         {
             itemName = itemName.ToLower();
             
@@ -64,7 +74,7 @@ namespace MW5.Mvp
         /// <summary>
         /// Sets event handlers for menu items
         /// </summary>
-        public void InitMenu(IMenuItemCollection items)
+        private void InitMenu(IMenuItemCollection items)
         {
             if (items == null)
             {

@@ -15,8 +15,13 @@ namespace MW5.Mvp
         void UpdateView();
     }
 
-    public interface IComplexView: IView
+    public interface IMenuProvider
     {
         IEnumerable<IToolbar> Toolbars { get; }
+    }
+
+    public interface IComplexView: IView, IMenuProvider
+    {
+        
     }
 }

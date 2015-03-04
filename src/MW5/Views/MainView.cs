@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Forms;
+using System.Linq;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
@@ -57,9 +59,9 @@ namespace MW5.Views
         {
             get
             {
-                // TODO: it's already included in toolbars, but better to expose it separately
-                // yield return _context.Menu;
-                return _context.Toolbars;
+                // TODO: wire up main menu as well
+                var list = _context.Toolbars.Where(tb => tb.Name.ToLower() == "maintoolbar" || tb.Name.ToLower() == "maptoolbar").ToList();
+                return list;
             }
         }
 

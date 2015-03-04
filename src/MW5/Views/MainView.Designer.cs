@@ -67,7 +67,7 @@ namespace MW5.Views
             this.toolOpenDatabase = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolCreateLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolRemoveLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this._toolbarMap = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "Map Toolbar");
+            this._toolbarMap = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MapToolbar");
             this.toolZoomIn = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolZoomOut = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.toolZoomToMax = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
@@ -525,7 +525,7 @@ namespace MW5.Views
             // 
             // _toolbarMap
             // 
-            this._toolbarMap.BarName = "Map Toolbar";
+            this._toolbarMap.BarName = "MapToolbar";
             this._toolbarMap.BarStyle = ((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle)((((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.AllowQuickCustomizing | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.RotateWhenVertical) 
             | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.Visible) 
             | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.DrawDragBorder)));
