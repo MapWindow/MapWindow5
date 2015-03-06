@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Mvp;
-using MW5.Mvp.DI;
+using MW5.Plugins.Mvp;
 using Ninject;
 
 namespace MW5.DI.Ninject
@@ -66,6 +66,15 @@ namespace MW5.DI.Ninject
 
         public TService Resolve<TService>() where TService : class
         {
+            return _kernel.Get<TService>();
+        }
+
+        public TService GetSingleton<TService>() where TService : class
+        {
+            if (!_kernel.CanResolve<TService>())
+            {
+                _kernel.Bind<TService>().ToSelf().InSingletonScope();
+            }
             return _kernel.Get<TService>();
         }
     }

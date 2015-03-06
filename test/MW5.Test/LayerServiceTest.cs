@@ -10,7 +10,8 @@ using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Services;
-using MW5.Services.Abstract;
+using MW5.Services.Services;
+using MW5.Services.Services.Abstract;
 using NUnit.Framework;
 
 namespace MW5.Test

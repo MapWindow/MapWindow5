@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Collections.Generic;
 using MW5.Plugins.Interfaces;
 
-namespace MW5.Mvp
+namespace MW5.Plugins.Mvp
 {
     public interface IView
     {

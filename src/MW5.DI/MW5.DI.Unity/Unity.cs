@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using MW5.Mvp;
-using MW5.Mvp.DI;
+using MW5.Plugins.Mvp;
 
 namespace MW5.DI.Unity
 {
@@ -66,6 +66,15 @@ namespace MW5.DI.Unity
 
         public TService Resolve<TService>() where TService : class
         {
+            return _container.Resolve<TService>();
+        }
+
+        public TService GetSingleton<TService>() where TService : class
+        {
+            if (_container.IsRegistered<TService>())
+            {
+                _container.RegisterType<TService>(new ContainerControlledLifetimeManager());
+            }
             return _container.Resolve<TService>();
         }
     }

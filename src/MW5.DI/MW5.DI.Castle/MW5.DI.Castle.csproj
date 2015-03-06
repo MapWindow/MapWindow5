@@ -71,6 +71,10 @@
       <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>
       <Name>MW5.Mvp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
+      <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
+      <Name>MW5.Plugins</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

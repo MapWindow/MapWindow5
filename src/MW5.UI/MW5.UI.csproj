@@ -70,11 +70,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComboBoxEnumItem.cs" />
+    <Compile Include="Helpers\ComboBoxHelper.cs" />
+    <Compile Include="Helpers\EnumConverter.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="MapWindowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Menu.cs" />
     <Compile Include="MenuItem.cs" />
     <Compile Include="MenuItemCollection.cs" />
     <Compile Include="DropDownMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Syncfusion\StyleSettings.cs" />
+    <Compile Include="Syncfusion\SyncfusionStyleService.cs" />
     <Compile Include="Toolbar.cs" />
     <Compile Include="ToolbarsCollection.cs" />
   </ItemGroup>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using MW5.Mvp;
-using MW5.Mvp.DI;
+using MW5.Plugins.Mvp;
 
 namespace MW5.DI.Castle
 {
@@ -63,6 +63,12 @@ namespace MW5.DI.Castle
 
         public TService Resolve<TService>() where TService : class
         {
+            return _container.Resolve<TService>();
+        }
+
+        public TService GetSingleton<TService>() where TService : class
+        {
+            _container.Register(Component.For<TService>().OnlyNewServices());
             return _container.Resolve<TService>();
         }
     }

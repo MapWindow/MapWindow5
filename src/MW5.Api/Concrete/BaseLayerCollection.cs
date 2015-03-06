@@ -38,6 +38,16 @@ namespace MW5.Api.Concrete
             return null;
         }
 
+        public IVectorLayer GetVectorLayer(int layerHandle)
+        {
+            var ogr = _axMap.get_OgrLayer(layerHandle);
+            if (ogr != null)
+            {
+                return new VectorLayer(ogr);
+            }
+            return null;
+        }
+
         public virtual int Add(ILayerSource layerSource, bool visible = true)
         {
             return _axMap.AddLayer(layerSource.InternalObject, visible);

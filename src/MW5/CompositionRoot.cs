@@ -10,11 +10,12 @@ using MW5.DI.Ninject;
 //using MW5.DI.Castle;
 //using MW5.DI.Unity;
 using MW5.Helpers;
-using MW5.Mvp.DI;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Presenters;
 using MW5.Services;
-using MW5.Services.Abstract;
+using MW5.Services.Services;
+using MW5.Services.Services.Abstract;
 using MW5.Views;
 
 namespace MW5
@@ -37,7 +38,7 @@ namespace MW5
                 .RegisterServiceSingleton<IAppContext, AppContext>()
                 .RegisterServiceSingleton<ILayerService, LayerService>();
             
-            Core.CompositionRoot.Compose(container);
+            Services.CompositionRoot.Compose(container);
         }
     }
 }

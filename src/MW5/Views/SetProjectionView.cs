@@ -11,14 +11,13 @@ using MW5.Abstract;
 using MW5.Mvp;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
+using MW5.UI;
 using Syncfusion.Windows.Forms;
 
 namespace MW5.Views
 {
-    public partial class SetProjectionView : MetroForm, ISetProjectionView
+    public partial class SetProjectionView : MapWindowForm, ISetProjectionView
     {
-        private readonly IMainView _owner;
-
         public enum ProjectionType
         {
             Empty = 0,
@@ -29,9 +28,8 @@ namespace MW5.Views
 
         public event Action OkClicked;
 
-        public SetProjectionView(IMainView owner)
+        public SetProjectionView(IAppContext context) : base(context)
         {
-            _owner = owner;
             InitializeComponent();
 
             cboWellKnown.Items.Add("WGS 84 (decimal degrees)");
@@ -77,25 +75,10 @@ namespace MW5.Views
             }
         }
 
-        public void ShowView()
-        {
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            StartPosition = FormStartPosition.CenterParent;
-            ShowDialog(_owner as IWin32Window);
-        }
-
         public void UpdateView()
         {
             cboWellKnown.Enabled = optWellKnown.Checked;
             txtDefinition.Enabled = optDefinition.Checked;
-        }
-
-        private void Invoke(Action action)
-        {
-            if (action != null)
-            {
-                action();
-            }
         }
     }
 }

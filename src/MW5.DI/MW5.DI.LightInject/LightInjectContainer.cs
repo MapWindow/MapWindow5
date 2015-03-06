@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using LightInject;
 using MW5.Mvp;
-using MW5.Mvp.DI;
+using MW5.Plugins.Mvp;
 
 namespace MW5.DI.LightInject
 {
@@ -75,6 +75,15 @@ namespace MW5.DI.LightInject
 
         public TService Resolve<TService>() where TService : class
         {
+            return _container.GetInstance<TService>();
+        }
+
+        public TService GetSingleton<TService>() where TService : class
+        {
+            if (!IsRegistered<TService>())
+            {
+                _container.Register<TService>(new PerContainerLifetime());
+            }
             return _container.GetInstance<TService>();
         }
 

@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using MW5.Services.Abstract;
+using MW5.Services.Services.Abstract;
 
-namespace MW5.Services
+namespace MW5.Services.Services
 {
     public class MessageService: IMessageService
     {
@@ -21,6 +21,11 @@ namespace MW5.Services
         {
             return MessageBox.Show(message, AppName, MessageBoxButtons.YesNo, MessageBoxIcon.Question) ==
                    DialogResult.Yes;
+        }
+
+        public DialogResult AskWithCancel(string message)
+        {
+            return MessageBox.Show(message, AppName, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
         }
     }
 }

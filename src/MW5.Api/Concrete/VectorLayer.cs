@@ -6,7 +6,6 @@ using MW5.Api.Static;
 
 namespace MW5.Api.Concrete
 {
-    // TODO: extract interface
     public class VectorLayer: IVectorLayer
     {
         private readonly OgrLayer _layer;

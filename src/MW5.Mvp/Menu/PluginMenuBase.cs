@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 
 namespace MW5.Mvp.Menu
 {

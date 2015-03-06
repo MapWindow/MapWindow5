@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using MW5.Plugins.Mvp;
 
 namespace MW5.Mvp.Sample
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using MW5.Mvp.DI;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
+using MW5.Services.Helpers;
 using MW5.Views;
 
 namespace MW5
@@ -17,6 +17,8 @@ namespace MW5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            EnumConverters.Init();
 
             var container = CompositionRoot.Container;
             CompositionRoot.Compose(container);

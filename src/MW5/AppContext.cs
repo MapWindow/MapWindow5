@@ -6,8 +6,11 @@ using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Abstract;
+using MW5.Plugins.Mvp;
+using MW5.Services.Services.Abstract;
 using MW5.UI;
+using MW5.UI.Syncfusion;
+using Syncfusion.Windows.Forms;
 
 namespace MW5
 {
@@ -52,6 +55,32 @@ namespace MW5
             _mapListener = new MapListener(_map, this, _manager.Broadcaster, layerService);
         }
 
+        public IApplicationContainer Container
+        {
+            get { return CompositionRoot.Container; }
+        }
+
+        public DialogResult ShowDialog(Form form)
+        {
+            if (form == null)
+            {
+                throw new ArgumentNullException("form");
+            }
+            
+            if (form is MetroForm)
+            {
+                // TODO: use injection
+                var service = new SyncfusionStyleService(ControlStyleSettings.Instance);
+                service.ApplyStyle(form as MetroForm);
+            }
+
+            form.MaximizeBox = false;
+            form.MinimizeBox = false;
+            form.FormBorderStyle = FormBorderStyle.FixedSingle;
+            form.StartPosition = FormStartPosition.CenterScreen;        // TODO: make parameter
+            return form.ShowDialog(_mainForm);
+        }
+
         public IMuteMap Map
         {
             get { return _map; }
@@ -75,6 +104,11 @@ namespace MW5
         public IToolbarCollection Toolbars
         {
             get { return _toolbars; }
+        }
+
+        public ILayerCollection<ILegendLayer> Layers
+        {
+            get { return _legend.Layers; }
         }
 
         public bool Initialized

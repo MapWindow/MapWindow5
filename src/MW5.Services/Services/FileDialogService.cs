@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 using MW5.Api.Static;
-using MW5.Services.Abstract;
+using MW5.Services.Services.Abstract;
 
-namespace MW5.Services
+namespace MW5.Services.Services
 {
     public class FileDialogService : IFileDialogService
     {
@@ -20,6 +20,22 @@ namespace MW5.Services
         public bool OpenFiles(LayerType layerType, IWin32Window parent, out string[] filenames)
         {
             return OpenFileCore(layerType, parent, true, out filenames);
+        }
+
+        public bool ChooseFolder(string initialPath, IWin32Window parent, out string chosenPath)
+        {
+            chosenPath = string.Empty;
+            using (var dialog = new FolderBrowserDialog())
+            {
+                dialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+                dialog.SelectedPath = initialPath;
+                if (dialog.ShowDialog(parent) == DialogResult.OK)
+                {
+                    chosenPath = dialog.SelectedPath;
+                    return true;
+                }
+            }
+            return false;
         }
 
         private bool OpenFileCore(LayerType layerType, IWin32Window parent, bool multiSelect, out string[] filenames)

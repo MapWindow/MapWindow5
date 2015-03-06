@@ -12,6 +12,7 @@ namespace MW5.Api.Interfaces
         T ItemByHandle(int layerHandle);
         int Count { get; }
         IFeatureSet GetFeatureSet(int layerHandle);
+        IVectorLayer GetVectorLayer(int layerHandle);
         int Add(ILayerSource layerSource, bool visible = true);
         bool Move(int initialPosition, int targetPosition);
         bool MoveBottom(int initialPosition);

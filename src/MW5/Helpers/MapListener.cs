@@ -9,7 +9,7 @@ using MW5.Api.Events;
 using MW5.Api.Interfaces;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Abstract;
+using MW5.Services.Services.Abstract;
 
 namespace MW5.Helpers
 {

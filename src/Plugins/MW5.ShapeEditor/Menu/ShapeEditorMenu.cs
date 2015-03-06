@@ -8,16 +8,24 @@ using MW5.Mvp.Menu;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.ShapeEditor.Properties;
+using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
     // TODO: add GetToolbarNames function
     internal class ShapeEditorMenu : PluginMenuBase<ShapeEditorCommand>
     {
+        private readonly ILayerService _layerService;
         private const string PLUGIN_TOOLBAR_NAME = "Shape Editor";
 
-        public ShapeEditorMenu(IAppContext context, BasePlugin plugin): base(context)
+        public ShapeEditorMenu(IAppContext context, ShapeEditor plugin, ILayerService layerService): base(context)
         {
+            if (layerService == null)
+            {
+                throw new ArgumentNullException("layerService");
+            }
+            _layerService = layerService;
+
             AddToolbar(PLUGIN_TOOLBAR_NAME, plugin);
 
             // TODO: provide way to add submenus
@@ -41,11 +49,12 @@ namespace MW5.Plugins.ShapeEditor.Menu
             switch (command)
             {
                 case ShapeEditorCommand.LayerEdit:
-                    MessageBox.Show("Layer edit clicked");      // TODO: remove (for testing only)
-                    break;
-                case ShapeEditorCommand.LayerSave:
+                    _layerService.ToggleVectorLayerEditing();
                     break;
                 case ShapeEditorCommand.LayerCreate:
+                    _layerService.CreateLayer();
+                    break;
+                case ShapeEditorCommand.LayerSave:
                     break;
                 case ShapeEditorCommand.GeometryCreate:
                     break;
