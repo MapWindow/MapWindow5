@@ -32,6 +32,7 @@ namespace MW5.Api
             AttachHandlers();
         }
 
+        public event EventHandler<EventArgs> MapCursorChanged;
         public event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
         public event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
         public event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
@@ -436,7 +437,12 @@ namespace MW5.Api
         public MapCursor MapCursor
         {
             get { return (MapCursor) _map.CursorMode; }
-            set { _map.CursorMode = (tkCursorMode) value; }
+            set
+            {
+                _map.CursorMode = (tkCursorMode) value;
+                // TODO: perhaps fire it from within MapWinGIS                
+                FireMapCursorChanged(this, new EventArgs());
+            }
         }
 
         public TileProvider TileProvider

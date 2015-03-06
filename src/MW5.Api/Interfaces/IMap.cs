@@ -10,6 +10,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IMap : IMuteMap
     {
+        event EventHandler<EventArgs> MapCursorChanged;
         event EventHandler<AfterShapeEditEventArgs> AfterShapeEdit;
         event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
         event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;

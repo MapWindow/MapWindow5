@@ -24,6 +24,7 @@ namespace MW5
         private IMuteLegend _legend;
         private readonly PluginManager _manager = new PluginManager();
         private MapListener _mapListener;
+        private IView _view;
 
         public void Init(IMainForm form)
         {
@@ -33,7 +34,8 @@ namespace MW5
             }
 
             _mainForm = form as IWin32Window;
-            
+            _view = form.View;
+
             _map = form.Map;
             _map.Initialize();
 
@@ -79,6 +81,11 @@ namespace MW5
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
             form.StartPosition = FormStartPosition.CenterScreen;        // TODO: make parameter
             return form.ShowDialog(_mainForm);
+        }
+
+        public IView View
+        {
+            get { return _view; }
         }
 
         public IMuteMap Map

@@ -8,6 +8,7 @@ using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Presenters;
 using MW5.UI;
 using Syncfusion.Windows.Forms.Tools;
@@ -90,6 +91,11 @@ namespace MW5.Views
         public IMuteLegend Legend
         {
             get { return _legendControl1; }
+        }
+
+        public IView View
+        {
+            get { return this; }
         }
 
         #endregion

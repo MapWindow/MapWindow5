@@ -19,7 +19,7 @@ namespace MW5.Plugins.ShapeEditor
 
         public ShapeEditor()
         {
-            _mapListener = new MapListener(this);
+            
         }
 
         public override string Description
@@ -30,6 +30,7 @@ namespace MW5.Plugins.ShapeEditor
         public override void Initialize(IAppContext context)
         {
             _context = context;
+            _mapListener = new MapListener(this);
 
             bool injection = false;
             if (injection)

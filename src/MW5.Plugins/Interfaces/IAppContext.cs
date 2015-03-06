@@ -18,5 +18,6 @@ namespace MW5.Plugins.Interfaces
         void Init(IMainForm form);
         IApplicationContainer Container { get; }
         DialogResult ShowDialog(Form form);
+        IView View { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace MW5.Mvp.Menu
     public abstract class PluginMenuBase<TCommand> : CommandPresenter<IMenuProvider, TCommand>, IMenuProvider
         where TCommand : struct, IConvertible
     {
-        private readonly IAppContext _context;
+        protected readonly IAppContext _context;
         private List<IToolbar> _toolbars = new List<IToolbar>();
 
         public PluginMenuBase(IAppContext context) 
@@ -31,7 +31,7 @@ namespace MW5.Mvp.Menu
             
             var toolbar = _context.Toolbars.Add(toolBarName);
             toolbar.Tag = plugin.Identity;
-            var items = GetMenuItems(toolBarName, Create);
+            var items = GetMenuItems(toolBarName, CreateItem);
             
             foreach (var item in items)
             {
@@ -57,7 +57,7 @@ namespace MW5.Mvp.Menu
             get { return _toolbars; }
         }
 
-        protected MenuItemData<TCommand> Create(TCommand command, Bitmap icon, string text)
+        protected MenuItemData<TCommand> CreateItem(TCommand command, Bitmap icon, string text)
         {
             return new MenuItemData<TCommand>(command, icon, text);
         }

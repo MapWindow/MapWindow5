@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Api;
 using MW5.Mvp;
 using MW5.Mvp.Menu;
 using MW5.Plugins.Concrete;
@@ -38,9 +39,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
             return new List<MenuItemData<ShapeEditorCommand>>()
             {
                 createItem(ShapeEditorCommand.LayerEdit, Resources.layer_edit, "Edit Layer"),
-                createItem(ShapeEditorCommand.GeometryCreate, Resources.geometry_create, "Add geometry"),
                 createItem(ShapeEditorCommand.LayerCreate, Resources.layer_create, "Create new layer"),
-                createItem(ShapeEditorCommand.LayerSave, Resources.layer_save, "Save changes")
+                createItem(ShapeEditorCommand.GeometryCreate, Resources.geometry_create, "Add geometry"),
+                createItem(ShapeEditorCommand.GeometryCreate, Resources.vertex_editor, "Vertex editor"),
             };
         }
 
@@ -54,9 +55,11 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 case ShapeEditorCommand.LayerCreate:
                     _layerService.CreateLayer();
                     break;
-                case ShapeEditorCommand.LayerSave:
+                case ShapeEditorCommand.VertexEditor:
+                    _context.Map.MapCursor = MapCursor.EditShape;
                     break;
                 case ShapeEditorCommand.GeometryCreate:
+                    _context.Map.MapCursor = MapCursor.AddShape;
                     break;
             }
         }

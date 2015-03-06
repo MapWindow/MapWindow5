@@ -6,5 +6,6 @@
         LayerSave = 1,
         LayerCreate = 2,
         GeometryCreate = 3,
+        VertexEditor = 4,
     }
 }

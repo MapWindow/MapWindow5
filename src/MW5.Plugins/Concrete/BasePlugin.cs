@@ -43,7 +43,9 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit_;
         internal MapEventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit_;
         internal MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape_;
+        internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
+        internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseUp_;
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<EventArgs> UndoListChanged_;
@@ -74,7 +76,11 @@ namespace MW5.Plugins.Concrete
             remove { BeforeShapeEdit_ -= value; }
         }
 
-        public event EventHandler<ChooseLayerEventArgs> ChooseLayer;
+        public event MapEventHandler<ChooseLayerEventArgs> ChooseLayer
+        {
+            add { ChooseLayer_ += value; }
+            remove { ChooseLayer_ -= value; }
+        }
 
         public event MapEventHandler<EventArgs> ExtentsChanged
         {
@@ -89,6 +95,13 @@ namespace MW5.Plugins.Concrete
         public event EventHandler<LayerRemovedEventArgs> LayerRemoved;
         public event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
         public event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+
+        public event MapEventHandler<EventArgs> MapCursorChanged
+        {
+            add { MapCursorChanged_ += value; }
+            remove { MapCursorChanged_ -= value; }
+        }
+        
         public event EventHandler<MouseEventArgs> MouseDown;
         public event EventHandler<MouseEventArgs> MouseMove;
 

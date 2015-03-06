@@ -49,12 +49,26 @@ namespace MW5.Helpers
             _map.ShapeValidationFailed += MapShapeValidationFailed;
             _map.UndoListChanged += MapUndoListChanged;
             _map.ValidateShape += MapValidateShape;
+            _map.MapCursorChanged += MapCursorChanged;
+            _map.ChooseLayer += _map_ChooseLayer;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        void _map_ChooseLayer(object sender, ChooseLayerEventArgs e)
+        {
+            _plugins.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
+        }
+
+        void MapCursorChanged(object sender, EventArgs e)
+        {
+            _context.View.UpdateView();
+
+            _plugins.BroadcastEvent(p => p.MapCursorChanged_, sender as IMuteMap, e);
         }
 
         private void MapValidateShape(object sender, ValidateShapeEventArgs e)

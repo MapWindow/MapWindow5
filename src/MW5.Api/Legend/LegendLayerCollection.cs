@@ -202,5 +202,17 @@ namespace MW5.Api.Legend
         {
             _legend.ClearLayers();
         }
+
+        public override ILegendLayer SelectedLayer
+        {
+            get
+            {
+                 if (_legend.SelectedLayer != -1)
+                 {
+                     return ItemByHandle(_legend.SelectedLayer);
+                 }
+                 return null;
+            }
+        }
     }
 }

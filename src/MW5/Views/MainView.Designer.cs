@@ -659,7 +659,7 @@ namespace MW5.Views
             this._legendControl1.Size = new System.Drawing.Size(107, 126);
             this._legendControl1.TabIndex = 5;
             // 
-            // MainView
+            // View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

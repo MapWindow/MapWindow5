@@ -7,6 +7,6 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
-    public delegate void MapEventHandler<TArgs>(IMuteMap sender, TArgs e)
+    public delegate void MapEventHandler<TArgs>(IMuteMap map, TArgs e)
         where TArgs : EventArgs;
 }

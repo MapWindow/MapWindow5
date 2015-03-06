@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -15,5 +16,6 @@ namespace MW5.Plugins.Interfaces
         object MenuManager { get;}
         IMap Map { get; }
         IMuteLegend Legend { get; }
+        IView View { get; }
     }
 }

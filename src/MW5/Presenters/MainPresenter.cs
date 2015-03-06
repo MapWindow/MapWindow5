@@ -84,7 +84,7 @@ namespace MW5.Presenters
         private void SetMapCursor(MapCursor cursor)
         {
             _context.Map.MapCursor = cursor;
-            _view.UpdateView();
+            //_view.UpdateView();           // it's will be called from MapCursorChanged event
         }
 
         protected override void CommandNotFound(string itemName)
