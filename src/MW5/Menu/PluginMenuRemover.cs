@@ -1,20 +1,18 @@
 ﻿using System.Linq;
-using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.UI;
 
-namespace MW5
+namespace MW5.Menu
 {
-    public static class PluginHelper
+    public static class PluginMenuRemover
     {
         public static void RemovePluginMenus(this IAppContext context, PluginIdentity identity)
         {
             for (int i = context.Toolbars.Count() - 1; i >= 0; i--)
             {
                 var bar = context.Toolbars[i];
-                var id = bar.Tag as PluginIdentity;
-                if (id == identity)
+                if (bar.PluginIdentity == identity)
                 {
                     context.Toolbars.Remove(i);
                 }

@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using MW5.Plugins.Concrete;
+using MW5.UI;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
@@ -37,8 +39,14 @@ namespace MW5.Helpers
             if (cbr != null)
             {
                 cbr.AlwaysLeadingEdge = true;
-            }
+                cbr.Tag = new MenuItemMetadata(PluginIdentity.Default, cbr.Name);
 
+                // temporary; items must be generated in code
+                foreach (BarItem item in mainMenu.Items)
+                {
+                    item.Tag = new MenuItemMetadata(PluginIdentity.Default, "");
+                }
+            }
             InitColors();
         }
 

@@ -47,8 +47,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
         private void InitToolbar()
         {
-            var bar = _context.Toolbars.Add(SHAPE_EDITOR_TOOLBAR);
-            bar.DockState = ToolbarDockState.Right;
+            var bar = _context.Toolbars.Add(SHAPE_EDITOR_TOOLBAR, _plugin.Identity);
+            bar.DockState = ToolbarDockState.Top;
             
             var btn = bar.Items.AddButton("Edit layer", MenuKeys.LayerEdit, _plugin.Identity);
             btn.Icon = new MenuIcon(Resources.layer_edit);

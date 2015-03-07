@@ -28,11 +28,11 @@ namespace MW5.Menu
 
         private void InitToolbars()
         {
-            var bar = _context.Toolbars.Add(FILE_TOOLBAR);
+            var bar = _context.Toolbars.Add(FILE_TOOLBAR, PluginIdentity.Default);
             InitFileToolbar(bar);
             bar.DockState = Plugins.ToolbarDockState.Left;
 
-            bar = _context.Toolbars.Add(TOOLS_TOOLBAR);
+            bar = _context.Toolbars.Add(TOOLS_TOOLBAR, PluginIdentity.Default);
             InitToolsToolbar(bar);
             bar.DockState = Plugins.ToolbarDockState.Top;
         }
@@ -50,6 +50,9 @@ namespace MW5.Menu
 
             bar.Items.AddButton("Create layer", MenuKeys.FileBarCreateLayer, Resources.layer_create, PluginIdentity.Default);
             bar.Items.AddButton("Remove layer", MenuKeys.RemoveLayer, Resources.layer_remove, PluginIdentity.Default);
+
+            bar.AddSeparator(3);
+            bar.AddSeparator(7);
         }
 
         private void InitToolsToolbar(IToolbar bar)
@@ -60,6 +63,7 @@ namespace MW5.Menu
             bar.Items.AddButton("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer, PluginIdentity.Default);
             bar.Items.AddButton("Pan", MenuKeys.Pan, Resources.pan, PluginIdentity.Default);
             bar.Items.AddButton("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change, PluginIdentity.Default);
+            bar.AddSeparator(5);
         }
 
         private void InitMenus()

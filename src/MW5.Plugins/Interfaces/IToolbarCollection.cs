@@ -9,12 +9,7 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IToolbarCollection : IEnumerable<IToolbar>
     {
-        /// <summary>
-        /// Adds a new toolbar
-        /// </summary>
-        /// <param name="name">The name o the toolbar</param>
-        /// <returns>True on success.</returns>
-        IToolbar Add(string name);
+        IToolbar Add(string name, PluginIdentity identity);
         
         void Remove(int toolbarIndex);
 

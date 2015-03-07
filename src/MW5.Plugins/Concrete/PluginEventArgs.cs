@@ -16,6 +16,9 @@ namespace MW5.Plugins.Concrete
             _identity = identity;
         }
 
-        public PluginIdentity Identity { get; private set; }
+        public PluginIdentity Identity
+        {
+            get { return _identity; }
+        }
     }
 }

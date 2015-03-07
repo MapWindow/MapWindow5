@@ -54,11 +54,14 @@ namespace MW5.UI
             return MenuIndex.GetItem(key);
         }
 
-        public IToolbar Add(string name)
+        public IToolbar Add(string name, PluginIdentity identity)
         {
             var bar = new Bar(_manager, name);
             int index = _manager.Bars.Add(bar);
-            return new Toolbar(_manager, _manager.Bars[index]);
+            var toolbar = new Toolbar(_manager, _manager.Bars[index]);
+            var cbr = _manager.GetBarControl(bar);
+            cbr.Tag = new MenuItemMetadata(identity, name);
+            return toolbar;
         }
 
         public void Remove(int toolbarIndex)

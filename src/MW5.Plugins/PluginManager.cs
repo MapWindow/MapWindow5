@@ -33,15 +33,6 @@ namespace MW5.Plugins
 
         public event EventHandler<MenuItemEventArgs> MenuItemClicked;
 
-        private void FirePluginUnloaded(PluginIdentity identity)
-        {
-            var handler = PluginUnloaded;
-            if (handler != null)
-            {
-                handler.Invoke(this, new PluginEventArgs(identity));
-            }
-        }
-
         private static PluginManager _instance;
         public static PluginManager Instance
         {
@@ -205,6 +196,15 @@ namespace MW5.Plugins
                 {
                     _broadcaster.BroadcastEvent(p => p.ItemClicked_, sender, args);
                 }
+            }
+        }
+
+        private void FirePluginUnloaded(PluginIdentity identity)
+        {
+            var handler = PluginUnloaded;
+            if (handler != null)
+            {
+                handler.Invoke(this, new PluginEventArgs(identity));
             }
         }
 

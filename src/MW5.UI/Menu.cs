@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
@@ -82,6 +83,21 @@ namespace MW5.UI
             set { throw new NotSupportedException("Dock state for the main menu can't be changed."); }
         }
 
+        public void AddSeparator(int beforeItemIndex)
+        {
+            MenuBar.SeparatorIndices.Add(beforeItemIndex);
+        }
+
+        public void ClearSeparators()
+        {
+            MenuBar.SeparatorIndices.Clear();
+        }
+
+        public PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
+        }
+
         public IDropDownMenuItem Plugins
         {
             get
@@ -99,5 +115,11 @@ namespace MW5.UI
                 return new DropDownMenuItem(item);
             }
         }
+
+        public IMenuItem FindItem(string key)
+        {
+            return MenuIndex.GetItem(key);
+        }
+       
     }
 }

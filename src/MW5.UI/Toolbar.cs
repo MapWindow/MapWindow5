@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
@@ -48,14 +49,42 @@ namespace MW5.UI
 
         public object Tag
         {
-            get { return _commandBar.Tag; }
-            set { _commandBar.Tag = value; }
+            get { return Metadata.Tag; }
+            set { Metadata.Tag = value; }
         }
 
         public ToolbarDockState DockState
         {
             get { return (ToolbarDockState) _manager.GetBarControl(_bar).DockState; }
             set { _manager.GetBarControl(_bar).DockState = (CommandBarDockState)value; }
+        }
+
+        public void AddSeparator(int beforeItemIndex)
+        {
+            _bar.SeparatorIndices.Add(beforeItemIndex);
+        }
+
+        public void ClearSeparators()
+        {
+            _bar.SeparatorIndices.Clear();
+        }
+
+        private MenuItemMetadata Metadata
+        {
+            get
+            {
+                var metadata = _commandBar.Tag as MenuItemMetadata;
+                if (metadata == null)
+                {
+                    throw new ApplicationException("Tag must have an instance of MenuItemMetadata class.");
+                }
+                return metadata;
+            }
+        }
+
+        public PluginIdentity PluginIdentity
+        {
+            get { return Metadata.PluginIdentity; }
         }
     }
 }
