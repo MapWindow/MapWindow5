@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -106,6 +107,15 @@ namespace MW5.UI
             {
                 throw new IndexOutOfRangeException("Menu items index is out of range.");
             }
+            
+            var item = _items[index];
+            EventHelper.RemoveEventHandler(item, "Click");      // so it can be collected by GC
+
+            if (item is ParentBarItem)
+            {
+                EventHelper.RemoveEventHandler(item, "Popup");      // so it can be collected by GC
+            }
+
             _items.RemoveAt(index);
         }
 

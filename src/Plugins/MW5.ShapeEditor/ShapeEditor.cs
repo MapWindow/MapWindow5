@@ -15,7 +15,7 @@ namespace MW5.Plugins.ShapeEditor
     {
         private IAppContext _context;
         private MapListener _mapListener;
-        private MenuGenerator _menu;
+        private MenuService _menu;
 
         public ShapeEditor()
         {
@@ -30,20 +30,20 @@ namespace MW5.Plugins.ShapeEditor
         public override void Initialize(IAppContext context)
         {
             _context = context;
-            _mapListener = new MapListener(this);
+            _mapListener = new MapListener(this, context);
 
             bool injection = false;
             if (injection)
             {
                 context.Container.RegisterInstance(typeof (ShapeEditor), this);     // perhaps do it silently before calling initialize
-                _menu = context.Container.GetSingleton<MenuGenerator>();
+                _menu = context.Container.GetSingleton<MenuService>();
             }
             else
             {
                 // I guess it's notorious service locator pattern; but strangely I like this one better;
                 // Of course if ShapeEditorMenu will be a dependency of some other service, the injeciton
                 // would work better, but will it be the case
-                _menu = new MenuGenerator(context, this, context.Container.Resolve<ILayerService>());       
+                _menu = new MenuService(context, this, context.Container.Resolve<ILayerService>());       
             }
         }
 

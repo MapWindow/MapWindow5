@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.UI;
@@ -35,7 +36,6 @@ namespace MW5
             {
                 if (items[j].PluginIdentity == identity)
                 {
-                    // TODO: remove event handlers, so that it can be collected
                     items.Remove(j);
                 }
             }

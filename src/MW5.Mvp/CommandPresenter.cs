@@ -85,12 +85,13 @@ namespace MW5.Mvp
 
             foreach (var item in items)
             {
-                // TODO: restore
-                //item.Tag != null
-                //if (item.Tag.GetType() != typeof(PluginIdentity))
-                //{
-                //    continue;       // those items are handled by somebody else
-                //}
+                if (item.Tag != null)
+                {
+                    if (item.Tag.GetType() != typeof (PluginIdentity))
+                    {
+                        continue; // those items are handled by somebody else
+                    }
+                }
 
                 item.AttachClickEventHandler(ItemClick);
                 

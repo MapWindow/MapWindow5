@@ -4,6 +4,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
+using MW5.Menu;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -51,7 +52,7 @@ namespace MW5
 
             _menu = UI.Menu.CreateInstance(form.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
-            var menus = new MenuService(this);
+            var menus = new MenuGenerator(this);
             menus.Init();
 
             // TODO: convert to service

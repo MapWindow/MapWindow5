@@ -13,7 +13,7 @@ using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
-    public class MenuGenerator
+    public class MenuService
     {
         private const string SHAPE_EDITOR_TOOLBAR = "Shape editor";    // perhaps simply use plugin name as a default
         
@@ -21,7 +21,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private readonly ILayerService _layerService;
         private readonly IAppContext _context;
 
-        public MenuGenerator(IAppContext context, BasePlugin plugin, ILayerService layerService)
+        public MenuService(IAppContext context, BasePlugin plugin, ILayerService layerService)
         {
             if (plugin == null)
             {
@@ -48,6 +48,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private void InitToolbar()
         {
             var bar = _context.Toolbars.Add(SHAPE_EDITOR_TOOLBAR);
+            bar.DockState = ToolbarDockState.Right;
             
             var btn = bar.Items.AddButton("Edit layer", MenuKeys.LayerEdit, _plugin.Identity);
             btn.Icon = new MenuIcon(Resources.layer_edit);

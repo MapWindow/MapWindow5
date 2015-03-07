@@ -7,18 +7,22 @@ using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
 {
     public class MapListener
     {
         private readonly BasePlugin _plugin;
+        private readonly IAppContext _context;
 
-        public MapListener(BasePlugin plugin)
+        public MapListener(BasePlugin plugin, IAppContext context)
         {
             if (plugin == null) throw new ArgumentNullException("plugin");
+            if (context == null) throw new ArgumentNullException("context");
 
             _plugin = plugin;
+            _context = context;
 
             plugin.ExtentsChanged += plugin_ExtentsChanged;
             plugin.MapCursorChanged += plugin_MapCursorChanged;
@@ -37,8 +41,9 @@ namespace MW5.Plugins.ShapeEditor
 
         private void plugin_MapCursorChanged(IMuteMap sender, EventArgs e)
         {
-            // TODO: update state of menu items
             Debug.Print("Map cursor changed");
+            _context.Toolbars.FindItem(MenuKeys.GeometryCreate).Checked = _context.Map.MapCursor == Api.MapCursor.AddShape;
+            _context.Toolbars.FindItem(MenuKeys.VertexEditor).Checked = _context.Map.MapCursor == Api.MapCursor.EditShape;
         }
 
         private void plugin_ExtentsChanged(IMuteMap sender, EventArgs e)

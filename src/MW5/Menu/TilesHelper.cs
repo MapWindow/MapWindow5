@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
@@ -8,7 +7,7 @@ using MW5.Plugins.Interfaces;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
-namespace MW5.Helpers
+namespace MW5.Menu
 {
     // I leave it static, there is no need to inject it anywhere
     internal static class TilesHelper
@@ -28,7 +27,7 @@ namespace MW5.Helpers
             
             root.SubItems.Clear();
 
-            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, "TileProvider_NoTiles", PluginIdentity.Default);
+            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, PluginIdentity.Default);
             item.Tag = -1;
             item.AttachClickEventHandler(item_Click);
             
@@ -42,7 +41,7 @@ namespace MW5.Helpers
 
             foreach (var p in list)
             {
-                item = root.SubItems.AddButton(EnumHelper.EnumToString(p), "TileProvider_" + p, PluginIdentity.Default );
+                item = root.SubItems.AddButton(EnumHelper.EnumToString(p), PluginIdentity.Default );
                 item.Tag = p;
                 item.AttachClickEventHandler(item_Click);
             }
@@ -60,22 +59,21 @@ namespace MW5.Helpers
 
         private static void root_DropDownOpening(object sender, EventArgs e)
         {
-            var menu = sender as ParentBarItem;
+            var menu = sender as IDropDownMenuItem;
             if (menu == null)
             {
                 return;
             }
 
-            var items = menu.Items.OfType<BarItem>().ToList();
-            foreach (var item in items)
+            foreach (var item in menu.SubItems)
             {
                 item.Checked = false;
             }
 
-            Func<BarItem, bool> predicate =
+            Func<IMenuItem, bool> predicate =
                 item => item.Tag != null && ((TileProvider)item.Tag == _map.TileProvider);
 
-            var selectedItem = items.FirstOrDefault(predicate);
+            var selectedItem = menu.SubItems.FirstOrDefault(predicate);
             if (selectedItem != null)
             {
                 selectedItem.Checked = true;

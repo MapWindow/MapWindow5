@@ -38,11 +38,11 @@ namespace MW5.UI
         {
             add
             {
-                AsParent.Popup += value;
+                AsParent.Popup += (s, e) => value.Invoke(this, e);
             }
             remove
             {
-                AsParent.Popup -= value;
+                AsParent.Popup -= value;        // the handler is removed in MenuItemCollection.Remove
             }
         }
 

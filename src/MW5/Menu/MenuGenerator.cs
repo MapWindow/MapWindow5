@@ -1,24 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-//using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Properties;
-using Syncfusion.Windows.Forms.Tools;
-using Syncfusion.Windows.Forms.Tools.XPMenus;
+using MW5.Services;
+//using System.Linq;
 
-namespace MW5.Services
+namespace MW5.Menu
 {
-    internal class MenuService
+    internal class MenuGenerator
     {
         private const string FILE_TOOLBAR = "File";
         private const string TOOLS_TOOLBAR = "Map tools";
         
         private readonly IAppContext _context;
 
-        public MenuService(IAppContext context)
+        public MenuGenerator(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
@@ -34,13 +30,11 @@ namespace MW5.Services
         {
             var bar = _context.Toolbars.Add(FILE_TOOLBAR);
             InitFileToolbar(bar);
+            bar.DockState = Plugins.ToolbarDockState.Left;
 
             bar = _context.Toolbars.Add(TOOLS_TOOLBAR);
             InitToolsToolbar(bar);
-
-            // TODO: add to the API
-            //_manager.DockToolbar(bar, CommandBarDockState.Left);
-            //_manager.DockToolbar(_toolbarMap, CommandBarDockState.Top);
+            bar.DockState = Plugins.ToolbarDockState.Top;
         }
 
         private void InitFileToolbar(IToolbar bar)

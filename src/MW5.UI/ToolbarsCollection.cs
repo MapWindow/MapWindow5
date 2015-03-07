@@ -51,8 +51,7 @@ namespace MW5.UI
 
         public IMenuItem FindItem(string key)
         {
-            // TODO: implement
-            return null;
+            return MenuIndex.GetItem(key);
         }
 
         public IToolbar Add(string name)

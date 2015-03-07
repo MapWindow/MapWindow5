@@ -93,6 +93,7 @@
     <Compile Include="Mvp\IPresenter.cs" />
     <Compile Include="Mvp\IView.cs" />
     <Compile Include="PluginBroadcaster.cs" />
+    <Compile Include="PluginEnumerations.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

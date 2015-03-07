@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
@@ -73,6 +74,12 @@ namespace MW5.UI
         {
             get { return CommandBar.Tag; }
             set { CommandBar.Tag = value; }
+        }
+
+        public ToolbarDockState DockState
+        {
+            get { return ToolbarDockState.Top; }
+            set { throw new NotSupportedException("Dock state for the main menu can't be changed."); }
         }
 
         public IDropDownMenuItem Plugins

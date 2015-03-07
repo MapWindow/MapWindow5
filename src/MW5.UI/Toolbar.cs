@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
@@ -49,6 +50,12 @@ namespace MW5.UI
         {
             get { return _commandBar.Tag; }
             set { _commandBar.Tag = value; }
+        }
+
+        public ToolbarDockState DockState
+        {
+            get { return (ToolbarDockState) _manager.GetBarControl(_bar).DockState; }
+            set { _manager.GetBarControl(_bar).DockState = (CommandBarDockState)value; }
         }
     }
 }

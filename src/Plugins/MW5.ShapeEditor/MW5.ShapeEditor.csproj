@@ -62,7 +62,7 @@
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="MapListener.cs" />
-    <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Menu\MenuService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

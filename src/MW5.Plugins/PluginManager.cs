@@ -212,7 +212,6 @@ namespace MW5.Plugins
 
         //public void Initialize(IAppContext context)
         //{
-            // TODO: fix it
             // skip initialization on startup for now
             //return;
 

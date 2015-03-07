@@ -7,9 +7,11 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
+using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Presenters;
+using MW5.Services;
 using MW5.UI;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -36,10 +38,7 @@ namespace MW5.Views
 
             _mainFrameBarManager1.InitMenus(_mainMenu);
 
-            
-
             FormClosed += MainView_FormClosed;
-
         }
         
         void MainView_FormClosed(object sender, FormClosedEventArgs e)
@@ -57,12 +56,10 @@ namespace MW5.Views
 
         public void UpdateView()
         {
-            // mapControls plays the role of the model here
-            
-            // TODO: implement
-            //toolZoomIn.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
-            //toolZoomOut.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
-            //toolPan.Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
+            // mapControl plays the role of the model here
+            _context.Toolbars.FindItem(MenuKeys.ZoomIn).Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
+            _context.Toolbars.FindItem(MenuKeys.ZoomOut).Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
+            _context.Toolbars.FindItem(MenuKeys.Pan).Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
         }
 
         #endregion
