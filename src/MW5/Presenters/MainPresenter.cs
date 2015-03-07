@@ -3,32 +3,20 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Mvp;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Services;
 using MW5.Services.Services.Abstract;
 
 namespace MW5.Presenters
 {
-    public enum MainCommand
-    {
-        Open = 0,
-        ZoomIn = 1,
-        ZoomOut = 2,
-        ZoomMax = 3,
-        Pan = 4,
-        OpenVector = 5,
-        OpenRaster = 6,
-        SetProjection = 7,
-        ZoomToLayer = 8,
-        RemoveLayer = 9,
-    }
-
-    public interface IMainView : IComplexView
+    public interface IMainView : IView
     {
         
     }
 
-    public class MainPresenter : BasePresenter<IMainView, MainCommand>
+    public class MainPresenter : BasePresenter<IMainView>
     {
         private readonly IAppContext _context;
         private readonly IMainView _view;
@@ -42,54 +30,48 @@ namespace MW5.Presenters
             _view = view;
             _layerService = layerService;
             _messageService = messageService;
+
+            PluginManager.Instance.MenuItemClicked += MenuItemClicked;
         }
 
-        public override void RunCommand(MainCommand command)
+        private void MenuItemClicked(object sender, Plugins.Concrete.MenuItemEventArgs e)
         {
-            switch( command)
+            switch (e.ItemKey)
             {
-                case MainCommand.Open:
+                case MenuKeys.AddLayer:
                     _layerService.AddLayer(LayerType.All);
                     break;
-                case MainCommand.OpenVector:
-                    _layerService.AddLayer(LayerType.Vector);
-                    break;
-                case MainCommand.OpenRaster:
+                case MenuKeys.AddRasterLayer:
                     _layerService.AddLayer(LayerType.Raster);
                     break;
-                case MainCommand.ZoomIn:
-                    SetMapCursor(MapCursor.ZoomIn);
+                case MenuKeys.AddVectorLayer:
+                    _layerService.AddLayer(LayerType.Vector);
                     break;
-                case MainCommand.ZoomOut:
-                    SetMapCursor(MapCursor.ZoomOut);
+                case MenuKeys.ZoomIn:
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
                     break;
-                case MainCommand.ZoomMax:
+                case MenuKeys.ZoomMax:
                     _context.Map.ZoomToMaxExtents();
                     break;
-                case MainCommand.Pan:
-                    SetMapCursor(MapCursor.Pan);
+                case MenuKeys.ZoomOut:
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
                     break;
-                case MainCommand.SetProjection:
-                    CompositionRoot.Container.Run<SetProjectionPresenter>();
-                    break;
-                case MainCommand.RemoveLayer:
-                    _layerService.RemoveSelectedLayer();
-                    break;
-                case MainCommand.ZoomToLayer:
+                case MenuKeys.ZoomToLayer:
                     _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
                     break;
+                case MenuKeys.AddDatabaseLayer:
+                    // TODO: implement
+                    break;
+                case MenuKeys.Pan:
+                    _context.Map.MapCursor = MapCursor.Pan;
+                    break;
+                case MenuKeys.RemoveLayer:
+                    _layerService.RemoveSelectedLayer();
+                    break;
+                case MenuKeys.SetProjection:
+                    CompositionRoot.Container.Run<SetProjectionPresenter>();
+                    break;
             }
-        }
-
-        private void SetMapCursor(MapCursor cursor)
-        {
-            _context.Map.MapCursor = cursor;
-            //_view.UpdateView();           // it's will be called from MapCursorChanged event
-        }
-
-        protected override void CommandNotFound(string itemName)
-        {
-            _messageService.Warn("Command not found: " + itemName);
         }
     }
 }

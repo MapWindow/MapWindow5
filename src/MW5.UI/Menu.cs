@@ -16,7 +16,7 @@ namespace MW5.UI
 
         private MainFrameBarManager _menuManager;
 
-        public static IMenu CreateInstance(object menuManager)
+        internal static IMenu CreateInstance(object menuManager)
         {
             var menu = new Menu(menuManager);
             return menu;

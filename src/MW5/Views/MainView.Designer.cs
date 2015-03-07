@@ -57,23 +57,6 @@ namespace MW5.Views
             this.mnuTiles = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.mnuPlugins = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.mnuHelp = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this._toolbarProject = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MainToolbar");
-            this.mnuOpenProject = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.mnuSaveProject = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.mnuSaveProjectAs = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.barItem6 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.mnuOpenVector = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.mnuOpenRaster = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolOpenDatabase = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolCreateLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolRemoveLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this._toolbarMap = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MapToolbar");
-            this.toolZoomIn = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolZoomOut = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolZoomToMax = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolZoomToLayer = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.toolPan = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.barItem2 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
             this._legendControl1 = new MW5.Api.Legend.LegendControl();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
@@ -288,10 +271,6 @@ namespace MW5.Views
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
             this._mainFrameBarManager1.Bars.Add(this._mainMenu);
-            this._mainFrameBarManager1.Bars.Add(this._toolbarProject);
-            this._mainFrameBarManager1.Bars.Add(this._toolbarMap);
-            this._mainFrameBarManager1.Categories.Add("FileToolbar");
-            this._mainFrameBarManager1.Categories.Add("Tools");
             this._mainFrameBarManager1.Categories.Add("Menu");
             this._mainFrameBarManager1.Categories.Add("FileMenu");
             this._mainFrameBarManager1.CurrentBaseFormType = "System.Windows.Forms.Form";
@@ -302,24 +281,9 @@ namespace MW5.Views
             this._mainFrameBarManager1.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
             this.mnuFile,
             this.mnuTiles,
-            this.mnuOpenVector,
             this.mnuPlugins,
-            this.mnuOpenRaster,
             this.mnuHelp,
-            this.mnuSaveProject,
-            this.mnuSaveProjectAs,
-            this.mnuOpenProject,
-            this.toolOpenDatabase,
-            this.toolCreateLayer,
-            this.toolRemoveLayer,
-            this.toolZoomIn,
-            this.toolZoomOut,
-            this.toolZoomToMax,
-            this.toolZoomToLayer,
-            this.toolPan,
-            this.barItem1,
-            this.barItem6,
-            this.barItem2});
+            this.barItem1});
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
@@ -344,7 +308,7 @@ namespace MW5.Views
             // mnuFile
             // 
             this.mnuFile.BarName = "mnuFile";
-            this.mnuFile.CategoryIndex = 2;
+            this.mnuFile.CategoryIndex = 0;
             this.mnuFile.ID = "File";
             this.mnuFile.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
             this.barItem1});
@@ -358,7 +322,7 @@ namespace MW5.Views
             // barItem1
             // 
             this.barItem1.BarName = "barItem1";
-            this.barItem1.CategoryIndex = 3;
+            this.barItem1.CategoryIndex = 1;
             this.barItem1.CustomTextFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.barItem1.ID = "mnuOpen";
             this.barItem1.ImageSize = new System.Drawing.Size(32, 32);
@@ -370,7 +334,7 @@ namespace MW5.Views
             // mnuTiles
             // 
             this.mnuTiles.BarName = "mnuTiles";
-            this.mnuTiles.CategoryIndex = 2;
+            this.mnuTiles.CategoryIndex = 0;
             this.mnuTiles.ID = "tiles";
             this.mnuTiles.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this.mnuTiles.ShowToolTipInPopUp = false;
@@ -382,7 +346,7 @@ namespace MW5.Views
             // mnuPlugins
             // 
             this.mnuPlugins.BarName = "mnuPlugins";
-            this.mnuPlugins.CategoryIndex = 2;
+            this.mnuPlugins.CategoryIndex = 0;
             this.mnuPlugins.ID = "plugins";
             this.mnuPlugins.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this.mnuPlugins.ShowToolTipInPopUp = false;
@@ -394,7 +358,7 @@ namespace MW5.Views
             // mnuHelp
             // 
             this.mnuHelp.BarName = "mnuHelp";
-            this.mnuHelp.CategoryIndex = 2;
+            this.mnuHelp.CategoryIndex = 0;
             this.mnuHelp.ID = "Help";
             this.mnuHelp.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this.mnuHelp.ShowToolTipInPopUp = false;
@@ -402,209 +366,6 @@ namespace MW5.Views
             this.mnuHelp.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
             this.mnuHelp.Text = "Help";
             this.mnuHelp.WrapLength = 20;
-            // 
-            // _toolbarProject
-            // 
-            this._toolbarProject.BarName = "MainToolbar";
-            this._toolbarProject.BarStyle = ((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle)((((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.AllowQuickCustomizing | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.RotateWhenVertical) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.Visible) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.DrawDragBorder)));
-            this._toolbarProject.Caption = "Project";
-            this._toolbarProject.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
-            this.mnuOpenProject,
-            this.mnuSaveProject,
-            this.mnuSaveProjectAs,
-            this.barItem6,
-            this.mnuOpenVector,
-            this.mnuOpenRaster,
-            this.toolOpenDatabase,
-            this.toolCreateLayer,
-            this.toolRemoveLayer});
-            this._toolbarProject.Manager = this._mainFrameBarManager1;
-            this._toolbarProject.SeparatorIndices.AddRange(new int[] {
-            3,
-            7});
-            // 
-            // mnuOpenProject
-            // 
-            this.mnuOpenProject.BarName = "mnuOpenProject";
-            this.mnuOpenProject.CategoryIndex = 0;
-            this.mnuOpenProject.ID = "Open Project";
-            this.mnuOpenProject.ImageIndex = 4;
-            this.mnuOpenProject.Padding = new System.Drawing.Point(10, 5);
-            this.mnuOpenProject.ShowToolTipInPopUp = false;
-            this.mnuOpenProject.SizeToFit = true;
-            this.mnuOpenProject.Text = "Open Project";
-            // 
-            // mnuSaveProject
-            // 
-            this.mnuSaveProject.BarName = "mnuSaveProject";
-            this.mnuSaveProject.CategoryIndex = 0;
-            this.mnuSaveProject.ID = "mnuSaveProject";
-            this.mnuSaveProject.ImageIndex = 22;
-            this.mnuSaveProject.Padding = new System.Drawing.Point(10, 5);
-            this.mnuSaveProject.ShowToolTipInPopUp = false;
-            this.mnuSaveProject.SizeToFit = true;
-            this.mnuSaveProject.Text = "Save Project";
-            // 
-            // mnuSaveProjectAs
-            // 
-            this.mnuSaveProjectAs.BarName = "mnuSaveProjectAs";
-            this.mnuSaveProjectAs.CategoryIndex = 0;
-            this.mnuSaveProjectAs.ID = "Save Project As";
-            this.mnuSaveProjectAs.ImageIndex = 24;
-            this.mnuSaveProjectAs.Padding = new System.Drawing.Point(10, 5);
-            this.mnuSaveProjectAs.ShowToolTipInPopUp = false;
-            this.mnuSaveProjectAs.SizeToFit = true;
-            this.mnuSaveProjectAs.Text = "Save Project As";
-            // 
-            // barItem6
-            // 
-            this.barItem6.BarName = "barItem6";
-            this.barItem6.CategoryIndex = 0;
-            this.barItem6.ID = "Open";
-            this.barItem6.ImageIndex = 6;
-            this.barItem6.ShowToolTipInPopUp = false;
-            this.barItem6.SizeToFit = true;
-            this.barItem6.Text = "Open";
-            // 
-            // mnuOpenVector
-            // 
-            this.mnuOpenVector.BarName = "mnuOpenVector";
-            this.mnuOpenVector.CategoryIndex = 0;
-            this.mnuOpenVector.ID = "toolOpenVector";
-            this.mnuOpenVector.ImageIndex = 14;
-            this.mnuOpenVector.Padding = new System.Drawing.Point(10, 5);
-            this.mnuOpenVector.ShowToolTipInPopUp = false;
-            this.mnuOpenVector.SizeToFit = true;
-            this.mnuOpenVector.Text = "Open Vector";
-            // 
-            // mnuOpenRaster
-            // 
-            this.mnuOpenRaster.BarName = "mnuOpenRaster";
-            this.mnuOpenRaster.CategoryIndex = 0;
-            this.mnuOpenRaster.ID = "toolOpenRaster";
-            this.mnuOpenRaster.ImageIndex = 11;
-            this.mnuOpenRaster.Padding = new System.Drawing.Point(10, 5);
-            this.mnuOpenRaster.ShowToolTipInPopUp = false;
-            this.mnuOpenRaster.SizeToFit = true;
-            this.mnuOpenRaster.Text = "Open Raster";
-            // 
-            // toolOpenDatabase
-            // 
-            this.toolOpenDatabase.BarName = "toolOpenDatabase";
-            this.toolOpenDatabase.CategoryIndex = 0;
-            this.toolOpenDatabase.ID = "Open PostGIS layer";
-            this.toolOpenDatabase.ImageIndex = 13;
-            this.toolOpenDatabase.Padding = new System.Drawing.Point(10, 5);
-            this.toolOpenDatabase.ShowToolTipInPopUp = false;
-            this.toolOpenDatabase.SizeToFit = true;
-            this.toolOpenDatabase.Text = "Open database layer";
-            // 
-            // toolCreateLayer
-            // 
-            this.toolCreateLayer.BarName = "toolCreateLayer";
-            this.toolCreateLayer.CategoryIndex = 0;
-            this.toolCreateLayer.ID = "Create Layer";
-            this.toolCreateLayer.ImageIndex = 7;
-            this.toolCreateLayer.Padding = new System.Drawing.Point(10, 5);
-            this.toolCreateLayer.ShowToolTipInPopUp = false;
-            this.toolCreateLayer.SizeToFit = true;
-            this.toolCreateLayer.Text = "Create Layer";
-            // 
-            // toolRemoveLayer
-            // 
-            this.toolRemoveLayer.BarName = "toolRemoveLayer";
-            this.toolRemoveLayer.CategoryIndex = 0;
-            this.toolRemoveLayer.ID = "toolRemoveLayer";
-            this.toolRemoveLayer.ImageIndex = 12;
-            this.toolRemoveLayer.Padding = new System.Drawing.Point(10, 5);
-            this.toolRemoveLayer.ShowToolTipInPopUp = false;
-            this.toolRemoveLayer.SizeToFit = true;
-            this.toolRemoveLayer.Text = "Remove Layer";
-            // 
-            // _toolbarMap
-            // 
-            this._toolbarMap.BarName = "MapToolbar";
-            this._toolbarMap.BarStyle = ((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle)((((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.AllowQuickCustomizing | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.RotateWhenVertical) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.Visible) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.DrawDragBorder)));
-            this._toolbarMap.Caption = "Tools";
-            this._toolbarMap.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
-            this.toolZoomIn,
-            this.toolZoomOut,
-            this.toolZoomToMax,
-            this.toolZoomToLayer,
-            this.toolPan,
-            this.barItem2});
-            this._toolbarMap.Manager = this._mainFrameBarManager1;
-            this._toolbarMap.SeparatorIndices.AddRange(new int[] {
-            5});
-            // 
-            // toolZoomIn
-            // 
-            this.toolZoomIn.BarName = "toolZoomIn";
-            this.toolZoomIn.CategoryIndex = 1;
-            this.toolZoomIn.ID = "ZoomIn";
-            this.toolZoomIn.ImageIndex = 32;
-            this.toolZoomIn.Padding = new System.Drawing.Point(10, 5);
-            this.toolZoomIn.ShowToolTipInPopUp = false;
-            this.toolZoomIn.SizeToFit = true;
-            this.toolZoomIn.Text = "Zoom In";
-            // 
-            // toolZoomOut
-            // 
-            this.toolZoomOut.BarName = "toolZoomOut";
-            this.toolZoomOut.CategoryIndex = 1;
-            this.toolZoomOut.ID = "ZoomOut";
-            this.toolZoomOut.ImageIndex = 34;
-            this.toolZoomOut.Padding = new System.Drawing.Point(10, 5);
-            this.toolZoomOut.ShowToolTipInPopUp = false;
-            this.toolZoomOut.SizeToFit = true;
-            this.toolZoomOut.Text = "Zoom Out";
-            // 
-            // toolZoomToMax
-            // 
-            this.toolZoomToMax.BarName = "toolZoomToMax";
-            this.toolZoomToMax.CategoryIndex = 1;
-            this.toolZoomToMax.ID = "ZoomMax";
-            this.toolZoomToMax.ImageIndex = 31;
-            this.toolZoomToMax.Padding = new System.Drawing.Point(10, 5);
-            this.toolZoomToMax.ShowToolTipInPopUp = false;
-            this.toolZoomToMax.SizeToFit = true;
-            this.toolZoomToMax.Text = "Zoom to Max";
-            // 
-            // toolZoomToLayer
-            // 
-            this.toolZoomToLayer.BarName = "toolZoomToLayer";
-            this.toolZoomToLayer.CategoryIndex = 1;
-            this.toolZoomToLayer.ID = "toolZoomToLayer";
-            this.toolZoomToLayer.ImageIndex = 33;
-            this.toolZoomToLayer.Padding = new System.Drawing.Point(10, 5);
-            this.toolZoomToLayer.ShowToolTipInPopUp = false;
-            this.toolZoomToLayer.SizeToFit = true;
-            this.toolZoomToLayer.Text = "Zoom to Layer";
-            // 
-            // toolPan
-            // 
-            this.toolPan.BarName = "toolPan";
-            this.toolPan.CategoryIndex = 1;
-            this.toolPan.ID = "Pan";
-            this.toolPan.ImageIndex = 20;
-            this.toolPan.Padding = new System.Drawing.Point(10, 5);
-            this.toolPan.ShowToolTipInPopUp = false;
-            this.toolPan.SizeToFit = true;
-            this.toolPan.Text = "Pan";
-            // 
-            // barItem2
-            // 
-            this.barItem2.BarName = "barItem2";
-            this.barItem2.CategoryIndex = 1;
-            this.barItem2.ID = "toolSetProjection";
-            this.barItem2.ImageIndex = 2;
-            this.barItem2.ShowToolTipInPopUp = false;
-            this.barItem2.SizeToFit = true;
-            this.barItem2.Text = "Set projection";
             // 
             // _imageListAdv1
             // 
@@ -652,6 +413,7 @@ namespace MW5.Views
             this._legendControl1.BackColor = System.Drawing.Color.White;
             this._legendControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._legendControl1.Location = new System.Drawing.Point(106, 174);
+            this._legendControl1.Map = null;
             this._legendControl1.Name = "_legendControl1";
             this._legendControl1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this._legendControl1.ShowGroupIcons = true;
@@ -659,7 +421,7 @@ namespace MW5.Views
             this._legendControl1.Size = new System.Drawing.Size(107, 126);
             this._legendControl1.TabIndex = 5;
             // 
-            // View
+            // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -700,29 +462,12 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _mainMenu;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _toolbarProject;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem mnuOpenVector;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem mnuOpenRaster;
         private Syncfusion.Windows.Forms.Tools.ImageListAdv _imageListAdv1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem mnuOpenProject;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem mnuSaveProject;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem mnuSaveProjectAs;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolOpenDatabase;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolCreateLayer;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolRemoveLayer;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _toolbarMap;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolZoomIn;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolZoomOut;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolZoomToMax;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolZoomToLayer;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem toolPan;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuFile;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuTiles;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuPlugins;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuHelp;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem6;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem2;
         private Api.Legend.LegendControl _legendControl1;
 
     }

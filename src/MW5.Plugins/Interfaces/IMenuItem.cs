@@ -17,7 +17,7 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// Gets/Sets the icon for the menu item
         /// </summary>
-        IMenuIcon Picture { get; set; }
+        IMenuIcon Icon { get; set; }
 
         /// <summary>
         /// Gets/Sets the category for this item (used when the user customizes the menu)
@@ -40,30 +40,38 @@ namespace MW5.Plugins.Interfaces
         string Description { get; set; }
 
         /// <summary>
-        /// Gets/Sets the Displayed state of this item
-        /// </summary>
-        bool Displayed { get; set; }
-
-        /// <summary>
         ///	Gets/Sets the enabled state of this item
         /// </summary>
         bool Enabled { get; set; }
 
         /// <summary>
-        /// Gets the Name of this item
+        /// Gets the key of this item
         /// </summary>
-        string Name { get; set; }
+        string Key { get; }
 
         /// <summary>
         /// Gets/Sets the visibility state of this item
         /// </summary>
         bool Visible { get; set; }
 
+        /// <summary>
+        /// Gets or sets any custom information to be stored with the item.
+        /// </summary>
         object Tag { get; set; }
 
-        // TODO: hide from plugins
-        event EventHandler Click;
+        /// <summary>
+        /// Allows to attach custom handler for click event.
+        /// </summary>
+        void AttachClickEventHandler(EventHandler<MenuItemEventArgs> handler);
 
+        /// <summary>
+        /// Gets the internal object.
+        /// </summary>
         object GetInternalObject();
+
+        /// <summary>
+        /// Gets the plugin identity.
+        /// </summary>
+        PluginIdentity PluginIdentity { get; }
     }
 }

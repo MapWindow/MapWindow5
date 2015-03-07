@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
@@ -13,7 +14,7 @@ namespace MW5.UI
     {
         private MainFrameBarManager _manager;
 
-        public static IToolbarCollection CreateInstance(object menuManager)
+        internal static IToolbarCollection CreateInstance(object menuManager)
         {
             var collection = new ToolbarsCollection(menuManager);
             return collection;
@@ -46,6 +47,12 @@ namespace MW5.UI
                 }
                 return new Toolbar(_manager, _manager.Bars[index]);
             }
+        }
+
+        public IMenuItem FindItem(string key)
+        {
+            // TODO: implement
+            return null;
         }
 
         public IToolbar Add(string name)

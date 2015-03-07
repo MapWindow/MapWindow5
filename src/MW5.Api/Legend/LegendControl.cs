@@ -84,6 +84,10 @@ namespace MW5.Api.Legend
             }
             set
             {
+                if (value == null)
+                {
+                    return;
+                }
                 _map = value.InternalObject as AxMap;
                 if (_map == null)
                 {

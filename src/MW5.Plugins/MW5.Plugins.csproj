@@ -76,6 +76,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concrete\BasePlugin.cs" />
+    <Compile Include="Concrete\MenuItemEventArgs.cs" />
+    <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
@@ -91,7 +93,6 @@
     <Compile Include="Mvp\IPresenter.cs" />
     <Compile Include="Mvp\IView.cs" />
     <Compile Include="PluginBroadcaster.cs" />
-    <Compile Include="PluginHelper.cs" />
     <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />

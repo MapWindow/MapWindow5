@@ -85,12 +85,14 @@ namespace MW5.Mvp
 
             foreach (var item in items)
             {
-                if (item.Tag != null && item.Tag.GetType() != typeof(PluginIdentity))
-                {
-                    continue;       // those items are handled by somebody else
-                }
+                // TODO: restore
+                //item.Tag != null
+                //if (item.Tag.GetType() != typeof(PluginIdentity))
+                //{
+                //    continue;       // those items are handled by somebody else
+                //}
 
-                item.Click += ItemClick;
+                item.AttachClickEventHandler(ItemClick);
                 
                 var dropDown = item as IDropDownMenuItem;
                 if (dropDown != null)
@@ -112,7 +114,7 @@ namespace MW5.Mvp
             }
 
             var command = Activator.CreateInstance<TCommand>();
-            if (CommandFromName(item.Name, ref command))
+            if (CommandFromName(item.Key, ref command))
             {
                 RunCommand(command);
             }

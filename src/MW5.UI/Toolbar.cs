@@ -21,6 +21,7 @@ namespace MW5.UI
             _manager = manager;
             _bar = bar;
             _commandBar = _manager.GetBarControl(_bar);
+
             if (bar == null || _commandBar == null)
             {
                 throw new NullReferenceException("Internal toolbar reference is null.");

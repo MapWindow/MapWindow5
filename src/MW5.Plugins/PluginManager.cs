@@ -29,10 +29,29 @@ namespace MW5.Plugins
 
         private readonly PluginBroadcaster _broadcaster;
 
+        public event EventHandler<PluginEventArgs> PluginUnloaded;
+
+        public event EventHandler<MenuItemEventArgs> MenuItemClicked;
+
+        private void FirePluginUnloaded(PluginIdentity identity)
+        {
+            var handler = PluginUnloaded;
+            if (handler != null)
+            {
+                handler.Invoke(this, new PluginEventArgs(identity));
+            }
+        }
+
+        private static PluginManager _instance;
+        public static PluginManager Instance
+        {
+            get { return _instance ?? (_instance = new PluginManager()); }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager()
+        private PluginManager()
         {
             _broadcaster = new PluginBroadcaster(this);
         }
@@ -161,12 +180,32 @@ namespace MW5.Plugins
             plugin.Terminate();
             _active.Remove(identity);
 
-            context.RemovePluginMenus(identity);
+            FirePluginUnloaded(identity);
         }
 
         public bool PluginActive(PluginIdentity identity)
         {
             return _active.Contains(identity);
+        }
+
+        public void FireItemClicked(object sender, MenuItemEventArgs args)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                if (item.PluginIdentity == PluginIdentity.Default)
+                {
+                    var handler = MenuItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+                }
+                else
+                {
+                    _broadcaster.BroadcastEvent(p => p.ItemClicked_, sender, args);
+                }
+            }
         }
 
         #region From prototype

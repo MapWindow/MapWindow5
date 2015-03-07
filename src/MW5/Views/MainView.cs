@@ -36,8 +36,7 @@ namespace MW5.Views
 
             _mainFrameBarManager1.InitMenus(_mainMenu);
 
-            _mainFrameBarManager1.DockToolbar(_toolbarProject, CommandBarDockState.Left);
-            _mainFrameBarManager1.DockToolbar(_toolbarMap, CommandBarDockState.Top);
+            
 
             FormClosed += MainView_FormClosed;
 
@@ -56,22 +55,14 @@ namespace MW5.Views
             Application.Run(this);
         }
 
-        public IEnumerable<IToolbar> Toolbars
-        {
-            get
-            {
-                // TODO: wire up main menu as well
-                var list = _context.Toolbars.Where(tb => tb.Name.ToLower() == "maintoolbar" || tb.Name.ToLower() == "maptoolbar").ToList();
-                return list;
-            }
-        }
-
         public void UpdateView()
         {
             // mapControls plays the role of the model here
-            toolZoomIn.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
-            toolZoomOut.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
-            toolPan.Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
+            
+            // TODO: implement
+            //toolZoomIn.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
+            //toolZoomOut.Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
+            //toolPan.Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
         }
 
         #endregion

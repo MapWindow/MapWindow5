@@ -10,7 +10,6 @@ namespace MW5.Plugins.Symbology
     public class SymbologyPlugin : BasePlugin
     {
         private IAppContext _context;
-        private SymbologyMenu _menu;
 
         public override string Description
         {
@@ -20,7 +19,6 @@ namespace MW5.Plugins.Symbology
         public override void Initialize(IAppContext context)
         {
             _context = context;
-            _menu = new SymbologyMenu(context);
         }
 
         public override void Terminate()

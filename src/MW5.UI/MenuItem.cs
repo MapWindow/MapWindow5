@@ -30,7 +30,7 @@ namespace MW5.UI
             set { _item.Text = value; }
         }
 
-        public IMenuIcon Picture
+        public IMenuIcon Icon
         {
             get { return new MenuIcon(_item.Image.GetImage()); }
             set
@@ -42,8 +42,8 @@ namespace MW5.UI
 
         public string Category
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return Metadata.Category; }
+            set { Metadata.Category = value; }
         }
 
         public bool Checked
@@ -60,14 +60,8 @@ namespace MW5.UI
 
         public string Description
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-
-        public bool Displayed
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return Metadata.Description; }
+            set { Metadata.Description = value; }
         }
 
         public bool Enabled
@@ -76,10 +70,9 @@ namespace MW5.UI
             set { _item.Enabled = value; }
         }
 
-        public string Name
+        public string Key
         {
-            get { return _item.ID; }
-            set { _item.ID = value; }
+            get { return Metadata.Key; }
         }
 
         public bool Visible
@@ -90,25 +83,39 @@ namespace MW5.UI
 
         public object Tag
         {
-            get { return _item.Tag; }
-            set { _item.Tag = value; }
+            get { return Metadata.Tag; }
+            set { Metadata.Tag = value; }
         }
 
-        public event EventHandler Click
+        public void AttachClickEventHandler(EventHandler<MenuItemEventArgs> handler)
         {
-            add
-            {
-                _item.Click += (sender, args) => value.Invoke(this, args);
-            }
-            remove
-            {
-                _item.Click -= value;       // TODO: remove handler
-            }
+            _item.Click += (sender, args) => handler.Invoke(this, new MenuItemEventArgs(this.Key));
         }
 
         public object GetInternalObject()
         {
             return _item;
+        }
+
+        public PluginIdentity PluginIdentity
+        {
+            get
+            {
+                return Metadata.PluginIdentity;
+            }
+        }
+
+        private MenuItemMetadata Metadata
+        {
+            get
+            {
+                var data = _item.Tag as MenuItemMetadata;
+                if (data == null)
+                {
+                    throw new ApplicationException("Tag property of menu items must store an instance of MenuItemMetadata class.");
+                }
+                return data;
+            }
         }
     }
 }

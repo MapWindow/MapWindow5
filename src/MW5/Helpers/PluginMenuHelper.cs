@@ -29,9 +29,9 @@ namespace MW5.Helpers
 
             foreach (var p in _manager.AllPlugins)
             {
-                var item = menuItem.SubItems.AddButton(p.Identity.Name);
+                var item = menuItem.SubItems.AddButton(p.Identity.Name, PluginIdentity.Default);
                 item.Tag = p.Identity;                    
-                item.Click += item_Click;
+                item.AttachClickEventHandler(item_Click);
             }
 
             menuItem.DropDownOpening += MenuDropDownOpening;
@@ -51,7 +51,7 @@ namespace MW5.Helpers
             }
         }
 
-        private static void item_Click(object sender, EventArgs e)
+        private static void item_Click(object sender, MenuItemEventArgs e)
         {
             var item = sender as IMenuItem;
             if (item != null)

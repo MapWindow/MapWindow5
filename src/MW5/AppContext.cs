@@ -7,6 +7,7 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Services;
 using MW5.Services.Services.Abstract;
 using MW5.UI;
 using MW5.UI.Syncfusion;
@@ -14,7 +15,7 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5
 {
-    // Lifetime should be singleton
+    // must be singleton
     public class AppContext: IAppContext
     {
         private IMap _map;
@@ -22,9 +23,14 @@ namespace MW5
         private IMenu _menu;
         private IToolbarCollection _toolbars;
         private IMuteLegend _legend;
-        private readonly PluginManager _manager = new PluginManager();
+        private readonly PluginManager _manager;
         private MapListener _mapListener;
         private IView _view;
+
+        public AppContext()
+        {
+            _manager = PluginManager.Instance;
+        }
 
         public void Init(IMainForm form)
         {
@@ -45,16 +51,24 @@ namespace MW5
 
             _menu = UI.Menu.CreateInstance(form.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
+            var menus = new MenuService(this);
+            menus.Init();
 
             // TODO: convert to service
             TilesHelper.Init(_map, Menu.Tiles);
 
+            _manager.PluginUnloaded += ManagerPluginUnloaded;
             _manager.AssemblePlugins();
             PluginMenuHelper.InitPlugins(this, _manager);
 
             // TODO: temporary only, use injection            
             var layerService = CompositionRoot.Container.Resolve<ILayerService>();
             _mapListener = new MapListener(_map, this, _manager.Broadcaster, layerService);
+        }
+
+        private void ManagerPluginUnloaded(object sender, Plugins.Concrete.PluginEventArgs e)
+        {
+            this.RemovePluginMenus(e.Identity);
         }
 
         public IApplicationContainer Container

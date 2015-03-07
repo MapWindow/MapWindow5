@@ -11,7 +11,16 @@ namespace MW5.Plugins.Concrete
         private string _name;
         private string _author;
         private Guid _guid;
-        
+
+        public static PluginIdentity Default
+        {
+            get
+            {
+                return new PluginIdentity("MapWindow Core App", "MapWindow Open Source Team",
+                    new Guid("F6D7BB9C-8E9E-4A8A-89BA-D4E1665825B3"));
+            }
+        }
+
         public PluginIdentity(string name, string author, Guid guid)
         {
             _name = name;

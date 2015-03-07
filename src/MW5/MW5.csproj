@@ -104,10 +104,14 @@
     <Compile Include="Helpers\MapListener.cs" />
     <Compile Include="Helpers\TilesHelper.cs" />
     <Compile Include="Helpers\PluginMenuHelper.cs" />
+    <Compile Include="PluginHelper.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SetProjectionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\MenuKeys.cs" />
+    <Compile Include="Services\MenuListener.cs" />
+    <Compile Include="Services\MenuService.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,6 +195,111 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\attribute_show.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\crs_change.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\element_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\label_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_create.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_database_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_db_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_raster_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_vector_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer_vector_thematic_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\measure_area.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\measure_distance.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\new_map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pan.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pan1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\project_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\quit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save_as.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\save1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\select.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\select_by_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snapshot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vertex.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_in.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_max_extents.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_out.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_to_layer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_to_selection.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

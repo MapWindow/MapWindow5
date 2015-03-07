@@ -11,6 +11,7 @@ using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins
 {
@@ -37,23 +38,36 @@ namespace MW5.Plugins
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, MapEventHandler<T>>> eventHandler, IMuteMap sender, T args)
             where T: EventArgs
         {
-            var expression = eventHandler.Body as MemberExpression;
-            if (expression != null)
-            {
-                string eventName = expression.Member.Name;
+            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args);
+        }
 
-                var fieldInfo = GetEventField(eventName);
-                if (fieldInfo != null)
+        public void BroadcastEvent<T>(Expression<Func<BasePlugin, EventHandler<T>>> eventHandler, object sender, T args)
+            where T : EventArgs
+        {
+           BroadcastEvent(eventHandler.Body as MemberExpression, sender, args);        
+        }
+
+        private void BroadcastEvent<T>(MemberExpression expression, object sender, T args)
+            where T : EventArgs
+        {
+            if (expression == null)
+            {
+                return;
+            }
+            
+            string eventName = expression.Member.Name;
+
+            var fieldInfo = GetEventField(eventName);
+            if (fieldInfo != null)
+            {
+                foreach (var p in _manager.ActivePlugins)
                 {
-                    foreach (var p in _manager.ActivePlugins)
+                    var del = fieldInfo.GetValue(p) as MulticastDelegate;
+                    if (del != null)
                     {
-                        var del = fieldInfo.GetValue(p) as MulticastDelegate;
-                        if (del != null)
+                        if (del.GetInvocationList().Any())
                         {
-                            if (del.GetInvocationList().Any())
-                            {
-                                del.Method.Invoke(del.Target, new object[] { sender, args });
-                            }
+                            del.Method.Invoke(del.Target, new object[] { sender, args });
                         }
                     }
                 }

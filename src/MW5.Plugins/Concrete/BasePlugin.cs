@@ -15,10 +15,12 @@ namespace MW5.Plugins.Concrete
         private PluginIdentity _identity = null;
 
         public abstract string Description { get; }
+
         public abstract void Initialize(IAppContext context);
+        
         public abstract void Terminate();
 
-        internal PluginIdentity Identity
+        public PluginIdentity Identity
         {
             get
             {
@@ -28,7 +30,7 @@ namespace MW5.Plugins.Concrete
                 }
                 return _identity;
             }
-            set
+            internal set
             {
                 if (_identity != null)
                 {
@@ -36,6 +38,14 @@ namespace MW5.Plugins.Concrete
                 }
                 _identity = value;
             }
+        }
+
+        internal EventHandler<MenuItemEventArgs> ItemClicked_;
+
+        public event EventHandler<MenuItemEventArgs> ItemClicked
+        {
+            add { ItemClicked_ += value; }
+            remove { ItemClicked_ -= value; }
         }
 
         #region Backing fields for events (shold be used to attach handlers externally)
@@ -53,7 +63,7 @@ namespace MW5.Plugins.Concrete
 
         #endregion
 
-        #region Events
+        #region Map events
 
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
         {

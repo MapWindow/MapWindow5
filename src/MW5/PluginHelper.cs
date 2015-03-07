@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.UI;
 
-namespace MW5.Plugins
+namespace MW5
 {
     public static class PluginHelper
     {
@@ -28,16 +25,17 @@ namespace MW5.Plugins
             }
 
             RemoveItemsWithinToolbar(context.Menu.Items, identity);
+
+            MenuIndex.RemoveItemsForPlugin(identity);
         }
 
         private static void RemoveItemsWithinToolbar(IMenuItemCollection items, PluginIdentity identity)
         {
             for (int j =items.Count() - 1; j >= 0; j--)
             {
-                var item = items[j];
-                var id = item.Tag as PluginIdentity;
-                if (id == identity)
+                if (items[j].PluginIdentity == identity)
                 {
+                    // TODO: remove event handlers, so that it can be collected
                     items.Remove(j);
                 }
             }

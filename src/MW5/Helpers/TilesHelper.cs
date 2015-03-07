@@ -3,7 +3,9 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Helpers
@@ -26,9 +28,9 @@ namespace MW5.Helpers
             
             root.SubItems.Clear();
 
-            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, "");
+            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, "TileProvider_NoTiles", PluginIdentity.Default);
             item.Tag = -1;
-            item.Click += item_Click;
+            item.AttachClickEventHandler(item_Click);
             
             var list = new[]
             {
@@ -40,9 +42,9 @@ namespace MW5.Helpers
 
             foreach (var p in list)
             {
-                item = root.SubItems.AddButton(p.ToString());
-                item.Tag = (int) p;
-                item.Click += item_Click;
+                item = root.SubItems.AddButton(EnumHelper.EnumToString(p), "TileProvider_" + p, PluginIdentity.Default );
+                item.Tag = p;
+                item.AttachClickEventHandler(item_Click);
             }
 
             root.SetGroupBegins(1, true);     // after No tiles
