@@ -79,6 +79,7 @@
     <Compile Include="Concrete\MenuItemEventArgs.cs" />
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
+    <Compile Include="Interfaces\IMenuIndex.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
     <Compile Include="Concrete\MenuIcon.cs" />

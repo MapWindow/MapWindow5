@@ -1,4 +1,5 @@
 ﻿using System;
+using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Properties;
@@ -13,17 +14,26 @@ namespace MW5.Menu
         private const string TOOLS_TOOLBAR = "Map tools";
         
         private readonly IAppContext _context;
+        private readonly PluginManager _pluginManager;
 
-        public MenuGenerator(IAppContext context)
+        public MenuGenerator(IAppContext context, PluginManager pluginManager)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (pluginManager == null) throw new ArgumentNullException("pluginManager");
             _context = context;
+            _pluginManager = pluginManager;
         }
 
         public void Init()
         {
             InitToolbars();
             InitMenus();
+        }
+
+        private void InitMenus()
+        {
+            TilesMainMenuHelper.Init(_context.Map, _context.Menu.Tiles);
+            PluginsMainMenuHelper.InitPlugins(_context, _pluginManager);
         }
 
         private void InitToolbars()
@@ -39,17 +49,18 @@ namespace MW5.Menu
 
         private void InitFileToolbar(IToolbar bar)
         {
-            bar.Items.AddButton("Open project", MenuKeys.OpenProject, Resources.folder, PluginIdentity.Default);
-            bar.Items.AddButton("Save project", MenuKeys.SaveProject, Resources.save, PluginIdentity.Default);
-            bar.Items.AddButton("Save project as", MenuKeys.SaveProjectAs, Resources.save_as, PluginIdentity.Default);
+            var items = bar.Items;
+            items.AddButton("Open project", MenuKeys.OpenProject, Resources.folder, PluginIdentity.Default);
+            items.AddButton("Save project", MenuKeys.SaveProject, Resources.save, PluginIdentity.Default);
+            items.AddButton("Save project as", MenuKeys.SaveProjectAs, Resources.save_as, PluginIdentity.Default);
 
-            bar.Items.AddButton("Add layer", MenuKeys.AddLayer, Resources.layer_add, PluginIdentity.Default);
-            bar.Items.AddButton("Add vector layer", MenuKeys.AddVectorLayer, Resources.layer_vector_add, PluginIdentity.Default);
-            bar.Items.AddButton("Add raster layer", MenuKeys.AddRasterLayer, Resources.layer_raster_add, PluginIdentity.Default);
-            bar.Items.AddButton("Add database layer", MenuKeys.AddDatabaseLayer, Resources.layer_database_add, PluginIdentity.Default);
+            items.AddButton("Add layer", MenuKeys.AddLayer, Resources.layer_add, PluginIdentity.Default);
+            items.AddButton("Add vector layer", MenuKeys.AddVectorLayer, Resources.layer_vector_add, PluginIdentity.Default);
+            items.AddButton("Add raster layer", MenuKeys.AddRasterLayer, Resources.layer_raster_add, PluginIdentity.Default);
+            items.AddButton("Add database layer", MenuKeys.AddDatabaseLayer, Resources.layer_database_add, PluginIdentity.Default);
 
-            bar.Items.AddButton("Create layer", MenuKeys.FileBarCreateLayer, Resources.layer_create, PluginIdentity.Default);
-            bar.Items.AddButton("Remove layer", MenuKeys.RemoveLayer, Resources.layer_remove, PluginIdentity.Default);
+            items.AddButton("Create layer", MenuKeys.FileBarCreateLayer, Resources.layer_create, PluginIdentity.Default);
+            items.AddButton("Remove layer", MenuKeys.RemoveLayer, Resources.layer_remove, PluginIdentity.Default);
 
             bar.AddSeparator(3);
             bar.AddSeparator(7);
@@ -57,18 +68,15 @@ namespace MW5.Menu
 
         private void InitToolsToolbar(IToolbar bar)
         {
-            bar.Items.AddButton("Zoom in", MenuKeys.ZoomIn, Resources.zoom_in, PluginIdentity.Default);
-            bar.Items.AddButton("Zoom out", MenuKeys.ZoomOut, Resources.zoom_out, PluginIdentity.Default);
-            bar.Items.AddButton("Zoom to maximum extents", MenuKeys.ZoomMax, Resources.zoom_max_extents, PluginIdentity.Default);
-            bar.Items.AddButton("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer, PluginIdentity.Default);
-            bar.Items.AddButton("Pan", MenuKeys.Pan, Resources.pan, PluginIdentity.Default);
-            bar.Items.AddButton("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change, PluginIdentity.Default);
-            bar.AddSeparator(5);
-        }
+            var items = bar.Items;
 
-        private void InitMenus()
-        {
-             
+            items.AddButton("Zoom in", MenuKeys.ZoomIn, Resources.zoom_in, PluginIdentity.Default);
+            items.AddButton("Zoom out", MenuKeys.ZoomOut, Resources.zoom_out, PluginIdentity.Default);
+            items.AddButton("Zoom to maximum extents", MenuKeys.ZoomMax, Resources.zoom_max_extents, PluginIdentity.Default);
+            items.AddButton("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer, PluginIdentity.Default);
+            items.AddButton("Pan", MenuKeys.Pan, Resources.pan, PluginIdentity.Default);
+            items.AddButton("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change, PluginIdentity.Default);
+            bar.AddSeparator(5);
         }
     }
 }

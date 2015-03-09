@@ -23,17 +23,22 @@ namespace MW5.Helpers
         private readonly IMap _map;
         private readonly IAppContext _context;
 
-        public MapListener(IMap map, IAppContext context, PluginBroadcaster broadcaster, ILayerService layerService)
+        public MapListener(IAppContext context, PluginBroadcaster broadcaster, ILayerService layerService)
         {
+            _context = context;
             _plugins = broadcaster;
             _layerService = layerService;
-            _map = map;
-            _context = context;
-
-            if (_plugins == null || _map == null || _context == null || layerService == null)
+            
+            if (_plugins == null || _context == null || layerService == null)
             {
 
                 throw new NullReferenceException("Failed to initialize map listener.");
+            }
+
+            _map = _context.Map as IMap;
+            if (_map == null)
+            {
+                throw new ApplicationException("Invalid map state.");
             }
 
             RegisterEvents();

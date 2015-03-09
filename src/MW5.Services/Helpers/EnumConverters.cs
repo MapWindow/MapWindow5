@@ -28,41 +28,41 @@ namespace MW5.Services.Helpers
                 case TileProvider.None:
                     return "None";
                 case TileProvider.OpenStreetMap:
-                    return "Open street map";
+                    return "Open Street Map";
                 case TileProvider.OpenCycleMap:
-                    return "Open cycle map";
+                    return "Open Cycle Map";
                 case TileProvider.OpenTransportMap:
-                    return "Open transport map";
+                    return "Open Transport Map";
                 case TileProvider.BingMaps:
-                    return "Bing maps";
+                    return "Bing Maps";
                 case TileProvider.BingSatellite:
-                    return "Bing satellite";
+                    return "Bing Satellite";
                 case TileProvider.BingHybrid:
-                    return "Bing hybrid";
+                    return "Bing Hybrid";
                 case TileProvider.GoogleMaps:
-                    return "Google map";
+                    return "Google Map";
                 case TileProvider.GoogleSatellite:
-                    return "Google satellite";
+                    return "Google Satellite";
                 case TileProvider.GoogleHybrid:
-                    return "Google hybrid";
+                    return "Google Hybrid";
                 case TileProvider.GoogleTerrain:
-                    return "Google terrain";
+                    return "Google Terrain";
                 case TileProvider.HereMaps:
-                    return "Here maps";
+                    return "Here Maps";
                 case TileProvider.HereSatellite:
-                    return "Here satellite";
+                    return "Here Satellite";
                 case TileProvider.HereHybrid:
-                    return "Here hybrid";
+                    return "Here Hybrid";
                 case TileProvider.HereTerrain:
-                    return "Here terrain";
+                    return "Here Terrain";
                 case TileProvider.Rosreestr:
                     return "Rosreestr";
                 case TileProvider.OpenHumanitarianMap:
-                    return "Open humanitarian map";
+                    return "Open Humanitarian Map";
                 case TileProvider.MapQuestAerial:
-                    return "MapQuest aerial";
+                    return "MapQuest Aerial";
                 case TileProvider.ProviderCustom:
-                    return "Custom provider";
+                    return "Custom Provider";
             }
             return "Not defined";
         }

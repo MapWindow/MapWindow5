@@ -32,25 +32,7 @@ namespace MW5.Helpers
             }
         }
 
-        public static void InitMenus(this MainFrameBarManager manager, Bar mainMenu)
-        {
-            // this will force menu to be always at the very top
-            var cbr = manager.GetBarControl(mainMenu);
-            if (cbr != null)
-            {
-                cbr.AlwaysLeadingEdge = true;
-                cbr.Tag = new MenuItemMetadata(PluginIdentity.Default, cbr.Name);
-
-                // temporary; items must be generated in code
-                foreach (BarItem item in mainMenu.Items)
-                {
-                    item.Tag = new MenuItemMetadata(PluginIdentity.Default, "");
-                }
-            }
-            InitColors();
-        }
-
-        private static void InitColors()
+        public static void InitMenuColors()
         {
             MenuColors.CommandBarBackColor = Color.White;
             MenuColors.MainMenuBackColor = Color.White;

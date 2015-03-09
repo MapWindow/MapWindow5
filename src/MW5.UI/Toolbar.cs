@@ -12,22 +12,34 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI
 {
-    public class Toolbar: IToolbar
+    internal class Toolbar: IToolbar
     {
         private MainFrameBarManager _manager;
         private readonly CommandBar _commandBar;
         private readonly Bar _bar;
+        private readonly IMenuIndex _menuIndex;
 
-        internal Toolbar(MainFrameBarManager manager, Bar bar)
+        internal Toolbar(MainFrameBarManager manager, Bar bar, IMenuIndex menuIndex)
         {
             _manager = manager;
             _bar = bar;
+            _menuIndex = menuIndex;
             _commandBar = _manager.GetBarControl(_bar);
 
+            if (manager == null)
+            {
+                throw new ArgumentNullException("manager");
+            }
+            if (menuIndex == null)
+            {
+                throw new ArgumentNullException("menuIndex");
+            }
             if (bar == null || _commandBar == null)
             {
                 throw new NullReferenceException("Internal toolbar reference is null.");
             }
+
+            
         }
 
         public string Name
@@ -38,7 +50,7 @@ namespace MW5.UI
 
         public IMenuItemCollection Items
         {
-            get { return new MenuItemCollection(_bar.Items); }
+            get { return new MenuItemCollection(_bar.Items, _menuIndex); }
         }
 
         public bool Visible

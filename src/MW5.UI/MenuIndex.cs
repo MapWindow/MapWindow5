@@ -8,23 +8,28 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.UI
 {
-    internal static class MenuIndex
+    internal class MenuIndex : IMenuIndex
     {
-        private static Dictionary<string, IMenuItem> _items = new Dictionary<string, IMenuItem>();
+        private Dictionary<string, IMenuItem> _items = new Dictionary<string, IMenuItem>();
 
-        public static void AddItem(string key, IMenuItem item)
+        public void AddItem(string key, IMenuItem item)
         {
-            _items.Add(key, item);    // TODO: handle exception
+            _items.Add(key, item);
         }
 
-        public static IMenuItem GetItem(string key)
+        public void Remove(string key)
+        {
+            _items.Remove(key);
+        }
+
+        public IMenuItem GetItem(string key)
         {
             IMenuItem item;
             _items.TryGetValue(key, out item);
             return item;
         }
 
-        public static void RemoveItemsForPlugin(PluginIdentity pluginIdentity)
+        public void RemoveItemsForPlugin(PluginIdentity pluginIdentity)
         {
             HashSet<string> keys = new HashSet<string>();
             foreach (var item in _items)
@@ -38,6 +43,11 @@ namespace MW5.UI
             {
                 _items.Remove(key);
             }
+        }
+
+        public void Clear()
+        {
+            _items.Clear();
         }
     }
 }

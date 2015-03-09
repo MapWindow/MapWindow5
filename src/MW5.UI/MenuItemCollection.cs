@@ -13,18 +13,41 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI
 {
-    public class MenuItemCollection : IMenuItemCollection
+    internal class MenuItemCollection : IMenuItemCollection
     {
         private const int TOOLBAR_ITEM_PADDING_X = 10;
         private const int TOOLBAR_ITEM_PADDING_Y = 5;
         private readonly BarItems _items;
+        private readonly IMenuIndex _menuIndex;
 
-        internal MenuItemCollection(BarItems items)
+        internal MenuItemCollection(BarItems items, IMenuIndex menuIndex)
         {
             _items = items;
+            _menuIndex = menuIndex;
             if (items == null)
             {
                 throw new NullReferenceException("Bar items reference is null.");
+            }
+            if (menuIndex == null)
+            {
+                throw new ArgumentNullException("menuIndex");
+            }
+        }
+
+        public static void RemoveItems(IMenuItemCollection items, PluginIdentity identity)
+        {
+            for (int j = items.Count() - 1; j >= 0; j--)
+            {
+                var dropDownMenuItem = items[j] as IDropDownMenuItem;
+                if (dropDownMenuItem != null)
+                {
+                    RemoveItems(dropDownMenuItem.SubItems, identity);
+                }
+
+                if (items[j].PluginIdentity == identity)
+                {
+                    items.Remove(j);
+                }
             }
         }
 
@@ -49,11 +72,13 @@ namespace MW5.UI
                 {
                     return null;
                 }
+
                 var item = _items[index];
                 if (item is ParentBarItem)
                 {
-                    return new DropDownMenuItem(item as ParentBarItem);
+                    return new DropDownMenuItem(item as ParentBarItem, _menuIndex);
                 }
+
                 return new MenuItem(item);
             }
         }
@@ -70,26 +95,19 @@ namespace MW5.UI
 
         public IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity pluginIdentity)
         {
-            var item = new BarItem(text);
-            item.Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y);
-            AddItem(item, pluginIdentity, key);
-            
-            var result = new MenuItem(item);
+            var item = new BarItem(text) {Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y)};
+            var menuItem = AddItem(item, pluginIdentity, key);
             if (icon != null)
             {
-                result.Icon = new MenuIcon(icon);
+                menuItem.Icon = new MenuIcon(icon);
             }
-            RegisterItem(result);
-            return result;
+            return menuItem;
         }
 
         public IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity identity)
         {
             var item = new ParentBarItem(text);
-            AddItem(item, identity, key);
-            var result = new DropDownMenuItem(item);
-            RegisterItem(result);
-            return result;
+            return AddItem(item, identity, key) as IDropDownMenuItem;
         }
 
         public void Insert(IMenuItem item, int index)
@@ -107,13 +125,12 @@ namespace MW5.UI
             {
                 throw new IndexOutOfRangeException("Menu items index is out of range.");
             }
-            
-            var item = _items[index];
-            EventHelper.RemoveEventHandler(item, "Click");      // so it can be collected by GC
 
-            if (item is ParentBarItem)
+            var menuItem = this[index] as MenuItem;
+            if (menuItem != null)
             {
-                EventHelper.RemoveEventHandler(item, "Popup");      // so it can be collected by GC
+                menuItem.DetachItemListeners();
+                _menuIndex.Remove(menuItem.Key);
             }
 
             _items.RemoveAt(index);
@@ -121,22 +138,39 @@ namespace MW5.UI
 
         public void Clear()
         {
+            // clear the nested menus recursively
+            var subMenus = this.OfType<IDropDownMenuItem>().Select(item => item.SubItems);
+            {
+                foreach (var menu in subMenus)
+                {
+                    menu.Clear();
+                }
+            }
+
+            // clear the index
+            var keys = this.Select(item => item.Key).ToList();
+            foreach (var key in keys)
+            {
+                _menuIndex.Remove(key);
+            }
+
             _items.Clear();
         }
 
-        private void AddItem(BarItem item, PluginIdentity identity, string key)
+        private IMenuItem AddItem(BarItem item, PluginIdentity identity, string key)
         {
             item.Tag = new MenuItemMetadata(identity, key);
-            _items.Add(item);
-        }
+            int index = _items.Add(item);
 
-        private void RegisterItem(IMenuItem item)
-        {
-            if (!string.IsNullOrWhiteSpace(item.Key))
+            var menuItem = this[index];
+
+            if (!string.IsNullOrWhiteSpace(key))
             {
-                item.AttachClickEventHandler(PluginManager.Instance.FireItemClicked);
-                MenuIndex.AddItem(item.Key, item);
+                menuItem.AttachClickEventHandler(PluginManager.Instance.FireItemClicked);
+                _menuIndex.AddItem(key, menuItem);
             }
+
+            return menuItem;
         }
     }
 }

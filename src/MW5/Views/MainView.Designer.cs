@@ -51,13 +51,11 @@ namespace MW5.Views
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControlControl1 = new MW5.Api.MapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
-            this._mainMenu = new Syncfusion.Windows.Forms.Tools.XPMenus.Bar(this._mainFrameBarManager1, "MainMenu");
             this.mnuFile = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.barItem1 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.mnuTiles = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.mnuPlugins = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.mnuHelp = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this._imageListAdv1 = new Syncfusion.Windows.Forms.Tools.ImageListAdv(this.components);
             this._legendControl1 = new MW5.Api.Legend.LegendControl();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
@@ -270,14 +268,12 @@ namespace MW5.Views
             // 
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
-            this._mainFrameBarManager1.Bars.Add(this._mainMenu);
             this._mainFrameBarManager1.Categories.Add("Menu");
             this._mainFrameBarManager1.Categories.Add("FileMenu");
             this._mainFrameBarManager1.CurrentBaseFormType = "System.Windows.Forms.Form";
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
-            this._mainFrameBarManager1.ImageListAdv = this._imageListAdv1;
             this._mainFrameBarManager1.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
             this.mnuFile,
             this.mnuTiles,
@@ -287,23 +283,6 @@ namespace MW5.Views
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
-            // 
-            // _mainMenu
-            // 
-            this._mainMenu.AllowCustomizing = false;
-            this._mainMenu.AllowItemsReorderOnShrunk = false;
-            this._mainMenu.AllowResizing = false;
-            this._mainMenu.BarName = "MainMenu";
-            this._mainMenu.BarStyle = ((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle)((((Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.IsMainMenu | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.RotateWhenVertical) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.Visible) 
-            | Syncfusion.Windows.Forms.Tools.XPMenus.BarStyle.UseWholeRow)));
-            this._mainMenu.Caption = "Main Menu";
-            this._mainMenu.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
-            this.mnuFile,
-            this.mnuTiles,
-            this.mnuPlugins,
-            this.mnuHelp});
-            this._mainMenu.Manager = this._mainFrameBarManager1;
             // 
             // mnuFile
             // 
@@ -340,7 +319,7 @@ namespace MW5.Views
             this.mnuTiles.ShowToolTipInPopUp = false;
             this.mnuTiles.SizeToFit = true;
             this.mnuTiles.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuTiles.Text = "Tiles";
+            this.mnuTiles.Text = "TilesDropDown";
             this.mnuTiles.WrapLength = 20;
             // 
             // mnuPlugins
@@ -352,61 +331,20 @@ namespace MW5.Views
             this.mnuPlugins.ShowToolTipInPopUp = false;
             this.mnuPlugins.SizeToFit = true;
             this.mnuPlugins.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuPlugins.Text = "Plugins";
+            this.mnuPlugins.Text = "PluginsDropDown";
             this.mnuPlugins.WrapLength = 20;
             // 
             // mnuHelp
             // 
             this.mnuHelp.BarName = "mnuHelp";
             this.mnuHelp.CategoryIndex = 0;
-            this.mnuHelp.ID = "Help";
+            this.mnuHelp.ID = "HelpDropDown";
             this.mnuHelp.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this.mnuHelp.ShowToolTipInPopUp = false;
             this.mnuHelp.SizeToFit = true;
             this.mnuHelp.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuHelp.Text = "Help";
+            this.mnuHelp.Text = "HelpDropDown";
             this.mnuHelp.WrapLength = 20;
-            // 
-            // _imageListAdv1
-            // 
-            this._imageListAdv1.Images.AddRange(new System.Drawing.Image[] {
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images1"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images2"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images3"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images4"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images5"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images6"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images7"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images8"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images9"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images10"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images11"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images12"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images13"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images14"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images15"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images16"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images17"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images18"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images19"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images20"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images21"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images22"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images23"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images24"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images25"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images26"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images27"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images28"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images29"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images30"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images31"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images32"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images33"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images34"))),
-            ((System.Drawing.Image)(resources.GetObject("_imageListAdv1.Images35")))});
-            this._imageListAdv1.ImageSize = new System.Drawing.Size(24, 24);
             // 
             // _legendControl1
             // 
@@ -461,8 +399,6 @@ namespace MW5.Views
         private MapControl _mapControlControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.Bar _mainMenu;
-        private Syncfusion.Windows.Forms.Tools.ImageListAdv _imageListAdv1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuFile;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuTiles;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuPlugins;

@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI
 {
-    public class DropDownMenuItem: MenuItem, IDropDownMenuItem
+    internal class DropDownMenuItem: MenuItem, IDropDownMenuItem
     {
-        internal DropDownMenuItem(ParentBarItem item) 
+        private readonly IMenuIndex _menuIndex;
+
+        internal DropDownMenuItem(ParentBarItem item, IMenuIndex menuIndex) 
             : base(item)
         {
-
+            if (menuIndex == null)
+            {
+                throw new ArgumentNullException("menuIndex");
+            }
+            _menuIndex = menuIndex;
         }
 
         public IMenuItemCollection SubItems
@@ -25,7 +32,7 @@ namespace MW5.UI
                 {
                     throw new ApplicationException("Invalid menu item: parent menu item expected.");
                 }
-                return new MenuItemCollection(item.Items);
+                return new MenuItemCollection(item.Items, _menuIndex);
             }
         }
 
@@ -42,7 +49,7 @@ namespace MW5.UI
             }
             remove
             {
-                AsParent.Popup -= value;        // the handler is removed in MenuItemCollection.Remove
+                //AsParent.Popup -= value;        // the handler is removed in MenuItemCollection.Remove
             }
         }
 
@@ -73,6 +80,12 @@ namespace MW5.UI
             
             var item = AsParent.Items[index];
             return AsParent.IsGroupBeginning(item);
+        }
+
+        internal protected override void DetachItemListeners()
+        {
+            base.DetachItemListeners();
+            EventHelper.RemoveEventHandler(_item, "Popup");
         }
     }
 }

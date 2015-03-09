@@ -13,6 +13,7 @@ using MW5.Plugins.Mvp;
 using MW5.Presenters;
 using MW5.Services;
 using MW5.UI;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Views
@@ -35,8 +36,6 @@ namespace MW5.Views
             context.Init(this);
 
             _dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
-
-            _mainFrameBarManager1.InitMenus(_mainMenu);
 
             FormClosed += MainView_FormClosed;
         }
@@ -87,5 +86,7 @@ namespace MW5.Views
         }
 
         #endregion
+
+        
     }
 }

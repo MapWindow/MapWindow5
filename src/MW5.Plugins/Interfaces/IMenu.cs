@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Concrete;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -13,5 +14,7 @@ namespace MW5.Plugins.Interfaces
         IDropDownMenuItem Tiles { get; }
 
         IMenuItem FindItem(string key);
+
+        void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

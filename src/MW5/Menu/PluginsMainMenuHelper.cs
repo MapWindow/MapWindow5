@@ -5,7 +5,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Menu
 {
-    public static class PluginMenuHelper
+    public static class PluginsMainMenuHelper
     {
         private static PluginManager _manager;
         private static IAppContext _context;

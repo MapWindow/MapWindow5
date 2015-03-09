@@ -1,5 +1,7 @@
 ﻿namespace MW5.Menu
 {
+    // TODO: how to distingusih menu items and toolbar items (they can use the same keys
+    // since menu and toolbars uses different instance of MenuIndex)
     internal class MenuKeys
     {
         public const string OpenProject = "OpenProject";

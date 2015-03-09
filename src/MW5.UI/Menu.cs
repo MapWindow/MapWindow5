@@ -11,22 +11,43 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI
 {
-    public class Menu: IMenu
+    internal class Menu: IMenu
     {
-        private const string PLUGIN_MENU_ITEM = "plugins";
-        private const string TILES_MENU_ITEM = "tiles";
+        private const string MAIN_MENU_NAME = "MainMenu";
+        private readonly MenuIndex _menuIndex;
 
         private MainFrameBarManager _menuManager;
 
-        internal static IMenu CreateInstance(object menuManager)
+        internal void CreateDefaultItems()
         {
-            var menu = new Menu(menuManager);
-            return menu;
+            Items.AddDropDown("File", MainMenuKeys.File, PluginIdentity.Default);
+            Items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
+            Items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
+            Items.AddDropDown("Help", MainMenuKeys.Help, PluginIdentity.Default);
         }
 
-        private Menu(object menuManager)
+        internal void CreateMenuBar()
         {
+            var bar = new Bar(_menuManager, MAIN_MENU_NAME)
+            {
+                BarStyle = BarStyle.IsMainMenu | BarStyle.UseWholeRow | BarStyle.Visible
+            };
+
+            int index = _menuManager.Bars.Add(bar);
+
+            var cbr = _menuManager.GetBarControl(bar);
+            cbr.Tag = new MenuItemMetadata(PluginIdentity.Default, MAIN_MENU_NAME);
+            cbr.AlwaysLeadingEdge = true;
+        }
+
+        internal Menu(object menuManager, MenuIndex menuIndex)
+        {
+            _menuIndex = menuIndex;
             _menuManager = menuManager as MainFrameBarManager;
+            if (menuIndex == null)
+            {
+                throw new ArgumentNullException("menuIndex");
+            }
             if (_menuManager == null)
             {
                 throw new ApplicationException("Invalid type of menu manager");
@@ -56,7 +77,7 @@ namespace MW5.UI
         {
             get
             {
-                return new MenuItemCollection(MenuBar.Items);
+                return new MenuItemCollection(MenuBar.Items, _menuIndex);
             }
         }
 
@@ -100,26 +121,29 @@ namespace MW5.UI
 
         public IDropDownMenuItem Plugins
         {
-            get
-            {
-                var item = _menuManager.MainMenuBar.Items.FindItem(PLUGIN_MENU_ITEM) as ParentBarItem; 
-                return new DropDownMenuItem(item);
-            }
+            get { return GetDropDownItem(MainMenuKeys.Plugins); }
         }
 
         public IDropDownMenuItem Tiles
         {
-            get
-            {
-                var item = _menuManager.MainMenuBar.Items.FindItem(TILES_MENU_ITEM) as ParentBarItem;
-                return new DropDownMenuItem(item);
-            }
+            get { return GetDropDownItem(MainMenuKeys.Tiles); }
+        }
+
+        private IDropDownMenuItem GetDropDownItem(string key)
+        {
+            return FindItem(key) as IDropDownMenuItem;
         }
 
         public IMenuItem FindItem(string key)
         {
-            return MenuIndex.GetItem(key);
+            return _menuIndex.GetItem(key);
         }
-       
+
+        public void RemoveItemsForPlugin(PluginIdentity identity)
+        {
+            _menuIndex.RemoveItemsForPlugin(identity);
+
+            MenuItemCollection.RemoveItems(Items, identity);
+        }
     }
 }

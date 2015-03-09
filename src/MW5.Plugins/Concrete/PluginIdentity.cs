@@ -12,7 +12,7 @@ namespace MW5.Plugins.Concrete
         private string _author;
         private Guid _guid;
 
-        public static PluginIdentity Default
+        internal static PluginIdentity Default
         {
             get
             {
@@ -21,7 +21,7 @@ namespace MW5.Plugins.Concrete
             }
         }
 
-        public PluginIdentity(string name, string author, Guid guid)
+        internal PluginIdentity(string name, string author, Guid guid)
         {
             _name = name;
             _author = author;

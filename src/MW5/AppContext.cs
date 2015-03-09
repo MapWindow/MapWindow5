@@ -16,7 +16,7 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5
 {
-    // must be singleton
+    // must be a singleton
     public class AppContext: IAppContext
     {
         private IMap _map;
@@ -24,13 +24,13 @@ namespace MW5
         private IMenu _menu;
         private IToolbarCollection _toolbars;
         private IMuteLegend _legend;
-        private readonly PluginManager _manager;
+        private readonly PluginManager _pluginManager;
         private MapListener _mapListener;
         private IView _view;
 
         public AppContext()
         {
-            _manager = PluginManager.Instance;
+            _pluginManager = PluginManager.Instance;
         }
 
         public void Init(IMainForm form)
@@ -46,30 +46,26 @@ namespace MW5
             _map = form.Map;
             _map.Initialize();
 
-            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), _map);  // it's a bit ugly; got ideas how to do it better? 
+            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), _map);  // it's a bit ugly; got ideas how to do it better?
 
             _legend = form.Legend;
 
-            _menu = UI.Menu.CreateInstance(form.MenuManager);
+            _menu = MenuFactory.CreateInstance(form.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
-            var menus = new MenuGenerator(this);
+
+            _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
+            _pluginManager.AssemblePlugins();
+
+            var menus = new MenuGenerator(this, _pluginManager);
             menus.Init();
 
-            // TODO: convert to service
-            TilesHelper.Init(_map, Menu.Tiles);
-
-            _manager.PluginUnloaded += ManagerPluginUnloaded;
-            _manager.AssemblePlugins();
-            PluginMenuHelper.InitPlugins(this, _manager);
-
-            // TODO: temporary only, use injection            
-            var layerService = CompositionRoot.Container.Resolve<ILayerService>();
-            _mapListener = new MapListener(_map, this, _manager.Broadcaster, layerService);
+            _mapListener = new MapListener(this, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
         }
 
         private void ManagerPluginUnloaded(object sender, Plugins.Concrete.PluginEventArgs e)
         {
-            this.RemovePluginMenus(e.Identity);
+            Toolbars.RemoveItemsForPlugin(e.Identity);
+            Menu.RemoveItemsForPlugin(e.Identity);
         }
 
         public IApplicationContainer Container

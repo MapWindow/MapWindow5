@@ -75,6 +75,7 @@
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="MenuFactory.cs" />
     <Compile Include="MenuIndex.cs" />
     <Compile Include="MapWindowForm.cs">
       <SubType>Form</SubType>
@@ -84,6 +85,7 @@
     <Compile Include="MenuItemCollection.cs" />
     <Compile Include="DropDownMenuItem.cs" />
     <Compile Include="MenuItemMetadata.cs" />
+    <Compile Include="MainMenuKeys.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Syncfusion\StyleSettings.cs" />
     <Compile Include="Syncfusion\SyncfusionStyleService.cs" />
