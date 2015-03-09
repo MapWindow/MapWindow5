@@ -13,6 +13,7 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IMainForm
     {
+        object DockingManager { get; }
         object MenuManager { get;}
         IMap Map { get; }
         IMuteLegend Legend { get; }

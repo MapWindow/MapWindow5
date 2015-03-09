@@ -38,5 +38,12 @@ namespace MW5.Helpers
             MenuColors.MainMenuBackColor = Color.White;
             MenuColors.StatusBarBackColor = Color.White;
         }
+
+        // unfortunately there is no easy way to do it with generics
+        // http ://journal.stuffwithstuff.com/2008/03/05/checking-flags-in-c-enums/
+        public static bool FlagIsSet(BarStyle style, BarStyle flag)
+        {
+            return (style & flag) == flag;
+        }
     }
 }

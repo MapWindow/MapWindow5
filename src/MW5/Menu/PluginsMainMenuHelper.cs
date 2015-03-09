@@ -5,7 +5,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Menu
 {
-    public static class PluginsMainMenuHelper
+    internal static class PluginsMainMenuHelper
     {
         private static PluginManager _manager;
         private static IAppContext _context;
@@ -19,7 +19,7 @@ namespace MW5.Menu
             _context = context;
             _manager = pluginManager;
 
-            var menuItem = context.Menu.Plugins;
+            var menuItem = context.Menu.PluginsMenu;
 
             foreach (var p in _manager.AllPlugins)
             {
@@ -33,7 +33,7 @@ namespace MW5.Menu
 
         private static void MenuDropDownOpening(object sender, EventArgs e)
         {
-            var menu = _context.Menu.Plugins;
+            var menu = _context.Menu.PluginsMenu;
 
             foreach (var item in menu.SubItems)
             {

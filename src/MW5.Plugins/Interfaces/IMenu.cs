@@ -9,9 +9,15 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IMenu: IToolbar
     {
-        IDropDownMenuItem Plugins { get; }
+        IDropDownMenuItem FileMenu { get; }
 
-        IDropDownMenuItem Tiles { get; }
+        IDropDownMenuItem ViewMenu { get; }
+
+        IDropDownMenuItem PluginsMenu { get; }
+
+        IDropDownMenuItem TilesMenu { get; }
+
+        IDropDownMenuItem HelpMenu { get; }
 
         IMenuItem FindItem(string key);
 

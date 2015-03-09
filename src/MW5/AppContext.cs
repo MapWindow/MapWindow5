@@ -56,7 +56,7 @@ namespace MW5
             _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
             _pluginManager.AssemblePlugins();
 
-            var menus = new MenuGenerator(this, _pluginManager);
+            var menus = new MenuGenerator(this, _pluginManager, form.MenuManager, form.DockingManager);
             menus.Init();
 
             _mapListener = new MapListener(this, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());

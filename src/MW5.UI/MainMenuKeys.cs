@@ -12,5 +12,6 @@ namespace MW5.UI
         public const string Plugins = "PluginsDropDown";
         public const string Tiles = "TilesDropDown";
         public const string Help = "HelpDropDown";
+        public const string View = "ViewDropDown";
     }
 }

@@ -85,6 +85,12 @@ namespace MW5.UI
                     _bar.SeparatorIndices.Add(i);
                 }
             }
+
+            // do the same for dropdowns
+            foreach (var menu in Items.OfType<IDropDownMenuItem>())
+            {
+                menu.Update();
+            }
         }
 
         private MenuItemMetadata Metadata

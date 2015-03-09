@@ -21,6 +21,7 @@ namespace MW5.UI
         internal void CreateDefaultItems()
         {
             Items.AddDropDown("File", MainMenuKeys.File, PluginIdentity.Default);
+            Items.AddDropDown("View", MainMenuKeys.View, PluginIdentity.Default);
             Items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
             Items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
             Items.AddDropDown("Help", MainMenuKeys.Help, PluginIdentity.Default);
@@ -114,14 +115,29 @@ namespace MW5.UI
             // do nothing; no separators are needed here
         }
 
-        public IDropDownMenuItem Plugins
+        public IDropDownMenuItem FileMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.File); }
+        }
+
+        public IDropDownMenuItem ViewMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.View); }
+        }
+
+        public IDropDownMenuItem PluginsMenu
         {
             get { return GetDropDownItem(MainMenuKeys.Plugins); }
         }
 
-        public IDropDownMenuItem Tiles
+        public IDropDownMenuItem TilesMenu
         {
             get { return GetDropDownItem(MainMenuKeys.Tiles); }
+        }
+
+        public IDropDownMenuItem HelpMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.Help); }
         }
 
         private IDropDownMenuItem GetDropDownItem(string key)

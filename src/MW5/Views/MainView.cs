@@ -65,6 +65,11 @@ namespace MW5.Views
 
         #region IMainForm implementation
 
+        public object DockingManager
+        {
+            get { return _dockingManager1; }
+        }
+
         object IMainForm.MenuManager
         {
             get { return _mainFrameBarManager1; }

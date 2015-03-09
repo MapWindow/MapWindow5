@@ -72,6 +72,9 @@ namespace MW5.Presenters
                 case MenuKeys.SetProjection:
                     CompositionRoot.Container.Run<SetProjectionPresenter>();
                     break;
+                default:
+                    _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
+                    break;
             }
         }
     }

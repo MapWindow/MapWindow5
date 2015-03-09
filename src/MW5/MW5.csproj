@@ -103,6 +103,7 @@
     <Compile Include="Helpers\MapListener.cs" />
     <Compile Include="Menu\TilesMainMenuHelper.cs" />
     <Compile Include="Menu\PluginsMainMenuHelper.cs" />
+    <Compile Include="Menu\ViewMainMenuService.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SetProjectionPresenter.cs" />
     <Compile Include="Program.cs" />
