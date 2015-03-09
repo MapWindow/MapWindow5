@@ -111,6 +111,12 @@ namespace MW5.UI
             }
         }
 
+        public bool BeginGroup
+        {
+            get { return Metadata.BeginGroup; }
+            set { Metadata.BeginGroup = value; }
+        }
+
         private MenuItemMetadata Metadata
         {
             get

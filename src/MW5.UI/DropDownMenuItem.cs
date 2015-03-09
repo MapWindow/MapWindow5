@@ -53,33 +53,22 @@ namespace MW5.UI
             }
         }
 
-        public void SetGroupBegins(int index, bool value)
+        public void Update()
         {
-            if (index < 0 || index > AsParent.Items.Count)
-            {
-                throw new IndexOutOfRangeException("Item index is out of range.");
-            }
-            var item = AsParent.Items[index];
-            if (value)
-            {
-                AsParent.BeginGroupAt(item);
-            }
-            else
-            {
-                AsParent.RemoveGroupAt(item);
-            }
-            
+            UpdateSeparators();
         }
 
-        public bool GetGroupBegins(int index)
+        private void UpdateSeparators()
         {
-            if (index < 0 || index > AsParent.Items.Count)
+            foreach (var item in SubItems)
             {
-                throw new IndexOutOfRangeException("Item index is out of range.");
+                var barItem = item.GetInternalObject() as BarItem;
+                AsParent.RemoveGroupAt(barItem);
+                if (item.BeginGroup)
+                {
+                    AsParent.BeginGroupAt(barItem);
+                }
             }
-            
-            var item = AsParent.Items[index];
-            return AsParent.IsGroupBeginning(item);
         }
 
         internal protected override void DetachItemListeners()

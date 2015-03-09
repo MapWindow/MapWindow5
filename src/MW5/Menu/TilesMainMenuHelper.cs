@@ -46,7 +46,8 @@ namespace MW5.Menu
                 item.AttachClickEventHandler(item_Click);
             }
 
-            root.SetGroupBegins(1, true);     // after No tiles
+            root.SubItems[1].BeginGroup = true;
+            root.Update();
 
             //item = root.DropDownItems.Add("Set Bing Maps API key");
             //item.Click += item_Click;

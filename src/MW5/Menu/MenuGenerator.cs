@@ -54,16 +54,15 @@ namespace MW5.Menu
             items.AddButton("Save project", MenuKeys.SaveProject, Resources.save, PluginIdentity.Default);
             items.AddButton("Save project as", MenuKeys.SaveProjectAs, Resources.save_as, PluginIdentity.Default);
 
-            items.AddButton("Add layer", MenuKeys.AddLayer, Resources.layer_add, PluginIdentity.Default);
+            items.AddButton("Add layer", MenuKeys.AddLayer, Resources.layer_add, PluginIdentity.Default).BeginGroup = true;
             items.AddButton("Add vector layer", MenuKeys.AddVectorLayer, Resources.layer_vector_add, PluginIdentity.Default);
             items.AddButton("Add raster layer", MenuKeys.AddRasterLayer, Resources.layer_raster_add, PluginIdentity.Default);
             items.AddButton("Add database layer", MenuKeys.AddDatabaseLayer, Resources.layer_database_add, PluginIdentity.Default);
 
-            items.AddButton("Create layer", MenuKeys.FileBarCreateLayer, Resources.layer_create, PluginIdentity.Default);
+            items.AddButton("Create layer", MenuKeys.FileBarCreateLayer, Resources.layer_create, PluginIdentity.Default).BeginGroup = true;
             items.AddButton("Remove layer", MenuKeys.RemoveLayer, Resources.layer_remove, PluginIdentity.Default);
 
-            bar.AddSeparator(3);
-            bar.AddSeparator(7);
+            bar.Update();
         }
 
         private void InitToolsToolbar(IToolbar bar)
@@ -75,8 +74,10 @@ namespace MW5.Menu
             items.AddButton("Zoom to maximum extents", MenuKeys.ZoomMax, Resources.zoom_max_extents, PluginIdentity.Default);
             items.AddButton("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer, PluginIdentity.Default);
             items.AddButton("Pan", MenuKeys.Pan, Resources.pan, PluginIdentity.Default);
-            items.AddButton("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change, PluginIdentity.Default);
-            bar.AddSeparator(5);
+
+            items.AddButton("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change, PluginIdentity.Default).BeginGroup = true;
+
+            bar.Update();
         }
     }
 }

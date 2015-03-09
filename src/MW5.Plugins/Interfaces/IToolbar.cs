@@ -15,8 +15,7 @@ namespace MW5.Plugins.Interfaces
         bool Visible { get; set; }
         object Tag { get; set; }
         ToolbarDockState DockState { get; set; }
-        void AddSeparator(int beforeItemIndex);
-        void ClearSeparators();
         PluginIdentity PluginIdentity { get; }
+        void Update();
     }
 }

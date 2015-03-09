@@ -38,8 +38,6 @@ namespace MW5.UI
             {
                 throw new NullReferenceException("Internal toolbar reference is null.");
             }
-
-            
         }
 
         public string Name
@@ -71,14 +69,22 @@ namespace MW5.UI
             set { _manager.GetBarControl(_bar).DockState = (CommandBarDockState)value; }
         }
 
-        public void AddSeparator(int beforeItemIndex)
+        public void Update()
         {
-            _bar.SeparatorIndices.Add(beforeItemIndex);
+            UpdateSeparators();
         }
 
-        public void ClearSeparators()
+        private void UpdateSeparators()
         {
             _bar.SeparatorIndices.Clear();
+            for (int i = 0; i < Items.Count(); i++)
+            {
+                var item = Items[i];
+                if (item.BeginGroup)
+                {
+                    _bar.SeparatorIndices.Add(i);
+                }
+            }
         }
 
         private MenuItemMetadata Metadata

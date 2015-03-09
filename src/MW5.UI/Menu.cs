@@ -104,19 +104,14 @@ namespace MW5.UI
             set { throw new NotSupportedException("Dock state for the main menu can't be changed."); }
         }
 
-        public void AddSeparator(int beforeItemIndex)
-        {
-            MenuBar.SeparatorIndices.Add(beforeItemIndex);
-        }
-
-        public void ClearSeparators()
-        {
-            MenuBar.SeparatorIndices.Clear();
-        }
-
         public PluginIdentity PluginIdentity
         {
             get { return PluginIdentity.Default; }
+        }
+
+        public void Update()
+        {
+            // do nothing; no separators are needed here
         }
 
         public IDropDownMenuItem Plugins

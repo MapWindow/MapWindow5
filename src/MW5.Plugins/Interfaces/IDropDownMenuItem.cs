@@ -15,8 +15,10 @@ namespace MW5.Plugins.Interfaces
 
         event EventHandler DropDownOpening;
 
-        bool GetGroupBegins(int index);
+        void Update();
 
-        void SetGroupBegins(int index, bool value);
+        //bool GetGroupBegins(int index);
+
+        //void SetGroupBegins(int index, bool value);
     }
 }

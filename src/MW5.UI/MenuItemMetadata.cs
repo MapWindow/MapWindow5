@@ -32,6 +32,8 @@ namespace MW5.UI
         public string Description { get; set; }
 
         public string Category { get; set; }
+        
+        public bool BeginGroup { get; set; }
 
         public string Key
         {

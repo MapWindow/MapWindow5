@@ -73,5 +73,11 @@ namespace MW5.Plugins.Interfaces
         /// Gets the plugin identity.
         /// </summary>
         PluginIdentity PluginIdentity { get; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this item should be preceded by separator. 
+        /// Note: call IMenuItemCollection.Update() after changing this property.
+        /// </summary>
+        bool BeginGroup { get; set; }
     }
 }
