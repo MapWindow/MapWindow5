@@ -58,7 +58,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseUp_;
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
-        internal MapEventHandler<EventArgs> UndoListChanged_;
+        internal MapEventHandler<EventArgs> HistoryChanged_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
 
         #endregion
@@ -136,10 +136,10 @@ namespace MW5.Plugins.Concrete
 
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
 
-        public event MapEventHandler<EventArgs> UndoListChanged
+        public event MapEventHandler<EventArgs> HistoryChanged
         {
-            add { UndoListChanged_ += value; }
-            remove { UndoListChanged_ -= value; }
+            add { HistoryChanged_ += value; }
+            remove { HistoryChanged_ -= value; }
         }
 
         public event MapEventHandler<ValidateShapeEventArgs> ValidateShape

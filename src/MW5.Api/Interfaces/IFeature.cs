@@ -14,6 +14,7 @@
         bool Selected { get; set; }
         bool IsRendered { get; }
         bool IsVisible { get; }
+        int Index { get; }
 
         int NumFields { get; }
         object GetValue(int fieldIndex);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
@@ -44,6 +45,14 @@ namespace MW5.Api.Concrete
             }
 
             set { _table.EditReplaceField(index, value.GetInternal()); }
+        }
+
+        public IFeatureField this[string name]
+        {
+            get
+            {
+                return this.FirstOrDefault(f => string.Equals(f.Name, name, StringComparison.InvariantCultureIgnoreCase));
+            }
         }
 
         public IEnumerator<IFeatureField> GetEnumerator()

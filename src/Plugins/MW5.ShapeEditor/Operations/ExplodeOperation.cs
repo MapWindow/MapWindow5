@@ -1,82 +1,99 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MW5.Api;
+using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.ShapeEditor.Helpers;
 
 namespace MW5.Plugins.ShapeEditor.Operations
 {
-    //internal static class ExplodeOperation
-    //{
-    //    /// <summary>
-    //    /// Merges selected shapes of the active shapefile
-    //    /// </summary>
-    //    internal static ExplodeResult Explode()
-    //    {
-    //        var sf = App.SelectedShapefile;
-    //        if (sf == null) return ExplodeResult.NoInput;
-    //        if (sf.NumSelected < 1) return ExplodeResult.NoInput;
-    //        if (!sf.InteractiveEditing) return ExplodeResult.NoInput;
-    //        if (!sf.HasMultiPart()) return ExplodeResult.NoMultiPart;
-    //        return Explode(App.Legend.SelectedLayer, sf);
-    //    }
+    internal static class ExplodeOperation
+    {
+        /// <summary>
+        /// Merges selected shapes of the active shapefile
+        /// </summary>
+        internal static ExplodeResult Run(IAppContext context)
+        {
+            var fs = context.Layers.SelectedLayer.FeatureSet;
 
-    //    /// <summary>
-    //    /// Runs explode operation
-    //    /// </summary>
-    //    private static ExplodeResult Explode(int layerHandle, Shapefile sf)
-    //    {
-    //        var dict = new Dictionary<int, Shape[]>();
-            
-    //        // exploding
-    //        for (int i = 0; i < sf.NumShapes; i++)
-    //        {
-    //            object result = null;
-    //            if (sf.ShapeSelected[i])
-    //            {
-    //                sf.Shape[i].Explode(ref result);
-    //                var shapes = result as object[];
-    //                if (shapes != null && shapes.Any())
-    //                    dict[i] = shapes.Cast<Shape>().ToArray();
-    //                else
-    //                    return ExplodeResult.Failed;
-    //            }
-    //        }
+            if (fs == null || fs.NumSelected == 0 || !fs.InteractiveEditing)
+            {
+                return ExplodeResult.NoInput;
+            }
 
-    //        int newSelectionStart = sf.NumShapes - sf.NumSelected;
-    //        var undoList = App.Map.UndoList;
-    //        undoList.BeginBatch();
+            if (!fs.HasMultiPart())
+            {
+                return ExplodeResult.NoMultiPart;
+            }
 
-    //        // add new shapes
-    //        var list = dict.ToList();
-    //        foreach (var item in list)
-    //        {
-    //            foreach (var shp in item.Value.ToList())
-    //            {
-    //                int shapeIndex = sf.EditAddShape(shp);
+            return Explode(context, fs);
+        }
 
-    //                sf.CopyAttributes(item.Key, shapeIndex);
+        /// <summary>
+        /// Runs explode operation
+        /// </summary>
+        private static ExplodeResult Explode(IAppContext context, IFeatureSet fs)
+        {
+            var dict = new Dictionary<int, IGeometry[]>();
 
-    //                if (shapeIndex != -1)
-    //                    undoList.Add(tkUndoOperation.uoAddShape, layerHandle, shapeIndex);
-    //            }
-    //        }
+            // exploding
+            foreach(var ft in fs.Features)
+            {
+                if (ft.Selected)
+                {
+                    var arr = ft.Geometry.Explode().ToArray();
+                    if (arr.Length > 0)
+                    {
+                        dict[ft.Index] = arr;
+                        continue;
+                    }
+                    return ExplodeResult.Failed;
+                }
+            }
 
-    //        // remove the old ones
-    //        for (int i = sf.NumShapes - 1; i >= 0; i--)
-    //        {
-    //            if (sf.ShapeSelected[i])
-    //            {
-    //                undoList.Add(tkUndoOperation.uoRemoveShape, layerHandle, i);
-    //                sf.EditDeleteShape(i);
-    //            }
-    //        }
+            int newSelectionStart = fs.Features.Count - fs.Features.Count(ft => ft.Selected);
 
-    //        undoList.EndBatch();
+            int layerHandle = context.Legend.SelectedLayer;
 
-    //        for (int i = newSelectionStart; i < sf.NumShapes; i++)
-    //        {
-    //            sf.ShapeSelected[i] = true;
-    //        }
+            var history = context.Map.History;
+            history.BeginBatch();
 
-    //        return ExplodeResult.Ok;
-    //    }
-    //}
+            // add new shapes
+            var list = dict.ToList();
+            foreach (var item in list)
+            {
+                foreach (var shp in item.Value.ToList())
+                {
+                    int shapeIndex = fs.Features.EditAdd(shp);
+
+                    fs.Table.CopyAttributes(item.Key, shapeIndex);
+
+                    if (shapeIndex != -1)
+                    {
+                        history.Add(UndoOperation.AddShape, layerHandle, shapeIndex);
+                    }
+                }
+            }
+
+            // remove the old ones
+            foreach (var ft in fs.Features.Reverse())
+            {
+                if (ft.Selected)
+                {
+                    history.Add(UndoOperation.RemoveShape, layerHandle, ft.Index);
+                    fs.Features.EditDelete(ft.Index);
+                }
+            }
+
+            history.EndBatch();
+
+            // selecting new shapes
+            for (int i = newSelectionStart; i < fs.Features.Count; i++)
+            {
+                 fs.Features[i].Selected = true;
+            }
+
+            return ExplodeResult.Ok;
+        }
+    }
 }

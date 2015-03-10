@@ -193,7 +193,7 @@ namespace MW5.Services.Services
                     {
                         sf.InteractiveEditing = false;
                         _context.Map.GeometryEditor.Clear();
-                        _context.Map.UndoList.ClearForLayer(layerHandle);
+                        _context.Map.History.ClearForLayer(layerHandle);
                     }
                     _context.Map.Redraw();
                     return true;

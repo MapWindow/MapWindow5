@@ -35,6 +35,11 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 return;
             }
 
+            if (HandleMapCursorChange(e.ItemKey))
+            {
+                return;
+            }
+
             switch (e.ItemKey)
             {
                 case MenuKeys.LayerCreate:
@@ -43,21 +48,47 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 case MenuKeys.LayerEdit:
                     _layerService.ToggleVectorLayerEditing();
                     break;
-                case MenuKeys.GeometryCreate:
-                    _context.Map.MapCursor = MapCursor.AddShape;
-                    break;
-                case MenuKeys.VertexEditor:
-                    _context.Map.MapCursor = MapCursor.EditShape;
-                    break;
-                case MenuKeys.MoveShapes:
-                    break;
-                case MenuKeys.RotateShapes:
-                    break;
                 case MenuKeys.Undo:
+                    _context.Map.History.Undo();
+                    _context.Map.Redraw(RedrawType.SkipDataLayers);
                     break;
                 case MenuKeys.Redo:
+                    _context.Map.History.Redo();
+                    _context.Map.Redraw(RedrawType.SkipDataLayers);
                     break;
             }
+        }
+
+        public bool HandleMapCursorChange(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.GeometryCreate:
+                    _context.Map.MapCursor = MapCursor.AddShape;
+                    return true;
+                case MenuKeys.VertexEditor:
+                    _context.Map.MapCursor = MapCursor.EditShape;
+                    return true;
+                case MenuKeys.MoveShapes:
+                    _context.Map.MapCursor = MapCursor.MoveShapes;
+                    return true;
+                case MenuKeys.RotateShapes:
+                    _context.Map.MapCursor = MapCursor.RotateShapes;
+                    return true;
+                case MenuKeys.SplitByPolygon:
+                    _context.Map.MapCursor = MapCursor.SplitByPolygon;
+                    return true;
+                case MenuKeys.EraseByPolygon:
+                    _context.Map.MapCursor = MapCursor.EraseByPolygon;
+                    return true;
+                case MenuKeys.ClipByPolygon:
+                    _context.Map.MapCursor = MapCursor.ClipByPolygon;
+                    return true;
+                case MenuKeys.SplitByPolyline:
+                    _context.Map.MapCursor = MapCursor.SplitByPolyline;
+                    return true;
+            }
+            return false;
         }
 
         public bool HandleGroupOperation(string itemKey)
@@ -67,21 +98,21 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 case MenuKeys.MergeShapes:
                     _geoprocessingService.MergeShapes();
                     return true;
-                //case MenuKeys.Copy:
-                //    OperationHelper.CopyShapes();
-                //    return true;
-                //case MenuKeys.Paste:
-                //    OperationHelper.PasteShapes();
-                //    return true;
-                //case MenuKeys.Cut:
-                //    OperationHelper.CutShapes();
-                //    return true;
-                //case MenuKeys.SplitShapes:
-                //    OperationHelper.ExplodeShapes();
-                //    return true;
-                //case EditorCommand.RemoveShapes:
-                //    GeoprocessingService.RemoveShapes();
-                //    return true;
+                case MenuKeys.Copy:
+                    _geoprocessingService.CopyShapes();
+                    return true;
+                case MenuKeys.Paste:
+                    _geoprocessingService.PasteShapes();
+                    return true;
+                case MenuKeys.Cut:
+                    _geoprocessingService.CutShapes();
+                    return true;
+                case MenuKeys.SplitShapes:
+                    _geoprocessingService.ExplodeShapes();
+                    return true;
+                case MenuKeys.RemoveShapes:
+                    _geoprocessingService.RemoveShapes();
+                    return true;
             }
             return false;
         }

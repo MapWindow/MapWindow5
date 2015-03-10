@@ -52,7 +52,7 @@ namespace MW5.Helpers
             _map.BeforeShapeEdit += MapBeforeShapeEdit;
             _map.MouseUp += MapMouseUp;
             _map.ShapeValidationFailed += MapShapeValidationFailed;
-            _map.UndoListChanged += MapUndoListChanged;
+            _map.HistoryChanged += MapHistoryChanged;
             _map.ValidateShape += MapValidateShape;
             _map.MapCursorChanged += MapCursorChanged;
             _map.ChooseLayer += MapChooseLayer;
@@ -82,9 +82,9 @@ namespace MW5.Helpers
             _plugins.BroadcastEvent(p => p.ValidateShape_, sender as IMuteMap, e);
         }
 
-        private void MapUndoListChanged(object sender, EventArgs e)
+        private void MapHistoryChanged(object sender, EventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.UndoListChanged_, sender as IMuteMap, e);
+            _plugins.BroadcastEvent(p => p.HistoryChanged_, sender as IMuteMap, e);
         }
 
         private void MapShapeValidationFailed(object sender, ShapeValidationFailedEventArgs e)

@@ -193,12 +193,12 @@ namespace MW5.Api.Concrete
             object o = null;
             if (_shape.Explode(ref o))
             {
-                var shapes = o as Shape[];
+                var shapes = o as object[];
                 if (shapes != null)
                 {
                     foreach (var shp in shapes)
                     {
-                        yield return new Geometry(shp);
+                        yield return new Geometry(shp as Shape);
                     }
                 }
             }

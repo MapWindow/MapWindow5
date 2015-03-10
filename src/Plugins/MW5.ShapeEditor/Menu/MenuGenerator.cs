@@ -14,7 +14,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 {
     internal class MenuGenerator
     {
-        private const string SHAPE_EDITOR_TOOLBAR = "Shape editor";    // perhaps simply use plugin name as a default
+        private const string SHAPE_EDITOR_TOOLBAR = "Shape Editor";    // perhaps simply use plugin name as a default
         
         private readonly CommandProvider _commands;
 
@@ -45,9 +45,21 @@ namespace MW5.Plugins.ShapeEditor.Menu
             _commands.AddToMenu(items, MenuKeys.Copy, true);
             _commands.AddToMenu(items, MenuKeys.Paste);
             _commands.AddToMenu(items, MenuKeys.Cut);
-            _commands.AddToMenu(items, MenuKeys.Undo, true);
-            _commands.AddToMenu(items, MenuKeys.Redo);
 
+            var dropDown = items.AddDropDown("Polygon Overlay", Resources.geometry_erase_by_polygon, identity);
+            dropDown.BeginGroup = true;
+
+            _commands.AddToMenu(dropDown.SubItems, MenuKeys.EraseByPolygon);
+            _commands.AddToMenu(dropDown.SubItems, MenuKeys.ClipByPolygon);
+            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SplitByPolygon);
+
+            _commands.AddToMenu(items, MenuKeys.SplitByPolyline);
+            _commands.AddToMenu(items, MenuKeys.Undo, true);
+
+            items.AddLabel("0/0", MenuKeys.HistoryLength, identity);
+
+            _commands.AddToMenu(items, MenuKeys.Redo);
+            
             bar.Update();
         }
 

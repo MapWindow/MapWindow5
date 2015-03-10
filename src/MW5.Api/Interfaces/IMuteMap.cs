@@ -53,7 +53,7 @@ namespace MW5.Api.Interfaces
         TileManager Tiles { get; }
         IdentifierSettings Identifier { get; }
         GeoMeasurer Measuring { get; }
-        HistoryList UndoList { get; }
+        HistoryList History { get; }
         DrawingLayers Drawing { get; }
 
         AutoToggle AnimationOnZooming { get; set; }

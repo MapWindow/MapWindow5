@@ -37,6 +37,11 @@ namespace MW5.Api.Concrete
 
         #endregion
 
+        public int Count
+        {
+            get { return _shapefile.NumShapes; }
+        }
+
         public int EditAdd(IGeometry geometry)
         {
             return _shapefile.EditAddShape(geometry.GetInternal());

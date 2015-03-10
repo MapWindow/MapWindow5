@@ -62,7 +62,10 @@
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Enumerations.cs" />
+    <Compile Include="Helpers\AttributeTableHelper.cs" />
+    <Compile Include="Helpers\FeatureSetHelper.cs" />
     <Compile Include="Helpers\GeoprocessingService.cs" />
+    <Compile Include="Helpers\StringBuilderHelper.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\CommandProvider.cs" />
     <Compile Include="Menu\MenuDispatcher.cs" />

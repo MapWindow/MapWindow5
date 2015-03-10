@@ -10,7 +10,7 @@ namespace MW5.Plugins.Concrete
     public abstract class CommandProviderBase
     {
         private readonly PluginIdentity _identity;
-        protected static Dictionary<string, MenuCommand> _commands = new Dictionary<string, MenuCommand>();
+        protected Dictionary<string, MenuCommand> _commands = new Dictionary<string, MenuCommand>();
 
         protected CommandProviderBase(PluginIdentity identity)
         {
@@ -27,7 +27,7 @@ namespace MW5.Plugins.Concrete
 
         public abstract List<MenuCommand> GetCommands();
 
-        public static MenuCommand Get(string key)
+        public MenuCommand Get(string key)
         {
             return _commands[key];      // don't catch it, if there is a mistake we want to know at once
         }

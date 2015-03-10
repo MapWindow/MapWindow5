@@ -36,7 +36,7 @@ namespace MW5.Api.Interfaces
         event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
         event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
-        event EventHandler<EventArgs> UndoListChanged;
+        event EventHandler<EventArgs> HistoryChanged;
         event EventHandler<ValidateShapeEventArgs> ValidateShape;
     }
 }

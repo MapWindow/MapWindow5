@@ -10,12 +10,13 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IMenuItemCollection: IEnumerable<IMenuItem>
     {
+        IMenuItem AddLabel(string text, string key, PluginIdentity identity);
         IMenuItem AddButton(MenuCommand command);
-        IMenuItem AddButton(string text, PluginIdentity pluginIdentity);
-        IMenuItem AddButton(string text, string key, PluginIdentity pluginIdentity);
-        IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity pluginIdentity);
-        IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity pluginIdentity);
-        IDropDownMenuItem AddDropDown(string text, Bitmap icon, PluginIdentity pluginIdentity);
+        IMenuItem AddButton(string text, PluginIdentity identity);
+        IMenuItem AddButton(string text, string key, PluginIdentity identity);
+        IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity identity);
+        IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity identity);
+        IDropDownMenuItem AddDropDown(string text, Bitmap icon, PluginIdentity identity);
         IMenuItem this[int menuItemIndex] { get; }
         void Insert(IMenuItem item, int index);
         void Remove(int index);

@@ -85,6 +85,13 @@ namespace MW5.UI
             }
         }
 
+        public IMenuItem AddLabel(string text, string key, PluginIdentity identity)
+        {
+            var item = new StaticBarItem(text) { Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y) };
+            var menuItem = AddItem(item, identity, key);
+            return menuItem;
+        }
+
         public IMenuItem AddButton(MenuCommand command)
         {
             if (command == null)

@@ -81,7 +81,7 @@ namespace MW5.Api
 
         private void MapUndoListChanged(object sender, EventArgs e)
         {
-            Invoke(sender, UndoListChanged, e);
+            Invoke(sender, HistoryChanged, e);
         }
 
         private void MapTilesLoaded(object sender, _DMapEvents_TilesLoadedEvent e)

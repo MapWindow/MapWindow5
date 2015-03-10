@@ -51,20 +51,28 @@ namespace MW5.Plugins.ShapeEditor.Operations
             // TODO: request for attributes
 
             // registering in undo list
-            var history = context.Map.UndoList;
+            var history = context.Map.History;
             history.BeginBatch();
 
             int layerHandle = context.Map.Layers.SelectedLayer.Handle;
 
-            var features = fs.Features;
-            for (int i = features.Count() - 1; i >= 0 ; i--)
+            foreach (var ft in fs.Features.Reverse())
             {
-                if (features[i].Selected)
+                if (ft.Selected)
                 {
-                    history.Add(UndoOperation.RemoveShape, layerHandle, i);
-                    features.EditDelete(i);
+                    history.Add(UndoOperation.RemoveShape, layerHandle, ft.Index);
+                    fs.Features.EditDelete(ft.Index);
                 }
             }
+            //var features = fs.Features;
+            //for (int i = features.Count() - 1; i >= 0 ; i--)
+            //{
+            //    if (features[i].Selected)
+            //    {
+            //        history.Add(UndoOperation.RemoveShape, layerHandle, i);
+            //        features.EditDelete(i);
+            //    }
+            //}
           
             int shapeIndex = fs.Features.EditAdd(result);
             if (shapeIndex != -1)

@@ -62,6 +62,11 @@ namespace MW5.Api.Concrete
 
         #region IFeature Members
 
+        public int Index
+        {
+            get { return _shapeIndex; }
+        }
+
         public IGeometry Geometry
         {
             get { return new Geometry(_shapefile.Shape[_shapeIndex]); }

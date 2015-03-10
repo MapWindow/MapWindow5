@@ -1,27 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
+﻿using MW5.Api;
+using MW5.Api.Interfaces;
 
-
-namespace MWLite.ShapeEditor.Operations
+namespace MW5.Plugins.ShapeEditor.Operations
 {
-    //public static class RemoveOperation
-    //{
-    //    public static void Remove(Shapefile sf, int layerHandle)
-    //    {
-    //         var list = App.Map.UndoList;
-    //        list.BeginBatch();
-    //        for (int i = sf.NumShapes - 1; i >= 0; i--)
-    //        {
-    //            if (sf.ShapeSelected[i])
-    //            {
-    //                list.Add(tkUndoOperation.uoRemoveShape, layerHandle , i);
-    //                sf.EditDeleteShape(i);
-    //            }
-    //        }
-    //        list.EndBatch();
-    //    }
-    //}
+    public static class RemoveOperation
+    {
+        // TODO: path Layer, rather than separately handle and featureset
+        public static void Remove(IMuteMap map, IFeatureSet fs, int layerHandle)
+        {
+            var list = map.History;
+            list.BeginBatch();
+
+            var features = fs.Features;
+            for (int i = features.Count - 1; i >= 0; i--)
+            {
+                if (features[i].Selected)
+                {
+                    list.Add(UndoOperation.RemoveShape, layerHandle, i);
+                    features.EditDelete(i);
+                }
+            }
+            list.EndBatch();
+        }
+    }
 }

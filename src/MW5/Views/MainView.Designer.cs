@@ -51,11 +51,6 @@ namespace MW5.Views
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.MapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
-            this.mnuFile = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this.barItem1 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
-            this.mnuTiles = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this.mnuPlugins = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
-            this.mnuHelp = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this._legendControl1 = new MW5.Api.Legend.LegendControl();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
@@ -223,7 +218,7 @@ namespace MW5.Views
             this.dockingClientPanel1.Size = new System.Drawing.Size(366, 294);
             this.dockingClientPanel1.TabIndex = 4;
             // 
-            // _mapControlControl1
+            // _mapControl1
             // 
             this._mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
             this._mapControl1.CurrentScale = 16.918010798186259D;
@@ -268,83 +263,13 @@ namespace MW5.Views
             // 
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
-            this._mainFrameBarManager1.Categories.Add("Menu");
-            this._mainFrameBarManager1.Categories.Add("FileMenu");
             this._mainFrameBarManager1.CurrentBaseFormType = "System.Windows.Forms.Form";
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
-            this._mainFrameBarManager1.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
-            this.mnuFile,
-            this.mnuTiles,
-            this.mnuPlugins,
-            this.mnuHelp,
-            this.barItem1});
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
-            // 
-            // mnuFile
-            // 
-            this.mnuFile.BarName = "mnuFile";
-            this.mnuFile.CategoryIndex = 0;
-            this.mnuFile.ID = "File";
-            this.mnuFile.Items.AddRange(new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem[] {
-            this.barItem1});
-            this.mnuFile.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
-            this.mnuFile.ShowToolTipInPopUp = false;
-            this.mnuFile.SizeToFit = true;
-            this.mnuFile.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuFile.Text = "File";
-            this.mnuFile.WrapLength = 20;
-            // 
-            // barItem1
-            // 
-            this.barItem1.BarName = "barItem1";
-            this.barItem1.CategoryIndex = 1;
-            this.barItem1.CustomTextFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.barItem1.ID = "mnuOpen";
-            this.barItem1.ImageSize = new System.Drawing.Size(32, 32);
-            this.barItem1.Padding = new System.Drawing.Point(15, 15);
-            this.barItem1.ShowToolTipInPopUp = false;
-            this.barItem1.SizeToFit = true;
-            this.barItem1.Text = "Open";
-            // 
-            // mnuTiles
-            // 
-            this.mnuTiles.BarName = "mnuTiles";
-            this.mnuTiles.CategoryIndex = 0;
-            this.mnuTiles.ID = "tiles";
-            this.mnuTiles.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
-            this.mnuTiles.ShowToolTipInPopUp = false;
-            this.mnuTiles.SizeToFit = true;
-            this.mnuTiles.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuTiles.Text = "TilesDropDown";
-            this.mnuTiles.WrapLength = 20;
-            // 
-            // mnuPlugins
-            // 
-            this.mnuPlugins.BarName = "mnuPlugins";
-            this.mnuPlugins.CategoryIndex = 0;
-            this.mnuPlugins.ID = "plugins";
-            this.mnuPlugins.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
-            this.mnuPlugins.ShowToolTipInPopUp = false;
-            this.mnuPlugins.SizeToFit = true;
-            this.mnuPlugins.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuPlugins.Text = "PluginsDropDown";
-            this.mnuPlugins.WrapLength = 20;
-            // 
-            // mnuHelp
-            // 
-            this.mnuHelp.BarName = "mnuHelp";
-            this.mnuHelp.CategoryIndex = 0;
-            this.mnuHelp.ID = "HelpDropDown";
-            this.mnuHelp.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
-            this.mnuHelp.ShowToolTipInPopUp = false;
-            this.mnuHelp.SizeToFit = true;
-            this.mnuHelp.Style = Syncfusion.Windows.Forms.VisualStyle.OfficeXP;
-            this.mnuHelp.Text = "HelpDropDown";
-            this.mnuHelp.WrapLength = 20;
             // 
             // _legendControl1
             // 
@@ -399,11 +324,6 @@ namespace MW5.Views
         private MapControl _mapControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuFile;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuTiles;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuPlugins;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem mnuHelp;
-        private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
         private Api.Legend.LegendControl _legendControl1;
 
     }

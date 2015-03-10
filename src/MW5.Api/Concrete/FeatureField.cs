@@ -18,7 +18,7 @@ namespace MW5.Api.Concrete
             _field = field;
         }
 
-        public AttributeType AttributeType
+        public AttributeType Type
         {
             get { return (AttributeType) _field.Type; }
             set { _field.Type = (FieldType) value; }

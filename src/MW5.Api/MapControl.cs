@@ -61,7 +61,7 @@ namespace MW5.Api
         public event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
         public event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
-        public event EventHandler<EventArgs> UndoListChanged;
+        public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
 
         #region Hiding Properties from PropertyGrid
@@ -119,7 +119,7 @@ namespace MW5.Api
 
         #region IMuteMap Members
 
-        public HistoryList UndoList
+        public HistoryList History
         {
             get { return new HistoryList(_map.UndoList); }
         }

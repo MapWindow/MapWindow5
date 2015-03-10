@@ -32,6 +32,11 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 new MenuCommand("Cut", MenuKeys.Cut, Resources.edit_cut),
                 new MenuCommand("Undo", MenuKeys.Undo, Resources.edit_undo),
                 new MenuCommand("Redo", MenuKeys.Redo, Resources.edit_redo),
+
+                new MenuCommand("Erase by polygon", MenuKeys.EraseByPolygon, null),
+                new MenuCommand("Clip by polygon", MenuKeys.ClipByPolygon, null),
+                new MenuCommand("Split by polygon", MenuKeys.SplitByPolygon, null),
+                new MenuCommand("Split by polyline", MenuKeys.SplitByPolyline, Resources.geometry_split_by_polyline),
             };
         }
     }

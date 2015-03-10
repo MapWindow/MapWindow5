@@ -35,23 +35,6 @@ namespace MW5.Presenters
             PluginManager.Instance.MenuItemClicked += MenuItemClicked;
         }
 
-        private bool TryClose()
-        {
-            // TODO: temporary
-            //if (!Editor.StopAllEditing())
-            //    return false;
-
-            //if (TryCloseProject())
-            {
-                _context.Map.GeometryEditor.Clear();
-                _context.Legend.Groups.Clear();
-                _context.Legend.Layers.Clear();
-                //_context.Map.SetDefaultExtents();
-                return true;
-            }
-            return false;
-        }
-
         private void MenuItemClicked(object sender, Plugins.Concrete.MenuItemEventArgs e)
         {
             if (HandleCursorChanged(e.ItemKey))
@@ -130,6 +113,23 @@ namespace MW5.Presenters
                 case MenuKeys.Attributes:
                     _context.Map.MapCursor = MapCursor.Identify;
                     return true;
+            }
+            return false;
+        }
+
+        private bool TryClose()
+        {
+            // TODO: temporary
+            //if (!Editor.StopAllEditing())
+            //    return false;
+
+            //if (TryCloseProject())
+            {
+                _context.Map.GeometryEditor.Clear();
+                _context.Legend.Groups.Clear();
+                _context.Legend.Layers.Clear();
+                //_context.Map.SetDefaultExtents();
+                return true;
             }
             return false;
         }
