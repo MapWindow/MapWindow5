@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Helpers;
+using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Presenters;
 using MW5.Services.Helpers;
@@ -21,6 +22,7 @@ namespace MW5
 
             EnumConverters.Init();
             CommandBarHelper.InitMenuColors();
+            MenuCommands.Init();
 
             var container = CompositionRoot.Container;
             CompositionRoot.Compose(container);

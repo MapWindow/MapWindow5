@@ -12,7 +12,7 @@
         public const string AddVectorLayer = "FileAddVectorLayer";
         public const string AddRasterLayer = "FileAddRasterLayer";
         public const string AddDatabaseLayer = "FileAddDatabaseLayer";
-        public const string FileBarCreateLayer = "FileCreateLayer";
+        public const string CreateLayer = "FileCreateLayer";
         public const string RemoveLayer = "FileRemoveLayer";
 
         public const string ViewToolbars = "ViewToolbars";

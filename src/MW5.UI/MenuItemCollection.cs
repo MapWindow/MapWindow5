@@ -83,6 +83,18 @@ namespace MW5.UI
             }
         }
 
+        public IMenuItem AddButton(MenuCommand command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException("command");
+            }
+
+            // TODO: command can have further use, e.g. to control Enabled state of the item
+            // then it should be stored in the tag
+            return AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
+        }
+
         public IMenuItem AddButton(string text, PluginIdentity identity)
         {
             return AddButton(text, string.Empty, identity);

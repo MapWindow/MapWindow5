@@ -101,6 +101,7 @@
     <Compile Include="Helpers\DockingHelper.cs" />
     <Compile Include="Helpers\MapInitializer.cs" />
     <Compile Include="Helpers\MapListener.cs" />
+    <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\TilesMainMenuHelper.cs" />
     <Compile Include="Menu\PluginsMainMenuHelper.cs" />
     <Compile Include="Menu\ViewMainMenuService.cs" />
