@@ -37,7 +37,7 @@ namespace MW5.Api.Concrete
 
         #endregion
 
-        public int EditAddShape(IGeometry geometry)
+        public int EditAdd(IGeometry geometry)
         {
             return _shapefile.EditAddShape(geometry.GetInternal());
         }
@@ -47,27 +47,30 @@ namespace MW5.Api.Concrete
             return _shapefile.EditClear();
         }
 
-        public bool EditDeleteShape(int index)
+        public bool EditDelete(int index)
         {
             return _shapefile.EditDeleteShape(index);
         }
 
-        public bool EditInsertShape(IGeometry geometry, ref int index)
+        public bool EditInsert(IGeometry geometry, ref int index)
         {
             return _shapefile.EditInsertShape(geometry.GetInternal(), ref index);
         }
 
-        public bool EditUpdateShape(int index, IGeometry geometryNew)
+        public bool EditUpdate(int index, IGeometry geometryNew)
         {
             return _shapefile.EditUpdateShape(index, geometryNew.GetInternal());
         }
 
-        public IGeometry this[int index]
+        public IFeature this[int index]
         {
             get
             {
-                var shape = _shapefile.Shape[index];
-                return shape != null ? new Geometry(shape) : null;
+                if (index < 0 || index >= _shapefile.NumShapes)
+                {
+                    throw new IndexOutOfRangeException("Feature index is out of range.");
+                }
+                return new Feature(_shapefile, index);
             }
         }
     }

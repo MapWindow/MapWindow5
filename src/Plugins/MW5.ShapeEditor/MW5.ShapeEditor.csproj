@@ -61,10 +61,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Enumerations.cs" />
+    <Compile Include="Helpers\GeoprocessingService.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\CommandProvider.cs" />
     <Compile Include="Menu\MenuDispatcher.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Operations\CopyOperation.cs" />
+    <Compile Include="Operations\ExplodeOperation.cs" />
+    <Compile Include="Operations\MergeOperation.cs" />
+    <Compile Include="Operations\RemoveOperation.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -19,7 +19,7 @@ namespace MW5.Api.Interfaces
         string Description { get; set; }
         bool LayerVisibleAtCurrentScale { get; }
 
-        IFeatureSet VectorSource { get ; }
+        IFeatureSet FeatureSet { get ; }
         IImageSource ImageSource { get; }
         ILayerSource LayerSource { get; }
         VectorLayer VectorLayer { get; }

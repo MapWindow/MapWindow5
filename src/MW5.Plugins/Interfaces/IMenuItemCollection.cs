@@ -15,6 +15,7 @@ namespace MW5.Plugins.Interfaces
         IMenuItem AddButton(string text, string key, PluginIdentity pluginIdentity);
         IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity pluginIdentity);
         IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity pluginIdentity);
+        IDropDownMenuItem AddDropDown(string text, Bitmap icon, PluginIdentity pluginIdentity);
         IMenuItem this[int menuItemIndex] { get; }
         void Insert(IMenuItem item, int index);
         void Remove(int index);

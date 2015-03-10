@@ -227,6 +227,9 @@ namespace MW5.Api.Legend
         /// </summary>
         public void Clear()
         {
+            ClearCore();
+            
+            // TODO: use event
             _legend.ClearGroups();
         }
 

@@ -35,10 +35,35 @@ namespace MW5.Presenters
             PluginManager.Instance.MenuItemClicked += MenuItemClicked;
         }
 
+        private bool TryClose()
+        {
+            // TODO: temporary
+            //if (!Editor.StopAllEditing())
+            //    return false;
+
+            //if (TryCloseProject())
+            {
+                _context.Map.GeometryEditor.Clear();
+                _context.Legend.Groups.Clear();
+                _context.Legend.Layers.Clear();
+                //_context.Map.SetDefaultExtents();
+                return true;
+            }
+            return false;
+        }
+
         private void MenuItemClicked(object sender, Plugins.Concrete.MenuItemEventArgs e)
         {
+            if (HandleCursorChanged(e.ItemKey))
+            {
+                return;
+            }
+
             switch (e.ItemKey)
             {
+                case MenuKeys.NewMap:
+                    TryClose();
+                    break;
                 case MenuKeys.AddLayer:
                     _layerService.AddLayer(LayerType.All);
                     break;
@@ -48,14 +73,8 @@ namespace MW5.Presenters
                 case MenuKeys.AddVectorLayer:
                     _layerService.AddLayer(LayerType.Vector);
                     break;
-                case MenuKeys.ZoomIn:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
-                    break;
                 case MenuKeys.ZoomMax:
                     _context.Map.ZoomToMaxExtents();
-                    break;
-                case MenuKeys.ZoomOut:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
                     break;
                 case MenuKeys.ZoomToLayer:
                     _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
@@ -63,19 +82,56 @@ namespace MW5.Presenters
                 case MenuKeys.AddDatabaseLayer:
                     // TODO: implement
                     break;
-                case MenuKeys.Pan:
-                    _context.Map.MapCursor = MapCursor.Pan;
-                    break;
                 case MenuKeys.RemoveLayer:
                     _layerService.RemoveSelectedLayer();
                     break;
                 case MenuKeys.SetProjection:
                     CompositionRoot.Container.Run<SetProjectionPresenter>();
                     break;
+                case MenuKeys.ClearSelection:
+                    _layerService.ClearSelection();
+                    break;
+                case MenuKeys.ZoomToSelected:
+                    _layerService.ZoomToSelected();
+                    break;
                 default:
                     _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
                     break;
             }
+        }
+
+        private bool HandleCursorChanged(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.ZoomIn:
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
+                    return true;
+                case MenuKeys.ZoomOut:
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
+                    return true;
+                case MenuKeys.Pan:
+                    _context.Map.MapCursor = MapCursor.Pan;
+                    return true;
+                case MenuKeys.SelectByPolygon:
+                    _context.Map.MapCursor = MapCursor.SelectByPolygon;
+                    return true;
+                case MenuKeys.SelectByRectangle:
+                    _context.Map.MapCursor = MapCursor.Selection;
+                    return true;
+                case MenuKeys.MeasureArea:
+                    _context.Map.Measuring.MeasuringType = MeasuringType.Area;
+                    _context.Map.MapCursor = MapCursor.Measure;
+                    return true;
+                case MenuKeys.MeasureDistance:
+                    _context.Map.Measuring.MeasuringType = MeasuringType.Distance;
+                    _context.Map.MapCursor = MapCursor.Measure;
+                    return true;
+                case MenuKeys.Attributes:
+                    _context.Map.MapCursor = MapCursor.Identify;
+                    return true;
+            }
+            return false;
         }
     }
 }

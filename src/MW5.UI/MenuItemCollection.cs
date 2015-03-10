@@ -64,6 +64,8 @@ namespace MW5.UI
             return GetEnumerator();
         }
 
+       
+
         public IMenuItem this[int index]
         {
             get
@@ -118,8 +120,23 @@ namespace MW5.UI
 
         public IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity identity)
         {
-            var item = new ParentBarItem(text);
-            return AddItem(item, identity, key) as IDropDownMenuItem;
+            return AddDropDown(text, key, null, identity);
+        }
+
+        public IDropDownMenuItem AddDropDown(string text, Bitmap icon, PluginIdentity identity)
+        {
+            return AddDropDown(text, string.Empty, icon, identity);
+        }
+
+        private IDropDownMenuItem AddDropDown(string text, string key, Bitmap icon, PluginIdentity identity)
+        {
+            var item = new ParentBarItem(text) { Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y) }; ;
+            var menuItem = AddItem(item, identity, key) as IDropDownMenuItem;
+            if (menuItem != null && icon != null)
+            {
+                menuItem.Icon = new MenuIcon(icon);
+            }
+            return menuItem;
         }
 
         public void Insert(IMenuItem item, int index)

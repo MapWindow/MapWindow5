@@ -2352,7 +2352,6 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal void ClearGroups()
         {
-            _groups.Clear();
             _map.RemoveAllLayers();
             Redraw();
         }

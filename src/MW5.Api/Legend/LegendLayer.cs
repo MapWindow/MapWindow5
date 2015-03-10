@@ -142,7 +142,7 @@ namespace MW5.Api.Legend
             {
                 if (LayerType == LayerType.Shapefile)
                 {
-                    var fs = this.VectorSource;
+                    var fs = this.FeatureSet;
                     if (fs != null)
                     {
                         switch (fs.GeometryType)

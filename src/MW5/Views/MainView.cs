@@ -30,8 +30,8 @@ namespace MW5.Views
 
             InitializeComponent();
 
-            _legendControl1.Map = _mapControlControl1;
-            _mapControlControl1.Legend = _legendControl1;
+            _legendControl1.Map = _mapControl1;
+            _mapControl1.Legend = _legendControl1;
 
             context.Init(this);
 
@@ -56,9 +56,18 @@ namespace MW5.Views
         public void UpdateView()
         {
             // mapControl plays the role of the model here
-            _context.Toolbars.FindItem(MenuKeys.ZoomIn).Checked = _mapControlControl1.MapCursor == MapCursor.ZoomIn;
-            _context.Toolbars.FindItem(MenuKeys.ZoomOut).Checked = _mapControlControl1.MapCursor == MapCursor.ZoomOut;
-            _context.Toolbars.FindItem(MenuKeys.Pan).Checked = _mapControlControl1.MapCursor == MapCursor.Pan;
+            _context.Toolbars.FindItem(MenuKeys.ZoomIn).Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
+            _context.Toolbars.FindItem(MenuKeys.ZoomOut).Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
+            _context.Toolbars.FindItem(MenuKeys.Pan).Checked = _mapControl1.MapCursor == MapCursor.Pan;
+            _context.Toolbars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
+            
+            _context.Toolbars.FindItem(MenuKeys.MeasureArea).Checked = 
+                _mapControl1.MapCursor == MapCursor.Measure && 
+                _mapControl1.Measuring.MeasuringType == MeasuringType.Area;
+
+            _context.Toolbars.FindItem(MenuKeys.MeasureDistance).Checked =
+                _mapControl1.MapCursor == MapCursor.Measure &&
+                _mapControl1.Measuring.MeasuringType == MeasuringType.Distance;
         }
 
         #endregion
@@ -77,7 +86,7 @@ namespace MW5.Views
 
         IMap IMainForm.Map
         {
-            get { return _mapControlControl1; }
+            get { return _mapControl1; }
         }
 
         public IMuteLegend Legend

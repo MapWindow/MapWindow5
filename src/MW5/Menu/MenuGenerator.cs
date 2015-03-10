@@ -136,6 +136,19 @@ namespace MW5.Menu
             _commands.AddToMenu(items, MenuKeys.Pan);
             _commands.AddToMenu(items, MenuKeys.SetProjection, true);
 
+            _commands.AddToMenu(items, MenuKeys.MeasureDistance, true);
+            _commands.AddToMenu(items, MenuKeys.MeasureArea);
+            _commands.AddToMenu(items, MenuKeys.Attributes);
+
+            // select drop down
+            var dropDown = items.AddDropDown("Select", Resources.select, PluginIdentity.Default);
+            dropDown.BeginGroup = true;
+            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByRectangle);
+            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByPolygon);
+
+            _commands.AddToMenu(items, MenuKeys.ZoomToSelected);
+            _commands.AddToMenu(items, MenuKeys.ClearSelection);
+
             bar.Update();
         }
 

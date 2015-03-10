@@ -38,7 +38,7 @@ namespace MW5.Api.Legend.Abstract
         /// </summary>
         Color SelectionColor { get; set; }
 
-        // TODO: perhaps return object
+        // TODO: return object; add separate property to return handle
         /// <summary>
         /// Gets or Sets the Selected layer within the legend
         /// </summary>

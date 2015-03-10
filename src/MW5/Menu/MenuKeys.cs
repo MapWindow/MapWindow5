@@ -25,6 +25,13 @@
         public const string ZoomToLayer = "ZoomToLayer";
         public const string Pan = "Pan";
         public const string SetProjection = "SetProjection";
+        public const string MeasureDistance = "MeasureDistance";
+        public const string MeasureArea = "MeasureArea";
+        public const string SelectByRectangle = "SelectByRectangle";
+        public const string SelectByPolygon = "SelectByPolygon";
+        public const string Attributes = "AttributesTool";
+        public const string ZoomToSelected = "ZoomToSelected";
+        public const string ClearSelection = "ClearSelection";
 
         public const string About = "HelpAbout";
     }

@@ -45,6 +45,15 @@ namespace MW5.Menu
                 new MenuCommand("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer),
                 new MenuCommand("Pan", MenuKeys.Pan, Resources.pan),
                 new MenuCommand("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change),
+                new MenuCommand("Measure distance", MenuKeys.MeasureDistance, Resources.measure_distance),
+                new MenuCommand("Measure area", MenuKeys.MeasureArea, Resources.measure_area),
+                new MenuCommand("By rectangle", MenuKeys.SelectByRectangle, null),
+                new MenuCommand("By polygon", MenuKeys.SelectByPolygon, null),
+                new MenuCommand("Attributes", MenuKeys.Attributes, Resources.attribute_show),
+                new MenuCommand("Zoom to selected", MenuKeys.ZoomToSelected, Resources.zoom_to_selection),
+                
+                // TODO: correct icon name
+                new MenuCommand("Clear Selection", MenuKeys.ClearSelection, Resources.delete_selected), 
             };
         }
     }

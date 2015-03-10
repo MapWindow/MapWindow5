@@ -8,5 +8,7 @@
         void ToggleVectorLayerEditing();
         bool SaveLayerChanges(int layerHandle);
         void CreateLayer();
+        void ZoomToSelected();
+        void ClearSelection();
     }
 }

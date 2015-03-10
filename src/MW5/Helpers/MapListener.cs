@@ -55,7 +55,7 @@ namespace MW5.Helpers
             _map.UndoListChanged += MapUndoListChanged;
             _map.ValidateShape += MapValidateShape;
             _map.MapCursorChanged += MapCursorChanged;
-            _map.ChooseLayer += _map_ChooseLayer;
+            _map.ChooseLayer += MapChooseLayer;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
@@ -64,12 +64,13 @@ namespace MW5.Helpers
             }
         }
 
-        void _map_ChooseLayer(object sender, ChooseLayerEventArgs e)
+        private void MapChooseLayer(object sender, ChooseLayerEventArgs e)
         {
+            e.LayerHandle = _context.Map.Layers.SelectedLayer.Handle;
             _plugins.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
         }
 
-        void MapCursorChanged(object sender, EventArgs e)
+        private void MapCursorChanged(object sender, EventArgs e)
         {
             _context.View.UpdateView();
 

@@ -480,6 +480,7 @@
         Pan = 2,
         Selection = 3,
         None = 4,
+        // TODO: add separate cursor for area and distance (in wrapper)
         Measure = 5,
         AddShape = 6,
         EditShape = 8,

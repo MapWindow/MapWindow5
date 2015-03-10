@@ -20,6 +20,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
         public MenuGenerator(IAppContext context, PluginIdentity identity)
         {
+            _commands = new CommandProvider(identity);
+
             InitToolbar(context, identity);
 
             InitMenu();
@@ -36,6 +38,17 @@ namespace MW5.Plugins.ShapeEditor.Menu
             _commands.AddToMenu(items, MenuKeys.LayerCreate);
             _commands.AddToMenu(items, MenuKeys.GeometryCreate, true);
             _commands.AddToMenu(items, MenuKeys.VertexEditor);
+            _commands.AddToMenu(items, MenuKeys.SplitShapes, true);
+            _commands.AddToMenu(items, MenuKeys.MergeShapes);
+            _commands.AddToMenu(items, MenuKeys.MoveShapes);
+            _commands.AddToMenu(items, MenuKeys.RotateShapes);
+            _commands.AddToMenu(items, MenuKeys.Copy, true);
+            _commands.AddToMenu(items, MenuKeys.Paste);
+            _commands.AddToMenu(items, MenuKeys.Cut);
+            _commands.AddToMenu(items, MenuKeys.Undo, true);
+            _commands.AddToMenu(items, MenuKeys.Redo);
+
+            bar.Update();
         }
 
         private void InitMenu()

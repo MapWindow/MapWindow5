@@ -216,5 +216,21 @@ namespace MW5.Services.Services
                 _context.Layers.Add(fs);
             }
         }
+
+        public void ZoomToSelected()
+        {
+            int handle = _context.Legend.SelectedLayer;
+            _context.Map.ZoomToSelected(handle);
+        }
+
+        public void ClearSelection()
+        {
+            var fs = _context.Map.Layers.SelectedLayer.FeatureSet;
+            if (fs != null)
+            {
+                fs.ClearSelection();
+                _context.Map.Redraw();
+            }
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace MW5.Plugins.ShapeEditor
             _context = context;
             _mapListener = new MapListener(this, context);
             _menuGenerator = new MenuGenerator(context, Identity);
-            _menuDispatcher = new MenuDispatcher(context, this, context.Container.Resolve<ILayerService>());       
+            _menuDispatcher = new MenuDispatcher(context, this);       
         }
 
         public override void Terminate()

@@ -120,7 +120,7 @@ namespace MW5.Api.Concrete
             get { return _map.get_LayerVisibleAtCurrentScale(_layerHandle); }
         }
 
-        public IFeatureSet VectorSource
+        public IFeatureSet FeatureSet
         {
             get
             {
