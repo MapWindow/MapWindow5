@@ -16,6 +16,7 @@ namespace MW5.Menu
         
         private readonly IAppContext _context;
         private readonly PluginManager _pluginManager;
+        private readonly CommandProvider _commands;
         private readonly object _menuManager;
         private readonly object _dockingManager;
         
@@ -26,10 +27,12 @@ namespace MW5.Menu
         {
             if (context == null) throw new ArgumentNullException("context");
             if (pluginManager == null) throw new ArgumentNullException("pluginManager");
+
             _context = context;
             _pluginManager = pluginManager;
             _menuManager = menuManager;
             _dockingManager = dockingManager;
+            _commands = new CommandProvider(PluginIdentity.Default);
         }
 
         public void Init()
@@ -59,15 +62,15 @@ namespace MW5.Menu
         {
             var items = _context.Menu.FileMenu.SubItems;
 
-            items.AddButton(MenuKeys.NewMap);
-            items.AddButton(MenuKeys.AddLayer, true);
-            items.AddButton(MenuKeys.AddVectorLayer);
-            items.AddButton(MenuKeys.AddRasterLayer);
-            items.AddButton(MenuKeys.AddDatabaseLayer);
-            items.AddButton(MenuKeys.OpenProject, true);
-            items.AddButton(MenuKeys.SaveProject, true);
-            items.AddButton(MenuKeys.SaveProjectAs);
-            items.AddButton(MenuKeys.Quit, true);
+            _commands.AddToMenu(items, MenuKeys.NewMap);
+            _commands.AddToMenu(items, MenuKeys.AddLayer, true);
+            _commands.AddToMenu(items, MenuKeys.AddVectorLayer);
+            _commands.AddToMenu(items, MenuKeys.AddRasterLayer);
+            _commands.AddToMenu(items, MenuKeys.AddDatabaseLayer);
+            _commands.AddToMenu(items, MenuKeys.OpenProject, true);
+            _commands.AddToMenu(items, MenuKeys.SaveProject, true);
+            _commands.AddToMenu(items, MenuKeys.SaveProjectAs);
+            _commands.AddToMenu(items, MenuKeys.Quit, true);
 
             _context.Menu.FileMenu.Update();
         }
@@ -108,16 +111,16 @@ namespace MW5.Menu
         {
             var items = bar.Items;
 
-            items.AddButton(MenuKeys.NewMap);
-            items.AddButton(MenuKeys.OpenProject);
-            items.AddButton(MenuKeys.SaveProject);
-            items.AddButton(MenuKeys.SaveProjectAs);
-            items.AddButton(MenuKeys.AddLayer, true);
-            items.AddButton(MenuKeys.AddVectorLayer);
-            items.AddButton(MenuKeys.AddRasterLayer);
-            items.AddButton(MenuKeys.AddDatabaseLayer);
-            items.AddButton(MenuKeys.CreateLayer, true);
-            items.AddButton(MenuKeys.RemoveLayer);
+            _commands.AddToMenu(items, MenuKeys.NewMap);
+            _commands.AddToMenu(items, MenuKeys.OpenProject);
+            _commands.AddToMenu(items, MenuKeys.SaveProject);
+            _commands.AddToMenu(items, MenuKeys.SaveProjectAs);
+            _commands.AddToMenu(items, MenuKeys.AddLayer, true);
+            _commands.AddToMenu(items, MenuKeys.AddVectorLayer);
+            _commands.AddToMenu(items, MenuKeys.AddRasterLayer);
+            _commands.AddToMenu(items, MenuKeys.AddDatabaseLayer);
+            _commands.AddToMenu(items, MenuKeys.CreateLayer, true);
+            _commands.AddToMenu(items, MenuKeys.RemoveLayer);
 
             bar.Update();
         }
@@ -126,12 +129,12 @@ namespace MW5.Menu
         {
             var items = bar.Items;
 
-            items.AddButton(MenuKeys.ZoomIn);
-            items.AddButton(MenuKeys.ZoomOut);
-            items.AddButton(MenuKeys.ZoomMax);
-            items.AddButton(MenuKeys.ZoomToLayer);
-            items.AddButton(MenuKeys.Pan);
-            items.AddButton(MenuKeys.SetProjection, true);
+            _commands.AddToMenu(items, MenuKeys.ZoomIn);
+            _commands.AddToMenu(items, MenuKeys.ZoomOut);
+            _commands.AddToMenu(items, MenuKeys.ZoomMax);
+            _commands.AddToMenu(items, MenuKeys.ZoomToLayer);
+            _commands.AddToMenu(items, MenuKeys.Pan);
+            _commands.AddToMenu(items, MenuKeys.SetProjection, true);
 
             bar.Update();
         }

@@ -22,7 +22,6 @@ namespace MW5
 
             EnumConverters.Init();
             CommandBarHelper.InitMenuColors();
-            MenuCommands.Init();
 
             var container = CompositionRoot.Container;
             CompositionRoot.Compose(container);

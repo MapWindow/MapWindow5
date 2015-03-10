@@ -12,12 +12,14 @@ namespace MW5.Plugins.Concrete
         private readonly string _key;
         private readonly string _text;
         private readonly Bitmap _icon;
-        private readonly PluginIdentity _identity;
+
+        public MenuCommand(string text, string key, Bitmap icon) : this(text, key, icon, null)
+        {
+        }
 
         public MenuCommand(string text, string key, Bitmap icon, PluginIdentity identity)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException("key");
-            if (identity == null) throw new ArgumentNullException("identity");
 
             if (string.IsNullOrWhiteSpace(text))
             {
@@ -27,7 +29,7 @@ namespace MW5.Plugins.Concrete
             _key = key;
             _text = text;
             _icon = icon;
-            _identity = identity;
+            PluginIdentity = identity;
         }
 
         public string Key
@@ -45,9 +47,6 @@ namespace MW5.Plugins.Concrete
             get { return _text; }
         }
 
-        public PluginIdentity PluginIdentity
-        {
-            get { return _identity; }
-        }
+        public PluginIdentity PluginIdentity { get; internal set; }
     }
 }

@@ -13,15 +13,12 @@ namespace MW5.Plugins.ShapeEditor
 {
     public class MapListener
     {
-        private readonly BasePlugin _plugin;
         private readonly IAppContext _context;
 
         public MapListener(BasePlugin plugin, IAppContext context)
         {
-            if (plugin == null) throw new ArgumentNullException("plugin");
             if (context == null) throw new ArgumentNullException("context");
 
-            _plugin = plugin;
             _context = context;
 
             plugin.ExtentsChanged += plugin_ExtentsChanged;
