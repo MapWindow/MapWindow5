@@ -44,7 +44,7 @@ namespace MW5.Services.Presenters
 
             // TODO: pass parent window handle in some unobtrusive way
             string path = Directory.GetDirectoryRoot(Assembly.GetExecutingAssembly().Location);
-            if (_fileDialogService.ChooseFolder(path, null, out path))
+            if (_fileDialogService.ChooseFolder(path, out path))
             {
                 if (ValidateName(path))
                 {

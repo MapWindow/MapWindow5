@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
@@ -8,7 +9,8 @@ using MW5.Api.Legend.Events;
 
 namespace MW5.Api.Legend
 {
-    public class LegendLayerCollection : BaseLayerCollection<ILegendLayer>
+    public class LegendLayerCollection<T> : BaseLayerCollection<T>
+        where T : class, ILayer
     {
         private readonly LegendControl _legend;
 
@@ -22,26 +24,27 @@ namespace MW5.Api.Legend
             }
         }
 
-        public override ILegendLayer this[int position]
+        public override T this[int position]
         {
             get
             {
-                if (position >= 0 && position < Count)
+                if (position < 0 && position >= Count)
                 {
-                    var layerHandle = _axMap.get_LayerHandle(position);
-                    if (layerHandle != -1)
-                    {
-                        return new LegendLayer(_axMap, _legend, layerHandle);
-                    }
+                    throw new ArgumentOutOfRangeException("Invalid layer position");
                 }
 
+                var layerHandle = _axMap.get_LayerHandle(position);
+                if (layerHandle != -1)
+                {
+                    return _legend.Groups.LayerByHandle(layerHandle) as T;
+                }
                 return null;
             }
         }
 
-        public override ILegendLayer ItemByHandle(int layerHandle)
+        public override T ItemByHandle(int layerHandle)
         {
-            return new LegendLayer(_axMap, _legend, layerHandle);
+            return _legend.Groups.LayerByHandle(layerHandle) as T;
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace MW5.Api.Legend
         /// <param name="targetGroupHandle">Handle of the group into which to move the layer</param>
         /// <param name="positionInGroup">0-Based index into the list of layers within the Target Group</param>
         /// <returns>True on success, False otherwise</returns>
-        public bool MoveLayer(int layerHandle, int targetGroupHandle, int positionInGroup)
+        public bool MoveLayer(int layerHandle, int targetGroupHandle, int positionInGroup = -1)
         {
             return _legend.MoveLayer(targetGroupHandle, layerHandle, positionInGroup);
         }
@@ -100,11 +103,11 @@ namespace MW5.Api.Legend
         /// </summary>
         /// <param name="layerSource"> object to be added as new layer </param>
         /// <param name="visible"> Should this layer to be visible in the map? </param>
-        /// <param name="targetGroupHandle"> layerHandle of the group into which this layer should be added </param>
         /// <param name="legendVisible"> Should this layer be visible in the legend? </param>
-        /// <param name="afterLayerHandle"> The after Layer handle. </param>
+        /// <param name="targetGroupHandle"> layerHandle of the group into which this layer should be added </param>
+        /// <param name="positionInGroup"> Position in group new layer should be inserted at </param>
         /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
-        public int Add(ILayerSource layerSource, bool visible, int targetGroupHandle, bool legendVisible, int afterLayerHandle = -1)
+        public int Add(ILayerSource layerSource, bool visible, bool legendVisible, int targetGroupHandle, int positionInGroup = -1)
         {
             var newLayer = layerSource.InternalObject;
 
@@ -121,12 +124,18 @@ namespace MW5.Api.Legend
             {
                 var grp = legendGroups.FindOrCreateGroup(targetGroupHandle) as LegendGroup;
 
-                var lyr = _legend.CreateLayer(mapLayerHandle, newLayer);
-                lyr.HideFromLegend = !legendVisible;
-
                 if (grp != null)
                 {
-                    grp.InsertLayer(afterLayerHandle, lyr);
+                    var lyr = _legend.CreateLayer(mapLayerHandle, newLayer);
+                    lyr.HideFromLegend = !legendVisible;
+                    if (positionInGroup == -1)
+                    {
+                        grp.AddLayer(lyr);
+                    }
+                    else
+                    {
+                        grp.InsertLayer(positionInGroup, lyr);
+                    }
                 }
             }
 
@@ -152,7 +161,7 @@ namespace MW5.Api.Legend
         /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
         public int Add(ILayerSource newLayer, bool visible, int targetGroupHandle)
         {
-            return Add(newLayer, visible, targetGroupHandle, true);
+            return Add(newLayer, visible, true, targetGroupHandle);
         }
 
         /// <summary>
@@ -163,7 +172,7 @@ namespace MW5.Api.Legend
         /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
         public override int Add(ILayerSource newLayer, bool visible = true)
         {
-            return Add(newLayer, visible, -1, true);
+            return Add(newLayer, visible, true, -1);
         }
 
         /// <summary>
@@ -203,7 +212,7 @@ namespace MW5.Api.Legend
             _legend.ClearLayers();
         }
 
-        public override ILegendLayer SelectedLayer
+        public override T SelectedLayer
         {
             get
             {

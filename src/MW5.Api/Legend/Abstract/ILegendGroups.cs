@@ -8,6 +8,8 @@ namespace MW5.Api.Legend.Abstract
 {
     public interface ILegendGroups : IEnumerable<ILegendGroup>
     {
+        ILegendLayer LayerByHandle(int layerHandle);
+        
         /// <summary>
         /// Gets the number of groups currently in the legend
         /// </summary>
@@ -23,14 +25,14 @@ namespace MW5.Api.Legend.Abstract
         /// Adds a new group to the legend at the topmost position
         /// </summary>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        int Add();
+        ILegendGroup Add();
 
         /// <summary>
         /// Adds a new group to the legend at the topmost position with the specified Name (Caption)
         /// </summary>
         /// <param name="name">The Caption for this group that appears in the legend</param>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        int Add(string name);
+        ILegendGroup Add(string name);
 
         /// <summary>
         /// Adds a new group to the legend at the topmost position with the specified Name (Caption)
@@ -38,7 +40,7 @@ namespace MW5.Api.Legend.Abstract
         /// <param name="name">The Caption for this group that appears in the legend</param>
         /// <param name="position">The desired 0-based index into the list of groups in the legend</param>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        int Add(string name, int position);
+        ILegendGroup Add(string name, int position);
 
         /// <summary>
         /// Tells you if a group exists with the specified handle
@@ -51,13 +53,6 @@ namespace MW5.Api.Legend.Abstract
         /// Clears all groups and layers
         /// </summary>
         void Clear();
-
-        /// <summary>
-        /// Allows you to iterate through the list of groups by position {get only}
-        /// </summary>
-        /// <param name="position">The 0-based index into the list of groups</param>
-        /// <returns>A Group object allowing you to read/change properties, null (nothing) on failure</returns>
-        ILegendGroup ItemByPosition(int position);
 
         /// <summary>
         /// Looks up a group by handle
@@ -102,6 +97,11 @@ namespace MW5.Api.Legend.Abstract
         /// <param name="source"> The Source group </param>
         /// <param name="targetPositionInGroup"> The Target Position In Group. </param>
         /// <param name="target"> The Destination group. Can be the same as the Source </param>
-        void ChangeLayerPosition(int currentPositionInGroup, ILegendGroup source, int targetPositionInGroup, ILegendGroup target);
+        void ChangeLayerPosition(ILegendGroup source, int currentPositionInGroup, ILegendGroup target, int targetPositionInGroup = -1);
+
+        /// <summary>
+        /// Removes group with specified handle.
+        /// </summary>
+        bool Remove(int handle);
     }
 }

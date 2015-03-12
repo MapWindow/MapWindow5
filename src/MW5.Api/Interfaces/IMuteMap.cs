@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Events;
+using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 
 namespace MW5.Api.Interfaces
@@ -9,7 +10,7 @@ namespace MW5.Api.Interfaces
     public interface IMuteMap: IComWrapper
     {
         IMuteLegend Legend { get; set; }
-        ILayerCollection<ILegendLayer> Layers { get; }
+        LegendLayerCollection<ILayer> Layers { get; }
         MapProjection Projection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }

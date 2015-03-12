@@ -11,6 +11,7 @@ namespace MW5.Services
         {
             container.RegisterService<IFileDialogService, FileDialogService>()
                 .RegisterService<IMessageService, MessageService>()
+                .RegisterService<IProjectService, ProjectService>()
                 .RegisterService<ICreateLayerView, CreateLayerView>();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using AxMapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
@@ -27,11 +28,13 @@ namespace MW5.Api.Concrete
             get { return _map; }
         }
 
+      
         public int Handle
         {
             get { return _layerHandle; }
         }
 
+      
         public string Name
         {
             get { return _map.get_LayerName(_layerHandle); }
@@ -39,10 +42,16 @@ namespace MW5.Api.Concrete
             set { _map.set_LayerName(_layerHandle, value); }
         }
 
+      
         public LayerType LayerType
         {
             get
             {
+                if (_map.get_OgrLayer(_layerHandle) != null)
+                {
+                    return LayerType.VectorLayer;
+                }
+                
                 if (_map.get_Shapefile(_layerHandle) != null)
                 {
                     return LayerType.Shapefile;
@@ -57,58 +66,68 @@ namespace MW5.Api.Concrete
             }
         }
 
+      
         public bool Visible
         {
             get { return _map.get_LayerVisible(_layerHandle); }
             set { _map.set_LayerVisible(_layerHandle, value); }
         }
 
+      
         public bool DynamicVisibility
         {
             get { return _map.get_LayerDynamicVisibility(_layerHandle); }
             set { _map.set_LayerDynamicVisibility(_layerHandle, value); }
         }
 
+      
         public int MinVisibleZoom
         {
             get { return _map.get_LayerMinVisibleZoom(_layerHandle); }
             set { _map.set_LayerMinVisibleZoom(_layerHandle, value); }
         }
 
+      
         public int MaxVisibleZoom
         {
             get { return _map.get_LayerMaxVisibleZoom(_layerHandle); }
             set { _map.set_LayerMaxVisibleZoom(_layerHandle, value); }
         }
 
+      
         public string Filename
         {
             get { return _map.get_LayerFilename(_layerHandle); }
         }
 
+      
         public int Position
         {
             get { return _map.get_LayerPosition(_layerHandle); }
         }
 
+      
         public string Tag
         {
             get { return _map.get_LayerKey(_layerHandle); }
             set { _map.set_LayerKey(_layerHandle, value); }
         }
 
+      
         public double MinVisibleScale
         {
             get { return _map.get_LayerMinVisibleScale(_layerHandle); }
             set { _map.set_LayerMinVisibleScale(_layerHandle, value); }
         }
 
+      
         public double MaxVisibleScale
         {
             get { return _map.get_LayerMaxVisibleScale(_layerHandle); }
             set { _map.set_LayerMaxVisibleScale(_layerHandle, value); }
         }
 
+      
         public string Description
         {
             get { return _map.get_LayerDescription(_layerHandle); }
@@ -120,6 +139,11 @@ namespace MW5.Api.Concrete
             get { return _map.get_LayerVisibleAtCurrentScale(_layerHandle); }
         }
 
+        public bool IsVector
+        {
+            get { return LayerType == LayerType.Shapefile || LayerType == LayerType.VectorLayer; }
+        }
+
         public IFeatureSet FeatureSet
         {
             get
@@ -129,6 +153,7 @@ namespace MW5.Api.Concrete
             }
         }
 
+      
         public IImageSource ImageSource
         {
             get
@@ -138,6 +163,7 @@ namespace MW5.Api.Concrete
             }
         }
 
+      
         public ILayerSource LayerSource
         {
             get
@@ -146,6 +172,7 @@ namespace MW5.Api.Concrete
             }
         }
 
+      
         public VectorLayer VectorLayer
         {
             get
@@ -155,6 +182,7 @@ namespace MW5.Api.Concrete
             }
         }
 
+      
         public ILabelsLayer Labels
         {
             get

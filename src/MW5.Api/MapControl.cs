@@ -19,7 +19,7 @@ namespace MW5.Api
     [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
     public partial class MapControl : UserControl, IMap
     {
-        private LegendLayerCollection _layers;
+        private LegendLayerCollection<ILayer> _layers;
 
         public MapControl()
         {
@@ -327,18 +327,19 @@ namespace MW5.Api
 
         // TODO: return interface
         [Browsable(false)]
-        ILayerCollection<ILegendLayer> IMuteMap.Layers
+        LegendLayerCollection<ILayer> IMuteMap.Layers
         {
             get
             {
+                if (Legend == null)
+                {
+                    throw new NullReferenceException(
+                        "MapControl.Legend property should be set before acceccing layers collection.");
+                }
+
                 if (_layers == null)
                 {
-                    if (Legend == null)
-                    {
-                        throw new NullReferenceException(
-                            "MapControl.Legend property should be set before acceccing layers collection.");
-                    }
-                    _layers = new LegendLayerCollection(_map, Legend);
+                    _layers = new LegendLayerCollection<ILayer>(_map, Legend);
                 }
                 return _layers;
             }

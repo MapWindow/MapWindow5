@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
@@ -6,9 +7,11 @@ using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services;
+using MW5.Services.Serialization;
 using MW5.Services.Services.Abstract;
 using MW5.UI;
 using MW5.UI.Syncfusion;
@@ -17,7 +20,7 @@ using Syncfusion.Windows.Forms;
 namespace MW5
 {
     // must be a singleton
-    public class AppContext: IAppContext
+    public class AppContext: ISerializableContext
     {
         private IMap _map;
         private IWin32Window _mainForm;
@@ -28,9 +31,24 @@ namespace MW5
         private MapListener _mapListener;
         private IView _view;
 
+        private static AppContext _instance;
+
+        public static AppContext Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    throw new ApplicationException("Application context isn't yet initialized");
+                }
+                return _instance;
+            }
+        }
+
         public AppContext()
         {
             _pluginManager = PluginManager.Instance;
+            _instance = this;
         }
 
         public void Init(IMainForm form)
@@ -46,6 +64,7 @@ namespace MW5
             _map = form.Map;
             _map.Initialize();
 
+            CompositionRoot.Container.RegisterInstance(typeof(IWin32Window), form);
             CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), _map);  // it's a bit ugly; got ideas how to do it better?
 
             _legend = form.Legend;
@@ -62,7 +81,7 @@ namespace MW5
             _mapListener = new MapListener(this, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
         }
 
-        private void ManagerPluginUnloaded(object sender, Plugins.Concrete.PluginEventArgs e)
+        private void ManagerPluginUnloaded(object sender, PluginEventArgs e)
         {
             Toolbars.RemoveItemsForPlugin(e.Identity);
             Menu.RemoveItemsForPlugin(e.Identity);
@@ -109,11 +128,6 @@ namespace MW5
             get { return _legend; }
         }
 
-        public IWin32Window MainWindow
-        {
-            get { return _mainForm; }
-        }
-
         public IMenu Menu
         {
             get { return _menu; }
@@ -124,14 +138,19 @@ namespace MW5
             get { return _toolbars; }
         }
 
-        public ILayerCollection<ILegendLayer> Layers
+        public LegendLayerCollection<ILayer> Layers
         {
-            get { return _legend.Layers; }
+            get { return _map.Layers; }
         }
 
         public bool Initialized
         {
             get { return _map != null; }
+        }
+
+        public PluginManager PluginManager
+        {
+            get { return _pluginManager; }
         }
     }
 }

@@ -1,0 +1,75 @@
+<Mapwin type="configurationfile" version="4.8.8">
+  <AppInfo Name="MapWindow GIS" 
+           Version="4.8.8" 
+           BuildDate="" 
+           Developer="MapWindow GIS Team" 
+           Comments="" HelpFilePath="d:\mw\MapWindow4Dev3\bin\help\MapWindow.chm" 
+           UseSplashScreen="" 
+           SplashTime="2" 
+           DefaultDir="D:\data\sf" 
+           URL="http://www.MapWindow.org" 
+           ShowWelcomeScreen="True" 
+           WelcomePlugin="" 
+           NeverShowProjectionDialog="False" 
+           NoPromptToSendErrors="False" 
+           LogfilePath="" 
+           ShowDynVisWarnings="True" 
+           ShowLayerAfterDynVis="True" 
+           SymbologyLoadingBehavior="1" 
+           ProjectionMismatchBehavior="1" 
+           ProjectionAbsenceBehavior="2" 
+           ShowLoadingReport="True" 
+           ProjectReloading="False" 
+           DisplayFloatingScalebar="False" 
+           DisplayRedrawSpeed="False" 
+           DisplayMapWindowVersion="True" 
+           DisplayAvoidCollision="False" 
+           DisplayAutoCreatespatialindex="False" >
+    <WindowIcon>
+      <Image Type="Icon"></Image>
+    </WindowIcon>
+    <SplashPicture>
+      <Image Type="">
+      </Image>
+    </SplashPicture>
+  </AppInfo>
+  <RecentProjects>
+    <Project>D:\mw\TestingScripts\ScriptData\General\MapWindow-Projects\Newton\Newton.mwprj</Project>
+    <Project>D:\mw\TestingScripts\ScriptData\General\MapWindow-Projects\World\World.mwprj</Project>
+    <Project>D:\mw\TestingScripts\ScriptData\General\MapWindow-Projects\UnitedStates\UnitedStates.mwprj</Project>
+  </RecentProjects>
+  <View LabelsUseProjectLevel="False" 
+        TransparentSelection="True" 
+        WindowWidth="989" 
+        WindowHeight="697" 
+        LocationX="0" 
+        LocationY="0" 
+        WindowState="0" 
+        ViewBackColor="16777215" 
+        CanUndockPreviewMap="False" 
+        CanUndockLegend="False" 
+        CanHidePreviewMap="False" 
+        CanHideLegend="False" 
+        ShowCustomizeContextMenuStrip="" 
+        CanPreviewMapDockLeft="False" 
+        CanLegendDockLeft="False" 
+        CanPreviewMapDockRight="False" 
+        CanLegendDockRight="False" 
+        LoadTIFFandIMGasgrid="Automatic" 
+        LoadESRIAsGrid="LoadAsGrid" 
+        MouseWheelBehavior="WheelUpZoomsIn" 
+        LegendVisible="False" 
+        PreviewVisible="False" />
+  <Plugins />
+  <ApplicationPlugins PluginDir="..\..\..\..\..\Program Files (x86)\MapWindow\ApplicationPlugins">
+    <Plugin SettingsString="" Key="mwIdentifier_mwIdentPlugin" />
+    <Plugin SettingsString="" Key="measureProject_measureClass" />
+    <Plugin SettingsString="" Key="mwSymbology_SymbologyPlugin" />
+    <Plugin SettingsString="" Key="ToolboxExtra_Classes_Main" />
+    <Plugin SettingsString="" Key="TableEditorNew_Main" />
+    <Plugin SettingsString="" Key="GISTools_GisToolsPlugin" />
+    <Plugin SettingsString="" Key="mwLayout_LayoutPlugin" />
+  </ApplicationPlugins>
+  <ColorPalettes />
+  <FavoriteProjections>4326;3857</FavoriteProjections>
+</Mapwin>

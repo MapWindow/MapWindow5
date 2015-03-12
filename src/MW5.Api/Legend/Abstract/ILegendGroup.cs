@@ -72,10 +72,12 @@ namespace MW5.Api.Legend.Abstract
         Bitmap Snapshot(int imgWidth);
 
         /// <summary>
-        /// Gets the layer handle of the specified layer
+        /// Gets Guid of the group.
         /// </summary>
-        /// <param name="positionInGroup">0 based index into list of layers</param>
-        /// <returns>Layer's handle on success, -1 on failure</returns>
-        int LayerHandle(int positionInGroup);
+        Guid Guid { get; }
+
+        void AddLayer(ILegendLayer layer);
+
+        void InsertLayer(int position, ILegendLayer layer);
     }
 }

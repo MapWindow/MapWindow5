@@ -1,0 +1,202 @@
+<Mapwin name="MapWindow+GIS++-+Newton*" type="projectfile.2" version="4.8.7">
+  <MapWinGIS OcxVersion="4.8" FileType="MapState" FileVersion="0">
+  <MapState SendMouseMove="1" SendMouseDown="1" SendMouseUp="1" SendSelectBoxFinal="1" TrapRightMouseDown="1" ExtentsLeft="380053.079425" ExtentsRight="448414.305498" ExtentsBottom="4616990.553824" ExtentsTop="4677248.617324" ExtentsPad="0.020000" />
+  <Layers>
+    <Layer LayerType="Image" LayerName="Shaded Relief Image" LayerVisible="1" LayerKey="" Filename="Images\newtned30.bmp">
+      <ImageClass Key="" SetToGrey="0" TransparencyColor="16777215" TransparencyColor2="16777215" UseTransparencyColor="0" TransparencyPercent="1.000000" DownsamplingMode="6" UpsamplingMode="6">
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" />
+      </ImageClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Populated Places" LayerVisible="1" LayerKey="" Filename="Shapefiles\utppl.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="0" LineColor="9868950" PointShapeRatio="1.000000" PointSize="7.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Alignment="5" FontColor="2838138" FrameBackColor2="11194106" FrameGradientMode="0" FrameVisible="-1" Generated="1" MaxVisibleScale="290000.000000" AutoOffset="0" DynamicVisibility="-1" AvoidCollisions="0" Positioning="0" Expression="[NAME] " />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Municipality Boundaries" LayerVisible="1" LayerKey="" Filename="Shapefiles\st_aomun.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="10395354" FillBgTransparent="0" FillColor="7238346" FillHatchStyle="39" FillTransparency="170.000000" FillType="1" LineColor="3027590" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Land Ownership" LayerVisible="1" LayerKey="" Filename="Shapefiles\ownership.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="8308398" FillColor2="4096618" FillHatchStyle="42" FillTransparency="106.000000" FillType="2" PointShapeRatio="1.000000" ScaleX="5.000000" ScaleY="5.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Alignment="7" FrameBackColor="8308398" FrameVisible="-1" Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="USGS Quad Boundaries" LayerVisible="0" LayerKey="" Filename="Shapefiles\24kquadgrid.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="5472257" FillVisible="0" LineColor="12632256" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="County Boundaries" LayerVisible="1" LayerKey="" Filename="Shapefiles\cnty.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="15966904" FillVisible="0" LineColor="65535" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="State Boundaries" LayerVisible="1" LayerKey="" Filename="Shapefiles\st.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="8303255" FillVisible="0" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Newton Watershed" LayerVisible="1" LayerKey="" Filename="Shapefiles\newton.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="13816530" FillColor2="12237498" FillGradientBounds="0" FillGradientType="2" FillTransparency="93.000000" FillType="2" LineColor="128" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="USGS HUC Boundary" LayerVisible="1" LayerKey="" Filename="Shapefiles\cat.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="4096618" FillColor2="11197130" FillGradientBounds="0" FillGradientType="2" FillTransparency="150.000000" FillType="2" LineColor="2511426" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Springs" LayerVisible="1" LayerKey="" Filename="Shapefiles\springs.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="5385746" LineColor="9868950" PointNumSides="6" PointShapeType="1" PointSize="12.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Alignment="5" Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="0" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="NHD Water Bodies" LayerVisible="1" LayerKey="" Filename="Shapefiles\16010202wb.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="9857614" FillBgTransparent="0" FillColor="12753530" FillHatchStyle="34" FillType="1" LineColor="5385746" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="NHD Reach File" LayerVisible="1" LayerKey="" Filename="Shapefiles\16010202rch.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="16777215" LineColor="8279610" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="6" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Major Roads" LayerVisible="1" LayerKey="" Filename="Shapefiles\fhards.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="16777215" LineColor="33023" PointShapeRatio="1.000000">
+          <LinePatternClass Key="" Transparency="255">
+            <LineSegments>
+              <LineSegmentClass LineType="0" Color="4343482" MarkerOutlineColor="7895160" LineWidth="3.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" />
+              <LineSegmentClass LineType="0" Color="0" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="2" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" />
+            </LineSegments>
+          </LinePatternClass>
+        </DefaultDrawingOptions>
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="6" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Detailed Roads" LayerVisible="1" LayerKey="" DynamicVisibility="1" MinVisibleScale="1.000000" MaxVisibleScale="252151.000000" Filename="Shapefiles\trrds.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="16777215" LineColor="7238346" PointShapeRatio="1.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" AutoOffset="0" AvoidCollisions="0" Positioning="6" />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Water Quality Stations" LayerVisible="1" LayerKey="" Filename="Shapefiles\wq_stations.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="3027590" LineColor="3552822" PointNumSides="16" PointShapeRatio="0.100000" PointShapeType="5" PointSize="20.000000" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Alignment="7" FontColor="3027590" FontName="Batang" HaloColor="9344666" HaloVisible="1" OffsetY="3" ShadowVisible="1" Generated="1" MaxVisibleScale="264000.000000" AutoOffset="0" DynamicVisibility="-1" AvoidCollisions="0" Positioning="1" Expression="[STATION_NA] " />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="Point Sources" LayerVisible="1" LayerKey="" Filename="Shapefiles\pcs3.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillBgColor="0" FillColor="2838138" FontName="Wingdings" LineColor="3289654" PointCharcter="80" PointShapeRatio="1.000000" PointSize="20.000000" PointSymbolType="1" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Alignment="7" HaloColor="9344666" HaloVisible="1" OffsetY="4" ShadowVisible="1" Generated="1" MaxVisibleScale="264000.000000" AutoOffset="0" DynamicVisibility="-1" AvoidCollisions="0" Positioning="1" Expression="[LOC_NAME] " />
+        <ChartsClass ValuesFontName="" Visible="-1" />
+      </ShapefileClass>
+    </Layer>
+  </Layers>
+</MapWinGIS>
+  <MapWindow4 ConfigurationPath="..\..\..\..\..\Users\Meems\AppData\Roaming\MapWindow\mapwindow.mwcfg" ProjectProjection="+proj=utm +zone=12 +datum=NAD27 +units=m +no_defs " MapUnits="Meters" StatusBarAlternateCoordsNumDecimals="3" StatusBarCoordsNumDecimals="3" StatusBarAlternateCoordsUseCommas="True" StatusBarCoordsUseCommas="True" ShowFloatingScaleBar="False" FloatingScaleBarPosition="LowerRight" FloatingScaleBarUnit="" FloatingScaleBarForecolor="-16777216" FloatingScaleBarBackcolor="-1" MapResizeBehavior="0" ShowStatusBarCoords_Projected="True" ShowStatusBarCoords_Alternate="Kilometers" SaveShapeSettings="False" ViewBackColor_UseDefault="True" ViewBackColor="16777215" ProjectProjectionWKT="PROJCS[&quot;NAD27 / UTM zone 12N&quot;,GEOGCS[&quot;NAD27&quot;,DATUM[&quot;North_American_Datum_1927&quot;,SPHEROID[&quot;Clarke 1866&quot;,6378206.4,294.9786982139006,AUTHORITY[&quot;EPSG&quot;,&quot;7008&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6267&quot;]],PRIMEM[&quot;Greenwich&quot;,0,AUTHORITY[&quot;EPSG&quot;,&quot;8901&quot;]],UNIT[&quot;degree&quot;,0.0174532925199433,AUTHORITY[&quot;EPSG&quot;,&quot;9122&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;4267&quot;]],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,0],PARAMETER[&quot;central_meridian&quot;,-111],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,500000],PARAMETER[&quot;false_northing&quot;,0],AUTHORITY[&quot;EPSG&quot;,&quot;26712&quot;],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]">
+    <Plugins>
+      <Plugin SettingsString="" Key="ArchiveTool_mwArchiveTool" />
+      <Plugin SettingsString="" Key="mwGPX_mwGPX" />
+    </Plugins>
+    <ApplicationPlugins PluginDir="..\..\..\..\..\dev\MapWindow4Dev\Bin\ApplicationPlugins">
+      <Plugin SettingsString="Editable=True" Key="mwIdentifier_mwIdentPlugin" />
+      <Plugin SettingsString="" Key="measureProject_measureClass" />
+      <Plugin SettingsString="" Key="mwSymbology_SymbologyPlugin" />
+      <Plugin SettingsString="" Key="ToolboxExtra_Classes_Main" />
+      <Plugin SettingsString="" Key="TableEditorNew_Main" />
+      <Plugin SettingsString="" Key="GISTools_GisToolsPlugin" />
+      <Plugin SettingsString="" Key="mwLayout_LayoutPlugin" />
+    </ApplicationPlugins>
+    <Bookmarks />
+    <PreviewMap dx="1" dy="1" xllcenter="0" yllcenter="0">
+      <Image Type="Bitmap"></Image>
+    </PreviewMap>
+    <Groups>
+      <Group Name="Topography" Expanded="True" Position="0">
+        <Image Type="">
+        </Image>
+      </Group>
+      <Group Name="Political Boundaries" Expanded="False" Position="1">
+        <Image Type="">
+        </Image>
+      </Group>
+      <Group Name="Watershed Boundaries" Expanded="True" Position="2">
+        <Image Type="">
+        </Image>
+      </Group>
+      <Group Name="Water Bodies" Expanded="True" Position="3">
+        <Image Type="">
+        </Image>
+      </Group>
+      <Group Name="Transportation" Expanded="True" Position="4">
+        <Image Type="">
+        </Image>
+      </Group>
+      <Group Name="Sampling Locations" Expanded="True" Position="5">
+        <Image Type="">
+        </Image>
+      </Group>
+    </Groups>
+    <Layers>
+      <Layer Name="Shaded Relief Image" Tag="" Expanded="True" Handle="0" PositionInGroup="0" GroupIndex="0" GroupName="Topography" />
+      <Layer Name="Populated Places" Tag="" Expanded="False" Handle="1" PositionInGroup="0" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="Municipality Boundaries" Tag="" Expanded="False" Handle="2" PositionInGroup="1" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="Land Ownership" Tag="" Expanded="False" Handle="3" PositionInGroup="2" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="USGS Quad Boundaries" Tag="" Expanded="False" Handle="4" PositionInGroup="3" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="County Boundaries" Tag="" Expanded="False" Handle="5" PositionInGroup="4" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="State Boundaries" Tag="" Expanded="False" Handle="6" PositionInGroup="5" GroupIndex="1" GroupName="Political Boundaries" />
+      <Layer Name="Newton Watershed" Tag="" Expanded="False" Handle="7" PositionInGroup="0" GroupIndex="2" GroupName="Watershed Boundaries" />
+      <Layer Name="USGS HUC Boundary" Tag="" Expanded="False" Handle="8" PositionInGroup="1" GroupIndex="2" GroupName="Watershed Boundaries" />
+      <Layer Name="Springs" Tag="" Expanded="False" Handle="9" PositionInGroup="0" GroupIndex="3" GroupName="Water Bodies" />
+      <Layer Name="NHD Water Bodies" Tag="" Expanded="False" Handle="10" PositionInGroup="1" GroupIndex="3" GroupName="Water Bodies" />
+      <Layer Name="NHD Reach File" Tag="" Expanded="False" Handle="11" PositionInGroup="2" GroupIndex="3" GroupName="Water Bodies" />
+      <Layer Name="Major Roads" Tag="" Expanded="False" Handle="12" PositionInGroup="0" GroupIndex="4" GroupName="Transportation" />
+      <Layer Name="Detailed Roads" Tag="" Expanded="False" Handle="13" PositionInGroup="1" GroupIndex="4" GroupName="Transportation" />
+      <Layer Name="Water Quality Stations" Tag="" Expanded="True" Handle="14" PositionInGroup="0" GroupIndex="5" GroupName="Sampling Locations" />
+      <Layer Name="Point Sources" Tag="" Expanded="True" Handle="15" PositionInGroup="1" GroupIndex="5" GroupName="Sampling Locations" />
+    </Layers>
+  </MapWindow4>
+</Mapwin>

@@ -21,7 +21,7 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// Gets the Menu for manipulating Layers (without respect to groups)
         /// </summary>
-        LegendLayerCollection Layers { get; }
+        LegendLayerCollection<ILegendLayer> Layers { get; }
 
         /// <summary>
         /// Toggles the label preview visiblity in the legend

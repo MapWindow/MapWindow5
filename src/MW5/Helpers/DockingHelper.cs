@@ -41,6 +41,7 @@ namespace MW5.Helpers
 
         private static AppStateSerializer GetSerializer()
         {
+            //  TODO: change the location
             return new AppStateSerializer(SerializeMode.XMLFile, @"d:\dockstate.xml");
         }
     }

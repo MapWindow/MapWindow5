@@ -18,6 +18,7 @@ namespace MW5.Api.Interfaces
         double MaxVisibleScale { get; set; }
         string Description { get; set; }
         bool LayerVisibleAtCurrentScale { get; }
+        bool IsVector { get; }
 
         IFeatureSet FeatureSet { get ; }
         IImageSource ImageSource { get; }

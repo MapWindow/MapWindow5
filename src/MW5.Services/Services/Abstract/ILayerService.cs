@@ -2,7 +2,7 @@
 {
     public interface ILayerService
     {
-        bool AddLayer(LayerType layerType);
+        bool AddLayer(DataSourceType layerType);
         bool RemoveSelectedLayer();
         bool AddLayersFromFilename(string filename);
         void ToggleVectorLayerEditing();

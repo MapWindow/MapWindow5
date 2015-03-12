@@ -11,6 +11,11 @@ namespace MW5.Api.Legend.Abstract
     public interface ILegendLayer: ILayer
     {
         /// <summary>
+        /// Gets the unique identifier of the layer. Used internal during project serialization.
+        /// </summary>
+        Guid Guid { get; set; }
+        
+        /// <summary>
         /// Gets or sets the icon that appears next to this layer in the legend.
         /// Setting this value to null(nothing) removes the icon from the legend
         /// and sets it back to the default icon.

@@ -110,7 +110,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
         public void CopyShapes()
         {
             var layer = _context.Map.Layers.SelectedLayer;
-            if (layer != null && layer.LayerType == Api.LayerType.Shapefile)
+            if (layer != null && layer.IsVector)
             {
                 _copyOperation.Copy(layer.Handle, layer.FeatureSet);
             }
@@ -119,7 +119,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
         public void PasteShapes()
         {
             var layer = _context.Map.Layers.SelectedLayer;
-            if (layer != null && layer.LayerType == Api.LayerType.Shapefile)
+            if (layer != null && layer.IsVector)
             {
                 var result = _copyOperation.Paste(layer.Handle, layer.FeatureSet);
                 switch (result)
@@ -142,7 +142,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
         public void CutShapes()
         {
             var layer = _context.Map.Layers.SelectedLayer;
-            if (layer != null && layer.LayerType == Api.LayerType.Shapefile)
+            if (layer != null && layer.IsVector)
             {
                 _copyOperation.Cut(layer.Handle, layer.FeatureSet);
                 _context.Map.Redraw();

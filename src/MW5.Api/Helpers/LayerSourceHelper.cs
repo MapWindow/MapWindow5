@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
@@ -7,6 +8,25 @@ namespace MW5.Api.Helpers
 {
     public static class LayerSourceHelper
     {
+        public static ILayerSource Open(string filename, LayerType layerType)
+        {
+            switch (layerType)
+            {
+                case LayerType.Shapefile:
+                    var fs = new FeatureSet(filename);
+                    return fs;
+                case LayerType.Image:
+                    var img = BitmapSource.Open(filename, false);
+                    return img;
+                case LayerType.VectorLayer:
+                    var ogr = new OgrLayer();
+                    var vector = new VectorLayer(ogr);
+                    return vector;
+                default:
+                    throw new ArgumentOutOfRangeException("layerType");
+            }
+        }
+        
         public static IDatasource Convert(object source)
         {
             if (source is OgrDatasource)

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Xml.Serialization;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
@@ -18,6 +19,7 @@ namespace MW5.Api.Legend
         private readonly LegendControl _legend;
         private readonly List<LayerElement> _elements; // size and positions of elements
         private readonly Dictionary<string, object> _customObjects;
+        private Guid _guid;
 
         private bool _expanded;
         private object _icon;
@@ -36,6 +38,7 @@ namespace MW5.Api.Legend
             _icon = null;
             _elements = new List<LayerElement>();
             _customObjects = new Dictionary<string, object>();
+            _guid = Guid.NewGuid();
 
             Expanded = true;
             SmallIconWasDrawn = false;
@@ -62,6 +65,18 @@ namespace MW5.Api.Legend
         internal bool ExpansionBoxForceAllowed = false;
         
         #endregion
+
+        public Guid Guid
+        {
+            get
+            {
+                return _guid;
+            }
+            set
+            {
+                _guid = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the icon that appears next to this layer in the legend.
@@ -140,7 +155,7 @@ namespace MW5.Api.Legend
         {
             get
             {
-                if (LayerType == LayerType.Shapefile)
+                if (IsVector)
                 {
                     var fs = this.FeatureSet;
                     if (fs != null)
@@ -168,7 +183,7 @@ namespace MW5.Api.Legend
 
         internal bool IsShapefile
         {
-            get { return LayerType == LayerType.Shapefile; }
+            get { return IsVector; }
         }
 
         /// <summary>

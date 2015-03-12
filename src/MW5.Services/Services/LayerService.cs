@@ -47,10 +47,10 @@ namespace MW5.Services.Services
             return false;
         }
 
-        public bool AddLayer(LayerType layerType)
+        public bool AddLayer(DataSourceType layerType)
         {
             string[] filenames;
-            if (!_fileDialogService.OpenFiles(layerType, _context.MainWindow, out filenames))
+            if (!_fileDialogService.OpenFiles(layerType, out filenames))
             {
                 return false;
             }

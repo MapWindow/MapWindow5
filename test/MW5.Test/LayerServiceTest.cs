@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Moq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
@@ -24,7 +25,7 @@ namespace MW5.Test
 
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
-        private Mock<ILayerCollection<ILegendLayer>> _layerColection;
+        private Mock<LegendLayerCollection<ILayer>> _layerColection;
 
         private string[] GetShapefileNames()
         {
@@ -39,7 +40,7 @@ namespace MW5.Test
         [SetUp]
         public void Setup()
         {
-            _layerColection = new Mock<ILayerCollection<ILegendLayer>>();
+            _layerColection = new Mock<LegendLayerCollection<ILayer>>();
             
             var map = new Mock<IMuteMap>();
             map.SetupGet(m => m.Layers).Returns(_layerColection.Object);
@@ -56,10 +57,10 @@ namespace MW5.Test
             string[] filenames = GetShapefileNames();
 
             var fileService = new Mock<IFileDialogService>();
-            fileService.Setup(s => s.OpenFiles(It.Is<LayerType>(t => t == LayerType.Vector), null, out filenames)).Returns(true);
+            fileService.Setup(s => s.OpenFiles(It.Is<DataSourceType>(t => t == DataSourceType.Vector), out filenames)).Returns(true);
 
             var layerService = new LayerService(_context.Object, fileService.Object, _messageService.Object);
-            layerService.AddLayer(LayerType.Vector);
+            layerService.AddLayer(DataSourceType.Vector);
 
             _messageService.Verify(s => s.Warn(It.IsAny<string>()), Times.Never);
             _layerColection.Verify(l => l.Add(It.IsAny<ILayerSource>(), true), Times.AtLeast(filenames.Count()));

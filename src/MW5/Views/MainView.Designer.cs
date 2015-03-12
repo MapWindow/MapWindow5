@@ -211,7 +211,7 @@ namespace MW5.Views
             // 
             // dockingClientPanel1
             // 
-            this.dockingClientPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.dockingClientPanel1.BackColor = System.Drawing.Color.White;
             this.dockingClientPanel1.Controls.Add(this._mapControl1);
             this.dockingClientPanel1.Location = new System.Drawing.Point(366, 179);
             this.dockingClientPanel1.Name = "dockingClientPanel1";
@@ -221,7 +221,7 @@ namespace MW5.Views
             // _mapControl1
             // 
             this._mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 16.918010798186259D;
+            this._mapControl1.CurrentScale = 20.05173105612738D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;

@@ -29,6 +29,12 @@ namespace MW5.Api.Legend
             _legend = leg;      // must be first in constructor
         }
 
+        public ILegendLayer LayerByHandle(int layerHandle)
+        {
+            var group = _legend.Groups.GroupByLayerHandle(layerHandle);
+            return group.Layers.FirstOrDefault(l => l.Handle == layerHandle);
+        }
+
         /// <summary>
         /// Gets the number of groups currently in the legend
         /// </summary>
@@ -57,7 +63,7 @@ namespace MW5.Api.Legend
         /// Adds a new group to the legend at the topmost position
         /// </summary>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        public int Add()
+        public ILegendGroup Add()
         {
             return Add(NEW_GROUP_NAME);
         }
@@ -67,7 +73,7 @@ namespace MW5.Api.Legend
         /// </summary>
         /// <param name="name">The Caption for this group that appears in the legend</param>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        public int Add(string name)
+        public ILegendGroup Add(string name)
         {
             return Add(name, -1);
         }
@@ -78,18 +84,18 @@ namespace MW5.Api.Legend
         /// <param name="name">The Caption for this group that appears in the legend</param>
         /// <param name="position">The desired 0-based index into the list of groups in the legend</param>
         /// <returns>Handle to the group on success, -1 on failure</returns>
-        public int Add(string name, int position)
+        public ILegendGroup Add(string name, int position)
         {
             var grp = CreateGroup(name, position);
             if (grp == null)
             {
-                return InvalidGroup;
+                return null;
             }
 
             _legend.Redraw();
 
             _legend.FireGroupAdded(grp.Handle);
-            return grp.Handle;
+            return grp;
         }
 
         internal int Add(LegendGroup group)
@@ -167,7 +173,7 @@ namespace MW5.Api.Legend
         /// </summary>
         /// <param name="handle"> layerHandle of the group to remove </param>
         /// <returns> True on success, False otherwise </returns>
-        protected bool Remove(int handle)
+        public bool Remove(int handle)
         {
             if (!IsValidHandle(handle))
             {
@@ -243,16 +249,6 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// Allows you to iterate through the list of groups by position {get only}
-        /// </summary>
-        /// <param name="position">The 0-based index into the list of groups</param>
-        /// <returns>A Group object allowing you to read/change properties, null (nothing) on failure</returns>
-        public ILegendGroup ItemByPosition(int position)
-        {
-            return this[position];
-        }
-
-        /// <summary>
         /// Looks up a group by handle
         /// </summary>
         /// <param name="handle">The unique number representing that group from others</param>
@@ -325,10 +321,8 @@ namespace MW5.Api.Legend
             var group = this.FirstOrDefault(g => String.Equals(g.Text, groupName, StringComparison.CurrentCultureIgnoreCase));
             if (group == null && createIfNotExists)
             {
-                var handle = Add(groupName);
-                group = ItemByHandle(handle);
+                group = Add(groupName);
             }
-
             return group;
         }
 
@@ -417,7 +411,7 @@ namespace MW5.Api.Legend
         /// <param name="source"> The Source group </param>
         /// <param name="targetPositionInGroup"> The Target Position In Group. </param>
         /// <param name="target"> The Destination group. Can be the same as the Source </param>
-        public void ChangeLayerPosition(int currentPositionInGroup, ILegendGroup source, int targetPositionInGroup, ILegendGroup target)
+        public void ChangeLayerPosition(ILegendGroup source, int currentPositionInGroup, ILegendGroup target, int targetPositionInGroup = -1)
         {
             var sourceGroup = source as LegendGroup;
             var destinationGroup = target as LegendGroup;
@@ -435,7 +429,7 @@ namespace MW5.Api.Legend
             var lyr = sourceGroup.LayersInternal[currentPositionInGroup];
             sourceGroup.LayersInternal.Remove(lyr);
 
-            if (targetPositionInGroup >= destinationGroup.Layers.Count)
+            if (targetPositionInGroup >= destinationGroup.Layers.Count || targetPositionInGroup == -1)
             {
                 destinationGroup.LayersInternal.Add(lyr);
             }

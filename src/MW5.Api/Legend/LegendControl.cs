@@ -26,7 +26,7 @@ namespace MW5.Api.Legend
     {
         private const string CHARTS_CAPTION = "Charts";
 
-        private LegendLayerCollection _layers;
+        private LegendLayerCollection<ILegendLayer> _layers;
         private readonly LegendGroups _groups;
 
         private Image _backBuffer;
@@ -114,9 +114,9 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets the Menu for manipulating Layers (without respect to groups)
         /// </summary>
-        public LegendLayerCollection Layers
+        public LegendLayerCollection<ILegendLayer> Layers
         {
-            get { return _layers ?? (_layers = new LegendLayerCollection(_map, this)); }
+            get { return _layers ?? (_layers = new LegendLayerCollection<ILegendLayer>(_map, this)); }
         }
 
         /// <summary>
@@ -132,6 +132,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets or Sets the Selected layer within the legend
         /// </summary>
+        [Browsable(false)]
         public int SelectedLayer
         {
             get
@@ -2798,7 +2799,7 @@ namespace MW5.Api.Legend
 
                         int newPos;
 
-                        var layerHandle = grp.LayerHandle(_dragInfo.DragLayerIndex);
+                        var layerHandle = grp.Layers[_dragInfo.DragLayerIndex].Handle;
 
                         if (targetGroup.Handle == grp.Handle)
                         {
@@ -3219,7 +3220,7 @@ namespace MW5.Api.Legend
         /// <param name="layerHandle"> layerHandle of layer to move </param>
         /// <param name="targetPositionInGroup"> The Target Position In Group. </param>
         /// <returns> True if Layer position has changed, False otherwise </returns>
-        protected internal bool MoveLayer(int targetGroupHandle, int layerHandle, int targetPositionInGroup)
+        protected internal bool MoveLayer(int targetGroupHandle, int layerHandle, int targetPositionInGroup = -1)
         {
             bool result;
 
@@ -3247,10 +3248,11 @@ namespace MW5.Api.Legend
                     var oldMapPos = _map.get_LayerPosition(layerHandle);
 
                     _groups.ChangeLayerPosition(
-                        currentPositionInGroup,
                         sourceGroup,
-                        targetPositionInGroup,
-                        destinationGroup);
+                        currentPositionInGroup,
+                        destinationGroup,
+                        targetPositionInGroup);
+
                     UpdateMapLayerPositions();
 
                     var newMapPos = _map.get_LayerPosition(layerHandle);
@@ -3484,12 +3486,7 @@ namespace MW5.Api.Legend
         /// <param name="groupName"> The group Name. </param>
         private int AssignOrphanLayersToNewGroup(string groupName)
         {
-            var g = Groups.GroupByName(groupName) as LegendGroup;
-            if (g == null)
-            {
-                var groupHandle = Groups.Add(groupName);
-                g = Groups.ItemByHandle(groupHandle) as LegendGroup;
-            }
+            var g = Groups.GroupByName(groupName) as LegendGroup ?? Groups.Add(groupName) as LegendGroup;
 
             for (var i = 0; i < _map.NumLayers; i++)
             {

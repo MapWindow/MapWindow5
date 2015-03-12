@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using MW5.Api.Concrete;
+using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 
 namespace MW5.Api.Legend
@@ -19,6 +20,7 @@ namespace MW5.Api.Legend
         private bool _expanded;
         private int _height;
         private object _icon;
+        private Guid _guid;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendGroup"/> class.
@@ -142,7 +144,7 @@ namespace MW5.Api.Legend
         /// </summary>
         public IReadOnlyList<ILegendLayer> Layers
         {
-            get { return _layers; }
+            get { return _layers.Cast<ILegendLayer>().ToList(); }
         }
 
         internal List<LegendLayer> LayersInternal
@@ -215,29 +217,9 @@ namespace MW5.Api.Legend
             return bmp;
         }
 
-        /// <summary>
-        /// Gets the layer handle of the specified layer
-        /// </summary>
-        /// <param name="positionInGroup">0 based index into list of layers</param>
-        /// <returns>Layer's handle on success, -1 on failure</returns>
-        public int LayerHandle(int positionInGroup)
+        public Guid Guid
         {
-            if (positionInGroup >= 0 && positionInGroup < _layers.Count)
-            {
-                return _layers[positionInGroup].Handle;
-            }
-
-            throw new IndexOutOfRangeException("Invalid layer position within group.");
-        }
-
-        /// <summary>
-        /// Looks up a Layer by Handle within this group
-        /// </summary>
-        /// <param name="handle">Handle of the Layer to lookup</param>
-        /// <returns>Layer item if successful, null (nothing) on failure</returns>
-        protected internal Layer LayerByHandle(int handle)
-        {
-            return _layers.FirstOrDefault(l => l.Handle == handle);
+            get { return _guid; }
         }
 
         /// <summary>
@@ -250,8 +232,8 @@ namespace MW5.Api.Legend
             var count = _layers.Count;
             for (var i = 0; i < count; i++)
             {
-                Layer lyr = _layers[i];
-                if (lyr.Handle == handle)
+                var lyr = _layers[i];
+                if (lyr != null && lyr.Handle == handle)
                 {
                     return i;
                 }
@@ -316,7 +298,7 @@ namespace MW5.Api.Legend
             var numLayers = _layers.Count;
             for (var i = 0; i < numLayers; i++)
             {
-                Layer lyr = _layers[i];
+                var lyr = _layers[i];
                 if (lyr.Visible)
                 {
                     numVisible++;
@@ -337,26 +319,39 @@ namespace MW5.Api.Legend
             }
         }
 
-        internal void InsertLayer(int afterLayerHandle, LegendLayer layer)
+        public void InsertLayer(int position, ILegendLayer layer)
         {
-            var inserted = false;
-            if (afterLayerHandle != -1)
+            if (position < 0)
             {
-                for (var i = 0; i < _layers.Count; i++)
-                {
-                    if (_layers[i].Handle == afterLayerHandle)
-                    {
-                        _layers.Insert(i, layer);
-                        inserted = true;
-                        break;
-                    }
-                }
+                position = 0;
+            }
+            if (position > _layers.Count)
+            {
+                position = _layers.Count;
             }
 
-            if (!inserted)
+            if (!(layer is LegendLayer))
             {
-                _layers.Add(layer);
+                throw new InvalidCastException("LegendLayer class is expected");
             }
+
+            _layers.Insert(position, (LegendLayer) layer);
+
+            RecalcHeight();
+
+            UpdateGroupVisibility();
+        }
+
+        public void AddLayer(ILegendLayer layer)
+        {
+            if (layer == null) throw new ArgumentNullException("layer");
+
+            if (!(layer is LegendLayer))
+            {
+                throw new InvalidCastException("LegendLayer class is expected");
+            }
+
+            _layers.Add((LegendLayer)layer);
 
             RecalcHeight();
 

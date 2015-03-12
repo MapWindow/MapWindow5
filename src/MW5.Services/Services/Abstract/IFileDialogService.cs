@@ -4,8 +4,10 @@ namespace MW5.Services.Services.Abstract
 {
     public interface IFileDialogService
     {
-        bool OpenFile(LayerType layerType, IWin32Window parent, out string filename);
-        bool OpenFiles(LayerType layerType, IWin32Window parent, out string[] filenames);
-        bool ChooseFolder(string initialPath, IWin32Window parent, out string chosenPath);
+        bool SaveFile(string filter, out string filename);
+        bool Open(string filter, out string filename);
+        bool OpenFile(DataSourceType layerType, out string filename);
+        bool OpenFiles(DataSourceType layerType, out string[] filenames);
+        bool ChooseFolder(string initialPath, out string chosenPath);
     }
 }

@@ -154,6 +154,23 @@ namespace MW5.Plugins
             _active.Add(identity);
         }
 
+        public void LoadPlugin(Guid pluginGuid, IAppContext context)
+        {
+            if (_active.Select(p => p.Guid).Contains(pluginGuid))
+            {
+                return;     // it's already loaded
+            }
+
+            var plugin = _plugins.FirstOrDefault(p => p.Identity.Guid == pluginGuid);
+            if (plugin == null)
+            {
+                throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
+            }
+
+            plugin.Initialize(context);
+            _active.Add(plugin.Identity);
+        }
+
         /// <summary>
         /// Unloads single plugin and removes associated menus & toolbars
         /// </summary>

@@ -8,6 +8,7 @@ using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services;
+using MW5.Services.Serialization;
 using MW5.Services.Services.Abstract;
 
 namespace MW5.Presenters
@@ -22,14 +23,21 @@ namespace MW5.Presenters
         private readonly IAppContext _context;
         private readonly IMainView _view;
         private readonly ILayerService _layerService;
+        private readonly IProjectService _projectService;
         private readonly IMessageService _messageService;
 
-        public MainPresenter(IAppContext context, IMainView view, ILayerService layerService, IMessageService messageService)
+        public MainPresenter(IAppContext context, IMainView view, ILayerService layerService, 
+            IProjectService projectService, IMessageService messageService)
             : base(view)
         {
+            if (layerService == null) throw new ArgumentNullException("layerService");
+            if (projectService == null) throw new ArgumentNullException("projectService");
+            if (messageService == null) throw new ArgumentNullException("messageService");
+
             _context = context;
             _view = view;
             _layerService = layerService;
+            _projectService = projectService;
             _messageService = messageService;
 
             PluginManager.Instance.MenuItemClicked += MenuItemClicked;
@@ -48,13 +56,13 @@ namespace MW5.Presenters
                     TryClose();
                     break;
                 case MenuKeys.AddLayer:
-                    _layerService.AddLayer(LayerType.All);
+                    _layerService.AddLayer(DataSourceType.All);
                     break;
                 case MenuKeys.AddRasterLayer:
-                    _layerService.AddLayer(LayerType.Raster);
+                    _layerService.AddLayer(DataSourceType.Raster);
                     break;
                 case MenuKeys.AddVectorLayer:
-                    _layerService.AddLayer(LayerType.Vector);
+                    _layerService.AddLayer(DataSourceType.Vector);
                     break;
                 case MenuKeys.ZoomMax:
                     _context.Map.ZoomToMaxExtents();
@@ -76,6 +84,12 @@ namespace MW5.Presenters
                     break;
                 case MenuKeys.ZoomToSelected:
                     _layerService.ZoomToSelected();
+                    break;
+                case MenuKeys.SaveProject:
+                    _projectService.Save(_context as ISerializableContext);
+                    break;
+                case MenuKeys.OpenProject:
+                    _projectService.Open(_context as ISerializableContext);
                     break;
                 default:
                     _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
