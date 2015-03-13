@@ -31,7 +31,7 @@ namespace MW5.UI
 
         public void ShowView()
         {
-            _context.ShowDialog(this);
+            _context.View.ShowDialog(this);
         }
     }
 }

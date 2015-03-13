@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -41,11 +42,18 @@ namespace MW5.Plugins.Concrete
         }
 
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
+        internal EventHandler<CancelEventArgs> ProjectClosing_;
 
         public event EventHandler<MenuItemEventArgs> ItemClicked
         {
             add { ItemClicked_ += value; }
             remove { ItemClicked_ -= value; }
+        }
+
+        public event EventHandler<CancelEventArgs> ProjectClosing
+        {
+            add { ProjectClosing_ += value; }
+            remove { ProjectClosing_ -= value; }
         }
 
         #region Backing fields for events (shold be used to attach handlers externally)

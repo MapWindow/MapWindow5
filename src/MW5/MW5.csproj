@@ -103,11 +103,12 @@
     <Compile Include="Helpers\CommandBarHelper.cs" />
     <Compile Include="Helpers\DockingHelper.cs" />
     <Compile Include="Helpers\MapInitializer.cs" />
-    <Compile Include="Helpers\MapListener.cs" />
+    <Compile Include="MapListener.cs" />
     <Compile Include="Menu\CommandProvider.cs" />
-    <Compile Include="Menu\TilesMainMenuHelper.cs" />
-    <Compile Include="Menu\PluginsMainMenuHelper.cs" />
-    <Compile Include="Menu\ViewMainMenuService.cs" />
+    <Compile Include="Menu\MenuListener.cs" />
+    <Compile Include="Menu\TilesMenuHelper.cs" />
+    <Compile Include="Menu\PluginsMenuHelper.cs" />
+    <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\SetProjectionPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -167,10 +168,6 @@
     <ProjectReference Include="..\MW5.Services\MW5.Services.csproj">
       <Project>{54bb55da-dbdc-47e5-8dec-de325f35f074}</Project>
       <Name>MW5.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MW5.Mvp\MW5.Mvp.csproj">
-      <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>
-      <Name>MW5.Mvp</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

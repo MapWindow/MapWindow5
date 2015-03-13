@@ -16,6 +16,7 @@ using MW5.Presenters;
 using MW5.Services;
 using MW5.Services.Services;
 using MW5.Services.Services.Abstract;
+using MW5.UI;
 using MW5.Views;
 
 namespace MW5
@@ -35,8 +36,7 @@ namespace MW5
         {
             container.RegisterServiceSingleton<IMainView, MainView>()
                 .RegisterView<ISetProjectionView, SetProjectionView>()
-                .RegisterServiceSingleton<IAppContext, AppContext>()
-                .RegisterServiceSingleton<ILayerService, LayerService>();
+                .RegisterServiceSingleton<IAppContext, AppContext>();
             
             Services.CompositionRoot.Compose(container);
         }

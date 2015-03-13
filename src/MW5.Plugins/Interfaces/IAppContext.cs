@@ -8,15 +8,13 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IAppContext
     {
-        IMuteMap Map { get; }
-        IMuteLegend Legend { get; }
         IMenu Menu { get; }
+        IMuteMap Map { get; }
+        IAppView View { get; }
+        IProject Project { get; }
+        IMuteLegend Legend { get; }
         IToolbarCollection Toolbars { get; }
-        LegendLayerCollection<ILayer> Layers { get; }
-        bool Initialized { get; }
-        void Init(IMainForm form);
         IApplicationContainer Container { get; }
-        DialogResult ShowDialog(Form form);
-        IView View { get; }
+        LegendLayerCollection<ILayer> Layers { get; }
     }
 }

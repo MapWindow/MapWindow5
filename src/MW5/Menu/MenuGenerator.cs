@@ -20,9 +20,6 @@ namespace MW5.Menu
         private readonly object _menuManager;
         private readonly object _dockingManager;
         
-        // perhaps can be injected 
-        private ViewMainMenuService _viewMenuService = new ViewMainMenuService();
-
         public MenuGenerator(IAppContext context, PluginManager pluginManager, object menuManager, object dockingManager)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -33,10 +30,7 @@ namespace MW5.Menu
             _menuManager = menuManager;
             _dockingManager = dockingManager;
             _commands = new CommandProvider(PluginIdentity.Default);
-        }
 
-        public void Init()
-        {
             InitToolbars();
             InitMenus();
         }
@@ -47,9 +41,9 @@ namespace MW5.Menu
 
             InitViewMenu();
 
-            PluginsMainMenuHelper.InitPlugins(_context, _pluginManager);
+            PluginsMenuHelper.Init(_context, _pluginManager);
 
-            TilesMainMenuHelper.Init(_context.Map, _context.Menu.TilesMenu);
+            TilesMenuHelper.Init(_context.Map, _context.Menu.TilesMenu);
 
             InitHelpMenu();
 
@@ -83,7 +77,7 @@ namespace MW5.Menu
             items.AddDropDown("Windows", MenuKeys.ViewWindows, PluginIdentity.Default);
             items.AddDropDown("Skins", MenuKeys.ViewSkins, PluginIdentity.Default);
 
-            _viewMenuService.Init(_context, _menuManager, _dockingManager);
+            ViewMenuHelper.Init(_context, _menuManager, _dockingManager);
         }
 
         private void InitHelpMenu()

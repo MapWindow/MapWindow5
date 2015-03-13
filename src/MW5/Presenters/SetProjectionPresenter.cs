@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using MW5.Abstract;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
-using MW5.Mvp;
+using MW5.Plugins.Mvp;
 using MW5.Services.Services.Abstract;
 using MW5.Views;
 

@@ -16,7 +16,8 @@ namespace MW5.Plugins.ShapeEditor
         private IAppContext _context;
         private MapListener _mapListener;
         private MenuGenerator _menuGenerator;
-        private MenuDispatcher _menuDispatcher;
+        private MenuListener _menuListener;
+        private ProjectListener _projectListener;
 
         public override string Description
         {
@@ -28,11 +29,14 @@ namespace MW5.Plugins.ShapeEditor
             _context = context;
             _mapListener = new MapListener(this, context);
             _menuGenerator = new MenuGenerator(context, Identity);
-            _menuDispatcher = new MenuDispatcher(context, this);       
+            _menuListener = new MenuListener(context, this);
+            _projectListener = new ProjectListener(context, this);
+            
         }
 
         public override void Terminate()
         {
+
         }
     }
 }

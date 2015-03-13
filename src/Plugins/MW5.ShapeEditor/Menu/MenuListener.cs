@@ -11,13 +11,13 @@ using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
-    internal class MenuDispatcher
+    internal class MenuListener
     {
         private readonly ILayerService _layerService;
         private readonly GeoprocessingService _geoprocessingService;
         private readonly IAppContext _context;
 
-        public MenuDispatcher(IAppContext context, BasePlugin plugin)
+        public MenuListener(IAppContext context, BasePlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
 

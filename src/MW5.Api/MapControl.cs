@@ -582,6 +582,14 @@ namespace MW5.Api
                 //_map.Tag = value;
             }
         }
+
+        public void SetDefaultExtents()
+        {
+            _map.Projection = tkMapProjection.PROJECTION_NONE;
+            var ext = new Extents();
+            ext.SetBounds(0.0, 0.0, 0.0, 100.0, 100.0, 0.0);
+            _map.Extents = ext;
+        }
     }
 }
 

@@ -5,12 +5,12 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Menu
 {
-    internal static class PluginsMainMenuHelper
+    internal static class PluginsMenuHelper
     {
         private static PluginManager _manager;
         private static IAppContext _context;
 
-        internal static void InitPlugins(IAppContext context, PluginManager pluginManager)
+        internal static void Init(IAppContext context, PluginManager pluginManager)
         {
             if (context == null || pluginManager == null)
             {

@@ -81,11 +81,15 @@
     <Compile Include="Concrete\MenuItemEventArgs.cs" />
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
+    <Compile Include="Interfaces\IAppView.cs" />
+    <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\IMenuIndex.cs" />
+    <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Mvp\BasePresenter.cs" />
+    <Compile Include="Mvp\CommandPresenter.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
     <Compile Include="Concrete\MenuIcon.cs" />
-    <Compile Include="Interfaces\IMainForm.cs" />
     <Compile Include="Interfaces\IMenu.cs" />
     <Compile Include="Interfaces\IMenuIcon.cs" />
     <Compile Include="Interfaces\IMenuItem.cs" />

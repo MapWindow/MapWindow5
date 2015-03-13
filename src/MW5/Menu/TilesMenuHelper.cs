@@ -10,7 +10,7 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 namespace MW5.Menu
 {
     // I leave it static, there is no need to inject it anywhere
-    internal static class TilesMainMenuHelper
+    internal static class TilesMenuHelper
     {
         private const string NO_TILES_MENU_ITEM_CAPTION = "No tiles";
 

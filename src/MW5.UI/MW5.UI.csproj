@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppView.cs" />
     <Compile Include="ComboBoxEnumItem.cs" />
     <Compile Include="EventHelper.cs" />
     <Compile Include="Helpers\ComboBoxHelper.cs" />

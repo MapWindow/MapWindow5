@@ -13,13 +13,13 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Menu
 {
-    internal class ViewMainMenuService
+    internal static class ViewMenuHelper
     {
-        private IAppContext _context;
-        private MainFrameBarManager _menuManager;
-        private DockingManager _dockingManager;
+        private static IAppContext _context;
+        private static MainFrameBarManager _menuManager;
+        private static DockingManager _dockingManager;
 
-        public void Init(IAppContext context, object menuManager, object dockingManager)
+        public static void Init(IAppContext context, object menuManager, object dockingManager)
         {
             _context = context;
             _menuManager = menuManager as MainFrameBarManager;
@@ -38,7 +38,7 @@ namespace MW5.Menu
         
         #region Skins
 
-        private void InitSkins()
+        private static void InitSkins()
         {
             var item = _context.Menu.FindItem(MenuKeys.ViewSkins) as IDropDownMenuItem;
             if (item != null)
@@ -51,7 +51,7 @@ namespace MW5.Menu
 
         #region Windows
 
-        private void InitWindows()
+        private static void InitWindows()
         {
             var item = _context.Menu.FindItem(MenuKeys.ViewWindows) as IDropDownMenuItem;
             if (item != null)
@@ -61,7 +61,7 @@ namespace MW5.Menu
             }
         }
 
-        private void WindowsDropDownOpening(object sender, EventArgs e)
+        private static void WindowsDropDownOpening(object sender, EventArgs e)
         {
             var menu = sender as IDropDownMenuItem;
             if (menu != null)
@@ -85,7 +85,7 @@ namespace MW5.Menu
             }
         }
 
-        private void DockWindowsVisibilityClicked(object sender, MenuItemEventArgs args)
+        private static void DockWindowsVisibilityClicked(object sender, MenuItemEventArgs args)
         {
             var item = sender as IMenuItem;
             if (item != null)
@@ -100,7 +100,7 @@ namespace MW5.Menu
 
         #region Toolbars
 
-        private void InitToolbars()
+        private static void InitToolbars()
         {
             var item = _context.Menu.FindItem(MenuKeys.ViewToolbars) as IDropDownMenuItem;
             if (item != null)
@@ -110,7 +110,7 @@ namespace MW5.Menu
             }
         }
 
-        void ToolbarsDropDownOpening(object sender, EventArgs e)
+        static void ToolbarsDropDownOpening(object sender, EventArgs e)
         {
             var menu = sender as IDropDownMenuItem;
             if (menu != null)
@@ -134,7 +134,7 @@ namespace MW5.Menu
             }
         }
 
-        private void ToolbarVisibilityClicked(object sender, MenuItemEventArgs args)
+        private static void ToolbarVisibilityClicked(object sender, MenuItemEventArgs args)
         {
             var item = sender as IMenuItem;
             if (item != null)

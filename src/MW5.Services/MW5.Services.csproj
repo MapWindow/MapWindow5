@@ -79,6 +79,7 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Presenters\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializableContext.cs" />
@@ -109,10 +110,6 @@
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
       <Project>{8aad34b3-8ef3-485f-a04d-ed2c07d8f1df}</Project>
       <Name>MW5.Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MW5.Mvp\MW5.Mvp.csproj">
-      <Project>{A8D9AB62-5BA6-46CF-B3E7-51DA79CD3860}</Project>
-      <Name>MW5.Mvp</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>

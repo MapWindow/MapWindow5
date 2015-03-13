@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api.Static;
+using MW5.Plugins.Interfaces;
 using MW5.Services.Services.Abstract;
 
 namespace MW5.Services.Services
@@ -9,17 +10,17 @@ namespace MW5.Services.Services
     {
         private readonly IWin32Window _parent;
 
-        public FileDialogService(IWin32Window parent)
+        public FileDialogService(IMainView parent)
         {
             if (parent == null) throw new ArgumentNullException("parent");
-            _parent = parent;
+            _parent = parent as IWin32Window;
         }
 
-        public bool SaveFile(string filter, out string filename)
+        public bool SaveFile(string filter, ref string filename)
         {
-            filename = string.Empty;
             var dialog = new SaveFileDialog();
             dialog.Filter = filter;
+            dialog.FileName = filename;
             if (dialog.ShowDialog(_parent) == DialogResult.OK)
             {
                 filename = dialog.FileName;

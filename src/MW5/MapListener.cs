@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Events;
@@ -11,7 +7,7 @@ using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Services.Services.Abstract;
 
-namespace MW5.Helpers
+namespace MW5
 {
     /// <summary>
     /// Allows to handle map events by the core application and broadcast them to plugins after that.
@@ -72,7 +68,7 @@ namespace MW5.Helpers
 
         private void MapCursorChanged(object sender, EventArgs e)
         {
-            _context.View.UpdateView();
+            _context.View.Update();
 
             _plugins.BroadcastEvent(p => p.MapCursorChanged_, sender as IMuteMap, e);
         }

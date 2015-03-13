@@ -2,9 +2,12 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
+using MW5.Helpers;
 using MW5.Menu;
-using MW5.Mvp;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services;
@@ -13,139 +16,44 @@ using MW5.Services.Services.Abstract;
 
 namespace MW5.Presenters
 {
-    public interface IMainView : IView
-    {
-        
-    }
-
     public class MainPresenter : BasePresenter<IMainView>
     {
         private readonly IAppContext _context;
-        private readonly IMainView _view;
-        private readonly ILayerService _layerService;
-        private readonly IProjectService _projectService;
-        private readonly IMessageService _messageService;
+        private readonly MenuListener _menuListener;
+        private readonly MenuGenerator _menuGenerator;
+        private readonly MapListener _mapListener;
 
-        public MainPresenter(IAppContext context, IMainView view, ILayerService layerService, 
-            IProjectService projectService, IMessageService messageService)
+        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService)
             : base(view)
         {
-            if (layerService == null) throw new ArgumentNullException("layerService");
-            if (projectService == null) throw new ArgumentNullException("projectService");
-            if (messageService == null) throw new ArgumentNullException("messageService");
-
+            if (view == null) throw new ArgumentNullException("view");
+            
             _context = context;
-            _view = view;
-            _layerService = layerService;
-            _projectService = projectService;
-            _messageService = messageService;
 
-            PluginManager.Instance.MenuItemClicked += MenuItemClicked;
+            view.Map.Initialize();
+
+            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), view.Map);
+
+            var appContext = context as AppContext;
+            if (appContext == null)
+            {
+                throw new InvalidCastException("Invalid type of IAppContext instance");
+            }
+            appContext.Init(view, projectService as IProject);
+
+            var pluginManager = appContext.PluginManager;
+            pluginManager.PluginUnloaded += ManagerPluginUnloaded;
+            pluginManager.AssemblePlugins();
+            
+            _menuGenerator = new MenuGenerator(_context, pluginManager, view.MenuManager, view.DockingManager);
+            _menuListener = context.Container.GetSingleton<MW5.Menu.MenuListener>();
+            _mapListener = new MapListener(_context, pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
         }
 
-        private void MenuItemClicked(object sender, Plugins.Concrete.MenuItemEventArgs e)
+        private void ManagerPluginUnloaded(object sender, PluginEventArgs e)
         {
-            if (HandleCursorChanged(e.ItemKey))
-            {
-                return;
-            }
-
-            switch (e.ItemKey)
-            {
-                case MenuKeys.NewMap:
-                    TryClose();
-                    break;
-                case MenuKeys.AddLayer:
-                    _layerService.AddLayer(DataSourceType.All);
-                    break;
-                case MenuKeys.AddRasterLayer:
-                    _layerService.AddLayer(DataSourceType.Raster);
-                    break;
-                case MenuKeys.AddVectorLayer:
-                    _layerService.AddLayer(DataSourceType.Vector);
-                    break;
-                case MenuKeys.ZoomMax:
-                    _context.Map.ZoomToMaxExtents();
-                    break;
-                case MenuKeys.ZoomToLayer:
-                    _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
-                    break;
-                case MenuKeys.AddDatabaseLayer:
-                    // TODO: implement
-                    break;
-                case MenuKeys.RemoveLayer:
-                    _layerService.RemoveSelectedLayer();
-                    break;
-                case MenuKeys.SetProjection:
-                    CompositionRoot.Container.Run<SetProjectionPresenter>();
-                    break;
-                case MenuKeys.ClearSelection:
-                    _layerService.ClearSelection();
-                    break;
-                case MenuKeys.ZoomToSelected:
-                    _layerService.ZoomToSelected();
-                    break;
-                case MenuKeys.SaveProject:
-                    _projectService.Save(_context as ISerializableContext);
-                    break;
-                case MenuKeys.OpenProject:
-                    _projectService.Open(_context as ISerializableContext);
-                    break;
-                default:
-                    _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
-                    break;
-            }
-        }
-
-        private bool HandleCursorChanged(string itemKey)
-        {
-            switch (itemKey)
-            {
-                case MenuKeys.ZoomIn:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
-                    return true;
-                case MenuKeys.ZoomOut:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
-                    return true;
-                case MenuKeys.Pan:
-                    _context.Map.MapCursor = MapCursor.Pan;
-                    return true;
-                case MenuKeys.SelectByPolygon:
-                    _context.Map.MapCursor = MapCursor.SelectByPolygon;
-                    return true;
-                case MenuKeys.SelectByRectangle:
-                    _context.Map.MapCursor = MapCursor.Selection;
-                    return true;
-                case MenuKeys.MeasureArea:
-                    _context.Map.Measuring.MeasuringType = MeasuringType.Area;
-                    _context.Map.MapCursor = MapCursor.Measure;
-                    return true;
-                case MenuKeys.MeasureDistance:
-                    _context.Map.Measuring.MeasuringType = MeasuringType.Distance;
-                    _context.Map.MapCursor = MapCursor.Measure;
-                    return true;
-                case MenuKeys.Attributes:
-                    _context.Map.MapCursor = MapCursor.Identify;
-                    return true;
-            }
-            return false;
-        }
-
-        private bool TryClose()
-        {
-            // TODO: temporary
-            //if (!Editor.StopAllEditing())
-            //    return false;
-
-            //if (TryCloseProject())
-            {
-                _context.Map.GeometryEditor.Clear();
-                _context.Legend.Groups.Clear();
-                _context.Legend.Layers.Clear();
-                //_context.Map.SetDefaultExtents();
-                return true;
-            }
-            return false;
+            _context.Toolbars.RemoveItemsForPlugin(e.Identity);
+            _context.Menu.RemoveItemsForPlugin(e.Identity);
         }
     }
 }

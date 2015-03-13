@@ -19,72 +19,38 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5
 {
-    // must be a singleton
+    /// <summary>
+    /// Central class storing all the resource avaialable for plugins.
+    /// </summary>
     public class AppContext: ISerializableContext
     {
         private IMap _map;
-        private IWin32Window _mainForm;
         private IMenu _menu;
-        private IToolbarCollection _toolbars;
+        private IAppView _view;
+        private IProject _project;
         private IMuteLegend _legend;
-        private readonly PluginManager _pluginManager;
-        private MapListener _mapListener;
-        private IView _view;
+        private IToolbarCollection _toolbars;
+        private PluginManager _pluginManager;
 
-        private static AppContext _instance;
-
-        public static AppContext Instance
+        /// <summary>
+        /// Sets all the necessary references from the main view. 
+        /// </summary>
+        /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
+        /// Perhaps property injection can be used.</remarks>
+        internal void Init(IMainView mainView, IProject project)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    throw new ApplicationException("Application context isn't yet initialized");
-                }
-                return _instance;
-            }
-        }
+            if (mainView == null) throw new ArgumentNullException("mainView");
+            if (project == null) throw new ArgumentNullException("project");
 
-        public AppContext()
-        {
             _pluginManager = PluginManager.Instance;
-            _instance = this;
-        }
 
-        public void Init(IMainForm form)
-        {
-            if (form == null)
-            {
-                throw new NullReferenceException("Main form reference is null.");
-            }
+            _view = new AppView(mainView);
+            _project = project;
+            _map = mainView.Map;
+            _legend = mainView.Legend;
 
-            _mainForm = form as IWin32Window;
-            _view = form.View;
-
-            _map = form.Map;
-            _map.Initialize();
-
-            CompositionRoot.Container.RegisterInstance(typeof(IWin32Window), form);
-            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), _map);  // it's a bit ugly; got ideas how to do it better?
-
-            _legend = form.Legend;
-
-            _menu = MenuFactory.CreateInstance(form.MenuManager);
-            _toolbars = ToolbarsCollection.CreateInstance(form.MenuManager);
-
-            _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
-            _pluginManager.AssemblePlugins();
-
-            var menus = new MenuGenerator(this, _pluginManager, form.MenuManager, form.DockingManager);
-            menus.Init();
-
-            _mapListener = new MapListener(this, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
-        }
-
-        private void ManagerPluginUnloaded(object sender, PluginEventArgs e)
-        {
-            Toolbars.RemoveItemsForPlugin(e.Identity);
-            Menu.RemoveItemsForPlugin(e.Identity);
+            _menu = MenuFactory.CreateInstance(mainView.MenuManager);
+            _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
         }
 
         public IApplicationContainer Container
@@ -92,28 +58,12 @@ namespace MW5
             get { return CompositionRoot.Container; }
         }
 
-        public DialogResult ShowDialog(Form form)
+        public IProject Project
         {
-            if (form == null)
-            {
-                throw new ArgumentNullException("form");
-            }
-            
-            if (form is MetroForm)
-            {
-                // TODO: use injection
-                var service = new SyncfusionStyleService(ControlStyleSettings.Instance);
-                service.ApplyStyle(form as MetroForm);
-            }
-
-            form.MaximizeBox = false;
-            form.MinimizeBox = false;
-            form.FormBorderStyle = FormBorderStyle.FixedSingle;
-            form.StartPosition = FormStartPosition.CenterScreen;        // TODO: make parameter
-            return form.ShowDialog(_mainForm);
+            get { return _project; }
         }
-
-        public IView View
+        
+        public IAppView View
         {
             get { return _view; }
         }
@@ -141,11 +91,6 @@ namespace MW5
         public LegendLayerCollection<ILayer> Layers
         {
             get { return _map.Layers; }
-        }
-
-        public bool Initialized
-        {
-            get { return _map != null; }
         }
 
         public PluginManager PluginManager

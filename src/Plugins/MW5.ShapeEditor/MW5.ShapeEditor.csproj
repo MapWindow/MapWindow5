@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\..\bin\Debug\Plugins\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -68,12 +68,13 @@
     <Compile Include="Helpers\StringBuilderHelper.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\CommandProvider.cs" />
-    <Compile Include="Menu\MenuDispatcher.cs" />
+    <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Operations\CopyOperation.cs" />
     <Compile Include="Operations\ExplodeOperation.cs" />
     <Compile Include="Operations\MergeOperation.cs" />
     <Compile Include="Operations\RemoveOperation.cs" />
+    <Compile Include="ProjectListener.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,11 +88,6 @@
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\MW5.Mvp\MW5.Mvp.csproj">
-      <Project>{a8d9ab62-5ba6-46cf-b3e7-51da79cd3860}</Project>
-      <Name>MW5.Mvp</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">

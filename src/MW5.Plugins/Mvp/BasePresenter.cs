@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Mvp;
+using MW5.Mvp;
 
-namespace MW5.Mvp
+namespace MW5.Plugins.Mvp
 {
     /// <summary>
     /// Base presenter without command enumeration.

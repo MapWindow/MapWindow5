@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace MW5.Views
 {
     // IMainView - for communication with the presenter
     // IMainForm - for initialization of application context
-    public partial class MainView : Form, IMainView, IMainForm
+    public partial class MainView : Form, IMainView
     {
         private readonly IAppContext _context;
 
@@ -32,8 +33,6 @@ namespace MW5.Views
 
             _legendControl1.Map = _mapControl1;
             _mapControl1.Legend = _legendControl1;
-
-            context.Init(this);
 
             _dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
 
@@ -72,19 +71,19 @@ namespace MW5.Views
 
         #endregion
 
-        #region IMainForm implementation
+        #region IMainView implementation
 
         public object DockingManager
         {
             get { return _dockingManager1; }
         }
 
-        object IMainForm.MenuManager
+        public object MenuManager
         {
             get { return _mainFrameBarManager1; }
         }
 
-        IMap IMainForm.Map
+        public IMap Map
         {
             get { return _mapControl1; }
         }

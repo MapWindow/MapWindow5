@@ -69,7 +69,8 @@ namespace MW5.Api.Interfaces
         double MouseWheelSpeed { get; set; }
         bool ReuseTileBuffer { get; set; }
         ZoomBehavior ZoomBehavior { get; set; }
-        
+        void SetDefaultExtents();
+
         double ZoomPercent { get; set; }
         CoordinatesDisplay ShowCoordinates { get; set; }
         bool ShowRedrawTime { get; set; }

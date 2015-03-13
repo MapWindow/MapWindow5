@@ -8,6 +8,11 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Services.Serialization
 {
+    /// <summary>
+    /// Represents a data contract for MapWindow project file. 
+    /// Before serialization the instance is populated from ISerializedContext.
+    /// After deserialization RestoreState method should be called.
+    /// </summary>
     [DataContract(Name="MapWindow5")]
     public class XmlProject
     {
@@ -24,6 +29,15 @@ namespace MW5.Services.Serialization
             }).ToList();
         }
 
+        [DataMember] public List<XmlGroup> Groups { get; set; }
+        [DataMember] public List<XmlLayer> Layers { get; set; }
+        [DataMember] public List<XmlPlugin> Plugins { get; set; }
+
+        /// <summary>
+        /// Restores the state of application by populating application context after project file was deserialized.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public bool RestoreState(ISerializableContext context)
         {
             foreach (var p in Plugins)
@@ -31,12 +45,20 @@ namespace MW5.Services.Serialization
                 context.PluginManager.LoadPlugin(p.Guid, context);
             }
 
-            // load layers
             foreach (var layer in Layers)
             {
                 layer.RestoreLayer(context.Legend.Layers);
             }
 
+            RestoreGroups(context);
+           
+            context.Legend.Redraw(LegendRedraw.LegendAndMap);
+
+            return true;
+        }
+
+        private void RestoreGroups(ISerializableContext context)
+        {
             if (Groups != null)
             {
                 foreach (var g in Groups)
@@ -57,13 +79,6 @@ namespace MW5.Services.Serialization
                 // first group was generated automatically
                 context.Legend.Groups.Remove(context.Legend.Groups[0].Handle);
             }
-            context.Legend.Redraw(LegendRedraw.LegendAndMap);
-
-            return true;
         }
-
-        [DataMember] public List<XmlGroup> Groups { get; set; }
-        [DataMember] public List<XmlLayer> Layers { get; set; }
-        [DataMember] public List<XmlPlugin> Plugins { get; set; }
     }
 }
