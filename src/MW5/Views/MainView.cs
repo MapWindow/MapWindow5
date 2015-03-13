@@ -1,29 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Forms;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Presenters;
-using MW5.Services;
-using MW5.UI;
-using Syncfusion.Windows.Forms;
-using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Views
 {
-    // IMainView - for communication with the presenter
-    // IMainForm - for initialization of application context
+    /// <summary>
+    /// Represents the main view of the application with the map, docking windows, toolbars and menu.
+    /// </summary>
     public partial class MainView : Form, IMainView
     {
+        private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
+        private bool _rendered = false;
 
         public MainView(IAppContext context)
         {
@@ -36,37 +32,139 @@ namespace MW5.Views
 
             _dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
 
-            FormClosed += MainView_FormClosed;
+            FormClosed += (s, e) => _dockingManager1.SaveLayout();
+
+            FormClosing += MainView_FormClosing;
+
+            // setting bar item text before form is shown results in creation of duplicated bar item;
+            // it seems it's a bug in Syncfusion's XpMenus
+            Shown += (s, e) =>
+            {
+                _rendered = true;
+                UpdateView();
+            };
         }
-        
-        void MainView_FormClosed(object sender, FormClosedEventArgs e)
+
+        void MainView_FormClosing(object sender, FormClosingEventArgs e)
         {
-            _dockingManager1.SaveLayout();
+            if (!FireViewClosing())
+            {
+                e.Cancel = true;
+            }
+        }
+
+        public event EventHandler<CancelEventArgs> ViewClosing;
+        public event EventHandler<EventArgs> ViewUpdating;
+
+        private void FireViewUpdating()
+        {
+            var handler = ViewUpdating;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
+        private bool FireViewClosing()
+        {
+            
+            var handler = ViewClosing;
+            if (handler != null)
+            {
+                var args = new CancelEventArgs();
+                handler(this, args);
+                if (args.Cancel)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         #region IView implementation
 
         public void ShowView()
         {
-            UpdateView();
             Application.Run(this);
         }
 
         public void UpdateView()
         {
-            // mapControl plays the role of the model here
-            _context.Toolbars.FindItem(MenuKeys.ZoomIn).Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
-            _context.Toolbars.FindItem(MenuKeys.ZoomOut).Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
-            _context.Toolbars.FindItem(MenuKeys.Pan).Checked = _mapControl1.MapCursor == MapCursor.Pan;
-            _context.Toolbars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
+            Text = WINDOW_TITLE;
+            if (!_context.Project.IsEmpty)
+            {
+                Text += @" - " + _context.Project.Filename;
+            }
             
-            _context.Toolbars.FindItem(MenuKeys.MeasureArea).Checked = 
-                _mapControl1.MapCursor == MapCursor.Measure && 
-                _mapControl1.Measuring.MeasuringType == MeasuringType.Area;
+            var bars = _context.Toolbars;
 
-            _context.Toolbars.FindItem(MenuKeys.MeasureDistance).Checked =
-                _mapControl1.MapCursor == MapCursor.Measure &&
-                _mapControl1.Measuring.MeasuringType == MeasuringType.Distance;
+            // mapControl plays the role of the model here
+            bars.FindItem(MenuKeys.ZoomIn).Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
+            bars.FindItem(MenuKeys.ZoomOut).Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
+            bars.FindItem(MenuKeys.Pan).Checked = _mapControl1.MapCursor == MapCursor.Pan;
+            bars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
+            
+            bars.FindItem(MenuKeys.SelectByRectangle).Checked = _mapControl1.MapCursor == MapCursor.Selection;
+            bars.FindItem(MenuKeys.SelectByPolygon).Checked = _mapControl1.MapCursor == MapCursor.SelectByPolygon;
+
+            bool selectionCursor = _mapControl1.MapCursor == MapCursor.Selection ||
+                                   _mapControl1.MapCursor == MapCursor.SelectByPolygon;
+            bars.FindItem(MenuKeys.SelectDropDown).Checked = selectionCursor;
+
+            bool distance = _mapControl1.Measuring.Type == MeasuringType.Distance;
+            bars.FindItem(MenuKeys.MeasureArea).Checked = _mapControl1.MapCursor == MapCursor.Measure && !distance;
+            bars.FindItem(MenuKeys.MeasureDistance).Checked = _mapControl1.MapCursor == MapCursor.Measure && distance;
+
+            var item = bars.FindItem(MenuKeys.SetProjection);
+            item.Enabled = !_context.Map.Layers.Any();
+            if (_rendered)
+            {
+                item.Text = item.Enabled
+                    ? "Set coordinate system and projection"
+                    : "It's not allowed to change projection when layers are already added to the map.";
+            }
+
+            bool hasFeatureSet = false;
+            
+            bool hasLayer = _context.Legend.SelectedLayer != -1;
+            if (hasLayer)
+            {
+                var fs = _context.Map.Layers.SelectedLayer.FeatureSet;
+                if (fs != null)
+                {
+                    //statusSelectedCount.Text = string.Format("Shapes: {0}; selected: {1}", sf.NumShapes, sf.NumSelected);
+                    bars.FindItem(MenuKeys.ClearSelection).Enabled = fs.NumSelected > 0;
+                    bars.FindItem(MenuKeys.ZoomToSelected).Enabled = fs.NumSelected > 0;
+                    hasFeatureSet = true;
+                }
+            }
+
+            if (!hasFeatureSet)
+            {
+                //statusSelectedCount.Text = "";
+                bars.FindItem(MenuKeys.ClearSelection).Enabled = false;
+                bars.FindItem(MenuKeys.ZoomToSelected).Enabled = false;
+            }
+
+            bars.FindItem(MenuKeys.RemoveLayer).Enabled = hasLayer;
+
+            //toolSearch.Enabled = true;
+            //toolSearch.Text = "Find location";
+            //if (App.Map.NumLayers > 0 && !App.Map.Measuring.IsUsingEllipsoid)
+            //{
+            //    toolSearch.Enabled = false;
+            //    toolSearch.Text = "Unsupported projection. Search isn't allowed.";
+            //}
+
+            //if (Map.CursorMode != tkCursorMode.cmIdentify)
+            //{
+            //    MapForm.HideTooltip();
+            //}
+            
+            // broadcast to plugins
+            FireViewUpdating();
+
+            _mapControl1.Focus();
         }
 
         #endregion
@@ -99,7 +197,5 @@ namespace MW5.Views
         }
 
         #endregion
-
-        
     }
 }

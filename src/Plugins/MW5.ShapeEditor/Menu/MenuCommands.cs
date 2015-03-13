@@ -8,9 +8,9 @@ using MW5.Plugins.ShapeEditor.Properties;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
-    public class CommandProvider: CommandProviderBase
+    public class MenuCommands: CommandProviderBase
     {
-        public CommandProvider(PluginIdentity identity)
+        public MenuCommands(PluginIdentity identity)
             : base(identity)
         {
         }
@@ -20,7 +20,6 @@ namespace MW5.Plugins.ShapeEditor.Menu
             return new List<MenuCommand>()
             {
                 new MenuCommand("Edit layer", MenuKeys.LayerEdit, Resources.layer_edit),
-                new MenuCommand("Create new layer", MenuKeys.LayerCreate, Resources.layer_create),
                 new MenuCommand("Add geometry", MenuKeys.GeometryCreate, Resources.geometry_create),
                 new MenuCommand("Vertex editor", MenuKeys.VertexEditor, Resources.vertex_editor),
                 new MenuCommand("Move shapes", MenuKeys.MoveShapes, Resources.geometry_move),

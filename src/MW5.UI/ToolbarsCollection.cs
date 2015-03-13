@@ -76,6 +76,11 @@ namespace MW5.UI
             }
         }
 
+        public IEnumerable<IMenuItem> ItemsForPlugin(PluginIdentity identity)
+        {
+            return _menuIndex.ItemsForPlugin(identity);
+        }
+
         public IToolbar Add(string name, PluginIdentity identity)
         {
             var bar = new Bar(_manager, name);

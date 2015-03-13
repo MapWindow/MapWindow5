@@ -62,6 +62,7 @@ namespace MW5.Menu
                         _manager.LoadPlugin(identity, _context);
                     }
                     item.Checked = !item.Checked;
+                    _context.View.Update();
                 }
             }
         }

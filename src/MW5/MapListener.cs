@@ -52,12 +52,18 @@ namespace MW5
             _map.ValidateShape += MapValidateShape;
             _map.MapCursorChanged += MapCursorChanged;
             _map.ChooseLayer += MapChooseLayer;
+            _map.SelectionChanged += MapSelectionChanged;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        private void MapSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _context.View.Update();
         }
 
         private void MapChooseLayer(object sender, ChooseLayerEventArgs e)

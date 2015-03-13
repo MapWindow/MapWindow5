@@ -13,6 +13,7 @@ namespace MW5.Plugins.Interfaces
         void Remove(string key);
         IMenuItem GetItem(string key);
         void RemoveItemsForPlugin(PluginIdentity pluginIdentity);
+        IEnumerable<IMenuItem> ItemsForPlugin(PluginIdentity pluginIdentity);
         void Clear();
     }
 }

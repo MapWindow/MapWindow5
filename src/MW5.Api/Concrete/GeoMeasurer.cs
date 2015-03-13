@@ -73,7 +73,7 @@ namespace MW5.Api.Concrete
             get { return _measuring.PointCount; }
         }
 
-        public MeasuringType MeasuringType
+        public MeasuringType Type
         {
             get { return (MeasuringType)_measuring.MeasuringType; }
             set { _measuring.MeasuringType = (tkMeasuringType)value; }

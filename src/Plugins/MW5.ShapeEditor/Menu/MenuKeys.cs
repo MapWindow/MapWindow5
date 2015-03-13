@@ -4,7 +4,6 @@
     {
         public const string LayerEdit = "se_LayerEdit";
         public const string LayerSave = "se_LayerSave";
-        public const string LayerCreate = "se_LayerCreate";
         public const string GeometryCreate = "se_GeometryCreate";
         public const string VertexEditor = "se_VertexEditor";
         public const string MoveShapes = "se_MoveShapes";
@@ -22,5 +21,6 @@
         public const string ClipByPolygon = "se_ClipByPolygon";
         public const string SplitByPolygon = "se_SplitByPolygon";
         public const string SplitByPolyline = "se_SplitByPolyline";
+        public const string PolygonOverlayDropDown = "se_PolygonOverlayDropDown";
     }
 }

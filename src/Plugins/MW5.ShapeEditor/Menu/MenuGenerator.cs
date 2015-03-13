@@ -16,13 +16,13 @@ namespace MW5.Plugins.ShapeEditor.Menu
     {
         private const string SHAPE_EDITOR_TOOLBAR = "Shape Editor";    // perhaps simply use plugin name as a default
         
-        private readonly CommandProvider _commands;
+        private readonly MenuCommands _commands;
 
-        public MenuGenerator(IAppContext context, PluginIdentity identity)
+        public MenuGenerator(IAppContext context, ShapeEditor plugin)
         {
-            _commands = new CommandProvider(identity);
+            _commands = new MenuCommands(plugin.Identity);
 
-            InitToolbar(context, identity);
+            InitToolbar(context, plugin.Identity);
 
             InitMenu();
         }
@@ -35,7 +35,6 @@ namespace MW5.Plugins.ShapeEditor.Menu
             var items = bar.Items;
 
             _commands.AddToMenu(items, MenuKeys.LayerEdit);
-            _commands.AddToMenu(items, MenuKeys.LayerCreate);
             _commands.AddToMenu(items, MenuKeys.GeometryCreate, true);
             _commands.AddToMenu(items, MenuKeys.VertexEditor);
             _commands.AddToMenu(items, MenuKeys.SplitShapes, true);
@@ -46,8 +45,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
             _commands.AddToMenu(items, MenuKeys.Paste);
             _commands.AddToMenu(items, MenuKeys.Cut);
 
-            var dropDown = items.AddDropDown("Polygon Overlay", Resources.geometry_erase_by_polygon, identity);
+            var dropDown = items.AddDropDown("Polygon Overlay", MenuKeys.PolygonOverlayDropDown, identity);
             dropDown.BeginGroup = true;
+            dropDown.Icon = new MenuIcon(Resources.geometry_erase_by_polygon);
 
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.EraseByPolygon);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.ClipByPolygon);

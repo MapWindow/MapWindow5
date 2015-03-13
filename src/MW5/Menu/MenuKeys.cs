@@ -27,6 +27,7 @@
         public const string SetProjection = "SetProjection";
         public const string MeasureDistance = "MeasureDistance";
         public const string MeasureArea = "MeasureArea";
+        public const string SelectDropDown = "SelectDropDown";
         public const string SelectByRectangle = "SelectByRectangle";
         public const string SelectByPolygon = "SelectByPolygon";
         public const string Attributes = "AttributesTool";

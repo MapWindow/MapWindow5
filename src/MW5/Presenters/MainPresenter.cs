@@ -19,18 +19,24 @@ namespace MW5.Presenters
     public class MainPresenter : BasePresenter<IMainView>
     {
         private readonly IAppContext _context;
+        private readonly IProjectService _projectService;
         private readonly MenuListener _menuListener;
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
+        private PluginManager _pluginManager;
 
         public MainPresenter(IAppContext context, IMainView view, IProjectService projectService)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
-            
+            if (projectService == null) throw new ArgumentNullException("projectService");
+
             _context = context;
+            _projectService = projectService;
 
             view.Map.Initialize();
+            view.ViewClosing += OnViewClosing;
+            view.ViewUpdating += OnViewUpdating;
 
             CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), view.Map);
 
@@ -39,15 +45,28 @@ namespace MW5.Presenters
             {
                 throw new InvalidCastException("Invalid type of IAppContext instance");
             }
-            appContext.Init(view, projectService as IProject);
+            appContext.Init(view, projectService);
 
-            var pluginManager = appContext.PluginManager;
-            pluginManager.PluginUnloaded += ManagerPluginUnloaded;
-            pluginManager.AssemblePlugins();
-            
-            _menuGenerator = new MenuGenerator(_context, pluginManager, view.MenuManager, view.DockingManager);
+            _pluginManager = appContext.PluginManager;
+            _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
+            _pluginManager.AssemblePlugins();
+
+            _menuGenerator = new MenuGenerator(_context, _pluginManager, view.MenuManager, view.DockingManager);
             _menuListener = context.Container.GetSingleton<MW5.Menu.MenuListener>();
-            _mapListener = new MapListener(_context, pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
+            _mapListener = new MapListener(_context, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
+        }
+
+        private void OnViewUpdating(object sender, EventArgs e)
+        {
+            _pluginManager.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
+        }
+
+        private void OnViewClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_projectService.TryClose())
+            {
+                e.Cancel = true;
+            }
         }
 
         private void ManagerPluginUnloaded(object sender, PluginEventArgs e)

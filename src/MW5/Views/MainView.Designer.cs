@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope3 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference3 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
@@ -221,15 +221,15 @@ namespace MW5.Views
             // _mapControl1
             // 
             this._mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 20.05173105612738D;
+            this._mapControl1.CurrentScale = 16.918010798186259D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope2.Tag = "";
-            this._mapControl1.Extents = envelope2;
-            spatialReference2.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference2;
+            envelope3.Tag = "";
+            this._mapControl1.Extents = envelope3;
+            spatialReference3.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference3;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;

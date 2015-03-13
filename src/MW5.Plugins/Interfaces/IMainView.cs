@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,5 +17,7 @@ namespace MW5.Plugins.Interfaces
         IMap Map { get; }
         IMuteLegend Legend { get; }
         IView View { get; }
+        event EventHandler<CancelEventArgs> ViewClosing;
+        event EventHandler<EventArgs> ViewUpdating;
     }
 }

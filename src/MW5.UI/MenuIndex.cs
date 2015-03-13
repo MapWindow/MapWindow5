@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 //using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +29,11 @@ namespace MW5.UI
             IMenuItem item;
             _items.TryGetValue(key, out item);
             return item;
+        }
+
+        public IEnumerable<IMenuItem> ItemsForPlugin(PluginIdentity identity)
+        {
+            return from item in _items where item.Value.PluginIdentity == identity select item.Value;
         }
 
         public void RemoveItemsForPlugin(PluginIdentity pluginIdentity)

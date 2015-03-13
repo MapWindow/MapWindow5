@@ -12,9 +12,9 @@ namespace MW5.Menu
     /// <summary>
     /// Holds list of commands for the core app. 
     /// </summary>
-    internal class CommandProvider : CommandProviderBase
+    internal class MenuCommands : CommandProviderBase
     {
-        public CommandProvider(PluginIdentity identity)
+        public MenuCommands(PluginIdentity identity)
             : base(identity)
         {
         }
@@ -44,7 +44,7 @@ namespace MW5.Menu
                 new MenuCommand("Zoom to maximum extents", MenuKeys.ZoomMax, Resources.zoom_max_extents),
                 new MenuCommand("Zoom to layer", MenuKeys.ZoomToLayer, Resources.zoom_to_layer),
                 new MenuCommand("Pan", MenuKeys.Pan, Resources.pan),
-                new MenuCommand("Set coordinate system & projection", MenuKeys.SetProjection, Resources.crs_change),
+                new MenuCommand("Set coordinate system and projection", MenuKeys.SetProjection, Resources.crs_change),
                 new MenuCommand("Measure distance", MenuKeys.MeasureDistance, Resources.measure_distance),
                 new MenuCommand("Measure area", MenuKeys.MeasureArea, Resources.measure_area),
                 new MenuCommand("By rectangle", MenuKeys.SelectByRectangle, null),

@@ -16,7 +16,7 @@ namespace MW5.Menu
         
         private readonly IAppContext _context;
         private readonly PluginManager _pluginManager;
-        private readonly CommandProvider _commands;
+        private readonly MenuCommands _commands;
         private readonly object _menuManager;
         private readonly object _dockingManager;
         
@@ -29,7 +29,7 @@ namespace MW5.Menu
             _pluginManager = pluginManager;
             _menuManager = menuManager;
             _dockingManager = dockingManager;
-            _commands = new CommandProvider(PluginIdentity.Default);
+            _commands = new MenuCommands(PluginIdentity.Default);
 
             InitToolbars();
             InitMenus();
@@ -135,8 +135,9 @@ namespace MW5.Menu
             _commands.AddToMenu(items, MenuKeys.Attributes);
 
             // select drop down
-            var dropDown = items.AddDropDown("Select", Resources.select, PluginIdentity.Default);
+            var dropDown = items.AddDropDown("Select", MenuKeys.SelectDropDown, PluginIdentity.Default);
             dropDown.BeginGroup = true;
+            dropDown.Icon = new MenuIcon(Resources.select);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByRectangle);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByPolygon);
 

@@ -146,8 +146,9 @@ namespace MW5.Services.Services
         public bool Save()
         {
             string filename = _filename;
+            var state = State; 
             
-            bool newProject = State == ProjectState.NotSaved;
+            bool newProject = state == ProjectState.NotSaved || state == ProjectState.Empty;
             if (newProject)
             {
                 if (!_fileService.SaveFile(PROJECT_FILTER, ref filename))

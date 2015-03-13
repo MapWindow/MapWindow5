@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Operations;
 using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Helpers
 {
-    public class GeoprocessingService
+    public class GeoprocessingService : IGeoprocessingService
     {
         private readonly IAppContext _context;
         private readonly IMessageService _messageService;

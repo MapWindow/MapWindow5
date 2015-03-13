@@ -27,7 +27,8 @@ namespace MW5
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
-        private IProject _project;
+        private IMainView _mainView;
+        private IProjectService _project;
         private IMuteLegend _legend;
         private IToolbarCollection _toolbars;
         private PluginManager _pluginManager;
@@ -37,13 +38,14 @@ namespace MW5
         /// </summary>
         /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
         /// Perhaps property injection can be used.</remarks>
-        internal void Init(IMainView mainView, IProject project)
+        internal void Init(IMainView mainView, IProjectService project)
         {
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
 
             _pluginManager = PluginManager.Instance;
 
+            _mainView = mainView;
             _view = new AppView(mainView);
             _project = project;
             _map = mainView.Map;
@@ -60,7 +62,7 @@ namespace MW5
 
         public IProject Project
         {
-            get { return _project; }
+            get { return _project as IProject; }
         }
         
         public IAppView View
@@ -96,6 +98,13 @@ namespace MW5
         public PluginManager PluginManager
         {
             get { return _pluginManager; }
+        }
+
+        public void Close()
+        {
+            // TODO: save application settings
+            // TODO: save toolbar positions
+            _mainView.Close();
         }
     }
 }

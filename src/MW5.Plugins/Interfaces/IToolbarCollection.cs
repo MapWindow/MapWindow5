@@ -18,5 +18,7 @@ namespace MW5.Plugins.Interfaces
         IMenuItem FindItem(string key);
 
         void RemoveItemsForPlugin(PluginIdentity identity);
+
+        IEnumerable<IMenuItem> ItemsForPlugin(PluginIdentity identity);
     }
 }

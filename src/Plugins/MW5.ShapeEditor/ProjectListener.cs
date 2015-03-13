@@ -14,7 +14,7 @@ namespace MW5.Plugins.ShapeEditor
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
 
-        public ProjectListener(IAppContext context,  BasePlugin plugin)
+        public ProjectListener(IAppContext context, ShapeEditor plugin)
         {
             _context = context;
             _layerService = context.Container.Resolve<ILayerService>();
@@ -27,6 +27,12 @@ namespace MW5.Plugins.ShapeEditor
 
         private void plugin_ProjectClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if (!_context.Map.GeometryEditor.SaveChanges())
+            {
+                e.Cancel = true;
+                return;
+            }
+            
             var layers = _context.Map.Layers;
 
             foreach (var layer in layers)

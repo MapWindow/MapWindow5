@@ -41,8 +41,19 @@ namespace MW5.Plugins.Concrete
             }
         }
 
+        #region Plugin events
+
+        // backing fields
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
+        internal EventHandler<EventArgs> ViewUpdating_;
+
+        // public events
+        public event EventHandler<EventArgs> ViewUpdating
+        {
+            add { ViewUpdating_ += value; }
+            remove { ViewUpdating_ -= value; }
+        }
 
         public event EventHandler<MenuItemEventArgs> ItemClicked
         {
@@ -56,8 +67,11 @@ namespace MW5.Plugins.Concrete
             remove { ProjectClosing_ -= value; }
         }
 
-        #region Backing fields for events (shold be used to attach handlers externally)
+        #endregion
 
+        #region Map events
+
+        // backing fields
         internal MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit_;
         internal MapEventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit_;
         internal MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape_;
@@ -69,10 +83,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<EventArgs> HistoryChanged_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
 
-        #endregion
-
-        #region Map events
-
+        // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
         {
             add { AfterShapeEdit_ += value; }

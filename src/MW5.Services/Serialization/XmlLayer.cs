@@ -28,6 +28,7 @@ namespace MW5.Services.Serialization
             var source = LayerSourceHelper.Open(Filename, LayerType);
             int handle = layers.Add(source);
             var layer = layers.ItemByHandle(handle);
+            layer.DeserializeLayer(Layer.OuterXml);
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.ColorSchemeCaption = ColorSchemeCaption;

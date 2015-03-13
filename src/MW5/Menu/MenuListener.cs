@@ -48,6 +48,9 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.CreateLayer:
+                    _layerService.CreateLayer();
+                    break;
                 case MenuKeys.NewMap:
                     _projectService.TryClose();
                     break;
@@ -75,9 +78,9 @@ namespace MW5.Menu
                 case MenuKeys.ZoomToLayer:
                     _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
                     break;
-                case MenuKeys.AddDatabaseLayer:
+                //case MenuKeys.AddDatabaseLayer:
                     // TODO: implement
-                    break;
+                //    break;
                 case MenuKeys.RemoveLayer:
                     _layerService.RemoveSelectedLayer();
                     break;
@@ -90,14 +93,24 @@ namespace MW5.Menu
                 case MenuKeys.ZoomToSelected:
                     _layerService.ZoomToSelected();
                     break;
+                case MenuKeys.Quit:
+                    var appContext = _context as AppContext;
+                    if (appContext != null)
+                    {
+                        appContext.Close();
+                    }
+                    return;
                 default:
                     _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
                     break;
             }
+
+            _context.View.Update();
         }
 
         private bool HandleCursorChanged(string itemKey)
         {
+            // MapCursorChanged event is raised automatically; no need to update UI manually
             switch (itemKey)
             {
                 case MenuKeys.ZoomIn:
@@ -116,11 +129,11 @@ namespace MW5.Menu
                     _context.Map.MapCursor = MapCursor.Selection;
                     return true;
                 case MenuKeys.MeasureArea:
-                    _context.Map.Measuring.MeasuringType = MeasuringType.Area;
+                    _context.Map.Measuring.Type = MeasuringType.Area;
                     _context.Map.MapCursor = MapCursor.Measure;
                     return true;
                 case MenuKeys.MeasureDistance:
-                    _context.Map.Measuring.MeasuringType = MeasuringType.Distance;
+                    _context.Map.Measuring.Type = MeasuringType.Distance;
                     _context.Map.MapCursor = MapCursor.Measure;
                     return true;
                 case MenuKeys.Attributes:

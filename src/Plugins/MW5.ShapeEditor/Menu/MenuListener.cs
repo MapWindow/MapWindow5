@@ -17,7 +17,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private readonly GeoprocessingService _geoprocessingService;
         private readonly IAppContext _context;
 
-        public MenuListener(IAppContext context, BasePlugin plugin)
+        public MenuListener(IAppContext context, ShapeEditor plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
 
@@ -32,19 +32,18 @@ namespace MW5.Plugins.ShapeEditor.Menu
         {
             if (HandleGroupOperation(e.ItemKey))
             {
+                _context.View.Update();
                 return;
             }
 
             if (HandleMapCursorChange(e.ItemKey))
             {
+                _context.View.Update();
                 return;
             }
 
             switch (e.ItemKey)
             {
-                case MenuKeys.LayerCreate:
-                    _layerService.CreateLayer();
-                    break;
                 case MenuKeys.LayerEdit:
                     _layerService.ToggleVectorLayerEditing();
                     break;
@@ -57,6 +56,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
                     _context.Map.Redraw(RedrawType.SkipDataLayers);
                     break;
             }
+            _context.View.Update();
         }
 
         public bool HandleMapCursorChange(string itemKey)
