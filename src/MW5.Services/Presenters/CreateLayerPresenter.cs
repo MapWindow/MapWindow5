@@ -38,7 +38,7 @@ namespace MW5.Services.Presenters
             string layerName = _view.LayerName;
             if (string.IsNullOrWhiteSpace(layerName))
             {
-                _messageService.Info("Please enter a name of the new layer");
+                _messageService.Info("Please enter a name of the new layer.");
                 return;
             }
 
@@ -72,6 +72,11 @@ namespace MW5.Services.Presenters
         public GeometryType GeometryType
         {
             get { return _view.GeometryType; }
+        }
+
+        public ZValueType ZValueType
+        {
+            get { return _view.ZValueType; }
         }
 
         public string LayerName

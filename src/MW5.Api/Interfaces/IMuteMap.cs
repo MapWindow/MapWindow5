@@ -9,6 +9,9 @@ namespace MW5.Api.Interfaces
 {
     public interface IMuteMap: IComWrapper
     {
+        IFeatureSet SelectedFeatureSet { get; }
+        IImageSource SelectedImage { get; }
+        IVectorLayer SelectedVectorLayer { get; }
         IMuteLegend Legend { get; set; }
         LegendLayerCollection<ILayer> Layers { get; }
         MapProjection Projection { get; set; }

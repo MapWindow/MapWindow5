@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
+using MW5.Api.Concrete;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 
@@ -27,8 +28,12 @@ namespace MW5.Services.Serialization
                 Name = p.Identity.Name,
                 Guid = p.Identity.Guid
             }).ToList();
+
+            Map = new XmlMap();
+            Map.Projection = context.Map.GeoProjection.ExportToWkt();
         }
 
+        [DataMember] public XmlMap Map { get; set; }
         [DataMember] public List<XmlGroup> Groups { get; set; }
         [DataMember] public List<XmlLayer> Layers { get; set; }
         [DataMember] public List<XmlPlugin> Plugins { get; set; }
@@ -40,6 +45,9 @@ namespace MW5.Services.Serialization
         /// <returns></returns>
         public bool RestoreState(ISerializableContext context)
         {
+            var sr = new SpatialReference();
+            sr.ImportFromAutoDetect(Map.Projection);
+            
             foreach (var p in Plugins)
             {
                 context.PluginManager.LoadPlugin(p.Guid, context);

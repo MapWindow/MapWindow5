@@ -119,11 +119,13 @@ namespace MW5.Api
 
         #region IMuteMap Members
 
+        [Browsable(false)]
         public HistoryList History
         {
             get { return new HistoryList(_map.UndoList); }
         }
 
+        [Browsable(false)]
         public DrawingLayers Drawing
         {
             get { return new DrawingLayers(_map); }
@@ -176,6 +178,7 @@ namespace MW5.Api
             set { _map.MapUnits = (tkUnitsOfMeasure)value; }
         }
 
+        [Browsable(false)]
         public IEnvelope MaxExtents
         {
             get { return new Envelope(_map.MaxExtents); }
@@ -303,14 +306,58 @@ namespace MW5.Api
             return BitmapSource.Wrap(img);
         }
 
+        [Browsable(false)]
         public GeoMeasurer Measuring
         {
             get { return new GeoMeasurer(_map.Measuring); }
         }
 
+        [Browsable(false)]
         public IdentifierSettings Identifier
         {
             get { return new IdentifierSettings(_map.Identifier); }
+        }
+
+        [Browsable(false)]
+        public IFeatureSet SelectedFeatureSet
+        {
+            get
+            {
+                var layer = LegendLayers.SelectedLayer;
+                if (layer != null)
+                {
+                    return layer.FeatureSet;
+                }
+                return null;
+            }
+        }
+
+        [Browsable(false)]
+        public IImageSource SelectedImage
+        {
+            get
+            {
+                var layer = LegendLayers.SelectedLayer;
+                if (layer != null)
+                {
+                    return layer.ImageSource;
+                }
+                return null;
+            }
+        }
+
+        [Browsable(false)]
+        public IVectorLayer SelectedVectorLayer
+        {
+            get
+            {
+                var layer = LegendLayers.SelectedLayer;
+                if (layer != null)
+                {
+                    return layer.VectorLayer;
+                }
+                return null;
+            }
         }
 
         [Browsable(false)]
@@ -325,9 +372,14 @@ namespace MW5.Api
             }
         }
 
-        // TODO: return interface
         [Browsable(false)]
         LegendLayerCollection<ILayer> IMuteMap.Layers
+        {
+            get { return LegendLayers; }
+        }
+
+        [Browsable(false)]
+        private LegendLayerCollection<ILayer> LegendLayers
         {
             get
             {
@@ -337,14 +389,10 @@ namespace MW5.Api
                         "MapControl.Legend property should be set before acceccing layers collection.");
                 }
 
-                if (_layers == null)
-                {
-                    _layers = new LegendLayerCollection<ILayer>(_map, Legend);
-                }
-                return _layers;
+                return _layers ?? (_layers = new LegendLayerCollection<ILayer>(_map, Legend));
             }
         }
-        
+
         public MapProjection Projection
         {
             get { return (MapProjection) _map.Projection; }
@@ -548,11 +596,13 @@ namespace MW5.Api
             return _map.DegreesToProj(degreesLngX, degreesLatY, ref projX, ref projY);
         }
 
+        [Browsable(false)]
         public IGeometryEditor GeometryEditor
         {
             get { return new GeometryEditor(_map.ShapeEditor); }
         }
 
+        [Browsable(false)]
         public TileManager Tiles
         {
             get { return new TileManager(_map.Tiles); }
@@ -560,6 +610,7 @@ namespace MW5.Api
 
         #endregion
 
+        [Browsable(false)]
         public object InternalObject
         {
             get { return _map; }

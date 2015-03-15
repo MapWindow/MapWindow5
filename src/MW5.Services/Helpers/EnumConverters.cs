@@ -28,11 +28,11 @@ namespace MW5.Services.Helpers
                 case TileProvider.None:
                     return "None";
                 case TileProvider.OpenStreetMap:
-                    return "Open Street Map";
+                    return "OpenStreetMap";
                 case TileProvider.OpenCycleMap:
-                    return "Open Cycle Map";
+                    return "OpenCycleMap";
                 case TileProvider.OpenTransportMap:
-                    return "Open Transport Map";
+                    return "OpenTransportMap";
                 case TileProvider.BingMaps:
                     return "Bing Maps";
                 case TileProvider.BingSatellite:
@@ -58,7 +58,7 @@ namespace MW5.Services.Helpers
                 case TileProvider.Rosreestr:
                     return "Rosreestr";
                 case TileProvider.OpenHumanitarianMap:
-                    return "Open Humanitarian Map";
+                    return "OpenHumanitarianMap";
                 case TileProvider.MapQuestAerial:
                     return "MapQuest Aerial";
                 case TileProvider.ProviderCustom:

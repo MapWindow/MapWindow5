@@ -13,7 +13,14 @@ namespace MW5.Api.Concrete
         {
             foreach (var cb in _list)
             {
-                cb.Progress(tagOfSender, percent, message);
+                if (percent == 0 || percent == 100)
+                {
+                    cb.ClearProgress();
+                }
+                else
+                {
+                    cb.Progress(tagOfSender, percent, message);    
+                }
             }
         }
 

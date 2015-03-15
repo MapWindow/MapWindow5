@@ -20,7 +20,6 @@ namespace MW5.Api.Legend
         private bool _expanded;
         private int _height;
         private object _icon;
-        private Guid _guid;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendGroup"/> class.
@@ -215,11 +214,6 @@ namespace MW5.Api.Legend
             _legend.DrawGroup(g, this, rect, true);
 
             return bmp;
-        }
-
-        public Guid Guid
-        {
-            get { return _guid; }
         }
 
         /// <summary>

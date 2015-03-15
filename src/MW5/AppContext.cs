@@ -32,6 +32,7 @@ namespace MW5
         private IMuteLegend _legend;
         private IToolbarCollection _toolbars;
         private PluginManager _pluginManager;
+        private IStatusBar _statusBar;
 
         /// <summary>
         /// Sets all the necessary references from the main view. 
@@ -53,6 +54,7 @@ namespace MW5
 
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
+            _statusBar = new UI.StatusBar(mainView.StatusBar);
         }
 
         public IApplicationContainer Container
@@ -78,6 +80,11 @@ namespace MW5
         public IMuteLegend Legend
         {
             get { return _legend; }
+        }
+
+        public IStatusBar StatusBar
+        {
+            get { return _statusBar; }
         }
 
         public IMenu Menu

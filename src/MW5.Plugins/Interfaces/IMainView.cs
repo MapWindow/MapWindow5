@@ -14,6 +14,7 @@ namespace MW5.Plugins.Interfaces
     {
         object DockingManager { get; }
         object MenuManager { get; }
+        object StatusBar { get; }
         IMap Map { get; }
         IMuteLegend Legend { get; }
         IView View { get; }

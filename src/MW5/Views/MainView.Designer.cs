@@ -33,25 +33,25 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope3 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference3 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusProgressMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
-            this.statusProjection = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusStripLabel4 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
-            this.statusCoordinates = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusSelected = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.MapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
             this._legendControl1 = new MW5.Api.Legend.LegendControl();
+            this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv2)).BeginInit();
@@ -86,14 +86,10 @@ namespace MW5.Views
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTileProvider,
-            this.toolStripStatusLabel3,
+            this.statusProgressMessage,
             this.toolStripStatusLabel4,
-            this.statusProgress,
-            this.statusProjection,
-            this.statusStripLabel4,
-            this.statusMapUnits,
-            this.statusStripLabel5,
-            this.statusCoordinates});
+            this.statusProgressBar,
+            this.statusSelected});
             this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.statusStripEx1.Location = new System.Drawing.Point(0, 509);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
@@ -112,11 +108,12 @@ namespace MW5.Views
             this.statusTileProvider.Size = new System.Drawing.Size(87, 19);
             this.statusTileProvider.Text = "Tile provider";
             // 
-            // toolStripStatusLabel3
+            // statusProgressMessage
             // 
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(52, 15);
-            this.toolStripStatusLabel3.Text = "Progress";
+            this.statusProgressMessage.Name = "statusProgressMessage";
+            this.statusProgressMessage.Size = new System.Drawing.Size(52, 15);
+            this.statusProgressMessage.Text = "Progress";
+            this.statusProgressMessage.Visible = false;
             // 
             // toolStripStatusLabel4
             // 
@@ -124,46 +121,18 @@ namespace MW5.Views
             this.toolStripStatusLabel4.Size = new System.Drawing.Size(0, 0);
             this.toolStripStatusLabel4.Spring = true;
             // 
-            // statusProgress
+            // statusProgressBar
             // 
-            this.statusProgress.Name = "statusProgress";
-            this.statusProgress.Size = new System.Drawing.Size(100, 15);
+            this.statusProgressBar.Enabled = false;
+            this.statusProgressBar.Name = "statusProgressBar";
+            this.statusProgressBar.Size = new System.Drawing.Size(100, 15);
+            this.statusProgressBar.Visible = false;
             // 
-            // statusProjection
+            // statusSelected
             // 
-            this.statusProjection.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusProjection.Name = "statusProjection";
-            this.statusProjection.Size = new System.Drawing.Size(87, 15);
-            this.statusProjection.Text = "ProjectionType";
-            // 
-            // statusStripLabel4
-            // 
-            this.statusStripLabel4.EndOfGroup = true;
-            this.statusStripLabel4.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusStripLabel4.Name = "statusStripLabel4";
-            this.statusStripLabel4.Size = new System.Drawing.Size(10, 15);
-            this.statusStripLabel4.Text = "|";
-            // 
-            // statusMapUnits
-            // 
-            this.statusMapUnits.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusMapUnits.Name = "statusMapUnits";
-            this.statusMapUnits.Size = new System.Drawing.Size(61, 15);
-            this.statusMapUnits.Text = "Map Units";
-            // 
-            // statusStripLabel5
-            // 
-            this.statusStripLabel5.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusStripLabel5.Name = "statusStripLabel5";
-            this.statusStripLabel5.Size = new System.Drawing.Size(10, 15);
-            this.statusStripLabel5.Text = "|";
-            // 
-            // statusCoordinates
-            // 
-            this.statusCoordinates.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
-            this.statusCoordinates.Name = "statusCoordinates";
-            this.statusCoordinates.Size = new System.Drawing.Size(71, 15);
-            this.statusCoordinates.Text = "Coordinates";
+            this.statusSelected.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusSelected.Name = "statusSelected";
+            this.statusSelected.Size = new System.Drawing.Size(0, 0);
             // 
             // parentBarItem3
             // 
@@ -226,10 +195,10 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope3.Tag = "";
-            this._mapControl1.Extents = envelope3;
-            spatialReference3.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference3;
+            envelope1.Tag = "";
+            this._mapControl1.Extents = envelope1;
+            spatialReference1.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference1;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -263,7 +232,7 @@ namespace MW5.Views
             // 
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
-            this._mainFrameBarManager1.CurrentBaseFormType = "System.Windows.Forms.Form";
+            this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.MapWindowForm";
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
@@ -278,11 +247,37 @@ namespace MW5.Views
             this._legendControl1.Location = new System.Drawing.Point(106, 174);
             this._legendControl1.Map = null;
             this._legendControl1.Name = "_legendControl1";
+            this._legendControl1.SelectedLayer = -1;
             this._legendControl1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this._legendControl1.ShowGroupIcons = true;
             this._legendControl1.ShowLabels = false;
             this._legendControl1.Size = new System.Drawing.Size(107, 126);
             this._legendControl1.TabIndex = 5;
+            // 
+            // statusStripLabel5
+            // 
+            this.statusStripLabel5.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusStripLabel5.Name = "statusStripLabel5";
+            this.statusStripLabel5.Size = new System.Drawing.Size(10, 15);
+            this.statusStripLabel5.Text = "|";
+            // 
+            // statusMapUnits
+            // 
+            this.statusMapUnits.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusMapUnits.Name = "statusMapUnits";
+            this.statusMapUnits.Size = new System.Drawing.Size(61, 15);
+            this.statusMapUnits.Text = "Map Units";
+            // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(52, 15);
+            this.toolStripStatusLabel3.Text = "Progress";
+            // 
+            // statusProgress
+            // 
+            this.statusProgress.Name = "statusProgress";
+            this.statusProgress.Size = new System.Drawing.Size(100, 15);
             // 
             // MainView
             // 
@@ -310,14 +305,9 @@ namespace MW5.Views
 
         private Syncfusion.Windows.Forms.Tools.StatusStripEx statusStripEx1;
         private System.Windows.Forms.ToolStripStatusLabel statusTileProvider;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel statusProgressMessage;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
-        private System.Windows.Forms.ToolStripProgressBar statusProgress;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusProjection;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel4;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusMapUnits;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel5;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusCoordinates;
+        private System.Windows.Forms.ToolStripProgressBar statusProgressBar;
         private Syncfusion.Windows.Forms.Tools.DockingManager _dockingManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem parentBarItem3;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
@@ -325,6 +315,11 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Api.Legend.LegendControl _legendControl1;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusSelected;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel5;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusMapUnits;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripProgressBar statusProgress;
 
     }
 }

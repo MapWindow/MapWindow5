@@ -35,14 +35,14 @@
             this._layerTypeComboBox = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this._okButton = new Syncfusion.Windows.Forms.ButtonAdv();
             this._cancelButton = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.radioButtonAdv1 = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
-            this.radioButtonAdv2 = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
-            this.radioButtonAdv3 = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.opt2D = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.optZ = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.optM = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this._layerNameTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._layerTypeComboBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.opt2D)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optZ)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optM)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -86,13 +86,17 @@
             // 
             // _okButton
             // 
+            this._okButton.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this._okButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._okButton.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this._okButton.ForeColor = System.Drawing.Color.White;
             this._okButton.IsBackStageButton = false;
             this._okButton.Location = new System.Drawing.Point(256, 143);
             this._okButton.Name = "_okButton";
             this._okButton.Size = new System.Drawing.Size(75, 23);
             this._okButton.TabIndex = 6;
             this._okButton.Text = "Ok";
+            this._okButton.UseVisualStyle = false;
             // 
             // _cancelButton
             // 
@@ -105,38 +109,41 @@
             this._cancelButton.TabIndex = 7;
             this._cancelButton.Text = "Cancel";
             // 
-            // radioButtonAdv1
+            // opt2D
             // 
-            this.radioButtonAdv1.BeforeTouchSize = new System.Drawing.Size(92, 21);
-            this.radioButtonAdv1.Location = new System.Drawing.Point(103, 102);
-            this.radioButtonAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.radioButtonAdv1.Name = "radioButtonAdv1";
-            this.radioButtonAdv1.Size = new System.Drawing.Size(92, 21);
-            this.radioButtonAdv1.TabIndex = 8;
-            this.radioButtonAdv1.Text = "Regular";
-            this.radioButtonAdv1.ThemesEnabled = false;
+            this.opt2D.BeforeTouchSize = new System.Drawing.Size(92, 21);
+            this.opt2D.Checked = true;
+            this.opt2D.Location = new System.Drawing.Point(103, 102);
+            this.opt2D.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.opt2D.Name = "opt2D";
+            this.opt2D.Size = new System.Drawing.Size(92, 21);
+            this.opt2D.TabIndex = 8;
+            this.opt2D.Text = "Regular";
+            this.opt2D.ThemesEnabled = false;
             // 
-            // radioButtonAdv2
+            // optZ
             // 
-            this.radioButtonAdv2.BeforeTouchSize = new System.Drawing.Size(48, 21);
-            this.radioButtonAdv2.Location = new System.Drawing.Point(201, 102);
-            this.radioButtonAdv2.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.radioButtonAdv2.Name = "radioButtonAdv2";
-            this.radioButtonAdv2.Size = new System.Drawing.Size(48, 21);
-            this.radioButtonAdv2.TabIndex = 9;
-            this.radioButtonAdv2.Text = "Z";
-            this.radioButtonAdv2.ThemesEnabled = false;
+            this.optZ.BeforeTouchSize = new System.Drawing.Size(48, 21);
+            this.optZ.Location = new System.Drawing.Point(201, 102);
+            this.optZ.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.optZ.Name = "optZ";
+            this.optZ.Size = new System.Drawing.Size(48, 21);
+            this.optZ.TabIndex = 9;
+            this.optZ.TabStop = false;
+            this.optZ.Text = "Z";
+            this.optZ.ThemesEnabled = false;
             // 
-            // radioButtonAdv3
+            // optM
             // 
-            this.radioButtonAdv3.BeforeTouchSize = new System.Drawing.Size(48, 21);
-            this.radioButtonAdv3.Location = new System.Drawing.Point(283, 102);
-            this.radioButtonAdv3.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.radioButtonAdv3.Name = "radioButtonAdv3";
-            this.radioButtonAdv3.Size = new System.Drawing.Size(48, 21);
-            this.radioButtonAdv3.TabIndex = 10;
-            this.radioButtonAdv3.Text = "M";
-            this.radioButtonAdv3.ThemesEnabled = false;
+            this.optM.BeforeTouchSize = new System.Drawing.Size(48, 21);
+            this.optM.Location = new System.Drawing.Point(283, 102);
+            this.optM.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.optM.Name = "optM";
+            this.optM.Size = new System.Drawing.Size(48, 21);
+            this.optM.TabIndex = 10;
+            this.optM.TabStop = false;
+            this.optM.Text = "M";
+            this.optM.ThemesEnabled = false;
             // 
             // CreateLayerView
             // 
@@ -144,9 +151,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._cancelButton;
             this.ClientSize = new System.Drawing.Size(424, 178);
-            this.Controls.Add(this.radioButtonAdv3);
-            this.Controls.Add(this.radioButtonAdv2);
-            this.Controls.Add(this.radioButtonAdv1);
+            this.Controls.Add(this.optM);
+            this.Controls.Add(this.optZ);
+            this.Controls.Add(this.opt2D);
             this.Controls.Add(this._cancelButton);
             this.Controls.Add(this._okButton);
             this.Controls.Add(this._layerTypeComboBox);
@@ -157,9 +164,9 @@
             this.Text = "Create new layer";
             ((System.ComponentModel.ISupportInitialize)(this._layerNameTextbox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._layerTypeComboBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.radioButtonAdv3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.opt2D)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optZ)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optM)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,8 +180,8 @@
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv _layerTypeComboBox;
         private Syncfusion.Windows.Forms.ButtonAdv _okButton;
         private Syncfusion.Windows.Forms.ButtonAdv _cancelButton;
-        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv radioButtonAdv1;
-        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv radioButtonAdv2;
-        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv radioButtonAdv3;
+        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv opt2D;
+        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv optZ;
+        private Syncfusion.Windows.Forms.Tools.RadioButtonAdv optM;
     }
 }

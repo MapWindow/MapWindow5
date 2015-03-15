@@ -14,5 +14,10 @@ namespace MW5.API.Test
         {
             Debug.Print("Callback reported progress: {0} {1}", message, percent);
         }
+
+        public void ClearProgress()
+        {
+            Debug.Print("Clear callback");
+        }
     }
 }

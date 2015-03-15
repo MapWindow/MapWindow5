@@ -9,19 +9,22 @@ using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.UI;
+using MW5.UI.Helpers;
 
 namespace MW5.Views
 {
     /// <summary>
     /// Represents the main view of the application with the map, docking windows, toolbars and menu.
     /// </summary>
-    public partial class MainView : Form, IMainView
+    public partial class MainView : MapWindowForm, IMainView
     {
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
 
         public MainView(IAppContext context)
+            : base(context)
         {
             _context = context;
 
@@ -83,7 +86,7 @@ namespace MW5.Views
 
         #region IView implementation
 
-        public void ShowView()
+        public new void ShowView()
         {
             Application.Run(this);
         }
@@ -160,11 +163,37 @@ namespace MW5.Views
             //{
             //    MapForm.HideTooltip();
             //}
-            
+
+            UpdateStatusBar();
+
             // broadcast to plugins
             FireViewUpdating();
 
             _mapControl1.Focus();
+        }
+
+        private void UpdateStatusBar()
+        {
+            statusTileProvider.Text = EnumHelper.EnumToString(_context.Map.TileProvider);
+
+            if (_context.Map.Layers.SelectedLayer == null)
+            {
+                statusSelected.Text = "No selected layer";
+                return;
+            }
+
+            var fs = _context.Map.SelectedFeatureSet;
+            if (fs != null)
+            {
+                statusSelected.Text = string.Format("Selected: {0} / {1}", fs.NumSelected, fs.Features.Count);
+                return;
+            }
+            
+            var img = _context.Map.SelectedImage;
+            if (img != null)
+            {
+                statusSelected.Text = "Selected layer is raster";
+            }
         }
 
         #endregion
@@ -179,6 +208,11 @@ namespace MW5.Views
         public object MenuManager
         {
             get { return _mainFrameBarManager1; }
+        }
+
+        public object StatusBar
+        {
+            get { return statusStripEx1; }
         }
 
         public IMap Map

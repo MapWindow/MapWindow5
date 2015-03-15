@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Concrete\BasePlugin.cs" />
+    <Compile Include="Concrete\LayerCancelEventArgs.cs" />
     <Compile Include="Concrete\MenuCommand.cs" />
     <Compile Include="Concrete\CommandProviderBase.cs" />
     <Compile Include="Concrete\MenuItemEventArgs.cs" />
@@ -85,6 +86,7 @@
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\IMenuIndex.cs" />
     <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
     <Compile Include="Mvp\CommandPresenter.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />

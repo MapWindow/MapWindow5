@@ -31,6 +31,7 @@ namespace MW5.UI.Syncfusion
                 if (btn != null)
                 {
                     btn.Appearance = _settings.ButtonAppearance;
+                    btn.UseVisualStyle = true;
                 }
 
                 var cbo = control as ComboBoxAdv;

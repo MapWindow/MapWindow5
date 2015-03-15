@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Properties;
 using Syncfusion.Windows.Forms;
 
 namespace MW5.UI
@@ -12,6 +13,11 @@ namespace MW5.UI
     {
         private readonly IAppContext _context;
 
+        public MapWindowForm()
+        {
+            
+        }
+
         public MapWindowForm(IAppContext context)
         {
             if (context == null)
@@ -19,6 +25,8 @@ namespace MW5.UI
                 throw new ArgumentNullException("context");
             }
             _context = context;
+
+            Icon = Resources.MapWindow;
         }
 
         protected void Invoke(Action action)
@@ -32,6 +40,18 @@ namespace MW5.UI
         public void ShowView()
         {
             _context.View.ShowDialog(this);
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // MapWindowForm
+            // 
+            this.ClientSize = new System.Drawing.Size(288, 264);
+            this.Name = "MapWindowForm";
+            this.ResumeLayout(false);
+
         }
     }
 }

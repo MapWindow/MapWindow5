@@ -26,7 +26,7 @@ namespace MW5.Plugins.Mef
             {
                 var temp = new Guid(guid);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw new ApplicationException("Invalid Guid value.");
             }

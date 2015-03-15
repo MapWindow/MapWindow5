@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="LightInject">
       <HintPath>..\packages\LightInject.3.0.2.5\lib\net45\LightInject.dll</HintPath>
@@ -89,14 +89,17 @@
     <Compile Include="Serialization\Utility\XmlSerializationHelper.cs" />
     <Compile Include="Serialization\XmlGroup.cs" />
     <Compile Include="Serialization\XmlLayer.cs" />
+    <Compile Include="Serialization\XmlMap.cs" />
     <Compile Include="Serialization\XmlPlugin.cs" />
     <Compile Include="Serialization\XmlProject.cs" />
     <Compile Include="Services\Abstract\IFileDialogService.cs" />
     <Compile Include="Services\Abstract\ILayerService.cs" />
+    <Compile Include="Services\Abstract\ILoggingService.cs" />
     <Compile Include="Services\Abstract\IMessageService.cs" />
     <Compile Include="Services\Abstract\IProjectService.cs" />
     <Compile Include="Services\FileDialogService.cs" />
     <Compile Include="Services\LayerService.cs" />
+    <Compile Include="Services\LoggingService.cs" />
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Views\CreateLayerView.cs">

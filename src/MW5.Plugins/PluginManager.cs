@@ -5,7 +5,6 @@ using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +20,9 @@ namespace MW5.Plugins
         private const string PLUGIN_DIRECTORY = "Plugins";
 
         [ImportMany] 
+        #pragma warning disable 649
         private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _mefPlugins;     // found by MEF
+        #pragma warning restore 649
 
         private List<BasePlugin> _plugins = new List<BasePlugin>();      // all valid plugins
 

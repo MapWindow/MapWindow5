@@ -40,15 +40,22 @@ namespace MW5.Plugins.Concrete
                 _identity = value;
             }
         }
-
+#pragma warning disable 67
         #region Plugin events
 
         // backing fields
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
+        internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
 
         // public events
+        public event EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer
+        {
+            add { BeforeRemoveLayer_ += value; }
+            remove { BeforeRemoveLayer_ -= value; }
+        }
+
         public event EventHandler<EventArgs> ViewUpdating
         {
             add { ViewUpdating_ += value; }
@@ -90,7 +97,9 @@ namespace MW5.Plugins.Concrete
             remove { AfterShapeEdit_ -= value; }
         }
 
+
         public event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
+
         public event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
 
         public event MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape
@@ -167,5 +176,6 @@ namespace MW5.Plugins.Concrete
             remove { ValidateShape_ -= value; }
         }
         #endregion
+#pragma warning restore 67
     }
 }

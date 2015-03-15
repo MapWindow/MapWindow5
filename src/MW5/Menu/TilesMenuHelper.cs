@@ -36,7 +36,7 @@ namespace MW5.Menu
                 TileProvider.OpenStreetMap, TileProvider.OpenTransportMap,
                 TileProvider.OpenHumanitarianMap, TileProvider.OpenCycleMap,
                 TileProvider.MapQuestAerial, TileProvider.BingMaps,
-                TileProvider.BingHybrid, TileProvider.BingSatellite
+                TileProvider.BingHybrid, TileProvider.BingSatellite,
             };
 
             foreach (var p in list)

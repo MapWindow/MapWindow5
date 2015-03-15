@@ -114,6 +114,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets the Menu for manipulating Layers (without respect to groups)
         /// </summary>
+        [Browsable(false)]
         public LegendLayerCollection<ILegendLayer> Layers
         {
             get { return _layers ?? (_layers = new LegendLayerCollection<ILegendLayer>(_map, this)); }
@@ -137,11 +138,16 @@ namespace MW5.Api.Legend
         {
             get
             {
-                return Layers.Count == 0 ? -1 : _selectedLayerHandle;
+                return _map == null || Layers.Count == 0 ? -1 : _selectedLayerHandle;    
             }
 
             set
             {
+                if (_map == null)
+                {
+                    return;
+                }
+
                 int groupIndex, layerIndex;
 
                 if (_selectedLayerHandle != value && FindLayerByHandle(value, out groupIndex, out layerIndex) != null)

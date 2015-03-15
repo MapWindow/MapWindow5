@@ -38,6 +38,7 @@ namespace MW5.UI
             form.MinimizeBox = false;
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
             form.StartPosition = FormStartPosition.CenterScreen;        // TODO: make parameter
+            form.ShowInTaskbar = false;
             return form.ShowDialog(_parent as IWin32Window);
         }
 

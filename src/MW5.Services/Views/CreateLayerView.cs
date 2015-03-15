@@ -19,6 +19,8 @@ namespace MW5.Services.Views
 {
     public partial class CreateLayerView : MapWindowForm, ICreateLayerView
     {
+        public CreateLayerView() { }
+
         public CreateLayerView(IAppContext context) : base(context)
         {
             InitializeComponent();
@@ -61,8 +63,33 @@ namespace MW5.Services.Views
 
         public ZValueType ZValueType
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get
+            {
+                if (optM.Checked)
+                {
+                    return ZValueType.M;
+                }
+                if (optZ.Checked)
+                {
+                    return ZValueType.Z;
+                }
+                return ZValueType.None;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case ZValueType.M:
+                        optM.Checked = true;
+                        break;
+                    case ZValueType.Z:
+                        optZ.Checked = true;
+                        break;
+                    case ZValueType.None:
+                        opt2D.Checked = true;
+                        break;
+                }
+            }
         }
     }
 

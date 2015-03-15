@@ -13,6 +13,7 @@ namespace MW5.Plugins.Interfaces
         IAppView View { get; }
         IProject Project { get; }
         IMuteLegend Legend { get; }
+        IStatusBar StatusBar { get; }
         IToolbarCollection Toolbars { get; }
         IApplicationContainer Container { get; }
         LegendLayerCollection<ILayer> Layers { get; }

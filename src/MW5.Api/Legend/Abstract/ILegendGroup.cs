@@ -71,11 +71,6 @@ namespace MW5.Api.Legend.Abstract
         /// <returns>Bitmap of the group and sublayers (expanded)</returns>
         Bitmap Snapshot(int imgWidth);
 
-        /// <summary>
-        /// Gets Guid of the group.
-        /// </summary>
-        Guid Guid { get; }
-
         void AddLayer(ILegendLayer layer);
 
         void InsertLayer(int position, ILegendLayer layer);

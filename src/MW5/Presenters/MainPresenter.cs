@@ -2,8 +2,10 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Api.Static;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins;
@@ -20,19 +22,24 @@ namespace MW5.Presenters
     {
         private readonly IAppContext _context;
         private readonly IProjectService _projectService;
+        private readonly ILoggingService _loggingService;
         private readonly MenuListener _menuListener;
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
         private PluginManager _pluginManager;
 
-        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService)
+        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, ILoggingService loggingService)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (projectService == null) throw new ArgumentNullException("projectService");
+            if (loggingService == null) throw new ArgumentNullException("loggingService");
 
             _context = context;
             _projectService = projectService;
+            _loggingService = loggingService;
+
+            ApplicationCallback.Attach(_loggingService);
 
             view.Map.Initialize();
             view.ViewClosing += OnViewClosing;

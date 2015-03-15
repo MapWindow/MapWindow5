@@ -23,6 +23,29 @@ namespace MW5.Plugins.ShapeEditor
             if (_layerService == null) throw new ArgumentNullException("layerService");
             
             plugin.ProjectClosing += plugin_ProjectClosing;
+            plugin.BeforeRemoveLayer += plugin_BeforeRemoveLayer;
+        }
+
+        private void plugin_BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)
+        {
+            if (_context.Map.GeometryEditor.LayerHandle == e.LayerHandle)
+            {
+                if (!_context.Map.GeometryEditor.SaveChanges())
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
+
+            var layer = _context.Map.Layers.ItemByHandle(e.LayerHandle);
+            if (layer != null && layer.FeatureSet != null && layer.FeatureSet.InteractiveEditing)
+            {
+                if (!_layerService.SaveLayerChanges(layer.Handle))
+                {
+                    e.Cancel = true;
+                    return;
+                }
+            }
         }
 
         private void plugin_ProjectClosing(object sender, System.ComponentModel.CancelEventArgs e)

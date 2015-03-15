@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
@@ -7,9 +8,11 @@ using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend;
 using MW5.Api.Static;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Services.Helpers;
 using MW5.Services.Presenters;
+using MW5.Services.Serialization;
 using MW5.Services.Services.Abstract;
 using MW5.Services.Views;
 using MW5.UI.Helpers;
@@ -38,6 +41,11 @@ namespace MW5.Services.Services
                 return false;
             }
 
+            if (!AskPluginsToRemoveLayer(layerHandle))
+            {
+                return false;
+            }
+
             var layer = _context.Map.Layers.ItemByHandle(layerHandle);
             if (_messageService.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
             {
@@ -45,6 +53,23 @@ namespace MW5.Services.Services
                 return true;
             }
             return false;
+        }
+
+        private bool AskPluginsToRemoveLayer(int layerHandle)
+        {
+            // check if plugins don't object
+            var serializableContext = _context as ISerializableContext;
+            if (serializableContext != null)
+            {
+                var args = new LayerRemoveEventArgs(layerHandle);
+                var broadcaster = serializableContext.PluginManager.Broadcaster;
+                broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
+                if (args.Cancel)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public bool AddLayer(DataSourceType layerType)
@@ -209,7 +234,7 @@ namespace MW5.Services.Services
             view.Run();
             if (view.Success)
             {
-                var fs = new FeatureSet(view.GeometryType);
+                var fs = new FeatureSet(view.GeometryType, view.ZValueType);
                 fs.SpatialReference.CopyFrom(_context.Map.GeoProjection);
                 fs.SaveAs(view.Filename);
                 fs.InteractiveEditing = true;
