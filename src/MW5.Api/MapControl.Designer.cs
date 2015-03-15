@@ -57,7 +57,7 @@
 
         #endregion
 
-        private AxMapWinGIS.AxMap _map;
+        protected AxMapWinGIS.AxMap _map;
 
     }
 }

@@ -64,6 +64,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoundMapControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Concrete\ApplicationCallback.cs" />
     <Compile Include="Concrete\AttributeTable.cs" />
     <Compile Include="Concrete\BaseLayerCollection.cs" />
@@ -92,6 +95,7 @@
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Events\MapEventHandler.cs" />
+    <Compile Include="Interfaces\ILegendLayerCollection.cs" />
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Legend\Abstract\ILegendGroup.cs" />
     <Compile Include="Legend\Abstract\ILegendGroups.cs" />

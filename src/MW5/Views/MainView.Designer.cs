@@ -45,7 +45,7 @@ namespace MW5.Views
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
-            this._mapControl1 = new MW5.Api.MapControl();
+            this._mapControl1 = new MW5.Api.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
             this._legendControl1 = new MW5.Api.Legend.LegendControl();
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
@@ -311,7 +311,7 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.DockingManager _dockingManager1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem parentBarItem3;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
-        private MapControl _mapControl1;
+        private BoundMapControl _mapControl1;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Api.Legend.LegendControl _legendControl1;

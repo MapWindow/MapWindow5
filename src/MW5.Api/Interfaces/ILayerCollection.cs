@@ -25,7 +25,5 @@ namespace MW5.Api.Interfaces
         bool Remove(int layerHandle);
         void RemoveWithoutClosing(int layerHandle);
         bool IsValidHandle(int layerHandle);
-        T SelectedLayer { get; }
-            
     }
 }

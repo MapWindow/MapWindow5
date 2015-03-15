@@ -109,10 +109,7 @@ namespace MW5.Api.Concrete
             return _axMap.get_LayerPosition(layerHandle) != -1;
         }
 
-        public virtual T SelectedLayer
-        {
-            get { throw new NotImplementedException(); }        // TODO: store selected layer within MapWinGIS
-        }
+
 
         public abstract T ItemByHandle(int layerHandle);
 

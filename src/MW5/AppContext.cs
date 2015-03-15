@@ -97,7 +97,7 @@ namespace MW5
             get { return _toolbars; }
         }
 
-        public LegendLayerCollection<ILayer> Layers
+        public ILegendLayerCollection<ILayer> Layers
         {
             get { return _map.Layers; }
         }

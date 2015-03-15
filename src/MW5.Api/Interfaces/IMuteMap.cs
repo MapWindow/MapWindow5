@@ -13,7 +13,7 @@ namespace MW5.Api.Interfaces
         IImageSource SelectedImage { get; }
         IVectorLayer SelectedVectorLayer { get; }
         IMuteLegend Legend { get; set; }
-        LegendLayerCollection<ILayer> Layers { get; }
+        ILegendLayerCollection<ILayer> Layers { get; }
         MapProjection Projection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }

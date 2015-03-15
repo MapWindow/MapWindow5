@@ -16,6 +16,6 @@ namespace MW5.Plugins.Interfaces
         IStatusBar StatusBar { get; }
         IToolbarCollection Toolbars { get; }
         IApplicationContainer Container { get; }
-        LegendLayerCollection<ILayer> Layers { get; }
+        ILegendLayerCollection<ILayer> Layers { get; }
     }
 }

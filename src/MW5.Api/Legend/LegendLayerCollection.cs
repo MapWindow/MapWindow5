@@ -9,8 +9,8 @@ using MW5.Api.Legend.Events;
 
 namespace MW5.Api.Legend
 {
-    public class LegendLayerCollection<T> : BaseLayerCollection<T>
-        where T : class, ILayer
+    public class LegendLayerCollection<T> : BaseLayerCollection<T>, ILegendLayerCollection<T>
+         where T : class, ILayer
     {
         private readonly LegendControl _legend;
 
@@ -212,7 +212,7 @@ namespace MW5.Api.Legend
             _legend.ClearLayers();
         }
 
-        public override T SelectedLayer
+        public T SelectedLayer
         {
             get
             {

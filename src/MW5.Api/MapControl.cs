@@ -17,10 +17,8 @@ namespace MW5.Api
     // https ://social.msdn.microsoft.com/Forums/en-US/4bd5a9cd-4730-41f6-a123-cb49b9ea420b/toolboxbitmap-problem?forum=Vsexpressvcs
 
     [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
-    public partial class MapControl : UserControl, IMap
+    public partial class MapControl : UserControl
     {
-        private LegendLayerCollection<ILayer> _layers;
-
         public MapControl()
         {
             InitializeComponent();
@@ -319,77 +317,11 @@ namespace MW5.Api
         }
 
         [Browsable(false)]
-        public IFeatureSet SelectedFeatureSet
-        {
-            get
-            {
-                var layer = LegendLayers.SelectedLayer;
-                if (layer != null)
-                {
-                    return layer.FeatureSet;
-                }
-                return null;
-            }
-        }
-
-        [Browsable(false)]
-        public IImageSource SelectedImage
-        {
-            get
-            {
-                var layer = LegendLayers.SelectedLayer;
-                if (layer != null)
-                {
-                    return layer.ImageSource;
-                }
-                return null;
-            }
-        }
-
-        [Browsable(false)]
-        public IVectorLayer SelectedVectorLayer
-        {
-            get
-            {
-                var layer = LegendLayers.SelectedLayer;
-                if (layer != null)
-                {
-                    return layer.VectorLayer;
-                }
-                return null;
-            }
-        }
-
-        [Browsable(false)]
-        public IMuteLegend Legend { get; set; }
-
-        [Browsable(false)]
         public ILayerCollection<ILayer> Layers
         {
             get
             {
                 return new LayerCollection(_map);
-            }
-        }
-
-        [Browsable(false)]
-        LegendLayerCollection<ILayer> IMuteMap.Layers
-        {
-            get { return LegendLayers; }
-        }
-
-        [Browsable(false)]
-        private LegendLayerCollection<ILayer> LegendLayers
-        {
-            get
-            {
-                if (Legend == null)
-                {
-                    throw new NullReferenceException(
-                        "MapControl.Legend property should be set before acceccing layers collection.");
-                }
-
-                return _layers ?? (_layers = new LegendLayerCollection<ILayer>(_map, Legend));
             }
         }
 
