@@ -23,15 +23,16 @@ namespace MW5.DI.LightInject
             return this;
         }
 
-        public IApplicationContainer RegisterInstance<TArgument>(TArgument instance)
-        {
-            _container.RegisterInstance(instance);
-            return this;
-        }
-
         public IApplicationContainer RegisterInstance(Type type, object instance)
         {
             _container.RegisterInstance(type, instance);
+            return this;
+        }
+
+        public IApplicationContainer RegisterInstance<TService>(object instance) 
+                where TService : class 
+        {
+            _container.RegisterInstance<TService>(instance as TService);
             return this;
         }
 
@@ -43,7 +44,7 @@ namespace MW5.DI.LightInject
             return this;
         }
 
-        public IApplicationContainer RegisterServiceSingleton<TService, TImplementation>() 
+        public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
         {

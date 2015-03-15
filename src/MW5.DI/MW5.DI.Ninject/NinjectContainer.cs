@@ -26,6 +26,13 @@ namespace MW5.DI.Ninject
             return this;
         }
 
+        public IApplicationContainer RegisterInstance<TService>(object instance) 
+            where TService : class 
+        {
+            _kernel.Bind<TService>().ToConstant<TService>(instance as TService);
+            return this;
+        }
+
         public IApplicationContainer RegisterService<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -34,7 +41,7 @@ namespace MW5.DI.Ninject
             return this;
         }
 
-        public IApplicationContainer RegisterServiceSingleton<TService, TImplementation>() 
+        public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
         {

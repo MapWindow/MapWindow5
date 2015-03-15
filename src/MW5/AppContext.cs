@@ -24,6 +24,7 @@ namespace MW5
     /// </summary>
     public class AppContext: ISerializableContext
     {
+        private readonly IApplicationContainer _container;
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
@@ -33,6 +34,12 @@ namespace MW5
         private IToolbarCollection _toolbars;
         private PluginManager _pluginManager;
         private IStatusBar _statusBar;
+
+        public AppContext(IApplicationContainer container)
+        {
+            if (container == null) throw new ArgumentNullException("container");
+            _container = container;
+        }
 
         /// <summary>
         /// Sets all the necessary references from the main view. 
@@ -59,7 +66,7 @@ namespace MW5
 
         public IApplicationContainer Container
         {
-            get { return CompositionRoot.Container; }
+            get { return _container; }
         }
 
         public IProject Project

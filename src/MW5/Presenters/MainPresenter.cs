@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-using MW5.Api;
+using System.ComponentModel;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend.Abstract;
-using MW5.Api.Static;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Services;
-using MW5.Services.Serialization;
 using MW5.Services.Services.Abstract;
 
 namespace MW5.Presenters
@@ -41,12 +35,6 @@ namespace MW5.Presenters
 
             ApplicationCallback.Attach(_loggingService);
 
-            view.Map.Initialize();
-            view.ViewClosing += OnViewClosing;
-            view.ViewUpdating += OnViewUpdating;
-
-            CompositionRoot.Container.RegisterInstance(typeof(IMuteMap), view.Map);
-
             var appContext = context as AppContext;
             if (appContext == null)
             {
@@ -54,13 +42,20 @@ namespace MW5.Presenters
             }
             appContext.Init(view, projectService);
 
+            view.Map.Initialize();
+            view.ViewClosing += OnViewClosing;
+            view.ViewUpdating += OnViewUpdating;
+
             _pluginManager = appContext.PluginManager;
             _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
             _pluginManager.AssemblePlugins();
 
+            _context.Container.RegisterInstance<IMuteMap>(view.Map);
+            _context.Container.RegisterInstance<PluginBroadcaster>(_pluginManager.Broadcaster);
+
             _menuGenerator = new MenuGenerator(_context, _pluginManager, view.MenuManager, view.DockingManager);
-            _menuListener = context.Container.GetSingleton<MW5.Menu.MenuListener>();
-            _mapListener = new MapListener(_context, _pluginManager.Broadcaster, CompositionRoot.Container.Resolve<ILayerService>());
+            _menuListener = context.Container.GetSingleton<MenuListener>();
+            _mapListener = context.Container.GetSingleton<MapListener>(); 
         }
 
         private void OnViewUpdating(object sender, EventArgs e)
@@ -68,7 +63,7 @@ namespace MW5.Presenters
             _pluginManager.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
         }
 
-        private void OnViewClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OnViewClosing(object sender, CancelEventArgs e)
         {
             if (!_projectService.TryClose())
             {

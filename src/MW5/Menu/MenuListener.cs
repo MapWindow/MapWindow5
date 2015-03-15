@@ -85,7 +85,7 @@ namespace MW5.Menu
                     _layerService.RemoveSelectedLayer();
                     break;
                 case MenuKeys.SetProjection:
-                    CompositionRoot.Container.Run<SetProjectionPresenter>();
+                    _context.Container.Run<SetProjectionPresenter>();
                     break;
                 case MenuKeys.ClearSelection:
                     _layerService.ClearSelection();
