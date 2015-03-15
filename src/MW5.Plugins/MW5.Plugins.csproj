@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Concrete\AppConfig.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
     <Compile Include="Concrete\LayerCancelEventArgs.cs" />
     <Compile Include="Concrete\MenuCommand.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Mef\PluginExportAttribute.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IBroadcasterService.cs" />
     <Compile Include="Services\IErrorService.cs" />
     <Compile Include="Services\IFileDialogService.cs" />

@@ -61,6 +61,9 @@ namespace MW5.Api.Interfaces
         /// <returns> layerHandle of the newly added layer, -1 on failure </returns>
         int Add(ILayerSource newLayer, bool visible, bool placeAboveCurrentlySelected);
 
+        /// <summary>
+        /// Gets the selected layer.
+        /// </summary>
         T SelectedLayer { get; }
     }
 }

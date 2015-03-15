@@ -47,22 +47,23 @@ namespace MW5.Menu
                 return;
             }
 
+            if (HandleProjectCommand(e.ItemKey))
+            {
+                _context.View.Update();
+                return;
+            }
+
+            if (HandleDialogs(e.ItemKey))
+            {
+                _context.View.Update();
+                return;
+            }
+
             switch (e.ItemKey)
             {
+                
                 case MenuKeys.CreateLayer:
                     _layerService.CreateLayer();
-                    break;
-                case MenuKeys.NewMap:
-                    _projectService.TryClose();
-                    break;
-                case MenuKeys.SaveProject:
-                    _projectService.Save();
-                    break;
-                case MenuKeys.SaveProjectAs:
-                    _projectService.SaveAs();
-                    break;
-                case MenuKeys.OpenProject:
-                    _projectService.Open();
                     break;
                 case MenuKeys.AddLayer:
                     _layerService.AddLayer(DataSourceType.All);
@@ -79,14 +80,8 @@ namespace MW5.Menu
                 case MenuKeys.ZoomToLayer:
                     _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
                     break;
-                //case MenuKeys.AddDatabaseLayer:
-                    // TODO: implement
-                //    break;
                 case MenuKeys.RemoveLayer:
                     _layerService.RemoveSelectedLayer();
-                    break;
-                case MenuKeys.SetProjection:
-                    _context.Container.Run<SetProjectionPresenter>();
                     break;
                 case MenuKeys.ClearSelection:
                     _layerService.ClearSelection();
@@ -94,19 +89,53 @@ namespace MW5.Menu
                 case MenuKeys.ZoomToSelected:
                     _layerService.ZoomToSelected();
                     break;
-                case MenuKeys.Quit:
-                    var appContext = _context as AppContext;
-                    if (appContext != null)
-                    {
-                        appContext.Close();
-                    }
-                    return;
                 default:
                     _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
                     break;
             }
 
             _context.View.Update();
+        }
+
+        private bool HandleDialogs(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.Settings:
+                    _context.Container.Run<ConfigPresenter>();
+                    return true;
+                case MenuKeys.SetProjection:
+                    _context.Container.Run<SetProjectionPresenter>();
+                    return true;
+            }
+            return false;
+        }
+
+        private bool HandleProjectCommand(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.NewMap:
+                    _projectService.TryClose();
+                    return true;
+                case MenuKeys.SaveProject:
+                    _projectService.Save();
+                    return true;
+                case MenuKeys.SaveProjectAs:
+                    _projectService.SaveAs();
+                    return true;
+                case MenuKeys.OpenProject:
+                    _projectService.Open();
+                    return true;
+                case MenuKeys.Quit:
+                    var appContext = _context as AppContext;
+                    if (appContext != null)
+                    {
+                        appContext.Close();
+                    }
+                    return true;
+            }
+            return false;
         }
 
         private bool HandleCursorChanged(string itemKey)

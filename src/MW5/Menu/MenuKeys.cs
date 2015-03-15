@@ -1,6 +1,5 @@
 ﻿namespace MW5.Menu
 {
-    
     internal class MenuKeys
     {
         public const string Quit = "FileQuit";
@@ -14,6 +13,7 @@
         public const string AddDatabaseLayer = "FileAddDatabaseLayer";
         public const string CreateLayer = "FileCreateLayer";
         public const string RemoveLayer = "FileRemoveLayer";
+        public const string Settings = "FileSettings";
 
         public const string ViewToolbars = "ViewToolbars";
         public const string ViewWindows = "ViewWindows";
@@ -37,3 +37,4 @@
         public const string About = "HelpAbout";
     }
 }
+

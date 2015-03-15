@@ -20,8 +20,9 @@ namespace MW5
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterSingleton<IMainView, MainView>()
-                .RegisterView<ISetProjectionView, SetProjectionView>()
                 .RegisterSingleton<IAppContext, AppContext>()
+                .RegisterView<ISetProjectionView, SetProjectionView>()
+                .RegisterView<IConfigView, ConfigView>()
                 .RegisterInstance<IApplicationContainer>(container);
             
             Services.CompositionRoot.Compose(container);

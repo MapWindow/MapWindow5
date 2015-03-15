@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using MW5.Services.Helpers;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -41,8 +42,7 @@ namespace MW5.Helpers
 
         private static AppStateSerializer GetSerializer()
         {
-            //  TODO: change the location
-            return new AppStateSerializer(SerializeMode.XMLFile, @"d:\dockstate.xml");
+            return new AppStateSerializer(SerializeMode.XMLFile, PathHelper.GetDockingConfigFilename());
         }
     }
 }

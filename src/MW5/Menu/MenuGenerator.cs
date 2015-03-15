@@ -118,7 +118,7 @@ namespace MW5.Menu
             _commands.AddToMenu(items, MenuKeys.AddDatabaseLayer);
             _commands.AddToMenu(items, MenuKeys.CreateLayer, true);
             _commands.AddToMenu(items, MenuKeys.RemoveLayer);
-
+            _commands.AddToMenu(items, MenuKeys.Settings, true);
             bar.Update();
         }
 

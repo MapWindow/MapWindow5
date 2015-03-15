@@ -145,7 +145,7 @@
     <Compile Include="Concrete\Vector3D.cs" />
     <Compile Include="Concrete\VectorDatasource.cs" />
     <Compile Include="Concrete\VectorLayer.cs" />
-    <Compile Include="Static\Configuration.cs" />
+    <Compile Include="Static\Config.cs" />
     <Compile Include="Concrete\DiagramsLayer.cs" />
     <Compile Include="Helpers\LayerSourceHelper.cs" />
     <Compile Include="Interfaces\IApplicationCallback.cs" />

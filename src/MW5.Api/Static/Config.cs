@@ -3,11 +3,11 @@ using MW5.Api.Concrete;
 
 namespace MW5.Api.Static
 {
-    public static class Configuration
+    public static class Config
     {
         private static GlobalSettings _settings = new GlobalSettings();
 
-        static Configuration()
+        static Config()
         {
             _settings.ApplicationCallback = new Callback();
         }

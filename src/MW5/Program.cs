@@ -10,6 +10,7 @@ using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Presenters;
 using MW5.Services.Helpers;
 using MW5.Views;
@@ -30,12 +31,16 @@ namespace MW5
             EnumConverters.Init();
             CommandBarHelper.InitMenuColors();
 
-            InitConfig();
-
+            InitMapConfig();
+            
             var container = CreateContainer();
             CompositionRoot.Compose(container);
+            var configService = container.GetSingleton<IConfigService>();
+            configService.Load();
 
             container.Run<MainPresenter>();
+
+            configService.Save();
         }
 
         private static IApplicationContainer CreateContainer()
@@ -48,14 +53,14 @@ namespace MW5
             return  new NinjectContainer();
         }
 
-        private static void InitConfig()
+        private static void InitMapConfig()
         {
-            Configuration.ZoomToFirstLayer = true;
-            Configuration.AllowLayersWithoutProjections = true;
-            Configuration.AllowProjectionMismatch = false;
-            Configuration.ReprojectLayersOnAdding = false;
-            Configuration.OgrLayerForceUpdateMode = true;
-            Configuration.LoadSymbologyOnAddLayer = true;
+            Config.ZoomToFirstLayer = true;
+            Config.AllowLayersWithoutProjections = true;
+            Config.AllowProjectionMismatch = false;
+            Config.ReprojectLayersOnAdding = false;
+            Config.OgrLayerForceUpdateMode = true;
+            Config.LoadSymbologyOnAddLayer = true;
         }
     }
 }

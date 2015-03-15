@@ -36,7 +36,7 @@ namespace MW5.Api.Concrete
         {
             if (callback != null && !_list.Contains(callback))
             {
-                Configuration.Init();
+                Config.Init();
                 _list.Add(callback);
                 return true;
             }
