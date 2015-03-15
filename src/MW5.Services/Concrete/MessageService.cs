@@ -1,7 +1,7 @@
 ﻿using System.Windows.Forms;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
-namespace MW5.Services.Services
+namespace MW5.Services.Concrete
 {
     public class MessageService: IMessageService
     {

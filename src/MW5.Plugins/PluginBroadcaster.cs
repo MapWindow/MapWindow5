@@ -12,10 +12,11 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 
 namespace MW5.Plugins
 {
-    public class PluginBroadcaster
+    internal class PluginBroadcaster : IBroadcasterService
     {
         private readonly PluginManager _manager;
         private readonly Dictionary<string, FieldInfo> _fields = new Dictionary<string,FieldInfo>();
@@ -27,6 +28,17 @@ namespace MW5.Plugins
                 throw new ArgumentNullException("Plugins manager is null.");
             }
             _manager = manager;
+
+            _manager.PluginItemClicked += manager_PluginItemClicked;
+        }
+
+        private void manager_PluginItemClicked(object sender, MenuItemEventArgs e)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                BroadcastEvent(p => p.ItemClicked_, sender, e, item.PluginIdentity);
+            }
         }
 
         /// <summary>
@@ -38,16 +50,22 @@ namespace MW5.Plugins
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, MapEventHandler<T>>> eventHandler, IMuteMap sender, T args)
             where T: EventArgs
         {
-            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args);
+            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null);
         }
 
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, EventHandler<T>>> eventHandler, object sender, T args)
             where T : EventArgs
         {
-           BroadcastEvent(eventHandler.Body as MemberExpression, sender, args);        
+           BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null);        
         }
 
-        private void BroadcastEvent<T>(MemberExpression expression, object sender, T args)
+        public void BroadcastEvent<T>(Expression<Func<BasePlugin, EventHandler<T>>> eventHandler, object sender, T args, PluginIdentity identity)
+            where T : EventArgs
+        {
+            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, identity);
+        }
+
+        private void BroadcastEvent<T>(MemberExpression expression, object sender, T args, PluginIdentity identity)
             where T : EventArgs
         {
             if (expression == null)
@@ -62,6 +80,11 @@ namespace MW5.Plugins
             {
                 foreach (var p in _manager.ActivePlugins)
                 {
+                    if (identity != null && p.Identity != identity)
+                    {
+                        continue;   // it's a wrong target
+                    }
+
                     var del = fieldInfo.GetValue(p) as MulticastDelegate;
                     if (del != null)
                     {

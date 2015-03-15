@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Operations;
-using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Helpers
 {

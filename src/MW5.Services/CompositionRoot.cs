@@ -1,6 +1,6 @@
 ﻿using MW5.Plugins.Mvp;
-using MW5.Services.Services;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
+using MW5.Services.Concrete;
 using MW5.Services.Views;
 
 namespace MW5.Services
@@ -14,7 +14,8 @@ namespace MW5.Services
                 .RegisterSingleton<ILayerService, LayerService>()
                 .RegisterSingleton<ILoggingService, LoggingService>()
                 .RegisterService<IProjectService, ProjectService>()
-                .RegisterService<ICreateLayerView, CreateLayerView>();
+                .RegisterService<ICreateLayerView, CreateLayerView>()
+                .RegisterService<IErrorService, ErrorService>();
         }
     }
 }

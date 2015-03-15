@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
 namespace MW5.Plugins.ShapeEditor
 {

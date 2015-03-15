@@ -6,7 +6,6 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.ShapeEditor.Menu;
-using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor
 {

@@ -11,12 +11,14 @@ using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 
 namespace MW5.Plugins
 {
     public class PluginManager
     {
+        private readonly IErrorService _errorService;
         private const string PLUGIN_DIRECTORY = "Plugins";
 
         [ImportMany] 
@@ -28,24 +30,26 @@ namespace MW5.Plugins
 
         private readonly HashSet<PluginIdentity> _active = new HashSet<PluginIdentity>();
 
-        private readonly PluginBroadcaster _broadcaster;
-
         public event EventHandler<PluginEventArgs> PluginUnloaded;
 
         public event EventHandler<MenuItemEventArgs> MenuItemClicked;
 
+        public event EventHandler<MenuItemEventArgs> PluginItemClicked;
+
         private static PluginManager _instance;
         public static PluginManager Instance
         {
-            get { return _instance ?? (_instance = new PluginManager()); }
+            get { return _instance; }
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        private PluginManager()
+        public PluginManager(IErrorService errorService)
         {
-            _broadcaster = new PluginBroadcaster(this);
+            if (errorService == null) throw new ArgumentNullException("errorService");
+            _errorService = errorService;
+            _instance = this;
         }
 
         /// <summary>
@@ -66,14 +70,6 @@ namespace MW5.Plugins
                 // TODO: cache it each time the list of plugins changes to spare the time on search for each event
                 return _plugins.Where(p => _active.Contains(p.Identity)).ToList();
             }
-        }
-
-        /// <summary>
-        /// Gets plugin broadcaster object.
-        /// </summary>
-        public PluginBroadcaster Broadcaster
-        {
-            get { return _broadcaster; }
         }
 
         /// <summary>
@@ -117,7 +113,7 @@ namespace MW5.Plugins
             }
             catch (ReflectionTypeLoadException ex)
             {
-                ErrorService.Report(ex);
+                _errorService.Report(ex);
             }
         }
 
@@ -212,7 +208,12 @@ namespace MW5.Plugins
                 }
                 else
                 {
-                    _broadcaster.BroadcastEvent(p => p.ItemClicked_, sender, args);
+                    var handler = PluginItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+                    
                 }
             }
         }

@@ -16,19 +16,22 @@ namespace MW5.Menu
         
         private readonly IAppContext _context;
         private readonly PluginManager _pluginManager;
+        private readonly IMainView _mainView;
         private readonly MenuCommands _commands;
         private readonly object _menuManager;
         private readonly object _dockingManager;
         
-        public MenuGenerator(IAppContext context, PluginManager pluginManager, object menuManager, object dockingManager)
+        public MenuGenerator(IAppContext context, PluginManager pluginManager, IMainView mainView)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (pluginManager == null) throw new ArgumentNullException("pluginManager");
+            if (mainView == null) throw new ArgumentNullException("mainView");
 
             _context = context;
             _pluginManager = pluginManager;
-            _menuManager = menuManager;
-            _dockingManager = dockingManager;
+            _mainView = mainView;
+            _menuManager = _mainView.MenuManager;
+            _dockingManager = _mainView.DockingManager;
             _commands = new MenuCommands(PluginIdentity.Default);
 
             InitToolbars();

@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Enumerations.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Presenters\CreateLayerPresenter.cs" />
@@ -92,16 +92,12 @@
     <Compile Include="Serialization\XmlMap.cs" />
     <Compile Include="Serialization\XmlPlugin.cs" />
     <Compile Include="Serialization\XmlProject.cs" />
-    <Compile Include="Services\Abstract\IFileDialogService.cs" />
-    <Compile Include="Services\Abstract\ILayerService.cs" />
-    <Compile Include="Services\Abstract\ILoggingService.cs" />
-    <Compile Include="Services\Abstract\IMessageService.cs" />
-    <Compile Include="Services\Abstract\IProjectService.cs" />
-    <Compile Include="Services\FileDialogService.cs" />
-    <Compile Include="Services\LayerService.cs" />
-    <Compile Include="Services\LoggingService.cs" />
-    <Compile Include="Services\MessageService.cs" />
-    <Compile Include="Services\ProjectService.cs" />
+    <Compile Include="Concrete\ErrorService.cs" />
+    <Compile Include="Concrete\FileDialogService.cs" />
+    <Compile Include="Concrete\LayerService.cs" />
+    <Compile Include="Concrete\LoggingService.cs" />
+    <Compile Include="Concrete\MessageService.cs" />
+    <Compile Include="Concrete\ProjectService.cs" />
     <Compile Include="Views\CreateLayerView.cs">
       <SubType>Form</SubType>
     </Compile>

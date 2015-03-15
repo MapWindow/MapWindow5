@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MW5.Services.Services.Abstract
+namespace MW5.Plugins.Services
 {
     public interface IMessageService
     {

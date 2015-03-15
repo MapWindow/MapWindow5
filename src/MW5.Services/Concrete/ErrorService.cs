@@ -3,12 +3,21 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using MW5.Plugins.Services;
 
-namespace MW5.Plugins.Services
+namespace MW5.Services.Concrete
 {
-    internal static class ErrorService
+    internal class ErrorService: IErrorService
     {
-        public static void Report(ReflectionTypeLoadException ex)
+        public void Report(Exception ex)
+        {
+            if (ex is ReflectionTypeLoadException)
+            {
+                ReportReflectionException(ex as ReflectionTypeLoadException);
+            }
+        }
+
+        private void ReportReflectionException(ReflectionTypeLoadException ex)
         {
             StringBuilder sb = new StringBuilder();
             foreach (Exception exSub in ex.LoaderExceptions)

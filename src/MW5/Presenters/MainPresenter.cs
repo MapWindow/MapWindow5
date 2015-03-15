@@ -8,7 +8,7 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
 namespace MW5.Presenters
 {
@@ -46,21 +46,24 @@ namespace MW5.Presenters
             view.ViewClosing += OnViewClosing;
             view.ViewUpdating += OnViewUpdating;
 
-            _pluginManager = appContext.PluginManager;
-            _pluginManager.PluginUnloaded += ManagerPluginUnloaded;
-            _pluginManager.AssemblePlugins();
+            var pluginManager = appContext.PluginManager;
+            pluginManager.PluginUnloaded += ManagerPluginUnloaded;
+            pluginManager.AssemblePlugins();
 
-            _context.Container.RegisterInstance<IMuteMap>(view.Map);
-            _context.Container.RegisterInstance<PluginBroadcaster>(_pluginManager.Broadcaster);
-
-            _menuGenerator = new MenuGenerator(_context, _pluginManager, view.MenuManager, view.DockingManager);
-            _menuListener = context.Container.GetSingleton<MenuListener>();
-            _mapListener = context.Container.GetSingleton<MapListener>(); 
+            var container = context.Container;
+            
+            _menuGenerator = container.GetSingleton<MenuGenerator>();
+            _menuListener = container.GetSingleton<MenuListener>();
+            _mapListener = container.GetSingleton<MapListener>(); 
         }
 
         private void OnViewUpdating(object sender, EventArgs e)
         {
-            _pluginManager.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
+            var appContext = _context as AppContext;
+            if (appContext != null)
+            {
+                appContext.Broadcaster.BroadcastEvent(p => p.ViewUpdating_, sender, e);
+            }
         }
 
         private void OnViewClosing(object sender, CancelEventArgs e)

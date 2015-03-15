@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.Api.Interfaces;
 
-namespace MW5.Services.Services.Abstract
+namespace MW5.Plugins.Services
 {
-    public interface ILoggingService: IApplicationCallback
+    public interface IErrorService
     {
+        void Report(Exception ex);
     }
 }

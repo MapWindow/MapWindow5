@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api.Static;
 using MW5.DI.Castle;
+using MW5.DI.Ninject;
 //using MW5.DI.LightInject;
 //using MW5.DI.Ninject;
 //using MW5.DI.Unity;
@@ -44,7 +45,7 @@ namespace MW5
             // NinjectContainer
             // WindsorCastleContainer
             // UnityApplicationContainer
-            return  new WindsorCastleContainer();
+            return  new NinjectContainer();
         }
 
         private static void InitConfig()

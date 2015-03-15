@@ -10,9 +10,9 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Services;
 using MW5.Services.Serialization;
-using MW5.Services.Services.Abstract;
 using MW5.UI;
 using MW5.UI.Syncfusion;
 using Syncfusion.Windows.Forms;
@@ -33,6 +33,7 @@ namespace MW5
         private IMuteLegend _legend;
         private IToolbarCollection _toolbars;
         private PluginManager _pluginManager;
+        private IBroadcasterService _broadcaster;
         private IStatusBar _statusBar;
 
         public AppContext(IApplicationContainer container)
@@ -51,7 +52,9 @@ namespace MW5
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
 
-            _pluginManager = PluginManager.Instance;
+            _pluginManager = _container.GetSingleton<PluginManager>();
+            _broadcaster = _container.GetSingleton<IBroadcasterService>();
+            _container.RegisterInstance<IMuteMap>(mainView.Map);
 
             _mainView = mainView;
             _view = new AppView(mainView);
@@ -112,6 +115,11 @@ namespace MW5
         public PluginManager PluginManager
         {
             get { return _pluginManager; }
+        }
+
+        public IBroadcasterService Broadcaster
+        {
+            get { return _broadcaster; }
         }
 
         public void Close()

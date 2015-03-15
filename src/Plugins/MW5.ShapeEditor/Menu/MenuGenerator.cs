@@ -8,7 +8,6 @@ using MW5.Mvp;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.ShapeEditor.Properties;
-using MW5.Services.Services.Abstract;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {

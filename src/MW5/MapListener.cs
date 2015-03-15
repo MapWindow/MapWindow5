@@ -5,7 +5,7 @@ using MW5.Api.Events;
 using MW5.Api.Interfaces;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
 namespace MW5
 {
@@ -14,18 +14,18 @@ namespace MW5
     /// </summary>
     internal class MapListener
     {
-        private readonly PluginBroadcaster _plugins;
+        private readonly IBroadcasterService _broadcaster;
         private readonly ILayerService _layerService;
         private readonly IMap _map;
         private readonly IAppContext _context;
 
-        public MapListener(IAppContext context, PluginBroadcaster broadcaster, ILayerService layerService)
+        public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService)
         {
             _context = context;
-            _plugins = broadcaster;
+            _broadcaster = broadcaster;
             _layerService = layerService;
             
-            if (_plugins == null || _context == null || layerService == null)
+            if (_broadcaster == null || _context == null || layerService == null)
             {
 
                 throw new NullReferenceException("Failed to initialize map listener.");
@@ -69,44 +69,44 @@ namespace MW5
         private void MapChooseLayer(object sender, ChooseLayerEventArgs e)
         {
             e.LayerHandle = _context.Map.Layers.SelectedLayer.Handle;
-            _plugins.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
         }
 
         private void MapCursorChanged(object sender, EventArgs e)
         {
             _context.View.Update();
 
-            _plugins.BroadcastEvent(p => p.MapCursorChanged_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.MapCursorChanged_, sender as IMuteMap, e);
         }
 
         private void MapValidateShape(object sender, ValidateShapeEventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.ValidateShape_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.ValidateShape_, sender as IMuteMap, e);
         }
 
         private void MapHistoryChanged(object sender, EventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.HistoryChanged_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.HistoryChanged_, sender as IMuteMap, e);
         }
 
         private void MapShapeValidationFailed(object sender, ShapeValidationFailedEventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.ShapeValidationFailed_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.ShapeValidationFailed_, sender as IMuteMap, e);
         }
 
         private void MapMouseUp(object sender, MouseEventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.MouseUp_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.MouseUp_, sender as IMuteMap, e);
         }
 
         private void MapBeforeShapeEdit(object sender, BeforeShapeEditEventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.BeforeShapeEdit_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.BeforeShapeEdit_, sender as IMuteMap, e);
         }
 
         private void MapBeforeDeleteShape(object sender, BeforeDeleteShapeEventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.BeforeDeleteShape_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.BeforeDeleteShape_, sender as IMuteMap, e);
         }
 
         private void MapFileDropped(object sender, FileDroppedEventArgs e)
@@ -116,7 +116,7 @@ namespace MW5
 
         private void MapExtentsChanged(object sender, EventArgs e)
         {
-            _plugins.BroadcastEvent(p => p.ExtentsChanged_, sender as IMuteMap, e);
+            _broadcaster.BroadcastEvent(p => p.ExtentsChanged_, sender as IMuteMap, e);
         }
 
         private void MapListener_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

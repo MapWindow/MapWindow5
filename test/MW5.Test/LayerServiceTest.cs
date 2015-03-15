@@ -9,10 +9,11 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Services;
-using MW5.Services.Services;
-using MW5.Services.Services.Abstract;
+using MW5.Services.Concrete;
 using NUnit.Framework;
 
 namespace MW5.Test
@@ -25,6 +26,7 @@ namespace MW5.Test
 
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
+        private Mock<IBroadcasterService> _broadcaster;
         private Mock<LegendLayerCollection<ILayer>> _layerColection;
 
         private string[] GetShapefileNames()
@@ -49,6 +51,8 @@ namespace MW5.Test
             _context.SetupGet(c => c.Map).Returns(map.Object);
 
             _messageService = new Mock<IMessageService>();
+
+            _broadcaster = new Mock<IBroadcasterService>();
         }
         
         [Test]
@@ -59,7 +63,7 @@ namespace MW5.Test
             var fileService = new Mock<IFileDialogService>();
             fileService.Setup(s => s.OpenFiles(It.Is<DataSourceType>(t => t == DataSourceType.Vector), out filenames)).Returns(true);
 
-            var layerService = new LayerService(_context.Object, fileService.Object, _messageService.Object);
+            var layerService = new LayerService(_context.Object, fileService.Object, _messageService.Object, _broadcaster.Object);
             layerService.AddLayer(DataSourceType.Vector);
 
             _messageService.Verify(s => s.Warn(It.IsAny<string>()), Times.Never);

@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
 using MW5.Services.Serialization.Utility;
-using MW5.Services.Services.Abstract;
 
-namespace MW5.Services.Services
+namespace MW5.Services.Concrete
 {
     public class ProjectService: IProjectService, IProject
     {
@@ -21,18 +18,21 @@ namespace MW5.Services.Services
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileService;
         private readonly IMessageService _messageService;
+        private readonly IBroadcasterService _broadcaster;
         private string _filename = string.Empty;
         private bool _modified;
 
-        public ProjectService(IAppContext context, IFileDialogService fileService, IMessageService messageService)
+        public ProjectService(IAppContext context, IFileDialogService fileService, IMessageService messageService, IBroadcasterService broadcaster)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileService == null) throw new ArgumentNullException("fileService");
             if (messageService == null) throw new ArgumentNullException("messageService");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
 
             _context = context;
             _fileService = fileService;
             _messageService = messageService;
+            _broadcaster = broadcaster;
         }
 
         public bool IsEmpty
@@ -89,8 +89,7 @@ namespace MW5.Services.Services
                 throw new ApplicationException("Invalid application context");
             }
 
-            var broadcaster = ((ISerializableContext) _context).PluginManager.Broadcaster;
-            broadcaster.BroadcastEvent(p => p.ProjectClosing_, this, args);
+            _broadcaster.BroadcastEvent(p => p.ProjectClosing_, this, args);
             if (args.Cancel)
             {
                 return false;

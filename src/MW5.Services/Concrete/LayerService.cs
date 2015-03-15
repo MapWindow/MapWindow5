@@ -1,35 +1,39 @@
 ﻿using System;
-using System.ComponentModel;
-using System.IO;
 using System.Windows.Forms;
-using System.Linq;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend;
 using MW5.Api.Static;
+using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Helpers;
+using MW5.Plugins.Services;
 using MW5.Services.Presenters;
 using MW5.Services.Serialization;
-using MW5.Services.Services.Abstract;
-using MW5.Services.Views;
 using MW5.UI.Helpers;
 
-namespace MW5.Services.Services
+namespace MW5.Services.Concrete
 {
     public class LayerService: ILayerService
     {
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;
         private readonly IMessageService _messageService;
+        private readonly IBroadcasterService _broadcasterService;
 
-        public LayerService(IAppContext context, IFileDialogService fileDialogService, IMessageService messageService)
+        public LayerService(IAppContext context, IFileDialogService fileDialogService, IMessageService messageService,
+            IBroadcasterService broadcasterService)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
+            if (messageService == null) throw new ArgumentNullException("messageService");
+            if (broadcasterService == null) throw new ArgumentNullException("broadcasterService");
+
             _context = context;
             _fileDialogService = fileDialogService;
             _messageService = messageService;
+            _broadcasterService = broadcasterService;
         }
 
         public bool RemoveSelectedLayer()
@@ -41,7 +45,9 @@ namespace MW5.Services.Services
                 return false;
             }
 
-            if (!AskPluginsToRemoveLayer(layerHandle))
+            var args = new LayerRemoveEventArgs(layerHandle);
+            _broadcasterService.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
+            if (args.Cancel)
             {
                 return false;
             }
@@ -53,23 +59,6 @@ namespace MW5.Services.Services
                 return true;
             }
             return false;
-        }
-
-        private bool AskPluginsToRemoveLayer(int layerHandle)
-        {
-            // check if plugins don't object
-            var serializableContext = _context as ISerializableContext;
-            if (serializableContext != null)
-            {
-                var args = new LayerRemoveEventArgs(layerHandle);
-                var broadcaster = serializableContext.PluginManager.Broadcaster;
-                broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
-                if (args.Cancel)
-                {
-                    return false;
-                }
-            }
-            return true;
         }
 
         public bool AddLayer(DataSourceType layerType)

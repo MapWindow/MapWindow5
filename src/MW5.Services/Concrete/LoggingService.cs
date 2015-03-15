@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
-namespace MW5.Services.Services
+namespace MW5.Services.Concrete
 {
     internal class LoggingService: ILoggingService
     {

@@ -172,7 +172,7 @@
     <Compile Include="Concrete\FeatureSetSpatialIndex.cs" />
     <Compile Include="Concrete\SpatialReference.cs" />
     <Compile Include="Concrete\ZoomBarSettings.cs" />
-    <Compile Include="Enumerations.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Events\AfterShapeEditEventArgs.cs" />
     <Compile Include="Events\BackgroundLoadingFinishedEventArgs.cs" />
     <Compile Include="Events\BackgroundLoadingStartedEventArgs.cs" />

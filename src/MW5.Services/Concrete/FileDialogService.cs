@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api.Static;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Services.Abstract;
+using MW5.Plugins.Services;
 
-namespace MW5.Services.Services
+namespace MW5.Services.Concrete
 {
-    public class FileDialogService : IFileDialogService
+    internal class FileDialogService : IFileDialogService
     {
         private readonly IWin32Window _parent;
 
