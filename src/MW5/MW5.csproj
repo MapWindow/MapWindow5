@@ -161,21 +161,9 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MW5.DI\MW5.DI.Castle\MW5.DI.Castle.csproj">
-      <Project>{193010C4-9BDE-42A3-A960-0B39700A9DE1}</Project>
-      <Name>MW5.DI.Castle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MW5.DI\MW5.DI.LightInject\MW5.DI.LightInject.csproj">
-      <Project>{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}</Project>
-      <Name>MW5.DI.LightInject</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MW5.DI\MW5.DI.Ninject\MW5.DI.Ninject.csproj">
       <Project>{b2b2be95-1f16-4d90-8f0a-e736da85d9fd}</Project>
       <Name>MW5.DI.Ninject</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MW5.DI\MW5.DI.Unity\MW5.DI.Unity.csproj">
-      <Project>{B99864F7-69EA-431A-A6C4-BD6904DA53AF}</Project>
-      <Name>MW5.DI.Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Services\MW5.Services.csproj">
       <Project>{54bb55da-dbdc-47e5-8dec-de325f35f074}</Project>
@@ -208,109 +196,109 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\attribute_show.png" />
+    <None Include="Resources\icon_attribute_show.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\crs_change.png" />
+    <None Include="Resources\icon_crs_change.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\delete_selected.png" />
+    <None Include="Resources\icon_element_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\element_add.png" />
+    <None Include="Resources\icon_folder.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\folder.png" />
+    <None Include="Resources\icon_label_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\label_add.png" />
+    <None Include="Resources\icon_layer_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_add.png" />
+    <None Include="Resources\icon_layer_clear.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_clear.png" />
+    <None Include="Resources\icon_layer_create.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_create.png" />
+    <None Include="Resources\icon_layer_database_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_database_add.png" />
+    <None Include="Resources\icon_layer_db_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_db_add.png" />
+    <None Include="Resources\icon_layer_raster_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_raster_add.png" />
+    <None Include="Resources\icon_layer_remove.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_remove.png" />
+    <None Include="Resources\icon_layer_vector_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_vector_add.png" />
+    <None Include="Resources\icon_layer_vector_thematic_add.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_vector_thematic_add.png" />
+    <None Include="Resources\icon_measure_area.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\measure_area.png" />
+    <None Include="Resources\icon_measure_distance.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\measure_distance.png" />
+    <None Include="Resources\icon_new_map.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\new_map.png" />
+    <None Include="Resources\icon_pan.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pan.png" />
+    <None Include="Resources\icon_pan1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pan1.png" />
+    <None Include="Resources\icon_project_open.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\project_open.png" />
+    <None Include="Resources\icon_quit.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\quit.png" />
+    <None Include="Resources\icon_save.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\save.png" />
+    <None Include="Resources\icon_save_as.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\save_as.png" />
+    <None Include="Resources\icon_save1.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\save1.png" />
+    <None Include="Resources\icon_search.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\search.png" />
+    <None Include="Resources\icon_select.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\select.png" />
+    <None Include="Resources\icon_select_by_polygon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\select_by_polygon.png" />
+    <None Include="Resources\icon_snapshot.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\snapshot.png" />
+    <None Include="Resources\icon_vertex.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\vertex.png" />
+    <None Include="Resources\icon_zoom_in.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_in.png" />
+    <None Include="Resources\icon_zoom_max_extents.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_max_extents.png" />
+    <None Include="Resources\icon_zoom_out.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_out.png" />
+    <None Include="Resources\icon_zoom_to_layer.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_to_layer.png" />
+    <None Include="Resources\icon_zoom_to_selection.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zoom_to_selection.png" />
+    <None Include="Resources\icon_clear_selection.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

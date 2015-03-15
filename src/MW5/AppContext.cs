@@ -14,6 +14,7 @@ using MW5.Plugins.Services;
 using MW5.Services;
 using MW5.Services.Serialization;
 using MW5.UI;
+using MW5.UI.Menu;
 using MW5.UI.Syncfusion;
 using Syncfusion.Windows.Forms;
 

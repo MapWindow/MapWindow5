@@ -78,7 +78,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             var editLayerItem = bars.FindItem(MenuKeys.LayerEdit);
             editLayerItem.Enabled = fs != null;
-            editLayerItem.Icon = new MenuIcon(editing ? Resources.layer_save : Resources.layer_edit);
+            editLayerItem.Icon = new MenuIcon(editing ? Resources.icon_layer_save : Resources.icon_layer_edit);
             editLayerItem.Text = editing ? "Save Changes" : "Edit Layer";
 
             if (editing)

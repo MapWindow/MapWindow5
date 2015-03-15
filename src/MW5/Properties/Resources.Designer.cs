@@ -63,9 +63,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap attribute_show {
+        internal static System.Drawing.Bitmap icon_attribute_show {
             get {
-                object obj = ResourceManager.GetObject("attribute_show", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_attribute_show", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap crs_change {
+        internal static System.Drawing.Bitmap icon_clear_selection {
             get {
-                object obj = ResourceManager.GetObject("crs_change", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_clear_selection", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap delete_selected {
+        internal static System.Drawing.Bitmap icon_crs_change {
             get {
-                object obj = ResourceManager.GetObject("delete_selected", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_crs_change", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap element_add {
+        internal static System.Drawing.Bitmap icon_element_add {
             get {
-                object obj = ResourceManager.GetObject("element_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_element_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap folder {
+        internal static System.Drawing.Bitmap icon_folder {
             get {
-                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_folder", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap label_add {
+        internal static System.Drawing.Bitmap icon_label_add {
             get {
-                object obj = ResourceManager.GetObject("label_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_label_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_add {
+        internal static System.Drawing.Bitmap icon_layer_add {
             get {
-                object obj = ResourceManager.GetObject("layer_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_clear {
+        internal static System.Drawing.Bitmap icon_layer_clear {
             get {
-                object obj = ResourceManager.GetObject("layer_clear", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_clear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_create {
+        internal static System.Drawing.Bitmap icon_layer_create {
             get {
-                object obj = ResourceManager.GetObject("layer_create", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_create", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_database_add {
+        internal static System.Drawing.Bitmap icon_layer_database_add {
             get {
-                object obj = ResourceManager.GetObject("layer_database_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_database_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_db_add {
+        internal static System.Drawing.Bitmap icon_layer_db_add {
             get {
-                object obj = ResourceManager.GetObject("layer_db_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_db_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_raster_add {
+        internal static System.Drawing.Bitmap icon_layer_raster_add {
             get {
-                object obj = ResourceManager.GetObject("layer_raster_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_raster_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_remove {
+        internal static System.Drawing.Bitmap icon_layer_remove {
             get {
-                object obj = ResourceManager.GetObject("layer_remove", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_remove", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_vector_add {
+        internal static System.Drawing.Bitmap icon_layer_vector_add {
             get {
-                object obj = ResourceManager.GetObject("layer_vector_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_vector_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_vector_thematic_add {
+        internal static System.Drawing.Bitmap icon_layer_vector_thematic_add {
             get {
-                object obj = ResourceManager.GetObject("layer_vector_thematic_add", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_vector_thematic_add", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap measure_area {
+        internal static System.Drawing.Bitmap icon_measure_area {
             get {
-                object obj = ResourceManager.GetObject("measure_area", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_measure_area", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +223,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap measure_distance {
+        internal static System.Drawing.Bitmap icon_measure_distance {
             get {
-                object obj = ResourceManager.GetObject("measure_distance", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_measure_distance", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -233,9 +233,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap new_map {
+        internal static System.Drawing.Bitmap icon_new_map {
             get {
-                object obj = ResourceManager.GetObject("new_map", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_new_map", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -243,9 +243,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pan {
+        internal static System.Drawing.Bitmap icon_pan {
             get {
-                object obj = ResourceManager.GetObject("pan", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_pan", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -253,9 +253,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap pan1 {
+        internal static System.Drawing.Bitmap icon_pan1 {
             get {
-                object obj = ResourceManager.GetObject("pan1", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_pan1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -263,9 +263,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap project_open {
+        internal static System.Drawing.Bitmap icon_project_open {
             get {
-                object obj = ResourceManager.GetObject("project_open", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_project_open", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -273,9 +273,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap quit {
+        internal static System.Drawing.Bitmap icon_quit {
             get {
-                object obj = ResourceManager.GetObject("quit", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_quit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -283,9 +283,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save {
+        internal static System.Drawing.Bitmap icon_save {
             get {
-                object obj = ResourceManager.GetObject("save", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -293,9 +293,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save_as {
+        internal static System.Drawing.Bitmap icon_save_as {
             get {
-                object obj = ResourceManager.GetObject("save_as", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_save_as", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -303,9 +303,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap save1 {
+        internal static System.Drawing.Bitmap icon_save1 {
             get {
-                object obj = ResourceManager.GetObject("save1", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_save1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -313,9 +313,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap search {
+        internal static System.Drawing.Bitmap icon_search {
             get {
-                object obj = ResourceManager.GetObject("search", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -323,9 +323,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap select {
+        internal static System.Drawing.Bitmap icon_select {
             get {
-                object obj = ResourceManager.GetObject("select", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_select", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -333,9 +333,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap select_by_polygon {
+        internal static System.Drawing.Bitmap icon_select_by_polygon {
             get {
-                object obj = ResourceManager.GetObject("select_by_polygon", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_select_by_polygon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -343,9 +343,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap snapshot {
+        internal static System.Drawing.Bitmap icon_snapshot {
             get {
-                object obj = ResourceManager.GetObject("snapshot", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_snapshot", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -353,9 +353,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap vertex {
+        internal static System.Drawing.Bitmap icon_vertex {
             get {
-                object obj = ResourceManager.GetObject("vertex", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_vertex", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -363,9 +363,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zoom_in {
+        internal static System.Drawing.Bitmap icon_zoom_in {
             get {
-                object obj = ResourceManager.GetObject("zoom_in", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_zoom_in", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -373,9 +373,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zoom_max_extents {
+        internal static System.Drawing.Bitmap icon_zoom_max_extents {
             get {
-                object obj = ResourceManager.GetObject("zoom_max_extents", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_zoom_max_extents", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,9 +383,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zoom_out {
+        internal static System.Drawing.Bitmap icon_zoom_out {
             get {
-                object obj = ResourceManager.GetObject("zoom_out", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_zoom_out", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -393,9 +393,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zoom_to_layer {
+        internal static System.Drawing.Bitmap icon_zoom_to_layer {
             get {
-                object obj = ResourceManager.GetObject("zoom_to_layer", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_zoom_to_layer", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -403,9 +403,9 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap zoom_to_selection {
+        internal static System.Drawing.Bitmap icon_zoom_to_selection {
             get {
-                object obj = ResourceManager.GetObject("zoom_to_selection", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_zoom_to_selection", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -46,7 +46,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             var dropDown = items.AddDropDown("Polygon Overlay", MenuKeys.PolygonOverlayDropDown, identity);
             dropDown.BeginGroup = true;
-            dropDown.Icon = new MenuIcon(Resources.geometry_erase_by_polygon);
+            dropDown.Icon = new MenuIcon(Resources.icon_geometry_erase_by_polygon);
 
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.EraseByPolygon);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.ClipByPolygon);

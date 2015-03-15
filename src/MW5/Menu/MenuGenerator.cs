@@ -140,7 +140,7 @@ namespace MW5.Menu
             // select drop down
             var dropDown = items.AddDropDown("Select", MenuKeys.SelectDropDown, PluginIdentity.Default);
             dropDown.BeginGroup = true;
-            dropDown.Icon = new MenuIcon(Resources.select);
+            dropDown.Icon = new MenuIcon(Resources.icon_select);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByRectangle);
             _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByPolygon);
 

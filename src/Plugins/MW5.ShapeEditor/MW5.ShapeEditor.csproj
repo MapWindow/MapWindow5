@@ -116,55 +116,55 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_copy.png" />
+    <None Include="Resources\icon_edit_copy.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_cut.png" />
+    <None Include="Resources\icon_edit_cut.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_paste.png" />
+    <None Include="Resources\icon_edit_paste.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_redo.png" />
+    <None Include="Resources\icon_edit_redo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_undo.png" />
+    <None Include="Resources\icon_edit_undo.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_attributes.png" />
+    <None Include="Resources\icon_geometry_attributes.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_create.png" />
+    <None Include="Resources\icon_geometry_create.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_erase_by_polygon.png" />
+    <None Include="Resources\icon_geometry_erase_by_polygon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_merge.png" />
+    <None Include="Resources\icon_geometry_merge.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_move.png" />
+    <None Include="Resources\icon_geometry_move.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_rotate.png" />
+    <None Include="Resources\icon_geometry_rotate.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_split.png" />
+    <None Include="Resources\icon_geometry_split.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\geometry_split_by_polyline.png" />
+    <None Include="Resources\icon_geometry_split_by_polyline.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_create.png" />
+    <None Include="Resources\icon_layer_create.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_edit.png" />
+    <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\layer_save.png" />
+    <None Include="Resources\icon_layer_save.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\vertex_editor.png" />
+    <None Include="Resources\icon_vertex_editor.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

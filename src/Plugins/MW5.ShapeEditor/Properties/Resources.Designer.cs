@@ -63,9 +63,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_copy {
+        internal static System.Drawing.Bitmap icon_edit_copy {
             get {
-                object obj = ResourceManager.GetObject("edit_copy", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_edit_copy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_cut {
+        internal static System.Drawing.Bitmap icon_edit_cut {
             get {
-                object obj = ResourceManager.GetObject("edit_cut", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_edit_cut", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_paste {
+        internal static System.Drawing.Bitmap icon_edit_paste {
             get {
-                object obj = ResourceManager.GetObject("edit_paste", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_edit_paste", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_redo {
+        internal static System.Drawing.Bitmap icon_edit_redo {
             get {
-                object obj = ResourceManager.GetObject("edit_redo", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_edit_redo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +103,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap edit_undo {
+        internal static System.Drawing.Bitmap icon_edit_undo {
             get {
-                object obj = ResourceManager.GetObject("edit_undo", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_edit_undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +113,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_attributes {
+        internal static System.Drawing.Bitmap icon_geometry_attributes {
             get {
-                object obj = ResourceManager.GetObject("geometry_attributes", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_attributes", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -123,9 +123,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_create {
+        internal static System.Drawing.Bitmap icon_geometry_create {
             get {
-                object obj = ResourceManager.GetObject("geometry_create", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_create", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_erase_by_polygon {
+        internal static System.Drawing.Bitmap icon_geometry_erase_by_polygon {
             get {
-                object obj = ResourceManager.GetObject("geometry_erase_by_polygon", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_erase_by_polygon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_merge {
+        internal static System.Drawing.Bitmap icon_geometry_merge {
             get {
-                object obj = ResourceManager.GetObject("geometry_merge", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_merge", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_move {
+        internal static System.Drawing.Bitmap icon_geometry_move {
             get {
-                object obj = ResourceManager.GetObject("geometry_move", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_move", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_rotate {
+        internal static System.Drawing.Bitmap icon_geometry_rotate {
             get {
-                object obj = ResourceManager.GetObject("geometry_rotate", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_rotate", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_split {
+        internal static System.Drawing.Bitmap icon_geometry_split {
             get {
-                object obj = ResourceManager.GetObject("geometry_split", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_split", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap geometry_split_by_polyline {
+        internal static System.Drawing.Bitmap icon_geometry_split_by_polyline {
             get {
-                object obj = ResourceManager.GetObject("geometry_split_by_polyline", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_geometry_split_by_polyline", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_create {
+        internal static System.Drawing.Bitmap icon_layer_create {
             get {
-                object obj = ResourceManager.GetObject("layer_create", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_create", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_edit {
+        internal static System.Drawing.Bitmap icon_layer_edit {
             get {
-                object obj = ResourceManager.GetObject("layer_edit", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_edit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap layer_save {
+        internal static System.Drawing.Bitmap icon_layer_save {
             get {
-                object obj = ResourceManager.GetObject("layer_save", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_layer_save", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +223,9 @@ namespace MW5.Plugins.ShapeEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap vertex_editor {
+        internal static System.Drawing.Bitmap icon_vertex_editor {
             get {
-                object obj = ResourceManager.GetObject("vertex_editor", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_vertex_editor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
