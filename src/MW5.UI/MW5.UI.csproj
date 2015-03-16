@@ -75,6 +75,9 @@
     </Compile>
     <Compile Include="AppView.cs" />
     <Compile Include="ComboBoxEnumItem.cs" />
+    <Compile Include="Docking\DockHelper.cs" />
+    <Compile Include="Docking\DockPanel.cs" />
+    <Compile Include="Docking\DockPanelCollection.cs" />
     <Compile Include="EventHelper.cs" />
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />

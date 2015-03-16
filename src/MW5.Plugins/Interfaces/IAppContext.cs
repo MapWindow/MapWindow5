@@ -17,5 +17,6 @@ namespace MW5.Plugins.Interfaces
         IToolbarCollection Toolbars { get; }
         IApplicationContainer Container { get; }
         ILegendLayerCollection<ILayer> Layers { get; }
+        IDockPanelCollection DockPanels { get; }
     }
 }

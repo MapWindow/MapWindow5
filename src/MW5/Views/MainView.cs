@@ -1,12 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+//using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Helpers;
 using MW5.Menu;
+using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI;
@@ -33,7 +36,7 @@ namespace MW5.Views
             _legendControl1.Map = _mapControl1;
             _mapControl1.Legend = _legendControl1;
 
-            _dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
+            //_dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
 
             FormClosed += (s, e) => _dockingManager1.SaveLayout();
 
@@ -84,10 +87,36 @@ namespace MW5.Views
             return true;
         }
 
+        private void InitDocking()
+        {
+            var panels = _context.DockPanels;
+            panels.Lock();
+            try
+            {
+                _legendControl1.BorderStyle = BorderStyle.None;
+                treeViewAdv2.BorderStyle = BorderStyle.None;
+                const int size = 300;
+
+                var legend = panels.Add(_legendControl1, DockPanelState.Left, true, size, PluginIdentity.Default);
+                legend.Caption = "Legend";
+
+                var preview = panels.Add(treeViewAdv2, DockPanelState.Left, true, size, PluginIdentity.Default);
+                preview.Caption = "Preview";
+
+                preview.DockTo(legend, DockPanelState.Bottom, size);
+            }
+            catch (Exception ex)
+            {
+                panels.Unlock();
+            }
+        }
+
         #region IView implementation
 
         public new void ShowView()
         {
+            InitDocking();
+            
             Application.Run(this);
         }
 

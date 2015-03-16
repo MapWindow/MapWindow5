@@ -90,6 +90,8 @@
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
+    <Compile Include="Interfaces\IDockPanel.cs" />
+    <Compile Include="Interfaces\IDockPanelCollection.cs" />
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\IMenuIndex.cs" />
     <Compile Include="Interfaces\IProject.cs" />

@@ -14,6 +14,7 @@ using MW5.Plugins.Services;
 using MW5.Services;
 using MW5.Services.Serialization;
 using MW5.UI;
+using MW5.UI.Docking;
 using MW5.UI.Menu;
 using MW5.UI.Syncfusion;
 using Syncfusion.Windows.Forms;
@@ -36,6 +37,7 @@ namespace MW5
         private PluginManager _pluginManager;
         private IBroadcasterService _broadcaster;
         private IStatusBar _statusBar;
+        private IDockPanelCollection _dockPanelCollection;
 
         public AppContext(IApplicationContainer container)
         {
@@ -63,6 +65,7 @@ namespace MW5
             _map = mainView.Map;
             _legend = mainView.Legend;
 
+            _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
             _statusBar = new UI.StatusBar(mainView.StatusBar);
@@ -111,6 +114,11 @@ namespace MW5
         public ILegendLayerCollection<ILayer> Layers
         {
             get { return _map.Layers; }
+        }
+
+        public IDockPanelCollection DockPanels
+        {
+            get { return _dockPanelCollection; }
         }
 
         public PluginManager PluginManager

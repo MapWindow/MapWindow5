@@ -78,6 +78,7 @@ namespace MW5.Presenters
         {
             _context.Toolbars.RemoveItemsForPlugin(e.Identity);
             _context.Menu.RemoveItemsForPlugin(e.Identity);
+            _context.DockPanels.RemoveItemsForPlugin(e.Identity);
         }
     }
 }

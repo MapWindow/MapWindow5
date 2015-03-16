@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.TemplatePlugin.Menu;
+using MW5.Services.Helpers;
 
 namespace MW5.Plugins.TemplatePlugin
 {
@@ -13,6 +15,7 @@ namespace MW5.Plugins.TemplatePlugin
         private MenuGenerator _menuGenerator;
         private MenuListener _menuListener;
         private MapListener _mapListener;
+        private UserControl1 _userControl;
 
         public override string Description
         {
@@ -27,6 +30,24 @@ namespace MW5.Plugins.TemplatePlugin
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
+            _userControl = new UserControl1();
+
+            CreateDockWindow(context);
+        }
+
+        private void CreateDockWindow(IAppContext context)
+        {
+            var panels = context.DockPanels;
+
+            panels.Lock();
+            var panel = panels.Add(_userControl, DockPanelState.Left, true, 200, Identity);
+            panel.Caption = "Custom dock window";
+
+            var legend = panels.FirstOrDefault(p => p.Caption.EqualsIgnoreCase("Preview"));
+            if (legend != null)
+            {
+                panel.DockTo(legend, DockPanelState.Tabbed, 150);
+            }
         }
 
         public override void Terminate()
