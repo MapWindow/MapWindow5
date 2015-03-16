@@ -27,7 +27,8 @@ namespace MW5.Test
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
         private Mock<IBroadcasterService> _broadcaster;
-        private Mock<LegendLayerCollection<ILayer>> _layerColection;
+        private Mock<ILegendLayerCollection<ILayer>> _layerColection;
+        private Mock<IMuteLegend> _legend;
 
         private string[] GetShapefileNames()
         {
@@ -42,13 +43,16 @@ namespace MW5.Test
         [SetUp]
         public void Setup()
         {
-            _layerColection = new Mock<LegendLayerCollection<ILayer>>();
+            _layerColection = new Mock<ILegendLayerCollection<ILayer>>();
             
             var map = new Mock<IMuteMap>();
             map.SetupGet(m => m.Layers).Returns(_layerColection.Object);
 
             _context = new Mock<IAppContext>();
             _context.SetupGet(c => c.Map).Returns(map.Object);
+
+            _legend = new Mock<IMuteLegend>();
+            _context.SetupGet(c => c.Legend).Returns(_legend.Object);
 
             _messageService = new Mock<IMessageService>();
 
