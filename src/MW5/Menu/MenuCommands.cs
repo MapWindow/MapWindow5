@@ -19,7 +19,7 @@ namespace MW5.Menu
         {
         }
 
-        public override List<MenuCommand> GetCommands()
+        public override IEnumerable<MenuCommand> GetCommands()
         {
             return new List<MenuCommand>()
             {

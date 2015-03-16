@@ -10,7 +10,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         {
         }
 
-        public override List<MenuCommand> GetCommands()
+        public override IEnumerable<MenuCommand> GetCommands()
         {
             return new List<MenuCommand>()
             {

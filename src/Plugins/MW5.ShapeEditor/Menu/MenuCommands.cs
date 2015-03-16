@@ -15,7 +15,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         {
         }
 
-        public override List<MenuCommand> GetCommands()
+        public override IEnumerable<MenuCommand> GetCommands()
         {
             return new List<MenuCommand>()
             {
