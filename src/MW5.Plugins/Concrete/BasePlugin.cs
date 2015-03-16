@@ -89,6 +89,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<EventArgs> HistoryChanged_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
+        internal MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -97,10 +98,9 @@ namespace MW5.Plugins.Concrete
             remove { AfterShapeEdit_ -= value; }
         }
 
+        public event MapEventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
 
-        public event EventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
-
-        public event EventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
+        public event MapEventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
 
         public event MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape
         {
@@ -126,13 +126,13 @@ namespace MW5.Plugins.Concrete
             remove { ExtentsChanged_ -= value; }
         }
 
-        public event EventHandler<FileDroppedEventArgs> FileDropped;
-        public event EventHandler<GridOpenedEventArgs> GridOpened;
-        public event EventHandler<LayerAddedEventArgs> LayerAdded;
-        public event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-        public event EventHandler<LayerRemovedEventArgs> LayerRemoved;
-        public event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
-        public event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+        public event MapEventHandler<FileDroppedEventArgs> FileDropped;
+        public event MapEventHandler<GridOpenedEventArgs> GridOpened;
+        public event MapEventHandler<LayerAddedEventArgs> LayerAdded;
+        public event MapEventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
+        public event MapEventHandler<LayerRemovedEventArgs> LayerRemoved;
+        public event MapEventHandler<LayerReprojectedEventArgs> LayerReprojected;
+        public event MapEventHandler<MeasuringChangedEventArgs> MeasuringChanged;
 
         public event MapEventHandler<EventArgs> MapCursorChanged
         {
@@ -140,8 +140,8 @@ namespace MW5.Plugins.Concrete
             remove { MapCursorChanged_ -= value; }
         }
         
-        public event EventHandler<MouseEventArgs> MouseDown;
-        public event EventHandler<MouseEventArgs> MouseMove;
+        public event MapEventHandler<MouseEventArgs> MouseDown;
+        public event MapEventHandler<MouseEventArgs> MouseMove;
 
         public event MapEventHandler<MouseEventArgs> MouseUp
         {
@@ -149,12 +149,16 @@ namespace MW5.Plugins.Concrete
             remove { MouseUp_ -= value; }
         }
 
-        public event EventHandler<EventArgs> ProjectionChanged;
-        public event EventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
-        public event EventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
-        public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
-        public event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
-        public event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
+        public event MapEventHandler<EventArgs> ProjectionChanged;
+        public event MapEventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
+        public event MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
+        public event MapEventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event MapEventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
+        public event MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified
+        {
+            add { ShapeIdentified_ += value; }
+            remove { ShapeIdentified_ -= value; }
+        }
 
         public event MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed
         {
@@ -162,7 +166,7 @@ namespace MW5.Plugins.Concrete
             remove { ShapeValidationFailed_ -= value; }
         }
 
-        public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
+        public event MapEventHandler<TilesLoadedEventArgs> TilesLoaded;
 
         public event MapEventHandler<EventArgs> HistoryChanged
         {
