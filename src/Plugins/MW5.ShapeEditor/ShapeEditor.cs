@@ -5,6 +5,9 @@ using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.Mvp;
+using MW5.Plugins.ShapeEditor.Abstract;
+using MW5.Plugins.ShapeEditor.Helpers;
 using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
@@ -35,11 +38,11 @@ namespace MW5.Plugins.ShapeEditor
 
             _context = context;
             var container = context.Container;
-            _mapListener = container.GetSingleton<MapListener>();
-            _menuGenerator = container.GetSingleton<MenuGenerator>();
-            _menuListener = container.GetSingleton<MenuListener>();
-            _projectListener = container.GetSingleton<ProjectListener>();
-            _menuUpdater = container.GetSingleton<MenuUpdater>();
+            _mapListener = container.Resolve<MapListener>();
+            _menuGenerator = container.Resolve<MenuGenerator>();
+            _menuListener = container.Resolve<MenuListener>();
+            _projectListener = container.Resolve<ProjectListener>();
+            _menuUpdater = container.Resolve<MenuUpdater>();
         }
 
         public override void Terminate()
