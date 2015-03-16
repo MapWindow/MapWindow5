@@ -213,7 +213,10 @@
           </RuleSettings>
         </Rule>
       </Rules>
-      <AnalyzerSettings />
+      <AnalyzerSettings>
+        <StringProperty Name="CompanyName">MapWindow OSS Team - www.mapwindow.org</StringProperty>
+        <StringProperty Name="Copyright">MapWindow OSS Team - 2015</StringProperty>
+      </AnalyzerSettings>
     </Analyzer>
     <Analyzer AnalyzerId="StyleCop.CSharp.ReadabilityRules">
       <Rules>

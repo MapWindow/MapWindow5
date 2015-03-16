@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
+      <Link>Properties\SolutionInfoCore.cs</Link>
+    </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\AppConfig.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
