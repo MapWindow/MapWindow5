@@ -99,6 +99,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
+      <Link>Properties\SolutionInfoCore.cs</Link>
+    </Compile>
     <Compile Include="Abstract\IProjectionView.cs" />
     <Compile Include="AppContext.cs" />
     <Compile Include="CompositionRoot.cs" />
