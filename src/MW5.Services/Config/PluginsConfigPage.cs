@@ -19,6 +19,7 @@ namespace MW5.Services.Config
     {
         private readonly PluginManager _manager;
         private readonly IConfigService _config;
+        private int _mouseOver = 0;
 
         public PluginsConfigPage(PluginManager manager, IConfigService config)
         {
@@ -34,52 +35,59 @@ namespace MW5.Services.Config
             var grid = gridGroupingControl1;
             grid.DataSource = provider.List.ToList();
             ApplyGridOptions(grid);
-
-            BorderStyle = BorderStyle.None;
         }
 
         private void ApplyGridOptions(GridGroupingControl grid)
         {
             grid.GridOfficeScrollBars = Syncfusion.Windows.Forms.OfficeScrollBars.Metro;
             grid.GridVisualStyles = Syncfusion.Windows.Forms.GridVisualStyles.Metro;
-            grid.ShowGroupDropArea = false;
-            grid.BorderStyle = BorderStyle.None;
-            grid.BrowseOnly = false;
-            grid.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
-            grid.TopLevelGroupOptions.ShowCaption = false;
+
             grid.Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle;
             grid.Appearance.AnyCell.Borders.All = new GridBorder(GridBorderStyle.None, Color.White);
+
+            grid.BrowseOnly = false;
             grid.ShowRowHeaders = false;
-            grid.ShowColumnHeaders = false;
-            grid.Table.TableOptions.ListBoxSelectionMode = SelectionMode.One;
+            grid.ShowColumnHeaders = true;
             grid.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
             grid.GridLineColor = Color.White;
-            grid.Table.TableOptions.ListBoxSelectionCurrentCellOptions =
-                GridListBoxSelectionCurrentCellOptions.HideCurrentCell;
-
+            grid.ShowGroupDropArea = false;
+            
+            grid.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            grid.TopLevelGroupOptions.ShowCaption = true;
+            grid.TopLevelGroupOptions.CaptionText = "Application plugins";
+            
+            grid.ActivateCurrentCellBehavior = GridCellActivateAction.None;
+            grid.Table.TableOptions.ListBoxSelectionColorOptions = GridListBoxSelectionColorOptions.None;
+            grid.Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.None;
+            grid.Table.TableOptions.ListBoxSelectionMode = SelectionMode.None;
+            
             grid.TableControlCellClick += grid_TableControlCellClick;
-            grid.TableControlCellMouseHoverEnter += grid_TableControlCellMouseHoverEnter;
-            grid.TableControlCellMouseHoverLeave += grid_TableControlCellMouseHoverLeave;
-            //grid.TableControlCurrentCellStartEditing += grid_TableControlCurrentCellStartEditing;
+            grid.TableControlCellHitTest += grid_TableControlCellHitTest;
+            grid.TableControlPrepareViewStyleInfo += grid_TableControlPrepareViewStyleInfo;
+            grid.TableControl.MouseLeave += TableControl_MouseLeave;
+            //grid.FocusOnMouseDown = false;
         }
 
-        void grid_TableControlCellMouseHoverLeave(object sender, GridTableControlCellMouseEventArgs e)
+        private void TableControl_MouseLeave(object sender, EventArgs e)
         {
-            return;
-            gridGroupingControl1.Table.SelectedRecords.Clear();
-            gridGroupingControl1.TableControl.Selections.Clear();
+            _mouseOver = 0;
             gridGroupingControl1.Refresh();
         }
-
-        void grid_TableControlCellMouseHoverEnter(object sender, GridTableControlCellMouseEventArgs e)
+       
+        private void grid_TableControlPrepareViewStyleInfo(object sender, GridTableControlPrepareViewStyleInfoEventArgs e)
         {
-            return;
-            int rowIndex = e.Inner.RowIndex - 1;
-            if (rowIndex >= 0)
+            if (e.Inner.RowIndex == _mouseOver)
             {
-                var record = this.gridGroupingControl1.Table.Records[rowIndex];
-                gridGroupingControl1.Table.SelectedRecords.Clear();
-                gridGroupingControl1.Table.SelectedRecords.Add(record);
+                e.Inner.Style.BackColor = Color.FromArgb(64, 51, 153, 255);
+                e.Inner.Style.TextColor = Color.Black;
+            }
+        }
+
+        private void grid_TableControlCellHitTest(object sender, GridTableControlCellHitTestEventArgs e)
+        {
+            if (e.Inner.RowIndex > 0)
+            {
+                _mouseOver = e.Inner.RowIndex;
                 gridGroupingControl1.Refresh();
             }
         }
@@ -87,20 +95,17 @@ namespace MW5.Services.Config
         void grid_TableControlCellClick(object sender, GridTableControlCellClickEventArgs e)
         {
             int rowIndex = e.Inner.RowIndex;
-            var data = gridGroupingControl1.Table.Records[rowIndex - 1].GetData() as PluginProvider.PluginInfo;
-            if (data != null)
+            if (e.Inner.RowIndex <= 1)
             {
-                data.Selected = !data.Selected;
-                gridGroupingControl1.Refresh();
+                return;
+            }
+
+            var record = gridGroupingControl1.Table.Records[rowIndex - 3];
+            if (record != null)
+            {
+                var value = (bool)record.GetValue("Selected");
+                record.SetValue("Selected", !value);
             }
         }
-
-        //void grid_TableControlCurrentCellStartEditing(object sender, GridTableControlCancelEventArgs e)
-        //{
-        //    if (e.Inner.)
-        //    {
-        //        e.Inner.Cancel = true;
-        //    }
-        //}
     }
 }

@@ -35,13 +35,15 @@
             // gridGroupingControl1
             // 
             this.gridGroupingControl1.BackColor = System.Drawing.SystemColors.Window;
+            this.gridGroupingControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gridGroupingControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridGroupingControl1.FreezeCaption = false;
             this.gridGroupingControl1.Location = new System.Drawing.Point(0, 0);
             this.gridGroupingControl1.Name = "gridGroupingControl1";
-            this.gridGroupingControl1.Size = new System.Drawing.Size(239, 234);
+            this.gridGroupingControl1.Size = new System.Drawing.Size(330, 331);
             this.gridGroupingControl1.TabIndex = 0;
-            this.gridGroupingControl1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
+            this.gridGroupingControl1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.AlphaBlend;
+            this.gridGroupingControl1.TableOptions.GridLineBorder = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.Solid, System.Drawing.Color.Silver);
             this.gridGroupingControl1.Text = "gridGroupingControl1";
             this.gridGroupingControl1.VersionInfo = "12.4450.0.24";
             // 
@@ -51,7 +53,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gridGroupingControl1);
             this.Name = "PluginsConfigPage";
-            this.Size = new System.Drawing.Size(239, 234);
+            this.Size = new System.Drawing.Size(330, 331);
             ((System.ComponentModel.ISupportInitialize)(this.gridGroupingControl1)).EndInit();
             this.ResumeLayout(false);
 

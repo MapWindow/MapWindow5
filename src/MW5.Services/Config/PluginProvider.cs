@@ -43,6 +43,11 @@ namespace MW5.Services.Config
             {
                 get { return _plugin.Identity.Name; }
             }
+
+            public string Author
+            {
+                get { return _plugin.Identity.Author; }
+            }
         }
     }
 }
