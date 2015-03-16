@@ -41,6 +41,16 @@ namespace MW5.DI.Ninject
             return this;
         }
 
+        public TService GetInstance<TService>() where TService : class
+        {
+            if (!_kernel.CanResolve<TService>())
+            {
+                _kernel.Bind<TService>().ToSelf();
+            }
+
+            return _kernel.Get<TService>();
+        }
+
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -51,23 +61,13 @@ namespace MW5.DI.Ninject
 
         public void Run<TPresenter, TArgumnent>(TArgumnent arg) where TPresenter : class, IPresenter<TArgumnent>
         {
-            if (!_kernel.CanResolve<TPresenter>())
-            {
-                _kernel.Bind<TPresenter>().ToSelf();
-            }
-
-            var presenter = _kernel.Get<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run(arg);
         }
 
         public void Run<TPresenter>() where TPresenter : class, IPresenter
         {
-            if (!_kernel.CanResolve<TPresenter>())
-            {
-                _kernel.Bind<TPresenter>().ToSelf();
-            }
-
-            var presenter = _kernel.Get<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run();
         }
 

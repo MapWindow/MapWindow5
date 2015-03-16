@@ -15,7 +15,6 @@ namespace MW5.Plugins.ShapeEditor
     [PluginExport("Shape Editor", "Sergei Leschinski", "274DCFA4-61FA-49E4-906D-E0D2E46E247B")]
     public class ShapeEditor: BasePlugin
     {
-        private bool _initialized = false;
         private IAppContext _context;
         private MapListener _mapListener;
         private MenuGenerator _menuGenerator;
@@ -30,19 +29,16 @@ namespace MW5.Plugins.ShapeEditor
 
         public override void Initialize(IAppContext context)
         {
-            if (!_initialized)
-            {
-                CompositionRoot.Compose(context.Container, this);
-                _initialized = true;
-            }
-
             _context = context;
+            
             var container = context.Container;
-            _mapListener = container.Resolve<MapListener>();
-            _menuGenerator = container.Resolve<MenuGenerator>();
-            _menuListener = container.Resolve<MenuListener>();
-            _projectListener = container.Resolve<ProjectListener>();
-            _menuUpdater = container.Resolve<MenuUpdater>();
+            CompositionRoot.Compose(context.Container);
+            
+            _mapListener = container.GetInstance<MapListener>();
+            _menuGenerator = container.GetInstance<MenuGenerator>();
+            _menuListener = container.GetInstance<MenuListener>();
+            _projectListener = container.GetInstance<ProjectListener>();
+            _menuUpdater = container.GetInstance<MenuUpdater>();
         }
 
         public override void Terminate()

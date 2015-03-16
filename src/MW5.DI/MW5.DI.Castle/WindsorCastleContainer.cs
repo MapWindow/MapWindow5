@@ -44,6 +44,14 @@ namespace MW5.DI.Castle
             return this;
         }
 
+        public TService GetInstance<TService>() where TService : class
+        {
+            // TODO: is there a way to check if component is registered
+            // http ://docs.castleproject.org/Windsor.Conditional-component-registration.ashx
+            _container.Register(Component.For<TService>().LifestyleTransient().OnlyNewServices());
+            return _container.Resolve<TService>();
+        }
+
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -54,17 +62,13 @@ namespace MW5.DI.Castle
 
         public void Run<TPresenter, TArgument>(TArgument arg) where TPresenter : class, IPresenter<TArgument>
         {
-            // TODO: is there a way to check if component is registered
-            // http ://docs.castleproject.org/Windsor.Conditional-component-registration.ashx
-            _container.Register(Component.For<TPresenter>().LifestyleTransient().OnlyNewServices());
-            var presenter = _container.Resolve<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run(arg);
         }
 
         public void Run<TPresenter>() where TPresenter : class, IPresenter
         {
-            _container.Register(Component.For<TPresenter>().LifestyleTransient().OnlyNewServices());
-            var presenter = _container.Resolve<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run();
         }
 

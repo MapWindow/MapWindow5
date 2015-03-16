@@ -44,6 +44,15 @@ namespace MW5.DI.LightInject
             return this;
         }
 
+        public TService GetInstance<TService>() where TService : class
+        {
+            if (!IsRegistered<TService>())
+            {
+                _container.Register<TService>();
+            }
+            return _container.GetInstance<TService>();
+        }
+
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -54,23 +63,13 @@ namespace MW5.DI.LightInject
 
         public void Run<TPresenter, TArgs>(TArgs arg) where TPresenter : class, IPresenter<TArgs>
         {
-            if (!IsRegistered<TPresenter>())
-            {
-                _container.Register<TPresenter>();
-            }
-
-            var presenter = _container.GetInstance<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run(arg);
         }
 
         public void Run<TPresenter>() where TPresenter : class, IPresenter
         {
-            if (!IsRegistered<TPresenter>())
-            {
-                _container.Register<TPresenter>();
-            }
-
-            var presenter = _container.GetInstance<TPresenter>();
+            var presenter = GetInstance<TPresenter>();
             presenter.Run();
         }
 

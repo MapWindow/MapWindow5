@@ -17,6 +17,12 @@ namespace MW5.Plugins.Mvp
             where TImplementation : class, TService;
 
         /// <summary>
+        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// </summary>
+        TService GetInstance<TService>()
+            where TService : class;
+
+        /// <summary>
         /// Bounds an interface to particular implementation. Lifetime is singleton (aka container controlled), 
         /// i.e. instance will be created on the first injection and then will be used for all the subsequent ones.
         /// </summary>

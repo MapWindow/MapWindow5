@@ -14,14 +14,9 @@ namespace MW5.Plugins.ShapeEditor
 {
     public static class CompositionRoot
     {
-        public static void Compose(IApplicationContainer container, BasePlugin plugin)
+        public static void Compose(IApplicationContainer container)
         {
-            container.RegisterInstance(plugin.GetType(), plugin);    // registering for injection
-            container.RegisterSingleton<IGeoprocessingService, GeoprocessingService>().
-                RegisterService<MenuGenerator, MenuGenerator>().
-                RegisterService<MapListener, MapListener>().
-                RegisterService<ProjectListener, ProjectListener>().
-                RegisterService<MenuUpdater, MenuUpdater>();
+            container.RegisterSingleton<IGeoprocessingService, GeoprocessingService>();
         }
     }
 }

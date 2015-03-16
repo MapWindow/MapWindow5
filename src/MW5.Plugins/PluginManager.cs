@@ -18,6 +18,7 @@ namespace MW5.Plugins
 {
     public class PluginManager
     {
+        private readonly IApplicationContainer _container;
         private readonly IErrorService _errorService;
         private const string PLUGIN_DIRECTORY = "Plugins";
 
@@ -45,9 +46,12 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IErrorService errorService)
+        public PluginManager(IApplicationContainer container, IErrorService errorService)
         {
+            if (container == null) throw new ArgumentNullException("container");
             if (errorService == null) throw new ArgumentNullException("errorService");
+
+            _container = container;
             _errorService = errorService;
             _instance = this;
         }
@@ -89,6 +93,8 @@ namespace MW5.Plugins
                 }
 
                 p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
+
+                _container.RegisterInstance(p.GetType(), p);
 
                 _plugins.Add(p);
             }
@@ -136,19 +142,7 @@ namespace MW5.Plugins
         /// <param name="context">Application context.</param>
         public void LoadPlugin(PluginIdentity identity, IAppContext context)
         {
-            if (_active.Contains(identity))
-            {
-                return;     // it's already loaded
-            }
-
-            var plugin = _plugins.FirstOrDefault(p => p.Identity == identity);
-            if (plugin == null)
-            {
-                throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
-            }
-
-            plugin.Initialize(context);
-            _active.Add(identity);
+            LoadPlugin(identity.Guid, context);
         }
 
         public void LoadPlugin(Guid pluginGuid, IAppContext context)

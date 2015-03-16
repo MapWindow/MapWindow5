@@ -6,10 +6,8 @@ namespace MW5.Plugins.TemplatePlugin
 {
     public static class CompositionRoot
     {
-        public static void Compose(IApplicationContainer container, BasePlugin plugin)
+        public static void Compose(IApplicationContainer container)
         {
-            container.RegisterInstance(plugin.GetType(), plugin);    // registering for injection
-            container.RegisterService<MenuGenerator, MenuGenerator>();
         }
     }
 }

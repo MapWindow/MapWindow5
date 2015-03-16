@@ -41,6 +41,16 @@ namespace MW5.DI.Unity
             return this;
         }
 
+        public TService GetInstance<TService>() where TService : class
+        {
+            if (_container.IsRegistered<TService>())
+            {
+                _container.RegisterType<TService>();
+            }
+
+            return _container.Resolve<TService>();
+        }
+
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -51,23 +61,13 @@ namespace MW5.DI.Unity
 
         public void Run<TPresenter, TArgument>(TArgument arg) where TPresenter : class, IPresenter<TArgument>
         {
-            if (_container.IsRegistered<TPresenter>())
-            {
-                _container.RegisterType<TPresenter>();
-            }
-
-            var p = _container.Resolve<TPresenter>();
+            var p = GetInstance<TPresenter>();
             p.Run(arg);
         }
 
         public void Run<TPresenter>() where TPresenter : class, IPresenter
         {
-            if (_container.IsRegistered<TPresenter>())
-            {
-                _container.RegisterType<TPresenter>();
-            }
-
-            var p = _container.Resolve<TPresenter>();
+            var p = GetInstance<TPresenter>();
             p.Run();
         }
 
