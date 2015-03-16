@@ -74,7 +74,9 @@
     </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4" />
     <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Tools.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
@@ -100,6 +102,20 @@
     <Compile Include="Abstract\IProjectionView.cs" />
     <Compile Include="AppContext.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Configuration\GeneralConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\GeneralConfigPage.Designer.cs">
+      <DependentUpon>GeneralConfigPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\PluginInfo.cs" />
+    <Compile Include="Configuration\PluginProvider.cs" />
+    <Compile Include="Configuration\PluginsConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\PluginsConfigPage.Designer.cs">
+      <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\CommandBarHelper.cs" />
     <Compile Include="Helpers\DockingHelper.cs" />
     <Compile Include="Helpers\MapInitializer.cs" />
@@ -135,6 +151,12 @@
     <Compile Include="Views\SetProjectionView.Designer.cs">
       <DependentUpon>SetProjectionView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Configuration\GeneralConfigPage.resx">
+      <DependentUpon>GeneralConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
+      <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

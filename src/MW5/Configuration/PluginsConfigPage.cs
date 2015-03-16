@@ -1,42 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Plugins;
-using MW5.Plugins.Services;
+using MW5.Services.Config;
+using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 
-namespace MW5.Services.Config
+namespace MW5.Configuration
 {
-    public partial class PluginsConfigPage : UserControl, IConfigPage
+    internal partial class PluginsConfigPage : UserControl, IConfigPage
     {
-        private readonly PluginManager _manager;
-        private readonly IConfigService _config;
+        private const string SELECTED_PROPERTY = "Selected";
         private int _mouseOver = 0;
 
-        public PluginsConfigPage(PluginManager manager, IConfigService config)
+        public PluginsConfigPage(PluginProvider pluginProvider)
         {
-            if (manager == null) throw new ArgumentNullException("manager");
-            if (config == null) throw new ArgumentNullException("config");
-            _manager = manager;
-            _config = config;
-
-            var provider = new PluginProvider(_manager, config.Config);
+            if (pluginProvider == null) throw new ArgumentNullException("pluginProvider");
 
             InitializeComponent();
 
             var grid = gridGroupingControl1;
-            grid.DataSource = provider.List.ToList();
+            grid.DataSource = pluginProvider.List;
             ApplyGridOptions(grid);
+            lblDescription.Text = "";
         }
 
+        // TODO: extract to application level styles
         private void ApplyGridOptions(GridGroupingControl grid)
         {
             grid.GridOfficeScrollBars = Syncfusion.Windows.Forms.OfficeScrollBars.Metro;
@@ -53,8 +42,8 @@ namespace MW5.Services.Config
             grid.ShowGroupDropArea = false;
             
             grid.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
-            grid.TopLevelGroupOptions.ShowCaption = true;
-            grid.TopLevelGroupOptions.CaptionText = "Application plugins";
+            grid.TopLevelGroupOptions.ShowCaption = false;
+            grid.TopLevelGroupOptions.CaptionText = "Application plugins:";
             
             grid.ActivateCurrentCellBehavior = GridCellActivateAction.None;
             grid.Table.TableOptions.ListBoxSelectionColorOptions = GridListBoxSelectionColorOptions.None;
@@ -85,8 +74,19 @@ namespace MW5.Services.Config
 
         private void grid_TableControlCellHitTest(object sender, GridTableControlCellHitTestEventArgs e)
         {
-            if (e.Inner.RowIndex > 0)
+            if (e.Inner.RowIndex > 0 && e.Inner.RowIndex != _mouseOver)
             {
+                var record = GetRecord(e.Inner.RowIndex);
+                if (record != null)
+                {
+                    var info = record.GetData() as PluginInfo;
+                    if (info != null)
+                    {
+                        lblDescription.Text = info.Description;
+                        lblDescription.Refresh();
+                    }
+                }
+                
                 _mouseOver = e.Inner.RowIndex;
                 gridGroupingControl1.Refresh();
             }
@@ -94,18 +94,32 @@ namespace MW5.Services.Config
 
         void grid_TableControlCellClick(object sender, GridTableControlCellClickEventArgs e)
         {
-            int rowIndex = e.Inner.RowIndex;
             if (e.Inner.RowIndex <= 1)
             {
                 return;
             }
 
-            var record = gridGroupingControl1.Table.Records[rowIndex - 3];
+            var record = GetRecord(e.Inner.RowIndex);
             if (record != null)
             {
-                var value = (bool)record.GetValue("Selected");
-                record.SetValue("Selected", !value);
+                var value = (bool)record.GetValue(SELECTED_PROPERTY);
+                record.SetValue(SELECTED_PROPERTY, !value);
             }
+        }
+
+        private Record GetRecord(int rowIndex)
+        {
+            int index = rowIndex - 2;
+            if (index >= 0 && index < gridGroupingControl1.Table.Records.Count)
+            {
+                return gridGroupingControl1.Table.Records[index];
+            }
+            return null;
+        }
+
+        public string PageName
+        {
+            get { return "Plugins"; }
         }
     }
 }

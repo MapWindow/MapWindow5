@@ -8,5 +8,6 @@ namespace MW5.Services.Config
 {
     public interface IConfigPage
     {
+        string PageName { get; }
     }
 }

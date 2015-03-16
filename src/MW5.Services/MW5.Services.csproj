@@ -85,13 +85,6 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\ConfigService.cs" />
     <Compile Include="Config\IConfigPage.cs" />
-    <Compile Include="Config\PluginProvider.cs" />
-    <Compile Include="Config\PluginsConfigPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Config\PluginsConfigPage.Designer.cs">
-      <DependentUpon>PluginsConfigPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
@@ -103,6 +96,7 @@
     <Compile Include="Serialization\Legacy\MapWindow4Project.cs" />
     <Compile Include="Serialization\Utility\DataContractSerializationHelper.cs" />
     <Compile Include="Serialization\Utility\XmlSerializationHelper.cs" />
+    <Compile Include="Serialization\XmlConfig.cs" />
     <Compile Include="Serialization\XmlGroup.cs" />
     <Compile Include="Serialization\XmlLayer.cs" />
     <Compile Include="Serialization\XmlMap.cs" />
@@ -142,9 +136,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Config\PluginsConfigPage.resx">
-      <DependentUpon>PluginsConfigPage.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\CreateLayerView.resx">
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </EmbeddedResource>
