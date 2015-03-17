@@ -8,6 +8,6 @@ namespace MW5.UI.Helpers
 {
     public interface IEnumConverter<T> where T : struct, IConvertible
     {
-        string GetString(T enumeration);
+        string GetString(T value);
     }
 }

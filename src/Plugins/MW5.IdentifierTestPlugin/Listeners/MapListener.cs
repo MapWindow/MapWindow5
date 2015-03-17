@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using MW5.Api.Legend.Abstract;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.IdentifierTestPlugin.Listeners
@@ -8,21 +10,31 @@ namespace MW5.Plugins.IdentifierTestPlugin.Listeners
     {
         private readonly IAppContext _context;
         private readonly IdentifierTestPlugin _plugin;
+        private readonly IdentifierControl _identifierControl;
 
-        public MapListener(IAppContext context, IdentifierTestPlugin plugin)
+        public MapListener(IAppContext context, IdentifierTestPlugin plugin, IdentifierControl identifierControl)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
-            
+            if (identifierControl == null) throw new ArgumentNullException("identifierControl");
+
             _context = context;
             _plugin = plugin;
+            _identifierControl = identifierControl;
 
-            _plugin.LayerSelected += _plugin_LayerSelected;
+            _plugin.LayerSelected += PluginLayerSelected;
+            _plugin.ShapeIdentified += _plugin_ShapeIdentified;
+
         }
 
-        void _plugin_LayerSelected(Api.Legend.Abstract.IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
+        private void _plugin_ShapeIdentified(Api.Interfaces.IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)
         {
-            Debug.Print("Layer selected: " + e.LayerHandle);
+            _identifierControl.OnShapeIdentified(map, e);
+        }
+
+        private void PluginLayerSelected(IMuteLegend legend, LayerEventArgs e)
+        {
+            _context.Map.Identifier.ActiveLayer = e.LayerHandle;
         }
     }
 }

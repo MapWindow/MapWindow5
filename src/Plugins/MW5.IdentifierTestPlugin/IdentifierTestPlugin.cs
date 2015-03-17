@@ -5,60 +5,45 @@ using MW5.Plugins.IdentifierTestPlugin.Menu;
 using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
     [PluginExport("Identifier test plugin", "Author", "1AECEA80-DCC3-4A34-89FB-7A2304B489FA")]
     public class IdentifierTestPlugin: BasePlugin
     {
-        private string DOCK_PANEL_KEY = "IdentifierPluginDockPanel";
         private IAppContext _context;
+        private DockPanelService _dockPanelService;
         private MenuGenerator _menuGenerator;
-        private MenuListener _menuListener;
         private MapListener _mapListener;
         private IdentifierControl _identifierControl;
 
+        static IdentifierTestPlugin()
+        {
+            EnumHelper.RegisterConverter(new IdentifierModeConverter());
+        }
+
         public override string Description
         {
-            get { return "Plugin description"; }
+            get { return "Identifier test plugin"; }
         }
 
         public override void Initialize(IAppContext context)
         {
             _context = context;
-        
+
             CompositionRoot.Compose(context.Container);
+
+            // will better to preserve state if plugin is unloaded, therefore singleton
+            _identifierControl = context.Container.GetSingleton<IdentifierControl>();   
+            
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
-            _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
-
-            CreateDockWindow(context);
+            _dockPanelService = context.Container.GetInstance<DockPanelService>();
         }
-
-
-        private void CreateDockWindow(IAppContext context)
-        {
-            _identifierControl = new IdentifierControl();
-
-            var panels = context.DockPanels;
-
-            panels.Lock();
-            var panel = panels.Add(_identifierControl, DOCK_PANEL_KEY, Identity);
-            panel.Caption = "Identifier";
-            panel.SetIcon(Resources.ico_identify);
-
-            var preview = panels.Preview;
-            if (preview != null)
-            {
-                panel.DockTo(preview, DockPanelState.Tabbed, 150);
-            }
-
-            panels.Unlock();
-        }
-
+        
         public override void Terminate()
         {
-            // menus & toolbars will be cleared automatically
         }
     }
 }

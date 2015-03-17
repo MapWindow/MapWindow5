@@ -140,7 +140,7 @@ namespace MW5.Views
             bars.FindItem(MenuKeys.ZoomIn).Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
             bars.FindItem(MenuKeys.ZoomOut).Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
             bars.FindItem(MenuKeys.Pan).Checked = _mapControl1.MapCursor == MapCursor.Pan;
-            bars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
+            //bars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
             
             bars.FindItem(MenuKeys.SelectByRectangle).Checked = _mapControl1.MapCursor == MapCursor.Selection;
             bars.FindItem(MenuKeys.SelectByPolygon).Checked = _mapControl1.MapCursor == MapCursor.SelectByPolygon;

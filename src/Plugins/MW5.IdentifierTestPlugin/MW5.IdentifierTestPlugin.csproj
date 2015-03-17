@@ -77,13 +77,15 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="IdentifierModeConverter.cs" />
     <Compile Include="Listeners\MapListener.cs" />
+    <Compile Include="Menu\DockPanelService.cs" />
     <Compile Include="Menu\MenuCommands.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
-    <Compile Include="Listeners\MenuListener.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -111,6 +113,10 @@
     <ProjectReference Include="..\..\MW5.Services\MW5.Services.csproj">
       <Project>{54BB55DA-DBDC-47E5-8DEC-DE325F35F074}</Project>
       <Name>MW5.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

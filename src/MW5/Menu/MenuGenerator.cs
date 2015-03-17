@@ -135,7 +135,7 @@ namespace MW5.Menu
 
             _commands.AddToMenu(items, MenuKeys.MeasureDistance, true);
             _commands.AddToMenu(items, MenuKeys.MeasureArea);
-            _commands.AddToMenu(items, MenuKeys.Attributes);
+            //_commands.AddToMenu(items, MenuKeys.Attributes);
 
             // select drop down
             var dropDown = items.AddDropDown("Select", MenuKeys.SelectDropDown, PluginIdentity.Default);
