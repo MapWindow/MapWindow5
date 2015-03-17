@@ -10,6 +10,7 @@ namespace MW5.Plugins.TemplatePlugin
 {
     #region
 
+    using System;
     using System.Diagnostics;
     using System.Linq;
     using System.Reflection;
@@ -60,6 +61,8 @@ namespace MW5.Plugins.TemplatePlugin
         ///     The reference to the menu listener class, is used in the constructor
         /// </summary>
         private MenuListener _menuListener;
+
+        private SampleDockWindow _sampleDockWindow;
 
         #endregion
 
@@ -176,6 +179,9 @@ namespace MW5.Plugins.TemplatePlugin
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
 
+            // Will better to preserve state if plugin is unloaded, therefore singleton
+            _sampleDockWindow = context.Container.GetSingleton<SampleDockWindow>();   
+
             // Legend event handler to raise when a layer is selected:
             this.LayerSelected += TemplatePlugin_LayerSelected;
 
@@ -207,6 +213,9 @@ namespace MW5.Plugins.TemplatePlugin
         private void TemplatePlugin_LayerSelected(IMuteLegend legend, LayerEventArgs e)
         {
             Debug.Print("Layer selected: " + e.LayerHandle);
+            _sampleDockWindow.DebugTextbox.AppendText(
+                "Layer file name: " + System.IO.Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename)
+                + Environment.NewLine);
         }
 
         #endregion

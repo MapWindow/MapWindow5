@@ -47,6 +47,11 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         private readonly IMessageService _messageService;
 
         /// <summary>
+        ///     A user control as a sample for a dockable window.
+        /// </summary>
+        private readonly SampleDockWindow _sampleDockWindow;
+
+        /// <summary>
         /// The _plugin.
         /// </summary>
         private readonly TemplatePlugin _plugin;
@@ -55,11 +60,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// To track if the dockable window is already loaded or not.
         /// </summary>
         private bool _alreadyLoaded;
-
-        /// <summary>
-        ///     A user control as a sample for a dockable window.
-        /// </summary>
-        private SampleDockWindow _sampleDockWindow;
 
         #endregion
 
@@ -77,7 +77,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <param name="messageService">
         /// The message service.
         /// </param>
-        public MenuListener(IAppContext context, TemplatePlugin plugin, IMessageService messageService)
+        /// <param name="sampleDockWindow">
+        /// The sample dock wi
+        /// </param>
+        public MenuListener(IAppContext context, TemplatePlugin plugin, IMessageService messageService, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
             {
@@ -94,9 +97,15 @@ namespace MW5.Plugins.TemplatePlugin.Menu
                 throw new ArgumentNullException("messageService");
             }
 
+            if (sampleDockWindow == null)
+            {
+                throw new ArgumentNullException("sampleDockWindow");
+            }
+
             // Save to local properties:
             _context = context;
             _messageService = messageService;
+            _sampleDockWindow = sampleDockWindow;
             _plugin = plugin;
 
             // Create event handlers:
@@ -122,7 +131,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             }
 
             var panels = context.DockPanels;
-            _sampleDockWindow = new SampleDockWindow();
 
             panels.Lock();
             var panel = panels.Add(_sampleDockWindow, DOCKPANELKEY, _plugin.Identity);

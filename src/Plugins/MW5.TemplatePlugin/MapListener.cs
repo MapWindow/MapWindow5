@@ -14,6 +14,7 @@ namespace MW5.Plugins.TemplatePlugin
     using System;
     using System.Diagnostics;
 
+    using MW5.Api.Events;
     using MW5.Api.Interfaces;
     using MW5.Plugins.Interfaces;
 
@@ -31,6 +32,8 @@ namespace MW5.Plugins.TemplatePlugin
         /// </summary>
         private readonly IAppContext _context;
 
+        private readonly SampleDockWindow _sampleDockWindow;
+
         #endregion
 
         #region Constructors and Destructors
@@ -44,7 +47,8 @@ namespace MW5.Plugins.TemplatePlugin
         /// <param name="plugin">
         /// The plugin.
         /// </param>
-        public MapListener(IAppContext context, TemplatePlugin plugin)
+        /// <param name="sampleDockWindow">Reference to the sample dock window</param>
+        public MapListener(IAppContext context, TemplatePlugin plugin, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
             {
@@ -56,14 +60,30 @@ namespace MW5.Plugins.TemplatePlugin
                 throw new ArgumentNullException("plugin");
             }
 
+            if (sampleDockWindow == null)
+            {
+                throw new ArgumentNullException("sampleDockWindow");
+            }
+
             // Save local references:
             _context = context;
+            _sampleDockWindow = sampleDockWindow;
 
             // As show case:
             Debug.WriteLine("Number of loaded layers; " + _context.Layers.Count);
+            _sampleDockWindow.DebugTextbox.Text = "Debug mode";
 
             // Create event handlers:
-            plugin.ExtentsChanged += this.PluginExtentsChanged;
+            plugin.ExtentsChanged += this.PluginOnExtentsChanged;
+            plugin.ChooseLayer += this.PluginOnChooseLayer;
+        }
+
+        private void PluginOnChooseLayer(IMuteMap map, ChooseLayerEventArgs e)
+        {
+            _sampleDockWindow.DebugTextbox.AppendText("New layer handle: " + e.LayerHandle);
+            _sampleDockWindow.DebugTextbox.AppendText(
+                "Layer file name: " + System.IO.Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename)
+                + Environment.NewLine);
         }
 
         #endregion
@@ -79,9 +99,10 @@ namespace MW5.Plugins.TemplatePlugin
         /// <param name="e">
         /// The event arguments
         /// </param>
-        private void PluginExtentsChanged(IMuteMap map, EventArgs e)
+        private void PluginOnExtentsChanged(IMuteMap map, EventArgs e)
         {
             Debug.Print("Extents changed: " + map.Extents);
+            _sampleDockWindow.DebugTextbox.AppendText("Extents changed: " + map.Extents + Environment.NewLine);
         }
 
         #endregion
