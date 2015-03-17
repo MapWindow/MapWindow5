@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Events;
+using MW5.Api.Legend;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Concrete
@@ -72,6 +74,18 @@ namespace MW5.Plugins.Concrete
         {
             add { ProjectClosing_ += value; }
             remove { ProjectClosing_ -= value; }
+        }
+
+        #endregion
+
+        #region Legend events
+
+        internal LegendEventHandler<LayerEventArgs> LayerSelected_;
+
+        public event LegendEventHandler<LayerEventArgs> LayerSelected
+        {
+            add { LayerSelected_ += value; }
+            remove { LayerSelected_ -= value; }
         }
 
         #endregion

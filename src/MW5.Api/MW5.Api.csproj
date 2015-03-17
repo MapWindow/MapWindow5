@@ -119,6 +119,7 @@
     <Compile Include="Legend\Events\LayerPaintEventArgs.cs" />
     <Compile Include="Legend\Events\LegendClickEventArgs.cs" />
     <Compile Include="Legend\Events\PositionChangedEventArgs.cs" />
+    <Compile Include="Legend\LegendEventHandler.cs" />
     <Compile Include="Legend\LegendGroup.cs" />
     <Compile Include="Legend\LegendGroups.cs" />
     <Compile Include="Legend\Abstract\IMuteLegend.cs" />

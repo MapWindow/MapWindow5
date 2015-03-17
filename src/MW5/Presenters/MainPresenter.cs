@@ -3,6 +3,7 @@ using System.ComponentModel;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
+using MW5.Listeners;
 using MW5.Menu;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
@@ -20,6 +21,7 @@ namespace MW5.Presenters
         private readonly MenuListener _menuListener;
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
+        private readonly LegendListener _legendListener;
         private PluginManager _pluginManager;
 
         public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, ILoggingService loggingService)
@@ -54,7 +56,8 @@ namespace MW5.Presenters
             
             _menuGenerator = container.GetSingleton<MenuGenerator>();
             _menuListener = container.GetSingleton<MenuListener>();
-            _mapListener = container.GetSingleton<MapListener>(); 
+            _mapListener = container.GetSingleton<MapListener>();
+            _legendListener = container.GetSingleton<LegendListener>(); 
         }
 
         private void OnViewUpdating(object sender, EventArgs e)

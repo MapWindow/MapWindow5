@@ -123,7 +123,8 @@
     <Compile Include="Helpers\DockingHelper.cs" />
     <Compile Include="Helpers\MapInitializer.cs" />
     <Compile Include="Abstract\IConfigView.cs" />
-    <Compile Include="MapListener.cs" />
+    <Compile Include="Listeners\LegendListener.cs" />
+    <Compile Include="Listeners\MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="Menu\TilesMenuHelper.cs" />

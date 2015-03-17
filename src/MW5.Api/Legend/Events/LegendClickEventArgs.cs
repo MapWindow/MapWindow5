@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MW5.Api.Legend.Events
 {
-    public class LegendClickEventArgs
+    public class LegendClickEventArgs: EventArgs
     {
         public LegendClickEventArgs(MouseButtons buttons, Point location)
         {

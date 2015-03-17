@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
+using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -49,6 +51,11 @@ namespace MW5.Plugins
         /// <param name="args">Event arguments</param>
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, MapEventHandler<T>>> eventHandler, IMuteMap sender, T args)
             where T: EventArgs
+        {
+            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null);
+        }
+
+        public void BroadcastEvent<T>(Expression<Func<BasePlugin, LegendEventHandler<T>>> eventHandler, IMuteLegend sender, T args) where T : EventArgs
         {
             BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null);
         }

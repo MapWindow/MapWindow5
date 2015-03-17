@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Api.Legend.Events
 {
-    public class PositionChangedEventArgs
+    public class PositionChangedEventArgs: EventArgs
     {
         public PositionChangedEventArgs(int handle, int oldPosition, int newPosition)
         {

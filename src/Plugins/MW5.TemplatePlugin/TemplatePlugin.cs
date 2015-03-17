@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -32,7 +33,14 @@ namespace MW5.Plugins.TemplatePlugin
             _mapListener = context.Container.GetInstance<MapListener>();
             _userControl = new UserControl1();
 
+            this.LayerSelected += TemplatePlugin_LayerSelected;
+
             CreateDockWindow(context);
+        }
+
+        private void TemplatePlugin_LayerSelected(Api.Legend.Abstract.IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
+        {
+            Debug.Print("Layer selected: " + e.LayerHandle);
         }
 
         private void CreateDockWindow(IAppContext context)
