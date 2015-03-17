@@ -34,16 +34,6 @@ namespace MW5.Plugins.TemplatePlugin
     [PluginExport("Template plugin", "Author", "BAE94101-5DBE-43E5-9D55-BC2532A2168C")]
     public class TemplatePlugin : BasePlugin
     {
-        #region Constants
-
-        /// <summary>
-        ///     The key to identify the dock panel
-        /// </summary>
-        /// <remarks>Change it to fit your plug-in</remarks>
-        private const string DOCKPANELKEY = "TemplatePluginDockPanel";
-
-        #endregion
-
         #region Fields
 
         /// <summary>
@@ -70,11 +60,6 @@ namespace MW5.Plugins.TemplatePlugin
         ///     The reference to the menu listener class, is used in the constructor
         /// </summary>
         private MenuListener _menuListener;
-
-        /// <summary>
-        ///     A user control as a sample for a dockable window.
-        /// </summary>
-        private SampleDockWindow _sampleDockWindow;
 
         #endregion
 
@@ -184,7 +169,6 @@ namespace MW5.Plugins.TemplatePlugin
         {
             // Save to local properties:
             _context = context;
-            _sampleDockWindow = new SampleDockWindow();
 
             // Set up container for dependency injection:
             CompositionRoot.Compose(context.Container);
@@ -197,9 +181,6 @@ namespace MW5.Plugins.TemplatePlugin
 
             // Just to show case:
             Debug.WriteLine("Number of layers loaded" + _context.Layers.Count());
-
-            // Create a dockable window:
-            this.CreateDockWindow(context);
         }
 
         /// <summary>
@@ -213,30 +194,6 @@ namespace MW5.Plugins.TemplatePlugin
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Create a dockable window.
-        /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        private void CreateDockWindow(IAppContext context)
-        {
-            var panels = context.DockPanels;
-
-            panels.Lock();
-            var panel = panels.Add(_sampleDockWindow, DOCKPANELKEY, Identity);
-            panel.Caption = "Template dock window";
-            panel.SetIcon(Resources.ico_template);
-
-            var preview = panels.Preview;
-            if (preview != null)
-            {
-                panel.DockTo(preview, DockPanelState.Tabbed, 150);
-            }
-
-            panels.Unlock();
-        }
 
         /// <summary>
         /// The layer selected event handler

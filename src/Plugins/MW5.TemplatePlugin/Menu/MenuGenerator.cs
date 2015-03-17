@@ -67,7 +67,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         private void InitMenu(IAppContext context, PluginIdentity identity)
         {
             var menu = context.Menu.Items.AddDropDown("Template", "_", identity);
-            menu.SubItems.AddButton("Info", MenuKeys.ShowPluginDialog, identity);
+            menu.SubItems.AddButton("Info", MenuKeys.ShowDockableWindow, identity);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             bar.DockState = ToolbarDockState.Top;
 
             // Add toolbar buttons, use MenuKeys to identify the buttons and add the command in MenuCommands:
-            _commands.AddToMenu(bar.Items, MenuKeys.ShowPluginDialog);
+            _commands.AddToMenu(bar.Items, MenuKeys.ShowDockableWindow);
         }
 
         #endregion

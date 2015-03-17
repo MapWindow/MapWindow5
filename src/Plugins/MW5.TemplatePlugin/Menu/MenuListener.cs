@@ -6,7 +6,6 @@
 //   The menu listener.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
     #region
@@ -16,25 +15,51 @@ namespace MW5.Plugins.TemplatePlugin.Menu
     using MW5.Plugins.Concrete;
     using MW5.Plugins.Interfaces;
     using MW5.Plugins.Services;
+    using MW5.Plugins.TemplatePlugin.Properties;
 
     #endregion
 
     /// <summary>
-    /// The menu listener.
+    ///     The menu listener.
     /// </summary>
     public class MenuListener
     {
+        #region Constants
+
+        /// <summary>
+        ///     The key to identify the dock panel
+        /// </summary>
+        /// <remarks>Change it to fit your plug-in</remarks>
+        private const string DOCKPANELKEY = "TemplatePluginDockPanel";
+
+        #endregion
+
         #region Fields
 
         /// <summary>
-        /// The message service.
+        ///     The application context.
+        /// </summary>
+        private readonly IAppContext _context;
+
+        /// <summary>
+        ///     The message service.
         /// </summary>
         private readonly IMessageService _messageService;
 
         /// <summary>
-        /// The application context.
+        /// The _plugin.
         /// </summary>
-        private IAppContext _context;
+        private readonly TemplatePlugin _plugin;
+
+        /// <summary>
+        /// To track if the dockable window is already loaded or not.
+        /// </summary>
+        private bool _alreadyLoaded;
+
+        /// <summary>
+        ///     A user control as a sample for a dockable window.
+        /// </summary>
+        private SampleDockWindow _sampleDockWindow;
 
         #endregion
 
@@ -72,6 +97,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             // Save to local properties:
             _context = context;
             _messageService = messageService;
+            _plugin = plugin;
 
             // Create event handlers:
             plugin.ItemClicked += Plugin_ItemClicked;
@@ -80,6 +106,40 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Create a dockable window.
+        /// </summary>
+        /// <param name="context">
+        /// The application context.
+        /// </param>
+        private void CreateDockWindow(IAppContext context)
+        {
+            // Check if already loaded,  don't load again
+            if (_alreadyLoaded)
+            {
+                return;
+            }
+
+            var panels = context.DockPanels;
+            _sampleDockWindow = new SampleDockWindow();
+
+            panels.Lock();
+            var panel = panels.Add(_sampleDockWindow, DOCKPANELKEY, _plugin.Identity);
+            panel.Caption = "Template dock window";
+            panel.SetIcon(Resources.ico_template);
+
+            var preview = panels.Preview;
+            if (preview != null)
+            {
+                panel.DockTo(preview, DockPanelState.Tabbed, 150);
+            }
+
+            panels.Unlock();
+
+            // Make sure this panel isn't loaded multiple times:
+            _alreadyLoaded = true;
+        }
 
         /// <summary>
         /// The toolbar button clicked event handler
@@ -94,9 +154,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         {
             switch (e.ItemKey)
             {
-                case MenuKeys.ShowPluginDialog:
+                case MenuKeys.ShowDockableWindow:
                     // Clicked on the toolbar button
                     _messageService.Info("Hello from Template plugin");
+                    this.CreateDockWindow(_context);
                     break;
             }
         }

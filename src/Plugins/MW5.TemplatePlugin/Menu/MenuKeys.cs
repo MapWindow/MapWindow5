@@ -17,9 +17,9 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Constants
 
         /// <summary>
-        /// The show plugin dialog key. Used to identify which toolbar button was clicked.
+        /// The menu item key. Used to identify which toolbar button or menu item was clicked.
         /// </summary>
-        public const string ShowPluginDialog = "tp_ShowPluginDialog";
+        public const string ShowDockableWindow = "tp_ShowDockableWindow";
 
         #endregion
     }
