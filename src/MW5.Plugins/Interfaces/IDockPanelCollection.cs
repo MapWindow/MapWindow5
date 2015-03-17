@@ -13,8 +13,11 @@ namespace MW5.Plugins.Interfaces
         void Lock();
         void Unlock();
         bool Locked { get; }
-        IDockPanel Add(Control control, DockPanelState state, bool visible, int size, PluginIdentity identity);
+        IDockPanel Add(Control control, string key, PluginIdentity identity);
         void Remove(IDockPanel panel, PluginIdentity identity);
         void RemoveItemsForPlugin(PluginIdentity identity);
+        IDockPanel Find(string key);
+        IDockPanel Legend { get; }
+        IDockPanel Preview { get; }
     }
 }

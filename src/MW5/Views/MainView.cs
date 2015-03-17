@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 //using System.Linq;
 using System.Windows.Forms;
@@ -12,7 +13,9 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Properties;
 using MW5.UI;
+using MW5.UI.Docking;
 using MW5.UI.Helpers;
 
 namespace MW5.Views
@@ -97,11 +100,14 @@ namespace MW5.Views
                 treeViewAdv2.BorderStyle = BorderStyle.None;
                 const int size = 300;
 
-                var legend = panels.Add(_legendControl1, DockPanelState.Left, true, size, PluginIdentity.Default);
+                var legend = panels.Add(_legendControl1, DockPanelKeys.Legend , PluginIdentity.Default);
                 legend.Caption = "Legend";
-
-                var preview = panels.Add(treeViewAdv2, DockPanelState.Left, true, size, PluginIdentity.Default);
+                legend.DockTo(null, DockPanelState.Left, size);
+                legend.SetIcon(Resources.ico_legend);
+                
+                var preview = panels.Add(treeViewAdv2, DockPanelKeys.Preview ,PluginIdentity.Default);
                 preview.Caption = "Preview";
+                preview.SetIcon(Resources.ico_zoom_to_layer);
 
                 preview.DockTo(legend, DockPanelState.Bottom, size);
             }

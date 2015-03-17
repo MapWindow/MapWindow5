@@ -50,7 +50,7 @@ namespace MW5.Menu
                 new MenuCommand("Measure area", MenuKeys.MeasureArea, Resources.icon_measure_area),
                 new MenuCommand("By rectangle", MenuKeys.SelectByRectangle, null),
                 new MenuCommand("By polygon", MenuKeys.SelectByPolygon, null),
-                new MenuCommand("Attributes", MenuKeys.Attributes, Resources.icon_attribute_show),
+                new MenuCommand("Attributes", MenuKeys.Attributes, Resources.icon_identify),
                 new MenuCommand("Zoom to selected", MenuKeys.ZoomToSelected, Resources.icon_zoom_to_selection),
                 new MenuCommand("Clear Selection", MenuKeys.ClearSelection, Resources.icon_clear_selection), 
             };

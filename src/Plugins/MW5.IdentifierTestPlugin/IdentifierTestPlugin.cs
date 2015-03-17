@@ -1,23 +1,22 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using MW5.Plugins.Concrete;
-using MW5.Plugins.Helpers;
+using MW5.Plugins.IdentifierTestPlugin.Listeners;
+using MW5.Plugins.IdentifierTestPlugin.Menu;
+using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
-using MW5.Plugins.TemplatePlugin.Menu;
-using MW5.Services.Helpers;
 
-namespace MW5.Plugins.TemplatePlugin
+namespace MW5.Plugins.IdentifierTestPlugin
 {
-    [PluginExport("Template plugin", "Author", "BAE94101-5DBE-43E5-9D55-BC2532A2168C")]
-    public class TemplatePlugin: BasePlugin
+    [PluginExport("Identifier test plugin", "Author", "1AECEA80-DCC3-4A34-89FB-7A2304B489FA")]
+    public class IdentifierTestPlugin: BasePlugin
     {
+        private string DOCK_PANEL_KEY = "IdentifierPluginDockPanel";
         private IAppContext _context;
         private MenuGenerator _menuGenerator;
         private MenuListener _menuListener;
         private MapListener _mapListener;
-        private UserControl1 _userControl;
+        private IdentifierControl _identifierControl;
 
         public override string Description
         {
@@ -32,26 +31,29 @@ namespace MW5.Plugins.TemplatePlugin
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
-            _userControl = new UserControl1();
 
             CreateDockWindow(context);
         }
 
-        
 
         private void CreateDockWindow(IAppContext context)
         {
+            _identifierControl = new IdentifierControl();
+
             var panels = context.DockPanels;
 
             panels.Lock();
-            var panel = panels.Add(_userControl, DockPanelState.Left, true, 200, Identity);
+            var panel = panels.Add(_identifierControl, DOCK_PANEL_KEY, Identity);
             panel.Caption = "Identifier";
+            panel.SetIcon(Resources.ico_identify);
 
-            var legend = panels.FirstOrDefault(p => p.Caption.EqualsIgnoreCase("Preview"));
-            if (legend != null)
+            var preview = panels.Preview;
+            if (preview != null)
             {
-                panel.DockTo(legend, DockPanelState.Tabbed, 150);
+                panel.DockTo(preview, DockPanelState.Tabbed, 150);
             }
+
+            panels.Unlock();
         }
 
         public override void Terminate()

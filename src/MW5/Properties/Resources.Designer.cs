@@ -61,6 +61,26 @@ namespace MW5.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon ico_legend {
+            get {
+                object obj = ResourceManager.GetObject("ico_legend", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon ico_zoom_to_layer {
+            get {
+                object obj = ResourceManager.GetObject("ico_zoom_to_layer", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap icon_attribute_show {
@@ -106,6 +126,16 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap icon_folder {
             get {
                 object obj = ResourceManager.GetObject("icon_folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap icon_identify {
+            get {
+                object obj = ResourceManager.GetObject("icon_identify", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

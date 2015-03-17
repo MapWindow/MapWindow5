@@ -137,6 +137,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -163,14 +168,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <EmbeddedResource Include="Views\ConfigView.resx">
       <DependentUpon>ConfigView.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +339,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico_zoom_to_layer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico_legend.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_identify.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

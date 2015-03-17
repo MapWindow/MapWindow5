@@ -68,19 +68,12 @@ namespace MW5.Menu
             {
                 menu.SubItems.Clear(); // old listeners will be removed here
 
-                var enumerator = _dockingManager.Controls;          // TODO: wrap it
-                enumerator.Reset();
-                while (enumerator.MoveNext())
+                foreach (var panel in _context.DockPanels)
                 {
-                    var dockItem = enumerator.Current as Control;
-                    if (dockItem != null)
-                    {
-                        string caption = _dockingManager.GetDockLabel(dockItem);
-                        var btn = menu.SubItems.AddButton(caption, PluginIdentity.Default);
-                        btn.AttachClickEventHandler(DockWindowsVisibilityClicked);
-                        btn.Checked = _dockingManager.GetDockVisibility(dockItem);
-                        btn.Tag = dockItem;
-                    }
+                    var btn = menu.SubItems.AddButton(panel.Caption, PluginIdentity.Default);
+                    btn.AttachClickEventHandler(DockWindowsVisibilityClicked);
+                    btn.Checked = panel.Visible;
+                    btn.Tag = panel;
                 }
             }
         }
@@ -91,8 +84,11 @@ namespace MW5.Menu
             if (item != null)
             {
                 item.Checked = !item.Checked;
-                var dockItem = item.Tag as Control;
-                _dockingManager.SetDockVisibility(dockItem, item.Checked);
+                var panel = item.Tag as IDockPanel;
+                if (panel != null)
+                {
+                    panel.Visible = item.Checked;
+                }
             }
         }
 

@@ -52,6 +52,7 @@ namespace MW5.Views
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv2)).BeginInit();
@@ -66,6 +67,7 @@ namespace MW5.Views
             this._dockingManager1.DockLayoutStream = ((System.IO.MemoryStream)(resources.GetObject("_dockingManager1.DockLayoutStream")));
             this._dockingManager1.DockTabAlignment = Syncfusion.Windows.Forms.Tools.DockTabAlignmentStyle.Left;
             this._dockingManager1.HostControl = this;
+            this._dockingManager1.ImageList = this.imageList1;
             this._dockingManager1.InActiveCaptionBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212))))));
             this._dockingManager1.InActiveCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this._dockingManager1.MetroButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
@@ -279,6 +281,13 @@ namespace MW5.Views
             this.statusProgress.Name = "statusProgress";
             this.statusProgress.Size = new System.Drawing.Size(100, 15);
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "icon_edit_copy.png");
+            this.imageList1.Images.SetKeyName(1, "icon_edit_cut.png");
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -320,6 +329,7 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusMapUnits;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripProgressBar statusProgress;
+        private System.Windows.Forms.ImageList imageList1;
 
     }
 }
