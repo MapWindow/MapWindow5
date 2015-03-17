@@ -34,6 +34,7 @@ namespace MW5.Api.Interfaces
         event EventHandler<SelectionChangedEventArgs> SelectionChanged;
         event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
         event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
+        event EventHandler<ShapesIdentifiedEventArgs> ShapesIdentified;
         event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
         event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         event EventHandler<EventArgs> HistoryChanged;

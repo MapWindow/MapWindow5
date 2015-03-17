@@ -54,12 +54,18 @@ namespace MW5
             _map.ChooseLayer += MapChooseLayer;
             _map.SelectionChanged += MapSelectionChanged;
             _map.ShapeIdentified += MapShapeIdentified;
+            _map.ShapesIdentified += MapShapesIdentified;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        void MapShapesIdentified(object sender, ShapesIdentifiedEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.ShapesIdentified_, sender as IMuteMap, e);
         }
 
         void MapShapeIdentified(object sender, ShapeIdentifiedEventArgs e)

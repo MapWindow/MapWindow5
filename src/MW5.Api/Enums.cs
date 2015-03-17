@@ -881,7 +881,7 @@
         Overlay = 4,
     }
 
-    public enum LayerSelection
+    public enum LayerSelectionMode
     {
         AllLayers = 0,
         NoLayer = 1,

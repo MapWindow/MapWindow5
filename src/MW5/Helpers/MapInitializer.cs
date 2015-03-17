@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 
 namespace MW5.Helpers
@@ -18,8 +19,8 @@ namespace MW5.Helpers
             map.ShowRedrawTime = false;
             map.Identifier.IdentifierMode = IdentifierMode.SingleLayer;
             map.Identifier.HotTracking = true;
-            map.GeometryEditor.HighlightVertices = LayerSelection.NoLayer;
-            map.GeometryEditor.SnapBehavior = LayerSelection.NoLayer;
+            map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
+            map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MW5.Api.Interfaces
         Color FillColor { get; set; }
         byte AlpaFillTransparency { get; set; }
         bool HasChanges { get; }
-        LayerSelection HighlightVertices { get; set; }
+        LayerSelectionMode HighlightVertices { get; set; }
         bool IndicesVisible { get; set; }
         bool IsDigitizing { get; }
         bool IsEmpty { get; }
@@ -27,7 +27,7 @@ namespace MW5.Api.Interfaces
         int SelectedVertex { get; set; }
         int ShapeIndex { get; }
         GeometryType GeometryType { get; set; }
-        LayerSelection SnapBehavior { get; set; }
+        LayerSelectionMode SnapBehavior { get; set; }
         double SnapTolerance { get; set; }
         IGeometry ValidatedShape { get; }
         EditorValidation ValidationMode { get; set; }

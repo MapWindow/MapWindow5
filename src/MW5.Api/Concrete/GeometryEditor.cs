@@ -64,9 +64,9 @@ namespace MW5.Api.Concrete
             get { return _editor.HasChanges; }
         }
 
-        public LayerSelection HighlightVertices
+        public LayerSelectionMode HighlightVertices
         {
-            get { return (LayerSelection)_editor.HighlightVertices; }
+            get { return (LayerSelectionMode)_editor.HighlightVertices; }
             set { _editor.HighlightVertices = (tkLayerSelection)value; }
         }
         
@@ -145,10 +145,10 @@ namespace MW5.Api.Concrete
             get { return GeometryHelper.ShapeType2GeometryType(_editor.ShapeType); }
             set { _editor.ShapeType = GeometryHelper.GeometryType2ShpType(value); }
         }
-        
-        public LayerSelection SnapBehavior
+
+        public LayerSelectionMode SnapBehavior
         {
-            get { return (LayerSelection)_editor.SnapBehavior; }
+            get { return (LayerSelectionMode)_editor.SnapBehavior; }
             set { _editor.SnapBehavior = (tkLayerSelection)value; }
         }
         
