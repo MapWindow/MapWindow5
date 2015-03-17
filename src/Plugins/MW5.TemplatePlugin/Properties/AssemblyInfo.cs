@@ -22,7 +22,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("This is the template plug-in. Use it to jump-start the development of your own plug-in.")]
 [assembly: AssemblyCompany("MapWindow OSS Team - Sergei Leschinsky & Paul Meems")]
 
-
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("65beb2fd-eec2-461c-965e-f20a0cef2aa2")]
 
