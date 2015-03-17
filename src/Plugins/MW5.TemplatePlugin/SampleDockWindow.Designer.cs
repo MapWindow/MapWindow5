@@ -1,6 +1,6 @@
 ﻿namespace MW5.Plugins.TemplatePlugin
 {
-    partial class UserControl1
+    partial class SampleDockWindow
     {
         /// <summary> 
         /// Required designer variable.

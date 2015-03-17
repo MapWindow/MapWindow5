@@ -14,7 +14,6 @@ using System.Runtime.InteropServices;
 
 #endregion
 
-[assembly: AssemblyCompany("MapWindow OSS Team - www.mapwindow.org")]
 [assembly: AssemblyCopyright("Copyright (C) 1998-2015 MapWindow OSS Team")]
 [assembly: AssemblyTrademark("MapWindow GIS is a trademark of Daniel P. Ames, 2005-2015")]
 [assembly: AssemblyCulture("")]

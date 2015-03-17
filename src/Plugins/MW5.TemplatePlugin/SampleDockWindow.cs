@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MW5.Plugins.TemplatePlugin
 {
-    public partial class UserControl1 : UserControl
+    public partial class SampleDockWindow : UserControl
     {
-        public UserControl1()
+        public SampleDockWindow()
         {
             InitializeComponent();
         }
