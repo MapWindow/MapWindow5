@@ -21,6 +21,7 @@ namespace MW5.Helpers
             map.Identifier.HotTracking = true;
             map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
+            map.Identifier.HotTracking = false;
         }
     }
 }
