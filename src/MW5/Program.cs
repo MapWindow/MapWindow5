@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api.Static;
-using MW5.DI.Ninject;
-//using MW5.DI.Castle;
-//using MW5.DI.LightInject;
-//using MW5.DI.Ninject;
-//using MW5.DI.Unity;
+using MW5.DI.Castle;
+// using MW5.DI.Ninject;
+// using MW5.DI.LightInject;
+// using MW5.DI.Ninject;
+// using MW5.DI.Unity;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
@@ -46,11 +46,13 @@ namespace MW5
         private static IApplicationContainer CreateContainer()
         {
             // Switch the class here and change the using directive above to use another one
+            // Also switch references.
+
             // LightInjectContainer
             // NinjectContainer
-            // WindsorCastleContainer
             // UnityApplicationContainer
-            return  new NinjectContainer();
+            // return  new NinjectContainer();
+            return new WindsorCastleContainer();
         }
 
         private static void InitMapConfig()

@@ -198,9 +198,9 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MW5.DI\MW5.DI.Ninject\MW5.DI.Ninject.csproj">
-      <Project>{b2b2be95-1f16-4d90-8f0a-e736da85d9fd}</Project>
-      <Name>MW5.DI.Ninject</Name>
+    <ProjectReference Include="..\MW5.DI\MW5.DI.Castle\MW5.DI.Castle.csproj">
+      <Project>{193010c4-9bde-42a3-a960-0b39700a9de1}</Project>
+      <Name>MW5.DI.Castle</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Services\MW5.Services.csproj">
       <Project>{54bb55da-dbdc-47e5-8dec-de325f35f074}</Project>
