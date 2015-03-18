@@ -5,5 +5,8 @@
 
 3 Read some atttributes from the assembly info instead of hard-coded in the plugin class
 
+4 When a user closes the panel an event should be raised. Now it is not possible to reopen the panel without reloading the plug-in.
+
+
 
 

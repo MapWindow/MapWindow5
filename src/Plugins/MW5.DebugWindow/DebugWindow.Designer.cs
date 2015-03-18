@@ -37,17 +37,17 @@
             this.DebugTextbox.Location = new System.Drawing.Point(0, 0);
             this.DebugTextbox.Multiline = true;
             this.DebugTextbox.Name = "DebugTextbox";
-            this.DebugTextbox.Size = new System.Drawing.Size(230, 210);
+            this.DebugTextbox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.DebugTextbox.Size = new System.Drawing.Size(575, 95);
             this.DebugTextbox.TabIndex = 3;
             // 
-            // SampleDockWindow
+            // DebugWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.DebugTextbox);
-            this.MinimumSize = new System.Drawing.Size(230, 210);
-            this.Name = "SampleDockWindow";
-            this.Size = new System.Drawing.Size(230, 210);
+            this.Name = "DebugWindow";
+            this.Size = new System.Drawing.Size(575, 95);
             this.ResumeLayout(false);
             this.PerformLayout();
 

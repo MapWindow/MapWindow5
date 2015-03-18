@@ -107,8 +107,8 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// </summary>
         private void AddDockWindowToPanels()
         {
-            // Check if already loaded,  don't load again
-            if (_alreadyAdded)
+            // Check if already added,  don't add again
+            if (_debugWindow.IsAddedAsPanel)
             {
                 return;
             }
@@ -121,10 +121,12 @@ namespace MW5.Plugins.DebugWindow.Menu
             panel.SetIcon(Resources.ico_bug);
 
             // TODO: Read configuration setting to show the window like the last time:
+            panel.DockTo(DockPanelState.Bottom, 100);
+
             panels.Unlock();
 
-            // Make sure this panel isn't loaded multiple times:
-            _alreadyAdded = true;
+            // Make sure this panel isn't added multiple times:
+            _debugWindow.IsAddedAsPanel = true;
         }
 
         /// <summary>

@@ -56,11 +56,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// </summary>
         private readonly TemplatePlugin _plugin;
 
-        /// <summary>
-        /// To track if the dockable window is already added or not.
-        /// </summary>
-        private bool _alreadyAdded;
-
         #endregion
 
         #region Constructors and Destructors
@@ -121,8 +116,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// </summary>
         private void AddDockWindowToPanels()
         {
-            // Check if already loaded,  don't load again
-            if (_alreadyAdded)
+            // Check if already added,  don't add again
+            if (_sampleDockWindow.IsAddedAsPanel)
             {
                 return;
             }
@@ -145,8 +140,8 @@ namespace MW5.Plugins.TemplatePlugin.Menu
 
             _sampleDockWindow.Write("AddDockWindowToPanels", "Add to panel");
 
-            // Make sure this panel isn't loaded multiple times:
-            _alreadyAdded = true;
+            // Make sure this panel isn't added multiple times:
+            _sampleDockWindow.IsAddedAsPanel = true;
         }
 
         /// <summary>

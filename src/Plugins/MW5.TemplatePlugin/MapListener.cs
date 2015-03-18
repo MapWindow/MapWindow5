@@ -100,6 +100,11 @@ namespace MW5.Plugins.TemplatePlugin
         /// </param>
         private void PluginOnChooseLayer(IMuteMap map, ChooseLayerEventArgs e)
         {
+            if (e.LayerHandle == -1)
+            {
+                return;
+            }
+
             _sampleDockWindow.Write(
                 "MapListener.PluginOnChooseLayer", 
                 "Selected layer name: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
@@ -130,6 +135,11 @@ namespace MW5.Plugins.TemplatePlugin
         /// </param>
         private void PluginOnLayerSelected(IMuteLegend legend, LayerEventArgs e)
         {
+            if (e.LayerHandle == -1)
+            {
+                return;
+            }
+
             _sampleDockWindow.Write(
                 "MapListener.PluginOnLayerSelected", 
                 "Selected layer: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));

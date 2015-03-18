@@ -121,12 +121,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\monitor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ico_template.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\bug-24.png" />
   </ItemGroup>
   <ItemGroup>

@@ -131,6 +131,11 @@ namespace MW5.Plugins.DebugWindow
         /// </param>
         private void PluginOnChooseLayer(IMuteMap map, ChooseLayerEventArgs e)
         {
+            if (e.LayerHandle == -1)
+            {
+                return;
+            }
+
             _debugWindow.Write(
                 "MapListener.PluginOnChooseLayer", 
                 "Selected layer name: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
@@ -233,6 +238,11 @@ namespace MW5.Plugins.DebugWindow
         /// </param>
         private void PluginOnLayerSelected(IMuteLegend legend, LayerEventArgs e)
         {
+            if (e.LayerHandle == -1)
+            {
+                return;
+            }
+
             _debugWindow.Write(
                 "MapListener.PluginOnLayerSelected", 
                 "Selected layer: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
@@ -311,13 +321,13 @@ namespace MW5.Plugins.DebugWindow
         /// </param>
         private void PluginOnShapeIdentified(IMuteMap map, ShapeIdentifiedEventArgs e)
         {
-            _debugWindow.Write(
-                "MapListener.PluginOnShapeIdentified", 
-                string.Format("layerHandle: {0}, shapeIndex: {1}, PointX: {2}, PointY: {3}", 
-                    e.LayerHandle, 
-                    e.ShapeIndex, 
-                    e.PointX, 
-                    e.PointY));
+            var msg = string.Format(
+                "layerHandle: {0}, shapeIndex: {1}, PointX: {2}, PointY: {3}",
+                e.LayerHandle,
+                e.ShapeIndex,
+                e.PointX,
+                e.PointY);
+            _debugWindow.Write("MapListener.PluginOnShapeIdentified", msg);
         }
 
         /// <summary>
