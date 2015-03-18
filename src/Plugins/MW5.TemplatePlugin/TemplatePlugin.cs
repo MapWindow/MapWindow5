@@ -62,6 +62,9 @@ namespace MW5.Plugins.TemplatePlugin
         /// </summary>
         private MenuListener _menuListener;
 
+        /// <summary>
+        ///     The reference to the sample dock user control, is used in the constructor
+        /// </summary>
         private SampleDockWindow _sampleDockWindow;
 
         #endregion
@@ -175,15 +178,16 @@ namespace MW5.Plugins.TemplatePlugin
 
             // Set up container for dependency injection:
             CompositionRoot.Compose(context.Container);
+
+            // Will better to preserve state if plugin is unloaded, therefore singleton
+            // Because SampleDockWindow is injected in MenuListener and MapListener it should be call before them:
+            _sampleDockWindow = context.Container.GetSingleton<SampleDockWindow>();   
+
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
 
-            // Will better to preserve state if plugin is unloaded, therefore singleton
-            _sampleDockWindow = context.Container.GetSingleton<SampleDockWindow>();   
-
-            // Legend event handler to raise when a layer is selected:
-            this.LayerSelected += TemplatePlugin_LayerSelected;
+            // Event handlers are in the MapListener class:
 
             // Just to show case:
             Debug.WriteLine("Number of layers loaded" + _context.Layers.Count());
@@ -195,27 +199,6 @@ namespace MW5.Plugins.TemplatePlugin
         public override void Terminate()
         {
             // menus & toolbars will be cleared automatically
-        }
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// The layer selected event handler
-        /// </summary>
-        /// <param name="legend">
-        /// The legend.
-        /// </param>
-        /// <param name="e">
-        /// The layer event arguments
-        /// </param>
-        private void TemplatePlugin_LayerSelected(IMuteLegend legend, LayerEventArgs e)
-        {
-            Debug.Print("Layer selected: " + e.LayerHandle);
-            _sampleDockWindow.DebugTextbox.AppendText(
-                "Layer file name: " + System.IO.Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename)
-                + Environment.NewLine);
         }
 
         #endregion

@@ -1,0 +1,9 @@
+1 Read and Write configuration settings
+1a Load sample dock window in the same location and size as the previous time
+
+2 Add the new menu before the Help menu
+
+3 Read some atttributes from the assembly info instead of hard-coded in the plugin class
+
+
+

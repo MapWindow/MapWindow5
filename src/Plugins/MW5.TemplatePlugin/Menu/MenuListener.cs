@@ -57,9 +57,9 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         private readonly TemplatePlugin _plugin;
 
         /// <summary>
-        /// To track if the dockable window is already loaded or not.
+        /// To track if the dockable window is already added or not.
         /// </summary>
-        private bool _alreadyLoaded;
+        private bool _alreadyAdded;
 
         #endregion
 
@@ -117,26 +117,24 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         #region Methods
 
         /// <summary>
-        /// Create a dockable window.
+        /// Add a dockable window to the panels
         /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        private void CreateDockWindow(IAppContext context)
+        private void AddDockWindowToPanels()
         {
             // Check if already loaded,  don't load again
-            if (_alreadyLoaded)
+            if (_alreadyAdded)
             {
                 return;
             }
 
-            var panels = context.DockPanels;
+            var panels = _context.DockPanels;
 
             panels.Lock();
             var panel = panels.Add(_sampleDockWindow, DOCKPANELKEY, _plugin.Identity);
             panel.Caption = "Template dock window";
             panel.SetIcon(Resources.ico_template);
 
+            // TODO: Read configuration setting to show the window like the last time:
             var preview = panels.Preview;
             if (preview != null)
             {
@@ -145,8 +143,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
 
             panels.Unlock();
 
+            _sampleDockWindow.Write("AddDockWindowToPanels", "Add to panel");
+
             // Make sure this panel isn't loaded multiple times:
-            _alreadyLoaded = true;
+            _alreadyAdded = true;
         }
 
         /// <summary>
@@ -165,7 +165,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
                 case MenuKeys.ShowDockableWindow:
                     // Clicked on the toolbar button
                     _messageService.Info("Hello from Template plugin");
-                    this.CreateDockWindow(_context);
+                    this.AddDockWindowToPanels();
                     break;
             }
         }

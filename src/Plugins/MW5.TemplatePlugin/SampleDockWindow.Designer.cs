@@ -67,11 +67,13 @@
             // 
             // DebugTextbox
             // 
-            this.DebugTextbox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.DebugTextbox.Location = new System.Drawing.Point(0, 103);
+            this.DebugTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.DebugTextbox.Location = new System.Drawing.Point(0, 96);
             this.DebugTextbox.Multiline = true;
             this.DebugTextbox.Name = "DebugTextbox";
-            this.DebugTextbox.Size = new System.Drawing.Size(237, 114);
+            this.DebugTextbox.Size = new System.Drawing.Size(230, 114);
             this.DebugTextbox.TabIndex = 3;
             // 
             // SampleDockWindow
@@ -82,8 +84,9 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxAdv1);
             this.Controls.Add(this.buttonAdv1);
+            this.MinimumSize = new System.Drawing.Size(230, 210);
             this.Name = "SampleDockWindow";
-            this.Size = new System.Drawing.Size(237, 217);
+            this.Size = new System.Drawing.Size(230, 210);
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -95,6 +98,6 @@
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
         private System.Windows.Forms.Label label1;
-        internal System.Windows.Forms.TextBox DebugTextbox;
+        private System.Windows.Forms.TextBox DebugTextbox;
     }
 }

@@ -11,6 +11,7 @@ namespace MW5.Plugins.TemplatePlugin
 {
     #region
 
+    using System;
     using System.Windows.Forms;
 
     #endregion
@@ -31,5 +32,10 @@ namespace MW5.Plugins.TemplatePlugin
         }
 
         #endregion
+
+        public void Write(string prefix, string message)
+        {
+            this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
+        }
     }
 }
