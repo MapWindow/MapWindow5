@@ -9,6 +9,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IMuteMap: IComWrapper
     {
+        IShapesList IdentifiedShapes { get; }
         IFeatureSet SelectedFeatureSet { get; }
         IImageSource SelectedImage { get; }
         IVectorLayer SelectedVectorLayer { get; }

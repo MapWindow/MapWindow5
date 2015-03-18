@@ -97,12 +97,12 @@
     <Compile Include="Concrete\GeoMeasurer.cs" />
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
-    <Compile Include="Concrete\LayerSelection.cs" />
-    <Compile Include="Concrete\LayerSelectionList.cs" />
+    <Compile Include="Concrete\SelectionItem.cs" />
+    <Compile Include="Concrete\ShapesList.cs" />
     <Compile Include="Events\MapEventHandler.cs" />
-    <Compile Include="Events\ShapesIdentifiedEventArgs.cs" />
     <Compile Include="Interfaces\ILegendLayerCollection.cs" />
     <Compile Include="Interfaces\IMap.cs" />
+    <Compile Include="Interfaces\IShapesList.cs" />
     <Compile Include="Legend\Abstract\ILegendGroup.cs" />
     <Compile Include="Legend\Abstract\ILegendGroups.cs" />
     <Compile Include="Legend\Abstract\ILegendLayer.cs" />

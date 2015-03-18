@@ -104,7 +104,6 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<EventArgs> HistoryChanged_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
         internal MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified_;
-        internal MapEventHandler<ShapesIdentifiedEventArgs> ShapesIdentified_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -173,12 +172,6 @@ namespace MW5.Plugins.Concrete
         {
             add { ShapeIdentified_ += value; }
             remove { ShapeIdentified_ -= value; }
-        }
-
-        public event MapEventHandler<ShapesIdentifiedEventArgs> ShapesIdentified
-        {
-            add { ShapesIdentified_ += value; }
-            remove { ShapesIdentified_ -= value; }
         }
 
         public event MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed

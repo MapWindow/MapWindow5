@@ -1221,6 +1221,7 @@
     {
         AllLayers = 0,
         SingleLayer = 1,
+        AllLayerStopOnFirst = 2,
     }
 
     public enum MeasuringType

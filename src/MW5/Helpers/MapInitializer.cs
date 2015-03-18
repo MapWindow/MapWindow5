@@ -17,7 +17,7 @@ namespace MW5.Helpers
             map.MapCursor = MapCursor.ZoomIn;
             map.InertiaOnPanning = AutoToggle.Auto;
             map.ShowRedrawTime = false;
-            map.Identifier.IdentifierMode = IdentifierMode.SingleLayer;
+            map.Identifier.Mode = IdentifierMode.SingleLayer;
             map.Identifier.HotTracking = true;
             map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;

@@ -57,7 +57,6 @@ namespace MW5.Api
         public event EventHandler<SelectionChangedEventArgs> SelectionChanged;
         public event EventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
         public event EventHandler<ShapeIdentifiedEventArgs> ShapeIdentified;
-        public event EventHandler<ShapesIdentifiedEventArgs> ShapesIdentified;
         public event EventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed;
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         public event EventHandler<EventArgs> HistoryChanged;
@@ -117,6 +116,11 @@ namespace MW5.Api
         #endregion
 
         #region IMuteMap Members
+        [Browsable(false)]
+        public IShapesList IdentifiedShapes
+        {
+            get { return new ShapesList(_map.IdentifiedShapes); }
+        }
 
         [Browsable(false)]
         public HistoryList History

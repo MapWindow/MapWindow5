@@ -32,7 +32,11 @@ namespace MW5.Api.Legend
         public ILegendLayer LayerByHandle(int layerHandle)
         {
             var group = _legend.Groups.GroupByLayerHandle(layerHandle);
-            return group.Layers.FirstOrDefault(l => l.Handle == layerHandle);
+            if (group != null)
+            {
+                return group.Layers.FirstOrDefault(l => l.Handle == layerHandle);
+            }
+            return null;
         }
 
         /// <summary>

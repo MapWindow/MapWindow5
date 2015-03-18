@@ -41,7 +41,7 @@ namespace MW5.Api.Concrete
             set { _identifier.HotTracking = value; }
         }
 
-        public IdentifierMode IdentifierMode
+        public IdentifierMode Mode
         {
             get { return (IdentifierMode)_identifier.IdentifierMode; }
             set { _identifier.IdentifierMode = (tkIdentifierMode)value; }
@@ -51,12 +51,6 @@ namespace MW5.Api.Concrete
         {
             get { return ColorHelper.UintToColor(_identifier.OutlineColor); }
             set { _identifier.OutlineColor = ColorHelper.ColorToUInt(value); }
-        }
-
-        public int ActiveLayer
-        {
-            get { return _identifier.ActiveLayer; }
-            set { _identifier.ActiveLayer = value; }
         }
     }
 }

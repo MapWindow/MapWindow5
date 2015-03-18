@@ -111,7 +111,7 @@ namespace MW5.Views
 
                 preview.DockTo(legend, DockPanelState.Bottom, size);
             }
-            catch (Exception ex)
+            finally
             {
                 panels.Unlock();
             }
@@ -188,7 +188,7 @@ namespace MW5.Views
 
             //toolSearch.Enabled = true;
             //toolSearch.Text = "Find location";
-            //if (App.Map.NumLayers > 0 && !App.Map.Measuring.IsUsingEllipsoid)
+            //if (App.Map.Count > 0 && !App.Map.Measuring.IsUsingEllipsoid)
             //{
             //    toolSearch.Enabled = false;
             //    toolSearch.Text = "Unsupported projection. Search isn't allowed.";

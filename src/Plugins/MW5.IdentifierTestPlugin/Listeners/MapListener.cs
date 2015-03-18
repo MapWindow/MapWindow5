@@ -22,24 +22,12 @@ namespace MW5.Plugins.IdentifierTestPlugin.Listeners
             _plugin = plugin;
             _identifierControl = identifierControl;
 
-            _plugin.LayerSelected += PluginLayerSelected;
             _plugin.ShapeIdentified += _plugin_ShapeIdentified;
-            _plugin.ShapesIdentified += _plugin_ShapesIdentified;
-        }
-
-        private void _plugin_ShapesIdentified(Api.Interfaces.IMuteMap map, Api.Events.ShapesIdentifiedEventArgs e)
-        {
-            _identifierControl.OnShapesIdentified(map, e);
         }
 
         private void _plugin_ShapeIdentified(Api.Interfaces.IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)
         {
             _identifierControl.OnShapeIdentified(map, e);
-        }
-
-        private void PluginLayerSelected(IMuteLegend legend, LayerEventArgs e)
-        {
-            _context.Map.Identifier.ActiveLayer = e.LayerHandle;
         }
     }
 }

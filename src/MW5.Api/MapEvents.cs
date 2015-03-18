@@ -38,14 +38,10 @@ namespace MW5.Api
             _map.TilesLoaded += MapTilesLoaded;
             _map.UndoListChanged += MapUndoListChanged;
             _map.ValidateShape += MapValidateShape;
-            _map.ShapesIdentified += MapShapesIdentified;
         }
-
-        
 
         public void DetachHandlers()
         {
-            _map.ShapesIdentified -= MapShapesIdentified;
             _map.ChooseLayer -= MapChooseLayer;
             _map.AfterShapeEdit -= MapAfterShapeEdit;
             _map.BackgroundLoadingFinished -= MapBackgroundLoadingFinished;
@@ -77,11 +73,6 @@ namespace MW5.Api
         }
 
         #region Handlers
-
-        private void MapShapesIdentified(object sender, _DMapEvents_ShapesIdentifiedEvent e)
-        {
-            Invoke(sender, ShapesIdentified, new ShapesIdentifiedEventArgs(e));
-        }
 
         private void MapValidateShape(object sender, _DMapEvents_ValidateShapeEvent e)
         {

@@ -5,14 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class LayerSelectionList: IEnumerable<LayerSelection>
+    public class ShapesList: IEnumerable<SelectionItem>, IShapesList
     {
         private readonly SelectionList _list;
 
-        public LayerSelectionList(SelectionList list)
+        public ShapesList(SelectionList list)
         {
             if (list == null) throw new ArgumentNullException("list");
             _list = list;
@@ -28,16 +29,21 @@ namespace MW5.Api.Concrete
             _list.Clear();
         }
 
-        public int NumLayers
+        public int Count
         {
-            get { return _list.NumLayers; }
+            get { return _list.Count; }
         }
 
-        public IEnumerator<LayerSelection> GetEnumerator()
+        public void RemoveByLayerHandle(int layerHandle)
         {
-            for (int i = 0; i < _list.NumLayers; i++)
+            _list.RemoveByLayerHandle(layerHandle);
+        }
+
+        public IEnumerator<SelectionItem> GetEnumerator()
+        {
+            for (int i = 0; i < _list.Count; i++)
             {
-                yield return new LayerSelection(_list, i);
+                yield return new SelectionItem(_list, i);
             }
         }
 

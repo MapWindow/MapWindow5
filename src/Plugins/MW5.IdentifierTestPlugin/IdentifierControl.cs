@@ -35,12 +35,14 @@ namespace MW5.Plugins.IdentifierTestPlugin
             switch (Mode)
             {
                 case IdentifierPluginMode.CurrentLayer:
-                    _map.Identifier.IdentifierMode = Api.IdentifierMode.SingleLayer;
+                    _map.Identifier.Mode = Api.IdentifierMode.SingleLayer;
+                    break;
+                case IdentifierPluginMode.TopDownStopOnFirst:
+                    _map.Identifier.Mode = Api.IdentifierMode.AllLayerStopOnFirst;
                     break;
                 case IdentifierPluginMode.AllLayers:
-                case IdentifierPluginMode.TopDownStopOnFirst:
                 case IdentifierPluginMode.LayerSelection:
-                    _map.Identifier.IdentifierMode = Api.IdentifierMode.AllLayers;
+                    _map.Identifier.Mode = Api.IdentifierMode.AllLayers;
                     break;
             }
         }
@@ -54,17 +56,6 @@ namespace MW5.Plugins.IdentifierTestPlugin
         {
             // TODO: display info about shape
             Debug.Print("Shape identified: {0}; layer handle: {1}", e.ShapeIndex, e.LayerHandle);
-        }
-
-        public void OnShapesIdentified(IMuteMap map, Api.Events.ShapesIdentifiedEventArgs e)
-        {
-            // TODO: display info about shape
-            var sb = new StringBuilder();
-            foreach (var layer in e.SelectionList)
-            {
-                sb.AppendFormat("Layer: {0}; Number of shapes: {1}" + Environment.NewLine, layer.LayerHandle, layer.ShapeIndices.Count);
-            }
-            MessageBox.Show(sb.ToString());
         }
     }
 }

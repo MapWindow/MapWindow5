@@ -56,12 +56,14 @@ namespace MW5.UI.Docking
 
         public void Lock()
         {
+            _dockingManager.LockDockPanelsUpdate();
             _dockingManager.LockHostFormUpdate();
             _locked = true;
         }
 
         public void Unlock()
         {
+            _dockingManager.UnlockDockPanelsUpdate();
             _dockingManager.UnlockHostFormUpdate();
             _locked = false;
         }
