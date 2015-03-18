@@ -26,7 +26,7 @@ namespace MW5.Configuration
             get { return _plugin.Identity.Author; }
         }
 
-        internal string Description
+        public string Description
         {
             get { return _plugin.Description; }
         }

@@ -9,7 +9,8 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
-    [PluginExport("Identifier test plugin", "Author", "1AECEA80-DCC3-4A34-89FB-7A2304B489FA")]
+    //[PluginExport("Identifier test plugin", "Author", "1AECEA80-DCC3-4A34-89FB-7A2304B489FA")]
+    [PluginExport()]
     public class IdentifierTestPlugin: BasePlugin
     {
         private IAppContext _context;
@@ -21,11 +22,6 @@ namespace MW5.Plugins.IdentifierTestPlugin
         static IdentifierTestPlugin()
         {
             EnumHelper.RegisterConverter(new IdentifierModeConverter());
-        }
-
-        public override string Description
-        {
-            get { return "Identifier test plugin"; }
         }
 
         public override void Initialize(IAppContext context)

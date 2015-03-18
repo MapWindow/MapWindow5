@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
@@ -92,7 +94,24 @@ namespace MW5.Plugins
                     continue;
                 }
 
-                p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
+                if (item.Metadata.Empty)
+                {
+                    try
+                    {
+                        var info = p.GetType().GetAssemblyInfo();
+                        var attr = p.GetType().Assembly.GetAttribute<GuidAttribute>();
+                        Guid guid = new Guid(attr.Value);
+                        p.Identity = new PluginIdentity(info.ProductName, info.CompanyName, guid);
+                    }
+                    catch(Exception ex)
+                    {
+                        throw new ApplicationException("Failed to load plugin identity from assembly.", ex);
+                    }
+                }
+                else
+                {
+                    p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
+                }
 
                 _container.RegisterInstance(p.GetType(), p);
 

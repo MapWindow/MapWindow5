@@ -10,7 +10,14 @@ namespace MW5.Plugins.Mef
         private string _name;
         private string _author;
         private string _guid;
-        
+        private bool _empty;
+
+        public PluginExportAttribute()
+            : base(typeof(IPlugin))
+        {
+            _empty = true;
+        }
+
         public PluginExportAttribute(string name,  string author, string guid)
             : base(typeof(IPlugin))
         {
@@ -31,9 +38,15 @@ namespace MW5.Plugins.Mef
                 throw new ApplicationException("Invalid Guid value.");
             }
 
+            _empty = false;
             _author = author;
             _name = name;
             _guid = guid;
+        }
+
+        public bool Empty
+        {
+            get { return _empty; }
         }
 
         public string Name

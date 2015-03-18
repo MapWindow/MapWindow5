@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +11,7 @@ using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Events;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Concrete
@@ -16,8 +19,25 @@ namespace MW5.Plugins.Concrete
     public abstract class BasePlugin: IPlugin
     {
         private PluginIdentity _identity = null;
+        private FileVersionInfo _fileVersionInfo;
 
-        public abstract string Description { get; }
+        public virtual string Description
+        {
+            get
+            {
+                return ReferenceFile.Comments;
+            }
+        }
+
+        private FileVersionInfo ReferenceFile
+        {
+            get { return _fileVersionInfo ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(ReferenceAssembly.Location));}
+        }
+
+        private Assembly ReferenceAssembly
+        {
+            get { return GetType().Assembly; }
+        }
 
         public abstract void Initialize(IAppContext context);
         

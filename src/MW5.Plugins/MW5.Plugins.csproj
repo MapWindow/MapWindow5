@@ -89,6 +89,7 @@
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="Helpers\AssemblyHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
     <Compile Include="Interfaces\IDockPanel.cs" />

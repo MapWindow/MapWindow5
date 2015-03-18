@@ -7,5 +7,6 @@ namespace MW5.Plugins.Mef
         string Name { get; }
         string Author { get; }
         string Guid { get; }
+        bool Empty { get; }
     }
 }
