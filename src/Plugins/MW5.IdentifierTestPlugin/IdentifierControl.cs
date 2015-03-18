@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
@@ -54,8 +55,12 @@ namespace MW5.Plugins.IdentifierTestPlugin
 
         public void OnShapeIdentified(IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)
         {
-            // TODO: display info about shape
-            Debug.Print("Shape identified: {0}; layer handle: {1}", e.ShapeIndex, e.LayerHandle);
+            treeViewAdv1.Nodes.Clear();
+            foreach (var shape in map.IdentifiedShapes)
+            {
+                string msg = string.Format("LayerHandle: {0}; shape index: {1}", shape.LayerHandle, shape.ShapeIndex);
+                treeViewAdv1.Nodes.Add(new TreeNodeAdv(msg));
+            }
         }
     }
 }
