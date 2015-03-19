@@ -40,7 +40,7 @@ namespace MW5
 
             container.Run<MainPresenter>();
 
-            configService.Save();
+            //configService.Save();   // it's saved on closing ConfigView
         }
 
         private static IApplicationContainer CreateContainer()

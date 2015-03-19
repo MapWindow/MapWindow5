@@ -80,7 +80,7 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Concrete\AppConfig.cs" />
+    <Compile Include="Concrete\AppSettings.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
     <Compile Include="Concrete\LayerCancelEventArgs.cs" />
     <Compile Include="Concrete\MenuCommand.cs" />
@@ -127,6 +127,7 @@
     <Compile Include="Services\ILayerService.cs" />
     <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\IMessageService.cs" />
+    <Compile Include="Services\IPluginManager.cs" />
     <Compile Include="Services\IProjectService.cs" />
   </ItemGroup>
   <ItemGroup>

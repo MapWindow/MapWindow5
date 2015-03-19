@@ -14,11 +14,9 @@ namespace MW5.Plugins.Interfaces
         IMenuItemCollection SubItems { get; }
 
         event EventHandler DropDownOpening;
+        
+        event EventHandler DropDownClosed;
 
         void Update();
-
-        //bool GetGroupBegins(int index);
-
-        //void SetGroupBegins(int index, bool value);
     }
 }

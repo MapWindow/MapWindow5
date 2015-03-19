@@ -2,15 +2,16 @@
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 
 namespace MW5.Menu
 {
     internal static class PluginsMenuHelper
     {
-        private static PluginManager _manager;
+        private static IPluginManager _manager;
         private static IAppContext _context;
 
-        internal static void Init(IAppContext context, PluginManager pluginManager)
+        internal static void Init(IAppContext context, IPluginManager pluginManager)
         {
             if (context == null || pluginManager == null)
             {
@@ -20,28 +21,35 @@ namespace MW5.Menu
             _manager = pluginManager;
 
             var menuItem = context.Menu.PluginsMenu;
-
-            foreach (var p in _manager.AllPlugins)
-            {
-                var item = menuItem.SubItems.AddButton(p.Identity.Name, PluginIdentity.Default);
-                item.Tag = p.Identity;                    
-                item.AttachClickEventHandler(item_Click);
-            }
-
             menuItem.DropDownOpening += MenuDropDownOpening;
+            menuItem.DropDownClosed += MenuDropDownClosed;
+
+            AddDummyItem();
+        }
+
+        private static void MenuDropDownClosed(object sender, EventArgs e)
+        {
+            AddDummyItem();
+        }
+
+        private static void AddDummyItem()
+        {
+            // otherwise it won't open, as plugin entries are added dynamically on opening
+            var item = _context.Menu.PluginsMenu;
+            item.SubItems.AddButton("__empty__", PluginIdentity.Default);
         }
 
         private static void MenuDropDownOpening(object sender, EventArgs e)
         {
-            var menu = _context.Menu.PluginsMenu;
+            var menuItem = _context.Menu.PluginsMenu;
+            menuItem.SubItems.Clear();
 
-            foreach (var item in menu.SubItems)
+            foreach (var p in _manager.CustomPlugins)
             {
-                var identity = item.Tag as PluginIdentity;
-                if (identity != null)
-                {
-                    item.Checked = _manager.PluginActive(identity);
-                }
+                var item = menuItem.SubItems.AddButton(p.Identity.Name, PluginIdentity.Default);
+                item.Tag = p.Identity;
+                item.AttachClickEventHandler(item_Click);
+                item.Checked = _manager.PluginActive(p.Identity);
             }
         }
 

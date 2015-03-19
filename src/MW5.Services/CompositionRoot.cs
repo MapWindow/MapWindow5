@@ -16,7 +16,7 @@ namespace MW5.Services
                 .RegisterService<IProjectService, ProjectService>()
                 .RegisterService<ICreateLayerView, CreateLayerView>()
                 .RegisterService<IErrorService, ErrorService>()
-                .RegisterService<IConfigService, ConfigService>();
+                .RegisterSingleton<IConfigService, ConfigService>();
 
         }
     }

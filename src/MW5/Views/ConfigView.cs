@@ -21,26 +21,42 @@ namespace MW5.Views
     public partial class ConfigView : MapWindowForm, IConfigView
     {
         private bool _initialized = false;
-        private readonly PluginManager _manager;
+        private readonly IPluginManager _manager;
         private readonly IConfigService _config;
         private List<IConfigPage> _pages = new List<IConfigPage>();
-        
+        private static string _lastPageName = string.Empty;
+
+        public event Action OkClicked;
+        public event Action OpenFolderClicked;
+        public event Action SaveClicked;
+
         public ConfigView()
         {
-            InitializeComponent();
+            Init();
         }
 
         public ConfigView(IAppContext context): base(context)
         {
+            Init();
+        }
+
+        private void Init()
+        {
             InitializeComponent();
+            FormClosed += (s, e) =>
+            {
+                var page = SelectedPage;
+                if (page != null)
+                {
+                    _lastPageName = page.PageName;
+                }
+            };
         }
 
         public List<IConfigPage> Pages
         {
             get { return _pages; }
         }
-
-        public event Action OkClicked;
 
         public void Initialize()
         {
@@ -49,29 +65,48 @@ namespace MW5.Views
                 throw new ApplicationException("The view was already initialized");
             }
 
+            TreeNodeAdv selectedNode = null;
             foreach (var page in _pages)
             {
                 var node = new TreeNodeAdv(page.PageName) { Tag = page };
-                treeViewAdv1.Nodes.Add(node);
+                _treeViewAdv1.Nodes.Add(node);
+                if (page.PageName == _lastPageName)
+                {
+                    selectedNode = node;
+                }
             }
-
-            treeViewAdv1.AfterSelect += treeViewAdv1_AfterSelect;
-            treeViewAdv1.SelectedNode = treeViewAdv1.Nodes[0];
+            
+            _treeViewAdv1.AfterSelect += treeViewAdv1_AfterSelect;
+            _treeViewAdv1.SelectedNode = selectedNode ?? _treeViewAdv1.Nodes[0];
             _initialized = true;
+
+            btnOk.Click += (s, e) => Invoke(OkClicked);
+            btnOpenFolder.Click += (s, e) => Invoke(OpenFolderClicked);
+            btnSave.Click += (s, e) => Invoke(SaveClicked);
         }
 
         void treeViewAdv1_AfterSelect(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            var node = treeViewAdv1.SelectedNode;
-            if (node != null)
+
+            var page = SelectedPage as Control;
+            if (page != null)
             {
-                var page = node.Tag as Control;
-                if (page != null)
+                page.Dock = DockStyle.Fill;
+                panel1.Controls.Add(page);
+            }
+        }
+
+        private IConfigPage SelectedPage
+        {
+            get 
+            {
+                var node = _treeViewAdv1.SelectedNode;
+                if (node != null)
                 {
-                    page.Dock = DockStyle.Fill;
-                    panel1.Controls.Add(page);
+                    return node.Tag as IConfigPage;
                 }
+                return null;
             }
         }
 

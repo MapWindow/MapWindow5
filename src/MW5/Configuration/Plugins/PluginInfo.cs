@@ -1,7 +1,7 @@
 ﻿using System;
 using MW5.Plugins.Concrete;
 
-namespace MW5.Configuration
+namespace MW5.Configuration.Plugins
 {
     public class PluginInfo
     {
@@ -13,6 +13,7 @@ namespace MW5.Configuration
             _plugin = plugin;
             Selected = selected;
         }
+
 
         public bool Selected { get; set; }
 
@@ -26,9 +27,9 @@ namespace MW5.Configuration
             get { return _plugin.Identity.Author; }
         }
 
-        public string Description
+        internal BasePlugin BasePlugin
         {
-            get { return _plugin.Description; }
+            get { return _plugin; }
         }
     }
 }

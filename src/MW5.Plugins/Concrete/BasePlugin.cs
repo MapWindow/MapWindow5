@@ -20,6 +20,12 @@ namespace MW5.Plugins.Concrete
     {
         private PluginIdentity _identity = null;
         private FileVersionInfo _fileVersionInfo;
+        private bool _applicationPlugin = false;
+
+        public bool IsApplicationPlugin
+        {
+            get { return _applicationPlugin; }
+        }
 
         public virtual string Description
         {
@@ -28,20 +34,6 @@ namespace MW5.Plugins.Concrete
                 return ReferenceFile.Comments;
             }
         }
-
-        private FileVersionInfo ReferenceFile
-        {
-            get { return _fileVersionInfo ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(ReferenceAssembly.Location));}
-        }
-
-        private Assembly ReferenceAssembly
-        {
-            get { return GetType().Assembly; }
-        }
-
-        public abstract void Initialize(IAppContext context);
-        
-        public abstract void Terminate();
 
         public PluginIdentity Identity
         {
@@ -62,6 +54,26 @@ namespace MW5.Plugins.Concrete
                 _identity = value;
             }
         }
+
+        private FileVersionInfo ReferenceFile
+        {
+            get { return _fileVersionInfo ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(ReferenceAssembly.Location)); }
+        }
+
+        private Assembly ReferenceAssembly
+        {
+            get { return GetType().Assembly; }
+        }
+
+        public abstract void Initialize(IAppContext context);
+
+        public abstract void Terminate();
+
+        internal void SetApplicationPlugin(bool value)
+        {
+            _applicationPlugin = value;
+        }
+
 #pragma warning disable 67
         #region Plugin events
 

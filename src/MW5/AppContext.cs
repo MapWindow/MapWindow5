@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
@@ -34,7 +35,7 @@ namespace MW5
         private IProjectService _project;
         private IMuteLegend _legend;
         private IToolbarCollection _toolbars;
-        private PluginManager _pluginManager;
+        private IPluginManager _pluginManager;
         private IBroadcasterService _broadcaster;
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
@@ -55,7 +56,7 @@ namespace MW5
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
 
-            _pluginManager = _container.GetSingleton<PluginManager>();
+            _pluginManager = _container.GetSingleton<IPluginManager>();
             _broadcaster = _container.GetSingleton<IBroadcasterService>();
             _container.RegisterInstance<IMuteMap>(mainView.Map);
 
@@ -69,6 +70,34 @@ namespace MW5
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
             _statusBar = new UI.StatusBar(mainView.StatusBar);
+        }
+
+        internal void InitPlugins(IConfigService configService)
+        {
+            var pluginManager = PluginManager;
+            pluginManager.PluginUnloaded += ManagerPluginUnloaded;
+            pluginManager.AssemblePlugins();
+
+            if (configService.ApplicationPlugins != null)
+            {
+                var dict = configService.ApplicationPlugins.ToDictionary(p => p, p => p);
+                foreach (var p in pluginManager.AllPlugins)
+                {
+                    bool active = dict.ContainsKey(p.Identity.Guid);
+                    p.SetApplicationPlugin(active);
+                    if (active)
+                    {
+                        pluginManager.LoadPlugin(p.Identity, this);
+                    }
+                }
+            }
+        }
+
+        private void ManagerPluginUnloaded(object sender, PluginEventArgs e)
+        {
+            Toolbars.RemoveItemsForPlugin(e.Identity);
+            Menu.RemoveItemsForPlugin(e.Identity);
+            DockPanels.RemoveItemsForPlugin(e.Identity);
         }
 
         public IApplicationContainer Container
@@ -121,7 +150,7 @@ namespace MW5
             get { return _dockPanelCollection; }
         }
 
-        public PluginManager PluginManager
+        public IPluginManager PluginManager
         {
             get { return _pluginManager; }
         }

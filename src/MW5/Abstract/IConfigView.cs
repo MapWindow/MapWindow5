@@ -8,7 +8,9 @@ namespace MW5.Abstract
     public interface IConfigView: IView
     {
         List<IConfigPage> Pages { get; }
-        event Action OkClicked;
         void Initialize();
+        event Action OkClicked;
+        event Action OpenFolderClicked;
+        event Action SaveClicked;
     }
 }

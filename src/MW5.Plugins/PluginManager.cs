@@ -18,10 +18,11 @@ using MW5.Plugins.Services;
 
 namespace MW5.Plugins
 {
-    public class PluginManager
+    public class PluginManager : IPluginManager
     {
         private readonly IApplicationContainer _container;
         private readonly IErrorService _errorService;
+        private readonly IMessageService _messageService;
         private const string PLUGIN_DIRECTORY = "Plugins";
 
         [ImportMany] 
@@ -39,8 +40,8 @@ namespace MW5.Plugins
 
         public event EventHandler<MenuItemEventArgs> PluginItemClicked;
 
-        private static PluginManager _instance;
-        public static PluginManager Instance
+        private static IPluginManager _instance;
+        public static IPluginManager Instance
         {
             get { return _instance; }
         }
@@ -48,13 +49,15 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IApplicationContainer container, IErrorService errorService)
+        public PluginManager(IApplicationContainer container, IErrorService errorService, IMessageService messageService)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (errorService == null) throw new ArgumentNullException("errorService");
+            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _container = container;
             _errorService = errorService;
+            _messageService = messageService;
             _instance = this;
         }
 
@@ -64,6 +67,16 @@ namespace MW5.Plugins
         public IEnumerable<BasePlugin> AllPlugins
         {
             get { return _plugins; }
+        }
+
+        public IEnumerable<BasePlugin> ApplicationPlugins
+        {
+            get { return _plugins.Where(p => p.IsApplicationPlugin); }
+        }
+
+        public IEnumerable<BasePlugin> CustomPlugins
+        {
+            get { return _plugins.Where(p => !p.IsApplicationPlugin); }
         }
 
         /// <summary>
@@ -177,7 +190,15 @@ namespace MW5.Plugins
                 throw new ApplicationException("Plugin which requested for loading isn't present in the list.");
             }
 
-            plugin.Initialize(context);
+            try
+            {
+                plugin.Initialize(context);
+            }
+            catch (Exception ex)
+            {
+                _messageService.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                return;
+            }
             _active.Add(plugin.Identity);
         }
 

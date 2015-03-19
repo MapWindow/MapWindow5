@@ -1,5 +1,4 @@
 ﻿using System;
-using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
@@ -46,6 +45,18 @@ namespace MW5.UI.Menu
             remove
             {
                 //AsParent.Popup -= value;        // the handler is removed in MenuItemCollection.Remove
+            }
+        }
+
+        public event EventHandler DropDownClosed
+        {
+            add
+            {
+                AsParent.PopupClosed += (s, e) => value.Invoke(this, e);
+            }
+            remove
+            {
+                AsParent.PopupClosed -= value;
             }
         }
 

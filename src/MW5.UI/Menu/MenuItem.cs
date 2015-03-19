@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;

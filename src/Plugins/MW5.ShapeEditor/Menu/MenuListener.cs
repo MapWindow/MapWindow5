@@ -7,6 +7,7 @@ using MW5.Api;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Helpers;
 
 namespace MW5.Plugins.ShapeEditor.Menu
@@ -14,15 +15,18 @@ namespace MW5.Plugins.ShapeEditor.Menu
     internal class MenuListener
     {
         private readonly ILayerService _layerService;
-        private readonly GeoprocessingService _geoprocessingService;
+        private readonly IGeoprocessingService _geoprocessingService;
         private readonly IAppContext _context;
 
-        public MenuListener(IAppContext context, ShapeEditor plugin)
+        public MenuListener(IAppContext context, ShapeEditor plugin, ILayerService layerService, 
+                IGeoprocessingService geoprocessingService)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (layerService == null) throw new ArgumentNullException("layerService");
+            if (geoprocessingService == null) throw new ArgumentNullException("geoprocessingService");
 
-            _layerService = context.Container.Resolve<ILayerService>();
-            _geoprocessingService = context.Container.GetSingleton<GeoprocessingService>();
+            _layerService = layerService;
+            _geoprocessingService = geoprocessingService;
             _context = context;
 
             plugin.ItemClicked += Plugin_ItemClicked;

@@ -20,5 +20,6 @@ namespace MW5.Plugins.Interfaces
         IView View { get; }
         event EventHandler<CancelEventArgs> ViewClosing;
         event EventHandler<EventArgs> ViewUpdating;
+        void InitDocking();
     }
 }

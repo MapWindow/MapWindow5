@@ -20,10 +20,10 @@ namespace MW5.Plugins
 {
     internal class PluginBroadcaster : IBroadcasterService
     {
-        private readonly PluginManager _manager;
+        private readonly IPluginManager _manager;
         private readonly Dictionary<string, FieldInfo> _fields = new Dictionary<string,FieldInfo>();
 
-        public PluginBroadcaster(PluginManager manager)
+        public PluginBroadcaster(IPluginManager manager)
         {
             if (manager == null)
             {

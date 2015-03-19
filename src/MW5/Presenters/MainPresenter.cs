@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
@@ -17,25 +18,24 @@ namespace MW5.Presenters
     {
         private readonly IAppContext _context;
         private readonly IProjectService _projectService;
-        private readonly ILoggingService _loggingService;
         private readonly MenuListener _menuListener;
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
         private readonly LegendListener _legendListener;
-        private PluginManager _pluginManager;
 
-        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, ILoggingService loggingService)
+        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, ILoggingService loggingService, 
+                            IConfigService configService)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (projectService == null) throw new ArgumentNullException("projectService");
             if (loggingService == null) throw new ArgumentNullException("loggingService");
+            if (configService == null) throw new ArgumentNullException("configService");
 
             _context = context;
             _projectService = projectService;
-            _loggingService = loggingService;
 
-            ApplicationCallback.Attach(_loggingService);
+            ApplicationCallback.Attach(loggingService);
 
             var appContext = context as AppContext;
             if (appContext == null)
@@ -43,21 +43,19 @@ namespace MW5.Presenters
                 throw new InvalidCastException("Invalid type of IAppContext instance");
             }
             appContext.Init(view, projectService);
+            view.InitDocking();                          // must be called when context is initialized
 
             view.Map.Initialize();
             view.ViewClosing += OnViewClosing;
             view.ViewUpdating += OnViewUpdating;
 
-            var pluginManager = appContext.PluginManager;
-            pluginManager.PluginUnloaded += ManagerPluginUnloaded;
-            pluginManager.AssemblePlugins();
-
             var container = context.Container;
-            
             _menuGenerator = container.GetSingleton<MenuGenerator>();
             _menuListener = container.GetSingleton<MenuListener>();
             _mapListener = container.GetSingleton<MapListener>();
-            _legendListener = container.GetSingleton<LegendListener>(); 
+            _legendListener = container.GetSingleton<LegendListener>();
+
+            appContext.InitPlugins(configService);      // must be called after docking is initialized
         }
 
         private void OnViewUpdating(object sender, EventArgs e)
@@ -75,13 +73,6 @@ namespace MW5.Presenters
             {
                 e.Cancel = true;
             }
-        }
-
-        private void ManagerPluginUnloaded(object sender, PluginEventArgs e)
-        {
-            _context.Toolbars.RemoveItemsForPlugin(e.Identity);
-            _context.Menu.RemoveItemsForPlugin(e.Identity);
-            _context.DockPanels.RemoveItemsForPlugin(e.Identity);
         }
     }
 }

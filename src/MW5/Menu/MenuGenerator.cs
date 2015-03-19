@@ -6,6 +6,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Properties;
 using MW5.Services;
 using System.Linq;
+using MW5.Plugins.Services;
 
 namespace MW5.Menu
 {
@@ -15,13 +16,13 @@ namespace MW5.Menu
         private const string MAP_TOOLBAR = "Map";
         
         private readonly IAppContext _context;
-        private readonly PluginManager _pluginManager;
+        private readonly IPluginManager _pluginManager;
         private readonly IMainView _mainView;
         private readonly MenuCommands _commands;
         private readonly object _menuManager;
         private readonly object _dockingManager;
-        
-        public MenuGenerator(IAppContext context, PluginManager pluginManager, IMainView mainView)
+
+        public MenuGenerator(IAppContext context, IPluginManager pluginManager, IMainView mainView)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (pluginManager == null) throw new ArgumentNullException("pluginManager");

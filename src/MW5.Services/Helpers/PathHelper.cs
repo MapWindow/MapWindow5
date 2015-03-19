@@ -11,7 +11,7 @@ namespace MW5.Services.Helpers
     {
         private const string AppName = "MapWindow5";
 
-        public static string GetSettingsPath()
+        public static string GetConfigPath()
         {
             string folder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
 
@@ -25,14 +25,14 @@ namespace MW5.Services.Helpers
             return path;
         }
 
-        public static string GetSettingsFile()
+        public static string GetConfigFilePath()
         {
-            return GetSettingsPath() + @"\settings.xml";
+            return GetConfigPath() + @"\mwconfig.xml";
         }
 
-        public static string GetDockingConfigFilename()
+        public static string GetDockingConfigPath()
         {
-            return GetSettingsPath() + @"\dockstate.xml";
+            return GetConfigPath() + @"\dockstate";
         }
     }
 }

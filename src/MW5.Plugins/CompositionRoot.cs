@@ -13,7 +13,7 @@ namespace MW5.Plugins
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterSingleton<IBroadcasterService, PluginBroadcaster>()
-                .RegisterSingleton<PluginManager, PluginManager>();
+                .RegisterSingleton<IPluginManager, PluginManager>();
         }
     }
 }

@@ -90,39 +90,10 @@ namespace MW5.Views
             return true;
         }
 
-        private void InitDocking()
-        {
-            var panels = _context.DockPanels;
-            panels.Lock();
-            try
-            {
-                _legendControl1.BorderStyle = BorderStyle.None;
-                treeViewAdv2.BorderStyle = BorderStyle.None;
-                const int size = 300;
-
-                var legend = panels.Add(_legendControl1, DockPanelKeys.Legend , PluginIdentity.Default);
-                legend.Caption = "Legend";
-                legend.DockTo(null, DockPanelState.Left, size);
-                legend.SetIcon(Resources.ico_legend);
-                
-                var preview = panels.Add(treeViewAdv2, DockPanelKeys.Preview ,PluginIdentity.Default);
-                preview.Caption = "Preview";
-                preview.SetIcon(Resources.ico_zoom_to_layer);
-
-                preview.DockTo(legend, DockPanelState.Bottom, size);
-            }
-            finally
-            {
-                panels.Unlock();
-            }
-        }
-
         #region IView implementation
 
         public new void ShowView()
         {
-            InitDocking();
-            
             Application.Run(this);
         }
 
@@ -263,6 +234,33 @@ namespace MW5.Views
         public IView View
         {
             get { return this; }
+        }
+
+        public void InitDocking()
+        {
+            var panels = _context.DockPanels;
+            panels.Lock();
+            try
+            {
+                _legendControl1.BorderStyle = BorderStyle.None;
+                treeViewAdv2.BorderStyle = BorderStyle.None;
+                const int size = 300;
+
+                var legend = panels.Add(_legendControl1, DockPanelKeys.Legend, PluginIdentity.Default);
+                legend.Caption = "Legend";
+                legend.DockTo(null, DockPanelState.Left, size);
+                legend.SetIcon(Resources.ico_legend);
+
+                var preview = panels.Add(treeViewAdv2, DockPanelKeys.Preview, PluginIdentity.Default);
+                preview.Caption = "Preview";
+                preview.SetIcon(Resources.ico_zoom_to_layer);
+
+                preview.DockTo(legend, DockPanelState.Bottom, size);
+            }
+            finally
+            {
+                panels.Unlock();
+            }
         }
 
         #endregion

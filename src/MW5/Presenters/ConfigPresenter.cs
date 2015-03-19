@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Abstract;
 using MW5.Configuration;
+using MW5.Configuration.Plugins;
 using MW5.Plugins;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Config;
@@ -14,40 +17,88 @@ namespace MW5.Presenters
 {
     internal class ConfigPresenter: BasePresenter<IConfigView>
     {
+        private readonly IAppContext _context;
         private readonly IConfigView _view;
         private readonly IConfigService _configService;
-        private readonly PluginManager _manager;
+        private readonly IPluginManager _manager;
+        private readonly IMessageService _messageService;
         private PluginProvider _pluginProvider;
 
-        public ConfigPresenter(IConfigView view, IConfigService configService, PluginManager manager) : base(view)
+        public ConfigPresenter(IAppContext context, IConfigView view, IConfigService configService, IPluginManager manager,
+                               IMessageService messageService)
+            : base(view)
         {
+            if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
             if (configService == null) throw new ArgumentNullException("configService");
             if (manager == null) throw new ArgumentNullException("manager");
-            
+            if (messageService == null) throw new ArgumentNullException("messageService");
+
+            _context = context;
             _view = view;
             _configService = configService;
             _manager = manager;
+            _messageService = messageService;
 
             InitPages();
 
             _view.Initialize();
 
             view.OkClicked += view_OkClicked;
+            view.OpenFolderClicked += view_OpenFolderClicked;
+            view.SaveClicked += view_SaveClicked;
+        }
+
+        private void view_SaveClicked()
+        {
+            ApplySettings();
+            bool result = _configService.Save();
+            if (result)
+            {
+                _messageService.Info("Configuration was saved successfully.");
+            }
+        }
+
+        private void view_OpenFolderClicked()
+        {
+            string path = _configService.ConfigPath;
+            try
+            {
+                Process.Start(path);
+            }
+            catch (Exception ex)
+            {
+                _messageService.Warn("Failed to open folder: " + path + 
+                Environment.NewLine + ex.Message);
+            }
         }
 
         private void view_OkClicked()
         {
-            foreach (var p in _pluginProvider.List)
+            ApplySettings();
+            _configService.Save();
+            _view.Close();
+        }
+
+        private void ApplySettings()
+        {
+            // saving application plugins
+            var dict = _pluginProvider.List.Where(p => p.Selected).ToDictionary(p => p.BasePlugin.Identity.Guid, p => p);
+            foreach (var plugin in _manager.AllPlugins)
             {
-                // TODO: save in in the app config
+                bool appPlugin = dict.ContainsKey(plugin.Identity.Guid);
+                plugin.SetApplicationPlugin(appPlugin);
+                if (appPlugin && !_manager.PluginActive(plugin.Identity))
+                {
+                    _manager.LoadPlugin(plugin.Identity, _context);
+                }
             }
         }
 
         private void InitPages()
         {
             _view.Pages.Add(new GeneralConfigPage(_configService));
-            _pluginProvider = new PluginProvider(_configService.Config, _manager);
+            _pluginProvider = new PluginProvider(_manager);
             _view.Pages.Add(new PluginsConfigPage(_pluginProvider));
         }
     }

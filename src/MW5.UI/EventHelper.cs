@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace MW5.Helpers
+namespace MW5.UI
 {
     // The code copied from  http: //www.codeproject.com/Articles/103542/Removing-Event-Handlers-using-Reflection
     internal static class EventHelper

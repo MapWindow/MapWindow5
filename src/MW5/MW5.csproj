@@ -111,8 +111,8 @@
     <Compile Include="Configuration\GeneralConfigPage.Designer.cs">
       <DependentUpon>GeneralConfigPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Configuration\PluginInfo.cs" />
-    <Compile Include="Configuration\PluginProvider.cs" />
+    <Compile Include="Configuration\Plugins\PluginInfo.cs" />
+    <Compile Include="Configuration\Plugins\PluginProvider.cs" />
     <Compile Include="Configuration\PluginsConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>

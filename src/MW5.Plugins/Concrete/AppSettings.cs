@@ -3,10 +3,10 @@ using System.Runtime.Serialization;
 
 namespace MW5.Plugins.Concrete
 {
-    [DataContract(Name="Config")]
-    public class AppConfig
+    [DataContract(Name="Settings")]
+    public class AppSettings
     {
-        public AppConfig()
+        public AppSettings()
         {
             LoadSymbology = true;
         }
