@@ -9,8 +9,6 @@
 
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
-    using System.Runtime.InteropServices;
-
     /// <summary>
     /// The menu keys.
     /// </summary>

@@ -1,0 +1,5 @@
+1. Copy MW5.TemplatePlugin.zip to <userdir>\Documents\Visual Studio 2013\Templates\ProjectTemplates\
+2. Start Visual Studio
+3. Create new project, search for MW5 or look in the Visual C# node. 
+   Make sure to save your project in <>\src\Plugins\
+4. Open the AssemblyInfo and change the metadata as you wish.

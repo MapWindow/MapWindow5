@@ -48,7 +48,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             // Create the toolbar:
             InitToolbar(context, plugin.Identity);
 
-            // TODO: Create new top-level menu:
+            // Create new top-level menu:
             InitMenu(context, plugin.Identity);
         }
         #endregion
