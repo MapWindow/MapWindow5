@@ -12,8 +12,6 @@ namespace MW5.Plugins.DebugWindow
 
     using System.Diagnostics;
     using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
 
     using MW5.Plugins.Concrete;
     using MW5.Plugins.DebugWindow.Menu;
@@ -25,10 +23,7 @@ namespace MW5.Plugins.DebugWindow
     /// <summary>
     ///     The debug window plugin.
     /// </summary>
-    /// <remarks>
-    ///     TODO: Investigate how read these PluginExport attributes from the assembly info, preferable in the base plug-in.
-    /// </remarks>
-    [PluginExport("DebugWindow", "Paul Meems", "F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0")]
+    [PluginExport]
     public class DebugWindowPlugin : BasePlugin
     {
         #region Fields
@@ -37,11 +32,6 @@ namespace MW5.Plugins.DebugWindow
         ///     The context of the application, holding the menu, layers, project, etc.
         /// </summary>
         private IAppContext _context;
-
-        /// <summary>
-        /// The _file version info.
-        /// </summary>
-        private FileVersionInfo _fileVersionInfo;
 
         /// <summary>
         ///     The reference to the map listener class, is used in the constructor
@@ -62,100 +52,6 @@ namespace MW5.Plugins.DebugWindow
         ///     The reference to the sample dock user control, is used in the constructor
         /// </summary>
         private DebugWindow _debugWindow;
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///     Short description of the plugin, from AssemblyDescription
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public override string Description
-        {
-            get
-            {
-                return this.ReferenceFile.Comments;
-            }
-        }
-
-        /// <summary>
-        /// Name of the plugin.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Name
-        {
-            get
-            {
-                return this.ReferenceFile.ProductName;
-            }
-        }
-
-        /// <summary>
-        /// Author of the plugin.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Actually this is the company name, perhaps it is better to use a custom attribute called Author?</remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Author
-        {
-            get
-            {
-                return this.ReferenceFile.CompanyName;
-            }
-        }
-
-        /// <summary>
-        /// Guid of the assembly.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Guid
-        {
-            get
-            {
-                var attribute = (GuidAttribute)this.ReferenceAssembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-                return attribute.Value;                
-            }
-        }
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the reference assembly.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        private Assembly ReferenceAssembly
-        {
-            get
-            {
-                return this.GetType().Assembly;
-            }
-        }
-
-        /// <summary>
-        /// Gets the reference file.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        private FileVersionInfo ReferenceFile
-        {
-            get
-            {
-                return _fileVersionInfo
-                       ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(this.ReferenceAssembly.Location));
-            }
-        }
 
         #endregion
 

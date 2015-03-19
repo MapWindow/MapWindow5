@@ -131,7 +131,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
 
             // TODO: Read configuration setting to show the window like the last time:
             var preview = panels.Preview;
-            if (preview != null)
+            if (preview != null && preview.Visible)
             {
                 panel.DockTo(preview, DockPanelState.Tabbed, 150);
             }

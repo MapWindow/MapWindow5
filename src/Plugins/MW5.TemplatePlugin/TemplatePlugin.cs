@@ -10,29 +10,20 @@ namespace MW5.Plugins.TemplatePlugin
 {
     #region
 
-    using System;
     using System.Diagnostics;
     using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
 
-    using MW5.Api.Legend.Abstract;
-    using MW5.Api.Legend.Events;
     using MW5.Plugins.Concrete;
     using MW5.Plugins.Interfaces;
     using MW5.Plugins.Mef;
     using MW5.Plugins.TemplatePlugin.Menu;
-    using MW5.Plugins.TemplatePlugin.Properties;
 
     #endregion
 
     /// <summary>
     ///     The template plugin.
     /// </summary>
-    /// <remarks>
-    ///     TODO: Investigate how read these PluginExport attributes from the assembly info, preferable in the base plug-in.
-    /// </remarks>
-    [PluginExport("Template plugin", "Author", "BAE94101-5DBE-43E5-9D55-BC2532A2168C")]
+    [PluginExport]
     public class TemplatePlugin : BasePlugin
     {
         #region Fields
@@ -41,11 +32,6 @@ namespace MW5.Plugins.TemplatePlugin
         ///     The context of the application, holding the menu, layers, project, etc.
         /// </summary>
         private IAppContext _context;
-
-        /// <summary>
-        /// The _file version info.
-        /// </summary>
-        private FileVersionInfo _fileVersionInfo;
 
         /// <summary>
         ///     The reference to the map listener class, is used in the constructor
@@ -66,100 +52,6 @@ namespace MW5.Plugins.TemplatePlugin
         ///     The reference to the sample dock user control, is used in the constructor
         /// </summary>
         private SampleDockWindow _sampleDockWindow;
-
-        #endregion
-
-        #region Public Properties
-
-        /// <summary>
-        ///     Short description of the plugin, from AssemblyDescription
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public override string Description
-        {
-            get
-            {
-                return this.ReferenceFile.Comments;
-            }
-        }
-
-        /// <summary>
-        /// Name of the plugin.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Name
-        {
-            get
-            {
-                return this.ReferenceFile.ProductName;
-            }
-        }
-
-        /// <summary>
-        /// Author of the plugin.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Actually this is the company name, perhaps it is better to use a custom attribute called Author?</remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Author
-        {
-            get
-            {
-                return this.ReferenceFile.CompanyName;
-            }
-        }
-
-        /// <summary>
-        /// Guid of the assembly.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        public virtual string Guid
-        {
-            get
-            {
-                var attribute = (GuidAttribute)this.ReferenceAssembly.GetCustomAttributes(typeof(GuidAttribute), true)[0];
-                return attribute.Value;                
-            }
-        }
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the reference assembly.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        private Assembly ReferenceAssembly
-        {
-            get
-            {
-                return this.GetType().Assembly;
-            }
-        }
-
-        /// <summary>
-        /// Gets the reference file.
-        /// </summary>
-        /// <remarks>
-        ///     TODO: Should be in BasePlugin.
-        /// </remarks>
-        private FileVersionInfo ReferenceFile
-        {
-            get
-            {
-                return _fileVersionInfo
-                       ?? (_fileVersionInfo = FileVersionInfo.GetVersionInfo(this.ReferenceAssembly.Location));
-            }
-        }
 
         #endregion
 
