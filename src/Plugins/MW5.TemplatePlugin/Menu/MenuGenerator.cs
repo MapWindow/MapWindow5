@@ -41,7 +41,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <param name="plugin">
         /// The plugin.
         /// </param>
-        public MenuGenerator(IAppContext context, TemplatePlugin plugin)
+        public MenuGenerator(IAppContext context, InitPlugin plugin)
         {
             _commands = new MenuCommands(plugin.Identity);
 

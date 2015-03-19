@@ -55,7 +55,7 @@ namespace MW5.Plugins.TemplatePlugin
         /// <param name="sampleDockWindow">
         /// Reference to the sample dock window
         /// </param>
-        public MapListener(IAppContext context, TemplatePlugin plugin, SampleDockWindow sampleDockWindow)
+        public MapListener(IAppContext context, InitPlugin plugin, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
             {

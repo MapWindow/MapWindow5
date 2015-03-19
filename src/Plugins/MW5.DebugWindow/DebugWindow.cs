@@ -33,20 +33,12 @@ namespace MW5.Plugins.DebugWindow
 
         #endregion
 
-        /// <summary>
-        /// Track if the window is already added to the panels
-        /// </summary>
-        public bool IsAddedAsPanel { get; set; }
-
         public void Write(string prefix, string message)
         {
-            if (!this.IsAddedAsPanel)
+            if (this.Visible)
             {
-                // This window is not yet added to the panels:
-                return;
+                this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
             }
-
-            this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
         }
     }
 }

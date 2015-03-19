@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="TemplatePlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="InitPlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //   MapWindow OSS Team - 2015
 // </copyright>
 // <summary>
-//   The template plugin.
+//   The initialization of the plugin.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 namespace MW5.Plugins.TemplatePlugin
@@ -24,7 +24,7 @@ namespace MW5.Plugins.TemplatePlugin
     ///     The template plugin.
     /// </summary>
     [PluginExport]
-    public class TemplatePlugin : BasePlugin
+    public class InitPlugin : BasePlugin
     {
         #region Fields
 

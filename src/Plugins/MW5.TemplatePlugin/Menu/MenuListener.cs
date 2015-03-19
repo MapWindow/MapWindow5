@@ -54,7 +54,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <summary>
         /// The _plugin.
         /// </summary>
-        private readonly TemplatePlugin _plugin;
+        private readonly InitPlugin _plugin;
 
         #endregion
 
@@ -75,7 +75,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <param name="sampleDockWindow">
         /// The sample dock wi
         /// </param>
-        public MenuListener(IAppContext context, TemplatePlugin plugin, IMessageService messageService, SampleDockWindow sampleDockWindow)
+        public MenuListener(IAppContext context, InitPlugin plugin, IMessageService messageService, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
             {
@@ -116,14 +116,17 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// </summary>
         private void AddDockWindowToPanels()
         {
-            // Check if already added,  don't add again
-            if (_sampleDockWindow.IsAddedAsPanel)
+            var panels = _context.DockPanels;
+
+            // Check if the panel not already exists:
+            var myPanel = panels.Find(DOCKPANELKEY);
+            if (myPanel != null)
             {
+                myPanel.Visible = true;
                 return;
             }
 
-            var panels = _context.DockPanels;
-
+            // Panel is not yet loaded:
             panels.Lock();
             var panel = panels.Add(_sampleDockWindow, DOCKPANELKEY, _plugin.Identity);
             panel.Caption = "Template dock window";
@@ -139,9 +142,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             panels.Unlock();
 
             _sampleDockWindow.Write("AddDockWindowToPanels", "Add to panel");
-
-            // Make sure this panel isn't added multiple times:
-            _sampleDockWindow.IsAddedAsPanel = true;
         }
 
         /// <summary>

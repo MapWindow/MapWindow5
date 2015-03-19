@@ -51,11 +51,6 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// </summary>
         private readonly DebugWindowPlugin _plugin;
 
-        /// <summary>
-        /// To track if the dockable window is already added or not.
-        /// </summary>
-        private bool _alreadyAdded;
-
         #endregion
 
         #region Constructors and Destructors
@@ -95,7 +90,7 @@ namespace MW5.Plugins.DebugWindow.Menu
             _plugin = plugin;
 
             // Create event handlers:
-            plugin.ItemClicked += this.Plugin_ItemClicked;
+            plugin.ItemClicked += this.PluginOnItemClicked;
         }
 
         #endregion
@@ -107,13 +102,15 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// </summary>
         private void AddDockWindowToPanels()
         {
-            // Check if already added,  don't add again
-            if (_debugWindow.IsAddedAsPanel)
+            var panels = _context.DockPanels;
+        
+            // Check if the panel not already exists:
+            var myPanel = panels.Find(DOCKPANELKEY);
+            if (myPanel != null)
             {
+                myPanel.Visible = true;
                 return;
             }
-
-            var panels = _context.DockPanels;
 
             panels.Lock();
             var panel = panels.Add(_debugWindow, DOCKPANELKEY, _plugin.Identity);
@@ -124,9 +121,6 @@ namespace MW5.Plugins.DebugWindow.Menu
             panel.DockTo(DockPanelState.Bottom, 100);
 
             panels.Unlock();
-
-            // Make sure this panel isn't added multiple times:
-            _debugWindow.IsAddedAsPanel = true;
         }
 
         /// <summary>
@@ -138,7 +132,7 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// <param name="e">
         /// The menu item event arguments
         /// </param>
-        private void Plugin_ItemClicked(object sender, MenuItemEventArgs e)
+        private void PluginOnItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
             {
@@ -148,7 +142,6 @@ namespace MW5.Plugins.DebugWindow.Menu
                     break;
             }
         }
-
         #endregion
     }
 }
