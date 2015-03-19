@@ -82,6 +82,8 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\AppSettings.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
+    <Compile Include="Concrete\DockPanelCancelEventArgs.cs" />
+    <Compile Include="Concrete\DockPanelEventArgs.cs" />
     <Compile Include="Concrete\LayerCancelEventArgs.cs" />
     <Compile Include="Concrete\MenuCommand.cs" />
     <Compile Include="Concrete\CommandProviderBase.cs" />

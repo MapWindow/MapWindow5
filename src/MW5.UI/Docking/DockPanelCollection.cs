@@ -9,6 +9,7 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Docking
@@ -17,14 +18,19 @@ namespace MW5.UI.Docking
     {
         private bool _locked;
         private readonly Form _mainForm;
+        private readonly IBroadcasterService _broadcaster;
         private DockingManager _dockingManager;
         private Dictionary<Control, DockPanelInfo> _dict = new Dictionary<Control, DockPanelInfo>();
 
-        internal DockPanelCollection(object dockingManager, Form mainForm)
+        internal DockPanelCollection(object dockingManager, Form mainForm, IBroadcasterService broadcaster)
         {
             if (mainForm == null) throw new ArgumentNullException("mainForm");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
+
             _mainForm = mainForm;
+            _broadcaster = broadcaster;
             _dockingManager = dockingManager as DockingManager;
+
             if (_dockingManager == null)
             {
                 throw new ApplicationException(
@@ -33,6 +39,56 @@ namespace MW5.UI.Docking
 
             _dockingManager.DockTabAlignment = DockTabAlignmentStyle.Bottom;
             _dockingManager.ShowCaptionImages = false;
+
+            _dockingManager.DockVisibilityChanged += DockVisibilityChanged;
+            _dockingManager.DockVisibilityChanging += DockVisibilityChanging;
+        }
+
+        private void DockVisibilityChanging(object sender, DockVisibilityChangingEventArgs arg)
+        {
+            if (!_dict.ContainsKey(arg.Control))
+            {
+                throw new ApplicationException("Invalid docking panel control");
+            }
+            
+            var panel = GetDockPanel(arg.Control);
+            var info = _dict[arg.Control];
+            var args = new DockPanelCancelEventArgs(panel, info.Key);
+
+            if (panel.Visible)
+            {
+                _broadcaster.BroadcastEvent(p => p.DockPanelClosing_, panel, args, info.Identity);
+            }
+            else
+            {
+                _broadcaster.BroadcastEvent(p => p.DockPanelOpening_, panel, args, info.Identity);
+            }
+
+            if (args.Cancel)
+            {
+                arg.Cancel = true;
+            }
+        }
+
+        private void DockVisibilityChanged(object sender, DockVisibilityChangedEventArgs arg)
+        {
+            if (!_dict.ContainsKey(arg.Control))
+            {
+                throw new ApplicationException("Invalid docking panel control");
+            }
+
+            var panel = GetDockPanel(arg.Control);
+            var info = _dict[arg.Control];
+            var args = new DockPanelEventArgs(panel, info.Key);
+
+            if (panel.Visible)
+            {
+                _broadcaster.BroadcastEvent(p => p.DockPanelOpened_, panel, args, info.Identity);    
+            }
+            else
+            {
+                _broadcaster.BroadcastEvent(p => p.DockPanelClosed_, panel, args, info.Identity);
+            }
         }
         
         public IEnumerator<IDockPanel> GetEnumerator()
@@ -44,7 +100,7 @@ namespace MW5.UI.Docking
                 var dockItem = enumerator.Current as Control;
                 if (dockItem != null)
                 {
-                    yield return new DockPanel(_dockingManager, dockItem, _mainForm);
+                    yield return GetDockPanel(dockItem);
                 }
             }
         }
@@ -88,7 +144,7 @@ namespace MW5.UI.Docking
 
             _dict.Add(control, new DockPanelInfo(identity, key));
 
-            return new DockPanel(_dockingManager, control, _mainForm);
+            return GetDockPanel(control);
         }
 
         public void Remove(IDockPanel panel, PluginIdentity identity)
@@ -139,7 +195,7 @@ namespace MW5.UI.Docking
             {
                 if (item.Value.Key.EqualsIgnoreCase(key))
                 {
-                    return new DockPanel(_dockingManager, item.Key, _mainForm);
+                    return GetDockPanel(item.Key);
                 }
             }
             return null;
@@ -153,6 +209,11 @@ namespace MW5.UI.Docking
         public IDockPanel Preview
         {
             get { return Find(DockPanelKeys.Preview); }
+        }
+
+        private IDockPanel GetDockPanel(Control control)
+        {
+            return new DockPanel(_dockingManager, control, _mainForm);
         }
     }
 }

@@ -226,6 +226,40 @@ namespace MW5.Plugins.Concrete
             remove { ValidateShape_ -= value; }
         }
         #endregion
+
+        #region DockPanel events
+
+        internal EventHandler<DockPanelCancelEventArgs> DockPanelOpening_;
+        internal EventHandler<DockPanelCancelEventArgs> DockPanelClosing_;
+        internal EventHandler<DockPanelEventArgs> DockPanelOpened_;
+        internal EventHandler<DockPanelEventArgs> DockPanelClosed_;
+
+        public event EventHandler<DockPanelCancelEventArgs> DockPanelOpening
+        {
+            add { DockPanelOpening_ += value; }
+            remove { DockPanelOpening_ -= value; }
+        }
+
+        public event EventHandler<DockPanelCancelEventArgs> DockPanelClosing
+        {
+            add { DockPanelClosing_ += value; }
+            remove { DockPanelClosing_ -= value; }
+        }
+
+        public event EventHandler<DockPanelEventArgs> DockPanelClosed
+        {
+            add { DockPanelClosed_ += value; }
+            remove { DockPanelClosed_ -= value; }
+        }
+
+        public event EventHandler<DockPanelEventArgs> DockPanelOpened
+        {
+            add { DockPanelOpened_ += value; }
+            remove { DockPanelOpened_ -= value; }
+        }
+
+        #endregion
+
 #pragma warning restore 67
     }
 }

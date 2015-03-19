@@ -19,5 +19,6 @@ namespace MW5.Plugins.Interfaces
         IDockPanel Find(string key);
         IDockPanel Legend { get; }
         IDockPanel Preview { get; }
+
     }
 }

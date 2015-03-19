@@ -66,7 +66,7 @@ namespace MW5
             _map = mainView.Map;
             _legend = mainView.Legend;
 
-            _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form);
+            _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
             _statusBar = new UI.StatusBar(mainView.StatusBar);
