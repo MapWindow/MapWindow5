@@ -26,7 +26,7 @@ namespace MW5.Plugins.IdentifierTestPlugin.Menu
             panel.SetIcon(Resources.ico_identify);
 
             var preview = panels.Preview;
-            if (preview != null)
+            if (preview != null && preview.Visible)
             {
                 panel.DockTo(preview, DockPanelState.Tabbed, 150);
             }

@@ -20,6 +20,7 @@ namespace MW5.Api.Legend
         private bool _expanded;
         private int _height;
         private object _icon;
+        private bool _recalcHeight;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendGroup"/> class.
@@ -29,6 +30,7 @@ namespace MW5.Api.Legend
             _legend = leg;      // must be first in the constructor
             _layers = new List<LegendLayer>();
             _icon = null;
+            _recalcHeight = true;
 
             Handle = handle;
             Visible = Visibility.AllVisible;
@@ -175,6 +177,11 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal int Top { get; set; }
 
+        internal void ScheduleHeightRecalc()
+        {
+            _recalcHeight = true;
+        }
+
         /// <summary>
         /// Gets the drawing height of the group
         /// </summary>
@@ -182,7 +189,11 @@ namespace MW5.Api.Legend
         {
             get
             {
-                RecalcHeight();
+                if (_recalcHeight)
+                {
+                    RecalcHeight();
+                    _recalcHeight = false;
+                }
                 return _height;
             }
         }

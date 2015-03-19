@@ -581,6 +581,7 @@ namespace MW5.Api.Legend
             for (var i = itemCount - 1; i >= 0; i--)
             {
                 var lyr = grp.LayersInternal[i];
+                lyr.ScheduleHeightRecalc();
 
                 if (lyr.HideFromLegend)
                 {
@@ -688,11 +689,11 @@ namespace MW5.Api.Legend
                 }
                 else
                 {
-                    rect.Y += lyr.CalcHeight(true);
-                    rect.Height -= lyr.CalcHeight(true);
+                    rect.Y += lyr.Height;
+                    rect.Height -= lyr.Height;
                 }
 
-                if (rect.Top >= ClientRectangle.Bottom && isSnapshot == false)
+                if (rect.Top >= ClientRectangle.Bottom && !isSnapshot)
                 {
                     break;
                 }
@@ -2443,7 +2444,7 @@ namespace MW5.Api.Legend
         /// </summary>
         private void DrawNextFrame()
         {
-            if (Locked == false)
+            if (!Locked)
             {
                 var totalHeight = CalcTotalDrawHeight(false);
                 Rectangle rect;
@@ -2476,6 +2477,8 @@ namespace MW5.Api.Legend
                 for (var i = numGroups - 1; i >= 0; i--)
                 {
                     var grp = _groups.GetGroup(i);
+                    grp.ScheduleHeightRecalc();
+
                     if (rect.Top + grp.Height < ClientRectangle.Top)
                     {
                         // update the drawing rectangle
@@ -2487,6 +2490,7 @@ namespace MW5.Api.Legend
 
                     DrawGroup(_draw, grp, rect, false);
                     rect.Y += grp.Height + Constants.ItemPad;
+
                     if (rect.Top >= ClientRectangle.Bottom)
                     {
                     }

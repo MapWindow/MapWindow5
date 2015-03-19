@@ -50,6 +50,10 @@ namespace MW5.UI.Docking
 
         public void DockTo(IDockPanel parent, DockPanelState state, int size)
         {
+            if (parent != null && !parent.Visible)
+            {
+                return;     // no need to throw exception if it not visible
+            }
             var ctrl = parent != null ? parent.Control : _mainForm;
             _dockingManager.DockControl(_control, ctrl, DockHelper.MapWindowToSyncfusion(state), size);
         }

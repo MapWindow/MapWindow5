@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Xml.Serialization;
 using AxMapWinGIS;
@@ -24,6 +25,8 @@ namespace MW5.Api.Legend
         private bool _expanded;
         private object _icon;
         private bool _hideFromLegend;
+        private bool _recalcHeight;
+        private int _height;
 
         internal bool SmallIconWasDrawn;   // temp flag storage during drawing
         internal int Top;                  // vertical position, is set by the LegendControl
@@ -39,6 +42,7 @@ namespace MW5.Api.Legend
             _elements = new List<LayerElement>();
             _customObjects = new Dictionary<string, object>();
             _guid = Guid.NewGuid();
+            _recalcHeight = true;
 
             Expanded = true;
             SmallIconWasDrawn = false;
@@ -63,19 +67,15 @@ namespace MW5.Api.Legend
         /// Allows you to force the expansion box option to be shown, e.g. you're planning to use ExpansionBoxCustomRenderFunction.
         /// </summary>
         internal bool ExpansionBoxForceAllowed = false;
+
         
+
         #endregion
 
         public Guid Guid
         {
-            get
-            {
-                return _guid;
-            }
-            set
-            {
-                _guid = value;
-            }
+            get { return _guid; }
+            set { _guid = value; }
         }
 
         /// <summary>
@@ -100,7 +100,15 @@ namespace MW5.Api.Legend
 
         internal int Height
         {
-            get { return CalcHeight(); }
+            get
+            {
+                if (_recalcHeight)
+                {
+                    _height = CalcHeight();
+                    _recalcHeight = false;
+                }
+                return _height;
+            }
         }
 
         /// <summary>
@@ -465,6 +473,11 @@ namespace MW5.Api.Legend
         internal List<LayerElement> Elements
         {
             get { return _elements; }
+        }
+
+        internal void ScheduleHeightRecalc()
+        {
+            _recalcHeight = true;
         }
     }
 }
