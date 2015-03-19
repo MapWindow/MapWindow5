@@ -839,9 +839,9 @@ namespace MW5.Api.Legend
                     for (var i = _layers.Count - 1; i >= 0; i--)
                     {
                         var lyr = _layers[i] as LegendLayer;
-                        if (lyr.Visible && !lyr.HideFromLegend)
+                        if (lyr != null && lyr.Visible && !lyr.HideFromLegend)
                         {
-                            imgHeight += lyr.CalcHeight(true) - 1;
+                            imgHeight += lyr.ExpandedHeight - 1;
                             visibleLayers.Add(lyr);
                         }
                     }
@@ -855,7 +855,7 @@ namespace MW5.Api.Legend
                     if (visibleLayers.Count > 0)
                     {
                         // set up the boundaries for the first layer
-                        var lyrHeight = visibleLayers[0].CalcHeight(true);
+                        var lyrHeight = visibleLayers[0].ExpandedHeight;
                         rect = new Rectangle(2, 2, imgWidth - 4, lyrHeight - 1);
                     }
 
@@ -863,7 +863,7 @@ namespace MW5.Api.Legend
                     {
                         DrawLayer(g, layer, rect, true);
 
-                        var lyrHeight = layer.CalcHeight(true);
+                        var lyrHeight = layer.ExpandedHeight;
 
                         rect.Y += lyrHeight - 1;
                         rect.Height = lyrHeight;
@@ -888,7 +888,7 @@ namespace MW5.Api.Legend
                             var lyr = grp.LayersInternal[j];
                             if (!lyr.HideFromLegend)
                             {
-                                imgHeight += lyr.CalcHeight(true) - 1;
+                                imgHeight += lyr.ExpandedHeight - 1;
                             }
                         }
                     }
@@ -914,7 +914,7 @@ namespace MW5.Api.Legend
                             {
                                 DrawLayer(g, lyr, rect, true);
 
-                                var lyrHeight = lyr.CalcHeight(true);
+                                var lyrHeight = lyr.ExpandedHeight;
 
                                 rect.Y += lyrHeight - 1;
                                 rect.Height = lyrHeight;
@@ -960,7 +960,7 @@ namespace MW5.Api.Legend
             Bitmap bmp = null;
             if (lyr != null)
             {
-                var lyrHeight = lyr.CalcHeight(true);
+                var lyrHeight = lyr.ExpandedHeight;
                 bmp = new Bitmap(imgWidth, lyrHeight);
                 var g = Graphics.FromImage(bmp);
 
@@ -1230,7 +1230,7 @@ namespace MW5.Api.Legend
             // ------------------------------------------------------
             // drawing background (with selection if needed)
             // ------------------------------------------------------
-            if (isSnapshot == false)
+            if (!isSnapshot)
             {
                 curLeft = bounds.Left;
                 curTop = bounds.Top;
@@ -1254,7 +1254,7 @@ namespace MW5.Api.Legend
                 curLeft = bounds.Left;
                 curTop = bounds.Top;
                 curWidth = bounds.Width - 1;
-                curHeight = lyr.CalcHeight(true) - 1;
+                curHeight = lyr.ExpandedHeight - 1;
                 rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
                 DrawBox(drawTool, rect, _boxLineColor, Color.White);
@@ -2367,28 +2367,15 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The calc total draw height.
         /// </summary>
-        /// <param name="useExpandedHeight"> The use expanded height. </param>
-        private int CalcTotalDrawHeight(bool useExpandedHeight)
+        private int CalcTotalDrawHeight()
         {
-            int count = _groups.Count, retval = 0;
+            int retval = 0;
 
-            if (useExpandedHeight)
+            for (var i = 0; i < _groups.Count; i++)
             {
-                for (var i = 0; i < count; i++)
-                {
-                    var g = _groups.GetGroup(i);
-                    g.RecalcHeight();
-                    retval += g.ExpandedHeight;
-                }
-            }
-            else
-            {
-                for (var i = 0; i < count; i++)
-                {
-                    var g = _groups.GetGroup(i);
-                    g.RecalcHeight();
-                    retval += g.Height + Constants.ItemPad;
-                }
+                var g = _groups.GetGroup(i);
+                g.RecalcHeight();
+                retval += g.Height + Constants.ItemPad;
             }
 
             return retval;
@@ -2403,7 +2390,7 @@ namespace MW5.Api.Legend
             // this is important because the click events use the stored top as
             // the way of figuring out if the item was clicked
             // and if the checkbox or expansion box was clicked
-            CalcTotalDrawHeight(false);
+            CalcTotalDrawHeight();
 
             var curTop = 0;
 
@@ -2446,8 +2433,9 @@ namespace MW5.Api.Legend
         {
             if (!Locked)
             {
-                var totalHeight = CalcTotalDrawHeight(false);
+                var totalHeight = CalcTotalDrawHeight();
                 Rectangle rect;
+
                 if (totalHeight > Height)
                 {
                     _vScrollBar.Minimum = 0;

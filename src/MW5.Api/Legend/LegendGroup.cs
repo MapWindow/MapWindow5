@@ -201,11 +201,11 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Calculates the expanded height of the group
         /// </summary>
-        internal int ExpandedHeight
+        private int ExpandedHeight
         {
             get
             {
-                return Constants.ItemHeight + _layers.Sum(lyr => lyr.CalcHeight(true));
+                return Constants.ItemHeight + _layers.Sum(lyr => lyr.ExpandedHeight);
             }
         }
 
@@ -216,11 +216,13 @@ namespace MW5.Api.Legend
         /// <returns>Bitmap of the group and sublayers (expanded)</returns>
         public Bitmap Snapshot(int imgWidth)
         {
-            var bmp = new Bitmap(imgWidth, ExpandedHeight);
+            int expandedHeight = ExpandedHeight;
+            
+            var bmp = new Bitmap(imgWidth, expandedHeight);
             Graphics g = Graphics.FromImage(bmp);
             g.Clear(Color.White);
 
-            var rect = new Rectangle(0, 0, imgWidth, ExpandedHeight);
+            var rect = new Rectangle(0, 0, imgWidth, expandedHeight);
 
             _legend.DrawGroup(g, this, rect, true);
 

@@ -111,6 +111,11 @@ namespace MW5.Api.Legend
             }
         }
 
+        internal int ExpandedHeight
+        {
+            get { return CalcHeight(true); }
+        }
+
         /// <summary>
         /// Gets or sets whether or not the Layer is expanded.  This shows or hides the
         /// layer's Color Scheme (if one exists).
@@ -269,7 +274,7 @@ namespace MW5.Api.Legend
         /// <param name="useExpandedHeight">If True, the height returned is the expanded height. 
         /// Otherwise, the height is the displayed height of the layer</param>
         /// <returns>Height of layer(depends on 'Expanded' state of the layer)</returns>
-        protected internal int CalcHeight(bool useExpandedHeight)
+        private int CalcHeight(bool useExpandedHeight)
         {
             if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
@@ -465,7 +470,7 @@ namespace MW5.Api.Legend
         /// Calculates the height of a layer
         /// </summary>
         /// <returns>Height of layer(depends on Expanded state of the layer)</returns>
-        protected internal int CalcHeight()
+        private int CalcHeight()
         {
             return CalcHeight(Expanded);
         }
