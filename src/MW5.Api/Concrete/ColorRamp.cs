@@ -12,6 +12,11 @@ namespace MW5.Api.Concrete
     {
         private readonly ColorScheme _scheme;
 
+        public ColorRamp()
+        {
+            _scheme = new ColorScheme();
+        }
+
         public ColorRamp(Color color1, Color color2)
         {
             _scheme = new ColorScheme();

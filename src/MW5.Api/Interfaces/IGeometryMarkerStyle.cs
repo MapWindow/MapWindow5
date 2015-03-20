@@ -2,11 +2,11 @@
 {
     public interface IGeometryMarkerStyle
     {
-        MarkerType MarkerType { get; set; }
+        MarkerType Type { get; set; }
         VectorMarkerType VectorMarker { get; set; }
         char FontCharacter { get; set; }
         double Rotation { get; set; }
-        int VectorMarkerSideCount { get; set; }
+        int VectorSideCount { get; set; }
         float VectorMarkerSideRatio { get; set; }
         float Size { get; set; }
         IImageSource Icon { get; set; }

@@ -35,7 +35,7 @@ namespace MW5.Api.Concrete
             set { _charts.Key = value; }
         }
 
-        public DiagramFieldCollection Field
+        public DiagramFieldCollection Fields
         {
             get { return new DiagramFieldCollection(_charts); }
         }
@@ -91,6 +91,11 @@ namespace MW5.Api.Concrete
         {
             get { return _charts.AvoidCollisions; }
             set { _charts.AvoidCollisions = value; }
+        }
+
+        public bool Bars
+        {
+            get { return DiagramType == Api.DiagramType.Bar; }
         }
 
         public DiagramType DiagramType

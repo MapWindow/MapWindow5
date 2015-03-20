@@ -13,11 +13,11 @@ namespace MW5.Api.Interfaces
 
         bool AddRange(int fieldIndex, Classification classification, int numClasses, object minValue, object maxValue);
 
-        void ApplyColorRamp(ColorRampType type, ColorRamp colorScheme);
+        void ApplyColorScheme(ColorRampType type, ColorRamp colorScheme);
 
-        void ApplyColorRamp(ColorRampType type, ColorRamp colorScheme, StyleElement shapeElement);
+        void ApplyColorScheme(ColorRampType type, ColorRamp colorScheme, StyleElement shapeElement);
 
-        void ApplyColorRamp(ColorRampType type, ColorRamp colorScheme, StyleElement shapeElement,
+        void ApplyColorScheme(ColorRampType type, ColorRamp colorScheme, StyleElement shapeElement,
                                 int categoryStartIndex, int categoryEndIndex);
 
         void ApplyExpression(int categoryIndex);

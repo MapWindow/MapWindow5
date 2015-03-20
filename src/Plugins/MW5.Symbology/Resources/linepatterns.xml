@@ -1,0 +1,91 @@
+<MapWindow version="" FileVersion="0" FileType="LinePatterns">
+  <LinePatterns>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="255" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="1" Color="1971946" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="12" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="1" Color="8435191" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="1" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="1" Color="13942904" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="0" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="12349952" MarkerOutlineColor="7895160" LineWidth="2.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="1" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="4096618" MarkerOutlineColor="7895160" LineWidth="5.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="65535" MarkerOutlineColor="7895160" LineWidth="3.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="1" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="1" Color="4368922" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="11.000000" MarkerOffset="0.000000" LineStyle="0" Marker="3" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="6975090" MarkerOutlineColor="7895160" LineWidth="5.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="65535" MarkerOutlineColor="7895160" LineWidth="3.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="15" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="12349952" MarkerOutlineColor="7895160" LineWidth="5.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="14865829" MarkerOutlineColor="7895160" LineWidth="3.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="15" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="4096618" MarkerOutlineColor="7895160" LineWidth="7.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="65535" MarkerOutlineColor="7895160" LineWidth="5.000000" MarkerSize="12.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="1" Color="1971946" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="8.000000" MarkerInterval="16.000000" MarkerOffset="0.000000" LineStyle="0" Marker="12" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="107"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="1" Color="4368922" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="15.000000" MarkerOffset="0.000000" LineStyle="0" Marker="8" MarkerOrientation="0" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="6975090" MarkerOutlineColor="7895160" LineWidth="5.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="13816530" MarkerOutlineColor="7895160" LineWidth="3.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="15" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="0" Color="12237498" MarkerOutlineColor="7895160" LineWidth="4.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="2" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="0" Color="65535" MarkerOutlineColor="7895160" LineWidth="2.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="15" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+    <Pattern>&lt;LinePatternClass Key="" Transparency="255"&gt;
+  &lt;LineSegments&gt;
+    &lt;LineSegmentClass LineType="1" Color="8435191" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="0.000000" LineStyle="0" Marker="1" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+    &lt;LineSegmentClass LineType="1" Color="13942904" MarkerOutlineColor="7895160" LineWidth="1.000000" MarkerSize="12.000000" MarkerInterval="28.000000" MarkerOffset="14.000000" LineStyle="0" Marker="0" MarkerOrientation="1" MarkerFlipFirst="-1" /&gt;
+  &lt;/LineSegments&gt;
+&lt;/LinePatternClass&gt;
+</Pattern>
+  </LinePatterns>
+</MapWindow>

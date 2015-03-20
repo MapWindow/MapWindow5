@@ -28,7 +28,7 @@ namespace MW5.Services.Serialization
             var source = LayerSourceHelper.Open(Filename, LayerType);
             int handle = layers.Add(source);
             var layer = layers.ItemByHandle(handle);
-            layer.DeserializeLayer(Layer.OuterXml);
+            layer.Deserialize(Layer.OuterXml);
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.ColorSchemeCaption = ColorSchemeCaption;
@@ -37,7 +37,7 @@ namespace MW5.Services.Serialization
 
         private XmlElement LayerToXmlElement(ILegendLayer layer)
         {
-            string xml = layer.SerializeLayer();
+            string xml = layer.Serialize();
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(xml);
             return doc.DocumentElement;

@@ -62,6 +62,16 @@ namespace MW5.Api.Concrete
             get { return new FeatureFieldList(_table); }
         }
 
+        public bool Calculate(string expression, int rowIndex, out object result, out string errorString)
+        {
+            return _table.Calculate(expression, rowIndex, out result, out errorString);
+        }
+
+        public bool TestExpression(string expression, TableValueType returnType, ref string errorString)
+        {
+            return _table.TestExpression(expression, (tkValueType)returnType, ref errorString);
+        }
+
         public FieldJoinCollection Joins
         {
             get { return new FieldJoinCollection(_table); }

@@ -192,7 +192,7 @@
         ReversedRainbow = 9,
     }
 
-    public enum InterpolationMode
+    public enum InterpolationType
     {
         Bilinear = 3,
         Bicubic = 4,
@@ -1207,8 +1207,8 @@
 
     public enum DiagramType
     {
-        BarChart = 0,
-        PieChart = 1,
+        Bar = 0,
+        Pie = 1,
     }
 
     public enum DiagramValuesStyle
@@ -1295,5 +1295,13 @@
     {
         ScreenReferencedList = 0,
         SpatiallyReferencedList = 1,
+    }
+
+    public enum TableValueType
+    {
+        Double = 0,
+        String = 1,
+        Boolean = 2,
+        FloatArray = 3,
     }
 }

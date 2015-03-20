@@ -32,6 +32,21 @@ namespace MW5.Api
             }
         }
 
+        public ILayer GetLayer(int layerHandle)
+        {
+            return Layers.ItemByHandle(layerHandle);
+        }
+
+        public IFeatureSet GetFeatureSet(int layerHandle)
+        {
+            var layer = GetLayer(layerHandle);
+            if (layer != null)
+            {
+                return layer.FeatureSet;
+            }
+            return null;
+        }
+
         [Browsable(false)]
         public IFeatureSet SelectedFeatureSet
         {

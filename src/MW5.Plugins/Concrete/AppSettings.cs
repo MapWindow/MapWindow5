@@ -9,11 +9,17 @@ namespace MW5.Plugins.Concrete
         public AppSettings()
         {
             LoadSymbology = true;
+            LoadLastProject = true;
+            LastProjectPath = "";
         }
 
         [DataMember]
         public bool LoadSymbology { get; set; }
-        
-        public List<BasePlugin> Plugins;
+
+        [DataMember]
+        public bool LoadLastProject { get; set; }
+
+        [DataMember]
+        public string LastProjectPath { get; set; }
     }
 }

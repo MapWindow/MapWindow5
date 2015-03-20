@@ -107,7 +107,7 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// Fires when layer colorbox is clicked
         /// </summary>
-        event EventHandler<LayerEventArgs> LayerColorboxClicked;
+        event EventHandler<LayerEventArgs> LayerStyleClicked;
 
         /// <summary>
         /// Fires when one of the shapefile categories is clicked
@@ -117,7 +117,7 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// Fires when charts icon is clicked
         /// </summary>
-        event EventHandler<LayerMouseEventArgs> LayerChartClicked;
+        event EventHandler<LayerEventArgs> LayerDiagramsClicked;
 
         /// <summary>
         /// Fires when one of chart fields is clicked

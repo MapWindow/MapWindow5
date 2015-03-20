@@ -131,7 +131,7 @@ namespace MW5.Api.Concrete
             set { _category.FontStrikeOut = value; }
         }
 
-        public byte FontAlphaTransparency
+        public byte FontTransparency
         {
             get { return (byte)_category.FontTransparency; }
             set { _category.FontTransparency = value; }
@@ -191,7 +191,7 @@ namespace MW5.Api.Concrete
             set { _category.FramePaddingY = value; }
         }
 
-        public byte FrameAlphaTransparency
+        public byte FrameTransparency
         {
             get { return (byte)_category.FrameTransparency; }
             set { _category.FrameTransparency = value; }
@@ -249,6 +249,24 @@ namespace MW5.Api.Concrete
         {
             get { return _category.ShadowVisible; }
             set { _category.ShadowVisible = value; }
+        }
+
+        public bool Visible
+        {
+            get { return _category.Visible; }
+            set { _category.Visible = value; }
+        }
+
+        public double OffsetX
+        {
+            get { return _category.OffsetX; }
+            set { _category.OffsetX = value; }
+        }
+
+        public double OffsetY
+        {
+            get { return _category.OffsetY; }
+            set { _category.OffsetY = value; }
         }
     }
 }

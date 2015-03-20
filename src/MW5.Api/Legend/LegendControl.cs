@@ -2621,7 +2621,7 @@ namespace MW5.Api.Legend
                 if (element.ColorBox && element.CategoryIndex == -1)
                 {
                     // default symbology
-                    FireEvent(this, LayerColorboxClicked, new LayerEventArgs(lyr.Handle));
+                    FireEvent(this, LayerStyleClicked, new LayerEventArgs(lyr.Handle));
                     Redraw();
                     return;
                 }
@@ -2647,7 +2647,7 @@ namespace MW5.Api.Legend
                 if (element.Charts && element.ChartFieldIndex == -1)
                 {
                     // default symbology
-                    FireEvent(this, LayerChartClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+                    FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                     Redraw();
                     return;
                 }
@@ -3594,7 +3594,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Fires when layer colorbox is clicked
         /// </summary>
-        public event EventHandler<LayerEventArgs> LayerColorboxClicked;
+        public event EventHandler<LayerEventArgs> LayerStyleClicked;
 
         /// <summary>
         /// Fires when one of the shapefile categories is clicked
@@ -3604,7 +3604,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Fires when charts icon is clicked
         /// </summary>
-        public event EventHandler<LayerMouseEventArgs> LayerChartClicked;
+        public event EventHandler<LayerEventArgs> LayerDiagramsClicked;
 
         /// <summary>
         /// Fires when one of chart fields is clicked

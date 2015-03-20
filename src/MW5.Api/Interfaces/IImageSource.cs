@@ -16,8 +16,8 @@ namespace MW5.Api.Interfaces
         bool UseTransparentColor { get; set; }
         
         double AlphaTransparency { get; set; }
-        InterpolationMode DownsamplingMode { get; set; }
-        InterpolationMode UpsamplingMode { get; set; }
+        InterpolationType DownsamplingMode { get; set; }
+        InterpolationType UpsamplingMode { get; set; }
 
         ImageFormat ImageFormat { get; }
         InRamState InRamState { get; }

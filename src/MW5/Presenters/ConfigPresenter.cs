@@ -22,7 +22,6 @@ namespace MW5.Presenters
         private readonly IConfigService _configService;
         private readonly IPluginManager _manager;
         private readonly IMessageService _messageService;
-        private PluginProvider _pluginProvider;
 
         public ConfigPresenter(IAppContext context, IConfigView view, IConfigService configService, IPluginManager manager,
                                IMessageService messageService)
@@ -82,24 +81,16 @@ namespace MW5.Presenters
 
         private void ApplySettings()
         {
-            // saving application plugins
-            var dict = _pluginProvider.List.Where(p => p.Selected).ToDictionary(p => p.BasePlugin.Identity.Guid, p => p);
-            foreach (var plugin in _manager.AllPlugins)
+            foreach (var page in _view.Pages)
             {
-                bool appPlugin = dict.ContainsKey(plugin.Identity.Guid);
-                plugin.SetApplicationPlugin(appPlugin);
-                if (appPlugin && !_manager.PluginActive(plugin.Identity))
-                {
-                    _manager.LoadPlugin(plugin.Identity, _context);
-                }
+                page.Save();
             }
         }
 
         private void InitPages()
         {
             _view.Pages.Add(new GeneralConfigPage(_configService));
-            _pluginProvider = new PluginProvider(_manager);
-            _view.Pages.Add(new PluginsConfigPage(_pluginProvider));
+            _view.Pages.Add(new PluginsConfigPage(_configService, _manager, _context));
         }
     }
 }

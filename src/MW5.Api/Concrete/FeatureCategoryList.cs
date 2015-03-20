@@ -137,17 +137,17 @@ namespace MW5.Api.Concrete
             return _categories.AddRange(fieldIndex, (tkClassificationType)classification, numClasses, minValue, maxValue);
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp)
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp)
         {
             _categories.ApplyColorScheme((tkColorSchemeType) type, colorRamp.GetInternal());
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement)
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement)
         {
             _categories.ApplyColorScheme2((tkColorSchemeType) type, colorRamp.GetInternal(), (tkShapeElements)shapeElement);
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement, int categoryStartIndex,
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement, int categoryStartIndex,
             int categoryEndIndex)
         {
             _categories.ApplyColorScheme3((tkColorSchemeType)type, colorRamp.GetInternal(), (tkShapeElements)shapeElement,

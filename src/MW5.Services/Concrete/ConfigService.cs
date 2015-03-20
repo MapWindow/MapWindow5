@@ -16,7 +16,7 @@ namespace MW5.Services.Concrete
     {
         private readonly IPluginManager _manager;
         private readonly IMessageService _messageService;
-        private static AppSettings _settings;
+        private static AppSettings _config;
         private List<Guid> _applicationPlugins;
 
         public ConfigService(IPluginManager manager, IMessageService messageService)
@@ -27,12 +27,12 @@ namespace MW5.Services.Concrete
             _manager = manager;
             _messageService = messageService;
 
-            _settings = new AppSettings();
+            _config = new AppSettings();
         }
 
-        public AppSettings Settings
+        public AppSettings Config
         {
-            get { return _settings; }
+            get { return _config; }
         }
 
         public IEnumerable<Guid> ApplicationPlugins
@@ -95,7 +95,7 @@ namespace MW5.Services.Concrete
 
         private XmlConfig GetXmlConfig()
         {
-            var xmlConfig = new XmlConfig { Settings = _settings };
+            var xmlConfig = new XmlConfig { Settings = _config };
 
             var plugins = _manager.ApplicationPlugins.Select(p => new XmlPlugin()
             {
@@ -108,7 +108,7 @@ namespace MW5.Services.Concrete
 
         private void ApplyXmlConfig(XmlConfig xmlConfig)
         {
-            _settings = xmlConfig.Settings;
+            _config = xmlConfig.Settings;
             _applicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
         }
     }

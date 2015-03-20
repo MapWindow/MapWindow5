@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Configuration.Plugins;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Services.Config;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
@@ -12,16 +15,26 @@ namespace MW5.Configuration
 {
     internal partial class PluginsConfigPage : UserControl, IConfigPage
     {
+        private PluginProvider _pluginProvider;
+        private readonly IConfigService _configService;
+        private readonly IPluginManager _manager;
+        private readonly IAppContext _context;
         private const string SELECTED_PROPERTY = "Selected";
         private int _mouseOver = 0;
 
-        public PluginsConfigPage(PluginProvider pluginProvider)
+        public PluginsConfigPage(IConfigService configService, IPluginManager manager, IAppContext context)
         {
-            if (pluginProvider == null) throw new ArgumentNullException("pluginProvider");
+            if (configService == null) throw new ArgumentNullException("configService");
+            if (manager == null) throw new ArgumentNullException("manager");
+            if (context == null) throw new ArgumentNullException("context");
+            _configService = configService;
+            _manager = manager;
+            _context = context;
 
             InitializeComponent();
 
-            _grid.DataSource = pluginProvider.List;
+            _pluginProvider = new PluginProvider(manager);
+            _grid.DataSource = _pluginProvider.List;
             ApplyGridOptions(_grid);
             lblDescription.Text = "";
         }
@@ -149,6 +162,20 @@ namespace MW5.Configuration
         public string PageName
         {
             get { return "Application Plugins"; }
+        }
+
+        public void Save()
+        {
+            var dict = _pluginProvider.List.Where(p => p.Selected).ToDictionary(p => p.BasePlugin.Identity.Guid, p => p);
+            foreach (var plugin in _manager.AllPlugins)
+            {
+                bool appPlugin = dict.ContainsKey(plugin.Identity.Guid);
+                plugin.SetApplicationPlugin(appPlugin);
+                if (appPlugin && !_manager.PluginActive(plugin.Identity))
+                {
+                    _manager.LoadPlugin(plugin.Identity, _context);
+                }
+            }
         }
     }
 }

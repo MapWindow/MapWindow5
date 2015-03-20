@@ -41,7 +41,7 @@ namespace MW5.Api.Concrete
         public Color Color
         {
             get { return ColorHelper.UintToColor(_style.LineColor); }
-            set { _style.LineWidth = ColorHelper.ColorToUInt(value); }
+            set { _style.LineColor = ColorHelper.ColorToUInt(value); }
         }
 
         public DashStyle DashStyle
@@ -56,7 +56,7 @@ namespace MW5.Api.Concrete
             set { _style.UseLinePattern = value; }
         }
 
-        public CompositeLine LinePattern
+        public CompositeLine Pattern
         {
             get { return _style.LinePattern != null ? new CompositeLine(_style.LinePattern) : null; }
             set { _style.LinePattern = value.GetInternal(); }

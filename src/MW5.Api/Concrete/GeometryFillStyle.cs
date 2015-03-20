@@ -32,7 +32,7 @@ namespace MW5.Api.Concrete
             set { _style.FillGradientType = (tkGradientType)value; }
         }
 
-        public FillType FillType
+        public FillType Type
         {
             get { return (FillType)_style.FillType; }
             set { _style.FillType = (tkFillType)value; }
@@ -62,13 +62,13 @@ namespace MW5.Api.Concrete
             set { _style.FillColor2 = ColorHelper.ColorToUInt(value); }
         }
 
-        public Color BackgroundHatchColor
+        public Color BgColor
         {
             get { return ColorHelper.UintToColor(_style.FillBgColor); }
             set { _style.FillBgColor = ColorHelper.ColorToUInt(value); }
         }
 
-        public bool BackgroundHatchTransparent
+        public bool BgTransparent
         {
             get { return _style.FillBgTransparent; }
             set { _style.FillBgTransparent = value; }
@@ -76,8 +76,8 @@ namespace MW5.Api.Concrete
 
         public bool Visible
         {
-            get { return _style.Visible; }
-            set { _style.Visible = value; }
+            get { return _style.FillVisible; }
+            set { _style.FillVisible = value; }
         }
 
         public HatchStyle HatchStyle

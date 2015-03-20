@@ -12,6 +12,6 @@ namespace MW5.Api.Interfaces
         Color Color { get; set; }
         DashStyle DashStyle { get; set; }
         bool UseLinePattern { get; set; }
-        CompositeLine LinePattern { get; set; }
+        CompositeLine Pattern { get; set; }
     }
 }

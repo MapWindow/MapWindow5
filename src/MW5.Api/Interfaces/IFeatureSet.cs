@@ -15,12 +15,16 @@ namespace MW5.Api.Interfaces
         AttributeTable Table { get; }
         ILabelsLayer Labels { get; }
         DiagramsLayer Diagrams { get; }
+        FeatureFieldList Fields { get; }
 
         IFeatureSet Clone();
         bool Dump(string shapefileName);
         bool LoadDataFrom(string shapefileName);
         bool Save();
         bool SaveAs(string shapefileName);
+        bool PointOrMultiPoint { get; }
+        bool IsPolyline { get; }
+        bool IsPolygon { get; }
 
         int NumSelected { get; }
         void SelectAll();
@@ -76,6 +80,9 @@ namespace MW5.Api.Interfaces
         string Serialize(bool saveSelection);
         string Serialize(bool saveSelection, bool serializeCategories);
         IStopExecutionCallback StopExecution { set; }
+        
+        // TODO: better to have it in labels class (make changes in ocx); 
+        int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false);
 
         #region Not implemented
 

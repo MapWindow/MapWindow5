@@ -125,15 +125,15 @@ namespace MW5.Api.Concrete
             set { _image.TransparencyPercent = value; }
         }
 
-        public InterpolationMode DownsamplingMode
+        public InterpolationType DownsamplingMode
         {
-            get { return (InterpolationMode)_image.DownsamplingMode; }
+            get { return (InterpolationType)_image.DownsamplingMode; }
             set { _image.DownsamplingMode = (tkInterpolationMode)value; }
         }
 
-        public InterpolationMode UpsamplingMode
+        public InterpolationType UpsamplingMode
         {
-            get { return (InterpolationMode)_image.UpsamplingMode; }
+            get { return (InterpolationType)_image.UpsamplingMode; }
             set { _image.UpsamplingMode = (tkInterpolationMode)value; }
         }
 

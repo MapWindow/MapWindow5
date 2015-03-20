@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
@@ -18,6 +19,7 @@ namespace MW5.Presenters
     {
         private readonly IAppContext _context;
         private readonly IProjectService _projectService;
+        private readonly IConfigService _configService;
         private readonly MenuListener _menuListener;
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
@@ -34,6 +36,7 @@ namespace MW5.Presenters
 
             _context = context;
             _projectService = projectService;
+            _configService = configService;
 
             ApplicationCallback.Attach(loggingService);
 
@@ -56,6 +59,13 @@ namespace MW5.Presenters
             _legendListener = container.GetSingleton<LegendListener>();
 
             appContext.InitPlugins(configService);      // must be called after docking is initialized
+
+            // for development only
+            var config = _configService.Config;
+            if (config.LoadLastProject && File.Exists(config.LastProjectPath))
+            {
+                _projectService.Open(config.LastProjectPath, true);
+            }
         }
 
         private void OnViewUpdating(object sender, EventArgs e)
@@ -69,6 +79,9 @@ namespace MW5.Presenters
 
         private void OnViewClosing(object sender, CancelEventArgs e)
         {
+            _configService.Config.LastProjectPath = _projectService.Filename;
+            _configService.Save();
+
             if (!_projectService.TryClose())
             {
                 e.Cancel = true;

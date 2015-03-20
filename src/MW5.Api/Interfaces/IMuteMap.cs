@@ -28,6 +28,8 @@ namespace MW5.Api.Interfaces
         SystemCursor SystemCursor { get; set; }
         MapCursor MapCursor { get; set; }
         TileProvider TileProvider { get; set; }
+        ILayer GetLayer(int layerHandle);
+        IFeatureSet GetFeatureSet(int layerHandle);
 
         IEnvelope Extents { get; set; }
         IEnvelope GeographicExtents { get; }

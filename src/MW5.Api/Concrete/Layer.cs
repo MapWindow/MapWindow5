@@ -207,12 +207,12 @@ namespace MW5.Api.Concrete
             return _map.LoadLayerOptions(_layerHandle, optionsName, ref description);
         }
 
-        public string SerializeLayer()
+        public string Serialize()
         {
             return _map.SerializeLayer(_layerHandle);
         }
 
-        public bool DeserializeLayer(string state)
+        public bool Deserialize(string state)
         {
             return _map.DeserializeLayer(_layerHandle, state);
         }
