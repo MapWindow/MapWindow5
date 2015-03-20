@@ -23,11 +23,8 @@ using MW5.Api.Concrete;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
-
-        #region General tab
-
         /// <summary>
         /// Sets the state of controls on the general tab on loading
         /// </summary>
@@ -52,11 +49,10 @@ namespace MW5.Plugins.Symbology.Forms
             var ext = _shapefile.Envelope;
             //string units = Globals.get_MapUnits();
             string units = "";
-            //string type = _shapefile.ShapefileType.ToString().Substring(4).ToLower() + " shapefile";
-            string type = "shapefile";
+            string type = _shapefile.GeometryType.ToString();
 
             var ogr = layer.VectorLayer;
-            if (layer != null)
+            if (ogr != null)
             {
                 s += "Datasource type: OGR layer" + Environment.NewLine;
                 s += "Driver name: " + ogr.DriverName + Environment.NewLine;
@@ -132,9 +128,7 @@ namespace MW5.Plugins.Symbology.Forms
                 }
             }
         }
-        #endregion
 
-        #region Layer preview
         /// <summary>
         /// Updates the state of the layer preview
         /// </summary>
@@ -155,12 +149,12 @@ namespace MW5.Plugins.Symbology.Forms
         {
             axMap1.Visible = true;
             
+            // TODO: uncomment
             //var sf = new FeatureSet();
             //axMap1.Layers.Add(_shapefile, true);
 
             axMap1.MapCursor = MapCursor.None;
             axMap1.MouseWheelSpeed = 1.0;
         }
-        #endregion
     }
 }

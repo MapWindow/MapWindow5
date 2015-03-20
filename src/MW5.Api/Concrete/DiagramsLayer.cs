@@ -320,13 +320,17 @@ namespace MW5.Api.Concrete
             set { _charts.SavingMode = (tkSavingMode)value; }
         }
 
-        #region Not implemented
+        public bool DrawChart(IntPtr hdc, float x, float y, bool hideLabels, Color? backColor)
+        {
+            return _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+        }
 
-        //public bool DrawChart(IntPtr hDC, float x, float y, bool hideLabels, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        #endregion
+        public bool DrawChart(Graphics g, float x, float y, bool hideLabels, Color? backColor)
+        {
+            var hdc = g.GetHdc();
+            bool result = _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
     }
 }

@@ -72,6 +72,16 @@ namespace MW5.Api.Concrete
             return _table.TestExpression(expression, (tkValueType)returnType, ref errorString);
         }
 
+        public bool ParseExpression(string expression, ref string errorString)
+        {
+            return _table.ParseExpression(expression, ref errorString);
+        }
+
+        public bool Query(string expression, ref object result, ref string errorString)
+        {
+            return _table.Query(expression, ref result, ref errorString);
+        }
+
         public FieldJoinCollection Joins
         {
             get { return new FieldJoinCollection(_table); }

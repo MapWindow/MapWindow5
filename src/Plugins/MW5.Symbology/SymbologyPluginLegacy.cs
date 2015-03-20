@@ -813,22 +813,6 @@ namespace MW5.Plugins.Symbology
     //    }
 
     //    /// <summary>
-    //    /// A shortcut to show standard error window
-    //    /// </summary>
-    //    public static void MessageBoxError(string message)
-    //    {
-    //        MessageBox.Show(message, "MapWindow GIS", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //    }
-
-    //    /// <summary>
-    //    /// A shortcut to show standard infromation window
-    //    /// </summary>
-    //    public static void MessageBoxInformation(string message)
-    //    {
-    //        MessageBox.Show(message, "MapWindow GIS", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    //    }
-
-    //    /// <summary>
     //    /// Logs the error through standard interface
     //    /// </summary>
     //    /// <param name="functionName"></param>

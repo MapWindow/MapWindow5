@@ -244,7 +244,7 @@ namespace MW5.Api.Concrete
             set { _shapefile.SelectionColor = ColorHelper.ColorToUInt(value); }
         }
 
-        public byte SelectionAlphaTransparency
+        public byte SelectionTransparency
         {
             get { return _shapefile.SelectionTransparency; }
             set { _shapefile.SelectionTransparency = value; }

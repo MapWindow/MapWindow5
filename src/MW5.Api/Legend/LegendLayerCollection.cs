@@ -14,8 +14,8 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControl _legend;
 
-        internal LegendLayerCollection(AxMap axMap, IMuteLegend legend)
-            : base(axMap)
+        internal LegendLayerCollection(MapControl mapControl, IMuteLegend legend)
+            : base(mapControl)
         {
             _legend = legend as LegendControl;
             if (_legend == null)

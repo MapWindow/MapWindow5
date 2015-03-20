@@ -17,6 +17,7 @@
 // ********************************************************************************************************
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -27,30 +28,37 @@ using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Utilities
 {
-    public partial class frmQueryBuilder : Form
+    public partial class QueryBuilderForm : Form
     {
-        IFeatureSet _shapefile = null;
-        int _layerHandle = -1;
-        bool _selectionMode = false;
-        bool _noEvents = false;
-        const int CMN_ICON = 0;
-        const int CMN_NAME = 1;
+        private const int CMN_ICON = 0;
+        private const int CMN_NAME = 1;
+
+        private readonly IFeatureSet _shapefile;
+        private readonly int _layerHandle;
+        private readonly ILayer _layer;
+        private readonly bool _selectionMode;
+        private bool _noEvents;
 
         /// <summary>
         /// Creates a new instance of frmQueryBuilder class
         /// </summary>
-        public frmQueryBuilder(IFeatureSet sf, int layerHandle, string expression, bool SelectionMode)
+        public QueryBuilderForm(ILayer layer, string expression, bool selectionMode)
         {
             InitializeComponent();
 
-            if (sf == null)
-                return;
+            if (layer == null || layer.FeatureSet == null)
+            {
+                throw new ArgumentNullException("layer");
+            }
+
+            var sf = layer.FeatureSet;
 
             _shapefile = sf;
-            _selectionMode = SelectionMode;
-            _layerHandle = layerHandle;
+            _layer = layer;
+            _selectionMode = selectionMode;
+            _layerHandle = layer.Handle;
 
-            btnTest.Text = SelectionMode ? "Select" : "Test";
+            btnTest.Text = selectionMode ? "Select" : "Test";
 
             dgvField.Rows.Clear();
             dgvField.Rows.Add(_shapefile.Table.Fields.Count);
@@ -112,12 +120,12 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         /// <summary>
         /// Showing values
         /// </summary>
-        private void ShowValues(int FieldIndex)
+        private void ShowValues(int fieldIndex)
         {
             _noEvents = true;
             dgvValues.Rows.Clear();
 
-            if (_shapefile.Fields.Count - 1 < FieldIndex)
+            if (_shapefile.Fields.Count - 1 < fieldIndex)
             {
                 _noEvents = false;
                 return;
@@ -127,15 +135,15 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
             object obj = null;
             SortedDictionary<object, int> hashTable = new SortedDictionary<object, int>();
 
-            bool isString = (_shapefile.Fields[FieldIndex].Type == AttributeType.String);
+            bool isString = (_shapefile.Fields[fieldIndex].Type == AttributeType.String);
 
             if (true)
             {
-                this.Cursor = Cursors.WaitCursor;
+                Cursor = Cursors.WaitCursor;
 
                 for (int i = 0; i < tbl.NumRows; i++)
                 {
-                    obj = tbl.CellValue(FieldIndex, i);
+                    obj = tbl.CellValue(fieldIndex, i);
                     if (hashTable.ContainsKey(obj))
                     {
                         hashTable[obj] += 1;
@@ -165,9 +173,8 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
                 this.Cursor = Cursors.Default;
             }
             else
-
-            // field stats: aren't used currently
             {
+                // field stats: aren't used currently
                 // for numeric fields we shall provide statistics
                 dgvValues.Rows.Add(7);
                 dgvValues[0, 0].Value = "Avg";
@@ -181,7 +188,7 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
                 List<object> list = new List<object>();
                 for (int i = 0; i < tbl.NumRows; i++)
                 {
-                    list.Add((object)tbl.CellValue(FieldIndex, i));
+                    list.Add((object)tbl.CellValue(fieldIndex, i));
                 }
                 list.Sort();
 
@@ -206,7 +213,6 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
                 //dgvValues[1, 1].Value = (float)tbl.get_StandardDeviation(FieldIndex);
                 //dgvValues[1, 2].Value = tbl.get_MinValue(FieldIndex);
                 //dgvValues[1, 6].Value = tbl.get_MaxValue(FieldIndex);
-
             }
 
             dgvValues.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
@@ -216,70 +222,70 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         /// <summary>
         /// Tests the expression typed by user, showing syntax errors
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnTest_Click(object sender, EventArgs e)
         {
             var tbl = _shapefile.Table;
             if (richTextBox1.Text == string.Empty)
             {
-                MessageBox.Show("No expression is entered", "MapWindow 4", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Globals.Message.Info("No expression is entered");
+                return;
+            }
+            
+            object result = null;
+            string err = string.Empty;
+
+            if (!tbl.ParseExpression(richTextBox1.Text, ref err))
+            {
+                return;
+            }
+            
+            if (tbl.Query(richTextBox1.Text, ref result, ref err))
+            {
+                lblResult.ForeColor = Color.Green;
+                int[] arr = result as int[];
+                if (arr != null)
+                {
+                    lblResult.Text = "Number of shapes = " + arr.Length;
+
+                    // updating shapefile selection
+                    if (_selectionMode)
+                    {
+                        // TODO: uncomment
+                        //ArrayList options = new ArrayList();
+                        //options.Add("1 - New selection");
+                        //options.Add("2 - Add to selection");
+                        //options.Add("3 - Exclude from selection");
+                        //options.Add("4 - Invert in selection");
+                        //string s = string.Format("Number of shapes = {0}. Choose the way to update selection", arr.Length);
+                        //int option = MapWindow.Controls.Dialogs.ChooseOptions(options, 0, s, "Update selection");
+
+                        //// updating selection
+                        //if (option != -1)
+                        //{
+                        //    // _mapWin.View.UpdateSelection(_layerHandle, ref arr, (SelectionOperation)option);
+                        //    // _mapWin.View.Redraw();
+                        //}
+                    }
+                }
             }
             else
             {
-                object result = null;
-                string err = string.Empty;
-
-                //if (tbl.ParseExpression(richTextBox1.Text, ref err))
-                //if (tbl.Query(richTextBox1.Text, ref result, ref err))
-                //{
-                //    lblResult.ForeColor = Color.Green;
-                //    int[] arr = result as int[];
-                //    if (arr != null)
-                //    {
-                //        lblResult.Text = "Number of shapes = " + arr.Length.ToString();
-
-                //        // updating shapefile selection
-                //        if (_selectionMode)
-                //        {
-                //            ArrayList options = new ArrayList();
-                //            options.Add("1 - New selection");
-                //            options.Add("2 - Add to selection");
-                //            options.Add("3 - Exclude from selection");
-                //            options.Add("4 - Invert in selection");
-                //            string s = string.Format("Number of shapes = {0}. Choose the way to update selection", arr.Length);
-                //            //int option = MapWindow.Controls.Dialogs.ChooseOptions(options, 0, s, "Update selection");
-
-                //            // updating selection
-                //            //if (option != -1)
-                //            //{
-                //            //_mapWin.View.UpdateSelection(_layerHandle, ref arr, (SelectionOperation)option);
-                //            //_mapWin.View.Redraw();
-                //            //}
-                //        }
-                //    }
-                //}
-                //else
-                //{
-                //    if (err.ToLower() == "selection is empty")
-                //    {
-                //        lblResult.ForeColor = Color.Blue;
-                //        lblResult.Text = err;
-                //    }
-                //    else
-                //    {
-                //        lblResult.ForeColor = Color.Red;
-                //        lblResult.Text = err;
-                //    }
-                //}
+                if (err.ToLower() == "selection is empty")
+                {
+                    lblResult.ForeColor = Color.Blue;
+                    lblResult.Text = err;
+                }
+                else
+                {
+                    lblResult.ForeColor = Color.Red;
+                    lblResult.Text = err;
+                }
             }
         }
 
         /// <summary>
         /// Updating selection
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnOk_Click(object sender, EventArgs e)
         {
             this.Tag = richTextBox1.Text;
@@ -294,14 +300,16 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         {
             if (e.RowIndex < 0)
                 return;
-            richTextBox1.SelectedText = "[" + dgvField[CMN_NAME, e.RowIndex].Value.ToString() + "] ";
+            richTextBox1.SelectedText = "[" + dgvField[CMN_NAME, e.RowIndex].Value + "] ";
         }
 
         private void dgvValues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
+            {
                 return;
-            richTextBox1.SelectedText = dgvValues[1, e.RowIndex].Value.ToString() + " ";
+            }
+            richTextBox1.SelectedText = dgvValues[1, e.RowIndex].Value + " ";
         }
 
 
@@ -310,23 +318,22 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         /// </summary>
         private void button0_Click(object sender, EventArgs e)
         {
-            Button btn = sender as Button;
+            var btn = sender as Button;
             if (btn != null)
+            {
                 richTextBox1.SelectedText = btn.Text + " ";
+            }
         }
 
         /// <summary>
         /// Warning while turning on the mode
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void chkShowDynamically_CheckedChanged(object sender, EventArgs e)
         {
-            //if (chkShowDynamically.Checked)
-            //{
-            //    MessageBox.Show("Dynamic selection mode was turned on.\nThe selection will be changed after each click\n on the value to show corresponding objects.", 
-            //                    "MapWindow 4", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
+            if (chkShowDynamically.Checked)
+            {
+                Globals.Message.Info("Dynamic selection mode was turned on.\nThe selection will be changed after each click\n on the value to show corresponding objects.");
+            }
         }
 
         /// <summary>
@@ -339,21 +346,26 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
                 return;
             }
 
-            if (chkShowDynamically.Checked)
+            if (!chkShowDynamically.Checked)
             {
-                if (dgvField.SelectedRows.Count != 0 && dgvValues.SelectedRows.Count != 0)
-                {
-                    string expr = "[" + dgvField[CMN_NAME, dgvField.SelectedRows[0].Index].Value.ToString() + "] = ";
-                    expr += dgvValues[1, dgvValues.SelectedRows[0].Index].Value.ToString();
+                return;
+            }
 
-                    object result = null;
-                    string errorMessage = string.Empty;
-                    //if (_shapefile.Table.Query(expr, ref result, ref errorMessage))
-                    //{
-                    //    int[] arr = result as int[];
-                    //    //_mapWin.View.UpdateSelection(_layerHandle, ref arr, SelectionOperation.SelectNew);
-                    //    //_mapWin.View.Redraw();
-                    //}
+            if (dgvField.SelectedRows.Count != 0 && dgvValues.SelectedRows.Count != 0)
+            {
+                var expr = "[" + dgvField[CMN_NAME, dgvField.SelectedRows[0].Index].Value + "] = ";
+                expr += dgvValues[1, dgvValues.SelectedRows[0].Index].Value.ToString();
+
+                object result = null;
+                string errorMessage = string.Empty;
+                if (_shapefile.Table.Query(expr, ref result, ref errorMessage))
+                {
+                    int[] arr = result as int[];
+
+                    if (arr != null)
+                    {
+                        _layer.UpdateSelection(arr.ToList(), SelectionOperation.New);
+                    }
                 }
             }
         }

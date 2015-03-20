@@ -11,7 +11,7 @@ namespace MW5.Api.Interfaces
         float Width { get; set; }
         Color Color { get; set; }
         DashStyle DashStyle { get; set; }
-        bool UseLinePattern { get; set; }
+        bool UsePattern { get; set; }
         CompositeLine Pattern { get; set; }
     }
 }

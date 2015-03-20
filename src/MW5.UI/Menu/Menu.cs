@@ -95,6 +95,11 @@ namespace MW5.UI.Menu
             set { CommandBar.Tag = value; }
         }
 
+        public string Key
+        {
+            get { return MAIN_MENU_NAME; }
+        }
+
         public ToolbarDockState DockState
         {
             get { return ToolbarDockState.Top; }

@@ -1,4 +1,5 @@
-﻿using MW5.Api.Concrete;
+﻿using System.Collections.Generic;
+using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
@@ -32,6 +33,8 @@ namespace MW5.Api.Interfaces
 
         string Serialize();
         bool Deserialize(string state);
+
+        void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode);
 
         #region Not implemented
 

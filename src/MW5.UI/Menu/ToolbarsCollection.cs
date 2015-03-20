@@ -12,6 +12,8 @@ namespace MW5.UI.Menu
     {
         private readonly IMenuIndex _menuIndex;
         private MainFrameBarManager _manager;
+        internal const string FILE_TOOLBAR_KEY = "FileToolbar";
+        internal const string MAP_TOOLBAR_KEY = "MapToolbar";
 
         internal static IToolbarCollection CreateInstance(object menuManager)
         {
@@ -79,12 +81,27 @@ namespace MW5.UI.Menu
             return _menuIndex.ItemsForPlugin(identity);
         }
 
+        public IToolbar MapToolbar
+        {
+            get { return this.FirstOrDefault(t => t.Key == MAP_TOOLBAR_KEY); }
+        }
+
+        public IToolbar FileToolbar
+        {
+            get { return this.FirstOrDefault(t => t.Key == FILE_TOOLBAR_KEY); }
+        }
+
         public IToolbar Add(string name, PluginIdentity identity)
+        {
+            return Add(name, string.Empty, identity);
+        }
+
+        public IToolbar Add(string name, string key, PluginIdentity identity)
         {
             var bar = new Bar(_manager, name);
             int index = _manager.Bars.Add(bar);
             var cbr = _manager.GetBarControl(bar);
-            cbr.Tag = new MenuItemMetadata(identity, name);
+            cbr.Tag = new MenuItemMetadata(identity, key);
             return this[index];
         }
 

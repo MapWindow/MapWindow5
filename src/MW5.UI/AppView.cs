@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Syncfusion;
 using Syncfusion.Windows.Forms;
@@ -46,5 +47,7 @@ namespace MW5.UI
         {
             _parent.UpdateView();
         }
+
+
     }
 }

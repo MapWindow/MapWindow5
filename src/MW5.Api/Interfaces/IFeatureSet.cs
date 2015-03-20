@@ -39,7 +39,7 @@ namespace MW5.Api.Interfaces
         bool Identifiable { get; set; }
         string VisibilityExpression { get; set; }
         Color SelectionColor { get; set; }
-        byte SelectionAlphaTransparency { get; set; }
+        byte SelectionTransparency { get; set; }
 
         bool EditingShapes { get; }
         bool EditingTable { get; }

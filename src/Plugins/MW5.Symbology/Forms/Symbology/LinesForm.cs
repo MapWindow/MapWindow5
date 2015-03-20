@@ -584,7 +584,7 @@ namespace MW5.Plugins.Symbology.Forms.Symbology
                     Bitmap bmp = new Bitmap(60, 14);
                     dgv[CMN_PICTURE, i].Value = bmp;
                 }
-                _options.Line.UseLinePattern = true;
+                _options.Line.UsePattern = true;
             }
             else
             {
@@ -593,7 +593,7 @@ namespace MW5.Plugins.Symbology.Forms.Symbology
                 dgv[CMN_TYPE, 0].Value = "line";
                 Bitmap bmp = new Bitmap(60, 14);
                 dgv[CMN_PICTURE, 0].Value = bmp;
-                _options.Line.UseLinePattern = false;
+                _options.Line.UsePattern = false;
             }
         }
         #endregion
@@ -606,7 +606,7 @@ namespace MW5.Plugins.Symbology.Forms.Symbology
             if (_options.Line.Pattern == null)
             {
                 // using line settings
-                _options.Line.UseLinePattern = false;
+                _options.Line.UsePattern = false;
             }
             else if (_options.Line.Pattern.Count == 1 && _options.Line.Pattern[0].LineType == LineType.Simple)
             {
@@ -619,12 +619,12 @@ namespace MW5.Plugins.Symbology.Forms.Symbology
                     _options.Line.Width = line.LineWidth;
                     _options.Line.Color = line.Color;
                 }
-                _options.Line.UseLinePattern = false;
+                _options.Line.UsePattern = false;
             }
             else
             {
                 // line pattern
-                _options.Line.UseLinePattern = true;
+                _options.Line.UsePattern = true;
             }
         }
 
@@ -661,7 +661,7 @@ namespace MW5.Plugins.Symbology.Forms.Symbology
             var pattern = new CompositeLine();
             this.ApplyPattern();
 
-            if (_options.Line.UseLinePattern && _options.Line.Pattern != null)
+            if (_options.Line.UsePattern && _options.Line.Pattern != null)
             {
                 string s = _options.Line.Pattern.Serialize();
                 pattern.Deserialize(s);

@@ -19,10 +19,11 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
         /// Sets the state of controls on the general tab on loading
@@ -69,12 +70,12 @@ namespace MW5.Plugins.Symbology.Forms
 
             //if (chkFastMode.Checked)
             //{
-            //    this.Enabled = false;
-            //    this.Cursor = Cursors.WaitCursor;
+            //    Enabled = false;
+            //    Cursor = Cursors.WaitCursor;
             //    oldCallback = _shapefile.GlobalCallback;
-            //    CallbackLocal callback = new CallbackLocal(this.progressBar1);
+            //    CallbackLocal callback = new CallbackLocal(progressBar1);
             //    _shapefile.GlobalCallback = callback;
-            //    this.progressBar1.Visible = true;
+            //    progressBar1.Visible = true;
             //    //groupModeDescription.Height = 267;
             //}
 
@@ -82,10 +83,10 @@ namespace MW5.Plugins.Symbology.Forms
 
             //if (chkFastMode.Checked)
             //{
-            //    this.Cursor = Cursors.Default;
-            //    this.Enabled = true;
+            //    Cursor = Cursors.Default;
+            //    Enabled = true;
             //    _shapefile.GlobalCallback = oldCallback;
-            //    this.progressBar1.Visible = false;
+            //    progressBar1.Visible = false;
             //    //groupModeDescription.Height = 293;
             //}
 
@@ -114,14 +115,14 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 if (!_shapefile.SpatialIndex.DiskIndexExists)
                 {
-                    this.Enabled = false;
-                    this.Cursor = Cursors.WaitCursor;
+                    Enabled = false;
+                    Cursor = Cursors.WaitCursor;
                     if (_shapefile.SpatialIndex.CreateDiskIndex())
                     {
-                        MessageBox.Show("Spatial index was successfully created");
+                        Globals.Message.Info("Spatial index was successfully created");
                     }
-                    this.Enabled = true;
-                    this.Cursor = Cursors.Default;
+                    Enabled = true;
+                    Cursor = Cursors.Default;
                 }
                 else
                 {

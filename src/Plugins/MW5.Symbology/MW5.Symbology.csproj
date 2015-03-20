@@ -174,20 +174,20 @@
     <Compile Include="Forms\Charts\ChartStyleForm.Designer.cs">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmSymbologyAppearance.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyCategories.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyCharts.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyExpression.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyGeneral.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyLabels.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyMain.cs">
+    <Compile Include="Forms\SymbologyFormAppearance.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormCategories.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormCharts.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormExpression.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormGeneral.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormLabels.Designer.cs" />
+    <Compile Include="Forms\SymbologyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\frmSymbologyMain.Designer.cs">
-      <DependentUpon>frmSymbologyMain.cs</DependentUpon>
+    <Compile Include="Forms\SymbologyForm.Designer.cs">
+      <DependentUpon>SymbologyForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\frmSymbologyMode.Designer.cs" />
-    <Compile Include="Forms\frmSymbologyVisibility.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormMode.Designer.cs" />
+    <Compile Include="Forms\SymbologyFormVisibility.Designer.cs" />
     <Compile Include="Forms\Labels\AddLabelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -264,13 +264,16 @@
     <Compile Include="Forms\Utilities\frmOptionsManager.Designer.cs">
       <DependentUpon>frmOptionsManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\frmQueryBuilder.cs">
+    <Compile Include="Forms\Utilities\QueryBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\frmQueryBuilder.Designer.cs">
-      <DependentUpon>frmQueryBuilder.cs</DependentUpon>
+    <Compile Include="Forms\Utilities\QueryBuilderForm.Designer.cs">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu\LegendListener.cs" />
+    <Compile Include="Menu\MenuCommands.cs" />
+    <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Menu\MenuService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -343,8 +346,8 @@
     <EmbeddedResource Include="Forms\Charts\ChartStyleForm.resx">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\frmSymbologyMain.resx">
-      <DependentUpon>frmSymbologyMain.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\SymbologyForm.resx">
+      <DependentUpon>SymbologyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Labels\AddLabelsForm.resx">
       <DependentUpon>AddLabelsForm.cs</DependentUpon>
@@ -385,8 +388,8 @@
     <EmbeddedResource Include="Forms\Utilities\frmOptionsManager.resx">
       <DependentUpon>frmOptionsManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\frmQueryBuilder.resx">
-      <DependentUpon>frmQueryBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Utilities\QueryBuilderForm.resx">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

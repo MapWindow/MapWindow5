@@ -10,14 +10,14 @@ namespace MW5.Api.Concrete
 {
     public class LayerCollection : BaseLayerCollection<ILayer>
     {
-        public LayerCollection(AxMap axMap)
-            : base(axMap)
+        public LayerCollection(MapControl mapControl)
+            : base(mapControl)
         {
         }
 
         public override ILayer ItemByHandle(int layerHandle)
         {
-            return new Layer(_axMap, layerHandle);
+            return new Layer(_mapControl, layerHandle);
         }
 
         public override ILayer this[int position]
@@ -29,7 +29,7 @@ namespace MW5.Api.Concrete
                     var layerHandle = _axMap.get_LayerHandle(position);
                     if (layerHandle != -1)
                     {
-                        return new Layer(_axMap, layerHandle);
+                        return new Layer(_mapControl, layerHandle);
                     }
                 }
                 return null;

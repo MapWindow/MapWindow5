@@ -34,7 +34,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendLayer"/> class.
         /// </summary>
-        internal LegendLayer(AxMap map, LegendControl legend, int layerHandle )
+        internal LegendLayer(MapControl map, LegendControl legend, int layerHandle )
             : base(map, layerHandle)
         {
             _legend = legend;   // must be the first line in constructor

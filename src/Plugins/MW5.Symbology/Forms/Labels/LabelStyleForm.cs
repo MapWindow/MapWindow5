@@ -40,6 +40,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         private static int tabNumber = 0;
 
         private readonly IMuteLegend _legend;
+        private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
         private readonly int _handle = -1;
         private readonly bool _categoryEdited;
@@ -52,15 +53,17 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// <summary>
         /// Constructor for setting label expression and options
         /// </summary>
-        public LabelStyleForm(IMuteLegend legend, IFeatureSet sf, int handle)
+        public LabelStyleForm(IMuteLegend legend, ILayer layer)
         {
-            if (sf == null)
+            if (layer == null || layer.FeatureSet == null)
             {
-                throw new Exception("LabelStyleForm: unexpected null parameter");
+                throw new ArgumentNullException("layer");
             }
+            
             _legend = legend;
-            _shapefile = sf;
-            _handle = handle;
+            _layer = layer;
+            _shapefile = _layer.FeatureSet;
+            _handle = _layer.Handle;
 
             InitializeComponent();
            
@@ -90,7 +93,6 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// <summary>
         /// Constructor for editing single category
         /// </summary>
-        /// <param name="lb"></param>
         public LabelStyleForm(IFeatureSet sf, ILabelStyle lb) 
         {
             _categoryEdited = true;
@@ -775,7 +777,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         private void btnLabelExpression_Click(object sender, EventArgs e)
         {
             string s = txtLabelExpression.Text;
-            frmQueryBuilder form = new frmQueryBuilder(_shapefile, _handle, s, false);
+            var form = new QueryBuilderForm(_layer, s, false);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (txtLabelExpression.Text != form.Tag.ToString())

@@ -236,5 +236,10 @@ namespace MW5.Api
         {
             Invoke(sender, MapCursorChanged, args);
         }
+
+        internal void FireSelectionChagned(object sender, SelectionChangedEventArgs args)
+        {
+            Invoke(sender, SelectionChanged, args);
+        }
     }
 }

@@ -326,7 +326,7 @@ namespace MW5.Api
         {
             get
             {
-                return new LayerCollection(_map);
+                return new LayerCollection(this);
             }
         }
 

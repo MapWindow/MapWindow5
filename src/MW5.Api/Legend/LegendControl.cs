@@ -117,7 +117,7 @@ namespace MW5.Api.Legend
         [Browsable(false)]
         public LegendLayerCollection<ILegendLayer> Layers
         {
-            get { return _layers ?? (_layers = new LegendLayerCollection<ILegendLayer>(_map, this)); }
+            get { return _layers ?? (_layers = new LegendLayerCollection<ILegendLayer>(_mapControl as MapControl, this)); }
         }
 
         /// <summary>
@@ -722,7 +722,7 @@ namespace MW5.Api.Legend
         /// </summary>
         internal LegendLayer CreateLayer(int layerHandle, object newLayer)
         {
-            return new LegendLayer(_map, this, layerHandle);
+            return new LegendLayer(_mapControl as MapControl, this, layerHandle);
         }
 
         /// <summary>

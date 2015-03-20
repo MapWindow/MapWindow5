@@ -23,7 +23,7 @@ using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
         /// Initializes labels tab
@@ -43,17 +43,16 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnGenerateLabels_Click(object sender, EventArgs e)
         {
-            //frmGenerateLabels form = new frmGenerateLabels(m_mapWin, _shapefile, layer, LabelAction.ChangeAll);
-
-            var form = new LabelStyleForm(_legend, _shapefile, _layerHandle);
-            if (form.ShowDialog(this) == DialogResult.OK)
-            {           
-                _shapefile.Labels.Visible = true;
-                DrawLabelsPreview();
-                RefreshControlsState(null, null);
-                RedrawMap();
+            using (var form = new LabelStyleForm(_legend, _layer))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    _shapefile.Labels.Visible = true;
+                    DrawLabelsPreview();
+                    RefreshControlsState(null, null);
+                    RedrawMap();
+                }
             }
-            form.Dispose();
         }
 
         /// <summary>
@@ -69,8 +68,10 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnLabelsAppearance_Click(object sender, EventArgs e)
         {
-            LabelStyleForm styleFormForm = new LabelStyleForm(_legend, _shapefile, _layerHandle );
-            styleFormForm.ShowDialog();
+            using (var styleFormForm = new LabelStyleForm(_legend, _layer))
+            {
+                styleFormForm.ShowDialog();
+            }
 
             // updating controls (even if cancel was hit, a user could have applied the options)
             var options = _shapefile.Labels.Style;
@@ -85,8 +86,6 @@ namespace MW5.Plugins.Symbology.Forms
 
             // refreshing preview
             DrawLabelsPreview();
-            
-            styleFormForm.Dispose();
         }
 
         /// <summary>
@@ -94,7 +93,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnLabelsClear_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete labels?", "MapWindow_5", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (Globals.Message.Ask("Do you want to delete labels?"))
             {
                 _shapefile.Labels.Items.Clear();
                 _shapefile.Labels.Expression = "";
@@ -110,7 +109,9 @@ namespace MW5.Plugins.Symbology.Forms
         private void udLabelFontSize_ValueChanged(object sender, EventArgs e)
         {
             if (_noEvents)
+            {
                 return;
+            }
 
             _shapefile.Labels.Style.FontSize = (int)udLabelFontSize.Value;
             DrawLabelsPreview();

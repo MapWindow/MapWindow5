@@ -40,18 +40,25 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         private static int _selectedTab = 0;
         private string _initState = "";
         private int _handle = -1;
-        private IMuteLegend m_legend = null;
+        private IMuteLegend _legend = null;
+        private readonly ILayer _layer;
 
         /// <summary>
         /// Initializes a new instance of the ChartStyleForm class
         /// </summary>
-        public ChartStyleForm(IMuteLegend legend, IFeatureSet sf, bool legendCall, int handle)
+        public ChartStyleForm(IMuteLegend legend, ILayer layer, bool legendCall)
         {
+            if (layer == null || layer.FeatureSet == null)
+            {
+                throw new ArgumentNullException("layer");
+            }
+
             InitializeComponent();
-            _shapefile = sf;
-            _charts = sf.Diagrams;
-            m_legend = legend;
-            _handle = handle;
+            _shapefile = layer.FeatureSet;
+            _charts = _shapefile.Diagrams;
+            _legend = legend;
+            _layer = layer;
+            _handle = layer.Handle;
 
             var mode = _charts.SavingMode;
             _charts.SavingMode = PersistenceType.None;
@@ -95,7 +102,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                 cboMaxScale.Items.Add(scales[i]);
             }
 
-            txtChartExpression.Text = sf.Diagrams.VisibilityExpression;
+            txtChartExpression.Text = _shapefile.Diagrams.VisibilityExpression;
 
             SetChartsType();
 
@@ -463,39 +470,35 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             {
                 if (_charts.Count == 0)
                 {
-                    //MessageBox.Show("No fields were chosen. No charts will be displayed.", _plugin.Globals.AppName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //return false;
+                    Globals.Message.Info("No fields were chosen. No charts will be displayed.");
+                    return false;
+                }
+
+                if (Globals.Message.Ask("No fields were chosen. Do you want to remove all charts?"))
+                {
+                    _charts.Clear();
                 }
                 else
                 {
-                    if (MessageBox.Show("No fields were chosen. Do you want to remove all charts?",
-                                    "MapWindow_5", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        _charts.Clear();
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             else
             {
                 // there is no charts, start generation
-                
                 if (_shapefile.PointOrMultiPoint)
                 {
                     // start generation, no need to prompt the user for position
-                    this.Enabled = false;
-                    this.Cursor = Cursors.WaitCursor;
+                    Enabled = false;
+                    Cursor = Cursors.WaitCursor;
                     try
                     {
                         _shapefile.Diagrams.Generate(LabelPosition.Centroid);
                     }
                     finally
                     {
-                        this.Enabled = true;
-                        this.Cursor = Cursors.Default;
+                        Enabled = true;
+                        Cursor = Cursors.Default;
                     }
                 }
                 else
@@ -531,7 +534,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
            // saves options for default loading behavior
            Globals.SaveLayerOptions(_handle);
 
-           this.DialogResult = DialogResult.OK;
+           DialogResult = DialogResult.OK;
        }
 
        private void btnRefresh_Click(object sender, EventArgs e)
@@ -751,7 +754,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         private void btnChartExpression_Click(object sender, EventArgs e)
         {
             string s = txtChartExpression.Text;
-            frmQueryBuilder form = new frmQueryBuilder(_shapefile, _handle, s, false);
+            var form = new QueryBuilderForm(_layer, s, false);
             if (form.ShowDialog() == DialogResult.OK)
             {
                 txtChartExpression.Text = form.Tag.ToString();
@@ -798,7 +801,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         /// </summary>
         private void frmChartStyle_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.DialogResult == DialogResult.Cancel)
+            if (DialogResult == DialogResult.Cancel)
             {
                 var mode = _charts.SavingMode;
                 _charts.SavingMode = PersistenceType.None;
@@ -816,7 +819,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 _noEvents = true;
-                this.icbColors.ColorSchemes = Globals.ChartColors;
+                icbColors.ColorSchemes = Globals.ChartColors;
                 _noEvents = false;
             }
             form.Dispose();
@@ -827,7 +830,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         /// </summary>
         private void btnSetMaxScale_Click(object sender, EventArgs e)
         {
-            var map = m_legend.Map;
+            var map = _legend.Map;
             if (map != null)
             {
                 cboMaxScale.Text = map.CurrentScale.ToString();
@@ -840,7 +843,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         /// </summary>
         private void btnSetMinScale_Click(object sender, EventArgs e)
         {
-            var map = m_legend.Map;
+            var map = _legend.Map;
             if (map != null)
             {
                 cboMinScale.Text = map.CurrentScale.ToString();

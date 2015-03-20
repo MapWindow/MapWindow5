@@ -7,13 +7,14 @@ using MW5.Properties;
 using MW5.Services;
 using System.Linq;
 using MW5.Plugins.Services;
+using MW5.UI.Menu;
 
 namespace MW5.Menu
 {
     internal class MenuGenerator
     {
-        private const string FILE_TOOLBAR = "File";
-        private const string MAP_TOOLBAR = "Map";
+        private const string FILE_TOOLBAR_NANE = "File";
+        private const string MAP_TOOLBAR_NAME = "Map";
         
         private readonly IAppContext _context;
         private readonly IPluginManager _pluginManager;
@@ -96,11 +97,11 @@ namespace MW5.Menu
 
         private void InitToolbars()
         {
-            var bar = _context.Toolbars.Add(FILE_TOOLBAR, PluginIdentity.Default);
+            var bar = _context.Toolbars.Add(FILE_TOOLBAR_NANE, ToolbarsCollection.FILE_TOOLBAR_KEY, PluginIdentity.Default);
             InitFileToolbar(bar);
             bar.DockState = ToolbarDockState.Left;
 
-            bar = _context.Toolbars.Add(MAP_TOOLBAR, PluginIdentity.Default);
+            bar = _context.Toolbars.Add(MAP_TOOLBAR_NAME, ToolbarsCollection.MAP_TOOLBAR_KEY, PluginIdentity.Default);
             InitMapToolbar(bar);
             bar.DockState = ToolbarDockState.Top;
         }

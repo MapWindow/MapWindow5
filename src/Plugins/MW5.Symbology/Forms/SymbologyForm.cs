@@ -23,78 +23,58 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Forms
 {
     /// <summary>
-    /// Available actions while changing label options
-    /// </summary>
-    internal enum LabelAction
-    {
-        ChangeAll = 0,
-        ChangeText = 1,
-    }
-
-    /// <summary>
     /// A class representing GUI for managing Shapefile symbology
     /// </summary>
-    public partial class frmSymbologyMain : Form
+    public partial class SymbologyForm : MapWindowForm
     {
-        #region Member variables
-
-        // A reference to the plug-in
-        private readonly IMuteLegend _legend;
-
-        // Handle of the shapefile layer
-        private readonly int _layerHandle = -1;
-
-        // MW the layer being edited
-        private readonly ILegendLayer _layer = null;
-
-        // the plug-in settings will be held in legend; 
-        // but it's possible to add them in the layer interface if needed
-        private readonly SymbologySettings _settings = null;
-        
-        // Reference to the shapefile
-        private readonly IFeatureSet _shapefile = null;
-        
-        // The tab index to show on the loading
-        static int _tabIndex = 0;
-        
-        // Prevents controls from triggering events when managed from code
-        private bool _noEvents = false;
-
-        // init state for serialization
-        private string _initState = "";
-
-        // changes flag
-        private bool _stateChanged = false;
-        
-        // redraw map at once is being changed
         private const bool _redrawModeIsChanging = false;
 
-        #endregion
+        static int _tabIndex = 0;
 
-        #region Constructor
+        private readonly IAppContext _context;
+        private readonly IMuteLegend _legend;
+        
+        private readonly int _layerHandle;
+
+        private readonly ILegendLayer _layer;
+
+        private readonly SymbologySettings _settings;
+        
+        private readonly IFeatureSet _shapefile;
+        
+        private bool _noEvents;
+
+        private string _initState;
+        
+        private bool _stateChanged;
+
+
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
         /// </summary>
-        public frmSymbologyMain(IMuteLegend legend, int layerHandle)
+        public SymbologyForm(IAppContext context, int layerHandle)
         {
-            // Required for Windows Form Designer support
+            if (context == null) throw new ArgumentNullException("context");
             InitializeComponent();
 
             Config.ForceHideLabels = true;
 
-            // setting member variables (some of them for faster access)
-            _legend = legend;
+            _context = context;
+            _legend = _context.Legend;
+
             _layerHandle = layerHandle;
             _layer = _legend.Layers.ItemByHandle(_layerHandle);
             _shapefile = _layer.FeatureSet;
 
             _settings = Globals.get_LayerSettings(_layerHandle);
-            this.Text = "Layer properties: " + _layer.Name;
+            Text = "Layer properties: " + _layer.Name;
 
             // update map at once button is off by default which is equal to locked state of the map
             LockLegendAndMap(true);
@@ -125,25 +105,25 @@ namespace MW5.Plugins.Symbology.Forms
             UpdateColorSchemes();
             
             // the state should be set after the loading as otherwise we can trigger unnecessary redraws
-            chkRedrawMap.Checked = false; //_settings.UpdateMapAtOnce;
+            chkRedrawMap.Checked = _settings.UpdateMapAtOnce;
 
             _noEvents = false;
             
             // sets the enabled state of the controls
             RefreshControlsState(null, null);
 
-            //DrawAllPreviews();
+            DrawAllPreviews();
             
             AddTooltips();
 
             // displaying the last tab
             tabControl1.SelectedIndex = _tabIndex;
 
-            tabControl1.TabPages.Remove(tabCharts);
-            tabControl1.TabPages.Remove(tabLabels);
-            tabControl1.TabPages.Remove(tabDefault);
+            //tabControl1.TabPages.Remove(tabCharts);
+            //tabControl1.TabPages.Remove(tabLabels);
+            //tabControl1.TabPages.Remove(tabDefault);
 
-            this.Shown += frmSymbologyMain_Shown;
+            Shown += frmSymbologyMain_Shown;
         }
 
         private void LockLegendAndMap( bool state)
@@ -175,14 +155,12 @@ namespace MW5.Plugins.Symbology.Forms
             txtLayerExpression.Text = _shapefile.VisibilityExpression;
         }
        
-        #endregion
-
         #region Controls updating
 
         /// <summary>
         /// Updates shapefile settings according to the values of the controls 
         /// </summary>
-        private void GUI2Settings(object sender, EventArgs e)
+        private void Ui2Settings(object sender, EventArgs e)
         {
             if (_noEvents)
                 return;
@@ -205,12 +183,12 @@ namespace MW5.Plugins.Symbology.Forms
             }
             else if (tabControl1.SelectedTab.Name.ToLower() == "tablabels")
             {
-                this.UpdateLabels();
+                UpdateLabels();
                 
             }
             else if (tabControl1.SelectedTab.Name.ToLower() == "tabcharts")
             {
-                this.UpdateCharts();
+                UpdateCharts();
             }
 
             _shapefile.VisibilityExpression = txtLayerExpression.Text;
@@ -234,7 +212,7 @@ namespace MW5.Plugins.Symbology.Forms
 
             // provide the options if there are a single line pattern, otherwise extednded options are needed
             IGeometryStyle options = _shapefile.Style;
-            if (options.Line.UseLinePattern)
+            if (options.Line.UsePattern)
             {
                 if (options.Line.Pattern.Count <= 1)
                 {
@@ -338,7 +316,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void frmSymbologyMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (this.DialogResult == DialogResult.Cancel)
+            if (DialogResult == DialogResult.Cancel)
             {
                 CancelChanges();
             }
@@ -450,13 +428,11 @@ namespace MW5.Plugins.Symbology.Forms
         {
             if (_stateChanged)
             {
-                GUI2Settings(null, null);
+                Ui2Settings(null, null);
 
                 // triggering redraw
                 if (!chkRedrawMap.Checked)
                 {
-                    var map = _legend.Map;
-
                     LockLegendAndMap(false);
 
                     _legend.Redraw(LegendRedraw.LegendAndMap);
@@ -520,17 +496,15 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void chkLayerVisible_CheckedChanged(object sender, EventArgs e)
         {
-            GUI2Settings(null, null);
+            Ui2Settings(null, null);
         }
 
         /// <summary>
         /// Sets visiblity expression
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void txtLayerExpression_TextChanged(object sender, EventArgs e)
         {
-            GUI2Settings(null, null);
+            Ui2Settings(null, null);
         }
     }
 }

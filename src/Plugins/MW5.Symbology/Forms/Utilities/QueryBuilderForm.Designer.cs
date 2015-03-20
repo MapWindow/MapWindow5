@@ -1,6 +1,6 @@
 ﻿namespace MW5.Plugins.Symbology.Forms.Utilities
 {
-    partial class frmQueryBuilder
+    partial class QueryBuilderForm
     {
         /// <summary>
         /// Required designer variable.
@@ -441,7 +441,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmQueryBuilder";
+            this.Name = "QueryBuilderForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Query builder";

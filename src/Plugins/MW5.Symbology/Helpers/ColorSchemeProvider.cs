@@ -348,14 +348,14 @@ namespace MW5.Plugins.Symbology.Helpers
                 List.Add(blend);
             }
 
-            blend = (ColorBlend)List[0];
+            blend = List[0];
             var shpType = sf.GeometryType;
             if (sf.PointOrMultiPoint || shpType == GeometryType.Polygon)
             {
                 blend.Colors[0] = sf.Style.Fill.Color;
                 blend.Colors[1] = sf.Style.Fill.Color;
             }
-            else if (shpType == Api.GeometryType.Polyline)
+            else if (shpType == GeometryType.Polyline)
             {
                 blend.Colors[0] = sf.Style.Line.Color;
                 blend.Colors[1] = sf.Style.Line.Color;

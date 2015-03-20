@@ -21,14 +21,15 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Controls;
+using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Forms.Labels
 {
-    public partial class FontGradientForm : Form
+    public partial class FontGradientForm : MapWindowForm
     {
-        bool _fontGradient = true;
-        ILabelStyle _labels = null;
-        bool _noEvents = false;
+        private readonly bool _fontGradient;
+        private readonly ILabelStyle _labels;
+        private bool _noEvents;
 
         /// <summary>
         /// Initializes new instance of the FontGradientForm class
@@ -48,13 +49,13 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             this.Text = fontGradient ? "Font gradient" : "Frame gradient";
             _noEvents = false;
 
-            Settings2GUI();
+            Settings2Ui();
         }
 
         /// <summary>
         /// Setting values of labels to the control
         /// </summary>
-        private void Settings2GUI()
+        private void Settings2Ui()
         {
             _noEvents = true;
             
@@ -87,32 +88,27 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// <summary>
         /// Saveing values options to the charts class
         /// </summary>
-        private void GUI2Settings(object sender, EventArgs e)
+        private void Ui2Settings(object sender, EventArgs e)
         {
             if (_noEvents)
+            {
                 return;
+            }
 
             if (_fontGradient)
             {
                 _labels.FontColor =  clpFont1.Color;
                 _labels.FontColor2 =  clpFont2.Color;
-                if (chkUseGradient.Checked)
-                    _labels.FontGradientMode = (LinearGradient)icbFontGradient.SelectedIndex;
-                else
-                    _labels.FontGradientMode = LinearGradient.None;
+                _labels.FontGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
             else
             {
                 _labels.FrameBackColor = clpFont1.Color;
                 _labels.FrameBackColor2 =  clpFont2.Color;
-                if (chkUseGradient.Checked)
-                    _labels.FrameGradientMode = (LinearGradient)icbFontGradient.SelectedIndex;
-                else
-                    _labels.FrameGradientMode = LinearGradient.None;
+                _labels.FrameGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
 
-
-            Settings2GUI();
+            Settings2Ui();
         }
 
         /// <summary>
@@ -130,7 +126,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// </summary>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            GUI2Settings(null, null);
+            Ui2Settings(null, null);
         }
 
         /// <summary>
@@ -140,17 +136,11 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         {
             if (chkUseGradient.Checked)
             {
-                if (_fontGradient)
-                    _labels.FontGradientMode = (LinearGradient)icbFontGradient.SelectedIndex;
-                else
-                    _labels.FontGradientMode = LinearGradient.None;
+               _labels.FontGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
             else
             {
-                if (_fontGradient)
-                    _labels.FrameGradientMode = (LinearGradient)icbFontGradient.SelectedIndex;
-                else
-                    _labels.FrameGradientMode = LinearGradient.None;
+               _labels.FrameGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
             RefreshControls();
         }

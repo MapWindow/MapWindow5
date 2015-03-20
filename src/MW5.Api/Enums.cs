@@ -1304,4 +1304,15 @@
         Boolean = 2,
         FloatArray = 3,
     }
+
+    /// <summary>
+    /// Defines the operation that will be used to update the existing selection
+    /// </summary>
+    public enum SelectionOperation
+    {
+        New = 0,          // old selection will be lost
+        Add = 1,          // new shapes will be added to the old selection
+        Exclude = 2,      // new shapes will be excluded from old selection
+        Invert = 3        // bew shapes will be inverted in case they are in the existing selection
+    }
 }

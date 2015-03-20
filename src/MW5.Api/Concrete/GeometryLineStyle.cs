@@ -50,7 +50,7 @@ namespace MW5.Api.Concrete
             set { _style.LineStipple = (tkDashStyle)value; }
         }
 
-        public bool UseLinePattern
+        public bool UsePattern
         {
             get { return _style.UseLinePattern; }
             set { _style.UseLinePattern = value; }

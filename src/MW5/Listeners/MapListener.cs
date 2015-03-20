@@ -69,6 +69,10 @@ namespace MW5
 
         private void MapSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (e.UpdateMap)
+            {
+                _map.Redraw();
+            }
             _context.View.Update();
         }
 

@@ -111,7 +111,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             this.clpFont1.Name = "clpFont1";
             this.clpFont1.Size = new System.Drawing.Size(74, 21);
             this.clpFont1.TabIndex = 118;
-            this.clpFont1.SelectedColorChanged += new System.EventHandler(this.GUI2Settings);
+            this.clpFont1.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // clpFont2
             // 
@@ -127,7 +127,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             this.clpFont2.Name = "clpFont2";
             this.clpFont2.Size = new System.Drawing.Size(74, 21);
             this.clpFont2.TabIndex = 119;
-            this.clpFont2.SelectedColorChanged += new System.EventHandler(this.GUI2Settings);
+            this.clpFont2.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // icbFontGradient
             // 
@@ -143,7 +143,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             this.icbFontGradient.OutlineColor = System.Drawing.Color.Black;
             this.icbFontGradient.Size = new System.Drawing.Size(154, 21);
             this.icbFontGradient.TabIndex = 120;
-            this.icbFontGradient.SelectedIndexChanged += new System.EventHandler(this.GUI2Settings);
+            this.icbFontGradient.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // FontGradientForm
             // 

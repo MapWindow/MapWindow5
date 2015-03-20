@@ -16,48 +16,37 @@
 // Date            Changed By      Notes
 // ********************************************************************************************************
 
-using System.Drawing;
-using System.Windows.Forms;
-using MW5.Api.Legend.Abstract;
+using System;
+using MW5.Plugins.Symbology.Forms.Utilities;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
-        /// Initializes the state of dynamic visibility controls
+        /// Building layer visibility expression
         /// </summary>
-        private void InitVisibilityTab()
+        private void btnLayerExpression_Click(object sender, EventArgs e)
         {
-            scaleLayer.Locked = true;
-
-            ILegendLayer layer = _layer;
-            scaleLayer.MaximumScale = layer.MaxVisibleScale;
-            scaleLayer.MinimimScale = layer.MinVisibleScale;
-            scaleLayer.UseDynamicVisibility = layer.DynamicVisibility;
-
-            var map = _legend.Map;
-            scaleLayer.CurrentScale = map.CurrentScale;
-            
-            Color color = _shapefile.GeometryType == MW5.Api.GeometryType.Polyline? _shapefile.Style.Line.Color : _shapefile.Style.Fill.Color;
-            scaleLayer.FillColor = color;
-
-            scaleLayer.Locked = false;
+            string s = txtLayerExpression.Text;
+            var form = new QueryBuilderForm(_context.Layers.ItemByHandle(_layerHandle), s, false);
+            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txtLayerExpression.Text = form.Tag.ToString();
+                _shapefile.VisibilityExpression = txtLayerExpression.Text;
+                RedrawMap();
+            }
+            form.Dispose();
         }
 
         /// <summary>
-        /// Handles the changes in the dynamic visibility state of the layer
+        /// Clears the layer expression
         /// </summary>
-        private void scaleLayer_StateChanged()
+        private void btnClearLayerExpression_Click(object sender, EventArgs e)
         {
-            if (_noEvents)
-                return;
-
-            _layer.MaxVisibleScale = scaleLayer.MaximumScale;
-            _layer.MinVisibleScale = scaleLayer.MinimimScale;
-            _layer.DynamicVisibility = scaleLayer.UseDynamicVisibility;
+            txtLayerExpression.Clear();
+            _shapefile.VisibilityExpression = "";
             RedrawMap();
-            Application.DoEvents();
         }
     }
 }

@@ -4,7 +4,7 @@ using MW5.Plugins.Symbology.Controls.ColorPicker;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@ namespace MW5.Plugins.Symbology.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSymbologyMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SymbologyForm));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -165,7 +165,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox7.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).BeginInit();
             this.tabDefault.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupLine.SuspendLayout();
@@ -944,7 +943,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkShowLabels.TabIndex = 137;
             this.chkShowLabels.Text = "Labels visible";
             this.chkShowLabels.UseVisualStyleBackColor = true;
-            this.chkShowLabels.CheckedChanged += new System.EventHandler(this.GUI2Settings);
+            this.chkShowLabels.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // chkLabelFrame
             // 
@@ -1054,7 +1053,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkChartsVisible.TabIndex = 127;
             this.chkChartsVisible.Text = "Charts visible";
             this.chkChartsVisible.UseVisualStyleBackColor = true;
-            this.chkChartsVisible.CheckedChanged += new System.EventHandler(this.GUI2Settings);
+            this.chkChartsVisible.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // label7
             // 
@@ -1074,7 +1073,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.optChartsPie.TabIndex = 164;
             this.optChartsPie.Text = "Pie charts";
             this.optChartsPie.UseVisualStyleBackColor = true;
-            this.optChartsPie.CheckedChanged += new System.EventHandler(this.GUI2Settings);
+            this.optChartsPie.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // optChartBars
             // 
@@ -1087,7 +1086,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.optChartBars.TabStop = true;
             this.optChartBars.Text = "Bar charts";
             this.optChartBars.UseVisualStyleBackColor = true;
-            this.optChartBars.CheckedChanged += new System.EventHandler(this.GUI2Settings);
+            this.optChartBars.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // groupCharts
             // 
@@ -1206,7 +1205,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.cboCollisionMode.Name = "cboCollisionMode";
             this.cboCollisionMode.Size = new System.Drawing.Size(185, 21);
             this.cboCollisionMode.TabIndex = 184;
-            this.cboCollisionMode.SelectedIndexChanged += new System.EventHandler(this.GUI2Settings);
+            this.cboCollisionMode.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
             this.cboCollisionMode.MouseEnter += new System.EventHandler(this.chkFastMode_Enter);
             // 
             // progressBar1
@@ -1380,7 +1379,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.icbLineWidth.OutlineColor = System.Drawing.Color.Black;
             this.icbLineWidth.Size = new System.Drawing.Size(72, 21);
             this.icbLineWidth.TabIndex = 4;
-            this.icbLineWidth.SelectedIndexChanged += new System.EventHandler(this.GUI2Settings);
+            this.icbLineWidth.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // clpDefaultOutline
             // 
@@ -1396,7 +1395,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpDefaultOutline.Name = "clpDefaultOutline";
             this.clpDefaultOutline.Size = new System.Drawing.Size(57, 21);
             this.clpDefaultOutline.TabIndex = 176;
-            this.clpDefaultOutline.SelectedColorChanged += new System.EventHandler(this.GUI2Settings);
+            this.clpDefaultOutline.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // udDefaultSize
             // 
@@ -1405,7 +1404,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.udDefaultSize.Name = "udDefaultSize";
             this.udDefaultSize.Size = new System.Drawing.Size(52, 20);
             this.udDefaultSize.TabIndex = 182;
-            this.udDefaultSize.ValueChanged += new System.EventHandler(this.GUI2Settings);
+            this.udDefaultSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // clpPointFill
             // 
@@ -1421,7 +1420,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpPointFill.Name = "clpPointFill";
             this.clpPointFill.Size = new System.Drawing.Size(57, 21);
             this.clpPointFill.TabIndex = 167;
-            this.clpPointFill.SelectedColorChanged += new System.EventHandler(this.GUI2Settings);
+            this.clpPointFill.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // icbFillStyle
             // 
@@ -1453,7 +1452,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpPolygonFill.Name = "clpPolygonFill";
             this.clpPolygonFill.Size = new System.Drawing.Size(63, 21);
             this.clpPolygonFill.TabIndex = 109;
-            this.clpPolygonFill.SelectedColorChanged += new System.EventHandler(this.GUI2Settings);
+            this.clpPolygonFill.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // transpSelection
             // 
@@ -1653,7 +1652,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
-            // frmSymbologyMain
+            // SymbologyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1668,7 +1667,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "frmSymbologyMain";
+            this.Name = "SymbologyForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Layer properties";
@@ -1679,7 +1678,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox7.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axMap1)).EndInit();
             this.tabDefault.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupLine.ResumeLayout(false);

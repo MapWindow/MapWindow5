@@ -28,13 +28,7 @@ using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    #region Usings
-
-    
-
-    #endregion
-
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
         /// Sets the state of controls on the general tab on loading
@@ -82,8 +76,8 @@ namespace MW5.Plugins.Symbology.Forms
         private void Appearance2Controls()
         {
             var options = _shapefile.Style;
-            //clpSelection.Color =  _shapefile.SelectionColor);
-            //transpSelection.Value = _shapefile.SelectionTransparency;
+            clpSelection.Color =  _shapefile.SelectionColor;
+            transpSelection.Value = _shapefile.SelectionTransparency;
 
             var type = _shapefile.GeometryType;
             if (type == GeometryType.Point || type == GeometryType.MultiPoint)
@@ -145,31 +139,29 @@ namespace MW5.Plugins.Symbology.Forms
                 Rectangle rect = pct.ClientRectangle;
                 Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 Graphics g = Graphics.FromImage(bmp);
-                IntPtr ptr = g.GetHdc();
 
                 if (_shapefile.PointOrMultiPoint)
                 {
-                    //sdo.DrawPoint(ptr, 0.0f, 0.0f, rect.Width, rect.Height,  Color.White));
+                    sdo.DrawPoint(g, 0.0f, 0.0f, rect.Width, rect.Height,  Color.White);
                 }
                 else if (_shapefile.GeometryType == GeometryType.Polyline)
                 {
-                    if (sdo.Line.UseLinePattern)
+                    if (sdo.Line.UsePattern)
                     {
-                        //sdo.DrawLine(ptr, 20.0f, 0.0f, 0, 0, true, rect.Width - 40, rect.Height,  Color.White));
+                        sdo.DrawLine(g, 20.0f, 0.0f, 0, 0, true, rect.Width - 40, rect.Height,  Color.White);
                     }
                     else
                     {
                         int w = rect.Width - 40;
                         int h = rect.Height - 40;
-                        //sdo.DrawLine(ptr, (rect.Width - w)/2, (rect.Height - h) / 2, w, h, true, rect.Width, rect.Height,  Color.White));
+                        sdo.DrawLine(g, (rect.Width - w)/2, (rect.Height - h) / 2, w, h, true, rect.Width, rect.Height,  Color.White);
                     }
                 }
                 else if (_shapefile.GeometryType == GeometryType.Polyline)
                 {
-                    //sdo.DrawRectangle(ptr, rect.Width / 2 - 40, rect.Height / 2 - 40, 80, 80, true, rect.Width, rect.Height,  Color.White));
+                    sdo.DrawRectangle(g, rect.Width / 2 - 40, rect.Height / 2 - 40, 80, 80, true, rect.Width, rect.Height,  Color.White);
                 }
 
-                g.ReleaseHdc(ptr);
                 pct.Image = bmp;
             }
         }
@@ -227,7 +219,7 @@ namespace MW5.Plugins.Symbology.Forms
                 options.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
 
                 // and pattern ones in case there is a single line pattern
-                if (options.Line.UseLinePattern)
+                if (options.Line.UsePattern)
                 {
                     if (options.Line.Pattern.Count == 1)
                     {
@@ -242,7 +234,7 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             _shapefile.SelectionColor =  clpSelection.Color;
-            _shapefile.SelectionAlphaTransparency = transpSelection.Value;
+            _shapefile.SelectionTransparency = transpSelection.Value;
             
             DrawAppearancePreview();
         }
@@ -276,7 +268,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void transpSelection_ValueChanged(object sender, byte value)
         {
-            _shapefile.SelectionAlphaTransparency = value;
+            _shapefile.SelectionTransparency = value;
             DrawAppearancePreview();
             RedrawMap();
         }
@@ -287,7 +279,9 @@ namespace MW5.Plugins.Symbology.Forms
         private void icbFillStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_noEvents)
+            {
                 return;
+            }
 
             IGeometryStyle options = _shapefile.Style;
             if (icbFillStyle.SelectedIndex == 0 && options.Fill.Type == FillType.Hatch)

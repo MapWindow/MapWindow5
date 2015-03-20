@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Symbology.Forms;
 using MW5.Plugins.Symbology.Forms.Labels;
 using MW5.Plugins.Symbology.Helpers;
 
@@ -32,7 +33,8 @@ namespace MW5.Plugins.Symbology.Menu
             var fs = legend.Map.GetFeatureSet(e.LayerHandle);
             if (fs != null)
             {
-                using (var form = new LabelStyleForm(legend, fs, e.LayerHandle))
+                var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
+                using (var form = new LabelStyleForm(legend, layer))
                 {
                     if (_context.View.ShowDialog(form) == DialogResult.OK)
                     {
@@ -59,7 +61,13 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerDoubleClicked(IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
         {
-            // TODO: show layer properties form
+            using (var form = new SymbologyForm(_context, e.LayerHandle))
+            {
+                if (_context.View.ShowDialog(form) == DialogResult.OK)
+                {
+                    // do something
+                }
+            }
         }
     }
 }

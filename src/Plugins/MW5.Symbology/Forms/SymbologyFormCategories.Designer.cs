@@ -27,14 +27,11 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
-using InterpolationMode = System.Drawing.Drawing2D.InterpolationMode;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
-        #region Categories Tab
-
         // column indices of the categories grid
         private const int CMN_CATEGORYID = 0;
         private const int CMN_VISIBLE = 1;
@@ -67,14 +64,14 @@ namespace MW5.Plugins.Symbology.Forms
             FillFieldList(_settings.CategoriesFieldName);
 
             // setting the color scheme that is in use
-            for (int i = 0; i < icbCategories.Items.Count; i++)
-            {
-                //if (m_plugin.LayerColors.List[i] == _settings.CategoriesColorScheme)
-                //{
-                //    icbCategories.SelectedIndex = i;
-                //    break;
-                //}
-            }
+            //for (int i = 0; i < icbCategories.Items.Count; i++)
+            //{
+            //    if (m_plugin.LayerColors.List[i] == _settings.CategoriesColorScheme)
+            //    {
+            //        icbCategories.SelectedIndex = i;
+            //        break;
+            //    }
+            //}
 
             var type = _shapefile.GeometryType;
             groupVariableSize.Visible = (type == MW5.Api.GeometryType.Point || type == MW5.Api.GeometryType.Polyline);
@@ -121,7 +118,7 @@ namespace MW5.Plugins.Symbology.Forms
             if (index == -1)
                 return;
 
-            Classification classification = chkUniqueValues.Checked ? Classification.UniqueValues : Classification.NaturalBreaks;
+            var classification = chkUniqueValues.Checked ? Classification.UniqueValues : Classification.NaturalBreaks;
 
             // preventing the large number of categories
             bool showWaiting = false;
@@ -138,8 +135,9 @@ namespace MW5.Plugins.Symbology.Forms
                 {
                     showWaiting = true;
                     string s = string.Format("The chosen field = {1}.\nThe number of unique values = {0}.\n" +
-                                             "Large number of categories negatively affects performance.\nDo you want to continue?", set.Count, "[" + name.ToUpper() + "]");
-                    if (MessageBox.Show(s, "MapWindow 4", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                    "Large number of categories negatively affects performance.\nDo you want to continue?", set.Count, "[" + name.ToUpper() + "]");
+
+                    if (!Globals.Message.Ask(s))
                     {
                         return;
                     }
@@ -501,18 +499,17 @@ namespace MW5.Plugins.Symbology.Forms
 
                 if (_shapefile.GeometryType == GeometryType.Polygon)
                 {
-                    //sdo.DrawRectangle(g.GetHdc(), 0, 0, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor));
+                    sdo.DrawRectangle(g, 0, 0, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor);
                 }
                 else if (_shapefile.GeometryType == GeometryType.Polyline)
                 {
-                    //sdo.DrawLine(g.GetHdc(), 0, 0, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor));
+                    sdo.DrawLine(g, 0, 0, img.Width - 1, img.Height - 1, true, img.Width, img.Height,  dgvCategories.BackgroundColor);
                 }
                 else if (_shapefile.GeometryType == GeometryType.Point)
                 {
-                    //sdo.DrawPoint(g.GetHdc(), 0.0f, 0.0f, img.Width, img.Height,  dgvCategories.BackgroundColor));
+                    sdo.DrawPoint(g, 0.0f, 0.0f, img.Width, img.Height,  dgvCategories.BackgroundColor);
                 }
 
-                g.ReleaseHdc();
                 g.Dispose();
             }
         }
@@ -657,8 +654,6 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Modifies the list of available color schemes for the layer
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
             frmColorSchemes form = new frmColorSchemes(ref Globals.LayerColors);
@@ -668,6 +663,5 @@ namespace MW5.Plugins.Symbology.Forms
             }
             form.Dispose();
         }
-        #endregion
     }
 }

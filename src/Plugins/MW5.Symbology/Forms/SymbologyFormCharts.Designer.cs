@@ -31,7 +31,7 @@ using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms
 {
-    partial class frmSymbologyMain
+    partial class SymbologyForm
     {
         /// <summary>
         /// The code for initialization of the charts tab
@@ -71,31 +71,26 @@ namespace MW5.Plugins.Symbology.Forms
                 int height = rect.Height;
 
                 var charts = _shapefile.Diagrams;
-
-                //if (charts.DiagramType == DiagramType.PieChart)
-                //    charts.DrawChart(ptr, (width - charts.IconWidth) / 2, (height - charts.IconHeight) / 2, false,  Color.White));
-                //else
-                //    charts.DrawChart(ptr, (width - charts.IconWidth) / 2, (height - charts.IconHeight) / 2, false,  Color.White));
-
-                g.ReleaseHdc(ptr);
+                charts.DrawChart(ptr, (width - charts.IconWidth) / 2, (height - charts.IconHeight) / 2, false, Color.White);
             }
             pctCharts.Image = bmp;
         }
-
 
         /// <summary>
         /// Opens form to change chart appearance
         /// </summary>
         private void btnChartAppearance_Click(object sender, EventArgs e)
         {
-            ChartStyleForm form = new ChartStyleForm(_legend, _shapefile, false, _layerHandle);
-            form.ShowDialog();
+            using (var form = new ChartStyleForm(_legend, _layer, false))
+            {
+                form.ShowDialog();
+            }
 
             // even if cancel was hit, a user could have applied the options
             bool state = _noEvents;
             _noEvents = true;
-            optChartBars.Checked = (_shapefile.Diagrams.DiagramType == DiagramType.Bar);
-            optChartsPie.Checked = (_shapefile.Diagrams.DiagramType == DiagramType.Pie);
+            optChartBars.Checked = _shapefile.Diagrams.DiagramType == DiagramType.Bar;
+            optChartsPie.Checked = _shapefile.Diagrams.DiagramType == DiagramType.Pie;
             _noEvents = state;
 
             DrawChartsPreview();
@@ -108,7 +103,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnClearCharts_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Do you want to delete charts?", "MapWindow_5", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (Globals.Message.Ask("Do you want to delete charts?"))
             {
                 _shapefile.Diagrams.Fields.Clear();
                 _shapefile.Diagrams.Clear();
@@ -123,7 +118,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void optChartBars_CheckedChanged(object sender, EventArgs e)
         {
-            GUI2Settings(null, null);
+            Ui2Settings(null, null);
             DrawAllPreviews();
         }
 
@@ -135,7 +130,7 @@ namespace MW5.Plugins.Symbology.Forms
             List<ColorBlend> schemes = icbChartColorScheme.ColorSchemes.List;
             if (schemes != null && icbChartColorScheme.SelectedIndex >= 0)
             {
-                GUI2Settings(null, null);
+                Ui2Settings(null, null);
                 DrawChartsPreview();
                 RedrawMap();
             }

@@ -25,13 +25,13 @@ namespace MW5.Api.Interfaces
 
         bool Calculate(string expression, int rowIndex, out object result, out string errorString);
         bool TestExpression(string expression, TableValueType returnType, ref string errorString);
+        bool ParseExpression(string expression, ref string errorString);
+        bool Query(string expression, ref object result, ref string errorString);
 
         FieldJoinCollection Joins { get; }
 
         #region Not implemented
-
-        //bool Query(string Expression, ref object result, ref string ErrorString);
-        //bool ParseExpression(string Expression, ref string ErrorString);
+        
         //object get_MaxValue(int FieldIndex);
         //double get_MeanValue(int FieldIndex);
         //object get_MinValue(int FieldIndex);
