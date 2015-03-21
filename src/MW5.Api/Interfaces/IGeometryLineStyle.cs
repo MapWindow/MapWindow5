@@ -6,7 +6,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IGeometryLineStyle
     {
-        byte AlphaTransparency { get; set; }
+        byte Transparency { get; set; }
         bool Visible { get; set; }
         float Width { get; set; }
         Color Color { get; set; }

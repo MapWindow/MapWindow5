@@ -148,7 +148,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                 }
                 catch (Exception ex)
                 {
-                    Globals.Message.Warn("Failed to create directory: " + path + Environment.NewLine + ex.Message);
+                    SymbologyPlugin.Msg.Warn("Failed to create directory: " + path + Environment.NewLine + ex.Message);
                     return false;
                 }
             }
@@ -161,7 +161,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                 }
                 catch (Exception ex)
                 {
-                    Globals.Message.Warn("Failed to save line patterns: " + path + Environment.NewLine + ex.Message);
+                    SymbologyPlugin.Msg.Warn("Failed to save line patterns: " + path + Environment.NewLine + ex.Message);
                     return false;
                 }
             }

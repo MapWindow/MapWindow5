@@ -37,7 +37,7 @@ namespace MW5.UI.Helpers
             return null;
         }
 
-        public static string EnumToString<T>(T value) where T: struct, IConvertible
+        public static string EnumToString<T>(this T value) where T: struct, IConvertible
         {
             var fn = GetToStringFunction<T>();
             return fn(value);

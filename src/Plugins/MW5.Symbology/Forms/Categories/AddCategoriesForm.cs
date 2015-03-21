@@ -19,22 +19,17 @@
 using System;
 using System.Windows.Forms;
 using MW5.Plugins.Symbology.Controls;
+using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {
-    #region Usings
-
-    
-
-    #endregion
-
-    public partial class AddCategoriesForm : Form
+    public partial class AddCategoriesForm : MapWindowForm
     {
-        internal AddCategoriesForm( bool labels)
+        internal AddCategoriesForm()
         {
             InitializeComponent();
 
-            //icbColors.ColorSchemes = _plugin.LayerColors;
+            icbColors.ColorSchemeType = ColorSchemeType.Default;
 
             icbColors.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
             if (icbColors.Items.Count >= 0)
@@ -49,14 +44,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandom_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColors.SelectedIndex;
-            if (chkRandom.Checked)
-            {
-                icbColors.ComboStyle = ImageComboStyle.ColorSchemeRandom;
-            }
-            else
-            {
-                icbColors.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            }
+            icbColors.ComboStyle = chkRandom.Checked ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
 
             if (index >= 0 && index < icbColors.Items.Count)
             {

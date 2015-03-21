@@ -9,7 +9,7 @@ namespace MW5.Api.Interfaces
         GradientType GradientType { get; set; }
         FillType Type { get; set; }
         double Rotation { get; set; }
-        byte AlphaTransparency { get; set; }
+        byte Transparency { get; set; }
         Color Color { get; set; }
         Color Color2 { get; set; }
         Color BgColor { get; set; }

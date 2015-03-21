@@ -2,7 +2,10 @@
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
-using MW5.Plugins.Symbology.Forms.Symbology;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Symbology.Forms.Categories;
+using MW5.Plugins.Symbology.Forms.Style;
+using MW5.Plugins.Symbology.Forms.Utilities;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
@@ -29,6 +32,40 @@ namespace MW5.Plugins.Symbology.Helpers
                 form = new PolygonForm(legend, layer, options, applyDisabled);
             }
             return form;
+        }
+
+        internal static void ShowCategories(IAppContext context)
+        {
+            var fs = context.Map.SelectedFeatureSet;
+            if (fs == null)
+            {
+                return;
+            }
+
+            using (var form = new CategoriesForm(context, context.Map.Layers.SelectedLayer))
+            {
+                if (context.View.ShowDialog(form) == DialogResult.OK)
+                {
+
+                }
+            }
+        }
+
+        internal static void ShowQueryBuilder(IAppContext context)
+        {
+            var fs = context.Map.SelectedFeatureSet;
+            if (fs == null)
+            {
+                return;
+            }
+
+            using (var form = new QueryBuilderForm(context.Map.Layers.SelectedLayer, string.Empty, false))
+            {
+                if (context.View.ShowDialog(form) == DialogResult.OK)
+                {
+
+                }
+            }
         }
     }
 }

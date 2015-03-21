@@ -7,7 +7,9 @@ using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms;
+using MW5.Plugins.Symbology.Forms.Charts;
 using MW5.Plugins.Symbology.Forms.Labels;
+using MW5.Plugins.Symbology.Forms.Layer;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Menu
@@ -23,9 +25,26 @@ namespace MW5.Plugins.Symbology.Menu
             _context = context;
             _plugin = plugin;
 
-            _plugin.LegendLayerDoubleClicked += LayerDoubleClicked;
-            _plugin.LegendLayerStyleClicked += LayerStyleClicked;
-            _plugin.LegendLayerLabelsClicked += LayerLabelsClicked;
+            _plugin.LayerDoubleClicked += LayerDoubleClicked;
+            _plugin.LayerStyleClicked += LayerStyleClicked;
+            _plugin.LayerLabelsClicked += LayerLabelsClicked;
+            _plugin.LayerDiagramsClicked += LayerDiagramsClicked;
+        }
+
+        private void LayerDiagramsClicked(IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
+        {
+            var fs = legend.Map.GetFeatureSet(e.LayerHandle);
+            if (fs != null)
+            {
+                var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
+                using (var form = new ChartStyleForm(_context, layer))
+                {
+                    if (_context.View.ShowDialog(form) == DialogResult.OK)
+                    {
+                        // do something
+                    }
+                }
+            }
         }
 
         private void LayerLabelsClicked(IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
@@ -61,7 +80,7 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerDoubleClicked(IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
         {
-            using (var form = new SymbologyForm(_context, e.LayerHandle))
+            using (var form = new LayerStyleForm(_context, e.LayerHandle))
             {
                 if (_context.View.ShowDialog(form) == DialogResult.OK)
                 {

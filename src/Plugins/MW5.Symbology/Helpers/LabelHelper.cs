@@ -18,8 +18,10 @@
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Symbology.Services;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
@@ -69,26 +71,32 @@ namespace MW5.Plugins.Symbology.Helpers
             DrawPreview(category, sf, canvas, expression, forceDrawing);
         }
 
+        /// <summary>
+        /// Renders a grid under label preview.
+        /// </summary>
         private static void RenderGrid(Bitmap img, Graphics g)
         {
             const int count = 50;
-            Pen gridPen = new Pen(Color.LightGray);
+            var gridPen = new Pen(Color.LightGray);
             float step = (float)img.Height / count;
+
             for (int i = 0; i < count; i++)
             {
-                g.DrawLine(gridPen, 0.0f, step * (float)i, (float)img.Width, step * (float)i);
+                g.DrawLine(gridPen, 0.0f, step * i, img.Width, step * i);
             }
+
             step = (float)img.Width / count;
             for (int j = 0; j < count; j++)
             {
-                g.DrawLine(gridPen, step * (float)j, 0.0f, step * (float)j, (float)img.Height);
+                g.DrawLine(gridPen, step * j, 0.0f, step * j, img.Height);
             }
         }
 
         /// <summary>
         /// Draws preview based on the specified expression string
         /// </summary>
-        internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, System.Windows.Forms.PictureBox canvas, string expression, bool forceDrawing)
+        internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, PictureBox canvas, 
+            string expression, bool forceDrawing, bool renderGrid = false, bool basePoint = false)
         {
             string s = get_LabelText(sf, expression);
             if (s.Trim() == string.Empty)
@@ -99,7 +107,10 @@ namespace MW5.Plugins.Symbology.Helpers
             Bitmap img = new Bitmap(canvas.ClientRectangle.Width, canvas.ClientRectangle.Height);
             Graphics g = Graphics.FromImage(img);
 
-            //RenderGrid(img, g);
+            if (renderGrid)
+            {
+                RenderGrid(img, g);
+            }
 
             Point pntOrigin = new Point((canvas.ClientRectangle.Right + canvas.ClientRectangle.Left) / 2,
                                                                       (canvas.ClientRectangle.Bottom + canvas.ClientRectangle.Top) / 2);
@@ -112,10 +123,13 @@ namespace MW5.Plugins.Symbology.Helpers
             if (sf.Labels.Items.Count > 0 || forceDrawing)
             {
                 // drawing base point
-                //Pen pen = new Pen(Color.Black, 2);
-                //var rect = new Rectangle(pntOrigin.X, pntOrigin.Y, 2, 2);
-                //g.DrawEllipse(pen, rect);
-                //pen.Dispose();
+                if (basePoint)
+                {
+                    Pen pen = new Pen(Color.Black, 2);
+                    var rect = new Rectangle(pntOrigin.X, pntOrigin.Y, 2, 2);
+                    g.DrawEllipse(pen, rect);
+                    pen.Dispose();
+                }
 
                 style.Draw(g, pntOrigin, s, true, 0);
             }
@@ -126,56 +140,6 @@ namespace MW5.Plugins.Symbology.Helpers
             }
 
             canvas.Image = img;
-        }
-
-        /// <summary>
-        /// Generate label categories for the given set of shapefile categories
-        /// </summary>
-        internal static void GenerateCategories(IMuteLegend legend, int layerHandle)
-        {
-            var lyr = legend.Layers.ItemByHandle(layerHandle);
-            var sf = lyr.FeatureSet;
-            var lb = sf.Labels;
-
-            //sf.Labels.ClearCategories();
-            //for (int i = 0; i < sf.Categories.Count; i++)
-            //{
-            //    ShapefileCategory cat = sf.Categories.get_Item(i);
-            //    LabelCategory labelCat = lb.AddCategory(cat.Name);
-            //    labelCat.Expression = cat.Expression;
-            //}
-
-            //SymbologySettings settings = Globals.get_LayerSettings(layerHandle);
-            //ColorBlend blend = (ColorBlend)settings.LabelsScheme;
-
-            //if (blend != null)
-            //{
-            //    ColorScheme scheme = ColorSchemes.ColorBlend2ColorScheme(blend);
-            //    if (settings.LabelsRandomColors)
-            //    {
-            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeRandom, scheme);
-            //    }
-            //    else
-            //    {
-            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
-            //    }
-            //}
-
-            //if (settings.LabelsVariableSize)
-            //{
-            //    for (int i = 0; i < lb.NumCategories; i++)
-            //    {
-            //        lb.get_Category(i).FontSize = (int)((double)sf.Labels.FontSize +
-            //        (double)settings.LabelsSizeRange / ((double)lb.NumCategories - 1) * (double)i);
-            //    }
-            //}
-
-            //// Expressions aren't supported by labels yet, therefore we need to copy indices from the symbology
-            //for (int i = 0; i < lb.Count; i++)
-            //{
-            //    MapWinGIS.Label label = lb.get_Label(i, 0);
-            //    label.Category = sf.get_ShapeCategory(i);
-            //}
         }
 
         /// <summary>
@@ -229,6 +193,56 @@ namespace MW5.Plugins.Symbology.Helpers
                     res += s[i];
             }
             return res;
+        }
+
+        /// <summary>
+        /// Generate label categories for the given set of shapefile categories
+        /// </summary>
+        internal static void GenerateCategories(IMuteLegend legend, int layerHandle)
+        {
+            var lyr = legend.Layers.ItemByHandle(layerHandle);
+            var sf = lyr.FeatureSet;
+            var lb = sf.Labels;
+
+            //sf.Labels.ClearCategories();
+            //for (int i = 0; i < sf.Categories.Count; i++)
+            //{
+            //    ShapefileCategory cat = sf.Categories.get_Item(i);
+            //    LabelCategory labelCat = lb.AddCategory(cat.Name);
+            //    labelCat.Expression = cat.Expression;
+            //}
+
+            //SymbologySettings settings = Globals.get_LayerSettings(layerHandle);
+            //ColorBlend blend = (ColorBlend)settings.LabelsScheme;
+
+            //if (blend != null)
+            //{
+            //    ColorScheme scheme = ColorSchemes.ColorBlend2ColorScheme(blend);
+            //    if (settings.LabelsRandomColors)
+            //    {
+            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeRandom, scheme);
+            //    }
+            //    else
+            //    {
+            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
+            //    }
+            //}
+
+            //if (settings.LabelsVariableSize)
+            //{
+            //    for (int i = 0; i < lb.NumCategories; i++)
+            //    {
+            //        lb.get_Category(i).FontSize = (int)((double)sf.Labels.FontSize +
+            //        (double)settings.LabelsSizeRange / ((double)lb.NumCategories - 1) * (double)i);
+            //    }
+            //}
+
+            //// Expressions aren't supported by labels yet, therefore we need to copy indices from the symbology
+            //for (int i = 0; i < lb.Count; i++)
+            //{
+            //    MapWinGIS.Label label = lb.get_Label(i, 0);
+            //    label.Category = sf.get_ShapeCategory(i);
+            //}
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms.Utilities;
+using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Menu
 {
@@ -34,6 +35,7 @@ namespace MW5.Plugins.Symbology.Menu
         {
             var fs = _context.Map.SelectedFeatureSet;
             _context.Toolbars.FindItem(MenuKeys.QueryBuilder).Enabled = fs != null;
+            _context.Toolbars.FindItem(MenuKeys.Categories).Enabled = fs != null;
         }
 
         private void PluginItemClicked(object sender, Concrete.MenuItemEventArgs e)
@@ -41,25 +43,11 @@ namespace MW5.Plugins.Symbology.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.QueryBuilder:
-                    ShowQueryBuilder();
+                    FormHelper.ShowQueryBuilder(_context);
                     break;
-            }
-        }
-
-        private void ShowQueryBuilder()
-        {
-            var fs = _context.Map.SelectedFeatureSet;
-            if (fs == null)
-            {
-                return;
-            }
-
-            using (var form = new QueryBuilderForm(_context.Map.Layers.SelectedLayer, string.Empty, false))
-            {
-                if (_context.View.ShowDialog(form) == DialogResult.OK)
-                {
-                    
-                }
+                case MenuKeys.Categories:
+                    FormHelper.ShowCategories(_context);
+                    break;
             }
         }
 
@@ -67,6 +55,11 @@ namespace MW5.Plugins.Symbology.Menu
         {
             var items = _context.Toolbars.MapToolbar.Items;
             _commands.AddToMenu(items, MenuKeys.QueryBuilder, true);
+            _context.Toolbars.MapToolbar.Update();
+
+            items = _context.Toolbars.FileToolbar.Items;
+            _commands.AddToMenu(items, MenuKeys.Categories);
+            _context.Toolbars.FileToolbar.Update();
         }
     }
 }

@@ -70,6 +70,7 @@ namespace MW5.Api.Legend
             SelectionColor = Color.FromArgb(255, 240, 240, 240);
             ShowGroupIcons = true;
             ShowLabels = false;
+            DrawLines = true;
         }
 
         /// <summary>
@@ -102,6 +103,11 @@ namespace MW5.Api.Legend
         /// </summary>
         /// <returns></returns>
         public bool ShowLabels { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to draw lines between group and layer within this group.
+        /// </summary>
+        public bool DrawLines { get; set; }
 
         /// <summary>
         /// Gets the Menu for manipulating Groups
@@ -265,10 +271,9 @@ namespace MW5.Api.Legend
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LegendControl));
             this._vScrollBar = new System.Windows.Forms.VScrollBar();
-            this.Icons = new System.Windows.Forms.ImageList(this.components);
+            this.Icons = new System.Windows.Forms.ImageList();
             this.SuspendLayout();
             // 
             // _vScrollBar
@@ -287,12 +292,14 @@ namespace MW5.Api.Legend
             this.Icons.Images.SetKeyName(3, "");
             this.Icons.Images.SetKeyName(4, "");
             this.Icons.Images.SetKeyName(5, "");
-            this.Icons.Images.SetKeyName(6, "tag_blue.png");
-            this.Icons.Images.SetKeyName(7, "tag_gray.png");
+            this.Icons.Images.SetKeyName(6, "img_label.png");
+            this.Icons.Images.SetKeyName(7, "img_label_grey.png");
             this.Icons.Images.SetKeyName(8, "pen.png");
             this.Icons.Images.SetKeyName(9, "database5.png");
             this.Icons.Images.SetKeyName(10, "folder.png");
             this.Icons.Images.SetKeyName(11, "folder_open.png");
+            this.Icons.Images.SetKeyName(12, "tag_gray.png");
+            this.Icons.Images.SetKeyName(13, "tag_blue.png");
             // 
             // LegendControl
             // 
@@ -479,8 +486,7 @@ namespace MW5.Api.Legend
                 drawGrayCheckbox = true;
             }
 
-            // BoxBackColor = Color.LightGray;
-            if (isSnapshot == false && grp.Expanded && grp.Layers.Any())
+            if (DrawLines && !isSnapshot && grp.Expanded && grp.Layers.Any())
             {
                 var endY = grp.Top + Constants.ItemHeight;
 
@@ -575,8 +581,6 @@ namespace MW5.Api.Legend
             var newWidth = bounds.Width - newLeft;
             rect = new Rectangle(newLeft, curTop, newWidth, bounds.Height - curTop);
 
-            var pen = new Pen(_boxLineColor);
-
             // now draw each of the subitems
             for (var i = itemCount - 1; i >= 0; i--)
             {
@@ -601,103 +605,59 @@ namespace MW5.Api.Legend
 
                 DrawLayer(drawTool, lyr, rect, isSnapshot);
 
-                var drawLines = false;
+                DrawLayerLines(isSnapshot, drawTool, grp, lyr, i, ref rect);
 
-                if (!isSnapshot && drawLines)
-                {
-                    // draw sub-item vertical line
-                    if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
-                    {
-                        // not the last visible layer
-                        drawTool.DrawLine(
-                            pen,
-                            Constants.VertLineIndent,
-                            lyr.Top,
-                            Constants.VertLineIndent,
-                            lyr.Top + lyr.Height + Constants.ItemPad);
-                    }
-                    else
-                    {
-                        // only draw down to box, not down to next item in list(since there is no next item)
-                        drawTool.DrawLine(
-                            pen,
-                            Constants.VertLineIndent,
-                            lyr.Top,
-                            Constants.VertLineIndent,
-                            (int) (lyr.Top + (.55*Constants.ItemHeight)));
-                    }
-
-                    // draw Horizontal line over to the Vertical Sub-lyr line
-                    curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
-
-                    if (lyr.ColorSchemeCount == 0)
-                    {
-                        // Color or image schemes do not exist with the layer
-
-                        // if the layer is selected
-                        if (lyr.Handle == _selectedLayerHandle)
-                        {
-                            drawTool.DrawLine(
-                                pen,
-                                Constants.VertLineIndent,
-                                curTop,
-                                rect.Left + Constants.ExpandBoxLeftPad - 3,
-                                curTop);
-                        }
-                        else
-                        {
-                            // if the layer is not selected
-                            drawTool.DrawLine(
-                                pen,
-                                Constants.VertLineIndent,
-                                curTop,
-                                rect.Left + Constants.CheckLeftPad,
-                                curTop);
-
-                            // DrawTool.DrawLine(pen, Constants.VERT_LINE_INDENT, CurTop, rect.Left + Constants.EXPAND_BOX_LEFT_PAD, CurTop);
-                        }
-                    }
-                    else
-                    {
-                        // There is color or image scheme with the layer
-
-                        // if the layer is selected
-                        if (lyr.Handle == _selectedLayerHandle)
-                        {
-                            drawTool.DrawLine(
-                                pen,
-                                Constants.VertLineIndent,
-                                curTop,
-                                rect.Left + Constants.ExpandBoxLeftPad - 3,
-                                curTop);
-                        }
-                        else
-                        {
-                            // if the layer is not selected
-                            drawTool.DrawLine(
-                                pen,
-                                Constants.VertLineIndent,
-                                curTop,
-                                rect.Left + Constants.ExpandBoxLeftPad,
-                                curTop);
-                        }
-                    }
-
-                    // set up the rectangle for the next layer
-                    rect.Y += lyr.Height;
-                    rect.Height -= lyr.Height;
-                }
-                else
-                {
-                    rect.Y += lyr.Height;
-                    rect.Height -= lyr.Height;
-                }
+                // set up the rectangle for the next layer
+                rect.Y += lyr.Height;
+                rect.Height -= lyr.Height;
 
                 if (rect.Top >= ClientRectangle.Bottom && !isSnapshot)
                 {
                     break;
                 }
             }
+        }
+
+        private void DrawLayerLines(bool isSnapshot, Graphics drawTool, LegendGroup grp, LegendLayer lyr, int i, ref Rectangle rect)
+        {
+            if (isSnapshot || !DrawLines)
+            {
+                return;
+            }
+            
+            var pen = new Pen(_boxLineColor);
+
+            // draw sub-item vertical line
+            if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
+            {
+                // not the last visible layer
+                drawTool.DrawLine(
+                    pen,
+                    Constants.VertLineIndent,
+                    lyr.Top,
+                    Constants.VertLineIndent,
+                    lyr.Top + lyr.Height + Constants.ItemPad);
+            }
+            else
+            {
+                // only draw down to box, not down to next item in list(since there is no next item)
+                drawTool.DrawLine(
+                    pen,
+                    Constants.VertLineIndent,
+                    lyr.Top,
+                    Constants.VertLineIndent,
+                    (int) (lyr.Top + (.55*Constants.ItemHeight)));
+            }
+
+            // draw Horizontal line over to the Vertical Sub-lyr line
+            int curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
+
+            drawTool.DrawLine(
+                pen,
+                Constants.VertLineIndent,
+                curTop,
+                rect.Left + Constants.ExpandBoxLeftPad - 3,
+                curTop);
         }
 
         /// <summary>
@@ -1139,10 +1099,6 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Expansion box with plus or minus sign
         /// </summary>
-        /// <param name="drawTool"> </param>
-        /// <param name="itemTop"> </param>
-        /// <param name="itemLeft"> </param>
-        /// <param name="expanded"> </param>
         private void DrawExpansionBox(Graphics drawTool, int itemTop, int itemLeft, bool expanded)
         {
             var pen = new Pen(_boxLineColor, 1);

@@ -112,29 +112,29 @@ namespace MW5.Plugins.Concrete
 
         #region Legend events
 
-        internal LegendEventHandler<LayerEventArgs> LegendLayerStyleClicked_;
-        internal LegendEventHandler<LayerEventArgs> LegendLayerDoubleClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerStyleClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerDoubleClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerSelected_;
-        internal LegendEventHandler<LayerEventArgs> LegendLayerDiagramsClicked_;
-        internal LegendEventHandler<LayerEventArgs> LegendLayerLabelsClicked_;
-        internal LegendEventHandler<LayerCategoryEventArgs> LegendLayerCategoryClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerDiagramsClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerLabelsClicked_;
+        internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
 
-        public event LegendEventHandler<LayerCategoryEventArgs> LegendLayerCategoryClicked
+        public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
         {
-            add { LegendLayerCategoryClicked_ += value; }
-            remove { LegendLayerCategoryClicked_ -= value; }
+            add { LayerCategoryClicked_ += value; }
+            remove { LayerCategoryClicked_ -= value; }
         }
 
-        public event LegendEventHandler<LayerEventArgs> LegendLayerLabelsClicked
+        public event LegendEventHandler<LayerEventArgs> LayerLabelsClicked
         {
-            add { LegendLayerLabelsClicked_ += value; }
-            remove { LegendLayerLabelsClicked_ -= value; }
+            add { LayerLabelsClicked_ += value; }
+            remove { LayerLabelsClicked_ -= value; }
         }
 
-        public event LegendEventHandler<LayerEventArgs> LegendLayerDiagramsClicked
+        public event LegendEventHandler<LayerEventArgs> LayerDiagramsClicked
         {
-            add { LegendLayerDiagramsClicked_ += value; }
-            remove { LegendLayerDiagramsClicked_ -= value; }
+            add { LayerDiagramsClicked_ += value; }
+            remove { LayerDiagramsClicked_ -= value; }
         }
 
         public event LegendEventHandler<LayerEventArgs> LayerSelected
@@ -143,16 +143,16 @@ namespace MW5.Plugins.Concrete
             remove { LayerSelected_ -= value; }
         }
 
-        public event LegendEventHandler<LayerEventArgs> LegendLayerDoubleClicked
+        public event LegendEventHandler<LayerEventArgs> LayerDoubleClicked
         {
-            add { LegendLayerDoubleClicked_ += value; }
-            remove { LegendLayerDoubleClicked_ -= value; }
+            add { LayerDoubleClicked_ += value; }
+            remove { LayerDoubleClicked_ -= value; }
         }
 
-        public event LegendEventHandler<LayerEventArgs> LegendLayerStyleClicked
+        public event LegendEventHandler<LayerEventArgs> LayerStyleClicked
         {
-            add { LegendLayerStyleClicked_ += value; }
-            remove { LegendLayerStyleClicked_ -= value; }
+            add { LayerStyleClicked_ += value; }
+            remove { LayerStyleClicked_ -= value; }
         }
 
         #endregion

@@ -44,7 +44,7 @@ namespace MW5.Api.Concrete
             set { _style.FillRotation = value; }
         }
 
-        public byte AlphaTransparency
+        public byte Transparency
         {
             get { return Convert.ToByte(_style.FillTransparency); }
             set { _style.FillTransparency = value; }

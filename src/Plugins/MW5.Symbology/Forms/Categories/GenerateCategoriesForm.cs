@@ -24,36 +24,38 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Symbology.Controls;
+using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Services;
+using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {
     /// <summary>
     /// Categories generation form with avanced set of options
     /// </summary>
-    public partial class GenerateCategoriesForm : Form
+    public partial class GenerateCategoriesForm : MapWindowForm
     {
-        private IMuteLegend m_legend = null;
-
-        // A shapefile to generate categories for
-        private IFeatureSet _shapefile;
-        // Layer handle
-        private int _layerHandle = -1;
-
+        private readonly ILayer _layer;
+        private readonly IFeatureSet _shapefile;
+        
         /// <summary>
         /// Generates a new instance of the GenerateCategoriesForm class
         /// </summary>
-        public GenerateCategoriesForm(IFeatureSet sf, int layerHandle)
+        public GenerateCategoriesForm(ILayer layer)
         {
+            if (layer == null || layer.FeatureSet == null)
+            {
+                throw new ArgumentNullException("layer");
+            }
+            _layer = layer;
+
             InitializeComponent();
 
-            _shapefile = sf;
-            _layerHandle = layerHandle;
-            if (sf == null) 
-                return;
-
-            SymbologySettings settings = new SymbologySettings();// _plugin.get_LayerSettings(layerHandle);
+            _shapefile = layer.FeatureSet;
+            
+            var settings = LayerSettingsService.get_LayerSettings(_layer.Handle);
             
             // classification
             cboClassificationType.Items.Clear();
@@ -72,10 +74,10 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             cboCategoriesCount.Text = settings.CategoriesCount.ToString();
 
             // dummy color scheme
-            Globals.LayerColors.SetDefaultColorScheme(_shapefile);
+            ColorSchemeProvider.GetList(ColorSchemeType.Default).SetDefaultColorScheme(_shapefile);
 
             // initializing for list of color schemes
-            icbColorScheme.ColorSchemes = Globals.LayerColors;
+            icbColorScheme.ColorSchemeType = ColorSchemeType.Default;
             icbColorScheme.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
 
             // settings active color scheme
@@ -143,15 +145,15 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             if (cboField.SelectedIndex < 0)
             {
-                Globals.Message.Info("No field for generation was selected.");
-                this.DialogResult = DialogResult.None;
+                SymbologyPlugin.Msg.Info("No field for generation was selected.");
+                DialogResult = DialogResult.None;
                 return;
             }
             
             int count;
             if (!Int32.TryParse(cboCategoriesCount.Text, out count))
             {
-                Globals.Message.Warn("Number of categories isn't a valid interger.");
+                SymbologyPlugin.Msg.Warn("Number of categories isn't a valid interger.");
                 return;
             }
 
@@ -171,7 +173,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                         categories[i].Style.Marker.Size = (int)udMinSize.Value + Convert.ToInt32(i * step);
                     }
                 }
-                else if (_shapefile.GeometryType == MW5.Api.GeometryType.Polyline)
+                else if (_shapefile.GeometryType == GeometryType.Polyline)
                 {
                     double step = (double)(udMaxSize.Value + udMinSize.Value) / (double)categories.Count;
                     for (int i = 0; i < categories.Count; i++)
@@ -184,8 +186,8 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             ColorRamp scheme = null;
             if (icbColorScheme.SelectedIndex >= 0)
             {
-                ColorBlend blend = (ColorBlend)icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
-                scheme = ColorSchemeProvider.ColorBlend2ColorScheme(blend);
+                var blend = icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
+                scheme = blend.ToColorScheme();
             }
 
             var type = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
@@ -226,40 +228,33 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void SaveSettings()
         {
-            //SymbologySettings settings = Globals.get_LayerSettings(_layerHandle);
+            var settings = LayerSettingsService.get_LayerSettings(_layer.Handle);
 
-            //int count;
-            //if (Int32.TryParse(cboCategoriesCount.Text, out count))
-            //{
-            //    settings.CategoriesCount = count;
-            //}
-            //else
-            //{
-            //    settings.CategoriesCount = 8;
-            //}
+            int count;
+            settings.CategoriesCount = Int32.TryParse(cboCategoriesCount.Text, out count) ? count : 8;
 
-            //// saving the options for the next time
-            //if (cboField.SelectedItem != null)
-            //    settings.CategoriesFieldName = ((ComboItem)cboField.SelectedItem).Text;
-            //else
-            //    settings.CategoriesFieldName = string.Empty;
+            // saving the options for the next time
+            if (cboField.SelectedItem != null)
+                settings.CategoriesFieldName = ((ComboItem)cboField.SelectedItem).Text;
+            else
+                settings.CategoriesFieldName = string.Empty;
 
-            //settings.CategoriesClassification = (tkClassificationType)cboClassificationType.SelectedIndex; ;
+            settings.CategoriesClassification = (Classification)cboClassificationType.SelectedIndex; ;
 
-            //if (icbColorScheme.SelectedItem != null)
-            //    settings.CategoriesColorScheme = (ColorBlend)icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
-            //else
-            //    settings.CategoriesColorScheme = null;
+            if (icbColorScheme.SelectedItem != null)
+                settings.CategoriesColorScheme = (ColorBlend)icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
+            else
+                settings.CategoriesColorScheme = null;
 
-            //settings.CategoriesRandomColors = chkRandomColors.Checked;
-            //settings.CategoriesUseGradient = chkSetGradient.Checked;
-            //settings.CategoriesVariableSize = chkUseVariableSize.Checked;
-            ////settings.CategoriesSortingField = cboSortingField.Text;
+            settings.CategoriesRandomColors = chkRandomColors.Checked;
+            settings.CategoriesUseGradient = chkSetGradient.Checked;
+            settings.CategoriesVariableSize = chkUseVariableSize.Checked;
+            //settings.CategoriesSortingField = cboSortingField.Text;
 
-            //if (chkUseVariableSize.Checked)
-            //    settings.CategoriesSizeRange = (int)(udMaxSize.Value - udMinSize.Value);
+            if (chkUseVariableSize.Checked)
+                settings.CategoriesSizeRange = (int)(udMaxSize.Value - udMinSize.Value);
 
-            //_plugin.SaveLayerSettings(_layerHandle, settings);
+            LayerSettingsService.SaveLayerSettings(_layer.Handle, settings);
         }
 
         /// <summary>
@@ -314,46 +309,12 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         }
 
         /// <summary>
-        /// A class for items with realIndex property
-        /// </summary>
-        private class ComboItem
-        {
-            string m_text = string.Empty;
-            int m_realIndex;
-
-            public ComboItem(string text, int realIndex)
-            {
-                m_text = text;
-                m_realIndex = realIndex;
-            }
-            public override string ToString()
-            {
-                return m_text;
-            }
-            public string Text
-            {
-                get { return m_text; }
-            }
-            public int RealIndex
-            {
-                get { return m_realIndex; }
-            }
-        }
-
-        /// <summary>
         /// Toggles between graduated and random colors
         /// </summary>
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColorScheme.SelectedIndex;
-            if (chkRandomColors.Checked)
-            {
-                icbColorScheme.ComboStyle = ImageComboStyle.ColorSchemeRandom;
-            }
-            else
-            {
-                icbColorScheme.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            }
+            icbColorScheme.ComboStyle = chkRandomColors.Checked ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
             if (index >= 0 && index < icbColorScheme.Items.Count)
             {
                 icbColorScheme.SelectedIndex = index;
@@ -373,12 +334,14 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
-            frmColorSchemes form = new frmColorSchemes(ref Globals.LayerColors);
-            if (form.ShowDialog(this) == DialogResult.OK)
+            var list = ColorSchemeProvider.GetList(ColorSchemeType.Default);
+            using (var form = new ColorSchemesForm(list))
             {
-                this.icbColorScheme.ColorSchemes = Globals.LayerColors;
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    icbColorScheme.ColorSchemes = list;
+                }
             }
-            form.Dispose();
         }
     }
 }

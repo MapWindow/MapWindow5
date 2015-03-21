@@ -20,7 +20,7 @@ namespace MW5.Api.Concrete
             _style = style;
         }
 
-        public byte AlphaTransparency
+        public byte Transparency
         {
             get { return (byte)_style.LineTransparency; }
             set { _style.LineTransparency = value; }

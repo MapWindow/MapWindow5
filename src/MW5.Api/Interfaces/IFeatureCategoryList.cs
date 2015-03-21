@@ -3,7 +3,7 @@ using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IFeatureCategoryList : IList<IFeatureCategory>, ISerializableComWrapper
+    public interface IFeatureCategoryList : IEnumerable<IFeatureCategory>, ISerializableComWrapper
     {
         int IndexByName(string categoryName);
 
@@ -37,5 +37,9 @@ namespace MW5.Api.Interfaces
         bool MoveDown(int index);
 
         bool MoveUp(int index);
+
+        bool LoadFromFile(string filename);
+
+        bool SaveToFile(string filename);
     }
 }

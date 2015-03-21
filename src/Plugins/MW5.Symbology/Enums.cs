@@ -29,7 +29,7 @@
     /// </summary>
     internal enum ColorSchemeType
     {
-        Layer = 0,
+        Default = 0,
         Charts = 1,
     }
 }
