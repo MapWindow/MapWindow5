@@ -2,7 +2,7 @@
 using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 
-namespace MW5.Plugins.Symbology.Forms.Charts
+namespace MW5.Plugins.Symbology.Forms.Style
 {
     partial class ChartStyleForm
     {

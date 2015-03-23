@@ -29,14 +29,15 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void btnLayerExpression_Click(object sender, EventArgs e)
         {
             string s = txtLayerExpression.Text;
-            var form = new QueryBuilderForm(_context.Layers.ItemByHandle(_layerHandle), s, false);
-            if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            using (var form = new QueryBuilderForm(_context.Layers.ItemByHandle(_layerHandle), s, false))
             {
-                txtLayerExpression.Text = form.Tag.ToString();
-                _shapefile.VisibilityExpression = txtLayerExpression.Text;
-                RedrawMap();
+                if (_context.View.ShowDialog(form, this))
+                {
+                    txtLayerExpression.Text = form.Tag.ToString();
+                    _shapefile.VisibilityExpression = txtLayerExpression.Text;
+                    RedrawMap();
+                }
             }
-            form.Dispose();
         }
 
         /// <summary>

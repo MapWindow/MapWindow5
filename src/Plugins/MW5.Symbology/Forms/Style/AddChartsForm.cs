@@ -22,11 +22,11 @@ using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Charts
+namespace MW5.Plugins.Symbology.Forms.Style
 {
     public partial class AddChartsForm : MapWindowForm
     {
-        private IFeatureSet _shapefile;
+        private readonly IFeatureSet _shapefile;
 
         /// <summary>
         /// Creates a new instance of the AddChartsForm class

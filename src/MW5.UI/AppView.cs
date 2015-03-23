@@ -21,11 +21,16 @@ namespace MW5.UI
             _parent = parent;
         }
 
-        public DialogResult ShowDialog(Form form)
+        public bool ShowDialog(Form form)
+        {
+            return ShowDialog(form, null);
+        }
+
+        public bool ShowDialog(Form form, IWin32Window parent)
         {
             if (form == null)
             {
-                throw new ArgumentNullException("form");
+                throw new ArgumentNullException("parent");
             }
 
             if (form is MetroForm)
@@ -38,9 +43,14 @@ namespace MW5.UI
             form.MaximizeBox = false;
             form.MinimizeBox = false;
             form.FormBorderStyle = FormBorderStyle.FixedSingle;
-            form.StartPosition = FormStartPosition.CenterScreen;        // TODO: make parameter
+            form.StartPosition = FormStartPosition.CenterScreen; // TODO: make parameter
             form.ShowInTaskbar = false;
-            return form.ShowDialog(_parent as IWin32Window);
+
+            if (parent == null)
+            {
+                parent = _parent as IWin32Window;
+            }
+            return form.ShowDialog(parent) == DialogResult.OK;
         }
 
         public void Update()

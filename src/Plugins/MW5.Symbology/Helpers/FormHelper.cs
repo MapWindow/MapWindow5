@@ -44,7 +44,7 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = new CategoriesForm(context, context.Map.Layers.SelectedLayer))
             {
-                if (context.View.ShowDialog(form) == DialogResult.OK)
+                if (context.View.ShowDialog(form))
                 {
 
                 }
@@ -61,7 +61,7 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = new QueryBuilderForm(context.Map.Layers.SelectedLayer, string.Empty, false))
             {
-                if (context.View.ShowDialog(form) == DialogResult.OK)
+                if (context.View.ShowDialog(form))
                 {
 
                 }

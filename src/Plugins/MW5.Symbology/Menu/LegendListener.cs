@@ -7,9 +7,8 @@ using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms;
-using MW5.Plugins.Symbology.Forms.Charts;
-using MW5.Plugins.Symbology.Forms.Labels;
 using MW5.Plugins.Symbology.Forms.Layer;
+using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Menu
@@ -39,7 +38,7 @@ namespace MW5.Plugins.Symbology.Menu
                 var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
                 using (var form = new ChartStyleForm(_context, layer))
                 {
-                    if (_context.View.ShowDialog(form) == DialogResult.OK)
+                    if (_context.View.ShowDialog(form))
                     {
                         // do something
                     }
@@ -53,9 +52,9 @@ namespace MW5.Plugins.Symbology.Menu
             if (fs != null)
             {
                 var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
-                using (var form = new LabelStyleForm(legend, layer))
+                using (var form = new LabelStyleForm(_context, layer))
                 {
-                    if (_context.View.ShowDialog(form) == DialogResult.OK)
+                    if (_context.View.ShowDialog(form))
                     {
                         // do something
                     }
@@ -70,7 +69,7 @@ namespace MW5.Plugins.Symbology.Menu
             {
                 using (var form = legend.GetSymbologyForm(e.LayerHandle, fs.GeometryType, fs.Style, false))
                 {
-                    if (_context.View.ShowDialog(form) == DialogResult.OK)
+                    if (_context.View.ShowDialog(form))
                     {
                         // do something
                     }    
@@ -82,7 +81,7 @@ namespace MW5.Plugins.Symbology.Menu
         {
             using (var form = new LayerStyleForm(_context, e.LayerHandle))
             {
-                if (_context.View.ShowDialog(form) == DialogResult.OK)
+                if (_context.View.ShowDialog(form))
                 {
                     // do something
                 }

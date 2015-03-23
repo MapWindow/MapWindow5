@@ -22,9 +22,10 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Labels;
+using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
@@ -34,22 +35,30 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 {
     public partial class GenerateLabelCategoriesForm : MapWindowForm
     {
+        private readonly IAppContext _context;
+        private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
-        private readonly IMuteLegend _legend;
         private readonly int _layerHandle;
 
         /// <summary>
         /// Creates a new instance of the frmGenerateLabelCategories class
         /// </summary>
-        public GenerateLabelCategoriesForm(IMuteLegend legend, IFeatureSet sf, int layerHandle)
+        public GenerateLabelCategoriesForm(IAppContext context, ILayer layer)
         {
+            if (context == null) throw new ArgumentNullException("context");
+
+            if (layer == null || layer.FeatureSet == null)
+            {
+                throw new ArgumentNullException("layer");
+            }
+
             InitializeComponent();
 
-            _shapefile = sf;
-            _legend = legend;
-            _layerHandle = layerHandle;
+            _context = context;
+            _layer = layer;
 
-            var layer = legend.Layers.ItemByHandle(layerHandle);
+            _shapefile = layer.FeatureSet;
+            _layerHandle = layer.Handle;
 
             // classification
             cboClassificationType.Items.Clear();
@@ -69,7 +78,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile.Labels.Style.FrameBackColor);
             icbFrame.ColorSchemeType = ColorSchemes.Default;
 
-            udMinSize.Value = sf.Labels.Style.FontSize;
+            udMinSize.Value = _shapefile.Labels.Style.FontSize;
 
             LoadOptions();
 
@@ -83,7 +92,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void LoadOptions()
         {
-            SymbologySettings settings = null;//m_plugin.get_LayerSettings(_layerHandle);
+            var settings = LayerSettingsService.get_LayerSettings(_layerHandle);
 
             cboClassificationType.SelectedIndex = (int)settings.LabelsClassification;
             cboCategoriesCount.Text = settings.LabelsCategoriesCount.ToString();
@@ -261,14 +270,14 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnChangeStyle_Click(object sender, EventArgs e)
         {
-            var styleFormForm = new LabelStyleForm(_shapefile, _shapefile.Labels.Style);
-            if (styleFormForm.ShowDialog(this) == DialogResult.OK)
+            using (var form = new LabelStyleForm(_context, _layer))
             {
-                // refreshing preview
-                DrawPreview();
-                RefreshControlsState(null, null);    
+                if (_context.View.ShowDialog(form, this))
+                {
+                    DrawPreview();
+                    RefreshControlsState(null, null);
+                }
             }
-            styleFormForm.Dispose();
         }
 
         /// <summary>
@@ -276,8 +285,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void DrawPreview()
         {
-            var lyr = _legend.Layers.ItemByHandle(_layerHandle);
-            var fs = lyr.FeatureSet;
+            
         }
 
         /// <summary>
@@ -285,9 +293,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnFrameScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(icbFrame.ColorSchemes))
+            using (var form = new ColorSchemesForm(_context, icbFrame.ColorSchemes))
             {
-                form.ShowDialog(this);
+                _context.View.ShowDialog(form, this);
             }
         }
 

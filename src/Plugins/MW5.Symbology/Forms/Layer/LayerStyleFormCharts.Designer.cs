@@ -25,7 +25,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Charts;
+using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 
@@ -76,7 +76,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new ChartStyleForm(_context, _layer))
             {
-                form.ShowDialog();
+                _context.View.ShowDialog(form, this);
             }
 
             // even if cancel was hit, a user could have applied the options
@@ -166,9 +166,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnChartsEditColorScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(icbChartColorScheme.ColorSchemes))
+            using (var form = new ColorSchemesForm(_context, icbChartColorScheme.ColorSchemes))
             {
-                form.ShowDialog(this);
+                _context.View.ShowDialog(form, this);
             }
         }
     }

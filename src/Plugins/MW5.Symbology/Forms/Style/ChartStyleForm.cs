@@ -26,16 +26,14 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
-using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Charts
+namespace MW5.Plugins.Symbology.Forms.Style
 {
     public partial class ChartStyleForm : MapWindowForm
     {
@@ -511,7 +509,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                     // prompting user for charts position
                     using (var form = new AddChartsForm(_shapefile))
                     {
-                        if (form.ShowDialog() != DialogResult.OK)
+                        if (!_context.View.ShowDialog(form, this))
                         {
                             return false;
                         }
@@ -774,14 +772,16 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         private void btnChartExpression_Click(object sender, EventArgs e)
         {
             string s = txtChartExpression.Text;
-            var form = new QueryBuilderForm(_layer, s, false);
-            if (form.ShowDialog() == DialogResult.OK)
+
+            using (var form = new QueryBuilderForm(_layer, s, false))
             {
-                txtChartExpression.Text = form.Tag.ToString();
-                _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
-                btnApply.Enabled = true;
+                if (_context.View.ShowDialog(form, this))
+                {
+                    txtChartExpression.Text = form.Tag.ToString();
+                    _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
+                    btnApply.Enabled = true;
+                }
             }
-            form.Dispose();
         }
 
         /// <summary>
@@ -835,11 +835,11 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         /// </summary>
         private void btnChangeScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(icbColors.ColorSchemes))
+            using (var form = new ColorSchemesForm(_context, icbColors.ColorSchemes))
             {
                 _noEvents = true;
-                form.ShowDialog(this);
-                form.Dispose();
+                _context.View.ShowDialog(form, this);
+                _noEvents = false;
             }
         }
 

@@ -25,6 +25,11 @@ namespace MW5.Plugins.Symbology
             ColorSchemeProvider.Load();
         }
 
+        internal static IAppContext Context
+        {
+            get { return _context; }
+        }
+
         internal static IMessageService Msg
         {
             get { return _context.Container.GetSingleton<IMessageService>(); }

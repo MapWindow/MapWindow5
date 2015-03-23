@@ -105,20 +105,21 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnDrawingOptions_Click(object sender, EventArgs e)
         {
-            Form form = FormHelper.GetSymbologyForm(_legend, _layerHandle, _shapefile.GeometryType, _shapefile.Style, true);
-            form.Text = "Default drawing options";
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using (var form = FormHelper.GetSymbologyForm(_legend, _layerHandle, _shapefile.GeometryType, _shapefile.Style, true))
             {
-                //updating controls
-                Appearance2Controls();
-                DrawAppearancePreview();
-                Application.DoEvents();
-                RedrawMap();
-                RefreshControlsState(null, null);
-            }
-            else
-            {
-                Application.DoEvents();
+                form.Text = "Default drawing options";
+                if (_context.View.ShowDialog(form, this))
+                {
+                    Appearance2Controls();
+                    DrawAppearancePreview();
+                    Application.DoEvents();
+                    RedrawMap();
+                    RefreshControlsState(null, null);
+                }
+                else
+                {
+                    Application.DoEvents();
+                }
             }
         }
 

@@ -25,13 +25,13 @@ using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
-using MW5.Plugins.Symbology.Controls;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Labels
+namespace MW5.Plugins.Symbology.Forms.Style
 {
     /// <summary>
     /// GUI for setting options for Labels and LabelCategory classes
@@ -40,10 +40,10 @@ namespace MW5.Plugins.Symbology.Forms.Labels
     {
         private static int tabNumber = 0;
 
-        private readonly IMuteLegend _legend;
-        private readonly ILayer _layer;
-        private readonly IFeatureSet _shapefile;
-        private readonly int _handle = -1;
+        private IAppContext _context;
+        private ILayer _layer;
+        private IFeatureSet _shapefile;
+        private int _handle = -1;
         private readonly bool _categoryEdited;
 
         private ILabelStyle _category;
@@ -54,22 +54,12 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// <summary>
         /// Constructor for setting label expression and options
         /// </summary>
-        public LabelStyleForm(IMuteLegend legend, ILayer layer)
+        public LabelStyleForm(IAppContext context, ILayer layer)
         {
-            if (layer == null || layer.FeatureSet == null)
-            {
-                throw new ArgumentNullException("layer");
-            }
-            
-            _legend = legend;
-            _layer = layer;
-            _shapefile = _layer.FeatureSet;
-            _handle = _layer.Handle;
+            InitLayer(context, layer);
 
             InitializeComponent();
            
-            //LabelStyle style = new LabelStyle( m_shapefile.Labels.Options);
-            
             // old-style labels not based on expression
             if (_shapefile.Labels.Expression == "" && !_shapefile.Labels.Empty &&
                 _shapefile.Labels.Items[0].Text != "")
@@ -94,10 +84,11 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// <summary>
         /// Constructor for editing single category
         /// </summary>
-        public LabelStyleForm(IFeatureSet sf, ILabelStyle lb) 
+        public LabelStyleForm(IAppContext context,  ILayer layer, ILabelStyle lb) 
         {
+            InitLayer(context, layer);
+
             _categoryEdited = true;
-            _shapefile = sf;
 
             InitializeComponent();
             Initialize(lb);
@@ -113,6 +104,21 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             }
             lblResult.Visible = false;
             btnApply.Visible = false;
+        }
+
+        private void InitLayer(IAppContext context, ILayer layer)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+
+            if (layer == null || layer.FeatureSet == null)
+            {
+                throw new ArgumentNullException("layer");
+            }
+
+            _context = context;
+            _layer = layer;
+            _shapefile = _layer.FeatureSet;
+            _handle = _layer.Handle;
         }
 
         /// <summary>
@@ -533,12 +539,14 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// </summary>
         private void btnSetFrameGradient_Click(object sender, EventArgs e)
         {
-            FontGradientForm form = new FontGradientForm(_category, false);
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using (var form = new FontGradientForm(_category, false))
             {
-                DrawPreview();
-                clpFrame1.Color =  _category.FrameBackColor;
-                btnApply.Enabled = true;
+                if (_context.View.ShowDialog(form, this))
+                {
+                    DrawPreview();
+                    clpFrame1.Color = _category.FrameBackColor;
+                    btnApply.Enabled = true;
+                }
             }
         }
         
@@ -600,7 +608,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
                 // generate
                 using (var form = new AddLabelsForm(_shapefile, _category.Alignment))
                 {
-                    if (form.ShowDialog(this) == DialogResult.OK)
+                    if (_context.View.ShowDialog(form, this))
                     {
                         if (_shapefile.PointOrMultiPoint)
                         {
@@ -780,17 +788,18 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         private void btnLabelExpression_Click(object sender, EventArgs e)
         {
             string s = txtLabelExpression.Text;
-            var form = new QueryBuilderForm(_layer, s, false);
-            if (form.ShowDialog() == DialogResult.OK)
+            using (var form = new QueryBuilderForm(_layer, s, false))
             {
-                if (txtLabelExpression.Text != form.Tag.ToString())
+                if (_context.View.ShowDialog(form))
                 {
-                    txtLabelExpression.Text = form.Tag.ToString();
-                    _shapefile.Labels.VisibilityExpression = txtLabelExpression.Text;
-                    btnApply.Enabled = true;
+                    if (txtLabelExpression.Text != form.Tag.ToString())
+                    {
+                        txtLabelExpression.Text = form.Tag.ToString();
+                        _shapefile.Labels.VisibilityExpression = txtLabelExpression.Text;
+                        btnApply.Enabled = true;
+                    }
                 }
             }
-            form.Dispose();
         }
 
         /// <summary>
@@ -809,11 +818,8 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         {
             if (ApplyOptions())
             {
-                if (_legend != null)
-                {
-                    //m_legend.FireLayerPropertiesChanged(m_handle);
-                    _legend.Redraw(LegendRedraw.LegendAndMap);
-                }
+                //m_legend.FireLayerPropertiesChanged(m_handle);
+                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
 
                 _initState = _shapefile.Labels.Serialize();
                 RefreshControls();
@@ -847,7 +853,7 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// </summary>
         private void btnSetCurrent_Click(object sender, EventArgs e)
         {
-            var map = _legend.Map;
+            var map = _context.Map;
             if (map != null)
             {
                 cboBasicScale.Text = map.CurrentScale.ToString("0.00");
@@ -859,12 +865,9 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// </summary>
         private void btnSetMaxScale_Click(object sender, EventArgs e)
         {
-            var map = _legend.Map;
-            if (map != null)
-            {
-                cboMaxScale.Text = map.CurrentScale.ToString("0.00");
-                btnApply.Enabled = true;
-            }
+            var map = _context.Map;
+            cboMaxScale.Text = map.CurrentScale.ToString("0.00");
+            btnApply.Enabled = true;
         }
 
         /// <summary>
@@ -872,12 +875,8 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         /// </summary>
         private void btnSetMinScale_Click(object sender, EventArgs e)
         {
-            var map = _legend.Map;
-            if (map != null)
-            {
-                cboMinScale.Text = map.CurrentScale.ToString("0.00");
-                btnApply.Enabled = true;
-            }
+            cboMinScale.Text = _context.Map.CurrentScale.ToString("0.00");
+            btnApply.Enabled = true;
         }
     }
 }

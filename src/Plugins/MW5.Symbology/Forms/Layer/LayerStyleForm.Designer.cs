@@ -298,7 +298,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // axMap1
             // 
             this.axMap1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this.axMap1.CurrentScale = 232.28589343056248D;
+            this.axMap1.CurrentScale = 24.377921071402245D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -893,6 +893,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbCategories
             // 
+            this.icbCategories.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
+            this.icbCategories.ComboStyle = MW5.Api.ColorRampType.Graduated;
             this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbCategories.FormattingEnabled = true;
@@ -1061,7 +1063,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // btnLabelsClear
             // 
             this.btnLabelsClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLabelsClear.Location = new System.Drawing.Point(259, 62);
+            this.btnLabelsClear.Location = new System.Drawing.Point(265, 62);
             this.btnLabelsClear.Name = "btnLabelsClear";
             this.btnLabelsClear.Size = new System.Drawing.Size(93, 26);
             this.btnLabelsClear.TabIndex = 170;
@@ -1074,7 +1076,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupLabelAppearance.Controls.Add(this.panelLabels);
             this.groupLabelAppearance.Location = new System.Drawing.Point(18, 148);
             this.groupLabelAppearance.Name = "groupLabelAppearance";
-            this.groupLabelAppearance.Size = new System.Drawing.Size(233, 128);
+            this.groupLabelAppearance.Size = new System.Drawing.Size(232, 128);
             this.groupLabelAppearance.TabIndex = 162;
             this.groupLabelAppearance.TabStop = false;
             this.groupLabelAppearance.Text = "Appearance";
@@ -1089,7 +1091,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.panelLabels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLabels.Location = new System.Drawing.Point(3, 16);
             this.panelLabels.Name = "panelLabels";
-            this.panelLabels.Size = new System.Drawing.Size(227, 109);
+            this.panelLabels.Size = new System.Drawing.Size(226, 109);
             this.panelLabels.TabIndex = 161;
             // 
             // udLabelFontSize
@@ -1181,7 +1183,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // btnLabelsAppearance
             // 
             this.btnLabelsAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLabelsAppearance.Location = new System.Drawing.Point(259, 30);
+            this.btnLabelsAppearance.Location = new System.Drawing.Point(265, 30);
             this.btnLabelsAppearance.Name = "btnLabelsAppearance";
             this.btnLabelsAppearance.Size = new System.Drawing.Size(93, 26);
             this.btnLabelsAppearance.TabIndex = 125;
@@ -1232,7 +1234,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupChartAppearance.Controls.Add(this.optChartBars);
             this.groupChartAppearance.Location = new System.Drawing.Point(15, 149);
             this.groupChartAppearance.Name = "groupChartAppearance";
-            this.groupChartAppearance.Size = new System.Drawing.Size(232, 129);
+            this.groupChartAppearance.Size = new System.Drawing.Size(235, 129);
             this.groupChartAppearance.TabIndex = 171;
             this.groupChartAppearance.TabStop = false;
             this.groupChartAppearance.Text = "Appearance";
@@ -1279,6 +1281,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbChartColorScheme
             // 
+            this.icbChartColorScheme.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
+            this.icbChartColorScheme.ComboStyle = MW5.Api.ColorRampType.Graduated;
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;

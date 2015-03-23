@@ -16,6 +16,7 @@
 // Date            Changed By      Notes
 // ********************************************************************************************************
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.UI;
@@ -40,8 +41,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
 
             if (options == null)
             {
-                // TODO: raise error
-                return;
+                throw new ArgumentNullException("options");
             }
 
             _list = new List<RadioButton>();
@@ -63,15 +63,16 @@ namespace MW5.Plugins.Symbology.Forms.Options
         /// Shows the form and returns the index selected options
         /// </summary>
         /// <param name="selectedIndex">The index that will be selected by default</param>
-        /// <returns></returns>
-        public int ShowDialogCustom(int selectedIndex)
+        /// <param name="parent">Parent window.</param>
+        public int ShowDialogCustom(int selectedIndex, IWin32Window parent)
         {
             if (selectedIndex >= 0 && selectedIndex < _list.Count)
             {
                 _list[selectedIndex].Checked = true;
             }
 
-            if (ShowDialog() == DialogResult.OK)
+            // TODO: use application context
+            if (ShowDialog(parent) == DialogResult.OK)
             {
                 for (int i = 0; i < _list.Count; i++)
                 {
@@ -85,3 +86,4 @@ namespace MW5.Plugins.Symbology.Forms.Options
         }
     }
 }
+

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using MW5.Plugins.Interfaces;
 using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
@@ -31,16 +32,19 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     public partial class ColorSchemesForm : MapWindowForm
     {
         private readonly List<ColorBlend> _list;
+        private readonly IAppContext _context;
         private readonly ColorSchemeCollection _provider;
         private readonly bool _noEvents;
         
         /// <summary>
         /// Initializes a new instance of the frmColorSchemes class
         /// </summary>
-        internal ColorSchemesForm(ColorSchemeCollection provider)
+        internal ColorSchemesForm(IAppContext context, ColorSchemeCollection provider)
         {
+            if (context == null) throw new ArgumentNullException("context");
             if (provider == null) throw new ArgumentNullException("provider");
 
+            _context = context;
             _provider = provider;
             _list = provider.List;
 
@@ -225,7 +229,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             using (var form = new ColorSchemeForm(blend))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (_context.View.ShowDialog(form, this))
                 {
                     _listBox1.Items[_listBox1.SelectedIndex] = form.Blend;
                     _listBox1.Refresh();
@@ -249,7 +253,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             using (var form = new ColorSchemeForm(blend))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (_context.View.ShowDialog(form, this))
                 {
                     _listBox1.Items.Add(form.Blend);
                     _listBox1.SelectedIndex = _listBox1.Items.Count - 1;

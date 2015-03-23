@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.Symbology.Forms.Labels
+﻿namespace MW5.Plugins.Symbology.Forms.Style
 {
     partial class AddLabelsForm
     {

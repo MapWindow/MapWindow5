@@ -649,9 +649,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(icbCategories.ColorSchemes))
+            using (var form = new ColorSchemesForm(_context, icbCategories.ColorSchemes))
             {
-                form.ShowDialog(this);
+                _context.View.ShowDialog(form, this);
             }
         }
     }

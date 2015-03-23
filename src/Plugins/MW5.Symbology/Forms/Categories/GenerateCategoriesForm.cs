@@ -23,6 +23,7 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Utilities;
@@ -37,18 +38,22 @@ namespace MW5.Plugins.Symbology.Forms.Categories
     /// </summary>
     public partial class GenerateCategoriesForm : MapWindowForm
     {
+        private readonly IAppContext _context;
         private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
         
         /// <summary>
         /// Generates a new instance of the GenerateCategoriesForm class
         /// </summary>
-        public GenerateCategoriesForm(ILayer layer)
+        public GenerateCategoriesForm(IAppContext context, ILayer layer)
         {
+            if (context == null) throw new ArgumentNullException("context");
+
             if (layer == null || layer.FeatureSet == null)
             {
                 throw new ArgumentNullException("layer");
             }
+            _context = context;
             _layer = layer;
 
             InitializeComponent();
@@ -333,9 +338,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(icbColorScheme.ColorSchemes))
+            using (var form = new ColorSchemesForm(_context, icbColorScheme.ColorSchemes))
             {
-                form.ShowDialog(this);
+                _context.View.ShowDialog(form, this);
             }
         }
     }

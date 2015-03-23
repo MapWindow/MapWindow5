@@ -135,9 +135,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnGenerate_Click(object sender, EventArgs e)
         {
-            using (var form = new GenerateCategoriesForm(_layer))
+            using (var form = new GenerateCategoriesForm(_context, _layer))
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (_context.View.ShowDialog(form, this))
                 {
                     Enabled = false;
                     Cursor = Cursors.WaitCursor;
@@ -166,7 +166,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             using (var form = new AddCategoriesForm())
             {
-                if (form.ShowDialog() == DialogResult.OK)
+                if (_context.View.ShowDialog(form, this))
                 {
                     var blend = form.icbColors.ColorSchemes.List[form.icbColors.SelectedIndex];
                     var scheme = blend.ToColorScheme();
@@ -320,14 +320,16 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             if (dgvCategories.CurrentCell != null)
             {
                 int index = dgvCategories.CurrentCell.RowIndex;
-                    
                 var category = _shapefile.Categories[index];
-                var form = new QueryBuilderForm(_layer, category.Expression, false);
-                if (form.ShowDialog(this) == DialogResult.OK)
+
+                using (var form = new QueryBuilderForm(_layer, category.Expression, false))
                 {
-                    category.Expression = form.Tag.ToString();
-                    txtExpression.Text = category.Expression;
-                    RefreshCategoriesCount();
+                    if (_context.View.ShowDialog(form ,this))
+                    {
+                        category.Expression = form.Tag.ToString();
+                        txtExpression.Text = category.Expression;
+                        RefreshCategoriesCount();
+                    }
                 }
             }
         }
@@ -355,16 +357,17 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 return;
             }
 
-            var form = _context.Legend.GetSymbologyForm(_layerHandle, _shapefile.GeometryType, cat.Style, true);
-            form.Text = "Category drawing options";
-
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using (var form = _context.Legend.GetSymbologyForm(_layerHandle, _shapefile.GeometryType, cat.Style, true))
             {
-                RefreshControlState();
-                dgvCategories.Invalidate();
-                btnApply.Enabled = true;
+                form.Text = "Category drawing options";
+
+                if (_context.View.ShowDialog(form, this))
+                {
+                    RefreshControlState();
+                    dgvCategories.Invalidate();
+                    btnApply.Enabled = true;
+                }
             }
-            form.Dispose();
         }
         #endregion
 

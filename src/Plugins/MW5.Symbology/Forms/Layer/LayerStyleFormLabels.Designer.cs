@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows.Forms;
-using MW5.Plugins.Symbology.Forms.Labels;
+using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
@@ -43,9 +43,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnGenerateLabels_Click(object sender, EventArgs e)
         {
-            using (var form = new LabelStyleForm(_legend, _layer))
+            using (var form = new LabelStyleForm(_context, _layer))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
+                if (_context.View.ShowDialog(form, this))
                 {
                     _shapefile.Labels.Visible = true;
                     DrawLabelsPreview();
@@ -68,9 +68,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnLabelsAppearance_Click(object sender, EventArgs e)
         {
-            using (var styleFormForm = new LabelStyleForm(_legend, _layer))
+            using (var form = new LabelStyleForm(_context, _layer))
             {
-                styleFormForm.ShowDialog();
+                _context.View.ShowDialog(form, this);
             }
 
             // updating controls (even if cancel was hit, a user could have applied the options)
