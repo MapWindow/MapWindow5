@@ -52,6 +52,9 @@ namespace MW5.Menu
 
             InitHelpMenu();
 
+            var items = _context.Menu.Items;
+            items.InsertBefore = items[items.Count - 1];
+
             _context.Menu.Update();
         }
 
@@ -121,6 +124,9 @@ namespace MW5.Menu
             _commands.AddToMenu(items, MenuKeys.CreateLayer, true);
             _commands.AddToMenu(items, MenuKeys.RemoveLayer);
             _commands.AddToMenu(items, MenuKeys.Settings, true);
+            
+            items.InsertBefore = items[items.Count - 1];    // before settings
+
             bar.Update();
         }
 

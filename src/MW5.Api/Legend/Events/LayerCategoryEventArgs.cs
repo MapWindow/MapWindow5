@@ -9,11 +9,11 @@ namespace MW5.Api.Legend.Events
 {
     public class LayerCategoryEventArgs: LayerMouseEventArgs
     {
-        public int Category { get; internal set; }
+        public int CategoryIndex { get; internal set; }
 
         public LayerCategoryEventArgs(int layerHandle, MouseButtons buttons, int category) : base(layerHandle, buttons)
         {
-            Category = category;
+            CategoryIndex = category;
         }
     }
 }

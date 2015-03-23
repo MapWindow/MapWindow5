@@ -53,12 +53,9 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void InitToolbar()
         {
-            var items = _context.Toolbars.MapToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.QueryBuilder, true);
-            _context.Toolbars.MapToolbar.Update();
-
-            items = _context.Toolbars.FileToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.Categories);
+            var items = _context.Toolbars.FileToolbar.Items;
+            _commands.AddToMenu(items, MenuKeys.Categories, true);
+            _commands.AddToMenu(items, MenuKeys.QueryBuilder);
             _context.Toolbars.FileToolbar.Update();
         }
     }

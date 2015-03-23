@@ -8,7 +8,8 @@ namespace MW5.UI.Menu
 {
     internal class MenuIndex : IMenuIndex
     {
-        private Dictionary<string, IMenuItem> _items = new Dictionary<string, IMenuItem>();
+        private readonly Dictionary<string, IMenuItem> _items = new Dictionary<string, IMenuItem>();
+        private readonly Dictionary<object, MenuItemCollectionMetadata> _collectionMetadata = new Dictionary<object, MenuItemCollectionMetadata>();
 
         public void AddItem(string key, IMenuItem item)
         {
@@ -51,6 +52,21 @@ namespace MW5.UI.Menu
         public void Clear()
         {
             _items.Clear();
+        }
+
+        public void SaveMetadata(object key, MenuItemCollectionMetadata metadata)
+        {
+            _collectionMetadata[key] = metadata;
+        }
+
+        public MenuItemCollectionMetadata LoadMetadata(object key)
+        {
+            MenuItemCollectionMetadata data;
+            if (_collectionMetadata.TryGetValue(key, out data))
+            {
+                return data;
+            }
+            return null;
         }
     }
 }

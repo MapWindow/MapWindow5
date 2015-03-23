@@ -190,10 +190,61 @@ namespace MW5.UI.Menu
             _items.Clear();
         }
 
+        public IMenuItem InsertBefore
+        {
+            get
+            {
+                var data = _menuIndex.LoadMetadata(_items);
+                if (data != null)
+                {
+                    return data.InsertBefore;
+                }
+                return null;
+            }
+            set
+            {
+                var data = _menuIndex.LoadMetadata(_items) ?? new MenuItemCollectionMetadata();
+                data.InsertBefore = value;
+                _menuIndex.SaveMetadata(_items, data);
+            }
+        }
+
+        public int IndexOf(IMenuItem item)
+        {
+            for (int i = 0; i < _items.Count; i++)
+            {
+                var it = this[i];
+                if (it.UniqueKey == item.UniqueKey)
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public int Count
+        {
+            get { return _items.Count; }
+        }
+
         private IMenuItem AddItem(BarItem item, PluginIdentity identity, string key)
         {
             item.Tag = new MenuItemMetadata(identity, key);
-            int index = _items.Add(item);
+
+            int index = -1;
+            if (InsertBefore != null)
+            {
+                index = IndexOf(InsertBefore);
+            }
+
+            if (index != -1)
+            {
+                _items.Insert(index, item);
+            }
+            else
+            {
+                index = _items.Add(item);
+            }
 
             var menuItem = this[index];
 

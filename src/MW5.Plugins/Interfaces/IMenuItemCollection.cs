@@ -21,6 +21,13 @@ namespace MW5.Plugins.Interfaces
         void Insert(IMenuItem item, int index);
         void Remove(int index);
         void Clear();
+        int IndexOf(IMenuItem item);
+        int Count { get; }
 
+        /// <summary>
+        /// Gets or sets menu item before which all the new items will be added. If set to null
+        /// items will be added to the end of collection.
+        /// </summary>
+        IMenuItem InsertBefore { get; set; }
     }
 }

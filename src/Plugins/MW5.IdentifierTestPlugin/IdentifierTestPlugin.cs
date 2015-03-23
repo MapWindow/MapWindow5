@@ -10,7 +10,6 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
-    //[PluginExport("Identifier test plugin", "Author", "1AECEA80-DCC3-4A34-89FB-7A2304B489FA")]
     [PluginExport()]
     public class IdentifierTestPlugin: BasePlugin
     {
