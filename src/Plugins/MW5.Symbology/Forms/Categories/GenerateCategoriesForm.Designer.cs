@@ -50,7 +50,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.label3 = new System.Windows.Forms.Label();
             this.udMaxSize = new NumericUpDownEx(this.components);
             this.udMinSize = new NumericUpDownEx(this.components);
-            this.icbColorScheme = new ImageCombo();
+            this.icbColorScheme = new ColorSchemeCombo();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).BeginInit();
@@ -274,10 +274,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // icbColorScheme
             // 
-            this.icbColorScheme.Color1 = System.Drawing.Color.Gray;
-            this.icbColorScheme.Color2 = System.Drawing.Color.Honeydew;
-            this.icbColorScheme.ColorSchemes = null;
-            this.icbColorScheme.ComboStyle = ImageComboStyle.Common;
             this.icbColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColorScheme.FormattingEnabled = true;
@@ -327,7 +323,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chkUseVariableSize;
-        private ImageCombo icbColorScheme;
+        private ColorSchemeCombo icbColorScheme;
         private System.Windows.Forms.CheckBox chkRandomColors;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

@@ -74,11 +74,10 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             cboCategoriesCount.Text = settings.CategoriesCount.ToString();
 
             // dummy color scheme
-            ColorSchemeProvider.GetList(ColorSchemeType.Default).SetDefaultColorScheme(_shapefile);
+            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
 
             // initializing for list of color schemes
-            icbColorScheme.ColorSchemeType = ColorSchemeType.Default;
-            icbColorScheme.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
+            icbColorScheme.ColorSchemeType = ColorSchemes.Default;
 
             // settings active color scheme
             for (int i = 0; i < icbColorScheme.Items.Count; i++)
@@ -130,7 +129,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             string name = settings.CategoriesFieldName.ToLower();
             for (int i = 0; i < cboField.Items.Count; i++)
             {
-                if (((ComboItem)cboField.Items[i]).Text.ToLower() == name)
+                if (((RealIndexComboItem)cboField.Items[i]).Text.ToLower() == name)
                 {
                     cboField.SelectedIndex = i;
                     break;
@@ -158,7 +157,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             }
 
             var categories = _shapefile.Categories;
-            int index = ((ComboItem)cboField.SelectedItem).RealIndex;
+            int index = ((RealIndexComboItem)cboField.SelectedItem).RealIndex;
             categories.Generate(index, (Classification)cboClassificationType.SelectedIndex, count);
 
             categories.Caption = "Categories: " + _shapefile.Fields[index].Name;
@@ -235,7 +234,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 
             // saving the options for the next time
             if (cboField.SelectedItem != null)
-                settings.CategoriesFieldName = ((ComboItem)cboField.SelectedItem).Text;
+                settings.CategoriesFieldName = ((RealIndexComboItem)cboField.SelectedItem).Text;
             else
                 settings.CategoriesFieldName = string.Empty;
 
@@ -272,7 +271,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // fields; graduated color schemes doesn't accept string fields, therefore we need to build new list in this case
             int fieldIndex = -1;
             if (cboField.SelectedItem != null)
-                fieldIndex = ((ComboItem)cboField.SelectedItem).RealIndex;
+                fieldIndex = ((RealIndexComboItem)cboField.SelectedItem).RealIndex;
             
             cboField.Items.Clear();
             if (_shapefile != null)
@@ -284,7 +283,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                     {
                         continue;
                     }
-                    cboField.Items.Add(new ComboItem(fld.Name, i));
+                    cboField.Items.Add(new RealIndexComboItem(fld.Name, i));
                 }
 
                 if (cboField.Items.Count > 0)
@@ -293,7 +292,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                     {
                         for (int i = 0; i < cboField.Items.Count; i++)
                         {
-                            if (((ComboItem)cboField.Items[i]).RealIndex == fieldIndex)
+                            if (((RealIndexComboItem)cboField.Items[i]).RealIndex == fieldIndex)
                             {
                                 cboField.SelectedIndex = i;
                                 break;
@@ -314,7 +313,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColorScheme.SelectedIndex;
-            icbColorScheme.ComboStyle = chkRandomColors.Checked ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
+            icbColorScheme.ComboStyle = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
             if (index >= 0 && index < icbColorScheme.Items.Count)
             {
                 icbColorScheme.SelectedIndex = index;
@@ -334,13 +333,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
-            var list = ColorSchemeProvider.GetList(ColorSchemeType.Default);
-            using (var form = new ColorSchemesForm(list))
+            using (var form = new ColorSchemesForm(icbColorScheme.ColorSchemes))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    icbColorScheme.ColorSchemes = list;
-                }
+                form.ShowDialog(this);
             }
         }
     }

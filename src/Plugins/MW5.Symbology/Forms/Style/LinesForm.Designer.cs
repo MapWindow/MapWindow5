@@ -231,7 +231,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Blue;
             this.icbLineWidth.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineWidth.ColorSchemes = null;
             this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -272,7 +271,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbLineType.Color1 = System.Drawing.Color.Blue;
             this.icbLineType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineType.ColorSchemes = null;
             this.icbLineType.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
             this.icbLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;

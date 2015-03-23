@@ -23,7 +23,7 @@ using System.Windows.Forms;
 using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Utilities
+namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     public partial class ColorSchemeForm : MapWindowForm
     {

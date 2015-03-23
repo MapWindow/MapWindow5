@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MW5.Plugins.Symbology.Forms.Categories
+﻿namespace MW5.Plugins.Symbology.Controls
 {
     /// <summary>
     /// A class for items with realIndex property
     /// </summary>
-    internal class ComboItem
+    internal class RealIndexComboItem
     {
         private readonly string _text;
         private readonly int _realIndex;
 
-        public ComboItem(string text, int realIndex)
+        public RealIndexComboItem(string text, int realIndex)
         {
             _text = text;
             _realIndex = realIndex;

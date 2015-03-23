@@ -109,7 +109,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             this.btnSetMinScale = new System.Windows.Forms.Button();
             this.btnSetMaxScale = new System.Windows.Forms.Button();
             this.transparencyControl1 = new TransparencyControl();
-            this.icbColors = new ImageCombo();
+            this.icbColors = new ColorSchemeCombo();
             this.udPieRadius2 = new NumericUpDownEx(this.components);
             this.udPieRadius = new NumericUpDownEx(this.components);
             this.udBarHeight = new NumericUpDownEx(this.components);
@@ -952,10 +952,6 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             // 
             // icbColors
             // 
-            this.icbColors.Color1 = System.Drawing.Color.Gray;
-            this.icbColors.Color2 = System.Drawing.Color.Gray;
-            this.icbColors.ColorSchemes = null;
-            this.icbColors.ComboStyle = ImageComboStyle.Common;
             this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColors.FormattingEnabled = true;
@@ -1284,7 +1280,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         private System.Windows.Forms.CheckBox chkValuesFrame;
         private System.Windows.Forms.RadioButton optBarCharts;
         private System.Windows.Forms.RadioButton optPieCharts;
-        private ImageCombo icbColors;
+        private ColorSchemeCombo icbColors;
         private System.Windows.Forms.GroupBox groupBox2;
         private NumericUpDownEx udTilt;
         private NumericUpDownEx udThickness;

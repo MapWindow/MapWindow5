@@ -16,23 +16,44 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     internal class ColorSchemeCollection
     {
-        private List<ColorBlend> _list  = new List<ColorBlend>();
-        private ColorSchemeType _type = ColorSchemeType.Default;
+        private List<ColorBlend> _list = new List<ColorBlend>();
         private readonly string _filename;
+        private readonly ColorSchemes _type;
 
-        public ColorSchemeCollection(ColorSchemeType type, string filename)
+        public ColorSchemeCollection(ColorSchemes type, string filename)
         {
             _type = type;
             _filename = filename;
+            SelectedIndex = -1;
             ReadFromFile(filename);
         }
+
+        /// <summary>
+        /// Occurs when list of color scheme is edited by user.
+        /// </summary>
+        public event EventHandler<EventArgs> ListChanged;
+
+        internal void FireListChanged()
+        {
+            var handler = ListChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected index chosen by user.
+        /// </summary>
+        public int SelectedIndex { get; set; }
 
         public List<ColorBlend> List
         {
             get { return _list; }
+            set { _list = value; }
         }
 
-        public ColorSchemeType Type
+        public ColorSchemes Type
         {
             get { return _type; }
         }
@@ -40,7 +61,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Sets dummy color scheme based on the shapefile default color. The color schemes is the first in the list.
         /// </summary>
-        public void SetDefaultColorScheme(IFeatureSet sf)
+        public void SetFirstColorScheme(IFeatureSet sf)
         {
             // settings dummy color scheme
             ColorBlend blend = null;
@@ -88,7 +109,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         {
             ColorBlend blend = null;
 
-            if (_type == ColorSchemeType.Default)
+            if (_type == ColorSchemes.Default)
             {
                 // dummy single color blend must be always the first for shapefile
                 blend = new ColorBlend(2);
@@ -153,7 +174,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 blend.Positions[1] = 1.0f;
                 List.Add(blend);
             }
-            else if (_type == ColorSchemeType.Charts)
+            else if (_type == ColorSchemes.Charts)
             {
                 blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Yellow;
@@ -213,7 +234,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             var xelSchemes = xmlDoc.CreateElement("ColorSchemes");
 
             // the first scheme must not be saved
-            int j = _type == ColorSchemeType.Default ? 1 : 0;
+            int j = _type == ColorSchemes.Default ? 1 : 0;
 
             for (; j < List.Count; j++)
             {
@@ -260,7 +281,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
             
             // dummy single color blend 
-            if (_type == ColorSchemeType.Default)
+            if (_type == ColorSchemes.Default)
             {
                 var blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Black; blend.Positions[0] = 0.0f;

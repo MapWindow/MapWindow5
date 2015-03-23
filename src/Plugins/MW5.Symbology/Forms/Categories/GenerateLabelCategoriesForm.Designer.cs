@@ -38,7 +38,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupColors = new System.Windows.Forms.GroupBox();
             this.udMaxSize = new NumericUpDownEx(this.components);
             this.btnFrameScheme = new System.Windows.Forms.Button();
-            this.icbFrame = new ImageCombo();
+            this.icbFrame = new ColorSchemeCombo();
             this.chkGraduatedFrame = new System.Windows.Forms.CheckBox();
             this.udMinSize = new NumericUpDownEx(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -132,10 +132,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // icbFrame
             // 
-            this.icbFrame.Color1 = System.Drawing.Color.Gray;
-            this.icbFrame.Color2 = System.Drawing.Color.Honeydew;
-            this.icbFrame.ColorSchemes = null;
-            this.icbFrame.ComboStyle = ImageComboStyle.Common;
             this.icbFrame.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFrame.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFrame.FormattingEnabled = true;
@@ -295,7 +291,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private System.Windows.Forms.ComboBox cboClassificationType;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnFrameScheme;
-        private ImageCombo icbFrame;
+        private ColorSchemeCombo icbFrame;
         private System.Windows.Forms.CheckBox chkGraduatedFrame;
         private NumericUpDownEx udMaxSize;
         private System.Windows.Forms.CheckBox chkRandomColors;

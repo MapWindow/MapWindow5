@@ -83,8 +83,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             _initState = SaveState();
            
-            // the first color in color scheme should be the fill/line color of the shapefile
-            ColorSchemeProvider.GetList(ColorSchemeType.Default).SetDefaultColorScheme(_shapefile);
+            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
 
             _noEvents = true;
 

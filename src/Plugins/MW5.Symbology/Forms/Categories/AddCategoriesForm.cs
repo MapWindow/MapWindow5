@@ -18,7 +18,9 @@
 
 using System;
 using System.Windows.Forms;
+using MW5.Api;
 using MW5.Plugins.Symbology.Controls;
+using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.UI;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
@@ -29,9 +31,10 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             InitializeComponent();
 
-            icbColors.ColorSchemeType = ColorSchemeType.Default;
+            
+            icbColors.ColorSchemeType = ColorSchemes.Default;
 
-            icbColors.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
+            icbColors.ComboStyle = ColorRampType.Graduated;
             if (icbColors.Items.Count >= 0)
             {
                 icbColors.SelectedIndex = 0;
@@ -44,7 +47,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandom_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColors.SelectedIndex;
-            icbColors.ComboStyle = chkRandom.Checked ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
+            icbColors.ComboStyle = chkRandom.Checked ? ColorRampType.Random : ColorRampType.Graduated;
 
             if (index >= 0 && index < icbColors.Items.Count)
             {

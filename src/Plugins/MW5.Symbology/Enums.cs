@@ -12,8 +12,6 @@
         FrameType = 4,
         PointShape = 5,
         HatchStyle = 6,
-        ColorSchemeGraduated = 7,
-        ColorSchemeRandom = 8,
         HatchStyleWithNone = 9,
     }
 
@@ -27,7 +25,7 @@
     /// <summary>
     /// Color scheme lists used in the plug-in
     /// </summary>
-    internal enum ColorSchemeType
+    internal enum ColorSchemes
     {
         Default = 0,
         Charts = 1,

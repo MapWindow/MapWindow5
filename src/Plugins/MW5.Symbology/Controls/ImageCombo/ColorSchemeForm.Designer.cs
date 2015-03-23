@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.Symbology.Forms.Utilities
+﻿namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     partial class ColorSchemeForm
     {

@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Utilities
+namespace MW5.Plugins.Symbology.Forms.Options
 {
     public partial class Options2Form : MapWindowForm
     {

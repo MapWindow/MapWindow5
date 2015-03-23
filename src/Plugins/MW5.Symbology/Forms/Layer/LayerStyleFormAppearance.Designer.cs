@@ -167,39 +167,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         }
 
         /// <summary>
-        /// Displays form with color schemes
-        /// </summary>
-        private void btnColorSchemes_Click(object sender, EventArgs e)
-        {
-            using (var form = new ColorSchemesForm(ColorSchemeProvider.GetList(ColorSchemeType.Default)))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    int index = icbChartColorScheme.SelectedIndex;
-
-                    icbChartColorScheme.ColorSchemeType = ColorSchemeType.Default;
-                    icbChartColorScheme.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-
-                    //Globals.LayerColors.Serialize2Xml();
-
-                    if (index < icbChartColorScheme.Items.Count)
-                    {
-                        icbChartColorScheme.SelectedIndex = index;
-                    }
-                    else if (icbChartColorScheme.Items.Count > 0)
-                    {
-                        icbChartColorScheme.SelectedIndex = 0;
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Sets the properties of the labels based upon user input
         /// </summary>
         private void Controls2Appearance()
         {
-            // default options
             IGeometryStyle options = _shapefile.Style;
             
             if (_shapefile.GeometryType == GeometryType.Polygon)

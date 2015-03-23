@@ -45,8 +45,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void InitCategoriesTab()
         {
-            icbCategories.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            icbCategories.ColorSchemeType = ColorSchemeType.Default;
+            icbCategories.ComboStyle = ColorRampType.Graduated;
+            icbCategories.ColorSchemeType = ColorSchemes.Default;
             if (icbCategories.Items.Count > 0)
             {
                 icbCategories.SelectedIndex = 0;
@@ -63,6 +63,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // fills in the list of fields
             FillFieldList(_settings.CategoriesFieldName);
 
+            // TODO: restore
             // setting the color scheme that is in use
             //for (int i = 0; i < icbCategories.Items.Count; i++)
             //{
@@ -248,14 +249,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbCategories.SelectedIndex;
-            if (chkRandomColors.Checked)
-            {
-                icbCategories.ComboStyle = ImageComboStyle.ColorSchemeRandom;
-            }
-            else
-            {
-                icbCategories.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            }
+            icbCategories.ComboStyle = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
 
             if (index >= 0 && index < icbCategories.Items.Count)
             {
@@ -651,16 +645,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         }
 
         /// <summary>
-        /// Modifies the list of available color schemes for the layer
+        /// Opens the editor of color schemes
         /// </summary>
         private void btnChangeColorScheme_Click(object sender, EventArgs e)
         {
-            //ColorSchemesForm form = new ColorSchemesForm(ref Globals.LayerColors);
-            //if (form.ShowDialog(this) == DialogResult.OK)
-            //{
-            //    icbCategories.ColorSchemes = Globals.LayerColors;
-            //}
-            //form.Dispose();
+            using (var form = new ColorSchemesForm(icbCategories.ColorSchemes))
+            {
+                form.ShowDialog(this);
+            }
         }
     }
 }

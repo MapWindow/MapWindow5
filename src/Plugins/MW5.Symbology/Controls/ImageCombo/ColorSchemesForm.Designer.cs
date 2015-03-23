@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.Symbology.Forms.Utilities
+﻿namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     partial class ColorSchemesForm
     {
@@ -34,7 +34,7 @@
             this.btnMoveDown = new System.Windows.Forms.Button();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this._listBox1 = new System.Windows.Forms.ListBox();
             this.btnEdit = new System.Windows.Forms.Button();
             this.lblPreview = new System.Windows.Forms.Label();
             this.SuspendLayout();
@@ -102,17 +102,17 @@
             // 
             // listBox1
             // 
-            this.listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(33, 13);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(175, 304);
-            this.listBox1.TabIndex = 18;
-            this.listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
-            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            this.listBox1.DoubleClick += new System.EventHandler(this.btnEdit_Click);
+            this._listBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this._listBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._listBox1.FormattingEnabled = true;
+            this._listBox1.ItemHeight = 20;
+            this._listBox1.Location = new System.Drawing.Point(33, 13);
+            this._listBox1.Name = "_listBox1";
+            this._listBox1.Size = new System.Drawing.Size(175, 304);
+            this._listBox1.TabIndex = 18;
+            this._listBox1.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.listBox1_DrawItem);
+            this._listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this._listBox1.DoubleClick += new System.EventHandler(this.btnEdit_Click);
             // 
             // btnEdit
             // 
@@ -146,7 +146,7 @@
             this.Controls.Add(this.btnMoveUp);
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnAdd);
-            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this._listBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -166,7 +166,7 @@
         private System.Windows.Forms.Button btnMoveDown;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox _listBox1;
         private System.Windows.Forms.Button btnEdit;
         private System.Windows.Forms.Label lblPreview;
     }

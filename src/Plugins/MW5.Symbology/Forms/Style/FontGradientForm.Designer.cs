@@ -134,7 +134,6 @@ namespace MW5.Plugins.Symbology.Forms.Labels
             // 
             this.icbFontGradient.Color1 = System.Drawing.Color.Blue;
             this.icbFontGradient.Color2 = System.Drawing.Color.Honeydew;
-            this.icbFontGradient.ColorSchemes = null;
             this.icbFontGradient.ComboStyle = ImageComboStyle.Common;
             this.icbFontGradient.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFontGradient.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;

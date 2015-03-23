@@ -36,12 +36,12 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     /// </summary>
     internal static class ColorSchemeProvider
     {
-        private static Dictionary<ColorSchemeType, ColorSchemeCollection> _dict = new Dictionary<ColorSchemeType, ColorSchemeCollection>();
+        private static Dictionary<ColorSchemes, ColorSchemeCollection> _dict = new Dictionary<ColorSchemes, ColorSchemeCollection>();
 
         internal static void Load()
         {
-            var values = Enum.GetValues(typeof (ColorSchemeType));
-            foreach (ColorSchemeType val in values)
+            var values = Enum.GetValues(typeof (ColorSchemes));
+            foreach (ColorSchemes val in values)
             {
                 try
                 {
@@ -54,7 +54,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
         }
 
-        public static ColorSchemeCollection GetList(ColorSchemeType type)
+        public static ColorSchemeCollection GetList(ColorSchemes type)
         {
             return _dict[type];
         }
@@ -62,17 +62,27 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Returns the path to the specified style file, in case the file doesn't exist - creates it.
         /// </summary>
-        private static string GetFilename(ColorSchemeType type)
+        private static string GetFilename(ColorSchemes type)
         {
             string path = PathHelper.GetStylesPath();
             switch (type)
             {
-                case ColorSchemeType.Default:
+                case ColorSchemes.Default:
                     return path + "colorschemes.xml";
-                case ColorSchemeType.Charts:
+                case ColorSchemes.Charts:
                     return path + "chartcolorsxml";
             }
             return string.Empty;
+        }
+
+        internal static void SetFirstColorScheme(ColorSchemes type, Color color)
+        {
+            GetList(type).SetFirstColorScheme(color);
+        }
+
+        internal static void SetFirstColorScheme(ColorSchemes type, IFeatureSet fs)
+        {
+            GetList(type).SetFirstColorScheme(fs);
         }
     }
 }

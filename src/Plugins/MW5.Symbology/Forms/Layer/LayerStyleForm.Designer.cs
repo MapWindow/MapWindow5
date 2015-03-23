@@ -93,7 +93,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.chkRandomColors = new System.Windows.Forms.CheckBox();
             this.chkSetGradient = new System.Windows.Forms.CheckBox();
-            this.icbCategories = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.icbCategories = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.btnChangeColorScheme = new System.Windows.Forms.Button();
             this.btnCategoryClear = new System.Windows.Forms.Button();
             this.groupVariableSize = new System.Windows.Forms.GroupBox();
@@ -128,7 +128,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.chkChartsVisible = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.optChartsPie = new System.Windows.Forms.RadioButton();
-            this.icbChartColorScheme = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.icbChartColorScheme = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.optChartBars = new System.Windows.Forms.RadioButton();
             this.groupCharts = new System.Windows.Forms.GroupBox();
             this.pctCharts = new System.Windows.Forms.PictureBox();
@@ -469,7 +469,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
             this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ColorSchemes = null;
             this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -579,7 +578,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.icbFillStyle.Color1 = System.Drawing.Color.Gray;
             this.icbFillStyle.Color2 = System.Drawing.Color.Gray;
-            this.icbFillStyle.ColorSchemes = null;
             this.icbFillStyle.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
             this.icbFillStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFillStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -895,10 +893,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbCategories
             // 
-            this.icbCategories.Color1 = System.Drawing.Color.Gray;
-            this.icbCategories.Color2 = System.Drawing.Color.Honeydew;
-            this.icbCategories.ColorSchemes = null;
-            this.icbCategories.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.ColorSchemeGraduated;
             this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbCategories.FormattingEnabled = true;
@@ -1285,10 +1279,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbChartColorScheme
             // 
-            this.icbChartColorScheme.Color1 = System.Drawing.Color.Gray;
-            this.icbChartColorScheme.Color2 = System.Drawing.Color.Honeydew;
-            this.icbChartColorScheme.ColorSchemes = null;
-            this.icbChartColorScheme.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.ColorSchemeGraduated;
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;
@@ -1794,7 +1784,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private Office2007ColorPicker clpLabelFrame;
         private System.Windows.Forms.CheckBox chkLabelFrame;
         private System.Windows.Forms.Label label15;
-        private ImageCombo icbCategories;
+        private ColorSchemeCombo icbCategories;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button btnChangeColorScheme;
         private System.Windows.Forms.CheckBox chkRandomColors;
@@ -1888,7 +1878,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private System.Windows.Forms.CheckBox chkChartsVisible;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.RadioButton optChartsPie;
-        private ImageCombo icbChartColorScheme;
+        private ColorSchemeCombo icbChartColorScheme;
         private System.Windows.Forms.RadioButton optChartBars;
         private System.Windows.Forms.GroupBox groupCharts;
         private System.Windows.Forms.PictureBox pctCharts;

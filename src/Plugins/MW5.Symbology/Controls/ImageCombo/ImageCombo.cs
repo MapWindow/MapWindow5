@@ -30,55 +30,23 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     /// <summary>
     /// Image combo to store the icons for symbology plug-in
     /// </summary>
-    internal class ImageCombo : ComboBox
+    internal class ImageCombo : ImageComboBase
     {
-        private const int PADDING_X = 1;
-        private const int PADDING_Y = 1;
-        
-        private ImageList _list = new ImageList();
         private ImageComboStyle _style;
-
-        private ColorSchemeCollection _colorSchemes;
-        private Color _color1 = Color.Gray;
-        private Color _color2 = Color.Honeydew;
-        private Color _outlineColor = Color.Black;
-        private int _itemCount;
-        private ColorSchemeType _colorSchemeType;
-
-        #region Contructors
+        
+        private Color _color1;
+        private Color _color2;
 
         /// <summary>
-        /// Constructor. Common type of combo will be used
+        /// Initializes a new instance of the <see cref="ImageCombo"/> class.
         /// </summary>
-        public ImageCombo():this(ImageComboStyle.Common){}
-        
-        /// <summary>
-        /// Constructor. Sets the style of combo.
-        /// </summary>
-        public ImageCombo(ImageComboStyle style) : this(style, Color.Gray, Color.Gray) { }
-        
-        /// <summary>
-        /// Constructor. Sets the style of combo and fill color.
-        /// </summary>
-        public ImageCombo(ImageComboStyle style, Color color1):this(style, color1, color1) { }
-        
-        /// <summary>
-        /// Constructor. Sets the style of combo and 2 both fill colors.
-        /// </summary>
-        public ImageCombo(ImageComboStyle style, Color color1, Color color2)
+        public ImageCombo()
         {
-            _list.ColorDepth = ColorDepth.Depth24Bit;
-            OutlineColor = Color.Black;
-            DrawMode = DrawMode.OwnerDrawFixed;
-            DropDownStyle = ComboBoxStyle.DropDownList;
-            _style = style;
-            _color1 = color1;
-            _color2 = color2;
-            EnabledChanged += (s, e) => RefreshImageList();
+            _style = ImageComboStyle.Common;
+            _color1 = Color.Gray;
+            _color2 = Color.Honeydew;
         }
-        #endregion
-
-        #region Properties
+        
         /// <summary>
         /// The main  color to fill contents
         /// </summary>
@@ -103,15 +71,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         }
 
         /// <summary>
-        /// The color to draw outline of the content
-        /// </summary>
-        public Color OutlineColor
-        {
-            get { return _outlineColor; }
-            set { _outlineColor = value; }
-        }
-
-        /// <summary>
         ///  Setting the number of items for a given combo style
         /// </summary>
         public ImageComboStyle ComboStyle
@@ -124,57 +83,28 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
         }
 
-        /// <summary>
-        ///  Gets or sets bound ImageList
-        /// </summary>
-        public ImageList ImageList
+        private int GetItemCount(ImageComboStyle style)
         {
-            get { return _list; }
-            set { _list = value; }
+            switch (style)
+            {
+                case ImageComboStyle.FrameType:
+                    return 3;
+                case ImageComboStyle.LinearGradient:
+                    return 4;
+                case ImageComboStyle.LineStyle:
+                    return 5;
+                case ImageComboStyle.LineWidth:
+                    return 10;
+                case ImageComboStyle.PointShape:
+                    return 6;
+                case ImageComboStyle.HatchStyle:
+                    return 53;
+                case ImageComboStyle.HatchStyleWithNone:
+                    return 54;
+            }
+            return 0;
         }
 
-        public ColorSchemeType ColorSchemeType
-        {
-            get { return _colorSchemeType; }
-            set
-            {
-                _colorSchemeType = value;
-                if (_colorSchemes == null || _colorSchemes.Type != value)
-                {
-                    ColorSchemes = ColorSchemeProvider.GetList(value);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets or gets the list of color schemes
-        /// </summary>
-        public ColorSchemeCollection ColorSchemes
-        {
-            get
-            {
-                return _colorSchemes;
-            }
-            set
-            {
-                // preserving index
-                int index = SelectedIndex;
-
-                _colorSchemes = value;
-                GenerateItems(ComboStyle);
-
-                // restoring index
-                if (index < Items.Count)
-                {
-                    SelectedIndex = index;
-                }
-                else if (Items.Count > 0)
-                {
-                    SelectedIndex = 0;
-                }
-            }
-        }
-        #endregion
 
         /// <summary>
         /// Generates items for the given combo style
@@ -183,138 +113,60 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         {
             Items.Clear();
 
-            // choosing number of items
-            switch (style)
-            {
-                case ImageComboStyle.FrameType:             
-                    _itemCount = 3; 
-                    break;
-                case ImageComboStyle.LinearGradient:
-                    _itemCount = 4; 
-                    break;
-                case ImageComboStyle.LineStyle:             
-                    _itemCount = 5; 
-                    break;
-                case ImageComboStyle.LineWidth:             
-                    _itemCount = 10; 
-                    break;
-                case ImageComboStyle.PointShape:            
-                    _itemCount = 6; 
-                    break;
-                case ImageComboStyle.HatchStyle:            
-                    _itemCount = 53; 
-                    break;
-                case ImageComboStyle.HatchStyleWithNone:    
-                    _itemCount = 54; 
-                    break;
-                case ImageComboStyle.ColorSchemeGraduated:
-                case ImageComboStyle.ColorSchemeRandom:
-                {
-                    _itemCount = _colorSchemes != null ? _colorSchemes.List.Count : 0;
-                    break;
-                }
-            }
+            _itemCount = GetItemCount(style);
 
-            // adding items
-            string str = string.Empty;
+            var s = string.Empty;
             for (int i = 0; i < _itemCount; i++)
             {
                 switch (style)
                 {
                     case ImageComboStyle.FrameType:
                     {
-                        if (i == 0) str = "ftRectangle";
-                        else if (i == 1) str = "ftRounded rectangle";
-                        else if (i == 2) str = "ftPointed rectangle";
+                        s = ((FrameType) i).ToString();
                         break;
                     }
                     case ImageComboStyle.LinearGradient:
                     {
-                        // TODO: temporary
-                        //str = ((tkLinearGradientMode)i).ToString();
-                        str = "  Style " + (i + 1).ToString();
-                        break;
-                    }
-                    case ImageComboStyle.LineStyle:
-                    {
-                        str = "ls";
-                        break;
-                    }
-                    case ImageComboStyle.LineWidth:
-                    {
-                        str = "wd";
+                        s = ((LinearGradient)i).ToString();
                         break;
                     }
                     case ImageComboStyle.PointShape:
                     {
-                        // TODO: temporary
-                        //str = ((tkPointShapeType)i).ToString();
-                        //str = str.Substring(5, str.Length - 5);
-                        
-                        str = "  Style " + (i + 1).ToString();
+                        s = ((VectorMarkerType)i).ToString();
+                        s = s.Substring(5, s.Length - 5);
                         break;
                     }
                     case ImageComboStyle.HatchStyle:
                     {
-                        // TODO: temporary
-                        //str = ((tkGDIPlusHatchStyle)i).ToString();
-                        str = "  Style " + (i + 1).ToString();
+                        s = ((HatchStyle)i).ToString();
                         break;
                     }
                     case ImageComboStyle.HatchStyleWithNone:
                     {
-                        // TODO: temporary
-                        //if (i == 0)
-                        //{
-                        //    str = "None";
-                        //}
-                        //else
-                        //{
-                        //    str = ((tkGDIPlusHatchStyle)i - 1).ToString();
-                        //}
-                        str = "  Style " + (i + 1).ToString();
-                        break;
-                    }
-                    case ImageComboStyle.ColorSchemeGraduated:
-                    case ImageComboStyle.ColorSchemeRandom:
-                    {
-                        str = "cl";
+                        s = i == 0 ? "None" : ((HatchStyle)i - 1).ToString();
                         break;
                     }
                 }
 
-                // getting rid of prefix
-                str = str.Substring(2, str.Length - 2); 
-                
-                Items.Add(new ImageComboItem(str, i));
+                Items.Add(new ImageComboItem(s, i));
             }
 
-            // adds images
             RefreshImageList();
         }
 
         /// <summary>
         /// Fills the image list with icons according to the selected colors
         /// </summary>
-        private void RefreshImageList()
+        protected override void RefreshImageList()
         {
-            if (_style == ImageComboStyle.Common) return;
+            if (_style == ImageComboStyle.Common)
+            {
+                return;
+            }
 
             _list.Images.Clear();
 
-            int width;
-            if (_style == ImageComboStyle.PointShape)
-            {
-                width = 20;
-            }
-            else if (_style == ImageComboStyle.ColorSchemeGraduated || _style == ImageComboStyle.ColorSchemeRandom)
-            {
-                width = Width - 24;
-            }
-            else
-            {
-                width = 64;
-            }
+            int width = _style == ImageComboStyle.PointShape ? 20 : 64;
 
             Size sz = new Size(width, 16);
             _list.ImageSize = sz;
@@ -322,14 +174,14 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             int imgHeight = _list.ImageSize.Height;
             int imgWidth = _list.ImageSize.Width;
 
-            Rectangle rect = new Rectangle(PADDING_X, PADDING_Y, imgWidth - 1 - PADDING_X * 2, imgHeight - 1 - PADDING_Y * 2);
+            var rect = new Rectangle(PADDING_X, PADDING_Y, imgWidth - 1 - PADDING_X * 2, imgHeight - 1 - PADDING_Y * 2);
 
-            Color foreColor = Enabled ? Color.Black : Color.Gray;
+            var foreColor = Enabled ? Color.Black : Color.Gray;
 
             for (int i = 0; i < _itemCount; i++)
             {
-                Bitmap img = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-                Graphics g = Graphics.FromImage(img);
+                var img = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var g = Graphics.FromImage(img);
                 
                 switch (_style)
                 {
@@ -370,7 +222,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                             g.FillPath(new SolidBrush(_color1), path);
                             g.DrawPath(new Pen(foreColor), path);
                             path.Dispose();
-                            break;
                         }
                         break;
                     }
@@ -465,119 +316,13 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                         }
                         break;
                     }
-                    case ImageComboStyle.ColorSchemeGraduated:
-                    {
-                        if (_colorSchemes != null)
-                        {
-                            var blend = _colorSchemes.List[i];
-                            if (blend != null)
-                            {
-                                LinearGradientBrush lgb = new LinearGradientBrush(rect, Color.White, Color.White, 0.0f);
-                                lgb.InterpolationColors = blend;
-                                g.FillRectangle( lgb, rect );
-                                g.DrawRectangle( new Pen(_outlineColor), rect);
-                                lgb.Dispose();
-                            }
-                        }
-                        break;
-                    }
-                    case ImageComboStyle.ColorSchemeRandom:
-                    {
-                        if (_colorSchemes != null)
-                        {
-                            var blend = _colorSchemes.List[i];
-                            if (blend != null)
-                            {
-                                var scheme = blend.ToColorScheme();
-                                if (scheme != null)
-                                {
-                                    int n = 0;
-                                    var rnd = new Random();
-                                    while (n < imgWidth)
-                                    {
-                                        var clr =  scheme.GetRandomColor(rnd.NextDouble());
-                                        var brush = new SolidBrush(clr);
-                                        var rectTemp = new Rectangle(rect.X + n, rect.Y, 8, rect.Height);
-                                        g.FillRectangle(brush, rectTemp);
-                                        g.DrawRectangle(new Pen(_outlineColor), rectTemp);
-                                        brush.Dispose();
-                                        n += 8;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    }
                     default: return;
                 }
-                // adding an image
+
                 _list.Images.Add(img);
             }
         }
         
-        /// <summary>
-        /// Drawing procedure of a single item of list
-        /// </summary>
-        protected override void OnDrawItem(DrawItemEventArgs e)
-        {
-            // we don't want to draw ites when combo is disabled
-            if ((ComboStyle == ImageComboStyle.ColorSchemeGraduated ||
-                ComboStyle == ImageComboStyle.ColorSchemeRandom) && !Enabled)
-            {
-                return;
-            }
-            
-            // check if it is an item from the Items collection
-            if (e.Index < 0)
-            {
-                // not an item, draw the text (indented)
-                e.Graphics.DrawString(Text, e.Font, new SolidBrush(e.ForeColor), e.Bounds.Left + _list.ImageSize.Width, e.Bounds.Top);
-            }
-            else
-            {
-                // check if item is an ImageComboItem
-                if (Items[e.Index].GetType() == typeof(ImageComboItem))
-                {
-                    // get item to draw
-                    ImageComboItem item = (ImageComboItem)Items[e.Index];
-
-                    if (Enabled)
-                    {
-                        e.Graphics.FillRectangle(new SolidBrush(BackColor), e.Bounds);
-                    }
-                    else
-                    {
-                        e.DrawBackground();
-                    }
-
-                    var textColor = Enabled ? Color.Black : Color.Gray;
-                    var forecolor = item.ForeColor;
-                    var font = item.Mark ? new Font(e.Font, FontStyle.Bold) : e.Font;
-
-                    if (item.ImageIndex != -1 && item.ImageIndex < ImageList.Images.Count)
-                    {
-                        // draw image
-                        ImageList.Draw(e.Graphics, e.Bounds.Left, e.Bounds.Top, item.ImageIndex);
-                        // draw text (indented)
-                        e.Graphics.DrawString(item.Text, font, new SolidBrush(textColor), e.Bounds.Left + _list.ImageSize.Width + 3 /*offset*/, e.Bounds.Top);
-                    }
-                    else
-                    {
-                        e.Graphics.DrawString(item.Text, font, new SolidBrush(forecolor), e.Bounds.Left + _list.ImageSize.Width, e.Bounds.Top);
-                    }
-
-                    if (((e.State & DrawItemState.Selected) != 0) && ((e.State & DrawItemState.ComboBoxEdit) == 0))
-                    {
-                        Pen pen = new Pen(textColor) {DashStyle = DashStyle.Dot};
-                        e.Graphics.DrawRectangle(pen, 0, e.Bounds.Top, e.Bounds.Width - 1, e.Bounds.Height - 1);
-                    }
-                }
-                else
-                {
-                    // it is not an ImageComboItem, draw it
-                    e.Graphics.DrawString(Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds.Left + _list.ImageSize.Width, e.Bounds.Top);
-                }
-            }
-        }
+        
     }
 }

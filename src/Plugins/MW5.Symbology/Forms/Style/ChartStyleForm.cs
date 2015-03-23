@@ -93,8 +93,8 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             optPieCharts.Checked = !_charts.Bars;
 
             // initializing for list of color schemes
-            icbColors.ColorSchemeType = ColorSchemeType.Charts;
-            icbColors.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
+            icbColors.ColorSchemeType = ColorSchemes.Charts;
+
             if (icbColors.Items.Count > 0)
             {
                 icbColors.SelectedIndex = 0;
@@ -826,14 +826,12 @@ namespace MW5.Plugins.Symbology.Forms.Charts
         /// </summary>
         private void btnChangeScheme_Click(object sender, EventArgs e)
         {
-            //ColorSchemesForm form = new ColorSchemesForm(ref Globals.ChartColors);
-            //if (form.ShowDialog(this) == DialogResult.OK)
-            //{
-            //    _noEvents = true;
-            //    icbColors.ColorSchemes = Globals.ChartColors;
-            //    _noEvents = false;
-            //}
-            //form.Dispose();
+            using (var form = new ColorSchemesForm(icbColors.ColorSchemes))
+            {
+                _noEvents = true;
+                form.ShowDialog(this);
+                form.Dispose();
+            }
         }
 
         /// <summary>

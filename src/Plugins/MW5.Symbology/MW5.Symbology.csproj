@@ -65,9 +65,15 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="Controls\ImageCombo\ColorSchemeCollection.cs" />
+    <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
-    <Compile Include="Forms\Categories\ComboItem.cs" />
+    <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Services\EnumConverters.cs" />
     <Compile Include="Services\LayerSettingsService.cs" />
@@ -236,28 +242,28 @@
     <Compile Include="Forms\Options\AddOptionsForm.Designer.cs">
       <DependentUpon>AddOptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ColorSchemeForm.cs">
+    <Compile Include="Controls\ImageCombo\ColorSchemeForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\ColorSchemeForm.Designer.cs">
+    <Compile Include="Controls\ImageCombo\ColorSchemeForm.Designer.cs">
       <DependentUpon>ColorSchemeForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\ColorSchemesForm.cs">
+    <Compile Include="Controls\ImageCombo\ColorSchemesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\ColorSchemesForm.Designer.cs">
+    <Compile Include="Controls\ImageCombo\ColorSchemesForm.Designer.cs">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\OptionsForm.cs">
+    <Compile Include="Forms\Options\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\OptionsForm.Designer.cs">
+    <Compile Include="Forms\Options\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Utilities\Options2Form.cs">
+    <Compile Include="Forms\Options\Options2Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Utilities\Options2Form.Designer.cs">
+    <Compile Include="Forms\Options\Options2Form.Designer.cs">
       <DependentUpon>Options2Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Options\OptionsChooserForm.cs">
@@ -383,16 +389,16 @@
     <EmbeddedResource Include="Forms\Options\AddOptionsForm.resx">
       <DependentUpon>AddOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\ColorSchemeForm.resx">
+    <EmbeddedResource Include="Controls\ImageCombo\ColorSchemeForm.resx">
       <DependentUpon>ColorSchemeForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\ColorSchemesForm.resx">
+    <EmbeddedResource Include="Controls\ImageCombo\ColorSchemesForm.resx">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\OptionsForm.resx">
+    <EmbeddedResource Include="Forms\Options\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Utilities\Options2Form.resx">
+    <EmbeddedResource Include="Forms\Options\Options2Form.resx">
       <DependentUpon>Options2Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Options\OptionsChooserForm.resx">

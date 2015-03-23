@@ -66,9 +66,8 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             }
 
             // initializing for list of color schemes
-            icbFrame.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            ColorSchemeProvider.GetList(ColorSchemeType.Default).SetFirstColorScheme(_shapefile.Labels.Style.FrameBackColor);
-            icbFrame.ColorSchemeType = ColorSchemeType.Default;
+            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile.Labels.Style.FrameBackColor);
+            icbFrame.ColorSchemeType = ColorSchemes.Default;
 
             udMinSize.Value = sf.Labels.Style.FontSize;
 
@@ -91,7 +90,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             udMinSize.SetValue((double)settings.LabelsSize);
             udMaxSize.SetValue((double)udMinSize.Value + settings.LabelsSizeRange);
             chkUseVariableSize.Checked = settings.LabelsVariableSize;
-            icbFrame.ComboStyle = settings.LabelsRandomColors ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
+            icbFrame.ComboStyle = settings.LabelsRandomColors ? ColorRampType.Random : ColorRampType.Graduated;
             chkGraduatedFrame.Checked = settings.LabelsGraduatedColors;
             chkRandomColors.Checked = settings.LabelsRandomColors;
 
@@ -286,13 +285,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnFrameScheme_Click(object sender, EventArgs e)
         {
-            var list = ColorSchemeProvider.GetList(ColorSchemeType.Default);
-            using (var form = new ColorSchemesForm(list))
+            using (var form = new ColorSchemesForm(icbFrame.ColorSchemes))
             {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    icbFrame.ColorSchemes = list;
-                }
+                form.ShowDialog(this);
             }
         }
 
@@ -302,7 +297,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbFrame.SelectedIndex;
-            icbFrame.ComboStyle = chkRandomColors.Checked ? ImageComboStyle.ColorSchemeRandom : ImageComboStyle.ColorSchemeGraduated;
+            icbFrame.ComboStyle = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
 
             if (index >= 0 && index < icbFrame.Items.Count)
             {

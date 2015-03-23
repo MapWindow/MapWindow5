@@ -36,7 +36,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.chkRandom = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.icbColors = new ImageCombo();
+            this.icbColors = new ColorSchemeCombo();
             this.numericUpDownExt1 = new NumericUpDownEx(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -88,10 +88,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // icbColors
             // 
-            this.icbColors.Color1 = System.Drawing.Color.Gray;
-            this.icbColors.Color2 = System.Drawing.Color.Gray;
-            this.icbColors.ColorSchemes = null;
-            this.icbColors.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
+            this.icbColors.ComboStyle = Api.ColorRampType.Graduated;
             this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColors.FormattingEnabled = true;
@@ -169,7 +166,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private System.Windows.Forms.Label label1;
         internal NumericUpDownEx numericUpDownExt1;
         private System.Windows.Forms.GroupBox groupBox1;
-        internal ImageCombo icbColors;
+        internal ColorSchemeCombo icbColors;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;

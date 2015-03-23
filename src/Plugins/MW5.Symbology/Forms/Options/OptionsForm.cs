@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Utilities
+namespace MW5.Plugins.Symbology.Forms.Options
 {
     /// <summary>
     /// Shows a list of options to choose from

@@ -38,8 +38,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void InitChartsTab()
         {
-            icbChartColorScheme.ComboStyle = ImageComboStyle.ColorSchemeGraduated;
-            icbChartColorScheme.ColorSchemeType = ColorSchemeType.Charts;
+            icbChartColorScheme.ComboStyle = ColorRampType.Graduated;
+            icbChartColorScheme.ColorSchemeType = ColorSchemes.Charts;
             if (icbChartColorScheme.Items.Count > 0)
             {
                 icbChartColorScheme.SelectedIndex = 0;
@@ -172,12 +172,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnChartsEditColorScheme_Click(object sender, EventArgs e)
         {
-            var form = new ColorSchemesForm(ColorSchemeProvider.GetList(ColorSchemeType.Charts));
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using (var form = new ColorSchemesForm(icbChartColorScheme.ColorSchemes))
             {
-                //icbChartColorScheme.ColorSchemes = Globals.ChartColors;
+                form.ShowDialog(this);
             }
-            form.Dispose();
         }
     }
 }
