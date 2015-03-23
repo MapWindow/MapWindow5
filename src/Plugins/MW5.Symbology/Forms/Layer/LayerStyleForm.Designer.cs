@@ -1585,6 +1585,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // chkFastMode
             // 
             this.chkFastMode.AutoSize = true;
+            this.chkFastMode.Enabled = false;
             this.chkFastMode.Location = new System.Drawing.Point(25, 32);
             this.chkFastMode.Name = "chkFastMode";
             this.chkFastMode.Size = new System.Drawing.Size(115, 17);

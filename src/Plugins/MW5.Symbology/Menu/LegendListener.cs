@@ -43,6 +43,7 @@ namespace MW5.Plugins.Symbology.Menu
                         // do something
                     }
                 }
+                e.Handled = true;
             }
         }
 
@@ -59,6 +60,7 @@ namespace MW5.Plugins.Symbology.Menu
                         // do something
                     }
                 }
+                e.Handled = true;
             }
         }
 
@@ -74,6 +76,7 @@ namespace MW5.Plugins.Symbology.Menu
                         // do something
                     }    
                 }
+                e.Handled = true;
             }
         }
 
@@ -85,6 +88,7 @@ namespace MW5.Plugins.Symbology.Menu
                 {
                     // do something
                 }
+                e.Handled = true;
             }
         }
     }

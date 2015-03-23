@@ -516,7 +516,7 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 _locked = true;
                 Graphics g = Graphics.FromImage(_backBuffer);
-                g.Clear(Color.White);
+                g.Clear(Color.Transparent);
 
                 // drawing color band (all in case it's disabled or a half of it)
                 int positionY = (chkEnabled.Checked) ? _topHandle.Position : BAND_OFFSET_Y;

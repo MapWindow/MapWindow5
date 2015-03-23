@@ -12,6 +12,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -22,6 +23,7 @@ namespace MW5.Plugins
     {
         private readonly IPluginManager _manager;
         private readonly Dictionary<string, FieldInfo> _fields = new Dictionary<string,FieldInfo>();
+        private Guid _symbologyPluginGuid = new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7");
 
         public PluginBroadcaster(IPluginManager manager)
         {
@@ -57,7 +59,8 @@ namespace MW5.Plugins
 
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, LegendEventHandler<T>>> eventHandler, IMuteLegend sender, T args) where T : EventArgs
         {
-            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null);
+            // symbology plugin is the default listener for legend generated events
+            BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, null, _symbologyPluginGuid);
         }
 
         public void BroadcastEvent<T>(Expression<Func<BasePlugin, EventHandler<T>>> eventHandler, object sender, T args)
@@ -72,7 +75,24 @@ namespace MW5.Plugins
             BroadcastEvent(eventHandler.Body as MemberExpression, sender, args, identity);
         }
 
-        private void BroadcastEvent<T>(MemberExpression expression, object sender, T args, PluginIdentity identity)
+        /// <summary>
+        /// Returns list of active plugins with default handler in the last position. 
+        /// </summary>
+        private List<BasePlugin> GetActiveList(Guid? defaultHandler)
+        {
+            var handler = defaultHandler != null ? _manager.ActivePlugins.FirstOrDefault(p => p.Identity.Guid == defaultHandler) : null;
+            
+            var plugins = handler == null ? _manager.ActivePlugins : _manager.ActivePlugins.Where(p => p != handler);
+            var list = plugins.ToList();
+
+            if (handler != null)
+            {
+                list.Add(handler);
+            }
+            return list;
+        }
+
+        private void BroadcastEvent<T>(MemberExpression expression, object sender, T args, PluginIdentity identity, Guid? defaultHandler = null)
             where T : EventArgs
         {
             if (expression == null)
@@ -82,10 +102,14 @@ namespace MW5.Plugins
             
             string eventName = expression.Member.Name;
 
+            var singleTargetArgs = args as SingleTargetEventArgs;
+
             var fieldInfo = GetEventField(eventName);
             if (fieldInfo != null)
             {
-                foreach (var p in _manager.ActivePlugins)
+                var list = GetActiveList(defaultHandler);
+
+                foreach (var p in list)
                 {
                     if (identity != null && p.Identity != identity)
                     {
@@ -97,8 +121,14 @@ namespace MW5.Plugins
                     {
                         if (del.GetInvocationList().Any())
                         {
-                            del.Method.Invoke(del.Target, new object[] { sender, args });
+                            del.Method.Invoke(del.Target, new[] { sender, args });
                         }
+                    }
+
+                    // in case we want only one handler
+                    if (singleTargetArgs != null && singleTargetArgs.Handled)
+                    {
+                        break;
                     }
                 }
             }

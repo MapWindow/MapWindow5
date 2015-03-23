@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using MW5.Api.Concrete;
@@ -64,7 +65,14 @@ namespace MW5.Presenters
             var config = _configService.Config;
             if (config.LoadLastProject && File.Exists(config.LastProjectPath))
             {
-                _projectService.Open(config.LastProjectPath, true);
+                try
+                {
+                    _projectService.Open(config.LastProjectPath, true);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("Error on project loading: " + ex.Message);
+                }
             }
         }
 
