@@ -42,21 +42,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         private readonly IAppContext _context;
         private readonly IMuteLegend _legend;
-        
-        private readonly int _layerHandle;
-
         private readonly ILegendLayer _layer;
-
         private readonly SymbologySettings _settings;
-        
         private readonly IFeatureSet _shapefile;
+        private readonly int _layerHandle;
         
         private bool _noEvents;
-
         private string _initState;
-        
         private bool _stateChanged;
-
 
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
@@ -259,6 +252,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             // charts
             bool enabled = (_shapefile.Diagrams.Count > 0 && (_shapefile.Diagrams.Fields.Any()));
+            groupChartAppearance.Enabled = enabled;
             btnClearCharts.Enabled = enabled;
             icbChartColorScheme.Enabled = enabled;
             groupCharts.Enabled = enabled;

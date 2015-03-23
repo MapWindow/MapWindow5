@@ -63,7 +63,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         public void SetFirstColorScheme(IFeatureSet sf)
         {
-            // settings dummy color scheme
             ColorBlend blend = null;
             if (List.Count <= 0)
             {
@@ -85,11 +84,12 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 blend.Colors[0] = sf.Style.Line.Color;
                 blend.Colors[1] = sf.Style.Line.Color;
             }
+
+            FireListChanged();
         }
 
         public void SetFirstColorScheme(Color color)
         {
-            // settings dummy color scheme
             ColorBlend blend = null;
             if (List.Count <= 0)
             {
@@ -103,6 +103,8 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             blend.Colors[0] = color;
             blend.Colors[1] = color;
+
+            FireListChanged();
         }
 
         private void SetDefaultColorSchemes()

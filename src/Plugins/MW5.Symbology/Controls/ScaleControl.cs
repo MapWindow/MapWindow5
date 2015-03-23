@@ -20,6 +20,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace MW5.Plugins.Symbology.Controls
@@ -111,6 +112,8 @@ namespace MW5.Plugins.Symbology.Controls
         // whether the result of painting should be rendered immediately
         //private bool _sync = false;
 
+        private Font _font = new Font("Microsoft Sans Serif", 8.25f);
+
         #endregion
 
         #region Constructor
@@ -176,11 +179,17 @@ namespace MW5.Plugins.Symbology.Controls
         /// </summary>
         protected internal void FireDynamicVisibilityStateChanged(bool newState)
         {
-            if (DynamicVisibilityStateChanged != null)
-                DynamicVisibilityStateChanged(newState);
+            var handler = DynamicVisibilityStateChanged;
+            if (handler != null)
+            {
+                handler(newState);
+            }
 
-            if (StateChanged != null)
-                StateChanged();
+            var handler2 = StateChanged;
+            if (handler2 != null)
+            {
+                handler2();
+            }
         }
         #endregion
 
@@ -197,7 +206,7 @@ namespace MW5.Plugins.Symbology.Controls
                 _locked = value;
                 if (!_locked)
                 {
-                    this.Invalidate();
+                    Invalidate();
                 }
             }
         }
@@ -211,7 +220,7 @@ namespace MW5.Plugins.Symbology.Controls
             set 
             { 
                 _colorFill1 = value;
-                this.Invalidate_(true);
+                Invalidate_(true);
             }
         }
 
@@ -224,7 +233,7 @@ namespace MW5.Plugins.Symbology.Controls
             set 
             { 
                 _colorFill2 = value;
-                this.Invalidate_(true);
+                Invalidate_(true);
               }
         }
 
@@ -237,7 +246,7 @@ namespace MW5.Plugins.Symbology.Controls
             set 
             { 
                 _colorOutline = value;
-                this.Invalidate_(false);
+                Invalidate_(false);
             }
         }
 
@@ -250,7 +259,7 @@ namespace MW5.Plugins.Symbology.Controls
             set
             {
                 _colorSelection = value;
-                this.Invalidate_(false);
+                Invalidate_(false);
             }
         }
 
@@ -357,7 +366,7 @@ namespace MW5.Plugins.Symbology.Controls
                         SetScale(_topHandle, scale);
                     }
 
-                    this.Invalidate_(true);
+                    Invalidate_(true);
                 }
                 else
                 {
@@ -373,7 +382,7 @@ namespace MW5.Plugins.Symbology.Controls
                         if (newState != handle.Selected)
                         {
                             handle.Selected = newState;
-                            Graphics g = Graphics.FromHwnd(this.Handle);
+                            Graphics g = Graphics.FromHwnd(Handle);
                             DrawHandle(g, handle);
                         }
                     }
@@ -392,11 +401,11 @@ namespace MW5.Plugins.Symbology.Controls
                 _draggingIsPerformed = false;
                 if (_draggedHandle == _topHandle)
                 {
-                    this.MaximumScale = Position2Scale(_topHandle.Position);
+                    MaximumScale = Position2Scale(_topHandle.Position);
                 }
                 else if(_draggedHandle == _bottomHandle)
                 {
-                    this.MinimimScale = Position2Scale(_bottomHandle.Position);
+                    MinimimScale = Position2Scale(_bottomHandle.Position);
                 }
             }
         }
@@ -421,16 +430,16 @@ namespace MW5.Plugins.Symbology.Controls
         {
             base.OnResize(e);
 
-            if (this.Width > 0 && this.Height > 0)
+            if (Width > 0 && Height > 0)
             {
                 if (_backBuffer != null)
                 {
                     _backBuffer.Dispose();
                     _backBuffer = null;
                 }
-                _backBuffer = new Bitmap(this.Width, this.Height);
-                _updateRectangle = new Rectangle(BAND_OFFSET_X, BAND_OFFSET_Y - (int)HANDLE_HEIGHT, BAND_WIDTH + (int)HANDLE_WIDTH + 5 + 1, this.Height - 2 * BAND_OFFSET_Y + 2 * (int)HANDLE_HEIGHT + 1);
-                //_updateRectangle = new Rectangle(BAND_OFFSET_X + BAND_WIDTH + 5, BAND_OFFSET_Y - (int)HANDLE_HEIGHT, (int)HANDLE_WIDTH + 1, this.Height - 2 * BAND_OFFSET_Y + 2*(int)HANDLE_HEIGHT +1);
+                _backBuffer = new Bitmap(Width, Height);
+                _updateRectangle = new Rectangle(BAND_OFFSET_X, BAND_OFFSET_Y - (int)HANDLE_HEIGHT, BAND_WIDTH + (int)HANDLE_WIDTH + 5 + 1, Height - 2 * BAND_OFFSET_Y + 2 * (int)HANDLE_HEIGHT + 1);
+                //_updateRectangle = new Rectangle(BAND_OFFSET_X + BAND_WIDTH + 5, BAND_OFFSET_Y - (int)HANDLE_HEIGHT, (int)HANDLE_WIDTH + 1, Height - 2 * BAND_OFFSET_Y + 2*(int)HANDLE_HEIGHT +1);
             }
         }
 
@@ -441,7 +450,7 @@ namespace MW5.Plugins.Symbology.Controls
         {
             scale = (scale > MAX_SCALE) ? MAX_SCALE : scale;
             scale = (scale < MIN_SCALE) ? MIN_SCALE : scale;
-            double step = (this.Height - BAND_OFFSET_Y * 2) / 9.0;
+            double step = (Height - BAND_OFFSET_Y * 2) / 9.0;
             int position = Convert.ToInt32((9.0 - Math.Log10(scale)) * step + (double)BAND_OFFSET_Y);
             return position;
         }
@@ -453,9 +462,9 @@ namespace MW5.Plugins.Symbology.Controls
         private double Position2Scale(int position)
         {
             position = (position < BAND_OFFSET_Y) ? BAND_OFFSET_Y : position;
-            position = (position > this.Height - BAND_OFFSET_Y) ? this.Height - BAND_OFFSET_Y : position;
+            position = (position > Height - BAND_OFFSET_Y) ? Height - BAND_OFFSET_Y : position;
             
-            float step = (this.Height - BAND_OFFSET_Y * 2) / 9.0f;
+            float step = (Height - BAND_OFFSET_Y * 2) / 9.0f;
             position -= BAND_OFFSET_Y;
 
             double scale = Math.Pow(10.0, (double)(9.0 - position / step));
@@ -499,7 +508,7 @@ namespace MW5.Plugins.Symbology.Controls
         /// <summary>
         /// The Control is being redrawn
         /// </summary>
-        protected override void OnPaint(System.Windows.Forms.PaintEventArgs e)
+        protected override void OnPaint(PaintEventArgs e)
         {
             Graphics gResult = e.Graphics;
             
@@ -507,11 +516,11 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 _locked = true;
                 Graphics g = Graphics.FromImage(_backBuffer);
-                g.Clear(Color.Transparent);
+                g.Clear(Color.White);
 
                 // drawing color band (all in case it's disabled or a half of it)
                 int positionY = (chkEnabled.Checked) ? _topHandle.Position : BAND_OFFSET_Y;
-                int dy = (chkEnabled.Checked) ? _bottomHandle.Position - _topHandle.Position : this.Height - 2 * BAND_OFFSET_Y;
+                int dy = (chkEnabled.Checked) ? _bottomHandle.Position - _topHandle.Position : Height - 2 * BAND_OFFSET_Y;
 
                 Rectangle rect = new Rectangle(BAND_OFFSET_X, positionY, BAND_WIDTH, dy);
                 if (dy > 0)
@@ -520,7 +529,6 @@ namespace MW5.Plugins.Symbology.Controls
                     if (_colorFill1 != _colorFill2)
                     {
                         Color clr1 = chkEnabled.Checked ? _colorFill1 : Color.FromArgb(120, _colorFill1);
-                        //Color clr2 = chkEnabled.Checked ? _colorFill2 : Color.FromArgb(120, _colorFill2);
                         brush = new LinearGradientBrush(rect, clr1, clr1, LinearGradientMode.Horizontal);
                     }
                     else
@@ -531,48 +539,44 @@ namespace MW5.Plugins.Symbology.Controls
                     g.FillRectangle(brush, rect);
                 }
 
-                rect = new Rectangle(BAND_OFFSET_X, BAND_OFFSET_Y, BAND_WIDTH, this.Height - 2 * BAND_OFFSET_Y);
+                rect = new Rectangle(BAND_OFFSET_X, BAND_OFFSET_Y, BAND_WIDTH, Height - 2 * BAND_OFFSET_Y);
                 Pen pen = new Pen(_colorOutline);
                 g.DrawRectangle(pen, rect);
 
                 // -------------------------------------------------
                 // drawing the scale
                 // -------------------------------------------------
-                float step = (this.Height - BAND_OFFSET_Y * 2) / 9.0f;
+                float step = (Height - BAND_OFFSET_Y * 2) / 9.0f;
 
-                //g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                //g.SmoothingMode = SmoothingMode.AntiAlias;
                 g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                Font font = new Font("Microsoft Sans Serif", 7.5f, FontStyle.Bold);
+
+                var color = UseDynamicVisibility ? Color.Black : Color.Gray;
+                var textBrush = new SolidBrush(color); 
 
                 for (int i = 0; i < 10; i++)
                 {
                     float y = BAND_OFFSET_Y + step * i;
-                    g.DrawLine(pen, (float)BAND_OFFSET_X - 5, y, (float)BAND_OFFSET_X, y);
-                    g.DrawLine(pen, (float)(BAND_OFFSET_X + BAND_WIDTH), y, (float)(BAND_OFFSET_X + BAND_WIDTH + 5), y);
+                    g.DrawLine(pen, (float)BAND_OFFSET_X - 5, y, BAND_OFFSET_X, y);
+                    g.DrawLine(pen, (float)(BAND_OFFSET_X + BAND_WIDTH), y, BAND_OFFSET_X + BAND_WIDTH + 5, y);
 
-                    string s = "1e" + (9 - i).ToString();
-                    SizeF size = g.MeasureString(s, font );
+                    string s = "1×e" + (9 - i);
+                    SizeF size = g.MeasureString(s, _font );
                     size.Width += 2;
                     PointF pos = new PointF(BAND_OFFSET_X - 5.0f - size.Width, y - size.Height / 2.0f);
                     RectangleF r = new RectangleF(pos, size);
-                    g.DrawString(s, font, new SolidBrush(UseDynamicVisibility ? Color.Black : Color.Gray), r);
+                    g.DrawString(s, _font, textBrush, r);
                 }
 
                 if (chkEnabled.Checked)
                 {
                     if (_topHandle.Selected)
                     {
-                        // draw bottom handle
                         DrawHandle(g, _bottomHandle);
-                        // draw top handle
                         DrawHandle(g, _topHandle);
                     }
                     else
                     {
-                        // draw top handle
                         DrawHandle(g, _topHandle);
-                        // draw bottom handle
                         DrawHandle(g, _bottomHandle);
                     }
                 }
@@ -585,16 +589,20 @@ namespace MW5.Plugins.Symbology.Controls
                     g.DrawRectangle(p, BAND_OFFSET_X - 3, position - 1, BAND_WIDTH + 6, 2);
                     g.FillRectangle(new SolidBrush(Color.Red), BAND_OFFSET_X - 3, position - 1, BAND_WIDTH + 6, 2);
                 }
-                
+
+                g.Flush();
+
                 _locked = false;
             }
 
             // drawing the buffer
+            //_backBuffer.Save("d:\\temp.png", ImageFormat.Png);
+            
             gResult.DrawImage(_backBuffer, 0, 0);
 
             if (_draggingIsPerformed)
             {
-                gResult.Flush(System.Drawing.Drawing2D.FlushIntention.Sync);
+                gResult.Flush(FlushIntention.Sync);
             }
         }
 
@@ -602,6 +610,7 @@ namespace MW5.Plugins.Symbology.Controls
         /// Draws the top handle
         /// </summary>
         /// <param name="g">Graphics object to draw upon</param>
+        /// <param name="handle">A handle to draw.</param>
         private void DrawHandle(Graphics g, ScaleHandle handle)
         {
             // -------------------------------------------------
@@ -655,7 +664,7 @@ namespace MW5.Plugins.Symbology.Controls
         private void btnSetMax_Click(object sender, EventArgs e)
         {
             SetScale(_topHandle, _currentScale);
-            this.Invalidate_(true);
+            Invalidate_(true);
             FireMaxVisibleScaleChanged(_currentScale);
         }
 
@@ -665,7 +674,7 @@ namespace MW5.Plugins.Symbology.Controls
         private void btnSetMin_Click(object sender, EventArgs e)
         {
             SetScale(_bottomHandle, _currentScale);
-            this.Invalidate_(true);
+            Invalidate_(true);
             FireMinVisibleScaleChanged(_currentScale);
          }
 
@@ -675,7 +684,7 @@ namespace MW5.Plugins.Symbology.Controls
         private void chkEnabled_CheckedChanged(object sender, EventArgs e)
         {
             panel1.Enabled = chkEnabled.Checked;
-            this.Invalidate_(true);
+            Invalidate_(false);
             Application.DoEvents();
             FireDynamicVisibilityStateChanged(chkEnabled.Checked);
         }
@@ -700,7 +709,7 @@ namespace MW5.Plugins.Symbology.Controls
             if (double.TryParse(txtMaxScale.Text, out val))
             {
                 SetScale(_topHandle, val);
-                this.Invalidate_(true);
+                Invalidate_(true);
                 FireMaxVisibleScaleChanged(val);
             }
             else
@@ -719,7 +728,7 @@ namespace MW5.Plugins.Symbology.Controls
             if (double.TryParse(txtMinScale.Text, out val))
             {
                 SetScale(_bottomHandle, val);
-                this.Invalidate_(true);
+                Invalidate_(true);
                 FireMinVisibleScaleChanged(val);
             }
             else
@@ -746,15 +755,15 @@ namespace MW5.Plugins.Symbology.Controls
         /// <summary>
         /// Invalidates control in case it's not locked
         /// </summary>
-        private void Invalidate_(bool UpdateRectangleOnly)
+        private void Invalidate_(bool updateRectangleOnly)
         {
-            if (UpdateRectangleOnly)
+            if (updateRectangleOnly)
             {
-                this.Invalidate(_updateRectangle);
+                Invalidate(_updateRectangle);
             }
             else
             {
-                this.Invalidate();
+                Invalidate();
             }
         }
     }

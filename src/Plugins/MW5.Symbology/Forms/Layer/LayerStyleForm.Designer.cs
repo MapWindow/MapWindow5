@@ -1074,9 +1074,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // groupLabelAppearance
             // 
             this.groupLabelAppearance.Controls.Add(this.panelLabels);
-            this.groupLabelAppearance.Location = new System.Drawing.Point(18, 148);
+            this.groupLabelAppearance.Location = new System.Drawing.Point(15, 148);
             this.groupLabelAppearance.Name = "groupLabelAppearance";
-            this.groupLabelAppearance.Size = new System.Drawing.Size(232, 128);
+            this.groupLabelAppearance.Size = new System.Drawing.Size(235, 128);
             this.groupLabelAppearance.TabIndex = 162;
             this.groupLabelAppearance.TabStop = false;
             this.groupLabelAppearance.Text = "Appearance";
@@ -1091,12 +1091,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.panelLabels.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelLabels.Location = new System.Drawing.Point(3, 16);
             this.panelLabels.Name = "panelLabels";
-            this.panelLabels.Size = new System.Drawing.Size(226, 109);
+            this.panelLabels.Size = new System.Drawing.Size(229, 109);
             this.panelLabels.TabIndex = 161;
             // 
             // udLabelFontSize
             // 
-            this.udLabelFontSize.Location = new System.Drawing.Point(19, 66);
+            this.udLabelFontSize.Location = new System.Drawing.Point(19, 60);
             this.udLabelFontSize.Minimum = new decimal(new int[] {
             1,
             0,
@@ -1122,7 +1122,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.clpLabelFrame.IntegralHeight = false;
             this.clpLabelFrame.Items.AddRange(new object[] {
             "Color"});
-            this.clpLabelFrame.Location = new System.Drawing.Point(128, 65);
+            this.clpLabelFrame.Location = new System.Drawing.Point(128, 59);
             this.clpLabelFrame.Name = "clpLabelFrame";
             this.clpLabelFrame.Size = new System.Drawing.Size(53, 21);
             this.clpLabelFrame.TabIndex = 157;
@@ -1131,7 +1131,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(76, 68);
+            this.label15.Location = new System.Drawing.Point(76, 62);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(27, 13);
             this.label15.TabIndex = 159;
@@ -1141,7 +1141,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.chkShowLabels.AutoSize = true;
             this.chkShowLabels.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.chkShowLabels.Location = new System.Drawing.Point(19, 25);
+            this.chkShowLabels.Location = new System.Drawing.Point(19, 19);
             this.chkShowLabels.Name = "chkShowLabels";
             this.chkShowLabels.Size = new System.Drawing.Size(89, 17);
             this.chkShowLabels.TabIndex = 137;
@@ -1152,7 +1152,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // chkLabelFrame
             // 
             this.chkLabelFrame.AutoSize = true;
-            this.chkLabelFrame.Location = new System.Drawing.Point(128, 25);
+            this.chkLabelFrame.Location = new System.Drawing.Point(128, 19);
             this.chkLabelFrame.Name = "chkLabelFrame";
             this.chkLabelFrame.Size = new System.Drawing.Size(87, 17);
             this.chkLabelFrame.TabIndex = 155;
@@ -1168,7 +1168,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupLabelStyle.Size = new System.Drawing.Size(235, 128);
             this.groupLabelStyle.TabIndex = 130;
             this.groupLabelStyle.TabStop = false;
-            this.groupLabelStyle.Text = "Labels preview";
+            this.groupLabelStyle.Text = "Preview";
             // 
             // pctLabelPreview
             // 
@@ -1232,9 +1232,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupChartAppearance.Controls.Add(this.optChartsPie);
             this.groupChartAppearance.Controls.Add(this.icbChartColorScheme);
             this.groupChartAppearance.Controls.Add(this.optChartBars);
-            this.groupChartAppearance.Location = new System.Drawing.Point(15, 149);
+            this.groupChartAppearance.Location = new System.Drawing.Point(15, 148);
             this.groupChartAppearance.Name = "groupChartAppearance";
-            this.groupChartAppearance.Size = new System.Drawing.Size(235, 129);
+            this.groupChartAppearance.Size = new System.Drawing.Size(235, 128);
             this.groupChartAppearance.TabIndex = 171;
             this.groupChartAppearance.TabStop = false;
             this.groupChartAppearance.Text = "Appearance";
@@ -1312,17 +1312,17 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupCharts.Controls.Add(this.pctCharts);
             this.groupCharts.Location = new System.Drawing.Point(15, 14);
             this.groupCharts.Name = "groupCharts";
-            this.groupCharts.Size = new System.Drawing.Size(235, 129);
+            this.groupCharts.Size = new System.Drawing.Size(235, 128);
             this.groupCharts.TabIndex = 170;
             this.groupCharts.TabStop = false;
-            this.groupCharts.Text = "Charts preview";
+            this.groupCharts.Text = "Preview";
             // 
             // pctCharts
             // 
             this.pctCharts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pctCharts.Location = new System.Drawing.Point(3, 16);
             this.pctCharts.Name = "pctCharts";
-            this.pctCharts.Size = new System.Drawing.Size(229, 110);
+            this.pctCharts.Size = new System.Drawing.Size(229, 109);
             this.pctCharts.TabIndex = 0;
             this.pctCharts.TabStop = false;
             this.pctCharts.Click += new System.EventHandler(this.btnChartAppearance_Click);
