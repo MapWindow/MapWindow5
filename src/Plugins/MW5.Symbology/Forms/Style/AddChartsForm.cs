@@ -97,6 +97,8 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                 Enabled = true;
                 Cursor = Cursors.Default;
             }
+
+            DialogResult = DialogResult.OK;
         }
 
         /// <summary>

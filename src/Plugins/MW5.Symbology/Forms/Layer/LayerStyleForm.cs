@@ -132,12 +132,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             if (state)
             {
                 _legend.Lock();
-                _legend.Map.LockWindow(true);
+                _legend.Map.Lock();
             }
             else
             {
                 _legend.Unlock();
-                _legend.Map.LockWindow(false);
+                _legend.Map.Unlock();
             }
         }
 

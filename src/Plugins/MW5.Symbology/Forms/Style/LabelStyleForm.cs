@@ -557,7 +557,9 @@ namespace MW5.Plugins.Symbology.Forms.Labels
         private void btnOk_Click(object sender, EventArgs e)
         {
             if (!ApplyOptions())
+            {
                 return;
+            }
 
             tabNumber = tabControl1.SelectedIndex;
 

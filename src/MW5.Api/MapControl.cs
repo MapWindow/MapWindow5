@@ -251,9 +251,15 @@ namespace MW5.Api
             return new Envelope(_map.GetKnownExtents((tkKnownExtents)extents));
         }
 
-        public void LockWindow(bool doLock)
+        public void Lock()
         {
-            _map.LockWindow(doLock ? tkLockMode.lmLock : tkLockMode.lmUnlock);
+            _map.LockWindow(tkLockMode.lmLock);
+        }
+
+        public bool Unlock()
+        {
+            _map.LockWindow(tkLockMode.lmUnlock);
+            return _map.IsLocked == tkLockMode.lmLock;
         }
 
         public void Redraw(RedrawType redrawType = RedrawType.All)

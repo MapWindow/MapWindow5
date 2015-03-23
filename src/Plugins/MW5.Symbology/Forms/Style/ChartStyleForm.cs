@@ -451,9 +451,12 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                     cboFontName.SelectedIndex = i;
                 }
             }
+            
             if (cboFontName.SelectedIndex < 0)
+            {
                 cboFontName.Text = "Arial";
-               
+            }
+
             // transparency
             transparencyControl1.Value = _charts.AlphaTransparency;
 
@@ -480,15 +483,14 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                 if (SymbologyPlugin.Msg.Ask("No fields were chosen. Do you want to remove all charts?"))
                 {
                     _charts.Clear();
+                    return true;
                 }
-                else
-                {
-                    return false;
-                }
+                return false;
             }
-            else
+
+            bool empty = _charts.Count == 0;
+            if (empty)
             {
-                // there is no charts, start generation
                 if (_shapefile.PointOrMultiPoint)
                 {
                     // start generation, no need to prompt the user for position
@@ -516,6 +518,13 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                     }
                 }
             }
+
+            if (empty || _charts.Serialize() != _initState)
+            {
+                _context.Legend.Redraw(LegendRedraw.LegendAndMapForce);
+                _context.Project.SetModified();
+            }
+
             return true;
         }
 
@@ -530,12 +539,6 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             }
 
            _selectedTab = tabControl1.SelectedIndex;
-
-           if (_charts.Serialize() != _initState)
-           {
-               _context.Legend.Redraw(LegendRedraw.LegendAndMap);
-               _context.Project.SetModified();
-           }
 
            // saves options for default loading behavior
            LayerSettingsService.SaveLayerOptions(_handle);
@@ -619,7 +622,8 @@ namespace MW5.Plugins.Symbology.Forms.Charts
             btnChangeScheme.Enabled = haveFields; ;
         }
 
-                #region "Fields"
+        #region "Fields"
+
         /// <summary>
         /// Adds selected field to the chart
         /// </summary>
@@ -632,15 +636,22 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                 listLeft.Items.Remove(listLeft.SelectedItem);
 
                 if (index < listLeft.Items.Count)
+                {
                     listLeft.SelectedIndex = index;
+                }
                 else if (index - 1 >= 0)
+                {
                     listLeft.SelectedIndex = index - 1;
+                }
 
                 listRight.SelectedIndex = listRight.Items.Count - 1;
 
                 if (!_noEvents)
+                {
                     btnApply.Enabled = true;
+                }
             }
+
             RefreshFields();
             RefreshControlsState();
             Draw();
@@ -663,9 +674,7 @@ namespace MW5.Plugins.Symbology.Forms.Charts
                     {
                         double val = i / (double)(listRight.Items.Count - 1);
 
-                        var field = new DiagramField();
-                        field.Index = j;
-                        field.Name = fields[j].Name;
+                        var field = new DiagramField {Index = j, Name = fields[j].Name};
                         _shapefile.Diagrams.Fields.Add(field);
                     }
                 }

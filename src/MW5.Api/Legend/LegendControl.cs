@@ -2287,6 +2287,23 @@ namespace MW5.Api.Legend
                     _map.Redraw();
                     RedrawCore();
                     break;
+                case LegendRedraw.LegendAndMapForce:
+                    bool locked = _map.IsLocked == tkLockMode.lmLock;
+                    if (locked)
+                    {
+                        _map.LockWindow(tkLockMode.lmUnlock);
+                    }
+
+                    _map.Redraw();
+                    Application.DoEvents();
+
+                    if (locked)
+                    {
+                        _map.LockWindow(tkLockMode.lmLock);
+                    }
+
+                    RedrawCore();
+                    break;
             }
         }
 

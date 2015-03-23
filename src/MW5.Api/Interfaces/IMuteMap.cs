@@ -86,7 +86,8 @@ namespace MW5.Api.Interfaces
         string VersionNumber { get; }
         IEnvelope GetKnownExtents(KnownExtents extents);
 
-        void LockWindow(bool doLock);
+        void Lock();
+        bool Unlock();
         void Redraw(RedrawType redrawType = RedrawType.All);
         void Clear();
         void Undo();

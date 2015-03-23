@@ -47,7 +47,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             var charts = _shapefile.Diagrams;
             chkChartsVisible.Checked = charts.Visible;
-            //cboChartVerticalPosition.SelectedIndex = (int)charts.VerticalPosition;
 
             optChartBars.Checked = (charts.DiagramType == DiagramType.Bar);
             optChartsPie.Checked = (charts.DiagramType == DiagramType.Pie);
@@ -58,19 +57,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void DrawChartsPreview()
         {
-            Rectangle rect = pctCharts.ClientRectangle;
-            Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var rect = pctCharts.ClientRectangle;
+            var bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-            if (_shapefile.Diagrams.Count > 0 && _shapefile.Diagrams.Fields.Any())
+            var charts = _shapefile.Diagrams;
+            if (charts.Count > 0 && charts.Fields.Any())
             {
-                Graphics g = Graphics.FromImage(bmp);
-                IntPtr ptr = g.GetHdc();
-
-                int width = rect.Width;
-                int height = rect.Height;
-
-                var charts = _shapefile.Diagrams;
-                charts.DrawChart(ptr, (width - charts.IconWidth) / 2, (height - charts.IconHeight) / 2, false, Color.White);
+                var g = Graphics.FromImage(bmp);
+                _shapefile.Diagrams.DrawChart(g, (rect.Width - charts.IconWidth) / 2, (rect.Height - charts.IconHeight) / 2, false, Color.White);
             }
             pctCharts.Image = bmp;
         }
@@ -126,7 +120,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void icbChartColorScheme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            List<ColorBlend> schemes = icbChartColorScheme.ColorSchemes.List;
+            var schemes = icbChartColorScheme.ColorSchemes.List;
             if (schemes != null && icbChartColorScheme.SelectedIndex >= 0)
             {
                 Ui2Settings(null, null);
