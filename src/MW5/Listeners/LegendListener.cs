@@ -74,6 +74,8 @@ namespace MW5.Listeners
 
         private void LayerSelected(object sender, Api.Legend.Events.LayerEventArgs e)
         {
+            _context.View.Update();
+
             _broadcaster.BroadcastEvent(p => p.LayerSelected_, sender as IMuteLegend, e);
         }
     }

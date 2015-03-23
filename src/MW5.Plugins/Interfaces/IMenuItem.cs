@@ -79,5 +79,11 @@ namespace MW5.Plugins.Interfaces
         /// Note: call IMenuItemCollection.Update() after changing this property.
         /// </summary>
         bool BeginGroup { get; set; }
+
+        /// <summary>
+        /// Gets the unique key of menu item, consisting of the original key assigned by developer and 
+        /// a postfix with GUID of plugin.
+        /// </summary>
+        string UniqueKey { get; }
     }
 }

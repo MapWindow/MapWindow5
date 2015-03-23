@@ -127,6 +127,7 @@
     <Compile Include="Listeners\MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuListener.cs" />
+    <Compile Include="Menu\MenuUpdater.cs" />
     <Compile Include="Menu\TilesMenuHelper.cs" />
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Menu\ViewMenuHelper.cs" />

@@ -163,7 +163,7 @@ namespace MW5.UI.Menu
             if (menuItem != null)
             {
                 menuItem.DetachItemListeners();
-                _menuIndex.Remove(menuItem.Key);
+                _menuIndex.Remove(menuItem.UniqueKey);
             }
 
             _items.RemoveAt(index);
@@ -181,10 +181,10 @@ namespace MW5.UI.Menu
             }
 
             // clear the index
-            var keys = this.Select(item => item.Key).ToList();
-            foreach (var key in keys)
+            var keys = this.Select(item => item.UniqueKey).ToList();
+            foreach (var uniqueKey in keys)
             {
-                _menuIndex.Remove(key);
+                _menuIndex.Remove(uniqueKey);
             }
 
             _items.Clear();
@@ -200,10 +200,11 @@ namespace MW5.UI.Menu
             if (!string.IsNullOrWhiteSpace(key))
             {
                 menuItem.AttachClickEventHandler(PluginManager.Instance.FireItemClicked);
-                _menuIndex.AddItem(key, menuItem);
+                _menuIndex.AddItem(menuItem.UniqueKey, menuItem);
             }
 
             return menuItem;
         }
+        
     }
 }

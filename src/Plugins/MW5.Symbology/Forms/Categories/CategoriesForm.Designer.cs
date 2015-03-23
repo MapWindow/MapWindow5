@@ -115,7 +115,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.dgvCategories.RowHeadersWidth = 15;
             this.dgvCategories.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dgvCategories.ShowCellErrors = false;
-            this.dgvCategories.Size = new System.Drawing.Size(278, 287);
+            this.dgvCategories.Size = new System.Drawing.Size(278, 323);
             this.dgvCategories.TabIndex = 83;
             this.dgvCategories.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvCategories_CellBeginEdit);
             this.dgvCategories.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvLabelCategories_CellDoubleClick);
@@ -181,7 +181,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // btnMore
             // 
-            this.btnMore.Location = new System.Drawing.Point(218, 305);
+            this.btnMore.Location = new System.Drawing.Point(218, 341);
             this.btnMore.Name = "btnMore";
             this.btnMore.Size = new System.Drawing.Size(72, 32);
             this.btnMore.TabIndex = 113;
@@ -195,7 +195,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupExpression.Controls.Add(this.txtExpression);
             this.groupExpression.Location = new System.Drawing.Point(300, 121);
             this.groupExpression.Name = "groupExpression";
-            this.groupExpression.Size = new System.Drawing.Size(299, 178);
+            this.groupExpression.Size = new System.Drawing.Size(311, 185);
             this.groupExpression.TabIndex = 111;
             this.groupExpression.TabStop = false;
             this.groupExpression.Text = "Expression";
@@ -207,7 +207,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.txtExpression.Location = new System.Drawing.Point(3, 16);
             this.txtExpression.Multiline = true;
             this.txtExpression.Name = "txtExpression";
-            this.txtExpression.Size = new System.Drawing.Size(293, 159);
+            this.txtExpression.Size = new System.Drawing.Size(305, 166);
             this.txtExpression.TabIndex = 86;
             this.txtExpression.TextChanged += new System.EventHandler(this.txtExpression_TextChanged);
             this.txtExpression.Validated += new System.EventHandler(this.txtExpression_Validated);
@@ -220,7 +220,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupFill.Controls.Add(this.label13);
             this.groupFill.Location = new System.Drawing.Point(300, 12);
             this.groupFill.Name = "groupFill";
-            this.groupFill.Size = new System.Drawing.Size(299, 74);
+            this.groupFill.Size = new System.Drawing.Size(311, 74);
             this.groupFill.TabIndex = 111;
             this.groupFill.TabStop = false;
             this.groupFill.Text = "Options";
@@ -274,7 +274,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // btnCategoryStyle
             // 
-            this.btnCategoryStyle.Location = new System.Drawing.Point(398, 92);
+            this.btnCategoryStyle.Location = new System.Drawing.Point(413, 92);
             this.btnCategoryStyle.Name = "btnCategoryStyle";
             this.btnCategoryStyle.Size = new System.Drawing.Size(106, 23);
             this.btnCategoryStyle.TabIndex = 8;
@@ -285,7 +285,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // btnCategoryRemove
             // 
             this.btnCategoryRemove.Image = global::MW5.Plugins.Symbology.Properties.Resources.layer_remove;
-            this.btnCategoryRemove.Location = new System.Drawing.Point(55, 305);
+            this.btnCategoryRemove.Location = new System.Drawing.Point(55, 341);
             this.btnCategoryRemove.Name = "btnCategoryRemove";
             this.btnCategoryRemove.Size = new System.Drawing.Size(32, 32);
             this.btnCategoryRemove.TabIndex = 103;
@@ -295,7 +295,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // btnEditExpression
             // 
-            this.btnEditExpression.Location = new System.Drawing.Point(508, 305);
+            this.btnEditExpression.Location = new System.Drawing.Point(520, 312);
             this.btnEditExpression.Name = "btnEditExpression";
             this.btnEditExpression.Size = new System.Drawing.Size(91, 23);
             this.btnEditExpression.TabIndex = 108;
@@ -306,7 +306,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // btnCategoryMoveDown
             // 
             this.btnCategoryMoveDown.Image = global::MW5.Plugins.Symbology.Properties.Resources.down;
-            this.btnCategoryMoveDown.Location = new System.Drawing.Point(131, 305);
+            this.btnCategoryMoveDown.Location = new System.Drawing.Point(131, 341);
             this.btnCategoryMoveDown.Name = "btnCategoryMoveDown";
             this.btnCategoryMoveDown.Size = new System.Drawing.Size(32, 32);
             this.btnCategoryMoveDown.TabIndex = 105;
@@ -316,7 +316,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // btnGenerate
             // 
             this.btnGenerate.Image = global::MW5.Plugins.Symbology.Properties.Resources.layer_vector_thematic_add;
-            this.btnGenerate.Location = new System.Drawing.Point(12, 305);
+            this.btnGenerate.Location = new System.Drawing.Point(12, 341);
             this.btnGenerate.Name = "btnGenerate";
             this.btnGenerate.Size = new System.Drawing.Size(37, 32);
             this.btnGenerate.TabIndex = 100;
@@ -327,7 +327,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // btnCategoryMoveUp
             // 
             this.btnCategoryMoveUp.Image = global::MW5.Plugins.Symbology.Properties.Resources.up;
-            this.btnCategoryMoveUp.Location = new System.Drawing.Point(93, 305);
+            this.btnCategoryMoveUp.Location = new System.Drawing.Point(93, 341);
             this.btnCategoryMoveUp.Name = "btnCategoryMoveUp";
             this.btnCategoryMoveUp.Size = new System.Drawing.Size(32, 32);
             this.btnCategoryMoveUp.TabIndex = 104;
@@ -342,7 +342,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupLine.Controls.Add(this.label7);
             this.groupLine.Location = new System.Drawing.Point(644, 105);
             this.groupLine.Name = "groupLine";
-            this.groupLine.Size = new System.Drawing.Size(299, 74);
+            this.groupLine.Size = new System.Drawing.Size(311, 74);
             this.groupLine.TabIndex = 95;
             this.groupLine.TabStop = false;
             this.groupLine.Text = "Options";
@@ -420,7 +420,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupPoint.Controls.Add(this.label5);
             this.groupPoint.Location = new System.Drawing.Point(644, 25);
             this.groupPoint.Name = "groupPoint";
-            this.groupPoint.Size = new System.Drawing.Size(299, 74);
+            this.groupPoint.Size = new System.Drawing.Size(311, 74);
             this.groupPoint.TabIndex = 110;
             this.groupPoint.TabStop = false;
             this.groupPoint.Text = "Options";
@@ -521,19 +521,20 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(512, 92);
+            this.button1.Location = new System.Drawing.Point(524, 92);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(87, 23);
             this.button1.TabIndex = 114;
             this.button1.Text = "Labels...";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CategoriesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(623, 385);
+            this.ClientSize = new System.Drawing.Size(621, 385);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnMore);
             this.Controls.Add(this.btnApply);

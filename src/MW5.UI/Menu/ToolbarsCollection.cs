@@ -53,9 +53,9 @@ namespace MW5.UI.Menu
             }
         }
 
-        public IMenuItem FindItem(string key)
+        public IMenuItem FindItem(string key, PluginIdentity identity)
         {
-            return _menuIndex.GetItem(key);
+            return _menuIndex.GetItem(identity.GetUniqueKey(key));
         }
 
         public void RemoveItemsForPlugin(PluginIdentity identity)

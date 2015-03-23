@@ -28,18 +28,17 @@ namespace MW5.Views
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
+        private MenuUpdater _menuUpdater;
 
         public MainView(IAppContext context)
             : base(context)
         {
             _context = context;
-
+            
             InitializeComponent();
 
             _legendControl1.Map = _mapControl1;
             _mapControl1.Legend = _legendControl1;
-
-            //_dockingManager1.InitDocking(_legendControl1, treeViewAdv2, this);
 
             FormClosed += (s, e) => _dockingManager1.SaveLayout();
 
@@ -50,6 +49,7 @@ namespace MW5.Views
             Shown += (s, e) =>
             {
                 _rendered = true;
+                
                 UpdateView();
             };
         }
@@ -94,6 +94,8 @@ namespace MW5.Views
 
         public new void ShowView()
         {
+            _menuUpdater = new MenuUpdater(_context, _mapControl1, PluginIdentity.Default);
+
             Application.Run(this);
         }
 
@@ -104,71 +106,11 @@ namespace MW5.Views
             {
                 Text += @" - " + _context.Project.Filename;
             }
-            
-            var bars = _context.Toolbars;
 
-            // mapControl plays the role of the model here
-            bars.FindItem(MenuKeys.ZoomIn).Checked = _mapControl1.MapCursor == MapCursor.ZoomIn;
-            bars.FindItem(MenuKeys.ZoomOut).Checked = _mapControl1.MapCursor == MapCursor.ZoomOut;
-            bars.FindItem(MenuKeys.Pan).Checked = _mapControl1.MapCursor == MapCursor.Pan;
-            //bars.FindItem(MenuKeys.Attributes).Checked = _mapControl1.MapCursor == MapCursor.Identify;
-            
-            bars.FindItem(MenuKeys.SelectByRectangle).Checked = _mapControl1.MapCursor == MapCursor.Selection;
-            bars.FindItem(MenuKeys.SelectByPolygon).Checked = _mapControl1.MapCursor == MapCursor.SelectByPolygon;
-
-            bool selectionCursor = _mapControl1.MapCursor == MapCursor.Selection ||
-                                   _mapControl1.MapCursor == MapCursor.SelectByPolygon;
-            bars.FindItem(MenuKeys.SelectDropDown).Checked = selectionCursor;
-
-            bool distance = _mapControl1.Measuring.Type == MeasuringType.Distance;
-            bars.FindItem(MenuKeys.MeasureArea).Checked = _mapControl1.MapCursor == MapCursor.Measure && !distance;
-            bars.FindItem(MenuKeys.MeasureDistance).Checked = _mapControl1.MapCursor == MapCursor.Measure && distance;
-
-            var item = bars.FindItem(MenuKeys.SetProjection);
-            item.Enabled = !_context.Map.Layers.Any();
-            if (_rendered)
+            if (_menuUpdater != null)
             {
-                item.Text = item.Enabled
-                    ? "Set coordinate system and projection"
-                    : "It's not allowed to change projection when layers are already added to the map.";
+                _menuUpdater.Update(_rendered);
             }
-
-            bool hasFeatureSet = false;
-            
-            bool hasLayer = _context.Legend.SelectedLayer != -1;
-            if (hasLayer)
-            {
-                var fs = _context.Map.Layers.SelectedLayer.FeatureSet;
-                if (fs != null)
-                {
-                    //statusSelectedCount.Text = string.Format("Shapes: {0}; selected: {1}", sf.NumShapes, sf.NumSelected);
-                    bars.FindItem(MenuKeys.ClearSelection).Enabled = fs.NumSelected > 0;
-                    bars.FindItem(MenuKeys.ZoomToSelected).Enabled = fs.NumSelected > 0;
-                    hasFeatureSet = true;
-                }
-            }
-
-            if (!hasFeatureSet)
-            {
-                //statusSelectedCount.Text = "";
-                bars.FindItem(MenuKeys.ClearSelection).Enabled = false;
-                bars.FindItem(MenuKeys.ZoomToSelected).Enabled = false;
-            }
-
-            bars.FindItem(MenuKeys.RemoveLayer).Enabled = hasLayer;
-
-            //toolSearch.Enabled = true;
-            //toolSearch.Text = "Find location";
-            //if (App.Map.Count > 0 && !App.Map.Measuring.IsUsingEllipsoid)
-            //{
-            //    toolSearch.Enabled = false;
-            //    toolSearch.Text = "Unsupported projection. Search isn't allowed.";
-            //}
-
-            //if (Map.CursorMode != tkCursorMode.cmIdentify)
-            //{
-            //    MapForm.HideTooltip();
-            //}
 
             UpdateStatusBar();
 
@@ -180,7 +122,7 @@ namespace MW5.Views
 
         private void UpdateStatusBar()
         {
-            statusTileProvider.Text = EnumHelper.EnumToString(_context.Map.TileProvider);
+            statusTileProvider.Text = _context.Map.TileProvider.EnumToString();
 
             if (_context.Map.Layers.SelectedLayer == null)
             {

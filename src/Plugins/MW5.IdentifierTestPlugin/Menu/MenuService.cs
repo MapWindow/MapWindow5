@@ -4,19 +4,20 @@ using MW5.Api;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Menu;
 
 namespace MW5.Plugins.IdentifierTestPlugin.Menu
 {
-    // it's also a listener and updated in this case (perhaps some other name is needed for such case)
-    public class MenuGenerator
+    public class MenuService: MenuServiceBase
     {
-        private readonly IAppContext _context;
+        private readonly IdentifierTestPlugin _plugin;
         private readonly MenuCommands _commands;
 
-        public MenuGenerator(IAppContext context, IdentifierTestPlugin plugin)
+        public MenuService(IAppContext context, IdentifierTestPlugin plugin):
+            base(context, plugin.Identity)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            if (plugin == null) throw new ArgumentNullException("plugin");
+            _plugin = plugin;
 
             _commands = new MenuCommands(plugin.Identity);
 
@@ -28,7 +29,7 @@ namespace MW5.Plugins.IdentifierTestPlugin.Menu
 
         private void ViewUpdating(object sender, EventArgs e)
         {
-            var item = _context.Toolbars.FindItem(MenuKeys.IdentifyTool);
+            var item = _context.Toolbars.FindItem(MenuKeys.IdentifyTool, _plugin.Identity);
             if (item != null)
             {
                 item.Checked = _context.Map.MapCursor == MapCursor.Identify;

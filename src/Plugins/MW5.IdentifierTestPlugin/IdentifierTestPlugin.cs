@@ -16,7 +16,7 @@ namespace MW5.Plugins.IdentifierTestPlugin
     {
         private IAppContext _context;
         private DockPanelService _dockPanelService;
-        private MenuGenerator _menuGenerator;
+        private MenuService _menuService;
         private MapListener _mapListener;
         private IdentifierControl _identifierControl;
 
@@ -34,7 +34,7 @@ namespace MW5.Plugins.IdentifierTestPlugin
             // will better to preserve state if plugin is unloaded, therefore singleton
             _identifierControl = context.Container.GetSingleton<IdentifierControl>();   
             
-            _menuGenerator = context.Container.GetInstance<MenuGenerator>();
+            _menuService = context.Container.GetInstance<MenuService>();
             _mapListener = context.Container.GetInstance<MapListener>();
             _dockPanelService = context.Container.GetInstance<DockPanelService>();
         }

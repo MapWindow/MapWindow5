@@ -124,5 +124,10 @@ namespace MW5.UI.Menu
                 return data;
             }
         }
+
+        public string UniqueKey
+        {
+            get { return Key + PluginIdentity.Guid; }
+        }
     }
 }

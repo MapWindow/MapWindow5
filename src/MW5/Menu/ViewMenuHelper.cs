@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Menu;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
@@ -40,7 +41,7 @@ namespace MW5.Menu
 
         private static void InitSkins()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewSkins) as IDropDownMenuItem;
+            var item = _context.Menu.FindItem(MenuKeys.ViewSkins, PluginIdentity.Default) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("Default", PluginIdentity.Default);
@@ -53,7 +54,7 @@ namespace MW5.Menu
 
         private static void InitWindows()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewWindows) as IDropDownMenuItem;
+            var item = _context.Menu.FindItem(MenuKeys.ViewWindows, PluginIdentity.Default) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("-", PluginIdentity.Default);   // dummy to make it open and start dynamic population
@@ -98,7 +99,7 @@ namespace MW5.Menu
 
         private static void InitToolbars()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewToolbars) as IDropDownMenuItem;
+            var item = _context.Menu.FindItem(MenuKeys.ViewToolbars, PluginIdentity.Default) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("-", PluginIdentity.Default);   // dummy to make it open and start dynamic population

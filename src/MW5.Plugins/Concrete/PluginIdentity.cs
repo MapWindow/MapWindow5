@@ -21,6 +21,11 @@ namespace MW5.Plugins.Concrete
             }
         }
 
+        public string GetUniqueKey(string key)
+        {
+            return key + Guid;
+        }
+
         internal PluginIdentity(string name, string author, Guid guid)
         {
             _name = name;

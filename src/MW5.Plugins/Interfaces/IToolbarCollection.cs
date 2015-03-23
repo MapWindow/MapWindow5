@@ -17,7 +17,7 @@ namespace MW5.Plugins.Interfaces
 
         IToolbar this[int toolbarIndex] { get; }
 
-        IMenuItem FindItem(string key);
+        IMenuItem FindItem(string key, PluginIdentity identity);
 
         void RemoveItemsForPlugin(PluginIdentity identity);
 

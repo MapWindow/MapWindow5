@@ -1029,6 +1029,11 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         }
 
         #endregion
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SymbologyPlugin.Msg.Info("Not implemented");
+        }
     }
 }
 

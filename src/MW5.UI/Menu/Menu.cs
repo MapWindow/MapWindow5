@@ -143,12 +143,12 @@ namespace MW5.UI.Menu
 
         private IDropDownMenuItem GetDropDownItem(string key)
         {
-            return FindItem(key) as IDropDownMenuItem;
+            return FindItem(key, PluginIdentity.Default) as IDropDownMenuItem;
         }
 
-        public IMenuItem FindItem(string key)
+        public IMenuItem FindItem(string key, PluginIdentity identity)
         {
-            return _menuIndex.GetItem(key);
+            return _menuIndex.GetItem(identity.GetUniqueKey(key));
         }
 
         public void RemoveItemsForPlugin(PluginIdentity identity)

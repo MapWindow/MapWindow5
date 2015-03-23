@@ -10,47 +10,44 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Properties;
+using MW5.UI.Menu;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
-    public class MenuUpdater
+    public class MenuUpdater: MenuServiceBase
     {
-        private readonly IAppContext _context;
-        private readonly BasePlugin _plugin;
+        private readonly ShapeEditor _plugin;
         private readonly IGeoprocessingService _geoprocessingService;
 
-        public MenuUpdater(IAppContext context, ShapeEditor plugin, IGeoprocessingService geoprocessingService)
+        public MenuUpdater(IAppContext context, ShapeEditor plugin, IGeoprocessingService geoprocessingService):
+            base(context, plugin.Identity)
         {
-            if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
-            
-            _context = context;
             _plugin = plugin;
             _geoprocessingService = geoprocessingService;
 
-            _plugin.ViewUpdating += OnViewUpdating;
-            _plugin.MapCursorChanged += OnMapCursorChanged;
-            _plugin.HistoryChanged += OnViewUpdating;
+            plugin.ViewUpdating += OnViewUpdating;
+            plugin.MapCursorChanged += OnMapCursorChanged;
+            plugin.HistoryChanged += OnViewUpdating;
         }
 
         private void OnMapCursorChanged(IMuteMap sender, EventArgs e)
         {
-            var toolbars = _context.Toolbars;
             var map = _context.Map;
 
-            toolbars.FindItem(MenuKeys.GeometryCreate).Checked = map.MapCursor == Api.MapCursor.AddShape;
-            toolbars.FindItem(MenuKeys.VertexEditor).Checked = map.MapCursor == Api.MapCursor.EditShape;
-            toolbars.FindItem(MenuKeys.MoveShapes).Checked = map.MapCursor == Api.MapCursor.MoveShapes;
-            toolbars.FindItem(MenuKeys.RotateShapes).Checked = map.MapCursor == Api.MapCursor.RotateShapes;
-            toolbars.FindItem(MenuKeys.SplitByPolyline).Checked = map.MapCursor == Api.MapCursor.SplitByPolyline;
-            toolbars.FindItem(MenuKeys.SplitByPolygon).Checked = map.MapCursor == Api.MapCursor.SplitByPolygon;
-            toolbars.FindItem(MenuKeys.EraseByPolygon).Checked = map.MapCursor == Api.MapCursor.EraseByPolygon;
-            toolbars.FindItem(MenuKeys.ClipByPolygon).Checked = map.MapCursor == Api.MapCursor.ClipByPolygon;
+            FindToolbarItem(MenuKeys.GeometryCreate).Checked = map.MapCursor == Api.MapCursor.AddShape;
+            FindToolbarItem(MenuKeys.VertexEditor).Checked = map.MapCursor == Api.MapCursor.EditShape;
+            FindToolbarItem(MenuKeys.MoveShapes).Checked = map.MapCursor == Api.MapCursor.MoveShapes;
+            FindToolbarItem(MenuKeys.RotateShapes).Checked = map.MapCursor == Api.MapCursor.RotateShapes;
+            FindToolbarItem(MenuKeys.SplitByPolyline).Checked = map.MapCursor == Api.MapCursor.SplitByPolyline;
+            FindToolbarItem(MenuKeys.SplitByPolygon).Checked = map.MapCursor == Api.MapCursor.SplitByPolygon;
+            FindToolbarItem(MenuKeys.EraseByPolygon).Checked = map.MapCursor == Api.MapCursor.EraseByPolygon;
+            FindToolbarItem(MenuKeys.ClipByPolygon).Checked = map.MapCursor == Api.MapCursor.ClipByPolygon;
             
             bool polygonCursor = map.MapCursor ==  Api.MapCursor.ClipByPolygon || 
                                  map.MapCursor == Api.MapCursor.SplitByPolygon || 
                                  map.MapCursor == Api.MapCursor.EraseByPolygon;
-            toolbars.FindItem(MenuKeys.PolygonOverlayDropDown).Checked = polygonCursor;
+            FindToolbarItem(MenuKeys.PolygonOverlayDropDown).Checked = polygonCursor;
         }
 
         private void OnViewUpdating(object sender, EventArgs e)
@@ -71,38 +68,38 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 fs = layer.FeatureSet;
             }
 
-            string text = string.Format("{0}\\{1}", _context.Map.History.UndoCount, _context.Map.History.TotalLength);
-            _context.Toolbars.FindItem(MenuKeys.HistoryLength).Text = text;
+            var text = string.Format("{0}\\{1}", _context.Map.History.UndoCount, _context.Map.History.TotalLength);
+            FindToolbarItem(MenuKeys.HistoryLength).Text = text;
 
             bool editing = fs != null && fs.InteractiveEditing;
 
-            var editLayerItem = bars.FindItem(MenuKeys.LayerEdit);
+            var editLayerItem =FindToolbarItem(MenuKeys.LayerEdit);
             editLayerItem.Enabled = fs != null;
             editLayerItem.Icon = new MenuIcon(editing ? Resources.icon_layer_save : Resources.icon_layer_edit);
             editLayerItem.Text = editing ? "Save Changes" : "Edit Layer";
 
             if (editing)
             {
-                bars.FindItem(MenuKeys.VertexEditor).Enabled = true;
-                bars.FindItem(MenuKeys.GeometryCreate).Enabled = true;
-                bars.FindItem(MenuKeys.SplitByPolygon).Enabled = true;
-                bars.FindItem(MenuKeys.SplitByPolyline).Enabled = true;
-                bars.FindItem(MenuKeys.EraseByPolygon).Enabled = true;
-                bars.FindItem(MenuKeys.ClipByPolygon).Enabled = true;
-                bars.FindItem(MenuKeys.PolygonOverlayDropDown).Enabled = true;
-                bars.FindItem(MenuKeys.HistoryLength).Enabled = true;
+               FindToolbarItem(MenuKeys.VertexEditor).Enabled = true;
+               FindToolbarItem(MenuKeys.GeometryCreate).Enabled = true;
+               FindToolbarItem(MenuKeys.SplitByPolygon).Enabled = true;
+               FindToolbarItem(MenuKeys.SplitByPolyline).Enabled = true;
+               FindToolbarItem(MenuKeys.EraseByPolygon).Enabled = true;
+               FindToolbarItem(MenuKeys.ClipByPolygon).Enabled = true;
+               FindToolbarItem(MenuKeys.PolygonOverlayDropDown).Enabled = true;
+               FindToolbarItem(MenuKeys.HistoryLength).Enabled = true;
                 
                 int selectedCount = fs.NumSelected;
-                bars.FindItem(MenuKeys.MergeShapes).Enabled = selectedCount > 1;
-                bars.FindItem(MenuKeys.SplitShapes).Enabled = selectedCount > 0;
-                bars.FindItem(MenuKeys.MoveShapes).Enabled = selectedCount > 0;
-                bars.FindItem(MenuKeys.RotateShapes).Enabled = selectedCount > 0;
+               FindToolbarItem(MenuKeys.MergeShapes).Enabled = selectedCount > 1;
+               FindToolbarItem(MenuKeys.SplitShapes).Enabled = selectedCount > 0;
+               FindToolbarItem(MenuKeys.MoveShapes).Enabled = selectedCount > 0;
+               FindToolbarItem(MenuKeys.RotateShapes).Enabled = selectedCount > 0;
             }
 
             var list = new[] { MenuKeys.Copy, MenuKeys.Paste, MenuKeys.Cut, MenuKeys.Undo, MenuKeys.Redo };
             foreach (var item in list)
             {
-                var menuItem = bars.FindItem(item);
+                var menuItem = FindToolbarItem(item);
                 menuItem.Enabled = GetEnabled(item);
             }
         }
