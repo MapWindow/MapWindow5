@@ -17,6 +17,7 @@ namespace MW5.Plugins.Symbology
         private static IAppContext _context;
         private LegendListener _legendListener;
         private MenuService _menuService;
+        private LabelMover _labelMover;
 
         static SymbologyPlugin()
         {
@@ -41,6 +42,7 @@ namespace MW5.Plugins.Symbology
 
             _legendListener = context.Container.GetInstance<LegendListener>();
             _menuService = context.Container.GetInstance<MenuService>();
+            _labelMover = context.Container.GetSingleton<LabelMover>();
         }
 
         public override void Terminate()

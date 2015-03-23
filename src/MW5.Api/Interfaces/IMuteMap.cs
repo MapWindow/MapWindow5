@@ -101,6 +101,11 @@ namespace MW5.Api.Interfaces
         IImageSource SnapShot(int clippingLayerHandle, double zoom, int width);
         IImageSource SnapShot(double left, double right, double top, double bottom, int width);
 
+        IntPtr Handle { get; }
+
+        int Width { get; }
+        int Height { get;  }
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

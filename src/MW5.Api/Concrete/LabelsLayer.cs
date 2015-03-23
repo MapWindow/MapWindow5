@@ -173,11 +173,12 @@ namespace MW5.Api.Concrete
             set { _labels.Visible = value; }
         }
 
-        public IList<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, SelectMode selectMode = SelectMode.INTERSECTION)
+        public IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, SelectionMode selectMode = SelectionMode.Intersection)
         {
             var extents = envelope.GetInternal();
             object indices = null, parts = null;
-            if (_labels.Select(extents, tolerance, selectMode, ref indices, ref parts))
+
+            if (_labels.Select(extents, tolerance, (SelectMode)selectMode, ref indices, ref parts))
             {
                 var list = from index in indices as int[]
                     from part in parts as int[]

@@ -1,6 +1,6 @@
 ﻿namespace MW5.Api.Concrete
 {
-    public struct LabelInfo
+    public class LabelInfo
     {
         public int LabelIndex;
         public int PartIndex;

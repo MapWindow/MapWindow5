@@ -76,6 +76,8 @@
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Services\EnumConverters.cs" />
+    <Compile Include="Services\LabelMoveData.cs" />
+    <Compile Include="Services\LabelMover.cs" />
     <Compile Include="Services\LayerSettingsService.cs" />
     <Compile Include="Helpers\ListViewHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Drawing.Text;
+﻿using System.Collections.Generic;
+using System.Drawing.Text;
 using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
@@ -57,7 +58,7 @@ namespace MW5.Api.Interfaces
 
         bool Visible { get; set; }
 
-        //IList<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, SelectMode selectMode = SelectMode.INTERSECTION);
+        IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, SelectionMode selectMode = SelectionMode.Intersection);
 
         //void ForceRecalculateExpression();
 

@@ -1,4 +1,5 @@
-﻿using MapWinGIS;
+﻿using System.Drawing;
+using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
@@ -22,6 +23,11 @@ namespace MW5.Api.Concrete
         internal Envelope(Extents extents)
         {
             _extents = extents;
+        }
+
+        public void SetBounds(double xMin, double xMax, double yMin, double yMax)
+        {
+            _extents.SetBounds(xMin, yMin, 0.0, xMax, yMax, 0.0);
         }
 
         public double MinX
@@ -91,6 +97,11 @@ namespace MW5.Api.Concrete
         public override string ToString()
         {
             return _extents.ToDebugString();
+        }
+
+        public Rectangle ToRectangle()
+        {
+            return new Rectangle((int) MinX, (int) MinY, (int) (MaxX - MinX), (int) (MaxY - MinY));
         }
     }
 }
