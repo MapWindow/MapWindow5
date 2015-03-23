@@ -5,6 +5,7 @@ using MW5.Plugins.IdentifierTestPlugin.Menu;
 using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.Services;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin

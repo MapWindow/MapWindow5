@@ -18,7 +18,7 @@ namespace MW5.Api.Concrete
             _style = style;
         }
 
-        public MarkerType MarkerType
+        public MarkerType Type
         {
             get { return (MarkerType)_style.PointType; }
             set { _style.PointType = (tkPointSymbolType)value; }
@@ -42,7 +42,7 @@ namespace MW5.Api.Concrete
             set { _style.PointRotation = value; }
         }
 
-        public int VectorMarkerSideCount
+        public int VectorSideCount
         {
             get { return _style.PointSidesCount; }
             set { _style.PointSidesCount = value; }

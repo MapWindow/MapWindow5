@@ -144,7 +144,7 @@ namespace MW5.API.Test
             var fs = new FeatureSet(@"d:\data\sf\buildings.shp");
             var fill = fs.Style.Fill;
             fill.Color = Color.LightGreen;
-            fill.FillType = FillType.Solid;
+            fill.Type = FillType.Solid;
             //fill.HatchStyle = HatchStyle.Cross;
             //fill.BackgroundHatchColor = Color.Moccasin;
             //fill.BackgroundHatchTransparent = false;
@@ -163,7 +163,7 @@ namespace MW5.API.Test
                 }
             }
             fs.Categories.ApplyExpressions();
-            fs.Categories.ApplyColorRamp(ColorRampType.Graduated, new ColorRamp(Color.Yellow, Color.Red));
+            fs.Categories.ApplyColorScheme(ColorRampType.Graduated, new ColorRamp(Color.Yellow, Color.Red));
 
             fs.Labels.Generate("[Type]", LabelPosition.Centroid);
             var style = fs.Labels.Style;

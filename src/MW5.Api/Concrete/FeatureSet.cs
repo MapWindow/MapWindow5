@@ -198,6 +198,11 @@ namespace MW5.Api.Concrete
             get { return new DiagramsLayer(_shapefile.Charts); }
         }
 
+        public FeatureFieldList Fields
+        {
+            get { return Table.Fields; }
+        }
+
         public bool SelectShapes(Envelope boundBox, ref object result, double tolerance = 0, SelectionMode selectionMode = SelectionMode.Intersection)
         {
             throw new NotImplementedException();
@@ -239,7 +244,7 @@ namespace MW5.Api.Concrete
             set { _shapefile.SelectionColor = ColorHelper.ColorToUInt(value); }
         }
 
-        public byte SelectionAlphaTransparency
+        public byte SelectionTransparency
         {
             get { return _shapefile.SelectionTransparency; }
             set { _shapefile.SelectionTransparency = value; }
@@ -380,6 +385,21 @@ namespace MW5.Api.Concrete
         public bool SaveAs(string shapefileName)
         {
             return _shapefile.SaveAs(shapefileName);
+        }
+
+        public bool PointOrMultiPoint
+        {
+            get { return GeometryType == GeometryType.Point || GeometryType == GeometryType.MultiPoint; }
+        }
+
+        public bool IsPolyline
+        {
+            get { return GeometryType == GeometryType.Polyline; }
+        }
+
+        public bool IsPolygon
+        {
+            get { return GeometryType == Api.GeometryType.Polygon; }
         }
 
         public int NumSelected
@@ -560,6 +580,11 @@ namespace MW5.Api.Concrete
             set { _shapefile.StopExecution = new StopExecution(value); }
         }
 
+        public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false)
+        {
+            return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly);
+        }
+
         public bool FixUpShapes(out IFeatureSet result)
         {
             Shapefile sf = null;
@@ -576,5 +601,7 @@ namespace MW5.Api.Concrete
         {
             return _shapefile.Move(xOffset, yOffset);
         }
+
+
     }
 }

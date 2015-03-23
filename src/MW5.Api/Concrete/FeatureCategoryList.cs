@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Windows.Forms;
+using System.Xml;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
@@ -48,12 +51,21 @@ namespace MW5.Api.Concrete
 
         public IEnumerator<IFeatureCategory> GetEnumerator()
         {
-            return ListHelper.GetEnumerator(this);
+            for (int i = 0; i < _categories.Count; i++)
+            {
+                yield return new FeatureCategory(_categories.Item[i]);
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IFeatureCategory Add(string name)
+        {
+            var ct = _categories.Add(name);
+            return new FeatureCategory(ct);
         }
 
         public void Add(IFeatureCategory item)
@@ -137,17 +149,17 @@ namespace MW5.Api.Concrete
             return _categories.AddRange(fieldIndex, (tkClassificationType)classification, numClasses, minValue, maxValue);
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp)
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp)
         {
             _categories.ApplyColorScheme((tkColorSchemeType) type, colorRamp.GetInternal());
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement)
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement)
         {
             _categories.ApplyColorScheme2((tkColorSchemeType) type, colorRamp.GetInternal(), (tkShapeElements)shapeElement);
         }
 
-        public void ApplyColorRamp(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement, int categoryStartIndex,
+        public void ApplyColorScheme(ColorRampType type, ColorRamp colorRamp, StyleElement shapeElement, int categoryStartIndex,
             int categoryEndIndex)
         {
             _categories.ApplyColorScheme3((tkColorSchemeType)type, colorRamp.GetInternal(), (tkShapeElements)shapeElement,
@@ -229,6 +241,59 @@ namespace MW5.Api.Concrete
         {
             get { return _categories.Key; }
             set { _categories.Key = value; }
+        }
+
+        public bool LoadFromFile(string filename)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.Load(filename);
+
+            if (xmlDoc.DocumentElement == null)
+            {
+                return false;
+            }
+
+            var docEl = xmlDoc.DocumentElement;
+            if (!docEl.HasAttribute("FileVersion") || !docEl.HasAttribute("FileType"))
+            {
+                return false;
+            }
+
+            var s = docEl.Attributes["FileType"].InnerText;
+            if ((s.ToLower() == "shapefilecategories"))
+            {
+                XmlElement xel = xmlDoc.DocumentElement["Categories"];
+                if (xel != null)
+                {
+                    _categories.Deserialize(xel.InnerXml);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool SaveToFile(string filename)
+        {
+            var xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml("<MapWindow version= '" + "'></MapWindow>");
+
+            var xelRoot = xmlDoc.DocumentElement;
+            
+            XmlAttribute attr = xmlDoc.CreateAttribute("FileType");
+            attr.InnerText = "ShapefileCategories";
+            xelRoot.Attributes.Append(attr);
+
+            attr = xmlDoc.CreateAttribute("FileVersion");
+            attr.InnerText = "0";
+            xelRoot.Attributes.Append(attr);
+
+            var xel = xmlDoc.CreateElement("Categories");
+            string s = _categories.Serialize();
+            xel.InnerXml = s;
+            xelRoot.AppendChild(xel);
+
+            xmlDoc.Save(filename);
+            return true;
         }
     }
 }

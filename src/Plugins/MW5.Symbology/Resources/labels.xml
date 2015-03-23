@@ -1,0 +1,16 @@
+<MapWindow version="" FileVersion="0" FileType="LabelStyles">
+  <LabelStyles>
+    <LabelStyle>&lt;LabelCategoryClass Name="" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+    <LabelStyle>&lt;LabelCategoryClass FrameBackColor="16777215" FrameOutlineColor="1971946" FrameType="1" FrameVisible="-1" Name="Default" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+    <LabelStyle>&lt;LabelCategoryClass FontName="BatangChe" FontSize="12" FrameBackColor="11197130" FrameOutlineColor="12349952" FrameOutlineStyle="1" FrameOutlineWidth="2" FrameType="0" ShadowVisible="1" Name="Default" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+    <LabelStyle>&lt;LabelCategoryClass Alignment="1" FontColor="12349952" FontName="Mistral" FontSize="14" FrameBackColor="12582911" FrameBackColor2="13553390" FrameGradientMode="0" FrameType="0" FrameVisible="-1" Name="Default" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+    <LabelStyle>&lt;LabelCategoryClass Alignment="5" FontStyle="1" Name="Default" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+    <LabelStyle>&lt;LabelCategoryClass Alignment="3" FontStyle="1" HaloColor="65535" HaloSize="5" HaloVisible="1" Name="Default" Expression="" Enabled="-1" /&gt;
+</LabelStyle>
+  </LabelStyles>
+</MapWindow>

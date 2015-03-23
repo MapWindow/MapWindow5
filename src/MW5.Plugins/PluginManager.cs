@@ -97,7 +97,9 @@ namespace MW5.Plugins
         public void ValidatePlugins()
         {
             _plugins.Clear();
-            
+
+            var dict = new Dictionary<Guid, BasePlugin>();
+
             foreach (var item in _mefPlugins)
             {
                 var p = item.Value as BasePlugin;
@@ -125,6 +127,16 @@ namespace MW5.Plugins
                 {
                     p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
                 }
+
+                // TODO: make sure that application plugins will have priority if duplicate GUIDs are found
+                if (dict.ContainsKey(p.Identity.Guid))
+                {
+                    var p2 = dict[p.Identity.Guid];
+                    string msg = string.Format("Plugins have duplicate GUIDs: {0} {1}", p, p2);
+                    throw new ApplicationException(msg);
+                }
+                
+                dict.Add(p.Identity.Guid, p);
 
                 _container.RegisterInstance(p.GetType(), p);
 

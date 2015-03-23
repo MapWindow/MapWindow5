@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Api.Legend.Events
 {
-    public class LayerEventArgs: EventArgs
+    public class LayerEventArgs : SingleTargetEventArgs
     {
         public LayerEventArgs(int layerHandle)
         {

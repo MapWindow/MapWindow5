@@ -3,9 +3,11 @@ using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
-    public interface ILabelsLayer
+    public interface ILabelsLayer: ISerializableComWrapper
     {
-        ILabelStyle Style { get; }
+        bool Empty { get; }
+
+        ILabelStyle Style { get; set;  }
         
         LabelStyleList Styles { get; }
 

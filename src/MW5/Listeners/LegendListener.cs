@@ -39,10 +39,40 @@ namespace MW5.Listeners
 
         private void RegisterEvents()
         {
-            _legend.LayerSelected += LegendLayerSelected;
+            _legend.LayerSelected += LayerSelected;
+            _legend.LayerDoubleClick += LayerDoubleClick;
+            _legend.LayerStyleClicked += LayerStyleClicked;
+            _legend.LayerLabelsClicked += LayerLabelsClicked;
+            _legend.LayerDiagramsClicked += _legend_LayerDiagramsClicked;
+            _legend.LayerCategoryClicked += LayerCategoryClicked;
         }
 
-        private void LegendLayerSelected(object sender, Api.Legend.Events.LayerEventArgs e)
+        private void LayerCategoryClicked(object sender, Api.Legend.Events.LayerCategoryEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerCategoryClicked_, sender as IMuteLegend, e);
+        }
+
+        private void _legend_LayerDiagramsClicked(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerDiagramsClicked_, sender as IMuteLegend, e);
+        }
+
+        private void LayerLabelsClicked(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerLabelsClicked_, sender as IMuteLegend, e);
+        }
+
+        private void LayerStyleClicked(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerStyleClicked_, sender as IMuteLegend, e);
+        }
+
+        private void LayerDoubleClick(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerDoubleClicked_, sender as IMuteLegend, e);
+        }
+
+        private void LayerSelected(object sender, Api.Legend.Events.LayerEventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.LayerSelected_, sender as IMuteLegend, e);
         }

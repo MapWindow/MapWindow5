@@ -192,7 +192,7 @@
         ReversedRainbow = 9,
     }
 
-    public enum InterpolationMode
+    public enum InterpolationType
     {
         Bilinear = 3,
         Bicubic = 4,
@@ -1207,8 +1207,8 @@
 
     public enum DiagramType
     {
-        BarChart = 0,
-        PieChart = 1,
+        Bar = 0,
+        Pie = 1,
     }
 
     public enum DiagramValuesStyle
@@ -1295,5 +1295,24 @@
     {
         ScreenReferencedList = 0,
         SpatiallyReferencedList = 1,
+    }
+
+    public enum TableValueType
+    {
+        Double = 0,
+        String = 1,
+        Boolean = 2,
+        FloatArray = 3,
+    }
+
+    /// <summary>
+    /// Defines the operation that will be used to update the existing selection
+    /// </summary>
+    public enum SelectionOperation
+    {
+        New = 0,          // old selection will be lost
+        Add = 1,          // new shapes will be added to the old selection
+        Exclude = 2,      // new shapes will be excluded from old selection
+        Invert = 3        // bew shapes will be inverted in case they are in the existing selection
     }
 }

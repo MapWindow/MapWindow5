@@ -9,7 +9,7 @@
         bool Save();
         void SaveAs();
         bool Open();
-        void Open(string filename);
+        void Open(string filename, bool silent = false);
         void SetModified();
         bool Modified { get; }
     }

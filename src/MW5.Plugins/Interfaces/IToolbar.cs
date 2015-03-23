@@ -14,6 +14,7 @@ namespace MW5.Plugins.Interfaces
         IMenuItemCollection Items { get; }
         bool Visible { get; set; }
         object Tag { get; set; }
+        string Key { get; }
         ToolbarDockState DockState { get; set; }
         PluginIdentity PluginIdentity { get; }
         void Update();

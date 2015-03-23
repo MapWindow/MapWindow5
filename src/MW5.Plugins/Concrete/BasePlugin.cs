@@ -112,12 +112,47 @@ namespace MW5.Plugins.Concrete
 
         #region Legend events
 
+        internal LegendEventHandler<LayerEventArgs> LayerStyleClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerDoubleClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerSelected_;
+        internal LegendEventHandler<LayerEventArgs> LayerDiagramsClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerLabelsClicked_;
+        internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
+
+        public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
+        {
+            add { LayerCategoryClicked_ += value; }
+            remove { LayerCategoryClicked_ -= value; }
+        }
+
+        public event LegendEventHandler<LayerEventArgs> LayerLabelsClicked
+        {
+            add { LayerLabelsClicked_ += value; }
+            remove { LayerLabelsClicked_ -= value; }
+        }
+
+        public event LegendEventHandler<LayerEventArgs> LayerDiagramsClicked
+        {
+            add { LayerDiagramsClicked_ += value; }
+            remove { LayerDiagramsClicked_ -= value; }
+        }
 
         public event LegendEventHandler<LayerEventArgs> LayerSelected
         {
             add { LayerSelected_ += value; }
             remove { LayerSelected_ -= value; }
+        }
+
+        public event LegendEventHandler<LayerEventArgs> LayerDoubleClicked
+        {
+            add { LayerDoubleClicked_ += value; }
+            remove { LayerDoubleClicked_ -= value; }
+        }
+
+        public event LegendEventHandler<LayerEventArgs> LayerStyleClicked
+        {
+            add { LayerStyleClicked_ += value; }
+            remove { LayerStyleClicked_ -= value; }
         }
 
         #endregion

@@ -53,5 +53,15 @@ namespace MW5.Api.Helpers
             retval += c.G << 8;
             return retval + c.R;
         }
+
+        public static uint ToUInt(this Color? color)
+        {
+            uint result = 16777215;
+            if (color != null)
+            {
+                result = ColorToUInt(color.Value);
+            }
+            return result;
+        }
     }
 }

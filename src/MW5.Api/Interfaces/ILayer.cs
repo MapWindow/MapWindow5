@@ -1,11 +1,12 @@
-﻿using MW5.Api.Concrete;
+﻿using System.Collections.Generic;
+using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
     public interface ILayer
     {
         int Handle { get; }
-        string Name { get; }
+        string Name { get; set; }
         LayerType LayerType { get; }
         bool Visible { get; set; }
         bool DynamicVisibility { get; set; }
@@ -30,8 +31,10 @@ namespace MW5.Api.Interfaces
         bool SaveOptions(string optionsName, bool overwrite, string description);
         bool LoadOptions(string optionsName, ref string description);
 
-        string SerializeLayer();
-        bool DeserializeLayer(string state);
+        string Serialize();
+        bool Deserialize(string state);
+
+        void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode);
 
         #region Not implemented
 

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace MW5.Plugins.Symbology.Menu
 {
-    public enum SymbologyCommand
+    internal static class MenuKeys
     {
+        public const string QueryBuilder = "sy_QueryBuilder";
+        public const string Categories = "sy_Categories";
     }
 }

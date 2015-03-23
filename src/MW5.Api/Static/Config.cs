@@ -164,15 +164,15 @@ namespace MW5.Api.Static
             set { _settings.LoadSymbologyOnAddLayer = value; }
         }
 
-        public static InterpolationMode ImageUpsamplingMode
+        public static InterpolationType ImageUpsamplingMode
         {
-            get { return (InterpolationMode)_settings.ImageUpsamplingMode; }
+            get { return (InterpolationType)_settings.ImageUpsamplingMode; }
             set { _settings.ImageUpsamplingMode = (tkInterpolationMode)value; }
         }
 
-        public static InterpolationMode ImageDownsamplingMode
+        public static InterpolationType ImageDownsamplingMode
         {
-            get { return (InterpolationMode)_settings.ImageDownsamplingMode; }
+            get { return (InterpolationType)_settings.ImageDownsamplingMode; }
             set { _settings.ImageDownsamplingMode = (tkInterpolationMode)value; }
         }
 

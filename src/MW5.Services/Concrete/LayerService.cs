@@ -69,7 +69,7 @@ namespace MW5.Services.Concrete
                 return false;
             }
 
-            _context.Map.LockWindow(true);
+            _context.Map.Lock();
 
             bool result = false;
             foreach (var name in filenames)
@@ -80,7 +80,7 @@ namespace MW5.Services.Concrete
                 }
             }
 
-            _context.Map.LockWindow(false);
+            _context.Map.Unlock();
 
             _context.Legend.Redraw();
 
@@ -89,11 +89,11 @@ namespace MW5.Services.Concrete
 
         public bool AddLayersFromFilename(string filename)
         {
-            _context.Map.LockWindow(true);
+            _context.Map.Lock();
 
             bool result = AddLayersFromFilenameCore(filename);
 
-            _context.Map.LockWindow(false);
+            _context.Map.Unlock();
 
             _context.Legend.Redraw();
 

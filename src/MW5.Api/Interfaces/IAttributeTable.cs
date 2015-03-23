@@ -1,4 +1,5 @@
-﻿using MW5.Api.Concrete;
+﻿using MapWinGIS;
+using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
@@ -22,16 +23,20 @@ namespace MW5.Api.Interfaces
         bool Save();
         bool SaveAs(string dbfFilename);
 
-        //bool Query(string Expression, ref object result, ref string ErrorString);
-        //bool ParseExpression(string Expression, ref string ErrorString);
-        //bool Calculate(string expression, int rowIndex, out object result, out string errorString);
+        bool Calculate(string expression, int rowIndex, out object result, out string errorString);
+        bool TestExpression(string expression, TableValueType returnType, ref string errorString);
+        bool ParseExpression(string expression, ref string errorString);
+        bool Query(string expression, ref object result, ref string errorString);
+
+        FieldJoinCollection Joins { get; }
+
+        #region Not implemented
+        
         //object get_MaxValue(int FieldIndex);
         //double get_MeanValue(int FieldIndex);
         //object get_MinValue(int FieldIndex);
         //double get_StandardDeviation(int FieldIndex);
-        //bool TestExpression(string Expression, tkValueType ReturnType, ref string ErrorString);
-
-        FieldJoinCollection Joins { get; }
+        
         //bool IsJoined { get; }
         //bool Join(Table table2, string field1, string field2);
         //bool Join2(Table table2, string field1, string field2, string filenameToReopen, string joinOptions);
@@ -39,5 +44,7 @@ namespace MW5.Api.Interfaces
         //bool StopJoin(int joinIndex);
         //bool TryJoin(Table table2, string fieldTo, string fieldFrom, out int rowCount, out int joinRowCount);
         //void StopAllJoins();
+
+        #endregion
     }
 }

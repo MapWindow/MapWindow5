@@ -20,7 +20,7 @@ namespace MW5.Api.Concrete
             _style = style;
         }
 
-        public byte AlphaTransparency
+        public byte Transparency
         {
             get { return (byte)_style.LineTransparency; }
             set { _style.LineTransparency = value; }
@@ -41,7 +41,7 @@ namespace MW5.Api.Concrete
         public Color Color
         {
             get { return ColorHelper.UintToColor(_style.LineColor); }
-            set { _style.LineWidth = ColorHelper.ColorToUInt(value); }
+            set { _style.LineColor = ColorHelper.ColorToUInt(value); }
         }
 
         public DashStyle DashStyle
@@ -50,13 +50,13 @@ namespace MW5.Api.Concrete
             set { _style.LineStipple = (tkDashStyle)value; }
         }
 
-        public bool UseLinePattern
+        public bool UsePattern
         {
             get { return _style.UseLinePattern; }
             set { _style.UseLinePattern = value; }
         }
 
-        public CompositeLine LinePattern
+        public CompositeLine Pattern
         {
             get { return _style.LinePattern != null ? new CompositeLine(_style.LinePattern) : null; }
             set { _style.LinePattern = value.GetInternal(); }

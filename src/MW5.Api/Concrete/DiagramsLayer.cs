@@ -35,7 +35,7 @@ namespace MW5.Api.Concrete
             set { _charts.Key = value; }
         }
 
-        public DiagramFieldCollection Field
+        public DiagramFieldCollection Fields
         {
             get { return new DiagramFieldCollection(_charts); }
         }
@@ -91,6 +91,11 @@ namespace MW5.Api.Concrete
         {
             get { return _charts.AvoidCollisions; }
             set { _charts.AvoidCollisions = value; }
+        }
+
+        public bool Bars
+        {
+            get { return DiagramType == Api.DiagramType.Bar; }
         }
 
         public DiagramType DiagramType
@@ -315,13 +320,17 @@ namespace MW5.Api.Concrete
             set { _charts.SavingMode = (tkSavingMode)value; }
         }
 
-        #region Not implemented
+        public bool DrawChart(IntPtr hdc, float x, float y, bool hideLabels, Color? backColor)
+        {
+            return _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+        }
 
-        //public bool DrawChart(IntPtr hDC, float x, float y, bool hideLabels, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        #endregion
+        public bool DrawChart(Graphics g, float x, float y, bool hideLabels, Color? backColor)
+        {
+            var hdc = g.GetHdc();
+            bool result = _charts.DrawChart(hdc, x, y, hideLabels, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
     }
 }

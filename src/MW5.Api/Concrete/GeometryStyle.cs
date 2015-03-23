@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using MapWinGIS;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -7,6 +9,11 @@ namespace MW5.Api.Concrete
     public class GeometryStyle: IGeometryStyle
     {
         private readonly ShapeDrawingOptions _style;
+
+        public GeometryStyle()
+        {
+            _style = new ShapeDrawingOptions();
+        }
 
         internal GeometryStyle(ShapeDrawingOptions style)
         {
@@ -74,6 +81,67 @@ namespace MW5.Api.Concrete
         public string Serialize()
         {
             return _style.Serialize();
+        }
+
+
+
+        public bool DrawLine(IntPtr hdc, float x, float y, int width, int height, bool drawVertices, int clipWidth, int clipHeight,
+            Color? backColor = null)
+        {
+            return _style.DrawLine(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+        }
+
+        public bool DrawPoint(IntPtr hdc, float x, float y, int clipWidth = 0, int clipHeight = 0, Color? backColor = null)
+        {
+            return _style.DrawPoint(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+        }
+
+        public bool DrawRectangle(IntPtr hdc, float x, float y, int width, int height, bool drawVertices, int clipWidth = 0,
+            int clipHeight = 0, Color? backColor = null)
+        {
+            return _style.DrawRectangle(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight,
+                backColor.ToUInt());
+        }
+
+        public bool DrawShape(IntPtr hdc, float x, float y, IGeometry geometry, bool drawVertices, int clipWidth, int clipHeight,
+            Color? backColor = null)
+        {
+            return _style.DrawShape(hdc, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+        }
+
+        public bool DrawLine(Graphics g, float x, float y, int width, int height, bool drawVertices, int clipWidth, int clipHeight,
+            Color? backColor = null)
+        {
+            IntPtr hdc = g.GetHdc();
+            bool result = DrawLine(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor);
+            g.ReleaseHdc(hdc);
+            return result;
+        }
+
+        public bool DrawPoint(Graphics g, float x, float y, int clipWidth = 0, int clipHeight = 0, Color? backColor = null)
+        {
+            IntPtr hdc = g.GetHdc();
+            bool result = _style.DrawPoint(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
+
+        public bool DrawRectangle(Graphics g, float x, float y, int width, int height, bool drawVertices, int clipWidth = 0,
+            int clipHeight = 0, Color? backColor = null)
+        {
+            IntPtr hdc = g.GetHdc();
+            bool result = _style.DrawRectangle(hdc, x, y, width, height, drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
+
+        public bool DrawShape(Graphics g, float x, float y, IGeometry geometry, bool drawVertices, int clipWidth, int clipHeight,
+            Color? backColor = null)
+        {
+            IntPtr hdc = g.GetHdc();
+            bool result = _style.DrawShape(hdc, x, y, geometry.GetInternal(), drawVertices, clipWidth, clipHeight, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
         }
 
         public object InternalObject

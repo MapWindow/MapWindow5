@@ -48,10 +48,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,17 +61,458 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Menu\SymbologyCommand.cs" />
-    <Compile Include="Menu\SymbologyMenu.cs" />
+    <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
+      <Link>Properties\SolutionInfoPlugins.cs</Link>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ColorSchemeCollection.cs" />
+    <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Enums.cs" />
+    <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
+    <Compile Include="Controls\RealIndexComboItem.cs" />
+    <Compile Include="Helpers\ColorBlendHelper.cs" />
+    <Compile Include="Services\EnumConverters.cs" />
+    <Compile Include="Services\LayerSettingsService.cs" />
+    <Compile Include="Helpers\ListViewHelper.cs" />
+    <Compile Include="Helpers\PathHelper.cs" />
+    <Compile Include="Legacy\InputBoxHelper.cs" />
+    <Compile Include="Controls\ImageCombo\ColorSchemeProvider.cs" />
+    <Compile Include="Helpers\FormHelper.cs" />
+    <Compile Include="Services\LabelStylerRenderer.cs" />
+    <Compile Include="Helpers\LabelHelper.cs" />
+    <Compile Include="Controls\ColorPicker\Office2007ColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\Office2007ColorPicker.Designer.cs">
+      <DependentUpon>Office2007ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\Office2007ColorPlate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\Office2007ColorPlate.Designer.cs">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\Office2007MenuHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ColorPicker\Office2007MenuHelper.designer.cs">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ImageCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\CharacterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\IconControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\IconControl.Designer.cs">
+      <DependentUpon>IconControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListControls\LinePatternControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\LinePatternControl.Designer.cs">
+      <DependentUpon>LinePatternControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListControls\ListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\ListControl.Designer.cs">
+      <DependentUpon>ListControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ListControls\SymbolControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ListControls\SymbolControl.Designer.cs">
+      <DependentUpon>SymbolControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NumericUpDownEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\NumericUpDownEx.Designer.cs">
+      <DependentUpon>NumericUpDownEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ScaleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ScaleControl.Designer.cs">
+      <DependentUpon>ScaleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TransparencyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TransparencyControl.Designer.cs">
+      <DependentUpon>TransparencyControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\AddCategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\AddCategoriesForm.Designer.cs">
+      <DependentUpon>AddCategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\CategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\CategoriesForm.Designer.cs">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\GenerateLabelCategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\GenerateLabelCategoriesForm.Designer.cs">
+      <DependentUpon>GenerateLabelCategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\GenerateCategoriesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\GenerateCategoriesForm.Designer.cs">
+      <DependentUpon>GenerateCategoriesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\AddChartsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\AddChartsForm.Designer.cs">
+      <DependentUpon>AddChartsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\ChartStyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\ChartStyleForm.Designer.cs">
+      <DependentUpon>ChartStyleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Layer\LayerStyleFormAppearance.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormCategories.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormCharts.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormExpression.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormGeneral.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormLabels.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Layer\LayerStyleForm.Designer.cs">
+      <DependentUpon>LayerStyleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Layer\LayerStyleFormMode.Designer.cs" />
+    <Compile Include="Forms\Layer\LayerStyleFormVisibility.Designer.cs" />
+    <Compile Include="Forms\Style\AddLabelsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\AddLabelsForm.Designer.cs">
+      <DependentUpon>AddLabelsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\FontGradientForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\FontGradientForm.Designer.cs">
+      <DependentUpon>FontGradientForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\LabelStyleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\LabelStyleForm.Designer.cs">
+      <DependentUpon>LabelStyleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\LinesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\LinesForm.Designer.cs">
+      <DependentUpon>LinesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\PointsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\PointsForm.Designer.cs">
+      <DependentUpon>PointsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Style\PolygonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Style\PolygonForm.Designer.cs">
+      <DependentUpon>PolygonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\AddOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\AddOptionsForm.Designer.cs">
+      <DependentUpon>AddOptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ColorSchemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ColorSchemeForm.Designer.cs">
+      <DependentUpon>ColorSchemeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ColorSchemesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageCombo\ColorSchemesForm.Designer.cs">
+      <DependentUpon>ColorSchemesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\Options2Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\Options2Form.Designer.cs">
+      <DependentUpon>Options2Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsChooserForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsChooserForm.Designer.cs">
+      <DependentUpon>OptionsChooserForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Options\OptionsManagerForm.Designer.cs">
+      <DependentUpon>OptionsManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Categories\QueryBuilderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Categories\QueryBuilderForm.Designer.cs">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\LocalCallback.cs" />
+    <Compile Include="Menu\LegendListener.cs" />
+    <Compile Include="Menu\MenuCommands.cs" />
+    <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Menu\MenuService.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SymbologyPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Legacy\SymbologyPluginLegacy.cs" />
+    <Compile Include="Services\SymbologySettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
+      <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
+      <Name>MW5.Api</Name>
+      <Private>False</Private>
+    </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_sql.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ColorPicker\Office2007ColorPlate.resx">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ColorPicker\Office2007MenuHelper.resx">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListControls\CharacterControl.resx">
+      <DependentUpon>CharacterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListControls\IconControl.resx">
+      <DependentUpon>IconControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListControls\LinePatternControl.resx">
+      <DependentUpon>LinePatternControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListControls\ListControl.resx">
+      <DependentUpon>ListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ListControls\SymbolControl.resx">
+      <DependentUpon>SymbolControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ScaleControl.resx">
+      <DependentUpon>ScaleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TransparencyControl.resx">
+      <DependentUpon>TransparencyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\AddCategoriesForm.resx">
+      <DependentUpon>AddCategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
+      <DependentUpon>CategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\GenerateLabelCategoriesForm.resx">
+      <DependentUpon>GenerateLabelCategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\GenerateCategoriesForm.resx">
+      <DependentUpon>GenerateCategoriesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\AddChartsForm.resx">
+      <DependentUpon>AddChartsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\ChartStyleForm.resx">
+      <DependentUpon>ChartStyleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Layer\LayerStyleForm.resx">
+      <DependentUpon>LayerStyleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\AddLabelsForm.resx">
+      <DependentUpon>AddLabelsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\FontGradientForm.resx">
+      <DependentUpon>FontGradientForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\LabelStyleForm.resx">
+      <DependentUpon>LabelStyleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\LinesForm.resx">
+      <DependentUpon>LinesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\PointsForm.resx">
+      <DependentUpon>PointsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Style\PolygonForm.resx">
+      <DependentUpon>PolygonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\AddOptionsForm.resx">
+      <DependentUpon>AddOptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImageCombo\ColorSchemeForm.resx">
+      <DependentUpon>ColorSchemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ImageCombo\ColorSchemesForm.resx">
+      <DependentUpon>ColorSchemesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\Options2Form.resx">
+      <DependentUpon>Options2Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\OptionsChooserForm.resx">
+      <DependentUpon>OptionsChooserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Options\OptionsManagerForm.resx">
+      <DependentUpon>OptionsManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Categories\QueryBuilderForm.resx">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_link.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_view_tile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow2 - Down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow2 - Up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calc.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clipboard Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\label_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\label-mover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-categories.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-more.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-query.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\layer-vector-thematic-add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\No.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ok2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\palette.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Plus_orange.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tag_blue.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tag_gray.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\colorschemes.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\labels.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\linepatterns.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

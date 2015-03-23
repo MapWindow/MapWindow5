@@ -1,4 +1,5 @@
-﻿using MapWinGIS;
+﻿using AxMapWinGIS;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 
@@ -104,6 +105,11 @@ namespace MW5.Api.Helpers
         public static Grid GetInternal(this GridSource operations)
         {
             return operations.InternalObject as Grid;
+        }
+
+        public static AxMap GetInternal(this MapControl mapControl)
+        {
+            return mapControl.InternalObject as AxMap;
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Serialization;
 using AxMapWinGIS;
+using MapWinGIS;
+using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
@@ -10,10 +13,12 @@ namespace MW5.Api.Concrete
     {
         protected readonly int _layerHandle;
         protected readonly AxMap _map;
+        protected readonly MapControl _mapControl;
 
-        public Layer(AxMap map, int layerHandle)
+        public Layer(MapControl map, int layerHandle)
         {
-            _map = map;
+            _mapControl = map;
+            _map = map.GetInternal() ;
             _layerHandle = layerHandle;
 
             var position = _map.get_LayerPosition(_layerHandle);
@@ -207,14 +212,66 @@ namespace MW5.Api.Concrete
             return _map.LoadLayerOptions(_layerHandle, optionsName, ref description);
         }
 
-        public string SerializeLayer()
+        public string Serialize()
         {
             return _map.SerializeLayer(_layerHandle);
         }
 
-        public bool DeserializeLayer(string state)
+        public bool Deserialize(string state)
         {
             return _map.DeserializeLayer(_layerHandle, state);
+        }
+
+        /// <summary>
+        /// Changes selection of the shapefile adding new shapes using the specified mode
+        /// </summary>
+        public void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode)
+        {
+            var fs = FeatureSet;
+
+            if (fs == null || indices == null)
+            {
+                return;
+            }
+
+            if (mode == SelectionOperation.New)
+            {
+                fs.ClearSelection();
+            }
+
+            var sf = fs.GetInternal();
+
+            switch (mode)
+            {
+                case SelectionOperation.New:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = true;
+                    }
+                    break;
+                case SelectionOperation.Add:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = true;
+                    }
+
+                    break;
+                case SelectionOperation.Exclude:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = false;
+                    }
+
+                    break;
+                case SelectionOperation.Invert:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = !sf.ShapeSelected[item];
+                    }
+                    break;
+            }
+
+            _mapControl.FireSelectionChagned(_mapControl, new SelectionChangedEventArgs(Handle, true));
         }
 
         #region Deprecated

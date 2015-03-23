@@ -19,7 +19,7 @@ namespace MW5.Api.Interfaces
         int FontOutlineWidth { get; set; }
         int FontSize { get; set; }
         bool FontStrikeOut { get; set; }
-        byte FontAlphaTransparency { get; set; }
+        byte FontTransparency { get; set; }
         bool FontUnderline { get; set; }
         Color FrameBackColor { get; set; }
         Color FrameBackColor2 { get; set; }
@@ -29,7 +29,7 @@ namespace MW5.Api.Interfaces
         int FrameOutlineWidth { get; set; }
         int FramePaddingX { get; set; }
         int FramePaddingY { get; set; }
-        byte FrameAlphaTransparency { get; set; }
+        byte FrameTransparency { get; set; }
         FrameType FrameType { get; set; }
         bool FrameVisible { get; set; }
         Color HaloColor { get; set; }
@@ -39,5 +39,8 @@ namespace MW5.Api.Interfaces
         int ShadowOffsetX { get; set; }
         int ShadowOffsetY { get; set; }
         bool ShadowVisible { get; set; }
+        bool Visible { get; set; }
+        double OffsetX { get; set; }
+        double OffsetY { get; set; }
     }
 }

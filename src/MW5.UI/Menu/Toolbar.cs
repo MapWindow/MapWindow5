@@ -59,6 +59,11 @@ namespace MW5.UI.Menu
             set { Metadata.Tag = value; }
         }
 
+        public string Key
+        {
+            get { return Metadata.Key; }
+        }
+
         public ToolbarDockState DockState
         {
             get { return (ToolbarDockState) _manager.GetBarControl(_bar).DockState; }

@@ -10,6 +10,8 @@ namespace MW5.Plugins.Interfaces
     public interface IToolbarCollection : IEnumerable<IToolbar>
     {
         IToolbar Add(string name, PluginIdentity identity);
+
+        IToolbar Add(string name, string key, PluginIdentity identity);
         
         void Remove(int toolbarIndex);
 
@@ -20,5 +22,9 @@ namespace MW5.Plugins.Interfaces
         void RemoveItemsForPlugin(PluginIdentity identity);
 
         IEnumerable<IMenuItem> ItemsForPlugin(PluginIdentity identity);
+
+        IToolbar MapToolbar { get; }
+
+        IToolbar FileToolbar { get; }
     }
 }

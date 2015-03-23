@@ -11,7 +11,7 @@ namespace MW5.Api.Legend.Abstract
         /// Gets or Sets the MapWinGIS.Map associated with this legend control
         /// Note: This property must be set before manipulating layers
         /// </summary>
-        IMuteMap Map { set; }
+        IMuteMap Map { get; set; }
 
         /// <summary>
         /// Gets the Menu for manipulating Groups

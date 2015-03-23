@@ -10,6 +10,11 @@ namespace MW5.Api.Concrete
     {
         private readonly ChartField _field;
 
+        public DiagramField()
+        {
+            _field = new ChartField();
+        }
+
         internal DiagramField(ChartField field)
         {
             _field = field;

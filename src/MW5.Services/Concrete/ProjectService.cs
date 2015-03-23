@@ -214,7 +214,7 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public void Open(string filename)
+        public void Open(string filename, bool silent = false)
         {
             if (string.IsNullOrWhiteSpace(filename))
             {
@@ -223,7 +223,10 @@ namespace MW5.Services.Concrete
 
             if (!File.Exists(filename))
             {
-                _messageService.Info("Project file wasn't found: " + filename);
+                if (!silent)
+                {
+                    _messageService.Info("Project file wasn't found: " + filename);
+                }
                 return;
             }
 
@@ -234,7 +237,10 @@ namespace MW5.Services.Concrete
                 project.RestoreState(_context as ISerializableContext);
                 _filename = filename;
 
-                _messageService.Info("Project was loaded: " + filename);
+                if (!silent)
+                {
+                    _messageService.Info("Project was loaded: " + filename);
+                }
             }
 
             //OnProjectChanged();

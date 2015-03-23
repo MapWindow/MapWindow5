@@ -13,7 +13,12 @@ namespace MW5.Api.Concrete
     {
         private readonly LinePattern _pattern;
 
-        public CompositeLine(LinePattern pattern)
+        public CompositeLine()
+        {
+            _pattern = new LinePattern();
+        }
+
+        internal CompositeLine(LinePattern pattern)
         {
             _pattern = pattern;
             if (pattern == null)
@@ -117,18 +122,17 @@ namespace MW5.Api.Concrete
             return GetEnumerator();
         }
 
-        #region Not implemented
+        public bool Draw(IntPtr hdc, float x, float y, int clipWidth, int clipHeight, Color? backColor = null)
+        {
+            return _pattern.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+        }
 
-        //public bool Draw(IntPtr hDC, float x, float y, int clipWidth, int clipHeight, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool DrawVB(int hDC, float x, float y, int clipWidth, int clipHeight, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        #endregion
+        public bool Draw(Graphics g, float x, float y, int clipWidth, int clipHeight, Color? backColor = null)
+        {
+            var hdc = g.GetHdc();
+            bool result = _pattern.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
     }
 }

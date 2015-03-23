@@ -28,8 +28,23 @@ namespace MW5.Api
                         "MapControl.Legend property should be set before acceccing layers collection.");
                 }
 
-                return _layers ?? (_layers = new LegendLayerCollection<ILayer>(_map, Legend));
+                return _layers ?? (_layers = new LegendLayerCollection<ILayer>(this, Legend));
             }
+        }
+
+        public ILayer GetLayer(int layerHandle)
+        {
+            return Layers.ItemByHandle(layerHandle);
+        }
+
+        public IFeatureSet GetFeatureSet(int layerHandle)
+        {
+            var layer = GetLayer(layerHandle);
+            if (layer != null)
+            {
+                return layer.FeatureSet;
+            }
+            return null;
         }
 
         [Browsable(false)]

@@ -33,7 +33,7 @@ namespace MW5.Api.Concrete
             return GetEnumerator();
         }
 
-        public void AddField(int fieldIndex, Color color)
+        public void Add(int fieldIndex, Color color)
         {
             _charts.AddField2(fieldIndex, ColorHelper.ColorToUInt(color));
         }
@@ -48,7 +48,7 @@ namespace MW5.Api.Concrete
             return _charts.RemoveField(index);
         }
 
-        public void ClearFields()
+        public void Clear()
         {
             _charts.ClearFields();
         }
@@ -58,7 +58,7 @@ namespace MW5.Api.Concrete
             return _charts.MoveField(oldIndex, newIndex);
         }
 
-        public bool AddField(DiagramField field)
+        public bool Add(DiagramField field)
         {
             return _charts.AddField(field.GetInternal());
         }
@@ -77,7 +77,7 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public int NumFields
+        public int Count
         {
             get { return _charts.NumFields; }
         }

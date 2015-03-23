@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -13,14 +14,16 @@ namespace MW5.Api.Concrete
     public abstract class BaseLayerCollection<T>: ILayerCollection<T> where T: ILayer
     {
         protected readonly AxMap _axMap;
+        protected readonly MapControl _mapControl;
 
-        internal BaseLayerCollection(AxMap axMap)
+        internal BaseLayerCollection(MapControl mapControl)
         {
-            if (axMap == null)
+            if (mapControl == null)
             {
                 throw new NullReferenceException("Map reference is null.");
             }
-            _axMap = axMap;
+            _mapControl = mapControl;
+            _axMap = mapControl.GetInternal();
         }
         
         public int Count

@@ -21,9 +21,15 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool Empty
+        {
+            get { return _labels.Count == 0; }
+        }
+
         public ILabelStyle Style
         {
             get { return new LabelStyle(_labels.Options); }
+            set { _labels.Options = value.GetInternal(); }
         }
 
         public LabelStyleList Styles
@@ -183,6 +189,33 @@ namespace MW5.Api.Concrete
                 return list.ToList();
             }
             return new List<LabelInfo>();
+        }
+
+        public object InternalObject
+        {
+            get { return _labels; }
+        }
+
+        public string LastError
+        {
+            get { return _labels.ErrorMsg[_labels.LastErrorCode]; }
+        }
+
+        public string Tag
+        {
+            get { return _labels.Key; }
+            set { _labels.Key = value; }
+        }
+
+        public string Serialize()
+        {
+            return _labels.Serialize();
+        }
+
+        public bool Deserialize(string state)
+        {
+            _labels.Deserialize(state);
+            return true;
         }
     }
 }

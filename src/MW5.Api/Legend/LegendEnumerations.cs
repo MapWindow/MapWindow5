@@ -95,5 +95,6 @@
     {
         LegendOnly = 0,
         LegendAndMap = 1,
+        LegendAndMapForce = 2,
     }
 }

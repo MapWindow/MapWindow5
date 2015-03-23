@@ -15,7 +15,7 @@ namespace MW5.UI
 
         public MapWindowForm()
         {
-            
+            Icon = Resources.MapWindow;
         }
 
         public MapWindowForm(IAppContext context)

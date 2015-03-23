@@ -102,18 +102,17 @@ namespace MW5.Api.Concrete
             set { _segment.MarkerOutlineColor = ColorHelper.ColorToUInt(value); }
         }
 
-        #region Not implemented
+        public bool Draw(IntPtr hdc, float x, float y, int clipWidth, int clipHeight, Color? backColor)
+        {
+            return _segment.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+        }
 
-        //public bool Draw(IntPtr hDC, float x, float y, int clipWidth, int clipHeight, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public bool DrawVB(int hDC, float x, float y, int clipWidth, int clipHeight, uint backColor = 16777215)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        #endregion
+        public bool Draw(Graphics g, float x, float y, int clipWidth, int clipHeight, Color? backColor)
+        {
+            var hdc = g.GetHdc();
+            bool result = _segment.Draw(hdc, x, y, clipWidth, clipHeight, backColor.ToUInt());
+            g.ReleaseHdc(hdc);
+            return result;
+        }
     }
 }
