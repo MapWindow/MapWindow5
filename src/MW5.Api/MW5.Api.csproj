@@ -79,6 +79,7 @@
     <Compile Include="Concrete\ColorRamp.cs" />
     <Compile Include="Concrete\CompareByValueBase.cs" />
     <Compile Include="Concrete\CompositeLine.cs" />
+    <Compile Include="Concrete\DecorationRectangle.cs" />
     <Compile Include="Concrete\Diagram.cs" />
     <Compile Include="Concrete\DiagramField.cs" />
     <Compile Include="Concrete\DiagramFieldCollection.cs" />

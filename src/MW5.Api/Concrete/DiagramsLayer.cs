@@ -50,7 +50,7 @@ namespace MW5.Api.Concrete
             _charts.Clear();
         }
 
-        public int[] Select(IEnvelope envelope, int tolerance, SelectionMode selectMode)
+        public int[] Select(IEnvelope envelope, int tolerance, MapSelectionMode selectMode)
         {
             object indices = null;
             if (_charts.Select(envelope.GetInternal(), tolerance, (SelectMode) selectMode, ref indices))

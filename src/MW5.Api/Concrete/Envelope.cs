@@ -25,7 +25,7 @@ namespace MW5.Api.Concrete
             _extents = extents;
         }
 
-        public void SetBounds(double xMin, double xMax, double yMin, double yMax)
+        public void SetBounds(double xMin, double yMin, double xMax, double yMax)
         {
             _extents.SetBounds(xMin, yMin, 0.0, xMax, yMax, 0.0);
         }

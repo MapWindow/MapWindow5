@@ -15,7 +15,6 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Properties;
-using SelectionMode = MW5.Api.SelectionMode;
 
 namespace MW5.Plugins.Symbology.Services
 {
@@ -114,20 +113,19 @@ namespace MW5.Plugins.Symbology.Services
         {
             if (!Active || _currentLabel.LayerHandle == -1)
             {
-                _currentLabel.Clear();
                 return;
             }
 
             if (e.X == _currentLabel.X || e.Y == _currentLabel.Y)
             {
-                _currentLabel.Clear();
+                Clear();
                 return;
             }
 
             // check that new position is within map
             if (e.X < 0 || e.Y < 0 || e.X > map.Width || e.Y > map.Height)
             {
-                _currentLabel.Clear();
+                Clear();
                 return;
             }
 
@@ -164,7 +162,14 @@ namespace MW5.Plugins.Symbology.Services
                 }
             }
 
+            Clear();
+        }
+
+        private void Clear()
+        {
             _currentLabel.Clear();
+            _map.FocusRectangle.Visible = false;
+            _map.Redraw(RedrawType.Minimal);
         }
 
         private LabelMoveData FindMovableItem(int x, int y)
@@ -232,7 +237,7 @@ namespace MW5.Plugins.Symbology.Services
             }
 
             var lb = fs.Labels;
-            var labelList = lb.Select(envelope, MOUSE_TOLERANCE).ToList();
+            var labelList = lb.Select(envelope).ToList();
             if (labelList.Any())
             {
                 var info = labelList[labelList.Count - 1];
@@ -247,7 +252,7 @@ namespace MW5.Plugins.Symbology.Services
             // analyzing charts: they are drawn on the top of the labels
             if (position == fs.Diagrams.VerticalPosition)
             {
-                int[] indices = fs.Diagrams.Select(envelope, MOUSE_TOLERANCE, SelectionMode.Intersection);
+                int[] indices = fs.Diagrams.Select(envelope, MOUSE_TOLERANCE, MapSelectionMode.Intersection);
                 if (indices != null && indices.Length > 0)
                 {
                     // in case severral charts are selected we have to choose the one with the largest id
@@ -264,13 +269,19 @@ namespace MW5.Plugins.Symbology.Services
         /// </summary>
         private void DrawLabelRectangle(Rectangle rect)
         {
+            var r = _context.Map.FocusRectangle; 
+            r.Visible = true;
+            r.X = rect.X;
+            r.Y = rect.Y;
+            r.Width = rect.Width;
+            r.Height = rect.Height;
             _context.Map.Redraw(RedrawType.Minimal);
-            IntPtr hwnd = _context.Map.Handle;
-            var g = Graphics.FromHwnd(hwnd);
+            
+            //IntPtr hwnd = _context.Map.Handle;
+            //var g = Graphics.FromHwnd(hwnd);
 
-            Pen pen = new Pen(Color.Gray, 2) { DashStyle = DashStyle.Dot 
-            };
-            g.DrawRectangle(pen, rect);
+            //Pen pen = new Pen(Color.Gray, 2) { DashStyle = DashStyle.Dot };
+            //g.DrawRectangle(pen, rect);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace MW5.Api.Interfaces
 
         bool Visible { get; set; }
 
-        IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, SelectionMode selectMode = SelectionMode.Intersection);
+        IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, MapSelectionMode selectMode = MapSelectionMode.Intersection);
 
         //void ForceRecalculateExpression();
 

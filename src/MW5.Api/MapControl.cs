@@ -265,11 +265,6 @@ namespace MW5.Api
 
         public void Redraw(RedrawType redrawType = RedrawType.All)
         {
-            if (redrawType == RedrawType.Minimal)
-            {
-                _map.Refresh();
-                return;
-            }
             _map.Redraw2((tkRedrawType)redrawType);
         }
 
@@ -594,6 +589,11 @@ namespace MW5.Api
         public new IntPtr Handle
         {
             get { return _map.Handle; }
+        }
+
+        public DecorationRectangle FocusRectangle
+        {
+            get { return new DecorationRectangle(_map.FocusRectangle); }
         }
     }
 }

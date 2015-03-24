@@ -203,7 +203,7 @@ namespace MW5.Api.Concrete
             get { return Table.Fields; }
         }
 
-        public bool SelectShapes(Envelope boundBox, ref object result, double tolerance = 0, SelectionMode selectionMode = SelectionMode.Intersection)
+        public bool SelectShapes(Envelope boundBox, ref object result, double tolerance = 0, MapSelectionMode selectionMode = MapSelectionMode.Intersection)
         {
             throw new NotImplementedException();
         }

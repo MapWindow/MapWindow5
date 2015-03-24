@@ -519,12 +519,6 @@
     <None Include="Resources\linepatterns.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\cursor_label_move.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\cursor_label_move.cur" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\cursor_label_move.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

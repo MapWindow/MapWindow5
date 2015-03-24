@@ -108,6 +108,8 @@ namespace MW5.Api.Interfaces
 
         CustomCursor CustomCursor { get; set; }
 
+        DecorationRectangle FocusRectangle { get; }
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

@@ -1199,7 +1199,7 @@
         HighQuality = 2,
     }
 
-    public enum SelectionMode
+    public enum MapSelectionMode
     {
         Intersection = 0,
         Inclusion = 1,
