@@ -180,14 +180,13 @@ namespace MW5.Api.Concrete
 
             if (_labels.Select(extents, tolerance, (SelectMode)selectMode, ref indices, ref parts))
             {
-                var list = from index in indices as int[]
-                    from part in parts as int[]
-                    select new LabelInfo
-                    {
-                        LabelIndex = index,
-                        PartIndex = part
-                    };
-                return list.ToList();
+                var arr1 = indices as int[];
+                var arr2 = parts as int[];
+                if (arr1 != null && arr2 != null)
+                {
+                    var list = arr1.Select((name, i) => new LabelInfo {LabelIndex = name, PartIndex = arr2[i]});
+                    return list.ToList();
+                }
             }
             return new List<LabelInfo>();
         }

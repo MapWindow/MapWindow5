@@ -26,6 +26,7 @@ namespace MW5.Api
             _map.SendSelectBoxFinal = true;
             _map.SendMouseDown = true;
             _map.SendMouseUp = true;
+            _map.SendMouseMove = true;
 
             AttachHandlers();
         }
@@ -264,6 +265,11 @@ namespace MW5.Api
 
         public void Redraw(RedrawType redrawType = RedrawType.All)
         {
+            if (redrawType == RedrawType.Minimal)
+            {
+                _map.Refresh();
+                return;
+            }
             _map.Redraw2((tkRedrawType)redrawType);
         }
 
@@ -583,6 +589,11 @@ namespace MW5.Api
             var ext = new Extents();
             ext.SetBounds(0.0, 0.0, 0.0, 100.0, 100.0, 0.0);
             _map.Extents = ext;
+        }
+
+        public new IntPtr Handle
+        {
+            get { return _map.Handle; }
         }
     }
 }

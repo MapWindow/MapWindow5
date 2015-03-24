@@ -4,9 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Services;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.Symbology.Menu
@@ -21,7 +23,7 @@ namespace MW5.Plugins.Symbology.Menu
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
-            
+
             _plugin = plugin;
             _commands = new MenuCommands(plugin.Identity);
 
@@ -36,6 +38,8 @@ namespace MW5.Plugins.Symbology.Menu
             var fs = _context.Map.SelectedFeatureSet;
             FindToolbarItem(MenuKeys.QueryBuilder).Enabled = fs != null;
             FindToolbarItem(MenuKeys.Categories).Enabled = fs != null;
+            
+            FindToolbarItem(MenuKeys.LabelMover).Checked = _context.Map.CustomCursor == LabelMoverCursor.Instance;
         }
 
         private void PluginItemClicked(object sender, Concrete.MenuItemEventArgs e)
@@ -48,14 +52,23 @@ namespace MW5.Plugins.Symbology.Menu
                 case MenuKeys.Categories:
                     FormHelper.ShowCategories(_context);
                     break;
+                case MenuKeys.LabelMover:
+                    _context.Map.CustomCursor = LabelMoverCursor.Instance;
+                    break;
             }
         }
 
         private void InitToolbar()
         {
+            // file toolbar
             var items = _context.Toolbars.FileToolbar.Items;
             _commands.AddToMenu(items, MenuKeys.Categories, true);
             _commands.AddToMenu(items, MenuKeys.QueryBuilder);
+            _context.Toolbars.FileToolbar.Update();
+
+            // map toolbar
+            items = _context.Toolbars.MapToolbar.Items;
+            _commands.AddToMenu(items, MenuKeys.LabelMover);
             _context.Toolbars.FileToolbar.Update();
         }
     }

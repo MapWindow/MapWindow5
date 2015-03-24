@@ -10,5 +10,6 @@ namespace MW5.Plugins.Symbology.Menu
     {
         public const string QueryBuilder = "sy_QueryBuilder";
         public const string Categories = "sy_Categories";
+        public const string LabelMover = "sy_LabelMover";
     }
 }

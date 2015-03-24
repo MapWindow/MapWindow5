@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 
 namespace MW5.Plugins.Concrete
 {
-    public class PluginIdentity: IEquatable<PluginIdentity>
+    public class PluginIdentity: CompareByValueBase, IEquatable<PluginIdentity>
     {
         private string _name;
         private string _author;
@@ -66,36 +67,6 @@ namespace MW5.Plugins.Concrete
         public override string ToString()
         {
             return string.Format("{0} : {1}", Name, Guid);
-        }
-
-        public static bool operator ==(PluginIdentity id1, PluginIdentity id2)
-        {
-            bool null1 = ReferenceEquals(id1, null);
-            bool null2 = ReferenceEquals(id2, null);
-            if (null1 && null2)
-            {
-                return true;
-            }
-            if (null1 != null2)
-            {
-                return false;
-            }
-            return id1.Equals(id2);
-        }
-
-        public static bool operator !=(PluginIdentity id1, PluginIdentity id2)
-        {
-            bool null1 = ReferenceEquals(id1, null);
-            bool null2 = ReferenceEquals(id2, null);
-            if (null1 && null2)
-            {
-                return false;
-            }
-            if (null1 != null2)
-            {
-                return true;
-            }
-            return !id1.Equals(id2);
         }
     }
 }

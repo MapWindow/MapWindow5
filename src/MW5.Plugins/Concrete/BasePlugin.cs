@@ -166,6 +166,8 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
         internal MapEventHandler<EventArgs> MapCursorChanged_;
+        internal MapEventHandler<MouseEventArgs> MouseDown_;
+        internal MapEventHandler<MouseEventArgs> MouseMove_;
         internal MapEventHandler<MouseEventArgs> MouseUp_;
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<EventArgs> HistoryChanged_;
@@ -221,8 +223,17 @@ namespace MW5.Plugins.Concrete
             remove { MapCursorChanged_ -= value; }
         }
         
-        public event MapEventHandler<MouseEventArgs> MouseDown;
-        public event MapEventHandler<MouseEventArgs> MouseMove;
+        public event MapEventHandler<MouseEventArgs> MouseDown
+        {
+            add { MouseDown_ += value; }
+            remove { MouseDown_ -= value; }
+        }
+
+        public event MapEventHandler<MouseEventArgs> MouseMove
+        {
+            add { MouseMove_ += value; }
+            remove { MouseMove_ -= value; }
+        }
 
         public event MapEventHandler<MouseEventArgs> MouseUp
         {

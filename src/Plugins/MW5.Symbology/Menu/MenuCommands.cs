@@ -19,7 +19,8 @@ namespace MW5.Plugins.Symbology.Menu
             return new List<MenuCommand>()
             {
                 new MenuCommand("Query builder", MenuKeys.QueryBuilder, Resources.img_sql),
-                new MenuCommand("Categories", MenuKeys.Categories, Resources.layer_vector_thematic_add)
+                new MenuCommand("Categories", MenuKeys.Categories, Resources.layer_vector_thematic_add),
+                new MenuCommand("Label mover", MenuKeys.LabelMover, Resources.label_mover)
             };
         }
     }

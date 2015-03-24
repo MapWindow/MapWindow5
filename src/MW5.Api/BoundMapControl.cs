@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
@@ -13,6 +14,21 @@ namespace MW5.Api
     public class BoundMapControl : MapControl, IMap
     {
         private ILegendLayerCollection<ILayer> _layers;
+        private CustomCursor _customCursor = null;
+
+        public BoundMapControl()
+        {
+            MapCursorChanged += BoundMapControl_MapCursorChanged;
+        }
+
+        void BoundMapControl_MapCursorChanged(object sender, EventArgs e)
+        {
+            if (MapCursor != MapCursor.None)
+            {
+                _customCursor = null;
+                _map.MapCursor = MapWinGIS.tkCursor.crsrMapDefault;
+            }
+        }
 
         [Browsable(false)]
         public IMuteLegend Legend { get; set; }
@@ -45,6 +61,31 @@ namespace MW5.Api
                 return layer.FeatureSet;
             }
             return null;
+        }
+
+        public CustomCursor CustomCursor
+        {
+            get
+            {
+                return _customCursor;
+            }
+            set
+            {
+                _customCursor = value;
+                if (value != null && value.Guid != default(Guid))
+                {
+                    if (_customCursor.Cursor == null)
+                    {
+                        _map.MapCursor = MapWinGIS.tkCursor.crsrArrow;
+                    }
+                    else
+                    {
+                        _map.UDCursorHandle = (int)_customCursor.Cursor.Handle;
+                        _map.MapCursor = MapWinGIS.tkCursor.crsrUserDefined;
+                    }
+                    MapCursor = MapCursor.None;
+                }
+            }
         }
 
         [Browsable(false)]

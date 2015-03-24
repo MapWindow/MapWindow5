@@ -106,6 +106,8 @@ namespace MW5.Api.Interfaces
         int Width { get; }
         int Height { get;  }
 
+        CustomCursor CustomCursor { get; set; }
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

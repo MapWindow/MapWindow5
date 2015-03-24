@@ -1,21 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Properties;
+using SelectionMode = MW5.Api.SelectionMode;
 
 namespace MW5.Plugins.Symbology.Services
 {
-    internal class LabelMover
+    public class LabelMover
     {
-        private const int MOUSE_TOLERANCE = 5;
+        private const int MOUSE_TOLERANCE = 0;
 
         private readonly IAppContext _context;
         private readonly SymbologyPlugin _plugin;
@@ -36,15 +42,17 @@ namespace MW5.Plugins.Symbology.Services
         }
 
         /// <summary>
-        /// Gets or sets value indicating whether label mover is currently active.
+        /// Gets value indicating whether label mover is currently active.
         /// </summary>
-        [DefaultValue(false)]
-        public bool Active { get; set; }
+        public bool Active
+        {
+            get { return _map.CustomCursor == LabelMoverCursor.Instance; }
+        }
 
         /// <summary>
         /// Start the dragging operation.
         /// </summary>
-        private void MapMouseDown(IMuteMap map, System.Windows.Forms.MouseEventArgs e)
+        private void MapMouseDown(IMuteMap map, MouseEventArgs e)
         {
             if (!Active)
             {
@@ -83,19 +91,18 @@ namespace MW5.Plugins.Symbology.Services
             DrawLabelRectangle(_currentLabel.Rect);
         }
 
-        private void MapMouseMove(IMuteMap map, System.Windows.Forms.MouseEventArgs e)
+        private void MapMouseMove(IMuteMap map, MouseEventArgs e)
         {
-            if (!Active || _currentLabel.LayerHandle != -1)
+            if (!Active || _currentLabel.LayerHandle == -1)
             {
                 return;
             }
 
             if (e.X != _currentLabel.X || e.Y != _currentLabel.Y)
             {
-                //m_CurrentLabel.rect.Offset(-m_CurrentLabel.X + ScreenX, -m_CurrentLabel.Y + ScreenY);
                 int dx = -_currentLabel.X + e.X;
                 int dy = -_currentLabel.Y + e.Y;
-                var r = new Rectangle(_currentLabel.Rect.X + dx, _currentLabel.Rect.Y + dy, _currentLabel.Rect.Width, _currentLabel.Rect.Height);
+                var r = _currentLabel.Rect.CloneWithOffset(dx, dy);
                 DrawLabelRectangle(r);
             }
         }
@@ -103,7 +110,7 @@ namespace MW5.Plugins.Symbology.Services
         /// <summary>
         /// Finishes the label moving operation.
         /// </summary>
-        private void MapMouseUp(IMuteMap map, System.Windows.Forms.MouseEventArgs e)
+        private void MapMouseUp(IMuteMap map, MouseEventArgs e)
         {
             if (!Active || _currentLabel.LayerHandle == -1)
             {
@@ -120,7 +127,7 @@ namespace MW5.Plugins.Symbology.Services
             // check that new position is within map
             if (e.X < 0 || e.Y < 0 || e.X > map.Width || e.Y > map.Height)
             {
-                
+                _currentLabel.Clear();
                 return;
             }
 
@@ -206,7 +213,7 @@ namespace MW5.Plugins.Symbology.Services
                     if (info != null)
                     {
                         data.LayerHandle = layer.Handle;
-                        data.LabelIndex = chartIndex;
+                        data.LabelIndex = info.LabelIndex;
                         data.PartIndex = info.PartIndex;
                         data.IsChart = false;
                         return data;
@@ -259,13 +266,11 @@ namespace MW5.Plugins.Symbology.Services
         {
             _context.Map.Redraw(RedrawType.Minimal);
             IntPtr hwnd = _context.Map.Handle;
-            using (var g = Graphics.FromHwnd(hwnd))
-            {
-                using (Pen pen = new Pen(Color.Gray, 1) {DashStyle = System.Drawing.Drawing2D.DashStyle.Dot})
-                {
-                    g.DrawRectangle(pen, rect);
-                }
-            }
+            var g = Graphics.FromHwnd(hwnd);
+
+            Pen pen = new Pen(Color.Gray, 2) { DashStyle = DashStyle.Dot 
+            };
+            g.DrawRectangle(pen, rect);
         }
     }
 }

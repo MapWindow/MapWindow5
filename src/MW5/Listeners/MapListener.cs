@@ -3,11 +3,10 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
-using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 
-namespace MW5
+namespace MW5.Listeners
 {
     /// <summary>
     /// Allows to handle map events by the core application and broadcast them to plugins after that.
@@ -42,18 +41,20 @@ namespace MW5
 
         private void RegisterEvents()
         {
-            _map.ExtentsChanged += MapExtentsChanged;
-            _map.FileDropped += MapFileDropped;
             _map.BeforeDeleteShape += MapBeforeDeleteShape;
             _map.BeforeShapeEdit += MapBeforeShapeEdit;
-            _map.MouseUp += MapMouseUp;
-            _map.ShapeValidationFailed += MapShapeValidationFailed;
-            _map.HistoryChanged += MapHistoryChanged;
-            _map.ValidateShape += MapValidateShape;
-            _map.MapCursorChanged += MapCursorChanged;
             _map.ChooseLayer += MapChooseLayer;
+            _map.ExtentsChanged += MapExtentsChanged;
+            _map.FileDropped += MapFileDropped;
+            _map.HistoryChanged += MapHistoryChanged;
+            _map.MapCursorChanged += MapCursorChanged;
+            _map.MouseUp += MapMouseUp;
+            _map.MouseDown += MapMouseDown;
+            _map.MouseMove += MapMouseMove;
             _map.SelectionChanged += MapSelectionChanged;
             _map.ShapeIdentified += MapShapeIdentified;
+            _map.ShapeValidationFailed += MapShapeValidationFailed;
+            _map.ValidateShape += MapValidateShape;
 
             var mapControl = (_map as MapControl);
             if (mapControl != null)
@@ -62,7 +63,17 @@ namespace MW5
             }
         }
 
-        void MapShapeIdentified(object sender, ShapeIdentifiedEventArgs e)
+        private void MapMouseMove(object sender, MouseEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.MouseMove_, sender as IMuteMap, e);
+        }
+
+        private void MapMouseDown(object sender, MouseEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.MouseDown_, sender as IMuteMap, e);
+        }
+
+        private void MapShapeIdentified(object sender, ShapeIdentifiedEventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.ShapeIdentified_, sender as IMuteMap, e);
         }

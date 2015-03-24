@@ -40,9 +40,9 @@ namespace MW5.Plugins.Symbology
         {
             _context = context;
 
+            _labelMover = context.Container.GetSingleton<LabelMover>();
             _legendListener = context.Container.GetInstance<LegendListener>();
             _menuService = context.Container.GetInstance<MenuService>();
-            _labelMover = context.Container.GetSingleton<LabelMover>();
         }
 
         public override void Terminate()
