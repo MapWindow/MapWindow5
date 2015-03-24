@@ -31,13 +31,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             scaleLayer.Locked = true;
 
-            ILegendLayer layer = _layer;
-            scaleLayer.MaximumScale = layer.MaxVisibleScale;
-            scaleLayer.MinimimScale = layer.MinVisibleScale;
-            scaleLayer.UseDynamicVisibility = layer.DynamicVisibility;
+            scaleLayer.MaximumScale = _layer.MaxVisibleScale;
+            scaleLayer.MinimimScale = _layer.MinVisibleScale;
+            scaleLayer.UseDynamicVisibility = _layer.DynamicVisibility;
 
-            var map = _legend.Map;
-            scaleLayer.CurrentScale = map.CurrentScale;
+            scaleLayer.CurrentScale = _context.Map.CurrentScale;
             
             Color color = _shapefile.GeometryType == MW5.Api.GeometryType.Polyline? _shapefile.Style.Line.Color : _shapefile.Style.Fill.Color;
             scaleLayer.FillColor = color;

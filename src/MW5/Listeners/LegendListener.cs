@@ -39,12 +39,18 @@ namespace MW5.Listeners
 
         private void RegisterEvents()
         {
+            _legend.LayerAdded += LegendLayerAdded;
             _legend.LayerSelected += LayerSelected;
             _legend.LayerDoubleClick += LayerDoubleClick;
             _legend.LayerStyleClicked += LayerStyleClicked;
             _legend.LayerLabelsClicked += LayerLabelsClicked;
             _legend.LayerDiagramsClicked += _legend_LayerDiagramsClicked;
             _legend.LayerCategoryClicked += LayerCategoryClicked;
+        }
+
+        private void LegendLayerAdded(object sender, Api.Legend.Events.LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerAdded_, sender as IMuteLegend, e);
         }
 
         private void LayerCategoryClicked(object sender, Api.Legend.Events.LayerCategoryEventArgs e)

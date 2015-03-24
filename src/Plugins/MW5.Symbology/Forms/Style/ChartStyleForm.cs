@@ -28,7 +28,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Utilities;
+using MW5.Plugins.Symbology.Forms.Categories;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
@@ -537,9 +537,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
 
            _selectedTab = tabControl1.SelectedIndex;
-
-           // saves options for default loading behavior
-           LayerSettingsService.SaveLayerOptions(_handle);
 
            DialogResult = DialogResult.OK;
        }

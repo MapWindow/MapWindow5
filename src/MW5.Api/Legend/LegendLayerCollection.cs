@@ -147,7 +147,7 @@ namespace MW5.Api.Legend
             _axMap.LockWindow(tkLockMode.lmUnlock);
 
             _legend.Redraw();
-            _legend.FireGroupAdded(mapLayerHandle);
+            _legend.FireLayerAdded(mapLayerHandle);
 
             return mapLayerHandle;
         }

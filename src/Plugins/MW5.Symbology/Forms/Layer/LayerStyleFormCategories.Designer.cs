@@ -25,7 +25,6 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
@@ -53,26 +52,17 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             }
 
             // layer settings
-
-            chkSetGradient.Checked = _settings.CategoriesUseGradient;
-            chkRandomColors.Checked = _settings.CategoriesRandomColors;
-            udNumCategories.Value = _settings.CategoriesCount;
-            chkUniqueValues.Checked = _settings.CategoriesClassification == Classification.UniqueValues;
-            chkUseVariableSize.Checked = _settings.CategoriesVariableSize;
+            chkSetGradient.Checked = _metadata.CategoriesUseGradient;
+            chkRandomColors.Checked = _metadata.CategoriesRandomColors;
+            udNumCategories.Value = _metadata.CategoriesCount;
+            chkUniqueValues.Checked = _metadata.CategoriesClassification == Classification.UniqueValues;
+            chkUseVariableSize.Checked = _metadata.CategoriesVariableSize;
 
             // fills in the list of fields
-            FillFieldList(_settings.CategoriesFieldName);
+            FillFieldList(_metadata.CategoriesFieldName);
 
-            // TODO: restore
             // setting the color scheme that is in use
-            //for (int i = 0; i < icbCategories.Items.Count; i++)
-            //{
-            //    if (m_plugin.LayerColors.List[i] == _settings.CategoriesColorScheme)
-            //    {
-            //        icbCategories.SelectedIndex = i;
-            //        break;
-            //    }
-            //}
+            icbCategories.SetSelectedItem(_metadata.CategoriesColorScheme);
 
             var type = _shapefile.GeometryType;
             groupVariableSize.Visible = (type == MW5.Api.GeometryType.Point || type == MW5.Api.GeometryType.Polyline);
@@ -85,7 +75,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             {
                 udMinSize.SetValue(_shapefile.Style.Line.Width);
             }
-            udMaxSize.SetValue((double)udMinSize.Value + _settings.CategoriesSizeRange);
+            udMaxSize.SetValue((double)udMinSize.Value + _metadata.CategoriesSizeRange);
 
             RefreshCategoriesList();
 
@@ -117,7 +107,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             }
 
             if (index == -1)
+            {
                 return;
+            }
 
             var classification = chkUniqueValues.Checked ? Classification.UniqueValues : Classification.NaturalBreaks;
 
@@ -168,21 +160,17 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             _shapefile.Categories.ApplyExpressions();
 
-            // updating labels
-            //LabelUtilities.GenerateCategories(m_mapWin, _layerHandle);
-
             RefreshCategoriesList();
             RedrawMap();
 
             // saving the settings
-
-            _settings.CategoriesClassification = classification;
-            _settings.CategoriesFieldName = name;
-            _settings.CategoriesSizeRange = (int)(udMaxSize.Value - udMinSize.Value);
-            _settings.CategoriesCount = (int)udNumCategories.Value;
-            _settings.CategoriesRandomColors = chkRandomColors.Checked;
-            _settings.CategoriesUseGradient = chkSetGradient.Checked;
-            _settings.CategoriesVariableSize = chkUseVariableSize.Checked;
+            _metadata.CategoriesClassification = classification;
+            _metadata.CategoriesFieldName = name;
+            _metadata.CategoriesSizeRange = (int)(udMaxSize.Value - udMinSize.Value);
+            _metadata.CategoriesCount = (int)udNumCategories.Value;
+            _metadata.CategoriesRandomColors = chkRandomColors.Checked;
+            _metadata.CategoriesUseGradient = chkSetGradient.Checked;
+            _metadata.CategoriesVariableSize = chkUseVariableSize.Checked;
 
             // cleaning
             if (showWaiting)
@@ -258,51 +246,37 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         }
 
         /// <summary>
-        /// Applies color scheme chosen in the image combo to actegories
+        /// Applies color scheme chosen in the image combo to categories
         /// </summary>
         private void ApplyColorScheme2Categories()
         {
-            if (_shapefile.Categories.Count > 0)
+            if (_shapefile.Categories.Count == 0)
             {
-                ColorRamp scheme = null;
-                if (icbCategories.SelectedIndex >= 0)
-                {
-                    ColorBlend blend = (ColorBlend)icbCategories.ColorSchemes.List[icbCategories.SelectedIndex];
-                    scheme = blend.ToColorScheme();
+                return;
+            }
 
-                    // saving the settings
-                    _settings.CategoriesColorScheme = blend;
-                }
-                else
-                    return;
+            _metadata.CategoriesColorScheme = icbCategories.GetSelectedItem();
+            var scheme = ColorBlendHelper.ToColorScheme(_metadata.CategoriesColorScheme);
 
-                if (chkRandomColors.Checked)
-                {
-                    _shapefile.Categories.ApplyColorScheme(ColorRampType.Random, scheme);
-                }
-                else
-                {
-                    _shapefile.Categories.ApplyColorScheme(ColorRampType.Graduated, scheme);
-                }
+            _shapefile.Categories.ApplyColorScheme(chkRandomColors.Checked ? ColorRampType.Random: ColorRampType.Graduated, scheme);
 
-                var categories = _shapefile.Categories;
-                if (chkSetGradient.Checked)
+            var categories = _shapefile.Categories;
+            if (chkSetGradient.Checked)
+            {
+                for (int i = 0; i < categories.Count; i++)
                 {
-                    for (int i = 0; i < categories.Count; i++)
-                    {
-                        var options = categories[i].Style;
-                        options.Fill.SetGradient(options.Fill.Color, 75);
-                        options.Fill.Type = FillType.Gradient;
-                    }
+                    var options = categories[i].Style;
+                    options.Fill.SetGradient(options.Fill.Color, 75);
+                    options.Fill.Type = FillType.Gradient;
                 }
-                else
+            }
+            else
+            {
+                for (int i = 0; i < categories.Count; i++)
                 {
-                    for (int i = 0; i < categories.Count; i++)
-                    {
-                        IGeometryStyle options = categories[i].Style;
-                        options.Fill.Color2 = options.Fill.Color;
-                        options.Fill.Type = FillType.Solid;
-                    }
+                    IGeometryStyle options = categories[i].Style;
+                    options.Fill.Color2 = options.Fill.Color;
+                    options.Fill.Type = FillType.Solid;
                 }
             }
         }
@@ -362,8 +336,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             _shapefile.Categories.Clear();
             RefreshCategoriesList();
 
-            var layer = _legend.Layers.ItemByHandle(_layerHandle);
-            _settings.CategoriesClassification = chkUniqueValues.Checked ? Classification.UniqueValues : Classification.NaturalBreaks;
+            _metadata.CategoriesClassification = chkUniqueValues.Checked ? Classification.UniqueValues : Classification.NaturalBreaks;
 
             RedrawMap();
         }
@@ -384,11 +357,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                 RefreshControlsState(null, null);
                 return;
             }
-            else
-            {
-                dgvCategories.ColumnHeadersVisible = true;
-            }
-
+            
+            dgvCategories.ColumnHeadersVisible = true;
             dgvCategories.Rows.Add(numCategories);
 
             bool noEventsState = _noEvents;
@@ -448,15 +418,16 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             var cat = _shapefile.Categories[row];
             if (cat == null) return;
 
-            Form form = FormHelper.GetSymbologyForm(_legend, _layerHandle, _shapefile.GeometryType, cat.Style, true);
-            form.Text = "Category drawing options";
-
-            if (form.ShowDialog(this) == DialogResult.OK)
+            using (Form form = _context.GetSymbologyForm(_layer.Handle, cat.Style, true))
             {
-                dgvCategories.Invalidate();
-                RedrawMap();
+                form.Text = "Category drawing options";
+
+                if (_context.View.ShowDialog(form))
+                {
+                    dgvCategories.Invalidate();
+                    RedrawMap();
+                }
             }
-            form.Dispose();
         }
 
         /// <summary>

@@ -5,7 +5,6 @@ using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms.Categories;
 using MW5.Plugins.Symbology.Forms.Style;
-using MW5.Plugins.Symbology.Forms.Utilities;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
@@ -14,22 +13,30 @@ namespace MW5.Plugins.Symbology.Helpers
         /// <summary>
         /// Displays symbology form of the appropriate type
         /// </summary>
-        public static Form GetSymbologyForm(this IMuteLegend legend, int layerHandle, GeometryType type, IGeometryStyle options, bool applyDisabled)
+        public static Form GetSymbologyForm(this IAppContext context, int layerHandle, IGeometryStyle options, bool applyDisabled)
         {
             Form form = null;
-            var layer = legend.Layers.ItemByHandle(layerHandle);
+            var layer = context.Legend.Layers.ItemByHandle(layerHandle);
+
+            var fs = layer.FeatureSet;
+            if (fs == null)
+            {
+                return null;
+            }
+
+            var type = fs.GeometryType;
 
             if (type == GeometryType.Point || type == GeometryType.MultiPoint)
             {
-                form = new PointsForm(legend, layer, options, applyDisabled);
+                form = new PointsForm(context.Legend, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polyline)
             {
-                form = new LinesForm(legend, layer, options, applyDisabled);
+                form = new LinesForm(context.Legend, layer, options, applyDisabled);
             }
             else if (type == GeometryType.Polygon)
             {
-                form = new PolygonForm(legend, layer, options, applyDisabled);
+                form = new PolygonForm(context.Legend, layer, options, applyDisabled);
             }
             return form;
         }

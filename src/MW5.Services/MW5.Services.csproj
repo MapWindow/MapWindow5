@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\ConfigService.cs" />
+    <Compile Include="Config\LayerMetadataServiceBase.cs" />
     <Compile Include="Config\IConfigPage.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />

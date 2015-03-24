@@ -41,12 +41,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         static int _tabIndex = 0;
 
         private readonly IAppContext _context;
-        private readonly IMuteLegend _legend;
-        private readonly ILegendLayer _layer;
-        private readonly SymbologySettings _settings;
+        private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
-        private readonly int _layerHandle;
-        
+        private readonly SymbologyMetadata _metadata;
+
         private bool _noEvents;
         private string _initState;
         private bool _stateChanged;
@@ -54,24 +52,23 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
         /// </summary>
-        public LayerStyleForm(IAppContext context, int layerHandle)
+        public LayerStyleForm(IAppContext context, ILayer layer)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (layer == null) throw new ArgumentNullException("layer");
+            
             InitializeComponent();
 
             Config.ForceHideLabels = true;
 
             _context = context;
-            _legend = _context.Legend;
+            _layer = layer;
 
-            _layerHandle = layerHandle;
-            _layer = _legend.Layers.ItemByHandle(_layerHandle);
+            _metadata = SymbologyPlugin.Metadata(_layer.Handle);
             _shapefile = _layer.FeatureSet;
 
-            _settings = LayerSettingsService.get_LayerSettings(_layerHandle);
             Text = "Layer properties: " + _layer.Name;
 
-            // update map at once button is off by default which is equal to locked state of the map
             LockLegendAndMap(true);
 
             _initState = SaveState();
@@ -99,7 +96,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             UpdateColorSchemes();
             
             // the state should be set after the loading as otherwise we can trigger unnecessary redraws
-            chkRedrawMap.Checked = _settings.UpdateMapAtOnce;
+            chkRedrawMap.Checked = _metadata.UpdateMapAtOnce;
 
             _noEvents = false;
             
@@ -110,27 +107,23 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             
             AddTooltips();
 
-            // displaying the last tab
             tabControl1.SelectedIndex = _tabIndex;
-
-            //tabControl1.TabPages.Remove(tabCharts);
-            //tabControl1.TabPages.Remove(tabLabels);
-            //tabControl1.TabPages.Remove(tabDefault);
 
             Shown += frmSymbologyMain_Shown;
         }
 
         private void LockLegendAndMap( bool state)
         {
+            var legend = _context.Legend;
             if (state)
             {
-                _legend.Lock();
-                _legend.Map.Lock();
+                legend.Lock();
+                legend.Map.Lock();
             }
             else
             {
-                _legend.Unlock();
-                _legend.Map.Unlock();
+                legend.Unlock();
+                legend.Map.Unlock();
             }
         }
 
@@ -269,7 +262,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void RedrawMap()
         {
-            _legend.Redraw(LegendRedraw.LegendAndMap);
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             
             // it's assumed that we call redraw when state changed only
             if (!_noEvents && !_redrawModeIsChanging)
@@ -285,7 +278,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             if (chkRedrawMap.Checked && !_noEvents)
             {
-                _legend.Redraw();
+                _context.Legend.Redraw();
             }
         }
 
@@ -328,12 +321,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
                 if (!chkRedrawMap.Checked)      // we presume here that the map is in actual state in case the checkbox is set
                 {
-                    _legend.Redraw(LegendRedraw.LegendAndMap);
+                    _context.Legend.Redraw(LegendRedraw.LegendAndMap);
                 }
 
-                _settings.ShowLayerPreview = chkLayerPreview.Checked;
-                _settings.UpdateMapAtOnce = chkRedrawMap.Checked;
-                _settings.Comments = txtComments.Text;
+                _metadata.ShowLayerPreview = chkLayerPreview.Checked;
+                _metadata.UpdateMapAtOnce = chkRedrawMap.Checked;
+                _metadata.Comments = txtComments.Text;
 
                 axMap1.Layers.RemoveWithoutClosing(0);
             }
@@ -392,27 +385,24 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void CancelChanges()
         {
-            var map = _legend.Map;
-            if (map != null)
+            
+            string state = _layer.Serialize();
+
+            if (state != _initState)
             {
-                string state = map.Layers.ItemByHandle(_layerHandle).Serialize();
+                // label and chart data must not be serialized
+                var mode1 = _shapefile.Labels.SavingMode;
+                var mode2 = _shapefile.Diagrams.SavingMode;
 
-                if (state != _initState)
-                {
-                    // label and chart data must not be serialized
-                    var mode1 = _shapefile.Labels.SavingMode;
-                    var mode2 = _shapefile.Diagrams.SavingMode;
+                _shapefile.Labels.SavingMode = PersistenceType.None;
+                _shapefile.Diagrams.SavingMode = PersistenceType.None;
 
-                    _shapefile.Labels.SavingMode = PersistenceType.None;
-                    _shapefile.Diagrams.SavingMode = PersistenceType.None;
+                bool res = _layer.Deserialize(_initState);
 
-                    bool res = map.Layers.ItemByHandle(_layerHandle).Deserialize(_initState);
+                _shapefile.Labels.SavingMode = mode1;
+                _shapefile.Diagrams.SavingMode = mode2;
 
-                    _shapefile.Labels.SavingMode = mode1;
-                    _shapefile.Diagrams.SavingMode = mode2;
-
-                    _legend.Redraw(LegendRedraw.LegendAndMap);
-                }
+                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             }
 
             LockLegendAndMap(false);
@@ -432,7 +422,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                 {
                     LockLegendAndMap(false);
 
-                    _legend.Redraw(LegendRedraw.LegendAndMap);
+                    _context.Legend.Redraw(LegendRedraw.LegendAndMap);
                     Application.DoEvents();
 
                     LockLegendAndMap(true);
@@ -459,9 +449,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             }
 
             LockLegendAndMap(false);
-            
-            // saves options for default loading behavior
-            LayerSettingsService.SaveLayerOptions(_layerHandle);
         }
 
         /// <summary>
@@ -470,21 +457,19 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private string SaveState()
         {
             string state = "";
-            var map = _legend.Map;
-            if (map != null)
-            {
-                // serializing for undo (label and chart data must not be serialized)
-                var mode1 = _shapefile.Labels.SavingMode;
-                var mode2 = _shapefile.Diagrams.SavingMode;
+            
+            // serializing for undo (label and chart data must not be serialized)
+            var mode1 = _shapefile.Labels.SavingMode;
+            var mode2 = _shapefile.Diagrams.SavingMode;
 
-                _shapefile.Labels.SavingMode = PersistenceType.None;
-                _shapefile.Diagrams.SavingMode = PersistenceType.None;
+            _shapefile.Labels.SavingMode = PersistenceType.None;
+            _shapefile.Diagrams.SavingMode = PersistenceType.None;
 
-                state = map.Layers.ItemByHandle(_layerHandle).Serialize();
+            state = _layer.Serialize();
 
-                _shapefile.Labels.SavingMode = mode1;
-                _shapefile.Diagrams.SavingMode = mode2;
-            }
+            _shapefile.Labels.SavingMode = mode1;
+            _shapefile.Diagrams.SavingMode = mode2;
+
             return state;
         }
 

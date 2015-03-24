@@ -60,7 +60,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
             pattern.AddLine(Color.Red, 1, DashStyle.Solid);
             _patterns.Add(pattern);
 
-            // TODO: mode patterns can be added
+            // TODO: more patterns can be added
 
             ItemCount = _patterns.Count;
         }
@@ -166,7 +166,6 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                 }
             }
 
-            // TEMP
             _patterns.Clear();
             ItemCount = _patterns.Count;
 
@@ -176,16 +175,15 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
         /// <summary>
         /// Loads all the icons form the current path
         /// </summary>
-        /// <param name="path"></param>
         public void LoadFromXml()
         {
             _patterns.Clear();
 
-            XmlDocument xmlDoc = new XmlDocument();
+            var xmlDoc = new XmlDocument();
             string filename = get_FileName();
 
             // reading from the file
-            if (System.IO.File.Exists(filename))
+            if (File.Exists(filename))
             {
                 xmlDoc.Load(filename);
 

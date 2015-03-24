@@ -36,6 +36,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         private static int _tabPage;
 
         private readonly IGeometryStyle _options;
+        private readonly SymbologyMetadata _metadata;
         private readonly IMuteLegend _legend;
         private string _initState;
         private bool _noEvents;
@@ -55,6 +56,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
             
             _options = options;
+            _metadata = SymbologyPlugin.Metadata(layer.Handle);
             _legend = legend;
             btnApply.Visible = !applyDisabled;
 
@@ -99,8 +101,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 iconControl1.FilePath = path;
                 iconControl1.Textures = true;
 
-                SymbologySettings settings = LayerSettingsService.get_LayerSettings(layer.Handle);
-                iconControl1.SelectedIndex = settings.IconIndex;
+                iconControl1.SelectedIndex = _metadata.IconIndex;
             }
             else
             {

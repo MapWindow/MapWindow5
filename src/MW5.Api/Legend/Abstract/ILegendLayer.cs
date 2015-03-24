@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
+using MW5.Api.Plugins;
 
 namespace MW5.Api.Legend.Abstract
 {
@@ -41,12 +42,12 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// Returns custom object for specified key
         /// </summary>
-        object GetCustomObject(string key);
+        T GetCustomObject<T>(object key) where T : LayerMetadataBase;
 
         /// <summary>
         /// Sets custom object associated with layer
         /// </summary>
-        void SetCustomObject(object obj, string key);
+        void SetCustomObject<T>(T obj, object key) where T : LayerMetadataBase;
 
         /// <summary>
         /// Gets a snapshot (bitmap) of the layer

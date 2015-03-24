@@ -31,7 +31,6 @@ using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
@@ -357,7 +356,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 return;
             }
 
-            using (var form = _context.Legend.GetSymbologyForm(_layerHandle, _shapefile.GeometryType, cat.Style, true))
+            using (var form = _context.GetSymbologyForm(_layerHandle, cat.Style, true))
             {
                 form.Text = "Category drawing options";
 
@@ -796,8 +795,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             {
                 _context.Project.SetModified();
             }
-
-            LayerSettingsService.SaveLayerOptions(_layerHandle);
         }
 
         /// <summary>

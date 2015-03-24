@@ -31,7 +31,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void InitGeneralTab()
         {
             chkLayerVisible.Checked = _layer.Visible;
-            chkLayerPreview.Checked = _settings.ShowLayerPreview;
+            chkLayerPreview.Checked = _metadata.ShowLayerPreview;
 
             txtLayerName.Text = _layer.Name;
 
@@ -42,16 +42,15 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             string s = "";
 
-            var map = _legend.Map;
-            var layer = map.Layers.ItemByHandle(_layerHandle);
-            txtComments.Text = layer.Description;
+            var map = _context.Map;
+            txtComments.Text = _layer.Description;
 
             var ext = _shapefile.Envelope;
             //string units = Globals.get_MapUnits();
             string units = "";
             string type = _shapefile.GeometryType.ToString();
 
-            var ogr = layer.VectorLayer;
+            var ogr = _layer.VectorLayer;
             if (ogr != null)
             {
                 s += "Datasource type: OGR layer" + Environment.NewLine;
@@ -105,12 +104,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void txtComments_Validated(object sender, EventArgs e)
         {
-            var map = _legend.Map;
-            if (map != null)
-            {
-                map.Layers.ItemByHandle(_layerHandle).Description = txtComments.Text;
-                MarkStateChanged();
-            }
+            _layer.Description = txtComments.Text;
+            MarkStateChanged();
         }
 
         /// <summary>
@@ -118,14 +113,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void txtComments_KeyPress(object sender, KeyPressEventArgs e)
         {
-            var map = _legend.Map;
-            if (map != null)
+            if (e.KeyChar == (char)Keys.Enter)
             {
-                if (e.KeyChar == (char)Keys.Enter)
-                {
-                    map.Layers.ItemByHandle(_layerHandle).Description = txtComments.Text;
-                    MarkStateChanged();
-                }
+                _layer.Description = txtComments.Text;
+                MarkStateChanged();
             }
         }
 

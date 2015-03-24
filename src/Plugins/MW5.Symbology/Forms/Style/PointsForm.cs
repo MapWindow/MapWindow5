@@ -641,7 +641,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             _tabIndex = tabControl1.SelectedIndex;
 
-            SymbologySettings settings = null; //Globals.get_LayerSettings(_layer.Handle, _mapWin);
+            SymbologyMetadata settings = null; //Globals.get_LayerSettings(_layer.Handle, _mapWin);
 
             if (settings != null)
             {

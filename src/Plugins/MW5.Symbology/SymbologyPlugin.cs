@@ -18,6 +18,7 @@ namespace MW5.Plugins.Symbology
         private LegendListener _legendListener;
         private MenuService _menuService;
         private LabelMover _labelMover;
+        private SymbologyMetadataService _metadataService;
 
         static SymbologyPlugin()
         {
@@ -26,20 +27,28 @@ namespace MW5.Plugins.Symbology
             ColorSchemeProvider.Load();
         }
 
-        internal static IAppContext Context
-        {
-            get { return _context; }
-        }
-
         internal static IMessageService Msg
         {
             get { return _context.Container.GetSingleton<IMessageService>(); }
+        }
+
+        internal static SymbologyMetadata Metadata(int layerHandle)
+        {
+            var service = _context.Container.Resolve<SymbologyMetadataService>();
+            return service.Get(layerHandle);
+        }
+
+        internal static void AttachMetadata(int layerHandle)
+        {
+            var service = _context.Container.Resolve<SymbologyMetadataService>();
+            service.Save(layerHandle, new SymbologyMetadata());
         }
 
         public override void Initialize(IAppContext context)
         {
             _context = context;
 
+            _metadataService = context.Container.GetSingleton<SymbologyMetadataService>();
             _labelMover = context.Container.GetSingleton<LabelMover>();
             _legendListener = context.Container.GetInstance<LegendListener>();
             _menuService = context.Container.GetInstance<MenuService>();

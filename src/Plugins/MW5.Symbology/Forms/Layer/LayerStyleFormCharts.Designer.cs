@@ -26,7 +26,6 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Style;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Layer

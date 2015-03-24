@@ -9,6 +9,7 @@ using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Api.Plugins;
 
 namespace MW5.Api.Legend
 {
@@ -19,8 +20,7 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControl _legend;
         private readonly List<LayerElement> _elements; // size and positions of elements
-        private readonly Dictionary<string, object> _customObjects;
-        private Guid _guid;
+        private readonly Dictionary<object, LayerMetadataBase> _customObjects;
 
         private bool _expanded;
         private object _icon;
@@ -40,8 +40,8 @@ namespace MW5.Api.Legend
             _legend = legend;   // must be the first line in constructor
             _icon = null;
             _elements = new List<LayerElement>();
-            _customObjects = new Dictionary<string, object>();
-            _guid = Guid.NewGuid();
+            _customObjects = new Dictionary<object, LayerMetadataBase>();
+            Guid = Guid.NewGuid();
             _recalcHeight = true;
 
             Expanded = true;
@@ -50,6 +50,7 @@ namespace MW5.Api.Legend
         }
 
         #region Custom rendering
+
         // internal for now; need to see how to (and whether to) expose it to plugins
 
         /// <summary>
@@ -68,15 +69,9 @@ namespace MW5.Api.Legend
         /// </summary>
         internal bool ExpansionBoxForceAllowed = false;
 
-        
-
         #endregion
 
-        public Guid Guid
-        {
-            get { return _guid; }
-            set { _guid = value; }
-        }
+        public Guid Guid { get; set; }
 
         /// <summary>
         /// Gets or sets the icon that appears next to this layer in the legend.
@@ -202,18 +197,16 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Returns custom object for specified key
         /// </summary>
-        public object GetCustomObject(string key)
+        public T GetCustomObject<T>(object key) where T : LayerMetadataBase
         {
-            // TODO: add constraint that an object is serializable
-            return _customObjects[key];
+            return _customObjects[key] as T;
         }
 
         /// <summary>
         /// Sets custom object associated with layer
         /// </summary>
-        public void SetCustomObject(object obj, string key)
+        public void SetCustomObject<T>(T obj, object key) where T: LayerMetadataBase
         {
-            // TODO: add constraint that an object is serializable
             _customObjects[key] = obj;
         }
 

@@ -60,6 +60,24 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             SelectedIndex = _provider.SelectedIndex >= 0 ? _provider.SelectedIndex : index;
         }
 
+        public void SetSelectedItem(ColorBlend blend)
+        {
+            for (int i = 0; i < _provider.List.Count; i++)
+            {
+                // TODO: after serialization we need to compare by value as references will be different
+                if (_provider.List[i] == blend)
+                {
+                    SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        public ColorBlend GetSelectedItem()
+        {
+            return SelectedItem != null ? ColorSchemes.List[SelectedIndex] : null;
+        }
+
         /// <summary>
         /// Gets the list of color schemes
         /// </summary>

@@ -17,18 +17,16 @@
 // ********************************************************************************************************
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
 
-namespace MW5.Plugins.Symbology.Forms.Utilities
+namespace MW5.Plugins.Symbology.Forms.Categories
 {
     public partial class QueryBuilderForm : MapWindowForm
     {
@@ -39,30 +37,27 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         private readonly int _layerHandle;
         private readonly ILayer _layer;
         private readonly bool _selectionMode;
+        private readonly SymbologyMetadata _metadata;
         private bool _noEvents;
-
-        internal QueryBuilderForm()
-        {
-            
-        }
 
         /// <summary>
         /// Creates a new instance of frmQueryBuilder class
         /// </summary>
         public QueryBuilderForm(ILayer layer, string expression, bool selectionMode)
         {
-            InitializeComponent();
-
             if (layer == null || layer.FeatureSet == null)
             {
                 throw new ArgumentNullException("layer");
             }
+
+            InitializeComponent();
 
             var sf = layer.FeatureSet;
 
             _shapefile = sf;
             _layer = layer;
             _selectionMode = selectionMode;
+            _metadata = SymbologyPlugin.Metadata(layer.Handle);
             _layerHandle = layer.Handle;
 
             btnTest.Text = selectionMode ? "Select" : "Test";
@@ -104,9 +99,8 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
             _noEvents = true;
 
             // restoring values
-            var settings = LayerSettingsService.get_LayerSettings(_layerHandle);
-            chkShowValues.Checked = settings.ShowQueryValues;
-            chkShowDynamically.Checked = settings.ShowQueryOnMap;
+            chkShowValues.Checked = _metadata.ShowQueryValues;
+            chkShowDynamically.Checked = _metadata.ShowQueryOnMap;
 
             _noEvents = false;
         }
@@ -298,10 +292,9 @@ namespace MW5.Plugins.Symbology.Forms.Utilities
         private void btnOk_Click(object sender, EventArgs e)
         {
             this.Tag = richTextBox1.Text;
-            SymbologySettings settings = LayerSettingsService.get_LayerSettings(_layerHandle);
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
             settings.ShowQueryValues = chkShowValues.Checked;
             settings.ShowQueryOnMap = chkShowDynamically.Checked;
-            LayerSettingsService.SaveLayerSettings(_layerHandle, settings);
         }
 
         // Adding field to the text control

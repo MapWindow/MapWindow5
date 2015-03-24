@@ -23,7 +23,6 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
@@ -105,7 +104,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnDrawingOptions_Click(object sender, EventArgs e)
         {
-            using (var form = FormHelper.GetSymbologyForm(_legend, _layerHandle, _shapefile.GeometryType, _shapefile.Style, true))
+            using (var form = FormHelper.GetSymbologyForm(_context, _layer.Handle, _shapefile.Style, true))
             {
                 form.Text = "Default drawing options";
                 if (_context.View.ShowDialog(form, this))

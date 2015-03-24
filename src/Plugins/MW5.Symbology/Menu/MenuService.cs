@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI.Menu;

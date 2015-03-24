@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Events;
+using MW5.Api.Plugins;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 
@@ -165,6 +166,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape_;
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
+        internal LegendEventHandler<LayerEventArgs> LayerAdded_;
         internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseDown_;
         internal MapEventHandler<MouseEventArgs> MouseMove_;
@@ -211,7 +213,12 @@ namespace MW5.Plugins.Concrete
 
         public event MapEventHandler<FileDroppedEventArgs> FileDropped;
         public event MapEventHandler<GridOpenedEventArgs> GridOpened;
-        public event MapEventHandler<LayerAddedEventArgs> LayerAdded;
+        public event LegendEventHandler<LayerEventArgs> LayerAdded
+        {
+            add { LayerAdded_ += value; }
+            remove { LayerAdded_ -= value; }
+        }
+
         public event MapEventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
         public event MapEventHandler<LayerRemovedEventArgs> LayerRemoved;
         public event MapEventHandler<LayerReprojectedEventArgs> LayerReprojected;

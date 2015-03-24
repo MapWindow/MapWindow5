@@ -144,7 +144,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
         /// </summary>
         void IconControl_OnDrawItem(Graphics graphics, RectangleF rect, int itemIndex, bool selected)
         {
-            Image img = _icons[itemIndex].img;
+            var img = _icons[itemIndex].img;
             if (img != null)
             {
                 RectangleF r = new RectangleF();

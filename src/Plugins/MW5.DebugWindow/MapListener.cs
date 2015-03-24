@@ -192,7 +192,7 @@ namespace MW5.Plugins.DebugWindow
         /// <param name="e">
         /// The e.
         /// </param>
-        private void PluginOnLayerAdded(IMuteMap map, LayerAddedEventArgs e)
+        private void PluginOnLayerAdded(IMuteLegend legend, LayerEventArgs e)
         {
             _debugWindow.Write("MapListener.PluginOnLayerAdded", e.LayerHandle.ToString(CultureInfo.InvariantCulture));
         }

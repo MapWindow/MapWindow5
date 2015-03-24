@@ -26,7 +26,6 @@ using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
-using MW5.Plugins.Symbology.Forms.Utilities;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
@@ -59,8 +58,8 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             InitializeComponent();
 
             _shapefile = layer.FeatureSet;
-            
-            var settings = LayerSettingsService.get_LayerSettings(_layer.Handle);
+
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
             
             // classification
             cboClassificationType.Items.Clear();
@@ -85,45 +84,14 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             icbColorScheme.ColorSchemeType = ColorSchemes.Default;
 
             // settings active color scheme
-            for (int i = 0; i < icbColorScheme.Items.Count; i++)
-            {
-                if (icbColorScheme.ColorSchemes.List[i] == settings.CategoriesColorScheme)
-                {
-                    icbColorScheme.SelectedIndex = i;
-                    break;
-                }
-            }
-            if (icbColorScheme.SelectedItem == null)
-                icbColorScheme.SelectedIndex = 0;
+            icbColorScheme.SetSelectedItem(settings.CategoriesColorScheme);
 
-            if (_shapefile.PointOrMultiPoint)
+            if (icbColorScheme.SelectedItem == null)
             {
-                chkUseVariableSize.Text = "Use variable symbol size";
-                udMinSize.Minimum = 1;
-                udMinSize.Maximum = 80;
-                udMaxSize.Minimum = 1;
-                udMaxSize.Maximum = 80;
-                udMinSize.SetValue(_shapefile.Style.Marker.Size);
-                udMaxSize.SetValue((double)udMinSize.Value + settings.CategoriesSizeRange);
+                icbColorScheme.SelectedIndex = 0;
             }
-            else if (_shapefile.GeometryType == MW5.Api.GeometryType.Polyline)
-            {
-                chkUseVariableSize.Text = "Use variable line width";
-                udMinSize.Minimum = 1;
-                udMinSize.Maximum = 10;
-                udMaxSize.Minimum = 1;
-                udMaxSize.Maximum = 10;
-                udMinSize.SetValue(_shapefile.Style.Line.Width);
-                udMaxSize.SetValue((double)udMinSize.Value + settings.CategoriesSizeRange);
-            }
-            else
-            {
-                chkUseVariableSize.Enabled = false;
-                udMinSize.Value = udMinSize.Minimum;
-                udMinSize.Enabled = false;
-                udMaxSize.Value = udMaxSize.Minimum;
-                udMaxSize.Enabled = false;
-            }
+
+            InitSize();
 
             chkRandomColors.Checked = settings.CategoriesRandomColors;
             chkSetGradient.Checked = settings.CategoriesUseGradient;
@@ -141,7 +109,41 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 }
             }
         }
-       
+
+        private void InitSize()
+        {
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+
+            if (_shapefile.PointOrMultiPoint)
+            {
+                chkUseVariableSize.Text = "Use variable symbol size";
+                udMinSize.Minimum = 1;
+                udMinSize.Maximum = 80;
+                udMaxSize.Minimum = 1;
+                udMaxSize.Maximum = 80;
+                udMinSize.SetValue(_shapefile.Style.Marker.Size);
+                udMaxSize.SetValue((double)udMinSize.Value + settings.CategoriesSizeRange);
+            }
+            else if (_shapefile.GeometryType == GeometryType.Polyline)
+            {
+                chkUseVariableSize.Text = "Use variable line width";
+                udMinSize.Minimum = 1;
+                udMinSize.Maximum = 10;
+                udMaxSize.Minimum = 1;
+                udMaxSize.Maximum = 10;
+                udMinSize.SetValue(_shapefile.Style.Line.Width);
+                udMaxSize.SetValue((double)udMinSize.Value + settings.CategoriesSizeRange);
+            }
+            else
+            {
+                chkUseVariableSize.Enabled = false;
+                udMinSize.Value = udMinSize.Minimum;
+                udMinSize.Enabled = false;
+                udMaxSize.Value = udMaxSize.Minimum;
+                udMaxSize.Enabled = false;
+            }
+        }
+
         /// <summary>
         /// Generates shapefile categories according to specified options
         /// </summary>
@@ -213,52 +215,26 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         }
 
         /// <summary>
-        /// Generates label categories for the given set of categories
-        /// </summary>
-        //private void GenerateLabelCategories()
-        //{
-        //    Layer layer = m_legend.Layers.ItemByHandle(_layerHandle);
-        //    if (layer == null) return;
-
-        //    _shapefile.Labels.ClearCategories();
-        //    for (int i = 0; i < _shapefile.Categories.Count; i++)
-        //    {
-        //        _shapefile.Labels.AddCategory(_shapefile.Categories.get_Item(i).Name);
-        //    }
-        //}
-
-        /// <summary>
         /// Saves the state of controls for the further launches
         /// </summary>
         private void SaveSettings()
         {
-            var settings = LayerSettingsService.get_LayerSettings(_layer.Handle);
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
 
             int count;
             settings.CategoriesCount = Int32.TryParse(cboCategoriesCount.Text, out count) ? count : 8;
 
-            // saving the options for the next time
-            if (cboField.SelectedItem != null)
-                settings.CategoriesFieldName = ((RealIndexComboItem)cboField.SelectedItem).Text;
-            else
-                settings.CategoriesFieldName = string.Empty;
-
+            settings.CategoriesFieldName = cboField.SelectedItem != null ? ((RealIndexComboItem)cboField.SelectedItem).Text : string.Empty;
             settings.CategoriesClassification = (Classification)cboClassificationType.SelectedIndex; ;
-
-            if (icbColorScheme.SelectedItem != null)
-                settings.CategoriesColorScheme = (ColorBlend)icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
-            else
-                settings.CategoriesColorScheme = null;
-
+            settings.CategoriesColorScheme = icbColorScheme.GetSelectedItem();
             settings.CategoriesRandomColors = chkRandomColors.Checked;
             settings.CategoriesUseGradient = chkSetGradient.Checked;
             settings.CategoriesVariableSize = chkUseVariableSize.Checked;
-            //settings.CategoriesSortingField = cboSortingField.Text;
 
             if (chkUseVariableSize.Checked)
-                settings.CategoriesSizeRange = (int)(udMaxSize.Value - udMinSize.Value);
-
-            LayerSettingsService.SaveLayerSettings(_layer.Handle, settings);
+            {
+                settings.CategoriesSizeRange = (int) (udMaxSize.Value - udMinSize.Value);
+            }
         }
 
         /// <summary>

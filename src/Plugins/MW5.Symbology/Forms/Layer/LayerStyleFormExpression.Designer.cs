@@ -17,7 +17,7 @@
 // ********************************************************************************************************
 
 using System;
-using MW5.Plugins.Symbology.Forms.Utilities;
+using MW5.Plugins.Symbology.Forms.Categories;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
@@ -29,7 +29,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void btnLayerExpression_Click(object sender, EventArgs e)
         {
             string s = txtLayerExpression.Text;
-            using (var form = new QueryBuilderForm(_context.Layers.ItemByHandle(_layerHandle), s, false))
+            var layer = _context.Layers.ItemByHandle(_layer.Handle);
+            using (var form = new QueryBuilderForm(layer, s, false)) 
             {
                 if (_context.View.ShowDialog(form, this))
                 {

@@ -15,1177 +15,1177 @@ using System.Xml.Serialization;
 // 
 
 
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = true)]
-public partial class Image
-{
-
-    private string typeField;
-
-    private string valueField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Type
-    {
-        get
-        {
-            return this.typeField;
-        }
-        set
-        {
-            this.typeField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTextAttribute()]
-    public string Value
-    {
-        get
-        {
-            return this.valueField;
-        }
-        set
-        {
-            this.valueField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-public partial class Mapwin
-{
-
-    private string pluginsField;
-
-    private string colorPalettesField;
-
-    private string favoriteProjectionsField;
-
-    private MapwinAppInfo[] appInfoField;
-
-    private MapwinRecentProjectsProject[][] recentProjectsField;
-
-    private MapwinView[] viewField;
-
-    private MapwinApplicationPlugins[] applicationPluginsField;
-
-    private string typeField;
-
-    private string versionField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public string Plugins
-    {
-        get
-        {
-            return this.pluginsField;
-        }
-        set
-        {
-            this.pluginsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public string ColorPalettes
-    {
-        get
-        {
-            return this.colorPalettesField;
-        }
-        set
-        {
-            this.colorPalettesField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public string FavoriteProjections
-    {
-        get
-        {
-            return this.favoriteProjectionsField;
-        }
-        set
-        {
-            this.favoriteProjectionsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("AppInfo", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public MapwinAppInfo[] AppInfo
-    {
-        get
-        {
-            return this.appInfoField;
-        }
-        set
-        {
-            this.appInfoField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    [System.Xml.Serialization.XmlArrayItemAttribute("Project", typeof(MapwinRecentProjectsProject), Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public MapwinRecentProjectsProject[][] RecentProjects
-    {
-        get
-        {
-            return this.recentProjectsField;
-        }
-        set
-        {
-            this.recentProjectsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("View", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public MapwinView[] View
-    {
-        get
-        {
-            return this.viewField;
-        }
-        set
-        {
-            this.viewField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("ApplicationPlugins", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public MapwinApplicationPlugins[] ApplicationPlugins
-    {
-        get
-        {
-            return this.applicationPluginsField;
-        }
-        set
-        {
-            this.applicationPluginsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string type
-    {
-        get
-        {
-            return this.typeField;
-        }
-        set
-        {
-            this.typeField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string version
-    {
-        get
-        {
-            return this.versionField;
-        }
-        set
-        {
-            this.versionField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class MapwinAppInfo
-{
-
-    private Image[][] windowIconField;
-
-    private Image[][] splashPictureField;
-
-    private string nameField;
-
-    private string versionField;
-
-    private string buildDateField;
-
-    private string developerField;
-
-    private string commentsField;
-
-    private string helpFilePathField;
-
-    private string useSplashScreenField;
-
-    private string splashTimeField;
-
-    private string defaultDirField;
-
-    private string uRLField;
-
-    private string showWelcomeScreenField;
-
-    private string welcomePluginField;
-
-    private string neverShowProjectionDialogField;
-
-    private string noPromptToSendErrorsField;
-
-    private string logfilePathField;
-
-    private string showDynVisWarningsField;
-
-    private string showLayerAfterDynVisField;
-
-    private string symbologyLoadingBehaviorField;
-
-    private string projectionMismatchBehaviorField;
-
-    private string projectionAbsenceBehaviorField;
-
-    private string showLoadingReportField;
-
-    private string projectReloadingField;
-
-    private string displayFloatingScalebarField;
-
-    private string displayRedrawSpeedField;
-
-    private string displayMapWindowVersionField;
-
-    private string displayAvoidCollisionField;
-
-    private string displayAutoCreatespatialindexField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    [System.Xml.Serialization.XmlArrayItemAttribute("Image", typeof(Image))]
-    public Image[][] WindowIcon
-    {
-        get
-        {
-            return this.windowIconField;
-        }
-        set
-        {
-            this.windowIconField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    [System.Xml.Serialization.XmlArrayItemAttribute("Image", typeof(Image))]
-    public Image[][] SplashPicture
-    {
-        get
-        {
-            return this.splashPictureField;
-        }
-        set
-        {
-            this.splashPictureField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Name
-    {
-        get
-        {
-            return this.nameField;
-        }
-        set
-        {
-            this.nameField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Version
-    {
-        get
-        {
-            return this.versionField;
-        }
-        set
-        {
-            this.versionField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string BuildDate
-    {
-        get
-        {
-            return this.buildDateField;
-        }
-        set
-        {
-            this.buildDateField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Developer
-    {
-        get
-        {
-            return this.developerField;
-        }
-        set
-        {
-            this.developerField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Comments
-    {
-        get
-        {
-            return this.commentsField;
-        }
-        set
-        {
-            this.commentsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string HelpFilePath
-    {
-        get
-        {
-            return this.helpFilePathField;
-        }
-        set
-        {
-            this.helpFilePathField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string UseSplashScreen
-    {
-        get
-        {
-            return this.useSplashScreenField;
-        }
-        set
-        {
-            this.useSplashScreenField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string SplashTime
-    {
-        get
-        {
-            return this.splashTimeField;
-        }
-        set
-        {
-            this.splashTimeField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DefaultDir
-    {
-        get
-        {
-            return this.defaultDirField;
-        }
-        set
-        {
-            this.defaultDirField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string URL
-    {
-        get
-        {
-            return this.uRLField;
-        }
-        set
-        {
-            this.uRLField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ShowWelcomeScreen
-    {
-        get
-        {
-            return this.showWelcomeScreenField;
-        }
-        set
-        {
-            this.showWelcomeScreenField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string WelcomePlugin
-    {
-        get
-        {
-            return this.welcomePluginField;
-        }
-        set
-        {
-            this.welcomePluginField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string NeverShowProjectionDialog
-    {
-        get
-        {
-            return this.neverShowProjectionDialogField;
-        }
-        set
-        {
-            this.neverShowProjectionDialogField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string NoPromptToSendErrors
-    {
-        get
-        {
-            return this.noPromptToSendErrorsField;
-        }
-        set
-        {
-            this.noPromptToSendErrorsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LogfilePath
-    {
-        get
-        {
-            return this.logfilePathField;
-        }
-        set
-        {
-            this.logfilePathField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ShowDynVisWarnings
-    {
-        get
-        {
-            return this.showDynVisWarningsField;
-        }
-        set
-        {
-            this.showDynVisWarningsField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ShowLayerAfterDynVis
-    {
-        get
-        {
-            return this.showLayerAfterDynVisField;
-        }
-        set
-        {
-            this.showLayerAfterDynVisField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string SymbologyLoadingBehavior
-    {
-        get
-        {
-            return this.symbologyLoadingBehaviorField;
-        }
-        set
-        {
-            this.symbologyLoadingBehaviorField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ProjectionMismatchBehavior
-    {
-        get
-        {
-            return this.projectionMismatchBehaviorField;
-        }
-        set
-        {
-            this.projectionMismatchBehaviorField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ProjectionAbsenceBehavior
-    {
-        get
-        {
-            return this.projectionAbsenceBehaviorField;
-        }
-        set
-        {
-            this.projectionAbsenceBehaviorField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ShowLoadingReport
-    {
-        get
-        {
-            return this.showLoadingReportField;
-        }
-        set
-        {
-            this.showLoadingReportField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ProjectReloading
-    {
-        get
-        {
-            return this.projectReloadingField;
-        }
-        set
-        {
-            this.projectReloadingField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DisplayFloatingScalebar
-    {
-        get
-        {
-            return this.displayFloatingScalebarField;
-        }
-        set
-        {
-            this.displayFloatingScalebarField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DisplayRedrawSpeed
-    {
-        get
-        {
-            return this.displayRedrawSpeedField;
-        }
-        set
-        {
-            this.displayRedrawSpeedField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DisplayMapWindowVersion
-    {
-        get
-        {
-            return this.displayMapWindowVersionField;
-        }
-        set
-        {
-            this.displayMapWindowVersionField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DisplayAvoidCollision
-    {
-        get
-        {
-            return this.displayAvoidCollisionField;
-        }
-        set
-        {
-            this.displayAvoidCollisionField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string DisplayAutoCreatespatialindex
-    {
-        get
-        {
-            return this.displayAutoCreatespatialindexField;
-        }
-        set
-        {
-            this.displayAutoCreatespatialindexField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class MapwinRecentProjectsProject
-{
-
-    private string valueField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlTextAttribute()]
-    public string Value
-    {
-        get
-        {
-            return this.valueField;
-        }
-        set
-        {
-            this.valueField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class MapwinView
-{
-
-    private string labelsUseProjectLevelField;
-
-    private string transparentSelectionField;
-
-    private string windowWidthField;
-
-    private string windowHeightField;
-
-    private string locationXField;
-
-    private string locationYField;
-
-    private string windowStateField;
-
-    private string viewBackColorField;
-
-    private string canUndockPreviewMapField;
-
-    private string canUndockLegendField;
-
-    private string canHidePreviewMapField;
-
-    private string canHideLegendField;
-
-    private string showCustomizeContextMenuStripField;
-
-    private string canPreviewMapDockLeftField;
-
-    private string canLegendDockLeftField;
-
-    private string canPreviewMapDockRightField;
-
-    private string canLegendDockRightField;
-
-    private string loadTIFFandIMGasgridField;
-
-    private string loadESRIAsGridField;
-
-    private string mouseWheelBehaviorField;
-
-    private string legendVisibleField;
-
-    private string previewVisibleField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LabelsUseProjectLevel
-    {
-        get
-        {
-            return this.labelsUseProjectLevelField;
-        }
-        set
-        {
-            this.labelsUseProjectLevelField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string TransparentSelection
-    {
-        get
-        {
-            return this.transparentSelectionField;
-        }
-        set
-        {
-            this.transparentSelectionField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string WindowWidth
-    {
-        get
-        {
-            return this.windowWidthField;
-        }
-        set
-        {
-            this.windowWidthField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string WindowHeight
-    {
-        get
-        {
-            return this.windowHeightField;
-        }
-        set
-        {
-            this.windowHeightField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LocationX
-    {
-        get
-        {
-            return this.locationXField;
-        }
-        set
-        {
-            this.locationXField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LocationY
-    {
-        get
-        {
-            return this.locationYField;
-        }
-        set
-        {
-            this.locationYField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string WindowState
-    {
-        get
-        {
-            return this.windowStateField;
-        }
-        set
-        {
-            this.windowStateField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ViewBackColor
-    {
-        get
-        {
-            return this.viewBackColorField;
-        }
-        set
-        {
-            this.viewBackColorField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanUndockPreviewMap
-    {
-        get
-        {
-            return this.canUndockPreviewMapField;
-        }
-        set
-        {
-            this.canUndockPreviewMapField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanUndockLegend
-    {
-        get
-        {
-            return this.canUndockLegendField;
-        }
-        set
-        {
-            this.canUndockLegendField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanHidePreviewMap
-    {
-        get
-        {
-            return this.canHidePreviewMapField;
-        }
-        set
-        {
-            this.canHidePreviewMapField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanHideLegend
-    {
-        get
-        {
-            return this.canHideLegendField;
-        }
-        set
-        {
-            this.canHideLegendField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string ShowCustomizeContextMenuStrip
-    {
-        get
-        {
-            return this.showCustomizeContextMenuStripField;
-        }
-        set
-        {
-            this.showCustomizeContextMenuStripField = value;
-        }
-    }
-
-    /// <remarks/>
-    [XmlAttributeAttribute()]
-    public string CanPreviewMapDockLeft
-    {
-        get
-        {
-            return this.canPreviewMapDockLeftField;
-        }
-        set
-        {
-            this.canPreviewMapDockLeftField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanLegendDockLeft
-    {
-        get
-        {
-            return this.canLegendDockLeftField;
-        }
-        set
-        {
-            this.canLegendDockLeftField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanPreviewMapDockRight
-    {
-        get
-        {
-            return this.canPreviewMapDockRightField;
-        }
-        set
-        {
-            this.canPreviewMapDockRightField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string CanLegendDockRight
-    {
-        get
-        {
-            return this.canLegendDockRightField;
-        }
-        set
-        {
-            this.canLegendDockRightField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LoadTIFFandIMGasgrid
-    {
-        get
-        {
-            return this.loadTIFFandIMGasgridField;
-        }
-        set
-        {
-            this.loadTIFFandIMGasgridField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LoadESRIAsGrid
-    {
-        get
-        {
-            return this.loadESRIAsGridField;
-        }
-        set
-        {
-            this.loadESRIAsGridField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string MouseWheelBehavior
-    {
-        get
-        {
-            return this.mouseWheelBehaviorField;
-        }
-        set
-        {
-            this.mouseWheelBehaviorField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string LegendVisible
-    {
-        get
-        {
-            return this.legendVisibleField;
-        }
-        set
-        {
-            this.legendVisibleField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string PreviewVisible
-    {
-        get
-        {
-            return this.previewVisibleField;
-        }
-        set
-        {
-            this.previewVisibleField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class MapwinApplicationPlugins
-{
-
-    private MapwinApplicationPluginsPlugin[] pluginField;
-
-    private string pluginDirField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("Plugin", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
-    public MapwinApplicationPluginsPlugin[] Plugin
-    {
-        get
-        {
-            return this.pluginField;
-        }
-        set
-        {
-            this.pluginField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string PluginDir
-    {
-        get
-        {
-            return this.pluginDirField;
-        }
-        set
-        {
-            this.pluginDirField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-public partial class MapwinApplicationPluginsPlugin
-{
-
-    private string settingsStringField;
-
-    private string keyField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string SettingsString
-    {
-        get
-        {
-            return this.settingsStringField;
-        }
-        set
-        {
-            this.settingsStringField = value;
-        }
-    }
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlAttributeAttribute()]
-    public string Key
-    {
-        get
-        {
-            return this.keyField;
-        }
-        set
-        {
-            this.keyField = value;
-        }
-    }
-}
-
-/// <remarks/>
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-public partial class NewDataSet
-{
-
-    private object[] itemsField;
-
-    /// <remarks/>
-    [System.Xml.Serialization.XmlElementAttribute("Image", typeof(Image), IsNullable = true)]
-    [System.Xml.Serialization.XmlElementAttribute("Mapwin", typeof(Mapwin))]
-    public object[] Items
-    {
-        get
-        {
-            return this.itemsField;
-        }
-        set
-        {
-            this.itemsField = value;
-        }
-    }
-}
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = true)]
+//public partial class Image
+//{
+
+//    private string typeField;
+
+//    private string valueField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Type
+//    {
+//        get
+//        {
+//            return this.typeField;
+//        }
+//        set
+//        {
+//            this.typeField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlTextAttribute()]
+//    public string Value
+//    {
+//        get
+//        {
+//            return this.valueField;
+//        }
+//        set
+//        {
+//            this.valueField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+//public partial class Mapwin
+//{
+
+//    private string pluginsField;
+
+//    private string colorPalettesField;
+
+//    private string favoriteProjectionsField;
+
+//    private MapwinAppInfo[] appInfoField;
+
+//    private MapwinRecentProjectsProject[][] recentProjectsField;
+
+//    private MapwinView[] viewField;
+
+//    private MapwinApplicationPlugins[] applicationPluginsField;
+
+//    private string typeField;
+
+//    private string versionField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public string Plugins
+//    {
+//        get
+//        {
+//            return this.pluginsField;
+//        }
+//        set
+//        {
+//            this.pluginsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public string ColorPalettes
+//    {
+//        get
+//        {
+//            return this.colorPalettesField;
+//        }
+//        set
+//        {
+//            this.colorPalettesField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public string FavoriteProjections
+//    {
+//        get
+//        {
+//            return this.favoriteProjectionsField;
+//        }
+//        set
+//        {
+//            this.favoriteProjectionsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute("AppInfo", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public MapwinAppInfo[] AppInfo
+//    {
+//        get
+//        {
+//            return this.appInfoField;
+//        }
+//        set
+//        {
+//            this.appInfoField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    [System.Xml.Serialization.XmlArrayItemAttribute("Project", typeof(MapwinRecentProjectsProject), Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public MapwinRecentProjectsProject[][] RecentProjects
+//    {
+//        get
+//        {
+//            return this.recentProjectsField;
+//        }
+//        set
+//        {
+//            this.recentProjectsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute("View", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public MapwinView[] View
+//    {
+//        get
+//        {
+//            return this.viewField;
+//        }
+//        set
+//        {
+//            this.viewField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute("ApplicationPlugins", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public MapwinApplicationPlugins[] ApplicationPlugins
+//    {
+//        get
+//        {
+//            return this.applicationPluginsField;
+//        }
+//        set
+//        {
+//            this.applicationPluginsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string type
+//    {
+//        get
+//        {
+//            return this.typeField;
+//        }
+//        set
+//        {
+//            this.typeField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string version
+//    {
+//        get
+//        {
+//            return this.versionField;
+//        }
+//        set
+//        {
+//            this.versionField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//public partial class MapwinAppInfo
+//{
+
+//    private Image[][] windowIconField;
+
+//    private Image[][] splashPictureField;
+
+//    private string nameField;
+
+//    private string versionField;
+
+//    private string buildDateField;
+
+//    private string developerField;
+
+//    private string commentsField;
+
+//    private string helpFilePathField;
+
+//    private string useSplashScreenField;
+
+//    private string splashTimeField;
+
+//    private string defaultDirField;
+
+//    private string uRLField;
+
+//    private string showWelcomeScreenField;
+
+//    private string welcomePluginField;
+
+//    private string neverShowProjectionDialogField;
+
+//    private string noPromptToSendErrorsField;
+
+//    private string logfilePathField;
+
+//    private string showDynVisWarningsField;
+
+//    private string showLayerAfterDynVisField;
+
+//    private string symbologyLoadingBehaviorField;
+
+//    private string projectionMismatchBehaviorField;
+
+//    private string projectionAbsenceBehaviorField;
+
+//    private string showLoadingReportField;
+
+//    private string projectReloadingField;
+
+//    private string displayFloatingScalebarField;
+
+//    private string displayRedrawSpeedField;
+
+//    private string displayMapWindowVersionField;
+
+//    private string displayAvoidCollisionField;
+
+//    private string displayAutoCreatespatialindexField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    [System.Xml.Serialization.XmlArrayItemAttribute("Image", typeof(Image))]
+//    public Image[][] WindowIcon
+//    {
+//        get
+//        {
+//            return this.windowIconField;
+//        }
+//        set
+//        {
+//            this.windowIconField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlArrayAttribute(Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    [System.Xml.Serialization.XmlArrayItemAttribute("Image", typeof(Image))]
+//    public Image[][] SplashPicture
+//    {
+//        get
+//        {
+//            return this.splashPictureField;
+//        }
+//        set
+//        {
+//            this.splashPictureField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Name
+//    {
+//        get
+//        {
+//            return this.nameField;
+//        }
+//        set
+//        {
+//            this.nameField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Version
+//    {
+//        get
+//        {
+//            return this.versionField;
+//        }
+//        set
+//        {
+//            this.versionField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string BuildDate
+//    {
+//        get
+//        {
+//            return this.buildDateField;
+//        }
+//        set
+//        {
+//            this.buildDateField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Developer
+//    {
+//        get
+//        {
+//            return this.developerField;
+//        }
+//        set
+//        {
+//            this.developerField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Comments
+//    {
+//        get
+//        {
+//            return this.commentsField;
+//        }
+//        set
+//        {
+//            this.commentsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string HelpFilePath
+//    {
+//        get
+//        {
+//            return this.helpFilePathField;
+//        }
+//        set
+//        {
+//            this.helpFilePathField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string UseSplashScreen
+//    {
+//        get
+//        {
+//            return this.useSplashScreenField;
+//        }
+//        set
+//        {
+//            this.useSplashScreenField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string SplashTime
+//    {
+//        get
+//        {
+//            return this.splashTimeField;
+//        }
+//        set
+//        {
+//            this.splashTimeField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DefaultDir
+//    {
+//        get
+//        {
+//            return this.defaultDirField;
+//        }
+//        set
+//        {
+//            this.defaultDirField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string URL
+//    {
+//        get
+//        {
+//            return this.uRLField;
+//        }
+//        set
+//        {
+//            this.uRLField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ShowWelcomeScreen
+//    {
+//        get
+//        {
+//            return this.showWelcomeScreenField;
+//        }
+//        set
+//        {
+//            this.showWelcomeScreenField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string WelcomePlugin
+//    {
+//        get
+//        {
+//            return this.welcomePluginField;
+//        }
+//        set
+//        {
+//            this.welcomePluginField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string NeverShowProjectionDialog
+//    {
+//        get
+//        {
+//            return this.neverShowProjectionDialogField;
+//        }
+//        set
+//        {
+//            this.neverShowProjectionDialogField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string NoPromptToSendErrors
+//    {
+//        get
+//        {
+//            return this.noPromptToSendErrorsField;
+//        }
+//        set
+//        {
+//            this.noPromptToSendErrorsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LogfilePath
+//    {
+//        get
+//        {
+//            return this.logfilePathField;
+//        }
+//        set
+//        {
+//            this.logfilePathField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ShowDynVisWarnings
+//    {
+//        get
+//        {
+//            return this.showDynVisWarningsField;
+//        }
+//        set
+//        {
+//            this.showDynVisWarningsField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ShowLayerAfterDynVis
+//    {
+//        get
+//        {
+//            return this.showLayerAfterDynVisField;
+//        }
+//        set
+//        {
+//            this.showLayerAfterDynVisField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string SymbologyLoadingBehavior
+//    {
+//        get
+//        {
+//            return this.symbologyLoadingBehaviorField;
+//        }
+//        set
+//        {
+//            this.symbologyLoadingBehaviorField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ProjectionMismatchBehavior
+//    {
+//        get
+//        {
+//            return this.projectionMismatchBehaviorField;
+//        }
+//        set
+//        {
+//            this.projectionMismatchBehaviorField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ProjectionAbsenceBehavior
+//    {
+//        get
+//        {
+//            return this.projectionAbsenceBehaviorField;
+//        }
+//        set
+//        {
+//            this.projectionAbsenceBehaviorField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ShowLoadingReport
+//    {
+//        get
+//        {
+//            return this.showLoadingReportField;
+//        }
+//        set
+//        {
+//            this.showLoadingReportField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ProjectReloading
+//    {
+//        get
+//        {
+//            return this.projectReloadingField;
+//        }
+//        set
+//        {
+//            this.projectReloadingField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DisplayFloatingScalebar
+//    {
+//        get
+//        {
+//            return this.displayFloatingScalebarField;
+//        }
+//        set
+//        {
+//            this.displayFloatingScalebarField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DisplayRedrawSpeed
+//    {
+//        get
+//        {
+//            return this.displayRedrawSpeedField;
+//        }
+//        set
+//        {
+//            this.displayRedrawSpeedField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DisplayMapWindowVersion
+//    {
+//        get
+//        {
+//            return this.displayMapWindowVersionField;
+//        }
+//        set
+//        {
+//            this.displayMapWindowVersionField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DisplayAvoidCollision
+//    {
+//        get
+//        {
+//            return this.displayAvoidCollisionField;
+//        }
+//        set
+//        {
+//            this.displayAvoidCollisionField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string DisplayAutoCreatespatialindex
+//    {
+//        get
+//        {
+//            return this.displayAutoCreatespatialindexField;
+//        }
+//        set
+//        {
+//            this.displayAutoCreatespatialindexField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//public partial class MapwinRecentProjectsProject
+//{
+
+//    private string valueField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlTextAttribute()]
+//    public string Value
+//    {
+//        get
+//        {
+//            return this.valueField;
+//        }
+//        set
+//        {
+//            this.valueField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//public partial class MapwinView
+//{
+
+//    private string labelsUseProjectLevelField;
+
+//    private string transparentSelectionField;
+
+//    private string windowWidthField;
+
+//    private string windowHeightField;
+
+//    private string locationXField;
+
+//    private string locationYField;
+
+//    private string windowStateField;
+
+//    private string viewBackColorField;
+
+//    private string canUndockPreviewMapField;
+
+//    private string canUndockLegendField;
+
+//    private string canHidePreviewMapField;
+
+//    private string canHideLegendField;
+
+//    private string showCustomizeContextMenuStripField;
+
+//    private string canPreviewMapDockLeftField;
+
+//    private string canLegendDockLeftField;
+
+//    private string canPreviewMapDockRightField;
+
+//    private string canLegendDockRightField;
+
+//    private string loadTIFFandIMGasgridField;
+
+//    private string loadESRIAsGridField;
+
+//    private string mouseWheelBehaviorField;
+
+//    private string legendVisibleField;
+
+//    private string previewVisibleField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LabelsUseProjectLevel
+//    {
+//        get
+//        {
+//            return this.labelsUseProjectLevelField;
+//        }
+//        set
+//        {
+//            this.labelsUseProjectLevelField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string TransparentSelection
+//    {
+//        get
+//        {
+//            return this.transparentSelectionField;
+//        }
+//        set
+//        {
+//            this.transparentSelectionField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string WindowWidth
+//    {
+//        get
+//        {
+//            return this.windowWidthField;
+//        }
+//        set
+//        {
+//            this.windowWidthField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string WindowHeight
+//    {
+//        get
+//        {
+//            return this.windowHeightField;
+//        }
+//        set
+//        {
+//            this.windowHeightField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LocationX
+//    {
+//        get
+//        {
+//            return this.locationXField;
+//        }
+//        set
+//        {
+//            this.locationXField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LocationY
+//    {
+//        get
+//        {
+//            return this.locationYField;
+//        }
+//        set
+//        {
+//            this.locationYField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string WindowState
+//    {
+//        get
+//        {
+//            return this.windowStateField;
+//        }
+//        set
+//        {
+//            this.windowStateField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ViewBackColor
+//    {
+//        get
+//        {
+//            return this.viewBackColorField;
+//        }
+//        set
+//        {
+//            this.viewBackColorField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanUndockPreviewMap
+//    {
+//        get
+//        {
+//            return this.canUndockPreviewMapField;
+//        }
+//        set
+//        {
+//            this.canUndockPreviewMapField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanUndockLegend
+//    {
+//        get
+//        {
+//            return this.canUndockLegendField;
+//        }
+//        set
+//        {
+//            this.canUndockLegendField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanHidePreviewMap
+//    {
+//        get
+//        {
+//            return this.canHidePreviewMapField;
+//        }
+//        set
+//        {
+//            this.canHidePreviewMapField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanHideLegend
+//    {
+//        get
+//        {
+//            return this.canHideLegendField;
+//        }
+//        set
+//        {
+//            this.canHideLegendField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string ShowCustomizeContextMenuStrip
+//    {
+//        get
+//        {
+//            return this.showCustomizeContextMenuStripField;
+//        }
+//        set
+//        {
+//            this.showCustomizeContextMenuStripField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [XmlAttributeAttribute()]
+//    public string CanPreviewMapDockLeft
+//    {
+//        get
+//        {
+//            return this.canPreviewMapDockLeftField;
+//        }
+//        set
+//        {
+//            this.canPreviewMapDockLeftField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanLegendDockLeft
+//    {
+//        get
+//        {
+//            return this.canLegendDockLeftField;
+//        }
+//        set
+//        {
+//            this.canLegendDockLeftField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanPreviewMapDockRight
+//    {
+//        get
+//        {
+//            return this.canPreviewMapDockRightField;
+//        }
+//        set
+//        {
+//            this.canPreviewMapDockRightField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string CanLegendDockRight
+//    {
+//        get
+//        {
+//            return this.canLegendDockRightField;
+//        }
+//        set
+//        {
+//            this.canLegendDockRightField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LoadTIFFandIMGasgrid
+//    {
+//        get
+//        {
+//            return this.loadTIFFandIMGasgridField;
+//        }
+//        set
+//        {
+//            this.loadTIFFandIMGasgridField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LoadESRIAsGrid
+//    {
+//        get
+//        {
+//            return this.loadESRIAsGridField;
+//        }
+//        set
+//        {
+//            this.loadESRIAsGridField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string MouseWheelBehavior
+//    {
+//        get
+//        {
+//            return this.mouseWheelBehaviorField;
+//        }
+//        set
+//        {
+//            this.mouseWheelBehaviorField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string LegendVisible
+//    {
+//        get
+//        {
+//            return this.legendVisibleField;
+//        }
+//        set
+//        {
+//            this.legendVisibleField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string PreviewVisible
+//    {
+//        get
+//        {
+//            return this.previewVisibleField;
+//        }
+//        set
+//        {
+//            this.previewVisibleField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//public partial class MapwinApplicationPlugins
+//{
+
+//    private MapwinApplicationPluginsPlugin[] pluginField;
+
+//    private string pluginDirField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute("Plugin", Form = System.Xml.Schema.XmlSchemaForm.Unqualified)]
+//    public MapwinApplicationPluginsPlugin[] Plugin
+//    {
+//        get
+//        {
+//            return this.pluginField;
+//        }
+//        set
+//        {
+//            this.pluginField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string PluginDir
+//    {
+//        get
+//        {
+//            return this.pluginDirField;
+//        }
+//        set
+//        {
+//            this.pluginDirField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//public partial class MapwinApplicationPluginsPlugin
+//{
+
+//    private string settingsStringField;
+
+//    private string keyField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string SettingsString
+//    {
+//        get
+//        {
+//            return this.settingsStringField;
+//        }
+//        set
+//        {
+//            this.settingsStringField = value;
+//        }
+//    }
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlAttributeAttribute()]
+//    public string Key
+//    {
+//        get
+//        {
+//            return this.keyField;
+//        }
+//        set
+//        {
+//            this.keyField = value;
+//        }
+//    }
+//}
+
+///// <remarks/>
+//[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.0.30319.33440")]
+//[System.SerializableAttribute()]
+//[System.Diagnostics.DebuggerStepThroughAttribute()]
+//[System.ComponentModel.DesignerCategoryAttribute("code")]
+//[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+//[System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+//public partial class NewDataSet
+//{
+
+//    private object[] itemsField;
+
+//    /// <remarks/>
+//    [System.Xml.Serialization.XmlElementAttribute("Image", typeof(Image), IsNullable = true)]
+//    [System.Xml.Serialization.XmlElementAttribute("Mapwin", typeof(Mapwin))]
+//    public object[] Items
+//    {
+//        get
+//        {
+//            return this.itemsField;
+//        }
+//        set
+//        {
+//            this.itemsField = value;
+//        }
+//    }
+//}
