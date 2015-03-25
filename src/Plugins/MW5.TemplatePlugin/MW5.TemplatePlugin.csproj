@@ -97,6 +97,7 @@
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
@@ -106,6 +107,7 @@
     <ProjectReference Include="..\..\MW5.Services\MW5.Services.csproj">
       <Project>{54BB55DA-DBDC-47E5-8DEC-DE325F35F074}</Project>
       <Name>MW5.Services</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

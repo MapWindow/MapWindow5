@@ -82,6 +82,7 @@
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

@@ -96,6 +96,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
+      <Link>Properties\SolutionInfoPlugins.cs</Link>
+    </Compile>
     <Compile Include="BO\AppContextWrapper.cs" />
     <Compile Include="BO\ShapeData.cs" />
     <Compile Include="BO\ShapefileWrapper.cs" />
@@ -280,10 +283,12 @@
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="MathParser\MathParser.vbproj">
       <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
