@@ -85,6 +85,8 @@ namespace MW5.Listeners
                 _map.Redraw();
             }
             _context.View.Update();
+
+            _broadcaster.BroadcastEvent(p => p.SelectionChanged_, sender as IMuteMap, e);
         }
 
         private void MapChooseLayer(object sender, ChooseLayerEventArgs e)

@@ -2628,12 +2628,18 @@ namespace MW5.Api.Legend
                     return;
                 }
 
-                if (_groups.Count > 1 || grp.Layers.Count > 1)
+                // Start dragging operation only if the clicked layer is selected.
+                // Otherwise LayerSelected event will be fired which might results in a dialog box 
+                // from plugin code (TableEditor) and no Legend.MouseUp event (the dragging operation won't be finished).
+                if (SelectedLayer == lyr.Handle)
                 {
-                    _dragInfo.StartLayerDrag(
-                        pnt.Y,
-                        _groups.PositionOf(grp.Handle),
-                        grp.LayerPositionInGroup(lyr.Handle));
+                    if (_groups.Count > 1 || grp.Layers.Count > 1)
+                    {
+                        _dragInfo.StartLayerDrag(
+                            pnt.Y,
+                            _groups.PositionOf(grp.Handle),
+                            grp.LayerPositionInGroup(lyr.Handle));
+                    }
                 }
 
                 SelectedLayer = lyr.Handle;

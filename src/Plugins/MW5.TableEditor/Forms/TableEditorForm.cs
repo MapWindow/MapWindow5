@@ -23,14 +23,16 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class TableEditorForm : MapWindowForm
     {
         private const int FastloadAmount = 1000;
+
+        private readonly AppContextWrapper _appContextWrapper;
+        private ShapefileWrapper _shapefile;
+        private ILayer _layer;
         private bool _dataStillLoading;
         private bool _isStructureChanged;
         private int _selectColumnIndex;
-        private ShapefileWrapper _shapefile;
         private bool _toolTipShown;
-        private readonly AppContextWrapper _appContextWrapper;
-        private ILayer _layer;
-        private bool _noSelectedChangedEvent;  
+        private bool _ignoreTableSelectionChanged;
+        private bool _ignoreMapSelectionChanged;
 
         /// <summary>
         /// Initializes a new instance of the TableEditorForm class
@@ -42,6 +44,12 @@ namespace MW5.Plugins.TableEditor.Forms
             _appContextWrapper = context;
 
             Shown += TableEditorForm_Shown;
+            FormClosed += TableEditorForm_FormClosed;
+        }
+
+        void TableEditorForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Dispose();
         }
 
         void TableEditorForm_Shown(object sender, EventArgs e)
@@ -112,7 +120,8 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (ShapefileWrapper.ShapeData.DataChanged(dt))
             {
-                var dialogResult = FormUtils.TopMostMessageBox("Save changes?", "TableEditor", MessageBoxButtons.YesNo);
+                // TODO: looks like a hack; is it really necessary?
+                var dialogResult = FormUtils.TopMostMessageBox("Save attribute table changes?", "TableEditor", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     SaveChanges();
@@ -188,7 +197,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         public void SetDataGrid()
         {
-            _noSelectedChangedEvent = true;
+            _ignoreTableSelectionChanged = true;
 
             var boShapeData = ShapefileWrapper.ShapeData;
 
@@ -215,12 +224,12 @@ namespace MW5.Plugins.TableEditor.Forms
 
                 string s = string.Format("{0} of {1} retrieved", boShapeData.NumShapes, boShapeData.NumShapes);
                 UpdateSelectedCountLabel(s);
-
-                // PM Added: Select rows of previously selected shapes:
-                SetSelected();
             }
 
-            _noSelectedChangedEvent = false;
+            // PM Added: Select rows of previously selected shapes:
+            SetSelected();
+
+            _ignoreTableSelectionChanged = false;
         }
 
         /// <summary>
@@ -228,6 +237,11 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         public void SetSelected()
         {
+            if (_ignoreMapSelectionChanged)
+            {
+                return;
+            }
+
             // PM: Added, no need to loop through records if no shapes are selected:
             if (_shapefile.Shapefile.NumSelected == 0)
             {
@@ -235,6 +249,8 @@ namespace MW5.Plugins.TableEditor.Forms
                 UpdateSelectedCountLabel(msg);
                 return;
             }
+
+            _ignoreTableSelectionChanged = true;
 
             if (((DataTable) TableEditorDataGrid.DataSource).DefaultView.RowFilter == string.Empty)
             {
@@ -260,6 +276,8 @@ namespace MW5.Plugins.TableEditor.Forms
             {
                 toolTip1.SetToolTip(btnShowSelected, btnShowSelected.Tag.ToString());
             }
+
+            _ignoreTableSelectionChanged = false;
         }
 
         private void UpdateSelectedCountLabel(string msg)
@@ -695,11 +713,12 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void SelectRowsBasedOnSelectedShapes()
         {
-            Application.DoEvents();
             var numSelectedShapes = ShapefileWrapper.Shapefile.NumSelected;
             var numSelectedRows = 0;
             var scrollTo = -1;
-            for (var j = 0; j < ShapefileWrapper.Shapefile.NumShapes; j++)
+            int count = Math.Min(_shapefile.Shapefile.NumShapes, TableEditorDataGrid.Rows.Count);
+
+            for (var j = 0; j < count; j++)
             {
                 if (ShapefileWrapper.Shapefile.ShapeSelected[j])
                 {
@@ -806,7 +825,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void ShowSelected()
         {
-            _noSelectedChangedEvent = true;
+            _ignoreTableSelectionChanged = true;
 
             if (((DataTable) TableEditorDataGrid.DataSource).DefaultView.RowFilter == string.Empty)
             {
@@ -831,7 +850,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             Application.DoEvents();
 
-            _noSelectedChangedEvent = false;
+            _ignoreTableSelectionChanged = false;
         }
 
         /// <summary>
@@ -931,7 +950,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void TableEditorDataGridSelectionChanged(object sender, EventArgs e)
         {
-            if (_noSelectedChangedEvent)
+            if (_ignoreTableSelectionChanged)
             {
                 return;
             }
@@ -951,7 +970,9 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (!_dataStillLoading)
             {
+                _ignoreMapSelectionChanged = true;
                 _appContextWrapper.UpdateMap(indices);
+                _ignoreMapSelectionChanged = false;
             }
 
             // Paul Meems, 17-05-2013. Enabled the zoom to selected button even if not all rows are loaded:

@@ -166,15 +166,16 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape_;
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
+        internal MapEventHandler<EventArgs> HistoryChanged_;
         internal LegendEventHandler<LayerEventArgs> LayerAdded_;
         internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseDown_;
         internal MapEventHandler<MouseEventArgs> MouseMove_;
         internal MapEventHandler<MouseEventArgs> MouseUp_;
-        internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
-        internal MapEventHandler<EventArgs> HistoryChanged_;
-        internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
+        internal MapEventHandler<SelectionChangedEventArgs> SelectionChanged_;
         internal MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified_;
+        internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
+        internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -251,7 +252,12 @@ namespace MW5.Plugins.Concrete
         public event MapEventHandler<EventArgs> ProjectionChanged;
         public event MapEventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
         public event MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
-        public event MapEventHandler<SelectionChangedEventArgs> SelectionChanged;
+        public event MapEventHandler<SelectionChangedEventArgs> SelectionChanged
+        {
+            add { SelectionChanged_ += value; }
+            remove { SelectionChanged_ -= value; }
+        }
+
         public event MapEventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
         public event MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified
         {

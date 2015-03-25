@@ -23,7 +23,17 @@ namespace MW5.Plugins.TableEditor
         public TableEditorForm Form
         {
             get { return _form; }
-            set { _form = value; }
+            set
+            {
+                _form = value;
+                _form.FormClosed += FormClosed;
+            }
+        }
+
+        private void FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
+        {
+            _form.FormClosed -= FormClosed;
+            _form = null;
         }
 
         public override void Initialize(IAppContext context)

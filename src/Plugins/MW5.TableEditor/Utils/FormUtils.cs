@@ -130,7 +130,11 @@ namespace MW5.Plugins.TableEditor.Utils
             topmostForm.BringToFront();
             topmostForm.TopMost = true;
 
-            var result = MessageBox.Show(topmostForm, message, title, buttons);
+            var icon = buttons == MessageBoxButtons.YesNo || buttons == MessageBoxButtons.YesNoCancel
+                ? MessageBoxIcon.Question
+                : MessageBoxIcon.Information;
+
+            var result = MessageBox.Show(topmostForm, message, title, buttons, icon);
             topmostForm.Dispose();
 
             return result;
