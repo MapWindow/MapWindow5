@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     ///  Form-class for updating a selection
     /// </summary>
-    public partial class UpdateSelectionForm : Form
+    public partial class UpdateSelectionForm : MapWindowForm
     {
         /// <summary>Initializes a new instance of the frmUpdateSelection class</summary>
         /// <param name = "numShapes">The amount of shapefile.</param>

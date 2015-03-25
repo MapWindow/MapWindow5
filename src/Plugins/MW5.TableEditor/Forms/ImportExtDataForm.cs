@@ -4,13 +4,14 @@ using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Utils;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     /// Form-class for joining with external data
     /// </summary>
-    public partial class ImportExtDataForm : Form
+    public partial class ImportExtDataForm : MapWindowForm
     {
         #region Constructors and Destructors
 

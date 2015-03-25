@@ -34,7 +34,10 @@ namespace MW5.Plugins.TableEditor
                 return;
             }
 
-            form.CheckAndSaveChanges();
+            if (e.LayerHandle != -1)
+            {
+                form.CheckAndSaveChanges();
+            }
 
             if (_context.Layers.GetFeatureSet(e.LayerHandle) == null)
             {
@@ -43,17 +46,9 @@ namespace MW5.Plugins.TableEditor
                 return;
             }
 
-            var sf = _context.CreateShapefileWrapper();
-            if (sf == null)
-            {
-                MessageBox.Show(form, "Selected layer is not a shapefile");
-                return;
-            }
-
             _context.ClearAllSelection();
 
-            form.ShapefileWrapper = sf;
-            form.SetDataGrid();
+            form.Layer = _context.Map.GetLayer(e.LayerHandle);
         }
     }
 }

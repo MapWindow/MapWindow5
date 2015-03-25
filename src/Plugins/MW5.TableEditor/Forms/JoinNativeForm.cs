@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Data;
 using System.Windows.Forms;
 using MapWinGIS;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
-    public partial class JoinNativeForm : Form
+    public partial class JoinNativeForm : MapWindowForm
     {
         private DataTable _dt;
         private readonly string _filename = "";

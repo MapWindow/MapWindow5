@@ -2,13 +2,14 @@
 using System.Data;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     ///  Form-class for renaming a field
     /// </summary>
-    public partial class RenameFieldForm : Form
+    public partial class RenameFieldForm : MapWindowForm
     {
         /// <summary>The datatable with shape-data</summary> 
         private readonly DataTable _dt;

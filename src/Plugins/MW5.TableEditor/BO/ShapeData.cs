@@ -77,7 +77,7 @@ namespace MW5.Plugins.TableEditor.BO
                 {
                     if (i == 44)
                     {
-                        Debug.WriteLine("Starting");
+                        //Debug.WriteLine("Starting");
                     }
 
                     // PM, 9 Oct 2012: Added to prevent errors about null values (Issue #2223):

@@ -32,7 +32,7 @@ namespace MW5.Api.Legend
         private Image _backBuffer;
         private Image _midBuffer;
         private Graphics _draw;
-        private Graphics _frontBuffer;
+        private Graphics _graphics;
         private Font _font;
         private uint _lockCount;
         
@@ -383,41 +383,29 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The swap buffers.
         /// </summary>
-        private void SwapBuffers()
+        private void RenderBuffer()
         {
-            SwapBuffers(_backBuffer, _frontBuffer);
+            RenderBuffer(_backBuffer, _graphics);
         }
 
         /// <summary>
         /// The swap buffers.
         /// </summary>
-        /// <param name="backBuffer">  The back buffer. </param>
-        private void SwapBuffers(Image backBuffer)
-        {
-            SwapBuffers(backBuffer, _frontBuffer);
-        }
-
-        /// <summary>
-        /// The swap buffers.
-        /// </summary>
-        /// <param name="backBuffer"> The back buffer. </param>
-        /// <param name="frontBuffer"> The front buffer. </param>
-        private void SwapBuffers(Image backBuffer, Graphics frontBuffer)
+        private void RenderBuffer(Image backBuffer, Graphics g)
         {
             try
             {
                 // temporary: checking random property to be sure the object is valid
-                var k = frontBuffer.DpiX;
+                var k = g.DpiX;
             }
             catch (Exception ex)
             {
-                // We'll log the error.
                 Trace.WriteLine(ex.Message);
                 return;
             }
 
-            frontBuffer.DrawImage(backBuffer, 0, 0);
-            frontBuffer.Flush(FlushIntention.Sync);
+            g.DrawImage(backBuffer, 0, 0);
+            g.Flush(FlushIntention.Sync);
         }
 
         /// <summary>
@@ -425,7 +413,7 @@ namespace MW5.Api.Legend
         /// </summary>
         /// <param name="backBuffer"> The back buffer. </param>
         /// <param name="frontBuffer"> The front buffer. </param>
-        private void SwapBuffers(Image backBuffer, Image frontBuffer)
+        private void RenderBuffer(Image backBuffer, Image frontBuffer)
         {
             var draw = Graphics.FromImage(frontBuffer);
             draw.DrawImage(backBuffer, 0, 0);
@@ -2457,7 +2445,7 @@ namespace MW5.Api.Legend
                 }
             }
 
-            SwapBuffers();
+            RenderBuffer();
         }
 
         /// <summary>
@@ -2465,9 +2453,16 @@ namespace MW5.Api.Legend
         /// </summary>
         protected override void OnPaint(PaintEventArgs e)
         {
-            _frontBuffer = e.Graphics;
+            // there is an exception accidentally occuring in LegendControl.SwapBuffers; 
+            // perhaps it's caused by concurrency issues; let's try a lock
+            //lock (this)     
+            {
+                SetCanvas(e.Graphics);
 
-            DrawNextFrame();
+                DrawNextFrame();
+
+                SetCanvas(null);
+            }
         }
 
         /// <summary>
@@ -2491,13 +2486,11 @@ namespace MW5.Api.Legend
         {
             if (_dragInfo.Dragging || _dragInfo.MouseDown)
             {
-                // someting went wrong and the legend got locked but never got unlocked
+                // something went wrong and the legend got locked but never got unlocked
                 if (_dragInfo.LegendLocked)
                 {
                     Unlock();
                 }
-
-                _dragInfo.Reset();
             }
 
             var pnt = new Point(e.X, e.Y);
@@ -2635,8 +2628,6 @@ namespace MW5.Api.Legend
                     return;
                 }
 
-                SelectedLayer = lyr.Handle;
-
                 if (_groups.Count > 1 || grp.Layers.Count > 1)
                 {
                     _dragInfo.StartLayerDrag(
@@ -2645,7 +2636,10 @@ namespace MW5.Api.Legend
                         grp.LayerPositionInGroup(lyr.Handle));
                 }
 
+                SelectedLayer = lyr.Handle;
+
                 FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+                
                 return;
             }
 
@@ -3000,14 +2994,14 @@ namespace MW5.Api.Legend
                     }
                 }
 
-                _frontBuffer = CreateGraphics();
+                SetCanvas(CreateGraphics());
                 if (_midBuffer == null)
                 {
                     _midBuffer = new Bitmap(_backBuffer.Width, _backBuffer.Height, _draw);
                 }
 
                 var localDraw = Graphics.FromImage(_midBuffer);
-                SwapBuffers(_backBuffer, localDraw);
+                RenderBuffer(_backBuffer, localDraw);
 
                 var pen = (Pen) Pens.Gray.Clone();
                 pen.Width = 3;
@@ -3026,8 +3020,13 @@ namespace MW5.Api.Legend
                     Width - Constants.ItemRightPad,
                     drawY + 3);
 
-                SwapBuffers(_midBuffer, _frontBuffer);
+                RenderBuffer(_midBuffer, _graphics);
             }
+        }
+
+        private void SetCanvas(Graphics g)
+        {
+            _graphics = g;
         }
 
         /// <summary>

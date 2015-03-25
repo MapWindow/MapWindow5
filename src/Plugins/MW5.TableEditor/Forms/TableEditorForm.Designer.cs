@@ -41,7 +41,7 @@ namespace MW5.Plugins.TableEditor.Forms
           this.tbbQuery = new System.Windows.Forms.Button();
           this.btnShowSelected = new System.Windows.Forms.Button();
           this.btnZoomToSelected = new System.Windows.Forms.Button();
-          this.lblAmountSeleted = new System.Windows.Forms.Label();
+          this.lblAmountSelected = new System.Windows.Forms.Label();
           this.btnClose = new System.Windows.Forms.Button();
           this.btnApply = new System.Windows.Forms.Button();
           this.TableEditorDataGrid = new System.Windows.Forms.DataGridView();
@@ -98,7 +98,7 @@ namespace MW5.Plugins.TableEditor.Forms
           this.panel1.Controls.Add(this.tbbQuery);
           this.panel1.Controls.Add(this.btnShowSelected);
           this.panel1.Controls.Add(this.btnZoomToSelected);
-          this.panel1.Controls.Add(this.lblAmountSeleted);
+          this.panel1.Controls.Add(this.lblAmountSelected);
           this.panel1.Controls.Add(this.btnClose);
           this.panel1.Controls.Add(this.btnApply);
           resources.ApplyResources(this.panel1, "panel1");
@@ -167,8 +167,8 @@ namespace MW5.Plugins.TableEditor.Forms
           // 
           // lblAmountSeleted
           // 
-          resources.ApplyResources(this.lblAmountSeleted, "lblAmountSeleted");
-          this.lblAmountSeleted.Name = "lblAmountSeleted";
+          resources.ApplyResources(this.lblAmountSelected, "lblAmountSelected");
+          this.lblAmountSelected.Name = "lblAmountSelected";
           // 
           // btnClose
           // 
@@ -368,7 +368,7 @@ namespace MW5.Plugins.TableEditor.Forms
           // 
           this.mnuGenerateOrUpdateShapeID.Name = "mnuGenerateOrUpdateShapeID";
           resources.ApplyResources(this.mnuGenerateOrUpdateShapeID, "mnuGenerateOrUpdateShapeID");
-          this.mnuGenerateOrUpdateShapeID.Click += new System.EventHandler(this.MnuGenerateOrUpdateShapeIDClick);
+          this.mnuGenerateOrUpdateShapeID.Click += new System.EventHandler(this.MnuGenerateOrUpdateShapeIdClick);
           // 
           // mnuCopyShapeIDs
           // 
@@ -479,7 +479,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem renameFieldToolStripMenuItem;
         private System.Windows.Forms.DataGridView TableEditorDataGrid;
-        private System.Windows.Forms.Label lblAmountSeleted;
+        private System.Windows.Forms.Label lblAmountSelected;
         private System.Windows.Forms.Button btnZoomToSelected;
         internal System.Windows.Forms.Button btnShowSelected;
         private System.Windows.Forms.ToolStripMenuItem mnuShowSelected;

@@ -14,33 +14,10 @@ namespace MW5.Plugins.TableEditor.Helpers
     {
         internal static void ShowEditorForm(this IAppContext context, TableEditorPlugin plugin)
         {
-            var sf = CreateShapefileWrapper(context);
-            var form = new TableEditorForm(sf, new AppContextWrapper(context));
-            form.InitForm();
+            var form = context.Container.GetInstance<TableEditorForm>();
+            form.Layer = context.Layers.SelectedLayer;
             plugin.Form = form;
             form.Show(context.View.MainForm);
-        }
-
-        internal static ShapefileWrapper CreateShapefileWrapper(this IAppContext context)
-        {
-            var layer = context.Layers.SelectedLayer;
-            if (layer == null)
-            {
-                return null;
-            }
-
-            ShapefileWrapper boShapeFile = null;
-
-            var sf = context.Layers.SelectedLayer.FeatureSet.InternalObject as Shapefile;
-            if (sf != null)
-            {
-                boShapeFile = new ShapefileWrapper
-                {
-                    Shapefile = sf,
-                    ShapefileName = layer.Name
-                };
-            }
-            return boShapeFile;
         }
 
         /// <summary>

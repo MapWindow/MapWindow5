@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     ///  Form-class for quering the shape-data
     /// </summary>
-    public partial class QueryBuilderForm : Form
+    public partial class QueryBuilderForm : MapWindowForm
     {
         /// <summary>Delegate to execute query</summary> 
         /// <param name = "queryString">The string with the query to execute.</param>

@@ -6,13 +6,14 @@ using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Plugins.TableEditor.Utils;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     /// The frm join excel.
     /// </summary>
-    public partial class JoinExcelForm : Form
+    public partial class JoinExcelForm : MapWindowForm
     {
         #region Constructors and Destructors
 

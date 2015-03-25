@@ -31,6 +31,8 @@ namespace MW5.Plugins.TableEditor
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
 
+            CompositionRoot.Compose(context.Container);
+
             _menuService = _context.Container.GetSingleton<MenuService>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
         }

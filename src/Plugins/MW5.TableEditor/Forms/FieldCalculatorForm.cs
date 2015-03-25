@@ -24,13 +24,14 @@ using System.Linq;
 using System.Windows.Forms;
 using MathParser;
 using MW5.Plugins.TableEditor.BO;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
   ///  Form-class for performing calculations
   /// </summary>
-  public partial class FieldCalculatorForm : Form
+  public partial class FieldCalculatorForm : MapWindowForm
   {
     /// <summary>Values to show on form</summary>
     private static string _pntShape = "ShapeX ShapeY ShapeZ";

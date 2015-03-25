@@ -10,15 +10,17 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api;
+using MW5.Api.Interfaces;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Utils;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     /// Form-class which show the shape-data
     /// </summary>
-    public partial class TableEditorForm : Form
+    public partial class TableEditorForm : MapWindowForm
     {
         private const int FastloadAmount = 1000;
         private bool _dataStillLoading;
@@ -27,19 +29,55 @@ namespace MW5.Plugins.TableEditor.Forms
         private ShapefileWrapper _shapefile;
         private bool _toolTipShown;
         private readonly AppContextWrapper _appContextWrapper;
+        private ILayer _layer;
+        private bool _noSelectedChangedEvent;  
 
         /// <summary>
         /// Initializes a new instance of the TableEditorForm class
         /// </summary>
-        public TableEditorForm(ShapefileWrapper sf, AppContextWrapper context)
+        public TableEditorForm(AppContextWrapper context)
         {
             InitializeComponent();
-
-            ShapefileWrapper = sf;
+            
             _appContextWrapper = context;
+
+            Shown += TableEditorForm_Shown;
+        }
+
+        void TableEditorForm_Shown(object sender, EventArgs e)
+        {
+            TableEditorDataGrid.SelectionChanged += TableEditorDataGridSelectionChanged;
         }
 
         #region Public Properties
+
+        /// <summary>
+        /// Sets or sets the layer currently displayed by the editor.
+        /// </summary>
+        public ILayer Layer 
+        {
+            get { return _layer; }
+            set
+            {
+                var fs = value.FeatureSet;
+                if (fs == null)
+                {
+                    return;
+                }
+                
+                _shapefile = new ShapefileWrapper
+                {
+                    Shapefile = fs.InternalObject as Shapefile,
+                    ShapefileName = value.Name
+                };
+
+                SetTitle();
+
+                SetDataGrid();
+
+                _layer = value;
+            }
+        }
 
         /// <summary>
         ///   Gets or sets the BOShapeFile-object
@@ -47,14 +85,17 @@ namespace MW5.Plugins.TableEditor.Forms
         public ShapefileWrapper ShapefileWrapper
         {
             get { return _shapefile; }
-
-            set
-            {
-                _shapefile = value;
-                SetTitle();
-            }
         }
 
+        public bool HasChanges
+        {
+            get
+            {
+                var dt = (DataTable)TableEditorDataGrid.DataSource;
+                return ShapefileWrapper.ShapeData.DataChanged(dt);
+            }
+        }
+        
         #endregion
 
         #region Public Methods and Operators
@@ -74,7 +115,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 var dialogResult = FormUtils.TopMostMessageBox("Save changes?", "TableEditor", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    Save();
+                    SaveChanges();
                 }
                 else
                 {
@@ -103,18 +144,6 @@ namespace MW5.Plugins.TableEditor.Forms
                 var joined = (bool) shapeFileData.Columns[i].ExtendedProperties["joined"];
                 TableEditorDataGrid.Columns[i].DefaultCellStyle.BackColor = joined ? Color.OldLace : Color.White;
             }
-        }
-
-        /// <summary>
-        /// Initializes the form
-        /// </summary>
-        public void InitForm()
-        {
-            SetTitle();
-
-            SetDataGrid();
-
-            TableEditorDataGrid.SelectionChanged += TableEditorDataGridSelectionChanged;
         }
 
         /// <summary>
@@ -159,6 +188,8 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         public void SetDataGrid()
         {
+            _noSelectedChangedEvent = true;
+
             var boShapeData = ShapefileWrapper.ShapeData;
 
             DataTable shapeFileData;
@@ -171,7 +202,8 @@ namespace MW5.Plugins.TableEditor.Forms
 
                 FillDataGrid(shapeFileData);
 
-                lblAmountSeleted.Text = string.Format("{0} of {1} retrieved", FastloadAmount, boShapeData.NumShapes);
+                string s = string.Format("{0} of {1} retrieved", FastloadAmount, boShapeData.NumShapes);
+                UpdateSelectedCountLabel(s);
             }
             else
             {
@@ -181,12 +213,14 @@ namespace MW5.Plugins.TableEditor.Forms
 
                 SetControlsEnabled(true);
 
-                lblAmountSeleted.Text = string.Format("{0} of {1} retrieved", boShapeData.NumShapes,
-                    boShapeData.NumShapes);
+                string s = string.Format("{0} of {1} retrieved", boShapeData.NumShapes, boShapeData.NumShapes);
+                UpdateSelectedCountLabel(s);
 
                 // PM Added: Select rows of previously selected shapes:
                 SetSelected();
             }
+
+            _noSelectedChangedEvent = false;
         }
 
         /// <summary>
@@ -195,9 +229,10 @@ namespace MW5.Plugins.TableEditor.Forms
         public void SetSelected()
         {
             // PM: Added, no need to loop through records if no shapes are selected:
-            if (ShapefileWrapper.Shapefile.NumSelected == 0)
+            if (_shapefile.Shapefile.NumSelected == 0)
             {
-                lblAmountSeleted.Text = string.Format("{0} of {1} selected.", 0, TableEditorDataGrid.Rows.Count);
+                string msg = string.Format("{0} of {1} selected.", 0,  _shapefile.Shapefile.NumShapes);
+                UpdateSelectedCountLabel(msg);
                 return;
             }
 
@@ -206,13 +241,6 @@ namespace MW5.Plugins.TableEditor.Forms
                 // No filter
                 // Paul Meems, 17-05-2013: Added some optimization:
                 SelectRowsBasedOnSelectedShapes();
-
-                /*
-        for (int j = 0; j < boShapeFile.ShapeFile.NumShapes; j++)
-        {
-          TableEditorDataGrid.Rows[j].Selected = boShapeFile.ShapeFile.get_ShapeSelected(j);
-        }
-        */
             }
             else
             {
@@ -223,8 +251,8 @@ namespace MW5.Plugins.TableEditor.Forms
                 SetAllRows(true);
             }
 
-            lblAmountSeleted.Text = string.Format(
-                "{0} of {1} selected.", TableEditorDataGrid.SelectedRows.Count, TableEditorDataGrid.Rows.Count);
+            string s = string.Format("{0} of {1} selected.", TableEditorDataGrid.SelectedRows.Count, TableEditorDataGrid.Rows.Count);
+            UpdateSelectedCountLabel(s);
 
             // Enable 'Show selected' button:
             btnShowSelected.Enabled = true;
@@ -232,6 +260,11 @@ namespace MW5.Plugins.TableEditor.Forms
             {
                 toolTip1.SetToolTip(btnShowSelected, btnShowSelected.Tag.ToString());
             }
+        }
+
+        private void UpdateSelectedCountLabel(string msg)
+        {
+            lblAmountSelected.Text = msg;
         }
 
         #endregion
@@ -414,9 +447,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Open form for fieldcalculator
         /// </summary>
-        /// <param name="selectedColumnIndex">
-        /// The index of the selected Column
-        /// </param>
+        /// <param name="selectedColumnIndex"> The index of the selected Column </param>
         private void FieldCalculator(int selectedColumnIndex)
         {
             // Check if data has changed
@@ -439,9 +470,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Generate or update shapeId's
         /// </summary>
-        /// <param name="destField">
-        /// The field where the id's will be written to.
-        /// </param>
+        /// <param name="destField"> The field where the id's will be written to. </param>
         private void GenerateShapeIDField(string destField)
         {
             var status = "updated";
@@ -547,12 +576,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Open form to import external data
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuImportExtDataClick(object sender, EventArgs e)
         {
             var frmExtData = new ImportExtDataForm((DataTable) TableEditorDataGrid.DataSource);
@@ -651,7 +674,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Save changed data
         /// </summary>
-        private void Save()
+        internal void SaveChanges()
         {
             var dt = (DataTable) TableEditorDataGrid.DataSource;
             if (dt != null)
@@ -666,6 +689,7 @@ namespace MW5.Plugins.TableEditor.Forms
             }
         }
 
+
         /// <summary>
         /// The select rows based on selected shapes.
         /// </summary>
@@ -677,7 +701,7 @@ namespace MW5.Plugins.TableEditor.Forms
             var scrollTo = -1;
             for (var j = 0; j < ShapefileWrapper.Shapefile.NumShapes; j++)
             {
-                if (ShapefileWrapper.Shapefile.get_ShapeSelected(j))
+                if (ShapefileWrapper.Shapefile.ShapeSelected[j])
                 {
                     if (scrollTo == -1)
                     {
@@ -709,9 +733,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Select or deselect all shapes
         /// </summary>
-        /// <param name="selected">
-        /// Indicates if rows have to be selected or deselected.
-        /// </param>
+        /// <param name="selected"> Indicates if rows have to be selected or deselected. </param>
         private void SetAllRows(bool selected)
         {
             foreach (DataGridViewRow row in TableEditorDataGrid.Rows)
@@ -723,9 +745,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Enable the controls
         /// </summary>
-        /// <param name="enabled">
-        /// Enabled or disable
-        /// </param>
+        /// <param name="enabled"> Enabled or disable </param>
         private void SetControlsEnabled(bool enabled)
         {
             mnuGridView.Enabled = enabled;
@@ -786,8 +806,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void ShowSelected()
         {
-            // Disable grid-changed event
-            TableEditorDataGrid.SelectionChanged -= TableEditorDataGridSelectionChanged;
+            _noSelectedChangedEvent = true;
 
             if (((DataTable) TableEditorDataGrid.DataSource).DefaultView.RowFilter == string.Empty)
             {
@@ -811,6 +830,8 @@ namespace MW5.Plugins.TableEditor.Forms
             }
 
             Application.DoEvents();
+
+            _noSelectedChangedEvent = false;
         }
 
         /// <summary>
@@ -910,10 +931,15 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void TableEditorDataGridSelectionChanged(object sender, EventArgs e)
         {
+            if (_noSelectedChangedEvent)
+            {
+                return;
+            }
+            
             var rowCollection = TableEditorDataGrid.SelectedRows;
 
-            lblAmountSeleted.Text = string.Format(
-                "{0} of {1} selected.", rowCollection.Count, TableEditorDataGrid.Rows.Count);
+            string s = string.Format("{0} of {1} selected.", rowCollection.Count, TableEditorDataGrid.Rows.Count);
+            UpdateSelectedCountLabel(s);
 
             var indices = new int[rowCollection.Count];
 
@@ -942,9 +968,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The trim column.
         /// </summary>
-        /// <param name="selectedOnly">
-        /// The selected only.
-        /// </param>
+        /// <param name="selectedOnly"> The selected only. </param>
         private void TrimColumn(bool selectedOnly)
         {
             // Get column type
@@ -966,12 +990,8 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Exectue a query
         /// </summary>
-        /// <param name="operation">
-        /// The operation to perform.
-        /// </param>
-        /// <param name="selectedIds">
-        /// The list of selecteds shapes to perform the operation on.
-        /// </param>
+        /// <param name="operation"> The operation to perform. </param>
+        /// <param name="selectedIds"> The list of selecteds shapes to perform the operation on. </param>
         private void UpdateFromQuerySelection(SelectionOperation operation, List<int> selectedIds)
         {
             switch (operation)
@@ -1086,7 +1106,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void BtnApplyClick(object sender, EventArgs e)
         {
-            Save();
+            SaveChanges();
         }
 
         /// <summary>
@@ -1117,7 +1137,8 @@ namespace MW5.Plugins.TableEditor.Forms
 
             var boShapeData = ShapefileWrapper.ShapeData;
 
-            lblAmountSeleted.Text = string.Format("Busy loading {0} records...", boShapeData.NumShapes);
+            string s = string.Format("Busy loading {0} records...", boShapeData.NumShapes);
+            UpdateSelectedCountLabel(s);
 
             var shapeFileData = boShapeData.GetDataTable(int.MaxValue);
 
@@ -1125,10 +1146,10 @@ namespace MW5.Plugins.TableEditor.Forms
 
             SetControlsEnabled(true);
 
-            lblAmountSeleted.Text = string.Format("{0} of {1} retrieved", boShapeData.NumShapes, boShapeData.NumShapes);
+            s = string.Format("{0} of {1} retrieved", boShapeData.NumShapes, boShapeData.NumShapes);
+            UpdateSelectedCountLabel(s);
 
             // PM Added: Select rows of previously selected shapes:
-            Debug.WriteLine("Num selected: " + ShapefileWrapper.Shapefile.NumSelected);
             SetSelected();
 
             _dataStillLoading = false;
@@ -1278,7 +1299,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Generate or update shapeId's
         /// </summary>
-        private void MnuGenerateOrUpdateShapeIDClick(object sender, EventArgs e)
+        private void MnuGenerateOrUpdateShapeIdClick(object sender, EventArgs e)
         {
             if (ShapefileWrapper.IsReadOnly)
             {
@@ -1368,12 +1389,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Select all shapes in grid
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuSelectAllClick(object sender, EventArgs e)
         {
             SetAllRows(true);
@@ -1382,12 +1397,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Deselect all shapes in grid
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuSelectNoneClick(object sender, EventArgs e)
         {
             DeSelectAllRows();
@@ -1396,12 +1405,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Show selected shapes
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuShowSelectedClick(object sender, EventArgs e)
         {
             ShowSelected();
@@ -1410,12 +1413,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The mnu statistics_ click.
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
         private void MnuStatisticsClick(object sender, EventArgs e)
         {
             ShowStatistics();
@@ -1424,12 +1421,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The mnu trim all_ click.
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
         private void MnuTrimAllClick(object sender, EventArgs e)
         {
             TrimColumn(false);
@@ -1438,12 +1429,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The mnu trim selected_ click.
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
         private void MnuTrimSelectedClick(object sender, EventArgs e)
         {
             TrimColumn(true);
@@ -1452,12 +1437,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Zoom to selected/edited shape
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuZoomToEditedClick(object sender, EventArgs e)
         {
             ZoomToEdit();
@@ -1466,12 +1445,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Zoom to selected shapes
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void MnuZoomToSelectedClick(object sender, EventArgs e)
         {
             ZoomToSelected();
@@ -1480,12 +1453,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Open form to remove field
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void RemoveFieldToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (ShapefileWrapper.IsReadOnly)
@@ -1516,12 +1483,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Open form to rename field
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void RenameFieldToolStripMenuItemClick(object sender, EventArgs e)
         {
             if (ShapefileWrapper.IsReadOnly)
@@ -1540,12 +1501,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Open form to perform a query
         /// </summary>
-        /// <param name="sender">
-        /// The sender of the event.
-        /// </param>
-        /// <param name="e">
-        /// The arguments.
-        /// </param>
         private void TbbQueryClick(object sender, EventArgs e)
         {
             QueryForm();

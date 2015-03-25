@@ -3,13 +3,14 @@ using System.Data;
 using System.Threading;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     ///  Form-class for textcalculator
     /// </summary>
-    public partial class TextCalculatorForm : Form
+    public partial class TextCalculatorForm : MapWindowForm
     {
         /// <summary>The gridview with shape-data</summary> 
         private readonly DataGridView _dataGridView;

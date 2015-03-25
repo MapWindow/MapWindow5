@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -442,31 +442,31 @@
   <data name="&gt;&gt;btnZoomToSelected.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="lblAmountSeleted.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+  <data name="lblAmountSelected.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
-  <data name="lblAmountSeleted.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="lblAmountSelected.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 41</value>
   </data>
-  <data name="lblAmountSeleted.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="lblAmountSelected.Size" type="System.Drawing.Size, System.Drawing">
     <value>157, 18</value>
   </data>
-  <data name="lblAmountSeleted.TabIndex" type="System.Int32, mscorlib">
+  <data name="lblAmountSelected.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
   </data>
-  <data name="lblAmountSeleted.Text" xml:space="preserve">
+  <data name="lblAmountSelected.Text" xml:space="preserve">
     <value>0 of 0 Selected</value>
   </data>
-  <data name="&gt;&gt;lblAmountSeleted.Name" xml:space="preserve">
-    <value>lblAmountSeleted</value>
+  <data name="&gt;&gt;lblAmountSelected.Name" xml:space="preserve">
+    <value>lblAmountSelected</value>
   </data>
-  <data name="&gt;&gt;lblAmountSeleted.Type" xml:space="preserve">
+  <data name="&gt;&gt;lblAmountSelected.Type" xml:space="preserve">
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;lblAmountSeleted.Parent" xml:space="preserve">
+  <data name="&gt;&gt;lblAmountSelected.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;lblAmountSeleted.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;lblAmountSelected.ZOrder" xml:space="preserve">
     <value>8</value>
   </data>
   <data name="btnClose.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">

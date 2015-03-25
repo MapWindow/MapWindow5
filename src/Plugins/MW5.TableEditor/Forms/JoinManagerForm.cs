@@ -2,13 +2,14 @@
 using System.Data;
 using System.Windows.Forms;
 using MapWinGIS;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     /// The frm join manager.
     /// </summary>
-    public partial class JoinManagerForm : Form
+    public partial class JoinManagerForm : MapWindowForm
     {
         #region Constructors and Destructors
 

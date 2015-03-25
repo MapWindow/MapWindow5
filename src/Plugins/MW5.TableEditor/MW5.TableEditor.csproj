@@ -82,6 +82,7 @@
       <HintPath>..\Bin\Interop.MapWinGIS.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
@@ -100,6 +101,7 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="BO\AppContextWrapper.cs" />
+    <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
@@ -192,6 +194,7 @@
       <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Legacy\Main.cs" />
+    <Compile Include="ProjectListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

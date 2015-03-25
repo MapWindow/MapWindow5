@@ -2,15 +2,15 @@
 using System.Data;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>
     ///  Form-class for adding a new field
     /// </summary>
-    public partial class NewFieldForm : Form
+    public partial class NewFieldForm : MapWindowForm
     {
-        /// <summary>The datatable with shapedata</summary>
         private readonly DataTable _dt;
 
         /// <summary>Initializes a new instance of the frmNewField class</summary>

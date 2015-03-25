@@ -17,7 +17,6 @@
 Option Strict Off
 Option Explicit On
 
-Imports Microsoft.VisualBasic.Compatibility
 Imports System.Math
 
 Public Class clsMathParser

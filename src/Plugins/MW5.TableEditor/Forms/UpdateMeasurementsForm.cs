@@ -6,11 +6,12 @@ using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Utils;
+using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
     /// <summary>The form to update the area, perimeter and length fields</summary>
-    public partial class UpdateMeasurementsForm : Form
+    public partial class UpdateMeasurementsForm : MapWindowForm
     {
         /// <summary>What is the shapefile type</summary>
         private short _shapefileType;
