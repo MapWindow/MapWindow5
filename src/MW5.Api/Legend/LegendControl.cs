@@ -2295,7 +2295,6 @@ namespace MW5.Api.Legend
                     }
 
                     _map.Redraw();
-                    Application.DoEvents();
 
                     if (locked)
                     {

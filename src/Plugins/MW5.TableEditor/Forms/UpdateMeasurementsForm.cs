@@ -47,7 +47,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             // Set labels:
             lblLayername.Text = string.Format("Layer name: {0}", _boShapefile.ShapefileName);
-            var geoprojection = _boShapefile.ShapeFile.GeoProjection;
+            var geoprojection = _boShapefile.Shapefile.GeoProjection;
             lblProjection.Text = string.Format("Projection: {0}", geoprojection.Name);
             lblShapefileUnits.Text = string.Format("Units: {0}",
                 _unitsOfMeasurement.GetUnitsFromProj4(geoprojection.ExportToProj4()));
@@ -130,7 +130,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>Get the shapefile type</summary>
         private void GetShapefileType()
         {
-            switch (_boShapefile.ShapeFile.ShapefileType)
+            switch (_boShapefile.Shapefile.ShapefileType)
             {
                 case ShpfileType.SHP_POLYGON:
                 case ShpfileType.SHP_POLYGONM:
@@ -187,9 +187,9 @@ namespace MW5.Plugins.TableEditor.Forms
         private IEnumerable<Field> GetFields()
         {
             var fields = new List<Field>();
-            for (var i = 0; i < _boShapefile.ShapeFile.NumFields; i++)
+            for (var i = 0; i < _boShapefile.Shapefile.NumFields; i++)
             {
-                var field = _boShapefile.ShapeFile.get_Field(i);
+                var field = _boShapefile.Shapefile.get_Field(i);
                 fields.Add(field);
             }
 
@@ -292,7 +292,7 @@ namespace MW5.Plugins.TableEditor.Forms
             }
             else
             {
-                columnID = _boShapefile.ShapeFile.Table.get_FieldIndexByName(currentFieldname) + 1;
+                columnID = _boShapefile.Shapefile.Table.get_FieldIndexByName(currentFieldname) + 1;
             }
 
             Calculate(measurementType, columnID, precision);
@@ -317,7 +317,7 @@ namespace MW5.Plugins.TableEditor.Forms
                     _unitsOfMeasurement.StringToUom(CalculateUnitsCombo.SelectedItem.ToString());
 
                 var utils = new MapWinGIS.Utils();
-                var numShapes = _boShapefile.ShapeFile.NumShapes;
+                var numShapes = _boShapefile.Shapefile.NumShapes;
 
                 // Init progress bar:
                 progressBar1.Minimum = 0;
@@ -329,7 +329,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 var useOldCalculation = false;
                 if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
                 {
-                    reprojectShapefile = ReprojectShapefileToUtm(_boShapefile.ShapeFile);
+                    reprojectShapefile = ReprojectShapefileToUtm(_boShapefile.Shapefile);
 
                     // If the reprojected shapefile has less shapes than the original,
                     // it means the data spans more than 1 UTM zone.
@@ -355,7 +355,7 @@ namespace MW5.Plugins.TableEditor.Forms
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = _boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.Shapefile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -379,7 +379,7 @@ namespace MW5.Plugins.TableEditor.Forms
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = _boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.Shapefile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;
@@ -397,7 +397,7 @@ namespace MW5.Plugins.TableEditor.Forms
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = _boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.Shapefile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -422,7 +422,7 @@ namespace MW5.Plugins.TableEditor.Forms
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = _boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.Shapefile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;
@@ -440,7 +440,7 @@ namespace MW5.Plugins.TableEditor.Forms
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = _boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.Shapefile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -464,7 +464,7 @@ namespace MW5.Plugins.TableEditor.Forms
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = _boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.Shapefile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;

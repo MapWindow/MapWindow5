@@ -13,5 +13,6 @@ namespace MW5.Plugins.Interfaces
         bool ShowDialog(Form form);
         bool ShowDialog(Form form, IWin32Window parent);
         void Update();
+        IWin32Window MainForm { get; }
     }
 }

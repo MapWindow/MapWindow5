@@ -1,16 +1,18 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.TableEditor.BO
 {
     /// <summary>
-    ///   Takes care of the communication with the MapWindow-object
+    /// Takes care of the communication with the main app.
     /// </summary>
     public class AppContextWrapper
     {
-        /// <summary>The MapWindow-object</summary>
-        private IAppContext _context;
+        private readonly IAppContext _context;
 
         /// <summary>Initializes a new instance of the BOMapWindow class</summary>
         /// <param name = "app">The name of ImapWin.</param>
@@ -23,48 +25,66 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "indices">A list of indices.</param>
         public void UpdateMap(int[] indices)
         {
-            //if (indices.Length > 0)
-            //{
-            // _context.View.UpdateSelection(_context.Layers.CurrentLayer, ref indices, SelectionOperation.SelectNew);
-            //  //mapWin.View.Redraw();
-            // _context.Refresh();
-            //}
+            if (indices.Length > 0)
+            {
+                _context.Layers.SelectedLayer.UpdateSelection(indices, SelectionOperation.New);
+                _context.Map.Redraw();
+                _context.View.Update();
+            }
+        }
+
+        private AxMap Map
+        {
+            get
+            {
+                var map = _context.Map.InternalObject as AxMap;
+                if (map == null)
+                {
+                    throw new NullReferenceException("Can't access AxMap.");
+                }
+                return map;
+            }
         }
 
         /// <summary>Moves to the selected shape(s)</summary>
         /// <param name = "selectedRows">A collection of th selected rows.</param>
-        /// <param name = "shapeFile">The current shapefile.</param>
-        public void MoveToSelected(DataGridViewSelectedRowCollection selectedRows, Shapefile shapeFile)
+        /// <param name = "shapefile">The current shapefile.</param>
+        public void MoveToSelected(DataGridViewSelectedRowCollection selectedRows, Shapefile shapefile)
         {
             // TODO: Check if this is the most optimal method. Perhaps the SF objects has some better solutions
-            //try
-            //{
-            //    MapWinGIS.Extents currentEx =_context.View.Extents;
+            try
+            {
+                var map = Map;
+                var currentEx = map.Extents as Extents;
+                if (currentEx == null)
+                {
+                    throw new NullReferenceException("Can't access map extents.");
+                }
 
-            //    // Get the current center of the view
-            //    double mpX = (currentEx.xMax - currentEx.xMin) / 2;
-            //    double mpY = (currentEx.yMax - currentEx.yMin) / 2;
+                // Get the current center of the view
+                double mpX = (currentEx.xMax - currentEx.xMin) / 2;
+                double mpY = (currentEx.yMax - currentEx.yMin) / 2;
 
-            //    // Determine the center point of the selected shapes
-            //    double centroidX = shapeFile.get_Shape(Convert.ToInt32(selectedRows[0].Cells[0].Value)).Center.x;
-            //    double centroidY = shapeFile.get_Shape(Convert.ToInt32(selectedRows[0].Cells[0].Value)).Center.y;
+                // Determine the center point of the selected shapes
+                double centroidX = shapefile.Shape[Convert.ToInt32(selectedRows[0].Cells[0].Value)].Center.x;
+                double centroidY = shapefile.Shape[Convert.ToInt32(selectedRows[0].Cells[0].Value)].Center.y;
 
-            //    // Check if the new centroid is calculated OK
-            //    if (centroidX * centroidY != 0)
-            //    {
-            //        // Create new extents
-            //        MapWinGIS.Extents newEx = new MapWinGIS.Extents();
+                // Check if the new centroid is calculated OK
+                if (centroidX * centroidY != 0)
+                {
+                    // Create new extents
+                    var newEx = new Extents();
 
-            //        // Set new extents
-            //        newEx.SetBounds((centroidX - mpX), (centroidY - mpY), 0, (centroidX + mpX), (centroidY + mpY), 0);
+                    // Set new extents
+                    newEx.SetBounds((centroidX - mpX), (centroidY - mpY), 0, (centroidX + mpX), (centroidY + mpY), 0);
 
-            //       _context.View.Extents = newEx;
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(string.Format("Error in MoveToSelected: {0}", ex.Message));
-            //}
+                    map.Extents = newEx;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error in MoveToSelected: {0}", ex.Message));
+            }
         }
 
         /// <summary>Zoom to the selected shape(s)</summary>
@@ -72,125 +92,134 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "shapeFile">The current shapefile.</param>
         public void ZoomToSelected(DataGridViewSelectedRowCollection selectedRows, Shapefile shapeFile)
         {
-            //try
-            //{
-            //    double maxX = double.MinValue;
-            //    double maxY = double.MinValue;
-            //    double minX = double.MaxValue;
-            //    double minY = double.MaxValue;
+            try
+            {
+                double maxX = double.MinValue;
+                double maxY = double.MinValue;
+                double minX = double.MaxValue;
+                double minY = double.MaxValue;
+                
+                var layer = _context.Layers.SelectedLayer;
+                if (layer == null || layer.FeatureSet == null)
+                {
+                    return;
+                }
 
-            //   _context.Layers[_context.Layers.CurrentLayer].Visible = true;
+                layer.Visible = true;
 
-            //    foreach (DataGridViewRow row in selectedRows)
-            //    {
-            //        MapWinGIS.Extents ext = shapeFile.QuickExtents(Convert.ToInt32(row.Cells[0].Value));
+                foreach (DataGridViewRow row in selectedRows)
+                {
+                    var ext = shapeFile.QuickExtents(Convert.ToInt32(row.Cells[0].Value));
 
-            //        maxX = ext.xMax > maxX ? ext.xMax : maxX;
-            //        maxY = ext.yMax > maxY ? ext.yMax : maxY;
-            //        minX = ext.xMin < minX ? ext.xMin : minX;
-            //        minY = ext.yMin < minY ? ext.yMin : minY;
-            //    }
+                    maxX = ext.xMax > maxX ? ext.xMax : maxX;
+                    maxY = ext.yMax > maxY ? ext.yMax : maxY;
+                    minX = ext.xMin < minX ? ext.xMin : minX;
+                    minY = ext.yMin < minY ? ext.yMin : minY;
+                }
 
-            //    // Pad extents now
-            //    double dx =PadExtentsSelected(maxX, minX);
-            //    maxX = maxX + dx;
-            //    minX = minX - dx;
+                // Pad extents now
+                double dx = PadExtentsSelected(maxX, minX);
+                maxX = maxX + dx;
+                minX = minX - dx;
 
-            //    double dy =PadExtentsSelected(maxY, minY);
-            //    maxY = maxY + dy;
-            //    minY = minY - dy;
+                double dy = PadExtentsSelected(maxY, minY);
+                maxY = maxY + dy;
+                minY = minY - dy;
 
-            //    MapWinGIS.Extents exts = new Extents();
+                var exts = new Extents();
 
-            //    if (_context.View.SelectedShapes.NumSelected == 1 
-            //      &&_context.Layers[_context.Layers.CurrentLayer].LayerType == eLayerType.PointShapefile)
-            //    {
-            //        MapWinGIS.Shapefile sf =_context.Layers[_context.Layers.CurrentLayer] as Shapefile;
+                if (layer.FeatureSet.NumSelected == 1 && layer.FeatureSet.PointOrMultiPoint)
+                {
+                    var sf = layer.FeatureSet.InternalObject as Shapefile;
+                    if (sf != null)
+                    {
+                        double xpad = (1/100)*(sf.Extents.xMax - sf.Extents.xMin);
+                        double ypad = (1/100)*(sf.Extents.yMax - sf.Extents.yMin);
 
-            //        double xpad = (1 / 100) * (sf.Extents.xMax - sf.Extents.xMin);
-            //        double ypad = (1 / 100) * (sf.Extents.yMax - sf.Extents.yMin);
+                        exts.SetBounds(minX + xpad, minY - ypad, 0, maxX - xpad, maxY + ypad, 0);
+                    }
+                }
+                else
+                {
+                    exts.SetBounds(minX, minY, 0, maxX, maxY, 0);
+                }
 
-            //        exts.SetBounds(minX + xpad, minY - ypad, 0, maxX - xpad, maxY + ypad, 0);
-            //    }
-            //    else
-            //    {
-            //        exts.SetBounds(minX, minY, 0, maxX, maxY, 0);
-            //    }
-
-            //   _context.View.Extents = exts;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(string.Format("Error in ZoomToSelected: {0}", ex.Message));
-            //}
+                var map = Map;
+                map.Extents = exts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error in ZoomToSelected: {0}", ex.Message));
+            }
         }
 
         /// <summary>Zoom to the shape dat is currently selected/edited</summary>
         /// <param name = "shapeId">Id of the selected shape.</param>
-        /// <param name = "shapeFile">The current shapefile.</param>
-        public void ZoomToEdit(int shapeId, Shapefile shapeFile)
+        /// <param name = "shapefile">The current shapefile.</param>
+        public void ZoomToEdit(int shapeId, Shapefile shapefile)
         {
-            //try
-            //{
-            //    MapWinGIS.Shape shape = shapeFile.get_Shape(shapeId);
+            try
+            {
+                var shape = shapefile.Shape[shapeId];
 
-            //    double maxX = shape.Extents.xMax;
-            //    double maxY = shape.Extents.yMax;
-            //    double minX = shape.Extents.xMin;
-            //    double minY = shape.Extents.yMin;
+                double maxX = shape.Extents.xMax;
+                double maxY = shape.Extents.yMax;
+                double minX = shape.Extents.xMin;
+                double minY = shape.Extents.yMin;
 
-            //   _context.Layers[_context.Layers.CurrentLayer].Visible = true;
+                _context.Layers.SelectedLayer.Visible = true;
 
-            //    // Pad extents now
-            //    double dx =PadExtentsEdit(maxX, minX);
-            //    maxX += dx;
-            //    minX -= dx;
+                // Pad extents now
+                double dx = PadExtentsEdit(maxX, minX);
+                maxX += dx;
+                minX -= dx;
 
-            //    double dy =PadExtentsEdit(maxY, minY);
-            //    maxY += dy;
-            //    minY -= dy;
+                double dy = PadExtentsEdit(maxY, minY);
+                maxY += dy;
+                minY -= dy;
 
-            //    MapWinGIS.Extents exts = new MapWinGIS.Extents();
-            //    exts.SetBounds(minX, minY, 0, maxX, maxY, 0);
+                var exts = new Extents();
+                exts.SetBounds(minX, minY, 0, maxX, maxY, 0);
 
-            //   _context.View.Extents = exts;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(string.Format("Error: {0}", ex.Message));
-            //}
+                Map.Extents = exts;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Error: {0}", ex.Message));
+            }
         }
 
         /// <summary>Save shapfileData to a shapefile</summary>
         /// <param name = "shapeFile">The current shapefile.</param>
         public void ExportShapes(Shapefile shapeFile)
         {
-            //if (_context.Layers.NumLayers == 0)
-            //{
-            //    MessageBox.Show("No layer selected.");
-            //    return;
-            //}
+            if (_context.Layers.Count == 0)
+            {
+                MessageBox.Show("No layer selected.");
+                return;
+            }
 
-            //if (shapeFile.NumSelected == 0)
-            //{
-            //    MessageBox.Show("No shapes selected.");
-            //    return;
-            //}
+            if (shapeFile.NumSelected == 0)
+            {
+                MessageBox.Show("No shapes selected.");
+                return;
+            }
 
-            //SaveFileDialog saveFileDialog = new SaveFileDialog
-            //    {
-            //        Filter = @"Shapefiles (*.shp)|*.shp", 
-            //        FilterIndex = 2, 
-            //        RestoreDirectory = true
-            //    };
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+                {
+                    Filter = @"Shapefiles (*.shp)|*.shp",
+                    FilterIndex = 2,
+                    RestoreDirectory = true
+                };
 
-            //if (saveFileDialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    bool loadShapeFile = MessageBox.Show(@"Do you want to load the new shapefile?", @"TableEditor", MessageBoxButtons.YesNo) == DialogResult.Yes;
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                bool loadShapeFile = MessageBox.Show(@"Do you want to load the new shapefile?", @"TableEditor", MessageBoxButtons.YesNo) == DialogResult.Yes;
 
-            //    // TODO: Use new export method of SF object:
-            //    MapWinGeoProc.Selection.ExportSelectedMWViewShapes(_context, saveFileDialog.FileName, loadShapeFile);
-            //}
+                // TODO: Use new export method of SF object:
+                //MapWinGeoProc.Selection.ExportSelectedMWViewShapes(_context, saveFileDialog.FileName, loadShapeFile);
+                throw new NotImplementedException();
+            }
         }
 
         /// <summary>
@@ -198,7 +227,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// </summary>
         public void MarkProjectModified()
         {
-            //_context.Project.Modified = true;
+            _context.Project.SetModified();
         }
 
         /// <summary>Set Exent for selected</summary>
@@ -222,7 +251,7 @@ namespace MW5.Plugins.TableEditor.BO
         {
             var dx = max - min;
 
-//            dx *= _context.View.ExtentPad;
+            dx *= _context.Map.ExtentPad;
 
             return dx == 0 ? 1 : dx;
         }

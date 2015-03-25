@@ -136,19 +136,19 @@ namespace MW5.Plugins.TableEditor.Forms
         switch (category)
         {
           case "Shapes":
-            if (shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINT
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINTM
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINTZ
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINT
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINTM
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINTZ)
+            if (shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINT
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINTM
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_MULTIPOINTZ
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINT
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINTM
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POINTZ)
             {
               subs = _pntShape.Split(' ');
               PopulateTreeView(category, subs);
             }
-            else if (shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINE
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINEM
-                || shapefileWrapper.ShapeFile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINEZ)
+            else if (shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINE
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINEM
+                || shapefileWrapper.Shapefile.ShapefileType == MapWinGIS.ShpfileType.SHP_POLYLINEZ)
             {
               subs = _polyShape.Split(' ');
               PopulateTreeView(category, subs);
@@ -377,26 +377,26 @@ namespace MW5.Plugins.TableEditor.Forms
                   {
                     case "shapex":
                     case "shapexfirst":
-                      mathParser.set_VarValue(i, _shpFile.ShapeFile.get_Shape(shapeID).get_Point(0).x);
+                      mathParser.set_VarValue(i, _shpFile.Shapefile.get_Shape(shapeID).get_Point(0).x);
                       break;
                     case "shapey":
                     case "shapeyfirst":
-                      mathParser.set_VarValue(i, _shpFile.ShapeFile.get_Shape(shapeID).get_Point(0).y);
+                      mathParser.set_VarValue(i, _shpFile.Shapefile.get_Shape(shapeID).get_Point(0).y);
                       break;
                     case "shapez":
                     case "shapezfirst":
-                      mathParser.set_VarValue(i, _shpFile.ShapeFile.get_Shape(shapeID).get_Point(0).Z);
+                      mathParser.set_VarValue(i, _shpFile.Shapefile.get_Shape(shapeID).get_Point(0).Z);
                       break;
                     case "shapexlast":
-                      shp = _shpFile.ShapeFile.get_Shape(shapeID);
+                      shp = _shpFile.Shapefile.get_Shape(shapeID);
                       mathParser.set_VarValue(i, shp.get_Point(shp.numPoints - 1).x);
                       break;
                     case "shapeylast":
-                      shp = _shpFile.ShapeFile.get_Shape(shapeID);
+                      shp = _shpFile.Shapefile.get_Shape(shapeID);
                       mathParser.set_VarValue(i, shp.get_Point(shp.numPoints - 1).y);
                       break;
                     case "shapezlast":
-                      shp = _shpFile.ShapeFile.get_Shape(shapeID);
+                      shp = _shpFile.Shapefile.get_Shape(shapeID);
                       mathParser.set_VarValue(i, shp.get_Point(shp.numPoints - 1).Z);
                       break;
                     default:

@@ -100,6 +100,11 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="BO\AppContextWrapper.cs" />
+    <Compile Include="Helpers\AppContextHelper.cs" />
+    <Compile Include="MapListener.cs" />
+    <Compile Include="Menu\MenuCommands.cs" />
+    <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Menu\MenuService.cs" />
     <Compile Include="BO\ShapeData.cs" />
     <Compile Include="BO\ShapefileWrapper.cs" />
     <Compile Include="Forms\DeleteFieldForm.cs">
@@ -290,6 +295,10 @@
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
     </ProjectReference>
     <ProjectReference Include="MathParser\MathParser.vbproj">
       <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>

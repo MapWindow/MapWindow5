@@ -9,13 +9,13 @@ namespace MW5.Plugins.TableEditor.BO
     public class ShapefileWrapper
     {
         /// <summary>Status if file is readonly</summary>
-        private bool? isDiskFileReadOnly;
+        private bool? _isDiskFileReadOnly;
 
         /// <summary>The shapefile-sourcetype</summary>
-        private tkShapefileSourceType sourceType;
+        private tkShapefileSourceType _sourceType;
 
         /// <summary>Gets or sets the shapefile</summary>
-        public Shapefile ShapeFile { get; set; }
+        public Shapefile Shapefile { get; set; }
 
         /// <summary>Gets or sets the name of the shapefile</summary>
         public string ShapefileName { get; set; }
@@ -23,7 +23,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <summary>Gets a reference to the shapedata-object</summary>
         public ShapeData ShapeData
         {
-            get { return new ShapeData(ShapeFile); }
+            get { return new ShapeData(Shapefile); }
         }
 
         /// <summary>Gets the shapefile-sourcetype</summary>
@@ -31,12 +31,12 @@ namespace MW5.Plugins.TableEditor.BO
         {
             get
             {
-                if (sourceType == tkShapefileSourceType.sstUninitialized)
+                if (_sourceType == tkShapefileSourceType.sstUninitialized)
                 {
-                    sourceType = ShapeFile.SourceType;
+                    _sourceType = Shapefile.SourceType;
                 }
 
-                return sourceType;
+                return _sourceType;
             }
         }
 
@@ -45,20 +45,13 @@ namespace MW5.Plugins.TableEditor.BO
         {
             get
             {
-                if (isDiskFileReadOnly == null)
+                if (_isDiskFileReadOnly == null)
                 {
-                    if ((File.GetAttributes(ShapeFile.Filename.Replace(".shp", ".dbf")) & FileAttributes.ReadOnly) ==
-                        FileAttributes.ReadOnly)
-                    {
-                        isDiskFileReadOnly = true;
-                    }
-                    else
-                    {
-                        isDiskFileReadOnly = false;
-                    }
+                    _isDiskFileReadOnly = (File.GetAttributes(Shapefile.Filename.Replace(".shp", ".dbf")) & FileAttributes.ReadOnly) ==
+                                          FileAttributes.ReadOnly;
                 }
 
-                return (bool) isDiskFileReadOnly;
+                return (bool) _isDiskFileReadOnly;
             }
         }
 

@@ -24,19 +24,19 @@ namespace MW5.Plugins.TableEditor.Forms
         private bool _dataStillLoading;
         private bool _isStructureChanged;
         private int _selectColumnIndex;
-        private ShapefileWrapper _sf;
+        private ShapefileWrapper _shapefile;
         private bool _toolTipShown;
         private readonly AppContextWrapper _appContextWrapper;
 
         /// <summary>
         /// Initializes a new instance of the TableEditorForm class
         /// </summary>
-        public TableEditorForm(ShapefileWrapper boSf, AppContextWrapper mapWindow)
+        public TableEditorForm(ShapefileWrapper sf, AppContextWrapper context)
         {
             InitializeComponent();
 
-            ShapefileWrapper = boSf;
-            _appContextWrapper = mapWindow;
+            ShapefileWrapper = sf;
+            _appContextWrapper = context;
         }
 
         #region Public Properties
@@ -46,11 +46,11 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         public ShapefileWrapper ShapefileWrapper
         {
-            get { return _sf; }
+            get { return _shapefile; }
 
             set
             {
-                _sf = value;
+                _shapefile = value;
                 SetTitle();
             }
         }
@@ -62,9 +62,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Check if data is changed and save data if necessary
         /// </summary>
-        /// <returns>
-        /// Value indicating if saving was successfull
-        /// </returns>
+        /// <returns> Value indicating if saving was successfull </returns>
         public bool CheckAndSaveChanges()
         {
             var noChangesOrUpdated = true;
@@ -197,7 +195,7 @@ namespace MW5.Plugins.TableEditor.Forms
         public void SetSelected()
         {
             // PM: Added, no need to loop through records if no shapes are selected:
-            if (ShapefileWrapper.ShapeFile.NumSelected == 0)
+            if (ShapefileWrapper.Shapefile.NumSelected == 0)
             {
                 lblAmountSeleted.Text = string.Format("{0} of {1} selected.", 0, TableEditorDataGrid.Rows.Count);
                 return;
@@ -356,9 +354,9 @@ namespace MW5.Plugins.TableEditor.Forms
             var query = new StringBuilder();
             query.Append("(");
 
-            for (var j = 0; j < ShapefileWrapper.ShapeFile.NumShapes; j++)
+            for (var j = 0; j < ShapefileWrapper.Shapefile.NumShapes; j++)
             {
-                if (ShapefileWrapper.ShapeFile.get_ShapeSelected(j))
+                if (ShapefileWrapper.Shapefile.get_ShapeSelected(j))
                 {
                     query.Append(j.ToString()).Append(",");
                 }
@@ -395,17 +393,17 @@ namespace MW5.Plugins.TableEditor.Forms
             toolTip1.SetToolTip(UpdateMeasurements, "Update measurements");
 
             // Issue #2219: check shapefile type and projection
-            if (ShapefileWrapper.ShapeFile.GeoProjection.IsEmpty &&
-                ShapefileWrapper.ShapeFile.Projection == string.Empty)
+            if (ShapefileWrapper.Shapefile.GeoProjection.IsEmpty &&
+                ShapefileWrapper.Shapefile.Projection == string.Empty)
             {
                 updateMeasurementsToolStripMenuItem.Enabled = false;
                 UpdateMeasurements.Enabled = false;
                 toolTip1.SetToolTip(UpdateMeasurements, "The shapefile has no projection");
             }
 
-            if (ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINT
-                || ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINTM
-                || ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINTZ)
+            if (ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINT
+                || ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINTM
+                || ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINTZ)
             {
                 updateMeasurementsToolStripMenuItem.Enabled = false;
                 UpdateMeasurements.Enabled = false;
@@ -576,17 +574,17 @@ namespace MW5.Plugins.TableEditor.Forms
             }
 
             // Issue #2219: check shapefile type and projection
-            if (ShapefileWrapper.ShapeFile.GeoProjection.IsEmpty &&
-                ShapefileWrapper.ShapeFile.Projection == string.Empty)
+            if (ShapefileWrapper.Shapefile.GeoProjection.IsEmpty &&
+                ShapefileWrapper.Shapefile.Projection == string.Empty)
             {
                 MessageBox.Show(
                     @"The shapefile has no projection. The measurements cannot be calculated for shapefiles without projection.");
                 return;
             }
 
-            if (ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINT
-                || ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINTM
-                || ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINTZ)
+            if (ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINT
+                || ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINTM
+                || ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINTZ)
             {
                 MessageBox.Show(
                     @"You've opened a point shapefile. The measurements cannot be calculated for point shapefiles");
@@ -674,12 +672,12 @@ namespace MW5.Plugins.TableEditor.Forms
         private void SelectRowsBasedOnSelectedShapes()
         {
             Application.DoEvents();
-            var numSelectedShapes = ShapefileWrapper.ShapeFile.NumSelected;
+            var numSelectedShapes = ShapefileWrapper.Shapefile.NumSelected;
             var numSelectedRows = 0;
             var scrollTo = -1;
-            for (var j = 0; j < ShapefileWrapper.ShapeFile.NumShapes; j++)
+            for (var j = 0; j < ShapefileWrapper.Shapefile.NumShapes; j++)
             {
-                if (ShapefileWrapper.ShapeFile.get_ShapeSelected(j))
+                if (ShapefileWrapper.Shapefile.get_ShapeSelected(j))
                 {
                     if (scrollTo == -1)
                     {
@@ -1038,7 +1036,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void ZoomToEdit()
         {
             _appContextWrapper.ZoomToEdit(
-                Convert.ToInt32(TableEditorDataGrid.CurrentRow.Cells[0].Value), ShapefileWrapper.ShapeFile);
+                Convert.ToInt32(TableEditorDataGrid.CurrentRow.Cells[0].Value), ShapefileWrapper.Shapefile);
         }
 
         /// <summary>
@@ -1051,15 +1049,15 @@ namespace MW5.Plugins.TableEditor.Forms
                 return;
             }
 
-            if ((ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_POINT
-                 || ShapefileWrapper.ShapeFile.ShapefileType == ShpfileType.SHP_MULTIPOINT)
+            if ((ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_POINT
+                 || ShapefileWrapper.Shapefile.ShapefileType == ShpfileType.SHP_MULTIPOINT)
                 && TableEditorDataGrid.SelectedRows.Count == 1)
             {
-                _appContextWrapper.MoveToSelected(TableEditorDataGrid.SelectedRows, ShapefileWrapper.ShapeFile);
+                _appContextWrapper.MoveToSelected(TableEditorDataGrid.SelectedRows, ShapefileWrapper.Shapefile);
             }
             else
             {
-                _appContextWrapper.ZoomToSelected(TableEditorDataGrid.SelectedRows, ShapefileWrapper.ShapeFile);
+                _appContextWrapper.ZoomToSelected(TableEditorDataGrid.SelectedRows, ShapefileWrapper.Shapefile);
             }
         }
 
@@ -1130,7 +1128,7 @@ namespace MW5.Plugins.TableEditor.Forms
             lblAmountSeleted.Text = string.Format("{0} of {1} retrieved", boShapeData.NumShapes, boShapeData.NumShapes);
 
             // PM Added: Select rows of previously selected shapes:
-            Debug.WriteLine("Num selected: " + ShapefileWrapper.ShapeFile.NumSelected);
+            Debug.WriteLine("Num selected: " + ShapefileWrapper.Shapefile.NumSelected);
             SetSelected();
 
             _dataStillLoading = false;
@@ -1151,7 +1149,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (CheckAndSaveChanges())
             {
-                var tbl = ShapefileWrapper.ShapeFile.Table;
+                var tbl = ShapefileWrapper.Shapefile.Table;
                 var state = tbl.Serialize();
 
                 var form = new JoinManagerForm((DataTable) TableEditorDataGrid.DataSource, tbl);
@@ -1230,7 +1228,7 @@ namespace MW5.Plugins.TableEditor.Forms
             // Check if data has changed
             if (CheckAndSaveChanges())
             {
-                _appContextWrapper.ExportShapes(ShapefileWrapper.ShapeFile);
+                _appContextWrapper.ExportShapes(ShapefileWrapper.Shapefile);
             }
             else
             {

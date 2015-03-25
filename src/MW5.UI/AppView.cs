@@ -58,6 +58,9 @@ namespace MW5.UI
             _parent.UpdateView();
         }
 
-
+        public IWin32Window MainForm
+        {
+            get { return _parent as IWin32Window; }
+        }
     }
 }

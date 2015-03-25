@@ -13,19 +13,19 @@ namespace MW5.Plugins.TableEditor.BO
     /// </summary>
     public class ShapeData : ICallback
     {
-        /// <summary>The shapefile-object</summary>
-        private readonly Shapefile sf;
+        private readonly Shapefile _shapefile;
 
         /// <summary>Initializes a new instance of the BOShapeData class</summary>
         /// <param name = "shapeFile">The shapeFile.</param>
         public ShapeData(Shapefile shapeFile)
         {
-            sf = shapeFile;
+            if (shapeFile == null) throw new ArgumentNullException("shapeFile");
+            _shapefile = shapeFile;
         }
 
         public int NumShapes
         {
-            get { return sf.NumShapes; }
+            get { return _shapefile.NumShapes; }
         }
 
         /// <summary>Check to see if dat has changed</summary>
@@ -33,16 +33,11 @@ namespace MW5.Plugins.TableEditor.BO
         /// <returns>The result</returns>
         public bool DataChanged(DataTable dataTable)
         {
-            var dataChanged = false;
+            bool dataChanged = (dataTable.Columns.Count - 1) != _shapefile.NumFields;
 
-            if ((dataTable.Columns.Count - 1) != sf.NumFields)
+            for (var i = 1; i <= _shapefile.NumFields; i++)
             {
-                dataChanged = true;
-            }
-
-            for (var i = 1; i <= sf.NumFields; i++)
-            {
-                if (dataTable.Columns[i].ColumnName != sf.get_Field(i - 1).Name)
+                if (dataTable.Columns[i].ColumnName != _shapefile.get_Field(i - 1).Name)
                 {
                     dataChanged = true;
                 }
@@ -68,8 +63,8 @@ namespace MW5.Plugins.TableEditor.BO
         {
             var dt = CreateTable();
 
-            var numShapes = sf.NumShapes;
-            var numfields = sf.NumFields;
+            var numShapes = _shapefile.NumShapes;
+            var numfields = _shapefile.NumFields;
 
             // PM, 9 Oct 2012: Added:
             dt.BeginLoadData();
@@ -86,7 +81,7 @@ namespace MW5.Plugins.TableEditor.BO
                     }
 
                     // PM, 9 Oct 2012: Added to prevent errors about null values (Issue #2223):
-                    dr[i + 1] = sf.get_CellValue(i, j) ?? DBNull.Value;
+                    dr[i + 1] = _shapefile.get_CellValue(i, j) ?? DBNull.Value;
                 }
 
                 dt.Rows.Add(dr);
@@ -114,9 +109,9 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "dataTable">The datatable with data.</param>
         public void SaveData(DataTable dataTable)
         {
-            if (!sf.StartEditingTable(null))
+            if (!_shapefile.StartEditingTable(null))
             {
-                MessageBox.Show(string.Format("Error in StartEditingTable: {0}", sf.get_ErrorMsg(sf.LastErrorCode)));
+                MessageBox.Show(string.Format("Error in StartEditingTable: {0}", _shapefile.get_ErrorMsg(_shapefile.LastErrorCode)));
             }
 
             AddField(dataTable);
@@ -128,18 +123,18 @@ namespace MW5.Plugins.TableEditor.BO
             DeleteField(dataTable);
 
             // To restore the join after saving:
-            sf.Table.OnUpdateJoin += Table_OnUpdateJoin;
+            _shapefile.Table.OnUpdateJoin += Table_OnUpdateJoin;
 
-            if (!sf.StopEditingTable(true, this))
+            if (!_shapefile.StopEditingTable(true, this))
             {
-                MessageBox.Show(string.Format("Error in StopEditingTable: {0}", sf.get_ErrorMsg(sf.LastErrorCode)));
+                MessageBox.Show(string.Format("Error in StopEditingTable: {0}", _shapefile.get_ErrorMsg(_shapefile.LastErrorCode)));
             }
             else
             {
                 dataTable.AcceptChanges();
 
                 // PM 17 Jan 2013 (Issue #2268): Refresh categories:
-                sf.Categories.ApplyExpressions();
+                _shapefile.Categories.ApplyExpressions();
             }
         }
 
@@ -157,11 +152,11 @@ namespace MW5.Plugins.TableEditor.BO
             filename = filename.ToLower();
             if (filename.EndsWith(".xls") || filename.EndsWith(".xlsx"))
             {
-                dt = XlsImport.GetData(filename, getOption("workbook", joinOptions));
+                dt = XlsImport.GetData(filename, GetOption("workbook", joinOptions));
             }
             else if (filename.EndsWith(".csv"))
             {
-                dt = CsvImport.GetData(filename, getOption("separator", joinOptions));
+                dt = CsvImport.GetData(filename, GetOption("separator", joinOptions));
             }
             else
             {
@@ -177,7 +172,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name="name">The name of the options</param>
         /// <param name="joinOptions">Initial string with join options</param>
         /// <returns>The value of the option</returns>
-        private static String getOption(String name, String joinOptions)
+        private static String GetOption(String name, String joinOptions)
         {
             var options = joinOptions.Split(';');
             foreach (var s in options)
@@ -197,12 +192,12 @@ namespace MW5.Plugins.TableEditor.BO
         {
             for (var i = 1; i < dataTable.Columns.Count; i++)
             {
-                var field = sf.get_Field(i - 1);
+                var field = _shapefile.get_Field(i - 1);
 
                 if (dataTable.Columns[i].ColumnName != field.Name)
                 {
                     field.Name = dataTable.Columns[i].ColumnName;
-                    sf.Table.EditReplaceField(i - 1, field, null);
+                    _shapefile.Table.EditReplaceField(i - 1, field, null);
                 }
             }
         }
@@ -217,13 +212,13 @@ namespace MW5.Plugins.TableEditor.BO
             {
                 for (var i = 0; i < datatChangedData.Rows.Count; i++)
                 {
-                    for (var j = 0; j < sf.NumFields; j++)
+                    for (var j = 0; j < _shapefile.NumFields; j++)
                     {
                         var shapeId = Convert.ToInt32(datatChangedData.Rows[i][0]);
-                        if (!sf.EditCellValue(j, shapeId, datatChangedData.Rows[i][j + 1]))
+                        if (!_shapefile.EditCellValue(j, shapeId, datatChangedData.Rows[i][j + 1]))
                         {
                             MessageBox.Show(string.Format("Error in EditCellValue: {0}",
-                                sf.get_ErrorMsg(sf.LastErrorCode)));
+                                _shapefile.get_ErrorMsg(_shapefile.LastErrorCode)));
                         }
                     }
                 }
@@ -234,7 +229,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "dataTable">The datatable with data.</param>
         private void AddField(DataTable dataTable)
         {
-            for (var newCol = sf.NumFields + 1; newCol < dataTable.Columns.Count; newCol++)
+            for (var newCol = _shapefile.NumFields + 1; newCol < dataTable.Columns.Count; newCol++)
             {
                 var column = dataTable.Columns[newCol];
                 AddField(column);
@@ -249,7 +244,7 @@ namespace MW5.Plugins.TableEditor.BO
             {
                 if ((bool) dataTable.Columns[col].ExtendedProperties["removed"])
                 {
-                    sf.EditDeleteField(col - 1, null);
+                    _shapefile.EditDeleteField(col - 1, null);
                 }
             }
         }
@@ -315,7 +310,7 @@ namespace MW5.Plugins.TableEditor.BO
             var precision = GetPrecision(column);
             var width = GetWidth(column);
 
-            var fieldIndexNew = sf.EditAddField(name, fieldType, precision, width);
+            var fieldIndexNew = _shapefile.EditAddField(name, fieldType, precision, width);
         }
 
         /// <summary>Checks if a given fieldname is valid</summary>
@@ -396,21 +391,21 @@ namespace MW5.Plugins.TableEditor.BO
 
             dataTable.Columns.Add(dataColumn);
 
-            for (var i = 0; i < sf.NumFields; i++)
+            for (var i = 0; i < _shapefile.NumFields; i++)
             {
                 dataColumn = new DataColumn();
 
-                var field = sf.get_Field(i);
+                var field = _shapefile.Field[i];
 
                 // No need to change the name, because it isn't stored in the dbf and don't have to comply with the 10 characters length rule:
-                dataColumn.ColumnName = sf.Table.get_FieldIsJoined(i)
+                dataColumn.ColumnName = _shapefile.Table.FieldIsJoined[i]
                     ? field.Name
                     : GetValidFieldName(field.Name, dataTable);
 
                 dataColumn.DataType = GetFieldType(field.Type);
                 dataColumn.ExtendedProperties.Add("removed", false);
-                dataColumn.ExtendedProperties.Add("joined", sf.Table.get_FieldIsJoined(i));
-                dataColumn.ReadOnly = sf.Table.get_FieldIsJoined(i);
+                dataColumn.ExtendedProperties.Add("joined", _shapefile.Table.FieldIsJoined[i]);
+                dataColumn.ReadOnly = _shapefile.Table.FieldIsJoined[i];
                 dataTable.Columns.Add(dataColumn);
             }
 
@@ -423,19 +418,9 @@ namespace MW5.Plugins.TableEditor.BO
         /// <returns>The valid fieldName</returns>
         private string GetValidFieldName(string fieldName, DataTable dataTable)
         {
-            var displayName = string.Empty;
-
             var errorMessage = string.Empty;
             var isValid = IsNameValid(fieldName, dataTable, ref errorMessage);
-            if (!isValid)
-            {
-                displayName = GenerateNewFieldName(fieldName, dataTable);
-            }
-            else
-            {
-                displayName = fieldName;
-            }
-
+            string displayName = !isValid ? GenerateNewFieldName(fieldName, dataTable) : fieldName;
             return displayName;
         }
 
