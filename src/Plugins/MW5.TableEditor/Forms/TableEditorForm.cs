@@ -49,7 +49,8 @@ namespace MW5.Plugins.TableEditor.Forms
 
         void TableEditorForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Dispose();
+            Clear();        // this actually releases the memory on closing!
+            Dispose();      // while this alone doesn't
         }
 
         void TableEditorForm_Shown(object sender, EventArgs e)
@@ -107,6 +108,12 @@ namespace MW5.Plugins.TableEditor.Forms
         #endregion
 
         #region Public Methods and Operators
+
+        public void Clear()
+        {
+            TableEditorDataGrid.DataSource = null;
+            TableEditorDataGrid.Rows.Clear();
+        }
 
         /// <summary>
         /// Check if data is changed and save data if necessary

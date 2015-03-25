@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using MW5.Plugins.Concrete;
@@ -25,15 +26,28 @@ namespace MW5.Plugins.TableEditor
             get { return _form; }
             set
             {
-                _form = value;
-                _form.FormClosed += FormClosed;
+                if (value != null && value != _form)
+                {
+                    _form = value;
+                    _form.FormClosed += FormClosed;
+                }
             }
         }
 
         private void FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
             _form.FormClosed -= FormClosed;
+
+            // it's still referenced; by the handler itself? (I've just unsubscribed it) 
+            // Perhaps should be tested with weak event instead.
+            WeakReference wr = new WeakReference(_form);
+
             _form = null;
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+
+            Debug.Print("Form is alive: " + wr.IsAlive);
+            Debug.Print("Generation: " + GC.GetGeneration(wr));
         }
 
         public override void Initialize(IAppContext context)

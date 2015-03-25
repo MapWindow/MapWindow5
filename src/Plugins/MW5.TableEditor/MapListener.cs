@@ -70,7 +70,6 @@ namespace MW5.Plugins.TableEditor
             if (_context.Layers.GetFeatureSet(e.LayerHandle) == null)
             {
                 form.Close();
-                _plugin.Form = null;
                 return;
                 
             }

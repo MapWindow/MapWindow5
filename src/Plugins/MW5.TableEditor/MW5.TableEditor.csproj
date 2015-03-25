@@ -202,13 +202,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TableEditorPlugin.cs" />
-    <Compile Include="Utils\CSVImport.cs" />
+    <Compile Include="Utils\CsvImport.cs" />
     <Compile Include="Utils\DbfImport.cs" />
     <Compile Include="Utils\Enums.cs" />
     <Compile Include="Utils\FormUtils.cs" />
     <Compile Include="Utils\NummericHelper.cs" />
     <Compile Include="Utils\UnitsOfMeasurement.cs" />
-    <Compile Include="Utils\XLSImport.cs" />
+    <Compile Include="Utils\XlsImport.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\DeleteFieldForm.resx">
