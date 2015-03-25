@@ -1,25 +1,4 @@
-﻿// ********************************************************************************************************
-// <copyright file="BOMapWindow.cs" company="TopX Geo-ICT">
-//     Copyright (c) 2012 TopX Geo-ICT. All rights reserved.
-// </copyright>
-// ********************************************************************************************************
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version is Jeen de Vegt.
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date           Changed By      Notes
-// 29 March 2012  Jeen de Vegt    Inital coding
-// ********************************************************************************************************
-
-using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Plugins.Interfaces;
 
@@ -37,19 +16,19 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "app">The name of ImapWin.</param>
         public AppContextWrapper(IAppContext app)
         {
-           _context = app;
+            _context = app;
         }
 
         /// <summary>Updates the map with the actual selection</summary>
         /// <param name = "indices">A list of indices.</param>
         public void UpdateMap(int[] indices)
         {
-          //if (indices.Length > 0)
-          //{
-          // _context.View.UpdateSelection(this._context.Layers.CurrentLayer, ref indices, SelectionOperation.SelectNew);
-          //  //this.mapWin.View.Redraw();
-          // _context.Refresh();
-          //}
+            //if (indices.Length > 0)
+            //{
+            // _context.View.UpdateSelection(this._context.Layers.CurrentLayer, ref indices, SelectionOperation.SelectNew);
+            //  //this.mapWin.View.Redraw();
+            // _context.Refresh();
+            //}
         }
 
         /// <summary>Moves to the selected shape(s)</summary>
@@ -219,7 +198,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// </summary>
         public void MarkProjectModified()
         {
-           //_context.Project.Modified = true;
+            //_context.Project.Modified = true;
         }
 
         /// <summary>Set Exent for selected</summary>
@@ -228,7 +207,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <returns>The result extent</returns>
         private double PadExtentsSelected(double max, double min)
         {
-            double dx = max - min;
+            var dx = max - min;
 
             dx /= 8;
 
@@ -241,7 +220,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <returns>The result extent</returns>
         private double PadExtentsEdit(double max, double min)
         {
-            double dx = max - min;
+            var dx = max - min;
 
 //            dx *= _context.View.ExtentPad;
 

@@ -1,24 +1,4 @@
-﻿// ********************************************************************************************************
-// <copyright file="BOShapeFile.cs" company="TopX Geo-ICT">
-//     Copyright (c) 2012 TopX Geo-ICT. All rights reserved.
-// </copyright>
-// ********************************************************************************************************
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version is Jeen de Vegt.
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date           Changed By      Notes
-// 29 March 2012  Jeen de Vegt    Inital coding
-// ********************************************************************************************************
-
-using System.IO;
+﻿using System.IO;
 using MapWinGIS;
 
 namespace MW5.Plugins.TableEditor.BO
@@ -28,11 +8,11 @@ namespace MW5.Plugins.TableEditor.BO
     /// </summary>
     public class ShapefileWrapper
     {
-        /// <summary>The shapefile-sourcetype</summary>
-        private tkShapefileSourceType sourceType;
-
         /// <summary>Status if file is readonly</summary>
         private bool? isDiskFileReadOnly;
+
+        /// <summary>The shapefile-sourcetype</summary>
+        private tkShapefileSourceType sourceType;
 
         /// <summary>Gets or sets the shapefile</summary>
         public Shapefile ShapeFile { get; set; }
@@ -43,10 +23,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <summary>Gets a reference to the shapedata-object</summary>
         public ShapeData ShapeData
         {
-            get
-            {
-                return new ShapeData(this.ShapeFile);
-            }
+            get { return new ShapeData(ShapeFile); }
         }
 
         /// <summary>Gets the shapefile-sourcetype</summary>
@@ -54,12 +31,12 @@ namespace MW5.Plugins.TableEditor.BO
         {
             get
             {
-                if (this.sourceType == tkShapefileSourceType.sstUninitialized)
+                if (sourceType == tkShapefileSourceType.sstUninitialized)
                 {
-                    this.sourceType = this.ShapeFile.SourceType;
+                    sourceType = ShapeFile.SourceType;
                 }
 
-                return this.sourceType;
+                return sourceType;
             }
         }
 
@@ -68,19 +45,20 @@ namespace MW5.Plugins.TableEditor.BO
         {
             get
             {
-                if (this.isDiskFileReadOnly == null)
+                if (isDiskFileReadOnly == null)
                 {
-                    if ((File.GetAttributes(this.ShapeFile.Filename.Replace(".shp", ".dbf")) & FileAttributes.ReadOnly) == FileAttributes.ReadOnly)
+                    if ((File.GetAttributes(ShapeFile.Filename.Replace(".shp", ".dbf")) & FileAttributes.ReadOnly) ==
+                        FileAttributes.ReadOnly)
                     {
-                        this.isDiskFileReadOnly = true;
+                        isDiskFileReadOnly = true;
                     }
                     else
                     {
-                        this.isDiskFileReadOnly = false;
+                        isDiskFileReadOnly = false;
                     }
                 }
 
-                return (bool)this.isDiskFileReadOnly;
+                return (bool) isDiskFileReadOnly;
             }
         }
 
@@ -91,8 +69,8 @@ namespace MW5.Plugins.TableEditor.BO
             {
                 bool isReadOnly;
 
-                if ((this.SourceType == tkShapefileSourceType.sstDiskBased && this.IsDiskFileReadOnly) ||
-                    this.SourceType == tkShapefileSourceType.sstInMemory)
+                if ((SourceType == tkShapefileSourceType.sstDiskBased && IsDiskFileReadOnly) ||
+                    SourceType == tkShapefileSourceType.sstInMemory)
                 {
                     isReadOnly = true;
                 }

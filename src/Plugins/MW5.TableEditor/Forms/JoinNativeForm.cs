@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -11,23 +10,10 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class JoinNativeForm : Form
     {
         private DataTable dt;
-        private Table table = null;
-        private Table tableNew = null;
-        private string filename = "";
-        private int joinIndex = -1;
-
-        private class FieldWrapper
-        {
-            public Field field;
-            public FieldWrapper(Field field)
-            {
-                this.field = field;
-            }
-            public override String ToString()
-            {
-                return this.field.Name;
-            }
-        }
+        private readonly string filename = "";
+        private readonly int joinIndex = -1;
+        private readonly Table table;
+        private readonly Table tableNew;
 
         /// <summary>
         /// Creates a new instance of the frmNativeJoin class
@@ -36,17 +22,17 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
             this.dt = dt;
-            this.table = tbl;
+            table = tbl;
             this.filename = filename;
             this.joinIndex = joinIndex;
-            this.FillCombo(this.cboCurrent, table, false);
+            FillCombo(cboCurrent, table, false);
 
-            this.tableNew = new Table();
+            tableNew = new Table();
             if (tableNew.Open(filename, null))
             {
-                this.FillCombo(this.cboExternal, this.tableNew, true);
-                this.FillList(this.listView1.Items, tableNew, false);
-                this.updateMatchingRowCount();
+                FillCombo(cboExternal, tableNew, true);
+                FillList(listView1.Items, tableNew, false);
+                updateMatchingRowCount();
             }
             else
             {
@@ -55,7 +41,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (this.joinIndex != -1)
             {
-                this.ShowJoinOptions();     // we are editing join
+                ShowJoinOptions(); // we are editing join
             }
         }
 
@@ -64,23 +50,23 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void ShowJoinOptions()
         {
-            string f1 = table.get_JoinToField(this.joinIndex);
-            string f2 = table.get_JoinFromField(this.joinIndex);
-            foreach (object f in cboCurrent.Items)
+            var f1 = table.get_JoinToField(joinIndex);
+            var f2 = table.get_JoinFromField(joinIndex);
+            foreach (var f in cboCurrent.Items)
             {
                 if ((f as FieldWrapper).field.Name == f1)
                     cboCurrent.SelectedItem = f;
             }
-            foreach (object f in cboExternal.Items)
+            foreach (var f in cboExternal.Items)
             {
                 if ((f as FieldWrapper).field.Name == f2)
                     cboExternal.SelectedItem = f;
             }
-            for (int i = 0; i < table.NumFields; i++)
+            for (var i = 0; i < table.NumFields; i++)
             {
-                if (table.get_FieldJoinIndex(i) == this.joinIndex)
+                if (table.get_FieldJoinIndex(i) == joinIndex)
                 {
-                    ListViewItem item = this.listView1.FindItemWithText(table.get_Field(i).Name);
+                    var item = listView1.FindItemWithText(table.get_Field(i).Name);
                     if (item != null)
                     {
                         item.Checked = true;
@@ -100,9 +86,9 @@ namespace MW5.Plugins.TableEditor.Forms
             list.Clear();
             if (tbl != null)
             {
-                for (int i = 0; i < tbl.NumFields; i++)
+                for (var i = 0; i < tbl.NumFields; i++)
                 {
-                    FieldWrapper wr = cboCurrent.SelectedItem as FieldWrapper;
+                    var wr = cboCurrent.SelectedItem as FieldWrapper;
                     if (filter && wr != null && wr.field.Type != tbl.get_Field(i).Type)
                         continue;
 
@@ -119,7 +105,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name="filter"></param>
         private void FillCombo(ComboBox combo, Table table, bool filter)
         {
-            this.FillList(combo.Items, table, filter);
+            FillList(combo.Items, table, filter);
             if (combo.Items.Count > 0)
             {
                 combo.SelectedIndex = 0;
@@ -131,10 +117,10 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void cboCurrent_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FieldWrapper wrapper = cboCurrent.SelectedItem as FieldWrapper;
+            var wrapper = cboCurrent.SelectedItem as FieldWrapper;
             if (wrapper != null)
             {
-                this.FillCombo(this.cboExternal, this.tableNew, true);
+                FillCombo(cboExternal, tableNew, true);
             }
         }
 
@@ -143,7 +129,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void chkAll_CheckedChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in this.listView1.Items)
+            foreach (ListViewItem item in listView1.Items)
                 item.Checked = chkAll.Checked;
         }
 
@@ -152,7 +138,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void cboExternal_SelectedIndexChanged(object sender, EventArgs e)
         {
-            this.updateMatchingRowCount();
+            updateMatchingRowCount();
         }
 
         /// <summary>
@@ -160,18 +146,18 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void updateMatchingRowCount()
         {
-            FieldWrapper fld1 = cboCurrent.SelectedItem as FieldWrapper;
-            FieldWrapper fld2 = cboExternal.SelectedItem as FieldWrapper;
+            var fld1 = cboCurrent.SelectedItem as FieldWrapper;
+            var fld2 = cboExternal.SelectedItem as FieldWrapper;
 
             int count1, count2;
-            if (!this.table.TryJoin(this.tableNew, fld1.ToString(), fld2.ToString(), out count1, out count2))
+            if (!table.TryJoin(tableNew, fld1.ToString(), fld2.ToString(), out count1, out count2))
             {
                 count1 = count2 = 0;
                 //MessageBox.Show("Failed to join: " + this.table.get_ErrorMsg(this.table.LastErrorCode));
             }
 
-            this.lblMatch.Text = "Matching rows: " + count1;
-            this.lblMatchJoin.Text = "Matching rows: " + count2;
+            lblMatch.Text = "Matching rows: " + count1;
+            lblMatchJoin.Text = "Matching rows: " + count2;
         }
 
         /// <summary>
@@ -179,17 +165,18 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (this.listView1.CheckedItems.Count == 0)
+            if (listView1.CheckedItems.Count == 0)
             {
-                MessageBox.Show("Select columns to include in the table", "Table editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Select columns to include in the table", "Table editor", MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
             }
             else
             {
-                FieldWrapper fld1 = cboCurrent.SelectedItem as FieldWrapper;
-                FieldWrapper fld2 = cboExternal.SelectedItem as FieldWrapper;
+                var fld1 = cboCurrent.SelectedItem as FieldWrapper;
+                var fld2 = cboExternal.SelectedItem as FieldWrapper;
 
-                List<String> list = new List<string>();
-                foreach (ListViewItem item in this.listView1.CheckedItems)
+                var list = new List<string>();
+                foreach (ListViewItem item in listView1.CheckedItems)
                 {
                     list.Add(item.Text);
                 }
@@ -200,15 +187,30 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    if (this.joinIndex != -1)
+                    if (joinIndex != -1)
                     {
-                        table.StopJoin(this.joinIndex);
+                        table.StopJoin(joinIndex);
                     }
-                    
-                    bool result = this.table.Join3(this.tableNew, fld1.ToString(), fld2.ToString(), this.filename, "", list.ToArray());
+
+                    var result = table.Join3(tableNew, fld1.ToString(), fld2.ToString(), filename, "", list.ToArray());
                     MessageBox.Show(result ? "Joining is successful" : "Joining has failed");
-                    this.DialogResult = result ? DialogResult.OK : DialogResult.Cancel;
+                    DialogResult = result ? DialogResult.OK : DialogResult.Cancel;
                 }
+            }
+        }
+
+        private class FieldWrapper
+        {
+            public readonly Field field;
+
+            public FieldWrapper(Field field)
+            {
+                this.field = field;
+            }
+
+            public override String ToString()
+            {
+                return field.Name;
             }
         }
     }

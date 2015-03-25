@@ -1,24 +1,4 @@
-﻿// ********************************************************************************************************
-// <copyright file="XLSImport.cs" company="TopX Geo-ICT">
-//     Copyright (c) 2012 TopX Geo-ICT. All rights reserved.
-// </copyright>
-// ********************************************************************************************************
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version is Jeen de Vegt.
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date           Changed By      Notes
-// 29 March 2012  Jeen de Vegt    Inital coding
-// ********************************************************************************************************
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OleDb;
@@ -36,19 +16,20 @@ namespace MW5.Plugins.TableEditor.utils
         /// <returns>List of workbooks</returns>
         public static List<string> GetWorkbooks(string fileName)
         {
-            List<string> workBooks = new List<string>();
+            var workBooks = new List<string>();
 
-            string connectionString = GetConnectionString(fileName);
+            var connectionString = GetConnectionString(fileName);
 
             using (var conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
 
                 // Get all of the Table names from the Excel workbook
-                using (var dt = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" }))
+                using (
+                    var dt = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] {null, null, null, "TABLE"}))
                 {
                     // Add the Table name to the combobox.
-                    for (int i = 0; i < dt.Rows.Count; i++)
+                    for (var i = 0; i < dt.Rows.Count; i++)
                     {
                         // Replace $ by "" 
                         workBooks.Add(dt.Rows[i]["TABLE_NAME"].ToString().Replace("$", string.Empty));
@@ -80,15 +61,12 @@ namespace MW5.Plugins.TableEditor.utils
             if (fileName.ToLower().EndsWith(".xlsx"))
             {
                 return @"Provider=Microsoft.ACE.OLEDB.12.0;" +
-                "Data Source=" + fileName +
-                @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""";
+                       "Data Source=" + fileName +
+                       @";Extended Properties=""Excel 12.0;HDR=No;IMEX=1""";
             }
-            else
-            {
-                return @"Provider=Microsoft.Jet.OLEDB.4.0;" +
-                "Data Source=" + fileName +
-                @";Extended Properties=""Excel 8.0;HDR=No;IMEX=1""";
-            }
+            return @"Provider=Microsoft.Jet.OLEDB.4.0;" +
+                   "Data Source=" + fileName +
+                   @";Extended Properties=""Excel 8.0;HDR=No;IMEX=1""";
         }
 
         /// <summary>Get the columnnames</summary>
@@ -97,9 +75,9 @@ namespace MW5.Plugins.TableEditor.utils
         /// <returns>A list of column-names</returns>
         public static List<string> GetColumnNames(string fileName, string workBook)
         {
-            List<string> colNames = new List<string>();
+            var colNames = new List<string>();
 
-            string connectionString = GetConnectionString(fileName);
+            var connectionString = GetConnectionString(fileName);
 
             if (connectionString == null)
             {
@@ -114,11 +92,11 @@ namespace MW5.Plugins.TableEditor.utils
 
                     var adapter = new OleDbDataAdapter(@"SELECT TOP 1 * FROM [" + workBook + "$]", conn);
 
-                    DataTable excelData = new DataTable();
+                    var excelData = new DataTable();
 
                     adapter.Fill(excelData);
 
-                    for (int i = 0; i < excelData.Columns.Count; i++)
+                    for (var i = 0; i < excelData.Columns.Count; i++)
                     {
                         colNames.Add(excelData.Rows[0][i].ToString());
                     }
@@ -138,9 +116,9 @@ namespace MW5.Plugins.TableEditor.utils
         /// <returns>Data from the workbook</returns>
         public static DataTable GetData(string fileName, string workBook)
         {
-            DataTable excelData = new DataTable();
+            var excelData = new DataTable();
 
-            string connectionString = GetConnectionString(fileName);
+            var connectionString = GetConnectionString(fileName);
 
             if (connectionString == null)
             {
@@ -172,7 +150,7 @@ namespace MW5.Plugins.TableEditor.utils
         /// <param name = "excelData">A datatable with data.</param>
         private static void ChangeColumnNames(DataTable excelData)
         {
-            for (int i = 0; i < excelData.Columns.Count; i++)
+            for (var i = 0; i < excelData.Columns.Count; i++)
             {
                 excelData.Columns[i].ColumnName = excelData.Rows[0][i].ToString();
             }

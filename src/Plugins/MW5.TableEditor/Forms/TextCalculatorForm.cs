@@ -1,26 +1,5 @@
-﻿// ********************************************************************************************************
-// <copyright file="frmTextCalculator.cs" company="TopX Geo-ICT">
-//     Copyright (c) 2012 TopX Geo-ICT. All rights reserved.
-// </copyright>
-// ********************************************************************************************************
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version is Jeen de Vegt.
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date           Changed By      Notes
-// 29 March 2012  Jeen de Vegt    Inital coding
-// ********************************************************************************************************
-
-using System;
+﻿using System;
 using System.Data;
-using System.Globalization;
 using System.Threading;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
@@ -42,9 +21,9 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
 
-            this.dataGridView = gridView;
+            dataGridView = gridView;
 
-            this.InitializeFieldValues((DataTable)gridView.DataSource, selectedColumnIndex);
+            InitializeFieldValues((DataTable) gridView.DataSource, selectedColumnIndex);
         }
 
         /// <summary>Initializes the controls on the form</summary>
@@ -54,8 +33,8 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             Fields_lb.Items.Clear();
 
-            string[] columnNames = ShapeData.GetVisibleFieldNames(dt);
-            foreach (string colName in columnNames)
+            var columnNames = ShapeData.GetVisibleFieldNames(dt);
+            foreach (var colName in columnNames)
             {
                 Fields_lb.Items.Add(colName);
             }
@@ -64,7 +43,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (DestFieldComboBox.Items.Count > 0)
             {
-              DestFieldComboBox.SelectedIndex = selectedColumnIndex;
+                DestFieldComboBox.SelectedIndex = selectedColumnIndex;
             }
         }
 
@@ -73,7 +52,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name = "e">The arguments.</param>
         private void Close_bn_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Close();
         }
 
         /// <summary>Execute the calculation</summary>
@@ -81,24 +60,26 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name = "e">The arguments.</param>
         private void Apply_Click(object sender, EventArgs e)
         {
-            bool isColumnExpression = functions_lb.Text == "+" || functions_lb.Text == "Trim()" || functions_lb.Text == "Substring()";
-            bool isDestinationInQuery = query_text_tb.Text.ToLower().Contains(DestFieldComboBox.Text.ToLower().Trim());
+            var isColumnExpression = functions_lb.Text == "+" || functions_lb.Text == "Trim()" ||
+                                     functions_lb.Text == "Substring()";
+            var isDestinationInQuery = query_text_tb.Text.ToLower().Contains(DestFieldComboBox.Text.ToLower().Trim());
 
             // Test first to see if using a column expression -- if so, make sure there are no circular references
             if (isColumnExpression && isDestinationInQuery)
             {
-                MessageBox.Show("The +, Trim(), and Substring() functions cannot operate on the same field as you are setting.");
+                MessageBox.Show(
+                    "The +, Trim(), and Substring() functions cannot operate on the same field as you are setting.");
             }
             else
             {
-                this.DoForumula();
+                DoForumula();
             }
         }
 
         /// <summary>Execute the calculation</summary>
         private void DoForumula()
         {
-            int destCol = this.GetDestinationColumn();
+            var destCol = GetDestinationColumn();
 
             if (destCol == -1)
             {
@@ -107,7 +88,8 @@ namespace MW5.Plugins.TableEditor.Forms
             else
             {
                 // Ensure that it's not tolower or toupper -- these can't be done as an expression
-                if (query_text_tb.Text.ToLower().Contains("tolower") || query_text_tb.Text.ToLower().Contains("toupper") || query_text_tb.Text.ToLower().Contains("proper"))
+                if (query_text_tb.Text.ToLower().Contains("tolower") || query_text_tb.Text.ToLower().Contains("toupper") ||
+                    query_text_tb.Text.ToLower().Contains("proper"))
                 {
                     if (!query_text_tb.Text.Contains("("))
                     {
@@ -115,10 +97,10 @@ namespace MW5.Plugins.TableEditor.Forms
                     }
                     else
                     {
-                        string fromfield = query_text_tb.Text.Substring(query_text_tb.Text.IndexOf("(") + 1).Trim();
-                        fromfield = fromfield.Trim(new char[] { ')' });
+                        var fromfield = query_text_tb.Text.Substring(query_text_tb.Text.IndexOf("(") + 1).Trim();
+                        fromfield = fromfield.Trim(')');
 
-                        int fromColumn = this.GetColumnIndex(fromfield);
+                        var fromColumn = GetColumnIndex(fromfield);
 
                         if (fromColumn == -1)
                         {
@@ -126,22 +108,25 @@ namespace MW5.Plugins.TableEditor.Forms
                         }
                         else
                         {
-                            for (int j = 0; j < this.dataGridView.RowCount; j++)
+                            for (var j = 0; j < dataGridView.RowCount; j++)
                             {
                                 if (query_text_tb.Text.ToLower().Contains("tolower"))
                                 {
-                                    this.dataGridView.Rows[j].Cells[destCol].Value = this.dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToLower();
+                                    dataGridView.Rows[j].Cells[destCol].Value =
+                                        dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToLower();
                                 }
                                 else if (query_text_tb.Text.ToLower().Contains("toupper"))
                                 {
-                                    this.dataGridView.Rows[j].Cells[destCol].Value = this.dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToUpper();
+                                    dataGridView.Rows[j].Cells[destCol].Value =
+                                        dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToUpper();
                                 }
                                 else if (query_text_tb.Text.ToLower().Contains("proper"))
                                 {
-                                    CultureInfo cultureInfo = Thread.CurrentThread.CurrentCulture;
-                                    TextInfo textInfo = cultureInfo.TextInfo;
+                                    var cultureInfo = Thread.CurrentThread.CurrentCulture;
+                                    var textInfo = cultureInfo.TextInfo;
 
-                                    this.dataGridView.Rows[j].Cells[destCol].Value = textInfo.ToTitleCase(this.dataGridView.Rows[j].Cells[fromColumn].Value.ToString());
+                                    dataGridView.Rows[j].Cells[destCol].Value =
+                                        textInfo.ToTitleCase(dataGridView.Rows[j].Cells[fromColumn].Value.ToString());
                                 }
                             }
                         }
@@ -149,7 +134,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    DataTable dt = (DataTable)this.dataGridView.DataSource;
+                    var dt = (DataTable) dataGridView.DataSource;
                     dt.Columns[destCol].Expression = query_text_tb.Text;
                 }
             }
@@ -159,11 +144,11 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <returns>The id of the column</returns>
         private int GetDestinationColumn()
         {
-            int destCol = -1;
+            var destCol = -1;
 
-            for (int i = 0; i < this.dataGridView.Columns.Count; i++)
+            for (var i = 0; i < dataGridView.Columns.Count; i++)
             {
-                if (this.dataGridView.Columns[i].Name.ToLower().Trim() == DestFieldComboBox.Text.ToLower().Trim())
+                if (dataGridView.Columns[i].Name.ToLower().Trim() == DestFieldComboBox.Text.ToLower().Trim())
                 {
                     destCol = i;
                     break;
@@ -178,15 +163,14 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <returns>The index of the column</returns>
         private int GetColumnIndex(string fromfield)
         {
-            int fromColumn = -1;
-            for (int i = 0; i < this.dataGridView.Columns.Count; i++)
+            var fromColumn = -1;
+            for (var i = 0; i < dataGridView.Columns.Count; i++)
             {
-                if (this.dataGridView.Columns[i].Name.ToLower().Trim() == fromfield.ToLower().Trim())
+                if (dataGridView.Columns[i].Name.ToLower().Trim() == fromfield.ToLower().Trim())
                 {
                     fromColumn = i;
                     break;
                 }
-
             }
 
             return fromColumn;
@@ -196,12 +180,12 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name = "value">The given text.</param>
         private void AddTextToFormula(string value)
         {
-            string formulaTxt = this.query_text_tb.Text;
+            var formulaTxt = query_text_tb.Text;
 
-            if (this.query_text_tb.SelectionLength > 0)
+            if (query_text_tb.SelectionLength > 0)
             {
-                string beforeS = formulaTxt.Substring(0, this.query_text_tb.SelectionStart);
-                string afterS = formulaTxt.Substring(this.query_text_tb.SelectionStart + this.query_text_tb.SelectionLength);
+                var beforeS = formulaTxt.Substring(0, query_text_tb.SelectionStart);
+                var afterS = formulaTxt.Substring(query_text_tb.SelectionStart + query_text_tb.SelectionLength);
 
                 formulaTxt = beforeS + value + afterS;
             }
@@ -210,7 +194,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 formulaTxt = formulaTxt != string.Empty ? formulaTxt + " " + value : formulaTxt + value;
             }
 
-            this.query_text_tb.Text = formulaTxt;
+            query_text_tb.Text = formulaTxt;
         }
 
         /// <summary>Add text to formula</summary>
@@ -220,8 +204,8 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (Fields_lb.SelectedItems.Count > 0)
             {
-                string value = Fields_lb.SelectedItems[0].ToString();
-                this.AddTextToFormula(value);
+                var value = Fields_lb.SelectedItems[0].ToString();
+                AddTextToFormula(value);
             }
         }
 
@@ -232,8 +216,8 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (functions_lb.SelectedItems.Count > 0)
             {
-                string value = functions_lb.SelectedItems[0].ToString();
-                this.AddTextToFormula(value);
+                var value = functions_lb.SelectedItems[0].ToString();
+                AddTextToFormula(value);
             }
         }
     }
