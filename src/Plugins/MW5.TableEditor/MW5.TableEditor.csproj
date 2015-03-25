@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>..\..\bin\Release\Plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\Debug\Plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{207ACB9D-605C-4FB0-8BFE-3E07FBA93188}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MW5.Plugins.TableEditor</RootNamespace>
+    <AssemblyName>MW5.TableEditor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\Debug\Plugins\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\Release\Plugins\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AxInterop.MapWinGIS, Version=4.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\AxInterop.MapWinGIS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Interop.MapWinGIS, Version=4.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bin\Interop.MapWinGIS.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BO\AppContextWrapper.cs" />
+    <Compile Include="BO\ShapeData.cs" />
+    <Compile Include="BO\ShapefileWrapper.cs" />
+    <Compile Include="Forms\DeleteFieldForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DeleteFieldForm.Designer.cs">
+      <DependentUpon>DeleteFieldForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FieldCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FieldCalculatorForm.Designer.cs">
+      <DependentUpon>FieldCalculatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\JoinExcelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\JoinExcelForm.Designer.cs">
+      <DependentUpon>JoinExcelForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ImportExtDataForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportExtDataForm.Designer.cs">
+      <DependentUpon>ImportExtDataForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\JoinManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\JoinManagerForm.Designer.cs">
+      <DependentUpon>JoinManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\JoinNativeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\JoinNativeForm.Designer.cs">
+      <DependentUpon>JoinNativeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\NewFieldForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NewFieldForm.Designer.cs">
+      <DependentUpon>NewFieldForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\QueryBuilderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\QueryBuilderForm.Designer.cs">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\RenameFieldForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\RenameFieldForm.Designer.cs">
+      <DependentUpon>RenameFieldForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TableEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TableEditorForm.Designer.cs">
+      <DependentUpon>TableEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TextCalculatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextCalculatorForm.Designer.cs">
+      <DependentUpon>TextCalculatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UpdateMeasurementsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateMeasurementsForm.Designer.cs">
+      <DependentUpon>UpdateMeasurementsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\UpdateSelectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateSelectionForm.Designer.cs">
+      <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legacy\Main.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="TableEditorPlugin.cs" />
+    <Compile Include="Utils\CSVImport.cs" />
+    <Compile Include="Utils\DbfImport.cs" />
+    <Compile Include="Utils\FormUtils.cs" />
+    <Compile Include="Utils\NummericHelper.cs" />
+    <Compile Include="Utils\UnitsOfMeasurement.cs" />
+    <Compile Include="Utils\XLSImport.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\DeleteFieldForm.resx">
+      <DependentUpon>DeleteFieldForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FieldCalculatorForm.resx">
+      <DependentUpon>FieldCalculatorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HelpForm.resx">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\JoinExcelForm.resx">
+      <DependentUpon>JoinExcelForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportExtDataForm.resx">
+      <DependentUpon>ImportExtDataForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\JoinManagerForm.resx">
+      <DependentUpon>JoinManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\JoinNativeForm.resx">
+      <DependentUpon>JoinNativeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NewFieldForm.resx">
+      <DependentUpon>NewFieldForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\QueryBuilderForm.resx">
+      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\RenameFieldForm.resx">
+      <DependentUpon>RenameFieldForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TableEditorForm.resx">
+      <DependentUpon>TableEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextCalculatorForm.resx">
+      <DependentUpon>TextCalculatorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateMeasurementsForm.resx">
+      <DependentUpon>UpdateMeasurementsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateSelectionForm.resx">
+      <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\table-editor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
+      <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
+      <Name>MW5.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
+      <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
+      <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="MathParser\MathParser.vbproj">
+      <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
+      <Name>MathParser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
