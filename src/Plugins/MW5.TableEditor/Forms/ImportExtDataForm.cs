@@ -3,15 +3,10 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.utils;
+using MW5.Plugins.TableEditor.Utils;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
-
-    #region
-
-    #endregion
-
     /// <summary>
     /// Form-class for joining with external data
     /// </summary>
@@ -30,7 +25,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
 
-            shapeData = dt;
+            _shapeData = dt;
 
             FillCurrentKeyColumns(dt);
         }
@@ -49,7 +44,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         ///   The shapedata
         /// </summary>
-        private readonly DataTable shapeData;
+        private readonly DataTable _shapeData;
 
         #endregion
 
@@ -72,7 +67,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void FillWorkBooks()
         {
             // Get workbooks
-            var books = XLSImport.GetWorkbooks(txtInputFile.Text);
+            var books = XlsImport.GetWorkbooks(txtInputFile.Text);
 
             cboWorkBooks.DataSource = books;
         }
@@ -92,11 +87,11 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (cboWorkBooks.Visible)
             {
-                importedData = XLSImport.GetData(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
+                importedData = XlsImport.GetData(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
             }
             else
             {
-                importedData = CSVImport.GetData(txtInputFile.Text, cboDelimiter.Text);
+                importedData = CsvImport.GetData(txtInputFile.Text, cboDelimiter.Text);
             }
 
             for (var i = 0; i < importedData.Columns.Count; i++)
@@ -104,7 +99,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 var dc = importedData.Columns[i];
                 var addColumn = true;
 
-                foreach (DataColumn dataColumn in shapeData.Columns)
+                foreach (DataColumn dataColumn in _shapeData.Columns)
                 {
                     if (dataColumn.ColumnName.PadRight(10).Substring(0, 10) ==
                         dc.ColumnName.PadRight(10).Substring(0, 10))
@@ -120,13 +115,13 @@ namespace MW5.Plugins.TableEditor.Forms
                 // to be changed in next version? Set length default to 50
                 if (addColumn)
                 {
-                    ShapeData.AddDataColumn(shapeData, importedData.Rows[0][i].ToString(), "String", "0", 50);
+                    ShapeData.AddDataColumn(_shapeData, importedData.Rows[0][i].ToString(), "String", "0", 50);
                 }
             }
 
-            for (var i = 0; i < shapeData.Rows.Count; i++)
+            for (var i = 0; i < _shapeData.Rows.Count; i++)
             {
-                var currentKeyValue = shapeData.Rows[i][cboCurrentKeyCol.SelectedItem.ToString()].ToString();
+                var currentKeyValue = _shapeData.Rows[i][cboCurrentKeyCol.SelectedItem.ToString()].ToString();
 
                 var searchString = string.Format("{0} = '{1}'", cboExternalKeyCol.SelectedItem, currentKeyValue);
                 var rows = importedData.Select(searchString);
@@ -140,7 +135,7 @@ namespace MW5.Plugins.TableEditor.Forms
                     {
                         var addColumn = true;
 
-                        foreach (DataColumn dataColumn in shapeData.Columns)
+                        foreach (DataColumn dataColumn in _shapeData.Columns)
                         {
                             if (dataColumn.ColumnName.PadRight(10).Substring(0, 10)
                                 == importedData.Columns[j].ColumnName.PadRight(10).Substring(0, 10))
@@ -151,7 +146,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
                         if (addColumn)
                         {
-                            shapeData.Rows[i][importedData.Columns[j].ColumnName] =
+                            _shapeData.Rows[i][importedData.Columns[j].ColumnName] =
                                 rows[0][importedData.Columns[j].ColumnName].ToString();
                         }
                     }
@@ -175,7 +170,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (cboWorkBooks.Visible)
             {
-                var colNames = XLSImport.GetColumnNames(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
+                var colNames = XlsImport.GetColumnNames(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -189,7 +184,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    var colNames = CSVImport.GetColumnNames(txtInputFile.Text, cboDelimiter.Text);
+                    var colNames = CsvImport.GetColumnNames(txtInputFile.Text, cboDelimiter.Text);
 
                     cboExternalKeyCol.DataSource = colNames;
 

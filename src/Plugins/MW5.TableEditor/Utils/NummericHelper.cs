@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace MW5.Plugins.TableEditor.utils
+namespace MW5.Plugins.TableEditor.Utils
 {
     /// <summary>
     ///  Class for performinc nummeric actions

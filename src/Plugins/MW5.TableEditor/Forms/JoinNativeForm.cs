@@ -9,11 +9,11 @@ namespace MW5.Plugins.TableEditor.Forms
 {
     public partial class JoinNativeForm : Form
     {
-        private DataTable dt;
-        private readonly string filename = "";
-        private readonly int joinIndex = -1;
-        private readonly Table table;
-        private readonly Table tableNew;
+        private DataTable _dt;
+        private readonly string _filename = "";
+        private readonly int _joinIndex = -1;
+        private readonly Table _table;
+        private readonly Table _tableNew;
 
         /// <summary>
         /// Creates a new instance of the frmNativeJoin class
@@ -21,17 +21,17 @@ namespace MW5.Plugins.TableEditor.Forms
         public JoinNativeForm(DataTable dt, Table tbl, string filename, int joinIndex)
         {
             InitializeComponent();
-            this.dt = dt;
-            table = tbl;
-            this.filename = filename;
-            this.joinIndex = joinIndex;
-            FillCombo(cboCurrent, table, false);
+            _dt = dt;
+            _table = tbl;
+            _filename = filename;
+            _joinIndex = joinIndex;
+            FillCombo(cboCurrent, _table, false);
 
-            tableNew = new Table();
-            if (tableNew.Open(filename, null))
+            _tableNew = new Table();
+            if (_tableNew.Open(filename, null))
             {
-                FillCombo(cboExternal, tableNew, true);
-                FillList(listView1.Items, tableNew, false);
+                FillCombo(cboExternal, _tableNew, true);
+                FillList(listView1.Items, _tableNew, false);
                 updateMatchingRowCount();
             }
             else
@@ -39,7 +39,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 MessageBox.Show("Failed to open dbf table: " + tbl.get_ErrorMsg(tbl.LastErrorCode));
             }
 
-            if (this.joinIndex != -1)
+            if (_joinIndex != -1)
             {
                 ShowJoinOptions(); // we are editing join
             }
@@ -50,8 +50,8 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </summary>
         private void ShowJoinOptions()
         {
-            var f1 = table.get_JoinToField(joinIndex);
-            var f2 = table.get_JoinFromField(joinIndex);
+            var f1 = _table.get_JoinToField(_joinIndex);
+            var f2 = _table.get_JoinFromField(_joinIndex);
             foreach (var f in cboCurrent.Items)
             {
                 if ((f as FieldWrapper).field.Name == f1)
@@ -62,11 +62,11 @@ namespace MW5.Plugins.TableEditor.Forms
                 if ((f as FieldWrapper).field.Name == f2)
                     cboExternal.SelectedItem = f;
             }
-            for (var i = 0; i < table.NumFields; i++)
+            for (var i = 0; i < _table.NumFields; i++)
             {
-                if (table.get_FieldJoinIndex(i) == joinIndex)
+                if (_table.get_FieldJoinIndex(i) == _joinIndex)
                 {
-                    var item = listView1.FindItemWithText(table.get_Field(i).Name);
+                    var item = listView1.FindItemWithText(_table.get_Field(i).Name);
                     if (item != null)
                     {
                         item.Checked = true;
@@ -78,9 +78,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Fills combobox object collection with list of fields
         /// </summary>
-        /// <param name="list"></param>
-        /// <param name="table"></param>
-        /// <param name="filter"></param>
         private void FillList(IList list, Table tbl, bool filter)
         {
             list.Clear();
@@ -100,9 +97,6 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Fills combobox with list of fields
         /// </summary>
-        /// <param name="combo"></param>
-        /// <param name="table"></param>
-        /// <param name="filter"></param>
         private void FillCombo(ComboBox combo, Table table, bool filter)
         {
             FillList(combo.Items, table, filter);
@@ -120,7 +114,7 @@ namespace MW5.Plugins.TableEditor.Forms
             var wrapper = cboCurrent.SelectedItem as FieldWrapper;
             if (wrapper != null)
             {
-                FillCombo(cboExternal, tableNew, true);
+                FillCombo(cboExternal, _tableNew, true);
             }
         }
 
@@ -150,10 +144,10 @@ namespace MW5.Plugins.TableEditor.Forms
             var fld2 = cboExternal.SelectedItem as FieldWrapper;
 
             int count1, count2;
-            if (!table.TryJoin(tableNew, fld1.ToString(), fld2.ToString(), out count1, out count2))
+            if (!_table.TryJoin(_tableNew, fld1.ToString(), fld2.ToString(), out count1, out count2))
             {
                 count1 = count2 = 0;
-                //MessageBox.Show("Failed to join: " + this.table.get_ErrorMsg(this.table.LastErrorCode));
+                //MessageBox.Show("Failed to join: " + table.get_ErrorMsg(table.LastErrorCode));
             }
 
             lblMatch.Text = "Matching rows: " + count1;
@@ -187,12 +181,12 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    if (joinIndex != -1)
+                    if (_joinIndex != -1)
                     {
-                        table.StopJoin(joinIndex);
+                        _table.StopJoin(_joinIndex);
                     }
 
-                    var result = table.Join3(tableNew, fld1.ToString(), fld2.ToString(), filename, "", list.ToArray());
+                    var result = _table.Join3(_tableNew, fld1.ToString(), fld2.ToString(), _filename, "", list.ToArray());
                     MessageBox.Show(result ? "Joining is successful" : "Joining has failed");
                     DialogResult = result ? DialogResult.OK : DialogResult.Cancel;
                 }
@@ -205,7 +199,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             public FieldWrapper(Field field)
             {
-                this.field = field;
+                field = field;
             }
 
             public override String ToString()

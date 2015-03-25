@@ -12,7 +12,7 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class TextCalculatorForm : Form
     {
         /// <summary>The gridview with shape-data</summary> 
-        private readonly DataGridView dataGridView;
+        private readonly DataGridView _dataGridView;
 
         /// <summary>Initializes a new instance of the frmTextCalculator class</summary>
         /// <param name = "gridView">The gridview.</param>
@@ -21,7 +21,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
 
-            dataGridView = gridView;
+            _dataGridView = gridView;
 
             InitializeFieldValues((DataTable) gridView.DataSource, selectedColumnIndex);
         }
@@ -108,25 +108,25 @@ namespace MW5.Plugins.TableEditor.Forms
                         }
                         else
                         {
-                            for (var j = 0; j < dataGridView.RowCount; j++)
+                            for (var j = 0; j < _dataGridView.RowCount; j++)
                             {
                                 if (query_text_tb.Text.ToLower().Contains("tolower"))
                                 {
-                                    dataGridView.Rows[j].Cells[destCol].Value =
-                                        dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToLower();
+                                    _dataGridView.Rows[j].Cells[destCol].Value =
+                                        _dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToLower();
                                 }
                                 else if (query_text_tb.Text.ToLower().Contains("toupper"))
                                 {
-                                    dataGridView.Rows[j].Cells[destCol].Value =
-                                        dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToUpper();
+                                    _dataGridView.Rows[j].Cells[destCol].Value =
+                                        _dataGridView.Rows[j].Cells[fromColumn].Value.ToString().ToUpper();
                                 }
                                 else if (query_text_tb.Text.ToLower().Contains("proper"))
                                 {
                                     var cultureInfo = Thread.CurrentThread.CurrentCulture;
                                     var textInfo = cultureInfo.TextInfo;
 
-                                    dataGridView.Rows[j].Cells[destCol].Value =
-                                        textInfo.ToTitleCase(dataGridView.Rows[j].Cells[fromColumn].Value.ToString());
+                                    _dataGridView.Rows[j].Cells[destCol].Value =
+                                        textInfo.ToTitleCase(_dataGridView.Rows[j].Cells[fromColumn].Value.ToString());
                                 }
                             }
                         }
@@ -134,7 +134,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    var dt = (DataTable) dataGridView.DataSource;
+                    var dt = (DataTable) _dataGridView.DataSource;
                     dt.Columns[destCol].Expression = query_text_tb.Text;
                 }
             }
@@ -146,9 +146,9 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             var destCol = -1;
 
-            for (var i = 0; i < dataGridView.Columns.Count; i++)
+            for (var i = 0; i < _dataGridView.Columns.Count; i++)
             {
-                if (dataGridView.Columns[i].Name.ToLower().Trim() == DestFieldComboBox.Text.ToLower().Trim())
+                if (_dataGridView.Columns[i].Name.ToLower().Trim() == DestFieldComboBox.Text.ToLower().Trim())
                 {
                     destCol = i;
                     break;
@@ -164,9 +164,9 @@ namespace MW5.Plugins.TableEditor.Forms
         private int GetColumnIndex(string fromfield)
         {
             var fromColumn = -1;
-            for (var i = 0; i < dataGridView.Columns.Count; i++)
+            for (var i = 0; i < _dataGridView.Columns.Count; i++)
             {
-                if (dataGridView.Columns[i].Name.ToLower().Trim() == fromfield.ToLower().Trim())
+                if (_dataGridView.Columns[i].Name.ToLower().Trim() == fromfield.ToLower().Trim())
                 {
                     fromColumn = i;
                     break;

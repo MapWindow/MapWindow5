@@ -7,24 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MW5.Plugins.TableEditor.utils
+namespace MW5.Plugins.TableEditor.Utils
 {
     /// <summary>
     /// The csv import.
     /// </summary>
-    public class CSVImport
+    public class CsvImport
     {
         #region Public Methods and Operators
 
         /// <summary>
         /// The get column names.
         /// </summary>
-        /// <param name="filename">
-        /// The filename.
-        /// </param>
-        /// <param name="delimiter">
-        /// The delimiter.
-        /// </param>
+        /// <param name="filename"> The filename. </param>
+        /// <param name="delimiter"> The delimiter. </param>
         /// <returns>A list of column names</returns>
         public static List<string> GetColumnNames(string filename, string delimiter)
         {
@@ -72,12 +68,8 @@ namespace MW5.Plugins.TableEditor.utils
         /// <summary>
         /// The get data.
         /// </summary>
-        /// <param name="filename">
-        /// The filename.
-        /// </param>
-        /// <param name="delimiter">
-        /// The delimiter.
-        /// </param>
+        /// <param name="filename"> The filename. </param>
+        /// <param name="delimiter"> The delimiter. </param>
         /// <returns>The datatable</returns>
         public static DataTable GetData(string filename, string delimiter)
         {
@@ -260,12 +252,8 @@ namespace MW5.Plugins.TableEditor.utils
         /// <summary>
         /// Check to make sure that something didn't get split by a comma when it shouldn't
         /// </summary>
-        /// <param name="vals">
-        /// The values of one line.
-        /// </param>
-        /// <param name="dt">
-        /// The dt.
-        /// </param>
+        /// <param name="vals"> The values of one line. </param>
+        /// <param name="dt"> The dt. </param>
         private static void ConditionValues(string[] vals, DataTable dt)
         {
             // Check to make sure that something didn't get split by a comma when it
@@ -336,9 +324,7 @@ namespace MW5.Plugins.TableEditor.utils
         /// <summary>
         /// Check to make sure that something didn't get split by a comma when it shouldn't
         /// </summary>
-        /// <param name="vals">
-        /// The values of one line.
-        /// </param>
+        /// <param name="vals"> The values of one line. </param>
         private static void ConditionValues_OneCommaOnly(string[] vals)
         {
             // Check to make sure that something didn't get split by a comma when it
@@ -403,12 +389,8 @@ namespace MW5.Plugins.TableEditor.utils
         /// <summary>
         /// Create the table to contain the csv
         /// </summary>
-        /// <param name="fields">
-        /// The fields.
-        /// </param>
-        /// <param name="dt">
-        /// The dt.
-        /// </param>
+        /// <param name="fields"> The fields. </param>
+        ///  <param name="dt"> The dt. </param>
         private static void CreateTable(IEnumerable<string> fields, DataTable dt)
         {
             foreach (var col in
@@ -429,9 +411,7 @@ namespace MW5.Plugins.TableEditor.utils
         /// <summary>
         /// Format the values.
         /// </summary>
-        /// <param name="fields">
-        /// The fields.
-        /// </param>
+        /// <param name="fields"> The fields. </param>
         private static void FormatValues(string[] fields)
         {
             for (var i = 0; i < fields.Length; i++)

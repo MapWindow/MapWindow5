@@ -5,15 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
-using MW5.Plugins.TableEditor.utils;
+using MW5.Plugins.TableEditor.Utils;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
-
-    #region
-
-    #endregion
-
     /// <summary>
     /// The frm join excel.
     /// </summary>
@@ -25,24 +20,16 @@ namespace MW5.Plugins.TableEditor.Forms
         /// Initializes a new instance of the <see cref="JoinExcelForm"/> class. 
         /// Initializes a new instance of the frmJoinExtData class
         /// </summary>
-        /// <param name="dt">
-        /// The datatable.
-        /// </param>
-        /// <param name="tbl">
-        /// The tbl.
-        /// </param>
-        /// <param name="filename">
-        /// The filename.
-        /// </param>
-        /// <param name="joinId">
-        /// The join Id.
-        /// </param>
+        /// <param name="dt"> The datatable. </param>
+        /// <param name="tbl"> The tbl. </param>
+        /// <param name="filename"> The filename. </param>
+        /// <param name="joinId"> The join Id. </param>
         public JoinExcelForm(DataTable dt, Table tbl, string filename, int joinId)
         {
             InitializeComponent();
 
-            table = tbl;
-            this.filename = filename;
+            _table = tbl;
+            _filename = filename;
 
             FillCurrentKeyColumns();
 
@@ -58,12 +45,12 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The filename.
         /// </summary>
-        private readonly string filename = string.Empty;
+        private readonly string _filename = string.Empty;
 
         /// <summary>
         /// The table.
         /// </summary>
-        private readonly Table table; // underlying dbf of current shapefile
+        private readonly Table _table; // underlying dbf of current shapefile
 
         #endregion
 
@@ -76,9 +63,9 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             var names = new List<string>();
 
-            for (var i = 0; i < table.NumFields; i++)
+            for (var i = 0; i < _table.NumFields; i++)
             {
-                names.Add(table.get_Field(i).Name);
+                names.Add(_table.get_Field(i).Name);
             }
 
             cboCurrentKeyCol.DataSource = names;
@@ -90,7 +77,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void FillWorkBooks()
         {
             // Get workbooks
-            var books = XLSImport.GetWorkbooks(filename);
+            var books = XlsImport.GetWorkbooks(_filename);
             cboWorkBooks.DataSource = books.Distinct().ToList();
 
             // strange, but I got a replica of the worksheet for .xlsx format
@@ -109,7 +96,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (cboWorkBooks.Visible)
             {
-                var colNames = XLSImport.GetColumnNames(filename, cboWorkBooks.SelectedItem.ToString());
+                var colNames = XlsImport.GetColumnNames(_filename, cboWorkBooks.SelectedItem.ToString());
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -123,7 +110,7 @@ namespace MW5.Plugins.TableEditor.Forms
                     return;
                 }
 
-                var colNames = CSVImport.GetColumnNames(filename, cboDelimiter.Text);
+                var colNames = CsvImport.GetColumnNames(_filename, cboDelimiter.Text);
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -154,12 +141,12 @@ namespace MW5.Plugins.TableEditor.Forms
             if (cboWorkBooks.Visible)
             {
                 options = "workbook=" + cboWorkBooks.SelectedItem;
-                dt = XLSImport.GetData(filename, cboWorkBooks.SelectedItem.ToString());
+                dt = XlsImport.GetData(_filename, cboWorkBooks.SelectedItem.ToString());
             }
             else
             {
                 options = "separator=" + cboDelimiter.SelectedItem;
-                dt = CSVImport.GetData(filename, cboDelimiter.Text);
+                dt = CsvImport.GetData(_filename, cboDelimiter.Text);
             }
 
             var tblNew = new Table();
@@ -169,8 +156,8 @@ namespace MW5.Plugins.TableEditor.Forms
                 return;
             }
 
-            var result = table.Join2(
-                tblNew, cboCurrentKeyCol.Text, cboExternalKeyCol.Text, filename, options);
+            var result = _table.Join2(
+                tblNew, cboCurrentKeyCol.Text, cboExternalKeyCol.Text, _filename, options);
             MessageBox.Show(result ? "Joining is successful" : "Joining has failed");
             DialogResult = result ? DialogResult.OK : DialogResult.Cancel;
         }
@@ -187,7 +174,7 @@ namespace MW5.Plugins.TableEditor.Forms
             btnGetColumns.Visible = false;
             groupBox1.Enabled = false;
 
-            if (!File.Exists(filename))
+            if (!File.Exists(_filename))
             {
                 MessageBox.Show(@"File does not exist.");
                 return;
@@ -195,7 +182,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             btnGetColumns.Visible = true;
 
-            var extension = Path.GetExtension(filename);
+            var extension = Path.GetExtension(_filename);
             if (extension == ".xls" || extension == ".xlsx")
             {
                 lblWorkbook.Visible = true;

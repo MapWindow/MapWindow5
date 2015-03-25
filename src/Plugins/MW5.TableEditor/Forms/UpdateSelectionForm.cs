@@ -21,7 +21,7 @@ namespace MW5.Plugins.TableEditor.Forms
         }
 
         /// <summary>Gets the selected operation</summary>
-        public SelectionOperation selectedOption
+        public SelectionOperation SelectedOption
         {
             get { return (SelectionOperation) lbOptions.SelectedIndex; }
         }

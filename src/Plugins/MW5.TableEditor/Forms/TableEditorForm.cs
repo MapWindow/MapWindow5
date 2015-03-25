@@ -11,7 +11,7 @@ using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.utils;
+using MW5.Plugins.TableEditor.Utils;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
@@ -138,7 +138,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
                     if (result == DialogResult.OK)
                     {
-                        var operation = updateSelection.selectedOption;
+                        var operation = updateSelection.SelectedOption;
 
                         var selectedIds = foundRows.Select(elm => Convert.ToInt32(elm[0])).ToList();
 

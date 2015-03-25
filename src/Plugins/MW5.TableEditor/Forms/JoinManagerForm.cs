@@ -5,11 +5,6 @@ using MapWinGIS;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
-
-    #region
-
-    #endregion
-
     /// <summary>
     /// The frm join manager.
     /// </summary>
@@ -21,17 +16,13 @@ namespace MW5.Plugins.TableEditor.Forms
         /// Initializes a new instance of the <see cref="JoinManagerForm"/> class. 
         /// Creates a new instance of the frmJoinManager class
         /// </summary>
-        /// <param name="dt">
-        /// The dt.
-        /// </param>
-        /// <param name="tbl">
-        /// The tbl.
-        /// </param>
+        /// <param name="dt"> The dt. </param>
+        /// <param name="tbl"> The tbl. </param>
         public JoinManagerForm(DataTable dt, Table tbl)
         {
             InitializeComponent();
-            table = tbl;
-            this.dt = dt;
+            _table = tbl;
+            _dt = dt;
             UpdateList();
         }
 
@@ -42,12 +33,12 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// The dt.
         /// </summary>
-        private readonly DataTable dt;
+        private readonly DataTable _dt;
 
         /// <summary>
         /// The table.
         /// </summary>
-        private readonly Table table;
+        private readonly Table _table;
 
         #endregion
 
@@ -66,10 +57,10 @@ namespace MW5.Plugins.TableEditor.Forms
             else
             {
                 var index = listView1.SelectedIndices[0];
-                var filename = table.get_JoinFilename(index);
+                var filename = _table.get_JoinFilename(index);
                 if (filename.ToLower().EndsWith(".dbf"))
                 {
-                    var form = new JoinNativeForm(dt, table, filename, index);
+                    var form = new JoinNativeForm(_dt, _table, filename, index);
                     form.ShowDialog(this);
                     UpdateList();
                 }
@@ -98,11 +89,11 @@ namespace MW5.Plugins.TableEditor.Forms
         private void UpdateList()
         {
             listView1.Items.Clear();
-            for (var i = 0; i < table.JoinCount; i++)
+            for (var i = 0; i < _table.JoinCount; i++)
             {
-                var item = listView1.Items.Add(table.get_JoinFilename(i));
-                item.SubItems.Add(table.get_JoinFromField(i));
-                item.SubItems.Add(table.get_JoinToField(i));
+                var item = listView1.Items.Add(_table.get_JoinFilename(i));
+                item.SubItems.Add(_table.get_JoinFromField(i));
+                item.SubItems.Add(_table.get_JoinToField(i));
                 item.Selected = true;
             }
 
@@ -150,12 +141,12 @@ namespace MW5.Plugins.TableEditor.Forms
             {
                 if (dialog.FileName.ToLower().EndsWith(".dbf"))
                 {
-                    var form = new JoinNativeForm(dt, table, dialog.FileName, -1);
+                    var form = new JoinNativeForm(_dt, _table, dialog.FileName, -1);
                     form.ShowDialog(this);
                 }
                 else
                 {
-                    var form = new JoinExcelForm(dt, table, dialog.FileName, -1);
+                    var form = new JoinExcelForm(_dt, _table, dialog.FileName, -1);
                     form.ShowDialog(this);
                 }
 
@@ -174,7 +165,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// </param>
         private void BtnStopAllClick(object sender, EventArgs e)
         {
-            table.StopAllJoins();
+            _table.StopAllJoins();
             MessageBox.Show(@"All joins are stopped", @"Table editor", MessageBoxButtons.OK, MessageBoxIcon.Information);
             UpdateList();
         }
@@ -198,8 +189,8 @@ namespace MW5.Plugins.TableEditor.Forms
             else
             {
                 var index = listView1.SelectedIndices[0];
-                var name = table.get_JoinFilename(index);
-                if (table.StopJoin(index))
+                var name = _table.get_JoinFilename(index);
+                if (_table.StopJoin(index))
                 {
                     MessageBox.Show(@"Join is stopped: " + name, @"Table editor", MessageBoxButtons.OK,
                         MessageBoxIcon.Information);

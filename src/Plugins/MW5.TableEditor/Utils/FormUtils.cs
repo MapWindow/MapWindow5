@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MW5.Plugins.TableEditor.utils
+namespace MW5.Plugins.TableEditor.Utils
 {
     /// <summary>
     ///  Class with form utils

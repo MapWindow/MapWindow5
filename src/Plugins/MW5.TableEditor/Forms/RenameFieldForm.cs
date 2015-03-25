@@ -11,7 +11,7 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class RenameFieldForm : Form
     {
         /// <summary>The datatable with shape-data</summary> 
-        private readonly DataTable dt;
+        private readonly DataTable _dt;
 
         /// <summary>Initializes a new instance of the frmRenameField class</summary>
         /// <param name = "dataTable">The datatable.</param>
@@ -19,9 +19,9 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
 
-            dt = dataTable;
+            _dt = dataTable;
 
-            var names = ShapeData.GetVisibleFieldNames(dt);
+            var names = ShapeData.GetVisibleFieldNames(_dt);
             cmbField.Items.AddRange(names);
         }
 
@@ -41,13 +41,13 @@ namespace MW5.Plugins.TableEditor.Forms
             var errorMessage = string.Empty;
 
             // Check if name is valid
-            if (!ShapeData.IsNameValid(txtNewName.Text, dt, ref errorMessage))
+            if (!ShapeData.IsNameValid(txtNewName.Text, _dt, ref errorMessage))
             {
                 MessageBox.Show(errorMessage);
             }
             else
             {
-                dt.Columns[cmbField.SelectedIndex + 1].ColumnName = txtNewName.Text;
+                _dt.Columns[cmbField.SelectedIndex + 1].ColumnName = txtNewName.Text;
                 DialogResult = DialogResult.OK;
             }
         }

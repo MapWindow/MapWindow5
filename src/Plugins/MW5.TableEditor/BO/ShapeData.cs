@@ -4,7 +4,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Windows.Forms;
 using MapWinGIS;
-using MW5.Plugins.TableEditor.utils;
+using MW5.Plugins.TableEditor.Utils;
 
 namespace MW5.Plugins.TableEditor.BO
 {
@@ -157,11 +157,11 @@ namespace MW5.Plugins.TableEditor.BO
             filename = filename.ToLower();
             if (filename.EndsWith(".xls") || filename.EndsWith(".xlsx"))
             {
-                dt = XLSImport.GetData(filename, getOption("workbook", joinOptions));
+                dt = XlsImport.GetData(filename, getOption("workbook", joinOptions));
             }
             else if (filename.EndsWith(".csv"))
             {
-                dt = CSVImport.GetData(filename, getOption("separator", joinOptions));
+                dt = CsvImport.GetData(filename, getOption("separator", joinOptions));
             }
             else
             {

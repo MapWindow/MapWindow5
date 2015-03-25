@@ -196,6 +196,7 @@
     <Compile Include="TableEditorPlugin.cs" />
     <Compile Include="Utils\CSVImport.cs" />
     <Compile Include="Utils\DbfImport.cs" />
+    <Compile Include="Utils\Enums.cs" />
     <Compile Include="Utils\FormUtils.cs" />
     <Compile Include="Utils\NummericHelper.cs" />
     <Compile Include="Utils\UnitsOfMeasurement.cs" />

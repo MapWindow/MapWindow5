@@ -11,14 +11,14 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class NewFieldForm : Form
     {
         /// <summary>The datatable with shapedata</summary>
-        private readonly DataTable dt;
+        private readonly DataTable _dt;
 
         /// <summary>Initializes a new instance of the frmNewField class</summary>
         /// <param name = "dataTable">The datatable.</param>
         public NewFieldForm(DataTable dataTable)
         {
             InitializeComponent();
-            dt = dataTable;
+            _dt = dataTable;
         }
 
         /// <summary>Add the new field</summary>
@@ -28,14 +28,14 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             var errorMessage = string.Empty;
 
-            if (!ShapeData.IsNameValid(txtFieldName.Text, dt, ref errorMessage))
+            if (!ShapeData.IsNameValid(txtFieldName.Text, _dt, ref errorMessage))
             {
                 MessageBox.Show(errorMessage);
                 DialogResult = DialogResult.Cancel;
                 return;
             }
 
-            ShapeData.AddDataColumn(dt, txtFieldName.Text, cmbFieldType.Text
+            ShapeData.AddDataColumn(_dt, txtFieldName.Text, cmbFieldType.Text
                 , fldPrecision.Value.ToString(), Convert.ToInt32(fldWidth.Value));
             DialogResult = DialogResult.OK;
         }

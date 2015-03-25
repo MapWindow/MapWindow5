@@ -25,8 +25,8 @@ namespace MW5.Plugins.TableEditor.BO
         {
             //if (indices.Length > 0)
             //{
-            // _context.View.UpdateSelection(this._context.Layers.CurrentLayer, ref indices, SelectionOperation.SelectNew);
-            //  //this.mapWin.View.Redraw();
+            // _context.View.UpdateSelection(_context.Layers.CurrentLayer, ref indices, SelectionOperation.SelectNew);
+            //  //mapWin.View.Redraw();
             // _context.Refresh();
             //}
         }
@@ -79,7 +79,7 @@ namespace MW5.Plugins.TableEditor.BO
             //    double minX = double.MaxValue;
             //    double minY = double.MaxValue;
 
-            //   _context.Layers[this._context.Layers.CurrentLayer].Visible = true;
+            //   _context.Layers[_context.Layers.CurrentLayer].Visible = true;
 
             //    foreach (DataGridViewRow row in selectedRows)
             //    {
@@ -102,10 +102,10 @@ namespace MW5.Plugins.TableEditor.BO
 
             //    MapWinGIS.Extents exts = new Extents();
 
-            //    if (this._context.View.SelectedShapes.NumSelected == 1 
-            //      &&_context.Layers[this._context.Layers.CurrentLayer].LayerType == eLayerType.PointShapefile)
+            //    if (_context.View.SelectedShapes.NumSelected == 1 
+            //      &&_context.Layers[_context.Layers.CurrentLayer].LayerType == eLayerType.PointShapefile)
             //    {
-            //        MapWinGIS.Shapefile sf =_context.Layers[this._context.Layers.CurrentLayer] as Shapefile;
+            //        MapWinGIS.Shapefile sf =_context.Layers[_context.Layers.CurrentLayer] as Shapefile;
 
             //        double xpad = (1 / 100) * (sf.Extents.xMax - sf.Extents.xMin);
             //        double ypad = (1 / 100) * (sf.Extents.yMax - sf.Extents.yMin);
@@ -139,7 +139,7 @@ namespace MW5.Plugins.TableEditor.BO
             //    double minX = shape.Extents.xMin;
             //    double minY = shape.Extents.yMin;
 
-            //   _context.Layers[this._context.Layers.CurrentLayer].Visible = true;
+            //   _context.Layers[_context.Layers.CurrentLayer].Visible = true;
 
             //    // Pad extents now
             //    double dx =PadExtentsEdit(maxX, minX);
@@ -165,7 +165,7 @@ namespace MW5.Plugins.TableEditor.BO
         /// <param name = "shapeFile">The current shapefile.</param>
         public void ExportShapes(Shapefile shapeFile)
         {
-            //if (this._context.Layers.NumLayers == 0)
+            //if (_context.Layers.NumLayers == 0)
             //{
             //    MessageBox.Show("No layer selected.");
             //    return;
@@ -189,7 +189,7 @@ namespace MW5.Plugins.TableEditor.BO
             //    bool loadShapeFile = MessageBox.Show(@"Do you want to load the new shapefile?", @"TableEditor", MessageBoxButtons.YesNo) == DialogResult.Yes;
 
             //    // TODO: Use new export method of SF object:
-            //    MapWinGeoProc.Selection.ExportSelectedMWViewShapes(this._context, saveFileDialog.FileName, loadShapeFile);
+            //    MapWinGeoProc.Selection.ExportSelectedMWViewShapes(_context, saveFileDialog.FileName, loadShapeFile);
             //}
         }
 

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.utils;
+using MW5.Plugins.TableEditor.Utils;
 
 namespace MW5.Plugins.TableEditor.Forms
 {
@@ -13,16 +13,16 @@ namespace MW5.Plugins.TableEditor.Forms
     public partial class UpdateMeasurementsForm : Form
     {
         /// <summary>What is the shapefile type</summary>
-        private short shapefileType;
+        private short _shapefileType;
 
         /// <summary>The current shapefile</summary>
-        private readonly ShapefileWrapper boShapefile;
+        private readonly ShapefileWrapper _boShapefile;
 
         /// <summary>The datatable with shapedata</summary>
-        private readonly DataTable dt;
+        private readonly DataTable _dt;
 
         /// <summary>The units of measurements</summary>
-        private readonly UnitsOfMeasurement unitsOfMeasurement;
+        private readonly UnitsOfMeasurement _unitsOfMeasurement;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateMeasurementsForm"/> class.</summary>
         /// <param name="dataTable">The data table.</param>
@@ -31,11 +31,11 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             InitializeComponent();
 
-            dt = dataTable;
+            _dt = dataTable;
 
-            boShapefile = shapefile;
+            _boShapefile = shapefile;
 
-            unitsOfMeasurement = new UnitsOfMeasurement();
+            _unitsOfMeasurement = new UnitsOfMeasurement();
 
             InitForm();
         }
@@ -46,16 +46,16 @@ namespace MW5.Plugins.TableEditor.Forms
             GetShapefileType();
 
             // Set labels:
-            lblLayername.Text = string.Format("Layer name: {0}", boShapefile.ShapefileName);
-            var geoprojection = boShapefile.ShapeFile.GeoProjection;
+            lblLayername.Text = string.Format("Layer name: {0}", _boShapefile.ShapefileName);
+            var geoprojection = _boShapefile.ShapeFile.GeoProjection;
             lblProjection.Text = string.Format("Projection: {0}", geoprojection.Name);
             lblShapefileUnits.Text = string.Format("Units: {0}",
-                unitsOfMeasurement.GetUnitsFromProj4(geoprojection.ExportToProj4()));
+                _unitsOfMeasurement.GetUnitsFromProj4(geoprojection.ExportToProj4()));
 
             // Show group boxes:
-            AreaGroupbox.Visible = shapefileType == 1;
-            PerimeterGroupbox.Visible = shapefileType == 1;
-            if (shapefileType == 2)
+            AreaGroupbox.Visible = _shapefileType == 1;
+            PerimeterGroupbox.Visible = _shapefileType == 1;
+            if (_shapefileType == 2)
             {
                 LengthGroupbox.Visible = true;
 
@@ -77,7 +77,7 @@ namespace MW5.Plugins.TableEditor.Forms
             // Length
             var selectedLength = FillCombobox(LengthAttributesCombo, fields, "length");
             SetRadioButton(selectedLength, LengthNewRadio, LengthExistingRadio);
-            if (shapefileType == 1)
+            if (_shapefileType == 1)
             {
                 LengthNoneRadio.Checked = true;
             }
@@ -130,20 +130,20 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>Get the shapefile type</summary>
         private void GetShapefileType()
         {
-            switch (boShapefile.ShapeFile.ShapefileType)
+            switch (_boShapefile.ShapeFile.ShapefileType)
             {
                 case ShpfileType.SHP_POLYGON:
                 case ShpfileType.SHP_POLYGONM:
                 case ShpfileType.SHP_POLYGONZ:
-                    shapefileType = 1;
+                    _shapefileType = 1;
                     break;
                 case ShpfileType.SHP_POLYLINE:
                 case ShpfileType.SHP_POLYLINEM:
                 case ShpfileType.SHP_POLYLINEZ:
-                    shapefileType = 2;
+                    _shapefileType = 2;
                     break;
                 default:
-                    shapefileType = 0;
+                    _shapefileType = 0;
                     break;
             }
         }
@@ -153,7 +153,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             try
             {
-                if (shapefileType == 2)
+                if (_shapefileType == 2)
                 {
                     // Polylines
                     string[] cboItems =
@@ -187,9 +187,9 @@ namespace MW5.Plugins.TableEditor.Forms
         private IEnumerable<Field> GetFields()
         {
             var fields = new List<Field>();
-            for (var i = 0; i < boShapefile.ShapeFile.NumFields; i++)
+            for (var i = 0; i < _boShapefile.ShapeFile.NumFields; i++)
             {
-                var field = boShapefile.ShapeFile.get_Field(i);
+                var field = _boShapefile.ShapeFile.get_Field(i);
                 fields.Add(field);
             }
 
@@ -211,7 +211,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
 
                 CalculateMeasurement(
-                    UnitsOfMeasurement.MeasurementTypes.Area,
+                    MeasurementTypes.Area,
                     selectedItem,
                     AreaNewRadio.Checked,
                     AreaNewText.Text,
@@ -228,7 +228,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
 
                 CalculateMeasurement(
-                    UnitsOfMeasurement.MeasurementTypes.Perimeter,
+                    MeasurementTypes.Perimeter,
                     selectedItem,
                     PerimeterNewRadio.Checked,
                     PerimeterNewText.Text,
@@ -245,7 +245,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
 
                 CalculateMeasurement(
-                    UnitsOfMeasurement.MeasurementTypes.Length,
+                    MeasurementTypes.Length,
                     selectedItem,
                     LengthNewRadio.Checked,
                     LengthNewText.Text,
@@ -268,7 +268,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name="newFieldName">The new field name.</param>
         /// <param name="precision">The precision.</param>
         /// <param name="width">The width.</param>
-        private void CalculateMeasurement(UnitsOfMeasurement.MeasurementTypes measurementType
+        private void CalculateMeasurement(MeasurementTypes measurementType
             , string currentFieldname, bool newField, string newFieldName, int precision, int width)
         {
             int columnID;
@@ -283,16 +283,16 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
 
                 ShapeData.AddDataColumn(
-                    dt,
+                    _dt,
                     newFieldName,
                     "Double",
                     precision.ToString(),
                     width);
-                columnID = dt.Columns.Count - 1;
+                columnID = _dt.Columns.Count - 1;
             }
             else
             {
-                columnID = boShapefile.ShapeFile.Table.get_FieldIndexByName(currentFieldname) + 1;
+                columnID = _boShapefile.ShapeFile.Table.get_FieldIndexByName(currentFieldname) + 1;
             }
 
             Calculate(measurementType, columnID, precision);
@@ -302,23 +302,22 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <param name="measurementType">What to calculate.</param>
         /// <param name="fieldIndex">The field index.</param>
         /// <param name="fieldPrecision">The field precision.</param>
-        public void Calculate(
-            UnitsOfMeasurement.MeasurementTypes measurementType,
+        public void Calculate(MeasurementTypes measurementType,
             int fieldIndex,
             int fieldPrecision)
         {
             try
             {
                 // Use units:
-                unitsOfMeasurement.MeasurementType = measurementType;
+                _unitsOfMeasurement.MeasurementType = measurementType;
                 var shapefileUnits = lblShapefileUnits.Text.Replace("Units: ", string.Empty).Trim();
-                unitsOfMeasurement.MapUnits = unitsOfMeasurement.StringToUom(shapefileUnits);
-                var orgMapUnits = unitsOfMeasurement.MapUnits;
-                unitsOfMeasurement.CalculatedUnits =
-                    unitsOfMeasurement.StringToUom(CalculateUnitsCombo.SelectedItem.ToString());
+                _unitsOfMeasurement.MapUnits = _unitsOfMeasurement.StringToUom(shapefileUnits);
+                var orgMapUnits = _unitsOfMeasurement.MapUnits;
+                _unitsOfMeasurement.CalculatedUnits =
+                    _unitsOfMeasurement.StringToUom(CalculateUnitsCombo.SelectedItem.ToString());
 
-                var utils = new Utils();
-                var numShapes = boShapefile.ShapeFile.NumShapes;
+                var utils = new MapWinGIS.Utils();
+                var numShapes = _boShapefile.ShapeFile.NumShapes;
 
                 // Init progress bar:
                 progressBar1.Minimum = 0;
@@ -328,9 +327,9 @@ namespace MW5.Plugins.TableEditor.Forms
 
                 var reprojectShapefile = new Shapefile();
                 var useOldCalculation = false;
-                if (unitsOfMeasurement.MapUnits == UnitsOfMeasurement.UnitOfArea.DecimalDegrees)
+                if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
                 {
-                    reprojectShapefile = ReprojectShapefileToUtm(boShapefile.ShapeFile);
+                    reprojectShapefile = ReprojectShapefileToUtm(_boShapefile.ShapeFile);
 
                     // If the reprojected shapefile has less shapes than the original,
                     // it means the data spans more than 1 UTM zone.
@@ -346,17 +345,17 @@ namespace MW5.Plugins.TableEditor.Forms
                     var measurement = 0.0;
 
                     // Reset map units because it might have been changed in the reprojection option:
-                    unitsOfMeasurement.MapUnits = orgMapUnits;
+                    _unitsOfMeasurement.MapUnits = orgMapUnits;
 
-                    if (measurementType == UnitsOfMeasurement.MeasurementTypes.Length)
+                    if (measurementType == MeasurementTypes.Length)
                     {
-                        if (unitsOfMeasurement.MapUnits == UnitsOfMeasurement.UnitOfArea.DecimalDegrees)
+                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.ShapeFile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -374,13 +373,13 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = shp.Length;
-                                unitsOfMeasurement.MapUnits = UnitsOfMeasurement.UnitOfArea.Meters;
+                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.ShapeFile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;
@@ -390,15 +389,15 @@ namespace MW5.Plugins.TableEditor.Forms
                         }
                     }
 
-                    if (measurementType == UnitsOfMeasurement.MeasurementTypes.Area)
+                    if (measurementType == MeasurementTypes.Area)
                     {
-                        if (unitsOfMeasurement.MapUnits == UnitsOfMeasurement.UnitOfArea.DecimalDegrees)
+                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:                         
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.ShapeFile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -417,13 +416,13 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = shp.Area;
-                                unitsOfMeasurement.MapUnits = UnitsOfMeasurement.UnitOfArea.Meters;
+                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.ShapeFile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;
@@ -433,15 +432,15 @@ namespace MW5.Plugins.TableEditor.Forms
                         }
                     }
 
-                    if (measurementType == UnitsOfMeasurement.MeasurementTypes.Perimeter)
+                    if (measurementType == MeasurementTypes.Perimeter)
                     {
-                        if (unitsOfMeasurement.MapUnits == UnitsOfMeasurement.UnitOfArea.DecimalDegrees)
+                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:
                             if (useOldCalculation)
                             {
                                 // Issue #2302: Null shape generates exception:
-                                var shp = boShapefile.ShapeFile.get_Shape(i);
+                                var shp = _boShapefile.ShapeFile.get_Shape(i);
                                 if (shp == null)
                                 {
                                     continue;
@@ -459,13 +458,13 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = utils.get_Perimeter(shp);
-                                unitsOfMeasurement.MapUnits = UnitsOfMeasurement.UnitOfArea.Meters;
+                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
                         {
                             // Issue #2302: Null shape generates exception:
-                            var shp = boShapefile.ShapeFile.get_Shape(i);
+                            var shp = _boShapefile.ShapeFile.get_Shape(i);
                             if (shp == null)
                             {
                                 continue;
@@ -476,11 +475,11 @@ namespace MW5.Plugins.TableEditor.Forms
                     }
 
                     // Use units:
-                    measurement = unitsOfMeasurement.ConvertUnits(measurement);
+                    measurement = _unitsOfMeasurement.ConvertUnits(measurement);
 
                     // Round value:
                     measurement = Math.Round(measurement, fieldPrecision);
-                    dt.Rows[i][fieldIndex] = measurement;
+                    _dt.Rows[i][fieldIndex] = measurement;
 
                     if (i%progressBar1.Step == 0)
                     {

@@ -1,29 +1,18 @@
 ﻿using System.Data;
 using MapWinGIS;
 
-namespace MW5.Plugins.TableEditor.utils
+namespace MW5.Plugins.TableEditor.Utils
 {
-
-    #region
-
-    #endregion
-
     /// <summary>
     /// The dbf import.
     /// </summary>
     public class DbfImport
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Fills table with data obtained by ADO.NET provider
         /// </summary>
-        /// <param name="dt">
-        /// Data table to make the data from
-        /// </param>
-        /// <param name="tableToFill">
-        /// MapWinGIS table to copy the data to
-        /// </param>
+        /// <param name="dt"> Data table to make the data from </param>
+        /// <param name="tableToFill"> MapWinGIS table to copy the data to </param>
         /// <returns>True on success</returns>
         public static bool FillMapWinGisTable(DataTable dt, Table tableToFill)
         {
@@ -66,7 +55,5 @@ namespace MW5.Plugins.TableEditor.utils
 
             return true;
         }
-
-        #endregion
     }
 }
