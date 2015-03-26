@@ -37,14 +37,14 @@ namespace MW5.Plugins.Symbology.Forms.Categories
     /// </summary>
     public partial class GenerateCategoriesForm : MapWindowForm
     {
-        private readonly IAppContext _context;
         private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
         
         /// <summary>
         /// Generates a new instance of the GenerateCategoriesForm class
         /// </summary>
-        public GenerateCategoriesForm(IAppContext context, ILayer layer)
+        public GenerateCategoriesForm(IAppContext context, ILayer layer):
+            base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
 
@@ -52,7 +52,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             {
                 throw new ArgumentNullException("layer");
             }
-            _context = context;
             _layer = layer;
 
             InitializeComponent();

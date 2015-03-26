@@ -699,7 +699,7 @@ namespace MW5.Plugins.TableEditor.Forms
         /// <summary>
         /// Save changed data
         /// </summary>
-        internal void SaveChanges()
+        public void SaveChanges()
         {
             var dt = (DataTable) TableEditorDataGrid.DataSource;
             if (dt != null)

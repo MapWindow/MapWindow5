@@ -92,7 +92,7 @@ namespace MW5.Views
 
         #region IView implementation
 
-        public new void ShowView()
+        public new void ShowView(bool dialog)
         {
             _menuUpdater = new MenuUpdater(_context, _mapControl1, PluginIdentity.Default);
 

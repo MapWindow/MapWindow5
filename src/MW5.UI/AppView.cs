@@ -21,12 +21,12 @@ namespace MW5.UI
             _parent = parent;
         }
 
-        public bool ShowDialog(Form form)
+        public bool ShowDialog(Form form, bool dialog = true)
         {
-            return ShowDialog(form, null);
+            return ShowDialog(form, null, dialog);
         }
 
-        public bool ShowDialog(Form form, IWin32Window parent)
+        public bool ShowDialog(Form form, IWin32Window parent, bool dialog = true)
         {
             if (form == null)
             {
@@ -50,7 +50,13 @@ namespace MW5.UI
             {
                 parent = _parent as IWin32Window;
             }
-            return form.ShowDialog(parent) == DialogResult.OK;
+            if (dialog)
+            {
+                return form.ShowDialog(parent) == DialogResult.OK;
+            }
+            
+            form.Show(parent);
+            return true;
         }
 
         public void Update()

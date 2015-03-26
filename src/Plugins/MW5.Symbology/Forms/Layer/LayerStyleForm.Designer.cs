@@ -83,7 +83,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.dgvCategories = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
             this.cmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmnExpression = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -751,7 +751,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
-            this.Visible,
+            this.cmnVisible,
             this.cmnStyle,
             this.cmnName,
             this.cmnExpression,
@@ -803,9 +803,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // Visible
             // 
-            this.Visible.HeaderText = "";
-            this.Visible.Name = "Visible";
-            this.Visible.Width = 30;
+            this.cmnVisible.HeaderText = "";
+            this.cmnVisible.Name = "cmnVisible";
+            this.cmnVisible.Width = 30;
             // 
             // cmnStyle
             // 
@@ -1814,7 +1814,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private System.Windows.Forms.GroupBox groupBox12;
         private System.Windows.Forms.DataGridView dgvCategories;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
         private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmnExpression;

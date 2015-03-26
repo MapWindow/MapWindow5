@@ -36,7 +36,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCategories = new System.Windows.Forms.DataGridView();
-            this.Visible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
             this.cmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,7 +96,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Visible,
+            this.cmnVisible,
             this.cmnStyle,
             this.cmnName,
             this.Count});
@@ -128,10 +128,10 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // Visible
             // 
-            this.Visible.HeaderText = "";
-            this.Visible.Name = "Visible";
-            this.Visible.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Visible.Width = 30;
+            this.cmnVisible.HeaderText = "";
+            this.cmnVisible.Name = "cmnVisible";
+            this.cmnVisible.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.cmnVisible.Width = 30;
             // 
             // cmnStyle
             // 
@@ -604,7 +604,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private System.Windows.Forms.GroupBox groupExpression;
         private System.Windows.Forms.TextBox txtExpression;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Visible;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
         private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
         private System.Windows.Forms.DataGridViewTextBoxColumn cmnName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;

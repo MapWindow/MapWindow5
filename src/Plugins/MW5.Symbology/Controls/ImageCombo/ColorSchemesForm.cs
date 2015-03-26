@@ -32,19 +32,18 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     public partial class ColorSchemesForm : MapWindowForm
     {
         private readonly List<ColorBlend> _list;
-        private readonly IAppContext _context;
         private readonly ColorSchemeCollection _provider;
         private readonly bool _noEvents;
         
         /// <summary>
         /// Initializes a new instance of the frmColorSchemes class
         /// </summary>
-        internal ColorSchemesForm(IAppContext context, ColorSchemeCollection provider)
+        internal ColorSchemesForm(IAppContext context, ColorSchemeCollection provider) : 
+            base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (provider == null) throw new ArgumentNullException("provider");
 
-            _context = context;
             _provider = provider;
             _list = provider.List;
 

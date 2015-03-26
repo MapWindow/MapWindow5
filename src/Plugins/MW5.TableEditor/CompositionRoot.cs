@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.TableEditor.BO;
+using MW5.Plugins.TableEditor.Editor;
+using MW5.Plugins.TableEditor.Forms;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -16,7 +18,9 @@ namespace MW5.Plugins.TableEditor
         {
             if (!composed)
             {
+                container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>();
                 container.RegisterSingleton<AppContextWrapper, AppContextWrapper>();
+                container.RegisterService<ITableEditorView, TableEditorView>();
                 composed = true;
             }
         }

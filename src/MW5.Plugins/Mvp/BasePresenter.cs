@@ -1,5 +1,4 @@
 ﻿using System;
-using MW5.Mvp;
 
 namespace MW5.Plugins.Mvp
 {
@@ -17,9 +16,9 @@ namespace MW5.Plugins.Mvp
             View = view;
         }
 
-        public void Run()
+        public void Run(bool dialog = true)
         {
-            View.ShowView();
+            View.ShowView(dialog);
         }
     }
 
@@ -38,47 +37,8 @@ namespace MW5.Plugins.Mvp
             View = view;
         }
 
-        public abstract void Run(TArg argument);
+        public abstract void Run(TArg argument, bool dialog = true);
     }
     
-    /// <summary>
-    /// Base presenter with command enumeration.
-    /// </summary>
-    /// <typeparam name="TView">The type of the view.</typeparam>
-    /// <typeparam name="TCommand">The type of the command.</typeparam>
-    public abstract class BasePresenter<TView, TCommand> : CommandPresenter<TView, TCommand>, IPresenter
-        where TCommand : struct, IConvertible
-        where TView : IComplexView
-    {
-        protected BasePresenter(TView view)
-            : base(view)
-        {
-        }
 
-        public void Run()
-        {
-            View.ShowView();
-        }
-    }
-
-    /// <summary>
-    /// Base presenter with command enumeration and argument.
-    /// </summary>
-    /// <typeparam name="TView">The type of the view.</typeparam>
-    /// <typeparam name="TCommand">The type of the command.</typeparam>
-    /// <typeparam name="TArg">The type of the argument.</typeparam>
-    public abstract class BasePresenter<TView, TCommand, TArg> : CommandPresenter<TView, TCommand>, IPresenter<TArg>
-        where TCommand : struct, IConvertible
-        where TView : IComplexView
-    {
-        protected BasePresenter(TView view)
-            : base(view)
-        {
-        }
-
-        public void Run(TArg argument)
-        {
-            View.ShowView();
-        }
-    }
 }

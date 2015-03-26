@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.UI.Properties;
 using Syncfusion.Windows.Forms;
 
@@ -11,7 +12,7 @@ namespace MW5.UI
 {
     public class MapWindowForm: MetroForm
     {
-        private readonly IAppContext _context;
+        protected readonly IAppContext _context;
 
         public MapWindowForm()
         {
@@ -37,21 +38,12 @@ namespace MW5.UI
             }
         }
 
-        public void ShowView()
+        public virtual void ShowView(bool dialog = true)
         {
-            _context.View.ShowDialog(this);
-        }
-
-        private void InitializeComponent()
-        {
-            this.SuspendLayout();
-            // 
-            // MapWindowForm
-            // 
-            this.ClientSize = new System.Drawing.Size(288, 264);
-            this.Name = "MapWindowForm";
-            this.ResumeLayout(false);
-
+            if (!Visible)
+            {
+                _context.View.ShowDialog(this, dialog);
+            }
         }
     }
 }

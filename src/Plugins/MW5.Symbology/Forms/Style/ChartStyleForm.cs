@@ -41,8 +41,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
         private readonly IFeatureSet _shapefile;
         private readonly DiagramsLayer _charts;
-        private readonly int _handle;
-        private readonly IAppContext _context;
         private readonly ILayer _layer;
 
         private bool _noEvents;
@@ -51,7 +49,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// <summary>
         /// Initializes a new instance of the ChartStyleForm class
         /// </summary>
-        public ChartStyleForm(IAppContext context, ILayer layer)
+        public ChartStyleForm(IAppContext context, ILayer layer):
+            base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layer == null || layer.FeatureSet == null)
@@ -62,9 +61,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             InitializeComponent();
             _shapefile = layer.FeatureSet;
             _charts = _shapefile.Diagrams;
-            _context = context;
             _layer = layer;
-            _handle = layer.Handle;
 
             var mode = _charts.SavingMode;
             _charts.SavingMode = PersistenceType.None;

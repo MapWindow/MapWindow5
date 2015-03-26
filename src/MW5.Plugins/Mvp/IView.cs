@@ -5,18 +5,9 @@ namespace MW5.Plugins.Mvp
 {
     public interface IView
     {
-        void ShowView();
+        void ShowView(bool dialog = true);
         void Close();
         void UpdateView();
-    }
-
-    public interface IMenuProvider
-    {
-        IEnumerable<IToolbar> Toolbars { get; }
-    }
-
-    public interface IComplexView: IView, IMenuProvider
-    {
-        
+        bool Visible { get; }
     }
 }

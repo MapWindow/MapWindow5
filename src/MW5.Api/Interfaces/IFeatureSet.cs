@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
@@ -83,6 +84,8 @@ namespace MW5.Api.Interfaces
         
         // TODO: better to have it in labels class (make changes in ocx); 
         int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false);
+
+        IList<int> SelectedIndices { get; }
 
         #region Not implemented
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using MW5.Mvp;
 
 namespace MW5.Plugins.Mvp
 {

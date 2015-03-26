@@ -40,10 +40,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
     {
         private static int tabNumber = 0;
 
-        private IAppContext _context;
         private ILayer _layer;
         private IFeatureSet _shapefile;
-        private int _handle = -1;
         private readonly bool _categoryEdited;
 
         private ILabelStyle _category;
@@ -54,7 +52,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// <summary>
         /// Constructor for setting label expression and options
         /// </summary>
-        public LabelStyleForm(IAppContext context, ILayer layer)
+        public LabelStyleForm(IAppContext context, ILayer layer):
+            base(context)
         {
             InitLayer(context, layer);
 
@@ -115,10 +114,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 throw new ArgumentNullException("layer");
             }
 
-            _context = context;
             _layer = layer;
             _shapefile = _layer.FeatureSet;
-            _handle = _layer.Handle;
         }
 
         /// <summary>

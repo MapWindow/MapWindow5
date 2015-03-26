@@ -1,7 +1,9 @@
 ﻿using System;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.BO;
+using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Helpers;
 using MW5.UI.Menu;
@@ -11,13 +13,18 @@ namespace MW5.Plugins.TableEditor.Menu
     public class MenuService: MenuServiceBase
     {
         private readonly TableEditorPlugin _plugin;
-        private MenuCommands _commands;
+        private readonly TableEditorPresenter _presenter;
+        private readonly MenuCommands _commands;
 
-        public MenuService(IAppContext context, TableEditorPlugin plugin)
+        public MenuService(IAppContext context, TableEditorPlugin plugin, TableEditorPresenter presenter)
             : base(context, plugin.Identity)
         {
+            if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
+            if (presenter == null) throw new ArgumentNullException("presenter");
+
             _plugin = plugin;
+            _presenter = presenter;
             _commands = new MenuCommands(plugin);
             
             InitToolbars();
@@ -42,7 +49,11 @@ namespace MW5.Plugins.TableEditor.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.ShowTable:
-                    _context.ShowEditorForm(_plugin);
+                    var layer = _context.Map.Layers.SelectedLayer;
+                    if (layer.IsVector)
+                    {
+                        _presenter.Run(layer, false);
+                    }
                     break;
             }
         }

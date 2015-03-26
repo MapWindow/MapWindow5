@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using MapWinGIS;
@@ -583,6 +584,28 @@ namespace MW5.Api.Concrete
         public int GenerateEmptyLabels(LabelPosition method, bool largestPartOnly = false)
         {
             return _shapefile.GenerateLabels(-1, (tkLabelPositioning) method, largestPartOnly);
+        }
+
+        public IList<int> SelectedIndices
+        {
+            get
+            {
+                int numSelected = _shapefile.NumSelected;
+                if (numSelected == 0)
+                {
+                    return new List<int>();
+                }
+
+                var list = new List<int> {Capacity = numSelected};
+                for (int i = 0; i < _shapefile.NumShapes; i++)
+                {
+                    if (_shapefile.ShapeSelected[i])
+                    {
+                        list.Add(i);
+                    }
+                }
+                return list;
+            }
         }
 
         public bool FixUpShapes(out IFeatureSet result)

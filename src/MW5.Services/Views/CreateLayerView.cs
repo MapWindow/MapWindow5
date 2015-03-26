@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
-using MW5.Mvp;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI;
@@ -19,7 +18,7 @@ namespace MW5.Services.Views
 {
     public partial class CreateLayerView : MapWindowForm, ICreateLayerView
     {
-        public CreateLayerView() { }
+        //public CreateLayerView() { }
 
         public CreateLayerView(IAppContext context) : base(context)
         {

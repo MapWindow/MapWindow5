@@ -40,7 +40,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         static int _tabIndex = 0;
 
-        private readonly IAppContext _context;
         private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
         private readonly SymbologyMetadata _metadata;
@@ -52,7 +51,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
         /// </summary>
-        public LayerStyleForm(IAppContext context, ILayer layer)
+        public LayerStyleForm(IAppContext context, ILayer layer):
+            base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layer == null) throw new ArgumentNullException("layer");
@@ -61,7 +61,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             Config.ForceHideLabels = true;
 
-            _context = context;
             _layer = layer;
 
             _metadata = SymbologyPlugin.Metadata(_layer.Handle);

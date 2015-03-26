@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Plugins.TableEditor.Editor;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -15,8 +16,10 @@ namespace MW5.Plugins.TableEditor
         private readonly IAppContext _context;
         private readonly TableEditorPlugin _plugin;
         private readonly IMessageService _messageService;
+        private readonly TableEditorPresenter _presenter;
 
-        public ProjectListener(IAppContext context, TableEditorPlugin plugin, IMessageService messageService)
+        public ProjectListener(IAppContext context, TableEditorPlugin plugin, IMessageService messageService,
+            TableEditorPresenter presenter)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
@@ -24,19 +27,19 @@ namespace MW5.Plugins.TableEditor
             _context = context;
             _plugin = plugin;
             _messageService = messageService;
+            _presenter = presenter;
 
             _plugin.BeforeRemoveLayer += BeforeRemoveLayer;
         }
 
         private void BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)
         {
-            var form = _plugin.Form;
-            if (form == null || form.Layer.Handle != e.LayerHandle)
+            if (!_presenter.HasLayer(e.LayerHandle))
             {
                 return;
             }
 
-            if (form.HasChanges)
+            if (_presenter.HasChanges)
             {
                 var result = _messageService.AskWithCancel("Do you want to save changes in attribute table of the layer?");
                 if (result == DialogResult.Cancel)
@@ -46,7 +49,7 @@ namespace MW5.Plugins.TableEditor
 
                 if (result == DialogResult.Yes)
                 {
-                    form.SaveChanges();
+                    _presenter.RunCommand(TableEditorCommand.SaveChanges);
                 }
             }
         }

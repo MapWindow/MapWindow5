@@ -47,7 +47,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private const int CMN_COUNT = 3;
         private const int CMN_WIDTH = 4;
 
-        private readonly IAppContext _context;
         private readonly ILayer _layer;
         private readonly IFeatureSet _shapefile;
         private readonly int _layerHandle;
@@ -60,6 +59,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// Creates a new instance of the CategoriesForm class
         /// </summary>
         public CategoriesForm(IAppContext context, ILayer layer)
+            : base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
 
@@ -68,7 +68,6 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 throw new ArgumentNullException("layer");
             }
             _shapefile = layer.FeatureSet;
-            _context = context;
             _layer = layer;
             _layerHandle = layer.Handle;
 

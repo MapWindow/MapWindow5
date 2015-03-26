@@ -9,6 +9,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Helpers;
 
 namespace MW5.Plugins.TableEditor
@@ -17,13 +18,17 @@ namespace MW5.Plugins.TableEditor
     {
         private readonly IAppContext _context;
         private readonly TableEditorPlugin _plugin;
+        private readonly TableEditorPresenter _presenter;
 
-        public MapListener(IAppContext context, TableEditorPlugin plugin)
+        public MapListener(IAppContext context, TableEditorPlugin plugin, TableEditorPresenter presenter)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
+            if (presenter == null) throw new ArgumentNullException("presenter");
+
             _context = context;
             _plugin = plugin;
+            _presenter = presenter;
 
             _plugin.LayerSelected += LayerSelected;
             _plugin.SelectionChanged += SelectionChanged;
@@ -48,35 +53,37 @@ namespace MW5.Plugins.TableEditor
 
         private void SelectionChanged(IMuteMap map, SelectionChangedEventArgs e)
         {
-            if (_plugin.Form != null)
+            if (_presenter.ViewVisible)
             {
-                _plugin.Form.SetSelected();
+                _presenter.UpdateSelection();
             }
         }
 
         private void LayerSelected(IMuteLegend legend, LayerEventArgs e)
         {
-            var form = _plugin.Form;
-            if (form == null)
+            if (!_presenter.ViewVisible)
             {
                 return;
             }
 
             if (e.LayerHandle != -1)
             {
-                form.CheckAndSaveChanges();
+                _presenter.CheckAndSaveChanges();
             }
 
             if (_context.Layers.GetFeatureSet(e.LayerHandle) == null)
             {
-                form.Close();
+                _presenter.RunCommand(TableEditorCommand.Close);
                 return;
-                
             }
 
-            _context.ClearAllSelection();
-
-            form.Layer = _context.Map.GetLayer(e.LayerHandle);
+            //_context.ClearAllSelection();
+            
+            var layer = _context.Map.GetLayer(e.LayerHandle);
+            if (layer.IsVector)
+            {
+                _presenter.Run(layer, false);    
+            }
         }
     }
 }

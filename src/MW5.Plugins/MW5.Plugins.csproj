@@ -102,7 +102,8 @@
     <Compile Include="Interfaces\IProject.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
-    <Compile Include="Mvp\CommandPresenter.cs" />
+    <Compile Include="Mvp\CommandDispatcher.cs" />
+    <Compile Include="Mvp\ComplexPresenter.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
     <Compile Include="Concrete\MenuIcon.cs" />
@@ -113,8 +114,10 @@
     <Compile Include="Interfaces\IDropDownMenuItem.cs" />
     <Compile Include="Interfaces\IToolbar.cs" />
     <Compile Include="Interfaces\IToolbarCollection.cs" />
+    <Compile Include="Mvp\IComplexView.cs" />
     <Compile Include="Mvp\IPresenter.cs" />
     <Compile Include="Mvp\IView.cs" />
+    <Compile Include="Mvp\IMenuProvider.cs" />
     <Compile Include="PluginBroadcaster.cs" />
     <Compile Include="PluginEnumerations.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
