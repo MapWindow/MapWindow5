@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Plugins.Mvp;
 
-namespace MW5.Plugins.TableEditor.Editor
+namespace MW5.Plugins.TableEditor.Views.Abstract
 {
     public interface ITableEditorView: IComplexView
     {

@@ -25,8 +25,6 @@ namespace MW5.Views
             None = 3,
         }
 
-        public event Action OkClicked;
-
         public SetProjectionView(IAppContext context) : base(context)
         {
             InitializeComponent();
@@ -41,7 +39,7 @@ namespace MW5.Views
             optEmpty.CheckChanged += (s, e) => UpdateView();
             optWellKnown.CheckChanged += (s, e) => UpdateView();
 
-            btnOk.Click += (s, e) => Invoke(OkClicked);
+            btnOk.Click += (s, e) => FireOkClicked();
         }
 
         public string CustomProjection

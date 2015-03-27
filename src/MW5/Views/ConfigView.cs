@@ -26,7 +26,6 @@ namespace MW5.Views
         private List<IConfigPage> _pages = new List<IConfigPage>();
         private static string _lastPageName = string.Empty;
 
-        public event Action OkClicked;
         public event Action OpenFolderClicked;
         public event Action SaveClicked;
 
@@ -75,7 +74,7 @@ namespace MW5.Views
             _treeViewAdv1.SelectedNode = selectedNode ?? _treeViewAdv1.Nodes[0];
             _initialized = true;
 
-            btnOk.Click += (s, e) => Invoke(OkClicked);
+            btnOk.Click += (s, e) => FireOkClicked();
             btnOpenFolder.Click += (s, e) => Invoke(OpenFolderClicked);
             btnSave.Click += (s, e) => Invoke(SaveClicked);
         }

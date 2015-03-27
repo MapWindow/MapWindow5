@@ -8,6 +8,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Editor;
+using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor
 {

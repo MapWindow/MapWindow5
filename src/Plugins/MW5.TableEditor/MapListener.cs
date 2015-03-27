@@ -11,6 +11,7 @@ using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Helpers;
+using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor
 {

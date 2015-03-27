@@ -8,7 +8,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class FeatureFieldList: IList<IFeatureField>
+    public class FeatureFieldList: IEnumerable<IFeatureField>
     {
         private readonly Table _table;
 
@@ -26,11 +26,6 @@ namespace MW5.Api.Concrete
         public int Count
         {
             get { return _table.NumFields; }
-        }
-
-        public bool IsReadOnly
-        {
-            get { return _table.EditingTable; }
         }
 
         public IFeatureField this[int index]
@@ -57,7 +52,10 @@ namespace MW5.Api.Concrete
 
         public IEnumerator<IFeatureField> GetEnumerator()
         {
-            return ListHelper.GetEnumerator(this);
+            for (int i = 0; i < _table.NumFields; i++)
+            {
+                yield return this[i];
+            }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -78,23 +76,9 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool Contains(IFeatureField item)
+        public bool Remove(int index)
         {
-            return IndexOf(item) != -1;
-        }
-
-        public void CopyTo(IFeatureField[] array, int arrayIndex)
-        {
-            ArrayHelper.CheckCopyTo(array, arrayIndex, _table.NumFields);
-            for (int i = 0; i < _table.NumFields; i++)
-            {
-                array[arrayIndex + i] = new FeatureField(_table.Field[i]);
-            }
-        }
-
-        public bool Remove(IFeatureField item)
-        {
-            return _table.EditDeleteField(IndexOf(item));
+            return _table.EditDeleteField(index);
         }
 
         public int IndexOf(IFeatureField item)
@@ -114,11 +98,6 @@ namespace MW5.Api.Concrete
         public void Insert(int index, IFeatureField item)
         {
             _table.EditInsertField(item.GetInternal(), index);
-        }
-
-        public void RemoveAt(int index)
-        {
-            _table.EditDeleteField(index);
         }
 
         #endregion
@@ -150,5 +129,6 @@ namespace MW5.Api.Concrete
         //int get_FieldIndexByName(string FieldName);
 
         #endregion
+
     }
 }

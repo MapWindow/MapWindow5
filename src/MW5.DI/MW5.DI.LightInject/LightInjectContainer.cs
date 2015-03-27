@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using LightInject;
-using MW5.Mvp;
 using MW5.Plugins.Mvp;
 
 namespace MW5.DI.LightInject

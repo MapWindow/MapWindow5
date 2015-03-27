@@ -114,7 +114,16 @@
     </Compile>
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Editor\TableEditorCommand.cs" />
-    <Compile Include="Editor\ITableEditorView.cs" />
+    <Compile Include="Views\DeleteFieldsPresenter.cs" />
+    <Compile Include="Views\DeleteFieldsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DeleteFieldsView.Designer.cs">
+      <DependentUpon>DeleteFieldsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Abstract\IDeleteFieldsView.cs" />
+    <Compile Include="Views\Abstract\IRenameFieldView.cs" />
+    <Compile Include="Views\Abstract\ITableEditorView.cs" />
     <Compile Include="BO\AppContextWrapper.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Editor\RowInfo.cs" />
@@ -122,10 +131,17 @@
     <Compile Include="Editor\TableEditorGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Editor\TableEditorView.cs">
+    <Compile Include="Views\RenameFieldPresenter.cs" />
+    <Compile Include="Views\RenameFieldView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Editor\TableEditorView.Designer.cs">
+    <Compile Include="Views\RenameFieldView.Designer.cs">
+      <DependentUpon>RenameFieldView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableEditorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TableEditorView.Designer.cs">
       <DependentUpon>TableEditorView.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\VirtualGrid.cs">
@@ -225,7 +241,7 @@
       <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Legacy\Main.cs" />
-    <Compile Include="Editor\TableEditorPresenter.cs" />
+    <Compile Include="Views\TableEditorPresenter.cs" />
     <Compile Include="ProjectListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -248,7 +264,7 @@
     <Compile Include="Views\AddFieldView.Designer.cs">
       <DependentUpon>AddFieldView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IAddFieldView.cs" />
+    <Compile Include="Views\Abstract\IAddFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\DeleteFieldForm.resx">
@@ -292,7 +308,13 @@
       <DependentUpon>TableEditorForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\TableEditorView.resx">
+    <EmbeddedResource Include="Views\DeleteFieldsView.resx">
+      <DependentUpon>DeleteFieldsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RenameFieldView.resx">
+      <DependentUpon>RenameFieldView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TableEditorView.resx">
       <DependentUpon>TableEditorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextCalculatorForm.resx">

@@ -31,15 +31,16 @@ namespace MW5.Plugins.Mvp
     /// </summary>
     /// <typeparam name="TView">The type of the view.</typeparam>
     /// <typeparam name="TArg">The type of the argument.</typeparam>
-    public abstract class BasePresener<TView, TArg> : IPresenter<TArg>
+    public abstract class BasePresenter<TView, TArg> : IPresenter<TArg>
         where TView : IView
     {
         protected bool _success;
 
         protected TView View { get; private set; }
 
-        protected BasePresener( TView view)
+        protected BasePresenter( TView view)
         {
+            if (view == null) throw new ArgumentNullException("view");
             View = view;
         }
 

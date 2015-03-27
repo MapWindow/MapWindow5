@@ -18,6 +18,8 @@ namespace MW5.UI
     {
         protected readonly IAppContext _context;
 
+        public event Action OkClicked;
+
         protected MapWindowView()
         {
             InitializeComponent();
@@ -51,6 +53,11 @@ namespace MW5.UI
             {
                 _context.View.ShowDialog(this, dialog);
             }
+        }
+
+        protected void FireOkClicked()
+        {
+            Invoke(OkClicked);
         }
     }
 }

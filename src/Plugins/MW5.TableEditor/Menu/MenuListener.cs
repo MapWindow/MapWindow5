@@ -6,6 +6,7 @@ using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Helpers;
+using MW5.Plugins.TableEditor.Views;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.TableEditor.Menu

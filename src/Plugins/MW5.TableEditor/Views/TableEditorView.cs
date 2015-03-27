@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.TableEditor.Editor;
+using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.UI;
 
-namespace MW5.Plugins.TableEditor.Editor
+namespace MW5.Plugins.TableEditor.Views
 {
     public partial class TableEditorView : MapWindowView, ITableEditorView
     {
@@ -60,14 +61,17 @@ namespace MW5.Plugins.TableEditor.Editor
 
             _grid.Invalidate();
 
-            btnStartEdit.Enabled = !_grid.TableSource.EditingTable;
+            bool editing = _grid.TableSource.EditingTable;
+            btnStartEdit.Enabled = !editing;
+            mnuAddField.Enabled = editing;
+            mnuRemoveField.Enabled = editing;
+            mnuRenameField.Enabled = editing;
 
             UpdateSelectedCount(_grid.SelectedCount);
         }
 
         private void UpdateSelectedCount(int numSelected)
         {
-            // TODO: optimize, for not calling count each time
             string msg = string.Format("{0} of {1} selected", numSelected, _grid.TableSource.NumShapes);
             _lblAmountSelected.Text = msg;
         }

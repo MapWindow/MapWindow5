@@ -9,7 +9,6 @@ namespace MW5.Abstract
     {
         List<IConfigPage> Pages { get; }
         void Initialize();
-        event Action OkClicked;
         event Action OpenFolderClicked;
         event Action SaveClicked;
     }

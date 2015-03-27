@@ -36,15 +36,13 @@ namespace MW5.Services.Views
             }
             _layerTypeComboBox.SetValue(GeometryType.Point);
 
-            _okButton.Click += (s, e) => Invoke(OkClicked);
+            _okButton.Click += (s, e) => FireOkClicked();
         }
 
         public void UpdateView()
         {
             
         }
-
-        public event Action OkClicked;
 
         public string LayerName
         {

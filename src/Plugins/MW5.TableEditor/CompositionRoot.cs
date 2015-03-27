@@ -8,6 +8,7 @@ using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Views;
+using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -23,8 +24,10 @@ namespace MW5.Plugins.TableEditor
                     .RegisterSingleton<RowManager, RowManager>()
                     .RegisterSingleton<AppContextWrapper, AppContextWrapper>()
                     .RegisterService<ITableEditorView, TableEditorView>()
-                    .RegisterService<IAddFieldView, AddFieldView>();
-
+                    .RegisterService<IDeleteFieldsView, DeleteFieldsView>()
+                    .RegisterService<IAddFieldView, AddFieldView>()
+                    .RegisterService<IRenameFieldView, RenameFieldView>();
+                
                 composed = true;
             }
         }

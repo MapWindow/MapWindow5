@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.UI;
 using MW5.UI.Helpers;
 
@@ -16,8 +17,6 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public partial class AddFieldView : MapWindowView, IAddFieldView
     {
-        public event Action OkClicked;
-
         public AddFieldView(IAppContext context):
             base(context)
         {
@@ -26,7 +25,7 @@ namespace MW5.Plugins.TableEditor.Views
             cboFieldType.AddItemsFromEnum<AttributeType>();
             cboFieldType.SetValue(AttributeType.String);
 
-            btnOK.Click += (s, e) => Invoke(OkClicked);
+            btnOK.Click += (s, e) => FireOkClicked();
         }
 
         public string FieldName

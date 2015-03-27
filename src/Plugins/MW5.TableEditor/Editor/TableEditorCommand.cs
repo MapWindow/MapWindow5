@@ -10,5 +10,8 @@
         AddField = 5, 
         RemoveField = 6,
         RenameField = 7,
+        SelectAll = 8,
+        ClearSelection = 9,
+        InvertSelection = 10,
     }
 }

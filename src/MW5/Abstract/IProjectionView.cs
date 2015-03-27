@@ -13,6 +13,5 @@ namespace MW5.Abstract
         SetProjectionView.ProjectionType Projection { get; }
         string CustomProjection { get; }
         int DefaultProjectionIndex { get; }
-        event Action OkClicked;
     }
 }

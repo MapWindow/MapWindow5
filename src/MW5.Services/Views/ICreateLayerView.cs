@@ -10,7 +10,6 @@ namespace MW5.Services.Views
 {
     public interface ICreateLayerView : IView
     {
-        event Action OkClicked;
         string LayerName { get; set; }
         GeometryType GeometryType { get; set; }
         ZValueType ZValueType { get; set; }

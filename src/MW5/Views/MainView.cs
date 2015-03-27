@@ -23,7 +23,7 @@ namespace MW5.Views
     /// <summary>
     /// Represents the main view of the application with the map, docking windows, toolbars and menu.
     /// </summary>
-    public partial class MainView : MapWindowForm, IMainView
+    public partial class MainView : MapWindowView, IMainView
     {
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
@@ -92,7 +92,7 @@ namespace MW5.Views
 
         #region IView implementation
 
-        public new void ShowView(bool dialog)
+        public new void ShowView(bool modal)
         {
             _menuUpdater = new MenuUpdater(_context, _mapControl1, PluginIdentity.Default);
 

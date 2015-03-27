@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
-using MW5.Mvp;
 using MW5.Plugins.Mvp;
 
 namespace MW5.DI.Unity

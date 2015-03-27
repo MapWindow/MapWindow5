@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public class AddFieldPresenter: BasePresener<IAddFieldView, IFeatureSet>
+    public class AddFieldPresenter: BasePresenter<IAddFieldView, IFeatureSet>
     {
         private readonly IAddFieldView _view;
         private IFeatureSet _featureSet;
