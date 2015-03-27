@@ -16,10 +16,8 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.Services.Views
 {
-    public partial class CreateLayerView : MapWindowForm, ICreateLayerView
+    public partial class CreateLayerView : MapWindowView, ICreateLayerView
     {
-        //public CreateLayerView() { }
-
         public CreateLayerView(IAppContext context) : base(context)
         {
             InitializeComponent();
@@ -92,11 +90,5 @@ namespace MW5.Services.Views
         }
     }
 
-    public interface ICreateLayerView: IView
-    {
-        event Action OkClicked;
-        string LayerName { get; set; }
-        GeometryType GeometryType { get; set; }
-        ZValueType ZValueType { get; set; }
-    }
+
 }

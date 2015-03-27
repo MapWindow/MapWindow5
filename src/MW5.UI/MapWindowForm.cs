@@ -21,29 +21,8 @@ namespace MW5.UI
 
         public MapWindowForm(IAppContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-            _context = context;
-
             Icon = Resources.MapWindow;
-        }
-
-        protected void Invoke(Action action)
-        {
-            if (action != null)
-            {
-                action();
-            }
-        }
-
-        public virtual void ShowView(bool dialog = true)
-        {
-            if (!Visible)
-            {
-                _context.View.ShowDialog(this, dialog);
-            }
+            _context = context;
         }
     }
 }

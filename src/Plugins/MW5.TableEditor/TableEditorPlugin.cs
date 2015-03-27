@@ -9,7 +9,9 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Forms;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Menu;
+using MW5.UI.Helpers;
 
 
 namespace MW5.Plugins.TableEditor
@@ -18,9 +20,15 @@ namespace MW5.Plugins.TableEditor
     public class TableEditorPlugin: BasePlugin
     {
         private IAppContext _context;
-        private MenuService _menuService;
+        private MenuListener _menuListener;
         private MapListener _mapListener;
-        
+        private MenuGenerator _menuGenerator;
+
+        static TableEditorPlugin()
+        {
+            EnumHelper.RegisterConverter(new AttributeTypeConverter());
+        }
+
         public override void Initialize(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -28,7 +36,8 @@ namespace MW5.Plugins.TableEditor
 
             CompositionRoot.Compose(context.Container);
 
-            _menuService = _context.Container.GetSingleton<MenuService>();
+            _menuGenerator = _context.Container.GetInstance<MenuGenerator>();
+            _menuListener = _context.Container.GetSingleton<MenuListener>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
         }
 

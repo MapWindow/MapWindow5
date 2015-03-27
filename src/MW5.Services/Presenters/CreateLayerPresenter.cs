@@ -18,7 +18,6 @@ namespace MW5.Services.Presenters
         private readonly IMessageService _messageService;
         private readonly IFileDialogService _fileDialogService;
         private string _filename = string.Empty;
-        private bool _success = false;
 
         public CreateLayerPresenter(ICreateLayerView view, IMessageService messageService, IFileDialogService fileDialogService) : base(view)
         {
@@ -82,11 +81,6 @@ namespace MW5.Services.Presenters
         public string LayerName
         {
             get { return _view.LayerName; }
-        }
-
-        public bool Success
-        {
-            get { return _success; }
         }
     }
 }

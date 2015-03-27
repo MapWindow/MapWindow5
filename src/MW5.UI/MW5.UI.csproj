@@ -84,6 +84,12 @@
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="MapWindowView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapWindowView.Designer.cs">
+      <DependentUpon>MapWindowView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu\MenuFactory.cs" />
     <Compile Include="Menu\MenuIndex.cs" />
     <Compile Include="MapWindowForm.cs">
@@ -122,6 +128,9 @@
   <ItemGroup>
     <EmbeddedResource Include="MapWindowForm.resx">
       <DependentUpon>MapWindowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapWindowView.resx">
+      <DependentUpon>MapWindowView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

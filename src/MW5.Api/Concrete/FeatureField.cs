@@ -8,6 +8,11 @@ namespace MW5.Api.Concrete
     {
         private readonly Field _field;
 
+        public FeatureField()
+        {
+            _field = new Field();
+        }
+
         internal FeatureField(Field field)
         {
             if (field == null)

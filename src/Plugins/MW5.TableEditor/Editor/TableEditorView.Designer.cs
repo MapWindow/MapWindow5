@@ -28,25 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableEditorView));
-            this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnJoin = new System.Windows.Forms.Button();
-            this.btnUpdateMeasurements = new System.Windows.Forms.Button();
-            this.btnFieldCalculator = new System.Windows.Forms.Button();
-            this.btnImportFieldsFromDBF = new System.Windows.Forms.Button();
-            this.btnQuery = new System.Windows.Forms.Button();
-            this.btnZoomToSelected = new System.Windows.Forms.Button();
             this._lblAmountSelected = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnApply = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.removeFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAddField = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuRemoveField = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.renameFieldToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuRenameField = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuShowSelected = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuZoomToSelected = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,41 +63,24 @@
             this.mnuCopyShapeIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuImportExtData = new System.Windows.Forms.ToolStripMenuItem();
             this.updateMeasurementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnShowSelected = new System.Windows.Forms.CheckBox();
-            ((System.ComponentModel.ISupportInitialize)(this._grid)).BeginInit();
+            this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnStartEdit = new System.Windows.Forms.Button();
+            this.btnShowSelected = new System.Windows.Forms.Button();
+            this.btnJoin = new System.Windows.Forms.Button();
+            this.btnUpdateMeasurements = new System.Windows.Forms.Button();
+            this.btnFieldCalculator = new System.Windows.Forms.Button();
+            this.btnImportFieldsFromDBF = new System.Windows.Forms.Button();
+            this.btnQuery = new System.Windows.Forms.Button();
+            this.btnZoomToSelected = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._grid)).BeginInit();
             this.SuspendLayout();
-            // 
-            // _grid
-            // 
-            this._grid.AllowUserToAddRows = false;
-            this._grid.AllowUserToDeleteRows = false;
-            this._grid.AllowUserToResizeRows = false;
-            this._grid.BackgroundColor = System.Drawing.Color.LightGray;
-            this._grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this._grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this._grid.DefaultCellStyle = dataGridViewCellStyle1;
-            this._grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._grid.Location = new System.Drawing.Point(0, 24);
-            this._grid.Name = "_grid";
-            this._grid.RowManager = null;
-            this._grid.SelectionColor = System.Drawing.Color.LightBlue;
-            this._grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this._grid.Size = new System.Drawing.Size(725, 371);
-            this._grid.TabIndex = 0;
-            this._grid.TableSource = null;
-            this._grid.VirtualMode = true;
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnStartEdit);
             this.panel1.Controls.Add(this.btnShowSelected);
             this.panel1.Controls.Add(this.btnJoin);
             this.panel1.Controls.Add(this.btnUpdateMeasurements);
@@ -119,64 +96,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 59);
             this.panel1.TabIndex = 14;
-            // 
-            // btnJoin
-            // 
-            this.btnJoin.Image = ((System.Drawing.Image)(resources.GetObject("btnJoin.Image")));
-            this.btnJoin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnJoin.Location = new System.Drawing.Point(235, 6);
-            this.btnJoin.Name = "btnJoin";
-            this.btnJoin.Size = new System.Drawing.Size(32, 32);
-            this.btnJoin.TabIndex = 20;
-            // 
-            // btnUpdateMeasurements
-            // 
-            this.btnUpdateMeasurements.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnUpdateMeasurements.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMeasurements.Image")));
-            this.btnUpdateMeasurements.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUpdateMeasurements.Location = new System.Drawing.Point(197, 6);
-            this.btnUpdateMeasurements.Name = "btnUpdateMeasurements";
-            this.btnUpdateMeasurements.Size = new System.Drawing.Size(32, 32);
-            this.btnUpdateMeasurements.TabIndex = 18;
-            this.btnUpdateMeasurements.Tag = "";
-            // 
-            // btnFieldCalculator
-            // 
-            this.btnFieldCalculator.Image = ((System.Drawing.Image)(resources.GetObject("btnFieldCalculator.Image")));
-            this.btnFieldCalculator.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFieldCalculator.Location = new System.Drawing.Point(82, 6);
-            this.btnFieldCalculator.Name = "btnFieldCalculator";
-            this.btnFieldCalculator.Size = new System.Drawing.Size(32, 32);
-            this.btnFieldCalculator.TabIndex = 17;
-            this.btnFieldCalculator.Tag = "";
-            // 
-            // btnImportFieldsFromDBF
-            // 
-            this.btnImportFieldsFromDBF.Image = ((System.Drawing.Image)(resources.GetObject("btnImportFieldsFromDBF.Image")));
-            this.btnImportFieldsFromDBF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnImportFieldsFromDBF.Location = new System.Drawing.Point(159, 6);
-            this.btnImportFieldsFromDBF.Name = "btnImportFieldsFromDBF";
-            this.btnImportFieldsFromDBF.Size = new System.Drawing.Size(32, 32);
-            this.btnImportFieldsFromDBF.TabIndex = 16;
-            // 
-            // btnQuery
-            // 
-            this.btnQuery.Image = global::MW5.Plugins.TableEditor.Properties.Resources.filter;
-            this.btnQuery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnQuery.Location = new System.Drawing.Point(120, 6);
-            this.btnQuery.Name = "btnQuery";
-            this.btnQuery.Size = new System.Drawing.Size(32, 32);
-            this.btnQuery.TabIndex = 15;
-            // 
-            // btnZoomToSelected
-            // 
-            this.btnZoomToSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomToSelected.Image")));
-            this.btnZoomToSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnZoomToSelected.Location = new System.Drawing.Point(6, 6);
-            this.btnZoomToSelected.Name = "btnZoomToSelected";
-            this.btnZoomToSelected.Size = new System.Drawing.Size(32, 32);
-            this.btnZoomToSelected.TabIndex = 13;
-            this.btnZoomToSelected.Tag = "";
             // 
             // _lblAmountSelected
             // 
@@ -226,36 +145,36 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addFieldToolStripMenuItem,
-            this.removeFieldToolStripMenuItem,
+            this.mnuAddField,
+            this.mnuRemoveField,
             this.toolStripMenuItem1,
-            this.renameFieldToolStripMenuItem});
+            this.mnuRenameField});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
             // 
-            // addFieldToolStripMenuItem
+            // mnuAddField
             // 
-            this.addFieldToolStripMenuItem.Name = "addFieldToolStripMenuItem";
-            this.addFieldToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.addFieldToolStripMenuItem.Text = "Add Field";
+            this.mnuAddField.Name = "mnuAddField";
+            this.mnuAddField.Size = new System.Drawing.Size(145, 22);
+            this.mnuAddField.Text = "Add Field";
             // 
-            // removeFieldToolStripMenuItem
+            // mnuRemoveField
             // 
-            this.removeFieldToolStripMenuItem.Name = "removeFieldToolStripMenuItem";
-            this.removeFieldToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.removeFieldToolStripMenuItem.Text = "Remove Field";
+            this.mnuRemoveField.Name = "mnuRemoveField";
+            this.mnuRemoveField.Size = new System.Drawing.Size(145, 22);
+            this.mnuRemoveField.Text = "Remove Field";
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(142, 6);
             // 
-            // renameFieldToolStripMenuItem
+            // mnuRenameField
             // 
-            this.renameFieldToolStripMenuItem.Name = "renameFieldToolStripMenuItem";
-            this.renameFieldToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
-            this.renameFieldToolStripMenuItem.Text = "Rename Field";
+            this.mnuRenameField.Name = "mnuRenameField";
+            this.mnuRenameField.Size = new System.Drawing.Size(145, 22);
+            this.mnuRenameField.Text = "Rename Field";
             // 
             // viewToolStripMenuItem
             // 
@@ -408,15 +327,116 @@
             this.updateMeasurementsToolStripMenuItem.Size = new System.Drawing.Size(272, 22);
             this.updateMeasurementsToolStripMenuItem.Text = "Update Measurements";
             // 
+            // _grid
+            // 
+            this._grid.AllowUserToAddRows = false;
+            this._grid.AllowUserToDeleteRows = false;
+            this._grid.AllowUserToResizeRows = false;
+            this._grid.BackgroundColor = System.Drawing.Color.LightGray;
+            this._grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this._grid.DefaultCellStyle = dataGridViewCellStyle1;
+            this._grid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._grid.Location = new System.Drawing.Point(0, 24);
+            this._grid.Name = "_grid";
+            this._grid.RowManager = null;
+            this._grid.SelectionColor = System.Drawing.Color.LightBlue;
+            this._grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this._grid.Size = new System.Drawing.Size(725, 371);
+            this._grid.TabIndex = 0;
+            this._grid.TableSource = null;
+            this._grid.VirtualMode = true;
+            // 
+            // btnStartEdit
+            // 
+            this.btnStartEdit.Image = global::MW5.Plugins.TableEditor.Properties.Resources.icon_layer_edit;
+            this.btnStartEdit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnStartEdit.Location = new System.Drawing.Point(273, 6);
+            this.btnStartEdit.Name = "btnStartEdit";
+            this.btnStartEdit.Size = new System.Drawing.Size(32, 32);
+            this.btnStartEdit.TabIndex = 23;
+            this.toolTip1.SetToolTip(this.btnStartEdit, "Edit");
+            // 
             // btnShowSelected
             // 
-            this.btnShowSelected.Appearance = System.Windows.Forms.Appearance.Button;
+            this.btnShowSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnShowSelected.Image")));
+            this.btnShowSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.btnShowSelected.Location = new System.Drawing.Point(44, 6);
             this.btnShowSelected.Name = "btnShowSelected";
             this.btnShowSelected.Size = new System.Drawing.Size(32, 32);
-            this.btnShowSelected.TabIndex = 21;
-            this.btnShowSelected.Text = "S";
-            this.btnShowSelected.UseVisualStyleBackColor = true;
+            this.btnShowSelected.TabIndex = 22;
+            this.toolTip1.SetToolTip(this.btnShowSelected, "Filter selected");
+            // 
+            // btnJoin
+            // 
+            this.btnJoin.Image = ((System.Drawing.Image)(resources.GetObject("btnJoin.Image")));
+            this.btnJoin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnJoin.Location = new System.Drawing.Point(235, 6);
+            this.btnJoin.Name = "btnJoin";
+            this.btnJoin.Size = new System.Drawing.Size(32, 32);
+            this.btnJoin.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.btnJoin, "Join");
+            // 
+            // btnUpdateMeasurements
+            // 
+            this.btnUpdateMeasurements.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnUpdateMeasurements.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMeasurements.Image")));
+            this.btnUpdateMeasurements.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnUpdateMeasurements.Location = new System.Drawing.Point(197, 6);
+            this.btnUpdateMeasurements.Name = "btnUpdateMeasurements";
+            this.btnUpdateMeasurements.Size = new System.Drawing.Size(32, 32);
+            this.btnUpdateMeasurements.TabIndex = 18;
+            this.btnUpdateMeasurements.Tag = "";
+            this.toolTip1.SetToolTip(this.btnUpdateMeasurements, "Update measurements");
+            // 
+            // btnFieldCalculator
+            // 
+            this.btnFieldCalculator.Image = ((System.Drawing.Image)(resources.GetObject("btnFieldCalculator.Image")));
+            this.btnFieldCalculator.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnFieldCalculator.Location = new System.Drawing.Point(82, 6);
+            this.btnFieldCalculator.Name = "btnFieldCalculator";
+            this.btnFieldCalculator.Size = new System.Drawing.Size(32, 32);
+            this.btnFieldCalculator.TabIndex = 17;
+            this.btnFieldCalculator.Tag = "";
+            this.toolTip1.SetToolTip(this.btnFieldCalculator, "Calculate");
+            // 
+            // btnImportFieldsFromDBF
+            // 
+            this.btnImportFieldsFromDBF.Image = ((System.Drawing.Image)(resources.GetObject("btnImportFieldsFromDBF.Image")));
+            this.btnImportFieldsFromDBF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnImportFieldsFromDBF.Location = new System.Drawing.Point(159, 6);
+            this.btnImportFieldsFromDBF.Name = "btnImportFieldsFromDBF";
+            this.btnImportFieldsFromDBF.Size = new System.Drawing.Size(32, 32);
+            this.btnImportFieldsFromDBF.TabIndex = 16;
+            this.toolTip1.SetToolTip(this.btnImportFieldsFromDBF, "Import fields from DBF");
+            // 
+            // btnQuery
+            // 
+            this.btnQuery.Image = global::MW5.Plugins.TableEditor.Properties.Resources.filter;
+            this.btnQuery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnQuery.Location = new System.Drawing.Point(120, 6);
+            this.btnQuery.Name = "btnQuery";
+            this.btnQuery.Size = new System.Drawing.Size(32, 32);
+            this.btnQuery.TabIndex = 15;
+            this.toolTip1.SetToolTip(this.btnQuery, "Query");
+            // 
+            // btnZoomToSelected
+            // 
+            this.btnZoomToSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomToSelected.Image")));
+            this.btnZoomToSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnZoomToSelected.Location = new System.Drawing.Point(6, 6);
+            this.btnZoomToSelected.Name = "btnZoomToSelected";
+            this.btnZoomToSelected.Size = new System.Drawing.Size(32, 32);
+            this.btnZoomToSelected.TabIndex = 13;
+            this.btnZoomToSelected.Tag = "";
+            this.toolTip1.SetToolTip(this.btnZoomToSelected, "Zoom to selected");
             // 
             // TableEditorView
             // 
@@ -430,10 +450,10 @@
             this.Name = "TableEditorView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Attribute Table Editor";
-            ((System.ComponentModel.ISupportInitialize)(this._grid)).EndInit();
             this.panel1.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -454,10 +474,10 @@
         private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addFieldToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem removeFieldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuAddField;
+        private System.Windows.Forms.ToolStripMenuItem mnuRemoveField;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem renameFieldToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuRenameField;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuShowSelected;
         private System.Windows.Forms.ToolStripMenuItem mnuZoomToSelected;
@@ -480,7 +500,9 @@
         private System.Windows.Forms.ToolStripMenuItem mnuCopyShapeIDs;
         private System.Windows.Forms.ToolStripMenuItem mnuImportExtData;
         private System.Windows.Forms.ToolStripMenuItem updateMeasurementsToolStripMenuItem;
-        private System.Windows.Forms.CheckBox btnShowSelected;
+        internal System.Windows.Forms.Button btnShowSelected;
+        private System.Windows.Forms.ToolTip toolTip1;
+        internal System.Windows.Forms.Button btnStartEdit;
 
     }
 }

@@ -7,10 +7,11 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    public class TableEditorPresenter : BasePresenter<ITableEditorView, TableEditorCommand, ILayer>
+    public class TableEditorPresenter : ComplexPresenter<ITableEditorView, TableEditorCommand, ILayer>
     {
         private readonly IAppContext _context;
         private readonly ITableEditorView _view;
@@ -83,16 +84,35 @@ namespace MW5.Plugins.TableEditor.Editor
             return true; 
         }
 
-        public override void Run(ILayer layer, bool dialog = true)
+        public override bool Run(ILayer layer, bool modal = true)
         {
             Layer = layer;
-            _view.ShowView(dialog);
+            _view.ShowView(modal);
+            return true;
         }
 
         public override void RunCommand(TableEditorCommand command)
         {
             switch (command)
             {
+                case TableEditorCommand.StartEdit:
+                    if (!_shapefile.Table.EditingTable)
+                    {
+                        _shapefile.Table.StartEditingTable();
+                    }
+                    _view.UpdateView();
+                    break;
+                case TableEditorCommand.AddField:
+                    var p = _context.Container.GetInstance<AddFieldPresenter>();
+                    if (p.Run(_layer.FeatureSet))
+                    {
+                        _view.SetDatasource(_shapefile);
+                    }
+                    break;
+                case TableEditorCommand.RemoveField:
+                    break;
+                case TableEditorCommand.RenameField:
+                    break;
                 case TableEditorCommand.Close:
                     Layer = null;
                     _view.Hide();
@@ -114,6 +134,7 @@ namespace MW5.Plugins.TableEditor.Editor
                 case TableEditorCommand.ZoomToSelected:
                     _context.Map.ZoomToSelected(_layer.Handle);
                     break;
+
             }
         }
 
@@ -124,12 +145,6 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void ViewSelectionChanged()
         {
-            //var indices = _view.SelectedIndices.ToArray();
-            //if (indices.Length > 0)
-            //{
-            //    _context.Layers.SelectedLayer.UpdateSelection(indices, SelectionOperation.New);
-               
-            //}
             _context.Map.Redraw();
             _context.View.Update();
         }

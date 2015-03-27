@@ -90,6 +90,7 @@
     <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core">
@@ -131,10 +132,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Helpers\AppContextHelper.cs" />
+    <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
+    <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
-    <Compile Include="Menu\MenuService.cs" />
+    <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="BO\ShapeData.cs" />
     <Compile Include="BO\ShapefileWrapper.cs" />
     <Compile Include="Forms\DeleteFieldForm.cs">
@@ -238,6 +241,14 @@
     <Compile Include="Utils\NummericHelper.cs" />
     <Compile Include="Utils\UnitsOfMeasurement.cs" />
     <Compile Include="Utils\XlsImport.cs" />
+    <Compile Include="Views\AddFieldPresenter.cs" />
+    <Compile Include="Views\AddFieldView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddFieldView.Designer.cs">
+      <DependentUpon>AddFieldView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IAddFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Forms\DeleteFieldForm.resx">
@@ -301,6 +312,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddFieldView.resx">
+      <DependentUpon>AddFieldView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="img\filter.png" />
@@ -339,6 +353,12 @@
       <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
       <Name>MathParser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\label_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

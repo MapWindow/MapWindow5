@@ -114,6 +114,7 @@
     <Compile Include="Views\CreateLayerView.Designer.cs">
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ICreateLayerView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">

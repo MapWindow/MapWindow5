@@ -18,7 +18,7 @@ using Action = System.Action;
 
 namespace MW5.Views
 {
-    public partial class ConfigView : MapWindowForm, IConfigView
+    public partial class ConfigView : MapWindowView, IConfigView
     {
         private bool _initialized = false;
         private readonly IPluginManager _manager;
@@ -29,11 +29,6 @@ namespace MW5.Views
         public event Action OkClicked;
         public event Action OpenFolderClicked;
         public event Action SaveClicked;
-
-        public ConfigView()
-        {
-            Init();
-        }
 
         public ConfigView(IAppContext context): base(context)
         {

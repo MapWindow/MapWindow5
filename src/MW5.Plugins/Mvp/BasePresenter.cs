@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace MW5.Plugins.Mvp
 {
@@ -9,6 +10,8 @@ namespace MW5.Plugins.Mvp
     public abstract class BasePresenter<TView> : IPresenter
          where TView : IView
     {
+        protected bool _success;
+
         protected TView View { get; private set; }
 
         protected BasePresenter(TView view)
@@ -16,9 +19,10 @@ namespace MW5.Plugins.Mvp
             View = view;
         }
 
-        public void Run(bool dialog = true)
+        public bool Run(bool modal = true)
         {
-            View.ShowView(dialog);
+            View.ShowView(modal);
+            return _success;
         }
     }
 
@@ -30,6 +34,8 @@ namespace MW5.Plugins.Mvp
     public abstract class BasePresener<TView, TArg> : IPresenter<TArg>
         where TView : IView
     {
+        protected bool _success;
+
         protected TView View { get; private set; }
 
         protected BasePresener( TView view)
@@ -37,7 +43,7 @@ namespace MW5.Plugins.Mvp
             View = view;
         }
 
-        public abstract void Run(TArg argument, bool dialog = true);
+        public abstract bool Run(TArg argument, bool modal = true);
     }
     
 

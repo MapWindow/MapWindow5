@@ -7,6 +7,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Forms;
+using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -18,10 +19,12 @@ namespace MW5.Plugins.TableEditor
         {
             if (!composed)
             {
-                container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>();
-                container.RegisterSingleton<RowManager, RowManager>();
-                container.RegisterSingleton<AppContextWrapper, AppContextWrapper>();
-                container.RegisterService<ITableEditorView, TableEditorView>();
+                container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>()
+                    .RegisterSingleton<RowManager, RowManager>()
+                    .RegisterSingleton<AppContextWrapper, AppContextWrapper>()
+                    .RegisterService<ITableEditorView, TableEditorView>()
+                    .RegisterService<IAddFieldView, AddFieldView>();
+
                 composed = true;
             }
         }

@@ -220,8 +220,7 @@ namespace MW5.Services.Concrete
         public void CreateLayer()
         {
             var view = _context.Container.GetSingleton<CreateLayerPresenter>();
-            view.Run();
-            if (view.Success)
+            if (view.Run())
             {
                 var fs = new FeatureSet(view.GeometryType, view.ZValueType);
                 fs.SpatialReference.CopyFrom(_context.Map.GeoProjection);

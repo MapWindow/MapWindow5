@@ -36,9 +36,9 @@ namespace MW5.Plugins.Mvp
                 btn.Click += ItemClick;
             }
 
-            foreach (var item in view.ToolStrips)
+            foreach (var items in view.ToolStrips)
             {
-                item.Click += ItemClick;
+                InitMenu(items);
             }
 
             //if (view.Toolbars != null)
@@ -48,6 +48,31 @@ namespace MW5.Plugins.Mvp
             //        InitMenu(menu.Items);
             //    }
             //}
+        }
+
+        /// <summary>
+        /// Sets event handlers for menu items
+        /// </summary>
+        public void InitMenu(ToolStripItemCollection items)
+        {
+            if (items == null)
+            {
+                return;
+            }
+
+            foreach (ToolStripItem item in items)
+            {
+                if (item.Tag == null)
+                {
+                    item.Click += ItemClick;
+                }
+
+                var menuItem = item as ToolStripDropDownItem;
+                if (menuItem != null)
+                {
+                    InitMenu(menuItem.DropDownItems);
+                }
+            }
         }
 
         /// <summary>
@@ -113,32 +138,37 @@ namespace MW5.Plugins.Mvp
         /// </summary>
         private void ItemClick(object sender, EventArgs e)
         {
-            string key = string.Empty;
+            var btn = sender as Control;
+            if (btn != null)
+            {
+                RunCommandCore(btn.Name);
+                return;
+            }
+
+            var toolstripItem = sender as ToolStripMenuItem;
+            if (toolstripItem != null)
+            {
+                RunCommandCore(toolstripItem.Name);
+                return;
+            }
+
             var item = sender as IMenuItem;
             if (item != null)
             {
-                key = item.Key;
+                RunCommandCore(item.Key);
+                return;
             }
-            else
-            {
-                var btn = sender as Control;
-                if (btn != null)
-                {
-                    key = btn.Name;
-                }
-            }
+                        
+            throw new InvalidOperationException("Unexpected type of menu item.");
+        }
 
-            if (key == string.Empty)
-            {
-                throw new InvalidOperationException("Unexpected type of menu item.");
-            }
-
+        private void RunCommandCore(string key)
+        {
             var command = Activator.CreateInstance<TCommand>();
             if (CommandFromName(key, ref command))
             {
                 RunCommand(command);
             }  
-
         }
     }
 }

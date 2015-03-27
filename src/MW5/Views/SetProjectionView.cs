@@ -15,7 +15,7 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.Views
 {
-    public partial class SetProjectionView : MapWindowForm, ISetProjectionView
+    public partial class SetProjectionView : MapWindowView, ISetProjectionView
     {
         public enum ProjectionType
         {

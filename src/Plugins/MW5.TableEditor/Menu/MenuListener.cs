@@ -10,24 +10,17 @@ using MW5.UI.Menu;
 
 namespace MW5.Plugins.TableEditor.Menu
 {
-    public class MenuService: MenuServiceBase
+    public class MenuListener: MenuServiceBase
     {
-        private readonly TableEditorPlugin _plugin;
         private readonly TableEditorPresenter _presenter;
-        private readonly MenuCommands _commands;
 
-        public MenuService(IAppContext context, TableEditorPlugin plugin, TableEditorPresenter presenter)
+        public MenuListener(IAppContext context, TableEditorPlugin plugin, TableEditorPresenter presenter)
             : base(context, plugin.Identity)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (plugin == null) throw new ArgumentNullException("plugin");
             if (presenter == null) throw new ArgumentNullException("presenter");
 
-            _plugin = plugin;
             _presenter = presenter;
-            _commands = new MenuCommands(plugin);
-            
-            InitToolbars();
 
             plugin.ItemClicked += PluginItemClicked;
             plugin.ViewUpdating += ViewUpdating;
@@ -36,12 +29,6 @@ namespace MW5.Plugins.TableEditor.Menu
         private void ViewUpdating(object sender, EventArgs e)
         {
             FindToolbarItem(MenuKeys.ShowTable).Enabled = _context.Map.SelectedFeatureSet != null;
-        }
-
-        private void InitToolbars()
-        {
-            var items = _context.Toolbars.FileToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.ShowTable);
         }
 
         private void PluginItemClicked(object sender, Concrete.MenuItemEventArgs e)

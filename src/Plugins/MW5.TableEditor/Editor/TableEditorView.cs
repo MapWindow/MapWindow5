@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api.Interfaces;
@@ -8,10 +9,8 @@ using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    public partial class TableEditorView : MapWindowForm, ITableEditorView
+    public partial class TableEditorView : MapWindowView, ITableEditorView
     {
-        private ILayer _layer;
-
         public TableEditorView(IAppContext context, RowManager rowManager): base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -55,9 +54,14 @@ namespace MW5.Plugins.TableEditor.Editor
             {
                 _grid.CurrentCell = null;
             }
+
+            _grid.RowCount = 0;     // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
             _grid.RowCount = RowManager.Count;
+
             _grid.Invalidate();
-            btnShowSelected.Checked = RowManager.Filtered;
+
+            btnStartEdit.Enabled = !_grid.TableSource.EditingTable;
+
             UpdateSelectedCount(_grid.SelectedCount);
         }
 
@@ -68,9 +72,11 @@ namespace MW5.Plugins.TableEditor.Editor
             _lblAmountSelected.Text = msg;
         }
 
-        public IEnumerable<ToolStripMenuItem> ToolStrips
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield break; }
+            get {
+                return from ToolStripMenuItem item in menuStrip1.Items select item.DropDownItems;
+            }
         }
 
         public IEnumerable<Control> Buttons

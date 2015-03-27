@@ -2,11 +2,11 @@
 {
     public interface IPresenter
     {
-        void Run(bool dialog = true);
+        bool Run(bool modal = true);
     }
 
     public interface IPresenter<in TArg>
     {
-        void Run(TArg argument, bool dialog = true);
+        bool Run(TArg argument, bool modal = true);
     }
 }

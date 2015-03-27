@@ -73,6 +73,26 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_layer_edit {
+            get {
+                object obj = ResourceManager.GetObject("icon_layer_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap label_edit {
+            get {
+                object obj = ResourceManager.GetObject("label_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap table_editor {
             get {
                 object obj = ResourceManager.GetObject("table_editor", resourceCulture);

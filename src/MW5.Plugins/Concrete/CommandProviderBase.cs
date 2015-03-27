@@ -36,6 +36,8 @@ namespace MW5.Plugins.Concrete
             return _commands[key];      // don't catch it, if there is a mistake we want to know at once
         }
 
+        
+
         /// <summary>
         /// Adds to menu.
         /// </summary>
@@ -44,6 +46,8 @@ namespace MW5.Plugins.Concrete
         /// <param name="beginGroup">True in case the item must be preceded by separator.</param>
         public void AddToMenu(IMenuItemCollection items, string key, bool beginGroup = false)
         {
+            // TODO: rework this, assign identity to MenuCommand instead
+
             var btn = items.AddButton(Get(key));
             if (beginGroup)
             {
