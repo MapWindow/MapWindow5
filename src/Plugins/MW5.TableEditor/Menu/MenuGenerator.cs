@@ -24,7 +24,7 @@ namespace MW5.Plugins.TableEditor.Menu
         private void InitToolbars()
         {
             var items = _context.Toolbars.FileToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.ShowTable);
+            items.AddButton(_commands[MenuKeys.ShowTable]);
         }
     }
 }

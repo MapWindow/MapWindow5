@@ -89,16 +89,21 @@ namespace MW5.UI.Menu
             return menuItem;
         }
 
-        public IMenuItem AddButton(MenuCommand command)
+        public IMenuItem AddButton(MenuCommand command, bool beginGroup = false)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException("command");
-            }
+            if (command == null) throw new ArgumentNullException("command"); 
 
             // TODO: command can have further use, e.g. to control Enabled state of the item
             // then it should be stored in the tag
-            return AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
+
+            var item = AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
+            
+            if (beginGroup)
+            {
+                item.BeginGroup = true;
+            }
+
+            return item;
         }
 
         public IMenuItem AddButton(string text, PluginIdentity identity)

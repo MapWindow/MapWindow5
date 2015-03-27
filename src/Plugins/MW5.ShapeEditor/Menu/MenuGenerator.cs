@@ -32,32 +32,32 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             var items = bar.Items;
 
-            _commands.AddToMenu(items, MenuKeys.LayerEdit);
-            _commands.AddToMenu(items, MenuKeys.GeometryCreate, true);
-            _commands.AddToMenu(items, MenuKeys.VertexEditor);
-            _commands.AddToMenu(items, MenuKeys.SplitShapes, true);
-            _commands.AddToMenu(items, MenuKeys.MergeShapes);
-            _commands.AddToMenu(items, MenuKeys.MoveShapes);
-            _commands.AddToMenu(items, MenuKeys.RotateShapes);
-            _commands.AddToMenu(items, MenuKeys.Copy, true);
-            _commands.AddToMenu(items, MenuKeys.Paste);
-            _commands.AddToMenu(items, MenuKeys.Cut);
+            items.AddButton(_commands[MenuKeys.LayerEdit]);
+            items.AddButton(_commands[MenuKeys.GeometryCreate], true);
+            items.AddButton(_commands[MenuKeys.VertexEditor]);
+            items.AddButton(_commands[MenuKeys.SplitShapes], true);
+            items.AddButton(_commands[MenuKeys.MergeShapes]);
+            items.AddButton(_commands[MenuKeys.MoveShapes]);
+            items.AddButton(_commands[MenuKeys.RotateShapes]);
+            items.AddButton(_commands[MenuKeys.Copy], true);
+            items.AddButton(_commands[MenuKeys.Paste]);
+            items.AddButton(_commands[MenuKeys.Cut]);
 
             var dropDown = items.AddDropDown("Polygon Overlay", MenuKeys.PolygonOverlayDropDown, identity);
             dropDown.BeginGroup = true;
             dropDown.Icon = new MenuIcon(Resources.icon_geometry_erase_by_polygon);
 
-            _commands.AddToMenu(dropDown.SubItems, MenuKeys.EraseByPolygon);
-            _commands.AddToMenu(dropDown.SubItems, MenuKeys.ClipByPolygon);
-            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SplitByPolygon);
+            dropDown.SubItems.AddButton(_commands[MenuKeys.EraseByPolygon]);
+            dropDown.SubItems.AddButton(_commands[MenuKeys.ClipByPolygon]);
+            dropDown.SubItems.AddButton(_commands[MenuKeys.SplitByPolygon]);
 
-            _commands.AddToMenu(items, MenuKeys.SplitByPolyline);
-            _commands.AddToMenu(items, MenuKeys.Undo, true);
+            items.AddButton(_commands[MenuKeys.SplitByPolyline]);
+            items.AddButton(_commands[MenuKeys.Undo], true);
 
             items.AddLabel("0/0", MenuKeys.HistoryLength, identity);
 
-            _commands.AddToMenu(items, MenuKeys.Redo);
-            
+            items.AddButton(_commands[MenuKeys.Redo]);
+
             bar.Update();
         }
 

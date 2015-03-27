@@ -97,6 +97,7 @@
     <Compile Include="Serialization\Utility\DataContractSerializationHelper.cs" />
     <Compile Include="Serialization\Utility\XmlSerializationHelper.cs" />
     <Compile Include="Serialization\XmlConfig.cs" />
+    <Compile Include="Serialization\XmlEnvelope.cs" />
     <Compile Include="Serialization\XmlGroup.cs" />
     <Compile Include="Serialization\XmlLayer.cs" />
     <Compile Include="Serialization\XmlMap.cs" />

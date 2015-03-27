@@ -61,13 +61,14 @@ namespace MW5.Plugins.Symbology.Menu
         {
             // file toolbar
             var items = _context.Toolbars.FileToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.Categories, true);
-            _commands.AddToMenu(items, MenuKeys.QueryBuilder);
+
+            items.AddButton(_commands[MenuKeys.Categories], true);
+            items.AddButton(_commands[MenuKeys.QueryBuilder]);
             _context.Toolbars.FileToolbar.Update();
 
             // map toolbar
             items = _context.Toolbars.MapToolbar.Items;
-            _commands.AddToMenu(items, MenuKeys.LabelMover);
+            items.AddButton(_commands[MenuKeys.LabelMover]);
             _context.Toolbars.FileToolbar.Update();
         }
     }

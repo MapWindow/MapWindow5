@@ -12,5 +12,8 @@ namespace MW5.Services.Serialization
     {
         [DataMember]
         public string Projection { get; set; }
+
+        [DataMember]
+        public XmlEnvelope Envelope { get; set; }
     }
 }

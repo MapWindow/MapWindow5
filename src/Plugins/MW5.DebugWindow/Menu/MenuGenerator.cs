@@ -69,7 +69,7 @@ namespace MW5.Plugins.DebugWindow.Menu
             bar.DockState = ToolbarDockState.Top;
 
             // Add toolbar buttons, use MenuKeys to identify the buttons and add the command in MenuCommands:
-            _commands.AddToMenu(bar.Items, MenuKeys.ShowDebugWindow);
+            bar.Items.AddButton(_commands[MenuKeys.ShowDebugWindow]);
         }
 
         #endregion

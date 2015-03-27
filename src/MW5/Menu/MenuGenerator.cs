@@ -64,15 +64,15 @@ namespace MW5.Menu
         {
             var items = _context.Menu.FileMenu.SubItems;
 
-            _commands.AddToMenu(items, MenuKeys.NewMap);
-            _commands.AddToMenu(items, MenuKeys.AddLayer, true);
-            _commands.AddToMenu(items, MenuKeys.AddVectorLayer);
-            _commands.AddToMenu(items, MenuKeys.AddRasterLayer);
-            _commands.AddToMenu(items, MenuKeys.AddDatabaseLayer);
-            _commands.AddToMenu(items, MenuKeys.OpenProject, true);
-            _commands.AddToMenu(items, MenuKeys.SaveProject, true);
-            _commands.AddToMenu(items, MenuKeys.SaveProjectAs);
-            _commands.AddToMenu(items, MenuKeys.Quit, true);
+            items.AddButton(_commands[MenuKeys.NewMap]);
+            items.AddButton(_commands[MenuKeys.AddLayer], true);
+            items.AddButton(_commands[MenuKeys.AddVectorLayer]);
+            items.AddButton(_commands[MenuKeys.AddRasterLayer]);
+            items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
+            items.AddButton(_commands[MenuKeys.OpenProject], true);
+            items.AddButton(_commands[MenuKeys.SaveProject], true);
+            items.AddButton(_commands[MenuKeys.SaveProjectAs]);
+            items.AddButton(_commands[MenuKeys.Quit], true);
 
             _context.Menu.FileMenu.Update();
         }
@@ -113,17 +113,17 @@ namespace MW5.Menu
         {
             var items = bar.Items;
 
-            _commands.AddToMenu(items, MenuKeys.NewMap);
-            _commands.AddToMenu(items, MenuKeys.OpenProject);
-            _commands.AddToMenu(items, MenuKeys.SaveProject);
-            _commands.AddToMenu(items, MenuKeys.SaveProjectAs);
-            _commands.AddToMenu(items, MenuKeys.AddLayer, true);
-            _commands.AddToMenu(items, MenuKeys.AddVectorLayer);
-            _commands.AddToMenu(items, MenuKeys.AddRasterLayer);
-            _commands.AddToMenu(items, MenuKeys.AddDatabaseLayer);
-            _commands.AddToMenu(items, MenuKeys.CreateLayer, true);
-            _commands.AddToMenu(items, MenuKeys.RemoveLayer);
-            _commands.AddToMenu(items, MenuKeys.Settings, true);
+            items.AddButton(_commands[MenuKeys.NewMap]);
+            items.AddButton(_commands[MenuKeys.OpenProject]);
+            items.AddButton(_commands[MenuKeys.SaveProject]);
+            items.AddButton(_commands[MenuKeys.SaveProjectAs]);
+            items.AddButton(_commands[MenuKeys.AddLayer], true);
+            items.AddButton(_commands[MenuKeys.AddVectorLayer]);
+            items.AddButton(_commands[MenuKeys.AddRasterLayer]);
+            items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
+            items.AddButton(_commands[MenuKeys.CreateLayer], true);
+            items.AddButton(_commands[MenuKeys.RemoveLayer]);
+            items.AddButton(_commands[MenuKeys.Settings], true);
             
             items.InsertBefore = items[items.Count - 1];    // before settings
 
@@ -134,26 +134,26 @@ namespace MW5.Menu
         {
             var items = bar.Items;
 
-            _commands.AddToMenu(items, MenuKeys.ZoomIn);
-            _commands.AddToMenu(items, MenuKeys.ZoomOut);
-            _commands.AddToMenu(items, MenuKeys.ZoomMax);
-            _commands.AddToMenu(items, MenuKeys.ZoomToLayer);
-            _commands.AddToMenu(items, MenuKeys.Pan);
-            _commands.AddToMenu(items, MenuKeys.SetProjection, true);
+            items.AddButton(_commands[MenuKeys.ZoomIn]);
+            items.AddButton(_commands[MenuKeys.ZoomOut]);
+            items.AddButton(_commands[MenuKeys.ZoomMax]);
+            items.AddButton(_commands[MenuKeys.ZoomToLayer]);
+            items.AddButton(_commands[MenuKeys.Pan]);
+            items.AddButton(_commands[MenuKeys.SetProjection], true);
 
-            _commands.AddToMenu(items, MenuKeys.MeasureDistance, true);
-            _commands.AddToMenu(items, MenuKeys.MeasureArea);
-            //_commands.AddToMenu(items, MenuKeys.Attributes);
+            items.AddButton(_commands[MenuKeys.MeasureDistance], true);
+            items.AddButton(_commands[MenuKeys.MeasureArea]);
 
             // select drop down
             var dropDown = items.AddDropDown("Select", MenuKeys.SelectDropDown, PluginIdentity.Default);
             dropDown.BeginGroup = true;
             dropDown.Icon = new MenuIcon(Resources.icon_select);
-            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByRectangle);
-            _commands.AddToMenu(dropDown.SubItems, MenuKeys.SelectByPolygon);
 
-            _commands.AddToMenu(items, MenuKeys.ZoomToSelected);
-            _commands.AddToMenu(items, MenuKeys.ClearSelection);
+            dropDown.SubItems.AddButton(_commands[MenuKeys.SelectByRectangle]);
+            dropDown.SubItems.AddButton(_commands[MenuKeys.SelectByPolygon]);
+
+            items.AddButton(_commands[MenuKeys.ZoomToSelected]);
+            items.AddButton(_commands[MenuKeys.ClearSelection]);
 
             bar.Update();
         }

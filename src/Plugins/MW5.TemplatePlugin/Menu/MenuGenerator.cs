@@ -86,7 +86,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             bar.DockState = ToolbarDockState.Top;
 
             // Add toolbar buttons, use MenuKeys to identify the buttons and add the command in MenuCommands:
-            _commands.AddToMenu(bar.Items, MenuKeys.ShowDockableWindow);
+            bar.Items.AddButton(_commands[MenuKeys.ShowDockableWindow]);
         }
 
         #endregion

@@ -11,7 +11,7 @@ namespace MW5.Plugins.Interfaces
     public interface IMenuItemCollection: IEnumerable<IMenuItem>
     {
         IMenuItem AddLabel(string text, string key, PluginIdentity identity);
-        IMenuItem AddButton(MenuCommand command);
+        IMenuItem AddButton(MenuCommand command, bool beginGroup = false);
         IMenuItem AddButton(string text, PluginIdentity identity);
         IMenuItem AddButton(string text, string key, PluginIdentity identity);
         IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity identity);

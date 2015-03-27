@@ -31,6 +31,7 @@ namespace MW5.Services.Serialization
 
             Map = new XmlMap();
             Map.Projection = context.Map.GeoProjection.ExportToWkt();
+            Map.Envelope = new XmlEnvelope(context.Map.Extents);
         }
 
         [DataMember] public XmlMap Map { get; set; }
@@ -45,9 +46,12 @@ namespace MW5.Services.Serialization
         /// <returns></returns>
         public bool RestoreState(ISerializableContext context)
         {
+            context.Map.Lock();
+
             var sr = new SpatialReference();
             sr.ImportFromAutoDetect(Map.Projection);
-            
+            context.Map.GeoProjection = sr;
+
             foreach (var p in Plugins)
             {
                 context.PluginManager.LoadPlugin(p.Guid, context);
@@ -59,7 +63,15 @@ namespace MW5.Services.Serialization
             }
 
             RestoreGroups(context);
-           
+
+            var e = Map.Envelope;
+            if (e != null)
+            {
+                context.Map.Extents = new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY);
+            }
+
+            context.Map.Unlock();
+
             context.Legend.Redraw(LegendRedraw.LegendAndMap);
 
             return true;

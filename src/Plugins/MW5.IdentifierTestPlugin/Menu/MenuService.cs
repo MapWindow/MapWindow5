@@ -43,7 +43,7 @@ namespace MW5.Plugins.IdentifierTestPlugin.Menu
 
             var items = bar.Items;
 
-            _commands.AddToMenu(items, MenuKeys.IdentifyTool);
+            items.AddButton(_commands[MenuKeys.IdentifyTool]);
         }
 
         void plugin_ItemClicked(object sender, MenuItemEventArgs e)
