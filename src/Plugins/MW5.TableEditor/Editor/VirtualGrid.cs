@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MapWinGIS;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    internal class VirtualGrid: DataGridView
+    internal abstract class VirtualGrid: DataGridView
     {
-        private readonly RowManager _rowManager = new RowManager();
+        protected RowManager _rowManager;
         private Color _selectionColor = Color.LightBlue;
+        private int _lastIndex = -1;        // for group selection with Shift
 
         public new event EventHandler<EventArgs> SelectionChanged;
 
-        private void FireSelectionChanged()
-        {
-            var handler = SelectionChanged;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
-            }
-        }
-
-        public VirtualGrid()
+        protected VirtualGrid()
         {
             VirtualMode = true;
             AllowUserToAddRows = false;
@@ -38,15 +31,18 @@ namespace MW5.Plugins.TableEditor.Editor
             RowHeaderMouseClick += GridRowHeaderMouseClick;
         }
 
+        protected abstract Shapefile Shapefile { get; }
+
         public Color SelectionColor
         {
             get { return _selectionColor; }
             set { _selectionColor = value; }
         }
 
-        protected RowManager RowManager
+        public RowManager RowManager
         {
             get { return _rowManager; }
+            set { _rowManager = value; }
         }
 
         private void GridRowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
@@ -57,7 +53,9 @@ namespace MW5.Plugins.TableEditor.Editor
                 Columns.GetColumnsWidth(DataGridViewElementStates.Visible) - HorizontalScrollingOffset + 1,
                 e.RowBounds.Height);
 
-            if (_rowManager[e.RowIndex].Selected)
+            int realIndex = _rowManager.RealIndex(e.RowIndex);
+
+            if (Shapefile.ShapeSelected[realIndex])
             {
                 e.PaintParts &= ~DataGridViewPaintParts.SelectionBackground;
                 e.PaintParts &= ~DataGridViewPaintParts.Background;
@@ -68,7 +66,9 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void GridRowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
         {
-            if (_rowManager[e.RowIndex].Selected)
+            int realIndex = _rowManager.RealIndex(e.RowIndex);
+
+            if (Shapefile.ShapeSelected[realIndex])
             {
                 var r = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, RowHeadersWidth, e.RowBounds.Height);
                 var brush = new SolidBrush(Color.FromArgb(64, _selectionColor));
@@ -78,7 +78,7 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void GridRowHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            _rowManager.OnRowHeaderClicked(e.RowIndex, ModifierKeys);
+            OnRowHeaderClicked(e.RowIndex, ModifierKeys);
 
             if (ModifierKeys == Keys.Control)
             {
@@ -90,6 +90,47 @@ namespace MW5.Plugins.TableEditor.Editor
             }
 
             FireSelectionChanged();
+        }
+
+        private void OnRowHeaderClicked(int rowIndex, Keys keys)
+        {
+            var sf = Shapefile;
+
+            if (keys != Keys.Shift && keys != Keys.Control)
+            {
+                sf.SelectNone();
+            }
+
+            if (keys == Keys.Shift && _lastIndex != -1)
+            {
+                int realIndex = RowManager.RealIndex(_lastIndex);
+                bool state = sf.ShapeSelected[realIndex];
+
+                int min = Math.Min(_lastIndex, rowIndex);
+                int max = Math.Max(_lastIndex, rowIndex);
+
+                for (int i = min; i <= max; i++)
+                {
+                    realIndex = RowManager.RealIndex(i);
+                    sf.ShapeSelected[realIndex] = state;
+                }
+            }
+            else
+            {
+                int realIndex = RowManager.RealIndex(rowIndex);
+                sf.ShapeSelected[realIndex] = !sf.ShapeSelected[realIndex];
+            }
+
+            _lastIndex = rowIndex;
+        }
+
+        private void FireSelectionChanged()
+        {
+            var handler = SelectionChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
 
@@ -14,6 +16,7 @@ namespace MW5.Plugins.TableEditor.Editor
         {
             CellValueNeeded += GridCellValueNeeded;
             CellValuePushed += GridCellValuePushed;
+            ColumnHeaderMouseClick += GridColumnHeaderMouseClick;
         }
 
         [Browsable(false)]
@@ -33,26 +36,20 @@ namespace MW5.Plugins.TableEditor.Editor
 
                 InitColumns(_table);
 
-                RowManager.Init(_shapefile);
+                RowManager.Reset(_shapefile);
 
                 RowCount = _table.NumRows;
             }
         }
 
+        protected override Shapefile Shapefile
+        {
+            get { return _shapefile; }
+        }
+
         public int SelectedCount
         {
-            get { return RowManager.SelectedCount; }
-        }
-
-        public IEnumerable<int> SelectedIndices
-        {
-            get { return RowManager.SelectedIndices; }
-        }
-
-        public void OnDatasourceSelectionChanged()
-        {
-            RowManager.OnDatasourceSelectionChanged(_shapefile);
-            Invalidate();
+            get { return _shapefile.NumSelected; }
         }
 
         private void InitColumns(Table table)
@@ -62,19 +59,89 @@ namespace MW5.Plugins.TableEditor.Editor
             for (int i = 0; i < table.NumFields; i++)
             {
                 var fld = table.Field[i];
-                var cmn = new DataGridViewTextBoxColumn { HeaderText = fld.Name };
+                var cmn = new DataGridViewTextBoxColumn
+                {
+                    HeaderText = fld.Name,
+                    SortMode = DataGridViewColumnSortMode.Programmatic
+                };
                 Columns.Add(cmn);
             }
         }
 
         private void GridCellValuePushed(object sender, DataGridViewCellValueEventArgs e)
         {
-            _table.EditCellValue(e.ColumnIndex, e.RowIndex, e.Value);
+            int realIndex = RowManager.RealIndex(e.RowIndex);
+            _table.EditCellValue(e.ColumnIndex, realIndex, e.Value);
         }
 
         private void GridCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
-            e.Value = _table.CellValue[e.ColumnIndex, e.RowIndex];
+            int realIndex = RowManager.RealIndex(e.RowIndex);
+            e.Value = _table.CellValue[e.ColumnIndex, realIndex];
+        }
+
+        private void SetSortGlyph(int cmnIndex, bool ascending)
+        {
+            foreach(DataGridViewColumn cmn in Columns)
+            {
+                if (cmn.Index == cmnIndex)
+                {
+                    cmn.HeaderCell.SortGlyphDirection = ascending
+                        ? SortOrder.Ascending
+                        : SortOrder.Descending;
+                }
+                else
+                {
+                    cmn.HeaderCell.SortGlyphDirection = SortOrder.None;
+                }
+            }
+        }
+
+        private void GridColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            bool ascending = !(RowManager.SortColumnIndex == e.ColumnIndex && RowManager.SortAscending);
+
+            var fld = _table.Field[e.ColumnIndex];
+            switch (fld.Type)
+            {
+                case FieldType.STRING_FIELD:
+                    SortByColumn<string>(e.ColumnIndex, ascending);
+                    break;
+                case FieldType.INTEGER_FIELD:
+                    SortByColumn<int>(e.ColumnIndex, ascending);
+                    break;
+                case FieldType.DOUBLE_FIELD:
+                    SortByColumn<double>(e.ColumnIndex, ascending);
+                    break;
+            }
+
+            SetSortGlyph(e.ColumnIndex, ascending);
+
+            Invalidate();
+        }
+
+        private void SortByColumn<T>(int cmnIndex, bool ascending) where T: IComparable
+        {
+            var list = new List<SortItem<T>> {Capacity = _table.NumRows};
+
+            string defValue = string.Empty;
+            bool isString = typeof (T) == typeof (string);
+
+            for (int i = 0; i < _table.NumRows; i++)
+            {
+                var val = _table.CellValue[cmnIndex, i];
+                if (isString && val == null)
+                {
+                    val = defValue;
+                }
+                var item = new SortItem<T>((T) val, i);
+                list.Add(item);
+            }
+
+            list.Sort();
+            var result = list.Select(item => item.RealIndex);
+
+            RowManager.SetSorting(cmnIndex, ascending, result);
         }
     }
 }

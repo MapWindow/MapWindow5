@@ -7,10 +7,8 @@ namespace MW5.Plugins.TableEditor.Editor
 {
     public interface ITableEditorView: IComplexView
     {
-        void UpdateSelection();
         void SetDatasource(Shapefile sf);
         event Action SelectionChanged;
         void Hide();
-        IEnumerable<int> SelectedIndices { get; }
     }
 }

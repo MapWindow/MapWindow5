@@ -6,81 +6,138 @@ using MapWinGIS;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    internal class RowManager
+    public class RowManager
     {
-        private RowInfo[] _rows;
-        private int _lastIndex = -1;
+        private int[] _sortingMap;             // sorted index -> real index
+        private int _sortColumnIndex = -1;
+        private bool _sortAscending;
 
-        public void Init(Shapefile sf)
+        private int[] _filterMap;           // row index -> real index
+        private bool[] _filterMask;         // in real indices
+        private bool _filtered;
+
+        
+
+        public int SortColumnIndex
+        {
+            get { return _sortColumnIndex; }
+        }
+
+        public bool SortAscending
+        {
+            get { return _sortAscending; }
+        }
+
+        public bool Sorted
+        {
+            get { return _sortColumnIndex != -1; }
+        }
+
+        public bool Filtered
+        {
+            get { return _filtered; }
+        }
+
+        public int Count
+        {
+            get { return _filtered ? _filterMap.Length : _sortingMap.Length; }
+        }
+
+        public int RealIndex(int rowIndex)
+        {
+            if (Filtered)
+            {
+                return _filterMap[rowIndex];
+            }
+            return _sortingMap[rowIndex];
+        }
+
+        public void Reset(Shapefile sf)
+        {
+            ClearSorting(sf);
+
+            ClearFilter();
+        }
+
+        private void ClearSorting(Shapefile sf)
         {
             int numRows = sf.Table.NumRows;
-            _rows = new RowInfo[sf.Table.NumRows];
+            _sortingMap = new int[sf.Table.NumRows];
 
             for (int i = 0; i < numRows; i++)
             {
-                _rows[i].RealIndex = i;
-                _rows[i].Selected = sf.ShapeSelected[i];
-            }
-        }
-
-        public void OnDatasourceSelectionChanged(Shapefile sf)
-        {
-            int numRows = sf.Table.NumRows;
-
-            for (int i = 0; i < numRows; i++)
-            {
-                _rows[i].Selected = sf.ShapeSelected[i];
-            }
-        }
-
-        public int SelectedCount
-        {
-            get { return _rows.Count(r => r.Selected); }
-        }
-
-        public RowInfo this[int rowIndex]
-        {
-            get { return _rows[rowIndex]; } 
-        }
-
-        public IEnumerable<int> SelectedIndices
-        {
-            get { return _rows.Where(r => r.Selected).Select(r => r.RealIndex); }
-        }
-
-        public void ClearSelection()
-        {
-            for (int i = 0; i < _rows.Length; i++)
-            {
-                _rows[i].Selected = false;
-            }
-        }
-
-        public void OnRowHeaderClicked(int rowIndex, Keys keys)
-        {
-            if (keys != Keys.Shift && keys != Keys.Control)
-            {
-                ClearSelection();
+                _sortingMap[i] = i;
             }
 
-            if (keys == Keys.Shift && _lastIndex != -1)
+            _sortColumnIndex = -1;
+            _sortAscending = true;
+        }
+
+        public void ClearFilter()
+        {
+            _filtered = false;
+            _filterMap = new int[0];
+        }
+
+        public void FilterSelected(Shapefile sf)
+        {
+            int numShapes = sf.NumShapes;
+            _filterMap = new int[sf.NumSelected];
+            _filterMask = new bool[sf.NumShapes];
+            int count = 0;
+
+            for (int i = 0; i < numShapes; i++)
             {
-                bool state = _rows[_lastIndex].Selected;
-
-                int min = Math.Min(_lastIndex, rowIndex);
-                int max = Math.Max(_lastIndex, rowIndex);
-
-                for (int i = min; i <= max; i++)
+                int realIndex = _sortingMap[i];
+                bool selected = sf.ShapeSelected[realIndex];
+                if (selected)
                 {
-                    _rows[i].Selected = state;
+                    _filterMap[count] = realIndex;
+                    _filterMask[realIndex] = true;
+                    count++;
                 }
             }
-            else
+
+            _filtered = true;
+        }
+
+        public void SetSorting(int cmnIndex, bool ascending, IEnumerable<int> indices)
+        {
+            _sortColumnIndex = cmnIndex;
+            _sortAscending = ascending;
+
+            var arr = indices.ToArray();
+            for (int i = 0; i < _sortingMap.Length; i++)
             {
-                _rows[rowIndex].Selected = !_rows[rowIndex].Selected;
+                _sortingMap[i] = arr[i];
             }
 
-            _lastIndex = rowIndex;
+            UpdateFilter();
         }
+
+        private void UpdateFilter()
+        {
+            if (!_filtered)
+            {
+                return;
+            }
+
+            int numFiltered = _filterMask.Count(v => v);
+            int count = 0;
+
+            _filterMap = new int[numFiltered];
+
+            for (int i = 0; i < _sortingMap.Length; i++)
+            {
+                int realIndex = _sortingMap[i];
+                if (_filterMask[realIndex])
+                {
+                    _filterMap[count] = realIndex;
+                    count++;
+                }
+            }
+        }
+
+
     }
 }

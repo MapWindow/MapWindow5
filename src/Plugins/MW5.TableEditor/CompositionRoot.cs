@@ -19,6 +19,7 @@ namespace MW5.Plugins.TableEditor
             if (!composed)
             {
                 container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>();
+                container.RegisterSingleton<RowManager, RowManager>();
                 container.RegisterSingleton<AppContextWrapper, AppContextWrapper>();
                 container.RegisterService<ITableEditorView, TableEditorView>();
                 composed = true;

@@ -12,16 +12,23 @@ namespace MW5.Plugins.TableEditor.Editor
     {
         private ILayer _layer;
 
-        public TableEditorView(IAppContext context): base(context)
+        public TableEditorView(IAppContext context, RowManager rowManager): base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (rowManager == null) throw new ArgumentNullException("rowManager");
 
             InitializeComponent();
 
+            _grid.RowManager = rowManager;
             _grid.SelectionChanged += (s, e) => Invoke(SelectionChanged);
         }
 
         public event Action SelectionChanged;
+
+        private RowManager RowManager
+        {
+            get { return _grid.RowManager; }
+        }
 
         public new void Hide()
         {
@@ -34,27 +41,23 @@ namespace MW5.Plugins.TableEditor.Editor
             _grid.TableSource = null;
         }
 
-        public void UpdateSelection()
-        {
-            _grid.OnDatasourceSelectionChanged();
-
-            UpdateSelectedCount(_grid.SelectedCount);
-        }
-
-        public IEnumerable<int> SelectedIndices
-        {
-            get { return _grid.SelectedIndices; }
-        }
-
         public void SetDatasource(Shapefile sf)
         {
             _grid.TableSource = sf;
 
-            UpdateSelectedCount(_grid.SelectedCount);
+            UpdateView();
         }
 
         public void UpdateView()
         {
+            int count = RowManager.Count;
+            if (count == 0)
+            {
+                _grid.CurrentCell = null;
+            }
+            _grid.RowCount = RowManager.Count;
+            _grid.Invalidate();
+            btnShowSelected.Checked = RowManager.Filtered;
             UpdateSelectedCount(_grid.SelectedCount);
         }
 

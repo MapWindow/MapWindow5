@@ -14,17 +14,21 @@ namespace MW5.Plugins.TableEditor.Editor
     {
         private readonly IAppContext _context;
         private readonly ITableEditorView _view;
+        private readonly RowManager _rowManager;
         private readonly IMessageService _messageService;
         private ILayer _layer;
+        private Shapefile _shapefile;
 
-        public TableEditorPresenter(IAppContext context, ITableEditorView view, IMessageService messageService) : base(view)
+        public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager, IMessageService messageService) : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
+            if (rowManager == null) throw new ArgumentNullException("rowManager");
             if (messageService == null) throw new ArgumentNullException("messageService");
 
             _context = context;
             _view = view;
+            _rowManager = rowManager;
             _messageService = messageService;
             _view.SelectionChanged += ViewSelectionChanged;
         }
@@ -59,17 +63,19 @@ namespace MW5.Plugins.TableEditor.Editor
                 {
                     return;     // it's the same layer
                 }
-
+                
                 _layer = value;
-
+                
                 var sf = _layer.FeatureSet.InternalObject as Shapefile;
+                _shapefile = sf;
+
                 _view.SetDatasource(sf);
             }
         }
 
         public void UpdateSelection()
         {
-            _view.UpdateSelection();
+            _view.UpdateView();
         }
 
         public bool CheckAndSaveChanges()
@@ -95,7 +101,15 @@ namespace MW5.Plugins.TableEditor.Editor
                     _messageService.Info("Not implemented");
                     break;
                 case TableEditorCommand.ShowSelected:
-                    _messageService.Info("Not implemented");
+                    if (_rowManager.Filtered)
+                    {
+                        _rowManager.ClearFilter();
+                    }
+                    else
+                    {
+                        _rowManager.FilterSelected(_shapefile);    
+                    }
+                    _view.UpdateView();
                     break;
                 case TableEditorCommand.ZoomToSelected:
                     _context.Map.ZoomToSelected(_layer.Handle);
@@ -110,13 +124,14 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void ViewSelectionChanged()
         {
-            var indices = _view.SelectedIndices.ToArray();
-            if (indices.Length > 0)
-            {
-                _context.Layers.SelectedLayer.UpdateSelection(indices, SelectionOperation.New);
-                _context.Map.Redraw();
-                _context.View.Update();
-            }
+            //var indices = _view.SelectedIndices.ToArray();
+            //if (indices.Length > 0)
+            //{
+            //    _context.Layers.SelectedLayer.UpdateSelection(indices, SelectionOperation.New);
+               
+            //}
+            _context.Map.Redraw();
+            _context.View.Update();
         }
     }
 }

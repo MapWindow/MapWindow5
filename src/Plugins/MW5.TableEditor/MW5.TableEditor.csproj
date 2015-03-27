@@ -111,6 +111,7 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Editor\TableEditorCommand.cs" />
     <Compile Include="Editor\ITableEditorView.cs" />
     <Compile Include="BO\AppContextWrapper.cs" />
