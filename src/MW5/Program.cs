@@ -11,7 +11,6 @@ using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Presenters;
 using MW5.Services.Helpers;
 using MW5.Views;
 

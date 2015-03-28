@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Helpers
 {
     /// <summary>
     /// The csv import.
     /// </summary>
-    public class CsvImport
+    public static class CsvImportHelper
     {
         #region Public Methods and Operators
 

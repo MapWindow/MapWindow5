@@ -12,14 +12,6 @@ namespace MW5.Plugins.TableEditor.Helpers
 {
     public static class AppContextHelper
     {
-        //internal static void ShowEditorForm(this IAppContext context, TableEditorPlugin plugin)
-        //{
-        //    var form = context.Container.Resolve<ITableEditorView>();
-        //    form.Layer = context.Layers.SelectedLayer;
-        //    plugin.Form = form;
-        //    form.ShowView();
-        //}
-
         /// <summary>
         /// Clears selection from all layers.
         /// </summary>

@@ -12,7 +12,8 @@ using MapWinGIS;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.Utils;
+using MW5.Plugins.TableEditor.Helpers;
+using MW5.Plugins.TableEditor.Legacy;
 using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
@@ -128,7 +129,7 @@ namespace MW5.Plugins.TableEditor.Forms
             if (ShapefileWrapper.ShapeData.DataChanged(dt))
             {
                 // TODO: looks like a hack; is it really necessary?
-                var dialogResult = FormUtils.TopMostMessageBox("Save attribute table changes?", "TableEditor", MessageBoxButtons.YesNo);
+                var dialogResult = FormHelper.TopMostMessageBox("Save attribute table changes?", "TableEditor", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     SaveChanges();
@@ -303,7 +304,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             var value = string.Empty;
 
-            var result = FormUtils.InputBox(
+            var result = FormHelper.InputBox(
                 "Assign Values (Selected Records)", "Input:  (No Quotes Needed for String Values)", ref value);
 
             if (result != DialogResult.OK)
@@ -362,11 +363,11 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (type == typeof (int))
             {
-                checkCurrentColomn = NummericHelper.IsNumeric(value, NumberStyles.Integer);
+                checkCurrentColomn = NumericHelper.IsNumeric(value, NumberStyles.Integer);
             }
             else if (type == typeof (double))
             {
-                checkCurrentColomn = NummericHelper.IsNumeric(value, NumberStyles.Float);
+                checkCurrentColomn = NumericHelper.IsNumeric(value, NumberStyles.Float);
             }
 
             return checkCurrentColomn;
@@ -1251,7 +1252,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void MnuCopyShapeIDsClick(object sender, EventArgs e)
         {
             var result = string.Empty;
-            FormUtils.InputBox(
+            FormHelper.InputBox(
                 "Assign Feature ID to a field", "Enter the name of the target field  (Data will be overwritten)",
                 ref result);
 
@@ -1299,7 +1300,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void MnuFindClick(object sender, EventArgs e)
         {
             var value = string.Empty;
-            if (FormUtils.InputBox("Find", "Search:", ref value) == DialogResult.OK && value != string.Empty)
+            if (FormHelper.InputBox("Find", "Search:", ref value) == DialogResult.OK && value != string.Empty)
             {
                 for (var i = 0; i < TableEditorDataGrid.Rows.Count; i++)
                 {
@@ -1372,7 +1373,7 @@ namespace MW5.Plugins.TableEditor.Forms
             var replace = string.Empty;
             var totalChanged = 0;
 
-            if (FormUtils.ReplaceBox(ref search, ref replace) == DialogResult.OK && search != string.Empty)
+            if (FormHelper.ReplaceBox(ref search, ref replace) == DialogResult.OK && search != string.Empty)
             {
                 for (var j = 1; j < TableEditorDataGrid.Columns.Count; j++)
                 {

@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Services.Views;
+using MW5.Services.Views.Abstract;
 
-namespace MW5.Services.Presenters
+namespace MW5.Services.Views
 {
     public class CreateLayerPresenter: BasePresenter<ICreateLayerView>
     {

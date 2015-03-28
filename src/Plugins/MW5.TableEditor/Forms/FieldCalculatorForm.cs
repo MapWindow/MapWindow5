@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MathParser;
 using MW5.Plugins.TableEditor.BO;
+using MW5.Plugins.TableEditor.Legacy;
 using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms

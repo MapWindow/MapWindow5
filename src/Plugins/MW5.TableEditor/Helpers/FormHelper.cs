@@ -2,12 +2,12 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Helpers
 {
     /// <summary>
     ///  Class with form utils
     /// </summary>
-    public class FormUtils
+    public static class FormHelper
     {
         /// <summary>Shows an inputbox</summary>
         /// <param name = "title">The title.</param>

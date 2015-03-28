@@ -124,7 +124,7 @@
     <Compile Include="Views\Abstract\IDeleteFieldsView.cs" />
     <Compile Include="Views\Abstract\IRenameFieldView.cs" />
     <Compile Include="Views\Abstract\ITableEditorView.cs" />
-    <Compile Include="BO\AppContextWrapper.cs" />
+    <Compile Include="Legacy\AppContextWrapper.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Editor\RowInfo.cs" />
     <Compile Include="Editor\RowManager.cs" />
@@ -154,8 +154,8 @@
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuListener.cs" />
-    <Compile Include="BO\ShapeData.cs" />
-    <Compile Include="BO\ShapefileWrapper.cs" />
+    <Compile Include="Legacy\ShapeData.cs" />
+    <Compile Include="Legacy\ShapefileWrapper.cs" />
     <Compile Include="Forms\DeleteFieldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,13 +250,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="TableEditorPlugin.cs" />
-    <Compile Include="Utils\CsvImport.cs" />
-    <Compile Include="Utils\DbfImport.cs" />
-    <Compile Include="Utils\Enums.cs" />
-    <Compile Include="Utils\FormUtils.cs" />
-    <Compile Include="Utils\NummericHelper.cs" />
-    <Compile Include="Utils\UnitsOfMeasurement.cs" />
-    <Compile Include="Utils\XlsImport.cs" />
+    <Compile Include="Helpers\CsvImportHelper.cs" />
+    <Compile Include="Helpers\DbfImportHelper.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Helpers\FormHelper.cs" />
+    <Compile Include="Helpers\NumericHelper.cs" />
+    <Compile Include="Services\MapUnitsService.cs" />
+    <Compile Include="Helpers\XlsImportHelper.cs" />
     <Compile Include="Views\AddFieldPresenter.cs" />
     <Compile Include="Views\AddFieldView.cs">
       <SubType>Form</SubType>
@@ -339,10 +339,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\filter.png" />
+    <None Include="Resources\filter.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="img\table-editor.png" />
+    <None Include="Resources\table_editor.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -375,9 +375,6 @@
       <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
       <Name>MathParser</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\label_edit.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_layer_edit.png" />

@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Services
 {
     /// <summary>The class using units of measurement</summary>
-    public class UnitsOfMeasurement
+    public class MapUnitsService
     {
         #region Methods
 

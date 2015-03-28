@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
-using MW5.Plugins.TableEditor.Utils;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
@@ -78,7 +78,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void FillWorkBooks()
         {
             // Get workbooks
-            var books = XlsImport.GetWorkbooks(_filename);
+            var books = XlsImportHelper.GetWorkbooks(_filename);
             cboWorkBooks.DataSource = books.Distinct().ToList();
 
             // strange, but I got a replica of the worksheet for .xlsx format
@@ -97,7 +97,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (cboWorkBooks.Visible)
             {
-                var colNames = XlsImport.GetColumnNames(_filename, cboWorkBooks.SelectedItem.ToString());
+                var colNames = XlsImportHelper.GetColumnNames(_filename, cboWorkBooks.SelectedItem.ToString());
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -111,7 +111,7 @@ namespace MW5.Plugins.TableEditor.Forms
                     return;
                 }
 
-                var colNames = CsvImport.GetColumnNames(_filename, cboDelimiter.Text);
+                var colNames = CsvImportHelper.GetColumnNames(_filename, cboDelimiter.Text);
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -142,16 +142,16 @@ namespace MW5.Plugins.TableEditor.Forms
             if (cboWorkBooks.Visible)
             {
                 options = "workbook=" + cboWorkBooks.SelectedItem;
-                dt = XlsImport.GetData(_filename, cboWorkBooks.SelectedItem.ToString());
+                dt = XlsImportHelper.GetData(_filename, cboWorkBooks.SelectedItem.ToString());
             }
             else
             {
                 options = "separator=" + cboDelimiter.SelectedItem;
-                dt = CsvImport.GetData(_filename, cboDelimiter.Text);
+                dt = CsvImportHelper.GetData(_filename, cboDelimiter.Text);
             }
 
             var tblNew = new Table();
-            if (!DbfImport.FillMapWinGisTable(dt, tblNew))
+            if (!DbfImportHelper.FillMapWinGisTable(dt, tblNew))
             {
                 DialogResult = DialogResult.Cancel;
                 return;

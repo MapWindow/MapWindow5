@@ -7,10 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Abstract;
 using MW5.Plugins.Interfaces;
-using MW5.Presenters;
 using MW5.UI;
+using MW5.Views.Abstract;
 using Syncfusion.Windows.Forms;
 
 namespace MW5.Views

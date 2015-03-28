@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Abstract;
 using MW5.Configuration;
-using MW5.Configuration.Plugins;
-using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Services.Config;
+using MW5.Views.Abstract;
 
-namespace MW5.Presenters
+namespace MW5.Views
 {
     internal class ConfigPresenter: BasePresenter<IConfigView>
     {

@@ -2,6 +2,7 @@
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
 using MW5.Services.Views;
+using MW5.Services.Views.Abstract;
 
 namespace MW5.Services
 {
@@ -17,7 +18,7 @@ namespace MW5.Services
                 .RegisterService<ICreateLayerView, CreateLayerView>()
                 .RegisterService<IErrorService, ErrorService>()
                 .RegisterSingleton<IConfigService, ConfigService>();
-
+                
         }
     }
 }

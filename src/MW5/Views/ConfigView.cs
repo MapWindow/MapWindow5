@@ -7,12 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Abstract;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Config;
 using MW5.UI;
+using MW5.Views.Abstract;
 using Syncfusion.Windows.Forms.Tools;
 using Action = System.Action;
 

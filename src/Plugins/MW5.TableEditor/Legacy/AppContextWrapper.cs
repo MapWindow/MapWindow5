@@ -5,7 +5,7 @@ using MapWinGIS;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
 
-namespace MW5.Plugins.TableEditor.BO
+namespace MW5.Plugins.TableEditor.Legacy
 {
     /// <summary>
     /// Takes care of the communication with the main app.

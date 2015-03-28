@@ -2,19 +2,15 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using MW5.Api.Concrete;
-using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Listeners;
 using MW5.Menu;
-using MW5.Plugins;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 
-namespace MW5.Presenters
+namespace MW5.Views
 {
     public class MainPresenter : BasePresenter<IMainView>
     {

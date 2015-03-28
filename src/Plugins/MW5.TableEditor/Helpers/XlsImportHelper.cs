@@ -4,12 +4,12 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Helpers
 {
     /// <summary>
     ///   Takes care of importing data from excel
     /// </summary>
-    public class XlsImport
+    public static class XlsImportHelper
     {
         /// <summary>Get a list of all the workbooks</summary>
         /// <param name = "fileName">The name of excel-file.</param>

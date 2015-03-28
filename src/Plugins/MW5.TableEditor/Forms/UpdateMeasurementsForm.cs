@@ -5,7 +5,8 @@ using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.Utils;
+using MW5.Plugins.TableEditor.Legacy;
+using MW5.Plugins.TableEditor.Services;
 using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
@@ -23,7 +24,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private readonly DataTable _dt;
 
         /// <summary>The units of measurements</summary>
-        private readonly UnitsOfMeasurement _unitsOfMeasurement;
+        private readonly MapUnitsService _mapUnitsService;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateMeasurementsForm"/> class.</summary>
         /// <param name="dataTable">The data table.</param>
@@ -36,7 +37,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
             _boShapefile = shapefile;
 
-            _unitsOfMeasurement = new UnitsOfMeasurement();
+            _mapUnitsService = new MapUnitsService();
 
             InitForm();
         }
@@ -51,7 +52,7 @@ namespace MW5.Plugins.TableEditor.Forms
             var geoprojection = _boShapefile.Shapefile.GeoProjection;
             lblProjection.Text = string.Format("Projection: {0}", geoprojection.Name);
             lblShapefileUnits.Text = string.Format("Units: {0}",
-                _unitsOfMeasurement.GetUnitsFromProj4(geoprojection.ExportToProj4()));
+                _mapUnitsService.GetUnitsFromProj4(geoprojection.ExportToProj4()));
 
             // Show group boxes:
             AreaGroupbox.Visible = _shapefileType == 1;
@@ -310,12 +311,12 @@ namespace MW5.Plugins.TableEditor.Forms
             try
             {
                 // Use units:
-                _unitsOfMeasurement.MeasurementType = measurementType;
+                _mapUnitsService.MeasurementType = measurementType;
                 var shapefileUnits = lblShapefileUnits.Text.Replace("Units: ", string.Empty).Trim();
-                _unitsOfMeasurement.MapUnits = _unitsOfMeasurement.StringToUom(shapefileUnits);
-                var orgMapUnits = _unitsOfMeasurement.MapUnits;
-                _unitsOfMeasurement.CalculatedUnits =
-                    _unitsOfMeasurement.StringToUom(CalculateUnitsCombo.SelectedItem.ToString());
+                _mapUnitsService.MapUnits = _mapUnitsService.StringToUom(shapefileUnits);
+                var orgMapUnits = _mapUnitsService.MapUnits;
+                _mapUnitsService.CalculatedUnits =
+                    _mapUnitsService.StringToUom(CalculateUnitsCombo.SelectedItem.ToString());
 
                 var utils = new MapWinGIS.Utils();
                 var numShapes = _boShapefile.Shapefile.NumShapes;
@@ -328,7 +329,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
                 var reprojectShapefile = new Shapefile();
                 var useOldCalculation = false;
-                if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
+                if (_mapUnitsService.MapUnits == UnitOfArea.DecimalDegrees)
                 {
                     reprojectShapefile = ReprojectShapefileToUtm(_boShapefile.Shapefile);
 
@@ -346,11 +347,11 @@ namespace MW5.Plugins.TableEditor.Forms
                     var measurement = 0.0;
 
                     // Reset map units because it might have been changed in the reprojection option:
-                    _unitsOfMeasurement.MapUnits = orgMapUnits;
+                    _mapUnitsService.MapUnits = orgMapUnits;
 
                     if (measurementType == MeasurementTypes.Length)
                     {
-                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
+                        if (_mapUnitsService.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:
                             if (useOldCalculation)
@@ -374,7 +375,7 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = shp.Length;
-                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
+                                _mapUnitsService.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
@@ -392,7 +393,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
                     if (measurementType == MeasurementTypes.Area)
                     {
-                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
+                        if (_mapUnitsService.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:                         
                             if (useOldCalculation)
@@ -417,7 +418,7 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = shp.Area;
-                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
+                                _mapUnitsService.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
@@ -435,7 +436,7 @@ namespace MW5.Plugins.TableEditor.Forms
 
                     if (measurementType == MeasurementTypes.Perimeter)
                     {
-                        if (_unitsOfMeasurement.MapUnits == UnitOfArea.DecimalDegrees)
+                        if (_mapUnitsService.MapUnits == UnitOfArea.DecimalDegrees)
                         {
                             // Use the intermediate reprojected to UTM shapefile:
                             if (useOldCalculation)
@@ -459,7 +460,7 @@ namespace MW5.Plugins.TableEditor.Forms
                                 }
 
                                 measurement = utils.get_Perimeter(shp);
-                                _unitsOfMeasurement.MapUnits = UnitOfArea.Meters;
+                                _mapUnitsService.MapUnits = UnitOfArea.Meters;
                             }
                         }
                         else
@@ -476,7 +477,7 @@ namespace MW5.Plugins.TableEditor.Forms
                     }
 
                     // Use units:
-                    measurement = _unitsOfMeasurement.ConvertUnits(measurement);
+                    measurement = _mapUnitsService.ConvertUnits(measurement);
 
                     // Round value:
                     measurement = Math.Round(measurement, fieldPrecision);

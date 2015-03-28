@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Abstract;
-using MW5.Api.Concrete;
+﻿using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Views;
+using MW5.Views.Abstract;
 
-namespace MW5.Presenters
+namespace MW5.Views
 {
     public class SetProjectionPresenter : BasePresenter<ISetProjectionView>
     {

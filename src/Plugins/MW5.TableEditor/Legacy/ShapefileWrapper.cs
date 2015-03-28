@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using MapWinGIS;
+using MW5.Plugins.TableEditor.Legacy;
 
 namespace MW5.Plugins.TableEditor.BO
 {

@@ -1,11 +1,11 @@
 ﻿using System.Globalization;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Helpers
 {
     /// <summary>
     ///  Class for performinc nummeric actions
     /// </summary>
-    public class NummericHelper
+    public static class NumericHelper
     {
         /// <summary>Check if a value is nummeric</summary>
         /// <param name = "value">The value to check.</param>

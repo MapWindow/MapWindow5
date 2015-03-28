@@ -1,12 +1,12 @@
 ﻿using System.Data;
 using MapWinGIS;
 
-namespace MW5.Plugins.TableEditor.Utils
+namespace MW5.Plugins.TableEditor.Helpers
 {
     /// <summary>
     /// The dbf import.
     /// </summary>
-    public class DbfImport
+    public static class DbfImportHelper
     {
         /// <summary>
         /// Fills table with data obtained by ADO.NET provider

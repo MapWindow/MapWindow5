@@ -3,7 +3,8 @@ using System.Data;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.Utils;
+using MW5.Plugins.TableEditor.Helpers;
+using MW5.Plugins.TableEditor.Legacy;
 using MW5.UI;
 
 namespace MW5.Plugins.TableEditor.Forms
@@ -68,7 +69,7 @@ namespace MW5.Plugins.TableEditor.Forms
         private void FillWorkBooks()
         {
             // Get workbooks
-            var books = XlsImport.GetWorkbooks(txtInputFile.Text);
+            var books = XlsImportHelper.GetWorkbooks(txtInputFile.Text);
 
             cboWorkBooks.DataSource = books;
         }
@@ -88,11 +89,11 @@ namespace MW5.Plugins.TableEditor.Forms
 
             if (cboWorkBooks.Visible)
             {
-                importedData = XlsImport.GetData(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
+                importedData = XlsImportHelper.GetData(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
             }
             else
             {
-                importedData = CsvImport.GetData(txtInputFile.Text, cboDelimiter.Text);
+                importedData = CsvImportHelper.GetData(txtInputFile.Text, cboDelimiter.Text);
             }
 
             for (var i = 0; i < importedData.Columns.Count; i++)
@@ -171,7 +172,7 @@ namespace MW5.Plugins.TableEditor.Forms
         {
             if (cboWorkBooks.Visible)
             {
-                var colNames = XlsImport.GetColumnNames(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
+                var colNames = XlsImportHelper.GetColumnNames(txtInputFile.Text, cboWorkBooks.SelectedItem.ToString());
 
                 cboExternalKeyCol.DataSource = colNames;
 
@@ -185,7 +186,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 else
                 {
-                    var colNames = CsvImport.GetColumnNames(txtInputFile.Text, cboDelimiter.Text);
+                    var colNames = CsvImportHelper.GetColumnNames(txtInputFile.Text, cboDelimiter.Text);
 
                     cboExternalKeyCol.DataSource = colNames;
 

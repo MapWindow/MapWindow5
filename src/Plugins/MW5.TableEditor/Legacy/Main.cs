@@ -18,13 +18,9 @@
 // 29 March 2012  Jeen de Vegt    Inital coding
 // 05 Jan 2013    Paul Meems      Moved toolbar button to existing Layer toolbar
 // ********************************************************************************************************
-namespace TableEditorNew
-{
-  using System;
-  using System.Collections.Generic;
-  using System.Windows.Forms;
-  using MapWinGIS;
 
+namespace MW5.Plugins.TableEditor.Legacy
+{
     /// <summary>
   ///   This is the start of the plug-in. In here all methods of the IPlugin interface can be implemented.
   /// </summary>

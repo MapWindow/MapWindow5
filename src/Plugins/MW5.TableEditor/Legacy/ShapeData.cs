@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
 using System.Windows.Forms;
 using MapWinGIS;
-using MW5.Plugins.TableEditor.Utils;
+using MW5.Plugins.TableEditor.Helpers;
 
-namespace MW5.Plugins.TableEditor.BO
+namespace MW5.Plugins.TableEditor.Legacy
 {
     /// <summary>
     ///  Class for handling the shapedata 
@@ -152,18 +151,18 @@ namespace MW5.Plugins.TableEditor.BO
             filename = filename.ToLower();
             if (filename.EndsWith(".xls") || filename.EndsWith(".xlsx"))
             {
-                dt = XlsImport.GetData(filename, GetOption("workbook", joinOptions));
+                dt = XlsImportHelper.GetData(filename, GetOption("workbook", joinOptions));
             }
             else if (filename.EndsWith(".csv"))
             {
-                dt = CsvImport.GetData(filename, GetOption("separator", joinOptions));
+                dt = CsvImportHelper.GetData(filename, GetOption("separator", joinOptions));
             }
             else
             {
                 return;
             }
 
-            DbfImport.FillMapWinGisTable(dt, joinSource);
+            DbfImportHelper.FillMapWinGisTable(dt, joinSource);
         }
 
         /// <summary>
