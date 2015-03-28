@@ -19,11 +19,9 @@ namespace MW5.Plugins.TableEditor.Views
         {
             if (messageService == null) throw new ArgumentNullException("messageService");
             _messageService = messageService;
-
-            view.OkClicked += ViewOkClicked;
         }
 
-        public override bool Run(IAttributeTable table, bool modal = true)
+        public override void Init(IAttributeTable table)
         {
             if (table == null) throw new ArgumentNullException("table");
 
@@ -35,28 +33,23 @@ namespace MW5.Plugins.TableEditor.Views
             _table = table;
 
             View.Init(table);
-            View.ShowView(modal);
-
-            return _success;
         }
 
-        private void ViewOkClicked()
+        public override bool ViewOkClicked()
         {
             string msg = string.Empty;
+
             if (!Validate(ref msg))
             {
                 _messageService.Info(msg);
-                return;
+                return false;
             }
 
             _table.Fields[View.FieldIndex].Name = View.NewName;
-
-            View.Close();
-
-            _success = true;
+            return true;
         }
 
-        public bool Validate(ref string message)
+        private bool Validate(ref string message)
         {
             if (View.FieldIndex == -1)
             {

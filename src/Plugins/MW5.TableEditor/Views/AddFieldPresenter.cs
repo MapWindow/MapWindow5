@@ -20,7 +20,6 @@ namespace MW5.Plugins.TableEditor.Views
             if (view == null) throw new ArgumentNullException("view");
 
             _view = view;
-            view.OkClicked += ViewOkClicked;
         }
 
         private FeatureField Field
@@ -38,14 +37,13 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        private void ViewOkClicked()
+        public override bool ViewOkClicked()
         {
             _featureSet.Fields.Add(Field);
-            _view.Close();
-            _success = true;
+            return true;
         }
 
-        public override bool Run(IFeatureSet fs, bool modal = true)
+        public override void Init(IFeatureSet fs)
         {
             if (fs == null)
             {
@@ -58,10 +56,6 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             _featureSet = fs;
-            
-            _view.ShowView();
-
-            return _success;
         }
     }
 }

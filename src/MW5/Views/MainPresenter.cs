@@ -95,5 +95,10 @@ namespace MW5.Presenters
                 e.Cancel = true;
             }
         }
+
+        public override bool ViewOkClicked()
+        {
+            return true;    // there is no ok button
+        }
     }
 }

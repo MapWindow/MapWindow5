@@ -12,5 +12,6 @@ namespace MW5.Plugins.Mvp
     {
         IEnumerable<ToolStripItemCollection> ToolStrips { get; }
         IEnumerable<Control> Buttons { get; }
+        IEnumerable<IToolbar> Toolbars { get; }
     }
 }

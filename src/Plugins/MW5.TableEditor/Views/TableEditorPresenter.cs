@@ -44,31 +44,6 @@ namespace MW5.Plugins.TableEditor.Views
             get { return false; }
         }
 
-        private ILayer Layer
-        {
-            get { return _layer; }
-            set
-            {
-                if (value == null)
-                {
-                    _layer = null;
-                    return;
-                }
-
-                if (_layer != null && _layer.Handle == value.Handle)
-                {
-                    return;     // it's the same layer
-                }
-                
-                _layer = value;
-                
-                var sf = _layer.FeatureSet.InternalObject as Shapefile;
-                _shapefile = sf;
-
-                View.SetDatasource(sf);
-            }
-        }
-
         public void UpdateSelection()
         {
             View.UpdateView();
@@ -79,11 +54,14 @@ namespace MW5.Plugins.TableEditor.Views
             return true; 
         }
 
-        public override bool Run(ILayer layer, bool modal = true)
+        public override void Init(ILayer layer)
         {
-            Layer = layer;
-            View.ShowView(modal);
-            return true;
+            _layer = layer;
+
+            var sf = _layer.FeatureSet.InternalObject as Shapefile;
+            _shapefile = sf;
+
+            View.SetDatasource(sf);
         }
 
         public override void RunCommand(TableEditorCommand command)
@@ -125,7 +103,7 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     break;
                 case TableEditorCommand.Close:
-                    Layer = null;
+                    _layer = null;
                     View.Hide();
                     break;
                 case TableEditorCommand.SaveChanges:
@@ -175,6 +153,11 @@ namespace MW5.Plugins.TableEditor.Views
         {
             _context.Map.Redraw();
             _context.View.Update();
+        }
+
+        public override bool ViewOkClicked()
+        {
+            return true;    // there is no ok button so far
         }
     }
 }

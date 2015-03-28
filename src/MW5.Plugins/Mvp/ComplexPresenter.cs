@@ -19,9 +19,27 @@ namespace MW5.Plugins.Mvp
         protected ComplexPresenter(TView view)
             : base(view)
         {
+            view.OkClicked += OnViewOkClickedCore;
         }
 
-        public abstract bool Run(bool modal = true);
+        public bool Success { get; protected set; }
+
+        public bool Run(bool modal = true)
+        {
+            View.ShowView(modal);
+            return Success;
+        }
+
+        private void OnViewOkClickedCore()
+        {
+            if (ViewOkClicked())
+            {
+                View.Close();
+                Success = true;
+            }
+        }
+
+        public abstract bool ViewOkClicked();
     }
 
     /// <summary>
@@ -30,7 +48,7 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TView">The type of the view.</typeparam>
     /// <typeparam name="TCommand">The type of the command.</typeparam>
     /// <typeparam name="TArg">The type of the argument.</typeparam>
-    public abstract class ComplexPresenter<TView, TCommand, TArg> : CommandDispatcher<TView, TCommand>, IPresenter<TArg>
+    public abstract class ComplexPresenter<TView, TCommand, TArg> : ComplexPresenter<TView, TCommand>, IPresenter<TArg>
         where TCommand : struct, IConvertible
         where TView : IComplexView
     {
@@ -39,6 +57,13 @@ namespace MW5.Plugins.Mvp
         {
         }
 
-        public abstract bool Run(TArg argument, bool modal = true);
+        public bool Run(TArg argument, bool modal = true)
+        {
+            Init(argument);
+            View.ShowView(modal);
+            return Success;
+        }
+
+        public abstract void Init(TArg arg);
     }
 }

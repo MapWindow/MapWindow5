@@ -70,7 +70,5 @@ namespace MW5.Plugins.Mvp
         /// </summary>
         void Run<TPresenter, TArgument>(TArgument arg)
           where TPresenter : class, IPresenter<TArgument>;
-
-        
     }
 }

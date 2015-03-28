@@ -28,41 +28,8 @@ namespace MW5.Services.Presenters
             _view = view;
             _messageService = messageService;
             _fileDialogService = fileDialogService;
-
-            view.OkClicked += view_OkClicked;
         }
-
-        private void view_OkClicked()
-        {
-            string layerName = _view.LayerName;
-            if (string.IsNullOrWhiteSpace(layerName))
-            {
-                _messageService.Info("Please enter a name of the new layer.");
-                return;
-            }
-
-            // TODO: pass parent window handle in some unobtrusive way
-            string path = Directory.GetDirectoryRoot(Assembly.GetExecutingAssembly().Location);
-            if (_fileDialogService.ChooseFolder(path, out path))
-            {
-                if (ValidateName(path))
-                {
-                    _success = true;
-                    _view.Close();
-                }
-            }
-        }
-
-        private bool ValidateName(string path)
-        {
-            _filename = path + LayerName.ToLower();
-            if (!_filename.EndsWith(".shp"))
-            {
-                _filename += ".shp";
-            }
-            return true;
-        }
-
+        
         public string Filename
         {
             get { return _filename; }
@@ -81,6 +48,38 @@ namespace MW5.Services.Presenters
         public string LayerName
         {
             get { return _view.LayerName; }
+        }
+
+        public override bool ViewOkClicked()
+        {
+            string layerName = _view.LayerName;
+            if (string.IsNullOrWhiteSpace(layerName))
+            {
+                _messageService.Info("Please enter a name of the new layer.");
+                return false;
+            }
+
+            // TODO: pass parent window handle in some unobtrusive way
+            string path = Directory.GetDirectoryRoot(Assembly.GetExecutingAssembly().Location);
+            if (_fileDialogService.ChooseFolder(path, out path))
+            {
+                if (ValidateName(path))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ValidateName(string path)
+        {
+            _filename = path + LayerName.ToLower();
+            if (!_filename.EndsWith(".shp"))
+            {
+                _filename += ".shp";
+            }
+            return true;
         }
     }
 }

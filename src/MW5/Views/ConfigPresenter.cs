@@ -43,7 +43,6 @@ namespace MW5.Presenters
 
             _view.Initialize();
 
-            view.OkClicked += view_OkClicked;
             view.OpenFolderClicked += view_OpenFolderClicked;
             view.SaveClicked += view_SaveClicked;
         }
@@ -72,13 +71,6 @@ namespace MW5.Presenters
             }
         }
 
-        private void view_OkClicked()
-        {
-            ApplySettings();
-            _configService.Save();
-            _view.Close();
-        }
-
         private void ApplySettings()
         {
             foreach (var page in _view.Pages)
@@ -91,6 +83,13 @@ namespace MW5.Presenters
         {
             _view.Pages.Add(new GeneralConfigPage(_configService));
             _view.Pages.Add(new PluginsConfigPage(_configService, _manager, _context));
+        }
+
+        public override bool ViewOkClicked()
+        {
+            ApplySettings();
+            _configService.Save();
+            return true;
         }
     }
 }

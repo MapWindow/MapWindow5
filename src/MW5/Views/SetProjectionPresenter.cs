@@ -26,17 +26,14 @@ namespace MW5.Presenters
             _view = view;
             _map = map;
             _messageService = messageService;
-
-            _view.OkClicked += SetProjection;
-
         }
 
-        private void SetProjection()
+        public override bool ViewOkClicked()
         {
             if (_map.Layers.Count > 0)
             {
                 _messageService.Info("Can't change projection when there are layers on the map.");
-                return;
+                return false;
             }
 
             var sr = new SpatialReference();
@@ -46,13 +43,13 @@ namespace MW5.Presenters
                 if (string.IsNullOrWhiteSpace(_view.CustomProjection))
                 {
                     _messageService.Info("ProjectionType string is empty.");
-                    return;
+                    return false;
                 }
 
                 if (!sr.ImportFromAutoDetect(_view.CustomProjection))
                 {
                     _messageService.Info("Failed to identify projection.");
-                    return;
+                    return false;
                 }
             }
 
@@ -71,8 +68,7 @@ namespace MW5.Presenters
 
             _map.GeoProjection = sr;
             _map.Redraw();
-
-            _view.Close();
+            return true;
         }
     }
 }

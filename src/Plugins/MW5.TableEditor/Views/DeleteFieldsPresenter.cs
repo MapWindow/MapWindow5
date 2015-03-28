@@ -15,37 +15,29 @@ namespace MW5.Plugins.TableEditor.Views
 
         public DeleteFieldsPresenter(IDeleteFieldsView view) : base(view)
         {
-            view.OkClicked += ViewOkClicked;
         }
 
-        private void ViewOkClicked()
+        public override bool ViewOkClicked()
         {
             var list = View.FieldsToRemove.OrderByDescending(i => i);
 
-            foreach (var i in list)   
+            foreach (var i in list)
             {
                 _featureSet.Fields.Remove(i);
             }
 
-            _success = true;
-            View.Close();
+            return true;
         }
 
-        public override bool Run(IFeatureSet fs, bool modal = true)
+        public override void Init(IFeatureSet fs)
         {
             if (fs == null) throw new ArgumentNullException("fs");
 
-            if (!fs.EditingTable)
-            {
-                throw new InvalidOperationException("Table in edit mode is expected.");
-            }
+            if (!fs.EditingTable) throw new InvalidOperationException("Table in edit mode is expected.");
 
             _featureSet = fs;
 
             View.Table = fs.Table;
-            View.ShowView(modal);
-
-            return _success;
         }
     }
 }

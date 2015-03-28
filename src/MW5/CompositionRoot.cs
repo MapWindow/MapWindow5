@@ -8,7 +8,6 @@ using MW5.Abstract;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Presenters;
 using MW5.Services;
 using MW5.UI;
 using MW5.Views;

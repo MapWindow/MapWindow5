@@ -12,7 +12,7 @@ namespace MW5.Plugins.Mvp
         where TCommand : struct, IConvertible
         where TView: IMenuProvider
     {
-        protected TView View { get; private set; }
+        public TView View { get; private set; }
 
         public abstract void RunCommand(TCommand command);
 
@@ -41,13 +41,13 @@ namespace MW5.Plugins.Mvp
                 InitMenu(items);
             }
 
-            //if (view.Toolbars != null)
-            //{
-            //    foreach (var menu in view.Toolbars)
-            //    {
-            //        InitMenu(menu.Items);
-            //    }
-            //}
+            if (view.Toolbars != null)
+            {
+                foreach (var menu in view.Toolbars)
+                {
+                    InitMenu(menu.Items);
+                }
+            }
         }
 
         /// <summary>
