@@ -16,12 +16,10 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public partial class RenameFieldView : MapWindowView, IRenameFieldView
     {
-        public RenameFieldView(IAppContext context): 
-            base(context)
+        public RenameFieldView(IAppView appView):
+            base(appView)
         {
             InitializeComponent();
-
-            btnOK.Click += (s, e) => FireOkClicked();
         }
 
         public void Init(IAttributeTable table)
@@ -46,6 +44,11 @@ namespace MW5.Plugins.TableEditor.Views
 
         public void UpdateView()
         {
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
         }
     }
 }

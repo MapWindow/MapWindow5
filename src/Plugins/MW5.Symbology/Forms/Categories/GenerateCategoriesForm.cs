@@ -315,7 +315,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             using (var form = new ColorSchemesForm(_context, icbColorScheme.ColorSchemes))
             {
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
             }
         }
     }

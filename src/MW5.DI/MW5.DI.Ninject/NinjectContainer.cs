@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Mvp;
 using Ninject;
 
@@ -58,16 +59,16 @@ namespace MW5.DI.Ninject
             return this;
         }
 
-        public void Run<TPresenter, TArgumnent>(TArgumnent arg) where TPresenter : class, IPresenter<TArgumnent>
+        public bool Run<TPresenter, TArgumnent>(TArgumnent arg, IWin32Window parent = null) where TPresenter : class, IPresenter<TArgumnent>
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run(arg);
+            return presenter.Run(arg, parent);
         }
 
-        public void Run<TPresenter>() where TPresenter : class, IPresenter
+        public bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run();
+            return presenter.Run(parent);
         }
 
         public TService Resolve<TService>() where TService : class

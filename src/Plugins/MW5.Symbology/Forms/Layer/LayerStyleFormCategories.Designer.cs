@@ -422,7 +422,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             {
                 form.Text = "Category drawing options";
 
-                if (_context.View.ShowDialog(form))
+                if (_context.View.ShowChildView(form))
                 {
                     dgvCategories.Invalidate();
                     RedrawMap();
@@ -622,7 +622,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new ColorSchemesForm(_context, icbCategories.ColorSchemes))
             {
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
             }
         }
     }

@@ -51,7 +51,7 @@ namespace MW5.Plugins.Symbology.Menu
                 {
                     using (var form = _context.GetSymbologyForm(e.LayerHandle, ct.Style, false))
                     {
-                        _context.View.ShowDialog(form);
+                        _context.View.ShowChildView(form);
                     }
                     e.Handled = true;
                 }
@@ -66,7 +66,7 @@ namespace MW5.Plugins.Symbology.Menu
                 var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
                 using (var form = new ChartStyleForm(_context, layer))
                 {
-                    _context.View.ShowDialog(form);
+                    _context.View.ShowChildView(form);
                 }
                 e.Handled = true;
             }
@@ -80,7 +80,7 @@ namespace MW5.Plugins.Symbology.Menu
                 var layer = legend.Map.Layers.ItemByHandle(e.LayerHandle);
                 using (var form = new LabelStyleForm(_context, layer))
                 {
-                    _context.View.ShowDialog(form);
+                    _context.View.ShowChildView(form);
                 }
                 e.Handled = true;
             }
@@ -93,7 +93,7 @@ namespace MW5.Plugins.Symbology.Menu
             {
                 using (var form = _context.GetSymbologyForm(e.LayerHandle, fs.Style, false))
                 {
-                    _context.View.ShowDialog(form);  
+                    _context.View.ShowChildView(form);  
                 }
                 e.Handled = true;
             }
@@ -103,7 +103,7 @@ namespace MW5.Plugins.Symbology.Menu
         {
             using (var form = new LayerStyleForm(_context, legend.Map.GetLayer(e.LayerHandle)))
             {
-                _context.View.ShowDialog(form);
+                _context.View.ShowChildView(form);
                 e.Handled = true;
             }
         }

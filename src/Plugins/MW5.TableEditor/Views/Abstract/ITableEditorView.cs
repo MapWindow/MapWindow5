@@ -6,6 +6,7 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
 {
     public interface ITableEditorView: IComplexView
     {
+        void UpdateDatasource();
         void SetDatasource(Shapefile sf);
         event Action SelectionChanged;
         void Hide();

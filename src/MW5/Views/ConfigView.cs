@@ -29,7 +29,8 @@ namespace MW5.Views
         public event Action OpenFolderClicked;
         public event Action SaveClicked;
 
-        public ConfigView(IAppContext context): base(context)
+        public ConfigView(IAppView appView)
+            : base(appView)
         {
             Init();
         }
@@ -74,7 +75,6 @@ namespace MW5.Views
             _treeViewAdv1.SelectedNode = selectedNode ?? _treeViewAdv1.Nodes[0];
             _initialized = true;
 
-            btnOk.Click += (s, e) => FireOkClicked();
             btnOpenFolder.Click += (s, e) => Invoke(OpenFolderClicked);
             btnSave.Click += (s, e) => Invoke(SaveClicked);
         }
@@ -107,6 +107,11 @@ namespace MW5.Views
         public void UpdateView()
         {
             
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
         }
     }
 }

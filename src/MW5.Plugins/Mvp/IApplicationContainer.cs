@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
 {
@@ -63,12 +64,12 @@ namespace MW5.Plugins.Mvp
         /// <summary>
         /// Runs presenter (registeres presenter type, creates instance of presenter, injects instance of IView in constructor, calls IView.ShowView).
         /// </summary>
-        void Run<TPresenter>() where TPresenter : class, IPresenter;
+        bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter;
 
         /// <summary>
         /// Runs presenter with an argument parameter. Registeres presenter type if it's not registered.
         /// </summary>
-        void Run<TPresenter, TArgument>(TArgument arg)
+        bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null)
           where TPresenter : class, IPresenter<TArgument>;
     }
 }

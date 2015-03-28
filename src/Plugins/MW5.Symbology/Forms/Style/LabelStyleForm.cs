@@ -538,7 +538,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             using (var form = new FontGradientForm(_category, false))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     DrawPreview();
                     clpFrame1.Color = _category.FrameBackColor;
@@ -603,7 +603,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 // generate
                 using (var form = new AddLabelsForm(_shapefile, _category.Alignment))
                 {
-                    if (_context.View.ShowDialog(form, this))
+                    if (_context.View.ShowChildView(form, this))
                     {
                         if (_shapefile.PointOrMultiPoint)
                         {
@@ -785,7 +785,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             string s = txtLabelExpression.Text;
             using (var form = new QueryBuilderForm(_layer, s, false))
             {
-                if (_context.View.ShowDialog(form))
+                if (_context.View.ShowChildView(form))
                 {
                     if (txtLabelExpression.Text != form.Tag.ToString())
                     {

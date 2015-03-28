@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Mvp
 {
-    public interface IView
+    public interface IView : IViewInternal
     {
-        void ShowView(bool modal = true);
-        void Close();
         void UpdateView();
-        bool Visible { get; }
-        event Action OkClicked;
+        ButtonBase OkButton { get; }
     }
 }

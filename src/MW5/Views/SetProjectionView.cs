@@ -24,7 +24,7 @@ namespace MW5.Views
             None = 3,
         }
 
-        public SetProjectionView(IAppContext context) : base(context)
+        public SetProjectionView(IAppView appView) : base(appView)
         {
             InitializeComponent();
 
@@ -37,8 +37,6 @@ namespace MW5.Views
             optDefinition.CheckChanged += (s, e) => UpdateView();
             optEmpty.CheckChanged += (s, e) => UpdateView();
             optWellKnown.CheckChanged += (s, e) => UpdateView();
-
-            btnOk.Click += (s, e) => FireOkClicked();
         }
 
         public string CustomProjection
@@ -75,6 +73,11 @@ namespace MW5.Views
         {
             cboWellKnown.Enabled = optWellKnown.Checked;
             txtDefinition.Enabled = optDefinition.Checked;
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
         }
     }
 }

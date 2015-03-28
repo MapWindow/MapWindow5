@@ -14,10 +14,9 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.UI
 {
-    public partial class MapWindowView : MetroForm
+    public partial class MapWindowView : MetroForm, IViewInternal
     {
-        protected readonly IAppContext _context;
-
+        private readonly IAppView _appView;
         public event Action OkClicked;
 
         protected MapWindowView()
@@ -26,15 +25,12 @@ namespace MW5.UI
             Icon = Resources.MapWindow;
         }
 
-        protected MapWindowView(IAppContext context)
+        protected MapWindowView(IAppView appView)
         {
-            InitializeComponent();
+            if (appView == null) throw new ArgumentNullException("appView");
+            _appView = appView;
 
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-            _context = context;
+            InitializeComponent();
 
             Icon = Resources.MapWindow;
         }
@@ -47,11 +43,23 @@ namespace MW5.UI
             }
         }
 
-        public virtual void ShowView(bool dialog = true)
+        public virtual void ShowView(IWin32Window parent = null)
         {
             if (!Visible)
             {
-                _context.View.ShowDialog(this, dialog);
+                _appView.ShowChildView(this, parent);
+            }
+        }
+
+        public virtual ViewStyle Style
+        {
+            get
+            {
+                return new ViewStyle()
+                {
+                    Modal = true,
+                    Sizable = false,
+                };
             }
         }
 

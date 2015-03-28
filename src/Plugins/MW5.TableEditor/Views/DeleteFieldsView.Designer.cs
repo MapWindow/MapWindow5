@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.clb = new System.Windows.Forms.CheckedListBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.Label1 = new System.Windows.Forms.Label();
+            this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.SuspendLayout();
             // 
             // clb
@@ -46,28 +47,6 @@
             this.clb.Size = new System.Drawing.Size(274, 139);
             this.clb.TabIndex = 12;
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancel.Location = new System.Drawing.Point(213, 181);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(80, 23);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "Cancel";
-            // 
-            // btnOK
-            // 
-            this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOK.Enabled = false;
-            this.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOK.Location = new System.Drawing.Point(132, 181);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(80, 23);
-            this.btnOK.TabIndex = 10;
-            this.btnOK.Text = "OK";
-            // 
             // Label1
             // 
             this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -77,14 +56,42 @@
             this.Label1.TabIndex = 9;
             this.Label1.Text = "Fields to Remove:";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.IsBackStageButton = false;
+            this.btnCancel.Location = new System.Drawing.Point(213, 183);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(85, 26);
+            this.btnCancel.TabIndex = 32;
+            this.btnCancel.Text = "Cancel";
+            // 
+            // btnOk
+            // 
+            this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnOk.ForeColor = System.Drawing.Color.White;
+            this.btnOk.IsBackStageButton = false;
+            this.btnOk.Location = new System.Drawing.Point(123, 183);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(85, 26);
+            this.btnOk.TabIndex = 31;
+            this.btnOk.Text = "Ok";
+            // 
             // DeleteFieldsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(310, 221);
-            this.Controls.Add(this.clb);
             this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.btnOk);
+            this.Controls.Add(this.clb);
             this.Controls.Add(this.Label1);
             this.Name = "DeleteFieldsView";
             this.Text = "Delete fields:";
@@ -95,9 +102,9 @@
         #endregion
 
         internal System.Windows.Forms.CheckedListBox clb;
-        internal System.Windows.Forms.Button btnCancel;
-        internal System.Windows.Forms.Button btnOK;
         internal System.Windows.Forms.Label Label1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
+        private Syncfusion.Windows.Forms.ButtonAdv btnOk;
 
 
     }

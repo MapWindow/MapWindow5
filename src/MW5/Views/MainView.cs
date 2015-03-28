@@ -31,7 +31,6 @@ namespace MW5.Views
         private MenuUpdater _menuUpdater;
 
         public MainView(IAppContext context)
-            : base(context)
         {
             _context = context;
             
@@ -92,7 +91,7 @@ namespace MW5.Views
 
         #region IView implementation
 
-        public new void ShowView(bool modal)
+        public override void ShowView(IWin32Window parent = null)
         {
             _menuUpdater = new MenuUpdater(_context, _mapControl1, PluginIdentity.Default);
 
@@ -124,6 +123,11 @@ namespace MW5.Views
             {
                 _mapControl1.Focus();
             }
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return null; }
         }
 
         private void UpdateStatusBar()

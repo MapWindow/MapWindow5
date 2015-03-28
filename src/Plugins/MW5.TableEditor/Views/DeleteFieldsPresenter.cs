@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public class DeleteFieldsPresenter: BasePresenter<IDeleteFieldsView, IFeatureSet>
+    public class DeleteFieldsPresenter: BasePresenter<IDeleteFieldsView, IAttributeTable>
     {
-        private IFeatureSet _featureSet;
+        private IAttributeTable _table;
 
         public DeleteFieldsPresenter(IDeleteFieldsView view) : base(view)
         {
@@ -23,21 +24,19 @@ namespace MW5.Plugins.TableEditor.Views
 
             foreach (var i in list)
             {
-                _featureSet.Fields.Remove(i);
+                _table.Fields.Remove(i);
             }
 
             return true;
         }
 
-        public override void Init(IFeatureSet fs)
+        public override void Init(IAttributeTable table)
         {
-            if (fs == null) throw new ArgumentNullException("fs");
+            table.CheckEditMode(true);
 
-            if (!fs.EditingTable) throw new InvalidOperationException("Table in edit mode is expected.");
+            _table = table;
 
-            _featureSet = fs;
-
-            View.Table = fs.Table;
+            View.Table = table;
         }
     }
 }

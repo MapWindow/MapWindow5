@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.UI.Syncfusion;
 using Syncfusion.Windows.Forms;
 
@@ -21,17 +22,14 @@ namespace MW5.UI
             _parent = parent;
         }
 
-        public bool ShowDialog(Form form, bool dialog = true)
+        public bool ShowChildView(Form form, bool modal = true)
         {
-            return ShowDialog(form, null, dialog);
+            return ShowChildView(form, null, modal);
         }
 
-        public bool ShowDialog(Form form, IWin32Window parent, bool dialog = true)
+        public bool ShowChildView(Form form, IWin32Window parent, bool modal = true)
         {
-            if (form == null)
-            {
-                throw new ArgumentNullException("parent");
-            }
+            if (form == null) throw new ArgumentNullException("parent");
 
             if (form is MetroForm)
             {
@@ -40,23 +38,39 @@ namespace MW5.UI
                 service.ApplyStyle(form as MetroForm);
             }
 
-            form.MaximizeBox = false;
-            form.MinimizeBox = false;
-            form.FormBorderStyle = FormBorderStyle.FixedSingle;
-            form.StartPosition = FormStartPosition.CenterScreen; // TODO: make parameter
-            form.ShowInTaskbar = false;
+            if (form is IViewInternal)
+            {
+                var view = form as IViewInternal;
+                var style = view.Style;
+
+                if (style != null)
+                {
+                    ApplyStyle(form, style);
+                    modal = style.Modal;
+                }
+            }
 
             if (parent == null)
             {
                 parent = _parent as IWin32Window;
             }
-            if (dialog)
+            if (modal)
             {
                 return form.ShowDialog(parent) == DialogResult.OK;
             }
             
             form.Show(parent);
             return true;
+        }
+
+        private void ApplyStyle(Form form, ViewStyle style)
+        {
+            form.MaximizeBox = style.Sizable;
+            form.MinimizeBox = style.Sizable;
+            form.FormBorderStyle = style.Sizable ? FormBorderStyle.Sizable : FormBorderStyle.FixedSingle;
+
+            form.StartPosition = FormStartPosition.CenterScreen;
+            form.ShowInTaskbar = false;
         }
 
         public void Update()

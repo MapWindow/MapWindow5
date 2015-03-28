@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
 {
@@ -24,9 +25,9 @@ namespace MW5.Plugins.Mvp
 
         public bool Success { get; protected set; }
 
-        public bool Run(bool modal = true)
+        public bool Run(IWin32Window parent = null)
         {
-            View.ShowView(modal);
+            View.ShowView(parent);
             return Success;
         }
 
@@ -40,6 +41,11 @@ namespace MW5.Plugins.Mvp
         }
 
         public abstract bool ViewOkClicked();
+
+        public IWin32Window ViewHandle
+        {
+            get { return View as IWin32Window; }
+        }
     }
 
     /// <summary>
@@ -57,10 +63,10 @@ namespace MW5.Plugins.Mvp
         {
         }
 
-        public bool Run(TArg argument, bool modal = true)
+        public bool Run(TArg argument, IWin32Window parent = null)
         {
             Init(argument);
-            View.ShowView(modal);
+            View.ShowView(parent);
             return Success;
         }
 

@@ -75,7 +75,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new ChartStyleForm(_context, _layer))
             {
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
             }
 
             // even if cancel was hit, a user could have applied the options
@@ -167,7 +167,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new ColorSchemesForm(_context, icbChartColorScheme.ColorSchemes))
             {
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
             }
         }
     }

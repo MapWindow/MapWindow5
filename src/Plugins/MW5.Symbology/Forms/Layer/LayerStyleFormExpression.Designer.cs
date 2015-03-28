@@ -32,7 +32,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             var layer = _context.Layers.ItemByHandle(_layer.Handle);
             using (var form = new QueryBuilderForm(layer, s, false)) 
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     txtLayerExpression.Text = form.Tag.ToString();
                     _shapefile.VisibilityExpression = txtLayerExpression.Text;

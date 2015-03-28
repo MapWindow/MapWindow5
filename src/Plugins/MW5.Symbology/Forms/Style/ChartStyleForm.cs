@@ -506,7 +506,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                     // prompting user for charts position
                     using (var form = new AddChartsForm(_shapefile))
                     {
-                        if (!_context.View.ShowDialog(form, this))
+                        if (!_context.View.ShowChildView(form, this))
                         {
                             return false;
                         }
@@ -769,7 +769,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             using (var form = new QueryBuilderForm(_layer, s, false))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     txtChartExpression.Text = form.Tag.ToString();
                     _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
@@ -832,7 +832,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             using (var form = new ColorSchemesForm(_context, icbColors.ColorSchemes))
             {
                 _noEvents = true;
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
                 _noEvents = false;
             }
         }

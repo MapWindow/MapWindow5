@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
 using MW5.Plugins.Mvp;
@@ -59,24 +60,28 @@ namespace MW5.DI.Castle
             return this;
         }
 
-        public void Run<TPresenter, TArgument>(TArgument arg) where TPresenter : class, IPresenter<TArgument>
+        public bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null) 
+            where TPresenter : class, IPresenter<TArgument>
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run(arg);
+            return presenter.Run(arg, parent);
         }
 
-        public void Run<TPresenter>() where TPresenter : class, IPresenter
+        public bool Run<TPresenter>(IWin32Window parent = null) 
+            where TPresenter : class, IPresenter
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run();
+            return presenter.Run(parent);
         }
 
-        public TService Resolve<TService>() where TService : class
+        public TService Resolve<TService>() 
+            where TService : class
         {
             return _container.Resolve<TService>();
         }
 
-        public TService GetSingleton<TService>() where TService : class
+        public TService GetSingleton<TService>() 
+            where TService : class
         {
             _container.Register(Component.For<TService>().OnlyNewServices());
             return _container.Resolve<TService>();

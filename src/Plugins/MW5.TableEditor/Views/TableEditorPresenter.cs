@@ -66,6 +66,16 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override void RunCommand(TableEditorCommand command)
         {
+            if (HandleSelection(command))
+            {
+                return;
+            }
+
+            if (HandleFields(command))
+            {
+                return;
+            }
+
             switch (command)
             {
                 case TableEditorCommand.StartEdit:
@@ -75,40 +85,51 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     View.UpdateView();
                     break;
-                case TableEditorCommand.AddField:
+                case TableEditorCommand.SaveChanges:
+                    if (_shapefile.Table.EditingTable)
                     {
-                        var p = _context.Container.GetInstance<AddFieldPresenter>();
-                        if (p.Run(_layer.FeatureSet))
-                        {
-                            View.SetDatasource(_shapefile);
-                        }
+                        _shapefile.Table.StopEditingTable();
                     }
-                    break;
-                case TableEditorCommand.RemoveField:
-                    {
-                        var p = _context.Container.GetInstance<DeleteFieldsPresenter>();
-                        if (p.Run(_layer.FeatureSet))
-                        {
-                            View.SetDatasource(_shapefile);
-                        }
-                    }
-                    break;
-                case TableEditorCommand.RenameField:
-                    {
-                        var p = _context.Container.GetInstance<RenameFieldPresenter>();
-                        if (p.Run(_layer.FeatureSet.Table))
-                        {
-                            View.SetDatasource(_shapefile);
-                        }
-                    }
+                    View.UpdateView();
                     break;
                 case TableEditorCommand.Close:
                     _layer = null;
                     View.Hide();
                     break;
-                case TableEditorCommand.SaveChanges:
-                    _messageService.Info("Not implemented");
-                    break;
+            }
+        }
+
+        private bool HandleFields(TableEditorCommand command)
+        {
+            switch (command)
+            {
+                case TableEditorCommand.AddField:
+                    if (_context.Container.Run<AddFieldPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    {
+                        View.UpdateDatasource();
+                    }
+                    return true;
+                case TableEditorCommand.RemoveField:
+                    if (_context.Container.Run<DeleteFieldsPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    {
+                        View.UpdateDatasource();
+                    }
+                    return true;
+                case TableEditorCommand.RenameField:
+                    if (_context.Container.Run<RenameFieldPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    {
+                        View.UpdateDatasource();
+                    }
+                    return true;
+            }
+            
+            return false;
+        }
+
+        private bool HandleSelection(TableEditorCommand command)
+        {
+            switch (command)
+            {
                 case TableEditorCommand.ShowSelected:
                     if (_rowManager.Filtered)
                     {
@@ -116,32 +137,37 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     else
                     {
-                        _rowManager.FilterSelected(_shapefile);    
+                        _rowManager.FilterSelected(_shapefile);
                     }
                     View.UpdateView();
-                    break;
+                    return true;
+
                 case TableEditorCommand.ZoomToSelected:
                     _context.Map.ZoomToSelected(_layer.Handle);
-                    break;
+                    return true;
+
                 case TableEditorCommand.SelectAll:
                     _shapefile.SelectAll();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();
-                    break;
+                    return true;
+
                 case TableEditorCommand.ClearSelection:
                     _shapefile.SelectNone();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();
-                    break;
+                    return true;
+
                 case TableEditorCommand.InvertSelection:
                     _shapefile.InvertSelection();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();
-                    break;
+                    return true;
             }
+            return false;
         }
 
         protected override void CommandNotFound(string itemName)

@@ -43,8 +43,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnQuery = new System.Windows.Forms.Button();
             this.btnZoomToSelected = new System.Windows.Forms.Button();
             this._lblAmountSelected = new System.Windows.Forms.Label();
-            this.btnClose = new System.Windows.Forms.Button();
-            this.btnApply = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAddField = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,8 +71,10 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuCopyShapeIDs = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuImportExtData = new System.Windows.Forms.ToolStripMenuItem();
             this.updateMeasurementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
+            this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._grid)).BeginInit();
@@ -82,6 +82,8 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnClose);
+            this.panel1.Controls.Add(this.btnSaveChanges);
             this.panel1.Controls.Add(this.btnStartEdit);
             this.panel1.Controls.Add(this.btnShowSelected);
             this.panel1.Controls.Add(this.btnJoin);
@@ -91,8 +93,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Controls.Add(this.btnZoomToSelected);
             this.panel1.Controls.Add(this._lblAmountSelected);
-            this.panel1.Controls.Add(this.btnClose);
-            this.panel1.Controls.Add(this.btnApply);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 395);
             this.panel1.Name = "panel1";
@@ -103,7 +103,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnStartEdit.Image = global::MW5.Plugins.TableEditor.Properties.Resources.icon_layer_edit;
             this.btnStartEdit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnStartEdit.Location = new System.Drawing.Point(273, 6);
+            this.btnStartEdit.Location = new System.Drawing.Point(6, 3);
             this.btnStartEdit.Name = "btnStartEdit";
             this.btnStartEdit.Size = new System.Drawing.Size(32, 32);
             this.btnStartEdit.TabIndex = 23;
@@ -113,7 +113,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnShowSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnShowSelected.Image")));
             this.btnShowSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnShowSelected.Location = new System.Drawing.Point(44, 6);
+            this.btnShowSelected.Location = new System.Drawing.Point(82, 3);
             this.btnShowSelected.Name = "btnShowSelected";
             this.btnShowSelected.Size = new System.Drawing.Size(32, 32);
             this.btnShowSelected.TabIndex = 22;
@@ -123,7 +123,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnJoin.Image = ((System.Drawing.Image)(resources.GetObject("btnJoin.Image")));
             this.btnJoin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnJoin.Location = new System.Drawing.Point(235, 6);
+            this.btnJoin.Location = new System.Drawing.Point(273, 3);
             this.btnJoin.Name = "btnJoin";
             this.btnJoin.Size = new System.Drawing.Size(32, 32);
             this.btnJoin.TabIndex = 20;
@@ -134,7 +134,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnUpdateMeasurements.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnUpdateMeasurements.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMeasurements.Image")));
             this.btnUpdateMeasurements.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnUpdateMeasurements.Location = new System.Drawing.Point(197, 6);
+            this.btnUpdateMeasurements.Location = new System.Drawing.Point(235, 3);
             this.btnUpdateMeasurements.Name = "btnUpdateMeasurements";
             this.btnUpdateMeasurements.Size = new System.Drawing.Size(32, 32);
             this.btnUpdateMeasurements.TabIndex = 18;
@@ -145,7 +145,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnFieldCalculator.Image = ((System.Drawing.Image)(resources.GetObject("btnFieldCalculator.Image")));
             this.btnFieldCalculator.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFieldCalculator.Location = new System.Drawing.Point(82, 6);
+            this.btnFieldCalculator.Location = new System.Drawing.Point(120, 3);
             this.btnFieldCalculator.Name = "btnFieldCalculator";
             this.btnFieldCalculator.Size = new System.Drawing.Size(32, 32);
             this.btnFieldCalculator.TabIndex = 17;
@@ -156,7 +156,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnImportFieldsFromDBF.Image = ((System.Drawing.Image)(resources.GetObject("btnImportFieldsFromDBF.Image")));
             this.btnImportFieldsFromDBF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnImportFieldsFromDBF.Location = new System.Drawing.Point(159, 6);
+            this.btnImportFieldsFromDBF.Location = new System.Drawing.Point(197, 3);
             this.btnImportFieldsFromDBF.Name = "btnImportFieldsFromDBF";
             this.btnImportFieldsFromDBF.Size = new System.Drawing.Size(32, 32);
             this.btnImportFieldsFromDBF.TabIndex = 16;
@@ -166,7 +166,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnQuery.Image = global::MW5.Plugins.TableEditor.Properties.Resources.filter;
             this.btnQuery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnQuery.Location = new System.Drawing.Point(120, 6);
+            this.btnQuery.Location = new System.Drawing.Point(158, 3);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(32, 32);
             this.btnQuery.TabIndex = 15;
@@ -176,7 +176,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.btnZoomToSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomToSelected.Image")));
             this.btnZoomToSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnZoomToSelected.Location = new System.Drawing.Point(6, 6);
+            this.btnZoomToSelected.Location = new System.Drawing.Point(44, 3);
             this.btnZoomToSelected.Name = "btnZoomToSelected";
             this.btnZoomToSelected.Size = new System.Drawing.Size(32, 32);
             this.btnZoomToSelected.TabIndex = 13;
@@ -192,31 +192,9 @@ namespace MW5.Plugins.TableEditor.Views
             this._lblAmountSelected.TabIndex = 12;
             this._lblAmountSelected.Text = "0 of 0 Selected";
             // 
-            // btnClose
-            // 
-            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnClose.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnClose.Location = new System.Drawing.Point(617, 7);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(97, 30);
-            this.btnClose.TabIndex = 2;
-            this.btnClose.Text = "Close";
-            this.btnClose.UseVisualStyleBackColor = true;
-            // 
-            // btnApply
-            // 
-            this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnApply.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnApply.Location = new System.Drawing.Point(514, 7);
-            this.btnApply.Name = "btnApply";
-            this.btnApply.Size = new System.Drawing.Size(97, 30);
-            this.btnApply.TabIndex = 1;
-            this.btnApply.Text = "Apply";
-            this.btnApply.UseVisualStyleBackColor = true;
-            // 
             // menuStrip1
             // 
+            this.menuStrip1.BackColor = System.Drawing.Color.White;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.editToolStripMenuItem,
             this.viewToolStripMenuItem,
@@ -224,6 +202,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.Size = new System.Drawing.Size(725, 24);
             this.menuStrip1.TabIndex = 15;
             this.menuStrip1.Text = "menuStrip1";
@@ -440,6 +419,26 @@ namespace MW5.Plugins.TableEditor.Views
             this._grid.TableSource = null;
             this._grid.VirtualMode = true;
             // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnSaveChanges.IsBackStageButton = false;
+            this.btnSaveChanges.Location = new System.Drawing.Point(537, 9);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(85, 26);
+            this.btnSaveChanges.TabIndex = 26;
+            this.btnSaveChanges.Text = "Apply";
+            // 
+            // btnClose
+            // 
+            this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnClose.IsBackStageButton = false;
+            this.btnClose.Location = new System.Drawing.Point(628, 9);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(85, 26);
+            this.btnClose.TabIndex = 27;
+            this.btnClose.Text = "Close";
+            // 
             // TableEditorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -472,8 +471,6 @@ namespace MW5.Plugins.TableEditor.Views
         internal System.Windows.Forms.Button btnQuery;
         private System.Windows.Forms.Button btnZoomToSelected;
         private System.Windows.Forms.Label _lblAmountSelected;
-        private System.Windows.Forms.Button btnClose;
-        private System.Windows.Forms.Button btnApply;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuAddField;
@@ -505,6 +502,8 @@ namespace MW5.Plugins.TableEditor.Views
         internal System.Windows.Forms.Button btnShowSelected;
         private System.Windows.Forms.ToolTip toolTip1;
         internal System.Windows.Forms.Button btnStartEdit;
+        private Syncfusion.Windows.Forms.ButtonAdv btnClose;
+        private Syncfusion.Windows.Forms.ButtonAdv btnSaveChanges;
 
     }
 }

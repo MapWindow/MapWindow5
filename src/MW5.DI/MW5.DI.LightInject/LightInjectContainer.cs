@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 using LightInject;
 using MW5.Plugins.Mvp;
 
@@ -60,16 +61,16 @@ namespace MW5.DI.LightInject
             return this;
         }
 
-        public void Run<TPresenter, TArgs>(TArgs arg) where TPresenter : class, IPresenter<TArgs>
+        public bool Run<TPresenter, TArgs>(TArgs arg, IWin32Window parent = null) where TPresenter : class, IPresenter<TArgs>
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run(arg);
+            return presenter.Run(arg, parent);
         }
 
-        public void Run<TPresenter>() where TPresenter : class, IPresenter
+        public bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter
         {
             var presenter = GetInstance<TPresenter>();
-            presenter.Run();
+            return presenter.Run(parent);
         }
 
         public TService Resolve<TService>() where TService : class

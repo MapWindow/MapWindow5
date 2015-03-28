@@ -135,7 +135,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             using (var form = new GenerateCategoriesForm(_context, _layer))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     Enabled = false;
                     Cursor = Cursors.WaitCursor;
@@ -164,7 +164,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             using (var form = new AddCategoriesForm())
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     var blend = form.icbColors.ColorSchemes.List[form.icbColors.SelectedIndex];
                     var scheme = blend.ToColorScheme();
@@ -322,7 +322,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 
                 using (var form = new QueryBuilderForm(_layer, category.Expression, false))
                 {
-                    if (_context.View.ShowDialog(form ,this))
+                    if (_context.View.ShowChildView(form ,this))
                     {
                         category.Expression = form.Tag.ToString();
                         txtExpression.Text = category.Expression;
@@ -359,7 +359,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             {
                 form.Text = "Category drawing options";
 
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     RefreshControlState();
                     dgvCategories.Invalidate();

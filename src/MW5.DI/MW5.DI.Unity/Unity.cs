@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using MW5.Plugins.Mvp;
 
@@ -58,16 +59,16 @@ namespace MW5.DI.Unity
             return this;
         }
 
-        public void Run<TPresenter, TArgument>(TArgument arg) where TPresenter : class, IPresenter<TArgument>
+        public bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null) where TPresenter : class, IPresenter<TArgument>
         {
             var p = GetInstance<TPresenter>();
-            p.Run(arg);
+            return p.Run(arg);
         }
 
-        public void Run<TPresenter>() where TPresenter : class, IPresenter
+        public bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter
         {
             var p = GetInstance<TPresenter>();
-            p.Run();
+            return p.Run();
         }
 
         public TService Resolve<TService>() where TService : class

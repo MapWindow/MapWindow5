@@ -19,12 +19,10 @@ namespace MW5.Plugins.TableEditor.Views
     {
         private IAttributeTable _table;
 
-        public DeleteFieldsView(IAppContext context):
-            base(context)
+        public DeleteFieldsView(IAppView appView):
+            base(appView)
         {
             InitializeComponent();
-
-            btnOK.Click += (s, e) => FireOkClicked();
 
             clb.ItemCheck += clb_ItemCheck;
         }
@@ -68,9 +66,14 @@ namespace MW5.Plugins.TableEditor.Views
 
         }
 
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
+        }
+
         private void clb_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            btnOK.Enabled = clb.SelectedItems.Count > 0;
+            btnOk.Enabled = clb.SelectedItems.Count > 0;
         }
     }
 }

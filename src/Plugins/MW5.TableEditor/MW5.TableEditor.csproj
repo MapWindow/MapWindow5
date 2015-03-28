@@ -114,6 +114,7 @@
     </Compile>
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Editor\TableEditorCommand.cs" />
+    <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Views\DeleteFieldsPresenter.cs" />
     <Compile Include="Views\DeleteFieldsView.cs">
       <SubType>Form</SubType>

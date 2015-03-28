@@ -19,7 +19,8 @@ namespace MW5.Services.Views
 {
     public partial class CreateLayerView : MapWindowView, ICreateLayerView
     {
-        public CreateLayerView(IAppContext context) : base(context)
+        public CreateLayerView(IAppView appView)
+            : base(appView)
         {
             InitializeComponent();
 
@@ -36,13 +37,16 @@ namespace MW5.Services.Views
                 _layerTypeComboBox.Items.Add(item);
             }
             _layerTypeComboBox.SetValue(GeometryType.Point);
-
-            _okButton.Click += (s, e) => FireOkClicked();
         }
 
         public void UpdateView()
         {
             
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return _okButton; }
         }
 
         public string LayerName

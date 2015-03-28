@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
 {
@@ -18,6 +19,10 @@ namespace MW5.Plugins.Mvp
         {
             View = view;
             View.OkClicked += OnViewOkClicked;
+            if (View.OkButton != null)
+            {
+                View.OkButton.Click += (s, e) => OnViewOkClicked();
+            }
         }
 
         private void OnViewOkClicked()
@@ -29,13 +34,18 @@ namespace MW5.Plugins.Mvp
             }
         }
 
-        public bool Run(bool modal = true)
+        public bool Run(IWin32Window parent = null)
         {
-            View.ShowView(modal);
+            View.ShowView(parent);
             return Success;
         }
 
         public abstract bool ViewOkClicked();
+
+        public IWin32Window ViewHandle
+        {
+            get { return View as IWin32Window; }
+        }
     }
 
     /// <summary>
@@ -51,10 +61,10 @@ namespace MW5.Plugins.Mvp
             
         }
 
-        public bool Run(TArg argument, bool modal = true)
+        public bool Run(TArg argument, IWin32Window parent = null)
         {
             Init(argument);
-            View.ShowView(modal);
+            View.ShowView(parent);
             return Success;
         }
 

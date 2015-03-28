@@ -22,6 +22,7 @@ namespace MW5
                 .RegisterSingleton<IAppContext, AppContext>()
                 .RegisterView<ISetProjectionView, SetProjectionView>()
                 .RegisterView<IConfigView, ConfigView>()
+                .RegisterSingleton<IAppView, AppView>()
                 .RegisterInstance<IApplicationContainer>(container);
             
             Services.CompositionRoot.Compose(container);

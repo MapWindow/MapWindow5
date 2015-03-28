@@ -66,6 +66,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
@@ -118,6 +119,8 @@
     <Compile Include="Mvp\IPresenter.cs" />
     <Compile Include="Mvp\IView.cs" />
     <Compile Include="Mvp\IMenuProvider.cs" />
+    <Compile Include="Mvp\IViewInternal.cs" />
+    <Compile Include="Mvp\ViewStyle.cs" />
     <Compile Include="PluginBroadcaster.cs" />
     <Compile Include="PluginEnumerations.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />

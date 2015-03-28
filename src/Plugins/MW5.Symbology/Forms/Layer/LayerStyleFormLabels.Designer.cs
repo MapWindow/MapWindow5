@@ -45,7 +45,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new LabelStyleForm(_context, _layer))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     _shapefile.Labels.Visible = true;
                     DrawLabelsPreview();
@@ -70,7 +70,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             using (var form = new LabelStyleForm(_context, _layer))
             {
-                _context.View.ShowDialog(form, this);
+                _context.View.ShowChildView(form, this);
             }
 
             // updating controls (even if cancel was hit, a user could have applied the options)

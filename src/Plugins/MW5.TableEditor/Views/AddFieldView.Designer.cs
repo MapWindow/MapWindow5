@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblWidth = new System.Windows.Forms.Label();
             this.lblPrecision = new System.Windows.Forms.Label();
             this.fldPrecision = new System.Windows.Forms.NumericUpDown();
             this.fldWidth = new System.Windows.Forms.NumericUpDown();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.lblType = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
             this.txtFieldName = new System.Windows.Forms.TextBox();
             this.cboFieldType = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.fldPrecision)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fldWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboFieldType)).BeginInit();
@@ -97,25 +98,6 @@
             0,
             0});
             // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancel.Location = new System.Drawing.Point(197, 186);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 25;
-            this.btnCancel.Text = "Cancel";
-            // 
-            // btnOK
-            // 
-            this.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOK.Location = new System.Drawing.Point(116, 186);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 24;
-            this.btnOK.Text = "OK";
-            // 
             // lblType
             // 
             this.lblType.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -152,18 +134,46 @@
             this.cboFieldType.Size = new System.Drawing.Size(129, 21);
             this.cboFieldType.TabIndex = 28;
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.IsBackStageButton = false;
+            this.btnCancel.Location = new System.Drawing.Point(188, 180);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(85, 26);
+            this.btnCancel.TabIndex = 30;
+            this.btnCancel.Text = "Cancel";
+            // 
+            // btnOk
+            // 
+            this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnOk.ForeColor = System.Drawing.Color.White;
+            this.btnOk.IsBackStageButton = false;
+            this.btnOk.Location = new System.Drawing.Point(98, 180);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(85, 26);
+            this.btnOk.TabIndex = 29;
+            this.btnOk.Text = "Ok";
+            // 
             // AddFieldView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(284, 221);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.cboFieldType);
             this.Controls.Add(this.lblWidth);
             this.Controls.Add(this.lblPrecision);
             this.Controls.Add(this.fldPrecision);
             this.Controls.Add(this.fldWidth);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.lblType);
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.txtFieldName);
@@ -183,11 +193,11 @@
         internal System.Windows.Forms.Label lblPrecision;
         internal System.Windows.Forms.NumericUpDown fldPrecision;
         internal System.Windows.Forms.NumericUpDown fldWidth;
-        internal System.Windows.Forms.Button btnCancel;
-        internal System.Windows.Forms.Button btnOK;
         internal System.Windows.Forms.Label lblType;
         internal System.Windows.Forms.Label lblName;
         internal System.Windows.Forms.TextBox txtFieldName;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboFieldType;
+        private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
+        private Syncfusion.Windows.Forms.ButtonAdv btnOk;
     }
 }

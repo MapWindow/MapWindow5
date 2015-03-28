@@ -228,7 +228,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             using (var form = new ColorSchemeForm(blend))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     _listBox1.Items[_listBox1.SelectedIndex] = form.Blend;
                     _listBox1.Refresh();
@@ -252,7 +252,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             using (var form = new ColorSchemeForm(blend))
             {
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     _listBox1.Items.Add(form.Blend);
                     _listBox1.SelectedIndex = _listBox1.Items.Count - 1;

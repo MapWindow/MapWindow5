@@ -83,7 +83,7 @@ namespace MW5.Plugins.TableEditor
             var layer = _context.Map.GetLayer(e.LayerHandle);
             if (layer.IsVector)
             {
-                _presenter.Run(layer, false);    
+                _presenter.Run(layer);    
             }
         }
     }

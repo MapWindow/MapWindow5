@@ -10,8 +10,8 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IAppView
     {
-        bool ShowDialog(Form form, bool dialog = true);
-        bool ShowDialog(Form form, IWin32Window parent, bool dialog = true);
+        bool ShowChildView(Form form, bool modal = true);
+        bool ShowChildView(Form form, IWin32Window parent, bool modal = true);
         void Update();
         IWin32Window MainForm { get; }
     }

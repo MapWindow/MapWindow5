@@ -107,7 +107,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             using (var form = FormHelper.GetSymbologyForm(_context, _layer.Handle, _shapefile.Style, true))
             {
                 form.Text = "Default drawing options";
-                if (_context.View.ShowDialog(form, this))
+                if (_context.View.ShowChildView(form, this))
                 {
                     Appearance2Controls();
                     DrawAppearancePreview();

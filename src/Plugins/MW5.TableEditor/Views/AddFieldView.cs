@@ -17,15 +17,13 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public partial class AddFieldView : MapWindowView, IAddFieldView
     {
-        public AddFieldView(IAppContext context):
-            base(context)
+        public AddFieldView(IAppView appView):
+            base(appView)
         {
             InitializeComponent();
 
             cboFieldType.AddItemsFromEnum<AttributeType>();
             cboFieldType.SetValue(AttributeType.String);
-
-            btnOK.Click += (s, e) => FireOkClicked();
         }
 
         public string FieldName
@@ -51,6 +49,11 @@ namespace MW5.Plugins.TableEditor.Views
         public void UpdateView()
         {
             // empty
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
         }
     }
 }

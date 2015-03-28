@@ -12,15 +12,27 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public partial class TableEditorView : MapWindowView, ITableEditorView
     {
-        public TableEditorView(IAppContext context, RowManager rowManager): base(context)
+        public TableEditorView(IAppView appView, RowManager rowManager)
+            : base(appView)
         {
-            if (context == null) throw new ArgumentNullException("context");
             if (rowManager == null) throw new ArgumentNullException("rowManager");
 
             InitializeComponent();
 
             _grid.RowManager = rowManager;
             _grid.SelectionChanged += (s, e) => Invoke(SelectionChanged);
+        }
+
+        public override Mvp.ViewStyle Style
+        {
+            get
+            {
+                return new Mvp.ViewStyle()
+                {
+                    Modal = false,
+                    Sizable = true,
+                };
+            }
         }
 
         public event Action SelectionChanged;
@@ -39,6 +51,11 @@ namespace MW5.Plugins.TableEditor.Views
         private void Clear()
         {
             _grid.TableSource = null;
+        }
+
+        public void UpdateDatasource()
+        {
+            SetDatasource(_grid.TableSource);
         }
 
         public void SetDatasource(Shapefile sf)
@@ -67,6 +84,8 @@ namespace MW5.Plugins.TableEditor.Views
             mnuRemoveField.Enabled = editing;
             mnuRenameField.Enabled = editing;
 
+            btnSaveChanges.Enabled = _grid.TableSource.EditingTable;
+
             UpdateSelectedCount(_grid.SelectedCount);
         }
 
@@ -78,28 +97,22 @@ namespace MW5.Plugins.TableEditor.Views
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get {
-                return from ToolStripMenuItem item in menuStrip1.Items select item.DropDownItems;
-            }
+            get { return from ToolStripMenuItem item in menuStrip1.Items select item.DropDownItems; }
         }
 
         public IEnumerable<Control> Buttons
         {
-            get
-            {
-                foreach (var item in panel1.Controls)
-                {
-                    if (item is ButtonBase)
-                    {
-                        yield return item as Control;
-                    }
-                }
-            }
+            get { return panel1.Controls.OfType<ButtonBase>().Select(item => item as Control); }
         }
 
         public IEnumerable<IToolbar> Toolbars
         {
             get { yield break; }
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return null; }
         }
     }
 }

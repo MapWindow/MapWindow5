@@ -40,7 +40,7 @@ namespace MW5.Plugins.TableEditor.Menu
                     var layer = _context.Map.Layers.SelectedLayer;
                     if (layer.IsVector)
                     {
-                        _presenter.Run(layer, false);
+                        _presenter.Run(layer);
                     }
                     break;
             }

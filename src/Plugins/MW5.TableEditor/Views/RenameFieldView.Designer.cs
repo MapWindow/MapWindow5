@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.Label2 = new System.Windows.Forms.Label();
             this.txtNewName = new System.Windows.Forms.TextBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
             this.cboField = new System.Windows.Forms.ComboBox();
             this.Label1 = new System.Windows.Forms.Label();
+            this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.SuspendLayout();
             // 
             // Label2
@@ -52,25 +53,6 @@
             this.txtNewName.Size = new System.Drawing.Size(212, 20);
             this.txtNewName.TabIndex = 16;
             // 
-            // btnCancel
-            // 
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnCancel.Location = new System.Drawing.Point(161, 119);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 15;
-            this.btnCancel.Text = "Cancel";
-            // 
-            // btnOK
-            // 
-            this.btnOK.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnOK.Location = new System.Drawing.Point(80, 119);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 23);
-            this.btnOK.TabIndex = 14;
-            this.btnOK.Text = "OK";
-            // 
             // cboField
             // 
             this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -88,15 +70,43 @@
             this.Label1.TabIndex = 12;
             this.Label1.Text = "Field to Rename:";
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.IsBackStageButton = false;
+            this.btnCancel.Location = new System.Drawing.Point(151, 118);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(85, 26);
+            this.btnCancel.TabIndex = 34;
+            this.btnCancel.Text = "Cancel";
+            // 
+            // btnOk
+            // 
+            this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnOk.ForeColor = System.Drawing.Color.White;
+            this.btnOk.IsBackStageButton = false;
+            this.btnOk.Location = new System.Drawing.Point(61, 118);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(85, 26);
+            this.btnOk.TabIndex = 33;
+            this.btnOk.Text = "Ok";
+            // 
             // RenameFieldView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(248, 151);
+            this.CancelButton = this.btnCancel;
+            this.ClientSize = new System.Drawing.Size(248, 155);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.txtNewName);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOK);
             this.Controls.Add(this.cboField);
             this.Controls.Add(this.Label1);
             this.Name = "RenameFieldView";
@@ -110,9 +120,9 @@
 
         internal System.Windows.Forms.Label Label2;
         internal System.Windows.Forms.TextBox txtNewName;
-        internal System.Windows.Forms.Button btnCancel;
-        internal System.Windows.Forms.Button btnOK;
         internal System.Windows.Forms.ComboBox cboField;
         internal System.Windows.Forms.Label Label1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
+        private Syncfusion.Windows.Forms.ButtonAdv btnOk;
     }
 }

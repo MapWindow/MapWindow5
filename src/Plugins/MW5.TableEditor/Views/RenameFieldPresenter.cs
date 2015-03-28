@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor.Views
@@ -37,9 +38,9 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override bool ViewOkClicked()
         {
-            string msg = string.Empty;
+            string msg;
 
-            if (!Validate(ref msg))
+            if (!Validate(out msg))
             {
                 _messageService.Info(msg);
                 return false;
@@ -49,7 +50,7 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        private bool Validate(ref string message)
+        private bool Validate(out string message)
         {
             if (View.FieldIndex == -1)
             {
@@ -57,26 +58,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return false;
             }
 
-            string newName = View.NewName;
-            if (newName == string.Empty)
-            {
-                message = "Please enter a name.";
-                return false;
-            }
-
-            if (newName.Length > 10)
-            {
-                message = "Max fieldlength is 10.";
-                return false;
-            }
-
-            if (_table.Fields.Any(f => f.Name.ToLower() == newName))
-            {
-                message = "Fieldname already exists or has been previously added/removed in this session. Apply or cancel your changes and try again.";
-                return false;
-            }
-
-            return true;
+            return _table.ValidateField(View.NewName, out message);
         }
     }
 }

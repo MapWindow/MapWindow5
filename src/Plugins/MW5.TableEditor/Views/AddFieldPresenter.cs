@@ -6,20 +6,25 @@ using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public class AddFieldPresenter: BasePresenter<IAddFieldView, IFeatureSet>
+    public class AddFieldPresenter: BasePresenter<IAddFieldView, IAttributeTable>
     {
         private readonly IAddFieldView _view;
-        private IFeatureSet _featureSet;
+        private readonly IMessageService _messageService;
+        private IAttributeTable _table;
 
-        public AddFieldPresenter(IAddFieldView view) : base(view)
+        public AddFieldPresenter(IAddFieldView view, IMessageService messageService) : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
+            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _view = view;
+            _messageService = messageService;
         }
 
         private FeatureField Field
@@ -39,23 +44,21 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override bool ViewOkClicked()
         {
-            _featureSet.Fields.Add(Field);
+            string msg;
+            if (_table.ValidateField(View.FieldName, out msg))
+            {
+                _messageService.Info(msg);
+                return false;
+            }
+            
+            _table.Fields.Add(Field);
             return true;
         }
 
-        public override void Init(IFeatureSet fs)
+        public override void Init(IAttributeTable table)
         {
-            if (fs == null)
-            {
-                throw new ArgumentNullException("fs");
-            }
-
-            if (!fs.EditingTable)
-            {
-                throw new InvalidOperationException("Fields can be added only after edit mode is started for the table.");
-            }
-
-            _featureSet = fs;
+            table.CheckEditMode(true);
+            _table = table;
         }
     }
 }
