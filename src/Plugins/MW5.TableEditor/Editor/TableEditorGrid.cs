@@ -99,7 +99,16 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void GridColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            bool ascending = !(RowManager.SortColumnIndex == e.ColumnIndex && RowManager.SortAscending);
+            if (e.Button != MouseButtons.Left)
+            {
+                return;
+            }
+
+            bool ascending = true;
+            if (RowManager.SortColumnIndex == e.ColumnIndex)
+            {
+                ascending = !RowManager.SortAscending;
+            }
 
             var fld = _table.Field[e.ColumnIndex];
             switch (fld.Type)
@@ -139,6 +148,12 @@ namespace MW5.Plugins.TableEditor.Editor
             }
 
             list.Sort();
+
+            if (!ascending)
+            {
+                list.Reverse();
+            }
+
             var result = list.Select(item => item.RealIndex);
 
             RowManager.SetSorting(cmnIndex, ascending, result);
