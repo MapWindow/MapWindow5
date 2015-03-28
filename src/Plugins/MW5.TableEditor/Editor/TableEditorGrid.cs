@@ -47,11 +47,6 @@ namespace MW5.Plugins.TableEditor.Editor
             get { return _shapefile; }
         }
 
-        public int SelectedCount
-        {
-            get { return _shapefile.NumSelected; }
-        }
-
         private void InitColumns(Table table)
         {
             Columns.Clear();

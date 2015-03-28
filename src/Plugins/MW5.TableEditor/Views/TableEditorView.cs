@@ -22,7 +22,11 @@ namespace MW5.Plugins.TableEditor.Views
 
             _grid.CurrentCellBorderColor = Color.LightGreen;
             _grid.RowManager = rowManager;
-            _grid.SelectionChanged += (s, e) => Invoke(SelectionChanged);
+            _grid.SelectionChanged += (s, e) =>
+            {
+                Invoke(SelectionChanged);
+                UpdateSelectedCount();
+            };
         }
 
         public override Mvp.ViewStyle Style
@@ -91,12 +95,12 @@ namespace MW5.Plugins.TableEditor.Views
 
             btnSaveChanges.Enabled = _grid.TableSource.EditingTable;
 
-            UpdateSelectedCount(_grid.SelectedCount);
+            UpdateSelectedCount();
         }
 
-        private void UpdateSelectedCount(int numSelected)
+        private void UpdateSelectedCount()
         {
-            string msg = string.Format("{0} of {1} selected", numSelected, _grid.TableSource.NumShapes);
+            string msg = string.Format("{0} of {1} selected", _grid.TableSource.NumSelected, _grid.TableSource.NumShapes);
             _lblAmountSelected.Text = msg;
         }
 
