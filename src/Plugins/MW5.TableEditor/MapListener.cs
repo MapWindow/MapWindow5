@@ -69,7 +69,7 @@ namespace MW5.Plugins.TableEditor
 
             if (e.LayerHandle != -1)
             {
-                _presenter.CheckAndSaveChanges();
+                _presenter.CheckAndSaveChanges(false);
             }
 
             if (_context.Layers.GetFeatureSet(e.LayerHandle) == null)

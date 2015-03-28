@@ -20,7 +20,11 @@ namespace MW5.Plugins.Mvp
         protected ComplexPresenter(TView view)
             : base(view)
         {
-            view.OkClicked += OnViewOkClickedCore;
+            View.OkClicked += OnViewOkClickedCore;
+            if (View.OkButton != null)
+            {
+                View.OkButton.Click += (s, e) => OnViewOkClickedCore();
+            }
         }
 
         public bool Success { get; protected set; }

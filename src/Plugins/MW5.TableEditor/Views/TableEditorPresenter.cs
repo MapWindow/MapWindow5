@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
@@ -39,19 +40,40 @@ namespace MW5.Plugins.TableEditor.Views
             return ViewVisible && _layer.Handle == layerHandle;
         }
 
-        public bool HasChanges
-        {
-            get { return false; }
-        }
-
         public void UpdateSelection()
         {
             View.UpdateView();
         }
 
-        public bool CheckAndSaveChanges()
+        public bool CheckAndSaveChanges(bool withCancel)
         {
-            return true; 
+            if (_shapefile.EditingTable)
+            {
+                string msg = "Save attribute table changes?";
+
+                bool saveChanges;
+                if (withCancel)
+                {
+                    var dialogResult = MessageService.Current.AskWithCancel(msg);
+                    if (dialogResult == DialogResult.Cancel)
+                    {
+                        return false;
+                    }
+                    saveChanges = dialogResult == DialogResult.Yes;
+                }
+                else
+                {
+                    saveChanges = MessageService.Current.Ask(msg);
+                }
+
+                if (saveChanges)
+                {
+                    RunCommand(TableEditorCommand.SaveChanges);
+                    return true;
+                }
+            }
+
+            return true;
         }
 
         public override void Init(ILayer layer)
@@ -189,7 +211,11 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override bool ViewOkClicked()
         {
-            return true;    // there is no ok button so far
+            if (CheckAndSaveChanges(true))
+            {
+                RunCommand(TableEditorCommand.Close);
+            }
+            return false;   // we actually want to hide and not to close the form
         }
     }
 }

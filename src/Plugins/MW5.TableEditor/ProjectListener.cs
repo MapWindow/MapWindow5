@@ -40,18 +40,9 @@ namespace MW5.Plugins.TableEditor
                 return;
             }
 
-            if (_presenter.HasChanges)
+            if (!_presenter.CheckAndSaveChanges(true))
             {
-                var result = _messageService.AskWithCancel("Do you want to save changes in attribute table of the layer?");
-                if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                }
-
-                if (result == DialogResult.Yes)
-                {
-                    _presenter.RunCommand(TableEditorCommand.SaveChanges);
-                }
+                e.Cancel = true;
             }
         }
     }

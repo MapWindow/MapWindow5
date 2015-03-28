@@ -103,7 +103,11 @@ namespace MW5.Plugins.TableEditor.Views
 
         public IEnumerable<Control> Buttons
         {
-            get { return panel1.Controls.OfType<ButtonBase>().Select(item => item as Control); }
+            get 
+            { 
+                var list =panel1.Controls.OfType<ButtonBase>().Select(item => item as Control);
+                return list.Except(new List<Control>() { OkButton });
+            }
         }
 
         public IEnumerable<IToolbar> Toolbars
@@ -113,7 +117,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public ButtonBase OkButton
         {
-            get { return null; }
+            get { return btnClose; }
         }
     }
 }
