@@ -107,7 +107,6 @@
     <Compile Include="Concrete\FileDialogService.cs" />
     <Compile Include="Concrete\LayerService.cs" />
     <Compile Include="Concrete\LoggingService.cs" />
-    <Compile Include="Concrete\MessageService.cs" />
     <Compile Include="Concrete\ProjectService.cs" />
     <Compile Include="Views\CreateLayerView.cs">
       <SubType>Form</SubType>

@@ -19,7 +19,7 @@ Option Explicit On
 
 Imports System.Math
 
-Public Class clsMathParser
+Public Class MathParser
 
 
     '********************************************************************************

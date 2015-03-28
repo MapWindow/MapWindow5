@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FDB4F032-795D-4AB0-B771-35FD61EEE0AC}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>MathParser</RootNamespace>
+    <RootNamespace>MW5.Plugins.TableEditor</RootNamespace>
     <AssemblyName>MathParser</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
@@ -104,7 +104,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsMathParser.vb" />
+    <Compile Include="MathParser.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>

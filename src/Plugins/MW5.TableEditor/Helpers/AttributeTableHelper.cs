@@ -13,7 +13,7 @@ namespace MW5.Plugins.TableEditor.Helpers
         {
             errorMessage = string.Empty;
 
-            if (newName == string.Empty)
+            if (string.IsNullOrWhiteSpace(newName))
             {
                 errorMessage = "Please enter a name.";
                 return false;

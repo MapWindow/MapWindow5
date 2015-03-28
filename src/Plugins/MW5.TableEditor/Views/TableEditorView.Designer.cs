@@ -34,11 +34,13 @@ namespace MW5.Plugins.TableEditor.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableEditorView));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnStartEdit = new System.Windows.Forms.Button();
             this.btnShowSelected = new System.Windows.Forms.Button();
             this.btnJoin = new System.Windows.Forms.Button();
             this.btnUpdateMeasurements = new System.Windows.Forms.Button();
-            this.btnFieldCalculator = new System.Windows.Forms.Button();
+            this.btnCalculateField = new System.Windows.Forms.Button();
             this.btnImportFieldsFromDBF = new System.Windows.Forms.Button();
             this.btnQuery = new System.Windows.Forms.Button();
             this.btnZoomToSelected = new System.Windows.Forms.Button();
@@ -73,8 +75,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.updateMeasurementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
-            this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._grid)).BeginInit();
@@ -88,7 +88,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.panel1.Controls.Add(this.btnShowSelected);
             this.panel1.Controls.Add(this.btnJoin);
             this.panel1.Controls.Add(this.btnUpdateMeasurements);
-            this.panel1.Controls.Add(this.btnFieldCalculator);
+            this.panel1.Controls.Add(this.btnCalculateField);
             this.panel1.Controls.Add(this.btnImportFieldsFromDBF);
             this.panel1.Controls.Add(this.btnQuery);
             this.panel1.Controls.Add(this.btnZoomToSelected);
@@ -98,6 +98,26 @@ namespace MW5.Plugins.TableEditor.Views
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(725, 59);
             this.panel1.TabIndex = 14;
+            // 
+            // btnClose
+            // 
+            this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnClose.IsBackStageButton = false;
+            this.btnClose.Location = new System.Drawing.Point(628, 9);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(85, 26);
+            this.btnClose.TabIndex = 27;
+            this.btnClose.Text = "Close";
+            // 
+            // btnSaveChanges
+            // 
+            this.btnSaveChanges.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnSaveChanges.IsBackStageButton = false;
+            this.btnSaveChanges.Location = new System.Drawing.Point(537, 9);
+            this.btnSaveChanges.Name = "btnSaveChanges";
+            this.btnSaveChanges.Size = new System.Drawing.Size(85, 26);
+            this.btnSaveChanges.TabIndex = 26;
+            this.btnSaveChanges.Text = "Apply";
             // 
             // btnStartEdit
             // 
@@ -141,16 +161,16 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnUpdateMeasurements.Tag = "";
             this.toolTip1.SetToolTip(this.btnUpdateMeasurements, "Update measurements");
             // 
-            // btnFieldCalculator
+            // btnCalculateField
             // 
-            this.btnFieldCalculator.Image = ((System.Drawing.Image)(resources.GetObject("btnFieldCalculator.Image")));
-            this.btnFieldCalculator.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btnFieldCalculator.Location = new System.Drawing.Point(120, 3);
-            this.btnFieldCalculator.Name = "btnFieldCalculator";
-            this.btnFieldCalculator.Size = new System.Drawing.Size(32, 32);
-            this.btnFieldCalculator.TabIndex = 17;
-            this.btnFieldCalculator.Tag = "";
-            this.toolTip1.SetToolTip(this.btnFieldCalculator, "Calculate");
+            this.btnCalculateField.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculateField.Image")));
+            this.btnCalculateField.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCalculateField.Location = new System.Drawing.Point(120, 3);
+            this.btnCalculateField.Name = "btnCalculateField";
+            this.btnCalculateField.Size = new System.Drawing.Size(32, 32);
+            this.btnCalculateField.TabIndex = 17;
+            this.btnCalculateField.Tag = "";
+            this.toolTip1.SetToolTip(this.btnCalculateField, "Calculate");
             // 
             // btnImportFieldsFromDBF
             // 
@@ -419,26 +439,6 @@ namespace MW5.Plugins.TableEditor.Views
             this._grid.TableSource = null;
             this._grid.VirtualMode = true;
             // 
-            // btnSaveChanges
-            // 
-            this.btnSaveChanges.BeforeTouchSize = new System.Drawing.Size(85, 26);
-            this.btnSaveChanges.IsBackStageButton = false;
-            this.btnSaveChanges.Location = new System.Drawing.Point(537, 9);
-            this.btnSaveChanges.Name = "btnSaveChanges";
-            this.btnSaveChanges.Size = new System.Drawing.Size(85, 26);
-            this.btnSaveChanges.TabIndex = 26;
-            this.btnSaveChanges.Text = "Apply";
-            // 
-            // btnClose
-            // 
-            this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
-            this.btnClose.IsBackStageButton = false;
-            this.btnClose.Location = new System.Drawing.Point(628, 9);
-            this.btnClose.Name = "btnClose";
-            this.btnClose.Size = new System.Drawing.Size(85, 26);
-            this.btnClose.TabIndex = 27;
-            this.btnClose.Text = "Close";
-            // 
             // TableEditorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -466,7 +466,7 @@ namespace MW5.Plugins.TableEditor.Views
         protected System.Windows.Forms.Panel panel1;
         internal System.Windows.Forms.Button btnJoin;
         internal System.Windows.Forms.Button btnUpdateMeasurements;
-        internal System.Windows.Forms.Button btnFieldCalculator;
+        internal System.Windows.Forms.Button btnCalculateField;
         internal System.Windows.Forms.Button btnImportFieldsFromDBF;
         internal System.Windows.Forms.Button btnQuery;
         private System.Windows.Forms.Button btnZoomToSelected;

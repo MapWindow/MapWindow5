@@ -28,6 +28,7 @@ namespace MW5.Plugins.TableEditor
         static TableEditorPlugin()
         {
             EnumHelper.RegisterConverter(new AttributeTypeConverter());
+            EnumHelper.RegisterConverter(new CalculatorFunctionCoverter());
         }
 
         public override void RegisterServices(IApplicationContainer container)

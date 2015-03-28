@@ -138,6 +138,7 @@
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IPluginManager.cs" />
     <Compile Include="Services\IProjectService.cs" />
+    <Compile Include="Services\MessageService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">

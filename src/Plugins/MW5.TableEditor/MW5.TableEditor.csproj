@@ -113,8 +113,16 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="Editor\SortItem.cs" />
-    <Compile Include="Editor\TableEditorCommand.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
+    <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
+    <Compile Include="Views\CalculateFieldPresenter.cs" />
+    <Compile Include="Views\CalculateFieldView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CalculateFieldView.Designer.cs">
+      <DependentUpon>CalculateFieldView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\DeleteFieldsPresenter.cs" />
     <Compile Include="Views\DeleteFieldsView.cs">
       <SubType>Form</SubType>
@@ -308,6 +316,9 @@
     <EmbeddedResource Include="Forms\TableEditorForm.resx">
       <DependentUpon>TableEditorForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CalculateFieldView.resx">
+      <DependentUpon>CalculateFieldView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>

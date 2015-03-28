@@ -103,6 +103,12 @@ namespace MW5.Plugins.TableEditor.Views
         {
             switch (command)
             {
+                case TableEditorCommand.CalculateField:
+                    if (_context.Container.Run<CalculateFieldPresenter, IFeatureSet>(_layer.FeatureSet, ViewHandle))
+                    {
+                        View.UpdateDatasource();
+                    }
+                    return true;
                 case TableEditorCommand.AddField:
                     if (_context.Container.Run<AddFieldPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
                     {

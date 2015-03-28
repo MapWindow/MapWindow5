@@ -45,7 +45,7 @@ namespace MW5.Plugins.TableEditor.Views
         public override bool ViewOkClicked()
         {
             string msg;
-            if (_table.ValidateField(View.FieldName, out msg))
+            if (!_table.ValidateField(View.FieldName, out msg))
             {
                 _messageService.Info(msg);
                 return false;

@@ -83,6 +83,7 @@ namespace MW5.Plugins.TableEditor.Views
             mnuAddField.Enabled = editing;
             mnuRemoveField.Enabled = editing;
             mnuRenameField.Enabled = editing;
+            btnCalculateField.Enabled = editing;
 
             btnSaveChanges.Enabled = _grid.TableSource.EditingTable;
 

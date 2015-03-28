@@ -1,6 +1,20 @@
 ﻿namespace MW5.Plugins.TableEditor
 {
-
+    public enum TableEditorCommand
+    {
+        Close = 0,
+        SaveChanges = 1,
+        ZoomToSelected = 2,
+        ShowSelected = 3,
+        StartEdit = 4,
+        AddField = 5,
+        RemoveField = 6,
+        RenameField = 7,
+        SelectAll = 8,
+        ClearSelection = 9,
+        InvertSelection = 10,
+        CalculateField = 11,
+    }
 
     /// <summary>The unit of area.</summary>
     /// <remarks>This should be in the MW core</remarks>
@@ -59,4 +73,19 @@
         Length
     }
 
+    /// <summary>
+    /// Groups of fuctions for field calculator
+    /// </summary>
+    public enum CalculatorFunction
+    {
+        Shapes = 0,
+        Operators = 1,
+        Booleans = 2,
+        Maths = 3,
+        Angles = 4,
+        Statistics = 5,
+        Time = 6,
+        Other = 7,
+        Constants = 8,
+    }
 }

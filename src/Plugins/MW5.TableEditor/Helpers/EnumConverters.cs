@@ -25,4 +25,33 @@ namespace MW5.Plugins.TableEditor.Helpers
             return "Not defined";
         }
     }
+
+    public class CalculatorFunctionCoverter : IEnumConverter<CalculatorFunction>
+    {
+        public string GetString(CalculatorFunction value)
+        {
+            switch (value)
+            {
+                case CalculatorFunction.Shapes:
+                    return "Shapes";
+                case CalculatorFunction.Operators:
+                    return "Operators";
+                case CalculatorFunction.Booleans:
+                    return "Boolean";
+                case CalculatorFunction.Maths:
+                    return "Math";
+                case CalculatorFunction.Angles:
+                    return "Angles";
+                case CalculatorFunction.Statistics:
+                    return "Statistics";
+                case CalculatorFunction.Time:
+                    return "Time";
+                case CalculatorFunction.Other:
+                    return "Other";
+                case CalculatorFunction.Constants:
+                    return "Constants";
+            }
+            return string.Empty;
+        }
+    }
 }

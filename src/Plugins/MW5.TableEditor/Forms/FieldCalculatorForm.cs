@@ -22,7 +22,6 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
-using MathParser;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Legacy;
 using MW5.UI;
@@ -288,7 +287,7 @@ namespace MW5.Plugins.TableEditor.Forms
     {
       if (ComputationTextBox.Text != string.Empty)
       {
-        clsMathParser mathParser = new clsMathParser();
+        MathParser mathParser = new MathParser();
 
         // Make sure all open parenthesis are closed to avoid stack overrun in parser
         ComputationTextBox.Text = CloseParenthesis(ComputationTextBox.Text);
@@ -340,7 +339,7 @@ namespace MW5.Plugins.TableEditor.Forms
     /// <summary>Calculate the values for the fields</summary>
     /// <param name = "mathParser">The class which performs the calculations.</param>
     /// <returns>The status of the calculation</returns>
-    private bool CalculateValues(clsMathParser mathParser)
+    private bool CalculateValues(MathParser mathParser)
     {
       int destFieldCol = GetResultColumn();
       if (destFieldCol == -1)
@@ -356,7 +355,7 @@ namespace MW5.Plugins.TableEditor.Forms
     /// <param name = "mathParser">The class which performs the calculations.</param>
     /// <param name = "destFieldCol">The colums to write the results to.</param>
     /// <returns>The status of the calculation</returns>
-    private bool DoCalculations(clsMathParser mathParser, int destFieldCol)
+    private bool DoCalculations(MathParser mathParser, int destFieldCol)
     {
       bool retVal = true;
       bool settingAll = _dataGridView.SelectedRows.Count == 0;
