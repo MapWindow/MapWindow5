@@ -15,22 +15,15 @@ namespace MW5.Plugins.TableEditor
 {
     public static class CompositionRoot
     {
-        private static bool composed = false;
-
         public static void Compose(IApplicationContainer container)
         {
-            if (!composed)
-            {
-                container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>()
-                    .RegisterSingleton<RowManager, RowManager>()
-                    .RegisterSingleton<AppContextWrapper, AppContextWrapper>()
-                    .RegisterService<ITableEditorView, TableEditorView>()
-                    .RegisterService<IDeleteFieldsView, DeleteFieldsView>()
-                    .RegisterService<IAddFieldView, AddFieldView>()
-                    .RegisterService<IRenameFieldView, RenameFieldView>();
-                
-                composed = true;
-            }
+            container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>()
+                .RegisterSingleton<RowManager, RowManager>()
+                .RegisterSingleton<AppContextWrapper, AppContextWrapper>()
+                .RegisterService<ITableEditorView, TableEditorView>()
+                .RegisterService<IDeleteFieldsView, DeleteFieldsView>()
+                .RegisterService<IAddFieldView, AddFieldView>()
+                .RegisterService<IRenameFieldView, RenameFieldView>();
         }
     }
 }

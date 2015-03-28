@@ -5,6 +5,7 @@ using MW5.Plugins.IdentifierTestPlugin.Menu;
 using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.UI.Helpers;
 
@@ -15,12 +16,15 @@ namespace MW5.Plugins.IdentifierTestPlugin
     {
         private IAppContext _context;
         private DockPanelService _dockPanelService;
-        private MenuService _menuService;
+        private MenuListener _menuListener;
+        private MenuGenerator _menuGenerator;
         private MapListener _mapListener;
         private IdentifierControl _identifierControl;
 
-        static IdentifierTestPlugin()
+        public override void RegisterServices(IApplicationContainer container)
         {
+            CompositionRoot.Compose(container);
+
             EnumHelper.RegisterConverter(new IdentifierModeConverter());
         }
 
@@ -28,12 +32,11 @@ namespace MW5.Plugins.IdentifierTestPlugin
         {
             _context = context;
 
-            CompositionRoot.Compose(context.Container);
-
             // will better to preserve state if plugin is unloaded, therefore singleton
-            _identifierControl = context.Container.GetSingleton<IdentifierControl>();   
-            
-            _menuService = context.Container.GetInstance<MenuService>();
+            _identifierControl = context.Container.GetSingleton<IdentifierControl>();
+
+            _menuGenerator = context.Container.GetInstance<MenuGenerator>();
+            _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
             _dockPanelService = context.Container.GetInstance<DockPanelService>();
         }

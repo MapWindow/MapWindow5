@@ -12,7 +12,7 @@ using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
 {
-    [PluginExport("Shape Editor", "Sergei Leschinski", "274DCFA4-61FA-49E4-906D-E0D2E46E247B")]
+    [PluginExport()]
     public class ShapeEditor: BasePlugin
     {
         private IAppContext _context;
@@ -22,9 +22,9 @@ namespace MW5.Plugins.ShapeEditor
         private ProjectListener _projectListener;
         private MenuUpdater _menuUpdater;
 
-        public override string Description
+        public override void RegisterServices(IApplicationContainer container)
         {
-            get { return "Provides tools for editing shapefiles and other vector formats."; }
+            CompositionRoot.Compose(container);
         }
 
         public override void Initialize(IAppContext context)
@@ -32,7 +32,6 @@ namespace MW5.Plugins.ShapeEditor
             _context = context;
             
             var container = context.Container;
-            CompositionRoot.Compose(context.Container);
             
             _mapListener = container.GetInstance<MapListener>();
             _menuGenerator = container.GetInstance<MenuGenerator>();

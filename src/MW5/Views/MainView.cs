@@ -115,7 +115,10 @@ namespace MW5.Views
             UpdateStatusBar();
 
             // broadcast to plugins
-            FireViewUpdating();
+            if (_rendered)
+            {
+                FireViewUpdating();
+            }
 
             if (Form.ActiveForm == _mapControl1.ParentForm)
             {

@@ -14,15 +14,9 @@ namespace MW5.Plugins.ShapeEditor
 {
     public static class CompositionRoot
     {
-        private static bool composed;
-
         public static void Compose(IApplicationContainer container)
         {
-            if (!composed)
-            {
-                container.RegisterSingleton<IGeoprocessingService, GeoprocessingService>();
-                composed = true;
-            }
+            container.RegisterSingleton<IGeoprocessingService, GeoprocessingService>();
         }
     }
 }

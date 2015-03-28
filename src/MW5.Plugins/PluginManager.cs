@@ -204,6 +204,16 @@ namespace MW5.Plugins
 
             try
             {
+                plugin.DoRegisterServices(context.Container);
+            }
+            catch (Exception ex)
+            {
+                _messageService.Warn("Failed to register services for plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                return;
+            }
+
+            try
+            {
                 plugin.Initialize(context);
             }
             catch (Exception ex)
@@ -211,6 +221,7 @@ namespace MW5.Plugins
                 _messageService.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
                 return;
             }
+
             _active.Add(plugin.Identity);
         }
 

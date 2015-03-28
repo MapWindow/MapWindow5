@@ -18,7 +18,6 @@ namespace MW5.Menu
         
         private readonly IAppContext _context;
         private readonly IPluginManager _pluginManager;
-        private readonly IMainView _mainView;
         private readonly MenuCommands _commands;
         private readonly object _menuManager;
         private readonly object _dockingManager;
@@ -31,9 +30,9 @@ namespace MW5.Menu
 
             _context = context;
             _pluginManager = pluginManager;
-            _mainView = mainView;
-            _menuManager = _mainView.MenuManager;
-            _dockingManager = _mainView.DockingManager;
+            var mainView1 = mainView;
+            _menuManager = mainView1.MenuManager;
+            _dockingManager = mainView1.DockingManager;
             _commands = new MenuCommands(PluginIdentity.Default);
 
             InitToolbars();

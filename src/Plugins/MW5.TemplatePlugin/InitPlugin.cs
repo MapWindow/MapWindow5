@@ -6,6 +6,9 @@
 //   The initialization of the plugin.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using MW5.Plugins.Mvp;
+
 namespace MW5.Plugins.TemplatePlugin
 {
     #region
@@ -58,6 +61,14 @@ namespace MW5.Plugins.TemplatePlugin
         #region Public Methods and Operators
 
         /// <summary>
+        /// Set up container for dependency injection:
+        /// </summary>
+        public override void RegisterServices(IApplicationContainer container)
+        {
+            CompositionRoot.Compose(container);
+        }
+
+        /// <summary>
         /// The initialize method, called when the plug-in is loaded
         /// </summary>
         /// <param name="context">
@@ -67,9 +78,6 @@ namespace MW5.Plugins.TemplatePlugin
         {
             // Save to local properties:
             _context = context;
-
-            // Set up container for dependency injection:
-            CompositionRoot.Compose(context.Container);
 
             // Will better to preserve state if plugin is unloaded, therefore singleton
             // Because SampleDockWindow is injected in MenuListener and MapListener it should be call before them:

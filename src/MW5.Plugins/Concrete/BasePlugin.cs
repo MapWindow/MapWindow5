@@ -14,6 +14,7 @@ using MW5.Api.Legend.Events;
 using MW5.Api.Plugins;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Concrete
 {
@@ -22,6 +23,7 @@ namespace MW5.Plugins.Concrete
         private PluginIdentity _identity = null;
         private FileVersionInfo _fileVersionInfo;
         private bool _applicationPlugin = false;
+        private bool _registered = false;
 
         public bool IsApplicationPlugin
         {
@@ -69,6 +71,17 @@ namespace MW5.Plugins.Concrete
         public abstract void Initialize(IAppContext context);
 
         public abstract void Terminate();
+
+        public abstract void RegisterServices(IApplicationContainer container);
+
+        internal void DoRegisterServices(IApplicationContainer container)
+        {
+            if (!_registered)
+            {
+                RegisterServices(container);
+                _registered = true;
+            }
+        }
 
         internal void SetApplicationPlugin(bool value)
         {

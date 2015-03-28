@@ -8,20 +8,15 @@ using MW5.UI.Menu;
 
 namespace MW5.Plugins.IdentifierTestPlugin.Menu
 {
-    public class MenuService: MenuServiceBase
+    public class MenuListener: MenuServiceBase
     {
         private readonly IdentifierTestPlugin _plugin;
-        private readonly MenuCommands _commands;
-
-        public MenuService(IAppContext context, IdentifierTestPlugin plugin):
+        
+        public MenuListener(IAppContext context, IdentifierTestPlugin plugin):
             base(context, plugin.Identity)
         {
             if (plugin == null) throw new ArgumentNullException("plugin");
             _plugin = plugin;
-
-            _commands = new MenuCommands(plugin.Identity);
-
-            InitToolbar(context, plugin.Identity);
             
             plugin.ItemClicked += plugin_ItemClicked;
             plugin.ViewUpdating += ViewUpdating;
@@ -34,16 +29,6 @@ namespace MW5.Plugins.IdentifierTestPlugin.Menu
             {
                 item.Checked = _context.Map.MapCursor == MapCursor.Identify;
             }
-        }
-
-        private void InitToolbar(IAppContext context, PluginIdentity identity)
-        {
-            var bar = context.Toolbars.Add("Identifier", identity);
-            bar.DockState = ToolbarDockState.Top;
-
-            var items = bar.Items;
-
-            items.AddButton(_commands[MenuKeys.IdentifyTool]);
         }
 
         void plugin_ItemClicked(object sender, MenuItemEventArgs e)

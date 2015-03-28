@@ -2,6 +2,7 @@
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
@@ -20,13 +21,6 @@ namespace MW5.Plugins.Symbology
         private LabelMover _labelMover;
         private SymbologyMetadataService _metadataService;
 
-        static SymbologyPlugin()
-        {
-            EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
-
-            ColorSchemeProvider.Load();
-        }
-
         internal static IMessageService Msg
         {
             get { return _context.Container.GetSingleton<IMessageService>(); }
@@ -42,6 +36,13 @@ namespace MW5.Plugins.Symbology
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
             service.Save(layerHandle, new SymbologyMetadata());
+        }
+
+        public override void RegisterServices(IApplicationContainer container)
+        {
+            EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
+
+            ColorSchemeProvider.Load();
         }
 
         public override void Initialize(IAppContext context)
