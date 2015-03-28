@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
@@ -19,6 +20,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             InitializeComponent();
 
+            _grid.CurrentCellBorderColor = Color.LightGreen;
             _grid.RowManager = rowManager;
             _grid.SelectionChanged += (s, e) => Invoke(SelectionChanged);
         }
@@ -76,9 +78,11 @@ namespace MW5.Plugins.TableEditor.Views
             _grid.RowCount = 0;     // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
             _grid.RowCount = RowManager.Count;
 
-            _grid.Invalidate();
-
             bool editing = _grid.TableSource.EditingTable;
+            _grid.ReadOnly = !editing;
+
+            _grid.Invalidate();
+            
             btnStartEdit.Enabled = !editing;
             mnuAddField.Enabled = editing;
             mnuRemoveField.Enabled = editing;

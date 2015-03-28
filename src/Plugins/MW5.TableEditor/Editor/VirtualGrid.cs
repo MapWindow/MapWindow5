@@ -29,8 +29,9 @@ namespace MW5.Plugins.TableEditor.Editor
             RowPrePaint += GridRowPrePaint;
             RowPostPaint += GridRowPostPaint;
             RowHeaderMouseClick += GridRowHeaderMouseClick;
+            CellPainting += VirtualGrid_CellPainting;
         }
-
+        
         protected abstract Shapefile Shapefile { get; }
 
         public Color SelectionColor
@@ -38,6 +39,8 @@ namespace MW5.Plugins.TableEditor.Editor
             get { return _selectionColor; }
             set { _selectionColor = value; }
         }
+
+        public Color CurrentCellBorderColor { get; set; }
 
         public RowManager RowManager
         {
@@ -57,7 +60,6 @@ namespace MW5.Plugins.TableEditor.Editor
 
             if (Shapefile.ShapeSelected[realIndex])
             {
-                e.PaintParts &= ~DataGridViewPaintParts.SelectionBackground;
                 e.PaintParts &= ~DataGridViewPaintParts.Background;
                 e.PaintHeader(false);
                 e.Graphics.FillRectangle(new SolidBrush(_selectionColor), rowBounds);
@@ -90,6 +92,26 @@ namespace MW5.Plugins.TableEditor.Editor
             }
 
             FireSelectionChanged();
+        }
+
+        private void VirtualGrid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            if (CurrentCell == null || CurrentCell.RowIndex != e.RowIndex || CurrentCell.ColumnIndex != e.ColumnIndex)
+            {
+                return;
+            }
+
+            e.Paint(e.CellBounds, DataGridViewPaintParts.All & ~DataGridViewPaintParts.Border);
+            using (Pen p = new Pen(CurrentCellBorderColor, 3))
+            {
+                Rectangle rect = e.CellBounds;
+                rect.X += 1;
+                rect.Y += 1;
+                rect.Width -= 3;
+                rect.Height -= 3;
+                e.Graphics.DrawRectangle(p, rect);
+            }
+            e.Handled = true;
         }
 
         private void OnRowHeaderClicked(int rowIndex, Keys keys)
