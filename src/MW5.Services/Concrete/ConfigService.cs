@@ -16,7 +16,7 @@ namespace MW5.Services.Concrete
     {
         private readonly IPluginManager _manager;
         private readonly IMessageService _messageService;
-        private static AppSettings _config;
+        private static AppConfig _config;
         private List<Guid> _applicationPlugins;
 
         public ConfigService(IPluginManager manager, IMessageService messageService)
@@ -27,10 +27,10 @@ namespace MW5.Services.Concrete
             _manager = manager;
             _messageService = messageService;
 
-            _config = new AppSettings();
+            _config = new AppConfig();
         }
 
-        public AppSettings Config
+        public AppConfig Config
         {
             get { return _config; }
         }

@@ -10,7 +10,6 @@ namespace MW5.Api.Legend.Events
     {
         public int CurrentWidth { get; internal set; }
         public int HeightToDraw { get; set; }
-        public bool Handled { get; set; }
 
         public LayerMeasureEventArgs(int layerHandle, int currentWidth, int heightToDraw) : base(layerHandle)
         {

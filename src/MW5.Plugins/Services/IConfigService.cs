@@ -11,7 +11,7 @@ namespace MW5.Plugins.Services
     {
         bool Save();
         bool Load();
-        AppSettings Config { get; }
+        AppConfig Config { get; }
         IEnumerable<Guid> ApplicationPlugins { get; }
         string ConfigPath { get; }
     }

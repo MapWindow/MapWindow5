@@ -201,7 +201,7 @@ namespace MW5.Plugins.Symbology.Services
                     var fs = layer.FeatureSet;
 
                     var env = new Envelope();
-                    env.SetBounds(x, y, x, y);
+                    env.SetBounds(x, x, y, y);
 
                     var position = (VerticalPosition)z;
 

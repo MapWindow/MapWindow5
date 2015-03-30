@@ -36,6 +36,8 @@ namespace MW5.Api.Interfaces
 
         void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode);
 
+        ISpatialReference Projection { get; }
+
         #region Not implemented
 
         // bool SkipOnSaving { get; set; }

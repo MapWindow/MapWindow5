@@ -251,7 +251,7 @@ namespace MW5.Api.Concrete
             get { return new Envelope(_grid.Extents); }
         }
 
-        public ISpatialReference SpatialReference
+        public ISpatialReference Projection
         {
             get { return new SpatialReference(_grid.Header.GeoProjection); }
         }
@@ -259,6 +259,11 @@ namespace MW5.Api.Concrete
         public bool IsEmpty
         {
             get { return _grid.SourceType == tkGridSourceType.gstUninitialized; }
+        }
+
+        public LayerType LayerType
+        {
+            get { return LayerType.Grid; }
         }
 
         public void Dispose()

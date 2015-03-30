@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
@@ -202,7 +204,7 @@ namespace MW5.Api.Concrete
             get { return _layer.GetConnectionString(); }
         }
 
-        public ISpatialReference SpatialReference
+        public ISpatialReference Projection
         {
             get { return new SpatialReference(_layer.GeoProjection); }
         }
@@ -210,6 +212,11 @@ namespace MW5.Api.Concrete
         public bool IsEmpty
         {
             get { return _layer.FeatureCount == 0; }
+        }
+
+        public LayerType LayerType
+        {
+            get { return LayerType.VectorLayer; }
         }
 
         public void Close()
@@ -279,5 +286,6 @@ namespace MW5.Api.Concrete
         //}
 
         #endregion
+
     }
 }

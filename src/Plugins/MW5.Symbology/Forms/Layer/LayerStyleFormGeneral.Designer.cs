@@ -72,7 +72,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                         "Source: " + _shapefile.Filename + Environment.NewLine +
                         "Bounds X: " + String.Format("{0:F2}", ext.MaxX) + " to " + String.Format("{0:F2}", ext.MaxX) + units + Environment.NewLine +
                         "Bounds Y: " + String.Format("{0:F2}", ext.MinY) + " to " + String.Format("{0:F2}", ext.MaxY) + units + Environment.NewLine +
-                        "Projection: " + _shapefile.SpatialReference.ExportToProj4();
+                        "Projection: " + _shapefile.Projection.ExportToProj4();
             return s;
         }
 

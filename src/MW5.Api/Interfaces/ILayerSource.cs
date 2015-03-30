@@ -4,10 +4,12 @@
     {
         IEnvelope Envelope { get; }
 
-        ISpatialReference SpatialReference { get; }
+        ISpatialReference Projection { get; }
 
         bool IsEmpty { get; }
 
+        LayerType LayerType { get; }
+        
         //Labels Labels { get; set; }
     }
 }

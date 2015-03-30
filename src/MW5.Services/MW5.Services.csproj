@@ -125,6 +125,10 @@
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.Projections\MW5.Projections.csproj">
+      <Project>{dd259453-611a-4ad5-878e-385cb2c89df5}</Project>
+      <Name>MW5.Projections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
       <Name>MW5.UI</Name>

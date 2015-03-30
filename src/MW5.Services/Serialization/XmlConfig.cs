@@ -12,7 +12,7 @@ namespace MW5.Services.Serialization
     public class XmlConfig
     {
         [DataMember]
-        public AppSettings Settings { get; set; }
+        public AppConfig Settings { get; set; }
 
         [DataMember]
         public List<XmlPlugin> ApplicationPlugins { get; set; }

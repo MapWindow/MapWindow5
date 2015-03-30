@@ -226,7 +226,7 @@ namespace MW5.Api.Concrete
             get { return _image.Filename; }
         }
 
-        public ISpatialReference SpatialReference
+        public ISpatialReference Projection
         {
             get { return new SpatialReference(_image.GeoProjection); }
         }
@@ -234,6 +234,11 @@ namespace MW5.Api.Concrete
         public bool IsEmpty
         {
             get { return _image.IsEmpty; }
+        }
+
+        public LayerType LayerType
+        {
+            get { return LayerType.Image; }
         }
 
         #endregion

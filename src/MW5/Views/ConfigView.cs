@@ -23,7 +23,7 @@ namespace MW5.Views
         private bool _initialized = false;
         private readonly IPluginManager _manager;
         private readonly IConfigService _config;
-        private List<IConfigPage> _pages = new List<IConfigPage>();
+        private readonly List<IConfigPage> _pages = new List<IConfigPage>();
         private static string _lastPageName = string.Empty;
 
         public event Action OpenFolderClicked;

@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DD259453-611A-4AD5-878E-385CB2C89DF5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MW5.Projections</RootNamespace>
+    <AssemblyName>MW5.Projections</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net45\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
+      <Link>Properties\SolutionInfoCore.cs</Link>
+    </Compile>
+    <Compile Include="DL\IDataProvider.cs" />
+    <Compile Include="DL\OleDbProvider.cs" />
+    <Compile Include="DL\SqlCeProvider.cs" />
+    <Compile Include="DL\SqliteProvider.cs" />
+    <Compile Include="DL\SqlProvider.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Constants.cs" />
+    <Compile Include="Services\ReprojectingService.cs" />
+    <Compile Include="BL\CoordinateSystem.cs" />
+    <Compile Include="BL\Country.cs" />
+    <Compile Include="Services\MismatchTester.cs" />
+    <Compile Include="Services\ProjectionDatabase.cs" />
+    <Compile Include="BL\GeographicCs.cs" />
+    <Compile Include="BL\ProjectedCs.cs" />
+    <Compile Include="BL\Region.cs" />
+    <Compile Include="BL\BoundingBox.cs" />
+    <Compile Include="Controls\ProjectionMap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProjectionTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ProjectionTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="BL\Territory.cs" />
+    <Compile Include="Enums.cs" />
+    <Compile Include="Forms\AssignProjectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AssignProjectionForm.Designer.cs">
+      <DependentUpon>AssignProjectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ChooseProjectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChooseProjectionForm.Designer.cs">
+      <DependentUpon>ChooseProjectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EnterProjectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EnterProjectionForm.Designer.cs">
+      <DependentUpon>EnterProjectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\IdentifyProjectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\IdentifyProjectionForm.Designer.cs">
+      <DependentUpon>IdentifyProjectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CompareProjectionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CompareProjectionForm.Designer.cs">
+      <DependentUpon>CompareProjectionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectionManagerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectionManagerForm.Designer.cs">
+      <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectionMismatchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectionMismatchForm.Designer.cs">
+      <DependentUpon>ProjectionMismatchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectionPropertiesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectionPropertiesForm.Designer.cs">
+      <DependentUpon>ProjectionPropertiesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProjectionResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProjectionResultsForm.Designer.cs">
+      <DependentUpon>ProjectionResultsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ReprojectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ReprojectForm.Designer.cs">
+      <DependentUpon>ReprojectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TesterReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TesterReportForm.Designer.cs">
+      <DependentUpon>TesterReportForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ListViewHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\ProjectionTreeView.resx">
+      <DependentUpon>ProjectionTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\AssignProjectionForm.resx">
+      <DependentUpon>AssignProjectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChooseProjectionForm.resx">
+      <DependentUpon>ChooseProjectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EnterProjectionForm.resx">
+      <DependentUpon>EnterProjectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\IdentifyProjectionForm.resx">
+      <DependentUpon>IdentifyProjectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CompareProjectionForm.resx">
+      <DependentUpon>CompareProjectionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectionManagerForm.resx">
+      <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectionMismatchForm.resx">
+      <DependentUpon>ProjectionMismatchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectionPropertiesForm.resx">
+      <DependentUpon>ProjectionPropertiesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProjectionResultsForm.resx">
+      <DependentUpon>ProjectionResultsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReprojectForm.resx">
+      <DependentUpon>ReprojectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TesterReportForm.resx">
+      <DependentUpon>TesterReportForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
+      <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
+      <Name>MW5.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
+      <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
+      <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_globe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_projection_mismatch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_plus.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

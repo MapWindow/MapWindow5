@@ -55,19 +55,19 @@ namespace MW5.Plugins.TableEditor.Forms
             var f2 = _table.get_JoinFromField(_joinIndex);
             foreach (var f in cboCurrent.Items)
             {
-                if ((f as FieldWrapper).field.Name == f1)
+                if ((f as FieldWrapper).Field.Name == f1)
                     cboCurrent.SelectedItem = f;
             }
             foreach (var f in cboExternal.Items)
             {
-                if ((f as FieldWrapper).field.Name == f2)
+                if ((f as FieldWrapper).Field.Name == f2)
                     cboExternal.SelectedItem = f;
             }
             for (var i = 0; i < _table.NumFields; i++)
             {
-                if (_table.get_FieldJoinIndex(i) == _joinIndex)
+                if (_table.FieldJoinIndex[i] == _joinIndex)
                 {
-                    var item = listView1.FindItemWithText(_table.get_Field(i).Name);
+                    var item = listView1.FindItemWithText(_table.Field[i].Name);
                     if (item != null)
                     {
                         item.Checked = true;
@@ -87,10 +87,10 @@ namespace MW5.Plugins.TableEditor.Forms
                 for (var i = 0; i < tbl.NumFields; i++)
                 {
                     var wr = cboCurrent.SelectedItem as FieldWrapper;
-                    if (filter && wr != null && wr.field.Type != tbl.get_Field(i).Type)
+                    if (filter && wr != null && wr.Field.Type != tbl.Field[i].Type)
                         continue;
 
-                    list.Add(new FieldWrapper(tbl.get_Field(i)));
+                    list.Add(new FieldWrapper(tbl.Field[i]));
                 }
             }
         }
@@ -196,16 +196,16 @@ namespace MW5.Plugins.TableEditor.Forms
 
         private class FieldWrapper
         {
-            public readonly Field field;
+            public Field Field { get; private set; }
 
             public FieldWrapper(Field field)
             {
-                field = field;
+                Field = field;
             }
 
             public override String ToString()
             {
-                return field.Name;
+                return Field.Name;
             }
         }
     }

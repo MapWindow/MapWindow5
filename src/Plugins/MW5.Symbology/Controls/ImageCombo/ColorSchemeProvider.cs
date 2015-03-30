@@ -49,7 +49,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 }
                 catch (Exception ex)
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to load color schemes");
+                    SymbologyPlugin.Msg.Warn("Failed to load color schemes:" + ex.Message);
                 }
             }
         }

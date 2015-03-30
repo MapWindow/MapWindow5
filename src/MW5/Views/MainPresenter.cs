@@ -42,7 +42,7 @@ namespace MW5.Views
             {
                 throw new InvalidCastException("Invalid type of IAppContext instance");
             }
-            appContext.Init(view, projectService);
+            appContext.Init(view, projectService, configService);
             view.InitDocking();                          // must be called when context is initialized
 
             view.Map.Initialize();

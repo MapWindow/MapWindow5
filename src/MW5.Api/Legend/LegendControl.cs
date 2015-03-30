@@ -39,7 +39,7 @@ namespace MW5.Api.Legend
         private int _selectedGroupHandle;
         private int _selectedLayerHandle;
         private VScrollBar _vScrollBar;
-        private IContainer components;
+        private readonly IContainer components;
 
         private readonly Font _boldFont;
         private readonly Color _boxLineColor;
@@ -55,8 +55,9 @@ namespace MW5.Api.Legend
         /// Initializes a new instance of the <see cref="LegendControl"/> class. 
         /// This is the constructor for the <c>LegendControl</c> control.
         /// </summary>
-        public LegendControl()
+        public LegendControl(IContainer components)
         {
+            this.components = components;
             InitializeComponent();
 
             _groups = new LegendGroups(this);

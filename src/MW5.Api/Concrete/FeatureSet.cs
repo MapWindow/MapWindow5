@@ -108,7 +108,7 @@ namespace MW5.Api.Concrete
             get { return _shapefile.Filename; }
         }
 
-        public ISpatialReference SpatialReference
+        public ISpatialReference Projection
         {
             get { return new SpatialReference(_shapefile.GeoProjection); }
         }
@@ -117,6 +117,11 @@ namespace MW5.Api.Concrete
         {
             // TODO: add Shapefile.IsEmpty property to ocx
             get { return _shapefile.NumShapes == 0; }
+        }
+
+        public LayerType LayerType
+        {
+            get { return LayerType.Shapefile; }
         }
 
         public void Close()

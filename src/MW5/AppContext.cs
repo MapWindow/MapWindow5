@@ -10,6 +10,7 @@ using MW5.Menu;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services;
@@ -39,6 +40,7 @@ namespace MW5
         private IBroadcasterService _broadcaster;
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
+        private IConfigService _configService;
 
         public AppContext(IApplicationContainer container)
         {
@@ -51,7 +53,7 @@ namespace MW5
         /// </summary>
         /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
         /// Perhaps property injection can be used.</remarks>
-        internal void Init(IMainView mainView, IProjectService project)
+        internal void Init(IMainView mainView, IProjectService project, IConfigService configService)
         {
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
@@ -65,6 +67,7 @@ namespace MW5
             _project = project;
             _map = mainView.Map;
             _legend = mainView.Legend;
+            _configService = configService;
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
@@ -148,6 +151,16 @@ namespace MW5
         public IDockPanelCollection DockPanels
         {
             get { return _dockPanelCollection; }
+        }
+
+        public IProjectionDatabase Projections
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public AppConfig Config
+        {
+            get { return _configService.Config; }
         }
 
         public IPluginManager PluginManager

@@ -75,6 +75,22 @@
     </Compile>
     <Compile Include="AppView.cs" />
     <Compile Include="ComboBoxEnumItem.cs" />
+    <Compile Include="Controls\GeometryRowStyle.cs" />
+    <Compile Include="Controls\LayersDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LayersDialog.Designer.cs">
+      <DependentUpon>LayersDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LayerStyleDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LayersControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LayersControl.Designer.cs">
+      <DependentUpon>LayersControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Docking\DockHelper.cs" />
     <Compile Include="Docking\DockPanel.cs" />
     <Compile Include="Docking\DockPanelCollection.cs" />
@@ -126,6 +142,15 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\LayersDialog.resx">
+      <DependentUpon>LayersDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayerStyleDataGridView.resx">
+      <DependentUpon>LayerStyleDataGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayersControl.resx">
+      <DependentUpon>LayersControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MapWindowForm.resx">
       <DependentUpon>MapWindowForm.cs</DependentUpon>
     </EmbeddedResource>

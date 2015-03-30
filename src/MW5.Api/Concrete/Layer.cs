@@ -33,7 +33,6 @@ namespace MW5.Api.Concrete
             get { return _map; }
         }
 
-      
         public int Handle
         {
             get { return _layerHandle; }
@@ -46,7 +45,6 @@ namespace MW5.Api.Concrete
 
             set { _map.set_LayerName(_layerHandle, value); }
         }
-
       
         public LayerType LayerType
         {
@@ -157,7 +155,6 @@ namespace MW5.Api.Concrete
                 return sf != null ? new FeatureSet(sf) : null;
             }
         }
-
       
         public IImageSource ImageSource
         {
@@ -168,7 +165,6 @@ namespace MW5.Api.Concrete
             }
         }
 
-      
         public ILayerSource LayerSource
         {
             get
@@ -177,7 +173,6 @@ namespace MW5.Api.Concrete
             }
         }
 
-      
         public VectorLayer VectorLayer
         {
             get
@@ -186,7 +181,6 @@ namespace MW5.Api.Concrete
                 return ogr != null ? new VectorLayer(ogr) : null;
             }
         }
-
       
         public ILabelsLayer Labels
         {
@@ -272,6 +266,19 @@ namespace MW5.Api.Concrete
             }
 
             _mapControl.FireSelectionChagned(_mapControl, new SelectionChangedEventArgs(Handle, true));
+        }
+
+        public ISpatialReference Projection
+        {
+            get
+            {
+                var layerSource = LayerSourceHelper.ConvertToLayer(_map.get_GetObject(_layerHandle));
+                if (layerSource != null)
+                {
+                    return layerSource.Projection;
+                }
+                return null;
+            }
         }
 
         #region Deprecated

@@ -37,6 +37,7 @@
         Shapefile = 0,
         Image = 1,
         VectorLayer = 2,
+        Grid = 3,
     }
 
     public enum SpatialRelation

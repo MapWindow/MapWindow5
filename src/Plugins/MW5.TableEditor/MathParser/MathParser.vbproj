@@ -62,7 +62,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
-    <OutputPath>..\..\..\Bin\Plugins\TableEditorNew\</OutputPath>
+    <OutputPath>Bin\x86\Debug\</OutputPath>
     <DocumentationFile>MathParser.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
     <DebugType>full</DebugType>

@@ -223,7 +223,7 @@ namespace MW5.Services.Concrete
             if (view.Run())
             {
                 var fs = new FeatureSet(view.GeometryType, view.ZValueType);
-                fs.SpatialReference.CopyFrom(_context.Map.GeoProjection);
+                fs.Projection.CopyFrom(_context.Map.GeoProjection);
                 fs.SaveAs(view.Filename);
                 fs.InteractiveEditing = true;
                 _context.Layers.Add(fs);

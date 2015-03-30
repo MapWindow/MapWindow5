@@ -81,7 +81,7 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Concrete\AppSettings.cs" />
+    <Compile Include="Concrete\AppConfig.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
     <Compile Include="Concrete\DockPanelCancelEventArgs.cs" />
     <Compile Include="Concrete\DockPanelEventArgs.cs" />
@@ -101,7 +101,14 @@
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\IMenuIndex.cs" />
     <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Interfaces\Projections\IProjectionDatabase.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
+    <Compile Include="Interfaces\Projections\ICoordinateSystem.cs" />
+    <Compile Include="Interfaces\Projections\ICountry.cs" />
+    <Compile Include="Interfaces\Projections\IGeogrpahicCs.cs" />
+    <Compile Include="Interfaces\Projections\IProjectedCs.cs" />
+    <Compile Include="Interfaces\Projections\IRegion.cs" />
+    <Compile Include="Interfaces\Projections\ITerritory.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
     <Compile Include="Mvp\CommandDispatcher.cs" />
     <Compile Include="Mvp\ComplexPresenter.cs" />
