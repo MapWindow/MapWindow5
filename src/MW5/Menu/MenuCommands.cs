@@ -38,7 +38,6 @@ namespace MW5.Menu
                 new MenuCommand("Create layer", MenuKeys.CreateLayer, Resources.icon_layer_create),
                 new MenuCommand("Remove layer", MenuKeys.RemoveLayer, Resources.icon_layer_remove),
                 new MenuCommand("Settings", MenuKeys.Settings, Resources.icon_settings),
-                new MenuCommand("Projections", MenuKeys.Projections, Resources.icon_crs_change), // temp
 
                 // map toolbar
                 new MenuCommand("Zoom in", MenuKeys.ZoomIn, Resources.icon_zoom_in),

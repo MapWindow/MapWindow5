@@ -14,8 +14,7 @@
         public const string CreateLayer = "FileCreateLayer";
         public const string RemoveLayer = "FileRemoveLayer";
         public const string Settings = "FileSettings";
-        public const string Projections = "FileProjections";
-
+        
         public const string ViewToolbars = "ViewToolbars";
         public const string ViewWindows = "ViewWindows";
         public const string ViewSkins = "ViewSkins";

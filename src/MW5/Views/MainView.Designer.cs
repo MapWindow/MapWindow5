@@ -125,7 +125,6 @@ namespace MW5.Views
             this.statusStripEx1.Size = new System.Drawing.Size(796, 29);
             this.statusStripEx1.TabIndex = 1;
             this.statusStripEx1.Text = "|";
-            this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
             // 
             // statusTileProvider
             // 

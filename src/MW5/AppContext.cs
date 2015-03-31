@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
@@ -13,6 +14,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Projections.BL;
 using MW5.Services;
 using MW5.Services.Serialization;
 using MW5.UI;
@@ -29,6 +31,7 @@ namespace MW5
     public class AppContext: ISerializableContext
     {
         private readonly IApplicationContainer _container;
+        private readonly IProjectionDatabase _projectionDatabase;
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
@@ -41,8 +44,7 @@ namespace MW5
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
         private IConfigService _configService;
-        private IProjectionDatabase _projectionDatabase;
-
+        
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase)
         {
             if (container == null) throw new ArgumentNullException("container");
@@ -167,6 +169,11 @@ namespace MW5
             get { return _configService.Config; }
         }
 
+        public void SetMapProjection(ISpatialReference projection)
+        {
+            this.SetProjection(projection);
+        }
+
         public IPluginManager PluginManager
         {
             get { return _pluginManager; }
@@ -183,5 +190,7 @@ namespace MW5
             // TODO: save toolbar positions
             _mainView.Close();
         }
+
+
     }
 }

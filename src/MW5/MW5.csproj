@@ -109,6 +109,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Helpers\ProjectionHelper.cs" />
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
     <Compile Include="Views\Abstract\IProjectionView.cs" />

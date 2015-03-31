@@ -30,13 +30,13 @@ namespace MW5.Projections.UI.Forms
         /// <summary>
         /// Reference to treeview for searching by EPSG code, currently not needed
         /// </summary>
-        private IProjectionDatabase _database;
+        private readonly IProjectionDatabase _database;
 
         // At least one dialect was either added or removed
         private bool _dialectsChanged;
 
         // well-known coordinate system (in case one was passed)
-        private ICoordinateSystem _coordinateSystem;
+        private readonly ICoordinateSystem _coordinateSystem;
 
         // max index in the list
         private int _index = 0;
@@ -61,12 +61,8 @@ namespace MW5.Projections.UI.Forms
             listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
 
             btnEdit.Click += delegate { EditProjection(); };
-            
-            _projectionMap1.LoadStateFromExeName(Application.ExecutablePath);
-            _projectionMap1.ZoomBar.Visible = false;
-            _projectionMap1.ScalebarVisible = false;
-            _projectionMap1.ShowCoordinates = Api.CoordinatesDisplay.None;
-            _projectionMap1.ShowVersionNumber = false;
+
+            LoadMapPreviewSettings();
 
             ShowProjection(projection);
         }
@@ -83,6 +79,8 @@ namespace MW5.Projections.UI.Forms
             // dialects available for EPSG codes
             tabControl1.TabPages.RemoveAt(3);
 
+            LoadMapPreviewSettings();
+
             ShowProjection(projection);
         }
         #endregion
@@ -94,16 +92,9 @@ namespace MW5.Projections.UI.Forms
         void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemove.Enabled = listView1.SelectedItems.Count > 0;
-            if (listView1.SelectedItems.Count > 0)
-            {
-                txtDialect.Text = listView1.SelectedItems[0].SubItems[2].Text;
-            }
-            else
-            {
-                txtDialect.Text = "";
-            }
+            txtDialect.Text = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0].SubItems[2].Text : "";
         }
-        
+
         /// <summary>
         /// Shows information about selected projection
         /// </summary>
@@ -153,13 +144,24 @@ namespace MW5.Projections.UI.Forms
             }
         }
 
+        private void LoadMapPreviewSettings()
+        {
+            _projectionMap1.LoadStateFromExeName(Application.ExecutablePath);
+            _projectionMap1.ZoomBar.Visible = false;
+            _projectionMap1.ScalebarVisible = false;
+            _projectionMap1.ShowCoordinates = Api.CoordinatesDisplay.None;
+            _projectionMap1.ShowVersionNumber = false;
+        }
+
         /// <summary>
         /// Shows information about unrecognized projection
         /// </summary>
         public void ShowProjection(ISpatialReference projection)
         {
             if (projection == null)
+            {
                 throw new NullReferenceException("Geoprojection wasn't passed");
+            }
 
             _projetion = projection;
 

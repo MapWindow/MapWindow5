@@ -30,6 +30,7 @@ namespace MW5.Projections.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -71,6 +72,9 @@ namespace MW5.Projections.UI.Forms
             // 
             // _projectionTreeView1
             // 
+            this._projectionTreeView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionTreeView1.ImageIndex = 0;
             this._projectionTreeView1.Location = new System.Drawing.Point(12, 45);
             this._projectionTreeView1.Name = "_projectionTreeView1";

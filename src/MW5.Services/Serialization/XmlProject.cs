@@ -30,6 +30,7 @@ namespace MW5.Services.Serialization
             }).ToList();
 
             Map = new XmlMap();
+
             Map.Projection = context.Map.GeoProjection.ExportToWkt();
             Map.Envelope = new XmlEnvelope(context.Map.Extents);
         }
@@ -50,7 +51,8 @@ namespace MW5.Services.Serialization
 
             var sr = new SpatialReference();
             sr.ImportFromAutoDetect(Map.Projection);
-            context.Map.GeoProjection = sr;
+
+            context.SetMapProjection(sr);
 
             foreach (var p in Plugins)
             {

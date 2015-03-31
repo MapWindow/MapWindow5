@@ -20,10 +20,16 @@ namespace MW5.Projections.UI.Forms
             base(context)
         {
             InitializeComponent();
+            
             if (_projectionTreeView1.Initialize(database, context))
             {
                 _projectionTreeView1.RefreshList();
             }
+        }
+
+        public BL.CoordinateSystem SelectedCoordinateSystem
+        {
+            get { return _projectionTreeView1.SelectedCoordinateSystem; }
         }
 
         private void btnOk_Click(object sender, EventArgs e)

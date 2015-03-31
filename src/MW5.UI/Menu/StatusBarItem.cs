@@ -41,8 +41,23 @@ namespace MW5.UI.Menu
 
         public bool Checked
         {
-            get { return false; }
-            set { ; }
+            get
+            {
+                var item = _item as ToolStripMenuItem;
+                if (item != null)
+                {
+                    return item.Checked;
+                }
+                return false;
+            }
+            set
+            {
+                var item = _item as ToolStripMenuItem;
+                if (item != null)
+                {
+                    item.Checked = value;
+                }
+            }
         }
 
         public string Tooltip

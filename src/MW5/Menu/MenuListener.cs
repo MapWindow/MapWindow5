@@ -62,12 +62,6 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
-                case MenuKeys.Projections:
-                    using (var form = new ChooseProjectionForm(_context.Projections, _context))
-                    {
-                        _context.View.ShowChildView(form);
-                    }
-                    break;
                 case MenuKeys.CreateLayer:
                     _layerService.CreateLayer();
                     break;

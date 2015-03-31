@@ -475,7 +475,9 @@ namespace MW5.Projections.UI.Controls
             projCount = 0;
 
             if (_database == null)
+            {
                 throw new Exception("No database was specified to populate tree view");
+            }
 
             SuspendLayout();
             Nodes.Clear();

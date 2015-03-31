@@ -34,6 +34,12 @@ namespace MW5.Plugins.Concrete
         [DataMember]
         public bool NeverShowProjectionDialog { get; set; }
 
+        [DataMember]
+        public bool ProjectionShowWarnings { get; set; }
+
+        [DataMember]
+        public bool ProjectionShowLoadingReport { get; set; }
+
         /// <summary>
         /// List of EPSG codes for favorite projections
         /// </summary>
