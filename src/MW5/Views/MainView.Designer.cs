@@ -36,23 +36,39 @@ namespace MW5.Views
             MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusTileProvider = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgressMessage = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.statusProjectionDropDown = new Syncfusion.Windows.Forms.Tools.StatusStripDropDownButton();
+            this.toolChooseProjection = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolProjectionProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.statusSelected = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.treeViewAdv2 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
-            this._legendControl1 = new MW5.Api.Legend.LegendControl(components);
+            this._legendControl1 = new MW5.Api.Legend.LegendControl(this.components);
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv2)).BeginInit();
@@ -81,25 +97,34 @@ namespace MW5.Views
             this._dockingManager1.CaptionButtons.Add(new Syncfusion.Windows.Forms.Tools.CaptionButton(Syncfusion.Windows.Forms.Tools.CaptionButtonType.Restore, "RestoreButton"));
             this._dockingManager1.CaptionButtons.Add(new Syncfusion.Windows.Forms.Tools.CaptionButton(Syncfusion.Windows.Forms.Tools.CaptionButtonType.Menu, "MenuButton"));
             // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "icon_edit_copy.png");
+            this.imageList1.Images.SetKeyName(1, "icon_edit_cut.png");
+            // 
             // statusStripEx1
             // 
             this.statusStripEx1.AutoSize = false;
-            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(796, 22);
+            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(796, 29);
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
+            this.statusStripEx1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTileProvider,
             this.statusProgressMessage,
             this.toolStripStatusLabel4,
             this.statusProgressBar,
+            this.statusProjectionDropDown,
             this.statusSelected});
             this.statusStripEx1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            this.statusStripEx1.Location = new System.Drawing.Point(0, 509);
+            this.statusStripEx1.Location = new System.Drawing.Point(0, 502);
             this.statusStripEx1.MetroColor = System.Drawing.Color.Empty;
             this.statusStripEx1.Name = "statusStripEx1";
             this.statusStripEx1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.statusStripEx1.Size = new System.Drawing.Size(796, 22);
+            this.statusStripEx1.Size = new System.Drawing.Size(796, 29);
             this.statusStripEx1.TabIndex = 1;
-            this.statusStripEx1.Text = "statusStripEx1";
+            this.statusStripEx1.Text = "|";
             this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
             // 
             // statusTileProvider
@@ -108,6 +133,7 @@ namespace MW5.Views
             this.statusTileProvider.Name = "statusTileProvider";
             this.statusTileProvider.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.statusTileProvider.Size = new System.Drawing.Size(87, 19);
+            this.statusTileProvider.Spring = true;
             this.statusTileProvider.Text = "Tile provider";
             // 
             // statusProgressMessage
@@ -130,11 +156,129 @@ namespace MW5.Views
             this.statusProgressBar.Size = new System.Drawing.Size(100, 15);
             this.statusProgressBar.Visible = false;
             // 
+            // statusProjectionDropDown
+            // 
+            this.statusProjectionDropDown.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolChooseProjection,
+            this.toolStripSeparator1,
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3,
+            this.toolStripMenuItem5,
+            this.toolStripMenuItem4,
+            this.toolStripSeparator2,
+            this.toolProjectionProperties});
+            this.statusProjectionDropDown.EndOfGroup = true;
+            this.statusProjectionDropDown.Image = global::MW5.Properties.Resources.icon_crs_change;
+            this.statusProjectionDropDown.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.statusProjectionDropDown.Margin = new System.Windows.Forms.Padding(0);
+            this.statusProjectionDropDown.Name = "statusProjectionDropDown";
+            this.statusProjectionDropDown.Size = new System.Drawing.Size(107, 28);
+            this.statusProjectionDropDown.Text = "Not defined";
+            // 
+            // toolChooseProjection
+            // 
+            this.toolChooseProjection.Name = "toolChooseProjection";
+            this.toolChooseProjection.Size = new System.Drawing.Size(181, 22);
+            this.toolChooseProjection.Text = "Choose projection";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem7,
+            this.toolStripMenuItem8,
+            this.toolStripMenuItem9});
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem2.Text = "Absense behavior";
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(178, 22);
+            this.toolStripMenuItem7.Text = "Assign from project";
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(178, 22);
+            this.toolStripMenuItem8.Text = "Ignore the absense";
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(178, 22);
+            this.toolStripMenuItem9.Text = "Slip the file";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem10,
+            this.toolStripMenuItem11,
+            this.toolStripMenuItem12});
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem3.Text = "Mismatch behavior";
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(164, 22);
+            this.toolStripMenuItem10.Text = "Ignore mismatch";
+            // 
+            // toolStripMenuItem11
+            // 
+            this.toolStripMenuItem11.Name = "toolStripMenuItem11";
+            this.toolStripMenuItem11.Size = new System.Drawing.Size(164, 22);
+            this.toolStripMenuItem11.Text = "Reproject the file";
+            // 
+            // toolStripMenuItem12
+            // 
+            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
+            this.toolStripMenuItem12.Size = new System.Drawing.Size(164, 22);
+            this.toolStripMenuItem12.Text = "Skip the file";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Checked = true;
+            this.toolStripMenuItem5.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem5.Text = "Show loading report";
+            this.toolStripMenuItem5.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Checked = true;
+            this.toolStripMenuItem4.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem4.Text = "Show warnings";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
+            // 
+            // toolProjectionProperties
+            // 
+            this.toolProjectionProperties.Name = "toolProjectionProperties";
+            this.toolProjectionProperties.Size = new System.Drawing.Size(181, 22);
+            this.toolProjectionProperties.Text = "Properties";
+            // 
             // statusSelected
             // 
-            this.statusSelected.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.statusSelected.EndOfGroup = true;
+            this.statusSelected.Margin = new System.Windows.Forms.Padding(10);
             this.statusSelected.Name = "statusSelected";
-            this.statusSelected.Size = new System.Drawing.Size(0, 0);
+            this.statusSelected.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.statusSelected.Size = new System.Drawing.Size(67, 15);
+            this.statusSelected.Text = "Selected: ";
             // 
             // parentBarItem3
             // 
@@ -194,6 +338,7 @@ namespace MW5.Views
             this._mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
             this._mapControl1.CurrentScale = 16.918010798186259D;
             this._mapControl1.CurrentZoom = -1;
+            this._mapControl1.CustomCursor = null;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
@@ -234,7 +379,7 @@ namespace MW5.Views
             // 
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
-            this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.MapWindowForm";
+            this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.MapWindowView";
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
@@ -246,6 +391,7 @@ namespace MW5.Views
             // 
             this._legendControl1.BackColor = System.Drawing.Color.White;
             this._legendControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._legendControl1.DrawLines = true;
             this._legendControl1.Location = new System.Drawing.Point(106, 174);
             this._legendControl1.Map = null;
             this._legendControl1.Name = "_legendControl1";
@@ -281,12 +427,11 @@ namespace MW5.Views
             this.statusProgress.Name = "statusProgress";
             this.statusProgress.Size = new System.Drawing.Size(100, 15);
             // 
-            // imageList1
+            // toolStripMenuItem6
             // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "icon_edit_copy.png");
-            this.imageList1.Images.SetKeyName(1, "icon_edit_cut.png");
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(181, 22);
+            this.toolStripMenuItem6.Text = "Properties";
             // 
             // MainView
             // 
@@ -324,12 +469,28 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv2;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
         private Api.Legend.LegendControl _legendControl1;
-        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusSelected;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel5;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusMapUnits;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         private System.Windows.Forms.ToolStripProgressBar statusProgress;
         private System.Windows.Forms.ImageList imageList1;
+        private Syncfusion.Windows.Forms.Tools.StatusStripDropDownButton statusProjectionDropDown;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusSelected;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolChooseProjection;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem11;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem toolProjectionProperties;
 
     }
 }

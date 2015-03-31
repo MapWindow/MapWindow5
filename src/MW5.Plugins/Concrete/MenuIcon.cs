@@ -25,5 +25,13 @@ namespace MW5.Plugins.Concrete
                 return _image;
             }
         }
+
+        public static void AssignIcon(IMenuItem menuItem, Bitmap icon)
+        {
+            if (menuItem != null && icon != null)
+            {
+                menuItem.Icon = new MenuIcon(icon);
+            }
+        }
     }
 }

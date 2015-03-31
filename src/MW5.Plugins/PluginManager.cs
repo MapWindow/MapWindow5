@@ -37,6 +37,7 @@ namespace MW5.Plugins
         public event EventHandler<PluginEventArgs> PluginUnloaded;
 
         public event EventHandler<MenuItemEventArgs> MenuItemClicked;
+        public event EventHandler<MenuItemEventArgs> StatusItemClicked;
 
         public event EventHandler<MenuItemEventArgs> PluginItemClicked;
 
@@ -271,6 +272,31 @@ namespace MW5.Plugins
                         handler.Invoke(sender, args);
                     }
                     
+                }
+            }
+        }
+
+        public void FireStatusItemClicked(object sender, MenuItemEventArgs args)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                if (item.PluginIdentity == PluginIdentity.Default)
+                {
+                    var handler = StatusItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+                }
+                else
+                {
+                    var handler = PluginItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+
                 }
             }
         }

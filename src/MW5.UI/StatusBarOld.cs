@@ -9,7 +9,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI
 {
-    internal class StatusBar: IStatusBar
+    internal class StatusBarOld
     {
         private readonly StatusStripEx _statusBar;
         private ToolStripItem _progressMessage;
@@ -21,7 +21,7 @@ namespace MW5.UI
             public const string ProgressBar = "statusProgressBar";
         }
 
-        internal StatusBar(object statusBar)
+        internal StatusBarOld(object statusBar)
         {
             _statusBar = statusBar as StatusStripEx;
             if (_statusBar == null) throw new ArgumentNullException("statusBar");

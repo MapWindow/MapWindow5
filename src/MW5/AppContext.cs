@@ -73,8 +73,8 @@ namespace MW5
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
-            _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
-            _statusBar = new UI.StatusBar(mainView.StatusBar);
+            _toolbars = MenuFactory.CreateToolbars(mainView.MenuManager);
+            _statusBar = MenuFactory.CreateStatusBar(mainView.StatusBar, PluginIdentity.Default);
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
         }

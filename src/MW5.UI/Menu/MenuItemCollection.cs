@@ -10,60 +10,23 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
-    internal class MenuItemCollection : IMenuItemCollection
+    internal class MenuItemCollection : ItemCollectionBase
     {
         private const int TOOLBAR_ITEM_PADDING_X = 10;
         private const int TOOLBAR_ITEM_PADDING_Y = 5;
         private readonly BarItems _items;
-        private readonly IMenuIndex _menuIndex;
 
-        internal MenuItemCollection(BarItems items, IMenuIndex menuIndex)
+        internal MenuItemCollection(BarItems items, IMenuIndex menuIndex):
+            base(items, menuIndex)
         {
             _items = items;
-            _menuIndex = menuIndex;
             if (items == null)
             {
                 throw new NullReferenceException("Bar items reference is null.");
             }
-            if (menuIndex == null)
-            {
-                throw new ArgumentNullException("menuIndex");
-            }
         }
 
-        public static void RemoveItems(IMenuItemCollection items, PluginIdentity identity)
-        {
-            for (int j = items.Count() - 1; j >= 0; j--)
-            {
-                var dropDownMenuItem = items[j] as IDropDownMenuItem;
-                if (dropDownMenuItem != null)
-                {
-                    RemoveItems(dropDownMenuItem.SubItems, identity);
-                }
-
-                if (items[j].PluginIdentity == identity)
-                {
-                    items.Remove(j);
-                }
-            }
-        }
-
-        public IEnumerator<IMenuItem> GetEnumerator()
-        {
-            for (int i = 0; i < _items.Count; i++)
-            {
-                yield return this[i];
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-       
-
-        public IMenuItem this[int index]
+        public override IMenuItem this[int index]
         {
             get
             {
@@ -75,192 +38,40 @@ namespace MW5.UI.Menu
                 var item = _items[index];
                 if (item is ParentBarItem)
                 {
-                    return new DropDownMenuItem(item as ParentBarItem, _menuIndex);
+                    return new DropDownMenuItem(item as ParentBarItem, MenuIndex);
                 }
 
                 return new MenuItem(item);
             }
         }
 
-        public IMenuItem AddLabel(string text, string key, PluginIdentity identity)
+        public override IMenuItem AddLabel(string text, string key, PluginIdentity identity)
         {
             var item = new StaticBarItem(text) { Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y) };
             var menuItem = AddItem(item, identity, key);
             return menuItem;
         }
 
-        public IMenuItem AddButton(MenuCommand command, bool beginGroup = false)
-        {
-            if (command == null) throw new ArgumentNullException("command"); 
-
-            // TODO: command can have further use, e.g. to control Enabled state of the item
-            // then it should be stored in the tag
-
-            var item = AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
-            
-            if (beginGroup)
-            {
-                item.BeginGroup = true;
-            }
-
-            return item;
-        }
-
-        public IMenuItem AddButton(string text, PluginIdentity identity)
-        {
-            return AddButton(text, string.Empty, identity);
-        }
-
-        public IMenuItem AddButton(string text, string key, PluginIdentity identity)
-        {
-            return AddButton(text, key, null, identity);
-        }
-
-        public IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity pluginIdentity)
+        public override IMenuItem AddButton(string text, string key, Bitmap icon, PluginIdentity pluginIdentity)
         {
             var item = new BarItem(text) {Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y)};
             var menuItem = AddItem(item, pluginIdentity, key);
-            if (icon != null)
-            {
-                menuItem.Icon = new MenuIcon(icon);
-            }
+            MenuIcon.AssignIcon(menuItem, icon);
             return menuItem;
         }
 
-        public IDropDownMenuItem AddDropDown(string text, string key, PluginIdentity identity)
-        {
-            return AddDropDown(text, key, null, identity);
-        }
-
-        public IDropDownMenuItem AddDropDown(string text, Bitmap icon, PluginIdentity identity)
-        {
-            return AddDropDown(text, string.Empty, icon, identity);
-        }
-
-        private IDropDownMenuItem AddDropDown(string text, string key, Bitmap icon, PluginIdentity identity)
+        protected override IDropDownMenuItem AddDropDown(string text, string key, Bitmap icon, PluginIdentity identity)
         {
             var item = new ParentBarItem(text) { Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y) }; ;
             var menuItem = AddItem(item, identity, key) as IDropDownMenuItem;
-            if (menuItem != null && icon != null)
-            {
-                menuItem.Icon = new MenuIcon(icon);
-            }
+            MenuIcon.AssignIcon(menuItem, icon);
             return menuItem;
         }
 
-        public void Insert(IMenuItem item, int index)
-        {
-            if (index < 0 || index >= _items.Count)
-            {
-                throw new IndexOutOfRangeException("Menu items index is out of range.");
-            }
-            _items.Insert(index, item);
-        }
-
-        public void Remove(int index)
-        {
-            if (index < 0 || index >= _items.Count)
-            {
-                throw new IndexOutOfRangeException("Menu items index is out of range.");
-            }
-
-            var menuItem = this[index] as MenuItem;
-            if (menuItem != null)
-            {
-                menuItem.DetachItemListeners();
-                _menuIndex.Remove(menuItem.UniqueKey);
-            }
-
-            _items.RemoveAt(index);
-        }
-
-        public void Clear()
-        {
-            // clear the nested menus recursively
-            var subMenus = this.OfType<IDropDownMenuItem>().Select(item => item.SubItems);
-            {
-                foreach (var menu in subMenus)
-                {
-                    menu.Clear();
-                }
-            }
-
-            // clear the index
-            var keys = this.Select(item => item.UniqueKey).ToList();
-            foreach (var uniqueKey in keys)
-            {
-                _menuIndex.Remove(uniqueKey);
-            }
-
-            _items.Clear();
-        }
-
-        public IMenuItem InsertBefore
-        {
-            get
-            {
-                var data = _menuIndex.LoadMetadata(_items);
-                if (data != null)
-                {
-                    return data.InsertBefore;
-                }
-                return null;
-            }
-            set
-            {
-                var data = _menuIndex.LoadMetadata(_items) ?? new MenuItemCollectionMetadata();
-                data.InsertBefore = value;
-                _menuIndex.SaveMetadata(_items, data);
-            }
-        }
-
-        public int IndexOf(IMenuItem item)
-        {
-            for (int i = 0; i < _items.Count; i++)
-            {
-                var it = this[i];
-                if (it.UniqueKey == item.UniqueKey)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public int Count
-        {
-            get { return _items.Count; }
-        }
-
-        private IMenuItem AddItem(BarItem item, PluginIdentity identity, string key)
+        protected IMenuItem AddItem(BarItem item, PluginIdentity identity, string key)
         {
             item.Tag = new MenuItemMetadata(identity, key);
-
-            int index = -1;
-            if (InsertBefore != null)
-            {
-                index = IndexOf(InsertBefore);
-            }
-
-            if (index != -1)
-            {
-                _items.Insert(index, item);
-            }
-            else
-            {
-                index = _items.Add(item);
-            }
-
-            var menuItem = this[index];
-
-            if (!string.IsNullOrWhiteSpace(key))
-            {
-                menuItem.AttachClickEventHandler(PluginManager.Instance.FireItemClicked);
-                _menuIndex.AddItem(menuItem.UniqueKey, menuItem);
-            }
-
-            return menuItem;
+            return AddItemCore(item, key, false, false);
         }
-        
     }
 }

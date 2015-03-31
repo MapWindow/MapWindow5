@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
-    internal class MenuItem: MenuItemBase, IMenuItem
+    internal class StatusBarItem: MenuItemBase, IMenuItem
     {
-        private const int ICON_SIZE = 24;
-        protected BarItem _item;
+        private readonly ToolStripItem _item;
 
-        internal MenuItem(BarItem item)
+        public StatusBarItem(ToolStripItem item)
         {
+            if (item == null) throw new ArgumentNullException("item");
             _item = item;
-            if (item == null)
-            {
-                throw new NullReferenceException("Bar item reference is null.");
-            }
         }
-        
+
         public string Text
         {
             get { return _item.Text; }
@@ -28,12 +29,8 @@ namespace MW5.UI.Menu
 
         public IMenuIcon Icon
         {
-            get { return new MenuIcon(_item.Image.GetImage()); }
-            set
-            {
-                _item.Image = new ImageExt(value.Image);
-                _item.ImageSize = new Size(ICON_SIZE, ICON_SIZE);
-            }
+            get { return new MenuIcon(_item.Image); }
+            set { _item.Image = value.Image; }
         }
 
         public string Category
@@ -44,14 +41,14 @@ namespace MW5.UI.Menu
 
         public bool Checked
         {
-            get { return _item.Checked; }
-            set { _item.Checked = value; }
+            get { return false; }
+            set { ; }
         }
 
         public string Tooltip
         {
-            get { return _item.Tooltip; }
-            set { _item.Tooltip = value; }
+            get { return ""; }
+            set { ; }
         }
 
         public bool Enabled

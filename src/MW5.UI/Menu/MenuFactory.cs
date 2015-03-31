@@ -1,4 +1,5 @@
-﻿using MW5.Plugins.Interfaces;
+﻿using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
 
 namespace MW5.UI.Menu
 {
@@ -17,6 +18,20 @@ namespace MW5.UI.Menu
                 _instance = menu;
             }
             return _instance;
+        }
+
+        internal static IStatusBar CreateStatusBar(object bar, PluginIdentity identity)
+        {
+            var menuIndex = new MenuIndex();
+            var statusBar = new StatusBar(bar, menuIndex, identity);
+            return statusBar;
+        }
+
+        internal static IToolbarCollection CreateToolbars(object menuManager)
+        {
+            var menuIndex = new MenuIndex();
+            var collection = new ToolbarsCollection(menuManager, menuIndex);
+            return collection;
         }
     }
 }

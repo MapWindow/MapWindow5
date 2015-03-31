@@ -14,15 +14,8 @@ namespace MW5.UI.Menu
         private MainFrameBarManager _manager;
         internal const string FILE_TOOLBAR_KEY = "FileToolbar";
         internal const string MAP_TOOLBAR_KEY = "MapToolbar";
-
-        internal static IToolbarCollection CreateInstance(object menuManager)
-        {
-            var menuIndex = new MenuIndex();
-            var collection = new ToolbarsCollection(menuManager, menuIndex);
-            return collection;
-        }
-
-        private ToolbarsCollection(object menuManager, IMenuIndex menuIndex)
+        
+        internal ToolbarsCollection(object menuManager, IMenuIndex menuIndex)
         {
             _menuIndex = menuIndex;
             _manager = menuManager as MainFrameBarManager;

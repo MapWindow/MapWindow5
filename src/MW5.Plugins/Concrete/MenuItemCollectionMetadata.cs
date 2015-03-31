@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Interfaces;
+﻿using MW5.Plugins.Interfaces;
 
-namespace MW5.UI.Menu
+namespace MW5.Plugins.Concrete
 {
     internal class MenuItemCollectionMetadata
     {
         public IMenuItem InsertBefore { get; set; }
+        public bool AlignRight { get; set; }
     }
 }

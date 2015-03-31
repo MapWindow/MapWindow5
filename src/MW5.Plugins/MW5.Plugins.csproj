@@ -92,6 +92,7 @@
     <Compile Include="Concrete\MenuItemEventArgs.cs" />
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
+    <Compile Include="Concrete\RenderedEventArgs.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\AssemblyHelper.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\IMenuIndex.cs" />
     <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Interfaces\IStatusItemCollection.cs" />
     <Compile Include="Interfaces\Projections\IProjectionDatabase.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Interfaces\Projections\ICoordinateSystem.cs" />

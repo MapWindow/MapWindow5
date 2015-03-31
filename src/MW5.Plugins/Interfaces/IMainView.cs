@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Interfaces
@@ -19,7 +20,7 @@ namespace MW5.Plugins.Interfaces
         IMuteLegend Legend { get; }
         IView View { get; }
         event EventHandler<CancelEventArgs> ViewClosing;
-        event EventHandler<EventArgs> ViewUpdating;
+        event EventHandler<RenderedEventArgs> ViewUpdating;
         void InitDocking();
     }
 }

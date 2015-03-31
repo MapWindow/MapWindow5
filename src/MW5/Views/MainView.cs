@@ -28,7 +28,6 @@ namespace MW5.Views
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
-        private MenuUpdater _menuUpdater;
 
         public MainView(IAppContext context)
         {
@@ -36,6 +35,7 @@ namespace MW5.Views
             
             InitializeComponent();
 
+            statusStripEx1.Items.Clear();
             _legendControl1.Map = _mapControl1;
             _mapControl1.Legend = _legendControl1;
 
@@ -62,14 +62,14 @@ namespace MW5.Views
         }
 
         public event EventHandler<CancelEventArgs> ViewClosing;
-        public event EventHandler<EventArgs> ViewUpdating;
+        public event EventHandler<RenderedEventArgs> ViewUpdating;
 
-        private void FireViewUpdating()
+        private void FireViewUpdating(bool rendered)
         {
             var handler = ViewUpdating;
             if (handler != null)
             {
-                handler(this, new EventArgs());
+                handler(this, new RenderedEventArgs() { Rendered = rendered });
             }
         }
 
@@ -93,8 +93,6 @@ namespace MW5.Views
 
         public override void ShowView(IWin32Window parent = null)
         {
-            _menuUpdater = new MenuUpdater(_context, _mapControl1, PluginIdentity.Default);
-
             Application.Run(this);
         }
 
@@ -105,21 +103,14 @@ namespace MW5.Views
             {
                 Text += @" - " + _context.Project.Filename;
             }
-
-            if (_menuUpdater != null)
-            {
-                _menuUpdater.Update(_rendered);
-            }
-
-            UpdateStatusBar();
-
+            
             // broadcast to plugins
             if (_rendered)
             {
-                FireViewUpdating();
+                FireViewUpdating(_rendered);
             }
 
-            if (Form.ActiveForm == _mapControl1.ParentForm)
+            if (ActiveForm == _mapControl1.ParentForm)
             {
                 _mapControl1.Focus();
             }
@@ -128,30 +119,6 @@ namespace MW5.Views
         public ButtonBase OkButton
         {
             get { return null; }
-        }
-
-        private void UpdateStatusBar()
-        {
-            statusTileProvider.Text = _context.Map.TileProvider.EnumToString();
-
-            if (_context.Map.Layers.SelectedLayer == null)
-            {
-                statusSelected.Text = "No selected layer";
-                return;
-            }
-
-            var fs = _context.Map.SelectedFeatureSet;
-            if (fs != null)
-            {
-                statusSelected.Text = string.Format("Selected: {0} / {1}", fs.NumSelected, fs.Features.Count);
-                return;
-            }
-            
-            var img = _context.Map.SelectedImage;
-            if (img != null)
-            {
-                statusSelected.Text = "Selected layer is raster";
-            }
         }
 
         #endregion

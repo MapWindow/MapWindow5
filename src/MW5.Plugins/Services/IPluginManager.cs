@@ -12,6 +12,7 @@ namespace MW5.Plugins.Services
     {
         event EventHandler<PluginEventArgs> PluginUnloaded;
         event EventHandler<MenuItemEventArgs> MenuItemClicked;
+        event EventHandler<MenuItemEventArgs> StatusItemClicked;
         event EventHandler<MenuItemEventArgs> PluginItemClicked;
 
         /// <summary>
@@ -62,6 +63,9 @@ namespace MW5.Plugins.Services
         void UnloadPlugin(PluginIdentity identity, IAppContext context);
 
         bool PluginActive(PluginIdentity identity);
+
         void FireItemClicked(object sender, MenuItemEventArgs args);
+        
+        void FireStatusItemClicked(object sender, MenuItemEventArgs args);
     }
 }
