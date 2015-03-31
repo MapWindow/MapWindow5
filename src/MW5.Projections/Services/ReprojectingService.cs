@@ -6,7 +6,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
-using MW5.Projections.Forms;
+using MW5.Projections.UI.Forms;
 
 namespace MW5.Projections.Services
 {

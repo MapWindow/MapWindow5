@@ -6,11 +6,14 @@ namespace MW5.Plugins.Concrete
     [DataContract(Name="Settings")]
     public class AppConfig
     {
+        private List<int> _favoriteProjections;
+
         public AppConfig()
         {
             LoadSymbology = true;
             LoadLastProject = true;
             LastProjectPath = "";
+            FavoriteProjections = new List<int>();
         }
 
         [DataMember]
@@ -35,6 +38,10 @@ namespace MW5.Plugins.Concrete
         /// List of EPSG codes for favorite projections
         /// </summary>
         [DataMember]
-        public List<int> FavoriteProjections { get; set; }
+        public List<int> FavoriteProjections 
+        {
+            get { return _favoriteProjections ?? (_favoriteProjections = new List<int>()); }
+            set { _favoriteProjections = value; }
+        }
     }
 }

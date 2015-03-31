@@ -1,0 +1,31 @@
+<Mapwin name="MapWindow+GIS++-+World*" type="projectfile.2" version="4.8.3">
+  <MapWinGIS OcxVersion="4.8" FileType="MapState" FileVersion="0">
+  <MapState SendMouseMove="1" SendMouseDown="1" SendMouseUp="1" SendSelectBoxFinal="1" TrapRightMouseDown="1" UnitsOfMeasure="0" ShowVersionNumber="1" ExtentsLeft="-144.200732" ExtentsRight="188.169251" ExtentsBottom="-110.247620" ExtentsTop="96.490842" ExtentsPad="0.020000" />
+  <Layers>
+    <Layer LayerType="Shapefile" LayerName="ocean" LayerVisible="1" LayerKey="" Filename="borders\ocean.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillColor="15788754" LineColor="9868950" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="TM_WORLD_BORDERS-0.3" LayerVisible="1" LayerKey="" Filename="borders\TM_WORLD_BORDERS-0.3.shp">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillColor="13823714" LineColor="9868950" />
+        <ShapefileCategoriesClass />
+        <LabelsClass FontColor="3027590" FontSize="9" FontStyle="1" Generated="1" MaxVisibleScale="85000000" DynamicVisibility="-1" Positioning="1" Expression="[NAME] " />
+        <ChartsClass ValuesFontName="" />
+      </ShapefileClass>
+    </Layer>
+    <Layer LayerType="Shapefile" LayerName="WORLD30" LayerVisible="1" LayerKey="" Filename="borders\WORLD30.SHP">
+      <ShapefileClass>
+        <DefaultDrawingOptions FillColor="14408401" FillVisible="0" LineColor="9868950" />
+        <ShapefileCategoriesClass />
+        <LabelsClass Generated="0" Positioning="1" />
+        <ChartsClass ValuesFontName="" />
+      </ShapefileClass>
+    </Layer>
+  </Layers>
+</MapWinGIS>
+</Mapwin>

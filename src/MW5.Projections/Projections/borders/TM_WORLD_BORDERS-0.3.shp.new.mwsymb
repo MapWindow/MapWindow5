@@ -1,0 +1,35 @@
+<MapWinGIS OcxVersion="4.8" FileType="LayerFile" FileVersion="0" Description="Enter description">
+  <Layer LayerType="Shapefile" LayerName="TM_WORLD_BORDERS-0.3" LayerVisible="1" LayerKey="" Filename="">
+    <ShapefileClass>
+      <DefaultDrawingOptions FillColor="14988487" LineColor="9868950" />
+      <ShapefileCategoriesClass>
+        <ShapefileCategoryClass Name="0 - 10.44k" Expression="[POP2005] &gt;= 0.000000 AND [POP2005] &lt; 10441.000000">
+          <ShapeDrawingOptionsClass FillColor="13353215" FillColor2="13353215" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="10.44k - 152.6k" Expression="[POP2005] &gt;= 10441.000000 AND [POP2005] &lt; 152622.000000">
+          <ShapeDrawingOptionsClass FillColor="13552127" FillColor2="13552127" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="152.6k - 16.30m" Expression="[POP2005] &gt;= 152622.000000 AND [POP2005] &lt; 16295102.000000">
+          <ShapeDrawingOptionsClass FillColor="13751039" FillColor2="13751039" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="16.30m - 47.97m" Expression="[POP2005] &gt;= 16295102.000000 AND [POP2005] &lt; 47967266.000000">
+          <ShapeDrawingOptionsClass FillColor="13949951" FillColor2="13949951" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="47.97m - 127.9m" Expression="[POP2005] &gt;= 47967266.000000 AND [POP2005] &lt; 127896740.000000">
+          <ShapeDrawingOptionsClass FillColor="14148863" FillColor2="14148863" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="127.9m - 226.0m" Expression="[POP2005] &gt;= 127896740.000000 AND [POP2005] &lt; 226063044.000000">
+          <ShapeDrawingOptionsClass FillColor="14347775" FillColor2="14347775" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="226.0m - 1.13b" Expression="[POP2005] &gt;= 226063044.000000 AND [POP2005] &lt; 1134403141.000000">
+          <ShapeDrawingOptionsClass FillColor="14546687" FillColor2="14546687" LineColor="9868950" />
+        </ShapefileCategoryClass>
+        <ShapefileCategoryClass Name="1.13b - 1.31b" Expression="[POP2005] &gt;= 1134403141.000000 AND [POP2005] &lt;= 1312978855.000000">
+          <ShapeDrawingOptionsClass FillColor="14745599" FillColor2="14745599" LineColor="9868950" />
+        </ShapefileCategoryClass>
+      </ShapefileCategoriesClass>
+      <LabelsClass Generated="1" Positioning="1" Expression="[NAME] " />
+      <ChartsClass />
+    </ShapefileClass>
+  </Layer>
+</MapWinGIS>

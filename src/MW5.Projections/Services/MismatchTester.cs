@@ -10,7 +10,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
-using MW5.Projections.Forms;
+using MW5.Projections.UI.Forms;
 
 namespace MW5.Projections.Services
 {

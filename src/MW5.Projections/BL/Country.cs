@@ -8,6 +8,12 @@ namespace MW5.Projections.BL
     /// </summary>
     public class Country : Territory, ICountry
     {
+        public Country()
+        {
+            GeographicCs = new List<IGeographicCs>();
+            ProjectedCs = new List<int>();
+        }
+
         /// <summary>
         /// A code of region, the country belong to
         /// </summary>

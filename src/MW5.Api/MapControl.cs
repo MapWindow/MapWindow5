@@ -595,6 +595,11 @@ namespace MW5.Api
         {
             get { return new DecorationRectangle(_map.FocusRectangle); }
         }
+
+        public bool LoadMapState(string filename)
+        {
+            return _map.LoadMapState(filename, null);
+        }
     }
 }
 

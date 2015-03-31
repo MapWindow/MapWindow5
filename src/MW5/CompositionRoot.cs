@@ -27,6 +27,7 @@ namespace MW5
             
             Services.CompositionRoot.Compose(container);
             Plugins.CompositionRoot.Compose(container);
+            Projections.CompositionRoot.Compose(container);
         }
     }
 }

@@ -41,11 +41,13 @@ namespace MW5
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
         private IConfigService _configService;
+        private IProjectionDatabase _projectionDatabase;
 
-        public AppContext(IApplicationContainer container)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase)
         {
             if (container == null) throw new ArgumentNullException("container");
             _container = container;
+            _projectionDatabase = projectionDatabase;
         }
 
         /// <summary>
@@ -73,6 +75,8 @@ namespace MW5
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
             _toolbars = ToolbarsCollection.CreateInstance(mainView.MenuManager);
             _statusBar = new UI.StatusBar(mainView.StatusBar);
+
+            _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
         }
 
         internal void InitPlugins(IConfigService configService)
@@ -155,7 +159,7 @@ namespace MW5
 
         public IProjectionDatabase Projections
         {
-            get { throw new NotImplementedException(); }
+            get { return _projectionDatabase; }
         }
 
         public AppConfig Config

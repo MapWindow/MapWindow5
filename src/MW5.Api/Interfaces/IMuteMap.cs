@@ -110,6 +110,8 @@ namespace MW5.Api.Interfaces
 
         DecorationRectangle FocusRectangle { get; }
 
+        bool LoadMapState(string filename);
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;
@@ -137,11 +139,11 @@ namespace MW5.Api.Interfaces
         // void ShowToolTip(string text, int milliseconds);
         //  FileManager FileManager { get; }
         // bool DeserializeMapState(string state, bool loadLayers, string basePath);
-        // bool LoadMapState(string filename, object callback);
         //bool TrapRMouseDown { get; set; }
         // bool SnapShotToDC(IntPtr hDC, Extents extents, int width);
         // bool SnapShotToDC2(IntPtr hDC, Extents extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
         //tkZoomBoxStyle ZoomBoxStyle { get; set; }
+
         #endregion
     }
 }

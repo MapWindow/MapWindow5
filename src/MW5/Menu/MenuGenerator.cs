@@ -123,6 +123,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.CreateLayer], true);
             items.AddButton(_commands[MenuKeys.RemoveLayer]);
             items.AddButton(_commands[MenuKeys.Settings], true);
+            items.AddButton(_commands[MenuKeys.Projections], true);
             
             items.InsertBefore = items[items.Count - 1];    // before settings
 

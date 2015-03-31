@@ -44,6 +44,7 @@ namespace MW5.Projections.Services
         private List<IProjectedCs> _listPcs = new List<IProjectedCs>();
 
         private readonly IDataProvider _provider;
+        private bool _initialized = false;
 
         /// <summary>
         /// Constructor. Sets SqLite provider
@@ -58,31 +59,24 @@ namespace MW5.Projections.Services
         }
         
         /// <summary>
-        /// Constructor
-        /// </summary>
-        public ProjectionDatabase(IDataProvider provider) 
-        {
-            if (provider == null)
-                throw new NullReferenceException("Provider for projections database wasn't specified");
-            _provider = provider;
-        }
-
-        /// <summary>
         /// Creates a new instance of the EpsgDatabase class
         /// </summary>
-        public ProjectionDatabase(string databaseName, IDataProvider provider)
+        public bool Init(string databaseName)
         {
-            if (provider == null)
+            if (_initialized)
             {
-                throw new NullReferenceException("Provider for projections database wasn't specified");
+                return false;
             }
-            _provider = provider;
-            
+
             if (!File.Exists(databaseName))
             {
                 throw new FileNotFoundException("EPSG database wan't found: " + databaseName);
             }
+
             Read(databaseName);
+
+            _initialized = true;
+            return true;
         }
 
         #region Coordinate system searching
