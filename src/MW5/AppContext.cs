@@ -32,6 +32,7 @@ namespace MW5
     {
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
+        private readonly IStyleService _styleService;
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
@@ -45,11 +46,13 @@ namespace MW5
         private IDockPanelCollection _dockPanelCollection;
         private IConfigService _configService;
         
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
             if (container == null) throw new ArgumentNullException("container");
+            if (styleService == null) throw new ArgumentNullException("styleService");
             _container = container;
             _projectionDatabase = projectionDatabase;
+            _styleService = styleService;
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace MW5
             _container.RegisterInstance<IMuteMap>(mainView.Map);
 
             _mainView = mainView;
-            _view = new AppView(mainView);
+            _view = new AppView(mainView, _styleService);
             _project = project;
             _map = mainView.Map;
             _legend = mainView.Legend;

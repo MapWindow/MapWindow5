@@ -10,19 +10,38 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.UI
 {
-    public class MapWindowForm: MetroForm
+#if STYLE2010
+    public partial class MapWindowForm : Office2010Form
+#else
+    public partial class MapWindowForm : MetroForm
+#endif
     {
         protected readonly IAppContext _context;
 
         public MapWindowForm()
         {
             Icon = Resources.MapWindow;
+#if STYLE2010
+            ApplyAeroTheme = false;
+            UseOffice2010SchemeBackColor = true;
+#endif
         }
 
         public MapWindowForm(IAppContext context)
+            : this()
         {
-            Icon = Resources.MapWindow;
             _context = context;
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // MapWindowForm
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "MapWindowForm";
+            this.ResumeLayout(false);
         }
     }
 }

@@ -38,12 +38,14 @@
             ((System.ComponentModel.ISupportInitialize)(this._treeViewAdv1)).BeginInit();
             this.SuspendLayout();
             // 
-            // treeViewAdv1
+            // _treeViewAdv1
             // 
             this._treeViewAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this._treeViewAdv1.BackColor = System.Drawing.Color.White;
             this._treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(199, 425);
             this._treeViewAdv1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
+            this._treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._treeViewAdv1.CanSelectDisabledNode = false;
             // 
             // 
@@ -57,8 +59,10 @@
             this._treeViewAdv1.Location = new System.Drawing.Point(12, 12);
             this._treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._treeViewAdv1.Name = "_treeViewAdv1";
-            this._treeViewAdv1.ShowFocusRect = true;
+            this._treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
+            this._treeViewAdv1.ShowFocusRect = false;
             this._treeViewAdv1.Size = new System.Drawing.Size(199, 425);
+            this._treeViewAdv1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this._treeViewAdv1.TabIndex = 0;
             this._treeViewAdv1.Text = "treeViewAdv1";
             this._treeViewAdv1.ThemesEnabled = true;
@@ -134,6 +138,7 @@
             this.btnSave.Size = new System.Drawing.Size(93, 29);
             this.btnSave.TabIndex = 11;
             this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyle = false;
             // 
             // ConfigView
             // 

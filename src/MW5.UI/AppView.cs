@@ -15,11 +15,14 @@ namespace MW5.UI
     public class AppView: IAppView
     {
         private readonly IMainView _parent;
+        private readonly IStyleService _styleService;
 
-        public AppView(IMainView parent)
+        public AppView(IMainView parent, IStyleService styleService)
         {
             if (parent == null) throw new ArgumentNullException("parent");
+            if (styleService == null) throw new ArgumentNullException("styleService");
             _parent = parent;
+            _styleService = styleService;
         }
 
         public bool ShowChildView(Form form, bool modal = true)
@@ -31,11 +34,9 @@ namespace MW5.UI
         {
             if (form == null) throw new ArgumentNullException("parent");
 
-            if (form is MetroForm)
+            if (form is Office2010Form || form is MetroForm)
             {
-                // TODO: use injection
-                var service = new SyncfusionStyleService(ControlStyleSettings.Instance);
-                service.ApplyStyle(form as MetroForm);
+                _styleService.ApplyStyle(form);
             }
 
             if (form is IViewInternal)

@@ -30,6 +30,12 @@ namespace MW5.UI.Menu
             if (_menuIndex == null) throw new ArgumentNullException("menuIndex");
             
             _bar.Tag = new MenuItemMetadata(identity, "statusbar");
+
+#if STYLE2010
+            _bar.VisualStyle = StatusStripExStyle.Default;
+#else
+            _bar.VisualStyle = StatusStripExStyle.Metro;
+#endif
         }
 
         public string Name { get; set; }

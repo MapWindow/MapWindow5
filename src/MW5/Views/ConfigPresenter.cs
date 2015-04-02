@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 using MW5.Configuration;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.UI.Syncfusion;
 using MW5.Views.Abstract;
 
 namespace MW5.Views
@@ -15,9 +17,10 @@ namespace MW5.Views
         private readonly IConfigService _configService;
         private readonly IPluginManager _manager;
         private readonly IMessageService _messageService;
+        private readonly IStyleService _styleService;
 
         public ConfigPresenter(IAppContext context, IConfigView view, IConfigService configService, IPluginManager manager,
-                               IMessageService messageService)
+                               IMessageService messageService, IStyleService styleService)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -25,12 +28,14 @@ namespace MW5.Views
             if (configService == null) throw new ArgumentNullException("configService");
             if (manager == null) throw new ArgumentNullException("manager");
             if (messageService == null) throw new ArgumentNullException("messageService");
+            if (styleService == null) throw new ArgumentNullException("styleService");
 
             _context = context;
             _view = view;
             _configService = configService;
             _manager = manager;
             _messageService = messageService;
+            _styleService = styleService;
 
             InitPages();
 
@@ -76,6 +81,11 @@ namespace MW5.Views
         {
             _view.Pages.Add(new GeneralConfigPage(_configService));
             _view.Pages.Add(new PluginsConfigPage(_configService, _manager, _context));
+
+            foreach (var page in _view.Pages)
+            {
+                _styleService.ApplyStyle(page as Control);
+            }
         }
 
         public override bool ViewOkClicked()

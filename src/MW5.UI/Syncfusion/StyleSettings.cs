@@ -10,21 +10,21 @@ namespace MW5.UI.Syncfusion
 {
     public class ControlStyleSettings
     {
-        private static ControlStyleSettings _instance;
-
-        public static ControlStyleSettings Instance
+        public ControlStyleSettings()
         {
-            get
-            {
-                return _instance ?? (_instance = new ControlStyleSettings()
-                {
-                    ButtonAppearance = ButtonAppearance.Metro,
-                    VisualStyle = VisualStyle.Metro,
-                    TextboxTheme = TextBoxExt.theme.Metro,
-                    CheckboxStyle = CheckBoxAdvStyle.Metro,
-                    RadioButtonStyle = RadioButtonAdvStyle.Metro,
-                });
-            }
+#if STYLE2010                
+            ButtonAppearance = ButtonAppearance.Office2010;
+            VisualStyle = VisualStyle.Office2010;
+            TextboxTheme = TextBoxExt.theme.Office2010;
+            CheckboxStyle = CheckBoxAdvStyle.Office2010;
+            RadioButtonStyle = RadioButtonAdvStyle.Office2010;
+#else
+            ButtonAppearance = ButtonAppearance.Metro;
+            VisualStyle = VisualStyle.Metro;
+            TextboxTheme = TextBoxExt.theme.Metro;
+            CheckboxStyle = CheckBoxAdvStyle.Metro;
+            RadioButtonStyle = RadioButtonAdvStyle.Metro;
+#endif
         }
 
         public RadioButtonAdvStyle RadioButtonStyle { get; set; }

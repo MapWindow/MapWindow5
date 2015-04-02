@@ -37,7 +37,6 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "MapWindowView";
             this.ResumeLayout(false);
-
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
@@ -11,7 +12,7 @@ namespace MW5.UI.Menu
     internal class ToolbarsCollection: IToolbarCollection
     {
         private readonly IMenuIndex _menuIndex;
-        private MainFrameBarManager _manager;
+        private readonly MainFrameBarManager _manager;
         internal const string FILE_TOOLBAR_KEY = "FileToolbar";
         internal const string MAP_TOOLBAR_KEY = "MapToolbar";
         
@@ -24,6 +25,12 @@ namespace MW5.UI.Menu
             {
                 throw new NullReferenceException("ToolbarsCollection: instance of menu manager is not provided.");
             }
+
+#if STYLE2010
+            _manager.Style = VisualStyle.Office2010;
+#else
+            _manager.Style = VisualStyle.OfficeXP;
+#endif
         }
 
         public IEnumerator<IToolbar> GetEnumerator()
@@ -64,7 +71,7 @@ namespace MW5.UI.Menu
                 }
                 else
                 {
-                    MenuItemCollection.RemoveItems(bar.Items, identity);
+                    ItemCollectionBase.RemoveItems(bar.Items, identity);
                 }
             }
         }

@@ -42,9 +42,6 @@ namespace MW5.Configuration
         // TODO: extract to application level styles
         private void ApplyGridOptions(GridGroupingControl grid)
         {
-            grid.GridOfficeScrollBars = Syncfusion.Windows.Forms.OfficeScrollBars.Metro;
-            grid.GridVisualStyles = Syncfusion.Windows.Forms.GridVisualStyles.Metro;
-
             grid.Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle;
             grid.Appearance.AnyCell.Borders.All = new GridBorder(GridBorderStyle.None, Color.White);
 

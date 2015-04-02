@@ -37,10 +37,12 @@
             // chkLoadSymbology
             // 
             this.chkLoadSymbology.BeforeTouchSize = new System.Drawing.Size(188, 21);
+            this.chkLoadSymbology.DrawFocusRectangle = false;
             this.chkLoadSymbology.Location = new System.Drawing.Point(24, 22);
-            this.chkLoadSymbology.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkLoadSymbology.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.chkLoadSymbology.Name = "chkLoadSymbology";
             this.chkLoadSymbology.Size = new System.Drawing.Size(188, 21);
+            this.chkLoadSymbology.Style = Syncfusion.Windows.Forms.Tools.CheckBoxAdvStyle.Metro;
             this.chkLoadSymbology.TabIndex = 2;
             this.chkLoadSymbology.Text = "Load Symbology for Layers";
             this.chkLoadSymbology.ThemesEnabled = false;

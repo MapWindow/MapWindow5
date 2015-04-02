@@ -10,6 +10,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Docking
@@ -19,8 +20,8 @@ namespace MW5.UI.Docking
         private bool _locked;
         private readonly Form _mainForm;
         private readonly IBroadcasterService _broadcaster;
-        private DockingManager _dockingManager;
-        private Dictionary<Control, DockPanelInfo> _dict = new Dictionary<Control, DockPanelInfo>();
+        private readonly DockingManager _dockingManager;
+        private readonly Dictionary<Control, DockPanelInfo> _dict = new Dictionary<Control, DockPanelInfo>();
 
         internal DockPanelCollection(object dockingManager, Form mainForm, IBroadcasterService broadcaster)
         {
@@ -36,6 +37,12 @@ namespace MW5.UI.Docking
                 throw new ApplicationException(
                     "Failed to initialize DockPanelCollection. No docking manager is provided.");
             }
+
+#if STYLE2010
+            _dockingManager.VisualStyle = VisualStyle.Office2010;
+#else
+            _dockingManager.VisualStyle = VisualStyle.VS2005;
+#endif
 
             _dockingManager.DockTabAlignment = DockTabAlignmentStyle.Bottom;
             _dockingManager.ShowCaptionImages = false;

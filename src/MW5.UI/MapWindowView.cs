@@ -14,7 +14,11 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.UI
 {
+#if STYLE2010
+    public partial class MapWindowView : Office2010Form, IViewInternal
+#else
     public partial class MapWindowView : MetroForm, IViewInternal
+#endif
     {
         private readonly IAppView _appView;
         public event Action OkClicked;
@@ -23,16 +27,17 @@ namespace MW5.UI
         {
             InitializeComponent();
             Icon = Resources.MapWindow;
+#if STYLE2010
+            ApplyAeroTheme = false;
+            UseOffice2010SchemeBackColor = true;
+#endif
         }
 
-        protected MapWindowView(IAppView appView)
+        protected MapWindowView(IAppView appView):
+            this()
         {
             if (appView == null) throw new ArgumentNullException("appView");
             _appView = appView;
-
-            InitializeComponent();
-
-            Icon = Resources.MapWindow;
         }
 
         protected void Invoke(Action action)
