@@ -99,7 +99,7 @@ namespace MW5.Api.Interfaces
 
         IImageSource SnapShot(IEnvelope boundBox);
         IImageSource SnapShot(int clippingLayerHandle, double zoom, int width);
-        IImageSource SnapShot(double left, double right, double top, double bottom, int width);
+        IImageSource SnapShot(IEnvelope boundBox, int width);
 
         IntPtr Handle { get; }
 

@@ -75,6 +75,9 @@
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="stdole, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4" />
     <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -109,6 +112,13 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\LocatorDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LocatorDockPanel.Designer.cs">
+      <DependentUpon>LocatorDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LocatorPresenter.cs" />
     <Compile Include="Helpers\ProjectionHelper.cs" />
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
@@ -176,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LocatorDockPanel.resx">
+      <DependentUpon>LocatorDockPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

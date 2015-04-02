@@ -6,6 +6,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Controls;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins;
@@ -45,6 +46,7 @@ namespace MW5
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
         private IConfigService _configService;
+        private LocatorPresenter _locator;
         
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
@@ -82,6 +84,8 @@ namespace MW5
             _statusBar = MenuFactory.CreateStatusBar(mainView.StatusBar, PluginIdentity.Default);
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
+
+            _locator = new LocatorPresenter(_map);
         }
 
         internal void InitPlugins(IConfigService configService)
@@ -175,6 +179,11 @@ namespace MW5
         public void SetMapProjection(ISpatialReference projection)
         {
             this.SetProjection(projection);
+        }
+
+        public ILocator Locator
+        {
+            get { return _locator; }
         }
 
         public IPluginManager PluginManager

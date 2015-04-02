@@ -304,9 +304,14 @@ namespace MW5.Api
             return BitmapSource.Wrap(img);
         }
 
-        public IImageSource SnapShot(double left, double right, double top, double bottom, int width)
+        public IImageSource SnapShot(IEnvelope boundBox, int width)
         {
-            var img = _map.SnapShot3(left, right, top, bottom, width);
+            if (boundBox == null)
+            {
+                throw new ArgumentNullException("boundBox");
+            }
+
+            var img = _map.SnapShot3(boundBox.MinX, boundBox.MaxX, boundBox.MaxY, boundBox.MinY, width);
             return BitmapSource.Wrap(img);
         }
 

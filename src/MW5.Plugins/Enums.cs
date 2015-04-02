@@ -98,4 +98,19 @@ namespace MW5.Plugins
         /// </summary>
         UseDialects = 2,
     }
+
+    /// <summary>
+    /// Enumeration of possible preview map update types.
+    /// </summary>
+    public enum PreviewExtents
+    {
+        /// <summary>
+        /// Update using full exents.
+        /// </summary>
+        FullExtents = 0,
+        /// <summary>
+        /// Update using current map view.
+        /// </summary>
+        CurrentMapView = 1
+    }
 }

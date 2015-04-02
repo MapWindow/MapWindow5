@@ -3,6 +3,8 @@ using System.Drawing;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Helpers;
+using stdole;
 using Image = MapWinGIS.Image;
 
 namespace MW5.Api.Concrete
@@ -20,14 +22,31 @@ namespace MW5.Api.Concrete
             _image = image;
         }
 
+        public stdole.IPictureDisp Picture
+        {
+            get { return _image.Picture; }
+            set { _image.Picture = value; }
+        }
+
         #region Static methods
 
         internal static IImageSource Wrap(Image img)
         {
+            if (img == null)
+            {
+                return null;
+            }
+
             if (img.SourceType == tkImageSourceType.istGDALBased)
             {
                 return new RasterSource(img);
             }
+            return new BitmapSource(img);
+        }
+
+        public static BitmapSource CreateEmpty()
+        {
+            var img = new Image();
             return new BitmapSource(img);
         }
 
@@ -119,7 +138,7 @@ namespace MW5.Api.Concrete
             UseTransparentColor = true;
         }
 
-        public double AlphaTransparency
+        public double Transparency
         {
             get { return _image.TransparencyPercent; }
             set { _image.TransparencyPercent = value; }
@@ -274,6 +293,24 @@ namespace MW5.Api.Concrete
         public void Dispose()
         {
             _image.Close();
+        }
+
+        public System.Drawing.Image ToGdiPlusBitmap()
+        {
+            var utils = new ImageUtils();
+            return utils.GetPictureFromIPicture(this.Picture);
+        }
+
+        public bool FromGdiPlusBitmap(System.Drawing.Image image)
+        {
+            if (image == null)
+            {
+                return false;
+            }
+
+            ImageUtils utils = new ImageUtils();
+            Picture = (IPictureDisp)utils.GetIPictureFromPicture(image);
+            return true;
         }
     }
 }

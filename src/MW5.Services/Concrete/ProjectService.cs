@@ -102,6 +102,7 @@ namespace MW5.Services.Concrete
                 _context.Legend.Groups.Clear();
                 _context.Legend.Layers.Clear();
                 _context.Map.SetDefaultExtents();
+                _context.Locator.Clear();
                 return true;
             }
             return false;

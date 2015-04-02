@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Controls;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins;
@@ -28,6 +29,7 @@ namespace MW5.Views
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
+        private LocatorPresenter _previewPresenter;
 
         public MainView(IAppContext context)
         {
@@ -162,7 +164,9 @@ namespace MW5.Views
             try
             {
                 _legendControl1.BorderStyle = BorderStyle.None;
-                treeViewAdv2.BorderStyle = BorderStyle.None;
+
+                var previewPanel = _context.Locator.View;
+                previewPanel.BorderStyle = BorderStyle.None;
                 const int size = 300;
 
                 var legend = panels.Add(_legendControl1, DockPanelKeys.Legend, PluginIdentity.Default);
@@ -170,10 +174,9 @@ namespace MW5.Views
                 legend.DockTo(null, DockPanelState.Left, size);
                 legend.SetIcon(Resources.ico_legend);
 
-                var preview = panels.Add(treeViewAdv2, DockPanelKeys.Preview, PluginIdentity.Default);
-                preview.Caption = "Preview";
+                var preview = panels.Add(previewPanel, DockPanelKeys.Preview, PluginIdentity.Default);
+                preview.Caption = "Locator";
                 preview.SetIcon(Resources.ico_zoom_to_layer);
-
                 preview.DockTo(legend, DockPanelState.Bottom, size);
             }
             finally

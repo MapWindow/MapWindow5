@@ -6,6 +6,7 @@ using System.Runtime.Serialization;
 using MW5.Api.Concrete;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
+using MW5.Services.Serialization.Utility;
 
 namespace MW5.Services.Serialization
 {
@@ -29,13 +30,21 @@ namespace MW5.Services.Serialization
                 Guid = p.Identity.Guid
             }).ToList();
 
-            Map = new XmlMap();
+            Map = new XmlMap
+            {
+                Projection = context.Map.GeoProjection.ExportToWkt(),
+                Envelope = new XmlEnvelope(context.Map.Extents)
+            };
 
-            Map.Projection = context.Map.GeoProjection.ExportToWkt();
-            Map.Envelope = new XmlEnvelope(context.Map.Extents);
+            if (!context.Locator.Empty)
+            {
+                var service = context.Container.GetInstance<ImageSerializationService>();
+                Locator = new XmlMapLocator(context.Locator, service);
+            }
         }
 
         [DataMember] public XmlMap Map { get; set; }
+        [DataMember] public XmlMapLocator Locator { get; set; }
         [DataMember] public List<XmlGroup> Groups { get; set; }
         [DataMember] public List<XmlLayer> Layers { get; set; }
         [DataMember] public List<XmlPlugin> Plugins { get; set; }
@@ -70,6 +79,13 @@ namespace MW5.Services.Serialization
             if (e != null)
             {
                 context.Map.Extents = new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY);
+            }
+
+            if (Locator != null)
+            {
+                var service = context.Container.GetInstance<ImageSerializationService>();
+                var bitmap = service.ConvertStringToImage(Locator.Image, Locator.Type);
+                context.Locator.RestorePicture(bitmap as System.Drawing.Image, Locator.Dx, Locator.Dy, Locator.XllCenter, Locator.YllCenter);
             }
 
             context.Map.Unlock();

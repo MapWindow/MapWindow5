@@ -9,6 +9,8 @@ namespace MW5.Services.Serialization.Utility
 {
     public static class DataContractSerializationHelper
     {
+        private const int MaxStringContentLength = 1048576;
+
         public static T Deserialize<T>(this string targetString)
         {
             return Deserialize<T>(targetString, null);
@@ -21,7 +23,8 @@ namespace MW5.Services.Serialization.Utility
 
             using (var stream = new MemoryStream(encoding.GetBytes(targetString)))
             {
-                using (var reader = XmlDictionaryReader.CreateTextReader(stream, new XmlDictionaryReaderQuotas()))
+                var quota = new XmlDictionaryReaderQuotas() { MaxStringContentLength = MaxStringContentLength };
+                using (var reader = XmlDictionaryReader.CreateTextReader(stream, quota))
                 {
                     var ser = new DataContractSerializer(typeof(T), knownTypes, Int32.MaxValue, false, false, null);
                     return (T)ser.ReadObject(reader);

@@ -14,5 +14,10 @@ namespace MW5.Api.Interfaces
         double MaxM { get; }
         Rectangle ToRectangle();
         void SetBounds(double xMin, double xMax, double yMin, double yMax);
+        IEnvelope Move(double dx, double dy);
+        double Width { get; }
+        double Height { get; }
+        ICoordinate Center { get; }
+        IEnvelope Adjust(double xyRatio);
     }
 }
