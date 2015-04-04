@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;STYLE2010</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -103,6 +103,7 @@
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\TreeViewAdvHelper.cs" />
     <Compile Include="MapWindowView.cs">
       <SubType>Form</SubType>
     </Compile>

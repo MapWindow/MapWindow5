@@ -4,6 +4,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.UI;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Projections.UI.Forms
 {
@@ -25,6 +26,14 @@ namespace MW5.Projections.UI.Forms
             {
                 _projectionTreeView1.RefreshList();
             }
+
+            btnOk.Click += btnOk_Click;
+
+            txtSearch.Cue = "Enter coordinate system name or EPSG code";
+
+            comboBoxAdv1.SelectedIndex = 0;
+
+            ActiveControl = txtSearch;
         }
 
         public BL.CoordinateSystem SelectedCoordinateSystem
@@ -41,6 +50,27 @@ namespace MW5.Projections.UI.Forms
             else
             {
                 MessageService.Current.Info("No projection is selected");
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            _projectionTreeView1.Filter(txtSearch.Text);
+        }
+
+        private void txtSearch_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.X > txtSearch.Width - 24)
+            {
+                txtSearch.Text = string.Empty;
+            }
+        }
+
+        private void txtSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                _projectionTreeView1.Filter(txtSearch.Text, true);
             }
         }
     }

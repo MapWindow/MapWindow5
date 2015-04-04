@@ -63,6 +63,16 @@ namespace MW5.Projections.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_clear_textbox {
+            get {
+                object obj = ResourceManager.GetObject("img_clear_textbox", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_edit {
             get {
                 object obj = ResourceManager.GetObject("img_edit", resourceCulture);
@@ -156,6 +166,16 @@ namespace MW5.Projections.Properties {
         internal static System.Drawing.Bitmap img_projection_mismatch {
             get {
                 object obj = ResourceManager.GetObject("img_projection_mismatch", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_search {
+            get {
+                object obj = ResourceManager.GetObject("img_search", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -31,24 +31,23 @@ namespace MW5.Projections.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            MW5.Api.Concrete.Envelope envelope2 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.projectionMap1 = new MW5.Projections.UI.Controls.ProjectionMap();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.lblX = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblY = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblProjection = new System.Windows.Forms.ToolStripStatusLabel();
             this.dgv = new MW5.UI.Controls.LayerStyleDataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lblX = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblY = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblProjection = new System.Windows.Forms.ToolStripStatusLabel();
             this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -77,15 +76,15 @@ namespace MW5.Projections.UI.Forms
             // projectionMap1
             // 
             this.projectionMap1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this.projectionMap1.CurrentScale = 91.63705745923977D;
+            this.projectionMap1.CurrentScale = 9.5684241903797478D;
             this.projectionMap1.CurrentZoom = -1;
             this.projectionMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.projectionMap1.ExtentHistory = 20;
             this.projectionMap1.ExtentPad = 0.02D;
-            envelope2.Tag = "";
-            this.projectionMap1.Extents = envelope2;
-            spatialReference2.Tag = "";
-            this.projectionMap1.GeoProjection = spatialReference2;
+            envelope1.Tag = "";
+            this.projectionMap1.Extents = envelope1;
+            spatialReference1.Tag = "";
+            this.projectionMap1.GeoProjection = spatialReference1;
             this.projectionMap1.GrabProjectionFromData = true;
             this.projectionMap1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this.projectionMap1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -104,7 +103,7 @@ namespace MW5.Projections.UI.Forms
             this.projectionMap1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
             this.projectionMap1.ShowRedrawTime = false;
             this.projectionMap1.ShowVersionNumber = false;
-            this.projectionMap1.Size = new System.Drawing.Size(735, 393);
+            this.projectionMap1.Size = new System.Drawing.Size(735, 395);
             this.projectionMap1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
             this.projectionMap1.TabIndex = 0;
             this.projectionMap1.Tag = "";
@@ -116,11 +115,48 @@ namespace MW5.Projections.UI.Forms
             // 
             // statusStrip1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 393);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 395);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(735, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(735, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // dgv
+            // 
+            this.dgv.AllowUserToAddRows = false;
+            this.dgv.AllowUserToDeleteRows = false;
+            this.dgv.AllowUserToResizeRows = false;
+            this.dgv.BackgroundColor = System.Drawing.Color.White;
+            this.dgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgv.Location = new System.Drawing.Point(0, 0);
+            this.dgv.MultiSelect = false;
+            this.dgv.Name = "dgv";
+            this.dgv.RowHeadersVisible = false;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            this.dgv.RowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgv.ShapefileDrawingColumn = -1;
+            this.dgv.Size = new System.Drawing.Size(94, 98);
+            this.dgv.TabIndex = 0;
+            this.dgv.Visible = false;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Name";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Comments";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             // 
             // lblX
             // 
@@ -140,43 +176,6 @@ namespace MW5.Projections.UI.Forms
             this.lblProjection.Name = "lblProjection";
             this.lblProjection.Size = new System.Drawing.Size(65, 19);
             this.lblProjection.Text = "projection";
-            // 
-            // dgv
-            // 
-            this.dgv.AllowUserToAddRows = false;
-            this.dgv.AllowUserToDeleteRows = false;
-            this.dgv.AllowUserToResizeRows = false;
-            this.dgv.BackgroundColor = System.Drawing.Color.White;
-            this.dgv.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2});
-            this.dgv.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv.Location = new System.Drawing.Point(0, 0);
-            this.dgv.MultiSelect = false;
-            this.dgv.Name = "dgv";
-            this.dgv.RowHeadersVisible = false;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
-            this.dgv.RowsDefaultCellStyle = dataGridViewCellStyle2;
-            this.dgv.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgv.ShapefileDrawingColumn = -1;
-            this.dgv.Size = new System.Drawing.Size(94, 98);
-            this.dgv.TabIndex = 0;
-            this.dgv.Visible = false;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Name";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Comments";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
             // 
             // btnCancel
             // 
@@ -206,8 +205,6 @@ namespace MW5.Projections.UI.Forms
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
 

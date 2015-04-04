@@ -9,6 +9,7 @@ namespace MW5.UI.Syncfusion
 {
     public class SyncfusionStyleService : IStyleService
     {
+        private Color _metroColor = Color.FromArgb(22, 165, 220);
         private readonly ControlStyleSettings _settings;
 
         public SyncfusionStyleService(ControlStyleSettings settings)
@@ -34,6 +35,12 @@ namespace MW5.UI.Syncfusion
         {
             foreach (Control control in controls)
             {
+                var lbl = control as Label;
+                if (lbl != null)
+                {
+                    lbl.BackColor = Color.Transparent;
+                }
+
                 var btn = control as ButtonAdv;
                 if (btn != null)
                 {
@@ -57,7 +64,7 @@ namespace MW5.UI.Syncfusion
                 if (chk != null)
                 {
                     chk.Style = _settings.CheckboxStyle;
-                    chk.MetroColor = Color.FromArgb(22, 165, 220);    // TODO: use constant
+                    chk.MetroColor = _metroColor;
                 }
 
                 var rad = control as RadioButtonAdv;
@@ -81,10 +88,21 @@ namespace MW5.UI.Syncfusion
                 var tree = control as TreeViewAdv;
                 if (tree != null)
                 {
+                    tree.MetroColor = _metroColor;
 #if STYLE2010
                     tree.Style = TreeStyle.Office2010;
 #else
                     tree.Style = TreeStyle.Metro;
+#endif
+                }
+
+                var tab = control as TabControlAdv;
+                if (tab != null)
+                {
+#if STYLE2010
+                    tab.TabStyle = typeof(TabRendererOffice2007);
+#else
+                    tab.TabStyle = typeof (TabRendererMetro);
 #endif
                 }
 

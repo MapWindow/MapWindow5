@@ -38,5 +38,10 @@ namespace MW5.Plugins.Interfaces.Projections
         /// Gets the extents where coordinate system is applicable (decimal degrees)
         /// </summary>
         IEnvelope Extents { get; }
+
+        /// <summary>
+        /// Returns true if token should be filtered by particular token entered by user
+        /// </summary>
+        bool Filter(string token);
     }
 }

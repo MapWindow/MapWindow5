@@ -48,12 +48,22 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Shared.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Tools.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite">
       <HintPath>..\packages\System.Data.SQLite.Core.1.0.96.0\lib\net45\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -87,6 +97,8 @@
     <Compile Include="BL\ProjectedCs.cs" />
     <Compile Include="BL\Region.cs" />
     <Compile Include="BL\BoundingBox.cs" />
+    <Compile Include="UI\Controls\Constants.cs" />
+    <Compile Include="UI\Controls\CoordinateSystemEventArgs.cs" />
     <Compile Include="UI\Controls\ProjectionMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +110,9 @@
     </Compile>
     <Compile Include="BL\Territory.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="UI\Controls\WatermarkTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="UI\Forms\AssignProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +191,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ChooseProjectionForm.resx">
       <DependentUpon>ChooseProjectionForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\EnterProjectionForm.resx">
       <DependentUpon>EnterProjectionForm.cs</DependentUpon>
@@ -311,6 +327,8 @@
     <Content Include="Projections\borders\Readme.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_clear_textbox.png" />
+    <None Include="Resources\img_search.png" />
     <None Include="Resources\img_map_delete.png" />
     <None Include="Resources\img_map_add.png" />
     <None Include="Resources\img_map.png" />

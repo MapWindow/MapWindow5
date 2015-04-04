@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces.Projections;
 
 namespace MW5.Projections.BL
@@ -59,6 +60,16 @@ namespace MW5.Projections.BL
                 env.SetBounds(Left, Right, Bottom, Top);
                 return env;
             }
+        }
+
+        public bool Filter(string token)
+        {
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return true;    // all nodes are ok for empty token
+            }
+
+            return Code.ToString().StartsWith(token) || Name.ContainsIgnoreCase(token);
         }
     }
 }

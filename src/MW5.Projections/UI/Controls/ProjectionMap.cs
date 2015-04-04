@@ -226,46 +226,11 @@ namespace MW5.Projections.UI.Controls
         /// </summary>
         private void InsertPart(IGeometry shp, double xMin, double xMax, double yMin, double yMax)
         {
-            int numParts = shp.Parts.Count;
-
-            // TODO: implement
-            //shp.InsertPart(shp.numPoints, ref numParts);
-
-            //// to left
-            //int index = shp.numPoints;
-            //MapWinGIS.Point pnt = new MapWinGIS.Point();
-            //pnt.x = xMin; pnt.y = yMax;
-            //shp.InsertPoint(pnt, ref index); index++;
-
-            //pnt = new MapWinGIS.Point();
-            //pnt.x = xMax; pnt.y = yMax;
-            //shp.InsertPoint(pnt, ref index); index++;
-
-            //pnt = new MapWinGIS.Point();
-            //pnt.x = xMax; pnt.y = yMin;
-            //shp.InsertPoint(pnt, ref index); index++;
-
-            //pnt = new MapWinGIS.Point();
-            //pnt.x = xMin; pnt.y = yMin;
-            //shp.InsertPoint(pnt, ref index); index++;
-
-            //pnt = new MapWinGIS.Point();
-            //pnt.x = xMin; pnt.y = yMax;
-            //shp.InsertPoint(pnt, ref index); index++;
-
-            //if (!shp.get_PartIsClockWise(0))
-            //{
-            //    bool val = shp.ReversePointsOrder(0);
-            //    if (!val)
-            //    {
-            //        System.Diagnostics.Debug.Print("CCW");
-            //    }
-            //}
-
-            //if (!shp.get_PartIsClockWise(0))
-            //{
-            //    System.Diagnostics.Debug.Print("CCW");
-            //}
+            shp.Points.Add(new Coordinate(xMin, yMax));
+            shp.Points.Add(new Coordinate(xMax, yMax));
+            shp.Points.Add(new Coordinate(xMax, yMin));
+            shp.Points.Add(new Coordinate(xMin, yMin));
+            shp.Points.Add(new Coordinate(xMin, yMax));
         }
 
         /// <summary>

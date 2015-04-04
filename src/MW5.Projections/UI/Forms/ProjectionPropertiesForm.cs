@@ -22,14 +22,11 @@ namespace MW5.Projections.UI.Forms
     public partial class ProjectionPropertiesForm : MapWindowForm
     {
         #region Declarations
-        /// <summary>
-        /// Underlying geoprojection object
-        /// </summary>
-        private ISpatialReference _projetion;
 
-        /// <summary>
-        /// Reference to treeview for searching by EPSG code, currently not needed
-        /// </summary>
+        private static int _lastTabIndex = 0;
+
+        private ISpatialReference _projection;
+
         private readonly IProjectionDatabase _database;
 
         // At least one dialect was either added or removed
@@ -53,18 +50,13 @@ namespace MW5.Projections.UI.Forms
 
             _database = database;
             _coordinateSystem = projection;
+            tabControl1.SelectedIndex = _lastTabIndex;
 
-            listView1.MouseDoubleClick += delegate {
-                EditProjection();
-            };
-
+            listView1.MouseDoubleClick += (s, e) => EditProjection();
+            
             listView1.SelectedIndexChanged += listView1_SelectedIndexChanged;
 
-            btnEdit.Click += delegate { EditProjection(); };
-
-            LoadMapPreviewSettings();
-
-            ShowProjection(projection);
+            Init();
         }
         
         /// <summary>
@@ -75,13 +67,28 @@ namespace MW5.Projections.UI.Forms
             InitializeComponent();
             _projectionMap1.Visible = false;
             linkLabel1.Visible = false;
+            tabControl1.SelectedIndex = _lastTabIndex;
 
             // dialects available for EPSG codes
             tabControl1.TabPages.RemoveAt(3);
 
+            Init();
+        }
+
+        private void Init()
+        {
             LoadMapPreviewSettings();
 
-            ShowProjection(projection);
+            if (_coordinateSystem != null)
+            {
+                ShowProjection(_coordinateSystem);
+            }
+            else
+            {
+                ShowProjection(_projection);
+            }
+
+            FormClosed += (s, e) => _lastTabIndex = tabControl1.SelectedIndex;
         }
         #endregion
 
@@ -92,34 +99,32 @@ namespace MW5.Projections.UI.Forms
         void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnRemove.Enabled = listView1.SelectedItems.Count > 0;
-            txtDialect.Text = listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0].SubItems[2].Text : "";
+            txtDialect.ShowProjection(listView1.SelectedItems.Count > 0 ? listView1.SelectedItems[0].SubItems[2].Text : "");
         }
 
         /// <summary>
         /// Shows information about selected projection
         /// </summary>
-        /// <param name="projection"></param>
         public void ShowProjection(ICoordinateSystem projection)
         {
-            if (projection == null)
-                throw new NullReferenceException("Geoprojection wasn't passed");
+            if (projection == null) throw new NullReferenceException("Geoprojection wasn't passed");
 
             txtName.Text = projection.Name;
             txtCode.Text = projection.Code.ToString();
 
-            _projetion = new SpatialReference();
-            if (!_projetion.ImportFromEpsg(projection.Code))
+            _projection = new SpatialReference();
+            if (!_projection.ImportFromEpsg(projection.Code))
             {
                 // usupported projection
             }
             else
             {
-                projectionTextBox1.ShowProjection(_projetion.ExportToWkt());
+                projectionTextBox1.ShowProjection(_projection.ExportToWkt());
 
                 _projectionMap1.DrawCoordinateSystem(projection);
                 _projectionMap1.ZoomToCoordinateSystem(projection);
 
-                txtProj4.Text = _projetion.ExportToProj4();
+                txtProj4.Text = _projection.ExportToProj4();
 
                 txtAreaName.Text = projection.AreaName;
                 txtRemarks.Text = projection.Remarks;
@@ -134,13 +139,14 @@ namespace MW5.Projections.UI.Forms
                 for (int i = 0; i < _coordinateSystem.Dialects.Count; i++)
                 {
                     string s = _coordinateSystem.Dialects[i];
-                    ListViewItem item = listView1.Items.Add(i.ToString());
+                    ListViewItem item = listView1.Items.Add((i + 1).ToString());
                     UpdateDialectString(item, s);
                 }
-                _index = _coordinateSystem.Dialects.Count;
 
                 if (listView1.Items.Count > 0)
+                {
                     listView1.Items[0].Selected = true;
+                }
             }
         }
 
@@ -151,6 +157,8 @@ namespace MW5.Projections.UI.Forms
             _projectionMap1.ScalebarVisible = false;
             _projectionMap1.ShowCoordinates = Api.CoordinatesDisplay.None;
             _projectionMap1.ShowVersionNumber = false;
+            _projectionMap1.TileProvider = Api.TileProvider.None;
+            _projectionMap1.ZoomBehavior = Api.ZoomBehavior.Default;
         }
 
         /// <summary>
@@ -163,21 +171,22 @@ namespace MW5.Projections.UI.Forms
                 throw new NullReferenceException("Geoprojection wasn't passed");
             }
 
-            _projetion = projection;
+            _projection = projection;
 
             txtName.Text = projection.Name == "" ? "None" : projection.Name;
             txtCode.Text = "None";
 
             if (!projection.IsEmpty)
             {
-                projectionTextBox1.ShowProjection(_projetion.ExportToWkt());
-                txtProj4.Text = _projetion.ExportToProj4();
+                projectionTextBox1.ShowProjection(_projection.ExportToWkt());
+                txtProj4.Text = _projection.ExportToProj4();
 
                 txtAreaName.Text = "Not defined";
                 txtScope.Text = "Not defined";
                 txtRemarks.Text = "Unrecognized projection";
             }
         }
+
         #endregion
 
         #region Interaction
@@ -187,28 +196,6 @@ namespace MW5.Projections.UI.Forms
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             _projectionMap1.Visible = tabControl1.SelectedIndex == 1;
-        }
-
-        /// <summary>
-        /// Updates size of tab pages. They tend to forget updting without it.
-        /// </summary>
-        private void tabControl1_SizeChanged(object sender, EventArgs e)
-        {
-            foreach (TabPage page in tabControl1.TabPages)
-            {
-                page.Invalidate();
-            }
-            Application.DoEvents();
-        }
-
-        private void ProjectionViewer_SizeChanged(object sender, EventArgs e)
-        {
-            foreach (TabPage page in tabControl1.TabPages)
-            {
-                page.Invalidate();
-            }
-            tabControl1.Invalidate();
-            Application.DoEvents();
         }
 
         /// <summary>
@@ -224,7 +211,7 @@ namespace MW5.Projections.UI.Forms
         /// <summary>
         /// Shows spatialreference.org page for the projection
         /// </summary>
-        private void linkLabel1_LinkClicked(object sender, System.Windows.Forms.LinkLabelLinkClickedEventArgs e)
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             try
             {
@@ -244,14 +231,17 @@ namespace MW5.Projections.UI.Forms
         /// </summary>
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            IEnumerable<string> list = ((IEnumerable)listView1.Items).Cast<ListViewItem>().Select(item => item.SubItems[2].Text);
-            EnterProjectionForm form = new EnterProjectionForm(_coordinateSystem, list, _database);
-            if (form.ShowDialog() == DialogResult.OK )
+            var list = ((IEnumerable)listView1.Items).Cast<ListViewItem>().Select(item => item.SubItems[2].Text);
+            using (var form = new EnterProjectionForm(_coordinateSystem, list, _database))
             {
-                ListViewItem item = listView1.Items.Add((_index++).ToString());
-                UpdateDialectString(item, form.textBox1.Text);
-                item.Selected = true;
-                _dialectsChanged = true;
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    string s = (listView1.Items.Count + 1).ToString();
+                    var item = listView1.Items.Add(s);
+                    UpdateDialectString(item, form.textBox1.Text);
+                    item.Selected = true;
+                    _dialectsChanged = true;
+                }
             }
         }
 
@@ -311,17 +301,26 @@ namespace MW5.Projections.UI.Forms
                 foreach (ListViewItem item in listView1.Items)
                 {
                     if (!item.Selected)
+                    {
                         list.Add(item.SubItems[2].Text);
+                    }
                 }
-                
-                EnterProjectionForm form = new EnterProjectionForm(_coordinateSystem, list, _database);
-                form.textBox1.Text = text;
-                if (form.ShowDialog() == DialogResult.OK)
+
+                using (var form = new EnterProjectionForm(_coordinateSystem, list, _database))
                 {
-                    listView1.SelectedItems[0].SubItems[2].Text = form.textBox1.Text;
+                    form.textBox1.Text = text;
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        listView1.SelectedItems[0].SubItems[2].Text = form.textBox1.Text;
+                    }
                 }
             }
         }
         #endregion
+
+        private void buttonAdv2_Click(object sender, EventArgs e)
+        {
+            EditProjection();
+        }
     }
 }

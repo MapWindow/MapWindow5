@@ -33,6 +33,11 @@ namespace MW5.UI
             _context = context;
         }
 
+        public IAppContext AppContext
+        {
+            get { return _context; }
+        }
+
         private void InitializeComponent()
         {
             this.SuspendLayout();

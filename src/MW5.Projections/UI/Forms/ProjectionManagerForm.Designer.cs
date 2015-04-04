@@ -285,10 +285,8 @@ namespace MW5.Projections.UI.Forms
             // 
             this._projectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._projectionTreeView1.HideSelection = false;
-            this._projectionTreeView1.ImageIndex = 0;
             this._projectionTreeView1.Location = new System.Drawing.Point(0, 0);
             this._projectionTreeView1.Name = "_projectionTreeView1";
-            this._projectionTreeView1.SelectedImageIndex = 0;
             this._projectionTreeView1.Size = new System.Drawing.Size(326, 450);
             this._projectionTreeView1.TabIndex = 0;
             // 

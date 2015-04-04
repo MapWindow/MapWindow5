@@ -39,10 +39,8 @@ namespace MW5.Projections.UI.Forms
             LayersControl1.LayerAdded += delegate {
                 RefreshControlState();
             };
-            LayersControl1.LayerRemoved += delegate()
-            {
-                RefreshControlState();
-            };
+            LayersControl1.LayerRemoved += RefreshControlState;
+
             if (ProjectionTreeView1.Initialize(database, context))
             {
                 ProjectionTreeView1.RefreshList();
@@ -168,11 +166,9 @@ namespace MW5.Projections.UI.Forms
 
         #endregion
 
-        /// <summary>
-        /// Shows the selected projection as a label
-        /// </summary>
-        private void ProjectionTreeView1_CoordinateSystemSelected(Territory cs)
+        private void ProjectionTreeView1_CoordinateSystemSelected(object sender, Controls.CoordinateSystemEventArgs e)
         {
+            var cs = e.CoordinateSystem;
             lblProjection.Text = cs != null ? "Projection: " + cs.Name : "";
         }
     }

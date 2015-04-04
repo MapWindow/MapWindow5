@@ -161,7 +161,7 @@ namespace MW5.Projections.UI.Forms
         /// <summary>
         /// Updating label
         /// </summary>
-        private void ProjectionTreeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void ProjectionTreeView1_AfterSelect(object sender, EventArgs e)
         {
             var cs = ProjectionTreeView1.SelectedCoordinateSystem;
             lblProjection.Text = cs == null ? "" : "Projection: " + cs.Name;

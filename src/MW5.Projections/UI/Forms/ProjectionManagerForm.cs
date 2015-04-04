@@ -48,7 +48,7 @@ namespace MW5.Projections.UI.Forms
                 lblGcsCount.Text = "Coordinate systems: " + gcsCount;
                 lblPcsCount.Text = "Projections: " + pcsCount.ToString();
             }
-            _projectionTreeView1.CoordinateSystemSelected += projectionTreeView1_CoordinateSystemSelected;
+            _projectionTreeView1.CoordinateSystemSelected += TreeViewCoordinateSystemSelected;
 
             // initializing map
             projectionMap1.LoadStateFromExeName(Application.ExecutablePath);
@@ -56,7 +56,25 @@ namespace MW5.Projections.UI.Forms
 
             // showing information on WGS 84
             IEnumerable<IGeographicCs> list = _projectionTreeView1.CoordinateSystems.Where(cs => cs.Code == 4326);
-            projectionTreeView1_CoordinateSystemSelected((Territory)list.First());
+            OnCoordinateSystemSelected((CoordinateSystem)list.First());
+        }
+
+        private void TreeViewCoordinateSystemSelected(object sender, Controls.CoordinateSystemEventArgs e)
+        {
+            OnCoordinateSystemSelected(e.CoordinateSystem);
+        }
+
+        private void OnCoordinateSystemSelected(CoordinateSystem cs)
+        {
+            projectionMap1.DrawCoordinateSystem(cs);
+            projectionMap1.ZoomToCoordinateSystem(cs);
+
+            _lastCode = cs.Code;
+            txtCode.Text = cs.Code.ToString();
+            txtName.Text = cs.Name;
+
+            txtRemarks.Text = cs.Remarks != "" ? cs.Remarks : "No remarks";
+            txtScope.Text = cs.Scope != "" ? cs.Scope : "No description";
         }
 
         /// <summary>
@@ -66,25 +84,6 @@ namespace MW5.Projections.UI.Forms
         {
             lblX.Text = "Long: " + textX;
             lblY.Text = "Lat: " + textY;
-        }
-
-        /// <summary>
-        /// Updting map and text
-        /// </summary>
-        void projectionTreeView1_CoordinateSystemSelected(Territory cs)
-        {
-            projectionMap1.DrawCoordinateSystem(cs);
-            projectionMap1.ZoomToCoordinateSystem(cs);
-
-            _lastCode = cs.Code;
-            txtCode.Text = cs.Code.ToString();
-            txtName.Text = cs.Name;
-            CoordinateSystem coord = cs as CoordinateSystem;
-            if (coord != null)
-            {
-                txtRemarks.Text = coord.Remarks != "" ? coord.Remarks : "No remarks";
-                txtScope.Text = coord.Scope != "" ? coord.Scope: "No description";
-            }
         }
 
         /// <summary>
@@ -171,14 +170,14 @@ namespace MW5.Projections.UI.Forms
             var list = _projectionTreeView1.CoordinateSystems.Where(cs => cs.Code == val).ToList();
             if (list.Any())
             {
-                projectionTreeView1_CoordinateSystemSelected((CoordinateSystem)list.First());
+                OnCoordinateSystemSelected((CoordinateSystem)list.First());
                 return;
             }
             
             var list2 = _projectionTreeView1.Projections.Where(cs => cs.Code == val).ToList();
             if (list2.Any())
             {
-                projectionTreeView1_CoordinateSystemSelected((CoordinateSystem)list2.First());
+                OnCoordinateSystemSelected((CoordinateSystem)list2.First());
             }
             else
             {

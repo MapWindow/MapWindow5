@@ -91,13 +91,11 @@ namespace MW5.Projections.UI.Forms
             this.ProjectionTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ProjectionTreeView1.FullRowSelect = true;
             this.ProjectionTreeView1.HideSelection = false;
-            this.ProjectionTreeView1.ImageIndex = 0;
             this.ProjectionTreeView1.Location = new System.Drawing.Point(0, 0);
             this.ProjectionTreeView1.Name = "ProjectionTreeView1";
-            this.ProjectionTreeView1.SelectedImageIndex = 0;
             this.ProjectionTreeView1.Size = new System.Drawing.Size(302, 354);
             this.ProjectionTreeView1.TabIndex = 11;
-            this.ProjectionTreeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.ProjectionTreeView1_AfterSelect);
+            this.ProjectionTreeView1.AfterSelect += ProjectionTreeView1_AfterSelect;
             // 
             // LayersControl1
             // 
