@@ -21,6 +21,7 @@ namespace MW5.Controls
     {
         private readonly IMap _mainMap;
         private readonly LocatorDockPanel _view;
+        private bool _noEvents = false;
 
         public LocatorPresenter(IMap map)
         {
@@ -31,17 +32,22 @@ namespace MW5.Controls
             _view = new LocatorDockPanel();
             _view.UpdateFullExtents += () => UpdatePreview(true);
             _view.UpdateWithCurrentExtents += () => UpdatePreview(false);
-            _view.PreviewExtentsChanged += PreviewExtentsChanged;
+            _view.LocatorExtentsChanged += LocatorExtentsChanged;
         }
 
-        private void PreviewExtentsChanged(object sender, Plugins.Concrete.ExtentsEventArgs e)
+        private void LocatorExtentsChanged(object sender, Plugins.Concrete.ExtentsEventArgs e)
         {
+            _noEvents = true;
             _mainMap.Extents = e.Extents;
+            _noEvents = false;
         }
 
         private void MainMapExtentsChanged(object sender, EventArgs e)
         {
-            _view.UpdateLocatorBox(_mainMap.Extents);
+            if (!_noEvents)
+            {
+                _view.UpdateLocatorBox(_mainMap.Extents);
+            }
         }
 
         public void RestorePicture(Image image, double dx, double dy, double xllCenter, double yllCenter)

@@ -276,12 +276,6 @@ namespace MW5.Plugins.Symbology.Services
             r.Width = rect.Width;
             r.Height = rect.Height;
             _context.Map.Redraw(RedrawType.Minimal);
-            
-            //IntPtr hwnd = _context.Map.Handle;
-            //var g = Graphics.FromHwnd(hwnd);
-
-            //Pen pen = new Pen(Color.Gray, 2) { DashStyle = DashStyle.Dot };
-            //g.DrawRectangle(pen, rect);
         }
     }
 }

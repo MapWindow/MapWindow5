@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Helpers;
 
 namespace MW5.Api.Concrete
 {
@@ -51,6 +53,24 @@ namespace MW5.Api.Concrete
         {
             get { return (DrawReferenceList)_rect.ReferenceType; }
             set { _rect.ReferenceType = (tkDrawReferenceList)value; }
+        }
+
+        public byte FillTransparency
+        {
+            get { return _rect.FillTransparency; }
+            set { _rect.FillTransparency = value; }
+        }
+
+        public Color Color
+        {
+            get { return ColorHelper.UintToColor(_rect.Color); }
+            set { _rect.Color = ColorHelper.ColorToUInt(value); }
+        }
+
+        public float LineWidth
+        {
+            get { return _rect.LineWidth; }
+            set { _rect.LineWidth = value; }
         }
     }
 }

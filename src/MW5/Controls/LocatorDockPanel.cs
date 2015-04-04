@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
@@ -28,9 +29,8 @@ namespace MW5.Controls
 
         public event Action UpdateFullExtents;
         public event Action UpdateWithCurrentExtents;
-        public event EventHandler<ExtentsEventArgs> PreviewExtentsChanged;
+        public event EventHandler<ExtentsEventArgs> LocatorExtentsChanged;
 
-        private int _drawHandle = -1;
         private bool _dragging;
         private int _initX;
         private int _initY;
@@ -51,6 +51,7 @@ namespace MW5.Controls
             mapControl1.MouseMove += MapMouseMove;
             mapControl1.MouseUp += MapMouseUp;
 
+            Paint += (s, e) => UpdateLocatorBox(_extents);
             Resize += (s, e) => UpdateLocatorBox(_extents);
         }
 
@@ -63,6 +64,9 @@ namespace MW5.Controls
             mapControl1.TileProvider = TileProvider.None;
             mapControl1.MapCursor = MapCursor.None;
             mapControl1.MouseWheelSpeed = 1.0;
+            mapControl1.FocusRectangle.FillTransparency = 64;
+            mapControl1.FocusRectangle.Color = Color.Red;
+            mapControl1.FocusRectangle.LineWidth = 2.0f;
         }
 
         internal bool BackgroundVisible
@@ -86,8 +90,8 @@ namespace MW5.Controls
 
         internal void Clear()
         {
+            mapControl1.FocusRectangle.Visible = false;
             mapControl1.Layers.Clear();
-            mapControl1.Drawing.Clear();
         }
 
         #region Drawing
@@ -102,12 +106,7 @@ namespace MW5.Controls
         
         internal void UpdateLocatorBox(IEnvelope exts)
         {
-            if (exts == null)
-            {
-                return;
-            }
-
-            if (!mapControl1.Layers.Any())
+            if (exts == null || Empty)
             {
                 return;
             }
@@ -116,27 +115,15 @@ namespace MW5.Controls
             mapControl1.ProjToPixel(exts.MinX, exts.MaxY, out newLeft, out newTop);
             mapControl1.ProjToPixel(exts.MaxX, exts.MinY, out newRight, out newBottom);
 
-            var rect = new Rectangle(Convert.ToInt32(newLeft), Convert.ToInt32(newTop), Convert.ToInt32(newRight - newLeft), Convert.ToInt32(newBottom - newTop));
-            DrawBox(rect);
+            var fr = mapControl1.FocusRectangle;
+            fr.X = newLeft;
+            fr.Y = Math.Min(newBottom, newTop);
+            fr.Width = newRight - newLeft;
+            fr.Height = Math.Abs(newTop - newBottom);
+            mapControl1.FocusRectangle.Visible = true;
+            mapControl1.Redraw(RedrawType.Minimal);
 
             _extents = exts;
-        }
-
-        private void DrawBox(Rectangle rect)
-        {
-            var drawing = mapControl1.Drawing;
-
-            if (_drawHandle >= 0)
-            {
-                drawing.RemoveLayer(_drawHandle);
-            }
-
-            _drawHandle = drawing.AddLayer(DrawReferenceList.ScreenReferencedList);
-
-            drawing.DrawLine(rect.Left, rect.Top, rect.Right, rect.Top, 2, _locatorColor);
-            drawing.DrawLine(rect.Right, rect.Top, rect.Right, rect.Bottom, 2, _locatorColor);
-            drawing.DrawLine(rect.Right, rect.Bottom, rect.Left, rect.Bottom, 2, _locatorColor);
-            drawing.DrawLine(rect.Left, rect.Bottom, rect.Left, rect.Top, 2, _locatorColor);
         }
 
         #endregion
@@ -208,7 +195,7 @@ namespace MW5.Controls
 
         private void FireExtentsChanged(IEnvelope ext)
         {
-            var handler = PreviewExtentsChanged;
+            var handler = LocatorExtentsChanged;
             if (handler != null)
             {
                 handler(this, new ExtentsEventArgs(ext));
