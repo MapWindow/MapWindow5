@@ -19,5 +19,6 @@ namespace MW5.Api.Interfaces
         double Height { get; }
         ICoordinate Center { get; }
         IEnvelope Adjust(double xyRatio);
+        bool PointWithin(double x, double y);
     }
 }

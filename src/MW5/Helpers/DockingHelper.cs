@@ -1,5 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using MW5.Plugins;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
+using MW5.Properties;
 using MW5.Services.Helpers;
+using MW5.UI.Docking;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -7,31 +13,42 @@ namespace MW5.Helpers
 {
     internal static class DockingHelper
     {
-        public static void InitDocking(this DockingManager dockingManager, UserControl legend, TreeViewAdv preview, Form parent)
+        private const int PanelSize = 300;
+
+        public static void InitDocking(this IAppContext context)
         {
-            // designer support of docking in VS2013 with MetroForm is buggy
-            // so better to et layout at runtime
+            var panels = context.DockPanels;
+            panels.Lock();
 
-            legend.BorderStyle = BorderStyle.None;
-            preview.BorderStyle = BorderStyle.None;
+            try
+            {
+                var legendControl = context.Legend as UserControl;
+                if (legendControl == null)
+                {
+                    throw new InvalidCastException("Legend control must inherit from UserControl");
+                }
 
-            // border was set to make them visible during design time
-            dockingManager.LockHostFormUpdate();
+                legendControl.BorderStyle = BorderStyle.None;
 
-            dockingManager.SetEnableDocking(legend, true);
-            dockingManager.SetEnableDocking(preview, true);
+                var legend = panels.Add(legendControl, DockPanelKeys.Legend, PluginIdentity.Default);
+                legend.Caption = "Legend";
+                legend.DockTo(null, DockPanelState.Left, PanelSize);
+                legend.SetIcon(Resources.ico_legend);
 
-            dockingManager.DockControl(legend, parent, DockingStyle.Left, 300);
-            dockingManager.DockControl(preview, legend, DockingStyle.Bottom, 300);
+                var previewPanel = context.Locator.View;
+                previewPanel.BorderStyle = BorderStyle.None;
 
-            dockingManager.SetDockLabel(legend, "Legend");
-            dockingManager.SetDockLabel(preview, "Preview");
-
-            dockingManager.UnlockHostFormUpdate();
-
-            var sr = GetSerializer();
-            //dockingManager.LoadDockState(sr);
+                var preview = panels.Add(previewPanel, DockPanelKeys.Preview, PluginIdentity.Default);
+                preview.Caption = "Locator";
+                preview.SetIcon(Resources.ico_zoom_to_layer);
+                preview.DockTo(legend, DockPanelState.Bottom, PanelSize);
+            }
+            finally
+            {
+                panels.Unlock();
+            }
         }
+
 
         public static void SaveLayout(this DockingManager dockingManager)
         {

@@ -40,40 +40,48 @@ namespace MW5.Views
 
             ApplicationCallback.Attach(loggingService);
 
-            var appContext = context as AppContext;
-            if (appContext == null)
+            view.Map.Lock();
+            try
             {
-                throw new InvalidCastException("Invalid type of IAppContext instance");
+                var appContext = context as AppContext;
+                if (appContext == null)
+                {
+                    throw new InvalidCastException("Invalid type of IAppContext instance");
+                }
+                appContext.Init(view, projectService, configService);
+
+                view.Map.Initialize();
+                view.ViewClosing += OnViewClosing;
+                view.ViewUpdating += OnViewUpdating;
+
+                var container = context.Container;
+                _menuGenerator = container.GetSingleton<MenuGenerator>();
+                _menuListener = container.GetSingleton<MenuListener>();
+                _mapListener = container.GetSingleton<MapListener>();
+                _legendListener = container.GetSingleton<LegendListener>();
+                _statusBarListener = container.GetSingleton<StatusBarListener>();
+                _menuUpdater = new MenuUpdater(_context, appContext.Map, PluginIdentity.Default);
+
+                appContext.InitPlugins(configService); // must be called after docking is initialized
+
+                // for development only
+                var config = _configService.Config;
+                if (config.LoadLastProject && File.Exists(config.LastProjectPath))
+                {
+                    try
+                    {
+                        _projectService.Open(config.LastProjectPath, true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Print("Error on project loading: " + ex.Message);
+                    }
+                }
             }
-            appContext.Init(view, projectService, configService);
-            view.InitDocking();                          // must be called when context is initialized
-
-            view.Map.Initialize();
-            view.ViewClosing += OnViewClosing;
-            view.ViewUpdating += OnViewUpdating;
-
-            var container = context.Container;
-            _menuGenerator = container.GetSingleton<MenuGenerator>();
-            _menuListener = container.GetSingleton<MenuListener>();
-            _mapListener = container.GetSingleton<MapListener>();
-            _legendListener = container.GetSingleton<LegendListener>();
-            _statusBarListener = container.GetSingleton<StatusBarListener>();
-            _menuUpdater = new MenuUpdater(_context, appContext.Map, PluginIdentity.Default);
-
-            appContext.InitPlugins(configService);      // must be called after docking is initialized
-
-            // for development only
-            var config = _configService.Config;
-            if (config.LoadLastProject && File.Exists(config.LastProjectPath))
+            finally
             {
-                try
-                {
-                    _projectService.Open(config.LastProjectPath, true);
-                }
-                catch (Exception ex)
-                {
-                    Debug.Print("Error on project loading: " + ex.Message);
-                }
+                view.Map.Unlock();
+                context.Legend.Unlock();
             }
         }
 

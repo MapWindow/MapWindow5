@@ -39,13 +39,7 @@ namespace MW5.Controls
         {
             InitializeComponent();
 
-            mapControl1.ScalebarVisible = false;
-            mapControl1.ShowCoordinates = CoordinatesDisplay.None;
-            mapControl1.ZoomBar.Visible = false;
-            mapControl1.ZoomBehavior = ZoomBehavior.Default;
-            mapControl1.TileProvider = TileProvider.None;
-            mapControl1.MapCursor = MapCursor.None;
-            mapControl1.MouseWheelSpeed = 1.0;
+            InitLocatorMap();
 
             btnUpdateCurrent.Click += (s, e) => Invoke(UpdateWithCurrentExtents);
             btnUpdateFull.Click += (s, e) => Invoke(UpdateFullExtents);
@@ -56,6 +50,19 @@ namespace MW5.Controls
             mapControl1.MouseDown += MapMouseDown;
             mapControl1.MouseMove += MapMouseMove;
             mapControl1.MouseUp += MapMouseUp;
+
+            Resize += (s, e) => UpdateLocatorBox(_extents);
+        }
+
+        private void InitLocatorMap()
+        {
+            mapControl1.ScalebarVisible = false;
+            mapControl1.ShowCoordinates = CoordinatesDisplay.None;
+            mapControl1.ZoomBar.Visible = false;
+            mapControl1.ZoomBehavior = ZoomBehavior.Default;
+            mapControl1.TileProvider = TileProvider.None;
+            mapControl1.MapCursor = MapCursor.None;
+            mapControl1.MouseWheelSpeed = 1.0;
         }
 
         internal bool BackgroundVisible
@@ -95,6 +102,11 @@ namespace MW5.Controls
         
         internal void UpdateLocatorBox(IEnvelope exts)
         {
+            if (exts == null)
+            {
+                return;
+            }
+
             if (!mapControl1.Layers.Any())
             {
                 return;
@@ -191,10 +203,7 @@ namespace MW5.Controls
                 return false;
             }
 
-            return xProj >= _extents.MinX && 
-                   xProj <= _extents.MaxX && 
-                   yProj >= _extents.MinY && 
-                   yProj <= _extents.MaxY;
+            return _extents.PointWithin(xProj, yProj);
         }
 
         private void FireExtentsChanged(IEnvelope ext)

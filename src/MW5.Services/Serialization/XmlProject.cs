@@ -57,42 +57,49 @@ namespace MW5.Services.Serialization
         public bool RestoreState(ISerializableContext context)
         {
             context.Map.Lock();
+            context.Legend.Lock();
 
-            var sr = new SpatialReference();
-            sr.ImportFromAutoDetect(Map.Projection);
-
-            context.SetMapProjection(sr);
-
-            foreach (var p in Plugins)
+            try
             {
-                context.PluginManager.LoadPlugin(p.Guid, context);
-            }
+                var sr = new SpatialReference();
+                sr.ImportFromAutoDetect(Map.Projection);
 
-            foreach (var layer in Layers)
+                context.SetMapProjection(sr);
+
+                foreach (var p in Plugins)
+                {
+                    context.PluginManager.LoadPlugin(p.Guid, context);
+                }
+
+                foreach (var layer in Layers)
+                {
+                    layer.RestoreLayer(context.Legend.Layers);
+                }
+
+                RestoreGroups(context);
+
+                var e = Map.Envelope;
+                if (e != null)
+                {
+                    context.Map.Extents = new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY);
+                }
+
+                if (Locator != null)
+                {
+                    var service = context.Container.GetInstance<ImageSerializationService>();
+                    var bitmap = service.ConvertStringToImage(Locator.Image, Locator.Type);
+                    context.Locator.RestorePicture(bitmap as System.Drawing.Image, Locator.Dx, Locator.Dy,
+                        Locator.XllCenter, Locator.YllCenter);
+                }
+
+                return true;
+            }
+            finally
             {
-                layer.RestoreLayer(context.Legend.Layers);
+                context.Map.Unlock();
+                context.Legend.Unlock();
+                context.Legend.Redraw(LegendRedraw.LegendAndMap);
             }
-
-            RestoreGroups(context);
-
-            var e = Map.Envelope;
-            if (e != null)
-            {
-                context.Map.Extents = new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY);
-            }
-
-            if (Locator != null)
-            {
-                var service = context.Container.GetInstance<ImageSerializationService>();
-                var bitmap = service.ConvertStringToImage(Locator.Image, Locator.Type);
-                context.Locator.RestorePicture(bitmap as System.Drawing.Image, Locator.Dx, Locator.Dy, Locator.XllCenter, Locator.YllCenter);
-            }
-
-            context.Map.Unlock();
-
-            context.Legend.Redraw(LegendRedraw.LegendAndMap);
-
-            return true;
         }
 
         private void RestoreGroups(ISerializableContext context)

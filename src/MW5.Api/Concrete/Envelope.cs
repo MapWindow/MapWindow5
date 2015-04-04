@@ -147,5 +147,13 @@ namespace MW5.Api.Concrete
                 return new Envelope(Center.X - width / 2, Center.X + width / 2, MinY, MaxY);
             }
         }
+
+        public bool PointWithin(double x, double y)
+        {
+            return x >= MinX && 
+                   x <= MaxX && 
+                   y >= MinY && 
+                   y <= MaxY;
+        }
     }
 }

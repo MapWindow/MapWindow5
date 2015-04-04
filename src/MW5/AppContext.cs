@@ -77,6 +77,7 @@ namespace MW5
             _map = mainView.Map;
             _legend = mainView.Legend;
             _configService = configService;
+            _legend.Lock();
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
@@ -86,6 +87,8 @@ namespace MW5
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
             _locator = new LocatorPresenter(_map);
+
+            this.InitDocking();
         }
 
         internal void InitPlugins(IConfigService configService)

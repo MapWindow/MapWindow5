@@ -29,7 +29,6 @@ namespace MW5.Views
         private const string WINDOW_TITLE = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
-        private LocatorPresenter _previewPresenter;
 
         public MainView(IAppContext context)
         {
@@ -157,33 +156,6 @@ namespace MW5.Views
             get { return this; }
         }
 
-        public void InitDocking()
-        {
-            var panels = _context.DockPanels;
-            panels.Lock();
-            try
-            {
-                _legendControl1.BorderStyle = BorderStyle.None;
-
-                var previewPanel = _context.Locator.View;
-                previewPanel.BorderStyle = BorderStyle.None;
-                const int size = 300;
-
-                var legend = panels.Add(_legendControl1, DockPanelKeys.Legend, PluginIdentity.Default);
-                legend.Caption = "Legend";
-                legend.DockTo(null, DockPanelState.Left, size);
-                legend.SetIcon(Resources.ico_legend);
-
-                var preview = panels.Add(previewPanel, DockPanelKeys.Preview, PluginIdentity.Default);
-                preview.Caption = "Locator";
-                preview.SetIcon(Resources.ico_zoom_to_layer);
-                preview.DockTo(legend, DockPanelState.Bottom, size);
-            }
-            finally
-            {
-                panels.Unlock();
-            }
-        }
 
         #endregion
     }
