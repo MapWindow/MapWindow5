@@ -17,13 +17,11 @@ namespace MW5.Projections.UI.Controls
     public class ProjectionTextBox : RichTextBox
     {
         /// <summary>
-        /// Constructor. Setting desired font
+        /// Initializes a new instance of the <see cref="ProjectionTextBox"/> class.
         /// </summary>
         public ProjectionTextBox()
         {
-            //Font font = new Font("Courier New", 10.0f);
-            Font font = new Font(this.Font.Name, 10.0f);
-            this.Font = font;
+            Font = new Font(Font.Name, 10.0f);
         }
 
         /// <summary>
@@ -32,53 +30,56 @@ namespace MW5.Projections.UI.Controls
         public void ShowProjection(string projection)
         {
             if (projection.Trim().Length == 0)
+            {
                 return;
-            
-            string s = this.FormatWkt(projection);
+            }
 
-            this.Text = s;
-            this.SelectAll();
-            this.SelectionColor = Color.Black;
-            this.SelectionLength = 0;
-            this.FormatProjection();
-        }
+            string s = FormatWkt(projection);
 
-        /// <summary>
-        /// Formats OGC WKT string in the textbox. It is assumed that the whole text in the text box is projection string
-        /// </summary>
-        private void FormatProjection()
-        {
-            this.FormatProjection(0, this.Text.Length - 1);
+            Text = s;
+            SelectAll();
+            SelectionColor = Color.Black;
+            SelectionLength = 0;
+            FormatProjection();
         }
 
         /// <summary>
         /// Formats OGC WKT string in the textbox. Position where projection string located can be specified.
         /// </summary>
-        private void FormatProjection(int start, int end)
+        private void FormatProjection(int start = 0)
         {
             // marking parameters
             int position = start;
-            string s = this.Text;
+            string s = Text;
+
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return;
+            }
+
             do
             {
                 int i = position;
                 while (i < s.Length - 1 && s[i] != '[')
+                {
                     i++;
+                }
 
                 if (s[i] == '[')
                 {
-                    this.Select(position, i - position);
-                    this.SelectionColor = Color.DarkGreen;
+                    Select(position, i - position);
+                    SelectionColor = Color.DarkGreen;
                 }
 
                 position = i;
                 position = s.IndexOf("\n", position);
-
-            } while (position != -1);
+            } 
+            while (position != -1);
 
             // marking text values
             bool started = false;
             position = 0;
+
             for (int i = position; i < s.Length; i++)
             {
                 if (s[i] == '\"')
@@ -89,8 +90,8 @@ namespace MW5.Projections.UI.Controls
                     }
                     else
                     {
-                        this.Select(position + 1, i - position - 1);
-                        this.SelectionColor = Color.Maroon;
+                        Select(position + 1, i - position - 1);
+                        SelectionColor = Color.Maroon;
                     }
                     started = !started;
                 }
@@ -118,7 +119,7 @@ namespace MW5.Projections.UI.Controls
         /// <param name="s">Unformatted WKT string without newline characters</param>
         private string FormatWkt(string s)
         {
-            List<Break> list = new List<Break>();
+            var list = new List<Break>();
 
             int level = 0;
             for (int i = 0; i < s.Length; i++)
@@ -130,38 +131,46 @@ namespace MW5.Projections.UI.Controls
 
                     // skipping spaces between name and [ (if any)
                     while (j >= 0 && s[j] == ' ')
+                    {
                         j--;
+                    }
 
                     // skipping name
                     while (j >= 0 && (s[j] != ',' && s[j] != ' '))
+                    {
                         j--;
+                    }
 
                     j++;
 
-                    Break br = new Break(j, level);
+                    var br = new Break(j, level);
                     list.Add(br);
                     level++;
                 }
 
                 if (s[i] == ']')
+                {
                     level--;
+                }
             }
 
             // inserting breaks
             string output = "";
-            if (list.Count > 0)
+            if (list.Count <= 0)
             {
-                output = s.Substring(0, list[1].Position);
+                return output;
+            }
 
-                for (int i = 1; i < list.Count; i++)
-                {
-                    int begin = list[i].Position;
-                    int end = (i == list.Count - 1) ? s.Length - 1 : list[i + 1].Position;
+            output = s.Substring(0, list[1].Position);
 
-                    output +=  '\n'; //Environment.NewLine;
-                    output += new string(' ', 4 * list[i].Level);
-                    output += s.Substring(begin, end - begin).Trim();
-                }
+            for (int i = 1; i < list.Count; i++)
+            {
+                int begin = list[i].Position;
+                int end = (i == list.Count - 1) ? s.Length - 1 : list[i + 1].Position;
+
+                output +=  '\n'; //Environment.NewLine;
+                output += new string(' ', 4 * list[i].Level);
+                output += s.Substring(begin, end - begin).Trim();
             }
 
             return output;

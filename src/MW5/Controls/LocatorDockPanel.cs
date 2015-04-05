@@ -25,7 +25,7 @@ namespace MW5.Controls
     {
         private IEnvelope _extents;      // extents of the main map
         private readonly Color _locatorColor = Color.Red;
-        private bool _backgroundVisible = true;
+        private bool _backgroundVisible = false;
 
         public event Action UpdateFullExtents;
         public event Action UpdateWithCurrentExtents;
@@ -66,7 +66,8 @@ namespace MW5.Controls
             mapControl1.MouseWheelSpeed = 1.0;
             mapControl1.FocusRectangle.FillTransparency = 64;
             mapControl1.FocusRectangle.Color = Color.Red;
-            mapControl1.FocusRectangle.LineWidth = 2.0f;
+            mapControl1.FocusRectangle.LineWidth = 1.0f;
+            mapControl1.ResizeBehavior = ResizeBehavior.Intuitive;
         }
 
         internal bool BackgroundVisible
@@ -132,6 +133,11 @@ namespace MW5.Controls
 
         private void MapMouseDown(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                return;
+            }
+
             if (Empty || !WithinBounds(e.X, e.Y))
             {
                 _dragging = false;
@@ -157,6 +163,11 @@ namespace MW5.Controls
 
         private void MapMouseUp(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
+                return;
+            }
+            
             if (_dragging) 
             {
                 var ext = GetNewExtents(e.X, e.Y);

@@ -521,7 +521,7 @@ namespace MW5.Projections.UI.Controls
 
             // adding top-most nodes
             _nodeByRegion = Nodes.Add(Constants.NodeByRegion, Constants.NodeByRegion, Constants.IconFolder);
-            var nodeAll = Nodes.Add(Constants.SearchResults, Constants.SearchResults, Constants.IconFolder);
+            
 
             FillRegions(_nodeByRegion, showFullExtents);
 
@@ -548,7 +548,7 @@ namespace MW5.Projections.UI.Controls
             return true;
         }
 
-        private void FillAll(TreeNodeAdv nodeAll, string token)
+        private void FillSearchResults(TreeNodeAdv nodeAll, string token)
         {
             foreach (var cs in _geographicList)
             {
@@ -560,7 +560,7 @@ namespace MW5.Projections.UI.Controls
                     if (p.Filter(token))
                     {
                         var childNode = node.Nodes.Add(p.Code.ToString(), p.Name, Constants.IconMap);
-                        childNode.Tag = cs;
+                        childNode.Tag = p;
                     }
                 }
 
@@ -994,48 +994,50 @@ namespace MW5.Projections.UI.Controls
             }
         }
 
+
         public void Filter(string text, bool force = false)
         {
-            var timer = new Stopwatch();
-            timer.Start();
-
             BeginUpdate();
-            SuspendLayout();
-            RemoveEventHandlers();
-            SuspendExpandRecalculate = false;
-            Debug.Print("Begin upate: " + timer.Elapsed);
 
             try
             {
                 bool empty = string.IsNullOrWhiteSpace(text) || (!force && text.Length <= 2);
 
                 var nodeRegion = Nodes.Find(Constants.NodeByRegion);
-                Debug.Print("Before expanded: " + timer.Elapsed);
-                nodeRegion.Expanded = empty;
-                Debug.Print("Node expanded: " + timer.Elapsed);
-                nodeRegion.Height = empty ? 16 : 0;    // removing and adding the node works much slower
-                Debug.Print("Node region hidden: " + timer.Elapsed);
+                if (!empty && nodeRegion.Expanded)
+                {
+                    nodeRegion.Expanded = false;
+                }
+                nodeRegion.Height = empty ? Constants.NodeHeight : 0;    // removing and adding the node works much slower
 
                 var nodeSearch = Nodes.Find(Constants.SearchResults);
-                nodeSearch.Nodes.Clear();
-                Debug.Print("Node search clear: " + timer.Elapsed);
+                
+                if (empty && nodeSearch != null)
+                {
+                    Nodes.Remove(nodeSearch);
+                }
 
                 if (!empty)
                 {
-                    FillAll(nodeSearch, text);
-                    Debug.Print("After search: " + timer.Elapsed);
+                    if (nodeSearch == null)
+                    {
+                        nodeSearch = Nodes.Add(Constants.SearchResults, Constants.SearchResults, Constants.IconFolder);
+                    }
+                    else
+                    {
+                        nodeSearch.Nodes.Clear();        
+                    }
                 }
 
-                nodeSearch.Expanded = nodeSearch.Nodes.Count > 0;
-                nodeSearch.Height = nodeSearch.Expanded ? 16 : 0;
+                if (!empty)
+                {
+                    FillSearchResults(nodeSearch, text);
+                    nodeSearch.Expanded = true;
+                }
             }
             finally
             {
-                SuspendExpandRecalculate = true;
                 EndUpdate();
-                ResumeLayout();
-                SetEventHandlers();
-                Debug.Print("Total: " + timer.Elapsed);
             }
         }
 
@@ -1065,6 +1067,7 @@ namespace MW5.Projections.UI.Controls
                     info.Header.Font = new Font(info.Header.Font, FontStyle.Bold);
                     info.Body.Text = cs.Scope + Environment.NewLine + cs.Proj4;
                     info.Footer.Text = "EPSG: " + cs.Code;
+                    _lastTooltip.MaxWidth = 450;
 
                     _lastTooltip.Show(info, pnt, -1);
                 }
@@ -1074,40 +1077,6 @@ namespace MW5.Projections.UI.Controls
         private void HideTooltip()
         {
             _lastTooltip.Hide();
-        }
-
-        private void InitializeComponent()
-        {
-            ((System.ComponentModel.ISupportInitialize)(this)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // ProjectionTreeView
-            // 
-            // 
-            // 
-            // 
-            this.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.HelpTextControl.Name = "helpText";
-            this.HelpTextControl.Size = new System.Drawing.Size(49, 15);
-            this.HelpTextControl.TabIndex = 0;
-            this.HelpTextControl.Text = "help text";
-            this.SelectOnCollapse = false;
-            this.SuspendExpandRecalculate = true;
-            // 
-            // 
-            // 
-            this.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
-            this.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.ToolTipControl.Name = "toolTip";
-            this.ToolTipControl.Size = new System.Drawing.Size(41, 15);
-            this.ToolTipControl.TabIndex = 1;
-            this.ToolTipControl.Text = "toolTip";
-            ((System.ComponentModel.ISupportInitialize)(this)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
         }
     }
 }

@@ -264,13 +264,20 @@ namespace MW5.Projections.UI.Forms
         {
             if (_coordinateSystem != null && _dialectsChanged)
             {
-                _coordinateSystem.Dialects.Clear();
-                foreach (ListViewItem item in listView1.Items)
-                {
-                    _coordinateSystem.Dialects.Add(item.SubItems[2].Text);
-                }
-                _database.SaveDialects(_coordinateSystem);
+                SaveDialects();
             }
+        }
+
+        private void SaveDialects()
+        {
+            _coordinateSystem.Dialects.Clear();
+            foreach (ListViewItem item in listView1.Items)
+            {
+                _coordinateSystem.Dialects.Add(item.SubItems[2].Text);
+            }
+            _database.SaveDialects(_coordinateSystem);
+
+            DialogResult = DialogResult.OK;
         }
 
         /// <summary>
@@ -297,7 +304,7 @@ namespace MW5.Projections.UI.Forms
                 string text = listView1.SelectedItems[0].SubItems[2].Text;
 
                 // building the list of available dialects
-                List<string> list = new List<string>();
+                var list = new List<string>();
                 foreach (ListViewItem item in listView1.Items)
                 {
                     if (!item.Selected)
@@ -321,6 +328,7 @@ namespace MW5.Projections.UI.Forms
         private void buttonAdv2_Click(object sender, EventArgs e)
         {
             EditProjection();
+            
         }
     }
 }

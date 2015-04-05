@@ -55,7 +55,10 @@ namespace MW5.Projections.UI.Forms
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            _projectionTreeView1.Filter(txtSearch.Text);
+            if (chkUpdate.Checked || txtSearch.Text.Length == 0)
+            {
+                _projectionTreeView1.Filter(txtSearch.Text);
+            }
         }
 
         private void txtSearch_MouseDown(object sender, MouseEventArgs e)

@@ -36,13 +36,14 @@ namespace MW5.Projections.UI.Forms
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             this.label3 = new System.Windows.Forms.Label();
-            this.spellChecker1 = new Syncfusion.Text.SpellChecker(this.components);
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this._projectionTreeView1 = new MW5.Projections.UI.Controls.ProjectionTreeView();
             this.txtSearch = new MW5.Projections.UI.Controls.WatermarkTextbox();
+            this.chkUpdate = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkUpdate)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -94,12 +95,6 @@ namespace MW5.Projections.UI.Forms
             this.label3.TabIndex = 37;
             this.label3.Text = "Coordinate systems:";
             // 
-            // spellChecker1
-            // 
-            this.spellChecker1.CustomDictionaryPath = "C:\\ProgramData\\Microsoft Corporation\\Microsoft® Visual Studio® 2013\\12.0.21005.1\\" +
-    "Custom_Dictionay.dic";
-            this.spellChecker1.DictionaryPath = "Syncfusion_en_us.dic";
-            // 
             // comboBoxAdv1
             // 
             this.comboBoxAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -115,6 +110,7 @@ namespace MW5.Projections.UI.Forms
             this.comboBoxAdv1.Size = new System.Drawing.Size(154, 21);
             this.comboBoxAdv1.Style = Syncfusion.Windows.Forms.VisualStyle.Metro;
             this.comboBoxAdv1.TabIndex = 39;
+            this.comboBoxAdv1.Text = "All";
             // 
             // _projectionTreeView1
             // 
@@ -123,7 +119,6 @@ namespace MW5.Projections.UI.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionTreeView1.BackColor = System.Drawing.Color.White;
             this._projectionTreeView1.BeforeTouchSize = new System.Drawing.Size(450, 443);
-            this._projectionTreeView1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
             this._projectionTreeView1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this._projectionTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._projectionTreeView1.CanSelectDisabledNode = false;
@@ -137,10 +132,11 @@ namespace MW5.Projections.UI.Forms
             this._projectionTreeView1.Location = new System.Drawing.Point(12, 61);
             this._projectionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._projectionTreeView1.Name = "_projectionTreeView1";
+            this._projectionTreeView1.RecalculateExpansion = false;
             this._projectionTreeView1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
-            this._projectionTreeView1.ShowFocusRect = false;
+            this._projectionTreeView1.ShowFocusRect = true;
             this._projectionTreeView1.Size = new System.Drawing.Size(450, 443);
-            this._projectionTreeView1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
+            this._projectionTreeView1.SuspendExpandRecalculate = true;
             this._projectionTreeView1.TabIndex = 4;
             // 
             // 
@@ -158,7 +154,7 @@ namespace MW5.Projections.UI.Forms
             this.txtSearch.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Cue = null;
-            this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.txtSearch.FarImage = global::MW5.Projections.Properties.Resources.img_clear_textbox;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
@@ -173,12 +169,26 @@ namespace MW5.Projections.UI.Forms
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             this.txtSearch.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseDown);
             // 
+            // chkUpdate
+            // 
+            this.chkUpdate.BeforeTouchSize = new System.Drawing.Size(150, 21);
+            this.chkUpdate.Checked = true;
+            this.chkUpdate.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkUpdate.Location = new System.Drawing.Point(12, 510);
+            this.chkUpdate.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkUpdate.Name = "chkUpdate";
+            this.chkUpdate.Size = new System.Drawing.Size(150, 21);
+            this.chkUpdate.TabIndex = 40;
+            this.chkUpdate.Text = "Update search on typing";
+            this.chkUpdate.ThemesEnabled = false;
+            // 
             // ChooseProjectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(474, 548);
+            this.Controls.Add(this.chkUpdate);
             this.Controls.Add(this._projectionTreeView1);
             this.Controls.Add(this.comboBoxAdv1);
             this.Controls.Add(this.label3);
@@ -193,6 +203,7 @@ namespace MW5.Projections.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkUpdate)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,7 +217,7 @@ namespace MW5.Projections.UI.Forms
         private WatermarkTextbox txtSearch;
         private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
         private System.Windows.Forms.Label label3;
-        private Syncfusion.Text.SpellChecker spellChecker1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkUpdate;
     }
 }

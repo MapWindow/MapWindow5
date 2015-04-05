@@ -155,5 +155,10 @@ namespace MW5.Api.Concrete
                    y >= MinY && 
                    y <= MaxY;
         }
+
+        public IEnvelope Inflate(double dx, double dy)
+        {
+            return new Envelope(MinX - dx/2, MaxX + dx/2, MinY - dy/2, MaxY + dy/2);
+        }
     }
 }

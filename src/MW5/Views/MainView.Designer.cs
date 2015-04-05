@@ -80,6 +80,7 @@ namespace MW5.Views
             this._dockingManager1.DockBehavior = Syncfusion.Windows.Forms.Tools.DockBehavior.VS2010;
             this._dockingManager1.DockLayoutStream = ((System.IO.MemoryStream)(resources.GetObject("_dockingManager1.DockLayoutStream")));
             this._dockingManager1.DockTabAlignment = Syncfusion.Windows.Forms.Tools.DockTabAlignmentStyle.Left;
+            this._dockingManager1.DockTabHeight = 26;
             this._dockingManager1.DragProviderStyle = Syncfusion.Windows.Forms.Tools.DragProviderStyle.VS2010;
             this._dockingManager1.HostControl = this;
             this._dockingManager1.ImageList = this.imageList1;

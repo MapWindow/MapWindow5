@@ -101,7 +101,7 @@ namespace MW5.Projections.UI.Forms
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtName.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtName.Location = new System.Drawing.Point(77, 29);
             this.txtName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -122,7 +122,7 @@ namespace MW5.Projections.UI.Forms
             // 
             // txtCode
             // 
-            this.txtCode.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtCode.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtCode.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtCode.Location = new System.Drawing.Point(77, 70);
             this.txtCode.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -158,7 +158,7 @@ namespace MW5.Projections.UI.Forms
             // 
             this.txtProj4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProj4.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtProj4.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtProj4.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProj4.Location = new System.Drawing.Point(27, 221);
             this.txtProj4.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -173,7 +173,7 @@ namespace MW5.Projections.UI.Forms
             // 
             this.txtRemarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRemarks.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtRemarks.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtRemarks.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtRemarks.Location = new System.Drawing.Point(27, 323);
             this.txtRemarks.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -210,7 +210,7 @@ namespace MW5.Projections.UI.Forms
             // 
             this.txtScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtScope.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtScope.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtScope.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtScope.Location = new System.Drawing.Point(27, 131);
             this.txtScope.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -225,7 +225,7 @@ namespace MW5.Projections.UI.Forms
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 245);
+            this.label5.Location = new System.Drawing.Point(17, 223);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 18;
@@ -235,9 +235,9 @@ namespace MW5.Projections.UI.Forms
             // 
             this.txtAreaName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAreaName.BeforeTouchSize = new System.Drawing.Size(420, 186);
+            this.txtAreaName.BeforeTouchSize = new System.Drawing.Size(290, 21);
             this.txtAreaName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtAreaName.Location = new System.Drawing.Point(20, 261);
+            this.txtAreaName.Location = new System.Drawing.Point(20, 239);
             this.txtAreaName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtAreaName.Multiline = true;
             this.txtAreaName.Name = "txtAreaName";
@@ -377,7 +377,7 @@ namespace MW5.Projections.UI.Forms
             this.buttonAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAdv1.BeforeTouchSize = new System.Drawing.Size(110, 23);
             this.buttonAdv1.IsBackStageButton = false;
-            this.buttonAdv1.Location = new System.Drawing.Point(334, 433);
+            this.buttonAdv1.Location = new System.Drawing.Point(334, 411);
             this.buttonAdv1.Name = "buttonAdv1";
             this.buttonAdv1.Size = new System.Drawing.Size(110, 23);
             this.buttonAdv1.TabIndex = 4;
@@ -396,7 +396,7 @@ namespace MW5.Projections.UI.Forms
             this.gradientPanel1.Location = new System.Drawing.Point(18, 13);
             this.gradientPanel1.Name = "gradientPanel1";
             this.gradientPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.gradientPanel1.Size = new System.Drawing.Size(426, 414);
+            this.gradientPanel1.Size = new System.Drawing.Size(426, 392);
             this.gradientPanel1.TabIndex = 6;
             // 
             // tabPageAdv4
@@ -426,7 +426,7 @@ namespace MW5.Projections.UI.Forms
             this.buttonAdv2.BeforeTouchSize = new System.Drawing.Size(69, 23);
             this.buttonAdv2.ForeColor = System.Drawing.Color.White;
             this.buttonAdv2.IsBackStageButton = false;
-            this.buttonAdv2.Location = new System.Drawing.Point(373, 434);
+            this.buttonAdv2.Location = new System.Drawing.Point(373, 412);
             this.buttonAdv2.Name = "buttonAdv2";
             this.buttonAdv2.Size = new System.Drawing.Size(69, 23);
             this.buttonAdv2.TabIndex = 36;
@@ -446,7 +446,7 @@ namespace MW5.Projections.UI.Forms
             this.gradientPanel2.Location = new System.Drawing.Point(22, 212);
             this.gradientPanel2.Name = "gradientPanel2";
             this.gradientPanel2.Padding = new System.Windows.Forms.Padding(5);
-            this.gradientPanel2.Size = new System.Drawing.Size(420, 216);
+            this.gradientPanel2.Size = new System.Drawing.Size(420, 194);
             this.gradientPanel2.TabIndex = 37;
             // 
             // btnRemove
@@ -518,7 +518,7 @@ namespace MW5.Projections.UI.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionMap1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
-            this._projectionMap1.CurrentScale = 18.083863900478466D;
+            this._projectionMap1.CurrentScale = 20.211377300534757D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
@@ -544,7 +544,7 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
             this._projectionMap1.ShowRedrawTime = false;
             this._projectionMap1.ShowVersionNumber = false;
-            this._projectionMap1.Size = new System.Drawing.Size(420, 209);
+            this._projectionMap1.Size = new System.Drawing.Size(420, 187);
             this._projectionMap1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
             this._projectionMap1.TabIndex = 20;
             this._projectionMap1.Tag = "";
@@ -561,7 +561,7 @@ namespace MW5.Projections.UI.Forms
             this.projectionTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.projectionTextBox1.Location = new System.Drawing.Point(5, 5);
             this.projectionTextBox1.Name = "projectionTextBox1";
-            this.projectionTextBox1.Size = new System.Drawing.Size(414, 402);
+            this.projectionTextBox1.Size = new System.Drawing.Size(414, 380);
             this.projectionTextBox1.TabIndex = 0;
             this.projectionTextBox1.Text = "";
             // 
@@ -572,7 +572,7 @@ namespace MW5.Projections.UI.Forms
             this.txtDialect.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtDialect.Location = new System.Drawing.Point(5, 5);
             this.txtDialect.Name = "txtDialect";
-            this.txtDialect.Size = new System.Drawing.Size(408, 204);
+            this.txtDialect.Size = new System.Drawing.Size(408, 182);
             this.txtDialect.TabIndex = 0;
             this.txtDialect.Text = "";
             // 

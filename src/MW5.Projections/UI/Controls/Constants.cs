@@ -32,5 +32,7 @@ namespace MW5.Projections.UI.Controls
         public const string ContextNodeCollapse = "Node Collapse";
 
         public const string ScopeNotRecommended = "Not recommended.";
+
+        public const int NodeHeight = 16;
     }
 }

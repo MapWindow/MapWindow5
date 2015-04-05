@@ -38,10 +38,11 @@ namespace MW5.UI.Docking
                     "Failed to initialize DockPanelCollection. No docking manager is provided.");
             }
 
+            _dockingManager.DragProviderStyle = DragProviderStyle.VS2012;
 #if STYLE2010
             _dockingManager.VisualStyle = VisualStyle.Office2010;
 #else
-            _dockingManager.VisualStyle = VisualStyle.VS2005;
+            _dockingManager.VisualStyle = VisualStyle.Metro;
 #endif
 
             _dockingManager.DockTabAlignment = DockTabAlignmentStyle.Bottom;

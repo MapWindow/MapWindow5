@@ -116,6 +116,7 @@ namespace MW5.Controls
         private void UpdatePreview(bool fullExtents)
         {
             IEnvelope e = fullExtents ? _mainMap.MaxExtents : _mainMap.Extents;
+            e = e.Inflate(e.Width*0.1, e.Height*0.1);       // parameter can be introduced
 
             double ratio = _view.Width / (double)_view.Height;
             var exts = e.Adjust(ratio);
