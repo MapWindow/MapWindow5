@@ -91,7 +91,7 @@ namespace MW5.Listeners
 
         private void MapChooseLayer(object sender, ChooseLayerEventArgs e)
         {
-            e.LayerHandle = _context.Map.Layers.SelectedLayer.Handle;
+            e.LayerHandle = _context.Map.Layers.Current.Handle;
             _broadcaster.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
         }
 

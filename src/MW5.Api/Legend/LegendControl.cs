@@ -141,11 +141,11 @@ namespace MW5.Api.Legend
         /// Gets or Sets the Selected layer within the legend
         /// </summary>
         [Browsable(false)]
-        public int SelectedLayer
+        public int SelectedLayerHandle
         {
             get
             {
-                return _map == null || Layers.Count == 0 ? -1 : _selectedLayerHandle;    
+                return _map == null || Layers.Count == 0 ? -1 : _selectedLayerHandle;
             }
 
             set
@@ -170,6 +170,22 @@ namespace MW5.Api.Legend
             }
         }
 
+        public ILegendLayer SelectedLayer
+        {
+            get
+            {
+                int handle = SelectedLayerHandle;
+                return handle != -1 ? _layers.ItemByHandle(SelectedLayerHandle) : null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    SelectedLayerHandle = value.Handle;
+                }
+            }
+        }
+
         internal void SetSelectedGroup(int groupHandle)
         {
             _selectedGroupHandle = groupHandle;
@@ -178,7 +194,7 @@ namespace MW5.Api.Legend
         internal void UpdateSelectedLayer()
         {
             int newVal = _map.NumLayers > 0 ? _map.get_LayerHandle(_map.NumLayers - 1) : -1;
-            SelectedLayer = newVal;
+            SelectedLayerHandle = newVal;
         }
 
         /// <summary>
@@ -880,6 +896,7 @@ namespace MW5.Api.Legend
                 return null;
             }
         }
+
 
         /// <summary>
         /// Gets a snapshot of a specific layer
@@ -2632,7 +2649,7 @@ namespace MW5.Api.Legend
                 // Start dragging operation only if the clicked layer is selected.
                 // Otherwise LayerSelected event will be fired which might results in a dialog box 
                 // from plugin code (TableEditor) and no Legend.MouseUp event (the dragging operation won't be finished).
-                if (SelectedLayer == lyr.Handle)
+                if (SelectedLayerHandle == lyr.Handle)
                 {
                     if (_groups.Count > 1 || grp.Layers.Count > 1)
                     {
@@ -2643,7 +2660,7 @@ namespace MW5.Api.Legend
                     }
                 }
 
-                SelectedLayer = lyr.Handle;
+                SelectedLayerHandle = lyr.Handle;
 
                 FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                 

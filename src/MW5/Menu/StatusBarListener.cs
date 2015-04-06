@@ -174,7 +174,7 @@ namespace MW5.Menu
             var bar = _context.StatusBar;
             var statusSelected = bar.FindItem(StatusBarKeys.SelectedCount, Identity);
 
-            if (_context.Map.Layers.SelectedLayer == null)
+            if (_context.Map.Layers.Current == null)
             {
                 statusSelected.Text = "No selected layer";
             }

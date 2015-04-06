@@ -56,11 +56,6 @@ namespace MW5.Plugins.Interfaces
         object Tag { get; set; }
 
         /// <summary>
-        /// Allows to attach custom handler for click event.
-        /// </summary>
-        void AttachClickEventHandler(EventHandler<MenuItemEventArgs> handler);
-
-        /// <summary>
         /// Gets the internal object.
         /// </summary>
         object GetInternalObject();
@@ -91,5 +86,10 @@ namespace MW5.Plugins.Interfaces
         /// Occurs when certain properties of the menu item change.
         /// </summary>
         event EventHandler<PropertyChangedEventArgs> ItemChanged;
+
+        /// <summary>
+        /// Occurs when user clicks the item with mouse.
+        /// </summary>
+        event EventHandler<MenuItemEventArgs> ItemClicked;
     }
 }

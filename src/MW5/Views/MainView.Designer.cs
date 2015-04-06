@@ -366,7 +366,7 @@ namespace MW5.Views
             this._legendControl1.Location = new System.Drawing.Point(106, 174);
             this._legendControl1.Map = null;
             this._legendControl1.Name = "_legendControl1";
-            this._legendControl1.SelectedLayer = -1;
+            this._legendControl1.SelectedLayerHandle = -1;
             this._legendControl1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
             this._legendControl1.ShowGroupIcons = true;
             this._legendControl1.ShowLabels = false;

@@ -34,6 +34,12 @@ namespace MW5.UI.Helpers
                 return;
             }
 
+            var dropDown = item as IDropDownMenuItem;
+            if (dropDown != null)
+            {
+                return;     // the tooltip would interfere with dropdown main function
+            }
+
             var comp = item.GetInternalObject() as Component;
 
             var info = _toolTipManager.GetToolTip(comp);
@@ -53,11 +59,8 @@ namespace MW5.UI.Helpers
 
             info.Body.Text = string.IsNullOrWhiteSpace(item.Description) ? "There is no description for the item." : item.Description;
 
-            if (item.PluginIdentity != PluginIdentity.Default)
-            {
-                info.Footer.Text = "Plugin: " + item.PluginIdentity.Name;
-                info.Separator = true;
-            }
+            info.Footer.Text = "Plugin: " + item.PluginIdentity.Name;
+            info.Separator = true;
 
             if (!hasToolTip)
             {

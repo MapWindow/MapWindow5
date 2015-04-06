@@ -37,7 +37,7 @@ namespace MW5.Plugins.TableEditor.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.ShowTable:
-                    var layer = _context.Map.Layers.SelectedLayer;
+                    var layer = _context.Map.Layers.Current;
                     if (layer.IsVector)
                     {
                         _presenter.Run(layer);

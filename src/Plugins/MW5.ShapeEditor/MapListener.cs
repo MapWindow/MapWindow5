@@ -26,7 +26,7 @@ namespace MW5.Plugins.ShapeEditor
 
         private  void plugin_ChooseLayer(IMuteMap map, Api.Events.ChooseLayerEventArgs e)
         {
-            var layer = map.Layers.SelectedLayer;
+            var layer = map.Layers.Current;
             if (layer != null)
             {
                 e.LayerHandle = layer.Handle;

@@ -21,8 +21,6 @@ namespace MW5.Views
     public partial class ConfigView : MapWindowView, IConfigView
     {
         private bool _initialized = false;
-        private readonly IPluginManager _manager;
-        private readonly IConfigService _config;
         private readonly List<IConfigPage> _pages = new List<IConfigPage>();
         private static string _lastPageName = string.Empty;
 

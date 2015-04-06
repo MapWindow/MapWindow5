@@ -112,8 +112,6 @@ namespace MW5.Api.Concrete
             return _axMap.get_LayerPosition(layerHandle) != -1;
         }
 
-
-
         public abstract T ItemByHandle(int layerHandle);
 
         public abstract T this[int position] { get; }

@@ -29,7 +29,7 @@ namespace MW5.Menu
 
             var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, PluginIdentity.Default);
             item.Tag = -1;
-            item.AttachClickEventHandler(item_Click);
+            item.ItemClicked += item_Click;
             
             var list = new[]
             {
@@ -43,7 +43,7 @@ namespace MW5.Menu
             {
                 item = root.SubItems.AddButton(EnumHelper.EnumToString(p), PluginIdentity.Default );
                 item.Tag = p;
-                item.AttachClickEventHandler(item_Click);
+                item.ItemClicked += item_Click;
             }
 
             root.SubItems[1].BeginGroup = true;

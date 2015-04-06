@@ -64,6 +64,6 @@ namespace MW5.Api.Interfaces
         /// <summary>
         /// Gets the selected layer.
         /// </summary>
-        T SelectedLayer { get; }
+        T Current { get; }
     }
 }

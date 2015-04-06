@@ -51,10 +51,10 @@ namespace MW5.Menu
 
             bool hasFeatureSet = false;
 
-            bool hasLayer = _context.Legend.SelectedLayer != -1;
+            bool hasLayer = _context.Legend.SelectedLayerHandle != -1;
             if (hasLayer)
             {
-                var fs = _context.Map.Layers.SelectedLayer.FeatureSet;
+                var fs = _context.Map.Layers.Current.FeatureSet;
                 if (fs != null)
                 {
                     //statusSelectedCount.Text = string.Format("Shapes: {0}; selected: {1}", sf.NumShapes, sf.NumSelected);

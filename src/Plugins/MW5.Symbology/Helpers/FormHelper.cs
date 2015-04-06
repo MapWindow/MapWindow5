@@ -49,7 +49,7 @@ namespace MW5.Plugins.Symbology.Helpers
                 return;
             }
 
-            using (var form = new CategoriesForm(context, context.Map.Layers.SelectedLayer))
+            using (var form = new CategoriesForm(context, context.Map.Layers.Current))
             {
                 if (context.View.ShowChildView(form))
                 {
@@ -66,7 +66,7 @@ namespace MW5.Plugins.Symbology.Helpers
                 return;
             }
 
-            using (var form = new QueryBuilderForm(context.Map.Layers.SelectedLayer, string.Empty, false))
+            using (var form = new QueryBuilderForm(context.Map.Layers.Current, string.Empty, false))
             {
                 if (context.View.ShowChildView(form))
                 {

@@ -92,11 +92,6 @@ namespace MW5.UI.Menu
             set { _item.Visible = value; }
         }
 
-        public void AttachClickEventHandler(EventHandler<MenuItemEventArgs> handler)
-        {
-            _item.Click += (sender, args) => handler.Invoke(this, new MenuItemEventArgs(Key));
-        }
-
         internal protected virtual void DetachItemListeners()
         {
             EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
@@ -110,5 +105,17 @@ namespace MW5.UI.Menu
         public event EventHandler ItemSelected;
 
         public event EventHandler<PropertyChangedEventArgs> ItemChanged;
+        
+        public event EventHandler<MenuItemEventArgs> ItemClicked
+        {
+            add
+            {
+                _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key));
+            }
+            remove
+            {
+                
+            }
+        }
     }
 }

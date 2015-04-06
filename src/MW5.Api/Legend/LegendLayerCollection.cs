@@ -141,7 +141,7 @@ namespace MW5.Api.Legend
 
             if (legendVisible)
             {
-                _legend.SelectedLayer = mapLayerHandle;
+                _legend.SelectedLayerHandle = mapLayerHandle;
             }
 
             _axMap.LockWindow(tkLockMode.lmUnlock);
@@ -191,8 +191,8 @@ namespace MW5.Api.Legend
                 return mapLayerHandle;
             }
 
-            int selectedLayer = _legend.SelectedLayer;
-            if (_legend.SelectedLayer != -1)
+            int selectedLayer = _legend.SelectedLayerHandle;
+            if (_legend.SelectedLayerHandle != -1)
             {
                 var addPos = PositionInGroup(selectedLayer) + 1;
                 var addGrp = GroupOf(selectedLayer);
@@ -212,13 +212,13 @@ namespace MW5.Api.Legend
             _legend.ClearLayers();
         }
 
-        public T SelectedLayer
+        public T Current
         {
             get
             {
-                 if (_legend.SelectedLayer != -1)
+                 if (_legend.SelectedLayerHandle != -1)
                  {
-                     return ItemByHandle(_legend.SelectedLayer);
+                     return ItemByHandle(_legend.SelectedLayerHandle);
                  }
                  return null;
             }

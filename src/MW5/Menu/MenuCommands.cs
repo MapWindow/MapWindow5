@@ -28,7 +28,7 @@ namespace MW5.Menu
                 "Removes all the layers and returns default settings for the map."),
 
                 new MenuCommand("Add Layer", MenuKeys.AddLayer, Resources.icon_layer_add,
-                "Adds a layer of any supported type, include vector, raster formats and spatial databases."),
+                "Adds a layer of any supported type, including vector, raster formats and spatial databases."),
 
                 new MenuCommand("Add Vector Layer", MenuKeys.AddVectorLayer, Resources.icon_layer_vector_add,
                 "Adds vector layer from the file based datasource."),
@@ -40,10 +40,10 @@ namespace MW5.Menu
                 "Adds a layer from geodatabase."),
 
                 new MenuCommand("Open Project", MenuKeys.OpenProject, Resources.icon_folder,
-                "Opens existing MapWindow project."),
+                "Opens an existing MapWindow project."),
 
                 new MenuCommand("Save Project", MenuKeys.SaveProject, Resources.icon_save,
-                "Saves current project under the same name or requests for the name if it wasn't yet specified."),
+                "Saves the current project under the same name or requests for the name if it wasn't yet specified."),
 
                 new MenuCommand("Save project as", MenuKeys.SaveProjectAs, Resources.icon_save_as,
                 "Saves the current project under new name."),
@@ -56,7 +56,7 @@ namespace MW5.Menu
                 "Creates ESRI Shapefile layer of any supported geometry type."),
 
                 new MenuCommand("Remove Layer", MenuKeys.RemoveLayer, Resources.icon_layer_remove,
-                "Removes layer currently selected in the legend."),
+                "Removes the layer currently selected in the legend."),
 
                 new MenuCommand("Settings", MenuKeys.Settings, Resources.icon_settings,
                 "Opens dialogs with application and plugin settings."),

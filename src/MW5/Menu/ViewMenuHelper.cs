@@ -72,7 +72,7 @@ namespace MW5.Menu
                 foreach (var panel in _context.DockPanels)
                 {
                     var btn = menu.SubItems.AddButton(panel.Caption, PluginIdentity.Default);
-                    btn.AttachClickEventHandler(DockWindowsVisibilityClicked);
+                    btn.ItemClicked += DockWindowsVisibilityClicked;
                     btn.Checked = panel.Visible;
                     btn.Tag = panel;
                 }
@@ -124,7 +124,7 @@ namespace MW5.Menu
                     var cbr = _menuManager.GetBarControl(bar);
 
                     var btn = menu.SubItems.AddButton(bar.BarName, PluginIdentity.Default);
-                    btn.AttachClickEventHandler(ToolbarVisibilityClicked);
+                    btn.ItemClicked += ToolbarVisibilityClicked;
                     btn.Checked = cbr.Visible;
                     btn.Tag = bar.BarName;
                 }

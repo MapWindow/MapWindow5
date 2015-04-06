@@ -93,7 +93,7 @@ namespace MW5.Api
         {
             get
             {
-                var layer = Layers.SelectedLayer;
+                var layer = Layers.Current;
                 if (layer != null)
                 {
                     return layer.FeatureSet;
@@ -107,7 +107,7 @@ namespace MW5.Api
         {
             get
             {
-                var layer = Layers.SelectedLayer;
+                var layer = Layers.Current;
                 if (layer != null)
                 {
                     return layer.ImageSource;
@@ -121,7 +121,7 @@ namespace MW5.Api
         {
             get
             {
-                var layer = Layers.SelectedLayer;
+                var layer = Layers.Current;
                 if (layer != null)
                 {
                     return layer.VectorLayer;

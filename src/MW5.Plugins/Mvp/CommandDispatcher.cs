@@ -95,7 +95,7 @@ namespace MW5.Plugins.Mvp
                     }
                 }
 
-                item.AttachClickEventHandler(ItemClick);
+                item.ItemClicked += ItemClick;
                 
                 var dropDown = item as IDropDownMenuItem;
                 if (dropDown != null)

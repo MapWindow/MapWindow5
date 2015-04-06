@@ -12,7 +12,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
     {
         public static MergeResult Run(IAppContext context)
         {
-            var fs = context.Layers.SelectedLayer.FeatureSet;
+            var fs = context.Map.SelectedFeatureSet;
             
             if (fs == null || fs.NumSelected <= 1 || !fs.InteractiveEditing)
             {
@@ -54,7 +54,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
             var history = context.Map.History;
             history.BeginBatch();
 
-            int layerHandle = context.Map.Layers.SelectedLayer.Handle;
+            int layerHandle = context.Map.Layers.Current.Handle;
 
             foreach (var ft in fs.Features.Reverse())
             {

@@ -65,7 +65,7 @@ namespace MW5.Plugins.Services
         bool PluginActive(PluginIdentity identity);
 
         void FireItemClicked(object sender, MenuItemEventArgs args);
-        
+
         void FireStatusItemClicked(object sender, MenuItemEventArgs args);
     }
 }

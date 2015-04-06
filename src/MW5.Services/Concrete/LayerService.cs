@@ -38,7 +38,7 @@ namespace MW5.Services.Concrete
 
         public bool RemoveSelectedLayer()
         {
-            int layerHandle = _context.Legend.SelectedLayer;
+            int layerHandle = _context.Legend.SelectedLayerHandle;
             if (layerHandle == -1)
             {
                 _messageService.Info("No selected layer to remove.");
@@ -137,7 +137,7 @@ namespace MW5.Services.Concrete
         /// TODO: perhaps better to allow setting state explicitly as parameter
         public void ToggleVectorLayerEditing()
         {
-            int handle = _context.Legend.SelectedLayer;
+            int handle = _context.Legend.SelectedLayerHandle;
             var fs = _context.Layers.GetFeatureSet(handle);
             var ogrLayer = _context.Layers.GetVectorLayer(handle);
 
@@ -232,13 +232,13 @@ namespace MW5.Services.Concrete
 
         public void ZoomToSelected()
         {
-            int handle = _context.Legend.SelectedLayer;
+            int handle = _context.Legend.SelectedLayerHandle;
             _context.Map.ZoomToSelected(handle);
         }
 
         public void ClearSelection()
         {
-            var fs = _context.Map.Layers.SelectedLayer.FeatureSet;
+            var fs = _context.Map.Layers.Current.FeatureSet;
             if (fs != null)
             {
                 fs.ClearSelection();

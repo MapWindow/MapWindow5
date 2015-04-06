@@ -16,7 +16,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
     {
         private readonly IAppContext _context;
         private readonly IMessageService _messageService;
-        private CopyOperation _copyOperation;
+        private readonly CopyOperation _copyOperation;
 
         public GeoprocessingService(IAppContext context, IMessageService messageService)
         {
@@ -83,7 +83,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
         /// </summary>
         public void RemoveShapes()
         {
-            var layer = _context.Layers.SelectedLayer;
+            var layer = _context.Layers.Current;
             if (layer == null)
             {
                 return;
@@ -110,7 +110,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
 
         public void CopyShapes()
         {
-            var layer = _context.Map.Layers.SelectedLayer;
+            var layer = _context.Map.Layers.Current;
             if (layer != null && layer.IsVector)
             {
                 _copyOperation.Copy(layer.Handle, layer.FeatureSet);
@@ -119,7 +119,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
 
         public void PasteShapes()
         {
-            var layer = _context.Map.Layers.SelectedLayer;
+            var layer = _context.Legend.SelectedLayer;
             if (layer != null && layer.IsVector)
             {
                 var result = _copyOperation.Paste(layer.Handle, layer.FeatureSet);
@@ -142,7 +142,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
 
         public void CutShapes()
         {
-            var layer = _context.Map.Layers.SelectedLayer;
+            var layer = _context.Legend.SelectedLayer;
             if (layer != null && layer.IsVector)
             {
                 _copyOperation.Cut(layer.Handle, layer.FeatureSet);

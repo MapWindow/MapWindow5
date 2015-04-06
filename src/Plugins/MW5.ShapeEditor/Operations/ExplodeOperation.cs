@@ -14,7 +14,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
         /// </summary>
         internal static ExplodeResult Run(IAppContext context)
         {
-            var fs = context.Layers.SelectedLayer.FeatureSet;
+            var fs = context.Layers.Current.FeatureSet;
 
             if (fs == null || fs.NumSelected == 0 || !fs.InteractiveEditing)
             {
@@ -53,7 +53,7 @@ namespace MW5.Plugins.ShapeEditor.Operations
 
             int newSelectionStart = fs.Features.Count - fs.Features.Count(ft => ft.Selected);
 
-            int layerHandle = context.Legend.SelectedLayer;
+            int layerHandle = context.Legend.SelectedLayerHandle;
 
             var history = context.Map.History;
             history.BeginBatch();

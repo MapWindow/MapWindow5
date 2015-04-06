@@ -38,12 +38,6 @@ namespace MW5.Api.Legend.Abstract
         /// </summary>
         Color SelectionColor { get; set; }
 
-        // TODO: return object; add separate property to return handle
-        /// <summary>
-        /// Gets or Sets the Selected layer within the legend
-        /// </summary>
-        int SelectedLayer { get; set; }
-
         /// <summary>
         /// Gets whether or not the legend is locked.  See Lock() function for description
         /// </summary>
@@ -141,5 +135,15 @@ namespace MW5.Api.Legend.Abstract
         /// <param name="imgWidth"> Width in pixels of the desired Snapshot </param>
         /// <returns> Bitmap if successful, null (nothing) otherwise </returns>
         Bitmap Snapshot(bool visibleLayersOnly, int imgWidth);
+
+        /// <summary>
+        /// Gets the selected layer within a legend or null if none is selected.
+        /// </summary>
+        int SelectedLayerHandle { get; set; }
+
+        /// <summary>
+        /// Gets the selected layer within a legend or null if none is selected.
+        /// </summary>
+        ILegendLayer SelectedLayer { get; set; }
     }
 }

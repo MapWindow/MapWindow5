@@ -78,7 +78,7 @@ namespace MW5.Menu
                     _context.Map.ZoomToMaxExtents();
                     break;
                 case MenuKeys.ZoomToLayer:
-                    _context.Map.ZoomToLayer(_context.Legend.SelectedLayer);
+                    _context.Map.ZoomToLayer(_context.Legend.SelectedLayerHandle);
                     break;
                 case MenuKeys.RemoveLayer:
                     _layerService.RemoveSelectedLayer();

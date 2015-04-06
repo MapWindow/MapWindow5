@@ -9,7 +9,7 @@ namespace MW5.UI.Menu
 {
     internal class MenuItem: MenuItemBase, IMenuItem
     {
-        private const int ICON_SIZE = 24;
+        private const int IconSize = 24;
         protected BarItem _item;
 
         internal MenuItem(BarItem item)
@@ -39,7 +39,7 @@ namespace MW5.UI.Menu
             set
             {
                 _item.Image = new ImageExt(value.Image);
-                _item.ImageSize = new Size(ICON_SIZE, ICON_SIZE);
+                _item.ImageSize = new Size(IconSize, IconSize);
             }
         }
 
@@ -80,21 +80,28 @@ namespace MW5.UI.Menu
             set { _item.Visible = value; }
         }
 
-        public void AttachClickEventHandler(EventHandler<MenuItemEventArgs> handler)
-        {
-            _item.Click += (sender, args) => handler.Invoke(this, new MenuItemEventArgs(Key));
-        }
-
         internal protected virtual void DetachItemListeners()
         {
             EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
             EventHelper.RemoveEventHandler(_item, "Selected");
-            EventHelper.RemoveEventHandler(_item, "ItemChanged");
+            EventHelper.RemoveEventHandler(this, "ItemChanged");
         }
 
         public object GetInternalObject()
         {
             return _item;
+        }
+
+        public event EventHandler<MenuItemEventArgs> ItemClicked
+        {
+            add
+            {
+                _item.Click += (s, e) => value.Invoke(this, new MenuItemEventArgs(Key));
+            }
+            remove
+            {
+                // will be unsubscribed in DetachItemListeners
+            }
         }
 
         public event EventHandler ItemSelected

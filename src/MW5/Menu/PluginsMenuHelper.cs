@@ -48,7 +48,7 @@ namespace MW5.Menu
             {
                 var item = menuItem.SubItems.AddButton(p.Identity.Name, PluginIdentity.Default);
                 item.Tag = p.Identity;
-                item.AttachClickEventHandler(item_Click);
+                item.ItemClicked += item_Click;
                 item.Checked = _manager.PluginActive(p.Identity);
             }
         }

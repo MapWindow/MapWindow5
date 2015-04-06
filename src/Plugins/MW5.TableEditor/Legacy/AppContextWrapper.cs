@@ -27,7 +27,7 @@ namespace MW5.Plugins.TableEditor.Legacy
         {
             if (indices.Length > 0)
             {
-                _context.Layers.SelectedLayer.UpdateSelection(indices, SelectionOperation.New);
+                _context.Layers.Current.UpdateSelection(indices, SelectionOperation.New);
                 _context.Map.Redraw();
                 _context.View.Update();
             }
@@ -99,7 +99,7 @@ namespace MW5.Plugins.TableEditor.Legacy
                 double minX = double.MaxValue;
                 double minY = double.MaxValue;
                 
-                var layer = _context.Layers.SelectedLayer;
+                var layer = _context.Layers.Current;
                 if (layer == null || layer.FeatureSet == null)
                 {
                     return;
@@ -167,7 +167,7 @@ namespace MW5.Plugins.TableEditor.Legacy
                 double minX = shape.Extents.xMin;
                 double minY = shape.Extents.yMin;
 
-                _context.Layers.SelectedLayer.Visible = true;
+                _context.Layers.Current.Visible = true;
 
                 // Pad extents now
                 double dx = PadExtentsEdit(maxX, minX);

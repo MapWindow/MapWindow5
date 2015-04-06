@@ -1,26 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Linq;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
-using MW5.Controls;
 using MW5.Helpers;
-using MW5.Menu;
-using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Properties;
 using MW5.UI;
-using MW5.UI.Docking;
 using MW5.UI.Helpers;
-using Syncfusion.Windows.Forms.Tools;
-using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Views
 {

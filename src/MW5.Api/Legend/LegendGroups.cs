@@ -192,7 +192,7 @@ namespace MW5.Api.Legend
             while (grp.Layers.Count > 0)
             {
                 var lyr = grp.Layers[0].Handle;
-                if (_legend.SelectedLayer == lyr)
+                if (_legend.SelectedLayerHandle == lyr)
                 {
                     layerInGroupWasSelected = true;
                 }

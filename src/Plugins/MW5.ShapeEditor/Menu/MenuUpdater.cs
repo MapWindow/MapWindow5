@@ -62,7 +62,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
             }
 
             IFeatureSet fs = null;
-            var layer = _context.Map.Layers.SelectedLayer;
+            var layer = _context.Map.Layers.Current;
             if (layer != null)
             {
                 fs = layer.FeatureSet;
@@ -107,7 +107,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         internal bool GetEnabled(string itemKey)
         {
             var map = _context.Map;
-            var layer = _context.Map.Layers.SelectedLayer;
+            var layer = _context.Map.Layers.Current;
             if (layer == null)
             {
                 return false;
