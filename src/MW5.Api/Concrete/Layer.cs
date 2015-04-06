@@ -173,7 +173,7 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public VectorLayer VectorLayer
+        public VectorLayer VectorSource
         {
             get
             {

@@ -50,7 +50,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             string units = "";
             string type = _shapefile.GeometryType.ToString();
 
-            var ogr = _layer.VectorLayer;
+            var ogr = _layer.VectorSource;
             if (ogr != null)
             {
                 s += "Datasource type: OGR layer" + Environment.NewLine;

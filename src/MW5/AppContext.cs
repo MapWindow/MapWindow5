@@ -40,7 +40,6 @@ namespace MW5
         private IAppView _view;
         private IMainView _mainView;
         private IProjectService _project;
-        private IMuteLegend _legend;
         private IToolbarCollection _toolbars;
         private IPluginManager _pluginManager;
         private IBroadcasterService _broadcaster;
@@ -48,7 +47,8 @@ namespace MW5
         private IDockPanelCollection _dockPanelCollection;
         private IConfigService _configService;
         private LocatorPresenter _locator;
-        
+        private LegendPresenter _legendPresenter;
+
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
             if (container == null) throw new ArgumentNullException("container");
@@ -63,10 +63,17 @@ namespace MW5
         /// </summary>
         /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
         /// Perhaps property injection can be used.</remarks>
-        internal void Init(IMainView mainView, IProjectService project, IConfigService configService)
+        internal void Init(IMainView mainView, IProjectService project, IConfigService configService, 
+                        LegendPresenter legendPresenter)
         {
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
+            if (legendPresenter == null) throw new ArgumentNullException("legendPresenter");
+
+            _legendPresenter = legendPresenter;
+            var legend = _legendPresenter.Legend;
+            mainView.Map.Legend = legend;
+            legend.Map = mainView.Map;
 
             _pluginManager = _container.GetSingleton<IPluginManager>();
             _broadcaster = _container.GetSingleton<IBroadcasterService>();
@@ -76,9 +83,9 @@ namespace MW5
             _view = new AppView(mainView, _styleService);
             _project = project;
             _map = mainView.Map;
-            _legend = mainView.Legend;
             _configService = configService;
-            _legend.Lock();
+
+            Legend.Lock();
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster);
             _menu = MenuFactory.CreateInstance(mainView.MenuManager);
@@ -142,7 +149,7 @@ namespace MW5
 
         public IMuteLegend Legend
         {
-            get { return _legend; }
+            get { return _legendPresenter.Legend; }
         }
 
         public IStatusBar StatusBar

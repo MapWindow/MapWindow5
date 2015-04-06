@@ -124,7 +124,7 @@ namespace MW5.Api
                 var layer = Layers.Current;
                 if (layer != null)
                 {
-                    return layer.VectorLayer;
+                    return layer.VectorSource;
                 }
                 return null;
             }

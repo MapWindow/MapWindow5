@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope3 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference3 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
@@ -62,7 +62,6 @@ namespace MW5.Views
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
-            this._legendControl1 = new MW5.Api.Legend.LegendControl(this.components);
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -311,10 +310,8 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope3.Tag = "";
-            this._mapControl1.Extents = envelope3;
-            spatialReference3.Tag = "";
-            this._mapControl1.Projection = spatialReference3;
+            envelope1.Tag = "";
+            this._mapControl1.Extents = envelope1;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -323,9 +320,12 @@ namespace MW5.Views
             this._mapControl1.Location = new System.Drawing.Point(0, 0);
             this._mapControl1.Longitude = 0F;
             this._mapControl1.MapCursor = MW5.Api.MapCursor.ZoomIn;
+            this._mapControl1.MapProjection = MW5.Api.MapProjection.None;
             this._mapControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
+            spatialReference1.Tag = "";
+            this._mapControl1.Projection = spatialReference1;
             this._mapControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
             this._mapControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
@@ -356,21 +356,6 @@ namespace MW5.Views
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
-            // 
-            // _legendControl1
-            // 
-            this._legendControl1.BackColor = System.Drawing.Color.White;
-            this._legendControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this._legendControl1.DrawLines = true;
-            this._legendControl1.Location = new System.Drawing.Point(106, 174);
-            this._legendControl1.Map = null;
-            this._legendControl1.Name = "_legendControl1";
-            this._legendControl1.SelectedLayerHandle = -1;
-            this._legendControl1.SelectionColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this._legendControl1.ShowGroupIcons = true;
-            this._legendControl1.ShowLabels = false;
-            this._legendControl1.Size = new System.Drawing.Size(107, 126);
-            this._legendControl1.TabIndex = 5;
             // 
             // statusStripLabel5
             // 
@@ -414,7 +399,6 @@ namespace MW5.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(796, 531);
-            this.Controls.Add(this._legendControl1);
             this.Controls.Add(this.dockingClientPanel1);
             this.Controls.Add(this.statusStripEx1);
             this.Name = "MainView";
@@ -440,7 +424,6 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
         private BoundMapControl _mapControl1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager _mainFrameBarManager1;
-        private Api.Legend.LegendControl _legendControl1;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusStripLabel5;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel statusMapUnits;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;

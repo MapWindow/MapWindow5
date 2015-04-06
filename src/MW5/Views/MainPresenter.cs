@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using MW5.Api.Concrete;
+using MW5.Controls;
 using MW5.Helpers;
 using MW5.Listeners;
 using MW5.Menu;
@@ -25,8 +26,9 @@ namespace MW5.Views
         private readonly StatusBarListener _statusBarListener;
         private readonly MenuUpdater _menuUpdater;
 
-        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, ILoggingService loggingService, 
-                            IConfigService configService)
+        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, 
+                             ILoggingService loggingService, IConfigService configService, 
+                             LegendPresenter legendPresenter)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
@@ -49,7 +51,7 @@ namespace MW5.Views
                     throw new InvalidCastException("Invalid type of IAppContext instance");
                 }
 
-                appContext.Init(view, projectService, configService);
+                appContext.Init(view, projectService, configService, legendPresenter);
 
                 view.Map.Initialize();
                 view.ViewClosing += OnViewClosing;
@@ -65,24 +67,29 @@ namespace MW5.Views
 
                 appContext.InitPlugins(configService); // must be called after docking is initialized
 
-                // for development only
-                var config = _configService.Config;
-                if (config.LoadLastProject && File.Exists(config.LastProjectPath))
-                {
-                    try
-                    {
-                        _projectService.Open(config.LastProjectPath, true);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.Print("Error on project loading: " + ex.Message);
-                    }
-                }
+                LoadLastProject();
             }
             finally
             {
                 view.Map.Unlock();
                 context.Legend.Unlock();
+            }
+        }
+
+        private void LoadLastProject()
+        {
+            // for development only
+            var config = _configService.Config;
+            if (config.LoadLastProject && File.Exists(config.LastProjectPath))
+            {
+                try
+                {
+                    _projectService.Open(config.LastProjectPath, true);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("Error on project loading: " + ex.Message);
+                }
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Controls;
 using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -23,7 +24,9 @@ namespace MW5
                 .RegisterView<ISetProjectionView, SetProjectionView>()
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterSingleton<IAppView, AppView>()
-                .RegisterInstance<IApplicationContainer>(container);
+                .RegisterInstance<IApplicationContainer>(container)
+                .RegisterService<LegendPresenter>()
+                .RegisterService<LegendDockPanel>();
             
             Services.CompositionRoot.Compose(container);
             Plugins.CompositionRoot.Compose(container);

@@ -1,6 +1,7 @@
 ﻿using System;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
@@ -196,6 +197,45 @@ namespace MW5.Services.Concrete
             _withinBatch = false;
             _context.Map.Unlock();
             _context.Legend.Redraw();
+        }
+
+        public void SaveStyle()
+        {
+            int layerHandle = _context.Legend.SelectedLayerHandle;
+            if (layerHandle == -1)
+            {
+                MessageService.Current.Info("No layer is selected");
+            }
+
+            bool result = _context.Map.Layers.Current.SaveOptions("", true, "");
+            MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
+        }
+
+        public void LoadStyle()
+        {
+            int layerHandle = _context.Legend.SelectedLayerHandle;
+            if (layerHandle == -1)
+            {
+                MessageService.Current.Info("No layer is selected");
+            }
+            
+            string description = "";
+            bool result = _context.Map.Layers.Current.LoadOptions("", ref description);
+            if (result)
+            {
+                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                MessageService.Current.Info("Options are loaded successfully.");
+            }
+            else
+            {
+                string msg = "No options are loaded: " + _context.Map.LastError;
+                var layer = _context.Map.GetLayer(layerHandle).VectorSource;
+                if (layer != null)
+                {
+                    msg += Environment.NewLine + "Last GDAL error message: " + layer.GdalLastErrorMsg;
+                }
+                MessageService.Current.Info(msg);
+            }
         }
     }
 }

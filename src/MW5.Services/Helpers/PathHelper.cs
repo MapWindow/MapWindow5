@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Services;
 
 namespace MW5.Services.Helpers
 {
@@ -33,6 +35,18 @@ namespace MW5.Services.Helpers
         public static string GetDockingConfigPath()
         {
             return GetConfigPath() + @"\dockstate";
+        }
+
+        public static void OpenFolderWithExplorer(string path)
+        {
+            try
+            {
+                Process.Start(path);
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Warn("Failed to open folder: " + path + Environment.NewLine + ex.Message);
+            }
         }
     }
 }

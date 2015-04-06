@@ -10,5 +10,7 @@
         int LastLayerHandle { get; }
         void BeginBatch();
         void EndBatch();
+        void SaveStyle();
+        void LoadStyle();
     }
 }

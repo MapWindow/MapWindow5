@@ -24,7 +24,7 @@ namespace MW5.Api.Interfaces
         IFeatureSet FeatureSet { get ; }
         IImageSource ImageSource { get; }
         ILayerSource LayerSource { get; }
-        VectorLayer VectorLayer { get; }
+        VectorLayer VectorSource { get; }
         ILabelsLayer Labels { get; }
 
         bool RemoveOptions(string optionsName);

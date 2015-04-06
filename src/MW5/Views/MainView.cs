@@ -28,8 +28,6 @@ namespace MW5.Views
             InitializeComponent();
 
             statusStripEx1.Items.Clear();
-            _legendControl1.Map = _mapControl1;
-            _mapControl1.Legend = _legendControl1;
 
             ToolTipHelper.Init(superToolTip1);
 
@@ -136,11 +134,6 @@ namespace MW5.Views
         public IMap Map
         {
             get { return _mapControl1; }
-        }
-
-        public IMuteLegend Legend
-        {
-            get { return _legendControl1; }
         }
 
         public IView View

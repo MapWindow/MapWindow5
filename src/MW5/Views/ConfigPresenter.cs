@@ -5,6 +5,7 @@ using MW5.Configuration;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Services.Helpers;
 using MW5.UI.Syncfusion;
 using MW5.Views.Abstract;
 
@@ -58,15 +59,7 @@ namespace MW5.Views
         private void view_OpenFolderClicked()
         {
             string path = _configService.ConfigPath;
-            try
-            {
-                Process.Start(path);
-            }
-            catch (Exception ex)
-            {
-                _messageService.Warn("Failed to open folder: " + path + 
-                Environment.NewLine + ex.Message);
-            }
+            PathHelper.OpenFolderWithExplorer(path);
         }
 
         private void ApplySettings()

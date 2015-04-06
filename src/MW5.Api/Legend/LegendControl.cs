@@ -1287,7 +1287,7 @@ namespace MW5.Api.Legend
                 var left = bounds.Right - 36;
                 Image icon;
 
-                var ogrLayer = lyr.VectorLayer;
+                var ogrLayer = lyr.VectorSource;
                 if (ogrLayer != null)
                 {
                     icon = Icons.GetIcon(LegendIcon.Database);

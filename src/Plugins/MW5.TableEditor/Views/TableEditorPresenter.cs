@@ -18,7 +18,8 @@ namespace MW5.Plugins.TableEditor.Views
         private ILayer _layer;
         private Shapefile _shapefile;
 
-        public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager, IMessageService messageService) : base(view)
+        public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager, IMessageService messageService) 
+            : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (rowManager == null) throw new ArgumentNullException("rowManager");

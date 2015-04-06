@@ -17,7 +17,6 @@ namespace MW5.Plugins.Interfaces
         object MenuManager { get; }
         object StatusBar { get; }
         IMap Map { get; }
-        IMuteLegend Legend { get; }
         IView View { get; }
         event EventHandler<CancelEventArgs> ViewClosing;
         event EventHandler<RenderedEventArgs> ViewUpdating;

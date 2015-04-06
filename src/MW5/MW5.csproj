@@ -112,6 +112,14 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\LegendCommand.cs" />
+    <Compile Include="Controls\LegendDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\LegendDockPanel.Designer.cs">
+      <DependentUpon>LegendDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LegendPresenter.cs" />
     <Compile Include="Controls\LocatorDockPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -185,6 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LegendDockPanel.resx">
+      <DependentUpon>LegendDockPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LocatorDockPanel.resx">
       <DependentUpon>LocatorDockPanel.cs</DependentUpon>
