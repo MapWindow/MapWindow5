@@ -42,7 +42,7 @@ namespace MW5.Projections.Services
         {
             if (layer == null) throw new ArgumentException("Empty layer reference was passed");
 
-            var mapProj = _context.Map.GeoProjection;
+            var mapProj = _context.Map.Projection;
             var layerProj = layer.Projection;
 
             var result = CheckIsSame(layer, mapProj, layerProj, out newLayer);
@@ -109,7 +109,7 @@ namespace MW5.Projections.Services
                 }
             }
 
-            _context.Map.GeoProjection = layerProj;
+            _context.Map.Projection = layerProj;
             return TestingResult.Ok;
         }
 

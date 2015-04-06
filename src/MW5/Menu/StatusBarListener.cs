@@ -50,7 +50,7 @@ namespace MW5.Menu
         {
             var bar = _context.StatusBar;
 
-            var dropDown = bar.Items.AddDropDown("Not defined", StatusBarKeys.ProjectionDropDown, Identity);
+            var dropDown = bar.Items.AddSplitButton("Not defined", StatusBarKeys.ProjectionDropDown, Identity);
             dropDown.Icon = new MenuIcon(Resources.icon_crs_change);
             dropDown.DropDownOpening += ProjectionDropDownOpening;
 
@@ -99,6 +99,16 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case StatusBarKeys.ProjectionDropDown:
+                    if (_context.Map.Projection.IsEmpty)
+                    {
+                        _context.ChangeProjection();
+                    }
+                    else
+                    {
+                        _context.ShowProjectionProperties();
+                    }
+                    break;
                 case StatusBarKeys.ProjectionProperties:
                     _context.ShowProjectionProperties();
                     break;
@@ -204,7 +214,7 @@ namespace MW5.Menu
         private void MapProjectionChanged(object sender, EventArgs e)
         {
             var item = _context.StatusBar.FindItem(StatusBarKeys.ProjectionDropDown, Identity);
-            var p = _context.Map.GeoProjection;
+            var p = _context.Map.Projection;
             item.Text = !p.IsEmpty ? p.Name : "Not defined";
         }
     }

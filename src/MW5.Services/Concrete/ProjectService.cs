@@ -59,7 +59,7 @@ namespace MW5.Services.Concrete
         {
             get
             {
-                if (_context.Map.GeoProjection.IsEmpty && _context.Map.Layers.Count == 0)
+                if (_context.Map.Projection.IsEmpty && _context.Map.Layers.Count == 0)
                 {
                     return ProjectState.Empty;
                 }

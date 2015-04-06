@@ -63,7 +63,7 @@ namespace MW5.Projections.Helpers
                 }
             }
 
-            context.Map.GeoProjection = projection;
+            context.Map.Projection = projection;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace MW5.Projections.Helpers
         /// </summary>
         public static void ShowProjectionProperties(this IAppContext context)
         {
-            var cs = context.Projections.GetCoordinateSystem(context.Map.GeoProjection, ProjectionSearchType.UseDialects);
+            var cs = context.Projections.GetCoordinateSystem(context.Map.Projection, ProjectionSearchType.UseDialects);
             if (cs != null)
             {
                 using (var form = new ProjectionPropertiesForm(cs, context.Projections))
@@ -81,7 +81,7 @@ namespace MW5.Projections.Helpers
             }
             else
             {
-                using (var form = new ProjectionPropertiesForm(context.Map.GeoProjection))
+                using (var form = new ProjectionPropertiesForm(context.Map.Projection))
                 {
                     context.View.ShowChildView(form);
                 }

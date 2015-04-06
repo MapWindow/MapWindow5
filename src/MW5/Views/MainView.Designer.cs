@@ -314,7 +314,7 @@ namespace MW5.Views
             envelope3.Tag = "";
             this._mapControl1.Extents = envelope3;
             spatialReference3.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference3;
+            this._mapControl1.Projection = spatialReference3;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -326,7 +326,6 @@ namespace MW5.Views
             this._mapControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
-            this._mapControl1.Projection = MW5.Api.MapProjection.None;
             this._mapControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
             this._mapControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;

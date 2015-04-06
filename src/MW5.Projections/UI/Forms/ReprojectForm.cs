@@ -137,7 +137,7 @@ namespace MW5.Projections.UI.Forms
                 return;
             }
 
-            if (!projection.IsSame(_context.Map.GeoProjection))
+            if (!projection.IsSame(_context.Map.Projection))
             {
                 MessageService.Current.Info("Chosen projection is different from the project one. The layers can't be added to map.");
                 return;

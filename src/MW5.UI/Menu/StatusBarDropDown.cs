@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
@@ -33,7 +35,7 @@ namespace MW5.UI.Menu
                     return new StatusItemCollection(item2.DropDownItems, _menuIndex, false);
                 }
 
-                var item = _item as ToolStripDropDownButton;
+                var item = _item as ToolStripDropDownItem;
                 if (item != null)
                 {
                     return new StatusItemCollection(item.DropDownItems, _menuIndex, false);
@@ -43,9 +45,9 @@ namespace MW5.UI.Menu
             }
         }
 
-        private ToolStripDropDownButton AsParent
+        private ToolStripDropDownItem AsParent
         {
-            get { return _item as ToolStripDropDownButton; }
+            get { return _item as ToolStripDropDownItem; }
         }
 
         public event EventHandler DropDownOpening
@@ -97,6 +99,31 @@ namespace MW5.UI.Menu
         {
             base.DetachItemListeners();
             EventHelper.RemoveEventHandler(_item, "Popup");
+            EventHelper.RemoveEventHandler(_item, "DropDownItemClicked");
+            EventHelper.RemoveEventHandler(_item, "Click");
+        }
+
+        public override event EventHandler<MenuItemEventArgs> ItemClicked
+        {
+            add
+            {
+                var button = _item as StatusStripSplitButton;
+                if (button != null)
+                {
+                    button.ButtonClick += (s, e) =>
+                    {
+                        value(this, new MenuItemEventArgs(Key));
+                    };
+                }
+                else
+                {
+                    _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key));
+                }
+            }
+            remove
+            {
+                
+            }
         }
     }
 }

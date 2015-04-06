@@ -84,7 +84,7 @@ namespace MW5.Projections.UI.Forms
             envelope1.Tag = "";
             this.projectionMap1.Extents = envelope1;
             spatialReference1.Tag = "";
-            this.projectionMap1.GeoProjection = spatialReference1;
+            this.projectionMap1.Projection = spatialReference1;
             this.projectionMap1.GrabProjectionFromData = true;
             this.projectionMap1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this.projectionMap1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -95,7 +95,6 @@ namespace MW5.Projections.UI.Forms
             this.projectionMap1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
             this.projectionMap1.MouseWheelSpeed = 0.5D;
             this.projectionMap1.Name = "projectionMap1";
-            this.projectionMap1.Projection = MW5.Api.MapProjection.None;
             this.projectionMap1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
             this.projectionMap1.ReuseTileBuffer = true;
             this.projectionMap1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;

@@ -58,7 +58,7 @@ namespace MW5.Views
                 }
             }
 
-            _map.GeoProjection = sr;
+            _map.Projection = sr;
             _map.Redraw();
             return true;
         }

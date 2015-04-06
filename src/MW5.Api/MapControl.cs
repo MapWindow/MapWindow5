@@ -342,7 +342,7 @@ namespace MW5.Api
             }
         }
 
-        public MapProjection Projection
+        public MapProjection MapProjection
         {
             get { return (MapProjection) _map.Projection; }
             set { _map.Projection = (tkMapProjection) value; }
@@ -401,7 +401,7 @@ namespace MW5.Api
         }
 
         [Browsable(false)]
-        public ISpatialReference GeoProjection
+        public ISpatialReference Projection
         {
             get { return new SpatialReference(_map.GeoProjection); }
             set { _map.GeoProjection = value.GetInternal(); }

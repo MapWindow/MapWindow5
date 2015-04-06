@@ -15,13 +15,13 @@ namespace MW5.Api.Interfaces
         IVectorLayer SelectedVectorLayer { get; }
         IMuteLegend Legend { get; set; }
         ILegendLayerCollection<ILayer> Layers { get; }
-        MapProjection Projection { get; set; }
+        MapProjection MapProjection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }
         bool ScalebarVisible { get; set; }
         double CurrentScale { get; set; }
         int CurrentZoom { get; set; }
-        ISpatialReference GeoProjection { get; set; }
+        ISpatialReference Projection { get; set; }
         KnownExtents KnownExtents { get; set; }
         float Latitude { get; set; }
         float Longitude { get; set; }

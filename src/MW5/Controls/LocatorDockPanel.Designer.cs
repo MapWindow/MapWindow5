@@ -53,7 +53,7 @@
             envelope1.Tag = "";
             this.mapControl1.Extents = envelope1;
             spatialReference1.Tag = "";
-            this.mapControl1.GeoProjection = spatialReference1;
+            this.mapControl1.Projection = spatialReference1;
             this.mapControl1.GrabProjectionFromData = true;
             this.mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this.mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -64,7 +64,6 @@
             this.mapControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
             this.mapControl1.MouseWheelSpeed = 0.5D;
             this.mapControl1.Name = "mapControl1";
-            this.mapControl1.Projection = MW5.Api.MapProjection.None;
             this.mapControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
             this.mapControl1.ReuseTileBuffer = true;
             this.mapControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;

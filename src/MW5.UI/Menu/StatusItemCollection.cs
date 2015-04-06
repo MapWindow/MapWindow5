@@ -42,7 +42,7 @@ namespace MW5.UI.Menu
                 }
 
                 var item = _items[index];
-                if (item is ToolStripMenuItem || item is StatusStripDropDownButton)
+                if (item is ToolStripMenuItem || item is ToolStripDropDownItem)
                 {
                     return new StatusBarDropDown(item, _menuIndex);
                 }
@@ -82,6 +82,16 @@ namespace MW5.UI.Menu
             return menuItem;
         }
 
+        public IDropDownMenuItem AddSplitButton(string text, string key, PluginIdentity identity)
+        {
+            if (!_topLevel)
+            {
+                return null;
+            }
+
+            return AddDropDownCore(new StatusStripSplitButton(), text, key, null, identity, false);
+        }
+
         protected override IDropDownMenuItem AddDropDown(string text, string key, Bitmap icon, PluginIdentity identity)
         {
             if (!_topLevel)
@@ -89,13 +99,18 @@ namespace MW5.UI.Menu
                 return AddButton(text, key, icon, identity) as IDropDownMenuItem;
             }
 
-            var item = new StatusStripDropDownButton()
-            {
-                Text = text, 
-                Padding = new Padding(ITEM_PADDING),
-                ImageScaling = ToolStripItemImageScaling.SizeToFit
-            };
-            var menuItem = AddItem(item, identity, key, true) as IDropDownMenuItem;
+            return AddDropDownCore(new StatusStripDropDownButton(), text, key, icon, identity, true);
+        }
+
+        private IDropDownMenuItem AddDropDownCore(ToolStripDropDownItem item, string text, string key, 
+            Bitmap icon, PluginIdentity identity, bool label)
+        {
+
+            item.Text = text;
+            item.Padding = new Padding(ITEM_PADDING);
+            item.ImageScaling = ToolStripItemImageScaling.SizeToFit;
+
+            var menuItem = AddItem(item, identity, key, label) as IDropDownMenuItem;
             MenuIcon.AssignIcon(menuItem, icon);
             return menuItem;
         }

@@ -106,7 +106,7 @@ namespace MW5.UI.Menu
 
         public event EventHandler<PropertyChangedEventArgs> ItemChanged;
         
-        public event EventHandler<MenuItemEventArgs> ItemClicked
+        public virtual event EventHandler<MenuItemEventArgs> ItemClicked
         {
             add
             {

@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using MW5.Plugins.Concrete;
-using MW5.Plugins.Interfaces;
 
-namespace MW5.UI.Menu
+namespace MW5.Plugins.Interfaces
 {
     public interface IStatusItemCollection: IMenuItemCollection
     {
         IMenuItem AddProgressBar(string key, PluginIdentity identity);
+        IDropDownMenuItem AddSplitButton(string text, string key, PluginIdentity identity);
     }
 }

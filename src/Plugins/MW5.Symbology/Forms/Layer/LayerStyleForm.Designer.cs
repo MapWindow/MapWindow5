@@ -306,7 +306,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             envelope1.Tag = "";
             this.axMap1.Extents = envelope1;
             spatialReference1.Tag = "";
-            this.axMap1.GeoProjection = spatialReference1;
+            this.axMap1.Projection = spatialReference1;
             this.axMap1.GrabProjectionFromData = true;
             this.axMap1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this.axMap1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -317,7 +317,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.axMap1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            this.axMap1.Projection = MW5.Api.MapProjection.None;
             this.axMap1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
             this.axMap1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
