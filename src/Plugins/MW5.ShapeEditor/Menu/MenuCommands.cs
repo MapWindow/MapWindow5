@@ -19,6 +19,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
         {
             return new List<MenuCommand>()
             {
+                new MenuCommand("Create Layer", MenuKeys.CreateLayer, Resources.icon_layer_create,
+                "Creates ESRI Shapefile layer of any supported geometry type."),
+
                 new MenuCommand("Edit layer", MenuKeys.LayerEdit, Resources.icon_layer_edit),
                 new MenuCommand("Add geometry", MenuKeys.GeometryCreate, Resources.icon_geometry_create),
                 new MenuCommand("Vertex editor", MenuKeys.VertexEditor, Resources.icon_vertex_editor),

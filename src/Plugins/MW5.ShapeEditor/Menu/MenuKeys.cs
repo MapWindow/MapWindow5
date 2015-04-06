@@ -2,6 +2,7 @@
 {
     internal static class MenuKeys
     {
+        public const string CreateLayer = "se_CreateLayer";
         public const string LayerEdit = "se_LayerEdit";
         public const string LayerSave = "se_LayerSave";
         public const string GeometryCreate = "se_GeometryCreate";

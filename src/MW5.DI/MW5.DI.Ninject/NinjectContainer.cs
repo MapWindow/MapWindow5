@@ -33,6 +33,12 @@ namespace MW5.DI.Ninject
             return this;
         }
 
+        public IApplicationContainer RegisterService<TService>() where TService : class
+        {
+            _kernel.Bind<TService>().ToSelf();
+            return this;
+        }
+
         public IApplicationContainer RegisterService<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -49,6 +55,12 @@ namespace MW5.DI.Ninject
             }
 
             return _kernel.Get<TService>();
+        }
+
+        public IApplicationContainer RegisterSingleton<TService>() where TService : class
+        {
+            _kernel.Bind<TService>().ToSelf().InSingletonScope();
+            return this;
         }
 
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 

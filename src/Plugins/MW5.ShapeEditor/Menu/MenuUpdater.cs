@@ -8,8 +8,8 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Properties;
+using MW5.Plugins.ShapeEditor.Services;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.ShapeEditor.Menu
@@ -60,6 +60,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
             {
                 item.Enabled = false;
             }
+
+            FindToolbarItem(MenuKeys.CreateLayer).Enabled = true;
 
             IFeatureSet fs = null;
             var layer = _context.Map.Layers.Current;

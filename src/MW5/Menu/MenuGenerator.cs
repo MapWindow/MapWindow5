@@ -120,7 +120,6 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.AddVectorLayer]);
             items.AddButton(_commands[MenuKeys.AddRasterLayer]);
             items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
-            items.AddButton(_commands[MenuKeys.CreateLayer], true);
             items.AddButton(_commands[MenuKeys.RemoveLayer]);
             items.AddButton(_commands[MenuKeys.Settings], true);
             

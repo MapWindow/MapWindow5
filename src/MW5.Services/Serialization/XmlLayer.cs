@@ -23,11 +23,8 @@ namespace MW5.Services.Serialization
             LayerType = layer.LayerType;
         }
 
-        public void RestoreLayer(ILayerCollection<ILegendLayer> layers)
+        public void RestoreLayer(ILegendLayer layer)
         {
-            var source = LayerSourceHelper.Open(Filename, LayerType);
-            int handle = layers.Add(source);
-            var layer = layers.ItemByHandle(handle);
             layer.Deserialize(Layer.OuterXml);
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;

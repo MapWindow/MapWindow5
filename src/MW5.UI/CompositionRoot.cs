@@ -15,7 +15,7 @@ namespace MW5.UI
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterService<IStyleService, SyncfusionStyleService>()
-            .RegisterSingleton<ControlStyleSettings, ControlStyleSettings>();
+            .RegisterSingleton<ControlStyleSettings>();
         }
     }
 }

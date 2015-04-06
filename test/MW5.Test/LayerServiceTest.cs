@@ -67,7 +67,7 @@ namespace MW5.Test
             var fileService = new Mock<IFileDialogService>();
             fileService.Setup(s => s.OpenFiles(It.Is<DataSourceType>(t => t == DataSourceType.Vector), out filenames)).Returns(true);
 
-            var layerService = new LayerService(_context.Object, fileService.Object, _messageService.Object, _broadcaster.Object);
+            var layerService = new LayerService(_context.Object, fileService.Object, _broadcaster.Object);
             layerService.AddLayer(DataSourceType.Vector);
 
             _messageService.Verify(s => s.Warn(It.IsAny<string>()), Times.Never);

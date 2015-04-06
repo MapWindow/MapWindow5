@@ -10,17 +10,23 @@ namespace MW5.Plugins.Mvp
     public interface IApplicationContainer
     {
         /// <summary>
+        /// Registeres particular concrete service with transient lifetime.
+        /// </summary>
+        IApplicationContainer RegisterService<TService>()
+            where TService : class;
+
+        /// <summary>
+        /// Registeres particular concrete service with singleton lifetime.
+        /// </summary>
+        IApplicationContainer RegisterSingleton<TService>()
+            where TService : class;
+        
+        /// <summary>
         /// Bounds an interface to particular implementation. Lifetime is transient, i.e. each time a new instance will be injected.
         /// </summary>
         IApplicationContainer RegisterService<TService, TImplementation>()
             where TService: class
             where TImplementation : class, TService;
-
-        /// <summary>
-        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
-        /// </summary>
-        TService GetInstance<TService>()
-            where TService : class;
 
         /// <summary>
         /// Bounds an interface to particular implementation. Lifetime is singleton (aka container controlled), 
@@ -41,6 +47,12 @@ namespace MW5.Plugins.Mvp
         /// instance will be used on all subsequent injections
         /// </summary>
         IApplicationContainer RegisterInstance<TService>(object instance)
+            where TService : class;
+
+        /// <summary>
+        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// </summary>
+        TService GetInstance<TService>()
             where TService : class;
 
         /// <summary>

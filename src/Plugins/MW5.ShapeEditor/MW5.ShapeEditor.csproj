@@ -63,12 +63,14 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
-    <Compile Include="Abstract\IGeoprocessingService.cs" />
+    <Compile Include="Services\IGeoprocessingService.cs" />
+    <Compile Include="Services\ILayerEditingService.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />
-    <Compile Include="Helpers\GeoprocessingService.cs" />
+    <Compile Include="Services\GeoprocessingService.cs" />
+    <Compile Include="Services\LayerEditingService.cs" />
     <Compile Include="Helpers\StringBuilderHelper.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />

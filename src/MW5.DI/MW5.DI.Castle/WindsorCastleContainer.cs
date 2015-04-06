@@ -36,6 +36,12 @@ namespace MW5.DI.Castle
             return this;
         }
 
+        public IApplicationContainer RegisterService<TService>() where TService : class
+        {
+            _container.Register(Component.For<TService>().LifestyleTransient());
+            return this;
+        }
+
         public IApplicationContainer RegisterService<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -57,6 +63,12 @@ namespace MW5.DI.Castle
             where TImplementation : class, TService
         {
             _container.Register(Component.For<TService>().ImplementedBy<TImplementation>().LifestyleSingleton());
+            return this;
+        }
+
+        public IApplicationContainer RegisterSingleton<TService>() where TService : class
+        {
+            _container.Register(Component.For<TService>().LifestyleSingleton());
             return this;
         }
 

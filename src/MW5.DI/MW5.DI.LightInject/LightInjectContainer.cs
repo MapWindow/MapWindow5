@@ -36,6 +36,12 @@ namespace MW5.DI.LightInject
             return this;
         }
 
+        public IApplicationContainer RegisterService<TService>() where TService : class
+        {
+            _container.Register<TService>();
+            return this;
+        }
+
         public IApplicationContainer RegisterService<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -51,6 +57,12 @@ namespace MW5.DI.LightInject
                 _container.Register<TService>();
             }
             return _container.GetInstance<TService>();
+        }
+
+        public IApplicationContainer RegisterSingleton<TService>() where TService : class
+        {
+            _container.Register<TService>(new PerContainerLifetime());
+            return this;
         }
 
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 

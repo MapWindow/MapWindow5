@@ -90,6 +90,8 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
+    <Compile Include="Concrete\ProjectLoader.cs" />
+    <Compile Include="Serialization\IProjectLoader.cs" />
     <Compile Include="Serialization\Utility\ImageSerializationService.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />

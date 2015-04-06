@@ -5,10 +5,10 @@
         bool AddLayer(DataSourceType layerType);
         bool RemoveSelectedLayer();
         bool AddLayersFromFilename(string filename);
-        void ToggleVectorLayerEditing();
-        bool SaveLayerChanges(int layerHandle);
-        void CreateLayer();
         void ZoomToSelected();
         void ClearSelection();
+        int LastLayerHandle { get; }
+        void BeginBatch();
+        void EndBatch();
     }
 }

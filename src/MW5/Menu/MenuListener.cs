@@ -62,9 +62,6 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
-                case MenuKeys.CreateLayer:
-                    _layerService.CreateLayer();
-                    break;
                 case MenuKeys.AddLayer:
                     _layerService.AddLayer(DataSourceType.All);
                     break;

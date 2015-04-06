@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Operations;
 
-namespace MW5.Plugins.ShapeEditor.Helpers
+namespace MW5.Plugins.ShapeEditor.Services
 {
     public class GeoprocessingService : IGeoprocessingService
     {

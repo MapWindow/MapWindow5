@@ -595,9 +595,6 @@ namespace MW5.Plugins.Symbology.Controls
                 _locked = false;
             }
 
-            // drawing the buffer
-            //_backBuffer.Save("d:\\temp.png", ImageFormat.Png);
-            
             gResult.DrawImage(_backBuffer, 0, 0);
 
             if (_draggingIsPerformed)

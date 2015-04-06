@@ -7,18 +7,18 @@ using MW5.Api;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Plugins.ShapeEditor.Abstract;
 using MW5.Plugins.ShapeEditor.Helpers;
+using MW5.Plugins.ShapeEditor.Services;
 
 namespace MW5.Plugins.ShapeEditor.Menu
 {
     internal class MenuListener
     {
-        private readonly ILayerService _layerService;
+        private readonly ILayerEditingService _layerService;
         private readonly IGeoprocessingService _geoprocessingService;
         private readonly IAppContext _context;
 
-        public MenuListener(IAppContext context, ShapeEditor plugin, ILayerService layerService, 
+        public MenuListener(IAppContext context, ShapeEditor plugin, ILayerEditingService layerService, 
                 IGeoprocessingService geoprocessingService)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -48,6 +48,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.CreateLayer:
+                    _layerService.CreateLayer();
+                    break;
                 case MenuKeys.LayerEdit:
                     _layerService.ToggleVectorLayerEditing();
                     break;

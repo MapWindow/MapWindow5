@@ -14,26 +14,30 @@ namespace MW5.Services.Concrete
 {
     public class ProjectService: IProjectService, IProject
     {
-        private const string PROJECT_FILTER = "*.mwproj|*.mwproj";
+        private const string ProjectFilter = "*.mwproj|*.mwproj";
 
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileService;
         private readonly IMessageService _messageService;
         private readonly IBroadcasterService _broadcaster;
+        private readonly IProjectLoader _projectLoader;
         private string _filename = string.Empty;
         private bool _modified;
 
-        public ProjectService(IAppContext context, IFileDialogService fileService, IMessageService messageService, IBroadcasterService broadcaster)
+        public ProjectService(IAppContext context, IFileDialogService fileService, 
+        IMessageService messageService, IBroadcasterService broadcaster, IProjectLoader projectLoader)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileService == null) throw new ArgumentNullException("fileService");
             if (messageService == null) throw new ArgumentNullException("messageService");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
+            if (projectLoader == null) throw new ArgumentNullException("projectLoader");
 
             _context = context;
             _fileService = fileService;
             _messageService = messageService;
             _broadcaster = broadcaster;
+            _projectLoader = projectLoader;
         }
 
         public bool IsEmpty
@@ -152,7 +156,7 @@ namespace MW5.Services.Concrete
             bool newProject = state == ProjectState.NotSaved || state == ProjectState.Empty;
             if (newProject)
             {
-                if (!_fileService.SaveFile(PROJECT_FILTER, ref filename))
+                if (!_fileService.SaveFile(ProjectFilter, ref filename))
                 {
                     return false;
                 }
@@ -170,7 +174,7 @@ namespace MW5.Services.Concrete
         public void SaveAs()
         {
             string filename = _filename;
-            if (!_fileService.SaveFile(PROJECT_FILTER, ref filename))
+            if (!_fileService.SaveFile(ProjectFilter, ref filename))
             {
                 return;
             }
@@ -203,7 +207,7 @@ namespace MW5.Services.Concrete
         public bool Open()
         {
             string filename;
-            if (_fileService.Open(PROJECT_FILTER, out filename))
+            if (_fileService.Open(ProjectFilter, out filename))
             {
                 if (!TryClose())
                 {
@@ -235,7 +239,8 @@ namespace MW5.Services.Concrete
             {
                 string state = reader.ReadToEnd();
                 var project = state.Deserialize<XmlProject>();
-                project.RestoreState(_context as ISerializableContext);
+
+                _projectLoader.Restore(project);
                 _filename = filename;
 
                 if (!silent)

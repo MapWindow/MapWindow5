@@ -11,7 +11,7 @@ namespace MW5.DI.Unity
 {
     public class UnityApplicationContainer: IApplicationContainer
     {
-        private UnityContainer _container = new UnityContainer();
+        private readonly UnityContainer _container = new UnityContainer();
            
         public IApplicationContainer RegisterView<TView, TImplementation>() 
              where TView : class, IView where TImplementation : class, TView
@@ -33,6 +33,12 @@ namespace MW5.DI.Unity
             return this;
         }
 
+        public IApplicationContainer RegisterService<TService>() where TService : class
+        {
+            _container.RegisterType<TService>();
+            return this;
+        }
+
         public IApplicationContainer RegisterService<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService
@@ -49,6 +55,12 @@ namespace MW5.DI.Unity
             }
 
             return _container.Resolve<TService>();
+        }
+
+        public IApplicationContainer RegisterSingleton<TService>() where TService : class
+        {
+            _container.RegisterType<TService>(new ContainerControlledLifetimeManager());
+            return this;
         }
 
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 

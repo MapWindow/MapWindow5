@@ -17,9 +17,9 @@ namespace MW5.Plugins.TableEditor
     {
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterSingleton<TableEditorPresenter, TableEditorPresenter>()
-                .RegisterSingleton<RowManager, RowManager>()
-                .RegisterSingleton<AppContextWrapper, AppContextWrapper>()
+            container.RegisterSingleton<TableEditorPresenter>()
+                .RegisterSingleton<RowManager>()
+                .RegisterSingleton<AppContextWrapper>()
                 .RegisterService<ICalculateFieldView, CalculateFieldView>()
                 .RegisterService<ITableEditorView, TableEditorView>()
                 .RegisterService<IDeleteFieldsView, DeleteFieldsView>()

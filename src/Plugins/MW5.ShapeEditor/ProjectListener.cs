@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Plugins.ShapeEditor.Services;
 
 namespace MW5.Plugins.ShapeEditor
 {
     public class ProjectListener
     {
         private readonly IAppContext _context;
-        private readonly ILayerService _layerService;
+        private readonly ILayerEditingService _layerService;
 
-        public ProjectListener(IAppContext context, ShapeEditor plugin)
+        public ProjectListener(IAppContext context, ShapeEditor plugin, ILayerEditingService layerService)
         {
-            _context = context;
-            _layerService = context.Container.Resolve<ILayerService>();
-
             if (context == null) throw new ArgumentNullException("context");
-            if (_layerService == null) throw new ArgumentNullException("layerService");
+            if (layerService == null) throw new ArgumentNullException("layerService");
+
+            _context = context;
+            _layerService = layerService;
             
             plugin.ProjectClosing += plugin_ProjectClosing;
             plugin.BeforeRemoveLayer += plugin_BeforeRemoveLayer;

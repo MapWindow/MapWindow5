@@ -52,9 +52,6 @@ namespace MW5.Menu
                 "Quits the application"),
                 
                 // file toolbar
-                new MenuCommand("Create Layer", MenuKeys.CreateLayer, Resources.icon_layer_create,
-                "Creates ESRI Shapefile layer of any supported geometry type."),
-
                 new MenuCommand("Remove Layer", MenuKeys.RemoveLayer, Resources.icon_layer_remove,
                 "Removes the layer currently selected in the legend."),
 
