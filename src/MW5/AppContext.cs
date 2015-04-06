@@ -16,6 +16,7 @@ using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Projections.BL;
+using MW5.Projections.Helpers;
 using MW5.Services;
 using MW5.Services.Serialization;
 using MW5.UI;

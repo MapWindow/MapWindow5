@@ -40,7 +40,7 @@ namespace MW5.Plugins
     /// <summary>
     /// Defines types of behaviors when a projection for an layer being added is different from project one
     /// </summary>
-    public enum ProjectionMismatchBehavior
+    public enum ProjectionMismatch
     {
         IgnoreMismatch = 0,
         Reproject = 1,
@@ -71,7 +71,7 @@ namespace MW5.Plugins
     /// <summary>
     /// Defines types of behaviors when there is no projection for a layer being added, but the project has one
     /// </summary>
-    public enum ProjectionAbsenceBehavior
+    public enum ProjectionAbsence
     {
         AssignFromProject = 0,
         IgnoreAbsence = 1,

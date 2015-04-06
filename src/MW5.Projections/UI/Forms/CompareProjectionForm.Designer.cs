@@ -1,4 +1,6 @@
-﻿namespace MW5.Projections.UI.Forms
+﻿using Syncfusion.Windows.Forms;
+
+namespace MW5.Projections.UI.Forms
 {
     partial class CompareProjectionForm
     {
@@ -28,13 +30,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblLayer = new System.Windows.Forms.Label();
             this.lblProject = new System.Windows.Forms.Label();
             this.txtProject = new System.Windows.Forms.TextBox();
             this.txtLayer = new System.Windows.Forms.TextBox();
-            this.btnLayer = new System.Windows.Forms.Button();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnProject = new System.Windows.Forms.Button();
+            this.btnLayer = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnProject = new Syncfusion.Windows.Forms.ButtonAdv();
             this.chkWkt = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
@@ -72,16 +75,20 @@
             // 
             // btnLayer
             // 
-            this.btnLayer.Location = new System.Drawing.Point(363, 137);
+            this.btnLayer.BeforeTouchSize = new System.Drawing.Size(66, 23);
+            this.btnLayer.IsBackStageButton = false;
+            this.btnLayer.Location = new System.Drawing.Point(386, 135);
             this.btnLayer.Name = "btnLayer";
-            this.btnLayer.Size = new System.Drawing.Size(89, 24);
+            this.btnLayer.Size = new System.Drawing.Size(66, 23);
             this.btnLayer.TabIndex = 20;
             this.btnLayer.Text = "Details...";
             this.btnLayer.UseVisualStyleBackColor = true;
             // 
             // btnOk
             // 
+            this.btnOk.BeforeTouchSize = new System.Drawing.Size(89, 26);
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.btnOk.IsBackStageButton = false;
             this.btnOk.Location = new System.Drawing.Point(363, 251);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(89, 26);
@@ -91,9 +98,11 @@
             // 
             // btnProject
             // 
-            this.btnProject.Location = new System.Drawing.Point(363, 10);
+            this.btnProject.BeforeTouchSize = new System.Drawing.Size(66, 23);
+            this.btnProject.IsBackStageButton = false;
+            this.btnProject.Location = new System.Drawing.Point(386, 11);
             this.btnProject.Name = "btnProject";
-            this.btnProject.Size = new System.Drawing.Size(89, 24);
+            this.btnProject.Size = new System.Drawing.Size(66, 23);
             this.btnProject.TabIndex = 22;
             this.btnProject.Text = "Details...";
             this.btnProject.UseVisualStyleBackColor = true;
@@ -109,7 +118,7 @@
             this.chkWkt.UseVisualStyleBackColor = true;
             this.chkWkt.Visible = false;
             // 
-            // frmProjectionCompare
+            // CompareProjectionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -139,9 +148,9 @@
         private System.Windows.Forms.Label lblProject;
         private System.Windows.Forms.TextBox txtProject;
         private System.Windows.Forms.TextBox txtLayer;
-        private System.Windows.Forms.Button btnLayer;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnProject;
+        private ButtonAdv btnLayer;
+        private ButtonAdv btnOk;
+        private ButtonAdv btnProject;
         private System.Windows.Forms.CheckBox chkWkt;
     }
 }

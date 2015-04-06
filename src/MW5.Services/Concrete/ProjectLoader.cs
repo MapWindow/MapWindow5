@@ -140,7 +140,10 @@ namespace MW5.Services.Concrete
             }
 
             // first group was generated automatically
-            _context.Legend.Groups.Remove(_context.Legend.Groups[0].Handle);
+            if (_context.Legend.Groups.Any())
+            {
+                _context.Legend.Groups.Remove(_context.Legend.Groups[0].Handle);
+            }
         }
     }
 }

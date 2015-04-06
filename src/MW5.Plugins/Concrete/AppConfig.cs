@@ -26,10 +26,10 @@ namespace MW5.Plugins.Concrete
         public string LastProjectPath { get; set; }
 
         [DataMember]
-        public ProjectionMismatchBehavior ProjectionMismatchBehavior { get; set; }
+        public ProjectionMismatch ProjectionMismatch { get; set; }
 
         [DataMember]
-        public ProjectionAbsenceBehavior ProjectionAbsenceBehavior { get; set; }
+        public ProjectionAbsence ProjectionAbsence { get; set; }
 
         [DataMember]
         public bool NeverShowProjectionDialog { get; set; }

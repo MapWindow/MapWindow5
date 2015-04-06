@@ -65,6 +65,8 @@ namespace MW5.Projections.UI.Forms
         public ProjectionPropertiesForm(ISpatialReference projection)
         {
             InitializeComponent();
+
+            _projection = projection;
             _projectionMap1.Visible = false;
             linkLabel1.Visible = false;
             tabControl1.SelectedIndex = _lastTabIndex;

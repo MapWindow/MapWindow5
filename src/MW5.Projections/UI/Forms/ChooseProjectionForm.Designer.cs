@@ -154,7 +154,7 @@ namespace MW5.Projections.UI.Forms
             this.txtSearch.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Cue = null;
-            this.txtSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtSearch.FarImage = global::MW5.Projections.Properties.Resources.img_clear_textbox;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtSearch.Location = new System.Drawing.Point(12, 12);
@@ -171,6 +171,7 @@ namespace MW5.Projections.UI.Forms
             // 
             // chkUpdate
             // 
+            this.chkUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkUpdate.BeforeTouchSize = new System.Drawing.Size(150, 21);
             this.chkUpdate.Checked = true;
             this.chkUpdate.CheckState = System.Windows.Forms.CheckState.Checked;

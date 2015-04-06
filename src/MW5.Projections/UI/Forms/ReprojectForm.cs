@@ -9,6 +9,7 @@ using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections.Services;
+using MW5.Projections.Services.Abstract;
 using MW5.UI;
 using MW5.UI.Controls;
 
@@ -16,15 +17,20 @@ namespace MW5.Projections.UI.Forms
 {
     public partial class ReprojectForm : MapWindowForm
     {
+        private readonly IReprojectingService _reprojectingService;
+
         /// <summary>
         /// Creates a new instance of the frmAssignProjection class
         /// </summary>
-        public ReprojectForm(IAppContext context):
+        public ReprojectForm(IAppContext context, IReprojectingService reprojectingService):
             base(context)
         {
+            _reprojectingService = reprojectingService;
+
             InitializeComponent();
             
             if (context == null) throw new ArgumentException("No reference to MapWindow was passed");
+            if (reprojectingService == null) throw new ArgumentNullException("reprojectingService");
 
             var database = context.Projections;
             if (database == null)
@@ -98,10 +104,10 @@ namespace MW5.Projections.UI.Forms
                 }
                 else
                 {
-                    TestingResult result = ReprojectingService.ReprojectLayer(layer, out layerNew, projection, report);
+                    TestingResult result = _reprojectingService.Reproject(layer, out layerNew, projection, report);
                     if (result == TestingResult.Ok || result == TestingResult.Substituted)
                     {
-                        ProjectionOperaion oper = result == TestingResult.Ok ? ProjectionOperaion.Reprojected : ProjectionOperaion.Substituted;
+                        var oper = result == TestingResult.Ok ? ProjectionOperaion.Reprojected : ProjectionOperaion.Substituted;
                         string newName = layerNew == null ? "" : layerNew.Filename;
                         report.AddFile(layer.Filename, layer.Projection.Name, oper, newName);
                         files.Add(newName == "" ? layer.Filename : newName);
@@ -109,7 +115,7 @@ namespace MW5.Projections.UI.Forms
                     }
                     else
                     {
-                        ProjectionOperaion operation = result == TestingResult.Error ? ProjectionOperaion.FailedToReproject : ProjectionOperaion.Skipped;
+                        var operation = result == TestingResult.Error ? ProjectionOperaion.FailedToReproject : ProjectionOperaion.Skipped;
                         report.AddFile(layer.Filename, layer.Projection.Name, ProjectionOperaion.Skipped, "");
                     }
                 }

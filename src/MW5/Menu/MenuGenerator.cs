@@ -13,8 +13,8 @@ namespace MW5.Menu
 {
     internal class MenuGenerator
     {
-        private const string FILE_TOOLBAR_NANE = "File";
-        private const string MAP_TOOLBAR_NAME = "Map";
+        private const string FileToolbarNane = "File";
+        private const string MapToolbarName = "Map";
         
         private readonly IAppContext _context;
         private readonly IPluginManager _pluginManager;
@@ -30,9 +30,8 @@ namespace MW5.Menu
 
             _context = context;
             _pluginManager = pluginManager;
-            var mainView1 = mainView;
-            _menuManager = mainView1.MenuManager;
-            _dockingManager = mainView1.DockingManager;
+            _menuManager = mainView.MenuManager;
+            _dockingManager = mainView.DockingManager;
             _commands = new MenuCommands(PluginIdentity.Default);
 
             InitToolbars();
@@ -99,11 +98,11 @@ namespace MW5.Menu
 
         private void InitToolbars()
         {
-            var bar = _context.Toolbars.Add(FILE_TOOLBAR_NANE, ToolbarsCollection.FILE_TOOLBAR_KEY, PluginIdentity.Default);
+            var bar = _context.Toolbars.Add(FileToolbarNane, ToolbarsCollection.FILE_TOOLBAR_KEY, PluginIdentity.Default);
             InitFileToolbar(bar);
             bar.DockState = ToolbarDockState.Left;
 
-            bar = _context.Toolbars.Add(MAP_TOOLBAR_NAME, ToolbarsCollection.MAP_TOOLBAR_KEY, PluginIdentity.Default);
+            bar = _context.Toolbars.Add(MapToolbarName, ToolbarsCollection.MAP_TOOLBAR_KEY, PluginIdentity.Default);
             InitMapToolbar(bar);
             bar.DockState = ToolbarDockState.Top;
         }

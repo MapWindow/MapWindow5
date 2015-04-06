@@ -12,6 +12,7 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Projections.Services.Abstract;
 using MW5.Services;
 using MW5.Services.Concrete;
 using NUnit.Framework;
@@ -26,6 +27,7 @@ namespace MW5.Test
 
         private Mock<IAppContext> _context;
         private Mock<IMessageService> _messageService;
+        private Mock<IProjectionMismatchService> _reprojectingService;
         private Mock<IBroadcasterService> _broadcaster;
         private Mock<ILegendLayerCollection<ILayer>> _layerColection;
         private Mock<IMuteLegend> _legend;
@@ -56,6 +58,8 @@ namespace MW5.Test
 
             _messageService = new Mock<IMessageService>();
 
+            _reprojectingService = new Mock<IProjectionMismatchService>();
+
             _broadcaster = new Mock<IBroadcasterService>();
         }
         
@@ -67,7 +71,7 @@ namespace MW5.Test
             var fileService = new Mock<IFileDialogService>();
             fileService.Setup(s => s.OpenFiles(It.Is<DataSourceType>(t => t == DataSourceType.Vector), out filenames)).Returns(true);
 
-            var layerService = new LayerService(_context.Object, fileService.Object, _broadcaster.Object);
+            var layerService = new LayerService(_context.Object, fileService.Object, _broadcaster.Object, _reprojectingService.Object);
             layerService.AddLayer(DataSourceType.Vector);
 
             _messageService.Verify(s => s.Warn(It.IsAny<string>()), Times.Never);

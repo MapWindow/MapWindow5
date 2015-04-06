@@ -119,7 +119,6 @@
       <DependentUpon>LocatorDockPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\LocatorPresenter.cs" />
-    <Compile Include="Helpers\ProjectionHelper.cs" />
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
     <Compile Include="Views\Abstract\IProjectionView.cs" />

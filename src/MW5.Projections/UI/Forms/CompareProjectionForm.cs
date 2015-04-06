@@ -1,5 +1,7 @@
-﻿using MW5.Api.Interfaces;
+﻿using System;
+using MW5.Api.Interfaces;
 using MW5.Plugins;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.UI;
 
@@ -7,24 +9,18 @@ namespace MW5.Projections.UI.Forms
 {
     public partial class CompareProjectionForm : MapWindowForm
     {
-        // project projection
-        private readonly ISpatialReference _projectProj;
-
-        // layer projection
         private readonly ISpatialReference _layerProj;
-
-        private readonly IProjectionDatabase _database;
 
         /// <summary>
         /// Creates a new instance of the frmProjectionCompare class
         /// </summary>
-        public CompareProjectionForm(ISpatialReference projectProj, ISpatialReference layerProj, IProjectionDatabase database)
+        public CompareProjectionForm(IAppContext context, ISpatialReference projectProj, ISpatialReference layerProj)
+            : base(context)
         {
+            if (context == null) throw new ArgumentNullException("context");
             InitializeComponent();
 
-            _projectProj = projectProj;
             _layerProj = layerProj;
-            _database = database;
 
             lblProject.Text = "Project: " + projectProj.Name;
             lblLayer.Text = "Layer: " + layerProj.Name;
@@ -33,7 +29,6 @@ namespace MW5.Projections.UI.Forms
             txtLayer.Text = layerProj.ExportToProj4();
 
             btnLayer.Click += (s, e) => ShowProjectionProperties(_layerProj);
-
             btnProject.Click += (s, e) => ShowProjectionProperties(_layerProj);
         }
 
@@ -43,26 +38,28 @@ namespace MW5.Projections.UI.Forms
         private void ShowProjectionProperties(ISpatialReference proj)
         {
             if (proj == null || proj.IsEmpty)
+            {
                 return;
+            }
 
             ICoordinateSystem cs = null;
-            if (_database != null)
+            if (_context.Projections != null)
             {
-                cs = _database.GetCoordinateSystem(proj, ProjectionSearchType.Enhanced);
+                cs = _context.Projections.GetCoordinateSystem(proj, ProjectionSearchType.Enhanced);
             }
 
             if (cs != null)
             {
-                using (var form = new ProjectionPropertiesForm(cs, _database))
+                using (var form = new ProjectionPropertiesForm(cs, _context.Projections))
                 {
-                    form.ShowDialog(this);
+                    _context.View.ShowChildView(form, this);
                 }
             }
             else
             {
                 using (var form = new ProjectionPropertiesForm(proj))
                 {
-                    form.ShowDialog(this);
+                    _context.View.ShowChildView(form, this);
                 }
             }
         }

@@ -8,6 +8,8 @@ using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Projections.Services;
+using MW5.Projections.Services.Abstract;
+using MW5.Projections.UI.Forms;
 
 namespace MW5.Projections
 {
@@ -15,7 +17,9 @@ namespace MW5.Projections
     {
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterSingleton<IProjectionDatabase, ProjectionDatabase>();
+            container.RegisterSingleton<IProjectionDatabase, ProjectionDatabase>()
+                .RegisterService<IReprojectingService, ReprojectingService>()
+                .RegisterService<IProjectionMismatchService, ProjectionMismatchService>();
         }
     }
 }

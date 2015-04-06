@@ -75,6 +75,10 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\MW5.Projections\MW5.Projections.csproj">
+      <Project>{DD259453-611A-4AD5-878E-385CB2C89DF5}</Project>
+      <Name>MW5.Projections</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\MW5.Services\MW5.Services.csproj">
       <Project>{54bb55da-dbdc-47e5-8dec-de325f35f074}</Project>
       <Name>MW5.Services</Name>

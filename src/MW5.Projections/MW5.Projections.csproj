@@ -32,7 +32,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -82,16 +82,19 @@
     <Compile Include="DL\SqlCeProvider.cs" />
     <Compile Include="DL\SqliteProvider.cs" />
     <Compile Include="DL\SqlProvider.cs" />
+    <Compile Include="Helpers\ProjectionHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\Constants.cs" />
+    <Compile Include="Services\Abstract\IProjectionMismatchService.cs" />
+    <Compile Include="Services\Abstract\IReprojectingService.cs" />
     <Compile Include="Services\ReprojectingService.cs" />
     <Compile Include="BL\CoordinateSystem.cs" />
     <Compile Include="BL\Country.cs" />
-    <Compile Include="Services\MismatchTester.cs" />
+    <Compile Include="Services\ProjectionMismatchService.cs" />
     <Compile Include="Services\ProjectionDatabase.cs" />
     <Compile Include="BL\GeographicCs.cs" />
     <Compile Include="BL\ProjectedCs.cs" />

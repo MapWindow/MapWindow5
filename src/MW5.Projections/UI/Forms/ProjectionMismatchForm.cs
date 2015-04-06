@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.UI;
 
@@ -12,14 +13,9 @@ namespace MW5.Projections.UI.Forms
     /// </summary>
     internal partial class ProjectionMismatchForm : MapWindowForm
     {
-        // project projection
+        private new readonly IAppContext _context;
         private ISpatialReference _projectProj;
-        
-        // layer projection
         private ISpatialReference _layerProj;
-
-        // db to show projection infor
-        private readonly IProjectionDatabase _database;
 
         public ProjectionMismatchForm()
         {
@@ -30,17 +26,18 @@ namespace MW5.Projections.UI.Forms
         /// Creates a new instance of frmProjectionMismatch class. ShowProjectionMismatch and ShowProjectionAbsence
         /// calls are needed to to the job.
         /// </summary>
-        internal ProjectionMismatchForm(IProjectionDatabase database)
+        internal ProjectionMismatchForm(IAppContext context)
         {
-            InitializeComponent();
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
 
-            _database = database;
+            InitializeComponent();
 
             btnLayer.Click += delegate
             {
-                using (var form = new CompareProjectionForm(_projectProj, _layerProj, _database))
+                using (var form = new CompareProjectionForm(_context, _projectProj, _layerProj))
                 {
-                    form.ShowDialog(this);
+                    _context.View.ShowChildView(form, this);
                 }
             };
         }
@@ -51,7 +48,9 @@ namespace MW5.Projections.UI.Forms
         private void listBox1_DoubleClick(object sender, EventArgs e)
         {
             if (listBox1.SelectedIndex >= 0)
+            {
                 DialogResult = DialogResult.OK;
+            }
         }
       
         /// <summary>
@@ -60,15 +59,17 @@ namespace MW5.Projections.UI.Forms
         public int ShowProjectionMismatch(ArrayList list, int selectedIndex, ISpatialReference projectProj, ISpatialReference layerProj, out bool useForOthers, out bool dontShow)
         {
             if (projectProj == null || layerProj == null)
+            {
                 throw new ArgumentException("No projections for mismatch dialog specified");
+            }
 
             _projectProj = projectProj;
             _layerProj = layerProj;
 
             Text = "Projection mismatch";
-            // PM 2013-05-03:
-            // lblMessage.Text = "Layer projection is different from project one." + Environment.NewLine + "Choose the way how to handle it:";
-            lblMessage.Text = "Layer projection is different from project one." + Environment.NewLine + "How do you want to handle this?";
+            lblMessage.Text = "Layer coordinate system is different from the coordinate system of the map." + Environment.NewLine + 
+                              "How do you want to handle this?";
+
             return ShowProjectionDialog(list, selectedIndex, out useForOthers, out dontShow);
         }
 
@@ -78,15 +79,16 @@ namespace MW5.Projections.UI.Forms
         public int ShowProjectionAbsence(ArrayList list, int selectedIndex, ISpatialReference projectProj, out bool useForOthers, out bool dontShow)
         {
             if (projectProj == null)
+            {
                 throw new ArgumentException("No projections for mismatch dialog specified");
+            }
 
             _projectProj = projectProj;
-            
-            // PM 2013-05-03:
-            // Text = "Projection absence";
-            // lblMessage.Text = "Layer projection isn't specified." + Environment.NewLine + "Choose the way how to handle it:";
+
             Text = "Missing projection file";
-            lblMessage.Text = "This layer's projection is unknown" + Environment.NewLine + "How do you want to handle this?";
+            lblMessage.Text = "This layer's projection is unknown" + Environment.NewLine + 
+                               "How do you want to handle this?";
+
             btnLayer.Visible = false;
             return ShowProjectionDialog(list, selectedIndex, out useForOthers, out dontShow);
         }
@@ -108,7 +110,9 @@ namespace MW5.Projections.UI.Forms
                 listBox1.SelectedIndex = 0;
             }
 
-            int index = (ShowDialog() == DialogResult.OK) ? listBox1.SelectedIndex : -1;
+            bool result = _context.View.ShowChildView(this);
+
+            int index = result ? listBox1.SelectedIndex : -1;
             neverShowDialog = chkShowMismatchWarning.Checked;
             useForOthers = chkUseAnswerLater.Checked;
 

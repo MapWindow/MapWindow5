@@ -10,6 +10,7 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Projections.Helpers;
 using MW5.Projections.UI.Forms;
 using MW5.Properties;
 using MW5.UI.Helpers;
@@ -105,22 +106,22 @@ namespace MW5.Menu
                     _context.ChangeProjection();
                     break;
                 case StatusBarKeys.AbsenseAssign:
-                    Config.ProjectionAbsenceBehavior = ProjectionAbsenceBehavior.AssignFromProject;
+                    Config.ProjectionAbsence = ProjectionAbsence.AssignFromProject;
                     break;
                 case StatusBarKeys.AbsenseIgnore:
-                    Config.ProjectionAbsenceBehavior = ProjectionAbsenceBehavior.IgnoreAbsence;
+                    Config.ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
                     break;
                 case StatusBarKeys.AbsenseSkip:
-                    Config.ProjectionAbsenceBehavior = ProjectionAbsenceBehavior.SkipFile;
+                    Config.ProjectionAbsence = ProjectionAbsence.SkipFile;
                     break;
                 case StatusBarKeys.MismatchIgnore:
-                    Config.ProjectionMismatchBehavior = ProjectionMismatchBehavior.IgnoreMismatch;
+                    Config.ProjectionMismatch = ProjectionMismatch.IgnoreMismatch;
                     break;
                 case StatusBarKeys.MismatchReproject:
-                    Config.ProjectionMismatchBehavior = ProjectionMismatchBehavior.Reproject;
+                    Config.ProjectionMismatch = ProjectionMismatch.Reproject;
                     break;
                 case StatusBarKeys.MismatchSkip:
-                    Config.ProjectionMismatchBehavior = ProjectionMismatchBehavior.SkipFile;
+                    Config.ProjectionMismatch = ProjectionMismatch.SkipFile;
                     break;
                 case StatusBarKeys.ProjShowLoadingReport:
                     Config.ProjectionShowLoadingReport = !menuItem.Checked;
@@ -150,15 +151,15 @@ namespace MW5.Menu
 
         private void ProjectionDropDownOpening(object sender, EventArgs e)
         {
-            var behavior = _configService.Config.ProjectionAbsenceBehavior;
-            FindItem(StatusBarKeys.AbsenseAssign).Checked = behavior == ProjectionAbsenceBehavior.AssignFromProject;
-            FindItem(StatusBarKeys.AbsenseIgnore).Checked = behavior == ProjectionAbsenceBehavior.IgnoreAbsence;
-            FindItem(StatusBarKeys.AbsenseSkip).Checked = behavior == ProjectionAbsenceBehavior.SkipFile;
+            var behavior = _configService.Config.ProjectionAbsence;
+            FindItem(StatusBarKeys.AbsenseAssign).Checked = behavior == ProjectionAbsence.AssignFromProject;
+            FindItem(StatusBarKeys.AbsenseIgnore).Checked = behavior == ProjectionAbsence.IgnoreAbsence;
+            FindItem(StatusBarKeys.AbsenseSkip).Checked = behavior == ProjectionAbsence.SkipFile;
 
-            var behavior2 = _configService.Config.ProjectionMismatchBehavior;
-            FindItem(StatusBarKeys.MismatchIgnore).Checked = behavior2 == ProjectionMismatchBehavior.IgnoreMismatch;
-            FindItem(StatusBarKeys.MismatchReproject).Checked = behavior2 == ProjectionMismatchBehavior.Reproject;
-            FindItem(StatusBarKeys.MismatchSkip).Checked = behavior2 == ProjectionMismatchBehavior.SkipFile;
+            var behavior2 = _configService.Config.ProjectionMismatch;
+            FindItem(StatusBarKeys.MismatchIgnore).Checked = behavior2 == ProjectionMismatch.IgnoreMismatch;
+            FindItem(StatusBarKeys.MismatchReproject).Checked = behavior2 == ProjectionMismatch.Reproject;
+            FindItem(StatusBarKeys.MismatchSkip).Checked = behavior2 == ProjectionMismatch.SkipFile;
 
             FindItem(StatusBarKeys.ProjShowLoadingReport).Checked = _configService.Config.ProjectionShowLoadingReport;
             FindItem(StatusBarKeys.ProjShowWarnings).Checked = _configService.Config.ProjectionShowWarnings;
