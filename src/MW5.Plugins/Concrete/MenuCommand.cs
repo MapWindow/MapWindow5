@@ -12,12 +12,18 @@ namespace MW5.Plugins.Concrete
         private readonly string _key;
         private readonly string _text;
         private readonly Bitmap _icon;
+        private readonly string _description;
 
         public MenuCommand(string text, string key, Bitmap icon) : this(text, key, icon, null)
         {
         }
 
-        public MenuCommand(string text, string key, Bitmap icon, PluginIdentity identity)
+        public MenuCommand(string text, string key, Bitmap icon, string description)
+            : this(text, key, icon, description, null)
+        {
+        }
+
+        public MenuCommand(string text, string key, Bitmap icon, string description, PluginIdentity identity)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException("key");
 
@@ -29,7 +35,13 @@ namespace MW5.Plugins.Concrete
             _key = key;
             _text = text;
             _icon = icon;
+            _description = description;
             PluginIdentity = identity;
+        }
+
+        public string Description
+        {
+            get { return _description; }
         }
 
         public string Key

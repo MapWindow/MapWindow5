@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,11 +29,6 @@ namespace MW5.Plugins.Interfaces
         /// Gets/Sets the checked state of the item
         /// </summary>
         bool Checked { get; set; }
-
-        /// <summary>
-        /// Gets/Sets the tool tip text that will pop up for the item when a mouse over event occurs
-        /// </summary>
-        string Tooltip { get; set; }
 
         /// <summary>
         /// Gets/Sets the description of this menu item, used in customization of menu by the user
@@ -85,5 +81,15 @@ namespace MW5.Plugins.Interfaces
         /// a postfix with GUID of plugin.
         /// </summary>
         string UniqueKey { get; }
+
+        /// <summary>
+        /// Occurs when user selects item with mouse or keyboard.
+        /// </summary>
+        event EventHandler ItemSelected;
+
+        /// <summary>
+        /// Occurs when certain properties of the menu item change.
+        /// </summary>
+        event EventHandler<PropertyChangedEventArgs> ItemChanged;
     }
 }

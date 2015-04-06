@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-//using System.Linq;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Interfaces;
@@ -18,6 +19,8 @@ using MW5.Properties;
 using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Views
 {
@@ -26,7 +29,7 @@ namespace MW5.Views
     /// </summary>
     public partial class MainView : MapWindowView, IMainView
     {
-        private const string WINDOW_TITLE = "MapWindow";
+        private const string WindowTitle = "MapWindow";
         private readonly IAppContext _context;
         private bool _rendered = false;
 
@@ -39,6 +42,8 @@ namespace MW5.Views
             statusStripEx1.Items.Clear();
             _legendControl1.Map = _mapControl1;
             _mapControl1.Legend = _legendControl1;
+
+            ToolTipHelper.Init(superToolTip1);
 
             FormClosed += (s, e) => _dockingManager1.SaveLayout();
 
@@ -76,7 +81,6 @@ namespace MW5.Views
 
         private bool FireViewClosing()
         {
-            
             var handler = ViewClosing;
             if (handler != null)
             {
@@ -99,7 +103,7 @@ namespace MW5.Views
 
         public void UpdateView()
         {
-            Text = WINDOW_TITLE;
+            Text = WindowTitle;
             if (!_context.Project.IsEmpty)
             {
                 Text += @" - " + _context.Project.Filename;
@@ -155,7 +159,6 @@ namespace MW5.Views
         {
             get { return this; }
         }
-
 
         #endregion
     }

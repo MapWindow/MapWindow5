@@ -48,6 +48,7 @@ namespace MW5.Views
                 {
                     throw new InvalidCastException("Invalid type of IAppContext instance");
                 }
+
                 appContext.Init(view, projectService, configService);
 
                 view.Map.Initialize();

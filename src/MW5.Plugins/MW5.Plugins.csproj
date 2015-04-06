@@ -90,6 +90,7 @@
     <Compile Include="Concrete\MenuCommand.cs" />
     <Compile Include="Concrete\CommandProviderBase.cs" />
     <Compile Include="Concrete\MenuItemCollectionMetadata.cs" />
+    <Compile Include="Concrete\MenuEventArgs.cs" />
     <Compile Include="Concrete\MenuItemEventArgs.cs" />
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />

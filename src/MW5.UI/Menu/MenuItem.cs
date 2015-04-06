@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -18,12 +19,18 @@ namespace MW5.UI.Menu
             {
                 throw new NullReferenceException("Bar item reference is null.");
             }
+
+            item.ShowTooltip = false;
         }
         
         public string Text
         {
             get { return _item.Text; }
-            set { _item.Text = value; }
+            set
+            {
+                _item.Text = value;
+                FireItemChanged("Text");
+            }
         }
 
         public IMenuIcon Icon
@@ -46,12 +53,6 @@ namespace MW5.UI.Menu
         {
             get { return _item.Checked; }
             set { _item.Checked = value; }
-        }
-
-        public string Tooltip
-        {
-            get { return _item.Tooltip; }
-            set { _item.Tooltip = value; }
         }
 
         public bool Enabled
@@ -87,11 +88,25 @@ namespace MW5.UI.Menu
         internal protected virtual void DetachItemListeners()
         {
             EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
+            EventHelper.RemoveEventHandler(_item, "Selected");
+            EventHelper.RemoveEventHandler(_item, "ItemChanged");
         }
 
         public object GetInternalObject()
         {
             return _item;
+        }
+
+        public event EventHandler ItemSelected
+        {
+            add
+            {
+                _item.Selected += (s, e) => value.Invoke(this, e);
+            }
+            remove
+            {
+                // will be unsubscribed in DetachItemListeners
+            }
         }
     }
 }

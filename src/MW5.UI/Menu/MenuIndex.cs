@@ -1,8 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-//using System.Linq;
+using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.Windows.Forms.Tools.XPMenus;
+using System.Linq;
 
 namespace MW5.UI.Menu
 {
@@ -13,6 +19,8 @@ namespace MW5.UI.Menu
 
         public void AddItem(string key, IMenuItem item)
         {
+            ToolTipHelper.UpdateTooltip(item);
+            item.ItemChanged += (s, e) => ToolTipHelper.UpdateTooltip(item);
             _items.Add(key, item);
         }
 

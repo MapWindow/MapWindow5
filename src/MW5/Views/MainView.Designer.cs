@@ -33,8 +33,8 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.Envelope envelope3 = new MW5.Api.Concrete.Envelope();
+            MW5.Api.Concrete.SpatialReference spatialReference3 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
@@ -68,6 +68,7 @@ namespace MW5.Views
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             this.dockingClientPanel1.SuspendLayout();
@@ -310,10 +311,10 @@ namespace MW5.Views
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
-            this._mapControl1.Extents = envelope1;
-            spatialReference1.Tag = "";
-            this._mapControl1.GeoProjection = spatialReference1;
+            envelope3.Tag = "";
+            this._mapControl1.Extents = envelope3;
+            spatialReference3.Tag = "";
+            this._mapControl1.GeoProjection = spatialReference3;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
             this._mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
@@ -345,6 +346,8 @@ namespace MW5.Views
             // 
             // _mainFrameBarManager1
             // 
+            this._mainFrameBarManager1.AutoLoadToolBarPositions = false;
+            this._mainFrameBarManager1.AutoPersistCustomization = false;
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
             this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.MapWindowView";
@@ -401,6 +404,11 @@ namespace MW5.Views
             this.toolStripMenuItem6.Size = new System.Drawing.Size(181, 22);
             this.toolStripMenuItem6.Text = "Properties";
             // 
+            // superToolTip1
+            // 
+            this.superToolTip1.MetroColor = System.Drawing.Color.White;
+            this.superToolTip1.VisualStyle = Syncfusion.Windows.Forms.Tools.SuperToolTip.Appearance.Metro;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -456,6 +464,7 @@ namespace MW5.Views
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private System.Windows.Forms.ToolStripMenuItem toolProjectionProperties;
+        private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
 
     }
 }

@@ -155,7 +155,7 @@ namespace MW5.UI.Menu
         {
             _menuIndex.RemoveItemsForPlugin(identity);
 
-            MenuItemCollection.RemoveItems(Items, identity);
+            ItemCollectionBase.RemoveItems(Items, identity);
         }
     }
 }

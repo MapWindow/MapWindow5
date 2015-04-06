@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,7 +39,11 @@ namespace MW5.UI.Menu
         public string Description
         {
             get { return Metadata.Description; }
-            set { Metadata.Description = value; }
+            set
+            {
+                Metadata.Description = value;
+                FireItemChanged("Description");
+            }
         }
 
         public string UniqueKey
@@ -47,5 +52,16 @@ namespace MW5.UI.Menu
         }
 
         protected abstract MenuItemMetadata Metadata { get; }
+
+        protected void FireItemChanged(string propertyName)
+        {
+            var handler = ItemChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        public event EventHandler<PropertyChangedEventArgs> ItemChanged;
     }
 }

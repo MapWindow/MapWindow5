@@ -57,6 +57,8 @@ namespace MW5.UI.Menu
 
             var item = AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
 
+            item.Description = command.Description;
+
             if (beginGroup)
             {
                 item.BeginGroup = true;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -105,5 +106,9 @@ namespace MW5.UI.Menu
         {
             return _item;
         }
+
+        public event EventHandler ItemSelected;
+
+        public event EventHandler<PropertyChangedEventArgs> ItemChanged;
     }
 }
