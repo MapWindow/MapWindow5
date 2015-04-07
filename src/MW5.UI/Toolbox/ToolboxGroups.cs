@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.UI.Toolbox
@@ -56,7 +57,30 @@ namespace MW5.UI.Toolbox
                 _nodes.Add(node);
             }
         }
-        
+
+        public void RemoveItemsForPlugin(PluginIdentity identity)
+        {
+            for (int i = _nodes.Count - 1; i >= 0; i--)
+            {
+                var group = _nodes[i].Tag as IToolboxGroup;
+
+                if (group == null)
+                {
+                    continue;
+                }
+
+                if (group.PluginIdentity == identity)
+                {
+                    _nodes.RemoveAt(i);
+                }
+                else
+                {
+                    group.SubGroups.RemoveItemsForPlugin(identity);
+                    group.Tools.RemoveItemsForPlugin(identity);
+                }
+            }
+        }
+
         /// <summary>
         /// Clears all the groups.
         /// </summary>

@@ -142,7 +142,7 @@
     <Compile Include="Menu\Toolbar.cs" />
     <Compile Include="Menu\ToolbarsCollection.cs" />
     <Compile Include="Toolbox\GisTool.cs" />
-    <Compile Include="Toolbox\Toolbox.cs">
+    <Compile Include="Toolbox\GisToolbox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Toolbox\ToolboxGroup.cs" />

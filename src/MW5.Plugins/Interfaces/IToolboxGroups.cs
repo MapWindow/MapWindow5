@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Concrete;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -16,5 +17,6 @@ namespace MW5.Plugins.Interfaces
         bool Contains(IToolboxGroup item);
         void Clear();
         void Add(IToolboxGroup item);
+        void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

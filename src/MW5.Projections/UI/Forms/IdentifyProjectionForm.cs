@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
@@ -23,7 +25,6 @@ namespace MW5.Projections.UI.Forms
         // prevents undesired events on loading        
         private readonly bool _noEvents;
 
-        #region Initilization
         /// <summary>
         /// Creates a new instance of the frmIdentifyProjection class
         /// </summary>
@@ -42,9 +43,8 @@ namespace MW5.Projections.UI.Forms
             _bounds = bounds;
 
             _noEvents = true;
-            cboLayer.DataSource = _context.Legend.Layers.Where(l => !l.HideFromLegend).ToList();
+            cboLayer.DataSource = _context.Legend.Layers.Where(l => !l.HideFromLegend).OfType<ILayer>().ToList();
             cboLayer.DisplayMember = "Name";
-            cboLayer.ValueMember = "Handle";
             _noEvents = false;
 
             if (cboLayer.Items.Count > 0)
@@ -52,42 +52,43 @@ namespace MW5.Projections.UI.Forms
                 cboLayer.SelectedIndex = 0;
                 cboLayer_SelectedIndexChanged(null, null);
             }
+
+            listBox1.DoubleClick += listBox1_MouseDoubleClick;
         }
-        #endregion
 
         #region Interaction
+
         /// <summary>
         /// Displays projection for the layer
         /// </summary>
         private void cboLayer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_noEvents)
+            {
                 return;
+            }
 
-            var layer = _context.Layers[(int)cboLayer.SelectedValue];
+            var layer = cboLayer.SelectedValue as ILayer;
             if (layer != null)
             {
-                textBox1.Text = layer.Projection.ToString();
+                textBox1.Text = layer.Projection.ExportToProj4();
             }
         }
 
         /// <summary>
         /// Shows properties for the selected CS
         /// </summary>
-        private void listBox1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void listBox1_MouseDoubleClick(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem == null)
             {
                 return;
             }
-            
+
             var cs = listBox1.SelectedItem as CoordinateSystem;
             using (var form = new ProjectionPropertiesForm(cs, _context.Projections))
             {
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    // do something
-                }
+                _context.View.ShowChildView(form, this);
             }
         }
         #endregion
@@ -125,13 +126,12 @@ namespace MW5.Projections.UI.Forms
             }
 
             listBox1.Items.Clear();
-                
+
             var cs = db.GetCoordinateSystem(proj, ProjectionSearchType.UseDialects);
             if (cs != null)
             {
-                // easy case - it was found by name
                 listBox1.Items.Add(cs);
-                MessageService.Current.Warn("Projection was identified.");
+                MessageService.Current.Info("Projection was identified.");
                 return;
             }
 

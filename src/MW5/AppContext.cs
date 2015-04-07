@@ -77,8 +77,6 @@ namespace MW5
             mainView.Map.Legend = legend;
             legend.Map = mainView.Map;
 
-            _toolbox = new Toolbox();
-
             _pluginManager = _container.GetSingleton<IPluginManager>();
             _broadcaster = _container.GetSingleton<IBroadcasterService>();
             _container.RegisterInstance<IMuteMap>(mainView.Map);
@@ -88,6 +86,8 @@ namespace MW5
             _project = project;
             _map = mainView.Map;
             _configService = configService;
+
+            InitToolbox();
 
             Legend.Lock();
 
@@ -101,6 +101,18 @@ namespace MW5
             _locator = new LocatorPresenter(_map);
 
             this.InitDocking();
+        }
+
+        private void InitToolbox()
+        {
+            var toolbox = new GisToolbox();
+            toolbox.ToolClicked += toolbox_ToolClicked;
+            _toolbox = toolbox;
+        }
+
+        private void toolbox_ToolClicked(object sender, ToolboxToolEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.ToolboxToolClicked_, _toolbox, e);
         }
 
         internal void InitPlugins(IConfigService configService)
@@ -129,6 +141,7 @@ namespace MW5
             Toolbars.RemoveItemsForPlugin(e.Identity);
             Menu.RemoveItemsForPlugin(e.Identity);
             DockPanels.RemoveItemsForPlugin(e.Identity);
+            Toolbox.RemoveItemsForPlugin(e.Identity);
         }
 
         public IApplicationContainer Container

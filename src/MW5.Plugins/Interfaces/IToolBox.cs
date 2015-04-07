@@ -33,24 +33,14 @@ namespace MW5.Plugins.Interfaces
         IToolboxGroup CreateGroup(string name, string key, PluginIdentity identity);
 
         /// <summary>
-        /// Should be fired when a tool is selected
-        /// </summary>
-        event EventHandler<ToolboxToolEventArgs> ToolSelected;
-
-        /// <summary>
-        /// Should be fired when user wants to execute the tool
-        /// </summary>
-        event EventHandler<ToolboxToolEventArgs> ToolClicked;
-
-        /// <summary>
-        /// Should be fired when a group is selected
-        /// </summary>
-        event EventHandler<ToolboxGroupEventArgs> GroupSelected;
-
-        /// <summary>
         /// Expands all the groups up to the target level
         /// </summary>
         void ExpandGroups(int level);
+
+        /// <summary>
+        /// Removes groups and tools added by specified plugin
+        /// </summary>
+        void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }
 

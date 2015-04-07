@@ -6,13 +6,14 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Properties;
 using Syncfusion.Windows.Forms.Tools;
+using System.Linq;
 
 namespace MW5.UI.Toolbox
 {
     /// <summary>
     /// GisToolbox control
     /// </summary>
-    public class Toolbox : SplitContainerAdv, IToolbox 
+    public class GisToolbox : SplitContainerAdv, IToolbox 
     {
         // icon indices
         internal const int IconFolder = 0;
@@ -31,7 +32,7 @@ namespace MW5.UI.Toolbox
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public Toolbox()
+        public GisToolbox()
         {
             Init();
 
@@ -156,6 +157,15 @@ namespace MW5.UI.Toolbox
         public void ExpandGroups(int level)
         {
             ExpandGroups(Groups, level);
+        }
+
+        /// <summary>
+        /// Removes groups and tools added by specified plugin
+        /// </summary>
+        public void RemoveItemsForPlugin(PluginIdentity identity)
+        {
+            Tools.RemoveItemsForPlugin(identity);
+            Groups.RemoveItemsForPlugin(identity);
         }
 
         /// <summary>

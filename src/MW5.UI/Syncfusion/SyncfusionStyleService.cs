@@ -64,7 +64,7 @@ namespace MW5.UI.Syncfusion
                 if (chk != null)
                 {
                     chk.Style = _settings.CheckboxStyle;
-                    chk.MetroColor = _metroColor;
+                    chk.MetroColor = Color.DimGray;
                 }
 
                 var rad = control as RadioButtonAdv;
@@ -81,7 +81,7 @@ namespace MW5.UI.Syncfusion
                     grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
 #else
                     grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
-                    grid.GridVisualStyles = GridVisualStyles.Metro;
+                    grid.GridVisualStyles = GridVisualStyles.Custom;
 #endif
                 }
 

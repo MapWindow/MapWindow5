@@ -26,7 +26,7 @@ namespace MW5.UI.Toolbox
 
             Description = description;
 
-            _node = new TreeNode {Text = name, ImageIndex = Toolbox.IconFolder};
+            _node = new TreeNode {Text = name, ImageIndex = GisToolbox.IconFolder};
             _node.Expand();
             _node.Tag = this;
         }

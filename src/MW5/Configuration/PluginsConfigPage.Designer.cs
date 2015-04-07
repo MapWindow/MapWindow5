@@ -36,7 +36,7 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gridGroupingControl1
+            // _grid
             // 
             this._grid.BackColor = System.Drawing.SystemColors.Window;
             this._grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -86,6 +86,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this._grid);
             this.Controls.Add(this.panel1);
             this.Name = "PluginsConfigPage";

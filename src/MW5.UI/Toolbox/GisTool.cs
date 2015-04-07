@@ -24,7 +24,7 @@ namespace MW5.UI.Toolbox
 
             _identity = identity;
             _name = name;
-            _node = new TreeNode {Text = _name, ImageIndex = Toolbox.IconTool, Tag = this};
+            _node = new TreeNode {Text = _name, ImageIndex = GisToolbox.IconTool, Tag = this};
 
             Key = key;
         }

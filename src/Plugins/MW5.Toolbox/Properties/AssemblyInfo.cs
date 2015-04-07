@@ -17,13 +17,14 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("MW5.TemplatePlugin")]
-[assembly: AssemblyProduct("Template Plugin")] // Used in the plug-ins menu
-[assembly: AssemblyDescription("This is the template plug-in. Use it to jump-start the development of your own plug-in.")]
+[assembly: AssemblyTitle("MW5.Toolbox")]
+[assembly: AssemblyProduct("GIS Toolbox")] // Used in the plug-ins menu
+[assembly: AssemblyDescription("Provides variety of geoprocessing tools available in GIS Toolbox.")]
 [assembly: AssemblyCompany("MapWindow OSS Team")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("6B16DD0D-D739-4A15-B247-CF30EBCE2875")]
+[assembly: Guid("F383FE43-0754-4EE2-951C-0066E87B28AB")]
 
 [assembly: AssemblyVersion("0.0.1.*")]
 [assembly: AssemblyFileVersion("0.0.1.0")]
+

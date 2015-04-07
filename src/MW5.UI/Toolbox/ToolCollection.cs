@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.UI.Toolbox
@@ -35,6 +36,18 @@ namespace MW5.UI.Toolbox
             }
 
             _nodes.Add(tool.Node);
+        }
+
+        public void RemoveItemsForPlugin(PluginIdentity identity)
+        {
+            for (int i = _nodes.Count - 1; i >= 0 ; i--)
+            {
+                var tool = _nodes[i].Tag as IGisTool;
+                if (tool != null && tool.PluginIdentity == identity)
+                {
+                    _nodes.RemoveAt(i);
+                }
+            }
         }
 
         /// <summary>

@@ -89,6 +89,7 @@ namespace MW5.Plugins.Concrete
         }
 
 #pragma warning disable 67
+        
         #region Plugin events
 
         // backing fields
@@ -96,8 +97,15 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<CancelEventArgs> ProjectClosing_;
         internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
+        internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
 
         // public events
+        public event EventHandler<ToolboxToolEventArgs> ToolboxToolClicked
+        {
+            add { ToolboxToolClicked_ += value; }
+            remove { ToolboxToolClicked_ -= value; }
+        }
+
         public event EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer
         {
             add { BeforeRemoveLayer_ += value; }
