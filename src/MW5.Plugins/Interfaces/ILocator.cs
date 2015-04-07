@@ -11,8 +11,8 @@ namespace MW5.Plugins.Interfaces
 {
     public interface ILocator
     {
-        void RestorePicture(System.Drawing.Image image, double dx, double dy, double xllCenter, double yllCenter);
-        UserControl View { get; }
+        void RestorePicture(Image image, double dx, double dy, double xllCenter, double yllCenter);
+        object GetInternalObject();
         IImageSource Picture { get; }
         void Clear();
         void Update(PreviewExtents updateExtents);

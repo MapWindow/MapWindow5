@@ -219,6 +219,11 @@ namespace MW5.UI.Docking
             get { return Find(DockPanelKeys.Preview); }
         }
 
+        public IDockPanel Toolbox
+        {
+            get { return Find(DockPanelKeys.Toolbox); }
+        }
+
         private IDockPanel GetDockPanel(Control control)
         {
             return new DockPanel(_dockingManager, control, _mainForm);

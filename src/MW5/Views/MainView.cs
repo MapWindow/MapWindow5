@@ -142,5 +142,17 @@ namespace MW5.Views
         }
 
         #endregion
+
+        private bool flag = false;
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                if (flag)
+                    cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
+                return cp;
+            }
+        } 
     }
 }

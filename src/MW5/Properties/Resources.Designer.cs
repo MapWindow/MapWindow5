@@ -73,6 +73,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon ico_tools {
+            get {
+                object obj = ResourceManager.GetObject("ico_tools", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon ico_zoom_to_layer {
             get {
                 object obj = ResourceManager.GetObject("ico_zoom_to_layer", resourceCulture);

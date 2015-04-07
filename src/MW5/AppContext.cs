@@ -23,6 +23,7 @@ using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Menu;
 using MW5.UI.Syncfusion;
+using MW5.UI.Toolbox;
 using Syncfusion.Windows.Forms;
 
 namespace MW5
@@ -48,6 +49,7 @@ namespace MW5
         private IConfigService _configService;
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
+        private IToolbox _toolbox;
 
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
@@ -74,6 +76,8 @@ namespace MW5
             var legend = _legendPresenter.Legend;
             mainView.Map.Legend = legend;
             legend.Map = mainView.Map;
+
+            _toolbox = new Toolbox();
 
             _pluginManager = _container.GetSingleton<IPluginManager>();
             _broadcaster = _container.GetSingleton<IBroadcasterService>();
@@ -195,6 +199,11 @@ namespace MW5
         public ILocator Locator
         {
             get { return _locator; }
+        }
+
+        public IToolbox Toolbox
+        {
+            get { return _toolbox; }
         }
 
         public IPluginManager PluginManager

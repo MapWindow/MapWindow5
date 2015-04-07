@@ -15,7 +15,7 @@ namespace MW5.UI.Menu
 {
     internal class StatusItemCollection : ItemCollectionBase, IStatusItemCollection
     {
-        private const int ITEM_PADDING = 7;
+        private const int ItemPadding = 4;
 
         private readonly ToolStripItemCollection _items;
         private readonly IMenuIndex _menuIndex;
@@ -56,11 +56,11 @@ namespace MW5.UI.Menu
             ToolStripItem item = null;
             if (AlignRight)
             {
-                item = new ToolStripStatusLabel() { Text = text, Padding = new Padding(ITEM_PADDING) };
+                item = new ToolStripStatusLabel() { Text = text, Padding = new Padding(ItemPadding) };
             }
             else
             {
-                item = new StatusStripLabel { Text = text, Padding = new Padding(ITEM_PADDING) };
+                item = new StatusStripLabel { Text = text, Padding = new Padding(ItemPadding) };
             }
 
             var menuItem = AddItem(item, identity, key, true);
@@ -107,7 +107,7 @@ namespace MW5.UI.Menu
         {
 
             item.Text = text;
-            item.Padding = new Padding(ITEM_PADDING);
+            item.Padding = new Padding(ItemPadding);
             item.ImageScaling = ToolStripItemImageScaling.SizeToFit;
 
             var menuItem = AddItem(item, identity, key, label) as IDropDownMenuItem;

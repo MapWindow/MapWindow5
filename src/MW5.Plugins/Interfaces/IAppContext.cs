@@ -24,5 +24,6 @@ namespace MW5.Plugins.Interfaces
         AppConfig Config { get; }       // TODO: extract interface later
         void SetMapProjection(ISpatialReference projection);
         ILocator Locator { get; }
+        IToolbox Toolbox { get; }
     }
 }

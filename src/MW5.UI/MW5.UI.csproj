@@ -136,12 +136,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StatusBarOld.cs" />
     <Compile Include="Syncfusion\IStyleService.cs" />
     <Compile Include="Syncfusion\StyleSettings.cs" />
     <Compile Include="Syncfusion\SyncfusionStyleService.cs" />
     <Compile Include="Menu\Toolbar.cs" />
     <Compile Include="Menu\ToolbarsCollection.cs" />
+    <Compile Include="Toolbox\GisTool.cs" />
+    <Compile Include="Toolbox\Toolbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Toolbox\ToolboxGroup.cs" />
+    <Compile Include="Toolbox\ToolboxGroups.cs" />
+    <Compile Include="Toolbox\ToolCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -176,6 +182,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MapWindow.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_closed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
