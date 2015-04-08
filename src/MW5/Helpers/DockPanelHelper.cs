@@ -31,13 +31,13 @@ namespace MW5.Helpers
                 InitToolbox(context);
 
                 InitRepository(context);
-
-                context.DockPanels.Legend.TabPosition = 0;
             }
             finally
             {
                 panels.Unlock();
             }
+
+            context.DockPanels.Legend.TabPosition = 0;
         }
 
         private static void InitLegend(ISerializableContext context)
