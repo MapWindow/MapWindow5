@@ -10,6 +10,8 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services;
 using MW5.UI;
+using MW5.UI.Repository;
+using MW5.UI.Repository.UI;
 using MW5.Views;
 using MW5.Views.Abstract;
 

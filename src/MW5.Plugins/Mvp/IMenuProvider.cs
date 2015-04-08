@@ -10,7 +10,7 @@ namespace MW5.Plugins.Mvp
 {
     public interface IMenuProvider
     {
-        IEnumerable<ToolStripItemCollection> ToolStrips { get; }
+        IEnumerable<ToolStripItemCollection> Toolstrips { get; }
         IEnumerable<Control> Buttons { get; }
         IEnumerable<IToolbar> Toolbars { get; }
     }

@@ -5,7 +5,7 @@ using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.UI.Syncfusion
+namespace MW5.UI.SyncfusionStyle
 {
     public class SyncfusionStyleService : IStyleService
     {

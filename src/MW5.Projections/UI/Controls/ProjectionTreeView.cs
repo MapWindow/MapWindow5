@@ -153,27 +153,15 @@ namespace MW5.Projections.UI.Controls
         /// </summary>
         private ImageList CreateImageList()
         {
-            ImageList list = new ImageList { ColorDepth = ColorDepth.Depth32Bit };
-
-            Bitmap bmp = new Bitmap(Resources.img_folder, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_folder_open, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_globe, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_map, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_map_add, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_map_delete, new Size(16, 16));
-            list.Images.Add(bmp);
-
-            return list;
+            return ImageListHelper.Create(new[]
+            {
+                Resources.img_folder,
+                Resources.img_folder_open,
+                Resources.img_globe,
+                Resources.img_map,
+                Resources.img_map_add,
+                Resources.img_map_delete
+            }, 16);
         }
         #endregion
 

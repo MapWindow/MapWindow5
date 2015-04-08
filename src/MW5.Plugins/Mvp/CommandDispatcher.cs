@@ -36,7 +36,7 @@ namespace MW5.Plugins.Mvp
                 btn.Click += ItemClick;
             }
 
-            foreach (var items in view.ToolStrips)
+            foreach (var items in view.Toolstrips)
             {
                 InitMenu(items);
             }
@@ -144,8 +144,8 @@ namespace MW5.Plugins.Mvp
                 RunCommandCore(btn.Name);
                 return;
             }
-
-            var toolstripItem = sender as ToolStripMenuItem;
+            
+            var toolstripItem = sender as ToolStripItem;
             if (toolstripItem != null)
             {
                 RunCommandCore(toolstripItem.Name);

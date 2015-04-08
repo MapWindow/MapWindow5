@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
@@ -15,17 +16,17 @@ namespace MW5.Services.Concrete
     internal class ConfigService: IConfigService
     {
         private readonly IPluginManager _manager;
-        private readonly IMessageService _messageService;
-        private static AppConfig _config;
+        private readonly IRepository _repository;
+        private AppConfig _config;
         private List<Guid> _applicationPlugins;
 
-        public ConfigService(IPluginManager manager, IMessageService messageService)
+        public ConfigService(IPluginManager manager, IRepository repository)
         {
             if (manager == null) throw new ArgumentNullException("manager");
-            if (messageService == null) throw new ArgumentNullException("messageService");
-            
+            if (repository == null) throw new ArgumentNullException("repository");
+
             _manager = manager;
-            _messageService = messageService;
+            _repository = repository;
 
             _config = new AppConfig();
         }
@@ -60,7 +61,7 @@ namespace MW5.Services.Concrete
             }
             catch (Exception ex)
             {
-                _messageService.Info("Failed to save app config: " + ex.Message);
+                MessageService.Current.Info("Failed to save app config: " + ex.Message);
             }
             return false;
         }
@@ -88,7 +89,7 @@ namespace MW5.Services.Concrete
             }
             catch(Exception ex)
             {
-                _messageService.Info("Failed to save app settings: " + ex.Message);
+                MessageService.Current.Info("Failed to save app settings: " + ex.Message);
             }
             return false;
         }
@@ -103,6 +104,9 @@ namespace MW5.Services.Concrete
                 Name = p.Identity.Name
             });
             xmlConfig.ApplicationPlugins = plugins.ToList();
+
+            xmlConfig.Repository = new XmlRepository(_repository);
+
             return xmlConfig;
         }
 
@@ -110,6 +114,14 @@ namespace MW5.Services.Concrete
         {
             _config = xmlConfig.Settings;
             _applicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
+
+            if (xmlConfig.Repository != null)
+            {
+                foreach (var item in xmlConfig.Repository.Folders)
+                {
+                    _repository.AddFolderLink(item);
+                }
+            }
         }
     }
 }

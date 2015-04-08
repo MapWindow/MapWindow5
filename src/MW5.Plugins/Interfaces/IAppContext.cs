@@ -22,8 +22,9 @@ namespace MW5.Plugins.Interfaces
         IDockPanelCollection DockPanels { get; }
         IProjectionDatabase Projections { get; }
         AppConfig Config { get; }       // TODO: extract interface later
-        void SetMapProjection(ISpatialReference projection);
         ILocator Locator { get; }
         IToolbox Toolbox { get; }
+        IRepository Repository { get; }        
+        void SetMapProjection(ISpatialReference projection);
     }
 }

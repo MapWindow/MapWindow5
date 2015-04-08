@@ -94,6 +94,7 @@
     <Compile Include="Serialization\IProjectLoader.cs" />
     <Compile Include="Serialization\Utility\ImageSerializationService.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
+    <Compile Include="Serialization\XmlRepository.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializableContext.cs" />

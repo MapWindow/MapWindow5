@@ -22,6 +22,7 @@ namespace MW5.Helpers
             map.GeometryEditor.HighlightVertices = LayerSelectionMode.NoLayer;
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
             map.Identifier.HotTracking = false;
+            map.ResizeBehavior = ResizeBehavior.KeepScale;
         }
     }
 }

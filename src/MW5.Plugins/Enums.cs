@@ -113,4 +113,12 @@ namespace MW5.Plugins
         /// </summary>
         CurrentMapView = 1
     }
+
+    public enum DefaultDockPanel
+    {
+        Legend = 0,
+        Toolbox = 1,
+        Locator = 2,
+        Repository = 3,
+    }
 }

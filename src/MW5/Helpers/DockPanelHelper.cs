@@ -6,6 +6,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Properties;
 using MW5.Services.Helpers;
+using MW5.Services.Serialization;
 using MW5.UI.Docking;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
@@ -16,7 +17,7 @@ namespace MW5.Helpers
     {
         private const int PanelSize = 300;
 
-        public static void InitDocking(this IAppContext context)
+        public static void InitDocking(this ISerializableContext context)
         {
             var panels = context.DockPanels;
             panels.Lock();
@@ -29,6 +30,8 @@ namespace MW5.Helpers
 
                 InitToolbox(context);
 
+                InitRepository(context);
+
                 context.DockPanels.Legend.TabPosition = 0;
             }
             finally
@@ -36,16 +39,10 @@ namespace MW5.Helpers
                 panels.Unlock();
             }
         }
-        
-        private static void InitLegend(IAppContext context)
-        {
-            var legendControl = context.Legend as UserControl;
-            if (legendControl == null)
-            {
-                throw new InvalidCastException("Legend control must inherit from UserControl");
-            }
 
-            legendControl.BorderStyle = BorderStyle.None;
+        private static void InitLegend(ISerializableContext context)
+        {
+            var legendControl = context.GetDockPanelObject(DefaultDockPanel.Legend);
 
             var legend = context.DockPanels.Add(legendControl, DockPanelKeys.Legend, PluginIdentity.Default);
             legend.Caption = "Legend";
@@ -53,40 +50,37 @@ namespace MW5.Helpers
             legend.SetIcon(Resources.ico_legend);
         }
 
-        private static void InitToolbox(IAppContext context)
+        private static void InitToolbox(ISerializableContext context)
         {
-            var panels = context.DockPanels;
+            var toolboControl = context.GetDockPanelObject(DefaultDockPanel.Toolbox);
 
-            var toolboxPanel = context.Toolbox as Control;
-            if (toolboxPanel == null)
-            {
-                throw new InvalidCastException("Toolbox control must inherit from Control");
-            }
-
-            var toolbox = context.DockPanels.Add(toolboxPanel, DockPanelKeys.Toolbox, PluginIdentity.Default);
+            var toolbox = context.DockPanels.Add(toolboControl, DockPanelKeys.Toolbox, PluginIdentity.Default);
             toolbox.Caption = "GIS Toolbox";
-            toolbox.DockTo(panels.Legend, DockPanelState.Tabbed, PanelSize);
+            toolbox.DockTo(context.DockPanels.Legend, DockPanelState.Tabbed, PanelSize);
             toolbox.SetIcon(Resources.ico_tools);
         }
 
-        private static void InitLocator(IAppContext context)
+        private static void InitLocator(ISerializableContext context)
         {
-            var panels = context.DockPanels;
+            var toolboControl = context.GetDockPanelObject(DefaultDockPanel.Locator);
 
-            var locatorPanel = context.Locator.GetInternalObject() as UserControl;
-            if (locatorPanel == null)
-            {
-                throw new InvalidCastException("Locator control must inherit from UserControl");
-            }
-
-            locatorPanel.BorderStyle = BorderStyle.None;
-            var locator = panels.Add(locatorPanel, DockPanelKeys.Preview, PluginIdentity.Default);
+            var locator = context.DockPanels.Add(toolboControl, DockPanelKeys.Preview, PluginIdentity.Default);
             locator.Caption = "Locator";
             locator.SetIcon(Resources.ico_zoom_to_layer);
-            locator.DockTo(panels.Legend, DockPanelState.Bottom, PanelSize);
+            locator.DockTo(context.DockPanels.Legend, DockPanelState.Bottom, PanelSize);
 
             var size = locator.Size;
             locator.Size = new Size(size.Width, 250);
+        }
+
+        private static void InitRepository(ISerializableContext context)
+        {
+            var repoControl = context.GetDockPanelObject(DefaultDockPanel.Repository);
+
+            var legend = context.DockPanels.Add(repoControl, DockPanelKeys.Repository, PluginIdentity.Default);
+            legend.Caption = "Repository";
+            legend.DockTo(null, DockPanelState.Right, PanelSize);
+            legend.SetIcon(Resources.ico_legend);
         }
 
         public static void SaveLayout(this DockingManager dockingManager)

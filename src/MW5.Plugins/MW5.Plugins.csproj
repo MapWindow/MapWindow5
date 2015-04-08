@@ -86,6 +86,7 @@
     <Compile Include="Concrete\DockPanelCancelEventArgs.cs" />
     <Compile Include="Concrete\DockPanelEventArgs.cs" />
     <Compile Include="Concrete\ExtentsEventArgs.cs" />
+    <Compile Include="Concrete\FileEventArgs.cs" />
     <Compile Include="Concrete\LayerCancelEventArgs.cs" />
     <Compile Include="Concrete\MenuCommand.cs" />
     <Compile Include="Concrete\CommandProviderBase.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Concrete\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Concrete\RenderedEventArgs.cs" />
+    <Compile Include="Concrete\DataRepository.cs" />
     <Compile Include="Concrete\ToolboxGroupEventArgs.cs" />
     <Compile Include="Concrete\ToolboxToolEventArgs.cs" />
     <Compile Include="Enums.cs" />
@@ -103,6 +105,8 @@
     <Compile Include="Interfaces\IAppView.cs" />
     <Compile Include="Interfaces\IDockPanel.cs" />
     <Compile Include="Interfaces\IDockPanelCollection.cs" />
+    <Compile Include="Interfaces\IDockPanelProvider.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IToolBox.cs" />
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\ILocator.cs" />

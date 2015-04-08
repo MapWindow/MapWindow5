@@ -16,5 +16,8 @@ namespace MW5.Services.Serialization
 
         [DataMember]
         public List<XmlPlugin> ApplicationPlugins { get; set; }
+
+        [DataMember]
+        public XmlRepository Repository { get; set; }
     }
 }

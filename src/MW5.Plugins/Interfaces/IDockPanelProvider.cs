@@ -5,11 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MW5.UI.Syncfusion
+namespace MW5.Plugins.Interfaces
 {
-    public interface IStyleService
+    public interface IDockPanelProvider
     {
-        void ApplyStyle(Form form);
-        void ApplyStyle(Control control);
+        Control GetInternalObject();
     }
 }

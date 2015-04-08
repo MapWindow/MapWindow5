@@ -11,5 +11,6 @@ namespace MW5.UI.Docking
         public const string Legend = "DockPanelLegend";
         public const string Preview = "DockPanelPreview";
         public const string Toolbox = "DockPanelToolbox";
+        public const string Repository = "DockPanelRepository";
     }
 }

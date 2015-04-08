@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Syncfusion.Windows.Forms;
+﻿using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.UI.Syncfusion
+namespace MW5.UI.SyncfusionStyle
 {
     public class ControlStyleSettings
     {

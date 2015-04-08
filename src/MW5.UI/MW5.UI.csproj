@@ -103,6 +103,7 @@
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\ImageListHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\TreeViewAdvHelper.cs" />
     <Compile Include="MapWindowView.cs">
@@ -136,9 +137,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Syncfusion\IStyleService.cs" />
-    <Compile Include="Syncfusion\StyleSettings.cs" />
-    <Compile Include="Syncfusion\SyncfusionStyleService.cs" />
+    <Compile Include="Repository\Model\FolderItem.cs" />
+    <Compile Include="Repository\Enums.cs" />
+    <Compile Include="Repository\Model\FolderItemMetadata.cs" />
+    <Compile Include="Repository\Model\IFolderItem.cs" />
+    <Compile Include="Repository\RepositoryItemTypeConverter.cs" />
+    <Compile Include="Repository\UI\IRepositoryView.cs" />
+    <Compile Include="Repository\Model\IRepositoryItem.cs" />
+    <Compile Include="Repository\Model\IVectorItem.cs" />
+    <Compile Include="Repository\Model\RepositoryItemCollection.cs" />
+    <Compile Include="Repository\Model\VectorItem.cs" />
+    <Compile Include="Repository\Model\VectorItemMetadata.cs" />
+    <Compile Include="Repository\UI\RepositoryDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repository\UI\RepositoryDockPanel.Designer.cs">
+      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Model\RepositoryItem.cs" />
+    <Compile Include="Repository\RepositoryPresenter.cs" />
+    <Compile Include="Repository\UI\RepositoryTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SyncfusionStyle\IStyleService.cs" />
+    <Compile Include="SyncfusionStyle\StyleSettings.cs" />
+    <Compile Include="SyncfusionStyle\SyncfusionStyleService.cs" />
     <Compile Include="Menu\Toolbar.cs" />
     <Compile Include="Menu\ToolbarsCollection.cs" />
     <Compile Include="Toolbox\GisTool.cs" />
@@ -179,6 +202,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Repository\UI\RepositoryDockPanel.resx">
+      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repository\UI\RepositoryTreeView.resx">
+      <DependentUpon>RepositoryTreeView.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MapWindow.ico" />
@@ -191,6 +220,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_folder_closed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_hard_disk.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -63,6 +63,16 @@ namespace MW5.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_folder_add {
+            get {
+                object obj = ResourceManager.GetObject("img_folder_add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_closed {
             get {
                 object obj = ResourceManager.GetObject("img_folder_closed", resourceCulture);
@@ -76,6 +86,46 @@ namespace MW5.UI.Properties {
         internal static System.Drawing.Bitmap img_folder_open {
             get {
                 object obj = ResourceManager.GetObject("img_folder_open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_hard_disk {
+            get {
+                object obj = ResourceManager.GetObject("img_hard_disk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_line {
+            get {
+                object obj = ResourceManager.GetObject("img_line", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_point {
+            get {
+                object obj = ResourceManager.GetObject("img_point", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_polygon {
+            get {
+                object obj = ResourceManager.GetObject("img_polygon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

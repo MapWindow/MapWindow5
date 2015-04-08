@@ -1,30 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Controls;
 using MW5.Helpers;
-using MW5.Menu;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Projections.BL;
 using MW5.Projections.Helpers;
-using MW5.Services;
 using MW5.Services.Serialization;
 using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Menu;
-using MW5.UI.Syncfusion;
+using MW5.UI.Repository;
+using MW5.UI.SyncfusionStyle;
 using MW5.UI.Toolbox;
-using Syncfusion.Windows.Forms;
 
 namespace MW5
 {
@@ -36,6 +30,7 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
+        
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
@@ -50,6 +45,7 @@ namespace MW5
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
         private IToolbox _toolbox;
+        private RepositoryPresenter _repositoryPresenter;
 
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
@@ -99,6 +95,7 @@ namespace MW5
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
             _locator = new LocatorPresenter(_map);
+            _repositoryPresenter = _container.GetSingleton<RepositoryPresenter>();
 
             this.InitDocking();
         }
@@ -224,9 +221,31 @@ namespace MW5
             get { return _pluginManager; }
         }
 
+        public Control GetDockPanelObject(DefaultDockPanel panel)
+        {
+            switch (panel)
+            {
+                case DefaultDockPanel.Legend:
+                    return _legendPresenter.Legend as Control;
+                case DefaultDockPanel.Toolbox:
+                    return _toolbox as Control;
+                case DefaultDockPanel.Locator:
+                    return _locator.GetInternalObject();
+                case DefaultDockPanel.Repository:
+                    return _repositoryPresenter.GetInternalObject();
+                default:
+                    throw new ArgumentOutOfRangeException("panel");
+            }
+        }
+
         public IBroadcasterService Broadcaster
         {
             get { return _broadcaster; }
+        }
+
+        public IRepository Repository
+        {
+            get { return _repositoryPresenter.Repository; }
         }
 
         public void Close()
@@ -235,7 +254,5 @@ namespace MW5
             // TODO: save toolbar positions
             _mainView.Close();
         }
-
-
     }
 }

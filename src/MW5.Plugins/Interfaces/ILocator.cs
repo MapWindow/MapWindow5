@@ -9,10 +9,9 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface ILocator
+    public interface ILocator: IDockPanelProvider
     {
         void RestorePicture(Image image, double dx, double dy, double xllCenter, double yllCenter);
-        object GetInternalObject();
         IImageSource Picture { get; }
         void Clear();
         void Update(PreviewExtents updateExtents);

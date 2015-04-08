@@ -64,14 +64,9 @@ namespace MW5.Controls
             _view.UpdateLocatorBox(_mainMap.Extents);
         }
 
-        public object GetInternalObject()
+        public Control GetInternalObject()
         {
-            return View;
-        }
-
-        public UserControl View
-        {
-            get { return _view; }
+            return _view;
         }
 
         public IImageSource Picture

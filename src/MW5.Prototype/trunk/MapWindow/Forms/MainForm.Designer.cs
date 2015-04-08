@@ -124,7 +124,6 @@
             treeNodeAdv1.Text = "Layers";
             this.Legend.Nodes.AddRange(new Syncfusion.Windows.Forms.Tools.TreeNodeAdv[] {
             treeNodeAdv1});
-            this.Legend.ScaleFactor = 1F;
             this.Legend.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this.Legend.SelectedNodeForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(57)))), ((int)(((byte)(91)))));
             this.Legend.ShowCheckBoxes = true;
