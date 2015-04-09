@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api.Concrete;
@@ -22,11 +24,16 @@ namespace MW5.Api
         public MapControl()
         {
             InitializeComponent();
-            
+
             _map.SendSelectBoxFinal = true;
             _map.SendMouseDown = true;
             _map.SendMouseUp = true;
             _map.SendMouseMove = true;
+
+            AllowDrop = true;
+
+            DragEnter += MapControl_DragEnter;
+            DragDrop += MapControl_DragDrop;
 
             AttachHandlers();
         }
@@ -117,6 +124,7 @@ namespace MW5.Api
         #endregion
 
         #region IMuteMap Members
+
         [Browsable(false)]
         public IShapesList IdentifiedShapes
         {
@@ -137,8 +145,8 @@ namespace MW5.Api
 
         public AutoToggle AnimationOnZooming
         {
-            get { return (AutoToggle)_map.AnimationOnZooming; }
-            set { _map.AnimationOnZooming = (tkCustomState)value; }
+            get { return (AutoToggle) _map.AnimationOnZooming; }
+            set { _map.AnimationOnZooming = (tkCustomState) value; }
         }
 
         public int ExtentHistory
@@ -161,8 +169,8 @@ namespace MW5.Api
 
         public AutoToggle InertiaOnPanning
         {
-            get { return (AutoToggle)_map.InertiaOnPanning; }
-            set { _map.InertiaOnPanning = (tkCustomState)value; }
+            get { return (AutoToggle) _map.InertiaOnPanning; }
+            set { _map.InertiaOnPanning = (tkCustomState) value; }
         }
 
         public bool IsLocked
@@ -172,14 +180,14 @@ namespace MW5.Api
 
         public ResizeBehavior ResizeBehavior
         {
-            get { return (ResizeBehavior)_map.MapResizeBehavior; }
-            set { _map.MapResizeBehavior = (tkResizeBehavior)value; }
+            get { return (ResizeBehavior) _map.MapResizeBehavior; }
+            set { _map.MapResizeBehavior = (tkResizeBehavior) value; }
         }
 
         public UnitsOfMeasure MapUnits
         {
-            get { return (UnitsOfMeasure)_map.MapUnits; }
-            set { _map.MapUnits = (tkUnitsOfMeasure)value; }
+            get { return (UnitsOfMeasure) _map.MapUnits; }
+            set { _map.MapUnits = (tkUnitsOfMeasure) value; }
         }
 
         [Browsable(false)]
@@ -202,8 +210,8 @@ namespace MW5.Api
 
         public ZoomBehavior ZoomBehavior
         {
-            get { return (ZoomBehavior)_map.ZoomBehavior; }
-            set { _map.ZoomBehavior = (tkZoomBehavior)value; }
+            get { return (ZoomBehavior) _map.ZoomBehavior; }
+            set { _map.ZoomBehavior = (tkZoomBehavior) value; }
         }
 
         public double ZoomPercent
@@ -214,8 +222,8 @@ namespace MW5.Api
 
         public CoordinatesDisplay ShowCoordinates
         {
-            get { return (CoordinatesDisplay)_map.ShowCoordinates; }
-            set { _map.ShowCoordinates = (tkCoordinatesDisplay)value; }
+            get { return (CoordinatesDisplay) _map.ShowCoordinates; }
+            set { _map.ShowCoordinates = (tkCoordinatesDisplay) value; }
         }
 
         public bool ShowRedrawTime
@@ -249,7 +257,7 @@ namespace MW5.Api
 
         public IEnvelope GetKnownExtents(KnownExtents extents)
         {
-            return new Envelope(_map.GetKnownExtents((tkKnownExtents)extents));
+            return new Envelope(_map.GetKnownExtents((tkKnownExtents) extents));
         }
 
         public void Lock()
@@ -265,7 +273,7 @@ namespace MW5.Api
 
         public void Redraw(RedrawType redrawType = RedrawType.All)
         {
-            _map.Redraw2((tkRedrawType)redrawType);
+            _map.Redraw2((tkRedrawType) redrawType);
         }
 
         public void Clear()
@@ -336,10 +344,7 @@ namespace MW5.Api
         [Browsable(false)]
         public ILayerCollection<ILayer> Layers
         {
-            get
-            {
-                return new LayerCollection(this);
-            }
+            get { return new LayerCollection(this); }
         }
 
         public MapProjection MapProjection
@@ -573,9 +578,7 @@ namespace MW5.Api
         // TODO: fix it
         public new string Tag
         {
-            get
-            {
-                return ""; //_map.Tag.ToString(); 
+            get { return ""; //_map.Tag.ToString(); 
             }
             set
             {
@@ -604,6 +607,31 @@ namespace MW5.Api
         public bool LoadMapState(string filename)
         {
             return _map.LoadMapState(filename, null);
+        }
+
+        private void MapControl_DragEnter(object sender, DragEventArgs e)
+        {
+            e.Effect = (GetFilename(e) != null) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
+
+        private void MapControl_DragDrop(object sender, DragEventArgs e)
+        {
+            string filename = GetFilename(e);
+            var handler = FileDropped;
+            if (handler != null)
+            {
+                handler(sender, new FileDroppedEventArgs(filename));
+            }
+        }
+
+        private string GetFilename(DragEventArgs e)
+        {
+            var filename = e.Data.GetData(DataFormats.StringFormat) as string;
+            if (!string.IsNullOrWhiteSpace(filename) && File.Exists(filename))
+            {
+                return filename;
+            }
+            return null;
         }
     }
 }

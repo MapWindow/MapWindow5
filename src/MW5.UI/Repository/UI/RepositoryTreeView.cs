@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -20,8 +21,6 @@ namespace MW5.UI.Repository.UI
     {
         public RepositoryTreeView()
         {
-            ContextMenuStrip = CreateContextMenu();
-
             BeforeExpand += TreeViewBeforeExpand;
 
             AfterSelect += RepositoryTreeView_AfterSelect;
@@ -31,8 +30,10 @@ namespace MW5.UI.Repository.UI
             LoadOnDemand = true;
 
             ToolTipDuration = 3000;
-        }
 
+            ItemDrag += RepositoryTreeView_ItemDrag;
+        }
+        
         public event EventHandler<RepositoryEventArgs> ItemSelected;
 
         protected override IEnumerable<Bitmap> OnCreateImageList()
@@ -45,20 +46,6 @@ namespace MW5.UI.Repository.UI
                 Resources.img_line,
                 Resources.img_polygon,
             };
-        }
-
-        private ContextMenuStripEx CreateContextMenu()
-        {
-            var contextMenu = new ContextMenuStripEx
-            {
-                ImageList = LeftImageList,
-                Style = ContextMenuStripEx.ContextMenuStyle.Metro,
-                RenderMode = ToolStripRenderMode.Professional
-            };
-            
-            contextMenu.Items.Add("Remove link").Name = "mnuRemoveFolder";
-
-            return contextMenu;
         }
 
         public RepositoryItemCollection Items
@@ -144,7 +131,7 @@ namespace MW5.UI.Repository.UI
             tooltip.Header.Text = Path.GetFileName(filename);
 
             string s;
-            using (var ds = GeoSourceManager.Open(filename))
+            using (var ds = GeoSource.Open(filename))
             {
                 if (ds.LayerType == Api.LayerType.Shapefile)
                 {
@@ -174,6 +161,21 @@ namespace MW5.UI.Repository.UI
                         }
                     }
                 }
+            }
+        }
+
+        private void RepositoryTreeView_ItemDrag(object sender, ItemDragEventArgs e)
+        {
+            var arr = e.Item as TreeNodeAdv[];
+            if (arr == null || arr.Length == 0)
+            {
+                return;
+            }
+
+            var vectorItem = RepositoryItem.Get(arr[0]) as IVectorItem;
+            if (vectorItem != null)
+            {
+                DoDragDrop(vectorItem.Filename, DragDropEffects.Copy);
             }
         }
     }

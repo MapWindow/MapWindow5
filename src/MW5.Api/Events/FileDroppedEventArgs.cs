@@ -5,20 +5,11 @@ namespace MW5.Api.Events
 {
     public class FileDroppedEventArgs: EventArgs
     {
-        private readonly _DMapEvents_FileDroppedEvent _args;
-
-        internal FileDroppedEventArgs(_DMapEvents_FileDroppedEvent args)
+        internal FileDroppedEventArgs(string filename)
         {
-            _args = args;
-            if (args == null)
-            {
-                throw new NullReferenceException("Internal reference is null.");
-            }
+            Filename = filename;
         }
 
-        public string Filename
-        {
-            get { return _args.filename; }
-        }
+        public string Filename { get; private set; }
     }
 }

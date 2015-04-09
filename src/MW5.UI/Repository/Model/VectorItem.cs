@@ -39,9 +39,9 @@ namespace MW5.UI.Repository.Model
             }
         }
 
-        public void Load()
+        public IFolderItem Folder
         {
-
+            get { return Get(_node.Parent) as IFolderItem; }
         }
     }
 }

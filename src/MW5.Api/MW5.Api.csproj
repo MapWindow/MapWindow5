@@ -103,6 +103,7 @@
     <Compile Include="Helpers\ImageUtils.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Plugins\LayerSettingsBase.cs" />
     <Compile Include="Concrete\SelectionItem.cs" />
     <Compile Include="Concrete\ShapesList.cs" />
@@ -145,7 +146,7 @@
     <Compile Include="Legend\LegendLayerCollection.cs" />
     <Compile Include="Legend\Win32ApiHelper.cs" />
     <Compile Include="Static\GeoProcessing.cs" />
-    <Compile Include="Static\GeoSourceManager.cs" />
+    <Compile Include="Static\GeoSource.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
     <Compile Include="Concrete\GridColorRamp.cs" />
     <Compile Include="Concrete\GridSource.cs" />

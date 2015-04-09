@@ -39,7 +39,7 @@ namespace MW5.UI.Repository.Model
 
             switch (type)
             {
-                case RepositoryItemType.Folders:
+                case RepositoryItemType.FileSystem:
                     return new RepositoryItem(node);
                 case RepositoryItemType.Folder:
                     return new FolderItem(node);
@@ -118,7 +118,7 @@ namespace MW5.UI.Repository.Model
         {
             switch (type)
             {
-                case RepositoryItemType.Folders:
+                case RepositoryItemType.FileSystem:
                     return 0;
                 case RepositoryItemType.Folder:
                     return 1;

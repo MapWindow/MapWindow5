@@ -246,7 +246,7 @@ namespace MW5.Api.Concrete
 
         public string OpenDialogFilter
         {
-            get { return GeoSourceManager.VectorFilter; }
+            get { return GeoSource.VectorFilter; }
         }
 
         public void Dispose()

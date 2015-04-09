@@ -93,11 +93,11 @@ namespace MW5.Services.Concrete
             switch (layerType)
             {
                 case DataSourceType.All:
-                    return GeoSourceManager.FileFilter;
+                    return GeoSource.FileFilter;
                 case DataSourceType.Raster:
-                    return GeoSourceManager.RasterFilter;
+                    return GeoSource.RasterFilter;
                 case DataSourceType.Vector:
-                    return GeoSourceManager.VectorFilter;
+                    return GeoSource.VectorFilter;
             }
             return "All files|*.*";
         }

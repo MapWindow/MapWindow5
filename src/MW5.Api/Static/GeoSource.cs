@@ -1,15 +1,18 @@
-﻿using MapWinGIS;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Static
 {
-    public static class GeoSourceManager
+    public static class GeoSource
     {
         private static readonly FileManager _manager;
 
-        static GeoSourceManager()
+        static GeoSource()
         {
             _manager = new FileManager();
         }
@@ -157,6 +160,40 @@ namespace MW5.Api.Static
         public static string SupportedGdalFormats
         {
             get { return _manager.SupportedGdalFormats; }
+        }
+
+        public static bool Remove(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return false;
+            }
+
+            if (!File.Exists(filename))
+            {
+                return true;
+            }
+
+            if (filename.ToLower().EndsWith(".shp"))
+            {
+                string[] exts = {".shp", ".shx", ".dbf", ".prj", ".lbl", ".chart", ".mwd", ".mwx", ".shp.mwsymb", ".mwsr"};
+                filename = PathHelper.GetFullPathWithoutExtension(filename);
+                foreach (var ext in exts)
+                {
+                    string path = filename + ext;
+                    try
+                    {
+                        File.Delete(path);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.Print("Failed to remove file: path." + Environment.NewLine + ex.Message);
+                    }
+                }
+                return true;
+            }
+
+            throw new InvalidOperationException("Unsupported file type.");
         }
     }
 }

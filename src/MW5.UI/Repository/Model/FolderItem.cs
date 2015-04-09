@@ -44,6 +44,15 @@ namespace MW5.UI.Repository.Model
             get { return Metadata.Root; }
         }
 
+        public void Refresh()
+        {
+            _node.ExpandedOnce = false;
+
+            _node.Nodes.Clear();
+
+            Expand();
+        }
+
         public void Expand()
         {
             if (_node.ExpandedOnce) return;

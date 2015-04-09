@@ -89,7 +89,7 @@ namespace MW5.Projections.UI.Forms
             int count = 0;  // number of successfully reprojected shapefiles
             foreach (string filename in filenames)
             {
-                var layer = GeoSourceManager.Open(filename) as ILayerSource;
+                var layer = GeoSource.Open(filename) as ILayerSource;
                 if (layer == null)
                 {
                     continue;
@@ -155,7 +155,7 @@ namespace MW5.Projections.UI.Forms
 
                 foreach (string filename in names)
                 {
-                    var ds = GeoSourceManager.Open(filename);
+                    var ds = GeoSource.Open(filename);
                     var layer = LayerSourceHelper.ConvertToLayer(ds);
                     _context.Layers.Add(layer);    
                 }

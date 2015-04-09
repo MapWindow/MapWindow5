@@ -12,5 +12,6 @@ namespace MW5.UI.Repository.Model
         void Expand();
         bool Loaded { get; }
         bool Root { get; }
+        void Refresh();
     }
 }

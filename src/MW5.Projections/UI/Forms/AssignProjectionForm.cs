@@ -91,7 +91,7 @@ namespace MW5.Projections.UI.Forms
 
             foreach (string name in LayersControl1.Filenames)
             {
-                var layer = GeoSourceManager.Open(name) as ILayerSource;
+                var layer = GeoSource.Open(name) as ILayerSource;
                 if (layer == null)
                 {
                     continue;

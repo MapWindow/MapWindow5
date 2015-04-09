@@ -112,11 +112,11 @@ namespace MW5.Services.Concrete
         {
             try
             {
-                var ds = GeoSourceManager.Open(filename);
+                var ds = GeoSource.Open(filename);
 
                 if (ds == null)
                 {
-                    MessageService.Current.Warn(string.Format("Failed to open datasource: {0} \n {1}", filename, GeoSourceManager.LastError));
+                    MessageService.Current.Warn(string.Format("Failed to open datasource: {0} \n {1}", filename, GeoSource.LastError));
                     return false;
                 }
 

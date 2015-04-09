@@ -135,6 +135,8 @@ namespace MW5.Listeners
         private void MapFileDropped(object sender, FileDroppedEventArgs e)
         {
             _layerService.AddLayersFromFilename(e.Filename);
+            int handle = _layerService.LastLayerHandle;
+            _map.ZoomToLayer(handle);
         }
 
         private void MapExtentsChanged(object sender, EventArgs e)

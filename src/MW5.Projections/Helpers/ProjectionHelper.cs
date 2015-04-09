@@ -141,7 +141,7 @@ namespace MW5.Projections.Helpers
                 return false;
             }
 
-            var layerTest = GeoSourceManager.Open(testName) as ILayerSource;
+            var layerTest = GeoSource.Open(testName) as ILayerSource;
             if (layerTest == null)
             {
                 return false;

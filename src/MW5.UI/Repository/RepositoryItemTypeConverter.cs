@@ -14,7 +14,7 @@ namespace MW5.UI.Repository
         {
             switch (value)
             {
-                case RepositoryItemType.Folders:
+                case RepositoryItemType.FileSystem:
                     return "File System";
                 case RepositoryItemType.Folder:
                     return "Folder";

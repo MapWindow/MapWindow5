@@ -177,7 +177,7 @@ namespace MW5.Api
 
         private void MapFileDropped(object sender, _DMapEvents_FileDroppedEvent e)
         {
-            Invoke(sender, FileDropped, new FileDroppedEventArgs(e));
+            Invoke(sender, FileDropped, new FileDroppedEventArgs(e.filename));
         }
 
         private void MapExtentsChanged(object sender, EventArgs e)

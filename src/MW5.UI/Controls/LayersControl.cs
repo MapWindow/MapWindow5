@@ -127,7 +127,7 @@ namespace MW5.UI.Controls
         /// </summary>
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new OpenFileDialog {Filter = GeoSourceManager.VectorFilter, Multiselect = _multiselect})
+            using (OpenFileDialog dlg = new OpenFileDialog {Filter = GeoSource.VectorFilter, Multiselect = _multiselect})
             { 
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

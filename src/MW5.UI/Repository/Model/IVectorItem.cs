@@ -9,5 +9,6 @@ namespace MW5.UI.Repository.Model
     public interface IVectorItem : IRepositoryItem
     {
         string Filename { get; }
+        IFolderItem Folder { get; }
     }
 }

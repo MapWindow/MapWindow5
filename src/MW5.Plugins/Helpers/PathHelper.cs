@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Services;
 
-namespace MW5.Services.Helpers
+namespace MW5.Plugins.Helpers
 {
     public static class PathHelper
     {
