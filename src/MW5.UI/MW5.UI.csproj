@@ -94,6 +94,10 @@
     <Compile Include="Controls\LayersControl.Designer.cs">
       <DependentUpon>LayersControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TreeViewBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\TooltipEventArgs.cs" />
     <Compile Include="Docking\DockHelper.cs" />
     <Compile Include="Docking\DockPanel.cs" />
     <Compile Include="Docking\DockPanelCollection.cs" />
@@ -103,7 +107,6 @@
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\EnumConverter.cs" />
     <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Helpers\ImageListHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\TreeViewAdvHelper.cs" />
     <Compile Include="MapWindowView.cs">
@@ -141,6 +144,7 @@
     <Compile Include="Repository\Enums.cs" />
     <Compile Include="Repository\Model\FolderItemMetadata.cs" />
     <Compile Include="Repository\Model\IFolderItem.cs" />
+    <Compile Include="Repository\RepositoryEventArgs.cs" />
     <Compile Include="Repository\RepositoryItemTypeConverter.cs" />
     <Compile Include="Repository\UI\IRepositoryView.cs" />
     <Compile Include="Repository\Model\IRepositoryItem.cs" />
@@ -207,6 +211,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Repository\UI\RepositoryTreeView.resx">
       <DependentUpon>RepositoryTreeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

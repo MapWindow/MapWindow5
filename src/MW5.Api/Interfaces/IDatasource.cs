@@ -11,5 +11,7 @@ namespace MW5.Api.Interfaces
         void Close();
 
         string OpenDialogFilter { get; }
+
+        LayerType LayerType { get; }
     }
 }

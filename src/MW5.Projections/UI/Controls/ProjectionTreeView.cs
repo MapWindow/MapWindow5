@@ -23,6 +23,7 @@ using MW5.Plugins.Services;
 using MW5.Projections.BL;
 using MW5.Projections.Properties;
 using MW5.Projections.UI.Forms;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
@@ -37,10 +38,8 @@ namespace MW5.Projections.UI.Controls
     /// </summary>
     [ToolboxItem(true)]
     [ToolboxBitmap(typeof(TreeView))]
-    public sealed class ProjectionTreeView : TreeViewAdv
+    public sealed class ProjectionTreeView : TreeViewBase
     {
-        private SuperToolTip _lastTooltip;
-
         #region Declarations
 
         IProjectionDatabase _database;
@@ -74,9 +73,6 @@ namespace MW5.Projections.UI.Controls
         /// </summary>
         public ProjectionTreeView()
         {
-            _lastTooltip = new SuperToolTip();
-
-            LeftImageList = CreateImageList();
             //ThemesEnabled = true;         // to show + -
 
             CreateContextMenu();
@@ -97,9 +93,9 @@ namespace MW5.Projections.UI.Controls
 
             MouseUp += ProjectionTreeView_MouseUp;
             NodeMouseDoubleClick += (s, e) => ShowProjectionProperties();
-            LostFocus += (s, e) => HideTooltip();
             KeyDown += ProjectionTreeView_KeyDown;
             CoordinateSystemPropertiesRequested += ProjectionTreeView_CoordinateSystemPropertiesRequested;
+            PrepareToolTip += ProjectionTreeView_PrepareToolTip;
 
             SetEventHandlers();
         }
@@ -112,13 +108,6 @@ namespace MW5.Projections.UI.Controls
             BeforeCollapse += ProjectionTreeView_BeforeCollapse;
             BeforeExpand += ProjectionTreeView_BeforeExpand;
             AfterSelect += ProjectionTreeView_AfterSelect;
-        }
-
-        private void RemoveEventHandlers()
-        {
-            BeforeCollapse -= ProjectionTreeView_BeforeCollapse;
-            BeforeExpand -= ProjectionTreeView_BeforeExpand;
-            AfterSelect -= ProjectionTreeView_AfterSelect;
         }
 
         private void ProjectionTreeView_CoordinateSystemPropertiesRequested(object sender, CoordinateSystemEventArgs e)
@@ -148,12 +137,9 @@ namespace MW5.Projections.UI.Controls
             }
         }
 
-        /// <summary>
-        /// Creates image list associated with tree view
-        /// </summary>
-        private ImageList CreateImageList()
+        protected override IEnumerable<Bitmap> OnCreateImageList()
         {
-            return ImageListHelper.Create(new[]
+            return new[]
             {
                 Resources.img_folder,
                 Resources.img_folder_open,
@@ -161,8 +147,9 @@ namespace MW5.Projections.UI.Controls
                 Resources.img_map,
                 Resources.img_map_add,
                 Resources.img_map_delete
-            }, 16);
+            };
         }
+
         #endregion
 
         #region Initialization
@@ -248,7 +235,7 @@ namespace MW5.Projections.UI.Controls
                 return;
             }
 
-            HideTooltip();
+            HideToolTip();
 
             SelectedNode = node;
 
@@ -786,11 +773,6 @@ namespace MW5.Projections.UI.Controls
                     break;
                 }
             }
-
-            if (MouseButtons != MouseButtons.Right)
-            {
-                ShowTooltip();
-            }
         }
 
         /// <summary>
@@ -954,7 +936,7 @@ namespace MW5.Projections.UI.Controls
 
         private void ShowProjectionProperties()
         {
-            HideTooltip();
+            HideToolTip();
             FireCoordinateSystemPropertiesRequested(SelectedCoordinateSystem);
         }
 
@@ -1034,37 +1016,19 @@ namespace MW5.Projections.UI.Controls
             return node.GetImageIndex() == Constants.IconGlobe || node.GetImageIndex() == Constants.IconMap;
         }
 
-        private void ShowTooltip()
+        private void ProjectionTreeView_PrepareToolTip(object sender, ToolTipEventArgs e)
         {
-            // TODO: perhaps make a base control with Tooltip support for TreeView
-
-            lock (_lastTooltip)
+            var cs = SelectedCoordinateSystem;
+            if (cs == null)
             {
-                _lastTooltip.Hide();
-                _lastTooltip = new SuperToolTip(this);
-
-                var cs = SelectedCoordinateSystem;
-                if (cs != null)
-                {
-                    var rect = SelectedNode.TextBounds;
-                    var pnt = new Point(rect.X + rect.Width + 20, rect.Y + rect.Height);
-                    pnt = PointToScreen(pnt);
-
-                    var info = new ToolTipInfo();
-                    info.Header.Text = cs.Name;
-                    info.Header.Font = new Font(info.Header.Font, FontStyle.Bold);
-                    info.Body.Text = cs.Scope + Environment.NewLine + cs.Proj4;
-                    info.Footer.Text = "EPSG: " + cs.Code;
-                    _lastTooltip.MaxWidth = 450;
-
-                    _lastTooltip.Show(info, pnt, -1);
-                }
+                e.Cancel = true;
+                return;
             }
-        }
 
-        private void HideTooltip()
-        {
-            _lastTooltip.Hide();
+            var info = e.ToolTip;
+            info.Header.Text = cs.Name;
+            info.Body.Text = cs.Scope + Environment.NewLine + cs.Proj4;
+            info.Footer.Text = "EPSG: " + cs.Code;
         }
     }
 }

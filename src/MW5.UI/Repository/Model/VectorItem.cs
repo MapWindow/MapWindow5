@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
+using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Repository.Model
@@ -13,9 +17,31 @@ namespace MW5.UI.Repository.Model
         {
         }
 
-        public string GetFilename()
+        private VectorItemMetadata Metadata
         {
-            return _node.Tag as string;
+            get
+            {
+                var data = _node.TagObject as VectorItemMetadata;
+                if (data == null)
+                {
+                    throw new InvalidCastException("VectorItemMetadata object must be stored in the tag.");
+                }
+
+                return data;
+            }
+        }
+
+        public string Filename
+        {
+            get
+            {
+                return Metadata.Filename;
+            }
+        }
+
+        public void Load()
+        {
+
         }
     }
 }

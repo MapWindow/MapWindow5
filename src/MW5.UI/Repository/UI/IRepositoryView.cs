@@ -1,4 +1,5 @@
-﻿using MW5.UI.Repository.Model;
+﻿using System;
+using MW5.UI.Repository.Model;
 
 namespace MW5.UI.Repository.UI
 {
@@ -10,5 +11,6 @@ namespace MW5.UI.Repository.UI
         IVectorItem CreateVector(string filename);
         IRepositoryItem GetSpecialItem(RepositoryItemType type);
         IRepositoryItem SelectedItem { get; }
+        event EventHandler<RepositoryEventArgs> ItemSelected;
     }
 }

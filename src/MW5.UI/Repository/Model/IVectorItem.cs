@@ -8,6 +8,6 @@ namespace MW5.UI.Repository.Model
 {
     public interface IVectorItem : IRepositoryItem
     {
-        string GetFilename();
+        string Filename { get; }
     }
 }

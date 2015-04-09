@@ -170,6 +170,11 @@ namespace MW5.Api.Concrete
             get { return GeoSourceManager.VectorFilter; }
         }
 
+        public LayerType LayerType
+        {
+            get { return LayerType.VectorLayer; }
+        }
+
         public void Dispose()
         {
             _datasource.Close();
