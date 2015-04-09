@@ -41,7 +41,9 @@ namespace MW5.UI.Repository.UI
             {
                 Resources.img_hard_disk,
                 Resources.img_folder_open,
-                Resources.img_polygon
+                Resources.img_point,
+                Resources.img_line,
+                Resources.img_polygon,
             };
         }
 
@@ -54,7 +56,7 @@ namespace MW5.UI.Repository.UI
                 RenderMode = ToolStripRenderMode.Professional
             };
             
-            contextMenu.Items.Add("Remove link").Name = "mnuRemoveLink";
+            contextMenu.Items.Add("Remove link").Name = "mnuRemoveFolder";
 
             return contextMenu;
         }

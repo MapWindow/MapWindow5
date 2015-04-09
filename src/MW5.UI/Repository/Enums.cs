@@ -3,7 +3,7 @@
     public enum RepositoryCommand
     {
         AddFolder = 0,
-        RemoveLink = 1,
+        RemoveFolder = 1,
     }
 
     public enum RepositoryItemType

@@ -43,11 +43,16 @@ namespace MW5.UI.Repository
                         Repository.AddFolderLink(path);
                     }
                     break;
-                case RepositoryCommand.RemoveLink:
-                    var item = View.Tree.SelectedItem as IFolderItem;
-                    if (item != null && item.Root)
+                case RepositoryCommand.RemoveFolder:
+                    if (MessageService.Current.Ask(
+                            "Do you want to remove a link to this folder from the repository?" + Environment.NewLine + 
+                            "(The folder will remain intact on the disk.)"))
                     {
-                        Repository.RemoveFolderLink(item.GetPath());
+                        var item = View.Tree.SelectedItem as IFolderItem;
+                        if (item != null && item.Root)
+                        {
+                            Repository.RemoveFolderLink(item.GetPath());
+                        }
                     }
                     break;
             }

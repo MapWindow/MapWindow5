@@ -83,6 +83,16 @@ namespace MW5.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_folder_delete {
+            get {
+                object obj = ResourceManager.GetObject("img_folder_delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_open {
             get {
                 object obj = ResourceManager.GetObject("img_folder_open", resourceCulture);

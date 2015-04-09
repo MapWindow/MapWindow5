@@ -1,5 +1,8 @@
 ﻿using System;
 using System.IO;
+using MW5.Api;
+using MW5.Api.Helpers;
+using MW5.Plugins.Helpers;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -75,6 +78,13 @@ namespace MW5.UI.Repository.Model
             node.TagObject = new VectorItemMetadata(filename);
             node.ExpandedOnce = true;
             node.Text = Path.GetFileName(filename);
+
+            if (filename.ToLower().EndsWith(".shp"))
+            {
+                var type = ShapefileHelper.GetGeometryType(filename);
+                node.LeftImageIndices =new[] { GetVectorIcon(type) };
+            }
+
             return new VectorItem(node);
         }
 
@@ -87,6 +97,23 @@ namespace MW5.UI.Repository.Model
             };
         }
 
+        private static int GetVectorIcon(GeometryType type)
+        {
+            switch (type)
+            {
+                case GeometryType.Point:
+                case GeometryType.MultiPoint:
+                    return 2;
+                case GeometryType.Polyline:
+                    return 3;
+                case GeometryType.Polygon:
+                case GeometryType.None:
+                    return 4;
+            }
+
+            return 4;
+        }
+
         private static int GetIconIndex(RepositoryItemType type)
         {
             switch (type)
@@ -96,7 +123,7 @@ namespace MW5.UI.Repository.Model
                 case RepositoryItemType.Folder:
                     return 1;
                 case RepositoryItemType.Vector:
-                    return 2;
+                    return 4;
                 default:
                     throw new ArgumentOutOfRangeException("type");
             }
