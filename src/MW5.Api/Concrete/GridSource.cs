@@ -266,6 +266,17 @@ namespace MW5.Api.Concrete
             get { return LayerType.Grid; }
         }
 
+        public string ToolTipText
+        {
+            get
+            {
+                // TODO: return more
+                var header = _grid.Header;
+                string s = string.Format("Size: {0}", header.NumberCols, header.NumberRows);
+                return s;
+            }
+        }
+
         public void Dispose()
         {
             _grid.Close();

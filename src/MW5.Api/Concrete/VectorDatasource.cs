@@ -175,6 +175,38 @@ namespace MW5.Api.Concrete
             get { return LayerType.VectorLayer; }
         }
 
+        public string ToolTipText
+        {
+            get
+            {
+                string s = string.Empty;
+                string proj = string.Empty;
+
+                foreach (var source in LayerSourceHelper.GetLayers(this))
+                {
+                    var layer = source as IVectorLayer;
+                    if (layer != null)
+                    {
+                        if (s != string.Empty)
+                        {
+                            s += "\n";
+                        }
+
+                        s += "Layer name: " + layer.Name + Environment.NewLine;
+                        s += "Geometry type: " + layer.GeometryType.EnumToString() +
+                                             Environment.NewLine;
+                        s += "Feature count: " + layer.get_FeatureCount() + Environment.NewLine;
+
+                        proj = layer.Projection.ExportToProj4();
+                    }
+                }
+
+                s += "\n" + proj;                
+
+                return s;
+            }
+        }
+
         public void Dispose()
         {
             _datasource.Close();

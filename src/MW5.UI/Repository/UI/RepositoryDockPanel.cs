@@ -50,14 +50,19 @@ namespace MW5.UI.Repository.UI
 
         private void Init()
         {
-            var folders = Tree.CreateItem(RepositoryItemType.FileSystem);
-            Tree.Items.Add(folders, true);
+            // databases
+            var dbs = Tree.Items.AddItem(RepositoryItemType.Databases);
+            dbs.SubItems.AddItem(RepositoryItemType.PostGis);
+
+            // file system
+            var folders = Tree.Items.AddItem(RepositoryItemType.FileSystem);
             
             foreach (var path in _repository.Folders)
             {
-                var folder = Tree.CreateFolder(path, true);
-                folders.SubItems.Add(folder, true);
+                folders.SubItems.AddFolder(path, true);
             }
+
+            folders.Expand();
         }
 
         public IRepositoryView Tree
@@ -104,8 +109,7 @@ namespace MW5.UI.Repository.UI
         private void RepositoryFolderAdded(object sender, Plugins.Concrete.FolderEventArgs e)
         {
             var item = Tree.GetSpecialItem(RepositoryItemType.FileSystem);
-            var folder = Tree.CreateFolder(e.Path, true);
-            item.SubItems.Add(folder, true);
+            item.SubItems.AddFolder(e.Path, true);
         }
 
         private void ContextMenuStripOpening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -127,23 +131,30 @@ namespace MW5.UI.Repository.UI
                 mnuAddFolder.Visible = true;
             }
 
-            if (item is IVectorItem)
+            var file = item as IFileItem;
+            if (file != null)
             {
+                mnuAddToMap.Text = file.AddedToMap ? "Remove from the map" : "Add to the map";
                 mnuAddToMap.Visible = true;
                 mnuRemoveFile.Visible = true;
                 mnuOpenLocation.Visible = true;
-                toolStripSeparator2.Visible = true;
+                mnuGdalInfo.Visible = true;
+                toolStripSeparator3.Visible = true;
+                toolStripSeparator4.Visible = true;
             }
 
             var folder = item as IFolderItem;
             if (folder != null )
             {
                 mnuOpenLocation.Visible = true;
+                mnuRefresh.Visible = true;
+                mnuAddFolderToMap.Visible = true;
+                toolStripSeparator4.Visible = true;
 
                 if (folder.Root)
                 {
                     mnuRemoveFolder.Visible = true;
-                    toolStripSeparator2.Visible = true;
+                    toolStripSeparator1.Visible = true;
                 }
             }
         }

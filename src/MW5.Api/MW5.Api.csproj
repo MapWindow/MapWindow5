@@ -100,9 +100,12 @@
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Concrete\CustomCursor.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\IEnumConverter.cs" />
     <Compile Include="Helpers\ImageUtils.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Helpers\MapHelper.cs" />
     <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Plugins\LayerSettingsBase.cs" />
     <Compile Include="Concrete\SelectionItem.cs" />

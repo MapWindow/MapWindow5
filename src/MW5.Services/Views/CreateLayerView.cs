@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services.Views.Abstract;
@@ -24,7 +25,7 @@ namespace MW5.Services.Views
         {
             InitializeComponent();
 
-            var items = EnumHelper.GetComboItems(new[]
+            var items = ComboBoxHelper.GetComboItems(new[]
             {
                 GeometryType.Point,
                 GeometryType.Polyline,

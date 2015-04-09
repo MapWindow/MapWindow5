@@ -105,8 +105,6 @@
     <Compile Include="Docking\DockPanelKeys.cs" />
     <Compile Include="EventHelper.cs" />
     <Compile Include="Helpers\ComboBoxHelper.cs" />
-    <Compile Include="Helpers\EnumConverter.cs" />
-    <Compile Include="Helpers\EnumHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\TreeViewAdvHelper.cs" />
     <Compile Include="MapWindowView.cs">
@@ -148,10 +146,10 @@
     <Compile Include="Repository\RepositoryItemTypeConverter.cs" />
     <Compile Include="Repository\UI\IRepositoryView.cs" />
     <Compile Include="Repository\Model\IRepositoryItem.cs" />
-    <Compile Include="Repository\Model\IVectorItem.cs" />
+    <Compile Include="Repository\Model\IFileItem.cs" />
     <Compile Include="Repository\Model\RepositoryItemCollection.cs" />
-    <Compile Include="Repository\Model\VectorItem.cs" />
-    <Compile Include="Repository\Model\VectorItemMetadata.cs" />
+    <Compile Include="Repository\Model\FileItem.cs" />
+    <Compile Include="Repository\Model\FileItemMetadata.cs" />
     <Compile Include="Repository\UI\RepositoryDockPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -243,6 +241,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_folder_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_database_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_databases_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_geometry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_postgis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_postgis_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_raster.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

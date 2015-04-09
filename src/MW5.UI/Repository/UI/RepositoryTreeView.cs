@@ -45,27 +45,17 @@ namespace MW5.UI.Repository.UI
                 Resources.img_point,
                 Resources.img_line,
                 Resources.img_polygon,
+                Resources.img_geometry,
+                Resources.img_databases_16,
+                Resources.img_database_16,
+                Resources.img_postgis_16,
+                Resources.img_raster
             };
         }
 
         public RepositoryItemCollection Items
         {
             get { return new RepositoryItemCollection(Nodes); }
-        }
-
-        public IFolderItem CreateFolder(string path, bool root)
-        {
-            return RepositoryItem.CreateFolder(path, root);
-        }
-
-        public IRepositoryItem CreateItem(RepositoryItemType type)
-        {
-            return RepositoryItem.CreateItem(type);
-        }
-
-        public IVectorItem CreateVector(string filename)
-        {
-            return RepositoryItem.CreateVector(filename);
         }
 
         public IRepositoryItem GetSpecialItem(RepositoryItemType type)
@@ -114,7 +104,7 @@ namespace MW5.UI.Repository.UI
         private void RepositoryTreeView_PrepareToolTip(object sender, ToolTipEventArgs e)
         {
             var item = RepositoryItem.Get(SelectedNode);
-            var vector = item as IVectorItem;
+            var vector = item as IFileItem;
             if (vector == null)
             {
                 e.Cancel = true;
@@ -129,38 +119,10 @@ namespace MW5.UI.Repository.UI
         private void PopulateToolTip(ToolTipInfo tooltip, string filename)
         {
             tooltip.Header.Text = Path.GetFileName(filename);
-
-            string s;
+            
             using (var ds = GeoSource.Open(filename))
             {
-                if (ds.LayerType == Api.LayerType.Shapefile)
-                {
-                    tooltip.Body.Text = "\n";
-
-                    var fs = LayerSourceHelper.GetLayers(ds).FirstOrDefault() as IFeatureSet;
-                    if (fs != null)
-                    {
-                        tooltip.Body.Text += "Geometry type: " + fs.GeometryType.EnumToString() + Environment.NewLine;
-                        tooltip.Body.Text += "Feature count: " + fs.Features.Count + Environment.NewLine;
-                        tooltip.Body.Text += "Projection: " + fs.Projection.ExportToProj4();
-                    }
-                }
-
-                if (ds.LayerType == Api.LayerType.VectorLayer)
-                {
-                    tooltip.Body.Text = "\nLayers:";
-
-                    foreach (var source in LayerSourceHelper.GetLayers(ds))
-                    {
-                        var layer = source as IVectorLayer;
-                        if (layer != null)
-                        {
-                            tooltip.Body.Text += "\nLayer name: " + layer.Name + Environment.NewLine;
-                            tooltip.Body.Text += "Geometry type: " + layer.GeometryType.EnumToString() + Environment.NewLine;
-                            tooltip.Body.Text += "Feature count: " + layer.get_FeatureCount() + Environment.NewLine;
-                        }
-                    }
-                }
+                tooltip.Body.Text = ds.ToolTipText;
             }
         }
 
@@ -172,7 +134,7 @@ namespace MW5.UI.Repository.UI
                 return;
             }
 
-            var vectorItem = RepositoryItem.Get(arr[0]) as IVectorItem;
+            var vectorItem = RepositoryItem.Get(arr[0]) as IFileItem;
             if (vectorItem != null)
             {
                 DoDragDrop(vectorItem.Filename, DragDropEffects.Copy);

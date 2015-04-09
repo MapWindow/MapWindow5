@@ -4,6 +4,7 @@
     {
         bool AddLayer(DataSourceType layerType);
         bool RemoveSelectedLayer();
+        bool RemoveLayer(string filename);
         bool AddLayersFromFilename(string filename);
         void ZoomToSelected();
         void ClearSelection();

@@ -63,6 +63,26 @@ namespace MW5.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_database_16 {
+            get {
+                object obj = ResourceManager.GetObject("img_database_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_databases_16 {
+            get {
+                object obj = ResourceManager.GetObject("img_databases_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_add {
             get {
                 object obj = ResourceManager.GetObject("img_folder_add", resourceCulture);
@@ -103,6 +123,16 @@ namespace MW5.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_geometry {
+            get {
+                object obj = ResourceManager.GetObject("img_geometry", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_hard_disk {
             get {
                 object obj = ResourceManager.GetObject("img_hard_disk", resourceCulture);
@@ -136,6 +166,36 @@ namespace MW5.UI.Properties {
         internal static System.Drawing.Bitmap img_polygon {
             get {
                 object obj = ResourceManager.GetObject("img_polygon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_postgis {
+            get {
+                object obj = ResourceManager.GetObject("img_postgis", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_postgis_16 {
+            get {
+                object obj = ResourceManager.GetObject("img_postgis_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_raster {
+            get {
+                object obj = ResourceManager.GetObject("img_raster", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections;
@@ -43,6 +45,11 @@ namespace MW5.Services.Concrete
                 return false;
             }
 
+            return RemoveLayerCore(layerHandle, false);
+        }
+
+        private bool RemoveLayerCore(int layerHandle, bool silent)
+        {
             var args = new LayerRemoveEventArgs(layerHandle);
             _broadcasterService.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
             if (args.Cancel)
@@ -51,13 +58,34 @@ namespace MW5.Services.Concrete
             }
 
             var layer = _context.Map.GetLayer(layerHandle);
-            if (MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
+            
+            if (silent || MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
             {
                 _context.Map.Layers.Remove(layerHandle);
                 return true;
             }
 
             return false;
+        }
+
+        public bool RemoveLayer(string filename)
+        {
+            var layers = _context.Map.Layers.Where(l => l.Filename.EqualsIgnoreCase(filename));
+            BeginBatch();
+
+            bool result = false;
+            foreach (var l in layers)
+            {
+                if (!RemoveLayerCore(l.Handle, true))
+                {
+                    result = false;
+                    break;
+                }
+                result = true;
+            }
+
+            EndBatch();
+            return result;
         }
 
         public bool AddLayer(DataSourceType layerType)

@@ -36,6 +36,7 @@ namespace MW5.Plugins
 
         public event EventHandler<PluginEventArgs> PluginUnloaded;
 
+        // TODO: move this to the broadcaster
         public event EventHandler<MenuItemEventArgs> MenuItemClicked;
         public event EventHandler<MenuItemEventArgs> StatusItemClicked;
 

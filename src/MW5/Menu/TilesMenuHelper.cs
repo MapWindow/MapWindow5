@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MW5.Api;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -41,7 +42,7 @@ namespace MW5.Menu
 
             foreach (var p in list)
             {
-                item = root.SubItems.AddButton(EnumHelper.EnumToString(p), PluginIdentity.Default );
+                item = root.SubItems.AddButton(p.EnumToString(), PluginIdentity.Default );
                 item.Tag = p;
                 item.ItemClicked += item_Click;
             }

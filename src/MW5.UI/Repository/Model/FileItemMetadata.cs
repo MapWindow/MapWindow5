@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 
 namespace MW5.UI.Repository.Model
 {
-    internal class VectorItemMetadata
+    internal class FileItemMetadata
     {
-        public VectorItemMetadata(string filename)
+        public FileItemMetadata(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename)) throw new ArgumentNullException("filename");
             Filename = filename;
         }
 
         public string Filename { get; set; }
+
+        public bool AddedToMap { get; set; }
     }
 }

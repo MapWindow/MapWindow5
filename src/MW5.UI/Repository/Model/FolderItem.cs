@@ -8,7 +8,15 @@ namespace MW5.UI.Repository.Model
 {
     public class FolderItem: RepositoryItem, IFolderItem
     {
-        private const string SearchRegex = @"$(?<=\.(shp|kml))";
+        private const string VectorFormats = "shp|kml|dgn|dxf|gml|mif|tab";
+        private const string ImageFormats = "tif|png";
+        private const string GridFormats = "asc";
+        private const string SearchRegex = @"$(?<=\.({0}))";
+        
+        private static readonly Regex VectorRegex = new Regex(GetSearchRegex(FormatType.Vector), RegexOptions.IgnoreCase);
+        private static readonly Regex ImageRegex = new Regex(GetSearchRegex(FormatType.Raster), RegexOptions.IgnoreCase);
+        private static readonly Regex GridRegex = new Regex(GetSearchRegex(FormatType.Grid), RegexOptions.IgnoreCase);
+
 
         public FolderItem(TreeNodeAdv node) : base(node)
         {
@@ -53,7 +61,7 @@ namespace MW5.UI.Repository.Model
             Expand();
         }
 
-        public void Expand()
+        public override void Expand()
         {
             if (_node.ExpandedOnce) return;
             
@@ -62,20 +70,46 @@ namespace MW5.UI.Repository.Model
             
             foreach (var path in Directory.EnumerateDirectories(root))
             {
-                var folder = CreateFolder(path, false);
-                items.Add(folder, false);
+                items.AddFolder(path, false);
             }
 
-            var pattern = new Regex(SearchRegex, RegexOptions.IgnoreCase);
+            var pattern = new Regex(GetSearchRegex(FormatType.All), RegexOptions.IgnoreCase);
             var files = Directory.EnumerateFiles(root).Where(f => pattern.IsMatch(f));
 
             foreach (var f in files)
             {
-                var vector = CreateVector(f);
-                items.Add(vector, false);
+                if (VectorRegex.IsMatch(f))
+                {
+                    items.AddFileVector(f);
+                    continue;
+                }
+
+                if (ImageRegex.IsMatch(f) || GridRegex.IsMatch(f))
+                {
+                    items.AddFileImage(f);
+                    continue;
+                }
             }
 
             _node.ExpandedOnce = true;
+        }
+
+        private static string GetSearchRegex(FormatType format)
+        {
+            switch (format)
+            {
+                case FormatType.All:
+                    return string.Format(SearchRegex, VectorFormats + "|" + ImageFormats + "|" + GridFormats);
+                case FormatType.Vector:
+                    return string.Format(SearchRegex, VectorFormats);
+                case FormatType.Raster:
+                    return string.Format(SearchRegex, ImageFormats);
+                case FormatType.Grid:
+                    return string.Format(SearchRegex, GridFormats);
+                default:
+                    throw new ArgumentOutOfRangeException("format");
+            }
+
         }
     }
 }

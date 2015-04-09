@@ -9,7 +9,6 @@ namespace MW5.UI.Repository.Model
     public interface IFolderItem : IRepositoryItem
     {
         string GetPath();
-        void Expand();
         bool Loaded { get; }
         bool Root { get; }
         void Refresh();

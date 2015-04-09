@@ -21,6 +21,7 @@ using System.IO;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;

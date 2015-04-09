@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -13,26 +17,33 @@ namespace MW5.UI.Repository
 {
     public class RepositoryPresenter: CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelProvider
     {
-        private readonly IMuteMap _map;
+        private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;
         private readonly ILayerService _layerService;
         private readonly RepositoryDockPanel _view;
 
-        public RepositoryPresenter(IMuteMap map, RepositoryDockPanel view, IFileDialogService fileDialogService, ILayerService layerService)
+        public RepositoryPresenter(IAppContext context, RepositoryDockPanel view, IFileDialogService fileDialogService, ILayerService layerService)
             : base(view)
         {
-            if (map == null) throw new ArgumentNullException("map");
+            if (context == null) throw new ArgumentNullException("context");
             if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
             if (layerService == null) throw new ArgumentNullException("layerService");
 
-            _map = map;
+            _context = context;
             _fileDialogService = fileDialogService;
             _layerService = layerService;
             _view = view;
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
+
+            var legend = context.Legend as ILegend;
+            if (legend != null)
+            {
+                legend.LayerAdded += (s, e) => UpdateItemState();
+                legend.LayerRemoved += (s, e) => UpdateItemState();
+            }
         }
-        
+
         public Control GetInternalObject()
         {
             return _view;
@@ -70,18 +81,24 @@ namespace MW5.UI.Repository
                     break;
                 case RepositoryCommand.AddToMap:
                     {
-                        var item = GetSelectedVectorItem<IVectorItem>();
+                        var item = GetSelectedVectorItem<IFileItem>();
 
-                        _layerService.AddLayersFromFilename(item.Filename);
-
-                        int handle = _layerService.LastLayerHandle;
-                        _map.ZoomToLayer(handle);
+                        if (item.AddedToMap)
+                        {
+                            _layerService.RemoveLayer(item.Filename);
+                        }
+                        else
+                        {
+                            _layerService.AddLayersFromFilename(item.Filename);
+                            int handle = _layerService.LastLayerHandle;
+                            _context.Map.ZoomToLayer(handle);
+                        }
 
                         break;
                     }
                 case RepositoryCommand.RemoveFile:
                     {
-                        var item = GetSelectedVectorItem<IVectorItem>();
+                        var item = GetSelectedVectorItem<IFileItem>();
 
                         if (MessageService.Current.Ask("Do you want to remove the datasource: "
                             + Environment.NewLine + item.Filename + "?"))
@@ -109,13 +126,65 @@ namespace MW5.UI.Repository
                             path = folder.GetPath();
                         }
 
-                        var vector = item as IVectorItem;
+                        var vector = item as IFileItem;
                         if (vector != null)
                         {
                             path = vector.Filename;
                         }
 
                         Plugins.Helpers.PathHelper.OpenFolderWithExplorer(path);
+                    }
+                    break;
+                case RepositoryCommand.GdalInfo:
+                    {
+                        var item = GetSelectedVectorItem<IFileItem>();
+                        if (item != null)
+                        {
+                            if (item.Type == RepositoryItemType.Image)
+                            {
+                                string info = GdalUtils.GdalInfo(item.Filename, "");
+                                MessageService.Current.Info("GDAL info: \n\n" + info);
+                            }
+                            else if (item.Type == RepositoryItemType.Vector)
+                            {
+                                string info = GdalUtils.OgrInfo(item.Filename, "", "");
+                                MessageService.Current.Info("OGR info: \n\n" + info);
+                            }
+                        }
+                    }
+                    break;
+                case RepositoryCommand.AddFolderToMap:
+                    {
+                        var folder = GetSelectedVectorItem<IFolderItem>();
+                        if (folder != null)
+                        {
+                            _layerService.BeginBatch();
+
+                            try
+                            {
+                                foreach (var item in folder.SubItems)
+                                {
+                                    var file = item as IFileItem;
+                                    if (file != null)
+                                    {
+                                        _layerService.AddLayersFromFilename(file.Filename);
+                                    }
+                                }
+                            }
+                            finally
+                            {
+                                _layerService.EndBatch();
+                            }
+                        }
+                    }
+                    break;
+                case RepositoryCommand.Refresh:
+                    {
+                        var folder = GetSelectedVectorItem<IFolderItem>();
+                        if (folder != null)
+                        {
+                            folder.Refresh();
+                        }
                     }
                     break;
             }
@@ -134,7 +203,7 @@ namespace MW5.UI.Repository
 
         private void ViewItemDoubleClicked(object sender, RepositoryEventArgs e)
         {
-            if (e.Item is IVectorItem)
+            if (e.Item is IFileItem)
             {
                 RunCommand(RepositoryCommand.AddToMap);
             }
@@ -143,6 +212,39 @@ namespace MW5.UI.Repository
         protected override void CommandNotFound(string itemName)
         {
             MessageService.Current.Info("No handler was found for the item with key: " + itemName);
+        }
+
+        /// <summary>
+        /// Marks items that were added to the map
+        /// </summary>
+        private void UpdateItemState()
+        {
+            var dict = _context.Map.GetFilenames().Select(n => n.ToLower()).Distinct().ToDictionary(item => item, item => item);
+
+            var fs = View.Tree.GetSpecialItem(RepositoryItemType.FileSystem);
+            if (fs != null)
+            {
+                UpdateState(fs.SubItems, dict);
+            }
+        }
+
+        private void UpdateState(RepositoryItemCollection items, Dictionary<string, string> filenames )
+        {
+            foreach (var item in items)
+            {
+                var file = item as IFileItem;
+                if (file != null)
+                {
+                    bool selected = filenames.ContainsKey(file.Filename.ToLower());
+                    file.AddedToMap = selected;
+                }
+
+                var folder = item as IFolderItem;
+                if (folder != null)
+                {
+                    UpdateState(folder.SubItems, filenames);
+                }
+            }
         }
     }
 }

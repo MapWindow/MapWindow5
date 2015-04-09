@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Helpers;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin

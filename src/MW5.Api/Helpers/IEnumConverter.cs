@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MW5.UI.Helpers
+namespace MW5.Api.Helpers
 {
     public interface IEnumConverter<T> where T : struct, IConvertible
     {

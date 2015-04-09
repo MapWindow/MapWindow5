@@ -219,6 +219,17 @@ namespace MW5.Api.Concrete
             get { return LayerType.VectorLayer; }
         }
 
+        public string ToolTipText
+        {
+            get
+            {
+                string s = "Geometry type: " + GeometryType.EnumToString() + Environment.NewLine;
+                s += "Feature count: " + get_FeatureCount() + Environment.NewLine;
+                s += Projection.ExportToProj4();
+                return s;
+            }
+        }
+
         public void Close()
         {
             _layer.Close();

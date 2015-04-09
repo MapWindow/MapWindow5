@@ -11,5 +11,6 @@ namespace MW5.UI.Repository.Model
         RepositoryItemType Type { get; }
         RepositoryItemCollection SubItems { get; }
         object GetInternalObject();
+        void Expand();
     }
 }

@@ -260,6 +260,20 @@ namespace MW5.Api.Concrete
             get { return LayerType.Image; }
         }
 
+        public virtual string ToolTipText
+        {
+            get
+            {
+                string s = string.Format("Size: {0}×{1}", Width, Height) + Environment.NewLine;
+                s += "XllCenter: " + XllCenter + Environment.NewLine;
+                s += "YllCenter: " + YllCenter + Environment.NewLine;
+                s += "dX: " + Dx + Environment.NewLine;
+                s += "dY: " + Dy + Environment.NewLine;
+                s += "Projection: " + Projection.ExportToProj4();
+                return s;
+            }
+        }
+
         #endregion
 
         public object GetInternalObject()

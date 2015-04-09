@@ -13,5 +13,7 @@ namespace MW5.Api.Interfaces
         string OpenDialogFilter { get; }
 
         LayerType LayerType { get; }
+
+        string ToolTipText { get; }
     }
 }

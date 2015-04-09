@@ -64,5 +64,15 @@ namespace MW5.Api.Concrete
             get { return _image.OriginalYllCenter; }
             set { throw new InvalidOperationException("YllCenter property isn't supported for RasterSource."); }
         }
+
+        public override string ToolTipText
+        {
+            get
+            {
+                string s = base.ToolTipText;
+                // TODO: add number of bands
+                return s;
+            }
+        }
     }
 }

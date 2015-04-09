@@ -10,10 +10,15 @@ namespace MW5.UI.Helpers
 {
     public static class ComboBoxHelper
     {
+        public static IEnumerable<ComboBoxEnumItem<T>> GetComboItems<T>(IEnumerable<T> items) where T : struct, IConvertible
+        {
+            return items.Select(item => new ComboBoxEnumItem<T>(item, Api.Helpers.EnumHelper.GetToStringFunction<T>()));
+        }
+
         public static void AddItemsFromEnum<T>(this ComboBoxAdv box) where T: struct, IConvertible
         {
             var t = new T();
-            var items = EnumHelper.GetComboItems(Enum.GetValues(t.GetType()).OfType<T>());
+            var items = GetComboItems(Enum.GetValues(t.GetType()).OfType<T>());
             foreach (var item in items)
             {
                 box.Items.Add(item);

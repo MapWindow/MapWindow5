@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace MW5.UI.Repository.Model
 {
-    public interface IVectorItem : IRepositoryItem
+    public interface IFileItem : IRepositoryItem
     {
         string Filename { get; }
         IFolderItem Folder { get; }
+        bool AddedToMap { get; set; }
     }
 }

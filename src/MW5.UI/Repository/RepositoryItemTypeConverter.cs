@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Helpers;
 using MW5.UI.Helpers;
 
 namespace MW5.UI.Repository
@@ -20,9 +21,15 @@ namespace MW5.UI.Repository
                     return "Folder";
                 case RepositoryItemType.Vector:
                     return "Vector layer";
+                case RepositoryItemType.Databases:
+                    return "Spatial Databases";
+                case RepositoryItemType.PostGis:
+                    return "PostGIS";
+                case RepositoryItemType.Database:
+                    return "Database";
+                default:
+                    throw new ArgumentOutOfRangeException("value");
             }
-
-            return "";
         }
     }
 }
