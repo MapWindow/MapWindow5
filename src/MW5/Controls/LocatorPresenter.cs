@@ -13,7 +13,6 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using stdole;
 
 namespace MW5.Controls
 {

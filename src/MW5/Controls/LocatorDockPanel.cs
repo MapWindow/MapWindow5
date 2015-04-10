@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using EnvDTE;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
@@ -17,7 +16,6 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.UI;
-using stdole;
 
 namespace MW5.Controls
 {
