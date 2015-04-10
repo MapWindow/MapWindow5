@@ -138,41 +138,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Repository\Model\FolderItem.cs" />
-    <Compile Include="Repository\Enums.cs" />
-    <Compile Include="Repository\Model\FolderItemMetadata.cs" />
-    <Compile Include="Repository\Model\IFolderItem.cs" />
-    <Compile Include="Repository\RepositoryEventArgs.cs" />
-    <Compile Include="Repository\RepositoryItemTypeConverter.cs" />
-    <Compile Include="Repository\UI\IRepositoryView.cs" />
-    <Compile Include="Repository\Model\IRepositoryItem.cs" />
-    <Compile Include="Repository\Model\IFileItem.cs" />
-    <Compile Include="Repository\Model\RepositoryItemCollection.cs" />
-    <Compile Include="Repository\Model\FileItem.cs" />
-    <Compile Include="Repository\Model\FileItemMetadata.cs" />
-    <Compile Include="Repository\UI\RepositoryDockPanel.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Repository\UI\RepositoryDockPanel.Designer.cs">
-      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Repository\Model\RepositoryItem.cs" />
-    <Compile Include="Repository\RepositoryPresenter.cs" />
-    <Compile Include="Repository\UI\RepositoryTreeView.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="SyncfusionStyle\IStyleService.cs" />
     <Compile Include="SyncfusionStyle\StyleSettings.cs" />
     <Compile Include="SyncfusionStyle\SyncfusionStyleService.cs" />
     <Compile Include="Menu\Toolbar.cs" />
     <Compile Include="Menu\ToolbarsCollection.cs" />
-    <Compile Include="Toolbox\GisTool.cs" />
-    <Compile Include="Toolbox\GisToolbox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Toolbox\ToolboxGroup.cs" />
-    <Compile Include="Toolbox\ToolboxGroups.cs" />
-    <Compile Include="Toolbox\ToolCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -203,13 +173,6 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Repository\UI\RepositoryDockPanel.resx">
-      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Repository\UI\RepositoryTreeView.resx">
-      <DependentUpon>RepositoryTreeView.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

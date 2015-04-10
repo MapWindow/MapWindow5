@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Controls;
+using MW5.Data.Repository;
 using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
@@ -13,12 +14,11 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Services.Serialization;
+using MW5.Tools.Toolbox;
 using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Menu;
-using MW5.UI.Repository;
 using MW5.UI.SyncfusionStyle;
-using MW5.UI.Toolbox;
 
 namespace MW5
 {

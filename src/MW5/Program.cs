@@ -2,7 +2,6 @@
 using System.Windows.Forms;
 using MW5.Api.Static;
 using MW5.DI.Castle;
-// using MW5.DI.Ninject;
 // using MW5.DI.LightInject;
 // using MW5.DI.Ninject;
 // using MW5.DI.Unity;

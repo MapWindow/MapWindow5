@@ -233,6 +233,10 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.Data\MW5.Data.csproj">
+      <Project>{12476697-03B6-4944-92C1-AE7214A13F0B}</Project>
+      <Name>MW5.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MW5.DI\MW5.DI.Castle\MW5.DI.Castle.csproj">
       <Project>{193010c4-9bde-42a3-a960-0b39700a9de1}</Project>
       <Name>MW5.DI.Castle</Name>
@@ -248,6 +252,10 @@
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Tools\MW5.Tools.csproj">
+      <Project>{FB836BB0-2668-41E6-A4AD-7798B13C327F}</Project>
+      <Name>MW5.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
       <Project>{784a24f2-9a57-46ee-8945-d87869595216}</Project>

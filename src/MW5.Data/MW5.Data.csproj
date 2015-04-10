@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{12476697-03B6-4944-92C1-AE7214A13F0B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MW5.Data</RootNamespace>
+    <AssemblyName>MW5.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
+      <Link>Properties\SolutionInfoCore.cs</Link>
+    </Compile>
+    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\Enums.cs" />
+    <Compile Include="Repository\Model\FileItem.cs" />
+    <Compile Include="Repository\Model\FileItemMetadata.cs" />
+    <Compile Include="Repository\Model\FolderItem.cs" />
+    <Compile Include="Repository\Model\FolderItemMetadata.cs" />
+    <Compile Include="Repository\Model\IFileItem.cs" />
+    <Compile Include="Repository\Model\IFolderItem.cs" />
+    <Compile Include="Repository\Model\IRepositoryItem.cs" />
+    <Compile Include="Repository\Model\RepositoryItem.cs" />
+    <Compile Include="Repository\Model\RepositoryItemCollection.cs" />
+    <Compile Include="Repository\RepositoryEventArgs.cs" />
+    <Compile Include="Repository\RepositoryItemTypeConverter.cs" />
+    <Compile Include="Repository\RepositoryPresenter.cs" />
+    <Compile Include="Repository\UI\IRepositoryView.cs" />
+    <Compile Include="Repository\UI\RepositoryDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Repository\UI\RepositoryDockPanel.Designer.cs">
+      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Repository\UI\RepositoryTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repository\UI\RepositoryDockPanel.resx">
+      <DependentUpon>RepositoryDockPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Repository\UI\RepositoryTreeView.resx">
+      <DependentUpon>RepositoryTreeView.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
+      <Project>{8aad34b3-8ef3-485f-a04d-ed2c07d8f1df}</Project>
+      <Name>MW5.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
+      <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
+      <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
+      <Project>{784a24f2-9a57-46ee-8945-d87869595216}</Project>
+      <Name>MW5.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_database_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_databases_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_closed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_geometry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_hard_disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_postgis.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_postgis_16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_raster.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

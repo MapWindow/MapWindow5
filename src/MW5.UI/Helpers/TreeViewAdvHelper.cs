@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using MW5.UI.Repository;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Helpers

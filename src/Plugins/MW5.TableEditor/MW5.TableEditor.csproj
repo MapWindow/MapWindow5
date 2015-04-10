@@ -382,6 +382,7 @@
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
       <Name>MW5.UI</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="MathParser\MathParser.vbproj">
       <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
