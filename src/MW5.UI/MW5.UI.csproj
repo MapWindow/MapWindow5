@@ -178,51 +178,6 @@
   <ItemGroup>
     <None Include="Resources\MapWindow.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_folder_open.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_tool.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_folder_closed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_folder_add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_line.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_point.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_polygon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_hard_disk.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_folder_delete.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_database_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_databases_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_geometry.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_postgis.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_postgis_16.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\img_raster.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
