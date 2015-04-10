@@ -113,7 +113,6 @@
         Legend = 0,
         Toolbox = 1,
         Locator = 2,
-        Repository = 3,
     }
 
     public enum ToolbarDockState

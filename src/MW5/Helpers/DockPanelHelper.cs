@@ -31,8 +31,6 @@ namespace MW5.Helpers
                 InitLocator(context);
 
                 InitToolbox(context);
-
-                InitRepository(context);
             }
             finally
             {
@@ -73,16 +71,6 @@ namespace MW5.Helpers
 
             var size = locator.Size;
             locator.Size = new Size(size.Width, 250);
-        }
-
-        private static void InitRepository(ISerializableContext context)
-        {
-            var repoControl = context.GetDockPanelObject(DefaultDockPanel.Repository);
-
-            var legend = context.DockPanels.Add(repoControl, DockPanelKeys.Repository, PluginIdentity.Default);
-            legend.Caption = "Repository";
-            legend.DockTo(null, DockPanelState.Right, PanelSize);
-            legend.SetIcon(Resources.ico_legend);
         }
 
         public static void SaveLayout(this DockingManager dockingManager)

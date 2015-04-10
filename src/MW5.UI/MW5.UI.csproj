@@ -128,9 +128,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SyncfusionStyle\IStyleService.cs" />
-    <Compile Include="SyncfusionStyle\StyleSettings.cs" />
-    <Compile Include="SyncfusionStyle\SyncfusionStyleService.cs" />
+    <Compile Include="Style\IStyleService.cs" />
+    <Compile Include="Style\StyleSettings.cs" />
+    <Compile Include="Style\SyncfusionStyleService.cs" />
     <Compile Include="Menu\Toolbar.cs" />
     <Compile Include="Menu\ToolbarsCollection.cs" />
   </ItemGroup>

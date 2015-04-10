@@ -5,7 +5,7 @@ using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.UI.SyncfusionStyle
+namespace MW5.UI.Style
 {
     public class SyncfusionStyleService : IStyleService
     {
@@ -99,11 +99,18 @@ namespace MW5.UI.SyncfusionStyle
                 var tab = control as TabControlAdv;
                 if (tab != null)
                 {
-#if STYLE2010
-                    tab.TabStyle = typeof(TabRendererOffice2007);
-#else
-                    tab.TabStyle = typeof (TabRendererMetro);
-#endif
+//#if STYLE2010
+//                    tab.TabStyle = typeof(TabRendererOffice2007);
+//#else
+//                    if (tab.Alignment == TabAlignment.Top)
+//                    {
+//                        tab.TabStyle = typeof (TabRendererMetro);
+//                    }
+//                    else
+//                    {
+//                        tab.TabStyle = typeof (TabRendererDockingVS2012);
+//                    }
+//#endif
                 }
 
                 ApplyStyle(control.Controls);

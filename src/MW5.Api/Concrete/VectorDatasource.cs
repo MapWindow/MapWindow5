@@ -10,7 +10,7 @@ using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
-    public class VectorDatasource: IVectorDatasource, IEnumerable<VectorLayer>, IDisposable
+    public class VectorDatasource: IVectorDatasource, IEnumerable<VectorLayer>
     {
         private readonly OgrDatasource _datasource;
 
@@ -23,14 +23,24 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public VectorDatasource(string connectionString)
+        public VectorDatasource()
         {
             _datasource = new OgrDatasource();
-            if (!_datasource.Open(connectionString))
+        }
+
+
+        public VectorDatasource(string connectionString) : this()
+        {
+            if (!Open(connectionString))
             {
                 throw new ApplicationException("Failed to open vector datasource:" +
                                                _datasource.ErrorMsg[_datasource.LastErrorCode]);
             }
+        }
+
+        public bool Open(string connectionString)
+        {
+            return _datasource.Open(connectionString);
         }
 
         public object InternalObject
@@ -208,6 +218,8 @@ namespace MW5.Api.Concrete
                 return s;
             }
         }
+
+        
 
         public void Dispose()
         {

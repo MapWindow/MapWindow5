@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MW5.UI.SyncfusionStyle
+namespace MW5.UI.Style
 {
     public interface IStyleService
     {

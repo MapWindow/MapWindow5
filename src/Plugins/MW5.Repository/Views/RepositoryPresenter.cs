@@ -5,14 +5,14 @@ using System.Windows.Forms;
 using MW5.Api.Helpers;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
+using MW5.Data.Repository;
 using MW5.Data.Repository.Model;
-using MW5.Data.Repository.UI;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 
-namespace MW5.Data.Repository
+namespace MW5.Plugins.Repository.Views
 {
     public class RepositoryPresenter: CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelProvider
     {

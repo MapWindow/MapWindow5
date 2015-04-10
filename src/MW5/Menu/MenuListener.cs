@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Api.Enums;
+using MW5.Data.Views;
 using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -64,6 +65,9 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.AddDatabaseLayer:
+                    _context.Container.Run<AddConnectionPresenter>();
+                    break;
                 case MenuKeys.AddLayer:
                     _layerService.AddLayer(DataSourceType.All);
                     break;

@@ -12,7 +12,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository.UI
 {
-    internal sealed class RepositoryTreeView: TreeViewBase, IRepositoryView
+    public sealed class RepositoryTreeView: TreeViewBase, IRepositoryView
     {
         public RepositoryTreeView()
         {

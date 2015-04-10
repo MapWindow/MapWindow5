@@ -83,29 +83,9 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap img_folder_add {
-            get {
-                object obj = ResourceManager.GetObject("img_folder_add", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap img_folder_closed {
             get {
                 object obj = ResourceManager.GetObject("img_folder_closed", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap img_folder_delete {
-            get {
-                object obj = ResourceManager.GetObject("img_folder_delete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

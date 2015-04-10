@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Windows.Forms;
-using MW5.Data.Properties;
+using MW5.Data.Repository.UI;
+using MW5.Plugins.Repository.Properties;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Data.Repository.UI
+namespace MW5.Plugins.Repository.Views
 {
     partial class RepositoryDockPanel
     {
@@ -200,7 +201,6 @@ namespace MW5.Data.Repository.UI
             this.treeViewAdv1.Location = new System.Drawing.Point(0, 37);
             this.treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.treeViewAdv1.Name = "treeViewAdv1";
-            this.treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this.treeViewAdv1.ShowFocusRect = false;
             this.treeViewAdv1.Size = new System.Drawing.Size(330, 635);
             this.treeViewAdv1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;

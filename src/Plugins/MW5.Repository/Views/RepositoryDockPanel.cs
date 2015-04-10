@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Data.Repository;
 using MW5.Data.Repository.Model;
-using MW5.Plugins.Helpers;
+using MW5.Data.Repository.UI;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
 
-namespace MW5.Data.Repository.UI
+namespace MW5.Plugins.Repository.Views
 {
     public partial class RepositoryDockPanel : UserControl, IMenuProvider
     {
@@ -97,7 +98,7 @@ namespace MW5.Data.Repository.UI
             get { yield break; }
         }
 
-        private void RepositoryFolderRemoved(object sender, Plugins.Concrete.FolderEventArgs e)
+        private void RepositoryFolderRemoved(object sender, Concrete.FolderEventArgs e)
         {
             var item = Tree.GetSpecialItem(RepositoryItemType.FileSystem);
             var folder = item.SubItems.OfType<IFolderItem>().FirstOrDefault(f => f.GetPath().EqualsIgnoreCase(e.Path));

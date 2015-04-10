@@ -47,7 +47,6 @@ namespace MW5.Plugins.TableEditor
             _menuGenerator = _context.Container.GetInstance<MenuGenerator>();
             _menuListener = _context.Container.GetSingleton<MenuListener>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
-
         }
 
         public override void Terminate()

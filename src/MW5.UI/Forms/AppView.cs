@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.UI.SyncfusionStyle;
+using MW5.UI.Style;
 using Syncfusion.Windows.Forms;
 
 namespace MW5.UI.Forms

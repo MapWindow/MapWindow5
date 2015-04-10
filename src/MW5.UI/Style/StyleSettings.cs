@@ -1,7 +1,7 @@
 ﻿using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.UI.SyncfusionStyle
+namespace MW5.UI.Style
 {
     public class ControlStyleSettings
     {

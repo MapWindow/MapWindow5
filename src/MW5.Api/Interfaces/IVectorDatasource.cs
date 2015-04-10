@@ -2,6 +2,6 @@
 {
     public interface IVectorDatasource: IDatasource
     {
-        // TODO: OgrDatasource wrapper
+        bool Open(string connectionString);
     }
 }

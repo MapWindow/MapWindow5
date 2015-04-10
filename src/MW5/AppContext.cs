@@ -20,7 +20,7 @@ using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Forms;
 using MW5.UI.Menu;
-using MW5.UI.SyncfusionStyle;
+using MW5.UI.Style;
 
 namespace MW5
 {
@@ -32,7 +32,8 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
-        
+        private readonly IRepository _repository;
+
         private IMap _map;
         private IMenu _menu;
         private IAppView _view;
@@ -47,15 +48,18 @@ namespace MW5
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
         private IToolbox _toolbox;
-        private RepositoryPresenter _repositoryPresenter;
 
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService,
+            IRepository repository)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
+            if (repository == null) throw new ArgumentNullException("repository");
+
             _container = container;
             _projectionDatabase = projectionDatabase;
             _styleService = styleService;
+            _repository = repository;
         }
 
         /// <summary>
@@ -97,7 +101,6 @@ namespace MW5
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
             _locator = new LocatorPresenter(_map);
-            _repositoryPresenter = _container.GetSingleton<RepositoryPresenter>();
 
             this.InitDocking();
         }
@@ -233,8 +236,6 @@ namespace MW5
                     return _toolbox as Control;
                 case DefaultDockPanel.Locator:
                     return _locator.GetInternalObject();
-                case DefaultDockPanel.Repository:
-                    return _repositoryPresenter.GetInternalObject();
                 default:
                     throw new ArgumentOutOfRangeException("panel");
             }
@@ -247,7 +248,7 @@ namespace MW5
 
         public IRepository Repository
         {
-            get { return _repositoryPresenter.Repository; }
+            get { return _repository; }
         }
 
         public void Close()
