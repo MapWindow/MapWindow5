@@ -26,7 +26,7 @@ namespace MW5.Plugins.TemplatePlugin
     /// <summary>
     ///     The template plugin.
     /// </summary>
-    [PluginExport]
+    [MapWindowPlugin]
     public class InitPlugin : BasePlugin
     {
         #region Fields

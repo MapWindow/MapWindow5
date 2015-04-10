@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins;
+using MW5.Plugins.Enums;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Docking

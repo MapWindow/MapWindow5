@@ -19,9 +19,11 @@
 using System;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {

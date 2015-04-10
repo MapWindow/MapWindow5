@@ -12,6 +12,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {

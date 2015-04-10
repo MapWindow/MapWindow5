@@ -6,6 +6,9 @@
 //   The menu listener.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using MW5.Plugins.Enums;
+
 namespace MW5.Plugins.DebugWindow.Menu
 {
     #region

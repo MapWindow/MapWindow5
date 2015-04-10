@@ -1,4 +1,4 @@
-﻿namespace MW5.Api
+﻿namespace MW5.Api.Enums
 {
     public enum AttributeType
     {

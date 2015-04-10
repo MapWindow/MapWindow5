@@ -8,6 +8,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI;
+using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 namespace MW5.Views

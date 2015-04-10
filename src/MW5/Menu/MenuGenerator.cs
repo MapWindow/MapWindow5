@@ -6,6 +6,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Properties;
 using MW5.Services;
 using System.Linq;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.UI.Menu;
 

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Map;
 
 namespace MW5.Api.Concrete
 {

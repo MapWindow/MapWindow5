@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared;
@@ -96,7 +97,7 @@ namespace MW5.Api.Concrete
 
         public bool Bars
         {
-            get { return DiagramType == Api.DiagramType.Bar; }
+            get { return DiagramType == DiagramType.Bar; }
         }
 
         public DiagramType DiagramType

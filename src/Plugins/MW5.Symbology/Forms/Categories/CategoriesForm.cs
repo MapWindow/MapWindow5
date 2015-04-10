@@ -25,6 +25,7 @@ using System.IO;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
@@ -34,6 +35,7 @@ using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {

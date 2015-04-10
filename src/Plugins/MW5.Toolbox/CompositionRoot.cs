@@ -14,7 +14,7 @@ namespace MW5.Plugins.Toolbox
     /// <summary>
     /// The composition root.
     /// </summary>
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         /// <summary>
         /// Composing the container

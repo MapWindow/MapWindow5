@@ -5,6 +5,7 @@ using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Map;
 
 namespace MW5.Api.Concrete
 {

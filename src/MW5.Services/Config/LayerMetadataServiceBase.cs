@@ -1,11 +1,11 @@
 ﻿using System;
-using MW5.Api.Plugins;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Services.Config
 {
-    public abstract class LayerMetadataServiceBase<T> where T: LayerMetadataBase
+    public abstract class LayerMetadataServiceBase<T> where T: class, ILayerMetadataBase
     {
         private readonly BasePlugin _plugin;
         private readonly IAppContext _context;

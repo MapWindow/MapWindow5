@@ -1,4 +1,5 @@
-﻿using MW5.Projections.Properties;
+﻿using MW5.Api.Enums;
+using MW5.Projections.Properties;
 using MW5.Projections.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -363,7 +364,7 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._projectionMap1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
+            this._projectionMap1.AnimationOnZooming = AutoToggle.Auto;
             this._projectionMap1.CurrentScale = 20.211377300534757D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
@@ -373,30 +374,30 @@ namespace MW5.Projections.UI.Forms
             spatialReference1.Tag = "";
             this._projectionMap1.Projection = spatialReference1;
             this._projectionMap1.GrabProjectionFromData = true;
-            this._projectionMap1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
-            this._projectionMap1.KnownExtents = MW5.Api.KnownExtents.None;
+            this._projectionMap1.InertiaOnPanning = AutoToggle.Auto;
+            this._projectionMap1.KnownExtents = KnownExtents.None;
             this._projectionMap1.Latitude = 0F;
             this._projectionMap1.Location = new System.Drawing.Point(20, 12);
             this._projectionMap1.Longitude = 0F;
-            this._projectionMap1.MapCursor = MW5.Api.MapCursor.ZoomIn;
-            this._projectionMap1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
+            this._projectionMap1.MapCursor = MapCursor.ZoomIn;
+            this._projectionMap1.MapUnits = UnitsOfMeasure.Meters;
             this._projectionMap1.MouseWheelSpeed = 0.5D;
             this._projectionMap1.Name = "_projectionMap1";
-            this._projectionMap1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
+            this._projectionMap1.ResizeBehavior = ResizeBehavior.Classic;
             this._projectionMap1.ReuseTileBuffer = true;
-            this._projectionMap1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
+            this._projectionMap1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this._projectionMap1.ScalebarVisible = true;
-            this._projectionMap1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
+            this._projectionMap1.ShowCoordinates = CoordinatesDisplay.Auto;
             this._projectionMap1.ShowRedrawTime = false;
             this._projectionMap1.ShowVersionNumber = false;
             this._projectionMap1.Size = new System.Drawing.Size(420, 203);
-            this._projectionMap1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
+            this._projectionMap1.SystemCursor = SystemCursor.MapDefault;
             this._projectionMap1.TabIndex = 20;
             this._projectionMap1.Tag = "";
-            this._projectionMap1.TileProvider = MW5.Api.TileProvider.OpenStreetMap;
+            this._projectionMap1.TileProvider = TileProvider.OpenStreetMap;
             this._projectionMap1.UdCursorHandle = 0;
             this._projectionMap1.UseSeamlessPan = false;
-            this._projectionMap1.ZoomBehavior = MW5.Api.ZoomBehavior.UseTileLevels;
+            this._projectionMap1.ZoomBehavior = ZoomBehavior.UseTileLevels;
             this._projectionMap1.ZoomPercent = 0.3D;
             // 
             // tabPageAdv3

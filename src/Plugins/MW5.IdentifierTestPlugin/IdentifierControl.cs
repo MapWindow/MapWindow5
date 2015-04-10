@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
@@ -36,14 +37,14 @@ namespace MW5.Plugins.IdentifierTestPlugin
             switch (Mode)
             {
                 case IdentifierPluginMode.CurrentLayer:
-                    _map.Identifier.Mode = Api.IdentifierMode.SingleLayer;
+                    _map.Identifier.Mode = IdentifierMode.SingleLayer;
                     break;
                 case IdentifierPluginMode.TopDownStopOnFirst:
-                    _map.Identifier.Mode = Api.IdentifierMode.AllLayerStopOnFirst;
+                    _map.Identifier.Mode = IdentifierMode.AllLayerStopOnFirst;
                     break;
                 case IdentifierPluginMode.AllLayers:
                 case IdentifierPluginMode.LayerSelection:
-                    _map.Identifier.Mode = Api.IdentifierMode.AllLayers;
+                    _map.Identifier.Mode = IdentifierMode.AllLayers;
                     break;
             }
         }

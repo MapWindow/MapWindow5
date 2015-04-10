@@ -22,6 +22,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {

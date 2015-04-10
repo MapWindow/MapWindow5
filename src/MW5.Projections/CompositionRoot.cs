@@ -13,7 +13,7 @@ using MW5.Projections.UI.Forms;
 
 namespace MW5.Projections
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

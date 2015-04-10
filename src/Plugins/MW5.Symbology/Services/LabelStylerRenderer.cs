@@ -19,6 +19,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Symbology.Services

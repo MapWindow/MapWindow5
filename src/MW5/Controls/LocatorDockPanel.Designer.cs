@@ -1,4 +1,7 @@
-﻿namespace MW5.Controls
+﻿using MW5.Api.Enums;
+using MW5.Api.Map;
+
+namespace MW5.Controls
 {
     partial class LocatorDockPanel
     {
@@ -30,7 +33,7 @@
         {
             MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
-            this.mapControl1 = new MW5.Api.MapControl();
+            this.mapControl1 = new MapControl();
             this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
             this.btnUpdateFull = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,7 +46,7 @@
             // 
             // mapControl1
             // 
-            this.mapControl1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
+            this.mapControl1.AnimationOnZooming = AutoToggle.Auto;
             this.mapControl1.ContextMenuStrip = this.contextMenuStripEx1;
             this.mapControl1.CurrentScale = 21.133078334935735D;
             this.mapControl1.CurrentZoom = -1;
@@ -55,30 +58,30 @@
             spatialReference1.Tag = "";
             this.mapControl1.Projection = spatialReference1;
             this.mapControl1.GrabProjectionFromData = true;
-            this.mapControl1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
-            this.mapControl1.KnownExtents = MW5.Api.KnownExtents.None;
+            this.mapControl1.InertiaOnPanning = AutoToggle.Auto;
+            this.mapControl1.KnownExtents = KnownExtents.None;
             this.mapControl1.Latitude = 0F;
             this.mapControl1.Location = new System.Drawing.Point(0, 0);
             this.mapControl1.Longitude = 0F;
-            this.mapControl1.MapCursor = MW5.Api.MapCursor.ZoomIn;
-            this.mapControl1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
+            this.mapControl1.MapCursor = MapCursor.ZoomIn;
+            this.mapControl1.MapUnits = UnitsOfMeasure.Meters;
             this.mapControl1.MouseWheelSpeed = 0.5D;
             this.mapControl1.Name = "mapControl1";
-            this.mapControl1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
+            this.mapControl1.ResizeBehavior = ResizeBehavior.Classic;
             this.mapControl1.ReuseTileBuffer = true;
-            this.mapControl1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
+            this.mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this.mapControl1.ScalebarVisible = true;
-            this.mapControl1.ShowCoordinates = MW5.Api.CoordinatesDisplay.Auto;
+            this.mapControl1.ShowCoordinates = CoordinatesDisplay.Auto;
             this.mapControl1.ShowRedrawTime = false;
             this.mapControl1.ShowVersionNumber = false;
             this.mapControl1.Size = new System.Drawing.Size(293, 301);
-            this.mapControl1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
+            this.mapControl1.SystemCursor = SystemCursor.MapDefault;
             this.mapControl1.TabIndex = 0;
             this.mapControl1.Tag = "";
-            this.mapControl1.TileProvider = MW5.Api.TileProvider.OpenStreetMap;
+            this.mapControl1.TileProvider = TileProvider.OpenStreetMap;
             this.mapControl1.UdCursorHandle = 0;
             this.mapControl1.UseSeamlessPan = false;
-            this.mapControl1.ZoomBehavior = MW5.Api.ZoomBehavior.UseTileLevels;
+            this.mapControl1.ZoomBehavior = ZoomBehavior.UseTileLevels;
             this.mapControl1.ZoomPercent = 0.3D;
             // 
             // contextMenuStripEx1
@@ -144,7 +147,7 @@
 
         #endregion
 
-        private Api.MapControl mapControl1;
+        private MapControl mapControl1;
         private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuStripEx1;
         private System.Windows.Forms.ToolStripMenuItem btnUpdateFull;
         private System.Windows.Forms.ToolStripMenuItem btnUpdateCurrent;

@@ -8,9 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.UI;
+using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views

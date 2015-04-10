@@ -26,7 +26,7 @@ namespace MW5.Plugins.DebugWindow
     /// <summary>
     ///     The debug window plugin.
     /// </summary>
-    [PluginExport]
+    [MapWindowPlugin]
     public class DebugWindowPlugin : BasePlugin
     {
         #region Fields

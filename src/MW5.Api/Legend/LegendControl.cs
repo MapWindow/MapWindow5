@@ -13,6 +13,8 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Api.Map;
+using MW5.Shared;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
 

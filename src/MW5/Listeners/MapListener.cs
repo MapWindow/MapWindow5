@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
+using MW5.Api.Map;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Shared;
 

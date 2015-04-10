@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Shared;
 

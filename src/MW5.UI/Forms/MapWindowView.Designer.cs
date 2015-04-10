@@ -1,4 +1,4 @@
-﻿namespace MW5.UI
+﻿namespace MW5.UI.Forms
 {
     partial class MapWindowView
     {

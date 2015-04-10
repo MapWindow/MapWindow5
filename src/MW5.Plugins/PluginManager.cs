@@ -19,7 +19,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins
 {
-    public class PluginManager : IPluginManager
+    internal class PluginManager : IPluginManager
     {
         private readonly IApplicationContainer _container;
         private readonly IErrorService _errorService;

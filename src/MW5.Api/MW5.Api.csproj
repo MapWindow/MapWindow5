@@ -63,7 +63,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
-    <Compile Include="BoundMapControl.cs">
+    <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Concrete\ApplicationCallback.cs" />
@@ -97,7 +97,7 @@
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Concrete\CustomCursor.cs" />
     <Compile Include="Helpers\MapHelper.cs" />
-    <Compile Include="Plugins\LayerSettingsBase.cs" />
+    <Compile Include="Interfaces\ILayerMetadataBase.cs" />
     <Compile Include="Concrete\SelectionItem.cs" />
     <Compile Include="Concrete\ShapesList.cs" />
     <Compile Include="Events\MapEventHandler.cs" />
@@ -137,7 +137,6 @@
     <Compile Include="Legend\LegendHelper.cs" />
     <Compile Include="Legend\LegendLayer.cs" />
     <Compile Include="Legend\LegendLayerCollection.cs" />
-    <Compile Include="Legend\Win32ApiHelper.cs" />
     <Compile Include="Static\GeoProcessing.cs" />
     <Compile Include="Static\GeoSource.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
@@ -181,7 +180,7 @@
     <Compile Include="Concrete\FeatureSetSpatialIndex.cs" />
     <Compile Include="Concrete\SpatialReference.cs" />
     <Compile Include="Concrete\ZoomBarSettings.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Events\AfterShapeEditEventArgs.cs" />
     <Compile Include="Events\BackgroundLoadingFinishedEventArgs.cs" />
     <Compile Include="Events\BackgroundLoadingStartedEventArgs.cs" />
@@ -235,13 +234,13 @@
     <Compile Include="Interfaces\IRasterSource.cs" />
     <Compile Include="Interfaces\ISpatialReference.cs" />
     <Compile Include="Interfaces\IComWrapper.cs" />
-    <Compile Include="MapControl.cs">
+    <Compile Include="Map\MapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapControl.Designer.cs">
+    <Compile Include="Map\MapControl.Designer.cs">
       <DependentUpon>MapControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapEvents.cs">
+    <Compile Include="Map\MapEvents.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -282,7 +281,7 @@
       <DependentUpon>LegendControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapControl.resx">
+    <EmbeddedResource Include="Map\MapControl.resx">
       <DependentUpon>MapControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -294,6 +293,9 @@
       <Project>{79400594-de0d-4ffd-b115-af2aeac79cd9}</Project>
       <Name>MW5.Shared</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plugins\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

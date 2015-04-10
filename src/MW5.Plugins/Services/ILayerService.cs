@@ -1,4 +1,6 @@
-﻿namespace MW5.Plugins.Services
+﻿using MW5.Plugins.Enums;
+
+namespace MW5.Plugins.Services
 {
     public interface ILayerService
     {

@@ -8,6 +8,7 @@ using MW5.Data.Repository;
 using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
@@ -17,6 +18,7 @@ using MW5.Services.Serialization;
 using MW5.Tools.Toolbox;
 using MW5.UI;
 using MW5.UI.Docking;
+using MW5.UI.Forms;
 using MW5.UI.Menu;
 using MW5.UI.SyncfusionStyle;
 

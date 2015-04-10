@@ -2,6 +2,7 @@
 using System.Drawing;
 using AxMapWinGIS;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Shared;
 

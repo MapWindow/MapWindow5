@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 
-namespace MW5.UI
+namespace MW5.Shared
 {
     // The code copied from  http: //www.codeproject.com/Articles/103542/Removing-Event-Handlers-using-Reflection
-    internal static class EventHelper
+    public static class EventHelper
     {
         private static readonly Dictionary<Type, List<FieldInfo>> DicEventFieldInfos = new Dictionary<Type, List<FieldInfo>>();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu

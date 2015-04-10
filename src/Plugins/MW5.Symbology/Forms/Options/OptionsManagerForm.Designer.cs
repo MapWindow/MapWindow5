@@ -1,4 +1,5 @@
 ﻿using MW5.Api;
+using MW5.Api.Map;
 using MW5.Plugins.Symbology.Properties;
 
 namespace MW5.Plugins.Symbology.Forms.Options

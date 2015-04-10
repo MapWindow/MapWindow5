@@ -1,4 +1,6 @@
-﻿namespace MW5.Api.Interfaces
+﻿using MW5.Api.Enums;
+
+namespace MW5.Api.Interfaces
 {
     public interface IGeometryMarkerStyle
     {

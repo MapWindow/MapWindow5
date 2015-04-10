@@ -12,7 +12,7 @@ using MW5.Services;
 
 namespace MW5.Plugins.ShapeEditor
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

@@ -6,6 +6,7 @@ using MW5.Api.Legend;
 using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;

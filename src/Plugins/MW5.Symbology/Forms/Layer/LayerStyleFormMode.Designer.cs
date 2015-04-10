@@ -19,6 +19,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
@@ -29,7 +30,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void InitModeTab()
         {
-            if (_shapefile.GeometryType == MW5.Api.GeometryType.Point)
+            if (_shapefile.GeometryType == GeometryType.Point)
             {
                 cboCollisionMode.Enabled = true;
                 cboCollisionMode.Items.Clear();

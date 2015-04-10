@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Symbology.Controls.ListControls
@@ -43,7 +44,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
             for (int i = 0; i <ItemCount; i++)
             {
                 var sdo = new GeometryStyle();
-                sdo.Marker.SetVectorMarker((Api.VectorMarker) i);
+                sdo.Marker.SetVectorMarker((VectorMarker) i);
                 sdo.Marker.Size = 0.8f * CellWidth;
                 sdo.Fill.Color = Color.Orange;
                 _icons.Add(sdo);

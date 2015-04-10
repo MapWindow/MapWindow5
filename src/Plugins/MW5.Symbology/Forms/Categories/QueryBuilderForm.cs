@@ -22,9 +22,11 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {

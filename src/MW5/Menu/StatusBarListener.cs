@@ -9,6 +9,7 @@ using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections.Helpers;

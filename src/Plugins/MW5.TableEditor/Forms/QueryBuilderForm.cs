@@ -2,6 +2,7 @@
 using System.Data;
 using System.Windows.Forms;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Forms
 {

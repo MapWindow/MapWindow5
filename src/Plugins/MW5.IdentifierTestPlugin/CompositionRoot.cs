@@ -2,7 +2,7 @@
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

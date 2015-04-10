@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Helpers

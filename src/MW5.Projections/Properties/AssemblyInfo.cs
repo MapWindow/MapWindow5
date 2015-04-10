@@ -25,3 +25,4 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("07a7031e-0679-43f7-af85-89102094b96d")]
 
+[assembly: InternalsVisibleTo("MapWindow")]

@@ -1,4 +1,5 @@
 ﻿using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract

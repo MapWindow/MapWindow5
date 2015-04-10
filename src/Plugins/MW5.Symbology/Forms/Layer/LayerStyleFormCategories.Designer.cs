@@ -23,6 +23,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
@@ -65,13 +66,13 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             icbCategories.SetSelectedItem(_metadata.CategoriesColorScheme);
 
             var type = _shapefile.GeometryType;
-            groupVariableSize.Visible = (type == MW5.Api.GeometryType.Point || type == MW5.Api.GeometryType.Polyline);
+            groupVariableSize.Visible = (type == GeometryType.Point || type == GeometryType.Polyline);
 
-            if (type == MW5.Api.GeometryType.Point)
+            if (type == GeometryType.Point)
             {
                 udMinSize.SetValue(_shapefile.Style.Marker.Size);
             }
-            else if (type == MW5.Api.GeometryType.Polyline)
+            else if (type == GeometryType.Polyline)
             {
                 udMinSize.SetValue(_shapefile.Style.Line.Width);
             }

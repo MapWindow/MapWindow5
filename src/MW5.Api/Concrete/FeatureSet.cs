@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared;
@@ -417,7 +418,7 @@ namespace MW5.Api.Concrete
 
         public bool IsPolygon
         {
-            get { return GeometryType == Api.GeometryType.Polygon; }
+            get { return GeometryType == GeometryType.Polygon; }
         }
 
         public int NumSelected

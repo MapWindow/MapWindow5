@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Xml;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;

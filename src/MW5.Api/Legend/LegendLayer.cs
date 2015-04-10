@@ -7,9 +7,11 @@ using System.Xml.Serialization;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
-using MW5.Api.Plugins;
+using MW5.Api.Map;
 
 namespace MW5.Api.Legend
 {
@@ -20,7 +22,7 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControl _legend;
         private readonly List<LayerElement> _elements; // size and positions of elements
-        private readonly Dictionary<object, LayerMetadataBase> _customObjects;
+        private readonly Dictionary<object, ILayerMetadataBase> _customObjects;
 
         private bool _expanded;
         private object _icon;
@@ -40,7 +42,7 @@ namespace MW5.Api.Legend
             _legend = legend;   // must be the first line in constructor
             _icon = null;
             _elements = new List<LayerElement>();
-            _customObjects = new Dictionary<object, LayerMetadataBase>();
+            _customObjects = new Dictionary<object, ILayerMetadataBase>();
             Guid = Guid.NewGuid();
             _recalcHeight = true;
 
@@ -197,7 +199,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Returns custom object for specified key
         /// </summary>
-        public T GetCustomObject<T>(object key) where T : LayerMetadataBase
+        public T GetCustomObject<T>(object key) where T : class, ILayerMetadataBase
         {
             return _customObjects[key] as T;
         }
@@ -205,7 +207,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Sets custom object associated with layer
         /// </summary>
-        public void SetCustomObject<T>(T obj, object key) where T: LayerMetadataBase
+        public void SetCustomObject<T>(T obj, object key) where T: class, ILayerMetadataBase
         {
             _customObjects[key] = obj;
         }

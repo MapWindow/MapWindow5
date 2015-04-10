@@ -1,4 +1,5 @@
 ﻿using MapWinGIS;
+using MW5.Api.Enums;
 
 namespace MW5.Api.Helpers
 {

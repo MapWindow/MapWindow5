@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Interfaces.Projections
 {

@@ -1,6 +1,7 @@
 ﻿
 using System;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;

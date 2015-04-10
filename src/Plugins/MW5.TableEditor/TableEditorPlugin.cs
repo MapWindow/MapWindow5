@@ -14,12 +14,13 @@ using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Menu;
 using MW5.Shared;
+using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 
 namespace MW5.Plugins.TableEditor
 {
-    [PluginExport()]
+    [MapWindowPlugin()]
     public class TableEditorPlugin: BasePlugin
     {
         private IAppContext _context;
@@ -46,6 +47,7 @@ namespace MW5.Plugins.TableEditor
             _menuGenerator = _context.Container.GetInstance<MenuGenerator>();
             _menuListener = _context.Container.GetSingleton<MenuListener>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
+
         }
 
         public override void Terminate()

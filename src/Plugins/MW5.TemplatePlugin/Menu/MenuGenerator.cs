@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using MW5.Plugins.Enums;
+
 namespace MW5.Plugins.TemplatePlugin.Menu
 {
     #region

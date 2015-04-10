@@ -21,11 +21,13 @@ using System.IO;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Shared;
 using MW5.UI;
+using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology.Forms.Options

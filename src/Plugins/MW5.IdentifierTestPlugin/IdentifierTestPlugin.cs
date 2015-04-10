@@ -13,7 +13,7 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
-    [PluginExport()]
+    [MapWindowPlugin()]
     public class IdentifierTestPlugin: BasePlugin
     {
         private IAppContext _context;

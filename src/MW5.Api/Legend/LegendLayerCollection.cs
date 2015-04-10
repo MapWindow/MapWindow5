@@ -6,6 +6,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Api.Map;
 
 namespace MW5.Api.Legend
 {

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Legacy

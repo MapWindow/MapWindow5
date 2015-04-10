@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;

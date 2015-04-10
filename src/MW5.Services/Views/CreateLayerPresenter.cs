@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Views.Abstract;

@@ -9,10 +9,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Projections.UI.Forms
 {
@@ -157,10 +159,10 @@ namespace MW5.Projections.UI.Forms
             _projectionMap1.LoadStateFromExeName(Application.ExecutablePath);
             _projectionMap1.ZoomBar.Visible = false;
             _projectionMap1.ScalebarVisible = false;
-            _projectionMap1.ShowCoordinates = Api.CoordinatesDisplay.None;
+            _projectionMap1.ShowCoordinates = CoordinatesDisplay.None;
             _projectionMap1.ShowVersionNumber = false;
-            _projectionMap1.TileProvider = Api.TileProvider.None;
-            _projectionMap1.ZoomBehavior = Api.ZoomBehavior.Default;
+            _projectionMap1.TileProvider = TileProvider.None;
+            _projectionMap1.ZoomBehavior = ZoomBehavior.Default;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using NUnit.Framework;
 
 namespace MW5.API.Test

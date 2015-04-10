@@ -7,7 +7,7 @@ using MW5.UI.SyncfusionStyle;
 
 namespace MW5.Data
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

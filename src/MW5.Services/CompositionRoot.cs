@@ -7,7 +7,7 @@ using MW5.Services.Views.Abstract;
 
 namespace MW5.Services
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

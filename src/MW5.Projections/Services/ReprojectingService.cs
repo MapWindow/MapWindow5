@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;

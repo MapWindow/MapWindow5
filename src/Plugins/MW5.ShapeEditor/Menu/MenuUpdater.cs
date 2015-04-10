@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -35,18 +36,18 @@ namespace MW5.Plugins.ShapeEditor.Menu
         {
             var map = _context.Map;
 
-            FindToolbarItem(MenuKeys.GeometryCreate).Checked = map.MapCursor == Api.MapCursor.AddShape;
-            FindToolbarItem(MenuKeys.VertexEditor).Checked = map.MapCursor == Api.MapCursor.EditShape;
-            FindToolbarItem(MenuKeys.MoveShapes).Checked = map.MapCursor == Api.MapCursor.MoveShapes;
-            FindToolbarItem(MenuKeys.RotateShapes).Checked = map.MapCursor == Api.MapCursor.RotateShapes;
-            FindToolbarItem(MenuKeys.SplitByPolyline).Checked = map.MapCursor == Api.MapCursor.SplitByPolyline;
-            FindToolbarItem(MenuKeys.SplitByPolygon).Checked = map.MapCursor == Api.MapCursor.SplitByPolygon;
-            FindToolbarItem(MenuKeys.EraseByPolygon).Checked = map.MapCursor == Api.MapCursor.EraseByPolygon;
-            FindToolbarItem(MenuKeys.ClipByPolygon).Checked = map.MapCursor == Api.MapCursor.ClipByPolygon;
+            FindToolbarItem(MenuKeys.GeometryCreate).Checked = map.MapCursor == MapCursor.AddShape;
+            FindToolbarItem(MenuKeys.VertexEditor).Checked = map.MapCursor == MapCursor.EditShape;
+            FindToolbarItem(MenuKeys.MoveShapes).Checked = map.MapCursor == MapCursor.MoveShapes;
+            FindToolbarItem(MenuKeys.RotateShapes).Checked = map.MapCursor == MapCursor.RotateShapes;
+            FindToolbarItem(MenuKeys.SplitByPolyline).Checked = map.MapCursor == MapCursor.SplitByPolyline;
+            FindToolbarItem(MenuKeys.SplitByPolygon).Checked = map.MapCursor == MapCursor.SplitByPolygon;
+            FindToolbarItem(MenuKeys.EraseByPolygon).Checked = map.MapCursor == MapCursor.EraseByPolygon;
+            FindToolbarItem(MenuKeys.ClipByPolygon).Checked = map.MapCursor == MapCursor.ClipByPolygon;
             
-            bool polygonCursor = map.MapCursor ==  Api.MapCursor.ClipByPolygon || 
-                                 map.MapCursor == Api.MapCursor.SplitByPolygon || 
-                                 map.MapCursor == Api.MapCursor.EraseByPolygon;
+            bool polygonCursor = map.MapCursor ==  MapCursor.ClipByPolygon || 
+                                 map.MapCursor == MapCursor.SplitByPolygon || 
+                                 map.MapCursor == MapCursor.EraseByPolygon;
             FindToolbarItem(MenuKeys.PolygonOverlayDropDown).Checked = polygonCursor;
         }
 

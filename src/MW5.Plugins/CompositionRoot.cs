@@ -10,7 +10,7 @@ using MW5.Plugins.Services;
 
 namespace MW5.Plugins
 {
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         public static void Compose(IApplicationContainer container)
         {

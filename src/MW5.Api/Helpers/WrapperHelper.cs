@@ -2,6 +2,7 @@
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Api.Map;
 
 namespace MW5.Api.Helpers
 {

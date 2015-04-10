@@ -1,18 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using MapWinGIS;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend;
-using MW5.Api.Legend.Abstract;
 
-namespace MW5.Api
+namespace MW5.Api.Map
 {
     //MW5.CoreApi.
     //internal class ResFinder { }

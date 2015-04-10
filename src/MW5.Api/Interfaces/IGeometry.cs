@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {

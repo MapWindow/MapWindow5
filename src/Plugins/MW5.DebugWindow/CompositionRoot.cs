@@ -18,7 +18,7 @@ namespace MW5.Plugins.DebugWindow
     /// <summary>
     /// The composition root.
     /// </summary>
-    public static class CompositionRoot
+    internal static class CompositionRoot
     {
         #region Public Methods and Operators
 

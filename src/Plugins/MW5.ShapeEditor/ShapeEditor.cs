@@ -11,7 +11,7 @@ using MW5.Plugins.ShapeEditor.Menu;
 
 namespace MW5.Plugins.ShapeEditor
 {
-    [PluginExport()]
+    [MapWindowPlugin()]
     public class ShapeEditor: BasePlugin
     {
         private IAppContext _context;

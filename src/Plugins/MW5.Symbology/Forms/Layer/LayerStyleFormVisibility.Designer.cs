@@ -18,6 +18,7 @@
 
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Legend.Abstract;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
@@ -37,7 +38,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             scaleLayer.CurrentScale = _context.Map.CurrentScale;
             
-            Color color = _shapefile.GeometryType == MW5.Api.GeometryType.Polyline? _shapefile.Style.Line.Color : _shapefile.Style.Fill.Color;
+            Color color = _shapefile.GeometryType == GeometryType.Polyline? _shapefile.Style.Line.Color : _shapefile.Style.Fill.Color;
             scaleLayer.FillColor = color;
 
             scaleLayer.Locked = false;

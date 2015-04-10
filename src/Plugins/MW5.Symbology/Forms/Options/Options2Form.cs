@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using MW5.UI;
+using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Options
 {

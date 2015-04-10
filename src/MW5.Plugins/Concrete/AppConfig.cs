@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Concrete
 {

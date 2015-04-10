@@ -2,13 +2,14 @@
 using System.Drawing.Drawing2D;
 using System.Xml.Serialization;
 using MW5.Api;
-using MW5.Api.Plugins;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.Symbology.Services
 {
     [Serializable]
     [XmlType("SymbologyPlugin")]
-    public class SymbologyMetadata: LayerMetadataBase
+    public class SymbologyMetadata: ILayerMetadataBase
     {
         public Classification CategoriesClassification = Classification.NaturalBreaks;
         

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
+using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {

@@ -1,6 +1,7 @@
 ﻿using System;
 using MapWinGIS;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 

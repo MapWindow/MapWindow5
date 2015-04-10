@@ -4,6 +4,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.UI;
+using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Projections.UI.Forms

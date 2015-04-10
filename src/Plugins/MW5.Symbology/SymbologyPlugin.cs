@@ -14,7 +14,7 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology
 {
-    [PluginExport()]
+    [MapWindowPlugin()]
     public class SymbologyPlugin : BasePlugin
     {
         private static IAppContext _context;

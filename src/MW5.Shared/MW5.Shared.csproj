@@ -68,6 +68,7 @@
     <Compile Include="ColorHelper.cs" />
     <Compile Include="DataContractSerializationHelper.cs" />
     <Compile Include="EnumHelper.cs" />
+    <Compile Include="EventHelper.cs" />
     <Compile Include="IEnumConverter.cs" />
     <Compile Include="OleImageHelper.cs">
       <SubType>Component</SubType>
@@ -79,6 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringBuilderHelper.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="Win32ApiHelper.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

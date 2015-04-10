@@ -99,7 +99,7 @@
     <Compile Include="Concrete\DataRepository.cs" />
     <Compile Include="Concrete\ToolboxGroupEventArgs.cs" />
     <Compile Include="Concrete\ToolboxToolEventArgs.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="Helpers\ConfigPathHelper.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
@@ -145,11 +145,10 @@
     <Compile Include="Mvp\IViewInternal.cs" />
     <Compile Include="Mvp\ViewStyle.cs" />
     <Compile Include="PluginBroadcaster.cs" />
-    <Compile Include="PluginEnumerations.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Mef\IPluginMetadata.cs" />
-    <Compile Include="Mef\PluginExportAttribute.cs" />
+    <Compile Include="Mef\MapWindowPluginAttribute.cs" />
     <Compile Include="PluginManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigService.cs" />

@@ -64,8 +64,8 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
-    <Compile Include="AppView.cs" />
-    <Compile Include="ComboBoxEnumItem.cs" />
+    <Compile Include="Forms\AppView.cs" />
+    <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Controls\GeometryRowStyle.cs" />
     <Compile Include="Controls\LayersDialog.cs">
@@ -92,22 +92,21 @@
     <Compile Include="Docking\DockPanelCollection.cs" />
     <Compile Include="Docking\DockPanelInfo.cs" />
     <Compile Include="Docking\DockPanelKeys.cs" />
-    <Compile Include="EventHelper.cs" />
     <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\CommandBarHelper.cs" />
     <Compile Include="Helpers\ListViewHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\TreeViewAdvHelper.cs" />
-    <Compile Include="MapWindowView.cs">
+    <Compile Include="Forms\MapWindowView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MapWindowView.Designer.cs">
+    <Compile Include="Forms\MapWindowView.Designer.cs">
       <DependentUpon>MapWindowView.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu\ItemCollectionBase.cs" />
     <Compile Include="Menu\MenuFactory.cs" />
     <Compile Include="Menu\MenuIndex.cs" />
-    <Compile Include="MapWindowForm.cs">
+    <Compile Include="Forms\MapWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Menu\Menu.cs" />
@@ -159,10 +158,10 @@
     <EmbeddedResource Include="Controls\LayersControl.resx">
       <DependentUpon>LayersControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapWindowForm.resx">
+    <EmbeddedResource Include="Forms\MapWindowForm.resx">
       <DependentUpon>MapWindowForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapWindowView.resx">
+    <EmbeddedResource Include="Forms\MapWindowView.resx">
       <DependentUpon>MapWindowView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

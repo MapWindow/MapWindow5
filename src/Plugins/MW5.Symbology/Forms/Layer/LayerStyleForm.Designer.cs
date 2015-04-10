@@ -1,4 +1,6 @@
 ﻿using MW5.Api;
+using MW5.Api.Enums;
+using MW5.Api.Map;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
@@ -46,7 +48,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtLayerSource = new System.Windows.Forms.RichTextBox();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.axMap1 = new MW5.Api.MapControl();
+            this.axMap1 = new MapControl();
             this.chkLayerPreview = new System.Windows.Forms.CheckBox();
             this.chkLayerVisible = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -297,7 +299,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // axMap1
             // 
-            this.axMap1.AnimationOnZooming = MW5.Api.AutoToggle.Auto;
+            this.axMap1.AnimationOnZooming = AutoToggle.Auto;
             this.axMap1.CurrentScale = 24.377921071402245D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -308,31 +310,31 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             spatialReference1.Tag = "";
             this.axMap1.Projection = spatialReference1;
             this.axMap1.GrabProjectionFromData = true;
-            this.axMap1.InertiaOnPanning = MW5.Api.AutoToggle.Auto;
-            this.axMap1.KnownExtents = MW5.Api.KnownExtents.None;
+            this.axMap1.InertiaOnPanning = AutoToggle.Auto;
+            this.axMap1.KnownExtents = KnownExtents.None;
             this.axMap1.Latitude = 0F;
             this.axMap1.Location = new System.Drawing.Point(3, 16);
             this.axMap1.Longitude = 0F;
-            this.axMap1.MapCursor = MW5.Api.MapCursor.ZoomIn;
-            this.axMap1.MapUnits = MW5.Api.UnitsOfMeasure.Meters;
+            this.axMap1.MapCursor = MapCursor.ZoomIn;
+            this.axMap1.MapUnits = UnitsOfMeasure.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            this.axMap1.ResizeBehavior = MW5.Api.ResizeBehavior.Classic;
+            this.axMap1.ResizeBehavior = ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
-            this.axMap1.ScalebarUnits = MW5.Api.ScalebarUnits.GoogleStyle;
+            this.axMap1.ScalebarUnits = ScalebarUnits.GoogleStyle;
             this.axMap1.ScalebarVisible = false;
-            this.axMap1.ShowCoordinates = MW5.Api.CoordinatesDisplay.None;
+            this.axMap1.ShowCoordinates = CoordinatesDisplay.None;
             this.axMap1.ShowRedrawTime = false;
             this.axMap1.ShowVersionNumber = false;
             this.axMap1.Size = new System.Drawing.Size(254, 250);
-            this.axMap1.SystemCursor = MW5.Api.SystemCursor.MapDefault;
+            this.axMap1.SystemCursor = SystemCursor.MapDefault;
             this.axMap1.TabIndex = 0;
             this.axMap1.Tag = "";
-            this.axMap1.TileProvider = MW5.Api.TileProvider.OpenStreetMap;
+            this.axMap1.TileProvider = TileProvider.OpenStreetMap;
             this.axMap1.UdCursorHandle = 0;
             this.axMap1.UseSeamlessPan = false;
             this.axMap1.Visible = false;
-            this.axMap1.ZoomBehavior = MW5.Api.ZoomBehavior.UseTileLevels;
+            this.axMap1.ZoomBehavior = ZoomBehavior.UseTileLevels;
             this.axMap1.ZoomPercent = 0.3D;
             // 
             // chkLayerPreview
@@ -893,7 +895,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // icbCategories
             // 
             this.icbCategories.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
-            this.icbCategories.ComboStyle = MW5.Api.ColorRampType.Graduated;
+            this.icbCategories.ComboStyle = ColorRampType.Graduated;
             this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbCategories.FormattingEnabled = true;
@@ -1281,7 +1283,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // icbChartColorScheme
             // 
             this.icbChartColorScheme.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
-            this.icbChartColorScheme.ComboStyle = MW5.Api.ColorRampType.Graduated;
+            this.icbChartColorScheme.ComboStyle = ColorRampType.Graduated;
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using MW5.Plugins;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces.Projections;
 
 namespace MW5.Projections.BL

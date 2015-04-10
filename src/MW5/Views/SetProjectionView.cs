@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.UI;
+using MW5.UI.Forms;
 using MW5.Views.Abstract;
 using Syncfusion.Windows.Forms;
 

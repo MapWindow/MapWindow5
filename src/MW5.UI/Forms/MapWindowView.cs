@@ -1,17 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI.Properties;
 using Syncfusion.Windows.Forms;
 
-namespace MW5.UI
+namespace MW5.UI.Forms
 {
 #if STYLE2010
     public partial class MapWindowView : Office2010Form, IViewInternal

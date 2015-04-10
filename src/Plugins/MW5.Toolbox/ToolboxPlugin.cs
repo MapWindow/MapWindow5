@@ -19,7 +19,7 @@ namespace MW5.Plugins.Toolbox
     /// <summary>
     ///     The debug window plugin.
     /// </summary>
-    [PluginExport]
+    [MapWindowPlugin]
     public class ToolboxPlugin : BasePlugin
     {
         private IAppContext _context;

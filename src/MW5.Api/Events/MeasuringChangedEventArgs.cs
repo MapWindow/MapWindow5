@@ -1,5 +1,6 @@
 ﻿using System;
 using AxMapWinGIS;
+using MW5.Api.Enums;
 
 namespace MW5.Api.Events
 {

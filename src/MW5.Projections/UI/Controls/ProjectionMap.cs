@@ -12,7 +12,9 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using MW5.Api;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Map;
 using MW5.Plugins.Interfaces.Projections;
 
 namespace MW5.Projections.UI.Controls

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Interfaces
 {

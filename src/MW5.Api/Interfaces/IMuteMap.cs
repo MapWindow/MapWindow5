@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;

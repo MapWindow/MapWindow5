@@ -14,6 +14,7 @@ using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
 using MW5.UI;
+using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views
