@@ -12,7 +12,9 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 
@@ -36,7 +38,7 @@ namespace MW5.Controls
             _view.LocatorExtentsChanged += LocatorExtentsChanged;
         }
 
-        private void LocatorExtentsChanged(object sender, Plugins.Concrete.ExtentsEventArgs e)
+        private void LocatorExtentsChanged(object sender, ExtentsEventArgs e)
         {
             _noEvents = true;
             _mainMap.Extents = e.Extents;

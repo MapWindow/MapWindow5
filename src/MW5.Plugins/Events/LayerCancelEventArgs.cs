@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MW5.Plugins.Concrete
+namespace MW5.Plugins.Events
 {
     public class LayerRemoveEventArgs: CancelEventArgs
     {

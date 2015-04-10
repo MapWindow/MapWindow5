@@ -1,6 +1,8 @@
 ﻿using System;
 using MapWinGIS;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Editor;
@@ -32,7 +34,7 @@ namespace MW5.Plugins.TableEditor.Menu
             FindToolbarItem(MenuKeys.ShowTable).Enabled = _context.Map.SelectedFeatureSet != null;
         }
 
-        private void PluginItemClicked(object sender, Concrete.MenuItemEventArgs e)
+        private void PluginItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
             {

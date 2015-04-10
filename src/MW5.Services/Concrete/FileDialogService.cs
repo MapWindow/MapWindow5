@@ -10,20 +10,19 @@ namespace MW5.Services.Concrete
 {
     internal class FileDialogService : IFileDialogService
     {
-        private readonly IWin32Window _parent;
+        private readonly IMainView _parent;
 
         public FileDialogService(IMainView parent)
         {
             if (parent == null) throw new ArgumentNullException("parent");
-            _parent = parent as IWin32Window;
+            _parent = parent;
         }
 
         public bool SaveFile(string filter, ref string filename)
         {
-            var dialog = new SaveFileDialog();
-            dialog.Filter = filter;
-            dialog.FileName = filename;
-            if (dialog.ShowDialog(_parent) == DialogResult.OK)
+            var dialog = new SaveFileDialog {Filter = filter, FileName = filename};
+
+            if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
             {
                 filename = dialog.FileName;
                 return true;
@@ -65,7 +64,7 @@ namespace MW5.Services.Concrete
             {
                 dialog.RootFolder = Environment.SpecialFolder.MyComputer;
                 dialog.SelectedPath = initialPath;
-                if (dialog.ShowDialog(_parent) == DialogResult.OK)
+                if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
                 {
                     chosenPath = dialog.SelectedPath;
                     return true;
@@ -81,7 +80,7 @@ namespace MW5.Services.Concrete
             {
                 dialog.Multiselect = multiSelect;
                 dialog.Filter = filter;
-                if (dialog.ShowDialog(_parent) == DialogResult.OK)
+                if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
                 {
                     filenames = dialog.FileNames;
                 }

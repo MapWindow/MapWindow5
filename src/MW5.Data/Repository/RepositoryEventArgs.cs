@@ -1,5 +1,4 @@
 ﻿using System;
-using MW5.Data.Repository.Model;
 
 namespace MW5.Data.Repository
 {

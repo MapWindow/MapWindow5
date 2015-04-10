@@ -6,6 +6,9 @@
 //   The map listener.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using MW5.Plugins.Events;
+
 namespace MW5.Plugins.DebugWindow
 {
     #region

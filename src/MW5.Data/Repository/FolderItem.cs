@@ -2,11 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MW5.Data.Enums;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Data.Repository.Model
+namespace MW5.Data.Repository
 {
-    public class FolderItem: RepositoryItem, IFolderItem
+    internal class FolderItem : MetadataItem<FolderItemMetadata>, IFolderItem
     {
         private const string VectorFormats = "shp|kml|dgn|dxf|gml|mif|tab";
         private const string ImageFormats = "tif|png";
@@ -23,42 +24,14 @@ namespace MW5.Data.Repository.Model
             
         }
 
-        private FolderItemMetadata Metadata
-        {
-            get
-            {
-                var data = _node.TagObject as FolderItemMetadata;
-                if (data == null)
-                {
-                    throw new InvalidCastException("FolderItemMetadata object is expected");
-                }
-
-                return data;
-            }
-        }
-
         public string GetPath()
         {
             return Metadata.Path;
         }
 
-        public bool Loaded
-        {
-            get { return _node.ExpandedOnce; }
-        }
-
         public bool Root
         {
             get { return Metadata.Root; }
-        }
-
-        public void Refresh()
-        {
-            _node.ExpandedOnce = false;
-
-            _node.Nodes.Clear();
-
-            Expand();
         }
 
         public override void Expand()

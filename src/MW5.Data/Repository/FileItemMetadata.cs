@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace MW5.Data.Repository.Model
+namespace MW5.Data.Repository
 {
-    internal class FileItemMetadata
+    internal class FileItemMetadata: IItemMetadata
     {
         public FileItemMetadata(string filename)
         {

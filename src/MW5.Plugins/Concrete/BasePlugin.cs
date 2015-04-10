@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Events;
+using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;

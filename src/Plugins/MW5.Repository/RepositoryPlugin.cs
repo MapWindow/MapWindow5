@@ -20,8 +20,8 @@ namespace MW5.Plugins.Repository
 
         public override void Initialize(IAppContext context)
         {
-            _repositoryPresenter = context.Container.GetInstance<RepositoryPresenter>();
-            _dockPanelService = context.Container.GetInstance<DockPanelService>();
+            _repositoryPresenter = context.Container.GetSingleton<RepositoryPresenter>();
+            _dockPanelService = context.Container.GetSingleton<DockPanelService>();
         }
 
         public override void Terminate()

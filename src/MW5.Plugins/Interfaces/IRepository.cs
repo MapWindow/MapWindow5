@@ -4,16 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 
 namespace MW5.Plugins.Interfaces
 {
     public interface IRepository
     {
         IEnumerable<string> Folders { get; }
+        IEnumerable<DatabaseConnection> Connections { get; }
+        
+        void AddFolderLink();
         void AddFolderLink(string path);
-        void RemoveFolderLink(string path);
+        void RemoveFolderLink(string path, bool silent);
+
+        void AddConnection();
+        void AddConnection(DatabaseConnection connection);
+        void RemoveConnection(DatabaseConnection connection, bool silent);
 
         event EventHandler<FolderEventArgs> FolderAdded;
         event EventHandler<FolderEventArgs> FolderRemoved;
+        event EventHandler<ConnectionEventArgs> ConnectionAdded;
+        event EventHandler<ConnectionEventArgs> ConnectionRemoved;
     }
 }

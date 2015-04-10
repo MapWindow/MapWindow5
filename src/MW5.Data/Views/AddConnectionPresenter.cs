@@ -9,6 +9,8 @@ using MW5.Api.Static;
 using MW5.Data.Db;
 using MW5.Data.Enums;
 using MW5.Data.Views.Abstract;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 
@@ -25,34 +27,12 @@ namespace MW5.Data.Views
             view.TestConnection += TestConnection;
         }
 
-        private void TestConnection()
+        public DatabaseConnection Connection
         {
-            if (View.DatabaseType != GeoDatabaseType.PostGis)
+            get
             {
-                MessageService.Current.Info("Not implemented");
-                return;
-            }
-            
-            var param = View.GetPostGisParams();
-
-            if (!ValidateInput(param))
-            {
-                return;
-            }
-            
-            string cs = param.GetPostGisConnection();
-
-            using (var ds = new VectorDatasource())
-            {
-                if (!ds.Open(cs))
-                {
-                    MessageService.Current.Warn("Failed to open connection: " + ds.GdalLastErrorMsg);
-                }
-                else
-                {
-                    MessageService.Current.Info("Connected successfully");
-                    Debug.Print("Num layers: " + ds.LayerCount);
-                }
+                var param = View.GetPostGisParams();
+                return new DatabaseConnection(View.DatabaseType, param.Database, param.GetPostGisConnection());
             }
         }
 
@@ -91,6 +71,37 @@ namespace MW5.Data.Views
             }
 
             return true;
+        }
+
+        private void TestConnection()
+        {
+            if (View.DatabaseType != GeoDatabaseType.PostGis)
+            {
+                MessageService.Current.Info("Not implemented");
+                return;
+            }
+
+            var param = View.GetPostGisParams();
+
+            if (!ValidateInput(param))
+            {
+                return;
+            }
+
+            string cs = param.GetPostGisConnection();
+
+            using (var ds = new VectorDatasource())
+            {
+                if (!ds.Open(cs))
+                {
+                    MessageService.Current.Warn("Failed to open connection: " + ds.GdalLastErrorMsg);
+                }
+                else
+                {
+                    MessageService.Current.Info("Connected successfully");
+                    Debug.Print("Num layers: " + ds.LayerCount);
+                }
+            }
         }
     }
 }

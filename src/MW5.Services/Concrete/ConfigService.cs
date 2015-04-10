@@ -118,9 +118,20 @@ namespace MW5.Services.Concrete
 
             if (xmlConfig.Repository != null)
             {
-                foreach (var item in xmlConfig.Repository.Folders)
+                if (xmlConfig.Repository.Folders != null)
                 {
-                    _repository.AddFolderLink(item);
+                    foreach (var item in xmlConfig.Repository.Folders)
+                    {
+                        _repository.AddFolderLink(item);
+                    }
+                }
+
+                if (xmlConfig.Repository.Connections != null)
+                {
+                    foreach (var item in xmlConfig.Repository.Connections)
+                    {
+                        _repository.AddConnection(item);
+                    }
                 }
             }
         }

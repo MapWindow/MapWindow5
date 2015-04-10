@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools.XPMenus;

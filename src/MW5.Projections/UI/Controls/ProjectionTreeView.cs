@@ -8,16 +8,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
-using MW5.Plugins;
 using MW5.Plugins.Enums;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
@@ -27,10 +24,6 @@ using MW5.Projections.UI.Forms;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
-using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
-using TreeNodeAdv = Syncfusion.Windows.Forms.Tools.TreeNodeAdv;
-using TreeNodeAdvCollection = Syncfusion.Windows.Forms.Tools.TreeNodeAdvCollection;
-using TreeViewAdvCancelableNodeEventArgs = Syncfusion.Windows.Forms.Tools.TreeViewAdvCancelableNodeEventArgs;
 
 namespace MW5.Projections.UI.Controls
 {

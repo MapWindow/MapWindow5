@@ -1,9 +1,10 @@
 ﻿using System;
+using MW5.Data.Enums;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Data.Repository.Model
+namespace MW5.Data.Repository
 {
-    public class RepositoryItem: IRepositoryItem
+    internal class RepositoryItem: IRepositoryItem
     {
         protected readonly TreeNodeAdv _node;
 
@@ -48,9 +49,27 @@ namespace MW5.Data.Repository.Model
                 case RepositoryItemType.Vector:
                 case RepositoryItemType.Image:
                     return new FileItem(node);
+                case RepositoryItemType.Database:
+                    return new DatabaseItem(node);
+                case RepositoryItemType.DatabaseLayer:
+                    return new DatabaseLayerItem(node);
             }
 
             throw new ApplicationException("Invalid repository item type.");
+        }
+
+        public void Refresh()
+        {
+            _node.ExpandedOnce = false;
+
+            _node.Nodes.Clear();
+
+            Expand();
+        }
+
+        public bool Loaded
+        {
+            get { return _node.ExpandedOnce; }
         }
     }
 }

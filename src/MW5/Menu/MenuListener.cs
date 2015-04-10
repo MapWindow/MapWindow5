@@ -7,7 +7,9 @@ using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Data.Views;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections.UI.Forms;
@@ -44,7 +46,7 @@ namespace MW5.Menu
             }
         }
 
-        private void MenuItemClicked(object sender, Plugins.Concrete.MenuItemEventArgs e)
+        private void MenuItemClicked(object sender, MenuItemEventArgs e)
         {
             if (HandleCursorChanged(e.ItemKey))
             {

@@ -2,26 +2,12 @@
 using System.Drawing;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Data.Repository.Model
+namespace MW5.Data.Repository
 {
-    internal class FileItem: RepositoryItem, IFileItem
+    internal class FileItem : MetadataItem<FileItemMetadata>, IFileItem
     {
         internal FileItem(TreeNodeAdv node) : base(node)
         {
-        }
-
-        private FileItemMetadata Metadata
-        {
-            get
-            {
-                var data = _node.TagObject as FileItemMetadata;
-                if (data == null)
-                {
-                    throw new InvalidCastException("VectorItemMetadata object must be stored in the tag.");
-                }
-
-                return data;
-            }
         }
 
         public string Filename

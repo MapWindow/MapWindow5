@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;

@@ -4,6 +4,7 @@ namespace MW5.Plugins.Services
 {
     public interface ILayerService
     {
+        bool AddDatabaseLayer(string connection, string layerName);
         bool AddLayer(DataSourceType layerType);
         bool RemoveSelectedLayer();
         bool RemoveLayer(string filename);

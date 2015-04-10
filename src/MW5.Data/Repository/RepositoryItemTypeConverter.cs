@@ -1,5 +1,6 @@
 ﻿using System;
 using MW5.Api.Helpers;
+using MW5.Data.Enums;
 using MW5.Shared;
 
 namespace MW5.Data.Repository

@@ -9,6 +9,7 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Mvp;
@@ -32,7 +33,6 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
-        private readonly IRepository _repository;
 
         private IMap _map;
         private IMenu _menu;
@@ -49,17 +49,14 @@ namespace MW5
         private LegendPresenter _legendPresenter;
         private IToolbox _toolbox;
 
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService,
-            IRepository repository)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
-            if (repository == null) throw new ArgumentNullException("repository");
 
             _container = container;
             _projectionDatabase = projectionDatabase;
             _styleService = styleService;
-            _repository = repository;
         }
 
         /// <summary>
@@ -244,11 +241,6 @@ namespace MW5
         public IBroadcasterService Broadcaster
         {
             get { return _broadcaster; }
-        }
-
-        public IRepository Repository
-        {
-            get { return _repository; }
         }
 
         public void Close()

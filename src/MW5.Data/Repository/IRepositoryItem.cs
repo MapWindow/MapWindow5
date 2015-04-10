@@ -1,4 +1,6 @@
-﻿namespace MW5.Data.Repository.Model
+﻿using MW5.Data.Enums;
+
+namespace MW5.Data.Repository
 {
     public interface IRepositoryItem
     {
@@ -6,5 +8,7 @@
         RepositoryItemCollection SubItems { get; }
         object GetInternalObject();
         void Expand();
+        void Refresh();
+        bool Loaded { get; }
     }
 }

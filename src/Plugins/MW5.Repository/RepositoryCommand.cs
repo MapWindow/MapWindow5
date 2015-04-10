@@ -9,6 +9,8 @@
         OpenLocation = 4,
         GdalInfo = 5,
         AddFolderToMap = 6,
-        Refresh = 7
+        Refresh = 7,
+        AddConnection = 8,
+        RemoveConnection = 9,
     }
 }

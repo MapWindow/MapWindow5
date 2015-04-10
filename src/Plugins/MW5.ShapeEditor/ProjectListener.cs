@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Services;

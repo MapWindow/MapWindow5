@@ -23,31 +23,51 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public VectorLayer(string connectionString, string sql)
+        public VectorLayer()
         {
             _layer = new OgrLayer();
-            if (!_layer.OpenFromQuery(connectionString, sql))
+        }
+
+        public VectorLayer(string connectionString, string sql)
+            : this()
+        {
+            if (!OpenFromQuery(connectionString, sql))
             {
                 ReportOpenFailure();
             }
         }
 
         public VectorLayer(string connectionString, string layerName, bool forUpdate = false)
+            : this()
         {
-            _layer = new OgrLayer();
-            if (!_layer.OpenFromDatabase(connectionString, layerName, forUpdate))
+            if (!Open(connectionString, layerName, forUpdate))
             {
                 ReportOpenFailure();
             }
         }
 
         public VectorLayer(string filename, bool forUpdate = false)
+            : this()
         {
-            _layer = new OgrLayer();
-            if (!_layer.OpenFromFile(filename, forUpdate))
+            if (!Open(filename, forUpdate))
             {
                 ReportOpenFailure();
             }
+        }
+
+        public bool Open(string filename, bool forUpdate = false)
+        {
+            return _layer.OpenFromFile(filename, forUpdate);
+        }
+
+        public bool OpenFromQuery(string connectionString, string sql)
+        {
+            return _layer.OpenFromQuery(connectionString, sql);
+        }
+
+        public bool Open(string connectionString, string layerName, bool forUpdate = false)
+        {
+            return _layer.OpenFromDatabase(connectionString, layerName, forUpdate);
         }
 
         private void ReportOpenFailure()

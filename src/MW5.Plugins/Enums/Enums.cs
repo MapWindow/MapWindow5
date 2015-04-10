@@ -1,5 +1,13 @@
 ﻿namespace MW5.Plugins.Enums
 {
+    public enum GeoDatabaseType
+    {
+        PostGis = 0,
+        SpatiaLite = 1,
+        Oracle = 2,
+        MsSql = 3,
+    }
+
     public enum DataSourceType
     {
         Vector = 0,

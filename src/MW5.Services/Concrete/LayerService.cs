@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
@@ -7,6 +8,7 @@ using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -136,6 +138,23 @@ namespace MW5.Services.Concrete
             }
 
             return result;
+        }
+
+        public bool AddDatabaseLayer(string connection, string layerName)
+        {
+            var layer = new VectorLayer();
+            if (layer.Open(connection, layerName))
+            {
+                int layerHandle = _context.Map.Layers.Add(layer);
+                if (layerHandle != -1)
+                {
+                    _lastLayerHandle = layerHandle;
+                }
+
+                return true;
+            }
+
+            return false;
         }
 
         private bool AddLayersFromFilenameCore(string filename)

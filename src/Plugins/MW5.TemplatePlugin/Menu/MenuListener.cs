@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 
 namespace MW5.Plugins.TemplatePlugin.Menu
 {

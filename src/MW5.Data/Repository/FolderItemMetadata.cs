@@ -1,6 +1,6 @@
-﻿namespace MW5.Data.Repository.Model
+﻿namespace MW5.Data.Repository
 {
-    public class FolderItemMetadata
+    internal class FolderItemMetadata: IItemMetadata
     {
         public FolderItemMetadata(string path, bool root)
         {

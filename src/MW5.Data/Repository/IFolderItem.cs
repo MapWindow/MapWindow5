@@ -1,10 +1,8 @@
-﻿namespace MW5.Data.Repository.Model
+﻿namespace MW5.Data.Repository
 {
     public interface IFolderItem : IRepositoryItem
     {
         string GetPath();
-        bool Loaded { get; }
         bool Root { get; }
-        void Refresh();
     }
 }

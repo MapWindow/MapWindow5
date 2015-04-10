@@ -15,8 +15,7 @@ namespace MW5.Plugins
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterSingleton<IBroadcasterService, PluginBroadcaster>()
-                .RegisterSingleton<IPluginManager, PluginManager>()
-                .RegisterSingleton<IRepository, DataRepository>();
+                .RegisterSingleton<IPluginManager, PluginManager>();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 

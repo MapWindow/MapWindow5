@@ -29,5 +29,8 @@ namespace MW5.Api.Interfaces
         bool get_SupportsEditing(SaveType editingType);
         string get_StyleName(int styleIndex);
         SaveResult SaveChanges(out int savedCount, SaveType saveType = SaveType.SaveAll, bool validateShapes = true);
+        bool Open(string filename, bool forUpdate = false);
+        bool Open(string connectionString, string layerName, bool forUpdate = false);
+        bool OpenFromQuery(string connectionString, string sql);
     }
 }

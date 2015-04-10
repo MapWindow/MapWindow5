@@ -55,13 +55,14 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Enums.cs" />
+    <Compile Include="RepositoryCommand.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

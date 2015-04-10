@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
@@ -41,7 +43,7 @@ namespace MW5.Plugins.Symbology.Menu
             FindToolbarItem(MenuKeys.LabelMover).Checked = _context.Map.CustomCursor == LabelMoverCursor.Instance;
         }
 
-        private void PluginItemClicked(object sender, Concrete.MenuItemEventArgs e)
+        private void PluginItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
             {

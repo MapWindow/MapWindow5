@@ -1,4 +1,4 @@
-﻿namespace MW5.Data.Repository.Model
+﻿namespace MW5.Data.Repository
 {
     public interface IFileItem : IRepositoryItem
     {
