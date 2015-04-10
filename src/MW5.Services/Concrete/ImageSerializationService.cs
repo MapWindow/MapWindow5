@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Services;
-using MW5.UI;
 
-namespace MW5.Services.Serialization.Utility
+namespace MW5.Services.Concrete
 {
     public class ImageSerializationService
     {

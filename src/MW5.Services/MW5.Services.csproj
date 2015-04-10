@@ -91,7 +91,7 @@
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Concrete\ProjectLoader.cs" />
     <Compile Include="Serialization\IProjectLoader.cs" />
-    <Compile Include="Serialization\Utility\ImageSerializationService.cs" />
+    <Compile Include="Concrete\ImageSerializationService.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
@@ -99,8 +99,6 @@
     <Compile Include="Serialization\ISerializableContext.cs" />
     <Compile Include="Serialization\Legacy\MapWindow4Config.cs" />
     <Compile Include="Serialization\Legacy\MapWindow4Project.cs" />
-    <Compile Include="Serialization\Utility\DataContractSerializationHelper.cs" />
-    <Compile Include="Serialization\Utility\XmlSerializationHelper.cs" />
     <Compile Include="Serialization\XmlConfig.cs" />
     <Compile Include="Serialization\XmlEnvelope.cs" />
     <Compile Include="Serialization\XmlGroup.cs" />
@@ -134,6 +132,10 @@
       <Project>{dd259453-611a-4ad5-878e-385cb2c89df5}</Project>
       <Name>MW5.Projections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
       <Name>MW5.UI</Name>
@@ -150,7 +152,9 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Serialization\Utility\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

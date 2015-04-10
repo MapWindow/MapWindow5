@@ -14,6 +14,7 @@ using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Projections.UI.Forms;
 using MW5.Properties;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Menu

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace MW5.Api.Helpers
+namespace MW5.Shared
 {
     public static class ListHelper
     {

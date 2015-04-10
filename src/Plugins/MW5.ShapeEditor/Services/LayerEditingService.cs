@@ -7,6 +7,7 @@ using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Views;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.ShapeEditor.Services

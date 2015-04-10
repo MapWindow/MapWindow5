@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace MW5.Helpers
+namespace MW5.Shared
 {
-    public class ImageUtils : AxHost
+    public class OleImageHelper : AxHost
     {
-        public ImageUtils():
+        public OleImageHelper():
             base("59EE46BA-677D-4d20-BF10-8D8067CB8B33")
         {
             
         }
-        public ImageUtils(string clsid) : base(clsid)
+        public OleImageHelper(string clsid) : base(clsid)
         {
         }
 
-        public ImageUtils(string clsid, int flags) : base(clsid, flags)
+        public OleImageHelper(string clsid, int flags) : base(clsid, flags)
         {
         }
 

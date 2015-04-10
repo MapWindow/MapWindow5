@@ -146,7 +146,6 @@
     <Compile Include="Configuration\PluginsConfigPage.Designer.cs">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\CommandBarHelper.cs" />
     <Compile Include="Helpers\DockPanelHelper.cs" />
     <Compile Include="Helpers\MapInitializer.cs" />
     <Compile Include="Views\Abstract\IConfigView.cs" />
@@ -252,6 +251,10 @@
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Tools\MW5.Tools.csproj">
       <Project>{FB836BB0-2668-41E6-A4AD-7798B13C327F}</Project>

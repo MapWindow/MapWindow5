@@ -93,7 +93,7 @@ namespace MW5.Helpers
 
         private static AppStateSerializer GetSerializer()
         {
-            return new AppStateSerializer(SerializeMode.XMLFile, PathHelper.GetDockingConfigPath());
+            return new AppStateSerializer(SerializeMode.XMLFile, ConfigPathHelper.GetDockingConfigPath());
         }
     }
 }

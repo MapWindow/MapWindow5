@@ -100,13 +100,7 @@
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Concrete\CustomCursor.cs" />
-    <Compile Include="Helpers\EnumHelper.cs" />
-    <Compile Include="Helpers\IEnumConverter.cs" />
-    <Compile Include="Helpers\ImageUtils.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Helpers\MapHelper.cs" />
-    <Compile Include="Helpers\PathHelper.cs" />
     <Compile Include="Plugins\LayerSettingsBase.cs" />
     <Compile Include="Concrete\SelectionItem.cs" />
     <Compile Include="Concrete\ShapesList.cs" />
@@ -213,12 +207,8 @@
     <Compile Include="Events\LayerAddedEventArgs.cs" />
     <Compile Include="Events\GridOpenedEventArgs.cs" />
     <Compile Include="Events\ValidateShapeEventArgs.cs" />
-    <Compile Include="Helpers\ArrayHelper.cs" />
-    <Compile Include="Helpers\ColorHelper.cs" />
     <Compile Include="Helpers\ErrorHelper.cs" />
     <Compile Include="Helpers\GeometryHelper.cs" />
-    <Compile Include="Helpers\ListHelper.cs" />
-    <Compile Include="Helpers\MouseEventHelper.cs" />
     <Compile Include="Helpers\ShapefileHelper.cs" />
     <Compile Include="Helpers\WrapperHelper.cs" />
     <Compile Include="Interfaces\IAttributeTable.cs" />

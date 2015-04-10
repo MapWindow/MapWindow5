@@ -5,7 +5,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace MW5.Services.Serialization.Utility
+namespace MW5.Shared
 {
     public static class XmlSerializationHelper
     {

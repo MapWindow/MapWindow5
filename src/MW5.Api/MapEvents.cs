@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using AxMapWinGIS;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
+using MW5.Shared;
 
 namespace MW5.Api
 {

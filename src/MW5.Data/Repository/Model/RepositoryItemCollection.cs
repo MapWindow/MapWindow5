@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MW5.Api;
 using MW5.Api.Helpers;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository.Model

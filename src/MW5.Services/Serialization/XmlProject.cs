@@ -7,7 +7,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Serialization.Utility;
+using MW5.Services.Concrete;
 
 namespace MW5.Services.Serialization
 {

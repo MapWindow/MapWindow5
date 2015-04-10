@@ -100,9 +100,8 @@
     <Compile Include="Concrete\ToolboxGroupEventArgs.cs" />
     <Compile Include="Concrete\ToolboxToolEventArgs.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Helpers\AssemblyHelper.cs" />
-    <Compile Include="Helpers\PathHelper.cs" />
-    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\AppContextHelper.cs" />
+    <Compile Include="Helpers\ConfigPathHelper.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
     <Compile Include="Interfaces\IDockPanel.cs" />
     <Compile Include="Interfaces\IDockPanelCollection.cs" />
@@ -169,6 +168,10 @@
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
       <Project>{8aad34b3-8ef3-485f-a04d-ed2c07d8f1df}</Project>
       <Name>MW5.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

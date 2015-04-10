@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Api.Helpers;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Helpers

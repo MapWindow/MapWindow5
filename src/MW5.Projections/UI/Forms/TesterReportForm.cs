@@ -3,6 +3,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Projections.Helpers;
 using MW5.UI;
+using MW5.UI.Helpers;
 
 namespace MW5.Projections.UI.Forms
 {

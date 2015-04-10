@@ -10,7 +10,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
-using MW5.Services.Serialization.Utility;
+using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
@@ -44,14 +44,14 @@ namespace MW5.Services.Concrete
 
         public string ConfigPath
         {
-            get { return PathHelper.GetConfigPath(); }
+            get { return ConfigPathHelper.GetConfigPath(); }
         }
 
         public bool Save()
         {
             try
             {
-                using (var stream = new StreamWriter(PathHelper.GetConfigFilePath(), false))
+                using (var stream = new StreamWriter(ConfigPathHelper.GetConfigFilePath(), false))
                 {
                     string state = GetXmlConfig().Serialize(false);
                     stream.Write(state);
@@ -69,7 +69,7 @@ namespace MW5.Services.Concrete
 
         public bool Load()
         {
-            string path = PathHelper.GetConfigFilePath();
+            string path = ConfigPathHelper.GetConfigFilePath();
             if (!File.Exists(path))
             {
                 return false;

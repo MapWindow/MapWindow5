@@ -5,7 +5,7 @@ using MW5.Plugins.Services;
 
 namespace MW5.Plugins.Helpers
 {
-    public static class PathHelper
+    public static class ConfigPathHelper
     {
         private const string AppName = "MapWindow5";
 
@@ -31,18 +31,6 @@ namespace MW5.Plugins.Helpers
         public static string GetDockingConfigPath()
         {
             return GetConfigPath() + @"\dockstate";
-        }
-
-        public static void OpenFolderWithExplorer(string path)
-        {
-            try
-            {
-                Process.Start(path);
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Warn("Failed to open folder: " + path + Environment.NewLine + ex.Message);
-            }
         }
     }
 }

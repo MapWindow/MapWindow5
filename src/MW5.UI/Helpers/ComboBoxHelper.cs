@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Helpers
@@ -12,7 +13,7 @@ namespace MW5.UI.Helpers
     {
         public static IEnumerable<ComboBoxEnumItem<T>> GetComboItems<T>(IEnumerable<T> items) where T : struct, IConvertible
         {
-            return items.Select(item => new ComboBoxEnumItem<T>(item, Api.Helpers.EnumHelper.GetToStringFunction<T>()));
+            return items.Select(item => new ComboBoxEnumItem<T>(item, EnumHelper.GetToStringFunction<T>()));
         }
 
         public static void AddItemsFromEnum<T>(this ComboBoxAdv box) where T: struct, IConvertible

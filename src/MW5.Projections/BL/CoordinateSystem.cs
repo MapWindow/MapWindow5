@@ -3,6 +3,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces.Projections;
+using MW5.Shared;
 
 namespace MW5.Projections.BL
 {

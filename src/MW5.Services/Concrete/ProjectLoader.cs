@@ -8,7 +8,6 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Serialization;
 using MW5.Services.Serialization.Legacy;
-using MW5.Services.Serialization.Utility;
 
 namespace MW5.Services.Concrete
 {

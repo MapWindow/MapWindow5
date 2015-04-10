@@ -8,6 +8,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.IdentifierTestPlugin

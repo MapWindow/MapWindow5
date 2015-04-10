@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace MW5.Api.Helpers
+namespace MW5.Shared
 {
     public static class ColorHelper
     {

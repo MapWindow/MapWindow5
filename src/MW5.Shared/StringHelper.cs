@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MW5.Plugins.Helpers
+namespace MW5.Shared
 {
     public static class StringHelper
     {

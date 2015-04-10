@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace MW5.Api.Helpers
+namespace MW5.Shared
 {
-    internal static class ArrayHelper
+    public static class ArrayHelper
     {
-        internal static void CheckCopyTo(Array array, int arrayIndex, int collectionSize)
+        public static void CheckCopyTo(Array array, int arrayIndex, int collectionSize)
         {
             if (array == null)
             {

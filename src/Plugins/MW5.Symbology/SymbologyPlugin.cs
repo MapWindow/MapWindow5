@@ -9,6 +9,7 @@ using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Menu;
 using MW5.Plugins.Symbology.Services;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology

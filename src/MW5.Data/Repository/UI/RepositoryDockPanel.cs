@@ -6,6 +6,7 @@ using MW5.Data.Repository.Model;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Shared;
 
 namespace MW5.Data.Repository.UI
 {

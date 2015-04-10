@@ -1,9 +1,9 @@
 ﻿using System.Globalization;
 
-namespace MW5.Plugins.TableEditor.Helpers
+namespace MW5.Shared
 {
     /// <summary>
-    ///  Parsing strings operations with numbers
+    ///  Class for performinc nummeric actions
     /// </summary>
     public static class NumericHelper
     {

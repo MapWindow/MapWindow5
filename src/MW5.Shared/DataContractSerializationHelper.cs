@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Xml;
 
-namespace MW5.Services.Serialization.Utility
+namespace MW5.Shared
 {
     public static class DataContractSerializationHelper
     {

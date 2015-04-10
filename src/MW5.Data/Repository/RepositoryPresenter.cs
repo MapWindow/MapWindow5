@@ -10,6 +10,7 @@ using MW5.Data.Repository.UI;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Data.Repository
 {
@@ -130,7 +131,7 @@ namespace MW5.Data.Repository
                             path = vector.Filename;
                         }
 
-                        Plugins.Helpers.PathHelper.OpenFolderWithExplorer(path);
+                        PathHelper.OpenFolderWithExplorer(path);
                     }
                     break;
                 case RepositoryCommand.GdalInfo:

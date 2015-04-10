@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Plugins.Interfaces;
-using MW5.Services.Serialization.Utility;
+using MW5.Services.Concrete;
 
 namespace MW5.Services.Serialization
 {

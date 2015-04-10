@@ -3,7 +3,7 @@ using System.Drawing;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
-using MW5.Helpers;
+using MW5.Shared;
 using stdole;
 using Image = MapWinGIS.Image;
 
@@ -311,7 +311,7 @@ namespace MW5.Api.Concrete
 
         public System.Drawing.Image ToGdiPlusBitmap()
         {
-            var utils = new ImageUtils();
+            var utils = new OleImageHelper();
             return utils.GetPictureFromIPicture(this.Picture);
         }
 
@@ -322,7 +322,7 @@ namespace MW5.Api.Concrete
                 return false;
             }
 
-            ImageUtils utils = new ImageUtils();
+            OleImageHelper utils = new OleImageHelper();
             Picture = (IPictureDisp)utils.GetIPictureFromPicture(image);
             return true;
         }

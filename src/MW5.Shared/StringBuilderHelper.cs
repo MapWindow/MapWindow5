@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
-namespace MW5.Plugins.ShapeEditor.Helpers
+namespace MW5.Shared
 {
     public static class StringBuilderHelper
     {

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MW5.Api.Helpers
+namespace MW5.Shared
 {
     public static class MouseEventHelper
     {

@@ -11,6 +11,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections;
 using MW5.Projections.Services.Abstract;
+using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {

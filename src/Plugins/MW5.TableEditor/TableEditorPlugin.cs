@@ -13,6 +13,7 @@ using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Menu;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 

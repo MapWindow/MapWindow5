@@ -24,6 +24,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Helpers;
 

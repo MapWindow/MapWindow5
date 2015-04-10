@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -67,7 +66,7 @@ namespace MW5.Controls
                     if (layer != null && File.Exists(layer.Filename))
                     {
                         string path = Path.GetDirectoryName(layer.Filename);
-                        PathHelper.OpenFolderWithExplorer(path);
+                        Shared.PathHelper.OpenFolderWithExplorer(path);
                     }
                     else
                     {

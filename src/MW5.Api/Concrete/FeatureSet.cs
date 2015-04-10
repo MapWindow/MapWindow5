@@ -5,6 +5,7 @@ using System.IO;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {

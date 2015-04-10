@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using MapWinGIS;
 using MW5.Api.Helpers;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {

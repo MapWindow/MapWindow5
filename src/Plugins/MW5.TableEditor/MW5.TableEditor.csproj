@@ -156,7 +156,6 @@
     <Compile Include="Editor\VirtualGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
@@ -378,6 +377,10 @@
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>

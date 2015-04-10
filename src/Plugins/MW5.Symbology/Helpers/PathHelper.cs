@@ -37,22 +37,5 @@ namespace MW5.Plugins.Symbology.Helpers
         {
             return GetAppDirectory() + @"\Styles\";
         }
-
-        internal static void CreateFolder(string filename)
-        {
-            string path = Path.GetDirectoryName(filename);
-
-            if (path != null && !Directory.Exists(path))
-            {
-                try
-                {
-                    Directory.CreateDirectory(path);
-                }
-                catch (Exception ex)
-                {
-                    SymbologyPlugin.Msg.Warn("Failed to create directory: " + path + Environment.NewLine + ex.Message);
-                }
-            }
-        }
     }
 }
