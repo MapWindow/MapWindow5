@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MW5.Plugins.Concrete
+namespace MW5.Plugins.Events
 {
     public class RenderedEventArgs: EventArgs
     {
