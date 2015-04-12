@@ -7,12 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 
-namespace MW5.UI.Controls
+namespace MW5.UI.Legacy
 {
     /// <summary>
     /// Provides functionality to choose layers from project or from open file dialog

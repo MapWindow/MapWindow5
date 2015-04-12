@@ -1,4 +1,4 @@
-﻿namespace MW5.UI.Controls
+﻿namespace MW5.UI.Legacy
 {
     partial class LayersDialog
     {

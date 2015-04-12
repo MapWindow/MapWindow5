@@ -24,7 +24,7 @@ namespace MW5.Plugins
     {
         private readonly IPluginManager _manager;
         private readonly Dictionary<string, FieldInfo> _fields = new Dictionary<string,FieldInfo>();
-        private Guid _symbologyPluginGuid = new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7");
+        private readonly Guid _symbologyPluginGuid = new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7");
 
         public PluginBroadcaster(IPluginManager manager)
         {

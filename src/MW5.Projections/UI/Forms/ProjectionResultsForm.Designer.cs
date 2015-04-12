@@ -1,6 +1,7 @@
 ﻿using MW5.Api.Enums;
 using MW5.Projections.UI.Controls;
 using MW5.UI.Controls;
+using MW5.UI.Legacy;
 
 namespace MW5.Projections.UI.Forms
 {
@@ -38,7 +39,7 @@ namespace MW5.Projections.UI.Forms
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.projectionMap1 = new MW5.Projections.UI.Controls.ProjectionMap();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.dgv = new MW5.UI.Controls.LayerStyleDataGridView();
+            this.dgv = new LayerStyleDataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblX = new System.Windows.Forms.ToolStripStatusLabel();

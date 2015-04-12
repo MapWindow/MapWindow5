@@ -52,6 +52,7 @@
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -59,34 +60,43 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\GridControlBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GridListControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\IGridList.cs" />
+    <Compile Include="Controls\ToolTipGridEventArgs.cs" />
     <Compile Include="Forms\AppView.cs" />
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Controls\GeometryRowStyle.cs" />
-    <Compile Include="Controls\LayersDialog.cs">
+    <Compile Include="Legacy\GeometryRowStyle.cs" />
+    <Compile Include="Legacy\LayersDialog.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\LayersDialog.Designer.cs">
+    <Compile Include="Legacy\LayersDialog.Designer.cs">
       <DependentUpon>LayersDialog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\LayerStyleDataGridView.cs">
+    <Compile Include="Legacy\LayerStyleDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\LayersControl.cs">
+    <Compile Include="Legacy\LayersControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\LayersControl.Designer.cs">
+    <Compile Include="Legacy\LayersControl.Designer.cs">
       <DependentUpon>LayersControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\TreeViewBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\TooltipEventArgs.cs" />
+    <Compile Include="Controls\ToolTipEventArgs.cs" />
     <Compile Include="Docking\DockHelper.cs" />
     <Compile Include="Docking\DockPanel.cs" />
     <Compile Include="Docking\DockPanelCollection.cs" />
@@ -149,13 +159,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\LayersDialog.resx">
+    <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LayerStyleDataGridView.resx">
+    <EmbeddedResource Include="Legacy\LayerStyleDataGridView.resx">
       <DependentUpon>LayerStyleDataGridView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\LayersControl.resx">
+    <EmbeddedResource Include="Legacy\LayersControl.resx">
       <DependentUpon>LayersControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MapWindowForm.resx">

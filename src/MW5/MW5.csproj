@@ -95,6 +95,9 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Configuration\PluginInfoGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\LegendCommand.cs" />
     <Compile Include="Controls\LegendDockPanel.cs">
       <SubType>UserControl</SubType>

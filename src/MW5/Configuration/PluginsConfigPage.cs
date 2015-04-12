@@ -13,147 +13,45 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Configuration
 {
-    internal partial class PluginsConfigPage : UserControl, IConfigPage
+    internal partial class PluginsConfigPage : PluginInfoGrid, IConfigPage
     {
-        private PluginProvider _pluginProvider;
-        private readonly IConfigService _configService;
+        private readonly PluginProvider _pluginProvider;
         private readonly IPluginManager _manager;
         private readonly IAppContext _context;
-        private const string SELECTED_PROPERTY = "Selected";
-        private int _mouseOver = 0;
 
-        public PluginsConfigPage(IConfigService configService, IPluginManager manager, IAppContext context)
+        public PluginsConfigPage(IPluginManager manager, IAppContext context)
         {
-            if (configService == null) throw new ArgumentNullException("configService");
             if (manager == null) throw new ArgumentNullException("manager");
             if (context == null) throw new ArgumentNullException("context");
-            _configService = configService;
             _manager = manager;
             _context = context;
 
             InitializeComponent();
 
             _pluginProvider = new PluginProvider(manager);
-            _grid.DataSource = _pluginProvider.List;
-            ApplyGridOptions(_grid);
-            lblDescription.Text = "";
-        }
-
-        // TODO: extract to application level styles
-        private void ApplyGridOptions(GridGroupingControl grid)
-        {
-            grid.Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle;
-            grid.Appearance.AnyCell.Borders.All = new GridBorder(GridBorderStyle.None, Color.White);
-
-            grid.BrowseOnly = false;
-            grid.ShowRowHeaders = false;
-            grid.ShowColumnHeaders = true;
-            grid.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
-            grid.GridLineColor = Color.White;
-            grid.ShowGroupDropArea = false;
             
-            grid.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
-            grid.TopLevelGroupOptions.ShowCaption = false;
-            
-            grid.ActivateCurrentCellBehavior = GridCellActivateAction.None;
-            
-            grid.Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.HideCurrentCell;
-            grid.TableOptions.ListBoxSelectionMode = SelectionMode.One;
-            grid.TableOptions.SelectionBackColor = Color.FromArgb(64, 51, 153, 255);
-            grid.TableOptions.SelectionTextColor = Color.Black;
-            grid.TableOptions.ListBoxSelectionColorOptions = GridListBoxSelectionColorOptions.ApplySelectionColor;
+            DataSource = _pluginProvider.List;
+            KeyDown += PluginsConfigPage_KeyDown;
 
-            // any option other than None will disable SelectedRecordsChanged event
-            // http ://www.syncfusion.com/forums/46745/grid-grouping-control-selection-color
-            grid.TableOptions.AllowSelection = GridSelectionFlags.None;         
-
-            grid.TableControlCellClick += grid_TableControlCellClick;
-            grid.TableControlCheckBoxClick += grid_TableControlCellClick;
-            grid.TableControlCellHitTest += grid_TableControlCellHitTest;
-            grid.TableControlPrepareViewStyleInfo += grid_TableControlPrepareViewStyleInfo;
-            grid.SelectedRecordsChanged += grid_SelectedRecordsChanged;
-            grid.TableControlKeyDown += grid_TableControlKeyDown;
+            PrepareToolTip += ListControlPrepareToolTip;
         }
 
-        void grid_TableControlKeyDown(object sender, GridTableControlKeyEventArgs e)
+        void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Inner.KeyCode == Keys.Space || e.Inner.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Space)
             {
-                if (_grid.Table.SelectedRecords.Count > 0)
-                {
-                    var rec = _grid.Table.SelectedRecords[0].Record;
-                    ToggleRecordState(rec);
-                }
+                ToggleProperty(info => info.Selected);
             }
         }
 
-        private void grid_SelectedRecordsChanged(object sender, SelectedRecordsChangedEventArgs e)
+        private void ListControlPrepareToolTip(object sender, UI.Controls.ToolTipGridEventArgs e)
         {
-            if (e.SelectedRecord == null || e.SelectedRecord.Record == null)
+            var info = this[e.RecordIndex];
+            if (info != null)
             {
-                return;
+                e.ToolTip.Header.Text = info.Name;
+                e.ToolTip.Body.Text = info.BasePlugin.Description;
             }
-            
-            // displaying description
-            var record = e.SelectedRecord.Record;
-            if (record != null)
-            {
-                var info = record.GetData() as PluginInfo;
-                if (info != null)
-                {
-                    lblDescription.Text = info.BasePlugin.Description;
-                    lblDescription.Refresh();
-                }
-            }
-        }
-
-        private void grid_TableControlPrepareViewStyleInfo(object sender, GridTableControlPrepareViewStyleInfoEventArgs e)
-        {
-            if (e.Inner.RowIndex == _mouseOver)
-            {
-                // uncomment to turn on hot tracking
-                // e.Inner.Style.BackColor = Color.FromArgb(64, 51, 153, 255);
-            }
-            e.Inner.Style.TextColor = Color.Black;
-        }
-
-        private void grid_TableControlCellHitTest(object sender, GridTableControlCellHitTestEventArgs e)
-        {
-            if (e.Inner.RowIndex > 0 && e.Inner.RowIndex != _mouseOver)
-            {
-                _mouseOver = e.Inner.RowIndex;
-                _grid.Refresh();
-            }
-        }
-
-        private void grid_TableControlCellClick(object sender, GridTableControlCellClickEventArgs e)
-        {
-            if (e.Inner.RowIndex <= 1)
-            {
-                return;
-            }
-
-            var rec = GetRecord(e.Inner.RowIndex);
-            ToggleRecordState(rec);
-        }
-
-        private void ToggleRecordState(Record record)
-        {
-            if (record != null)
-            {
-                var value = (bool)record.GetValue(SELECTED_PROPERTY);
-                record.SetValue(SELECTED_PROPERTY, !value);
-            }
-        }
-
-        private Record GetRecord(int rowIndex)
-        {
-            int index = rowIndex - 2;
-            if (index >= 0 && index < _grid.Table.Records.Count)
-            {
-                return _grid.Table.Records[index];
-            }
-            return null;
         }
 
         public string PageName
@@ -168,6 +66,7 @@ namespace MW5.Configuration
             {
                 bool appPlugin = dict.ContainsKey(plugin.Identity.Guid);
                 plugin.SetApplicationPlugin(appPlugin);
+
                 if (appPlugin && !_manager.PluginActive(plugin.Identity))
                 {
                     _manager.LoadPlugin(plugin.Identity, _context);

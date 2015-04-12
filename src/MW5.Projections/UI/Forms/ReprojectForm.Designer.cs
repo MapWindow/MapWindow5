@@ -1,5 +1,6 @@
 ﻿using MW5.Projections.UI.Controls;
 using MW5.UI.Controls;
+using MW5.UI.Legacy;
 
 namespace MW5.Projections.UI.Forms
 {

@@ -9,11 +9,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using MW5.Api;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
-namespace MW5.UI.Controls
+namespace MW5.UI.Legacy
 {
     /// <summary>
     /// Data grid view with some commonly used options

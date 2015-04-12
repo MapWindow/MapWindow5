@@ -8,16 +8,14 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
-using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 
-namespace MW5.UI.Controls
+namespace MW5.UI.Legacy
 {
     /// <summary>
     /// A dialog for layer selection (either from disk or from project)

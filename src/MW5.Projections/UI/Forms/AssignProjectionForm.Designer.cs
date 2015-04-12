@@ -1,5 +1,6 @@
 ﻿using MW5.Projections.UI.Controls;
 using MW5.UI.Controls;
+using MW5.UI.Legacy;
 
 namespace MW5.Projections.UI.Forms
 {
@@ -35,7 +36,7 @@ namespace MW5.Projections.UI.Forms
             this.btnOk = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.SplitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.LayersControl1 = new MW5.UI.Controls.LayersControl();
+            this.LayersControl1 = new LayersControl();
             this.btnTest = new System.Windows.Forms.Button();
             this.lblProjection = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -92,7 +93,7 @@ namespace MW5.Projections.UI.Forms
             // 
             // LayersControl1
             // 
-            this.LayersControl1.ControlType = MW5.UI.Controls.LayersControl.CustomType.Default;
+            this.LayersControl1.ControlType = LayersControl.CustomType.Default;
             this.LayersControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.LayersControl1.Location = new System.Drawing.Point(0, 0);
             this.LayersControl1.MinimumSize = new System.Drawing.Size(233, 262);

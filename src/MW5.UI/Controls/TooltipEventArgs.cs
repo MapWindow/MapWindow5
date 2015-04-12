@@ -14,6 +14,7 @@ namespace MW5.UI.Controls
         {
             ToolTip = info;
         }
+
         public ToolTipInfo ToolTip { get; private set; }
     }
 }
