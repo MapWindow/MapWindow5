@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text;
+using log4net;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Log;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
 
-namespace MW5.Plugins.Log
+namespace MW5.Services.Concrete
 {
     public class LoggingService: ILoggingService
     {
+        private readonly ILog _log4NetLogger;
+
         private readonly List<LogEntry> _entries = new List<LogEntry>();
 
         private readonly IAppContext _context;
@@ -23,6 +23,8 @@ namespace MW5.Plugins.Log
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
+
+            _log4NetLogger = LogManager.GetLogger(typeof(Logger));
 
             var broadcaster = _context.Container.Resolve<IBroadcasterService>();
             EntryAdded += (s, e) =>
@@ -60,6 +62,7 @@ namespace MW5.Plugins.Log
         public void Info(string msg, params object[] param)
         {
             Log(string.Format(msg, param), LogLevel.Info);
+
         }
 
         public void Debug(string msg, params object[] param)
@@ -96,7 +99,32 @@ namespace MW5.Plugins.Log
 
             FireEntryAdded(entry);
 
+            AddToFile(entry);
+
             // TODO: display info about exception
+        }
+
+        private void AddToFile(LogEntry entry)
+        {
+            switch (entry.Level)
+            {
+                case LogLevel.Info:
+                    _log4NetLogger.Info(entry.Message, entry.Exception);
+                    break;
+                case LogLevel.Debug:
+                    _log4NetLogger.Debug(entry.Message, entry.Exception);
+                    break;
+                case LogLevel.Warn:
+                    _log4NetLogger.Warn(entry.Message, entry.Exception);
+                    break;
+                case LogLevel.Error:
+                    _log4NetLogger.Error(entry.Message, entry.Exception);
+                    break;
+                case LogLevel.Fatal:
+                    _log4NetLogger.Fatal(entry.Message, entry.Exception);
+                    break;
+            }
+            
         }
 
         private void WriteToDebug(string msg, params object[] param)

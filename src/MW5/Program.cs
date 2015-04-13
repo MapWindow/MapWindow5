@@ -32,6 +32,7 @@ namespace MW5
             var container = CreateContainer();
             CompositionRoot.Compose(container);
             var logger = container.Resolve<ILoggingService>();      // this will initialize Logger.Current
+            logger.Info("APPLICATION STARUP");
 
             LoadConfig(container);
 
