@@ -15,6 +15,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.UI.Style;
 
 namespace MW5.Views
 {

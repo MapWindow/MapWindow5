@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Legacy;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Forms;
 
@@ -412,7 +413,7 @@ namespace MW5.Plugins.TableEditor.Forms
                 }
                 catch (Exception ex)
                 {
-                  //MapWinUtility.Logger.Dbg("DEBUG: " + ex.ToString());
+                    Logger.Current.Warn("Math parser: failed to populate data for row.", ex);
                 }
               }
             }

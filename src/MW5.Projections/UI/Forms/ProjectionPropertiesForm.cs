@@ -37,9 +37,6 @@ namespace MW5.Projections.UI.Forms
         // well-known coordinate system (in case one was passed)
         private readonly ICoordinateSystem _coordinateSystem;
 
-        // max index in the list
-        private int _index = 0;
-
         #endregion
 
         #region Constructors

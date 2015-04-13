@@ -26,6 +26,15 @@ namespace MW5.Plugins
         private readonly Dictionary<string, FieldInfo> _fields = new Dictionary<string,FieldInfo>();
         private readonly Guid _symbologyPluginGuid = new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7");
 
+        public event EventHandler<MenuItemEventArgs> MenuItemClicked;
+        public event EventHandler<MenuItemEventArgs> StatusItemClicked;
+
+        private static IBroadcasterService _instance;
+        public static IBroadcasterService Instance
+        {
+            get { return _instance; }
+        }
+
         public PluginBroadcaster(IPluginManager manager)
         {
             if (manager == null)
@@ -34,16 +43,7 @@ namespace MW5.Plugins
             }
             _manager = manager;
 
-            _manager.PluginItemClicked += manager_PluginItemClicked;
-        }
-
-        private void manager_PluginItemClicked(object sender, MenuItemEventArgs e)
-        {
-            var item = sender as IMenuItem;
-            if (item != null)
-            {
-                BroadcastEvent(p => p.ItemClicked_, sender, e, item.PluginIdentity);
-            }
+            _instance = this;
         }
 
         /// <summary>
@@ -148,6 +148,55 @@ namespace MW5.Plugins
             }
 
             return _fields[eventName];
+        }
+
+        private void BroadcastPluginItemClicked(object sender, MenuItemEventArgs e)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                BroadcastEvent(p => p.ItemClicked_, sender, e, item.PluginIdentity);
+            }
+        }
+
+        public void FireItemClicked(object sender, MenuItemEventArgs args)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                if (item.PluginIdentity == PluginIdentity.Default)
+                {
+                    var handler = MenuItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+                }
+                else
+                {
+                    BroadcastPluginItemClicked(sender, args);
+                }
+            }
+        }
+
+        public void FireStatusItemClicked(object sender, MenuItemEventArgs args)
+        {
+            var item = sender as IMenuItem;
+            if (item != null)
+            {
+                if (item.PluginIdentity == PluginIdentity.Default)
+                {
+                    var handler = StatusItemClicked;
+                    if (handler != null)
+                    {
+                        handler.Invoke(sender, args);
+                    }
+                }
+                else
+                {
+                    BroadcastPluginItemClicked(sender, args);
+                }
+            }
         }
     }
 }

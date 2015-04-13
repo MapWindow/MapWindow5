@@ -9,6 +9,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 
 namespace MW5.Plugins.Services
 {
@@ -28,5 +29,12 @@ namespace MW5.Plugins.Services
 
         void BroadcastEvent<T>(Expression<Func<BasePlugin, EventHandler<T>>> eventHandler, object sender, T args, PluginIdentity identity)
             where T : EventArgs;
+
+        event EventHandler<MenuItemEventArgs> MenuItemClicked;
+        event EventHandler<MenuItemEventArgs> StatusItemClicked;
+
+        void FireItemClicked(object sender, MenuItemEventArgs args);
+
+        void FireStatusItemClicked(object sender, MenuItemEventArgs args);
     }
 }

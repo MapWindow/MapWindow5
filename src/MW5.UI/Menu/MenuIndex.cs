@@ -8,7 +8,6 @@ using MW5.Plugins.Interfaces;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
-using System.Linq;
 
 namespace MW5.UI.Menu
 {

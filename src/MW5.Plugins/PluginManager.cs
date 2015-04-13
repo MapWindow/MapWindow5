@@ -37,18 +37,6 @@ namespace MW5.Plugins
 
         public event EventHandler<PluginEventArgs> PluginUnloaded;
 
-        // TODO: move this to the broadcaster
-        public event EventHandler<MenuItemEventArgs> MenuItemClicked;
-        public event EventHandler<MenuItemEventArgs> StatusItemClicked;
-
-        public event EventHandler<MenuItemEventArgs> PluginItemClicked;
-
-        private static IPluginManager _instance;
-        public static IPluginManager Instance
-        {
-            get { return _instance; }
-        }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
@@ -57,7 +45,6 @@ namespace MW5.Plugins
             if (container == null) throw new ArgumentNullException("container");
 
             _container = container;
-            _instance = this;
         }
 
         /// <summary>
@@ -247,56 +234,6 @@ namespace MW5.Plugins
         public bool PluginActive(PluginIdentity identity)
         {
             return _active.Contains(identity);
-        }
-
-        public void FireItemClicked(object sender, MenuItemEventArgs args)
-        {
-            var item = sender as IMenuItem;
-            if (item != null)
-            {
-                if (item.PluginIdentity == PluginIdentity.Default)
-                {
-                    var handler = MenuItemClicked;
-                    if (handler != null)
-                    {
-                        handler.Invoke(sender, args);
-                    }
-                }
-                else
-                {
-                    var handler = PluginItemClicked;
-                    if (handler != null)
-                    {
-                        handler.Invoke(sender, args);
-                    }
-                    
-                }
-            }
-        }
-
-        public void FireStatusItemClicked(object sender, MenuItemEventArgs args)
-        {
-            var item = sender as IMenuItem;
-            if (item != null)
-            {
-                if (item.PluginIdentity == PluginIdentity.Default)
-                {
-                    var handler = StatusItemClicked;
-                    if (handler != null)
-                    {
-                        handler.Invoke(sender, args);
-                    }
-                }
-                else
-                {
-                    var handler = PluginItemClicked;
-                    if (handler != null)
-                    {
-                        handler.Invoke(sender, args);
-                    }
-
-                }
-            }
         }
 
         private void FirePluginUnloaded(PluginIdentity identity)

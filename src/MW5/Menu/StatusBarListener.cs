@@ -39,7 +39,7 @@ namespace MW5.Menu
             var appContext = context as AppContext;
             if (appContext != null)
             {
-                appContext.PluginManager.StatusItemClicked += PluginManager_MenuItemClicked;
+                appContext.Broadcaster.StatusItemClicked += PluginManager_MenuItemClicked;
             }
 
             var map = context.Map as IMap;

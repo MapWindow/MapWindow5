@@ -1,6 +1,8 @@
 ﻿namespace MW5.Api.Concrete
 {
-    public class CompareByValueBase
+#pragma warning disable 660,661
+    public abstract class CompareByValueBase
+#pragma warning restore 660,661
     {
         public static bool operator ==(CompareByValueBase id1, CompareByValueBase id2)
         {

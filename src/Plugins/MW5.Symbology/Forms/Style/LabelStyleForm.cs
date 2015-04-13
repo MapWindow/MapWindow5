@@ -49,7 +49,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
         private ILabelStyle _category;
         private bool _noEvents;
-        private string _labelText = "";
         private string _initState = "";
 
         /// <summary>

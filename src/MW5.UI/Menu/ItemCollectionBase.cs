@@ -209,11 +209,11 @@ namespace MW5.UI.Menu
                 {
                     if (statusBar)
                     {
-                        menuItem.ItemClicked += PluginManager.Instance.FireStatusItemClicked;    
+                        menuItem.ItemClicked += PluginBroadcaster.Instance.FireStatusItemClicked;    
                     }
                     else
                     {
-                        menuItem.ItemClicked += PluginManager.Instance.FireItemClicked;    
+                        menuItem.ItemClicked += PluginBroadcaster.Instance.FireItemClicked;    
                     }
                 }
 

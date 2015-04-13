@@ -138,91 +138,90 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             }
 
             var tbl = _shapefile.Table;
-            object obj = null;
-            SortedDictionary<object, int> hashTable = new SortedDictionary<object, int>();
+            var hashTable = new SortedDictionary<object, int>();
 
             bool isString = (_shapefile.Fields[fieldIndex].Type == AttributeType.String);
+            
+            Cursor = Cursors.WaitCursor;
 
-            if (true)
+            for (int i = 0; i < tbl.NumRows; i++)
             {
-                Cursor = Cursors.WaitCursor;
-
-                for (int i = 0; i < tbl.NumRows; i++)
+                var obj = tbl.CellValue(fieldIndex, i);
+                if (hashTable.ContainsKey(obj))
                 {
-                    obj = tbl.CellValue(fieldIndex, i);
-                    if (hashTable.ContainsKey(obj))
-                    {
-                        hashTable[obj] += 1;
-                    }
-                    else
-                    {
-                        hashTable.Add(obj, 1);
-                    }
+                    hashTable[obj] += 1;
                 }
-                int[] values = hashTable.Values.ToArray();
-                object[] keys = hashTable.Keys.ToArray();
-
-                dgvValues.Rows.Add(values.Length);
-                for (int i = 0; i < values.Length; i++)
+                else
                 {
-                    if (isString)
-                    {
-                        dgvValues[1, i].Value = "\"" + keys[i].ToString() + "\"";
-                    }
-                    else
-                    {
-                        dgvValues[1, i].Value = keys[i].ToString();
-                    }
-                    dgvValues[0, i].Value = values[i];
+                    hashTable.Add(obj, 1);
                 }
-
-                this.Cursor = Cursors.Default;
             }
-            else
+            int[] values = hashTable.Values.ToArray();
+            object[] keys = hashTable.Keys.ToArray();
+
+            dgvValues.Rows.Add(values.Length);
+            for (int i = 0; i < values.Length; i++)
             {
-                // field stats: aren't used currently
-                // for numeric fields we shall provide statistics
-                dgvValues.Rows.Add(7);
-                dgvValues[0, 0].Value = "Avg";
-                dgvValues[0, 1].Value = "StDev";
-                dgvValues[0, 2].Value = "0%";
-                dgvValues[0, 3].Value = "25%";
-                dgvValues[0, 4].Value = "50%";
-                dgvValues[0, 5].Value = "75%";
-                dgvValues[0, 6].Value = "100%";
-
-                List<object> list = new List<object>();
-                for (int i = 0; i < tbl.NumRows; i++)
+                if (isString)
                 {
-                    list.Add((object)tbl.CellValue(fieldIndex, i));
+                    dgvValues[1, i].Value = "\"" + keys[i] + "\"";
                 }
-                list.Sort();
-
-                int quater = list.Count / 4;
-                for (int i = 0; i < list.Count; i++)
+                else
                 {
-                    if (i == quater)
-                    {
-                        dgvValues[1, 3].Value = list[i];
-                    }
-                    else if (i == quater * 2)
-                    {
-                        dgvValues[1, 4].Value = list[i];
-                    }
-                    else if (i == quater * 3)
-                    {
-                        dgvValues[1, 5].Value = list[i];
-                    }
+                    dgvValues[1, i].Value = keys[i].ToString();
                 }
-
-                //dgvValues[1, 0].Value = (float)tbl.get_MeanValue(FieldIndex);
-                //dgvValues[1, 1].Value = (float)tbl.get_StandardDeviation(FieldIndex);
-                //dgvValues[1, 2].Value = tbl.get_MinValue(FieldIndex);
-                //dgvValues[1, 6].Value = tbl.get_MaxValue(FieldIndex);
+                dgvValues[0, i].Value = values[i];
             }
+
+            Cursor = Cursors.Default;
 
             dgvValues.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
             _noEvents = false;
+        }
+
+        private void ShowStats(int fieldIndex)
+        {
+            var tbl = _shapefile.Table;
+
+            // field stats: aren't used currently
+            // for numeric fields we shall provide statistics
+            dgvValues.Rows.Add(7);
+            dgvValues[0, 0].Value = "Avg";
+            dgvValues[0, 1].Value = "StDev";
+            dgvValues[0, 2].Value = "0%";
+            dgvValues[0, 3].Value = "25%";
+            dgvValues[0, 4].Value = "50%";
+            dgvValues[0, 5].Value = "75%";
+            dgvValues[0, 6].Value = "100%";
+
+            List<object> list = new List<object>();
+            for (int i = 0; i < tbl.NumRows; i++)
+            {
+                list.Add((object)tbl.CellValue(fieldIndex, i));
+            }
+            list.Sort();
+
+            int quater = list.Count / 4;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (i == quater)
+                {
+                    dgvValues[1, 3].Value = list[i];
+                }
+                else if (i == quater * 2)
+                {
+                    dgvValues[1, 4].Value = list[i];
+                }
+                else if (i == quater * 3)
+                {
+                    dgvValues[1, 5].Value = list[i];
+                }
+            }
+
+            //dgvValues[1, 0].Value = (float)tbl.get_MeanValue(FieldIndex);
+            //dgvValues[1, 1].Value = (float)tbl.get_StandardDeviation(FieldIndex);
+            //dgvValues[1, 2].Value = tbl.get_MinValue(FieldIndex);
+            //dgvValues[1, 6].Value = tbl.get_MaxValue(FieldIndex);
         }
 
         /// <summary>
@@ -294,7 +293,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            this.Tag = richTextBox1.Text;
+            Tag = richTextBox1.Text;
             var settings = SymbologyPlugin.Metadata(_layer.Handle);
             settings.ShowQueryValues = chkShowValues.Checked;
             settings.ShowQueryOnMap = chkShowDynamically.Checked;

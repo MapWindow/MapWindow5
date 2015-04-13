@@ -12,9 +12,6 @@ namespace MW5.Plugins.Services
     public interface IPluginManager
     {
         event EventHandler<PluginEventArgs> PluginUnloaded;
-        event EventHandler<MenuItemEventArgs> MenuItemClicked;
-        event EventHandler<MenuItemEventArgs> StatusItemClicked;
-        event EventHandler<MenuItemEventArgs> PluginItemClicked;
 
         /// <summary>
         /// Gets list of all plugins both active and not.
@@ -64,9 +61,5 @@ namespace MW5.Plugins.Services
         void UnloadPlugin(PluginIdentity identity, IAppContext context);
 
         bool PluginActive(PluginIdentity identity);
-
-        void FireItemClicked(object sender, MenuItemEventArgs args);
-
-        void FireStatusItemClicked(object sender, MenuItemEventArgs args);
     }
 }

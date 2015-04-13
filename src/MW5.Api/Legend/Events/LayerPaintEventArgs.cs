@@ -11,7 +11,6 @@ namespace MW5.Api.Legend.Events
     {
         public Rectangle Bounds { get; internal set; }
         public Graphics Graphics { get; set; }
-        public bool Handled { get; set; }
 
         public LayerPaintEventArgs(int layerHandle, Rectangle bounds, Graphics g) : base(layerHandle)
         {

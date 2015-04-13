@@ -38,7 +38,7 @@ namespace MW5.Menu
             var appContext = context as AppContext;
             if (appContext != null)
             {
-                appContext.PluginManager.MenuItemClicked += MenuItemClicked;
+                appContext.Broadcaster.MenuItemClicked += MenuItemClicked;
             }
         }
 

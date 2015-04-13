@@ -109,6 +109,7 @@
     <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
       <Name>MW5.Shared</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
       <Project>{784a24f2-9a57-46ee-8945-d87869595216}</Project>

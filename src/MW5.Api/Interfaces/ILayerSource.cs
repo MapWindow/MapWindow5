@@ -10,8 +10,6 @@ namespace MW5.Api.Interfaces
 
         bool IsEmpty { get; }
 
-        LayerType LayerType { get; }
-        
         //Labels Labels { get; set; }
     }
 }

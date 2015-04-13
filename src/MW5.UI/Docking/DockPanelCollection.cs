@@ -12,6 +12,7 @@ using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.UI.Style;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -22,16 +23,20 @@ namespace MW5.UI.Docking
         private bool _locked;
         private readonly Form _mainForm;
         private readonly IBroadcasterService _broadcaster;
+        private readonly IStyleService _styleService;
         private readonly DockingManager _dockingManager;
         private readonly Dictionary<Control, DockPanelInfo> _dict = new Dictionary<Control, DockPanelInfo>();
 
-        internal DockPanelCollection(object dockingManager, Form mainForm, IBroadcasterService broadcaster)
+        internal DockPanelCollection(object dockingManager, Form mainForm, IBroadcasterService broadcaster, 
+            IStyleService styleService)
         {
             if (mainForm == null) throw new ArgumentNullException("mainForm");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
+            if (styleService == null) throw new ArgumentNullException("styleService");
 
             _mainForm = mainForm;
             _broadcaster = broadcaster;
+            _styleService = styleService;
             _dockingManager = dockingManager as DockingManager;
 
             if (_dockingManager == null)
@@ -153,6 +158,8 @@ namespace MW5.UI.Docking
             }
 
             _dict.Add(control, new DockPanelInfo(identity, key));
+
+            _styleService.ApplyStyle(control);
 
             return GetDockPanel(control);
         }
