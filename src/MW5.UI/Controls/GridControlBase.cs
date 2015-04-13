@@ -24,6 +24,12 @@ namespace MW5.UI.Controls
             InitRowSelection();
         }
 
+        public Color SelectionBackColor
+        {
+            get { return TableOptions.SelectionBackColor; }
+            set { TableOptions.SelectionBackColor = value; }
+        }
+
         private void InitStyle()
         {
             Appearance.AnyCell.VerticalAlignment = GridVerticalAlignment.Middle;
@@ -50,9 +56,8 @@ namespace MW5.UI.Controls
 
         private void InitRowSelection()
         {
-            
             TableOptions.ListBoxSelectionMode = SelectionMode.One;
-            TableOptions.SelectionBackColor = Color.FromArgb(64, 51, 153, 255);
+            SelectionBackColor = Color.FromArgb(64, 51, 153, 255);
             TableOptions.SelectionTextColor = Color.Black;
             TableOptions.ListBoxSelectionColorOptions = GridListBoxSelectionColorOptions.ApplySelectionColor;
 

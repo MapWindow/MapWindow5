@@ -75,6 +75,9 @@
     <Compile Include="Controls\GridListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\GridListControl.Designer.cs">
+      <DependentUpon>GridListControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\IGridList.cs" />
     <Compile Include="Controls\ToolTipGridEventArgs.cs" />
     <Compile Include="Forms\AppView.cs" />
@@ -162,6 +165,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\GridListControl.resx">
+      <DependentUpon>GridListControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>
     </EmbeddedResource>

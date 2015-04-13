@@ -18,30 +18,26 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls
 {
-    public class GridListControl<T>: UserControl, IGridList<T>
+    public partial class GridListControl<T> : UserControl, IGridList<T>
         where T: class
     {
-        private readonly GridGroupingControl _grid;
         private SuperToolTip _lastTooltip = new SuperToolTip();
+        private GridControlBase _grid;
         private int _mouseOverIndex = 0;
-
-        public event EventHandler<ToolTipGridEventArgs> PrepareToolTip;
-        
-        public event EventHandler<EventArgs> SelectionChanged;
-        
-        public new event KeyEventHandler KeyDown
-        {
-            add { _grid.TableControl.KeyDown += value; }
-            remove { _grid.TableControl.KeyDown -= value; }
-        }
 
         public GridListControl()
         {
-            _grid = new GridControlBase {Dock = DockStyle.Fill, BorderStyle = BorderStyle.None};
-            Controls.Add(_grid);
+            InitializeComponent();
 
-            ToolTipDuration = 3000;
+            _grid.BorderStyle = BorderStyle.None;
 
+            SetDefaults();
+
+            AttachEvents();
+        }
+
+        private void AttachEvents()
+        {
             _grid.TableControlCellHitTest += grid_TableControlCellHitTest;
             _grid.TableControlPrepareViewStyleInfo += grid_TableControlPrepareViewStyleInfo;
             _grid.SelectedRecordsChanged += GridSelectedRecordsChanged;
@@ -50,13 +46,30 @@ namespace MW5.UI.Controls
             _grid.TableControl.LostFocus += (s, e) => HideToolTip();
         }
 
+        private void SetDefaults()
+        {
+            ToolTipDuration = 3000;
+            ToolTipMaxWidth = 450;
+            HotTrackingColor = Color.FromArgb(24, 51, 153, 255);
+        }
+
+        public event EventHandler<ToolTipGridEventArgs> PrepareToolTip;
+
+        public event EventHandler<EventArgs> SelectionChanged;
+
+        public new event KeyEventHandler KeyDown
+        {
+            add { _grid.TableControl.KeyDown += value; }
+            remove { _grid.TableControl.KeyDown -= value; }
+        }
+
         public object DataSource
         {
             get { return _grid.DataSource; }
             set { _grid.DataSource = value; }
         }
         
-        public GridGroupingControl Grid
+        protected GridGroupingControl Grid
         {
             get { return _grid; }
         }
@@ -66,6 +79,10 @@ namespace MW5.UI.Controls
         public bool ShowSuperTooltips { get; set; }
 
         public int ToolTipDuration { get; set; }
+
+        public Color HotTrackingColor { get; set; }
+
+        public int ToolTipMaxWidth { get; set; }
 
         public T SelectedItem
         {
@@ -115,7 +132,7 @@ namespace MW5.UI.Controls
 
             if (e.Inner.RowIndex == _mouseOverIndex)
             {
-                e.Inner.Style.BackColor = Color.FromArgb(24, 51, 153, 255);
+                e.Inner.Style.BackColor = HotTrackingColor;
             }
 
             e.Inner.Style.TextColor = Color.Black;
@@ -155,10 +172,12 @@ namespace MW5.UI.Controls
                 _lastTooltip.Hide();
                 _lastTooltip = new SuperToolTip(this);
 
+                int columnCount = _grid.TableDescriptor.Columns.Count;
+
                 var pnt = new Point
                 {
-                    X = _grid.TableControl.ColIndexToHScrollPixelPos(3),        // TODO: make parameter
-                    Y = _grid.TableControl.RowIndexToVScrollPixelPos(rowIndex + 2)
+                    X = _grid.TableControl.ColIndexToHScrollPixelPos(columnCount),
+                    Y = _grid.TableControl.RowIndexToVScrollPixelPos(rowIndex + RowOffset)
                 };
 
                 pnt = PointToScreen(pnt);
@@ -174,7 +193,7 @@ namespace MW5.UI.Controls
                 }
 
                 info.Header.Font = new Font(info.Header.Font, FontStyle.Bold);
-                _lastTooltip.MaxWidth = 450;
+                _lastTooltip.MaxWidth = ToolTipMaxWidth;
                 _lastTooltip.Show(info, pnt, ToolTipDuration);
             }
         }
@@ -239,6 +258,11 @@ namespace MW5.UI.Controls
             {
                 handler(this, new EventArgs());
             }
+        }
+
+        private int RowOffset
+        {
+            get { return 2; }
         }
     }
 }
