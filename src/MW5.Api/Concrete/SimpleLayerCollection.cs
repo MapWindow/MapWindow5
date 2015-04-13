@@ -9,9 +9,9 @@ using MW5.Api.Map;
 
 namespace MW5.Api.Concrete
 {
-    public class LayerCollection : BaseLayerCollection<ILayer>
+    public class SimpleLayerCollection : BaseLayerCollection<ILayer>
     {
-        public LayerCollection(MapControl mapControl)
+        public SimpleLayerCollection(MapControl mapControl)
             : base(mapControl)
         {
         }

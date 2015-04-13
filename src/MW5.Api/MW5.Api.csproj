@@ -102,7 +102,6 @@
     <Compile Include="Concrete\SelectionItem.cs" />
     <Compile Include="Concrete\ShapesList.cs" />
     <Compile Include="Events\MapEventHandler.cs" />
-    <Compile Include="Interfaces\ILegendLayerCollection.cs" />
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\IShapesList.cs" />
     <Compile Include="Legend\Abstract\ILegendGroup.cs" />
@@ -137,7 +136,7 @@
     <Compile Include="Legend\LegendEnumerations.cs" />
     <Compile Include="Legend\LegendHelper.cs" />
     <Compile Include="Legend\LegendLayer.cs" />
-    <Compile Include="Legend\LegendLayerCollection.cs" />
+    <Compile Include="Legend\LayerCollection.cs" />
     <Compile Include="Static\GeoProcessing.cs" />
     <Compile Include="Static\GeoSource.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
@@ -175,7 +174,7 @@
     <Compile Include="Concrete\GeometryStyle.cs" />
     <Compile Include="Concrete\GeometryVertexStyle.cs" />
     <Compile Include="Concrete\Layer.cs" />
-    <Compile Include="Concrete\LayerCollection.cs" />
+    <Compile Include="Concrete\SimpleLayerCollection.cs" />
     <Compile Include="Concrete\RasterSource.cs" />
     <Compile Include="Concrete\FeatureSetSpatialIndex.cs" />
     <Compile Include="Concrete\SpatialReference.cs" />

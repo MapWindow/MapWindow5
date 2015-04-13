@@ -46,9 +46,7 @@ namespace MW5.Api.Map
         public event EventHandler<EventArgs> ExtentsChanged;
         public event EventHandler<FileDroppedEventArgs> FileDropped;
         public event EventHandler<GridOpenedEventArgs> GridOpened;
-        public event EventHandler<LayerAddedEventArgs> LayerAdded;
         public event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-        public event EventHandler<LayerRemovedEventArgs> LayerRemoved;
         public event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
         public event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
 
@@ -340,9 +338,9 @@ namespace MW5.Api.Map
         }
 
         [Browsable(false)]
-        public ILayerCollection<ILayer> Layers
+        public SimpleLayerCollection Layers
         {
-            get { return new LayerCollection(this); }
+            get { return new SimpleLayerCollection(this); }
         }
 
         public MapProjection MapProjection

@@ -20,9 +20,7 @@ namespace MW5.Api.Map
             _map.ExtentsChanged += MapExtentsChanged;
             _map.FileDropped += MapFileDropped;
             _map.GridOpened += MapGridOpened;
-            _map.LayerAdded += MapLayerAdded;
             _map.LayerProjectionIsEmpty += MapLayerProjectionIsEmpty;
-            _map.LayerRemoved += MapLayerRemoved;
             _map.LayerReprojected += MapLayerReprojected;
             _map.MeasuringChanged += MapMeasuringChanged;
             _map.MouseDownEvent += MapMouseDownEvent;
@@ -52,9 +50,7 @@ namespace MW5.Api.Map
             _map.ExtentsChanged -= MapExtentsChanged;
             _map.FileDropped -= MapFileDropped;
             _map.GridOpened -= MapGridOpened;
-            _map.LayerAdded -= MapLayerAdded;
             _map.LayerProjectionIsEmpty -= MapLayerProjectionIsEmpty;
-            _map.LayerRemoved -= MapLayerRemoved;
             _map.LayerReprojected -= MapLayerReprojected;
             _map.MeasuringChanged -= MapMeasuringChanged;
             _map.MouseDownEvent -= MapMouseDownEvent;
@@ -155,19 +151,9 @@ namespace MW5.Api.Map
             Invoke(sender, LayerReprojected, new LayerReprojectedEventArgs(e));
         }
 
-        private void MapLayerRemoved(object sender, _DMapEvents_LayerRemovedEvent e)
-        {
-            Invoke(sender, LayerRemoved, new LayerRemovedEventArgs(e));
-        }
-
         private void MapLayerProjectionIsEmpty(object sender, _DMapEvents_LayerProjectionIsEmptyEvent e)
         {
             Invoke(sender, LayerProjectionIsEmpty, new LayerProjectionIsEmptyEventArgs(e));
-        }
-
-        private void MapLayerAdded(object sender, _DMapEvents_LayerAddedEvent e)
-        {
-            Invoke(sender, LayerAdded, new LayerAddedEventArgs(e));
         }
 
         private void MapGridOpened(object sender, _DMapEvents_GridOpenedEvent e)

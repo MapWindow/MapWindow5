@@ -187,7 +187,7 @@ namespace MW5
             get { return _toolbars; }
         }
 
-        public ILegendLayerCollection<ILayer> Layers
+        public ILayerCollection<ILayer> Layers
         {
             get { return _map.Layers; }
         }

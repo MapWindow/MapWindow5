@@ -18,7 +18,7 @@ namespace MW5.Plugins.Interfaces
         IStatusBar StatusBar { get; }
         IToolbarCollection Toolbars { get; }
         IApplicationContainer Container { get; }
-        ILegendLayerCollection<ILayer> Layers { get; }
+        ILayerCollection<ILayer> Layers { get; }
         IDockPanelCollection DockPanels { get; }
         IProjectionDatabase Projections { get; }
         AppConfig Config { get; }       // TODO: extract interface later

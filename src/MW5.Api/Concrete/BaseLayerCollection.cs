@@ -13,7 +13,7 @@ using MW5.Api.Map;
 
 namespace MW5.Api.Concrete
 {
-    public abstract class BaseLayerCollection<T>: ILayerCollection<T> where T: ILayer
+    public abstract class BaseLayerCollection<T>: IEnumerable<T> where T: ILayer
     {
         protected readonly AxMap _axMap;
         protected readonly MapControl _mapControl;
@@ -118,17 +118,17 @@ namespace MW5.Api.Concrete
 
         public abstract T this[int position] { get; }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public IEnumerator<T> GetEnumerator()
         {
             for (int i = 0; i < Count; i++)
             {
                 yield return this[i];
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

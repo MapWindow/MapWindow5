@@ -28,7 +28,7 @@ namespace MW5.Api.Legend
     {
         private const string CHARTS_CAPTION = "Charts";
 
-        private LegendLayerCollection<ILegendLayer> _layers;
+        private LayerCollection<ILegendLayer> _layers;
         private readonly LegendGroups _groups;
 
         private Image _backBuffer;
@@ -124,9 +124,9 @@ namespace MW5.Api.Legend
         /// Gets the Menu for manipulating Layers (without respect to groups)
         /// </summary>
         [Browsable(false)]
-        public LegendLayerCollection<ILegendLayer> Layers
+        public LayerCollection<ILegendLayer> Layers
         {
-            get { return _layers ?? (_layers = new LegendLayerCollection<ILegendLayer>(_mapControl as MapControl, this)); }
+            get { return _layers ?? (_layers = new LayerCollection<ILegendLayer>(_mapControl as MapControl, this)); }
         }
 
         /// <summary>

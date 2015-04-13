@@ -20,9 +20,7 @@ namespace MW5.Api.Interfaces
         event EventHandler<EventArgs> ExtentsChanged;
         event EventHandler<FileDroppedEventArgs> FileDropped;
         event EventHandler<GridOpenedEventArgs> GridOpened;
-        event EventHandler<LayerAddedEventArgs> LayerAdded;
         event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-        event EventHandler<LayerRemovedEventArgs> LayerRemoved;
         event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
         event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
         event EventHandler<MouseEventArgs> MouseDown;

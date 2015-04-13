@@ -10,12 +10,12 @@ using MW5.Api.Map;
 
 namespace MW5.Api.Legend
 {
-    public class LegendLayerCollection<T> : BaseLayerCollection<T>, ILegendLayerCollection<T>
+    public class LayerCollection<T> : BaseLayerCollection<T>, ILayerCollection<T>
          where T : class, ILayer
     {
         private readonly LegendControl _legend;
 
-        internal LegendLayerCollection(MapControl mapControl, IMuteLegend legend)
+        internal LayerCollection(MapControl mapControl, IMuteLegend legend)
             : base(mapControl)
         {
             _legend = legend as LegendControl;

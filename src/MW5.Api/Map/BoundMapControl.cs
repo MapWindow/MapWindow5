@@ -10,7 +10,7 @@ namespace MW5.Api.Map
 {
     public class BoundMapControl : MapControl, IMap
     {
-        private ILegendLayerCollection<ILayer> _layers;
+        private ILayerCollection<ILayer> _layers;
         private CustomCursor _customCursor = null;
 
         public BoundMapControl()
@@ -31,7 +31,7 @@ namespace MW5.Api.Map
         public IMuteLegend Legend { get; set; }
 
         [Browsable(false)]
-        public new ILegendLayerCollection<ILayer> Layers
+        public new ILayerCollection<ILayer> Layers
         {
             get
             {
@@ -41,7 +41,7 @@ namespace MW5.Api.Map
                         "MapControl.Legend property should be set before acceccing layers collection.");
                 }
 
-                return _layers ?? (_layers = new LegendLayerCollection<ILayer>(this, Legend));
+                return _layers ?? (_layers = new LayerCollection<ILayer>(this, Legend));
             }
         }
 
