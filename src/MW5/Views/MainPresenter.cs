@@ -10,11 +10,17 @@ using MW5.Menu;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Log;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Views
 {
+    /// <summary>
+    /// Manages the startup of the application and interaction with main view.
+    /// </summary>
     public class MainPresenter : BasePresenter<IMainView>
     {
         private readonly IAppContext _context;
@@ -28,20 +34,18 @@ namespace MW5.Views
         private readonly MenuUpdater _menuUpdater;
 
         public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, 
-                             ILoggingService loggingService, IConfigService configService, 
-                             LegendPresenter legendPresenter)
+                             IConfigService configService, LegendPresenter legendPresenter)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (projectService == null) throw new ArgumentNullException("projectService");
-            if (loggingService == null) throw new ArgumentNullException("loggingService");
             if (configService == null) throw new ArgumentNullException("configService");
 
             _context = context;
             _projectService = projectService;
             _configService = configService;
 
-            ApplicationCallback.Attach(loggingService);
+            ApplicationCallback.Attach(Logger.Current);
 
             view.Map.Lock();
             try
@@ -89,7 +93,7 @@ namespace MW5.Views
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print("Error on project loading: " + ex.Message);
+                    Logger.Current.Warn("Error on project loading: <{0}>", ex, config.LastProjectPath);
                 }
             }
         }

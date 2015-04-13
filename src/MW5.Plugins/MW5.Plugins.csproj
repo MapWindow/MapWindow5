@@ -103,10 +103,11 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="Helpers\ConfigPathHelper.cs" />
+    <Compile Include="Interfaces\IDockPanelView.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
     <Compile Include="Interfaces\IDockPanel.cs" />
     <Compile Include="Interfaces\IDockPanelCollection.cs" />
-    <Compile Include="Interfaces\IDockPanelProvider.cs" />
+    <Compile Include="Interfaces\IDockPanelPresenter.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IToolBox.cs" />
     <Compile Include="Interfaces\IMainView.cs" />
@@ -154,10 +155,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IBroadcasterService.cs" />
-    <Compile Include="Services\IErrorService.cs" />
     <Compile Include="Services\IFileDialogService.cs" />
     <Compile Include="Services\ILayerService.cs" />
-    <Compile Include="Services\ILoggingService.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IPluginManager.cs" />
     <Compile Include="Services\IProjectService.cs" />
@@ -191,7 +190,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Log\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

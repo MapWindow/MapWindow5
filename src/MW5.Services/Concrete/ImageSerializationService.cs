@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
@@ -66,7 +67,7 @@ namespace MW5.Services.Concrete
             }
             catch (Exception e)
             {
-                Debug.Print("Failed to serialize image: " + e.Message);
+                Logger.Current.Error("Failed to serialize image.", e);
             }
             
             return string.Empty;
@@ -105,7 +106,7 @@ namespace MW5.Services.Concrete
             }
             catch (Exception ex)
             {
-                Debug.Print("Failed to deserialize image: " + ex.Message);
+                Logger.Current.Error("Failed to deserialize image.", ex);
             }
 
             return null;

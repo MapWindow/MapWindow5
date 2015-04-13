@@ -94,11 +94,11 @@
     </Compile>
     <Compile Include="IdentifierTestPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IdentifierControl.cs">
+    <Compile Include="IdentifierDockPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IdentifierControl.Designer.cs">
-      <DependentUpon>IdentifierControl.cs</DependentUpon>
+    <Compile Include="IdentifierDockPanel.Designer.cs">
+      <DependentUpon>IdentifierDockPanel.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -132,8 +132,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="IdentifierControl.resx">
-      <DependentUpon>IdentifierControl.cs</DependentUpon>
+    <EmbeddedResource Include="IdentifierDockPanel.resx">
+      <DependentUpon>IdentifierDockPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

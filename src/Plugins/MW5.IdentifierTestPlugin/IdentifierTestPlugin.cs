@@ -21,13 +21,11 @@ namespace MW5.Plugins.IdentifierTestPlugin
         private MenuListener _menuListener;
         private MenuGenerator _menuGenerator;
         private MapListener _mapListener;
-        private IdentifierControl _identifierControl;
+        private IdentifierDockPanel _identifierControl;
 
         public override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
-
-            EnumHelper.RegisterConverter(new IdentifierModeConverter());
         }
 
         public override void Initialize(IAppContext context)
@@ -35,7 +33,7 @@ namespace MW5.Plugins.IdentifierTestPlugin
             _context = context;
 
             // will better to preserve state if plugin is unloaded, therefore singleton
-            _identifierControl = context.Container.GetSingleton<IdentifierControl>();
+            _identifierControl = context.Container.GetSingleton<IdentifierDockPanel>();
 
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();

@@ -1,9 +1,11 @@
-﻿using MW5.Plugins.Mvp;
+﻿using MW5.Plugins.Log;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
 using MW5.Services.Serialization;
 using MW5.Services.Views;
 using MW5.Services.Views.Abstract;
+using MW5.Shared.Log;
 
 namespace MW5.Services
 {
@@ -17,7 +19,6 @@ namespace MW5.Services
                 .RegisterSingleton<ILoggingService, LoggingService>()
                 .RegisterSingleton<IProjectService, ProjectService>()
                 .RegisterService<ICreateLayerView, CreateLayerView>()
-                .RegisterService<IErrorService, ErrorService>()
                 .RegisterService<ImageSerializationService>()
                 .RegisterSingleton<ITempFileService, TempFileService>()
                 .RegisterSingleton<IConfigService, ConfigService>()

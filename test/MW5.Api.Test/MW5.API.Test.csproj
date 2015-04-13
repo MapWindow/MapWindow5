@@ -87,6 +87,10 @@
       <Project>{8aad34b3-8ef3-485f-a04d-ed2c07d8f1df}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

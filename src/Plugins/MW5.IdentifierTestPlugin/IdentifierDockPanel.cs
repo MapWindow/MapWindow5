@@ -5,16 +5,18 @@ using System.Text;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
-    public partial class IdentifierControl : UserControl
+    public partial class IdentifierDockPanel: DockPanelControlBase
     {
         private readonly IMuteMap _map;
 
-        public IdentifierControl(IMuteMap map)
+        public IdentifierDockPanel(IMuteMap map)
         {
             if (map == null) throw new ArgumentNullException("map");
             _map = map;

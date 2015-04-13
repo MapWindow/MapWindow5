@@ -139,8 +139,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void ShowLayerPreview()
         {
-            bool val = Config.LoadSymbologyOnAddLayer;
-            Config.LoadSymbologyOnAddLayer = false;
+            bool val = MapConfig.LoadSymbologyOnAddLayer;
+            MapConfig.LoadSymbologyOnAddLayer = false;
 
             axMap1.ShowCoordinates = CoordinatesDisplay.None;
             axMap1.ScalebarVisible = false;
@@ -153,7 +153,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             int handle = axMap1.Layers.Add(_shapefile, true);
             axMap1.ZoomToLayer(handle);
 
-            Config.LoadSymbologyOnAddLayer = val;
+            MapConfig.LoadSymbologyOnAddLayer = val;
         }
     }
 }

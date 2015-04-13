@@ -23,7 +23,7 @@ namespace MW5.Shared
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine("Failed to create directory: " + path + Environment.NewLine + ex.Message);
+                    Logger.Current.Warn("Failed to create directory: " + path, ex);
                 }
             }
         }
@@ -36,7 +36,7 @@ namespace MW5.Shared
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to open folder: " + path + Environment.NewLine + ex.Message);
+                Logger.Current.Warn("Failed to open folder: " + path, ex);
             }
         }
     }

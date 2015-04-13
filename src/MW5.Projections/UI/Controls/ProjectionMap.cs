@@ -16,6 +16,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
 using MW5.Plugins.Interfaces.Projections;
+using MW5.Shared;
 
 namespace MW5.Projections.UI.Controls
 {
@@ -92,14 +93,13 @@ namespace MW5.Projections.UI.Controls
         {
             if (!File.Exists(filename))
             {
-                // TODO: use logging
-                Debug.Print("World state file wasn't found: " + filename);
+                Logger.Current.Warn("World state file wasn't found: " + filename);
                 return false;
             }
             
             if (!LoadMapState(filename))
             {
-                Debug.Print("Failed to load map state: " + filename);
+                Logger.Current.Warn("Failed to load map state: " + filename);
                 return false;
             }
                 

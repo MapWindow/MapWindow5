@@ -4,11 +4,11 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Static
 {
-    public static class Config
+    public static class MapConfig
     {
         private static GlobalSettings _settings = new GlobalSettings();
 
-        static Config()
+        static MapConfig()
         {
             _settings.ApplicationCallback = new Callback();
         }

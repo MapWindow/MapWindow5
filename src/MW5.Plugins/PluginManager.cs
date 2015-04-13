@@ -22,10 +22,10 @@ namespace MW5.Plugins
 {
     internal class PluginManager : IPluginManager
     {
+        private const string PluginDirectory = "Plugins";
+
         private readonly IApplicationContainer _container;
-        private readonly IErrorService _errorService;
         private readonly IMessageService _messageService;
-        private const string PLUGIN_DIRECTORY = "Plugins";
 
         [ImportMany] 
         #pragma warning disable 649
@@ -53,14 +53,12 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IApplicationContainer container, IErrorService errorService, IMessageService messageService)
+        public PluginManager(IApplicationContainer container, IMessageService messageService)
         {
             if (container == null) throw new ArgumentNullException("container");
-            if (errorService == null) throw new ArgumentNullException("errorService");
             if (messageService == null) throw new ArgumentNullException("messageService");
 
             _container = container;
-            _errorService = errorService;
             _messageService = messageService;
             _instance = this;
         }
@@ -109,7 +107,7 @@ namespace MW5.Plugins
                 var p = item.Value as BasePlugin;
                 if (p == null)
                 {
-                    Debug.Print("Invalid plugin type: plugin must inherit from BasePlugin type.");
+                    Logger.Current.Warn("Invalid plugin type: plugin must inherit from BasePlugin type.");
                     continue;
                 }
 
@@ -167,7 +165,7 @@ namespace MW5.Plugins
             }
             catch (ReflectionTypeLoadException ex)
             {
-                _errorService.Report(ex);
+                Logger.Current.Error("Failed to initialize plugin manager", ex);
             }
         }
 
@@ -178,7 +176,7 @@ namespace MW5.Plugins
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? "";
 
-            path = Path.Combine(path, PLUGIN_DIRECTORY);
+            path = Path.Combine(path, PluginDirectory);
 
             return new DirectoryCatalog(path, "*.dll");
         }

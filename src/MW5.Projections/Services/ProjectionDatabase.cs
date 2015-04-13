@@ -21,6 +21,7 @@ using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.Projections.BL;
 using MW5.Projections.DL;
+using MW5.Shared;
 
 namespace MW5.Projections.Services
 {
@@ -452,7 +453,7 @@ namespace MW5.Projections.Services
                 }
                 else
                 {
-                    Debug.Print("Specified region wasn't found: " + country.RegionCode);
+                    Logger.Current.Warn("Specified region wasn't found: " + country.RegionCode);
                 }
             }
 
@@ -472,7 +473,7 @@ namespace MW5.Projections.Services
                 }
                 else
                 {
-                    Debug.Print("Source geographic CS for projected CS wasn't found: " + pcs.Code);
+                    Logger.Current.Warn("Source geographic CS for projected CS wasn't found: " + pcs.Code);
                 }
             
             }
@@ -802,7 +803,7 @@ namespace MW5.Projections.Services
             }
             catch (Exception ex)
             {
-                Debug.Print(ex.Message);
+                Logger.Current.Error("Failed to open projection table: " + commandText, ex);
                 return null;
             }
         }
@@ -867,7 +868,6 @@ namespace MW5.Projections.Services
                 {
                     string s = dtCoutries.Rows[i]["Alias"].ToString().ToLower();
                     list[i] = s;
-                    Debug.Print(s);
                 }
 
                 int count = 0;
@@ -902,11 +902,9 @@ namespace MW5.Projections.Services
                             row[1] = dtCoutries.Rows[j][0];
                             dtResults.Rows.Add(row);
 
-                            Debug.Print(s + ": " + list[j]);
                             count++;
                         }
                     }
-                    Debug.Print("--------------------------------");
                 }
 
                 adapter.Update(dtResults);

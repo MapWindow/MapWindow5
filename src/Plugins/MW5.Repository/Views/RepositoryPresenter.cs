@@ -15,7 +15,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Repository.Views
 {
-    public class RepositoryPresenter: CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelProvider
+    public class RepositoryPresenter: CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;

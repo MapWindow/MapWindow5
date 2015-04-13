@@ -61,7 +61,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             
             InitializeComponent();
 
-            Config.ForceHideLabels = true;
+            MapConfig.ForceHideLabels = true;
 
             _layer = layer;
 
@@ -132,7 +132,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             Application.DoEvents();
 
-            Config.ForceHideLabels = false;
+            MapConfig.ForceHideLabels = false;
         }
 
         /// <summary>

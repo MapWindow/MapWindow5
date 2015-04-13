@@ -28,12 +28,6 @@ namespace MW5.Plugins.TableEditor
         private MapListener _mapListener;
         private MenuGenerator _menuGenerator;
 
-        static TableEditorPlugin()
-        {
-            EnumHelper.RegisterConverter(new AttributeTypeConverter());
-            EnumHelper.RegisterConverter(new CalculatorFunctionCoverter());
-        }
-
         public override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);

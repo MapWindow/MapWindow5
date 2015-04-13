@@ -15,6 +15,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Shared.Log;
 
 namespace MW5.Plugins.Concrete
 {
@@ -93,6 +94,7 @@ namespace MW5.Plugins.Concrete
         #region Plugin events
 
         // backing fields
+        internal EventHandler<LogEventArgs> LogEntryAdded_;
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
         internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
@@ -100,6 +102,12 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
 
         // public events
+        public event EventHandler<LogEventArgs> LogEntryAdded
+        {
+            add { LogEntryAdded_ += value; }
+            remove { LogEntryAdded_ -= value; }
+        }
+
         public event EventHandler<ToolboxToolEventArgs> ToolboxToolClicked
         {
             add { ToolboxToolClicked_ += value; }

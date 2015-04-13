@@ -1,4 +1,5 @@
 ﻿using MW5.Plugins.Mvp;
+using MW5.Shared;
 
 namespace MW5.Plugins.IdentifierTestPlugin
 {
@@ -6,6 +7,7 @@ namespace MW5.Plugins.IdentifierTestPlugin
     {
         public static void Compose(IApplicationContainer container)
         {
+            EnumHelper.RegisterConverter(new IdentifierModeConverter());
         }
     }
 }

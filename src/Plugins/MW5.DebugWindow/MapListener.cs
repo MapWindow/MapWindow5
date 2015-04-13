@@ -101,11 +101,17 @@ namespace MW5.Plugins.DebugWindow
             plugin.ShapeIdentified += this.PluginOnShapeIdentified;
             plugin.TilesLoaded += this.PluginOnTilesLoaded;
             plugin.ViewUpdating += this.PluginOnViewUpdating;
+            plugin.LogEntryAdded += PluginOnLogEntryAdded;
         }
 
         #endregion
 
         #region Methods
+
+        private void PluginOnLogEntryAdded(object sender, Shared.Log.LogEventArgs e)
+        {
+            _debugWindow.Write(e.Entry.TimeStamp.ToLongTimeString(), e.Entry.ToString());
+        }
 
         /// <summary>
         /// On before remove layer.

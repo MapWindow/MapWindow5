@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using MW5.Plugins.Services;
 
-namespace MW5.Services.Concrete
+namespace MW5.Services.Helpers
 {
-    internal class ErrorService: IErrorService
+    internal static class ExceptionHelper
     {
-        public void Report(Exception ex)
+        internal static string Report(Exception ex)
         {
             if (ex is ReflectionTypeLoadException)
             {
-                ReportReflectionException(ex as ReflectionTypeLoadException);
+                return ReportReflectionException(ex as ReflectionTypeLoadException);
             }
+
+            return string.Empty;
         }
 
-        private void ReportReflectionException(ReflectionTypeLoadException ex)
+        private static string ReportReflectionException(ReflectionTypeLoadException ex)
         {
             StringBuilder sb = new StringBuilder();
             foreach (Exception exSub in ex.LoaderExceptions)
@@ -32,9 +32,11 @@ namespace MW5.Services.Concrete
                         sb.AppendLine(exFileNotFound.FusionLog);
                     }
                 }
+
                 sb.AppendLine();
             }
-            Debug.Print(sb.ToString());
+
+            return sb.ToString();
         }
     }
 }

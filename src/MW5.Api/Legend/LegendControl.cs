@@ -894,7 +894,7 @@ namespace MW5.Api.Legend
             }
             catch (Exception ex)
             {
-                Debug.Print("Error: LegendControl.Snaphot. " + ex.Message);
+                Logger.Current.Warn("Failed to do legend snapshot", ex);
                 return null;
             }
         }

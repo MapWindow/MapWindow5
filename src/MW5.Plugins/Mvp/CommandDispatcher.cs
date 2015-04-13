@@ -127,8 +127,6 @@ namespace MW5.Plugins.Mvp
                 return true;
             }
 
-            Debug.Print("Command not found: " + itemName);
-
             CommandNotFound(itemName);
             return false;
         }

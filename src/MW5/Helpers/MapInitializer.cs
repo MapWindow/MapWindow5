@@ -7,6 +7,7 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 
 namespace MW5.Helpers
 {
@@ -24,6 +25,16 @@ namespace MW5.Helpers
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
             map.Identifier.HotTracking = false;
             map.ResizeBehavior = ResizeBehavior.KeepScale;
+        }
+
+        public static void InitMapConfig()
+        {
+            MapConfig.ZoomToFirstLayer = true;
+            MapConfig.AllowLayersWithoutProjections = true;
+            MapConfig.AllowProjectionMismatch = false;
+            MapConfig.ReprojectLayersOnAdding = false;
+            MapConfig.OgrLayerForceUpdateMode = true;
+            MapConfig.LoadSymbologyOnAddLayer = true;
         }
     }
 }

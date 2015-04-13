@@ -68,6 +68,9 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\ConfigService.cs" />
+    <Compile Include="Helpers\ExceptionHelper.cs" />
+    <Compile Include="Concrete\LogEntry.cs" />
+    <Compile Include="Concrete\LoggingService.cs" />
     <Compile Include="Concrete\TempFileService.cs" />
     <Compile Include="Config\LayerMetadataServiceBase.cs" />
     <Compile Include="Config\IConfigPage.cs" />
@@ -90,10 +93,8 @@
     <Compile Include="Serialization\XmlMap.cs" />
     <Compile Include="Serialization\XmlPlugin.cs" />
     <Compile Include="Serialization\XmlProject.cs" />
-    <Compile Include="Concrete\ErrorService.cs" />
     <Compile Include="Concrete\FileDialogService.cs" />
     <Compile Include="Concrete\LayerService.cs" />
-    <Compile Include="Concrete\LoggingService.cs" />
     <Compile Include="Concrete\ProjectService.cs" />
     <Compile Include="Views\CreateLayerView.cs">
       <SubType>Form</SubType>

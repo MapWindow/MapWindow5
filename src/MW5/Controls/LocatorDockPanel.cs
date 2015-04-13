@@ -18,10 +18,11 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.UI;
+using MW5.UI.Controls;
 
 namespace MW5.Controls
 {
-    public partial class LocatorDockPanel : UserControl
+    public partial class LocatorDockPanel : DockPanelControlBase
     {
         private IEnvelope _extents;      // extents of the main map
         private readonly Color _locatorColor = Color.Red;

@@ -10,7 +10,7 @@ using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface ILocator: IDockPanelProvider
+    public interface ILocator: IDockPanelPresenter
     {
         void RestorePicture(Image image, double dx, double dy, double xllCenter, double yllCenter);
         IImageSource Picture { get; }

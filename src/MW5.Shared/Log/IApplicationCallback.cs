@@ -1,4 +1,4 @@
-﻿namespace MW5.Api.Interfaces
+﻿namespace MW5.Shared.Log
 {
     public interface IApplicationCallback
     {

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using MW5.Api.Interfaces;
+using MW5.Shared.Log;
 
 namespace MW5.API.Test
 {

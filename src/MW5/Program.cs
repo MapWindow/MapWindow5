@@ -8,9 +8,11 @@ using MW5.DI.Castle;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Log;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
+using MW5.Shared.Log;
 using MW5.UI.Helpers;
 using MW5.Views;
 
@@ -26,20 +28,24 @@ namespace MW5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            EnumConverters.Init();
-            CommandBarHelper.InitMenuColors();
-
-            InitMapConfig();
             
             var container = CreateContainer();
             CompositionRoot.Compose(container);
-            var configService = container.GetSingleton<IConfigService>();
-            configService.Load();
+            var logger = container.Resolve<ILoggingService>();      // this will initialize Logger.Current
+
+            LoadConfig(container);
 
             container.Run<MainPresenter>();
 
             //configService.Save();   // it's saved on closing ConfigView
+        }
+
+        private static void LoadConfig(IApplicationContainer container)
+        {
+            MapInitializer.InitMapConfig();
+
+            var configService = container.GetSingleton<IConfigService>();
+            configService.Load();
         }
 
         private static IApplicationContainer CreateContainer()
@@ -52,16 +58,6 @@ namespace MW5
             // UnityApplicationContainer
             // return  new NinjectContainer();
             return new WindsorCastleContainer();
-        }
-
-        private static void InitMapConfig()
-        {
-            Config.ZoomToFirstLayer = true;
-            Config.AllowLayersWithoutProjections = true;
-            Config.AllowProjectionMismatch = false;
-            Config.ReprojectLayersOnAdding = false;
-            Config.OgrLayerForceUpdateMode = true;
-            Config.LoadSymbologyOnAddLayer = true;
         }
     }
 }

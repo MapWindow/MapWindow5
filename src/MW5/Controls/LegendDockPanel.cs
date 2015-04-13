@@ -10,10 +10,11 @@ using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.UI.Controls;
 
 namespace MW5.Controls
 {
-    public partial class LegendDockPanel : UserControl, IMenuProvider
+    public partial class LegendDockPanel : DockPanelControlBase, IMenuProvider
     {
         public LegendDockPanel()
         {

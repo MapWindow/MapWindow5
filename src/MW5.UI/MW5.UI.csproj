@@ -66,6 +66,9 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\DockPanelControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\GridControlBase.cs">
       <SubType>Component</SubType>
     </Compile>

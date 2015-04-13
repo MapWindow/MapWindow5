@@ -10,9 +10,9 @@ namespace MW5.Plugins.IdentifierTestPlugin.Listeners
     {
         private readonly IAppContext _context;
         private readonly IdentifierTestPlugin _plugin;
-        private readonly IdentifierControl _identifierControl;
+        private readonly IdentifierDockPanel _identifierControl;
 
-        public MapListener(IAppContext context, IdentifierTestPlugin plugin, IdentifierControl identifierControl)
+        public MapListener(IAppContext context, IdentifierTestPlugin plugin, IdentifierDockPanel identifierControl)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");

@@ -13,7 +13,7 @@ namespace MW5.Plugins.IdentifierTestPlugin.Menu
     {
         private string DOCK_PANEL_KEY = "IdentifierPluginDockPanel";
 
-        public DockPanelService(IAppContext context, IdentifierControl identifierControl, IdentifierTestPlugin plugin)
+        public DockPanelService(IAppContext context, IdentifierDockPanel identifierControl, IdentifierTestPlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (identifierControl == null) throw new ArgumentNullException("identifierControl");

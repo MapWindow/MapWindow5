@@ -189,7 +189,7 @@ namespace MW5.Api.Static
                     }
                     catch (Exception ex)
                     {
-                        Debug.Print("Failed to remove file: path." + Environment.NewLine + ex.Message);
+                        Logger.Current.Info("Failed to remove file: {}", ex, path);
                     }
                 }
                 return true;

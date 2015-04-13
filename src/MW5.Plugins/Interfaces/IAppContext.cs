@@ -25,5 +25,6 @@ namespace MW5.Plugins.Interfaces
         ILocator Locator { get; }
         IToolbox Toolbox { get; }
         void SetMapProjection(ISpatialReference projection);
+        bool Initialized { get; }
     }
 }

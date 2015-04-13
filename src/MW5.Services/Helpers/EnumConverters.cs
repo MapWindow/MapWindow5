@@ -10,17 +10,6 @@ using MW5.Shared;
 
 namespace MW5.Services.Helpers
 {
-    public static class EnumConverters
-    {
-        public static void Init()
-        {
-            // TODO: perphaps register all implementation automatically via reflection
-            EnumHelper.RegisterConverter(new GeometryTypeConverter());
-            EnumHelper.RegisterConverter(new SaveResultConverter());
-            EnumHelper.RegisterConverter(new TileProviderConverter());
-        }
-    }
-
     public class TileProviderConverter : IEnumConverter<TileProvider>
     {
         public string GetString(TileProvider enumeration)

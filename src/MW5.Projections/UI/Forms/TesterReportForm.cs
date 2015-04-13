@@ -132,7 +132,7 @@ namespace MW5.Projections.UI.Forms
 
             if (operation == ProjectionOperaion.Skipped || operation == ProjectionOperaion.FailedToReproject)
             {
-                item.SubItems.Add(Config.GdalReprojectionErrorMsg);
+                item.SubItems.Add(MapConfig.GdalReprojectionErrorMsg);
             }
             else
             {

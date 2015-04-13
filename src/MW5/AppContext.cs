@@ -49,6 +49,8 @@ namespace MW5
         private LegendPresenter _legendPresenter;
         private IToolbox _toolbox;
 
+        private bool _initialized;
+
         public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
             if (container == null) throw new ArgumentNullException("container");
@@ -100,6 +102,8 @@ namespace MW5
             _locator = new LocatorPresenter(_map);
 
             this.InitDocking();
+
+            _initialized = true;
         }
 
         private void InitToolbox()
@@ -206,6 +210,11 @@ namespace MW5
         public void SetMapProjection(ISpatialReference projection)
         {
             this.SetProjection(projection);
+        }
+
+        public bool Initialized
+        {
+            get { return _initialized; }
         }
 
         public ILocator Locator

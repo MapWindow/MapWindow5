@@ -9,8 +9,11 @@ using MW5.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services;
+using MW5.Services.Helpers;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Forms;
+using MW5.UI.Helpers;
 using MW5.Views;
 using MW5.Views.Abstract;
 
@@ -34,6 +37,12 @@ namespace MW5
             Projections.CompositionRoot.Compose(container);
             UI.CompositionRoot.Compose(container);
             Data.CompositionRoot.Compose(container);
+
+            EnumHelper.RegisterConverter(new GeometryTypeConverter());
+            EnumHelper.RegisterConverter(new SaveResultConverter());
+            EnumHelper.RegisterConverter(new TileProviderConverter());
+
+            CommandBarHelper.InitMenuColors();
         }
     }
 }

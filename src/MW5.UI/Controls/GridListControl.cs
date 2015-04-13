@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Plugins.Concrete;
+using MW5.Shared;
+using MW5.Shared.Log;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
@@ -71,6 +73,7 @@ namespace MW5.UI.Controls
             {
                 if (_grid.Table.SelectedRecords.Count == 0)
                 {
+                    Logger.Current.Warn("GridListControl: Invalid invalid index");
                     return null;
                 }
 
@@ -84,7 +87,8 @@ namespace MW5.UI.Controls
             {
                 if (index < 0 || index >= _grid.Table.Records.Count)
                 {
-                    return null;    // TODO: log it
+                    Logger.Current.Warn("GridListControl: Invalid invalid index");
+                    return null;
                 }
                 
                 return _grid.Table.Records[index].GetData() as T;     

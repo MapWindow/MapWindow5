@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
@@ -36,7 +37,7 @@ namespace MW5.Api.Concrete
         {
             if (callback != null && !_list.Contains(callback))
             {
-                Config.Init();
+                MapConfig.Init();
                 _list.Add(callback);
                 return true;
             }

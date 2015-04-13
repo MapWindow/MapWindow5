@@ -292,7 +292,6 @@
     <Compile Include="Forms\Categories\QueryBuilderForm.Designer.cs">
       <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Legacy\LocalCallback.cs" />
     <Compile Include="Menu\LegendListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuKeys.cs" />

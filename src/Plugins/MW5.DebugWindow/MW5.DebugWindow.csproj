@@ -89,6 +89,10 @@
       <Name>MW5.Plugins</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-de0d-4ffd-b115-af2aeac79cd9}</Project>
+      <Name>MW5.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

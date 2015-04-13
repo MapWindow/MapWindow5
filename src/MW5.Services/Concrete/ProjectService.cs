@@ -6,6 +6,7 @@ using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Log;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
@@ -248,6 +249,8 @@ namespace MW5.Services.Concrete
                 {
                     _messageService.Info("Project was loaded: " + filename);
                 }
+
+                Logger.Current.Info("Project was loaded: " + filename);
             }
 
             //OnProjectChanged();

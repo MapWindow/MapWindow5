@@ -99,7 +99,6 @@ namespace MW5.Data.Views
                 else
                 {
                     MessageService.Current.Info("Connected successfully");
-                    Debug.Print("Num layers: " + ds.LayerCount);
                 }
             }
         }

@@ -8,10 +8,11 @@ using MW5.Data.Repository;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
+using MW5.UI.Controls;
 
 namespace MW5.Plugins.Repository.Views
 {
-    public partial class RepositoryDockPanel : UserControl, IMenuProvider
+    public partial class RepositoryDockPanel : DockPanelControlBase, IMenuProvider
     {
         public event EventHandler<RepositoryEventArgs> ItemDoubleClicked;
 

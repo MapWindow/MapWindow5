@@ -1,6 +1,6 @@
 ﻿namespace MW5.Plugins.IdentifierTestPlugin
 {
-    partial class IdentifierControl
+    partial class IdentifierDockPanel
     {
         /// <summary> 
         /// Required designer variable.
@@ -99,7 +99,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.treeViewAdv1);
             this.Controls.Add(this._cboIdentifierMode);
-            this.Name = "IdentifierControl";
+            this.Name = "IdentifierDockPanel";
             this.Size = new System.Drawing.Size(268, 244);
             ((System.ComponentModel.ISupportInitialize)(this._cboIdentifierMode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).EndInit();

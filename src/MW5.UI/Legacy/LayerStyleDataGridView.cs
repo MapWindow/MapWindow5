@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Shared;
 
 namespace MW5.UI.Legacy
 {
@@ -163,7 +164,7 @@ namespace MW5.UI.Legacy
             bool val = _shapeOptions.Count == Rows.Count;
             if (!val)
             {
-                Debug.Print("Broken syncronization inside custom data grid view");
+                Logger.Current.Warn("Broken syncronization inside custom data grid view");
             }
             return val;
         }

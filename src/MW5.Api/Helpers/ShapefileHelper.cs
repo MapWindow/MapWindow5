@@ -3,6 +3,8 @@ using System.Diagnostics;
 using System.IO;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Helpers
 {
@@ -30,7 +32,7 @@ namespace MW5.Api.Helpers
             }
             catch (Exception ex)
             {
-                Debug.Print("Failed to read file: " + ex.Message);   // TODO: log it
+                Logger.Current.Warn("Failed to read file", ex);
             }
 
             return GeometryType.None;
