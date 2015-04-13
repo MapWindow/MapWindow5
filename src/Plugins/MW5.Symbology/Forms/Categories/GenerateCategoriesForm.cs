@@ -25,6 +25,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
@@ -152,7 +153,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             if (cboField.SelectedIndex < 0)
             {
-                SymbologyPlugin.Msg.Info("No field for generation was selected.");
+                MessageService.Current.Info("No field for generation was selected.");
                 DialogResult = DialogResult.None;
                 return;
             }
@@ -160,7 +161,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             int count;
             if (!Int32.TryParse(cboCategoriesCount.Text, out count))
             {
-                SymbologyPlugin.Msg.Warn("Number of categories isn't a valid interger.");
+                MessageService.Current.Warn("Number of categories isn't a valid interger.");
                 return;
             }
 

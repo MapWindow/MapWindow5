@@ -11,6 +11,7 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
@@ -341,7 +342,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
             catch (Exception ex)
             {
-                SymbologyPlugin.Msg.Warn("Failed to save color schemes: " + filename + Environment.NewLine + ex.Message);
+                MessageService.Current.Warn("Failed to save color schemes: " + filename + Environment.NewLine + ex.Message);
             }
         }
 

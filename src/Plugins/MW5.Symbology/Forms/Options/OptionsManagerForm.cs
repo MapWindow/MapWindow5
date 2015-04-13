@@ -26,6 +26,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Shared;
 using MW5.UI;
@@ -130,7 +131,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                 string name = _layer.Filename + "." + value + ".mwsymb";
                 if (File.Exists(name))
                 {
-                    if (!SymbologyPlugin.Msg.Ask("Set of options with such name already exists." + Environment.NewLine + "Do you want to rewrite it?"))
+                    if (!MessageService.Current.Ask("Set of options with such name already exists." + Environment.NewLine + "Do you want to rewrite it?"))
                     {
                         return;
                     }
@@ -184,7 +185,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                 }
                 catch
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to rename file");
+                    MessageService.Current.Warn("Failed to rename file");
                     return;
                 }
 
@@ -244,7 +245,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                 }
                 else
                 {
-                    SymbologyPlugin.Msg.Warn("Error while loading options");
+                    MessageService.Current.Warn("Error while loading options");
                 }
             }
         }
@@ -279,7 +280,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                 string description = "";
                 if (!axMap1.Layers.ItemByHandle(handle).LoadOptions(name, ref description))
                 {
-                    SymbologyPlugin.Msg.Warn("Error while loading options");
+                    MessageService.Current.Warn("Error while loading options");
                 }
                 else
                 {
@@ -324,7 +325,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                     }
                     catch
                     {
-                        SymbologyPlugin.Msg.Warn("Failed to rename file");
+                        MessageService.Current.Warn("Failed to rename file");
                         return;
                     }
                 }
@@ -349,7 +350,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
             var map = _legend.Map;
             if (map != null)
             {
-                if (SymbologyPlugin.Msg.Ask("Do you want to remove all option sets for the layer?"))
+                if (MessageService.Current.Ask("Do you want to remove all option sets for the layer?"))
                 {
                     int errorCount = 0;
                     for (int row = 0; row < listView1.Items.Count; row++)
@@ -372,7 +373,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
 
                     if (errorCount > 0)
                     {
-                        SymbologyPlugin.Msg.Warn("Failed to remove options: " + errorCount + Environment.NewLine + 
+                        MessageService.Current.Warn("Failed to remove options: " + errorCount + Environment.NewLine + 
                                         "Reason: " + map.LastError);
                     }
                 }
@@ -389,7 +390,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
             if (!get_CurrentNameAndType(out name, out type))
                 return;
 
-            if (SymbologyPlugin.Msg.Ask("Do you want to remove the following set of options: " + name + "?"))
+            if (MessageService.Current.Ask("Do you want to remove the following set of options: " + name + "?"))
             {
                 var map = _legend.Map;
                 if (map != null)
@@ -406,7 +407,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
                     }
                     else
                     {
-                        SymbologyPlugin.Msg.Warn("Failed to remove options." + Environment.NewLine + "Reason: " + map.LastError);
+                        MessageService.Current.Warn("Failed to remove options." + Environment.NewLine + "Reason: " + map.LastError);
                     }
                 }
             }

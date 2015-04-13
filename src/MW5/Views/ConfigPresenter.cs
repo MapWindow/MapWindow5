@@ -19,25 +19,22 @@ namespace MW5.Views
         private readonly IConfigView _view;
         private readonly IConfigService _configService;
         private readonly IPluginManager _manager;
-        private readonly IMessageService _messageService;
         private readonly IStyleService _styleService;
 
         public ConfigPresenter(IAppContext context, IConfigView view, IConfigService configService, IPluginManager manager,
-                               IMessageService messageService, IStyleService styleService)
+                                IStyleService styleService)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
             if (configService == null) throw new ArgumentNullException("configService");
             if (manager == null) throw new ArgumentNullException("manager");
-            if (messageService == null) throw new ArgumentNullException("messageService");
             if (styleService == null) throw new ArgumentNullException("styleService");
 
             _context = context;
             _view = view;
             _configService = configService;
             _manager = manager;
-            _messageService = messageService;
             _styleService = styleService;
 
             InitPages();
@@ -54,7 +51,7 @@ namespace MW5.Views
             bool result = _configService.Save();
             if (result)
             {
-                _messageService.Info("Configuration was saved successfully.");
+                MessageService.Current.Info("Configuration was saved successfully.");
             }
         }
 

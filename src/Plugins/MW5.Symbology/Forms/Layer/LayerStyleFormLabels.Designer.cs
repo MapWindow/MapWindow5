@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows.Forms;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 
@@ -93,7 +94,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnLabelsClear_Click(object sender, EventArgs e)
         {
-            if (SymbologyPlugin.Msg.Ask("Do you want to delete labels?"))
+            if (MessageService.Current.Ask("Do you want to delete labels?"))
             {
                 _shapefile.Labels.Items.Clear();
                 _shapefile.Labels.Expression = "";

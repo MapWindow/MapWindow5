@@ -25,6 +25,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
@@ -96,7 +97,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void btnClearCharts_Click(object sender, EventArgs e)
         {
-            if (SymbologyPlugin.Msg.Ask("Do you want to delete charts?"))
+            if (MessageService.Current.Ask("Do you want to delete charts?"))
             {
                 _shapefile.Diagrams.Fields.Clear();
                 _shapefile.Diagrams.Clear();

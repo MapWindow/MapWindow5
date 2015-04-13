@@ -20,6 +20,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Plugins.Services;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
@@ -119,7 +120,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                     Cursor = Cursors.WaitCursor;
                     if (_shapefile.SpatialIndex.CreateDiskIndex())
                     {
-                        SymbologyPlugin.Msg.Info("Spatial index was successfully created");
+                        MessageService.Current.Info("Spatial index was successfully created");
                     }
                     Enabled = true;
                     Cursor = Cursors.Default;

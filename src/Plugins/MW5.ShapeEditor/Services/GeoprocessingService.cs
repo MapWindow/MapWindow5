@@ -10,16 +10,13 @@ namespace MW5.Plugins.ShapeEditor.Services
     public class GeoprocessingService : IGeoprocessingService
     {
         private readonly IAppContext _context;
-        private readonly IMessageService _messageService;
         private readonly CopyOperation _copyOperation;
 
-        public GeoprocessingService(IAppContext context, IMessageService messageService)
+        public GeoprocessingService(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _context = context;
-            _messageService = messageService;
             _copyOperation = new CopyOperation(context.Map);
         }
 
@@ -33,17 +30,17 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 case MergeResult.Ok:
                     _context.Map.Redraw(RedrawType.SkipDataLayers);
-                    _messageService.Info("Shapes were merged successfully.");
+                    MessageService.Current.Info("Shapes were merged successfully.");
                     //App.RefreshUI();
                     break;
                 case MergeResult.TooManyShapes:
-                    _messageService.Info("Too many shapes. The number of shapes for operation is limited to 50.");
+                    MessageService.Current.Info("Too many shapes. The number of shapes for operation is limited to 50.");
                     break;
                 case MergeResult.Failed:
-                    _messageService.Info("Failed to merge.");
+                    MessageService.Current.Info("Failed to merge.");
                     break;
                 case MergeResult.NoInput:
-                    _messageService.Info("No input for operation was found.");
+                    MessageService.Current.Info("No input for operation was found.");
                     break;
             }
         }
@@ -58,17 +55,17 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 case ExplodeResult.Ok:
                     _context.Map.Redraw(RedrawType.SkipDataLayers);
-                    _messageService.Info("Shapes were split successfully.");
+                    MessageService.Current.Info("Shapes were split successfully.");
                     //App.RefreshUI();
                     break;
                 case ExplodeResult.NoMultiPart:
-                    _messageService.Info("No multipart shapes were found within selection.");
+                    MessageService.Current.Info("No multipart shapes were found within selection.");
                     break;
                 case ExplodeResult.Failed:
-                    _messageService.Info("Failed to merge.");
+                    MessageService.Current.Info("Failed to merge.");
                     break;
                 case ExplodeResult.NoInput:
-                    _messageService.Info("No input for operation was found.");
+                    MessageService.Current.Info("No input for operation was found.");
                     break;
             }
         }
@@ -90,8 +87,8 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 return;
             }
-            
-            if (_messageService.Ask("Remove selected shapes: " + fs.NumSelected + "?"))
+
+            if (MessageService.Current.Ask("Remove selected shapes: " + fs.NumSelected + "?"))
             {
                 RemoveOperation.Remove(_context.Map, layer.FeatureSet, layer.Handle);
                 _context.Map.Redraw();
@@ -122,14 +119,14 @@ namespace MW5.Plugins.ShapeEditor.Services
                 {
                     case PasteResult.Ok:
                         _context.Map.Redraw();
-                        _messageService.Info("Shapes were copied.");
+                        MessageService.Current.Info("Shapes were copied.");
                         //App.RefreshUI();
                         break;
                     case PasteResult.NoInput:
-                        _messageService.Info("No input was found.");
+                        MessageService.Current.Info("No input was found.");
                         break;
                     case PasteResult.ShapeTypeMismatch:
-                        _messageService.Info("Shape type of source and target shapefiles doesn't match.");
+                        MessageService.Current.Info("Shape type of source and target shapefiles doesn't match.");
                         break;
                 }
             }

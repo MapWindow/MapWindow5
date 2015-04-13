@@ -10,21 +10,19 @@ namespace MW5.Views
     {
         private readonly ISetProjectionView _view;
         private readonly IMuteMap _map;
-        private readonly IMessageService _messageService;
 
-        public SetProjectionPresenter(ISetProjectionView view, IMuteMap map, IMessageService messageService)
+        public SetProjectionPresenter(ISetProjectionView view, IMuteMap map)
             : base(view)
         {
             _view = view;
             _map = map;
-            _messageService = messageService;
         }
 
         public override bool ViewOkClicked()
         {
             if (_map.Layers.Count > 0)
             {
-                _messageService.Info("Can't change projection when there are layers on the map.");
+                MessageService.Current.Info("Can't change projection when there are layers on the map.");
                 return false;
             }
 
@@ -34,13 +32,13 @@ namespace MW5.Views
             {
                 if (string.IsNullOrWhiteSpace(_view.CustomProjection))
                 {
-                    _messageService.Info("ProjectionType string is empty.");
+                    MessageService.Current.Info("ProjectionType string is empty.");
                     return false;
                 }
 
                 if (!sr.ImportFromAutoDetect(_view.CustomProjection))
                 {
-                    _messageService.Info("Failed to identify projection.");
+                    MessageService.Current.Info("Failed to identify projection.");
                     return false;
                 }
             }

@@ -184,7 +184,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
     //    {
     //        if (cboField.SelectedIndex < 0)
     //        {
-    //            SymbologyPlugin.Msg.Info("No field for generation was selected");
+    //            MessageService.Current.Info("No field for generation was selected");
     //            this.DialogResult = DialogResult.None;
     //            return;
     //        }
@@ -192,7 +192,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
     //        int count = 0;
     //        if (!Int32.TryParse(cboCategoriesCount.Text, out count))
     //        {
-    //            SymbologyPlugin.Msg.Info("The entered categories count isn't a number");
+    //            MessageService.Current.Info("The entered categories count isn't a number");
     //            DialogResult = DialogResult.None;
     //            return;
     //        }

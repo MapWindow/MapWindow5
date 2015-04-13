@@ -64,6 +64,7 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="CompositionRoot.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeCollection.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>

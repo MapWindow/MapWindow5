@@ -16,22 +16,18 @@ namespace MW5.Plugins.TableEditor
     public class ProjectListener
     {
         private readonly IAppContext _context;
-        private readonly TableEditorPlugin _plugin;
-        private readonly IMessageService _messageService;
         private readonly TableEditorPresenter _presenter;
 
-        public ProjectListener(IAppContext context, TableEditorPlugin plugin, IMessageService messageService,
-            TableEditorPresenter presenter)
+        public ProjectListener(IAppContext context, TableEditorPlugin plugin, TableEditorPresenter presenter)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
-            if (messageService == null) throw new ArgumentNullException("messageService");
+            if (presenter == null) throw new ArgumentNullException("presenter");
+
             _context = context;
-            _plugin = plugin;
-            _messageService = messageService;
             _presenter = presenter;
 
-            _plugin.BeforeRemoveLayer += BeforeRemoveLayer;
+            plugin.BeforeRemoveLayer += BeforeRemoveLayer;
         }
 
         private void BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)

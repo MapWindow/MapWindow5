@@ -25,7 +25,6 @@ namespace MW5.Plugins
         private const string PluginDirectory = "Plugins";
 
         private readonly IApplicationContainer _container;
-        private readonly IMessageService _messageService;
 
         [ImportMany] 
         #pragma warning disable 649
@@ -53,13 +52,11 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IApplicationContainer container, IMessageService messageService)
+        public PluginManager(IApplicationContainer container)
         {
             if (container == null) throw new ArgumentNullException("container");
-            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _container = container;
-            _messageService = messageService;
             _instance = this;
         }
 
@@ -210,7 +207,7 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                _messageService.Warn("Failed to register services for plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                MessageService.Current.Warn("Failed to register services for plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
                 return;
             }
 
@@ -220,7 +217,7 @@ namespace MW5.Plugins
             }
             catch (Exception ex)
             {
-                _messageService.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
+                MessageService.Current.Warn("Failed to load plugin: " + plugin.Identity + Environment.NewLine + ex.Message);
                 return;
             }
 

@@ -15,16 +15,13 @@ namespace MW5.Plugins.TableEditor.Views
     public class AddFieldPresenter: BasePresenter<IAddFieldView, IAttributeTable>
     {
         private readonly IAddFieldView _view;
-        private readonly IMessageService _messageService;
         private IAttributeTable _table;
 
-        public AddFieldPresenter(IAddFieldView view, IMessageService messageService) : base(view)
+        public AddFieldPresenter(IAddFieldView view) : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
-            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _view = view;
-            _messageService = messageService;
         }
 
         private FeatureField Field
@@ -47,7 +44,7 @@ namespace MW5.Plugins.TableEditor.Views
             string msg;
             if (!_table.ValidateField(View.FieldName, out msg))
             {
-                _messageService.Info(msg);
+                MessageService.Current.Info(msg);
                 return false;
             }
             

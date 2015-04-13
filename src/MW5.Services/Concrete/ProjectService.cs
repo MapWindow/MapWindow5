@@ -20,24 +20,21 @@ namespace MW5.Services.Concrete
 
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileService;
-        private readonly IMessageService _messageService;
         private readonly IBroadcasterService _broadcaster;
         private readonly IProjectLoader _projectLoader;
         private string _filename = string.Empty;
         private bool _modified;
 
         public ProjectService(IAppContext context, IFileDialogService fileService, 
-        IMessageService messageService, IBroadcasterService broadcaster, IProjectLoader projectLoader)
+         IBroadcasterService broadcaster, IProjectLoader projectLoader)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileService == null) throw new ArgumentNullException("fileService");
-            if (messageService == null) throw new ArgumentNullException("messageService");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
             if (projectLoader == null) throw new ArgumentNullException("projectLoader");
 
             _context = context;
             _fileService = fileService;
-            _messageService = messageService;
             _broadcaster = broadcaster;
             _projectLoader = projectLoader;
         }
@@ -129,7 +126,7 @@ namespace MW5.Services.Concrete
                         prompt = string.Format("Save the project: {0}?", Path.GetFileName(_filename));
                     }
 
-                    var result = _messageService.AskWithCancel(prompt);
+                    var result = MessageService.Current.AskWithCancel(prompt);
                     if (result == DialogResult.Cancel)
                     {
                         return false;
@@ -197,12 +194,12 @@ namespace MW5.Services.Concrete
                     _filename = filename;
                     _modified = false;
 
-                    _messageService.Info("Project was saved: " + filename);
+                    MessageService.Current.Info("Project was saved: " + filename);
                 }
             }
             catch (Exception ex)
             {
-                _messageService.Warn("Failed to save project: " + ex.Message);
+                MessageService.Current.Warn("Failed to save project: " + ex.Message);
             }
         }
 
@@ -232,7 +229,7 @@ namespace MW5.Services.Concrete
             {
                 if (!silent)
                 {
-                    _messageService.Info("Project file wasn't found: " + filename);
+                    MessageService.Current.Info("Project file wasn't found: " + filename);
                 }
                 return;
             }
@@ -247,7 +244,7 @@ namespace MW5.Services.Concrete
 
                 if (!silent)
                 {
-                    _messageService.Info("Project was loaded: " + filename);
+                    MessageService.Current.Info("Project was loaded: " + filename);
                 }
 
                 Logger.Current.Info("Project was loaded: " + filename);

@@ -22,6 +22,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.UI;
 using MW5.UI.Forms;
 
@@ -198,7 +199,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (SymbologyPlugin.Msg.Ask("Do you want to delete the selected color scheme?"))
+            if (MessageService.Current.Ask("Do you want to delete the selected color scheme?"))
             {
                 if (_listBox1.Items.Count > 1)
                 {

@@ -12,18 +12,15 @@ namespace MW5.Services.Views
     public class CreateLayerPresenter: BasePresenter<ICreateLayerView>
     {
         private readonly ICreateLayerView _view;
-        private readonly IMessageService _messageService;
         private readonly IFileDialogService _fileDialogService;
         private string _filename = string.Empty;
 
-        public CreateLayerPresenter(ICreateLayerView view, IMessageService messageService, IFileDialogService fileDialogService) : base(view)
+        public CreateLayerPresenter(ICreateLayerView view, IFileDialogService fileDialogService) : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
-            if (messageService == null) throw new ArgumentNullException("messageService");
             if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
 
             _view = view;
-            _messageService = messageService;
             _fileDialogService = fileDialogService;
         }
         
@@ -52,7 +49,7 @@ namespace MW5.Services.Views
             string layerName = _view.LayerName;
             if (string.IsNullOrWhiteSpace(layerName))
             {
-                _messageService.Info("Please enter a name of the new layer.");
+                MessageService.Current.Info("Please enter a name of the new layer.");
                 return false;
             }
 

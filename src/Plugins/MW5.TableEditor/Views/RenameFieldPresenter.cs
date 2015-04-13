@@ -13,13 +13,11 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class RenameFieldPresenter : BasePresenter<IRenameFieldView, IAttributeTable>
     {
-        private readonly IMessageService _messageService;
         private IAttributeTable _table;
 
-        public RenameFieldPresenter(IRenameFieldView view, IMessageService messageService) : base(view)
+        public RenameFieldPresenter(IRenameFieldView view) : base(view)
         {
-            if (messageService == null) throw new ArgumentNullException("messageService");
-            _messageService = messageService;
+
         }
 
         public override void Init(IAttributeTable table)
@@ -42,7 +40,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             if (!Validate(out msg))
             {
-                _messageService.Info(msg);
+                MessageService.Current.Info(msg);
                 return false;
             }
 

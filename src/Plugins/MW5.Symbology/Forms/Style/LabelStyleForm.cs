@@ -27,6 +27,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Forms.Categories;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
@@ -590,7 +591,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             if (richTextBox1.Text == "" && !_shapefile.Labels.Empty)
             {
-                if (SymbologyPlugin.Msg.Ask("Expression is empty. Remove all the labels?"))
+                if (MessageService.Current.Ask("Expression is empty. Remove all the labels?"))
                 {
                     _shapefile.Labels.Items.Clear();
                     _shapefile.Labels.Expression = "";
@@ -620,7 +621,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
             else if (richTextBox1.Text == "" && _shapefile.Labels.Empty)
             {
-                SymbologyPlugin.Msg.Info("No expression was entered.");
+                MessageService.Current.Info("No expression was entered.");
                 return false;
             }
 
@@ -747,7 +748,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             if (richTextBox1.Text.ToLower() == "<no expression>")
             {
-                if (SymbologyPlugin.Msg.Ask("Remove labels?"))
+                if (MessageService.Current.Ask("Remove labels?"))
                 {
                     var lb = _shapefile.Labels.Items;
                     for (int i = 0; i < lb.Count; i++)

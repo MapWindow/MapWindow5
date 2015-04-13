@@ -46,11 +46,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         private readonly IAppContext _context;
 
         /// <summary>
-        ///     The message service.
-        /// </summary>
-        private readonly IMessageService _messageService;
-
-        /// <summary>
         ///     A user control as a sample for a dockable window.
         /// </summary>
         private readonly SampleDockWindow _sampleDockWindow;
@@ -73,13 +68,10 @@ namespace MW5.Plugins.TemplatePlugin.Menu
         /// <param name="plugin">
         /// The plugin.
         /// </param>
-        /// <param name="messageService">
-        /// The message service.
-        /// </param>
         /// <param name="sampleDockWindow">
         /// The sample dock wi
         /// </param>
-        public MenuListener(IAppContext context, InitPlugin plugin, IMessageService messageService, SampleDockWindow sampleDockWindow)
+        public MenuListener(IAppContext context, InitPlugin plugin, SampleDockWindow sampleDockWindow)
         {
             if (context == null)
             {
@@ -91,11 +83,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
                 throw new ArgumentNullException("plugin");
             }
 
-            if (messageService == null)
-            {
-                throw new ArgumentNullException("messageService");
-            }
-
             if (sampleDockWindow == null)
             {
                 throw new ArgumentNullException("sampleDockWindow");
@@ -103,7 +90,6 @@ namespace MW5.Plugins.TemplatePlugin.Menu
 
             // Save to local properties:
             _context = context;
-            _messageService = messageService;
             _sampleDockWindow = sampleDockWindow;
             _plugin = plugin;
 
@@ -163,7 +149,7 @@ namespace MW5.Plugins.TemplatePlugin.Menu
             {
                 case MenuKeys.ShowDockableWindow:
                     // Clicked on the toolbar button
-                    _messageService.Info("Hello from Template plugin");
+                    MessageService.Current.Info("Hello from Template plugin");
                     this.AddDockWindowToPanels();
                     break;
             }

@@ -25,6 +25,7 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 
@@ -131,7 +132,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                     string s = string.Format("The chosen field = {1}.\nThe number of unique values = {0}.\n" +
                     "Large number of categories negatively affects performance.\nDo you want to continue?", set.Count, "[" + name.ToUpper() + "]");
 
-                    if (!SymbologyPlugin.Msg.Ask(s))
+                    if (!MessageService.Current.Ask(s))
                     {
                         return;
                     }

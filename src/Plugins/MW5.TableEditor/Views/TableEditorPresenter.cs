@@ -14,20 +14,17 @@ namespace MW5.Plugins.TableEditor.Views
     {
         private readonly IAppContext _context;
         private readonly RowManager _rowManager;
-        private readonly IMessageService _messageService;
         private ILayer _layer;
         private Shapefile _shapefile;
 
-        public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager, IMessageService messageService) 
+        public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager) 
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (rowManager == null) throw new ArgumentNullException("rowManager");
-            if (messageService == null) throw new ArgumentNullException("messageService");
 
             _context = context;
             _rowManager = rowManager;
-            _messageService = messageService;
             View.SelectionChanged += ViewSelectionChanged;
         }
 
@@ -201,7 +198,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         protected override void CommandNotFound(string itemName)
         {
-            _messageService.Info("No handler found for item: " + itemName);
+            MessageService.Current.Info("No handler found for item: " + itemName);
         }
 
         private void ViewSelectionChanged()

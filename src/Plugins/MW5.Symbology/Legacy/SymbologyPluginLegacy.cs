@@ -513,7 +513,7 @@ namespace MW5.Plugins.Symbology
     //    //            }
     //    //            else
     //    //            {
-    //    //                SymbologyPlugin.Msg.Info("Active layer should be a shapefile");
+    //    //                MessageService.Current.Info("Active layer should be a shapefile");
     //    //            }
     //    //            break;
     //    //        case BUTTON_CATEGORIES:
@@ -529,7 +529,7 @@ namespace MW5.Plugins.Symbology
     //    //            }
     //    //            else
     //    //            {
-    //    //                SymbologyPlugin.Msg.Info("Active layer should be a shapefile");
+    //    //                MessageService.Current.Info("Active layer should be a shapefile");
     //    //            }
     //    //            break;
     //    //        default:

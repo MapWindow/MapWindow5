@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MW5.Plugins.Services;
 using MW5.UI;
 using MW5.UI.Forms;
 
@@ -34,7 +35,7 @@ namespace MW5.Plugins.Symbology.Forms.Options
         {
             if (txtName.Text.Trim() == "")
             {
-                SymbologyPlugin.Msg.Info("The name can't be empty");
+                MessageService.Current.Info("The name can't be empty");
             }
             else
             {

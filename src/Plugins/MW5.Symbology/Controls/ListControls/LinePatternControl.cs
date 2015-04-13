@@ -24,6 +24,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Xml;
 using MW5.Api.Concrete;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Controls.ListControls
@@ -148,7 +149,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                 }
                 catch (Exception ex)
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to create directory: " + path + Environment.NewLine + ex.Message);
+                    MessageService.Current.Warn("Failed to create directory: " + path + Environment.NewLine + ex.Message);
                     return false;
                 }
             }
@@ -161,7 +162,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                 }
                 catch (Exception ex)
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to save line patterns: " + path + Environment.NewLine + ex.Message);
+                    MessageService.Current.Warn("Failed to save line patterns: " + path + Environment.NewLine + ex.Message);
                     return false;
                 }
             }

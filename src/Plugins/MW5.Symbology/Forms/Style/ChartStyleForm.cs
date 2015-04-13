@@ -28,6 +28,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms.Categories;
 using MW5.Plugins.Symbology.Helpers;
@@ -473,11 +474,11 @@ namespace MW5.Plugins.Symbology.Forms.Style
             {
                 if (_charts.Count == 0)
                 {
-                    SymbologyPlugin.Msg.Info("No fields were chosen. No charts will be displayed.");
+                    MessageService.Current.Info("No fields were chosen. No charts will be displayed.");
                     return false;
                 }
 
-                if (SymbologyPlugin.Msg.Ask("No fields were chosen. Do you want to remove all charts?"))
+                if (MessageService.Current.Ask("No fields were chosen. Do you want to remove all charts?"))
                 {
                     _charts.Clear();
                     return true;

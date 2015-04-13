@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI;
 using MW5.UI.Forms;
@@ -232,7 +233,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             var tbl = _shapefile.Table;
             if (richTextBox1.Text == string.Empty)
             {
-                SymbologyPlugin.Msg.Info("No expression is entered");
+                MessageService.Current.Info("No expression is entered");
                 return;
             }
             
@@ -336,7 +337,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             if (chkShowDynamically.Checked)
             {
-                //SymbologyPlugin.Msg.Info("Dynamic selection mode was turned on.\nThe selection will be changed after each click\n on the value to show corresponding objects.");
+                //MessageService.Current.Info("Dynamic selection mode was turned on.\nThe selection will be changed after each click\n on the value to show corresponding objects.");
             }
         }
 

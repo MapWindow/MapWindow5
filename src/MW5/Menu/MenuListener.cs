@@ -23,20 +23,16 @@ namespace MW5.Menu
     {
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
-        private readonly IMessageService _messageService;
         private readonly IProjectService _projectService;
 
-        public MenuListener(IAppContext context, ILayerService layerService, 
-            IMessageService messageService, IProjectService projectService)
+        public MenuListener(IAppContext context, ILayerService layerService, IProjectService projectService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
-            if (messageService == null) throw new ArgumentNullException("messageService");
             if (projectService == null) throw new ArgumentNullException("projectService");
 
             _context = context;
             _layerService = layerService;
-            _messageService = messageService;
             _projectService = projectService;
 
             var appContext = context as AppContext;
@@ -95,7 +91,7 @@ namespace MW5.Menu
                     _layerService.ZoomToSelected();
                     break;
                 default:
-                    _messageService.Info("There is no handler for menu item with key: " + e.ItemKey);
+                    MessageService.Current.Info("There is no handler for menu item with key: " + e.ItemKey);
                     break;
             }
 

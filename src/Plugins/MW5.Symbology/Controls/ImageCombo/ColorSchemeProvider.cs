@@ -27,6 +27,7 @@ using System.Xml;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
@@ -49,7 +50,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 }
                 catch (Exception ex)
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to load color schemes:" + ex.Message);
+                    MessageService.Current.Warn("Failed to load color schemes:" + ex.Message);
                 }
             }
         }

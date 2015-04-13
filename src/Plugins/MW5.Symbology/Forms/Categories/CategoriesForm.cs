@@ -30,6 +30,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
@@ -304,7 +305,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void btnCategoriesClear_Click(object sender, EventArgs e)
         {
-            if (SymbologyPlugin.Msg.Ask("Do you want to remove all the categories?"))
+            if (MessageService.Current.Ask("Do you want to remove all the categories?"))
             {
                 _shapefile.Categories.Clear();
                 RefreshCategoriesList();
@@ -887,7 +888,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         {
             //if (dgvCategories.Rows.Count  > 0)
             //{
-            //    if (!SymbologyPlugin.Msg.Ask("Do you want to copy categories definitions from labels?"))
+            //    if (!MessageService.Current.Ask("Do you want to copy categories definitions from labels?"))
             //    {
             //        return;
             //    }
@@ -947,7 +948,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                     btnCategoriesClear_Click(null, null);
                     break;
                 case "btnCopy":
-                    SymbologyPlugin.Msg.Info("Not implemented");
+                    MessageService.Current.Info("Not implemented");
                     break;
                 case "btnAddRange":
                     btnAddCategory_Click(null, null);
@@ -992,7 +993,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                     }
                     catch (Exception ex)
                     {
-                        SymbologyPlugin.Msg.Warn("Failed to save categories: " + ex.Message);
+                        MessageService.Current.Warn("Failed to save categories: " + ex.Message);
                     }
                 }
             }
@@ -1020,7 +1021,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 }
                 catch(Exception ex)
                 {
-                    SymbologyPlugin.Msg.Warn("Failed to load categories: " + ex.Message);
+                    MessageService.Current.Warn("Failed to load categories: " + ex.Message);
                 }
             }
             dlg.Dispose();
@@ -1030,7 +1031,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SymbologyPlugin.Msg.Info("Not implemented");
+            MessageService.Current.Info("Not implemented");
         }
     }
 }

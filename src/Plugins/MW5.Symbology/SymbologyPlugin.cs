@@ -23,11 +23,6 @@ namespace MW5.Plugins.Symbology
         private LabelMover _labelMover;
         private SymbologyMetadataService _metadataService;
 
-        internal static IMessageService Msg
-        {
-            get { return _context.Container.GetSingleton<IMessageService>(); }
-        }
-
         internal static SymbologyMetadata Metadata(int layerHandle)
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
@@ -42,7 +37,7 @@ namespace MW5.Plugins.Symbology
 
         public override void RegisterServices(IApplicationContainer container)
         {
-            EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
+            CompositionRoot.Compose(container);
 
             ColorSchemeProvider.Load();
         }
