@@ -269,6 +269,12 @@ namespace MW5.Data.Repository
             {
                 DoDragDrop(vectorItem.Filename, DragDropEffects.Copy);
             }
+
+            var layerItem = RepositoryItem.Get(arr[0]) as IDatabaseLayerItem;
+            if (layerItem != null)
+            {
+                DoDragDrop(layerItem.Serialize(), DragDropEffects.Copy);
+            }
         }
     }
 }

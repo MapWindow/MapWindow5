@@ -623,7 +623,7 @@ namespace MW5.Api.Map
         private string GetFilename(DragEventArgs e)
         {
             var filename = e.Data.GetData(DataFormats.StringFormat) as string;
-            if (!string.IsNullOrWhiteSpace(filename) && File.Exists(filename))
+            if (!string.IsNullOrWhiteSpace(filename))
             {
                 return filename;
             }

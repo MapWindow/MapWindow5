@@ -135,10 +135,17 @@ namespace MW5.Plugins.Repository.Views
                 return;
             }
 
-            if (_layerService.AddDatabaseLayer(layer.Connection, layer.Name))
+            if (layer.AddedToMap)
             {
-                int handle = _layerService.LastLayerHandle;
-                _context.Map.ZoomToLayer(handle);
+                _layerService.RemoveLayer(layer.Serialize());
+            }
+            else
+            {
+                if (_layerService.AddDatabaseLayer(layer.Connection, layer.Name))
+                {
+                    int handle = _layerService.LastLayerHandle;
+                    _context.Map.ZoomToLayer(handle);
+                }
             }
         }
 
@@ -274,7 +281,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void ViewItemDoubleClicked(object sender, RepositoryEventArgs e)
         {
-            if (e.Item is IFileItem)
+            if (e.Item is IFileItem || e.Item is IDatabaseLayerItem)
             {
                 RunCommand(RepositoryCommand.AddToMap);
             }
@@ -297,7 +304,12 @@ namespace MW5.Plugins.Repository.Views
             {
                 fs.SubItems.UpdateState(dict);
             }
+
+            var db = View.Tree.GetSpecialItem(RepositoryItemType.PostGis);
+            if (db != null)
+            {
+                db.SubItems.UpdateState(dict);
+            }
         }
-        
     }
 }

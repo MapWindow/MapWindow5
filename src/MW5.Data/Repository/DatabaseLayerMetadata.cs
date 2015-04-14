@@ -27,5 +27,6 @@ namespace MW5.Data.Repository
         public int NumFeatures { get; set; }
         public ISpatialReference Projection { get; set; }
         public string Connection { get; set; }
+        public bool AddedToMap { get; set; }
     }
 }

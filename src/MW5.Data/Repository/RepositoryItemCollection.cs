@@ -173,10 +173,17 @@ namespace MW5.Data.Repository
                     file.AddedToMap = selected;
                 }
 
-                var folder = item as IFolderItem;
-                if (folder != null)
+                var databaseLayer = item as IDatabaseLayerItem;
+                if (databaseLayer != null)
                 {
-                    folder.SubItems.UpdateState(filenames);
+                    string filename = databaseLayer.Serialize().ToLower();
+                    bool selected = filenames.ContainsKey(filename);
+                    databaseLayer.AddedToMap = selected;
+                }
+
+                if (item is IFolderItem || item is IDatabaseItem)
+                {
+                    item.SubItems.UpdateState(filenames);
                 }
             }
         }

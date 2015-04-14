@@ -134,7 +134,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                     case ImageComboStyle.PointShape:
                     {
                         s = ((VectorMarkerType)i).ToString();
-                        s = s.Substring(5, s.Length - 5);
                         break;
                     }
                     case ImageComboStyle.HatchStyle:

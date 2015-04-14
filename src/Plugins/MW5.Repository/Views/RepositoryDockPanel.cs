@@ -103,16 +103,16 @@ namespace MW5.Plugins.Repository.Views
                     SetDatabaseContextMenu();
                     return;
                 case RepositoryItemType.DatabaseLayer:
-                    SetDatabaseLayerContextMenu();
+                    SetDatabaseLayerContextMenu(item as IDatabaseLayerItem);
                     return;
             }
 
             e.Cancel = true;
         }
 
-        private void SetDatabaseLayerContextMenu()
+        private void SetDatabaseLayerContextMenu(IDatabaseLayerItem layer)
         {
-            // TODO: determine if the layer was already added
+            mnuAddToMap.Text = layer.AddedToMap ? "Remove from the map" : "Add to the map";
             contextMenuStripEx1.Items.Add(mnuAddToMap);
         }
 
