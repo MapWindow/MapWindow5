@@ -19,8 +19,31 @@ namespace MW5.Api.Static
             _manager = new FileManager();
         }
 
+        private static IDatasource TryOpenAsDatabaseLayer(string filename)
+        {
+            if (filename == null || !filename.ToLower().StartsWith("ogrconnection"))
+            {
+                return null;
+            }
+
+            var parts = filename.Split('|');
+            if (parts.Length == 3)
+            {
+                var source = _manager.OpenFromDatabase(parts[1], parts[2]);
+                return LayerSourceHelper.Convert(source);
+            }
+
+            return null;
+        }
+
         public static IDatasource Open(string filename, OpenStrategy openStrategy = OpenStrategy.AutoDetect)
         {
+            var result = TryOpenAsDatabaseLayer(filename);
+            if (result != null)
+            {
+                return result;
+            }
+
             var source = _manager.Open(filename, (tkFileOpenStrategy)openStrategy, null);
             return LayerSourceHelper.Convert(source);
         }

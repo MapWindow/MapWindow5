@@ -106,7 +106,6 @@ namespace MW5.Services.Concrete
             var layers = _context.Map.Layers;
             foreach (var xmlLayer in project.Layers)
             {
-                // TODO: use xmlLayer.LayerType
                 if (_layerService.AddLayersFromFilename(xmlLayer.Filename)) 
                 {
                     int handle = _layerService.LastLayerHandle;
