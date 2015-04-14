@@ -44,8 +44,8 @@ namespace MW5.UI.Style
                 var btn = control as ButtonAdv;
                 if (btn != null)
                 {
-                    btn.Appearance = _settings.ButtonAppearance;
-                    btn.UseVisualStyle = true;
+                    //btn.Appearance = _settings.ButtonAppearance;
+                    //btn.UseVisualStyle = true;
                 }
 
                 var cbo = control as ComboBoxAdv;
@@ -93,7 +93,7 @@ namespace MW5.UI.Style
 #if STYLE2010
                     tree.Style = TreeStyle.Office2010;
 #else
-                    tree.Style = TreeStyle.Metro;
+                    //tree.Style = TreeStyle.Metro;
 #endif
                 }
 

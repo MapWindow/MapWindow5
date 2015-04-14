@@ -58,6 +58,7 @@
     <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -65,6 +66,12 @@
   <ItemGroup>
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
+    </Compile>
+    <Compile Include="Controls\ConfigPanelControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigPanelControl.Designer.cs">
+      <DependentUpon>ConfigPanelControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\DockPanelControlBase.cs">
       <SubType>UserControl</SubType>
@@ -169,6 +176,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ConfigPanelControl.resx">
+      <DependentUpon>ConfigPanelControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridListControl.resx">
       <DependentUpon>GridListControl.cs</DependentUpon>
     </EmbeddedResource>

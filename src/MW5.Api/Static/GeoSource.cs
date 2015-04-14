@@ -21,6 +21,8 @@ namespace MW5.Api.Static
 
         private static IDatasource TryOpenAsDatabaseLayer(string filename)
         {
+            // the expected format is: "OgrConnection|<connection>|<query_or_layer_name>"
+                        
             if (filename == null || !filename.ToLower().StartsWith("ogrconnection"))
             {
                 return null;

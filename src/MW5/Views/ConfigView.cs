@@ -63,6 +63,7 @@ namespace MW5.Views
             foreach (var page in _pages)
             {
                 var node = new TreeNodeAdv(page.PageName) { Tag = page };
+                
                 _treeViewAdv1.Nodes.Add(node);
                 if (page.PageName == _lastPageName)
                 {
@@ -80,13 +81,23 @@ namespace MW5.Views
 
         void treeViewAdv1_AfterSelect(object sender, EventArgs e)
         {
-            panel1.Controls.Clear();
+            Control control = null;
+            if (panel1.Controls.Count > 0)
+            {
+                control = panel1.Controls[0];
+            }
 
             var page = SelectedPage as Control;
             if (page != null)
             {
                 page.Dock = DockStyle.Fill;
                 panel1.Controls.Add(page);
+                page.BringToFront();
+            }
+
+            if (control != null)
+            {
+                panel1.Controls.Remove(control);
             }
         }
 
