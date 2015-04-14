@@ -185,6 +185,8 @@ namespace MW5.Services.Concrete
             var layers = _context.Map.Layers;
             foreach (var layer in LayerSourceHelper.GetLayers(ds))
             {
+                
+                
                 ILayerSource newLayer;
                 var result = _mismatchTester.TestLayer(layer, out newLayer);
 

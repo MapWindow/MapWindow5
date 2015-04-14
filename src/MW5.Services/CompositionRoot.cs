@@ -1,5 +1,4 @@
-﻿using MW5.Plugins.Log;
-using MW5.Plugins.Mvp;
+﻿using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
 using MW5.Services.Serialization;

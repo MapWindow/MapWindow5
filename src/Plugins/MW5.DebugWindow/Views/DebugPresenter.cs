@@ -8,7 +8,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.DebugWindow.Views
 {
-    public class DebugPresenter: IDockPanelProvider
+    public class DebugPresenter: IDockPanelPresenter
     {
         private readonly DebugDockPanel _debugDockPanel;
 

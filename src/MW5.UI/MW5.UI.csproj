@@ -72,6 +72,7 @@
     <Compile Include="Controls\GridControlBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\GridCustomEngine.cs" />
     <Compile Include="Controls\GridListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

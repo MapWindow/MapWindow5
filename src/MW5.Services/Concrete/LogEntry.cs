@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel;
 using MW5.Shared.Log;
 
-namespace MW5.Plugins.Log
+namespace MW5.Services.Concrete
 {
     public class LogEntry: ILogEntry
     {
@@ -22,9 +19,13 @@ namespace MW5.Plugins.Log
             TimeStamp = DateTime.Now;
         }
 
+        public LogLevel Level { get; set; }
+
         public string Message { get; private set; }
-        public LogLevel Level { get; private set; }
+        
+        [Browsable(false)]
         public Exception Exception { get; private set; }
+
         public DateTime TimeStamp { get; private set; }
 
         public override string ToString()

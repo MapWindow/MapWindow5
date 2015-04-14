@@ -82,6 +82,7 @@ namespace MW5.UI.Style
 #else
                     grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
                     grid.GridVisualStyles = GridVisualStyles.Custom;
+                    grid.TableOptions.GridVisualStyles = GridVisualStyles.Custom;
 #endif
                 }
 

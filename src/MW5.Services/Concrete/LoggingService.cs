@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using log4net;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Log;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
@@ -13,7 +13,7 @@ namespace MW5.Services.Concrete
     {
         private readonly ILog _log4NetLogger;
 
-        private readonly List<LogEntry> _entries = new List<LogEntry>();
+        private readonly SortableBindingList<ILogEntry> _entries = new SortableBindingList<ILogEntry>();
 
         private readonly IAppContext _context;
 

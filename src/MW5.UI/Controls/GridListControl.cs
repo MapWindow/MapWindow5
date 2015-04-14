@@ -24,12 +24,11 @@ namespace MW5.UI.Controls
         private SuperToolTip _lastTooltip = new SuperToolTip();
         private GridControlBase _grid;
         private int _mouseOverIndex = 0;
+        private bool _autoAdjustRowHeights;
 
         public GridListControl()
         {
             InitializeComponent();
-
-            _grid.BorderStyle = BorderStyle.None;
 
             SetDefaults();
 
@@ -57,6 +56,68 @@ namespace MW5.UI.Controls
 
         public event EventHandler<EventArgs> SelectionChanged;
 
+        public bool ReadOnly
+        {
+            get { return _grid.BrowseOnly; }
+            set
+            {
+                _grid.BrowseOnly = value;
+                ShowEditors = !_grid.BrowseOnly;
+            }
+        }
+
+        public bool WrapText
+        {
+            get { return _grid.TableDescriptor.Appearance.AnyCell.WrapText; }
+            set { _grid.TableDescriptor.Appearance.AnyCell.WrapText = value; }
+        }
+
+        public new BorderStyle BorderStyle
+        {
+            get { return _grid.BorderStyle; }
+            set { _grid.BorderStyle = value; }
+        }
+
+        public bool ShowEditors
+        {
+            get
+            {
+                return _grid.Table.Appearance.AnyCell.ShowButtons != GridShowButtons.Hide;
+            }
+            set
+            {
+                _grid.TableOptions.AllowDropDownCell = value;
+                _grid.Table.Appearance.AnyCell.ShowButtons = value ? GridShowButtons.Show : GridShowButtons.Hide;
+            }
+        }
+
+        public void AdjustRowHeights()
+        {
+            _grid.TableModel.RowHeights.ResizeToFit(GridRangeInfo.Table());
+        }
+
+        public bool AutoAdjustRowHeights
+        {
+            get { return _autoAdjustRowHeights; }
+            set
+            {
+                _autoAdjustRowHeights = value;
+                if (value)
+                {
+                    _grid.TableModel.ColWidthsChanged += TableModel_ColWidthsChanged;
+                }
+                else
+                {
+                    _grid.TableModel.ColWidthsChanged -= TableModel_ColWidthsChanged;
+                }
+            }
+        }
+
+        private void TableModel_ColWidthsChanged(object sender, GridRowColSizeChangedEventArgs e)
+        {
+            AdjustRowHeights();
+        }
+
         public new event KeyEventHandler KeyDown
         {
             add { _grid.TableControl.KeyDown += value; }
@@ -69,7 +130,7 @@ namespace MW5.UI.Controls
             set { _grid.DataSource = value; }
         }
         
-        protected GridGroupingControl Grid
+        public GridGroupingControl Grid
         {
             get { return _grid; }
         }

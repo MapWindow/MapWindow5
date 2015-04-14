@@ -8,40 +8,34 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.Reflection;
 using System.Windows.Forms;
+using MW5.Shared;
 using MW5.UI.Controls;
+using Syncfusion.Windows.Forms.Grid;
+using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Plugins.DebugWindow.Views
 {
-    #region
-
-    
-
-    #endregion
-
-    /// <summary>
-    /// The sample dock window.
-    /// </summary>
     public partial class DebugDockPanel : DockPanelControlBase
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DebugDockPanel"/> class.
         /// </summary>
         public DebugDockPanel()
         {
             InitializeComponent();
-        }
 
-        #endregion
+            _listControl.BorderStyle = BorderStyle.None;
+            _listControl.ReadOnly = true;
+            _listControl.WrapText = true;
+            _listControl.HotTracking = true;
 
-        public void Write(string prefix, string message)
-        {
-            if (Visible)
-            {
-                DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
-            }
+            _listControl.DataSource = Logger.Current.Entries;
+            _listControl.AdjustRowHeights();
+            _listControl.AutoAdjustRowHeights = true;
         }
     }
 }

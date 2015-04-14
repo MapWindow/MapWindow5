@@ -12,10 +12,12 @@ using MW5.Services;
 using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.UI;
+using MW5.UI.Controls;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 using MW5.Views;
 using MW5.Views.Abstract;
+using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5
 {
@@ -43,6 +45,8 @@ namespace MW5
             EnumHelper.RegisterConverter(new TileProviderConverter());
 
             CommandBarHelper.InitMenuColors();
+
+            GridEngineFactory.Factory = new GroupingEngineFactory();
         }
     }
 }

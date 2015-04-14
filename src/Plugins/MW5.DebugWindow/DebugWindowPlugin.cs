@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using MW5.Plugins.DebugWindow.Services;
+using MW5.Plugins.DebugWindow.Views;
 using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.DebugWindow
@@ -56,6 +58,10 @@ namespace MW5.Plugins.DebugWindow
         /// </summary>
         private DebugWindow _debugWindow;
 
+        private DebugPresenter _presenter;
+
+        private DockPanelService _dockPanelService;
+
         #endregion
 
         #region Public Methods and Operators
@@ -87,6 +93,8 @@ namespace MW5.Plugins.DebugWindow
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
+            _presenter = context.Container.GetInstance<DebugPresenter>();
+            _dockPanelService = context.Container.GetInstance<DockPanelService>();
 
             // Event handlers are in the MapListener class:
 
