@@ -39,7 +39,7 @@ namespace MW5.Projections.UI.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this._projectionTreeView1 = new MW5.Projections.UI.Controls.ProjectionTreeView();
-            this.txtSearch = new WatermarkTextbox();
+            this.txtSearch = new MW5.UI.Controls.WatermarkTextbox();
             this.chkUpdate = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).BeginInit();
