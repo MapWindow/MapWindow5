@@ -46,6 +46,13 @@ namespace MW5.UI.Menu
             get { return new StatusItemCollection(_bar.Items, _menuIndex, true); }
         }
 
+        public void RemoveItemsForPlugin(PluginIdentity identity)
+        {
+            _menuIndex.RemoveItemsForPlugin(identity);
+
+            ItemCollectionBase.RemoveItems(Items, identity);
+        }
+
         IMenuItemCollection IToolbar.Items
         {
             get { return Items; }

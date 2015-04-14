@@ -145,6 +145,7 @@ namespace MW5
             Menu.RemoveItemsForPlugin(e.Identity);
             DockPanels.RemoveItemsForPlugin(e.Identity);
             Toolbox.RemoveItemsForPlugin(e.Identity);
+            StatusBar.RemoveItemsForPlugin(e.Identity);
         }
 
         public IApplicationContainer Container

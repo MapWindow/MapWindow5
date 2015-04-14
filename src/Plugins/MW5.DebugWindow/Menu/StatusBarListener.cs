@@ -24,6 +24,14 @@ namespace MW5.Plugins.DebugWindow.Menu
             InitStatusBar();
 
             plugin.ItemClicked += plugin_ItemClicked;
+            plugin.ViewUpdating += plugin_ViewUpdating;
+        }
+
+        private void plugin_ViewUpdating(object sender, EventArgs e)
+        {
+            // it set ok, but isn't displayed on the statusbar; perhaps style related problems
+            var item = _context.StatusBar.FindItem(MenuKeys.StatusShowDebug, _plugin.Identity);
+            item.Checked = _context.DockPanels.Find(DockPanelService.DockPanelKey).Visible;
         }
 
         private void plugin_ItemClicked(object sender, Events.MenuItemEventArgs e)
@@ -38,6 +46,7 @@ namespace MW5.Plugins.DebugWindow.Menu
                 case MenuKeys.StatusShowDebug:
                     var panel = _context.DockPanels.Find(DockPanelService.DockPanelKey);
                     panel.Visible = !panel.Visible;
+                    _context.View.Update();
                     break;
             }
         }
@@ -46,6 +55,7 @@ namespace MW5.Plugins.DebugWindow.Menu
         {
             var bar = _context.StatusBar;
             bar.AlignNewItemsRight = true;
+
             bar.Items.AddButton("Debug", MenuKeys.StatusShowDebug, Resources.img_bug_24, _plugin.Identity);
         }
     }

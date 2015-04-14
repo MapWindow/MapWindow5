@@ -14,5 +14,6 @@ namespace MW5.Plugins.Interfaces
         IMenuItem FindItem(string key, PluginIdentity identity);
         bool AlignNewItemsRight { get; set; }
         new IStatusItemCollection Items { get; }
+        void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

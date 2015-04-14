@@ -92,7 +92,11 @@ namespace MW5.UI.Menu
                 var item = SubItems[i];
                 if (item.BeginGroup)
                 {
-                    items.Insert(i, new ToolStripSeparator());
+                    var sep = new ToolStripSeparator
+                    {
+                        Tag = new MenuItemMetadata(item.PluginIdentity, Guid.NewGuid().ToString())
+                    };
+                    items.Insert(i, sep);
                 }
             }
         }
