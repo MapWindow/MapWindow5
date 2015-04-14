@@ -4,23 +4,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.DebugWindow.Views.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins.DebugWindow.Views
 {
-    public class DebugPresenter: IDockPanelPresenter
+    public class DebugPresenter: CommandDispatcher<IDebugView, DebugCommand>, IDockPanelPresenter
     {
-        private readonly DebugDockPanel _debugDockPanel;
+        private readonly DebugDockView _debugDockView;
 
-        public DebugPresenter(DebugDockPanel debugDockPanel)
+        public DebugPresenter(DebugDockView debugDockView)
+            :base(debugDockView)
         {
-            if (debugDockPanel == null) throw new ArgumentNullException("debugDockPanel");
-            _debugDockPanel = debugDockPanel;
+            if (debugDockView == null) throw new ArgumentNullException("debugDockView");
+            _debugDockView = debugDockView;
         }
 
         public Control GetInternalObject()
         {
-            return _debugDockPanel;
+            return _debugDockView;
+        }
+
+        public override void RunCommand(DebugCommand command)
+        {
+            switch (command)
+            {
+                case DebugCommand.ClearLog:
+                    Logger.Current.Clear();
+                    break;
+                case DebugCommand.ClearFilter:
+                    MessageService.Current.Info("Not implemented");
+                    break;
+            }
+        }
+
+        protected override void CommandNotFound(string itemName)
+        {
+            MessageService.Current.Info("No handler found for item key: " + itemName);
         }
     }
 }

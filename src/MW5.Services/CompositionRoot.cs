@@ -4,6 +4,7 @@ using MW5.Services.Concrete;
 using MW5.Services.Serialization;
 using MW5.Services.Views;
 using MW5.Services.Views.Abstract;
+using MW5.Shared;
 using MW5.Shared.Log;
 
 namespace MW5.Services
@@ -23,6 +24,7 @@ namespace MW5.Services
                 .RegisterSingleton<IConfigService, ConfigService>()
                 .RegisterSingleton<IProjectLoader, ProjectLoader>();
 
+            EnumHelper.RegisterConverter(new LogLevelConverter());
         }
     }
 }

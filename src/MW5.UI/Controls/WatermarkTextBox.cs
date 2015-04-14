@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Forms;
+using MW5.UI.Properties;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Projections.UI.Controls
+namespace MW5.UI.Controls
 {
     public class WatermarkTextbox : TextBoxExt
     {
+        private const int IconSize = 24;
         private string _cue;
+
+        public WatermarkTextbox()
+        {
+            FarImage = Resources.img_clear_textbox;
+            MouseDown += OnMouseDown;
+        }
 
         [Localizable(true)]
         public string Cue
@@ -36,6 +41,14 @@ namespace MW5.Projections.UI.Controls
         {
             base.OnHandleCreated(e);
             UpdateCue();
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.X > Width - IconSize)
+            {
+                Text = string.Empty;
+            }
         }
 
         // PInvoke

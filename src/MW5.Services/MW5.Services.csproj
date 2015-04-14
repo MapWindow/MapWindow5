@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\ConfigService.cs" />
+    <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Concrete\LogEntry.cs" />
     <Compile Include="Concrete\LoggingService.cs" />

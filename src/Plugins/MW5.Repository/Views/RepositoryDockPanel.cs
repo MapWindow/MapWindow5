@@ -65,11 +65,6 @@ namespace MW5.Plugins.Repository.Views
             get { yield break; }
         }
 
-        public IEnumerable<IToolbar> Toolbars
-        {
-            get { yield break; }
-        }
-
         private void treeViewAdv1_ItemSelected(object sender, RepositoryEventArgs e)
         {
             var folder = e.Item as IFolderItem;

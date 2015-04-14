@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
     <Compile Include="Controls\ToolTipGridEventArgs.cs" />
+    <Compile Include="Controls\WatermarkTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms\AppView.cs" />
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
@@ -191,6 +194,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\MapWindow.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_clear_textbox.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -32,7 +32,7 @@ namespace MW5.Plugins.DebugWindow
         /// </param>
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterService<DebugDockPanel>();
+            container.RegisterService<DebugDockView>();
         }
 
         #endregion

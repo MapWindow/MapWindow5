@@ -113,9 +113,6 @@
     </Compile>
     <Compile Include="BL\Territory.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="UI\Controls\WatermarkTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="UI\Forms\AssignProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>

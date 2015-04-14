@@ -13,5 +13,6 @@ namespace MW5.Shared.Log
         void Warn(string msg, Exception ex = null, params object[] param);
         void Fatal(string msg, Exception ex = null, params object[] param);
         IReadOnlyList<ILogEntry> Entries { get; }
+        void Clear();
     }
 }

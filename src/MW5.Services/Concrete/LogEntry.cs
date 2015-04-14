@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using MW5.Shared;
 using MW5.Shared.Log;
 
 namespace MW5.Services.Concrete
@@ -26,6 +27,7 @@ namespace MW5.Services.Concrete
         [Browsable(false)]
         public Exception Exception { get; private set; }
 
+        [DisplayName("Time")]
         public DateTime TimeStamp { get; private set; }
 
         public override string ToString()

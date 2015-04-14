@@ -103,11 +103,13 @@
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\DockPanelService.cs" />
-    <Compile Include="Views\DebugDockPanel.cs">
+    <Compile Include="Views\Abstract\IDebugView.cs" />
+    <Compile Include="Views\DebugCommand.cs" />
+    <Compile Include="Views\DebugDockView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\DebugDockPanel.Designer.cs">
-      <DependentUpon>DebugDockPanel.cs</DependentUpon>
+    <Compile Include="Views\DebugDockView.Designer.cs">
+      <DependentUpon>DebugDockView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\DebugPresenter.cs" />
   </ItemGroup>
@@ -144,8 +146,8 @@
     <EmbeddedResource Include="DebugWindow.resx">
       <DependentUpon>DebugWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\DebugDockPanel.resx">
-      <DependentUpon>DebugDockPanel.cs</DependentUpon>
+    <EmbeddedResource Include="Views\DebugDockView.resx">
+      <DependentUpon>DebugDockView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +155,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\bug-multi-size.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_clear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

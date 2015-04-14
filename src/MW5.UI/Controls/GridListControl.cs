@@ -21,6 +21,7 @@ namespace MW5.UI.Controls
     public partial class GridListControl<T> : UserControl, IGridList<T>
         where T: class
     {
+        private Dictionary<string, Func<T, int>> _iconSelectors = new Dictionary<string, Func<T, int>>();
         private SuperToolTip _lastTooltip = new SuperToolTip();
         private GridControlBase _grid;
         private int _mouseOverIndex = 0;
@@ -40,6 +41,7 @@ namespace MW5.UI.Controls
             _grid.TableControlCellHitTest += grid_TableControlCellHitTest;
             _grid.TableControlPrepareViewStyleInfo += grid_TableControlPrepareViewStyleInfo;
             _grid.SelectedRecordsChanged += GridSelectedRecordsChanged;
+            _grid.QueryCellStyleInfo += GridQueryCellStyleInfo;
 
             _grid.TableControl.MouseLeave += (s, e) => HideToolTip();
             _grid.TableControl.LostFocus += (s, e) => HideToolTip();
@@ -89,6 +91,11 @@ namespace MW5.UI.Controls
                 _grid.TableOptions.AllowDropDownCell = value;
                 _grid.Table.Appearance.AnyCell.ShowButtons = value ? GridShowButtons.Show : GridShowButtons.Hide;
             }
+        }
+
+        public void AdjustColumnWidths()
+        {
+            _grid.TableModel.ColWidths.ResizeToFit(GridRangeInfo.Table());
         }
 
         public void AdjustRowHeights()
@@ -293,6 +300,27 @@ namespace MW5.UI.Controls
             return _grid.Table.SelectedRecords[0].Record;
         }
 
+        public GridTableCellStyleInfo GetColumnStyle(int index)
+        {
+            return _grid.TableDescriptor.Columns[index].Appearance.AnyCell;
+        }
+
+        public GridTableCellStyleInfo GetColumnStyle(string columnName)
+        {
+            return _grid.TableDescriptor.Columns[columnName].Appearance.AnyCell;
+        }
+
+        public GridTableCellStyleInfo GetColumnStyle(Expression<Func<T, object>> propertySelector)
+        {
+            var name = GetPropertyName(propertySelector);
+            if (name != string.Empty)
+            {
+                return GetColumnStyle(name);
+            }
+
+            return null;
+        }
+
         public void ToggleProperty(Expression<Func<T, bool>> propertySelector)
         {
             var record = GetSelectedRecord();
@@ -310,6 +338,38 @@ namespace MW5.UI.Controls
             }
         }
 
+        private string GetTypedPropertyName<TT>(Expression<Func<T, TT>> propertySelector)
+        {
+            var expr = propertySelector.Body as MemberExpression;
+            if (expr == null)
+            {
+                return string.Empty;
+            }
+
+            return expr.Member.Name;
+        }
+
+        private string GetPropertyName(Expression<Func<T, object>> propertySelector)
+        {
+            var me = propertySelector.Body as MemberExpression;
+            if (me != null)
+            {
+                return me.Member.Name;
+            }
+
+            var ubody = propertySelector.Body as UnaryExpression;
+            if (ubody != null)
+            {
+                var expr = ubody.Operand as MemberExpression;
+                if (expr != null)
+                {
+                    return expr.Member.Name;
+                }
+            }
+
+            return string.Empty;
+        }
+
         private void GridSelectedRecordsChanged(object sender, SelectedRecordsChangedEventArgs e)
         {
             DisplayTooltip();
@@ -324,6 +384,67 @@ namespace MW5.UI.Controls
         private int RowOffset
         {
             get { return 2; }
+        }
+
+        public void SetColumnIcon(Expression<Func<T, object>> propertySelector,
+            Func<T, int> imageSelector)
+        {
+            string name = GetPropertyName(propertySelector);
+            if (name != string.Empty)
+            {
+                _iconSelectors.Add(name, imageSelector);
+            }
+        }
+
+        private void GridQueryCellStyleInfo(object sender, GridTableCellStyleInfoEventArgs e)
+        {
+            if (e.TableCellIdentity.Column == null || _iconSelectors.Count == 0)
+            {
+                return;
+            }
+
+            int rowIndex = e.TableCellIdentity.RowIndex;
+            if (rowIndex < RowOffset) return;
+
+            string name = e.TableCellIdentity.Column.Name;
+
+            Func<T, int> fn;
+            if (_iconSelectors.TryGetValue(name, out fn))
+            {
+                var r = _grid.Table.FilteredRecords[rowIndex - RowOffset];
+                if (r != null)
+                {
+                    e.Style.ImageIndex = fn(r.GetData() as T);
+                }
+            }
+        }
+
+        public void ClearFilter()
+        {
+            _grid.TableDescriptor.RecordFilters.Clear();
+        }
+
+        public void AddFilterLike(Expression<Func<T, string>> propertySelector, string token, FilterLogicalOperator op = FilterLogicalOperator.And)
+        {
+            if (string.IsNullOrWhiteSpace(token)) return;
+
+            string propertyName = GetTypedPropertyName(propertySelector);
+
+            var condition = new FilterCondition(FilterCompareOperator.Like, "*" + token + "*");
+            
+            var desc = new RecordFilterDescriptor(propertyName, op, new[] { condition });
+            _grid.TableDescriptor.RecordFilters.Add(desc);
+        }
+
+        public void AddFilterMatch<TT>(Expression<Func<T, TT>> propertySelector, TT value,
+            FilterLogicalOperator op = FilterLogicalOperator.And)
+        {
+            string propertyName = GetTypedPropertyName(propertySelector);
+
+            var condition = new FilterCondition(FilterCompareOperator.Match, value);
+
+            var desc = new RecordFilterDescriptor(propertyName, op, new[] { condition });
+            _grid.TableDescriptor.RecordFilters.Add(desc);
         }
     }
 }

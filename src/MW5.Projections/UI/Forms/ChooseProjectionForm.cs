@@ -62,14 +62,6 @@ namespace MW5.Projections.UI.Forms
             }
         }
 
-        private void txtSearch_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.X > txtSearch.Width - 24)
-            {
-                txtSearch.Text = string.Empty;
-            }
-        }
-
         private void txtSearch_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)

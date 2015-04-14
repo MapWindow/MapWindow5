@@ -1,4 +1,5 @@
 ﻿using MW5.Projections.UI.Controls;
+using MW5.UI.Controls;
 
 namespace MW5.Projections.UI.Forms
 {
@@ -38,7 +39,7 @@ namespace MW5.Projections.UI.Forms
             this.label3 = new System.Windows.Forms.Label();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this._projectionTreeView1 = new MW5.Projections.UI.Controls.ProjectionTreeView();
-            this.txtSearch = new MW5.Projections.UI.Controls.WatermarkTextbox();
+            this.txtSearch = new WatermarkTextbox();
             this.chkUpdate = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._projectionTreeView1)).BeginInit();
@@ -144,6 +145,7 @@ namespace MW5.Projections.UI.Forms
             this._projectionTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
             this._projectionTreeView1.ToolTipControl.Name = "toolTip";
             this._projectionTreeView1.ToolTipControl.TabIndex = 1;
+            this._projectionTreeView1.ToolTipDuration = 0;
             // 
             // txtSearch
             // 
@@ -167,7 +169,6 @@ namespace MW5.Projections.UI.Forms
             this.txtSearch.ThemesEnabled = false;
             this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
-            this.txtSearch.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txtSearch_MouseDown);
             // 
             // chkUpdate
             // 

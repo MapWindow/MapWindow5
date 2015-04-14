@@ -90,6 +90,11 @@ namespace MW5.Services.Concrete
             get { return _entries; }
         }
 
+        public void Clear()
+        {
+            _entries.Clear();
+        }
+
         private void Log(string msg, LogLevel level, Exception ex = null)
         {
             var entry = new LogEntry(msg, level, ex);

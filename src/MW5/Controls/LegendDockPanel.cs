@@ -49,10 +49,5 @@ namespace MW5.Controls
         {
             get { yield break; }
         }
-
-        public IEnumerable<IToolbar> Toolbars
-        {
-            get { yield break; }
-        }
     }
 }

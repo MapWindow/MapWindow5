@@ -119,11 +119,6 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        public IEnumerable<IToolbar> Toolbars
-        {
-            get { yield break; }
-        }
-
         public ButtonBase OkButton
         {
             get { return btnClose; }

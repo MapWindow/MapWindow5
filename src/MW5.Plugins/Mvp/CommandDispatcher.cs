@@ -40,14 +40,6 @@ namespace MW5.Plugins.Mvp
             {
                 InitMenu(items);
             }
-
-            if (view.Toolbars != null)
-            {
-                foreach (var menu in view.Toolbars)
-                {
-                    InitMenu(menu.Items);
-                }
-            }
         }
 
         /// <summary>
