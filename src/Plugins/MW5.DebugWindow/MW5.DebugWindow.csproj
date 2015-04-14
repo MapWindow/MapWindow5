@@ -89,6 +89,7 @@
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuListener.cs" />
+    <Compile Include="Menu\StatusBarListener.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -114,12 +114,12 @@ namespace MW5.UI.Menu
                 {
                     button.ButtonClick += (s, e) =>
                     {
-                        value(this, new MenuItemEventArgs(Key));
+                        value(this, new MenuItemEventArgs(Key, true));
                     };
                 }
                 else
                 {
-                    _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key));
+                    _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key, true));
                 }
             }
             remove

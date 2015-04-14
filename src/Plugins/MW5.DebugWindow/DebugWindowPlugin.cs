@@ -62,6 +62,8 @@ namespace MW5.Plugins.DebugWindow
 
         private DockPanelService _dockPanelService;
 
+        private StatusBarListener _statusBarListener;
+
         #endregion
 
         #region Public Methods and Operators
@@ -93,8 +95,10 @@ namespace MW5.Plugins.DebugWindow
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
+            
             _presenter = context.Container.GetInstance<DebugPresenter>();
             _dockPanelService = context.Container.GetInstance<DockPanelService>();
+            _statusBarListener = context.Container.GetInstance<StatusBarListener>();
 
             // Event handlers are in the MapListener class:
 

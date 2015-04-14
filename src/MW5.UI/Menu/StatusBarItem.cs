@@ -110,7 +110,7 @@ namespace MW5.UI.Menu
         {
             add
             {
-                _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key));
+                _item.Click += (sender, args) => value.Invoke(this, new MenuItemEventArgs(Key, true));
             }
             remove
             {

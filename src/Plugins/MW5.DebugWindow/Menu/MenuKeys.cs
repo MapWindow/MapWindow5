@@ -20,6 +20,7 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// The menu item key. Used to identify which toolbar button or menu item was clicked.
         /// </summary>
         public const string ShowDebugWindow = "tp_ShowDebugWindow";
+        public const string StatusShowDebug = "tp_StatusShowDebug";
 
         #endregion
     }

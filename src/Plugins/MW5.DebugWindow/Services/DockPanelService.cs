@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.DebugWindow.Properties;
 using MW5.Plugins.DebugWindow.Views;
 using MW5.Plugins.Enums;
@@ -12,7 +13,7 @@ namespace MW5.Plugins.DebugWindow.Services
 {
     public class DockPanelService
     {
-        private const string DockPanelKey = "DebugDockPanel";
+        public const string DockPanelKey = "DebugDockPanel";
 
         public DockPanelService(IAppContext context, DebugWindowPlugin plugin, DebugPresenter presenter)
         {
@@ -30,6 +31,7 @@ namespace MW5.Plugins.DebugWindow.Services
                 panel.Caption = "Debug";
                 panel.SetIcon(Resources.ico_bug);
                 panel.DockTo(DockPanelState.Bottom, 300);
+                panel.Visible = false;
             }
             finally
             {
