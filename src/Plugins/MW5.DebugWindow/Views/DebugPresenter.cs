@@ -40,10 +40,5 @@ namespace MW5.Plugins.DebugWindow.Views
                     break;
             }
         }
-
-        protected override void CommandNotFound(string itemName)
-        {
-            MessageService.Current.Info("No handler found for item key: " + itemName);
-        }
     }
 }

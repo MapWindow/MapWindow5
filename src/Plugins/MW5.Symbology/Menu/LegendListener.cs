@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
@@ -12,28 +14,28 @@ using MW5.Plugins.Symbology.Forms.Layer;
 using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
+using MW5.Plugins.Symbology.Views;
+using MW5.Plugins.Symbology.Views.Abstract;
 
 namespace MW5.Plugins.Symbology.Menu
 {
     public class LegendListener
     {
         private readonly IAppContext _context;
-        private readonly SymbologyPlugin _plugin;
         private readonly SymbologyMetadataService _metadataService;
 
         public LegendListener(IAppContext context, SymbologyPlugin plugin, SymbologyMetadataService metadataService)
         {
             if (plugin == null) throw new ArgumentNullException("plugin");
             _context = context;
-            _plugin = plugin;
             _metadataService = metadataService;
 
-            _plugin.LayerDoubleClicked += LayerDoubleClicked;
-            _plugin.LayerStyleClicked += LayerStyleClicked;
-            _plugin.LayerLabelsClicked += LayerLabelsClicked;
-            _plugin.LayerDiagramsClicked += LayerDiagramsClicked;
-            _plugin.LayerCategoryClicked += LayerCategoryClicked;
-            _plugin.LayerAdded += LegendLayerAdded;
+            plugin.LayerDoubleClicked += LayerDoubleClicked;
+            plugin.LayerStyleClicked += LayerStyleClicked;
+            plugin.LayerLabelsClicked += LayerLabelsClicked;
+            plugin.LayerDiagramsClicked += LayerDiagramsClicked;
+            plugin.LayerCategoryClicked += LayerCategoryClicked;
+            plugin.LayerAdded += LegendLayerAdded;
         }
 
         private void LegendLayerAdded(IMuteLegend legend, LayerEventArgs e)
@@ -101,10 +103,22 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerDoubleClicked(IMuteLegend legend, LayerEventArgs e)
         {
-            using (var form = new LayerStyleForm(_context, legend.Map.GetLayer(e.LayerHandle)))
+            var layer = legend.Map.GetLayer(e.LayerHandle);
+            switch (layer.LayerType)
             {
-                _context.View.ShowChildView(form);
-                e.Handled = true;
+                case LayerType.Shapefile:
+                case LayerType.VectorLayer:
+                    using (var form = new LayerStyleForm(_context, layer))
+                    {
+                        _context.View.ShowChildView(form);
+                        e.Handled = true;
+                    }
+                    break;
+                case LayerType.Image:
+                case LayerType.Grid:
+                    _context.Container.Run<RasterStylePresenter, ILayer>(layer);
+                    e.Handled = true;
+                    break;
             }
         }
     }

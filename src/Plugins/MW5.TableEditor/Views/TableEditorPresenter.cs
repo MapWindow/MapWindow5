@@ -196,11 +196,6 @@ namespace MW5.Plugins.TableEditor.Views
             return false;
         }
 
-        protected override void CommandNotFound(string itemName)
-        {
-            MessageService.Current.Info("No handler found for item: " + itemName);
-        }
-
         private void ViewSelectionChanged()
         {
             _context.Map.Redraw();

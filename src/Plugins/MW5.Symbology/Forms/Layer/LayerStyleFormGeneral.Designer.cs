@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Static;
+using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
@@ -37,6 +38,19 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             txtLayerName.Text = _layer.Name;
 
             txtLayerSource.Text = GetLayerDescription();
+
+            txtDatasourceName.Text = _layer.Filename;
+
+            txtProjection.Text = _layer.Projection.Name;
+
+            PopulateBriefInfo();
+        }
+
+        private void PopulateBriefInfo()
+        {
+            int numFeatures = _shapefile.Features.Count;
+            var type = EnumHelper.EnumToString(_shapefile.GeometryType).ToLower();
+            txtBriefInfo.Text = string.Format("Features count: {0}; geometry type: {1}", numFeatures, type);
         }
 
         private string GetLayerDescription()

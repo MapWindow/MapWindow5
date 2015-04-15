@@ -44,8 +44,8 @@ namespace MW5.UI.Style
                 var btn = control as ButtonAdv;
                 if (btn != null)
                 {
-                    //btn.Appearance = _settings.ButtonAppearance;
-                    //btn.UseVisualStyle = true;
+                    btn.Appearance = _settings.ButtonAppearance;
+                    btn.UseVisualStyle = true;
                 }
 
                 var cbo = control as ComboBoxAdv;

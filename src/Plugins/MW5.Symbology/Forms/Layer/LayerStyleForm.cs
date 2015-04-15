@@ -28,6 +28,7 @@ using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Services;
+using MW5.Projections.UI.Forms;
 using MW5.UI;
 using MW5.UI.Forms;
 
@@ -488,6 +489,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void txtLayerExpression_TextChanged(object sender, EventArgs e)
         {
             Ui2Settings(null, null);
+        }
+
+        private void btnProjectionDetails_Click(object sender, EventArgs e)
+        {
+            using (var form = new ProjectionPropertiesForm(_layer.Projection))
+            {
+                _context.View.ShowChildView(form);
+            }
         }
     }
 }

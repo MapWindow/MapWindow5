@@ -75,10 +75,5 @@ namespace MW5.Controls
                     break;
             }
         }
-
-        protected override void CommandNotFound(string itemName)
-        {
-            MessageService.Current.Info("No handler is found for command with key: " + itemName);
-        }
     }
 }

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Services;
+using MW5.Plugins.Symbology.Views;
+using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
 
 namespace MW5.Plugins.Symbology
@@ -13,6 +15,8 @@ namespace MW5.Plugins.Symbology
     {
         public static void Compose(IApplicationContainer container)
         {
+            container.RegisterView<IRasterStyleView, RasterStyleView>();
+
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
         }
     }

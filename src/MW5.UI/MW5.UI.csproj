@@ -87,6 +87,10 @@
       <DependentUpon>GridListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
+    <Compile Include="Controls\TabPropertiesControl.cs" />
+    <Compile Include="Controls\TabPropertiesControl.Designer.cs">
+      <DependentUpon>TabPropertiesControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ToolTipGridEventArgs.cs" />
     <Compile Include="Controls\WatermarkTextBox.cs">
       <SubType>Component</SubType>
@@ -181,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GridListControl.resx">
       <DependentUpon>GridListControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TabPropertiesControl.resx">
+      <DependentUpon>TabPropertiesControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>

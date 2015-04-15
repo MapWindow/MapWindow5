@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 
 namespace MW5.Plugins.Mvp
 {
@@ -16,7 +17,10 @@ namespace MW5.Plugins.Mvp
 
         public abstract void RunCommand(TCommand command);
 
-        protected abstract void CommandNotFound(string itemName);
+        protected virtual void CommandNotFound(string itemName)
+        {
+            MessageService.Current.Info("No handler was found for the item with the key: " + itemName);
+        }
 
         protected CommandDispatcher()
         {

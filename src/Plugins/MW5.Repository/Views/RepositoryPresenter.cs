@@ -287,11 +287,6 @@ namespace MW5.Plugins.Repository.Views
             }
         }
 
-        protected override void CommandNotFound(string itemName)
-        {
-            MessageService.Current.Info("No handler was found for the item with key: " + itemName);
-        }
-
         /// <summary>
         /// Marks items that were added to the map
         /// </summary>

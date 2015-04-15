@@ -30,5 +30,10 @@
         Default = 0,
         Charts = 1,
     }
+
+    public enum RasterCommand
+    {
+        
+    }
 }
 
