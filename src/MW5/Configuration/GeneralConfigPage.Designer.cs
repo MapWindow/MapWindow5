@@ -95,8 +95,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(326, 35);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Some long description of the description of the general options. Here is some mor" +
-    "e.\r\n";
+            this.label1.Text = "Some long description of the general options. Here is some more.\r\n";
             // 
             // GeneralConfigPage
             // 

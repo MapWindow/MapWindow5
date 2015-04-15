@@ -254,7 +254,7 @@ namespace MW5.Plugins.DebugWindow
 
             _debugWindow.Write(
                 "MapListener.PluginOnLayerSelected", 
-                "Selected layer: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
+                "Selected layer: " + _context.Layers.ItemByHandle(e.LayerHandle).Filename);
         }
 
         /// <summary>

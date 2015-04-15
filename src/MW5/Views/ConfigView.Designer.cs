@@ -42,8 +42,10 @@
             // 
             this._treeViewAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this._treeViewAdv1.BackColor = System.Drawing.Color.White;
+            this._treeViewAdv1.BackColor = System.Drawing.Color.Gray;
+            this._treeViewAdv1.BackgroundColor = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.Gray);
             this._treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(174, 425);
+            this._treeViewAdv1.BorderColor = System.Drawing.Color.DarkGray;
             this._treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._treeViewAdv1.CanSelectDisabledNode = false;
             this._treeViewAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -60,20 +62,19 @@
             this._treeViewAdv1.HelpTextControl.TabIndex = 0;
             this._treeViewAdv1.HelpTextControl.Text = "help text";
             this._treeViewAdv1.HideSelection = false;
-            this._treeViewAdv1.InactiveSelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255))))));
             this._treeViewAdv1.InactiveSelectedNodeForeColor = System.Drawing.Color.Black;
             this._treeViewAdv1.ItemHeight = 30;
             this._treeViewAdv1.Location = new System.Drawing.Point(12, 12);
             this._treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._treeViewAdv1.Name = "_treeViewAdv1";
-            this._treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255))))));
+            this._treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
             this._treeViewAdv1.SelectedNodeForeColor = System.Drawing.Color.Black;
             this._treeViewAdv1.ShowFocusRect = false;
             this._treeViewAdv1.ShowRootLines = false;
             this._treeViewAdv1.Size = new System.Drawing.Size(174, 425);
             this._treeViewAdv1.TabIndex = 0;
             this._treeViewAdv1.Text = "treeViewAdv1";
-            this._treeViewAdv1.ThemesEnabled = true;
+            this._treeViewAdv1.ThemesEnabled = false;
             // 
             // 
             // 
