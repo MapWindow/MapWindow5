@@ -1316,4 +1316,25 @@
         Exclude = 2,      // new shapes will be excluded from old selection
         Invert = 3        // bew shapes will be inverted in case they are in the existing selection
     }
+
+    public enum RasterOverviewSampling
+    {
+        None = 0,
+        Nearest = 1,
+        Gauss = 2,
+        Bicubic = 3,
+        Average = 4,
+    }
+
+    public enum RasterOverviewType
+    {
+        External = 0,
+        Internal = 1,
+    }
+
+    public enum DynamicVisibilityMode
+    {
+        Scales = 0,
+        ZoomLevels = 1,
+    }
 }

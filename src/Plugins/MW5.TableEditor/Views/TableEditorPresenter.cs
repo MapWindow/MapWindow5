@@ -73,10 +73,8 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        public override void Init(ILayer model)
+        public override void Initialize()
         {
-            base.Init(model);
-            
             var sf = Model.FeatureSet.InternalObject as Shapefile;
             _shapefile = sf;
         }
@@ -207,5 +205,7 @@ namespace MW5.Plugins.TableEditor.Views
             }
             return false;   // we actually want to hide and not to close the form
         }
+
+
     }
 }

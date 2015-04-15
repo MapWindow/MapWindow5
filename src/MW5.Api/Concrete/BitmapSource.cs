@@ -327,5 +327,10 @@ namespace MW5.Api.Concrete
             Picture = (IPictureDisp)utils.GetIPictureFromPicture(image);
             return true;
         }
+
+        public virtual int NumBands
+        {
+            get { return 3; }
+        }
     }
 }

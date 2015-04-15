@@ -75,7 +75,9 @@ namespace MW5.Plugins.Mvp
             return Success;
         }
 
-        public virtual void Init(TModel model)
+        public abstract void Initialize();
+
+        private void Init(TModel model)
         {
             if (model == null)
             {
@@ -85,6 +87,7 @@ namespace MW5.Plugins.Mvp
             _model = model;
             View.InitInternal(model);
             (View as IView<TModel>).Initialize();
+            Initialize();
         }
     }
 }

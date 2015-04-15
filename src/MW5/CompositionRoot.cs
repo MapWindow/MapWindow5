@@ -40,10 +40,6 @@ namespace MW5
             UI.CompositionRoot.Compose(container);
             Data.CompositionRoot.Compose(container);
 
-            EnumHelper.RegisterConverter(new GeometryTypeConverter());
-            EnumHelper.RegisterConverter(new SaveResultConverter());
-            EnumHelper.RegisterConverter(new TileProviderConverter());
-
             CommandBarHelper.InitMenuColors();
 
             GridEngineFactory.Factory = new GroupingEngineFactory();

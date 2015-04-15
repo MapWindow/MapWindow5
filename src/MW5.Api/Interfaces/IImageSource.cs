@@ -35,5 +35,7 @@ namespace MW5.Api.Interfaces
 
         System.Drawing.Image ToGdiPlusBitmap();
         bool FromGdiPlusBitmap(System.Drawing.Image image);
+
+        int NumBands { get; }
     }
 }

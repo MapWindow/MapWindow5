@@ -18,11 +18,9 @@ namespace MW5.Plugins.TableEditor.Views
 
         }
 
-        public override void Init(IAttributeTable model)
+        public override void Initialize()
         {
-            base.Init(model);
-
-            if (!model.EditMode)
+            if (!Model.EditMode)
             {
                 throw new InvalidOperationException("Table in edit mode is expected.");
             }

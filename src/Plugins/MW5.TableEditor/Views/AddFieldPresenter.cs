@@ -41,20 +41,19 @@ namespace MW5.Plugins.TableEditor.Views
         public override bool ViewOkClicked()
         {
             string msg;
-            if (!_model.ValidateField(View.FieldName, out msg))
+            if (!Model.ValidateField(View.FieldName, out msg))
             {
                 MessageService.Current.Info(msg);
                 return false;
             }
 
-            _model.Fields.Add(Field);
+            Model.Fields.Add(Field);
             return true;
         }
 
-        public override void Init(IAttributeTable model)
+        public override void Initialize()
         {
-            base.Init(model);
-            model.CheckEditMode(true);
+            Model.CheckEditMode(true);
         }
     }
 }

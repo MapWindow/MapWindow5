@@ -311,6 +311,7 @@
     <Compile Include="Legacy\SymbologyPluginLegacy.cs" />
     <Compile Include="Services\SymbologyMetadata.cs" />
     <Compile Include="Views\Abstract\IRasterStyleView.cs" />
+    <Compile Include="Views\RasterStyleCommand.cs" />
     <Compile Include="Views\RasterStylePresenter.cs" />
     <Compile Include="Views\RasterStyleView.cs">
       <SubType>Form</SubType>

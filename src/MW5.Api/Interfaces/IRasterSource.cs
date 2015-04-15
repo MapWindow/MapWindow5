@@ -1,7 +1,16 @@
-﻿namespace MW5.Api.Interfaces
+﻿using System;
+using System.Collections.Generic;
+using MapWinGIS;
+using MW5.Api.Enums;
+
+namespace MW5.Api.Interfaces
 {
     public interface IRasterSource : IImageSource
     {
+        int NumOverviews { get; }
+    
+        bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
+
         //tkGridRendering AllowGridRendering { get; set; }
         //bool AllowHillshade { get; set; }
         //int BufferSize { get; set; }
@@ -17,8 +26,7 @@
         //int OriginalWidth { get; }
         //double OriginalXllCenter { get; set; }
         //double OriginalYllCenter { get; set; }
-        //int NoBands { get; }
-        //int NumOverviews { get; }
+        
         //string PaletteInterpretation { get; }
         //bool SetToGrey { get; set; }
 
@@ -33,7 +41,7 @@
 
         //bool _pushSchemetkRaster(GridColorScheme cScheme);
         //void BufferToProjection(int BufferX, int BufferY, out double ProjX, out double ProjY);
-        //bool BuildOverviews(tkGDALResamplingMethod ResamplingMethod, int NumOverviews, Array OverviewList);
+        
 
         //void Deserialize(string newVal);
 

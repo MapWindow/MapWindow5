@@ -14,6 +14,6 @@ namespace MW5.Plugins.Mvp
     public interface IPresenter<in TModel>: IPresenter
     {
         bool Run(TModel argument, IWin32Window parent = null);
-        void Init(TModel model);
+        void Initialize();
     }
 }

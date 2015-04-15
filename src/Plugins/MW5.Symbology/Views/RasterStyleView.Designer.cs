@@ -60,26 +60,25 @@ namespace MW5.Plugins.Symbology.Views
             this.txtLayerName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtGdalInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.txtGdalInfo = new System.Windows.Forms.RichTextBox();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label12 = new System.Windows.Forms.Label();
-            this.comboBoxAdv5 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboDownsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label11 = new System.Windows.Forms.Label();
-            this.comboBoxAdv4 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboUpsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
-            this.buttonAdv3 = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnClearOverviews = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label8 = new System.Windows.Forms.Label();
-            this.buttonAdv2 = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.comboBoxAdv3 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.btnBuildOverviews = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.cboOverviewType = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBoxAdv2 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboOverviewSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -100,15 +99,14 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).BeginInit();
             this.tabPageAdv2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGdalInfo)).BeginInit();
             this.tabPageAdv3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboUpsampling)).BeginInit();
             this.tabPageAdv5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
@@ -307,14 +305,13 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.cboMinScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboMinScale.BeforeTouchSize = new System.Drawing.Size(141, 21);
+            this.cboMinScale.BeforeTouchSize = new System.Drawing.Size(142, 21);
             this.cboMinScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboMinScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboMinScale.Location = new System.Drawing.Point(12, 77);
+            this.cboMinScale.Location = new System.Drawing.Point(11, 77);
             this.cboMinScale.Name = "cboMinScale";
-            this.cboMinScale.Size = new System.Drawing.Size(141, 21);
+            this.cboMinScale.Size = new System.Drawing.Size(142, 21);
             this.cboMinScale.TabIndex = 3;
-            this.cboMinScale.SelectedIndexChanged += new System.EventHandler(this.cboMinScale_SelectedIndexChanged);
             // 
             // chkDynamicVisibility
             // 
@@ -328,7 +325,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtBriefInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtBriefInfo.Location = new System.Drawing.Point(128, 145);
             this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -360,7 +357,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtProjection
             // 
-            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProjection.Location = new System.Drawing.Point(128, 104);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -381,7 +378,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtDatasourceName
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtDatasourceName.Location = new System.Drawing.Point(128, 63);
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -402,7 +399,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtLayerName
             // 
-            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtLayerName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtLayerName.Location = new System.Drawing.Point(128, 24);
             this.txtLayerName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -422,7 +419,6 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageAdv2
             // 
-            this.tabPageAdv2.Controls.Add(this.label1);
             this.tabPageAdv2.Controls.Add(this.txtGdalInfo);
             this.tabPageAdv2.Image = null;
             this.tabPageAdv2.ImageIndex = 1;
@@ -435,46 +431,21 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv2.Text = "Info";
             this.tabPageAdv2.ThemesEnabled = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "GDAL info:";
-            // 
             // txtGdalInfo
             // 
-            this.txtGdalInfo.BeforeTouchSize = new System.Drawing.Size(364, 20);
-            this.txtGdalInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtGdalInfo.Location = new System.Drawing.Point(8, 36);
-            this.txtGdalInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtGdalInfo.Multiline = true;
+            this.txtGdalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtGdalInfo.Location = new System.Drawing.Point(11, 13);
             this.txtGdalInfo.Name = "txtGdalInfo";
-            this.txtGdalInfo.Size = new System.Drawing.Size(511, 425);
-            this.txtGdalInfo.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtGdalInfo.TabIndex = 2;
-            // 
-            // tabPageAdv4
-            // 
-            this.tabPageAdv4.Image = null;
-            this.tabPageAdv4.ImageIndex = 2;
-            this.tabPageAdv4.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv4.Location = new System.Drawing.Point(119, 0);
-            this.tabPageAdv4.Name = "tabPageAdv4";
-            this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(527, 441);
-            this.tabPageAdv4.TabIndex = 4;
-            this.tabPageAdv4.Text = "Colors";
-            this.tabPageAdv4.ThemesEnabled = false;
+            this.txtGdalInfo.Size = new System.Drawing.Size(510, 412);
+            this.txtGdalInfo.TabIndex = 4;
+            this.txtGdalInfo.Text = "";
             // 
             // tabPageAdv3
             // 
             this.tabPageAdv3.Controls.Add(this.label12);
-            this.tabPageAdv3.Controls.Add(this.comboBoxAdv5);
+            this.tabPageAdv3.Controls.Add(this.cboDownsampling);
             this.tabPageAdv3.Controls.Add(this.label11);
-            this.tabPageAdv3.Controls.Add(this.comboBoxAdv4);
+            this.tabPageAdv3.Controls.Add(this.cboUpsampling);
             this.tabPageAdv3.Image = null;
             this.tabPageAdv3.ImageIndex = 3;
             this.tabPageAdv3.ImageSize = new System.Drawing.Size(16, 16);
@@ -495,38 +466,38 @@ namespace MW5.Plugins.Symbology.Views
             this.label12.TabIndex = 45;
             this.label12.Text = "Downsampling interpolation mode:";
             // 
-            // comboBoxAdv5
+            // cboDownsampling
             // 
-            this.comboBoxAdv5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboDownsampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAdv5.BeforeTouchSize = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAdv5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxAdv5.Location = new System.Drawing.Point(27, 100);
-            this.comboBoxAdv5.Name = "comboBoxAdv5";
-            this.comboBoxAdv5.Size = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv5.TabIndex = 46;
+            this.cboDownsampling.BeforeTouchSize = new System.Drawing.Size(320, 21);
+            this.cboDownsampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDownsampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboDownsampling.Location = new System.Drawing.Point(27, 100);
+            this.cboDownsampling.Name = "cboDownsampling";
+            this.cboDownsampling.Size = new System.Drawing.Size(320, 21);
+            this.cboDownsampling.TabIndex = 46;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Location = new System.Drawing.Point(28, 29);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(148, 13);
+            this.label11.Size = new System.Drawing.Size(154, 13);
             this.label11.TabIndex = 43;
-            this.label11.Text = "Upsamling interpolation mode:";
+            this.label11.Text = "Upsampling interpolation mode:";
             // 
-            // comboBoxAdv4
+            // cboUpsampling
             // 
-            this.comboBoxAdv4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboUpsampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAdv4.BeforeTouchSize = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAdv4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxAdv4.Location = new System.Drawing.Point(27, 45);
-            this.comboBoxAdv4.Name = "comboBoxAdv4";
-            this.comboBoxAdv4.Size = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv4.TabIndex = 44;
+            this.cboUpsampling.BeforeTouchSize = new System.Drawing.Size(320, 21);
+            this.cboUpsampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboUpsampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboUpsampling.Location = new System.Drawing.Point(27, 45);
+            this.cboUpsampling.Name = "cboUpsampling";
+            this.cboUpsampling.Size = new System.Drawing.Size(320, 21);
+            this.cboUpsampling.TabIndex = 44;
             // 
             // tabPageAdv5
             // 
@@ -548,13 +519,13 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.configPanelControl1.Controls.Add(this.checkedListBox1);
-            this.configPanelControl1.Controls.Add(this.buttonAdv3);
+            this.configPanelControl1.Controls.Add(this.btnClearOverviews);
             this.configPanelControl1.Controls.Add(this.label8);
-            this.configPanelControl1.Controls.Add(this.buttonAdv2);
-            this.configPanelControl1.Controls.Add(this.comboBoxAdv3);
+            this.configPanelControl1.Controls.Add(this.btnBuildOverviews);
+            this.configPanelControl1.Controls.Add(this.cboOverviewType);
             this.configPanelControl1.Controls.Add(this.label6);
             this.configPanelControl1.Controls.Add(this.label10);
-            this.configPanelControl1.Controls.Add(this.comboBoxAdv2);
+            this.configPanelControl1.Controls.Add(this.cboOverviewSampling);
             this.configPanelControl1.HeaderText = "Pyramid generation";
             this.configPanelControl1.Location = new System.Drawing.Point(12, 121);
             this.configPanelControl1.Name = "configPanelControl1";
@@ -575,15 +546,15 @@ namespace MW5.Plugins.Symbology.Views
             this.checkedListBox1.Size = new System.Drawing.Size(120, 94);
             this.checkedListBox1.TabIndex = 49;
             // 
-            // buttonAdv3
+            // btnClearOverviews
             // 
-            this.buttonAdv3.BeforeTouchSize = new System.Drawing.Size(75, 23);
-            this.buttonAdv3.IsBackStageButton = false;
-            this.buttonAdv3.Location = new System.Drawing.Point(92, 140);
-            this.buttonAdv3.Name = "buttonAdv3";
-            this.buttonAdv3.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdv3.TabIndex = 48;
-            this.buttonAdv3.Text = "Clear";
+            this.btnClearOverviews.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnClearOverviews.IsBackStageButton = false;
+            this.btnClearOverviews.Location = new System.Drawing.Point(92, 140);
+            this.btnClearOverviews.Name = "btnClearOverviews";
+            this.btnClearOverviews.Size = new System.Drawing.Size(75, 23);
+            this.btnClearOverviews.TabIndex = 48;
+            this.btnClearOverviews.Text = "Clear";
             // 
             // label8
             // 
@@ -594,27 +565,27 @@ namespace MW5.Plugins.Symbology.Views
             this.label8.TabIndex = 39;
             this.label8.Text = "Overview format:";
             // 
-            // buttonAdv2
+            // btnBuildOverviews
             // 
-            this.buttonAdv2.BeforeTouchSize = new System.Drawing.Size(75, 23);
-            this.buttonAdv2.IsBackStageButton = false;
-            this.buttonAdv2.Location = new System.Drawing.Point(11, 140);
-            this.buttonAdv2.Name = "buttonAdv2";
-            this.buttonAdv2.Size = new System.Drawing.Size(75, 23);
-            this.buttonAdv2.TabIndex = 47;
-            this.buttonAdv2.Text = "Generate";
+            this.btnBuildOverviews.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnBuildOverviews.IsBackStageButton = false;
+            this.btnBuildOverviews.Location = new System.Drawing.Point(11, 140);
+            this.btnBuildOverviews.Name = "btnBuildOverviews";
+            this.btnBuildOverviews.Size = new System.Drawing.Size(75, 23);
+            this.btnBuildOverviews.TabIndex = 47;
+            this.btnBuildOverviews.Text = "Generate";
             // 
-            // comboBoxAdv3
+            // cboOverviewType
             // 
-            this.comboBoxAdv3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboOverviewType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAdv3.BeforeTouchSize = new System.Drawing.Size(319, 21);
-            this.comboBoxAdv3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAdv3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxAdv3.Location = new System.Drawing.Point(11, 53);
-            this.comboBoxAdv3.Name = "comboBoxAdv3";
-            this.comboBoxAdv3.Size = new System.Drawing.Size(319, 21);
-            this.comboBoxAdv3.TabIndex = 41;
+            this.cboOverviewType.BeforeTouchSize = new System.Drawing.Size(319, 21);
+            this.cboOverviewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboOverviewType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboOverviewType.Location = new System.Drawing.Point(11, 53);
+            this.cboOverviewType.Name = "cboOverviewType";
+            this.cboOverviewType.Size = new System.Drawing.Size(319, 21);
+            this.cboOverviewType.TabIndex = 41;
             // 
             // label6
             // 
@@ -634,17 +605,17 @@ namespace MW5.Plugins.Symbology.Views
             this.label10.TabIndex = 45;
             this.label10.Text = "Available scales:";
             // 
-            // comboBoxAdv2
+            // cboOverviewSampling
             // 
-            this.comboBoxAdv2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cboOverviewSampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAdv2.BeforeTouchSize = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAdv2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxAdv2.Location = new System.Drawing.Point(10, 102);
-            this.comboBoxAdv2.Name = "comboBoxAdv2";
-            this.comboBoxAdv2.Size = new System.Drawing.Size(320, 21);
-            this.comboBoxAdv2.TabIndex = 42;
+            this.cboOverviewSampling.BeforeTouchSize = new System.Drawing.Size(320, 21);
+            this.cboOverviewSampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboOverviewSampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboOverviewSampling.Location = new System.Drawing.Point(10, 102);
+            this.cboOverviewSampling.Name = "cboOverviewSampling";
+            this.cboOverviewSampling.Size = new System.Drawing.Size(320, 21);
+            this.cboOverviewSampling.TabIndex = 42;
             // 
             // label9
             // 
@@ -663,6 +634,19 @@ namespace MW5.Plugins.Symbology.Views
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 43;
             this.pictureBox2.TabStop = false;
+            // 
+            // tabPageAdv4
+            // 
+            this.tabPageAdv4.Image = null;
+            this.tabPageAdv4.ImageIndex = 2;
+            this.tabPageAdv4.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv4.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv4.Name = "tabPageAdv4";
+            this.tabPageAdv4.ShowCloseButton = true;
+            this.tabPageAdv4.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv4.TabIndex = 4;
+            this.tabPageAdv4.Text = "Colors";
+            this.tabPageAdv4.ThemesEnabled = false;
             // 
             // imageList1
             // 
@@ -740,18 +724,16 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).EndInit();
             this.tabPageAdv2.ResumeLayout(false);
-            this.tabPageAdv2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtGdalInfo)).EndInit();
             this.tabPageAdv3.ResumeLayout(false);
             this.tabPageAdv3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboUpsampling)).EndInit();
             this.tabPageAdv5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
             this.gradientPanel1.ResumeLayout(false);
@@ -781,8 +763,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Label label3;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtLayerName;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt txtGdalInfo;
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.Panel panel1;
         private ButtonAdv btnSetMaxScale;
@@ -797,19 +777,20 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.GroupBox groupBox1;
         private CheckBoxAdv chkLayerVisible;
         private System.Windows.Forms.Label label12;
-        private ComboBoxAdv comboBoxAdv5;
+        private ComboBoxAdv cboDownsampling;
         private System.Windows.Forms.Label label11;
-        private ComboBoxAdv comboBoxAdv4;
+        private ComboBoxAdv cboUpsampling;
         private UI.Controls.ConfigPanelControl configPanelControl1;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
-        private ButtonAdv buttonAdv3;
+        private ButtonAdv btnClearOverviews;
         private System.Windows.Forms.Label label8;
-        private ButtonAdv buttonAdv2;
-        private ComboBoxAdv comboBoxAdv3;
+        private ButtonAdv btnBuildOverviews;
+        private ComboBoxAdv cboOverviewType;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label10;
-        private ComboBoxAdv comboBoxAdv2;
+        private ComboBoxAdv cboOverviewSampling;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.RichTextBox txtGdalInfo;
     }
 }

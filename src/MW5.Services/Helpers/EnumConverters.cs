@@ -96,4 +96,76 @@ namespace MW5.Services.Helpers
             return "";
         }
     }
+
+    public class InterpolationTypeConverter : IEnumConverter<InterpolationType>
+    {
+        public string GetString(InterpolationType value)
+        {
+            switch (value)
+            {
+                case InterpolationType.Bilinear:
+                    return "Bilinear";
+                case InterpolationType.Bicubic:
+                    return "Bicubic";
+                case InterpolationType.None:
+                    return "None";
+                case InterpolationType.HighQualityBilinear:
+                    return "High Quality Bilinear";
+                case InterpolationType.HighQualityBicubic:
+                    return "High Quality Bicubic";
+            }
+            return "";
+        }
+    }
+
+    public class RasterOverviewTypeConverter: IEnumConverter<RasterOverviewType>
+    {
+        public string GetString(RasterOverviewType value)
+        {
+            switch (value)
+            {
+                case RasterOverviewType.External:
+                    return "External file";
+                case RasterOverviewType.Internal:
+                    return "Internal";
+            }
+            return "";
+        }
+    }
+
+    public class RasterOverviewSamplingConverter: IEnumConverter<RasterOverviewSampling>
+    {
+        public string GetString(RasterOverviewSampling value)
+        {
+            switch (value)
+            {
+                case RasterOverviewSampling.None:
+                    return "None";
+                case RasterOverviewSampling.Nearest:
+                    return "Nearest neighbour";
+                case RasterOverviewSampling.Gauss:
+                    return "Gauss";
+                case RasterOverviewSampling.Bicubic:
+                    return "Bicubic";
+                case RasterOverviewSampling.Average:
+                    return "Average";
+            }
+            return "";
+        }
+    }
+
+    public class DynamicVisiblityModeConverter : IEnumConverter<DynamicVisibilityMode>
+    {
+        public string GetString(DynamicVisibilityMode value)
+        {
+            switch (value)
+            {
+                case DynamicVisibilityMode.Scales:
+                    return "Map scales";
+                case DynamicVisibilityMode.ZoomLevels:
+                    return "Tile zoom levels";
+            }
+            return "";
+        }
+    }
 }

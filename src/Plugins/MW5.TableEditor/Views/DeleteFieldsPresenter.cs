@@ -12,8 +12,6 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class DeleteFieldsPresenter: BasePresenter<IDeleteFieldsView, IAttributeTable>
     {
-        private IAttributeTable _table;
-
         public DeleteFieldsPresenter(IDeleteFieldsView view) : base(view)
         {
         }
@@ -24,17 +22,15 @@ namespace MW5.Plugins.TableEditor.Views
 
             foreach (var i in list)
             {
-                _table.Fields.Remove(i);
+                Model.Fields.Remove(i);
             }
 
             return true;
         }
 
-        public override void Init(IAttributeTable model)
+        public override void Initialize()
         {
-            base.Init(model);
-
-            model.CheckEditMode(true);
+            Model.CheckEditMode(true);
         }
     }
 }

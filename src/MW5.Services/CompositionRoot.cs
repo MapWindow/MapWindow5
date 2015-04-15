@@ -1,6 +1,7 @@
 ﻿using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
+using MW5.Services.Helpers;
 using MW5.Services.Serialization;
 using MW5.Services.Views;
 using MW5.Services.Views.Abstract;
@@ -25,6 +26,13 @@ namespace MW5.Services
                 .RegisterSingleton<IProjectLoader, ProjectLoader>();
 
             EnumHelper.RegisterConverter(new LogLevelConverter());
+            EnumHelper.RegisterConverter(new GeometryTypeConverter());
+            EnumHelper.RegisterConverter(new SaveResultConverter());
+            EnumHelper.RegisterConverter(new TileProviderConverter());
+            EnumHelper.RegisterConverter(new InterpolationTypeConverter());
+            EnumHelper.RegisterConverter(new RasterOverviewSamplingConverter());
+            EnumHelper.RegisterConverter(new RasterOverviewTypeConverter());
+            EnumHelper.RegisterConverter(new DynamicVisiblityModeConverter());
         }
     }
 }

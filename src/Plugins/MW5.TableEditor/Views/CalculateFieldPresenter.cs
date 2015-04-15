@@ -29,6 +29,11 @@ namespace MW5.Plugins.TableEditor.Views
             return ParseAndCalculate();
         }
 
+        public override void Initialize()
+        {
+
+        }
+
         private bool Validate()
         {
             if (string.IsNullOrWhiteSpace(View.Expression))
