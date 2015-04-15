@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MapWinGIS;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Views.Abstract;
@@ -12,10 +13,9 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class TableEditorView : MapWindowView, ITableEditorView
+    public partial class TableEditorView : TableEditorViewBase, ITableEditorView
     {
-        public TableEditorView(IAppView appView, RowManager rowManager)
-            : base(appView)
+        public TableEditorView(RowManager rowManager)
         {
             if (rowManager == null) throw new ArgumentNullException("rowManager");
 
@@ -28,6 +28,11 @@ namespace MW5.Plugins.TableEditor.Views
                 Invoke(SelectionChanged);
                 UpdateSelectedCount();
             };
+        }
+
+        public void Initialize()
+        {
+            SetDatasource(Model.FeatureSet.InternalObject as Shapefile);
         }
 
         public override Mvp.ViewStyle Style
@@ -80,14 +85,15 @@ namespace MW5.Plugins.TableEditor.Views
                 _grid.CurrentCell = null;
             }
 
-            _grid.RowCount = 0;     // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
+            _grid.RowCount = 0;
+                // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
             _grid.RowCount = RowManager.Count;
 
             bool editing = _grid.TableSource.EditingTable;
             _grid.ReadOnly = !editing;
 
             _grid.Invalidate();
-            
+
             btnStartEdit.Enabled = !editing;
             mnuAddField.Enabled = editing;
             mnuRemoveField.Enabled = editing;
@@ -112,10 +118,10 @@ namespace MW5.Plugins.TableEditor.Views
 
         public IEnumerable<Control> Buttons
         {
-            get 
-            { 
-                var list =panel1.Controls.OfType<ButtonBase>().Select(item => item as Control);
-                return list.Except(new List<Control>() { OkButton });
+            get
+            {
+                var list = panel1.Controls.OfType<ButtonBase>().Select(item => item as Control);
+                return list.Except(new List<Control>() {OkButton});
             }
         }
 
@@ -124,4 +130,6 @@ namespace MW5.Plugins.TableEditor.Views
             get { return btnClose; }
         }
     }
+
+    public class TableEditorViewBase : MapWindowView<ILayer> { }
 }

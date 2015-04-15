@@ -4,9 +4,8 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract
 {
-    public interface IDeleteFieldsView: IView
+    public interface IDeleteFieldsView : IView<IAttributeTable>
     {
         IEnumerable<int> FieldsToRemove { get; }
-        IAttributeTable Table { get; set; }
     }
 }

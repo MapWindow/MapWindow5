@@ -18,6 +18,7 @@ namespace MW5.UI.Forms
             if (styleService == null) throw new ArgumentNullException("styleService");
             _parent = parent;
             _styleService = styleService;
+            AppViewFactory.Instance = this;
         }
 
         public bool ShowChildView(Form form, bool modal = true)

@@ -16,12 +16,9 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class DeleteFieldsView : MapWindowView, IDeleteFieldsView
+    public partial class DeleteFieldsView : MapWindowView<IAttributeTable>, IDeleteFieldsView
     {
-        private IAttributeTable _table;
-
-        public DeleteFieldsView(IAppView appView):
-            base(appView)
+        public DeleteFieldsView()
         {
             InitializeComponent();
 
@@ -42,21 +39,10 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        public IAttributeTable Table
-        {
-            get { return _table; }
-            set
-            {
-                if (value == null) throw new ArgumentNullException("value");
-                _table = value;
-                InitList();
-            }
-        }
-
-        private void InitList()
+        public void Initialize()
         {
             clb.Items.Clear();
-            foreach (var fld in Table.Fields)
+            foreach (var fld in Model.Fields)
             {
                 clb.Items.Add(fld.Name);
             }
@@ -64,7 +50,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public void UpdateView()
         {
-
+          
         }
 
         public ButtonBase OkButton

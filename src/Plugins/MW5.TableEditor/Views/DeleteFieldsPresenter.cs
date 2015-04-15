@@ -30,13 +30,11 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        public override void Init(IAttributeTable table)
+        public override void Init(IAttributeTable model)
         {
-            table.CheckEditMode(true);
+            base.Init(model);
 
-            _table = table;
-
-            View.Table = table;
+            model.CheckEditMode(true);
         }
     }
 }

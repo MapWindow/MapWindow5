@@ -13,7 +13,6 @@ namespace MW5.UI.Forms
     public partial class MapWindowView : MetroForm, IViewInternal
 #endif
     {
-        private readonly IAppView _appView;
         public event Action OkClicked;
 
         protected MapWindowView()
@@ -24,13 +23,6 @@ namespace MW5.UI.Forms
             ApplyAeroTheme = false;
             UseOffice2010SchemeBackColor = true;
 #endif
-        }
-
-        protected MapWindowView(IAppView appView):
-            this()
-        {
-            if (appView == null) throw new ArgumentNullException("appView");
-            _appView = appView;
         }
 
         protected void Invoke(Action action)
@@ -45,7 +37,7 @@ namespace MW5.UI.Forms
         {
             if (!Visible)
             {
-                _appView.ShowChildView(this, parent);
+                AppViewFactory.Instance.ShowChildView(this, parent);
             }
         }
 

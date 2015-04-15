@@ -15,7 +15,7 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TCommand">The type of the command.</typeparam>
     public abstract class ComplexPresenter<TView, TCommand> : CommandDispatcher<TView, TCommand>, IPresenter
         where TCommand : struct, IConvertible
-        where TView : IComplexView
+        where TView : IView, IMenuProvider
     {
         protected ComplexPresenter(TView view)
             : base(view)
@@ -57,23 +57,40 @@ namespace MW5.Plugins.Mvp
     /// </summary>
     /// <typeparam name="TView">The type of the view.</typeparam>
     /// <typeparam name="TCommand">The type of the command.</typeparam>
-    /// <typeparam name="TArg">The type of the argument.</typeparam>
-    public abstract class ComplexPresenter<TView, TCommand, TArg> : ComplexPresenter<TView, TCommand>, IPresenter<TArg>
+    /// <typeparam name="TModel">The type of the argument.</typeparam>
+    public abstract class ComplexPresenter<TView, TCommand, TModel> : ComplexPresenter<TView, TCommand>, IPresenter<TModel>
         where TCommand : struct, IConvertible
-        where TView : IComplexView
+        where TView : IView<TModel>, IMenuProvider
     {
+        protected TModel _model;
+
         protected ComplexPresenter(TView view)
             : base(view)
         {
         }
 
-        public bool Run(TArg argument, IWin32Window parent = null)
+        public TModel Model
+        {
+            get { return _model; }
+        }
+
+        public bool Run(TModel argument, IWin32Window parent = null)
         {
             Init(argument);
             View.ShowView(parent);
             return Success;
         }
 
-        public abstract void Init(TArg arg);
+        public virtual void Init(TModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException("model");
+            }
+
+            _model = model;
+            View.InitInternal(model);
+            (View as IView<TModel>).Initialize();
+        }
     }
 }

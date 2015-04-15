@@ -87,7 +87,9 @@
       <DependentUpon>GridListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
-    <Compile Include="Controls\TabPropertiesControl.cs" />
+    <Compile Include="Controls\TabPropertiesControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TabPropertiesControl.Designer.cs">
       <DependentUpon>TabPropertiesControl.cs</DependentUpon>
     </Compile>
@@ -96,6 +98,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\AppView.cs" />
+    <Compile Include="Forms\MapWindowView2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />

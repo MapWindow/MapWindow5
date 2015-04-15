@@ -114,6 +114,11 @@ namespace MW5.Views
             get { return null; }
         }
 
+        public void Initialize(object param)
+        {
+            
+        }
+
         #endregion
 
         #region IMainView implementation

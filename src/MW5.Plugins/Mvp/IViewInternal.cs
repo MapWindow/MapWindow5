@@ -15,4 +15,10 @@ namespace MW5.Plugins.Mvp
         event Action OkClicked;
         ViewStyle Style { get; }
     }
+
+    public interface IViewInternal<TModel>: IViewInternal
+    {
+        void InitInternal(TModel model);
+        TModel Model { get; }
+    }
 }

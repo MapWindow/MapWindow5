@@ -28,8 +28,7 @@ namespace MW5.Views
         public event Action OpenFolderClicked;
         public event Action SaveClicked;
 
-        public ConfigView(IAppView appView)
-            : base(appView)
+        public ConfigView()
         {
             Init();
         }
@@ -122,6 +121,11 @@ namespace MW5.Views
         public ButtonBase OkButton
         {
             get { return btnOk; }
+        }
+
+        public void Initialize(object param)
+        {
+            
         }
     }
 }

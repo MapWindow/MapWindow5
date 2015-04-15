@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.UI;
@@ -17,10 +18,9 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class AddFieldView : MapWindowView, IAddFieldView
+    public partial class AddFieldView : MapWindowView<IAttributeTable>, IAddFieldView
     {
-        public AddFieldView(IAppView appView):
-            base(appView)
+        public AddFieldView()
         {
             InitializeComponent();
 
@@ -46,6 +46,11 @@ namespace MW5.Plugins.TableEditor.Views
         public AttributeType FieldType
         {
             get { return cboFieldType.GetValue<AttributeType>(); }
+        }
+
+        public void Initialize()
+        {
+            
         }
 
         public void UpdateView()

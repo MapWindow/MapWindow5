@@ -15,22 +15,11 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class RenameFieldView : MapWindowView, IRenameFieldView
+    public partial class RenameFieldView : MapWindowView<IAttributeTable>, IRenameFieldView
     {
-        public RenameFieldView(IAppView appView):
-            base(appView)
+        public RenameFieldView()
         {
             InitializeComponent();
-        }
-
-        public void Init(IAttributeTable table)
-        {
-            cboField.Items.Clear();
-
-            foreach (var fld in table.Fields)
-            {
-                cboField.Items.Add(fld.Name);
-            }
         }
 
         public int FieldIndex
@@ -41,6 +30,16 @@ namespace MW5.Plugins.TableEditor.Views
         public string NewName
         {
             get { return txtNewName.Text; }
+        }
+
+        public void Initialize()
+        {
+            cboField.Items.Clear();
+
+            foreach (var fld in Model.Fields)
+            {
+                cboField.Items.Add(fld.Name);
+            }
         }
 
         public void UpdateView()

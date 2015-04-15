@@ -22,8 +22,7 @@ namespace MW5.Services.Views
 {
     public partial class CreateLayerView : MapWindowView, ICreateLayerView
     {
-        public CreateLayerView(IAppView appView)
-            : base(appView)
+        public CreateLayerView()
         {
             InitializeComponent();
 
@@ -50,6 +49,11 @@ namespace MW5.Services.Views
         public ButtonBase OkButton
         {
             get { return _okButton; }
+        }
+
+        public void Initialize(object param)
+        {
+            
         }
 
         public string LayerName

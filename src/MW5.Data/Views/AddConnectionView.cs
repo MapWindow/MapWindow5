@@ -19,8 +19,7 @@ namespace MW5.Data.Views
 {
     public partial class AddConnectionView : MapWindowView, IAddConnectionView
     {
-        public AddConnectionView(IAppContext context)
-            : base(context.View)
+        public AddConnectionView()
         {
             InitializeComponent();
 
@@ -69,6 +68,11 @@ namespace MW5.Data.Views
         public ButtonBase OkButton
         {
             get { return btnOk; }
+        }
+
+        public void Initialize(object param)
+        {
+            
         }
 
         public void Init(PostGisConnectionParams param)

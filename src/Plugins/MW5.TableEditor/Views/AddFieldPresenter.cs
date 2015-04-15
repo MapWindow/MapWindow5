@@ -15,7 +15,6 @@ namespace MW5.Plugins.TableEditor.Views
     public class AddFieldPresenter: BasePresenter<IAddFieldView, IAttributeTable>
     {
         private readonly IAddFieldView _view;
-        private IAttributeTable _table;
 
         public AddFieldPresenter(IAddFieldView view) : base(view)
         {
@@ -42,20 +41,20 @@ namespace MW5.Plugins.TableEditor.Views
         public override bool ViewOkClicked()
         {
             string msg;
-            if (!_table.ValidateField(View.FieldName, out msg))
+            if (!_model.ValidateField(View.FieldName, out msg))
             {
                 MessageService.Current.Info(msg);
                 return false;
             }
-            
-            _table.Fields.Add(Field);
+
+            _model.Fields.Add(Field);
             return true;
         }
 
-        public override void Init(IAttributeTable table)
+        public override void Init(IAttributeTable model)
         {
-            table.CheckEditMode(true);
-            _table = table;
+            base.Init(model);
+            model.CheckEditMode(true);
         }
     }
 }

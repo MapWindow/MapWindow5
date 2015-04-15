@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
@@ -14,22 +15,11 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Views
 {
-    public partial class RasterStyleView : MapWindowView, IRasterStyleView
+    public partial class RasterStyleView: RasterStyleViewBase, IRasterStyleView
     {
-        public RasterStyleView(IAppContext context):
-            base(context.View)
+        public RasterStyleView()
         {
             InitializeComponent();
-        }
-
-        public void UpdateView()
-        {
-
-        }
-
-        public ButtonBase OkButton
-        {
-            get { return btnOk; }
         }
 
         public IEnumerable<ToolStripItemCollection> Toolstrips
@@ -46,7 +36,22 @@ namespace MW5.Plugins.Symbology.Views
         {
 
         }
+
+        public void Initialize()
+        {
+            
+        }
+
+        public void UpdateView()
+        {
+            
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
+        }
     }
 
-
+    public class RasterStyleViewBase : MapWindowView<ILayer> { }
 }

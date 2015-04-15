@@ -19,12 +19,9 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class CalculateFieldView : MapWindowView, ICalculateFieldView
+    public partial class CalculateFieldView : MapWindowView<IFeatureSet>, ICalculateFieldView
     {
-        private IFeatureSet _featurSet;
-
-        public CalculateFieldView(IAppView appView)
-            :base(appView)
+        public CalculateFieldView()
         {
             InitializeComponent();
 
@@ -39,6 +36,12 @@ namespace MW5.Plugins.TableEditor.Views
             get { return btnOk; }
         }
 
+        public void Initialize()
+        {
+            PopulateTreeView(Model);
+            PopulateCombos(Model);
+        }
+
         public string Expression
         {
             get
@@ -51,13 +54,6 @@ namespace MW5.Plugins.TableEditor.Views
         public int TargetFieldIndex
         {
             get { return DestFieldComboBox.SelectedIndex; }
-        }
-
-        public void Init(IFeatureSet fs)
-        {
-            _featurSet = fs;
-            PopulateTreeView(_featurSet);
-            PopulateCombos(_featurSet);
         }
 
         private void PopulateCombos(IFeatureSet fs)

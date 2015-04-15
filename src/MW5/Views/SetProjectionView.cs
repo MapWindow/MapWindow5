@@ -25,7 +25,7 @@ namespace MW5.Views
             None = 3,
         }
 
-        public SetProjectionView(IAppView appView) : base(appView)
+        public SetProjectionView()
         {
             InitializeComponent();
 
@@ -79,6 +79,11 @@ namespace MW5.Views
         public ButtonBase OkButton
         {
             get { return btnOk; }
+        }
+
+        public void Initialize(object param)
+        {
+            
         }
     }
 }

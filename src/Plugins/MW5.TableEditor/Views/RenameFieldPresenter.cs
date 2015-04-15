@@ -13,25 +13,19 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class RenameFieldPresenter : BasePresenter<IRenameFieldView, IAttributeTable>
     {
-        private IAttributeTable _table;
-
         public RenameFieldPresenter(IRenameFieldView view) : base(view)
         {
 
         }
 
-        public override void Init(IAttributeTable table)
+        public override void Init(IAttributeTable model)
         {
-            if (table == null) throw new ArgumentNullException("table");
+            base.Init(model);
 
-            if (!table.EditMode)
+            if (!model.EditMode)
             {
                 throw new InvalidOperationException("Table in edit mode is expected.");
             }
-
-            _table = table;
-
-            View.Init(table);
         }
 
         public override bool ViewOkClicked()
@@ -44,7 +38,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return false;
             }
 
-            _table.Fields[View.FieldIndex].Name = View.NewName;
+            _model.Fields[View.FieldIndex].Name = View.NewName;
             return true;
         }
 
@@ -56,7 +50,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return false;
             }
 
-            return _table.ValidateField(View.NewName, out message);
+            return _model.ValidateField(View.NewName, out message);
         }
     }
 }

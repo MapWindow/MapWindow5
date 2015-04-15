@@ -10,4 +10,9 @@ namespace MW5.Plugins.Mvp
         void UpdateView();
         ButtonBase OkButton { get; }
     }
+
+    public interface IView<TModel> : IView, IViewInternal<TModel>
+    {
+        void Initialize();
+    }
 }

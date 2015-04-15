@@ -7,11 +7,8 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Mvp
 {
-    public interface IComplexView : IView, IMenuProvider
+    public static class AppViewFactory
     {
-    }
-
-    public interface IComplexView<TModel> : IView<TModel>, IMenuProvider
-    {
+        public static IAppView Instance { get;  internal set; }
     }
 }

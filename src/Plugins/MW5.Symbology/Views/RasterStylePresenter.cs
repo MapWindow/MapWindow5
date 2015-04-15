@@ -28,9 +28,9 @@ namespace MW5.Plugins.Symbology.Views
             return true;
         }
 
-        public override void Init(ILayer arg)
+        public override void Init(ILayer model)
         {
-            // TODO: implement
+            
         }
     }
 }

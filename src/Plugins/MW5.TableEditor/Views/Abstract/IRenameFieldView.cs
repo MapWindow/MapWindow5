@@ -3,10 +3,9 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract
 {
-    public interface IRenameFieldView: IView
+    public interface IRenameFieldView : IView<IAttributeTable>
     {
         int FieldIndex { get; }
         string NewName { get; }
-        void Init(IAttributeTable table);
     }
 }

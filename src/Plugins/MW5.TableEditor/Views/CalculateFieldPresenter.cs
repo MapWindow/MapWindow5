@@ -15,19 +15,8 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class CalculateFieldPresenter: BasePresenter<ICalculateFieldView, IFeatureSet>
     {
-        private IFeatureSet _featureSet;
-
         public CalculateFieldPresenter(ICalculateFieldView view) : base(view)
         {
-        }
-
-        public override void Init(IFeatureSet arg)
-        {
-            if (arg == null) throw new ArgumentNullException("arg");
-
-            _featureSet = arg;
-
-            View.Init(_featureSet);
         }
 
         public override bool ViewOkClicked()
@@ -75,7 +64,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return false;
             }
 
-            return parser.CalculateForFeatureSet(_featureSet, View.TargetFieldIndex);
+            return parser.CalculateForFeatureSet(_model, View.TargetFieldIndex);
         }
     }
 }

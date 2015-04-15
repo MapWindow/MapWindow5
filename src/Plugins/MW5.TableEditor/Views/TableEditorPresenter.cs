@@ -14,7 +14,6 @@ namespace MW5.Plugins.TableEditor.Views
     {
         private readonly IAppContext _context;
         private readonly RowManager _rowManager;
-        private ILayer _layer;
         private Shapefile _shapefile;
 
         public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager) 
@@ -35,7 +34,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public bool HasLayer(int layerHandle)
         {
-            return ViewVisible && _layer.Handle == layerHandle;
+            return ViewVisible && Model.Handle == layerHandle;
         }
 
         public void UpdateSelection()
@@ -74,14 +73,12 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        public override void Init(ILayer layer)
+        public override void Init(ILayer model)
         {
-            _layer = layer;
-
-            var sf = _layer.FeatureSet.InternalObject as Shapefile;
+            base.Init(model);
+            
+            var sf = Model.FeatureSet.InternalObject as Shapefile;
             _shapefile = sf;
-
-            View.SetDatasource(sf);
         }
 
         public override void RunCommand(TableEditorCommand command)
@@ -113,7 +110,7 @@ namespace MW5.Plugins.TableEditor.Views
                     View.UpdateView();
                     break;
                 case TableEditorCommand.Close:
-                    _layer = null;
+                    _model = null;
                     View.Hide();
                     break;
             }
@@ -124,25 +121,25 @@ namespace MW5.Plugins.TableEditor.Views
             switch (command)
             {
                 case TableEditorCommand.CalculateField:
-                    if (_context.Container.Run<CalculateFieldPresenter, IFeatureSet>(_layer.FeatureSet, ViewHandle))
+                    if (_context.Container.Run<CalculateFieldPresenter, IFeatureSet>(Model.FeatureSet, ViewHandle))
                     {
                         View.UpdateDatasource();
                     }
                     return true;
                 case TableEditorCommand.AddField:
-                    if (_context.Container.Run<AddFieldPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    if (_context.Container.Run<AddFieldPresenter, IAttributeTable>(Model.FeatureSet.Table, ViewHandle))
                     {
                         View.UpdateDatasource();
                     }
                     return true;
                 case TableEditorCommand.RemoveField:
-                    if (_context.Container.Run<DeleteFieldsPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    if (_context.Container.Run<DeleteFieldsPresenter, IAttributeTable>(Model.FeatureSet.Table, ViewHandle))
                     {
                         View.UpdateDatasource();
                     }
                     return true;
                 case TableEditorCommand.RenameField:
-                    if (_context.Container.Run<RenameFieldPresenter, IAttributeTable>(_layer.FeatureSet.Table, ViewHandle))
+                    if (_context.Container.Run<RenameFieldPresenter, IAttributeTable>(Model.FeatureSet.Table, ViewHandle))
                     {
                         View.UpdateDatasource();
                     }
@@ -169,7 +166,7 @@ namespace MW5.Plugins.TableEditor.Views
                     return true;
 
                 case TableEditorCommand.ZoomToSelected:
-                    _context.Map.ZoomToSelected(_layer.Handle);
+                    _context.Map.ZoomToSelected(Model.Handle);
                     return true;
 
                 case TableEditorCommand.SelectAll:

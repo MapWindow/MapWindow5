@@ -52,22 +52,39 @@ namespace MW5.Plugins.Mvp
     /// Base presenter with argument without command enumeration.
     /// </summary>
     /// <typeparam name="TView">The type of the view.</typeparam>
-    /// <typeparam name="TArg">The type of the argument.</typeparam>
-    public abstract class BasePresenter<TView, TArg> : BasePresenter<TView>, IPresenter<TArg>
-        where TView : IView
+    /// <typeparam name="TModel">The type of the argument.</typeparam>
+    public abstract class BasePresenter<TView, TModel> : BasePresenter<TView>, IPresenter<TModel>
+        where TView : IView<TModel>
     {
+        protected TModel _model;
+
         protected BasePresenter( TView view): base(view)
         {
             
         }
 
-        public bool Run(TArg argument, IWin32Window parent = null)
+        public TModel Model
+        {
+            get { return _model; }
+        }
+
+        public bool Run(TModel argument, IWin32Window parent = null)
         {
             Init(argument);
             View.ShowView(parent);
             return Success;
         }
 
-        public abstract void Init(TArg arg);
+        public virtual void Init(TModel model)
+        {
+            if (model == null)
+            {
+                throw new ArgumentNullException("model");
+            }
+
+            _model = model;
+            View.InitInternal(model);
+            (View as IView<TModel>).Initialize();
+        }
     }
 }

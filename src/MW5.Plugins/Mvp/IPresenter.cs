@@ -11,9 +11,9 @@ namespace MW5.Plugins.Mvp
         IWin32Window ViewHandle { get; }
     }
 
-    public interface IPresenter<in TArg>: IPresenter
+    public interface IPresenter<in TModel>: IPresenter
     {
-        bool Run(TArg argument, IWin32Window parent = null);
-        void Init(TArg arg);
+        bool Run(TModel argument, IWin32Window parent = null);
+        void Init(TModel model);
     }
 }

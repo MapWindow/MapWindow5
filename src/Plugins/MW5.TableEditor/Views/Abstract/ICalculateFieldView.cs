@@ -8,11 +8,9 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract
 {
-    public interface ICalculateFieldView: IView
+    public interface ICalculateFieldView: IView<IFeatureSet>
     {
-        void Init(IFeatureSet fs);
         string Expression { get; }
         int TargetFieldIndex { get; }
-
     }
 }
