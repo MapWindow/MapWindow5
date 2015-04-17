@@ -138,5 +138,32 @@ namespace MW5.Api.Concrete
         {
             get { return new ImageBandCollection(_image); }
         }
+
+        public bool UseHistogram
+        {
+            get { return _image.UseHistogram; }
+            set { _image.UseHistogram = value; }
+        }
+
+        public bool SetToGrey
+        {
+            get { return _image.SetToGrey; }
+            set { _image.SetToGrey = value; }
+        }
+
+        public PaletteInterpretation PaletteInterpretation
+        {
+            get { return (PaletteInterpretation)_image.PaletteInterpretation2; }
+        }
+
+        public bool IsRgb
+        {
+            get { return _image.IsRgb; }
+        }
+
+        public bool Warped
+        {
+            get { return _image.Warped; }
+        }
     }
 }

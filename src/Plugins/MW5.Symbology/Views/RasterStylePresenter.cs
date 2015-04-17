@@ -41,40 +41,14 @@ namespace MW5.Plugins.Symbology.Views
 
         public override bool ViewOkClicked()
         {
+            View.UiToModel();
+            
             return true;
         }
 
         public override void Initialize()
         {
-            TestBands();
-        }
-
-        private void TestBands()
-        {
-            var image = Model.ImageSource as IRasterSource;
-            if (image != null)
-            {
-                var logger = Logger.Current;
-                foreach (var band in image.Bands)
-                {
-                    logger.Info("BAND: ");
-                    logger.Info("No data value: " + band.NoDataValue);
-                    logger.Info("Minimum: " + band.Minimum);
-                    logger.Info("Maximum: " + band.Maximum);
-                    logger.Info("Overview count: " + band.OverviewCount);
-                    logger.Info("Color interpretation: " + band.ColorInterpretation);
-                }
-            }
-        }
-
-        private void WriteDebugInfo()
-        {
-            var image = Model.ImageSource as IRasterSource;
-            if (image != null)
-            {
-                Logger.Current.Info("Raster; dx = {0}; dy = {1}; width = {2}; height = {3}; xllcenter = {4}; yllcenter = {5}",
-                                    image.BufferDx, image.BufferDy, image.BufferWidth, image.BufferHeight, image.BufferXllCenter, image.BufferYllCenter);
-            }
+            
         }
     }
 }

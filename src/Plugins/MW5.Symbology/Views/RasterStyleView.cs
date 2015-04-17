@@ -78,15 +78,57 @@ namespace MW5.Plugins.Symbology.Views
 
         private void ModelToUi()
         {
+            ModelToUiBitmap();
+
+            ModelToUiRaster();
+        }
+
+        private void ModelToUiBitmap()
+        {
             txtLayerName.Text = Model.Name;
             txtDatasourceName.Text = Model.Filename;
             txtProjection.Text = _imageSource.Projection.Name;
-            
+
             const string format = "{0} × {1} pixels; {2} bands; rendered as {3}";
             txtBriefInfo.Text = string.Format(format, _imageSource.Width, _imageSource.Height, _imageSource.NumBands, "unknown");
 
             cboDownsampling.SetValue(_imageSource.DownsamplingMode);
             cboUpsampling.SetValue(_imageSource.UpsamplingMode);
+        }
+
+        private void ModelToUiRaster()
+        {
+            var raster = _imageSource as IRasterSource;
+            if (raster == null)
+            {
+                return;
+            }
+
+            chkUseHistogram.Checked = raster.UseHistogram;
+        }
+
+        public void UiToModel()
+        {
+            UiToModelBitmap();
+
+            UiToModelRaster();
+        }
+
+        private void UiToModelBitmap()
+        {
+            _imageSource.DownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
+            _imageSource.UpsamplingMode = cboUpsampling.GetValue<InterpolationType>();
+        }
+
+        private void UiToModelRaster()
+        {
+            var raster = _imageSource as IRasterSource;
+            if (raster == null)
+            {
+                return;
+            }
+
+            raster.UseHistogram = chkUseHistogram.Checked;
         }
 
         public void UpdateView()

@@ -24,12 +24,25 @@ namespace MW5.Api.Interfaces
 
         IRasterBandCollection Bands { get; }
 
-        //bool HasColorTable { get; }
-        //string PaletteInterpretation { get; }
+        /// <summary>
+        /// Gets or sets a value indicating whether histogram equalization will be used. 
+        /// Currently supported for single band, single byte per-pixel datasources with some
+        /// format specific behavior.
+        /// </summary>
+        bool UseHistogram { get; set; }
+
+        bool SetToGrey { get; set; }
+
+        PaletteInterpretation PaletteInterpretation { get; }
+
+        bool IsRgb { get; }
+
+        bool Warped { get; }
 
         //bool AllowHillshade { get; set; }
 
-        //bool UseHistogram { get; set; }
+        //bool HasColorTable { get; }
+        //string PaletteInterpretation { get; }
 
         //GridColorScheme CustomColorScheme { get; set; }
         //GridColorScheme GridProxyColorScheme { get; }
@@ -41,16 +54,12 @@ namespace MW5.Api.Interfaces
         //bool ClearGdalCache { get; set; }
         
         //bool GridRendering { get; }
-        
-        //bool SetToGrey { get; set; }
 
         //string SourceFilename { get; }
         //int SourceGridBandIndex { get; set; }
         //string SourceGridName { get; }
-        //bool IsRgb { get; }
-        //bool IsGridProxy { get; }
         
-        //bool Warped { get; }
+        //bool IsGridProxy { get; }
 
         //bool _pushSchemetkRaster(GridColorScheme cScheme);
         

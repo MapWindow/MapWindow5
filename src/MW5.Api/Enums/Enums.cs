@@ -1015,19 +1015,19 @@
     public enum GdalDriverMetadata
     {
         Longname = 0,
-        Helptopic = 1,
-        Mimetype = 2,
+        HelpTopic = 1,
+        MimeType = 2,
         Extension = 3,
         Extensions = 4,
-        Creationoptionlist = 5,
-        Openoptionlist = 6,
-        Creationdatatypes = 7,
-        Subdatasets = 8,
+        CreationOptionList = 5,
+        OpenOptionList = 6,
+        CreationDataTypes = 7,
+        SubDatasets = 8,
         Open = 9,
         Create = 10,
-        Createcopy = 11,
-        Virtualio = 12,
-        LayerCreationoptionlist = 13,
+        CreateCopy = 11,
+        VirtualIo = 12,
+        LayerCreationOptionList = 13,
         OgrDriver = 14,
     }
 
@@ -1357,5 +1357,29 @@
         Yband = 14,
         CbBand = 15,
         CrBand = 16,
+    }
+
+    public enum PaletteInterpretation
+    {
+        Gray = 0,
+        Rgb = 1,
+        Cmyk = 2,
+        Hls = 3,
+    }
+
+    public enum GdalDataType
+    {
+        Unknown = 0,
+        Byte = 1,
+        UInt16 = 2,
+        Int16 = 3,
+        UInt32 = 4,
+        Int32 = 5,
+        Float32 = 6,
+        Float64 = 7,
+        CInt16 = 8,
+        CInt32 = 9,
+        CFloat32 = 10,
+        CFloat64 = 11,
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
+using MW5.Shared;
 using NUnit.Framework;
 
 namespace MW5.API.Test
@@ -179,5 +181,23 @@ namespace MW5.API.Test
             //mapControl1.Layers.Add(fs);
         }
 
+        private void TestBands()
+        {
+            string filename = "";   // TODO: set filename
+            var raster = BitmapSource.Open(filename, false) as IRasterSource;
+            if (raster != null)
+            {
+                var logger = Logger.Current;
+                foreach (var band in raster.Bands)
+                {
+                    logger.Info("BAND: ");
+                    logger.Info("No data value: " + band.NoDataValue);
+                    logger.Info("Minimum: " + band.Minimum);
+                    logger.Info("Maximum: " + band.Maximum);
+                    logger.Info("Overview count: " + band.OverviewCount);
+                    logger.Info("Color interpretation: " + band.ColorInterpretation);
+                }
+            }
+        }
     }
 }
