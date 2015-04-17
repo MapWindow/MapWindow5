@@ -138,8 +138,6 @@ namespace MW5.Api.Concrete
             _grid.CellToProj(column, row, out x, out y);
         }
 
-       
-
         public bool SetInvalidValuesToNodata(double minThresholdValue, double maxThresholdValue)
         {
             return _grid.SetInvalidValuesToNodata(minThresholdValue, maxThresholdValue);
@@ -273,7 +271,7 @@ namespace MW5.Api.Concrete
             {
                 // TODO: return more
                 var header = _grid.Header;
-                string s = string.Format("Size: {0}", header.NumberCols, header.NumberRows);
+                string s = string.Format("Size: {0}×{1}", header.NumberCols, header.NumberRows);
                 return s;
             }
         }
@@ -281,6 +279,11 @@ namespace MW5.Api.Concrete
         public void Dispose()
         {
             _grid.Close();
+        }
+
+        public IRasterBandCollection Bands
+        {
+            get { return new GridBandCollection(_grid); }
         }
 
         #region Batch reading of values

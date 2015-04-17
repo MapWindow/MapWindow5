@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,25 @@ namespace MW5.Plugins.Symbology.Views
 
         public override void Initialize()
         {
-            //WriteDebugInfo();
+            TestBands();
+        }
+
+        private void TestBands()
+        {
+            var image = Model.ImageSource as IRasterSource;
+            if (image != null)
+            {
+                var logger = Logger.Current;
+                foreach (var band in image.Bands)
+                {
+                    logger.Info("BAND: ");
+                    logger.Info("No data value: " + band.NoDataValue);
+                    logger.Info("Minimum: " + band.Minimum);
+                    logger.Info("Maximum: " + band.Maximum);
+                    logger.Info("Overview count: " + band.OverviewCount);
+                    logger.Info("Color interpretation: " + band.ColorInterpretation);
+                }
+            }
         }
 
         private void WriteDebugInfo()

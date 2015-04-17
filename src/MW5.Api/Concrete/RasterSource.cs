@@ -133,5 +133,10 @@ namespace MW5.Api.Concrete
         {
             _image.ProjectionToBuffer(projX, projY, out bufferX, out bufferY);
         }
+
+        public IRasterBandCollection Bands
+        {
+            get { return new ImageBandCollection(_image); }
+        }
     }
 }

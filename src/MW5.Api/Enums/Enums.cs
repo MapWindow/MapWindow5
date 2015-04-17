@@ -1337,4 +1337,25 @@
         Scales = 0,
         ZoomLevels = 1,
     }
+
+    public enum ColorInterpretation
+    {
+        Undefined = 0,
+        GrayIndex = 1,
+        PaletteIndex = 2,
+        RedBand = 3,
+        GreenBand = 4,
+        BlueBand = 5,
+        AlphaBand = 6,
+        HueBand = 7,
+        SaturationBand = 8,
+        LightnessBand = 9,
+        CyanBand = 10,
+        MagentaBand = 11,
+        YellowBand = 12,
+        BlackBand = 13,
+        Yband = 14,
+        CbBand = 15,
+        CrBand = 16,
+    }
 }

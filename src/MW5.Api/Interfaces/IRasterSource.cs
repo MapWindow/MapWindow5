@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MapWinGIS;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
@@ -20,6 +21,8 @@ namespace MW5.Api.Interfaces
 
         void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY);
         void ProjectionToBuffer(double projX, double projY, out int bufferX, out int bufferY);
+
+        IRasterBandCollection Bands { get; }
 
         //bool HasColorTable { get; }
         //string PaletteInterpretation { get; }

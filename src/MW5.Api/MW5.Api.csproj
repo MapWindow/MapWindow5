@@ -64,6 +64,10 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Concrete\GridBandCollection.cs" />
+    <Compile Include="Concrete\RasterBand.cs" />
+    <Compile Include="Concrete\ImageBandCollection.cs" />
+    <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
