@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins;
@@ -52,9 +53,9 @@ namespace MW5.Helpers
 
         private static void InitToolbox(ISerializableContext context)
         {
-            var toolboControl = context.GetDockPanelObject(DefaultDockPanel.Toolbox);
+            var toolboxControl = context.GetDockPanelObject(DefaultDockPanel.Toolbox);
 
-            var toolbox = context.DockPanels.Add(toolboControl, DockPanelKeys.Toolbox, PluginIdentity.Default);
+            var toolbox = context.DockPanels.Add(toolboxControl, DockPanelKeys.Toolbox, PluginIdentity.Default);
             toolbox.Caption = "GIS Toolbox";
             toolbox.DockTo(context.DockPanels.Legend, DockPanelState.Tabbed, PanelSize);
             toolbox.SetIcon(Resources.ico_tools);
@@ -83,6 +84,81 @@ namespace MW5.Helpers
         private static AppStateSerializer GetSerializer()
         {
             return new AppStateSerializer(SerializeMode.XMLFile, ConfigPathHelper.GetDockingConfigPath());
+        }
+
+        public static void SerializeDockState(IAppContext context)
+        {
+            var panels = context.DockPanels;
+            panels.Lock();
+
+            foreach (var panel in panels)
+            {
+                Debug.Print(panel.Caption);
+                Debug.Print("Hidden: " + panel.AutoHidden);
+                Debug.Print("Visible: " + panel.Visible);
+                Debug.Print("Style: " + panel.DockState);
+
+                //bool hidden = panel.Hidden;
+                //if (hidden)
+                //{
+                //    panel.Hidden = false;
+                //}
+
+                //bool visible = panel.Visible;
+                //if (!visible)
+                //{
+                //    panel.Visible = true;
+                //}
+
+                var host = panel.Control.Parent as DockHost;
+                if (host != null)
+                {
+
+
+                    var dhc = host.InternalController as DockHostController;
+                    if (dhc != null)
+                    {
+                        DockInfo di = dhc.GetSerCurrentDI();
+                        if (di != null)
+                        {
+
+                            Rectangle r;
+
+                            if (dhc.bInAutoHide)
+                            {
+                                r = dhc.DINew.rcDockArea;
+                            }
+                            else
+                            {
+                                r = dhc.LayoutRect;
+                            }
+
+                            Debug.Print("Child host count: " + dhc.ChildHostCount);
+
+                            Debug.Print("Controller name: " + di.ControlleName);
+                            Debug.Print("Style: " + di.dStyle);
+                            Debug.Print("x: {0}; y: {1}; w: {2}; h: {3}", r.X, r.Y, r.Width, r.Height);
+                            //Debug.Print("x: {0}; y: {1}; w: {2}; h: {3}", r2.X, r2.Y, r2.Width, r2.Height);
+                            Debug.Print("Priority: " + di.nPriority);
+                            Debug.Print("DockIndex: " + di.nDockIndex);
+                        }
+                    }
+                }
+
+                //if (!visible)
+                //{
+                //    panel.Visible = false;
+                //}
+
+                //if (hidden)
+                //{
+                //    panel.Hidden = true;
+                //}
+
+                Debug.Print("--------------");
+            }
+
+            panels.Unlock();
         }
     }
 }

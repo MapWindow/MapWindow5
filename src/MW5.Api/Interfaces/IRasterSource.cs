@@ -11,23 +11,34 @@ namespace MW5.Api.Interfaces
     
         bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
 
-        //tkGridRendering AllowGridRendering { get; set; }
+        double BufferDx { get; }
+        double BufferDy { get; }
+        double BufferWidth { get; }
+        double BufferHeight { get; }
+        double BufferXllCenter { get; }
+        double BufferYllCenter { get; }
+
+        void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY);
+        void ProjectionToBuffer(double projX, double projY, out int bufferX, out int bufferY);
+
+        //bool HasColorTable { get; }
+        //string PaletteInterpretation { get; }
+
         //bool AllowHillshade { get; set; }
-        //int BufferSize { get; set; }
-        //bool ClearGdalCache { get; set; }
+
+        //bool UseHistogram { get; set; }
+
         //GridColorScheme CustomColorScheme { get; set; }
         //GridColorScheme GridProxyColorScheme { get; }
-        //bool GridRendering { get; }
-        //bool HasColorTable { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }
-        //double OriginalDx { get; set; }
-        //double OriginalDy { get; set; }
-        //int OriginalHeight { get; }
-        //int OriginalWidth { get; }
-        //double OriginalXllCenter { get; set; }
-        //double OriginalYllCenter { get; set; }
+
+        //tkGridRendering AllowGridRendering { get; set; }
         
-        //string PaletteInterpretation { get; }
+        //int BufferSize { get; set; }
+        //bool ClearGdalCache { get; set; }
+        
+        //bool GridRendering { get; }
+        
         //bool SetToGrey { get; set; }
 
         //string SourceFilename { get; }
@@ -35,14 +46,11 @@ namespace MW5.Api.Interfaces
         //string SourceGridName { get; }
         //bool IsRgb { get; }
         //bool IsGridProxy { get; }
-
-        //bool UseHistogram { get; set; }
+        
         //bool Warped { get; }
 
         //bool _pushSchemetkRaster(GridColorScheme cScheme);
-        //void BufferToProjection(int BufferX, int BufferY, out double ProjX, out double ProjY);
         
-
         //void Deserialize(string newVal);
 
         //bool GetImageBitsDC(int hDC);
@@ -56,8 +64,6 @@ namespace MW5.Api.Interfaces
         //bool Open(string ImageFileName, ImageType FileType = ImageType.USE_FILE_EXTENSION, bool InRam = false, ICallback cBack = null);
 
         //Grid OpenAsGrid();
-
-        //void ProjectionToBuffer(double ProjX, double ProjY, out int BufferX, out int BufferY);
 
         //bool Resource(string newImgPath);
 

@@ -7,6 +7,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
+using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Views
 {
@@ -44,7 +45,17 @@ namespace MW5.Plugins.Symbology.Views
 
         public override void Initialize()
         {
+            //WriteDebugInfo();
+        }
 
+        private void WriteDebugInfo()
+        {
+            var image = Model.ImageSource as IRasterSource;
+            if (image != null)
+            {
+                Logger.Current.Info("Raster; dx = {0}; dy = {1}; width = {2}; height = {3}; xllcenter = {4}; yllcenter = {5}",
+                                    image.BufferDx, image.BufferDy, image.BufferWidth, image.BufferHeight, image.BufferXllCenter, image.BufferYllCenter);
+            }
         }
     }
 }

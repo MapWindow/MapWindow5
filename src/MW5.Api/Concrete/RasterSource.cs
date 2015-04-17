@@ -93,5 +93,45 @@ namespace MW5.Api.Concrete
             scales = scales.ToList();
             return _image.BuildOverviews((tkGDALResamplingMethod) method, scales.Count(), scales.ToArray());
         }
+
+        public double BufferDx
+        {
+            get { return _image.dX; }
+        }
+
+        public double BufferDy
+        {
+            get { return _image.dY; }
+        }
+
+        public double BufferWidth
+        {
+            get { return _image.Width; }
+        }
+
+        public double BufferHeight
+        {
+            get { return _image.Height; }
+        }
+
+        public double BufferXllCenter
+        {
+            get { return _image.XllCenter; }
+        }
+
+        public double BufferYllCenter
+        {
+            get { return _image.YllCenter; }
+        }
+
+        public void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY)
+        {
+            _image.BufferToProjection(bufferX, bufferY, out projX, out projY);
+        }
+
+        public void ProjectionToBuffer(double projX, double projY, out int bufferX, out int bufferY)
+        {
+            _image.ProjectionToBuffer(projX, projY, out bufferX, out bufferY);
+        }
     }
 }

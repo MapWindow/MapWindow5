@@ -114,5 +114,11 @@ namespace MW5.UI.Docking
         {
             _dockingManager.FloatControl(_control, rect, tabFloating);
         }
+
+        public bool Hidden
+        {
+            get { return _dockingManager.GetAutoHideMode(_control); }
+            set { _dockingManager.SetAutoHideMode(_control, value); }
+        }
     }
 }

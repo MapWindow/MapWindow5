@@ -15,7 +15,8 @@ namespace MW5.Api.Interfaces
         Color TransparentColorFrom { get; set; }
         Color TransparentColorTo { get; set; }
         bool UseTransparentColor { get; set; }
-        
+        void SetTransparentColor(Color color);
+
         double Transparency { get; set; }
         InterpolationType DownsamplingMode { get; set; }
         InterpolationType UpsamplingMode { get; set; }
@@ -33,8 +34,8 @@ namespace MW5.Api.Interfaces
         Color GetPixel(int row, int column);
         void SetPixel(int row, int column, Color pVal);
 
-        System.Drawing.Image ToGdiPlusBitmap();
-        bool FromGdiPlusBitmap(System.Drawing.Image image);
+        Image ToGdiPlusBitmap();
+        bool FromGdiPlusBitmap(Image image);
 
         int NumBands { get; }
     }
