@@ -82,6 +82,13 @@
     <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\RasterInfoTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\RasterInfoTreeView.Designer.cs">
+      <DependentUpon>RasterInfoTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\NodeData.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />

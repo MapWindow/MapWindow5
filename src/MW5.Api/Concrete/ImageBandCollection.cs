@@ -40,6 +40,11 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public int Count
+        {
+            get { return _image.NoBands; }
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();

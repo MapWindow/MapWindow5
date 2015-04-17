@@ -11,5 +11,6 @@ namespace MW5.Api.Interfaces
     {
         IEnumerator<RasterBand> GetEnumerator();
         RasterBand this[int index] { get; }
+        int Count { get; }
     }
 }

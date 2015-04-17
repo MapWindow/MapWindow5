@@ -52,6 +52,8 @@ namespace MW5.Plugins.Symbology.Views
             ModelToUi();
 
             txtGdalInfo.Text = GdalUtils.GdalInfo(Model.Filename, "");
+
+            rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
         }
 
         public ButtonBase OkButton

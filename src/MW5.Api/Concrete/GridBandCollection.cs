@@ -15,7 +15,7 @@ namespace MW5.Api.Concrete
 
         internal GridBandCollection(Grid grid)
         {
-            if (grid == null) throw new ArgumentNullException("image");
+            if (grid == null) throw new ArgumentNullException("grid");
             _grid = grid;
         }
 
@@ -38,6 +38,11 @@ namespace MW5.Api.Concrete
 
                 return new RasterBand(_grid.Band[index]);
             }
+        }
+
+        public int Count
+        {
+            get { return _grid.NumBands; }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
