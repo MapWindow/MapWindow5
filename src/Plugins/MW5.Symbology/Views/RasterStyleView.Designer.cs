@@ -39,11 +39,12 @@ namespace MW5.Plugins.Symbology.Views
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            this.tabControlAdv1 = new MW5.UI.Controls.TabPropertiesControl();
+            this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.chkLayerPreview = new System.Windows.Forms.CheckBox();
             this.chkLayerVisible = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.pctPreview = new System.Windows.Forms.PictureBox();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -66,9 +67,10 @@ namespace MW5.Plugins.Symbology.Views
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.rasterInfoTreeView1 = new MW5.Plugins.Symbology.Controls.RasterInfoTreeView();
-            this.tabPageAdv6 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.txtGdalInfo = new System.Windows.Forms.RichTextBox();
             this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cboRasterRendering = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label12 = new System.Windows.Forms.Label();
@@ -87,16 +89,17 @@ namespace MW5.Plugins.Symbology.Views
             this.cboOverviewSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tabPageAdv6 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.txtGdalInfo = new System.Windows.Forms.RichTextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageAdv1.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLayerVisible)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctPreview)).BeginInit();
             this.groupBox13.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboDynamicScaleMode)).BeginInit();
@@ -108,8 +111,8 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).BeginInit();
             this.tabPageAdv2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rasterInfoTreeView1)).BeginInit();
-            this.tabPageAdv6.SuspendLayout();
             this.tabPageAdv4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
             this.tabPageAdv3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).BeginInit();
@@ -120,43 +123,38 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
-            this.gradientPanel1.SuspendLayout();
+            this.tabPageAdv6.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAdv1
             // 
-            this.tabControlAdv1.ActiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-            this.tabControlAdv1.ActiveTabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(646, 441);
-            this.tabControlAdv1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(636, 443);
+            this.tabControlAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabControlAdv1.BorderVisible = true;
+            this.tabControlAdv1.BorderWidth = 1;
             this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv6);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv5);
-            this.tabControlAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlAdv1.Controls.Add(this.tabPageAdv6);
             this.tabControlAdv1.FocusOnTabClick = false;
             this.tabControlAdv1.ImageList = this.imageList1;
-            this.tabControlAdv1.InactiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 50);
-            this.tabControlAdv1.Location = new System.Drawing.Point(0, 0);
+            this.tabControlAdv1.Location = new System.Drawing.Point(3, 12);
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.Padding = new System.Drawing.Point(5, 10);
-            this.tabControlAdv1.PersistTabState = true;
             this.tabControlAdv1.RotateTextWhenVertical = true;
-            this.tabControlAdv1.Size = new System.Drawing.Size(646, 441);
-            this.tabControlAdv1.TabGap = 10;
+            this.tabControlAdv1.Size = new System.Drawing.Size(636, 443);
             this.tabControlAdv1.TabIndex = 0;
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererBlendLight);
             this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
             // 
             // tabPageAdv1
             // 
+            this.tabPageAdv1.Controls.Add(this.groupBox10);
             this.tabPageAdv1.Controls.Add(this.chkLayerVisible);
-            this.tabPageAdv1.Controls.Add(this.groupBox1);
             this.tabPageAdv1.Controls.Add(this.groupBox13);
             this.tabPageAdv1.Controls.Add(this.txtBriefInfo);
             this.tabPageAdv1.Controls.Add(this.label5);
@@ -170,15 +168,46 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv1.Image = null;
             this.tabPageAdv1.ImageIndex = 0;
             this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv1.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv1.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv1.Margin = new System.Windows.Forms.Padding(20);
             this.tabPageAdv1.Name = "tabPageAdv1";
             this.tabPageAdv1.Padding = new System.Windows.Forms.Padding(5);
             this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv1.Size = new System.Drawing.Size(515, 441);
             this.tabPageAdv1.TabIndex = 1;
             this.tabPageAdv1.Text = "General";
             this.tabPageAdv1.ThemesEnabled = false;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.pictureBox1);
+            this.groupBox10.Controls.Add(this.chkLayerPreview);
+            this.groupBox10.Location = new System.Drawing.Point(269, 213);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(227, 210);
+            this.groupBox10.TabIndex = 180;
+            this.groupBox10.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 16);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(221, 191);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 163;
+            this.pictureBox1.TabStop = false;
+            // 
+            // chkLayerPreview
+            // 
+            this.chkLayerPreview.AutoSize = true;
+            this.chkLayerPreview.Location = new System.Drawing.Point(6, 0);
+            this.chkLayerPreview.Name = "chkLayerPreview";
+            this.chkLayerPreview.Size = new System.Drawing.Size(93, 17);
+            this.chkLayerPreview.TabIndex = 162;
+            this.chkLayerPreview.Text = "Show preview";
+            this.chkLayerPreview.UseVisualStyleBackColor = true;
             // 
             // chkLayerVisible
             // 
@@ -191,32 +220,11 @@ namespace MW5.Plugins.Symbology.Views
             this.chkLayerVisible.Text = "Visible";
             this.chkLayerVisible.ThemesEnabled = false;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.pctPreview);
-            this.groupBox1.Location = new System.Drawing.Point(22, 214);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(238, 210);
-            this.groupBox1.TabIndex = 178;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Preview";
-            // 
-            // pctPreview
-            // 
-            this.pctPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pctPreview.Image = ((System.Drawing.Image)(resources.GetObject("pctPreview.Image")));
-            this.pctPreview.Location = new System.Drawing.Point(3, 16);
-            this.pctPreview.Name = "pctPreview";
-            this.pctPreview.Size = new System.Drawing.Size(232, 191);
-            this.pctPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pctPreview.TabIndex = 9;
-            this.pctPreview.TabStop = false;
-            // 
             // groupBox13
             // 
             this.groupBox13.Controls.Add(this.panel1);
             this.groupBox13.Controls.Add(this.chkDynamicVisibility);
-            this.groupBox13.Location = new System.Drawing.Point(275, 214);
+            this.groupBox13.Location = new System.Drawing.Point(22, 213);
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(238, 210);
             this.groupBox13.TabIndex = 177;
@@ -436,10 +444,10 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv2.Image = null;
             this.tabPageAdv2.ImageIndex = 1;
             this.tabPageAdv2.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv2.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv2.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv2.Name = "tabPageAdv2";
             this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv2.Size = new System.Drawing.Size(515, 441);
             this.tabPageAdv2.TabIndex = 2;
             this.tabPageAdv2.Text = "Info";
             this.tabPageAdv2.ThemesEnabled = false;
@@ -452,9 +460,9 @@ namespace MW5.Plugins.Symbology.Views
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
-            this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(498, 405);
+            this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(515, 441);
             this.rasterInfoTreeView1.BorderColor = System.Drawing.Color.Silver;
-            this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             treeColumnAdv1.Highlighted = false;
             treeColumnAdv1.Text = "Name";
             treeColumnAdv1.Width = 260;
@@ -465,7 +473,9 @@ namespace MW5.Plugins.Symbology.Views
             treeColumnAdv1,
             treeColumnAdv2});
             this.rasterInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
+            this.rasterInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rasterInfoTreeView1.FullRowSelect = true;
+            this.rasterInfoTreeView1.GutterSpace = 12;
             // 
             // 
             // 
@@ -476,12 +486,13 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.HelpTextControl.TabIndex = 0;
             this.rasterInfoTreeView1.HelpTextControl.Text = "help text";
             this.rasterInfoTreeView1.HideSelection = false;
-            this.rasterInfoTreeView1.Location = new System.Drawing.Point(13, 18);
+            this.rasterInfoTreeView1.Location = new System.Drawing.Point(0, 0);
+            this.rasterInfoTreeView1.Margin = new System.Windows.Forms.Padding(5);
             this.rasterInfoTreeView1.Name = "rasterInfoTreeView1";
             this.rasterInfoTreeView1.ShowColumnsHeader = false;
             this.rasterInfoTreeView1.ShowLines = false;
             this.rasterInfoTreeView1.ShowRootLines = false;
-            this.rasterInfoTreeView1.Size = new System.Drawing.Size(498, 405);
+            this.rasterInfoTreeView1.Size = new System.Drawing.Size(515, 441);
             this.rasterInfoTreeView1.Style = Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.MultiColumnVisualStyle.Metro;
             this.rasterInfoTreeView1.TabIndex = 0;
             this.rasterInfoTreeView1.Text = "rasterInfoTreeView1";
@@ -497,46 +508,63 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.ToolTipControl.TabIndex = 1;
             this.rasterInfoTreeView1.ToolTipControl.Text = "toolTip";
             // 
-            // tabPageAdv6
-            // 
-            this.tabPageAdv6.Controls.Add(this.txtGdalInfo);
-            this.tabPageAdv6.Image = null;
-            this.tabPageAdv6.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv6.Location = new System.Drawing.Point(119, 0);
-            this.tabPageAdv6.Name = "tabPageAdv6";
-            this.tabPageAdv6.ShowCloseButton = true;
-            this.tabPageAdv6.Size = new System.Drawing.Size(527, 441);
-            this.tabPageAdv6.TabIndex = 6;
-            this.tabPageAdv6.Text = "Temp info";
-            this.tabPageAdv6.ThemesEnabled = false;
-            // 
-            // txtGdalInfo
-            // 
-            this.txtGdalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtGdalInfo.Location = new System.Drawing.Point(11, 14);
-            this.txtGdalInfo.Name = "txtGdalInfo";
-            this.txtGdalInfo.Size = new System.Drawing.Size(505, 412);
-            this.txtGdalInfo.TabIndex = 5;
-            this.txtGdalInfo.Text = "";
-            // 
             // tabPageAdv4
             // 
+            this.tabPageAdv4.Controls.Add(this.rasterColorSchemeGrid1);
+            this.tabPageAdv4.Controls.Add(this.label1);
+            this.tabPageAdv4.Controls.Add(this.cboRasterRendering);
             this.tabPageAdv4.Controls.Add(this.chkUseHistogram);
             this.tabPageAdv4.Image = null;
             this.tabPageAdv4.ImageIndex = 2;
             this.tabPageAdv4.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv4.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv4.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv4.Name = "tabPageAdv4";
             this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv4.Size = new System.Drawing.Size(515, 441);
             this.tabPageAdv4.TabIndex = 4;
             this.tabPageAdv4.Text = "Colors";
             this.tabPageAdv4.ThemesEnabled = false;
             // 
+            // rasterColorSchemeGrid1
+            // 
+            this.rasterColorSchemeGrid1.AutoAdjustRowHeights = false;
+            this.rasterColorSchemeGrid1.DataSource = null;
+            this.rasterColorSchemeGrid1.HotTracking = false;
+            this.rasterColorSchemeGrid1.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.rasterColorSchemeGrid1.Location = new System.Drawing.Point(15, 59);
+            this.rasterColorSchemeGrid1.Name = "rasterColorSchemeGrid1";
+            this.rasterColorSchemeGrid1.ReadOnly = false;
+            this.rasterColorSchemeGrid1.ShowEditors = true;
+            this.rasterColorSchemeGrid1.ShowSuperTooltips = false;
+            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(243, 379);
+            this.rasterColorSchemeGrid1.TabIndex = 3;
+            this.rasterColorSchemeGrid1.ToolTipDuration = 3000;
+            this.rasterColorSchemeGrid1.ToolTipMaxWidth = 450;
+            this.rasterColorSchemeGrid1.WrapText = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(20, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(85, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Rendering mode";
+            // 
+            // cboRasterRendering
+            // 
+            this.cboRasterRendering.BeforeTouchSize = new System.Drawing.Size(254, 21);
+            this.cboRasterRendering.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboRasterRendering.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboRasterRendering.Location = new System.Drawing.Point(111, 23);
+            this.cboRasterRendering.Name = "cboRasterRendering";
+            this.cboRasterRendering.Size = new System.Drawing.Size(254, 21);
+            this.cboRasterRendering.TabIndex = 1;
+            // 
             // chkUseHistogram
             // 
             this.chkUseHistogram.BeforeTouchSize = new System.Drawing.Size(150, 21);
-            this.chkUseHistogram.Location = new System.Drawing.Point(24, 25);
+            this.chkUseHistogram.Location = new System.Drawing.Point(276, 59);
             this.chkUseHistogram.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkUseHistogram.Name = "chkUseHistogram";
             this.chkUseHistogram.Size = new System.Drawing.Size(150, 21);
@@ -553,10 +581,10 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv3.Image = null;
             this.tabPageAdv3.ImageIndex = 3;
             this.tabPageAdv3.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv3.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv3.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv3.Name = "tabPageAdv3";
             this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv3.Size = new System.Drawing.Size(515, 441);
             this.tabPageAdv3.TabIndex = 3;
             this.tabPageAdv3.Text = "Rendering";
             this.tabPageAdv3.ThemesEnabled = false;
@@ -574,12 +602,12 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.cboDownsampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboDownsampling.BeforeTouchSize = new System.Drawing.Size(320, 21);
+            this.cboDownsampling.BeforeTouchSize = new System.Drawing.Size(308, 21);
             this.cboDownsampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDownsampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboDownsampling.Location = new System.Drawing.Point(27, 100);
             this.cboDownsampling.Name = "cboDownsampling";
-            this.cboDownsampling.Size = new System.Drawing.Size(320, 21);
+            this.cboDownsampling.Size = new System.Drawing.Size(308, 21);
             this.cboDownsampling.TabIndex = 46;
             // 
             // label11
@@ -595,12 +623,12 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.cboUpsampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboUpsampling.BeforeTouchSize = new System.Drawing.Size(320, 21);
+            this.cboUpsampling.BeforeTouchSize = new System.Drawing.Size(308, 21);
             this.cboUpsampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboUpsampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboUpsampling.Location = new System.Drawing.Point(27, 45);
             this.cboUpsampling.Name = "cboUpsampling";
-            this.cboUpsampling.Size = new System.Drawing.Size(320, 21);
+            this.cboUpsampling.Size = new System.Drawing.Size(308, 21);
             this.cboUpsampling.TabIndex = 44;
             // 
             // tabPageAdv5
@@ -611,10 +639,10 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv5.Image = null;
             this.tabPageAdv5.ImageIndex = 4;
             this.tabPageAdv5.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv5.Location = new System.Drawing.Point(119, 0);
+            this.tabPageAdv5.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv5.Name = "tabPageAdv5";
             this.tabPageAdv5.ShowCloseButton = true;
-            this.tabPageAdv5.Size = new System.Drawing.Size(527, 441);
+            this.tabPageAdv5.Size = new System.Drawing.Size(515, 441);
             this.tabPageAdv5.TabIndex = 5;
             this.tabPageAdv5.Text = "Pyramids";
             this.tabPageAdv5.ThemesEnabled = false;
@@ -723,21 +751,43 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // label9
             // 
-            this.label9.Location = new System.Drawing.Point(109, 22);
+            this.label9.Location = new System.Drawing.Point(64, 22);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(386, 78);
+            this.label9.Size = new System.Drawing.Size(431, 78);
             this.label9.TabIndex = 44;
             this.label9.Text = resources.GetString("label9.Text");
             // 
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(12, 22);
+            this.pictureBox2.Location = new System.Drawing.Point(26, 22);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(91, 78);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox2.TabIndex = 43;
             this.pictureBox2.TabStop = false;
+            // 
+            // tabPageAdv6
+            // 
+            this.tabPageAdv6.Controls.Add(this.txtGdalInfo);
+            this.tabPageAdv6.Image = null;
+            this.tabPageAdv6.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv6.Location = new System.Drawing.Point(120, 1);
+            this.tabPageAdv6.Name = "tabPageAdv6";
+            this.tabPageAdv6.ShowCloseButton = true;
+            this.tabPageAdv6.Size = new System.Drawing.Size(515, 441);
+            this.tabPageAdv6.TabIndex = 6;
+            this.tabPageAdv6.Text = "Temp info";
+            this.tabPageAdv6.ThemesEnabled = false;
+            // 
+            // txtGdalInfo
+            // 
+            this.txtGdalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtGdalInfo.Location = new System.Drawing.Point(11, 14);
+            this.txtGdalInfo.Name = "txtGdalInfo";
+            this.txtGdalInfo.Size = new System.Drawing.Size(505, 412);
+            this.txtGdalInfo.TabIndex = 5;
+            this.txtGdalInfo.Text = "";
             // 
             // imageList1
             // 
@@ -757,7 +807,7 @@ namespace MW5.Plugins.Symbology.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(563, 461);
+            this.btnCancel.Location = new System.Drawing.Point(544, 461);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 36;
@@ -765,33 +815,23 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // btnOk
             // 
-            this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Office2000;
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
-            this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(472, 461);
+            this.btnOk.Location = new System.Drawing.Point(453, 461);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 35;
             this.btnOk.Text = "Ok";
-            // 
-            // gradientPanel1
-            // 
-            this.gradientPanel1.BorderColor = System.Drawing.Color.Gray;
-            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientPanel1.Controls.Add(this.tabControlAdv1);
-            this.gradientPanel1.Location = new System.Drawing.Point(7, 12);
-            this.gradientPanel1.Name = "gradientPanel1";
-            this.gradientPanel1.Size = new System.Drawing.Size(648, 443);
-            this.gradientPanel1.TabIndex = 37;
+            this.btnOk.UseVisualStyle = false;
             // 
             // RasterStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(660, 491);
-            this.Controls.Add(this.gradientPanel1);
+            this.ClientSize = new System.Drawing.Size(641, 491);
+            this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Name = "RasterStyleView";
@@ -800,9 +840,10 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.ResumeLayout(false);
             this.tabPageAdv1.ResumeLayout(false);
             this.tabPageAdv1.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            this.groupBox10.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLayerVisible)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pctPreview)).EndInit();
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -816,29 +857,30 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).EndInit();
             this.tabPageAdv2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.rasterInfoTreeView1)).EndInit();
-            this.tabPageAdv6.ResumeLayout(false);
             this.tabPageAdv4.ResumeLayout(false);
+            this.tabPageAdv4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
             this.tabPageAdv3.ResumeLayout(false);
             this.tabPageAdv3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboUpsampling)).EndInit();
             this.tabPageAdv5.ResumeLayout(false);
+            this.tabPageAdv5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
-            this.gradientPanel1.ResumeLayout(false);
+            this.tabPageAdv6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private TabPropertiesControl tabControlAdv1;
+        private TabControlAdv tabControlAdv1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv2;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv4;
@@ -847,8 +889,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.ImageList imageList1;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
-        private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
-        private System.Windows.Forms.PictureBox pctPreview;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtBriefInfo;
         private System.Windows.Forms.Label label5;
         private Syncfusion.Windows.Forms.ButtonAdv btnProjectionDetails;
@@ -869,7 +909,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.CheckBox chkDynamicVisibility;
         private System.Windows.Forms.Label label7;
         private ComboBoxAdv cboDynamicScaleMode;
-        private System.Windows.Forms.GroupBox groupBox1;
         private CheckBoxAdv chkLayerVisible;
         private System.Windows.Forms.Label label12;
         private ComboBoxAdv cboDownsampling;
@@ -890,5 +929,11 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.RichTextBox txtGdalInfo;
         private Controls.RasterInfoTreeView rasterInfoTreeView1;
         private CheckBoxAdv chkUseHistogram;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.CheckBox chkLayerPreview;
+        private System.Windows.Forms.Label label1;
+        private ComboBoxAdv cboRasterRendering;
+        private Controls.RasterColorSchemeGrid rasterColorSchemeGrid1;
     }
 }

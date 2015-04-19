@@ -47,9 +47,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private readonly IFeatureSet _shapefile;
         private readonly SymbologyMetadata _metadata;
 
-        private bool _noEvents;
         private string _initState;
         private bool _stateChanged;
+        private bool _lockUpdate;
 
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
@@ -77,7 +77,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
            
             ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
 
-            _noEvents = true;
+            LockUpdate = true;
 
             InitGeneralTab();
 
@@ -100,7 +100,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // the state should be set after the loading as otherwise we can trigger unnecessary redraws
             chkRedrawMap.Checked = _metadata.UpdateMapAtOnce;
 
-            _noEvents = false;
+            LockUpdate = false;
             
             // sets the enabled state of the controls
             RefreshControlsState(null, null);
@@ -112,6 +112,16 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             tabControl1.SelectedIndex = _tabIndex;
 
             Shown += frmSymbologyMain_Shown;
+        }
+
+        public bool LockUpdate
+        {
+            get { return _lockUpdate; }
+            set
+            {
+                _lockUpdate = value;
+                dgvCategories.LockUpdate = _lockUpdate;
+            }
         }
 
         private void LockLegendAndMap( bool state)
@@ -151,7 +161,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void Ui2Settings(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
             {
                 return;
             }
@@ -193,7 +203,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void RefreshControlsState(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
                 return;
             
             // appearance
@@ -267,7 +277,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             
             // it's assumed that we call redraw when state changed only
-            if (!_noEvents && !_redrawModeIsChanging)
+            if (!LockUpdate && !_redrawModeIsChanging)
             {
                 MarkStateChanged();
             }
@@ -278,7 +288,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void RedrawLegend()
         {
-            if (chkRedrawMap.Checked && !_noEvents)
+            if (chkRedrawMap.Checked && !LockUpdate)
             {
                 _context.Legend.Redraw();
             }

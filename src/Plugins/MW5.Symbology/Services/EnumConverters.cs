@@ -25,4 +25,24 @@ namespace MW5.Plugins.Symbology.Services
             }
         }
     }
+
+    internal class RasterRenderingConverter : IEnumConverter<RasterRendering>
+    {
+        public string GetString(RasterRendering value)
+        {
+            switch (value)
+            {
+                case RasterRendering.SingleBand:
+                    return "Single band grey";
+                case RasterRendering.MultiBand:
+                    return "Multiband RGB";
+                case RasterRendering.PsuedoColors:
+                    return "Single band pseudo colors";
+                case RasterRendering.BuiltInColorTable:
+                    return "Built-in color table";
+            }
+
+            return string.Empty;
+        }
+    }
 }

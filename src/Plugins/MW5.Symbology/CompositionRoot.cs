@@ -18,6 +18,7 @@ namespace MW5.Plugins.Symbology
             container.RegisterView<IRasterStyleView, RasterStyleView>();
 
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
+            EnumHelper.RegisterConverter(new RasterRenderingConverter());
         }
     }
 }

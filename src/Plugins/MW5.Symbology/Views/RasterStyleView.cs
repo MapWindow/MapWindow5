@@ -11,7 +11,9 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Views.Abstract;
+using MW5.UI.Controls;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
@@ -25,7 +27,7 @@ namespace MW5.Plugins.Symbology.Views
         public RasterStyleView()
         {
             InitializeComponent();
-            
+
             InitControls();
         }
 
@@ -49,11 +51,60 @@ namespace MW5.Plugins.Symbology.Views
         {
             _imageSource = Model.ImageSource;
 
+            InitRenderMode();
+
             ModelToUi();
 
             txtGdalInfo.Text = GdalUtils.GdalInfo(Model.Filename, "");
 
             rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
+
+            FillGrid();
+        }
+
+        private void FillGrid()
+        {
+            var raster = _imageSource as IRasterSource;
+            if (raster == null)
+            {
+                return;
+            }
+
+            var table = raster.Bands[1].ColorTable;
+            if (table != null)
+            {
+                rasterColorSchemeGrid1.DataSource = table.ToList();
+              
+
+                rasterColorSchemeGrid1.ShowDropDowns(true);
+            }
+        }
+
+        private void InitRenderMode()
+        {
+            var raster = _imageSource as IRasterSource;
+            if (raster == null)
+            {
+                return;
+            }
+
+            var list = new List<RasterRendering> {RasterRendering.SingleBand};
+
+            if (raster.NumBands > 1)
+            {
+                list.Add(RasterRendering.MultiBand);
+            }
+
+            list.Add(RasterRendering.PsuedoColors);
+
+            if (raster.HasBuiltInColorTable)
+            {
+                list.Add(RasterRendering.BuiltInColorTable);
+            }
+
+            cboRasterRendering.Items.AddRange(ComboBoxHelper.GetComboItems(list).ToArray<object>());
+
+            cboRasterRendering.SelectedIndex = 0;
         }
 
         public ButtonBase OkButton

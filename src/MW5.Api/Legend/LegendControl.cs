@@ -41,7 +41,7 @@ namespace MW5.Api.Legend
         private int _selectedGroupHandle;
         private int _selectedLayerHandle;
         private VScrollBar _vScrollBar;
-        private readonly IContainer components;
+        private IContainer components;
 
         private readonly Font _boldFont;
         private readonly Color _boxLineColor;
@@ -290,9 +290,10 @@ namespace MW5.Api.Legend
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LegendControl));
             this._vScrollBar = new System.Windows.Forms.VScrollBar();
-            this.Icons = new System.Windows.Forms.ImageList();
+            this.Icons = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 
             // _vScrollBar
@@ -306,7 +307,7 @@ namespace MW5.Api.Legend
             this.Icons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Icons.ImageStream")));
             this.Icons.TransparentColor = System.Drawing.Color.Transparent;
             this.Icons.Images.SetKeyName(0, "");
-            this.Icons.Images.SetKeyName(1, "");
+            this.Icons.Images.SetKeyName(1, "img_raster.png");
             this.Icons.Images.SetKeyName(2, "");
             this.Icons.Images.SetKeyName(3, "");
             this.Icons.Images.SetKeyName(4, "");
@@ -319,6 +320,7 @@ namespace MW5.Api.Legend
             this.Icons.Images.SetKeyName(11, "folder_open.png");
             this.Icons.Images.SetKeyName(12, "tag_gray.png");
             this.Icons.Images.SetKeyName(13, "tag_blue.png");
+            this.Icons.Images.SetKeyName(14, "");
             // 
             // LegendControl
             // 

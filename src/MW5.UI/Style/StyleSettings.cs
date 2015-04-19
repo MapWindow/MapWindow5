@@ -14,7 +14,7 @@ namespace MW5.UI.Style
             CheckboxStyle = CheckBoxAdvStyle.Office2010;
             RadioButtonStyle = RadioButtonAdvStyle.Office2010;
 #else
-            ButtonAppearance = ButtonAppearance.Metro;
+            ButtonAppearance = ButtonAppearance.Classic;
             VisualStyle = VisualStyle.Metro;
             TextboxTheme = TextBoxExt.theme.Metro;
             CheckboxStyle = CheckBoxAdvStyle.Metro;

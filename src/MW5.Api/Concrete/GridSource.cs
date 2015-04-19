@@ -78,12 +78,12 @@ namespace MW5.Api.Concrete
             get { return _grid.Filename; }
         }
 
-        public GridColorRamp RasterColorTableColoringScheme
+        public RasterColorScheme RasterColorTableColoringScheme
         {
             get
             {
                 var scheme = _grid.RasterColorTableColoringScheme;
-                return scheme != null ? new GridColorRamp(scheme) : null;
+                return scheme != null ? new RasterColorScheme(scheme) : null;
             }
         }
 
@@ -148,7 +148,7 @@ namespace MW5.Api.Concrete
             return _grid.OpenBand(bandIndex);
         }
 
-        public IImageSource OpenAsImage(GridColorRamp scheme, GridProxyMode proxyMode = GridProxyMode.Auto)
+        public IImageSource OpenAsImage(RasterColorScheme scheme, GridProxyMode proxyMode = GridProxyMode.Auto)
         {
             var img = _grid.OpenAsImage(scheme.GetInternal(), (tkGridProxyMode)proxyMode);
             if (img != null)
@@ -158,22 +158,22 @@ namespace MW5.Api.Concrete
             return null;
         }
 
-        public GridColorRamp RetrieveColorScheme(GridSchemeRetrieval method)
+        public RasterColorScheme RetrieveColorScheme(GridSchemeRetrieval method)
         {
             var scheme = _grid.RetrieveColorScheme((tkGridSchemeRetrieval)method);
             if (scheme != null)
             {
-                return new GridColorRamp(scheme);
+                return new RasterColorScheme(scheme);
             }
             return null;
         }
 
-        public GridColorRamp GenerateColorScheme(GridSchemeGeneration method, PredefinedColors colors)
+        public RasterColorScheme GenerateColorScheme(GridSchemeGeneration method, PredefinedColors colors)
         {
             var scheme = _grid.GenerateColorScheme((tkGridSchemeGeneration) method, (PredefinedColorScheme) colors);
             if (scheme != null)
             {
-                return new GridColorRamp(scheme);
+                return new RasterColorScheme(scheme);
             }
             return null;
         }
@@ -183,7 +183,7 @@ namespace MW5.Api.Concrete
             return _grid.RemoveImageProxy();
         }
 
-        public IImageSource CreateImageProxy(GridColorRamp colorScheme)
+        public IImageSource CreateImageProxy(RasterColorScheme colorScheme)
         {
             var img = _grid.CreateImageProxy(colorScheme.GetInternal());
             if (img != null)
@@ -193,14 +193,14 @@ namespace MW5.Api.Concrete
             return null;
         }
 
-        public GridColorRamp RetrieveOrGenerateColorScheme(GridSchemeRetrieval retrievalMethod = GridSchemeRetrieval.Auto,
+        public RasterColorScheme RetrieveOrGenerateColorScheme(GridSchemeRetrieval retrievalMethod = GridSchemeRetrieval.Auto,
             GridSchemeGeneration generateMethod = GridSchemeGeneration.Gradient, PredefinedColors colors = PredefinedColors.FallLeaves)
         {
             var scheme = _grid.RetrieveOrGenerateColorScheme((tkGridSchemeRetrieval)retrievalMethod, 
             (tkGridSchemeGeneration)generateMethod, (PredefinedColorScheme)colors);
             if (scheme != null)
             {
-                return new GridColorRamp(scheme);
+                return new RasterColorScheme(scheme);
             }
             return null;
         }

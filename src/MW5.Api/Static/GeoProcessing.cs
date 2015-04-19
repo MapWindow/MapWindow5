@@ -44,7 +44,7 @@ namespace MW5.Api.Static
             return shape != null ? new Geometry(shape) : null;
         }
 
-        public static Image GridToImage(GridSource grid, GridColorRamp scheme)
+        public static Image GridToImage(GridSource grid, RasterColorScheme scheme)
         {
             return _utils.GridToImage(grid.GetInternal(), scheme.GetInternal());
         }
@@ -152,7 +152,7 @@ namespace MW5.Api.Static
             return _utils.CopyNodataValues(sourceFilename, destFilename);
         }
 
-        public static IImageSource GridToImage2(GridSource grid, GridColorRamp scheme, GridProxyFormat imageFormat, 
+        public static IImageSource GridToImage2(GridSource grid, RasterColorScheme scheme, GridProxyFormat imageFormat, 
                 bool inRam)
         {
             var img = _utils.GridToImage2(grid.GetInternal(), scheme.GetInternal(), (tkGridProxyFormat)imageFormat, inRam, null);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace MW5.UI.Helpers
 {
@@ -20,7 +21,12 @@ namespace MW5.UI.Helpers
 
         public override string ToString()
         {
-            return _toString(_item);
+            if (_toString != null)
+            {
+                return _toString(_item);
+            }
+
+            return _item.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

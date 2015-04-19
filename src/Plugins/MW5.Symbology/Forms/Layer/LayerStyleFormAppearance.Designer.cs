@@ -248,7 +248,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void icbFillStyle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
             {
                 return;
             }

@@ -93,7 +93,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnDefaultChange = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabCategories = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
-            this.dgvCategories = new System.Windows.Forms.DataGridView();
+            this.dgvCategories = new MW5.Plugins.Symbology.Controls.CategoriesGrid();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
@@ -187,7 +187,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
-            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -242,8 +241,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupPoint.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).BeginInit();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
-            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOk
@@ -289,12 +286,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabControl1.Controls.Add(this.tabCharts);
             this.tabControl1.Controls.Add(this.tabVisibility);
             this.tabControl1.Controls.Add(this.tabMode);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.FocusOnTabClick = false;
             this.tabControl1.ImageList = this.imageList1;
             this.tabControl1.InactiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
             this.tabControl1.ItemSize = new System.Drawing.Size(120, 50);
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.Padding = new System.Drawing.Point(5, 10);
             this.tabControl1.PersistTabState = true;
@@ -334,7 +330,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.groupBox8.Controls.Add(this.panel1);
             this.groupBox8.Controls.Add(this.chkDynamicVisibility);
-            this.groupBox8.Location = new System.Drawing.Point(267, 199);
+            this.groupBox8.Location = new System.Drawing.Point(23, 202);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(238, 210);
             this.groupBox8.TabIndex = 178;
@@ -533,12 +529,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.groupBox10.Controls.Add(this.axMap1);
             this.groupBox10.Controls.Add(this.chkLayerPreview);
-            this.groupBox10.Location = new System.Drawing.Point(14, 199);
+            this.groupBox10.Location = new System.Drawing.Point(267, 202);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(238, 210);
             this.groupBox10.TabIndex = 163;
             this.groupBox10.TabStop = false;
-            this.groupBox10.Text = "Preview";
             // 
             // axMap1
             // 
@@ -911,6 +906,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.dgvCategories.Location = new System.Drawing.Point(3, 16);
+            this.dgvCategories.LockUpdate = false;
             this.dgvCategories.Name = "dgvCategories";
             dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
@@ -927,13 +923,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.dgvCategories.ShowCellErrors = false;
             this.dgvCategories.Size = new System.Drawing.Size(360, 200);
             this.dgvCategories.TabIndex = 93;
-            this.dgvCategories.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.dgvCategories_CellBeginEdit);
-            this.dgvCategories.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellDoubleClick);
-            this.dgvCategories.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellEndEdit);
-            this.dgvCategories.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvCategories_CellFormatting);
-            this.dgvCategories.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.dgvCategories_CellPainting);
-            this.dgvCategories.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCategories_CellValueChanged);
-            this.dgvCategories.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvCategories_CurrentCellDirtyStateChanged);
             // 
             // ID
             // 
@@ -1064,7 +1053,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnCategoryClear
             // 
-            this.btnCategoryClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCategoryClear.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnCategoryClear.IsBackStageButton = false;
             this.btnCategoryClear.Location = new System.Drawing.Point(407, 121);
@@ -1164,7 +1152,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnCategoryRemove
             // 
-            this.btnCategoryRemove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCategoryRemove.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnCategoryRemove.IsBackStageButton = false;
             this.btnCategoryRemove.Location = new System.Drawing.Point(407, 89);
@@ -1177,7 +1164,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnCategoryAppearance
             // 
-            this.btnCategoryAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCategoryAppearance.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnCategoryAppearance.IsBackStageButton = false;
             this.btnCategoryAppearance.Location = new System.Drawing.Point(407, 57);
@@ -1190,7 +1176,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnCategoryGenerate
             // 
-            this.btnCategoryGenerate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCategoryGenerate.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnCategoryGenerate.IsBackStageButton = false;
             this.btnCategoryGenerate.Location = new System.Drawing.Point(407, 25);
@@ -1220,7 +1205,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnLabelsClear
             // 
-            this.btnLabelsClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLabelsClear.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnLabelsClear.IsBackStageButton = false;
             this.btnLabelsClear.Location = new System.Drawing.Point(265, 46);
@@ -1342,7 +1326,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // btnLabelsAppearance
             // 
-            this.btnLabelsAppearance.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLabelsAppearance.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnLabelsAppearance.IsBackStageButton = false;
             this.btnLabelsAppearance.Location = new System.Drawing.Point(265, 14);
@@ -1458,7 +1441,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;
-            this.icbChartColorScheme.ItemHeight = 16;
+            //this.icbChartColorScheme.ItemHeight = 16;
             this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
             this.icbChartColorScheme.Name = "icbChartColorScheme";
             this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
@@ -2017,23 +2000,13 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
-            // gradientPanel1
-            // 
-            this.gradientPanel1.BorderColor = System.Drawing.Color.Silver;
-            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientPanel1.Controls.Add(this.tabControl1);
-            this.gradientPanel1.Location = new System.Drawing.Point(12, 12);
-            this.gradientPanel1.Name = "gradientPanel1";
-            this.gradientPanel1.Size = new System.Drawing.Size(641, 427);
-            this.gradientPanel1.TabIndex = 183;
-            // 
             // LayerStyleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(660, 475);
-            this.Controls.Add(this.gradientPanel1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupPoint);
             this.Controls.Add(this.groupLine);
@@ -2121,8 +2094,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupPoint.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).EndInit();
             this.groupBox7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
-            this.gradientPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2175,7 +2146,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private System.Windows.Forms.GroupBox groupBox10;
         private MapControl axMap1;
         private System.Windows.Forms.GroupBox groupBox12;
-        private System.Windows.Forms.DataGridView dgvCategories;
+        private CategoriesGrid dgvCategories;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
         private System.Windows.Forms.DataGridViewCheckBoxColumn cmnVisible;
         private System.Windows.Forms.DataGridViewImageColumn cmnStyle;
@@ -2253,7 +2224,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private TabPageAdv tabInfo;
         private System.Windows.Forms.RichTextBox txtLayerSource;
         private System.Windows.Forms.ImageList imageList1;
-        private GradientPanel gradientPanel1;
         private TextBoxExt txtBriefInfo;
         private System.Windows.Forms.Label label2;
         private Syncfusion.Windows.Forms.ButtonAdv btnProjectionDetails;

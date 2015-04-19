@@ -4,7 +4,7 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Concrete
 {
-    public class RasterBand
+    public class RasterBand //: IGdalRasterBand
     {
         private readonly GdalRasterBand _band;
 
@@ -91,6 +91,20 @@ namespace MW5.Api.Concrete
         public string get_MetadataItem(int itemIndex)
         {
             return _band.MetadataItem[itemIndex];
+        }
+
+        public RasterColorScheme ColorTable
+        {
+            get
+            {
+                var table = _band.ColorTable;
+                if (table != null)
+                {
+                    return new RasterColorScheme(table);
+                }
+
+                return null;
+            }
         }
 
         public ColorInterpretation ColorInterpretation

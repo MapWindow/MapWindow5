@@ -144,7 +144,7 @@
     <Compile Include="Static\GeoProcessing.cs" />
     <Compile Include="Static\GeoSource.cs" />
     <Compile Include="Concrete\GridColorInterval.cs" />
-    <Compile Include="Concrete\GridColorRamp.cs" />
+    <Compile Include="Concrete\RasterColorScheme.cs" />
     <Compile Include="Concrete\GridSource.cs" />
     <Compile Include="Concrete\GridSourceHeader.cs" />
     <Compile Include="Concrete\HistoryList.cs" />

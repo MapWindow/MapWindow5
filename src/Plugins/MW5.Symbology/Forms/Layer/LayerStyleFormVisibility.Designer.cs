@@ -49,7 +49,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void scaleLayer_StateChanged()
         {
-            if (_noEvents)
+            if (LockUpdate)
                 return;
 
             _layer.MaxVisibleScale = scaleLayer.MaximumScale;

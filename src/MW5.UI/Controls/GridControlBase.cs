@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,27 @@ namespace MW5.UI.Controls
 
             InitGroupOptions();
 
-            InitCurrentCell();
-
             InitRowSelection();
+        }
+
+        public bool AllowCurrentCell
+        {
+            get { return ActivateCurrentCellBehavior == GridCellActivateAction.None; }
+            set
+            {
+                if (!value)
+                {
+                    Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.None;
+                    ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
+                    ActivateCurrentCellBehavior = GridCellActivateAction.None;
+                }
+                else
+                {
+                    Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.WhiteCurrentCell;
+                    ActivateCurrentCellBehavior = GridCellActivateAction.SetCurrent;
+                    ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
+                }
+            }
         }
 
         public Color SelectionBackColor
@@ -38,6 +57,7 @@ namespace MW5.UI.Controls
             BrowseOnly = false;
             ShowRowHeaders = false;
             ShowColumnHeaders = true;
+            AllowCurrentCell = false;
         }
 
         private void InitGroupOptions()
@@ -45,13 +65,6 @@ namespace MW5.UI.Controls
             ShowGroupDropArea = false;
             TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
             TopLevelGroupOptions.ShowCaption = false;
-        }
-
-        private void InitCurrentCell()
-        {
-            Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.None;
-            ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
-            ActivateCurrentCellBehavior = GridCellActivateAction.None;
         }
 
         private void InitRowSelection()

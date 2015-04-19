@@ -18,10 +18,10 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls
 {
-    public partial class GridListControl<T> : UserControl, IGridList<T>
+    public class GridListControl<T> : UserControl, IGridList<T>
         where T: class
     {
-        private Dictionary<string, Func<T, int>> _iconSelectors = new Dictionary<string, Func<T, int>>();
+        private readonly Dictionary<string, Func<T, int>> _iconSelectors = new Dictionary<string, Func<T, int>>();
         private SuperToolTip _lastTooltip = new SuperToolTip();
         private GridControlBase _grid;
         private int _mouseOverIndex = 0;
@@ -29,7 +29,8 @@ namespace MW5.UI.Controls
 
         public GridListControl()
         {
-            InitializeComponent();
+            _grid = new GridControlBase {Dock = DockStyle.Fill};
+            Controls.Add(_grid);
 
             SetDefaults();
 
@@ -131,13 +132,13 @@ namespace MW5.UI.Controls
             remove { _grid.TableControl.KeyDown -= value; }
         }
 
-        public object DataSource
+        public virtual object DataSource
         {
             get { return _grid.DataSource; }
             set { _grid.DataSource = value; }
         }
-        
-        public GridGroupingControl Grid
+
+        public GridControlBase Grid
         {
             get { return _grid; }
         }
@@ -321,6 +322,28 @@ namespace MW5.UI.Controls
             return null;
         }
 
+        public GridColumnDescriptor GetColumn(Expression<Func<T, object>> propertySelector)
+        {
+            var name = GetPropertyName(propertySelector);
+            if (name != string.Empty)
+            {
+                return _grid.TableDescriptor.Columns[name];
+            }
+
+            return null;
+        }
+
+        public int GetColumnIndex(Expression<Func<T, object>> propertySelector)
+        {
+           var column = GetColumn(propertySelector);
+            if (column != null)
+            {
+                return column.GetRelativeColumnIndex() + Grid.TableDescriptor.GetColumnIndentCount();
+            }
+
+            return -1;
+        }
+
         public void ToggleProperty(Expression<Func<T, bool>> propertySelector)
         {
             var record = GetSelectedRecord();
@@ -335,6 +358,17 @@ namespace MW5.UI.Controls
                 string propertyName = expr.Member.Name;
                 var value = (bool)record.GetValue(propertyName);
                 record.SetValue(propertyName, !value);
+            }
+        }
+
+        public void SetProperty(Expression<Func<T, object>> propertySelector, object value)
+        {
+            var record = GetSelectedRecord();
+
+            if (record != null)
+            {
+                string name = GetPropertyName(propertySelector);
+                record.SetValue(name, value);
             }
         }
 
@@ -446,5 +480,7 @@ namespace MW5.UI.Controls
             var desc = new RecordFilterDescriptor(propertyName, op, new[] { condition });
             _grid.TableDescriptor.RecordFilters.Add(desc);
         }
+
+        
     }
 }

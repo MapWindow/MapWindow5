@@ -53,6 +53,7 @@
     </Reference>
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.GridHelperClasses.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -67,6 +68,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\ColorPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ColorPicker.Designer.cs">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConfigPanelControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -76,15 +83,14 @@
     <Compile Include="Controls\DockPanelControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Controls\GridCellColorModel.cs" />
+    <Compile Include="Controls\GridCellColorRenderer.cs" />
     <Compile Include="Controls\GridControlBase.cs">
       <SubType>Component</SubType>
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
     </Compile>
-    <Compile Include="Controls\GridCustomEngine.cs" />
     <Compile Include="Controls\GridListControl.cs">
       <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\GridListControl.Designer.cs">
-      <DependentUpon>GridListControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
     <Compile Include="Controls\TabPropertiesControl.cs">
@@ -185,11 +191,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ColorPicker.resx">
+      <DependentUpon>ColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigPanelControl.resx">
       <DependentUpon>ConfigPanelControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GridListControl.resx">
-      <DependentUpon>GridListControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabPropertiesControl.resx">
       <DependentUpon>TabPropertiesControl.cs</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace MW5.Shared
 {
@@ -32,7 +33,13 @@ namespace MW5.Shared
         public static string EnumToString<T>(this T value) where T : struct, IConvertible
         {
             var fn = GetToStringFunction<T>();
-            return fn(value);
+
+            if (fn != null)
+            {
+                return fn(value);
+            }
+
+            return value.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

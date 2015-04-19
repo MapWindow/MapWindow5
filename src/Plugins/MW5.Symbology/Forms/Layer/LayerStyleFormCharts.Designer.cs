@@ -81,11 +81,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             }
 
             // even if cancel was hit, a user could have applied the options
-            bool state = _noEvents;
-            _noEvents = true;
+            bool state = LockUpdate;
+            LockUpdate = true;
             optChartBars.Checked = _shapefile.Diagrams.DiagramType == DiagramType.Bar;
             optChartsPie.Checked = _shapefile.Diagrams.DiagramType == DiagramType.Pie;
-            _noEvents = state;
+            LockUpdate = state;
 
             DrawChartsPreview();
             RefreshControlsState(null, null);

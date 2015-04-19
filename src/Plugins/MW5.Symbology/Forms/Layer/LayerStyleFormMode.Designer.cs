@@ -62,7 +62,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void chkFastEditingMode_CheckedChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
             {
                 return;
             }
@@ -107,7 +107,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void chkSpatialIndex_CheckedChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
             {
                 return;
             }

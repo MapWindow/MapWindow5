@@ -10,11 +10,11 @@ using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
-    public class GridColorRamp: IEnumerable<GridColorInterval>, ISerializableComWrapper
+    public class RasterColorScheme: IEnumerable<GridColorInterval>, ISerializableComWrapper
     {
         private readonly GridColorScheme _scheme;
 
-        internal GridColorRamp(GridColorScheme scheme)
+        internal RasterColorScheme(GridColorScheme scheme)
         {
             _scheme = scheme;
             if (scheme == null)

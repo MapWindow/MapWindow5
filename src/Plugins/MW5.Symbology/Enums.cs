@@ -30,5 +30,13 @@
         Default = 0,
         Charts = 1,
     }
+
+    internal enum RasterRendering
+    {
+        SingleBand = 0,
+        MultiBand = 1,
+        PsuedoColors = 2,
+        BuiltInColorTable = 3,
+    }
  }
 

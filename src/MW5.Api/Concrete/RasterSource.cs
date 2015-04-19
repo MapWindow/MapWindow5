@@ -165,5 +165,10 @@ namespace MW5.Api.Concrete
         {
             get { return _image.Warped; }
         }
+
+        public bool HasBuiltInColorTable
+        {
+            get { return _image.HasColorTable; }
+        }
     }
 }

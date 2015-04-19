@@ -39,9 +39,10 @@ namespace MW5.Api.Interfaces
 
         bool Warped { get; }
 
-        //bool AllowHillshade { get; set; }
+        bool HasBuiltInColorTable { get; }
 
-        //bool HasColorTable { get; }
+        //bool AllowHillshade { get; set; }
+        
         //string PaletteInterpretation { get; }
 
         //GridColorScheme CustomColorScheme { get; set; }

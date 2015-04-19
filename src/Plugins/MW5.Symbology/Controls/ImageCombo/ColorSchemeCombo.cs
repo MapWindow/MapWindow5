@@ -56,6 +56,8 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
         private void OnListChanged(object sender, EventArgs args)
         {
+            if (this.IsDisposed) return;    // TODO: unsubscribe controls from notifications
+
             int index = SelectedIndex;
             GenerateItems();
             SelectedIndex = _provider.SelectedIndex >= 0 ? _provider.SelectedIndex : index;

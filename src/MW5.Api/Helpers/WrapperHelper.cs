@@ -68,9 +68,9 @@ namespace MW5.Api.Helpers
             return header.InternalObject as GridHeader;
         }
 
-        public static GridColorScheme GetInternal(this GridColorRamp colorRamp)
+        public static GridColorScheme GetInternal(this RasterColorScheme colorScheme)
         {
-            return colorRamp.InternalObject as GridColorScheme;
+            return colorScheme.InternalObject as GridColorScheme;
         }
 
         public static GridColorBreak GetInternal(this GridColorInterval interval)

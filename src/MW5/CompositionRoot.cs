@@ -42,7 +42,7 @@ namespace MW5
 
             CommandBarHelper.InitMenuColors();
 
-            GridEngineFactory.Factory = new GroupingEngineFactory();
+            GridEngineFactory.Factory = new Syncfusion.GridHelperClasses.AllowResizingIndividualRows();
         }
     }
 }

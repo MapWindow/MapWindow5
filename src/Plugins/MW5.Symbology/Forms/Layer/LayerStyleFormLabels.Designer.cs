@@ -109,7 +109,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void udLabelFontSize_ValueChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
             {
                 return;
             }
@@ -124,7 +124,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void clpLabelFrame_SelectedColorChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
                 return;
            
             _shapefile.Labels.Style.FrameBackColor = clpLabelFrame.Color;
@@ -137,7 +137,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void chkLabelFrame_CheckedChanged(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (LockUpdate)
                 return;
 
             _shapefile.Labels.Style.FrameVisible = chkLabelFrame.Checked;

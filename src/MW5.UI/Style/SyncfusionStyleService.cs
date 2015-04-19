@@ -33,8 +33,10 @@ namespace MW5.UI.Style
 
         private void ApplyStyle(Control.ControlCollection controls)
         {
-            foreach (Control control in controls)
+            for (int i = controls.Count - 1; i >= 0; i--)
             {
+                var control = controls[i];
+
                 var lbl = control as Label;
                 if (lbl != null)
                 {
@@ -44,8 +46,16 @@ namespace MW5.UI.Style
                 var btn = control as ButtonAdv;
                 if (btn != null)
                 {
-                    btn.Appearance = _settings.ButtonAppearance;
+                    btn.KeepFocusRectangle = false;
+#if STYLE2010   
+                    btn.Appearance = ButtonAppearance.Office2010;
                     btn.UseVisualStyle = true;
+#else
+                    btn.Appearance= ButtonAppearance.Classic;
+                    btn.UseVisualStyle = false;
+                    btn.UseVisualStyleBackColor = true;
+                    btn.ForeColor = Color.Black;
+#endif
                 }
 
                 var cbo = control as ComboBoxAdv;
@@ -93,28 +103,65 @@ namespace MW5.UI.Style
 #if STYLE2010
                     tree.Style = TreeStyle.Office2010;
 #else
-                    //tree.Style = TreeStyle.Metro;
+                    tree.Style = TreeStyle.Metro;
 #endif
                 }
 
-                var tab = control as TabControlAdv;
-                if (tab != null)
-                {
-//#if STYLE2010
-//                    tab.TabStyle = typeof(TabRendererOffice2007);
-//#else
-//                    if (tab.Alignment == TabAlignment.Top)
-//                    {
-//                        tab.TabStyle = typeof (TabRendererMetro);
-//                    }
-//                    else
-//                    {
-//                        tab.TabStyle = typeof (TabRendererDockingVS2012);
-//                    }
-//#endif
-                }
+                ApplyTabStyle(control);
 
                 ApplyStyle(control.Controls);
+            }
+        }
+
+        private void ApplyTabStyle(Control control)
+        {
+            var tab = control as TabControlAdv;
+            if (tab != null)
+            {
+#if STYLE2010
+                    tab.TabStyle = typeof(TabRendererOffice2007);
+#else
+                // it seems there is no way to set decent looking border for TabControlAdv
+                // so let's insert gradient panel
+                var panel = new GradientPanel
+                {
+                    BorderColor = Color.LightGray,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Left = tab.Left,
+                    Top = tab.Top,
+                    Width = tab.Width,
+                    Height = tab.Height
+                };
+
+                tab.Parent.Controls.Add(panel);
+                tab.Parent.Controls.Remove(tab);
+                panel.Controls.Add(tab);
+                tab.Dock = DockStyle.Fill;
+
+                tab.PersistTabState = false;
+                tab.BorderStyle = BorderStyle.None;
+                tab.BorderVisible = false;
+                tab.FocusOnTabClick = false;
+                tab.RotateTextWhenVertical = true;
+                tab.TabStyle = typeof(TabRendererMetro);
+
+                if (tab.Alignment == TabAlignment.Left)
+                {
+                    tab.ActiveTabFont = tab.Font;
+                    tab.Padding = new Point(7, 10);
+                    tab.ActiveTabColor = Color.FromKnownColor(KnownColor.Control);         // 200
+                    tab.TabPanelBackColor = Color.Gray;      //112; 141
+                    tab.InactiveTabColor = Color.Gray;
+                }
+                else
+                {
+                    tab.Padding = new Point(10, 5);
+                    //tab.TabPanelBackColor = Color.FromArgb(141, 141, 141);
+                    //tab.InactiveTabColor = Color.FromArgb(141, 141, 141);
+                }
+
+                tab.FixedSingleBorderColor = _metroColor;
+#endif
             }
         }
     }
