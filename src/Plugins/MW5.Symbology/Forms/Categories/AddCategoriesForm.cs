@@ -34,9 +34,9 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             InitializeComponent();
 
             
-            icbColors.ColorSchemeType = ColorSchemes.Default;
+            icbColors.SchemeTarget = SchemeTarget.Vector;
 
-            icbColors.ComboStyle = ColorRampType.Graduated;
+            icbColors.ComboStyle = SchemeType.Graduated;
             if (icbColors.Items.Count >= 0)
             {
                 icbColors.SelectedIndex = 0;
@@ -49,7 +49,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandom_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColors.SelectedIndex;
-            icbColors.ComboStyle = chkRandom.Checked ? ColorRampType.Random : ColorRampType.Graduated;
+            icbColors.ComboStyle = chkRandom.Checked ? SchemeType.Random : SchemeType.Graduated;
 
             if (index >= 0 && index < icbColors.Items.Count)
             {

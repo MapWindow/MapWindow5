@@ -84,7 +84,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             _initState = _shapefile.Categories.Serialize();
 
             _noEvents = true;
-            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
+            ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _shapefile);
 
             icbFillStyle.ComboStyle = ImageComboStyle.HatchStyleWithNone;
             icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;

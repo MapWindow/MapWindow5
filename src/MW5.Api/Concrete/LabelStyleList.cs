@@ -129,7 +129,7 @@ namespace MW5.Api.Concrete
             return _labels.GenerateCategories(fieldIndex, (tkClassificationType) classification, numClasses);
         }
 
-        public void ApplyColors(ColorRampType coloringType, ColorRamp colors)
+        public void ApplyColors(SchemeType coloringType, ColorRamp colors)
         {
             _labels.ApplyColorScheme((tkColorSchemeType) coloringType, colors.GetInternal());
         }

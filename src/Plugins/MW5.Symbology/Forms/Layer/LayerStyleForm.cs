@@ -75,7 +75,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             _initState = SaveState();
            
-            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
+            ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _shapefile);
 
             LockUpdate = true;
 

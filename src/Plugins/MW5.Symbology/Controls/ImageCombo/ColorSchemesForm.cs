@@ -54,7 +54,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             // adding schemes
             _listBox1.Items.Clear();
 
-            int index = (provider.Type == ColorSchemes.Default) ? 1 : 0;
+            int index = (provider.Type == SchemeTarget.Vector) ? 1 : 0;
             for (int i = index; i < _list.Count; i++)
             {
                 ColorBlend blend = _list[i];
@@ -309,7 +309,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             _list.Clear();
 
             // dummy color scheme for shapefile
-            if (_provider.Type == ColorSchemes.Default)
+            if (_provider.Type == SchemeTarget.Vector)
             {
                 blend = new ColorBlend(2);
                 blend.Colors[0] = clr; 
@@ -319,7 +319,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 _list.Add(blend);
             }
 
-            int index = _provider.Type == ColorSchemes.Default ? 1 : 0;
+            int index = _provider.Type == SchemeTarget.Vector ? 1 : 0;
 
             for (int i = index; i < _listBox1.Items.Count; i++)
             {

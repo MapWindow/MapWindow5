@@ -28,7 +28,8 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Plugins.Symbology.Helpers;
+using MW5.Shared;
+using PathHelper = MW5.Plugins.Symbology.Helpers.PathHelper;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
@@ -37,12 +38,13 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     /// </summary>
     internal static class ColorSchemeProvider
     {
-        private static Dictionary<ColorSchemes, ColorSchemeCollection> _dict = new Dictionary<ColorSchemes, ColorSchemeCollection>();
+        private static Dictionary<SchemeTarget, ColorSchemeCollection> _dict = new Dictionary<SchemeTarget, ColorSchemeCollection>();
 
         internal static void Load()
         {
-            var values = Enum.GetValues(typeof (ColorSchemes));
-            foreach (ColorSchemes val in values)
+            var values = Enum.GetValues(typeof (SchemeTarget));
+
+            foreach (SchemeTarget val in values)
             {
                 try
                 {
@@ -50,38 +52,42 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 }
                 catch (Exception ex)
                 {
-                    MessageService.Current.Warn("Failed to load color schemes:" + ex.Message);
+                    Logger.Current.Warn("Failed to load color schemes:", ex);
                 }
             }
         }
 
-        public static ColorSchemeCollection GetList(ColorSchemes type)
+        public static ColorSchemeCollection GetList(SchemeTarget type)
         {
-            return _dict[type];
+            if (_dict.ContainsKey(type))
+            {
+                return _dict[type];
+            }
+            return null;
         }
 
         /// <summary>
         /// Returns the path to the specified style file, in case the file doesn't exist - creates it.
         /// </summary>
-        private static string GetFilename(ColorSchemes type)
+        private static string GetFilename(SchemeTarget type)
         {
             string path = PathHelper.GetStylesPath();
             switch (type)
             {
-                case ColorSchemes.Default:
+                case SchemeTarget.Vector:
                     return path + "colorschemes.xml";
-                case ColorSchemes.Charts:
+                case SchemeTarget.Charts:
                     return path + "chartcolorsxml";
             }
             return string.Empty;
         }
 
-        internal static void SetFirstColorScheme(ColorSchemes type, Color color)
+        internal static void SetFirstColorScheme(SchemeTarget type, Color color)
         {
             GetList(type).SetFirstColorScheme(color);
         }
 
-        internal static void SetFirstColorScheme(ColorSchemes type, IFeatureSet fs)
+        internal static void SetFirstColorScheme(SchemeTarget type, IFeatureSet fs)
         {
             GetList(type).SetFirstColorScheme(fs);
         }

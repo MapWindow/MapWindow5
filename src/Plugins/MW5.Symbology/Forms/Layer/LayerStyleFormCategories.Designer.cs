@@ -42,8 +42,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             dgvCategories.CategoryNameChanged += (s, e) => RedrawLegend();
             dgvCategories.Initialize(_shapefile);
 
-            icbCategories.ComboStyle = ColorRampType.Graduated;
-            icbCategories.ColorSchemeType = ColorSchemes.Default;
+            icbCategories.ComboStyle = SchemeType.Graduated;
+            icbCategories.SchemeTarget = SchemeTarget.Vector;
             if (icbCategories.Items.Count > 0)
             {
                 icbCategories.SelectedIndex = 0;
@@ -241,7 +241,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbCategories.SelectedIndex;
-            icbCategories.ComboStyle = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
+            icbCategories.ComboStyle = chkRandomColors.Checked ? SchemeType.Random : SchemeType.Graduated;
 
             if (index >= 0 && index < icbCategories.Items.Count)
             {
@@ -262,7 +262,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             _metadata.CategoriesColorScheme = icbCategories.GetSelectedItem();
             var scheme = ColorBlendHelper.ToColorScheme(_metadata.CategoriesColorScheme);
 
-            _shapefile.Categories.ApplyColorScheme(chkRandomColors.Checked ? ColorRampType.Random: ColorRampType.Graduated, scheme);
+            _shapefile.Categories.ApplyColorScheme(chkRandomColors.Checked ? SchemeType.Random: SchemeType.Graduated, scheme);
 
             var categories = _shapefile.Categories;
             if (chkSetGradient.Checked)

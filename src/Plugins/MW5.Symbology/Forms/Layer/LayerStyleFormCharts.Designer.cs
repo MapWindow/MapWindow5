@@ -39,8 +39,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// </summary>
         private void InitChartsTab()
         {
-            icbChartColorScheme.ComboStyle = ColorRampType.Graduated;
-            icbChartColorScheme.ColorSchemeType = ColorSchemes.Charts;
+            icbChartColorScheme.ComboStyle = SchemeType.Graduated;
+            icbChartColorScheme.SchemeTarget = SchemeTarget.Charts;
             if (icbChartColorScheme.Items.Count > 0)
             {
                 icbChartColorScheme.SelectedIndex = 0;

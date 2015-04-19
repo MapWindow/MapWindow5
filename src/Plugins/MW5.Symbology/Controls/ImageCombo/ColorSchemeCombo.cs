@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -16,26 +17,26 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     internal class ColorSchemeCombo: ImageComboBase
     {
-        private ColorSchemes _colorSchemeType;
-        private ColorSchemeCollection _provider;
+        private SchemeTarget _schemeTarget;
+        private ColorSchemeCollection _schemeList;
 
         public ColorSchemeCombo()
         {
-            ComboStyle = ColorRampType.Graduated;
+            ComboStyle = SchemeType.Graduated;
         }
 
-        public ColorRampType ComboStyle { get; set; }
+        public SchemeType ComboStyle { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the color schemes to populate the combobox with.
         /// </summary>
-        public ColorSchemes ColorSchemeType
+        public SchemeTarget SchemeTarget
         {
-            get { return _colorSchemeType; }
+            get { return _schemeTarget; }
             set
             {
-                _colorSchemeType = value;
-                if (_provider == null || _provider.Type != ColorSchemeType)
+                _schemeTarget = value;
+                if (_schemeList == null || _schemeList.Type != SchemeTarget)
                 {
                     UpdateItems();
                 }
@@ -44,31 +45,34 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
         public void UpdateItems()
         {
-            if (_provider != null)
+            if (_schemeList != null)
             {
-                _provider.ListChanged -= OnListChanged;     // unsubscribe from the previous list
+                _schemeList.ListChanged -= OnListChanged;     // unsubscribe from the previous list
             }
 
-            _provider = ColorSchemeProvider.GetList(ColorSchemeType);
-            _provider.ListChanged += OnListChanged;
-            GenerateItems();
+            _schemeList = ColorSchemeProvider.GetList(SchemeTarget);
+            if (_schemeList != null)
+            {
+                _schemeList.ListChanged += OnListChanged;
+                GenerateItems();
+            }
         }
 
         private void OnListChanged(object sender, EventArgs args)
         {
-            if (this.IsDisposed) return;    // TODO: unsubscribe controls from notifications
+            if (IsDisposed) return;    // TODO: unsubscribe controls from notifications
 
             int index = SelectedIndex;
             GenerateItems();
-            SelectedIndex = _provider.SelectedIndex >= 0 ? _provider.SelectedIndex : index;
+            SelectedIndex = _schemeList.SelectedIndex >= 0 ? _schemeList.SelectedIndex : index;
         }
 
         public void SetSelectedItem(ColorBlend blend)
         {
-            for (int i = 0; i < _provider.List.Count; i++)
+            for (int i = 0; i < _schemeList.List.Count; i++)
             {
                 // TODO: after serialization we need to compare by value as references will be different
-                if (_provider.List[i] == blend)
+                if (_schemeList.List[i] == blend)
                 {
                     SelectedIndex = i;
                     break;
@@ -76,6 +80,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
         }
 
+        [Browsable(false)]
         public ColorBlend GetSelectedItem()
         {
             return SelectedItem != null ? ColorSchemes.List[SelectedIndex] : null;
@@ -84,9 +89,10 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Gets the list of color schemes
         /// </summary>
+        [Browsable(false)]
         public ColorSchemeCollection ColorSchemes
         {
-            get { return _provider; }
+            get { return _schemeList; }
         }
 
         /// <summary>
@@ -96,7 +102,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         {
             Items.Clear();
 
-            _itemCount = _provider != null ? _provider.List.Count : 0;
+            _itemCount = _schemeList != null ? _schemeList.List.Count : 0;
 
             for (var i = 0; i < _itemCount; i++)
             {
@@ -127,54 +133,51 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 var img = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
                 var g = Graphics.FromImage(img);
 
-                switch (ComboStyle)
+                if (_schemeList != null)
                 {
-                    case ColorRampType.Graduated:
+                    switch (ComboStyle)
+                    {
+                        case SchemeType.Graduated:
                         {
-                            if (_provider != null)
+                            var blend = _schemeList.List[i];
+                            if (blend != null)
                             {
-                                var blend = _provider.List[i];
-                                if (blend != null)
-                                {
-                                    LinearGradientBrush lgb = new LinearGradientBrush(rect, Color.White, Color.White, 0.0f) {InterpolationColors = blend};
-                                    g.FillRectangle(lgb, rect);
-                                    g.DrawRectangle(new Pen(_outlineColor), rect);
-                                    lgb.Dispose();
-                                }
+                                var lgb = new LinearGradientBrush(rect, Color.White, Color.White, 0.0f) {InterpolationColors = blend};
+                                g.FillRectangle(lgb, rect);
+                                g.DrawRectangle(new Pen(_outlineColor), rect);
+                                lgb.Dispose();
                             }
                             break;
                         }
-                    case ColorRampType.Random:
+                        case SchemeType.Random:
                         {
-                            if (_provider != null)
+                            var blend = _schemeList.List[i];
+                            if (blend != null)
                             {
-                                var blend = _provider.List[i];
-                                if (blend != null)
+                                var scheme = blend.ToColorScheme();
+                                if (scheme != null)
                                 {
-                                    var scheme = blend.ToColorScheme();
-                                    if (scheme != null)
+                                    int n = 0;
+                                    var rnd = new Random();
+                                    while (n < imgWidth)
                                     {
-                                        int n = 0;
-                                        var rnd = new Random();
-                                        while (n < imgWidth)
-                                        {
-                                            var clr = scheme.GetRandomColor(rnd.NextDouble());
-                                            var brush = new SolidBrush(clr);
-                                            var rectTemp = new Rectangle(rect.X + n, rect.Y, 8, rect.Height);
-                                            g.FillRectangle(brush, rectTemp);
-                                            g.DrawRectangle(new Pen(_outlineColor), rectTemp);
-                                            brush.Dispose();
-                                            n += 8;
-                                        }
+                                        var clr = scheme.GetRandomColor(rnd.NextDouble());
+                                        var brush = new SolidBrush(clr);
+                                        var rectTemp = new Rectangle(rect.X + n, rect.Y, 8, rect.Height);
+                                        g.FillRectangle(brush, rectTemp);
+                                        g.DrawRectangle(new Pen(_outlineColor), rectTemp);
+                                        brush.Dispose();
+                                        n += 8;
                                     }
                                 }
                             }
                             break;
                         }
-                    default: 
-                        return;
+                        default:
+                            return;
+                    }
                 }
-                
+
                 _list.Images.Add(img);
             }
         }

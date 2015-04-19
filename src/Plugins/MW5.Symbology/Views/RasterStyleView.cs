@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
-using MW5.Plugins.Interfaces;
-using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Views.Abstract;
-using MW5.UI.Controls;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
-using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterStyleView: RasterStyleViewBase, IRasterStyleView
     {
         private IImageSource _imageSource;
+        private RasterColorScheme _colorScheme;
 
         public RasterStyleView()
         {
@@ -42,6 +35,13 @@ namespace MW5.Plugins.Symbology.Views
             cboOverviewType.SetValue(RasterOverviewType.External);
             cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
             cboDynamicScaleMode.SetValue(DynamicVisibilityMode.ZoomLevels);
+
+            colorSchemeCombo1.SelectedIndex = 0;
+        }
+
+        public IRasterSource Raster
+        {
+            get  { return _imageSource as IRasterSource;}
         }
 
         /// <summary>
@@ -51,43 +51,80 @@ namespace MW5.Plugins.Symbology.Views
         {
             _imageSource = Model.ImageSource;
 
-            InitRenderMode();
+            if (Raster != null)
+            {
+                InitRenderMode(Raster);
+
+                FillGrid(Raster);
+
+                FillBandCombo(Raster);
+            }
 
             ModelToUi();
 
             txtGdalInfo.Text = GdalUtils.GdalInfo(Model.Filename, "");
 
             rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
-
-            FillGrid();
         }
 
-        private void FillGrid()
+        /// <summary>
+        /// Fills the band combo.
+        /// </summary>
+        private void FillBandCombo(IRasterSource raster)
         {
-            var raster = _imageSource as IRasterSource;
-            if (raster == null)
+            cboSelectedBand.Items.Clear();
+
+            for (int i = 1; i <= raster.Bands.Count; i++)
             {
-                return;
+                var band = raster.Bands[i];
+                string bandName = "Band " + i + " (" + band.ColorInterpretation + ")";
+                cboSelectedBand.Items.Add(bandName);
             }
 
+            if (cboSelectedBand.Items.Count > 0)
+            {
+                cboSelectedBand.SelectedIndex = 0;
+            }
+        }
+
+        public int SelectedPredefinedColorScheme
+        {
+            get { return colorSchemeCombo1.SelectedIndex; }
+        }
+
+        public int ActiveBandIndex
+        {
+            get { return cboSelectedBand.SelectedIndex + 1; }
+        }
+
+        public RasterColorScheme ColorScheme
+        {
+            get { return _colorScheme; }
+            set
+            {
+                if (value != null)
+                {
+                    _colorScheme = value;
+                    rasterColorSchemeGrid1.DataSource = value.ToList();
+                    rasterColorSchemeGrid1.ShowDropDowns(true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets datasource for color scheme grid.
+        /// </summary>
+        private void FillGrid(IRasterSource raster)
+        {
             var table = raster.Bands[1].ColorTable;
-            if (table != null)
-            {
-                rasterColorSchemeGrid1.DataSource = table.ToList();
-              
-
-                rasterColorSchemeGrid1.ShowDropDowns(true);
-            }
+            ColorScheme = table;
         }
 
-        private void InitRenderMode()
+        /// <summary>
+        /// Initializes the rendering mode combo box.
+        /// </summary>
+        private void InitRenderMode(IRasterSource raster)
         {
-            var raster = _imageSource as IRasterSource;
-            if (raster == null)
-            {
-                return;
-            }
-
             var list = new List<RasterRendering> {RasterRendering.SingleBand};
 
             if (raster.NumBands > 1)
@@ -121,9 +158,20 @@ namespace MW5.Plugins.Symbology.Views
         {
             get
             {
-                yield return btnProjectionDetails;
-                yield return btnBuildOverviews;
-                yield return btnClearOverviews;
+                var items = new[]
+                {
+                    btnProjectionDetails,
+                    btnBuildOverviews,
+                    btnClearOverviews,
+                    btnGenerateColorScheme,
+                    btnCalculateMinMax,
+                    btnApply
+                };
+                
+                foreach(var item in items)
+                {
+                    yield return item;
+                }
             }
         }
 
@@ -165,6 +213,18 @@ namespace MW5.Plugins.Symbology.Views
             UiToModelRaster();
         }
 
+        public double BandMinValue
+        {
+            get { return txtMinimum.DoubleValue; }
+        }
+
+        public double BandMaxValue
+        {
+            get { return txtMaximum.DoubleValue; }
+        }
+
+
+
         private void UiToModelBitmap()
         {
             _imageSource.DownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
@@ -185,6 +245,17 @@ namespace MW5.Plugins.Symbology.Views
         public void UpdateView()
         {
 
+        }
+
+        private void cboSelectedBand_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var bandIndex = cboSelectedBand.SelectedIndex + 1;
+            if (bandIndex >= 1)
+            {
+                var band = Raster.Bands[bandIndex];
+                txtMinimum.DoubleValue = band.Minimum;
+                txtMaximum.DoubleValue = band.Maximum;
+            }
         }
     }
 

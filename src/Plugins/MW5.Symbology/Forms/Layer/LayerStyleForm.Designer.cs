@@ -1026,8 +1026,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbCategories
             // 
-            this.icbCategories.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
-            this.icbCategories.ComboStyle = MW5.Api.Enums.ColorRampType.Graduated;
+            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbCategories.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbCategories.FormattingEnabled = true;
@@ -1436,8 +1436,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbChartColorScheme
             // 
-            this.icbChartColorScheme.ColorSchemeType = MW5.Plugins.Symbology.ColorSchemes.Default;
-            this.icbChartColorScheme.ComboStyle = MW5.Api.Enums.ColorRampType.Graduated;
+            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbChartColorScheme.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;

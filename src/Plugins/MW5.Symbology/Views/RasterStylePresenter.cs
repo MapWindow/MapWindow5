@@ -4,7 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
@@ -14,8 +17,13 @@ namespace MW5.Plugins.Symbology.Views
 {
     public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterStyleCommand, ILayer>
     {
-        public RasterStylePresenter(IRasterStyleView view) : base(view)
+        private readonly IAppContext _context;
+        private IRasterSource _raster;
+
+        public RasterStylePresenter(IAppContext context, IRasterStyleView view) : base(view)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
         }
 
         public override void RunCommand(RasterStyleCommand command)
@@ -34,8 +42,33 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterStyleCommand.ClearOverviews:
                     MessageService.Current.Info("About to clear overviews");
                     break;
+                case RasterStyleCommand.CalculateMinMax:
+                    if (_context.Container.Run<RasterMinMaxPresenter, IRasterSource>(_raster))
+                    {
+                        // TODO: set the resulting values
+                    }
+                    break;
+                case RasterStyleCommand.GenerateColorScheme:
+                    var scheme = new RasterColorScheme();
+                    scheme.SetPredefined(View.BandMinValue, View.BandMaxValue, (PredefinedColors)View.SelectedPredefinedColorScheme);
+                    View.ColorScheme = scheme;
+                    break;
+                case RasterStyleCommand.Apply:
+                    Apply();
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
+            }
+        }
+
+        private void Apply()
+        {
+            if (View.ColorScheme != null && _raster != null)
+            {
+                _raster.ForceGridRendering = true;
+                _raster.ActiveBandIndex = View.ActiveBandIndex;
+                _raster.CustomColorScheme = View.ColorScheme;
+                _context.Map.Redraw();
             }
         }
 
@@ -48,7 +81,7 @@ namespace MW5.Plugins.Symbology.Views
 
         public override void Initialize()
         {
-            
+            _raster = Model.ImageSource as IRasterSource;
         }
     }
 }

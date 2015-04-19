@@ -14,6 +14,11 @@ namespace MW5.Api.Concrete
     {
         private readonly GridColorScheme _scheme;
 
+        public RasterColorScheme()
+        {
+            _scheme = new GridColorScheme();
+        }
+
         internal RasterColorScheme(GridColorScheme scheme)
         {
             _scheme = scheme;

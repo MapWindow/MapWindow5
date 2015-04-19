@@ -15,7 +15,8 @@ namespace MW5.Plugins.Symbology
     {
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterView<IRasterStyleView, RasterStyleView>();
+            container.RegisterView<IRasterStyleView, RasterStyleView>().
+                      RegisterView<IRasterMinMaxView, RasterMinMaxView>();
 
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
             EnumHelper.RegisterConverter(new RasterRenderingConverter());

@@ -41,15 +41,21 @@ namespace MW5.Api.Interfaces
 
         bool HasBuiltInColorTable { get; }
 
+        int ActiveBandIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets user color scheme for single band pseudo color rendering.
+        /// </summary>
+        RasterColorScheme CustomColorScheme { get; set; }
+
+        bool ForceGridRendering { get; set; }
+
         //bool AllowHillshade { get; set; }
         
-        //string PaletteInterpretation { get; }
-
-        //GridColorScheme CustomColorScheme { get; set; }
         //GridColorScheme GridProxyColorScheme { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }
 
-        //tkGridRendering AllowGridRendering { get; set; }
+        
         
         //int BufferSize { get; set; }
         //bool ClearGdalCache { get; set; }
@@ -57,7 +63,7 @@ namespace MW5.Api.Interfaces
         //bool GridRendering { get; }
 
         //string SourceFilename { get; }
-        //int SourceGridBandIndex { get; set; }
+        
         //string SourceGridName { get; }
         
         //bool IsGridProxy { get; }

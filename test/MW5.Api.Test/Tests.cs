@@ -166,7 +166,7 @@ namespace MW5.API.Test
                 }
             }
             fs.Categories.ApplyExpressions();
-            fs.Categories.ApplyColorScheme(ColorRampType.Graduated, new ColorRamp(Color.Yellow, Color.Red));
+            fs.Categories.ApplyColorScheme(SchemeType.Graduated, new ColorRamp(Color.Yellow, Color.Red));
 
             fs.Labels.Generate("[Type]", LabelPosition.Centroid);
             var style = fs.Labels.Style;

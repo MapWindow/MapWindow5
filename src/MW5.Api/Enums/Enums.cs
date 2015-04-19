@@ -164,7 +164,7 @@
         EqualSumOfValues = 5,
     }
 
-    public enum ColorRampType
+    public enum SchemeType
     {
         Random = 0,
         Graduated = 1,

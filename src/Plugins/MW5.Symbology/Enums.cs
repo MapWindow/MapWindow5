@@ -25,10 +25,11 @@
     /// <summary>
     /// Color scheme lists used in the plug-in
     /// </summary>
-    internal enum ColorSchemes
+    internal enum SchemeTarget
     {
-        Default = 0,
+        Vector = 0,
         Charts = 1,
+        Raster = 2,
     }
 
     internal enum RasterRendering

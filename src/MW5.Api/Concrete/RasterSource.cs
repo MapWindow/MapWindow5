@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -169,6 +170,28 @@ namespace MW5.Api.Concrete
         public bool HasBuiltInColorTable
         {
             get { return _image.HasColorTable; }
+        }
+
+        public int ActiveBandIndex
+        {
+            get { return _image.SourceGridBandIndex; }
+            set { _image.SourceGridBandIndex = value; }
+        }
+
+        public RasterColorScheme CustomColorScheme
+        {
+            get
+            {
+                var scheme = _image.CustomColorScheme;
+                return scheme != null ? new RasterColorScheme(scheme) : null;
+            }
+            set { _image.CustomColorScheme = value.GetInternal(); }
+        }
+
+        public bool ForceGridRendering
+        {
+            get { return _image.AllowGridRendering == tkGridRendering.grForceForAllFormats; }
+            set { _image.AllowGridRendering = tkGridRendering.grForceForAllFormats; }
         }
     }
 }

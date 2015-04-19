@@ -20,9 +20,9 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     {
         private List<ColorBlend> _list = new List<ColorBlend>();
         private readonly string _filename;
-        private readonly ColorSchemes _type;
+        private readonly SchemeTarget _type;
 
-        public ColorSchemeCollection(ColorSchemes type, string filename)
+        public ColorSchemeCollection(SchemeTarget type, string filename)
         {
             _type = type;
             _filename = filename;
@@ -55,7 +55,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             set { _list = value; }
         }
 
-        public ColorSchemes Type
+        public SchemeTarget Type
         {
             get { return _type; }
         }
@@ -111,96 +111,126 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
         private void SetDefaultColorSchemes()
         {
+            switch (_type)
+            {
+                case SchemeTarget.Vector:
+                    AddDefaultVectorSchemes();
+                    break;
+                case SchemeTarget.Charts:
+                    AddDefaultChartSchemes();
+                    break;
+                case SchemeTarget.Raster:
+                    AddDefaultRasterSchemes();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void AddDefaultRasterSchemes()
+        {
+            var values = Enum.GetValues(typeof (PredefinedColors));
+            foreach (PredefinedColors value in values)
+            {
+                var sch = new ColorRamp();
+                sch.SetColors(value);
+                var blend = ColorScheme2ColorBlend(sch);
+                List.Add(blend);
+            }
+        }
+
+        private void AddDefaultChartSchemes()
+        {
             ColorBlend blend = null;
 
-            if (_type == ColorSchemes.Default)
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.Yellow;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Orange;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.LightBlue;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Pink;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.LightGreen;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Yellow;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+        }
+
+        private void AddDefaultVectorSchemes()
+        {
+            ColorBlend blend = null;
+
+            // dummy single color blend must be always the first for shapefile
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.White;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.White;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.LightBlue;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Orange;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.Yellow;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Orange;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            for (int i = 0; i < 2; i++)
             {
-                // dummy single color blend must be always the first for shapefile
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.White;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.White;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
-
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.LightBlue;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Orange;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
-
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.Yellow;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Orange;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
-
-                for (int i = 0; i < 2; i++)
-                {
-                    var sch = new ColorRamp();
-                    if (i == 0) sch.SetColors(PredefinedColors.FallLeaves);
-                    if (i == 1) sch.SetColors(PredefinedColors.DeadSea);
-                    blend = ColorScheme2ColorBlend(sch);
-                    List.Add(blend);
-                }
-
-                // adding to 2 color schemes, as there can be none in the list
-                blend = new ColorBlend(7);
-                blend.Colors[0] = Color.Red;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Orange;
-                blend.Positions[1] = 1.0f/6.0f;
-                blend.Colors[2] = Color.Yellow;
-                blend.Positions[2] = 2.0f/6.0f;
-                blend.Colors[3] = Color.LightGreen;
-                blend.Positions[3] = 3.0f/6.0f;
-                blend.Colors[4] = Color.LightBlue;
-                blend.Positions[4] = 4.0f/6.0f;
-                blend.Colors[5] = Color.Blue;
-                blend.Positions[5] = 5.0f/6.0f;
-                blend.Colors[6] = Color.BlueViolet;
-                blend.Positions[6] = 1.0f;
-                List.Add(blend);
-
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.LightGray;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Gray;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
-
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.Pink;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.LightYellow;
-                blend.Positions[1] = 1.0f;
+                var sch = new ColorRamp();
+                if (i == 0) sch.SetColors(PredefinedColors.FallLeaves);
+                if (i == 1) sch.SetColors(PredefinedColors.DeadSea);
+                blend = ColorScheme2ColorBlend(sch);
                 List.Add(blend);
             }
-            else if (_type == ColorSchemes.Charts)
-            {
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.Yellow;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Orange;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
 
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.LightBlue;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Pink;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
+            // adding to 2 color schemes, as there can be none in the list
+            blend = new ColorBlend(7);
+            blend.Colors[0] = Color.Red;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Orange;
+            blend.Positions[1] = 1.0f / 6.0f;
+            blend.Colors[2] = Color.Yellow;
+            blend.Positions[2] = 2.0f / 6.0f;
+            blend.Colors[3] = Color.LightGreen;
+            blend.Positions[3] = 3.0f / 6.0f;
+            blend.Colors[4] = Color.LightBlue;
+            blend.Positions[4] = 4.0f / 6.0f;
+            blend.Colors[5] = Color.Blue;
+            blend.Positions[5] = 5.0f / 6.0f;
+            blend.Colors[6] = Color.BlueViolet;
+            blend.Positions[6] = 1.0f;
+            List.Add(blend);
 
-                blend = new ColorBlend(2);
-                blend.Colors[0] = Color.LightGreen;
-                blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Yellow;
-                blend.Positions[1] = 1.0f;
-                List.Add(blend);
-            }
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.LightGray;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.Gray;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
+
+            blend = new ColorBlend(2);
+            blend.Colors[0] = Color.Pink;
+            blend.Positions[0] = 0.0f;
+            blend.Colors[1] = Color.LightYellow;
+            blend.Positions[1] = 1.0f;
+            List.Add(blend);
         }
 
         /// <summary>
@@ -238,7 +268,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             var xelSchemes = xmlDoc.CreateElement("ColorSchemes");
 
             // the first scheme must not be saved
-            int j = _type == ColorSchemes.Default ? 1 : 0;
+            int j = _type == SchemeTarget.Vector ? 1 : 0;
 
             for (; j < List.Count; j++)
             {
@@ -285,7 +315,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
             
             // dummy single color blend 
-            if (_type == ColorSchemes.Default)
+            if (_type == SchemeTarget.Vector)
             {
                 var blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Black; blend.Positions[0] = 0.0f;
@@ -342,7 +372,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             }
             catch (Exception ex)
             {
-                MessageService.Current.Warn("Failed to save color schemes: " + filename + Environment.NewLine + ex.Message);
+                Logger.Current.Warn("Failed to save color schemes: " + filename, ex);
             }
         }
 

@@ -11,5 +11,8 @@ namespace MW5.Plugins.Symbology.Views
         ProjectionDetails = 0,
         BuildOverviews = 1,
         ClearOverviews = 2,
+        GenerateColorScheme = 3,
+        CalculateMinMax = 4,
+        Apply = 5,
     }
 }

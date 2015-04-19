@@ -80,10 +80,10 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             cboCategoriesCount.Text = settings.CategoriesCount.ToString();
 
             // dummy color scheme
-            ColorSchemeProvider.SetFirstColorScheme(ColorSchemes.Default, _shapefile);
+            ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _shapefile);
 
             // initializing for list of color schemes
-            icbColorScheme.ColorSchemeType = ColorSchemes.Default;
+            icbColorScheme.SchemeTarget = SchemeTarget.Vector;
 
             // settings active color scheme
             icbColorScheme.SetSelectedItem(settings.CategoriesColorScheme);
@@ -198,7 +198,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
                 scheme = blend.ToColorScheme();
             }
 
-            var type = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
+            var type = chkRandomColors.Checked ? SchemeType.Random : SchemeType.Graduated;
             _shapefile.Categories.ApplyColorScheme(type, scheme);
 
             if (chkSetGradient.Checked)
@@ -296,7 +296,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
         {
             int index = icbColorScheme.SelectedIndex;
-            icbColorScheme.ComboStyle = chkRandomColors.Checked ? ColorRampType.Random : ColorRampType.Graduated;
+            icbColorScheme.ComboStyle = chkRandomColors.Checked ? SchemeType.Random : SchemeType.Graduated;
             if (index >= 0 && index < icbColorScheme.Items.Count)
             {
                 icbColorScheme.SelectedIndex = index;

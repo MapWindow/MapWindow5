@@ -89,7 +89,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             // icbColors
             // 
-            this.icbColors.ComboStyle = ColorRampType.Graduated;
+            this.icbColors.ComboStyle = SchemeType.Graduated;
             this.icbColors.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbColors.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbColors.FormattingEnabled = true;
