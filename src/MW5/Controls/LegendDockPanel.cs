@@ -37,7 +37,7 @@ namespace MW5.Controls
             }
         }
 
-        public IEnumerable<ToolStripItemCollection> Toolstrips
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
             get 
             {

@@ -51,7 +51,7 @@ namespace MW5.Plugins.Repository.Views
         }
 
 
-        public IEnumerable<ToolStripItemCollection> Toolstrips
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
             get
             {

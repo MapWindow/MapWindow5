@@ -40,7 +40,7 @@ namespace MW5.Plugins.Mvp
                 btn.Click += ItemClick;
             }
 
-            foreach (var items in view.Toolstrips)
+            foreach (var items in view.ToolStrips)
             {
                 InitMenu(items);
             }

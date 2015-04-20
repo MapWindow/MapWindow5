@@ -111,7 +111,7 @@ namespace MW5.Plugins.TableEditor.Views
             _lblAmountSelected.Text = msg;
         }
 
-        public IEnumerable<ToolStripItemCollection> Toolstrips
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
             get { return from ToolStripMenuItem item in menuStrip1.Items select item.DropDownItems; }
         }
