@@ -9,11 +9,16 @@ using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
-    public class GridColorInterval: IComWrapper
+    public class RasterInterval: IComWrapper
     {
         private readonly GridColorBreak _colorBreak;
 
-        internal GridColorInterval(GridColorBreak colorBreak)
+        public RasterInterval()
+        {
+            _colorBreak = new GridColorBreak();
+        }
+
+        internal RasterInterval(GridColorBreak colorBreak)
         {
             _colorBreak = colorBreak;
             if (colorBreak == null)
@@ -58,7 +63,7 @@ namespace MW5.Api.Concrete
         [Browsable(false)]
         public double HighValue
         {
-            get { return _colorBreak.HighColor; }
+            get { return _colorBreak.HighValue; }
             set { _colorBreak.HighValue = value; }
         }
 

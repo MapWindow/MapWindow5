@@ -32,7 +32,7 @@
         Raster = 2,
     }
 
-    internal enum RasterRendering
+    public enum RasterRendering
     {
         SingleBand = 0,
         MultiBand = 1,

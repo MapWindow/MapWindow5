@@ -286,6 +286,11 @@ namespace MW5.Api.Concrete
             get { return new GridBandCollection(_grid); }
         }
 
+        public RasterBand ActiveBand
+        {
+            get { return Bands[_grid.ActiveBandIndex]; }
+        }
+
         #region Batch reading of values
         // TODO: test if it's working
 

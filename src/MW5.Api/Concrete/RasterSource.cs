@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using Image = MapWinGIS.Image;
 
 namespace MW5.Api.Concrete
 {
@@ -191,7 +193,56 @@ namespace MW5.Api.Concrete
         public bool ForceGridRendering
         {
             get { return _image.AllowGridRendering == tkGridRendering.grForceForAllFormats; }
-            set { _image.AllowGridRendering = tkGridRendering.grForceForAllFormats; }
+            set { _image.AllowGridRendering = value ? tkGridRendering.grForceForAllFormats : tkGridRendering.grForGridsOnly; }
+        }
+
+        public RenderingType RenderingType
+        {
+            get
+            {
+                if (_image.GridRendering)
+                {
+                    return RenderingType.Grid;
+                }
+                
+                return _image.NoBands == 1 ? RenderingType.Grayscale : RenderingType.Rgb;
+            }
+        }
+
+
+        public RasterColorScheme RgbBandMapping
+        {
+            get
+            {
+                // TODO: just a stub; shoud be stored in the IImage object instead
+                var scheme = new RasterColorScheme();
+                scheme.AddInterval(new RasterInterval() {LowColor = Color.Red, Caption = "Red: Band 1"});
+                scheme.AddInterval(new RasterInterval() { LowColor = Color.Green, Caption = "Green: Band 2" });
+                scheme.AddInterval(new RasterInterval() { LowColor = Color.Blue, Caption = "Blue: Band 3" });
+                return scheme;
+            }
+        }
+
+        public RasterColorScheme GrayScaleColorScheme
+        {
+            get
+            {
+                var scheme = new RasterColorScheme();
+                
+                scheme.AddInterval(new RasterInterval()
+                {
+                    LowColor = Color.White,
+                    HighColor = Color.Black,
+                    Caption = "0 - 255"     // TODO: should depend on min / max really used
+                });
+
+                return scheme;
+            }
+        }
+
+        public RasterBand ActiveBand
+        {
+            get { return Bands[_image.SourceGridBandIndex]; }
         }
 
         public override GdalDataType DataType

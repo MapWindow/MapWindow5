@@ -50,12 +50,19 @@ namespace MW5.Api.Interfaces
 
         bool ForceGridRendering { get; set; }
 
+        RenderingType RenderingType { get; }
+
+        RasterBand ActiveBand { get; }
+
+        // temporary
+        RasterColorScheme RgbBandMapping { get; }
+
+        RasterColorScheme GrayScaleColorScheme { get; }
+
         //bool AllowHillshade { get; set; }
         
         //GridColorScheme GridProxyColorScheme { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }
-
-        
         
         //int BufferSize { get; set; }
         //bool ClearGdalCache { get; set; }

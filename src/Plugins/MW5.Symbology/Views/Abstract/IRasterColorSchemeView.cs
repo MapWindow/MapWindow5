@@ -14,6 +14,8 @@ namespace MW5.Plugins.Symbology.Views.Abstract
         int SelectedPredefinedColorScheme { get; }
         int ActiveBandIndex { get; }
 
+        RasterRendering Rendering { get; }
+
         RasterColorScheme ColorScheme { get; set; }
     }
 }

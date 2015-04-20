@@ -26,8 +26,6 @@ namespace MW5.Api.Legend
     [ToolboxBitmap(typeof(MapControl), "Resources.MapWinLegend.ico")]       // TODO: test it
     public class LegendControl : UserControl, ILegend
     {
-        private const string CHARTS_CAPTION = "Charts";
-
         private LayerCollection<ILegendLayer> _layers;
         private readonly LegendGroups _groups;
 
@@ -46,7 +44,6 @@ namespace MW5.Api.Legend
         private readonly Font _boldFont;
         private readonly Color _boxLineColor;
         private readonly DragInfo _dragInfo = new DragInfo();
-        private readonly ToolTip _toolTip = new ToolTip();
 
         private IMuteMap _mapControl; 
         private AxMap _map;
@@ -88,15 +85,15 @@ namespace MW5.Api.Legend
             }
             set
             {
-                if (value == null)
-                {
-                    return;
-                }
+                if (value == null) return;
+
                 _map = value.InternalObject as AxMap;
+
                 if (_map == null)
                 {
                     throw new ApplicationException("Invalid map control reference.");
                 }
+
                 _mapControl = value;
             }
         }
@@ -152,10 +149,7 @@ namespace MW5.Api.Legend
 
             set
             {
-                if (_map == null)
-                {
-                    return;
-                }
+                if (_map == null) return;
 
                 int groupIndex, layerIndex;
 
@@ -186,6 +180,11 @@ namespace MW5.Api.Legend
                     SelectedLayerHandle = value.Handle;
                 }
             }
+        }
+
+        internal Font InternalFont
+        {
+            get { return _font; }
         }
 
         internal void SetSelectedGroup(int groupHandle)
@@ -306,8 +305,8 @@ namespace MW5.Api.Legend
             // 
             this.Icons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Icons.ImageStream")));
             this.Icons.TransparentColor = System.Drawing.Color.Transparent;
-            this.Icons.Images.SetKeyName(0, "");
-            this.Icons.Images.SetKeyName(1, "img_raster.png");
+            this.Icons.Images.SetKeyName(0, "img_raster.png");
+            this.Icons.Images.SetKeyName(1, "");
             this.Icons.Images.SetKeyName(2, "");
             this.Icons.Images.SetKeyName(3, "");
             this.Icons.Images.SetKeyName(4, "");
@@ -375,34 +374,17 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw box.
         /// </summary>
-        /// <param name="drawTool">  The draw tool. </param>
-        /// <param name="rect"> The rect. </param>
-        /// <param name="lineColor"> The line color. </param>
-        private void DrawBox(Graphics drawTool, Rectangle rect, Color lineColor)
-        {
-            var pen = new Pen(lineColor);
-
-            drawTool.DrawRectangle(pen, rect);
-        }
-
-        /// <summary>
-        /// The draw box.
-        /// </summary>
-        /// <param name="drawTool">The draw tool. </param>
-        /// <param name="rect"> The rect. </param>
-        /// <param name="lineColor"> The line color. </param>
-        /// <param name="backColor"> The back color. </param>
-        private void DrawBox(Graphics drawTool, Rectangle rect, Color lineColor, Color backColor)
+        private void DrawBox(Graphics g, Rectangle rect, Color lineColor, Color backColor)
         {
             var pen = new Pen(backColor);
-            drawTool.FillRectangle(pen.Brush, rect);
+            g.FillRectangle(pen.Brush, rect);
 
             pen = new Pen(lineColor);
-            drawTool.DrawRectangle(pen, rect);
+            g.DrawRectangle(pen, rect);
         }
 
         /// <summary>
-        /// The swap buffers.
+        /// Renders the buffer.
         /// </summary>
         private void RenderBuffer()
         {
@@ -410,7 +392,7 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The swap buffers.
+        /// Renders the buffer.
         /// </summary>
         private void RenderBuffer(Image backBuffer, Graphics g)
         {
@@ -430,25 +412,13 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The swap buffers.
-        /// </summary>
-        /// <param name="backBuffer"> The back buffer. </param>
-        /// <param name="frontBuffer"> The front buffer. </param>
-        private void RenderBuffer(Image backBuffer, Image frontBuffer)
-        {
-            var draw = Graphics.FromImage(frontBuffer);
-            draw.DrawImage(backBuffer, 0, 0);
-            draw.Flush(FlushIntention.Sync);
-        }
-
-        /// <summary>
         /// Draws a group onto a give graphics object (surface)
         /// </summary>
-        /// <param name="drawTool"> Graphics object with which to draw </param>
+        /// <param name="g"> Graphics object with which to draw </param>
         /// <param name="grp"> Group to be drawn </param>
         /// <param name="bounds"> Clipping boundaries for this group </param>
         /// <param name="isSnapshot"> Drawing is handled in special way if this is a Snapshot </param>
-        internal protected void DrawGroup(Graphics drawTool, LegendGroup grp, Rectangle bounds, bool isSnapshot)
+        internal protected void DrawGroup(Graphics g, LegendGroup grp, Rectangle bounds, bool isSnapshot)
         {
             int curLeft,
                 curWidth,
@@ -477,14 +447,14 @@ namespace MW5.Api.Legend
                     curTop,
                     bounds.Width - Constants.GrpIndent - Constants.ItemRightPad,
                     Constants.ItemHeight);
-                DrawBox(drawTool, rect, _boxLineColor, SelectionColor);
+                DrawBox(g, rect, _boxLineColor, SelectionColor);
             }
 
             // draw the +- box if there are sub items
             if (grp.Layers.Any() && isSnapshot == false)
             {
                 DrawExpansionBox(
-                    drawTool,
+                    g,
                     bounds.Top + Constants.ExpandBoxTopPad,
                     Constants.GrpIndent + Constants.ExpandBoxLeftPad,
                     grp.Expanded);
@@ -500,7 +470,7 @@ namespace MW5.Api.Legend
                 var endY = grp.Top + Constants.ItemHeight;
 
                 var blackPen = new Pen(_boxLineColor);
-                drawTool.DrawLine(
+                g.DrawLine(
                     blackPen,
                     Constants.VertLineIndent,
                     bounds.Top + Constants.VertLineGrpTopOffset,
@@ -514,7 +484,7 @@ namespace MW5.Api.Legend
                 {
                     curLeft = Constants.GrpIndent + Constants.CheckLeftPad;
                     DrawCheckBox(
-                        drawTool,
+                        g,
                         bounds.Top + Constants.CheckTopPad,
                         curLeft,
                         drawCheck,
@@ -526,7 +496,7 @@ namespace MW5.Api.Legend
             {
                 // draw the icon
                 DrawPicture(
-                    drawTool,
+                    g,
                     bounds.Right - Constants.IconRightPad,
                     curTop + Constants.IconTopPad,
                     Constants.IconSize,
@@ -566,18 +536,18 @@ namespace MW5.Api.Legend
                  const int size = 16;
                  Bitmap bmp = Icons.GetIcon(grp.Expanded ? LegendIcon.FolderOpened : LegendIcon.Folder) as Bitmap;
                  rect.Offset(0, -2);
-                 DrawPicture(drawTool, rect.Left, rect.Top, size, size, bmp);
+                 DrawPicture(g, rect.Left, rect.Top, size, size, bmp);
                  rect = new Rectangle(rect.X + size + 3, rect.Y + 2, rect.Width - size, rect.Height);
              }
 
             // group name
             if (grp.Handle == _selectedGroupHandle && !isSnapshot)
             {
-                DrawText(drawTool, grp.Text, rect, _boldFont);
+                DrawText(g, grp.Text, rect, _boldFont);
             }
             else
             {
-                DrawText(drawTool, grp.Text, rect, _font);
+                DrawText(g, grp.Text, rect, _font);
             }
 
             // set up the boundaries for drawing list items
@@ -612,9 +582,9 @@ namespace MW5.Api.Legend
                     continue;
                 }
 
-                DrawLayer(drawTool, lyr, rect, isSnapshot);
+                DrawLayer(g, lyr, rect, isSnapshot);
 
-                DrawLayerLines(isSnapshot, drawTool, grp, lyr, i, ref rect);
+                DrawLayerLines(isSnapshot, g, grp, lyr, i, ref rect);
 
                 // set up the rectangle for the next layer
                 rect.Y += lyr.Height;
@@ -627,7 +597,7 @@ namespace MW5.Api.Legend
             }
         }
 
-        private void DrawLayerLines(bool isSnapshot, Graphics drawTool, LegendGroup grp, LegendLayer lyr, int i, ref Rectangle rect)
+        private void DrawLayerLines(bool isSnapshot, Graphics g, LegendGroup grp, LegendLayer lyr, int i, ref Rectangle rect)
         {
             if (isSnapshot || !DrawLines)
             {
@@ -640,7 +610,7 @@ namespace MW5.Api.Legend
             if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
             {
                 // not the last visible layer
-                drawTool.DrawLine(
+                g.DrawLine(
                     pen,
                     Constants.VertLineIndent,
                     lyr.Top,
@@ -650,7 +620,7 @@ namespace MW5.Api.Legend
             else
             {
                 // only draw down to box, not down to next item in list(since there is no next item)
-                drawTool.DrawLine(
+                g.DrawLine(
                     pen,
                     Constants.VertLineIndent,
                     lyr.Top,
@@ -661,7 +631,7 @@ namespace MW5.Api.Legend
             // draw Horizontal line over to the Vertical Sub-lyr line
             int curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
 
-            drawTool.DrawLine(
+            g.DrawLine(
                 pen,
                 Constants.VertLineIndent,
                 curTop,
@@ -672,18 +642,18 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw text.
         /// </summary>
-        private void DrawText(Graphics drawTool, string text, Rectangle rect, Font font, Color penColor)
+        private void DrawText(Graphics g, string text, Rectangle rect, Font font, Color penColor)
         {
             var pen = new Pen(penColor);
-            drawTool.DrawString(text, font, pen.Brush, rect);
+            g.DrawString(text, font, pen.Brush, rect);
         }
 
         /// <summary>
         /// The draw text.
         /// </summary>
-        private void DrawText(Graphics drawTool, string text, Rectangle rect, Font font)
+        private void DrawText(Graphics g, string text, Rectangle rect, Font font)
         {
-            DrawText(drawTool, text, rect, font, Color.Black);
+            DrawText(g, text, rect, font, Color.Black);
         }
 
         /// <summary>
@@ -1014,12 +984,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw check box.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="itemTop"> The item top. </param>
-        /// <param name="itemLeft"> The item left. </param>
-        /// <param name="drawCheck"> The draw check. </param>
-        /// <param name="drawGrayBackground"> The draw gray background. </param>
-        private void DrawCheckBox(Graphics drawTool, int itemTop, int itemLeft, bool drawCheck, bool drawGrayBackground)
+        private void DrawCheckBox(Graphics g, int itemTop, int itemLeft, bool drawCheck, bool drawGrayBackground)
         {
             LegendIcon icon;
             if (drawCheck)
@@ -1032,27 +997,21 @@ namespace MW5.Api.Legend
             }
 
             var image = Icons.GetIcon(icon);
-            DrawPicture(drawTool, itemLeft, itemTop, Constants.CheckBoxSize, Constants.CheckBoxSize, image);
+            DrawPicture(g, itemLeft, itemTop, Constants.CheckBoxSize, Constants.CheckBoxSize, image);
         }
 
         /// <summary>
         /// Draws picture in the legend. Picture can be either an image or an icon
         /// </summary>
-        /// <param name="drawTool"> The Draw Tool. </param>
-        /// <param name="picLeft"> The Pic Left. </param>
-        /// <param name="picTop"> The Pic Top. </param>
-        /// <param name="picWidth"> The Pic Width. </param>
-        /// <param name="picHeight"> The Pic Height. </param>
-        /// <param name="picture"> The picture. </param>
-        private void DrawPicture(Graphics drawTool, int picLeft, int picTop, int picWidth, int picHeight, object picture)
+        private void DrawPicture(Graphics g, int picLeft, int picTop, int picWidth, int picHeight, object picture)
         {
             if (picture == null)
             {
                 return;
             }
 
-            var oldSm = drawTool.SmoothingMode;
-            drawTool.SmoothingMode = SmoothingMode.HighQuality;
+            var oldSm = g.SmoothingMode;
+            g.SmoothingMode = SmoothingMode.HighQuality;
 
             var rect = new Rectangle(picLeft, picTop, picWidth, picHeight);
 
@@ -1060,7 +1019,7 @@ namespace MW5.Api.Legend
 
             if (icon != null)
             {
-                drawTool.DrawIcon(icon, rect);
+                g.DrawIcon(icon, rect);
             }
             else
             {
@@ -1076,7 +1035,7 @@ namespace MW5.Api.Legend
 
                 if (img != null)
                 {
-                    drawTool.DrawImage(img, rect);
+                    g.DrawImage(img, rect);
                 }
                 else
                 {
@@ -1094,7 +1053,7 @@ namespace MW5.Api.Legend
                         try
                         {
                             img = Image.FromHbitmap(new IntPtr(mwImg.Picture.Handle));
-                            drawTool.DrawImage(img, rect);
+                            g.DrawImage(img, rect);
                         }
                         catch (Exception)
                         {
@@ -1103,20 +1062,20 @@ namespace MW5.Api.Legend
                 }
             }
 
-            drawTool.SmoothingMode = oldSm;
+            g.SmoothingMode = oldSm;
         }
 
         /// <summary>
         /// Expansion box with plus or minus sign
         /// </summary>
-        private void DrawExpansionBox(Graphics drawTool, int itemTop, int itemLeft, bool expanded)
+        private void DrawExpansionBox(Graphics g, int itemTop, int itemLeft, bool expanded)
         {
             var pen = new Pen(_boxLineColor, 1);
 
             var rect = new Rectangle(itemLeft, itemTop, Constants.ExpandBoxSize, Constants.ExpandBoxSize);
 
             // draw the border
-            DrawBox(drawTool, rect, _boxLineColor, Color.White);
+            DrawBox(g, rect, _boxLineColor, Color.White);
 
             var midX = (int) (rect.Left + (.5*rect.Width));
             var midY = (int) (rect.Top + (.5*rect.Height));
@@ -1125,15 +1084,15 @@ namespace MW5.Api.Legend
             {
                 // draw a + sign, indicating that there is more to be seen
                 // draw the vertical part
-                drawTool.DrawLine(pen, midX, itemTop + 2, midX, itemTop + Constants.ExpandBoxSize - 2);
+                g.DrawLine(pen, midX, itemTop + 2, midX, itemTop + Constants.ExpandBoxSize - 2);
 
                 // draw the horizontal part
-                drawTool.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
+                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
             }
             else
             {
                 // draw a - sign
-                drawTool.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
+                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
             }
         }
 
@@ -1164,24 +1123,13 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// Drawing procedure for the new symbology
-        /// </summary>
-        /// <param name="drawTool"> </param>
-        /// <param name="lyr"> </param>
-        /// <param name="bounds"> </param>
-        /// <param name="isSnapshot"> </param>
-        protected internal void DrawLayerExt(Graphics drawTool, Layer lyr, Rectangle bounds, bool isSnapshot)
-        {
-        }
-
-        /// <summary>
         /// Draws a layer onto a given graphics surface
         /// </summary>
-        /// <param name="drawTool"> Graphics surface (object) onto which the give layer should be drawn </param>
+        /// <param name="g"> Graphics surface (object) onto which the give layer should be drawn </param>
         /// <param name="lyr"> Layer object to be drawn </param>
         /// <param name="bounds"> Rectangle oulining the allowable draw area </param>
         /// <param name="isSnapshot"> Drawing is done differently when it is a snapshot we are takeing of this layer </param>
-        protected void DrawLayer(Graphics drawTool, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        protected void DrawLayer(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
             lyr.SmallIconWasDrawn = false;
             lyr.Top = bounds.Top;
@@ -1211,7 +1159,7 @@ namespace MW5.Api.Legend
 
                     if (curTop + rect.Height > 0 || curTop < ClientRectangle.Height)
                     {
-                        DrawBox(drawTool, rect, _boxLineColor, SelectionColor);
+                        DrawBox(g, rect, _boxLineColor, SelectionColor);
                     }
                 }
             }
@@ -1223,7 +1171,7 @@ namespace MW5.Api.Legend
                 curHeight = lyr.ExpandedHeight - 1;
                 rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
-                DrawBox(drawTool, rect, _boxLineColor, Color.White);
+                DrawBox(g, rect, _boxLineColor, Color.White);
             }
 
             // -------------------------------------------------------
@@ -1246,7 +1194,7 @@ namespace MW5.Api.Legend
                 visible = visible && _map.get_LayerVisible(lyr.Handle);
 
                 // draw a grey background if the layer is in dynamic visibility mode.
-                DrawCheckBox(drawTool, curTop, curLeft, visible, lyr.DynamicVisibility);
+                DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
             }
 
             // ----------------------------------------------------------
@@ -1257,7 +1205,7 @@ namespace MW5.Api.Legend
             {
                 // draw text
                 var text = _map.get_LayerName(lyr.Handle);
-                textSize = drawTool.MeasureString(text, _font);
+                textSize = g.MeasureString(text, _font);
 
                 if (isSnapshot)
                 {
@@ -1275,678 +1223,199 @@ namespace MW5.Api.Legend
                 curHeight = Constants.TextHeight;
 
                 rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-                DrawText(drawTool, text, rect, _font, ForeColor);
+                DrawText(g, text, rect, _font, ForeColor);
 
                 var el = new LayerElement(LayerElementType.Name, rect, text);
                 lyr.Elements.Add(el);
             }
 
-            // -------------------------------------------------------------
-            // Drawing layer icon
-            // -------------------------------------------------------------
-            if (bounds.Width > 60 && bounds.Right - curLeft - 41 > textSize.Width)
+            // ----------------------------------------------------------
+            // icons to the right of the layer name
+            // ----------------------------------------------------------
+            DrawLayerIcon(g, lyr, bounds, curLeft, textSize, curTop);
+
+            // ----------------------------------------------------------
+            // Drawing expansion box
+            // ----------------------------------------------------------
+            var customRect = new Rectangle(
+                bounds.Left + Constants.CheckLeftPad,
+                lyr.Top + Constants.ItemHeight + Constants.ExpandBoxTopPad,
+                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent -
+                Constants.ExpandBoxLeftPad,
+                bounds.Height - lyr.Top);
+
+            if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
             {
-                // -5 (offset)
-                var top = bounds.Top + Constants.IconTopPad;
-                var left = bounds.Right - 36;
-                Image icon;
-
-                var ogrLayer = lyr.VectorSource;
-                if (ogrLayer != null)
-                {
-                    icon = Icons.GetIcon(LegendIcon.Database);
-                    DrawPicture(drawTool, left, curTop, Constants.IconSize, Constants.IconSize, icon);
-                }
-                else if (lyr.Icon != null)
-                {
-                    DrawPicture(drawTool, left, curTop, Constants.IconSize, Constants.IconSize, lyr.Icon);
-                }
-                else if (lyr.Type == LegendLayerType.Image)
-                {
-                    icon = Icons.GetIcon(LegendIcon.Image);
-                    DrawPicture(drawTool, left, top, Constants.IconSize, Constants.IconSize, icon);
-                }
-                else if (lyr.Type == LegendLayerType.Grid)
-                {
-                    icon = Icons.GetIcon(LegendIcon.Grid);
-                    DrawPicture(drawTool, left, top, Constants.IconSize, Constants.IconSize, icon);
-                }
-                else
-                {
-                    // drawing shapefile symbology preview, but only in case the layer is collapsed
-                    if (!lyr.Expanded)
-                    {
-                        lyr.SmallIconWasDrawn = true;
-
-                        // drawing category symbol
-                        var hdc = drawTool.GetHdc();
-                        var clr = (lyr.Handle == _selectedLayerHandle && bounds.Width > 25)
-                            ? SelectionColor
-                            : BackColor;
-                        var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
-
-                        var sf = _map.get_GetObject(lyr.Handle) as Shapefile;
-
-                        if (sf != null)
-                        {
-                            if (lyr.Type == LegendLayerType.PointShapefile)
-                            {
-                                sf.DefaultDrawingOptions.DrawPoint(
-                                    hdc,
-                                    left,
-                                    top,
-                                    Constants.IconSize,
-                                    Constants.IconSize,
-                                    backColor);
-                            }
-                            else if (lyr.Type == LegendLayerType.LineShapefile)
-                            {
-                                sf.DefaultDrawingOptions.DrawLine(
-                                    hdc,
-                                    left,
-                                    top,
-                                    Constants.IconSize - 1,
-                                    Constants.IconSize - 1,
-                                    false,
-                                    Constants.IconSize,
-                                    Constants.IconSize,
-                                    backColor);
-                            }
-                            else if (lyr.Type == LegendLayerType.PolygonShapefile)
-                            {
-                                sf.DefaultDrawingOptions.DrawRectangle(
-                                    hdc,
-                                    left,
-                                    top,
-                                    Constants.IconSize - 1,
-                                    Constants.IconSize - 1,
-                                    false,
-                                    Constants.IconSize,
-                                    Constants.IconSize,
-                                    backColor);
-                            }
-                        }
-
-                        drawTool.ReleaseHdc(hdc);
-                    }
-                }
-
-                // labels link
-                if (bounds.Width > 60 && bounds.Right - curLeft - 62 > textSize.Width)
-                {
-                    var sf = _map.get_Shapefile(lyr.Handle);
-                    if (sf != null)
-                    {
-                        var top2 = bounds.Top + Constants.IconTopPad;
-                        var left2 = bounds.Right - 56;
-
-                        var scale = _map.CurrentScale;
-                        var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible &&
-                                            sf.Labels.Expression.Trim() != string.Empty;
-                        labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
-
-                        var icon2 = Icons.GetIcon(labelsVisible ? LegendIcon.ActiveLabel : LegendIcon.DimmedLabel);
-                        DrawPicture(drawTool, left2, top2, Constants.IconSize, Constants.IconSize, icon2);
-                    }
-                }
-
-                // editing icon
-                if (bounds.Width > 60 && bounds.Right - curLeft - 82 > textSize.Width)
-                {
-                    var sf = _map.get_Shapefile(lyr.Handle);
-                    if (sf != null && sf.InteractiveEditing)
-                    {
-                        var top2 = bounds.Top + Constants.IconTopPad;
-                        var left2 = bounds.Right - 76;
-                        DrawPicture(
-                            drawTool,
-                            left2,
-                            top2,
-                            Constants.IconSize,
-                            Constants.IconSize,
-                            Icons.GetIcon(LegendIcon.Editing));
-                    }
-                }
+                var args = new LayerPaintEventArgs(lyr.Handle, customRect, g);
+                FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
             }
 
-            // -------------------------------------------------------------
-            // Drawing categories and expansion box for shapefiles
-            // -------------------------------------------------------------
-            if (lyr.IsShapefile)
+            if (bounds.Width > 17 && isSnapshot == false)
             {
-                if (bounds.Width > 17 && isSnapshot == false)
-                {
-                    rect = new Rectangle(
-                        bounds.Left,
-                        bounds.Top,
-                        bounds.Width - Constants.ItemRightPad,
-                        bounds.Height);
-                    DrawExpansionBox(
-                        drawTool,
-                        rect.Top + Constants.ExpandBoxTopPad,
-                        rect.Left + Constants.ExpandBoxLeftPad,
-                        lyr.Expanded);
-                }
+                rect = new Rectangle(
+                    bounds.Left,
+                    bounds.Top,
+                    bounds.Width - Constants.ItemRightPad,
+                    bounds.Height);
 
-                // drawing shapefile
-                DrawShapefileCategories(drawTool, lyr, bounds, isSnapshot);
+                DrawExpansionBox(
+                    g,
+                    rect.Top + Constants.ExpandBoxTopPad,
+                    rect.Left + Constants.ExpandBoxLeftPad,
+                    lyr.Expanded);
+            }
+
+            // ----------------------------------------------------------
+            //   Symbology below the layer name
+            // ----------------------------------------------------------
+            if ((!isSnapshot && !lyr.Expanded) || bounds.Width <= 47)
+            {
+                return;
+            }
+
+            if (lyr.IsVector)
+            {
+                var renderer = new VectorSymbologyRenderer(this);
+                renderer.Render(g, lyr, bounds, isSnapshot);
             }
             else
             {
-                // Draw the expansion box and sub items (if they exist or if we're being forced)
-                var customRect = new Rectangle(
-                    bounds.Left + Constants.CheckLeftPad,
-                    lyr.Top + Constants.ItemHeight + Constants.ExpandBoxTopPad,
-                    bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent -
-                    Constants.ExpandBoxLeftPad,
-                    bounds.Height - lyr.Top);
-
-                if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
-                {
-                    var args = new LayerPaintEventArgs(lyr.Handle, customRect, drawTool);
-                    FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
-                }
-
-                // Here, draw the + or - sign according to based on  layer.expanded property
-                if (lyr.ExpansionBoxForceAllowed || lyr.ColorSchemeCount > 0)
-                {
-                    if (bounds.Width > 17 && isSnapshot == false)
-                    {
-                        // SetRect(&LocalBounds, bounds.left + LIST_ITEM_INDENT,Top,bounds.right-ITEM_PAD,Top+lyr.Height);
-                        rect = new Rectangle(
-                            bounds.Left,
-                            bounds.Top,
-                            bounds.Width - Constants.ItemRightPad,
-                            bounds.Height);
-                        DrawExpansionBox(
-                            drawTool,
-                            rect.Top + Constants.ExpandBoxTopPad,
-                            rect.Left + Constants.ExpandBoxLeftPad,
-                            lyr.Expanded);
-                    }
-                }
+                var renderer = new RasterSymbologyRenderer(this);
+                renderer.Render(g, lyr, bounds, isSnapshot);
             }
         }
 
         /// <summary>
-        /// Draws color scheme (categories) for the shapefile layer
+        /// Draws layer icon to the right of the name.
         /// </summary>
-        /// <param name="drawTool"> The Draw Tool. </param>
-        /// <param name="layer"> The layer. </param>
-        /// <param name="bounds"> The bounds. </param>
-        /// <param name="isSnapshot"> The Is Snapshot. </param>
-        private void DrawShapefileCategories(Graphics drawTool, LegendLayer layer, Rectangle bounds, bool isSnapshot)
+        private void DrawLayerIcon(Graphics g, LegendLayer lyr, Rectangle bounds, int curLeft, SizeF textSize, int curTop)
         {
-            if (!layer.IsShapefile)
+            if (bounds.Width <= 60 || bounds.Right - curLeft - 41 <= textSize.Width)
             {
                 return;
             }
+            
+            // -5 (offset)
+            var top = bounds.Top + Constants.IconTopPad;
+            var left = bounds.Right - 36;
+            Image icon;
 
-            if ((!isSnapshot && !layer.Expanded) || bounds.Width <= 47)
+            var ogrLayer = lyr.VectorSource;
+            if (ogrLayer != null)
             {
-                return;
+                icon = Icons.GetIcon(LegendIcon.Database);
+                DrawPicture(g, left, curTop, Constants.IconSize, Constants.IconSize, icon);
             }
-
-            var sf = _map.get_Shapefile(layer.Handle);
-            if (sf == null)
+            else if (lyr.Icon != null)
             {
-                return;
+                DrawPicture(g, left, curTop, Constants.IconSize, Constants.IconSize, lyr.Icon);
             }
-
-            var maxWidth = Constants.IconWidth;
-            if (layer.Type == LegendLayerType.PointShapefile)
+            else if (lyr.Type == LegendLayerType.Image)
             {
-                maxWidth = layer.get_MaxIconWidth(sf);
+                icon = Icons.GetIcon(LegendIcon.Image);
+                DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
             }
-
-            var top = bounds.Top + Constants.ItemHeight + 2;
-            var height = layer.GetCategoryHeight(sf.DefaultDrawingOptions) + 2;
-
-            if (top + height > ClientRectangle.Top)
+            else if (lyr.Type == LegendLayerType.Grid)
             {
-                DrawShapefileCategory(
-                    drawTool,
-                    sf.DefaultDrawingOptions,
-                    layer,
-                    bounds,
-                    top,
-                    string.Empty,
-                    maxWidth);
+                icon = Icons.GetIcon(LegendIcon.Grid);
+                DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
             }
-
-            top += height;
-
-            Rectangle rect;
-            if (sf.Categories.Count > 0)
+            else
             {
-                // categories caption
-                var caption = sf.Categories.Caption;
-                if (caption == string.Empty)
+                // drawing shapefile symbology preview, but only in case the layer is collapsed
+                if (!lyr.Expanded)
                 {
-                    caption = "Categories";
-                }
+                    lyr.SmallIconWasDrawn = true;
 
-                var left = bounds.Left + Constants.TextLeftPad;
-                if (!(top + Constants.TextHeight < 0))
-                {
-                    rect = new Rectangle(
-                        left,
-                        top,
-                        bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                        Constants.TextHeight);
-                    DrawText(drawTool, caption, rect, _font, ForeColor);
-                }
+                    // drawing category symbol
+                    var hdc = g.GetHdc();
+                    var clr = (lyr.Handle == _selectedLayerHandle && bounds.Width > 25)
+                        ? SelectionColor
+                        : BackColor;
+                    var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
 
-                top += Constants.CsItemHeight + 2;
+                    var sf = _map.get_GetObject(lyr.Handle) as Shapefile;
 
-                // figure out if we can clip any of the categories at the top
-                var i = 0;
-                var categories = sf.Categories;
-                var numCategories = sf.Categories.Count;
-                if (top < ClientRectangle.Top && isSnapshot == false)
-                {
-                    while (i < numCategories)
+                    if (sf != null)
                     {
-                        // for point categories height can be different
-                        top += layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
-
-                        if (top < ClientRectangle.Top)
-                        {
-                            i++;
-                        }
-                        else
-                        {
-                            top -= layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
-
-                            // this category should be drawn
-                            break;
-                        }
-                    }
-                }
-
-                // we shall draw symbology first and text second
-                // symbology is drawn from ocx, so it's better to draw all categories at once
-                // avoiding additional GetHDC calls
-                var hdc = drawTool.GetHdc();
-                var topTemp = top;
-                var startIndex = i;
-                for (; i < categories.Count; i++)
-                {
-                    var cat = categories.Item[i];
-                    var options = cat.DrawingOptions;
-
-                    DrawShapefileCategorySymbology(drawTool, options, layer, bounds, topTemp, maxWidth, i, hdc);
-
-                    topTemp += layer.GetCategoryHeight(options);
-                    if (topTemp >= ClientRectangle.Bottom && isSnapshot == false)
-                    {
-                        // stop drawing in case there are not visible
-                        break;
-                    }
-                }
-
-                drawTool.ReleaseHdc(hdc);
-
-                // now when hdc is released, GDI+ can be used for the text
-                i = startIndex;
-                for (; i < categories.Count; i++)
-                {
-                    var cat = categories.Item[i];
-                    var options = cat.DrawingOptions;
-
-                    DrawShapefileCategoryText(drawTool, options, layer, bounds, top, cat.Name, maxWidth, i);
-
-                    top += layer.GetCategoryHeight(options);
-                    if (top >= ClientRectangle.Bottom && isSnapshot == false)
-                    {
-                        // stop drawing in case there are not visible
-                        break;
-                    }
-                }
-            }
-
-            // charts
-            if (sf.Charts.Count > 0 && sf.Charts.NumFields > 0 && sf.Charts.Visible)
-            {
-                // charts caption
-                var caption = sf.Charts.Caption;
-                if (caption == string.Empty)
-                {
-                    caption = CHARTS_CAPTION;
-                }
-
-                var left = bounds.Left + Constants.TextLeftPad;
-                rect = new Rectangle(
-                    left,
-                    top,
-                    bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                    Constants.TextHeight);
-                DrawText(drawTool, caption, rect, _font, ForeColor);
-                top += Constants.CsItemHeight + 2;
-
-                // storing bounds
-                var el = new LayerElement(LayerElementType.Charts, rect);
-                layer.Elements.Add(el);
-
-                // preview
-                var hdc = drawTool.GetHdc();
-                var backColor = Convert.ToUInt32(ColorTranslator.ToOle(BackColor));
-
-                left = bounds.Left + Constants.TextLeftPad;
-                sf.Charts.DrawChart(hdc, left, top, true, backColor);
-                top += sf.Charts.IconHeight + 2;
-                drawTool.ReleaseHdc(hdc);
-
-                // storing bounds
-                el = new LayerElement(LayerElementType.ChartField, rect);
-                layer.Elements.Add(el);
-
-                // fields
-                var color = ColorTranslator.FromOle(Convert.ToInt32(sf.Charts.LineColor));
-                var pen = new Pen(color);
-
-                for (var i = 0; i < sf.Charts.NumFields; i++)
-                {
-                    rect = new Rectangle(left, top, Constants.IconWidth, Constants.IconHeight);
-                    color = ColorTranslator.FromOle(Convert.ToInt32(sf.Charts.Field[i].Color));
-                    var brush = new SolidBrush(color);
-                    drawTool.FillRectangle(brush, rect);
-                    drawTool.DrawRectangle(pen, rect);
-
-                    // storing bounds
-                    el = new LayerElement(LayerElementType.ChartField, rect, i);
-                    layer.Elements.Add(el);
-
-                    rect = new Rectangle(
-                        left + Constants.IconWidth + 5,
-                        top,
-                        bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                        Constants.TextHeight);
-                    var name = sf.Charts.Field[i].Name;
-                    DrawText(drawTool, name, rect, _font, Color.Black);
-
-                    // storing bounds
-                    el = new LayerElement(LayerElementType.ChartFieldName, rect, name, i);
-                    layer.Elements.Add(el);
-
-                    top += Constants.CsItemHeight + 2;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Draws shapefile category in specified location
-        /// </summary>
-        /// <param name="drawTool"> The Draw Tool. </param>
-        /// <param name="options"> Options to use for drawing </param>
-        /// <param name="layer"> The layer. </param>
-        /// <param name="bounds"> The bounds. </param>
-        /// <param name="top"> The top. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="maxWidth"> The max Width. </param>
-        private void DrawShapefileCategory(
-            Graphics drawTool,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            string name,
-            int maxWidth)
-        {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            var categoryWidth = layer.GetCategoryWidth(options);
-
-            // drawing category symbol
-            var hdc = drawTool.GetHdc();
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(BackColor));
-
-            var left = bounds.Left + Constants.TextLeftPad;
-            if (categoryWidth != Constants.IconWidth)
-            {
-                left -= (categoryWidth - Constants.IconWidth)/2;
-            }
-
-            if (layer.Type == LegendLayerType.PointShapefile)
-            {
-                options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
-            }
-            else if (layer.Type == LegendLayerType.LineShapefile)
-            {
-                options.DrawLine(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-            else if (layer.Type == LegendLayerType.PolygonShapefile)
-            {
-                options.DrawRectangle(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-
-            drawTool.ReleaseHdc(hdc);
-
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight)/2;
-            }
-
-            // drawing category name
-            left = bounds.Left + Constants.TextLeftPad + (Constants.IconWidth/2) + (maxWidth/2) + 5;
-
-            var rect = new Rectangle(
-                left,
-                top,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                Constants.TextHeight);
-            DrawText(drawTool, name, rect, _font, Color.Black);
-        }
-
-        /// <summary>
-        /// Draws shapefile category. It's assumed here that GetHDC and ReleaseHDC calls are made by caller
-        /// </summary>
-        /// <param name="drawTool"> The Draw Tool. </param>
-        /// <param name="options"> The options. </param>
-        /// <param name="layer"> The layer. </param>
-        /// <param name="bounds"> The bounds. </param>
-        /// <param name="top"> The top. </param>
-        /// <param name="maxWidth"> The max Width. </param>
-        /// <param name="index"> The index. </param>
-        /// <param name="hdc"> The hdc. </param>
-        private void DrawShapefileCategorySymbology(
-            Graphics drawTool,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            int maxWidth,
-            int index,
-            IntPtr hdc)
-        {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            var categoryWidth = layer.GetCategoryWidth(options);
-
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(BackColor));
-
-            var left = bounds.Left + Constants.TextLeftPad;
-            if (categoryWidth != Constants.IconWidth)
-            {
-                left -= (categoryWidth - Constants.IconWidth)/2;
-            }
-
-            if (layer.Type == LegendLayerType.PointShapefile)
-            {
-                options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
-            }
-            else if (layer.Type == LegendLayerType.LineShapefile)
-            {
-                options.DrawLine(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-            else if (layer.Type == LegendLayerType.PolygonShapefile)
-            {
-                options.DrawRectangle(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight)/2;
-            }
-        }
-
-        /// <summary>
-        /// Draw the text for the shapefile category
-        /// </summary>
-        /// <param name="drawTool"> The Draw Tool. </param>
-        /// <param name="options"> The options. </param>
-        /// <param name="layer"> The layer. </param>
-        /// <param name="bounds"> The bounds. </param>
-        /// <param name="top"> The top. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="maxWidth"> The max Width. </param>
-        /// <param name="index"> The index. </param>
-        private void DrawShapefileCategoryText(
-            Graphics drawTool,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            string name,
-            int maxWidth,
-            int index)
-        {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight)/2;
-            }
-
-            // drawing category name
-            var left = bounds.Left + Constants.TextLeftPad + (Constants.IconWidth/2) + (maxWidth/2) + 5;
-
-            var rect = new Rectangle(
-                left,
-                top,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                Constants.TextHeight);
-            DrawText(drawTool, name, rect, _font, ForeColor);
-        }
-
-        /// <summary>
-        /// Drawing icon for the new symbology
-        /// </summary>
-        /// <param name="drawTool"> </param>
-        /// <param name="layer"> The layer. </param>
-        /// <param name="topPos"> </param>
-        /// <param name="leftPos"> </param>
-        private void DrawLayerSymbolNew(Graphics drawTool, LegendLayer layer, int topPos, int leftPos)
-        {
-            var oldSmoothingMode = drawTool.SmoothingMode;
-
-            try
-            {
-                drawTool.SmoothingMode = SmoothingMode.AntiAlias;
-                Image icon;
-
-                switch (layer.Type)
-                {
-                    case LegendLayerType.Grid:
-                        icon = Icons.GetIcon(LegendIcon.Grid);
-                        DrawPicture(drawTool, leftPos, topPos, Constants.IconSize, Constants.IconSize, icon);
-                        break;
-                    case LegendLayerType.Image:
-                        icon = Icons.GetIcon(LegendIcon.Image);
-                        DrawPicture(drawTool, leftPos, topPos, Constants.IconSize, Constants.IconSize, icon);
-                        break;
-                    default:
-                        var sf = _map.get_GetObject(layer.Handle) as Shapefile;
-                        if (sf == null)
-                        {
-                            MessageBox.Show("Error: shapefile not set");
-                            return;
-                        }
-
-                        var hdc = drawTool.GetHdc();
-
-                        var backColor = Convert.ToUInt32(ColorTranslator.ToOle(BackColor));
-
-                        if (layer.Type == LegendLayerType.PointShapefile)
+                        if (lyr.Type == LegendLayerType.PointShapefile)
                         {
                             sf.DefaultDrawingOptions.DrawPoint(
                                 hdc,
-                                leftPos,
-                                topPos,
-                                Constants.IconWidth,
-                                Constants.IconHeight,
+                                left,
+                                top,
+                                Constants.IconSize,
+                                Constants.IconSize,
                                 backColor);
                         }
-                        else if (layer.Type == LegendLayerType.LineShapefile)
+                        else if (lyr.Type == LegendLayerType.LineShapefile)
                         {
                             sf.DefaultDrawingOptions.DrawLine(
                                 hdc,
-                                leftPos,
-                                topPos,
-                                Constants.IconWidth - 1,
+                                left,
+                                top,
+                                Constants.IconSize - 1,
                                 Constants.IconSize - 1,
                                 false,
-                                Constants.IconWidth,
-                                Constants.IconHeight,
+                                Constants.IconSize,
+                                Constants.IconSize,
                                 backColor);
                         }
-                        else if (layer.Type == LegendLayerType.PolygonShapefile)
+                        else if (lyr.Type == LegendLayerType.PolygonShapefile)
                         {
                             sf.DefaultDrawingOptions.DrawRectangle(
                                 hdc,
-                                leftPos,
-                                topPos,
-                                Constants.IconWidth - 1,
+                                left,
+                                top,
+                                Constants.IconSize - 1,
                                 Constants.IconSize - 1,
                                 false,
-                                Constants.IconWidth,
-                                Constants.IconHeight,
+                                Constants.IconSize,
+                                Constants.IconSize,
                                 backColor);
                         }
+                    }
 
-                        drawTool.ReleaseHdc(hdc);
-                        break;
+                    g.ReleaseHdc(hdc);
                 }
             }
-            catch (Exception ex)
+
+            // labels link
+            if (bounds.Width > 60 && bounds.Right - curLeft - 62 > textSize.Width)
             {
-                var temp = ex.Message;
+                var sf = _map.get_Shapefile(lyr.Handle);
+                if (sf != null)
+                {
+                    var top2 = bounds.Top + Constants.IconTopPad;
+                    var left2 = bounds.Right - 56;
+
+                    var scale = _map.CurrentScale;
+                    var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible &&
+                                        sf.Labels.Expression.Trim() != string.Empty;
+                    labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
+
+                    var icon2 = Icons.GetIcon(labelsVisible ? LegendIcon.ActiveLabel : LegendIcon.DimmedLabel);
+                    DrawPicture(g, left2, top2, Constants.IconSize, Constants.IconSize, icon2);
+                }
             }
 
-            drawTool.SmoothingMode = oldSmoothingMode;
+            // editing icon
+            if (bounds.Width > 60 && bounds.Right - curLeft - 82 > textSize.Width)
+            {
+                var sf = _map.get_Shapefile(lyr.Handle);
+                if (sf != null && sf.InteractiveEditing)
+                {
+                    var top2 = bounds.Top + Constants.IconTopPad;
+                    var left2 = bounds.Right - 76;
+                    DrawPicture(
+                        g,
+                        left2,
+                        top2,
+                        Constants.IconSize,
+                        Constants.IconSize,
+                        Icons.GetIcon(LegendIcon.Editing));
+                }
+            }
         }
 
         /// <summary>
@@ -2110,9 +1579,9 @@ namespace MW5.Api.Legend
                         curHeight = Constants.ExpandBoxSize;
                         bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
-                        if (lyr.Type == LegendLayerType.Image || lyr.Type == LegendLayerType.Grid)
+                        if (lyr.IsRaster)
                         {
-                            if (bounds.Contains(point) && (lyr.ColorSchemeCount > 0 || lyr.ExpansionBoxForceAllowed))
+                            if (bounds.Contains(point) && (lyr.RasterSymbologyCount > 0 || lyr.ExpansionBoxForceAllowed))
                             {
                                 element.ExpansionBox = true;
                                 return lyr;
@@ -2129,7 +1598,7 @@ namespace MW5.Api.Legend
                             return lyr;
                         }
 
-                        if (!lyr.Expanded && lyr.IsShapefile && lyr.SmallIconWasDrawn)
+                        if (!lyr.Expanded && lyr.IsVector && lyr.SmallIconWasDrawn)
                         {
                             curHeight = Constants.IconSize;
                             curWidth = Constants.IconSize;
@@ -2149,7 +1618,7 @@ namespace MW5.Api.Legend
                         }
 
                         // layer icon (to the right from the caption)
-                        if ( lyr.IsShapefile )
+                        if ( lyr.IsVector )
                         {
                             curHeight = Constants.IconSize;
                             curWidth = Constants.IconSize;
@@ -2863,7 +2332,7 @@ namespace MW5.Api.Legend
             var lyr = FindClickedLayer(pnt, out inCheck, out inExpansion);
             if (lyr != null && inCheck == false)
             {
-                if (inExpansion == false || lyr.ColorSchemeCount == 0)
+                if (inExpansion == false || lyr.RasterSymbologyCount == 0)
                 {
                     FireEvent(this, LayerMouseUp, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                 }
@@ -2941,22 +2410,6 @@ namespace MW5.Api.Legend
             {
                 FindDropLocation(e.Y);
                 DrawDragLine(_dragInfo.TargetGroupIndex, _dragInfo.TargetLayerIndex);
-            }
-            else
-            {
-                // TODO: it's flickering
-                //show a tooltip if the mouse is over a layer
-                //bool inCheck, inExpand;
-                //var lyr = FindClickedLayer(new Point(e.X, e.Y), out inCheck, out inExpand);
-                //if (lyr != null)
-                //{
-                //    _toolTip.AutoPopDelay = 5000;
-                //    _toolTip.InitialDelay = 1000;
-                //    _toolTip.ReshowDelay = 500;
-                //    _toolTip.ShowAlways = false;
-                //    string caption = _map.get_LayerName(lyr.Handle);
-                //    _toolTip.SetToolTip(this, caption);
-                //}
             }
         }
 
@@ -3208,8 +2661,6 @@ namespace MW5.Api.Legend
             }
         }
 
-
-
         /// <summary>
         /// Move a layer to a new location and/or group
         /// </summary>
@@ -3316,14 +2767,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw transparent patch.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="topPos"> The top pos. </param>
-        /// <param name="leftPos"> The left pos. </param>
-        /// <param name="boxHeight"> The box height. </param>
-        /// <param name="boxWidth"> The box width. </param>
-        /// <param name="outlineColor"> The outline color. </param>
-        /// <param name="drawOutline"> The draw outline. </param>
-        private void DrawTransparentPatch(Graphics drawTool, int topPos, int leftPos, int boxHeight, int boxWidth,
+        private void DrawTransparentPatch(Graphics g, int topPos, int leftPos, int boxHeight, int boxWidth,
             Color outlineColor, bool drawOutline)
         {
             var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
@@ -3331,28 +2775,19 @@ namespace MW5.Api.Legend
 
             // fill the rectangle with a diagonal hatch
             Brush brush = new HatchBrush(HatchStyle.LightUpwardDiagonal, _boxLineColor, Color.White);
-            drawTool.FillRectangle(brush, rect);
+            g.FillRectangle(brush, rect);
 
             if (drawOutline)
             {
-                drawTool.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
+                g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
             }
         }
 
         /// <summary>
         /// The draw color patch.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="startColor"> The start color. </param>
-        /// <param name="endColor"> The end color. </param>
-        /// <param name="topPos"> The top pos. </param>
-        /// <param name="leftPos"> The left pos. </param>
-        /// <param name="boxHeight"> The box height. </param>
-        /// <param name="boxWidth"> The box width. </param>
-        /// <param name="outlineColor"> The outline color. </param>
-        /// <param name="drawOutline"> The draw outline. </param>
         private void DrawColorPatch(
-            Graphics drawTool,
+            Graphics g,
             Color startColor,
             Color endColor,
             int topPos,
@@ -3363,7 +2798,7 @@ namespace MW5.Api.Legend
             bool drawOutline)
         {
             DrawColorPatch(
-                drawTool,
+                g,
                 startColor,
                 endColor,
                 topPos,
@@ -3378,18 +2813,8 @@ namespace MW5.Api.Legend
         /// <summary>
         /// The draw color patch.
         /// </summary>
-        /// <param name="drawTool"> The draw tool. </param>
-        /// <param name="startColor"> The start color. </param>
-        /// <param name="endColor"> The end color. </param>
-        /// <param name="topPos"> The top pos. </param>
-        /// <param name="leftPos"> The left pos. </param>
-        /// <param name="boxHeight"> The box height. </param>
-        /// <param name="boxWidth"> The box width. </param>
-        /// <param name="outlineColor"> The outline color. </param>
-        /// <param name="drawOutline"> The draw outline. </param>
-        /// <param name="layerType"> The layer type. </param>
         private void DrawColorPatch(
-            Graphics drawTool,
+            Graphics g,
             Color startColor,
             Color endColor,
             int topPos,
@@ -3400,6 +2825,8 @@ namespace MW5.Api.Legend
             bool drawOutline,
             LegendLayerType layerType)
         {
+            //TODO: revisit
+            
             // Note - LayerType == invalid when we don't care :)
             if (layerType == LegendLayerType.LineShapefile)
             {
@@ -3410,14 +2837,14 @@ namespace MW5.Api.Legend
 
                 var pen = new Pen(startColor, 2);
 
-                var oldSmoothingMode = drawTool.SmoothingMode;
-                drawTool.SmoothingMode = SmoothingMode.AntiAlias;
+                var oldSmoothingMode = g.SmoothingMode;
+                g.SmoothingMode = SmoothingMode.AntiAlias;
 
-                drawTool.DrawLine(pen, leftPos, topPos + 8, leftPos + 4, topPos + 3);
-                drawTool.DrawLine(pen, leftPos + 4, topPos + 3, leftPos + 9, topPos + 10);
-                drawTool.DrawLine(pen, leftPos + 9, topPos + 10, leftPos + 13, topPos + 4);
+                g.DrawLine(pen, leftPos, topPos + 8, leftPos + 4, topPos + 3);
+                g.DrawLine(pen, leftPos + 4, topPos + 3, leftPos + 9, topPos + 10);
+                g.DrawLine(pen, leftPos + 9, topPos + 10, leftPos + 13, topPos + 4);
 
-                drawTool.SmoothingMode = oldSmoothingMode;
+                g.SmoothingMode = oldSmoothingMode;
             }
             else
             {
@@ -3426,11 +2853,11 @@ namespace MW5.Api.Legend
 
                 // fill the rectangle with a gradient fill
                 Brush brush = new LinearGradientBrush(rect, startColor, endColor, LinearGradientMode.Horizontal);
-                drawTool.FillRectangle(brush, rect);
+                g.FillRectangle(brush, rect);
 
                 if (drawOutline)
                 {
-                    drawTool.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
+                    g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
                 }
             }
         }

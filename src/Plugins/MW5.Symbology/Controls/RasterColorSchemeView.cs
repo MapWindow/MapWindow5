@@ -90,7 +90,7 @@ namespace MW5.Plugins.Symbology.Controls
             get { return cboSelectedBand.SelectedIndex + 1; }
         }
 
-        private RasterRendering Rendering
+        public RasterRendering Rendering
         {
             get { return cboRasterRendering.GetValue<RasterRendering>(); }
         }

@@ -19,7 +19,7 @@ namespace MW5.Services.Serialization
             Filename = layer.Filename;
             Expanded = layer.Expanded;
             HideFromLegend = layer.HideFromLegend;
-            ColorSchemeCaption = layer.ColorSchemeCaption;
+            ColorSchemeCaption = layer.SymbologyCaption;
             Guid = layer.Guid;
             LayerType = layer.LayerType;
         }
@@ -29,7 +29,7 @@ namespace MW5.Services.Serialization
             layer.Deserialize(Layer.OuterXml);
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
-            layer.ColorSchemeCaption = ColorSchemeCaption;
+            layer.SymbologyCaption = ColorSchemeCaption;
             layer.Guid = Guid;
         }
 

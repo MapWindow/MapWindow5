@@ -14,7 +14,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public partial class RasterColorSchemeGrid : GridListControl<GridColorInterval>
+    public partial class RasterColorSchemeGrid : GridListControl<RasterInterval>
     {
         public const string ModelName = "ColorModel";
         public const int RowHeight = 20;
@@ -43,6 +43,8 @@ namespace MW5.Plugins.Symbology.Controls
             set
             {
                 base.DataSource = value;
+
+                AdjustColumnWidths();
 
                 var cmn = GetColumn(item => item.LowColor);
                 if (cmn != null)

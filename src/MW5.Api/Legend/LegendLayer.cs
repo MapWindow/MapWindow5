@@ -29,9 +29,7 @@ namespace MW5.Api.Legend
         private bool _hideFromLegend;
         private bool _recalcHeight;
         private int _height;
-
-        internal bool SmallIconWasDrawn;   // temp flag storage during drawing
-        internal int Top;                  // vertical position, is set by the LegendControl
+        private string _symbologyCaption;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendLayer"/> class.
@@ -48,31 +46,12 @@ namespace MW5.Api.Legend
 
             Expanded = true;
             SmallIconWasDrawn = false;
-            ColorSchemeCaption = "";
+            SymbologyCaption = "";
         }
 
-        #region Custom rendering
-
-        // internal for now; need to see how to (and whether to) expose it to plugins
-
         /// <summary>
-        /// Tells the legend how high your custom rendered legend will be, so that it can  arrange items around it.
+        /// Gets the unique identifier of the layer. Used internal during project serialization.
         /// </summary>
-        internal EventHandler<LayerMeasureEventArgs> ExpansionBoxCustomHeightFunction = null;
-
-        /// <summary>
-        /// Allows you to render the expanded region of a layer yourself. Useful with ExpansionBoxForceAllowed=true.
-        /// If you use this, you must also set ExpansionBoxCustomHeightFunction.
-        /// </summary>
-        internal EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
-
-        /// <summary>
-        /// Allows you to force the expansion box option to be shown, e.g. you're planning to use ExpansionBoxCustomRenderFunction.
-        /// </summary>
-        internal bool ExpansionBoxForceAllowed = false;
-
-        #endregion
-
         public Guid Guid { get; set; }
 
         /// <summary>
@@ -82,7 +61,6 @@ namespace MW5.Api.Legend
         /// </summary>
         public object Icon
         {
-            // TODO: limit the type
             get { return _icon; }
 
             set
@@ -91,10 +69,14 @@ namespace MW5.Api.Legend
                 {
                     throw new Exception("LegendControl Error: Invalid Group Icon type");
                 }
+
                 _icon = value;
             }
         }
 
+        /// <summary>
+        /// Gets the height of layer in the legend coordinates.
+        /// </summary>
         internal int Height
         {
             get
@@ -108,6 +90,9 @@ namespace MW5.Api.Legend
             }
         }
 
+        /// <summary>
+        /// Gets the height of the expanded layer.
+        /// </summary>
         internal int ExpandedHeight
         {
             get { return CalcHeight(true); }
@@ -144,19 +129,80 @@ namespace MW5.Api.Legend
         /// <summary>
         /// If you wish to display a caption (e.g. "Region") above the legend items for the layer. Set "" to disable.
         /// </summary>
-        public string ColorSchemeCaption { get; set; }
+        public string SymbologyCaption
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_symbologyCaption))
+                {
+                    if (IsVector)
+                    {
+                        var sf = AxMap.get_Shapefile(Handle);
+                        return sf != null ? sf.Categories.Caption : "";
+                    }
+
+                    var raster = ImageSource as IRasterSource;
+                    if (raster != null)
+                    {
+                        switch (raster.RenderingType)
+                        {
+                            case RenderingType.Grid:
+                                var band = raster.ActiveBand;    
+                                string interp = band != null ? "(" + band.ColorInterpretation + ")" : "";
+                                return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands, interp);
+                            case RenderingType.Rgb:
+                                return "RGB";
+                            case RenderingType.Grayscale:
+                                return "Band 1: greyscale";
+                        }
+                    }
+                }
+
+                return _symbologyCaption;
+            }
+            set
+            {
+                _symbologyCaption = value;
+            }
+        }
 
         /// <summary>
         /// Gets number of items in colors scheme for image or grid
         /// </summary>
-        internal int ColorSchemeCount
+        internal int RasterSymbologyCount
         {
             get
             {
-                // TODO: implement
+                var raster = ImageSource as IRasterSource;
+                if (raster != null)
+                {
+                    switch (raster.RenderingType)
+                    {
+                        case RenderingType.Grid:
+                            var scheme = raster.CustomColorScheme;
+                            return scheme != null ? scheme.NumBreaks : 0;
+                        case RenderingType.Rgb:
+                            return 3;
+                        case RenderingType.Grayscale:
+                            return 1;
+                    }
+                    
+                    return raster.NumBands == 1 ? 1 : 3;
+                }
+
                 return 0;
             }
         }
+
+        /// <summary>
+        /// Temp flag storage during drawing
+        /// </summary>
+        internal bool SmallIconWasDrawn { get; set; }
+
+        /// <summary>
+        /// Vertical position, is set by the LegendControl
+        /// </summary>
+        internal int Top;
 
         /// <summary>
         /// Gets or sets the data type of the layer.
@@ -167,7 +213,7 @@ namespace MW5.Api.Legend
             {
                 if (IsVector)
                 {
-                    var fs = this.FeatureSet;
+                    var fs = FeatureSet;
                     if (fs != null)
                     {
                         switch (fs.GeometryType)
@@ -184,11 +230,22 @@ namespace MW5.Api.Legend
                 }
                 else if (LayerType == LayerType.Image)
                 {
-                    // TODO: return grid
-                    return LegendLayerType.Image;
+                    var raster = ImageSource as IRasterSource;
+                    if (raster == null)
+                    {
+                        return LegendLayerType.Image;
+                    }
+
+                    return raster.RenderingType == RenderingType.Rgb ? LegendLayerType.Image : LegendLayerType.Grid;
                 }
+
                 return LegendLayerType.Invalid;
             }
+        }
+
+        internal bool IsRaster
+        {
+            get { return LayerType == LayerType.Image || LayerType == LayerType.Grid; }
         }
 
         internal bool IsShapefile
@@ -273,10 +330,8 @@ namespace MW5.Api.Legend
         {
             if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
-                var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ItemHeight)
-                {
-                    Handled = false
-                };
+                var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ItemHeight) { Handled = false };
+                
                 ExpansionBoxCustomHeightFunction.Invoke(this, args);
 
                 if (args.Handled)
@@ -287,44 +342,36 @@ namespace MW5.Api.Legend
                 return Constants.ItemHeight;
             }
 
-            int ret;
+            // layer name
+            int ret = Constants.ItemHeightAndPad();
+
+            bool expanded = _expanded || useExpandedHeight;
 
             if (Type == LegendLayerType.Grid || Type == LegendLayerType.Image)
             {
-                if (useExpandedHeight == false && (_expanded == false || ColorSchemeCount == 0))
+                if (RasterSymbologyCount > 0)
                 {
-                    ret = Constants.ItemHeight;
-                }
-                else
-                {
-                    ret = Constants.ItemHeight + (ColorSchemeCount * Constants.CsItemHeight) + 2;
-                }
+                    ret += !string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
 
-                // Add in caption space
-                if (useExpandedHeight || _expanded)
-                {
-                    ret += (ColorSchemeCaption.Trim() != string.Empty ? Constants.CsItemHeight : 0);
-
+                    ret += RasterSymbologyCount * Constants.CsItemHeightAndPad();
                 }
             }
             else
             {
                 var sf = _map.get_Shapefile(Handle);
 
-                if ((useExpandedHeight || _expanded) && sf != null)
+                if (sf != null && expanded)
                 {
-                    ret = Constants.ItemHeight + 2; // layer name
-
-                    ret += GetCategoryHeight(sf.DefaultDrawingOptions) + 2; // default symbology
+                    ret += GetCategoryHeight(sf.DefaultDrawingOptions) + Constants.VerticalPad; // default symbology
 
                     if (sf.Categories.Count > 0)
                     {
-                        ret += Constants.CsItemHeight + 2; // caption
+                        ret += Constants.CsItemHeight + Constants.VerticalPad; // caption
 
                         var categories = sf.Categories;
                         if (Type == LegendLayerType.LineShapefile || Type == LegendLayerType.PolygonShapefile)
                         {
-                            ret += sf.Categories.Count*(Constants.CsItemHeight + 2);
+                            ret += sf.Categories.Count * (Constants.CsItemHeight + Constants.VerticalPad);
                         }
                         else
                         {
@@ -334,24 +381,19 @@ namespace MW5.Api.Legend
                             }
                         }
 
-                        ret += 2;
+                        ret += Constants.VerticalPad;
                     }
 
                     if (sf.Charts.Count > 0 && sf.Charts.NumFields > 0 && sf.Charts.Visible)
                     {
-                        ret += Constants.CsItemHeight + 2; // caption
+                        ret += Constants.CsItemHeightAndPad(); // caption
                         ret += sf.Charts.IconHeight;
-                        ret += 2;
+                        ret += Constants.VerticalPad;
 
-                        ret += sf.Charts.NumFields*(Constants.CsItemHeight + 2);
+                        ret += sf.Charts.NumFields * Constants.CsItemHeightAndPad();
                     }
                 }
-                else
-                {
-                    ret = Constants.ItemHeight;
-                }
             }
-
             return ret;
         }
 
@@ -479,5 +521,27 @@ namespace MW5.Api.Legend
         {
             _recalcHeight = true;
         }
+
+        #region Custom rendering
+
+        // internal for now; need to see how to (and whether to) expose it to plugins
+
+        /// <summary>
+        /// Tells the legend how high your custom rendered legend will be, so that it can  arrange items around it.
+        /// </summary>
+        internal EventHandler<LayerMeasureEventArgs> ExpansionBoxCustomHeightFunction = null;
+
+        /// <summary>
+        /// Allows you to render the expanded region of a layer yourself. Useful with ExpansionBoxForceAllowed=true.
+        /// If you use this, you must also set ExpansionBoxCustomHeightFunction.
+        /// </summary>
+        internal EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
+
+        /// <summary>
+        /// Allows you to force the expansion box option to be shown, e.g. you're planning to use ExpansionBoxCustomRenderFunction.
+        /// </summary>
+        internal bool ExpansionBoxForceAllowed = false;
+
+        #endregion
     }
 }

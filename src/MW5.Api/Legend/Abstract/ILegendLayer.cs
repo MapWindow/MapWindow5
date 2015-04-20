@@ -36,7 +36,7 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// If you wish to display a caption (e.g. "Region") above the legend items for the layer. Set "" to disable.
         /// </summary>
-        string ColorSchemeCaption { get; set; }
+        string SymbologyCaption { get; set; }
 
         /// <summary>
         /// Returns custom object for specified key

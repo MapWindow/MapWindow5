@@ -49,5 +49,17 @@
         public const int CsPatchWidth = 15;
         public const int CsPatchLeftIndent = CheckLeftPad;
         public const int CsTextLeftIndent = CsPatchLeftIndent + CsPatchWidth + 3;
+
+        public const int VerticalPad = 2;
+
+        public static int ItemHeightAndPad()
+        {
+            return ItemHeight + VerticalPad;
+        }
+
+        public static int CsItemHeightAndPad()
+        {
+            return CsItemHeight + VerticalPad;
+        }
     }
 }

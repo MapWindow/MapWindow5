@@ -1382,4 +1382,11 @@
         CFloat32 = 10,
         CFloat64 = 11,
     }
+
+    public enum RenderingType
+    {
+        Grid = 0,
+        Rgb = 1,
+        Grayscale = 2,
+    }
 }

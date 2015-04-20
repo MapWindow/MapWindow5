@@ -10,7 +10,7 @@ using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
-    public class RasterColorScheme: IEnumerable<GridColorInterval>, ISerializableComWrapper
+    public class RasterColorScheme: IEnumerable<RasterInterval>, ISerializableComWrapper
     {
         private readonly GridColorScheme _scheme;
 
@@ -49,7 +49,7 @@ namespace MW5.Api.Concrete
             _scheme.SetLightSource(azimuth, elevation);
         }
 
-        public void InsertInterval(GridColorInterval interval)
+        public void AddInterval(RasterInterval interval)
         {
             _scheme.InsertBreak(interval.GetInternal());
         }
@@ -67,6 +67,11 @@ namespace MW5.Api.Concrete
         public void SetPredefined(double lowValue, double highValue, PredefinedColors preset = PredefinedColors.SummerMountains)
         {
             _scheme.UsePredefined(lowValue, highValue, (PredefinedColorScheme) preset);
+
+            foreach (var item in this)
+            {
+                item.Caption = string.Format("{0} - {1}", item.LowValue, item.HighValue);
+            }
         }
 
         public Vector3D GetLightSource()
@@ -74,7 +79,7 @@ namespace MW5.Api.Concrete
             return new Vector3D(_scheme.GetLightSource());
         }
 
-        public void InsertAt(int position, GridColorInterval interval)
+        public void InsertAt(int position, RasterInterval interval)
         {
             _scheme.InsertAt(position, interval.GetInternal());
         }
@@ -137,12 +142,12 @@ namespace MW5.Api.Concrete
             get { return _scheme.LightSourceElevation; }
         }
 
-        public GridColorInterval this[int index]
+        public RasterInterval this[int index]
         {
             get
             {
                 var cb = _scheme.Break[index];
-                return cb != null ? new GridColorInterval(cb) : null;
+                return cb != null ? new RasterInterval(cb) : null;
             }
         }
 
@@ -152,11 +157,11 @@ namespace MW5.Api.Concrete
             set { _scheme.NoDataColor = ColorHelper.ColorToUInt(value); }
         }
 
-        public IEnumerator<GridColorInterval> GetEnumerator()
+        public IEnumerator<RasterInterval> GetEnumerator()
         {
             for (int i = 0; i < _scheme.NumBreaks; i++)
             {
-                yield return new GridColorInterval(_scheme.Break[i]);
+                yield return new RasterInterval(_scheme.Break[i]);
             }
         }
 

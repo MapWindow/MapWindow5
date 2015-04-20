@@ -102,7 +102,7 @@ namespace MW5.Plugins.DebugWindow.Views
             return -1;
         }
 
-        public IEnumerable<ToolStripItemCollection> Toolstrips
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
             get { yield return toolStripEx1.Items; }
         }

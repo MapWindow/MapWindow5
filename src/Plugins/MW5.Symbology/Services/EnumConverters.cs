@@ -33,7 +33,7 @@ namespace MW5.Plugins.Symbology.Services
             switch (value)
             {
                 case RasterRendering.SingleBand:
-                    return "Single band grey";
+                    return "Single band greyscale";
                 case RasterRendering.MultiBand:
                     return "Multiband RGB";
                 case RasterRendering.PseudoColors:

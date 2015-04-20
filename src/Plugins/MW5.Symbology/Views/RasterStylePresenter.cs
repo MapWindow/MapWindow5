@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -51,9 +52,9 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterStyleCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
 
-                    var colors = View.Colors;
-                    scheme.SetPredefined(colors.BandMinValue, colors.BandMaxValue, (PredefinedColors)colors.SelectedPredefinedColorScheme);
-                    colors.ColorScheme = scheme;
+                    var colorView = View.Colors;
+                    scheme.SetPredefined(colorView.BandMinValue, colorView.BandMaxValue, (PredefinedColors)colorView.SelectedPredefinedColorScheme);
+                    colorView.ColorScheme = scheme;
                     break;
                 case RasterStyleCommand.Apply:
                     Apply();
@@ -68,13 +69,28 @@ namespace MW5.Plugins.Symbology.Views
             View.UiToModel();
 
             var colors = View.Colors;
-            if (colors.ColorScheme != null && _raster != null)
+
+            switch (colors.Rendering)
             {
-                _raster.ForceGridRendering = true;
-                _raster.ActiveBandIndex = colors.ActiveBandIndex;
-                _raster.CustomColorScheme = colors.ColorScheme;
-                _context.Map.Redraw();
+                case RasterRendering.SingleBand:
+                case RasterRendering.MultiBand:
+                case RasterRendering.BuiltInColorTable:
+                    _raster.ForceGridRendering = false;
+                    break;
+                case RasterRendering.PseudoColors:
+                    if (colors.ColorScheme != null && _raster != null)
+                    {
+                        _raster.ForceGridRendering = true;
+                        _raster.ActiveBandIndex = colors.ActiveBandIndex;
+                        _raster.CustomColorScheme = colors.ColorScheme;
+                    }
+                    break;
+                default:
+                    Logger.Current.Warn("Unexpected RasterRendering enum value: " + colors.Rendering);
+                    break;
             }
+
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
         }
 
         public override bool ViewOkClicked()
