@@ -101,6 +101,12 @@
     <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\RasterColorSchemeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RasterColorSchemeView.Designer.cs">
+      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RasterColorSchemeGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -342,6 +348,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Legacy\SymbologyPluginLegacy.cs" />
     <Compile Include="Services\SymbologyMetadata.cs" />
+    <Compile Include="Views\Abstract\IRasterColorSchemeView.cs" />
     <Compile Include="Views\Abstract\IRasterMinMaxView.cs" />
     <Compile Include="Views\Abstract\IRasterStyleView.cs" />
     <Compile Include="Views\RasterMinMaxPresenter.cs" />
@@ -415,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ListControls\SymbolControl.resx">
       <DependentUpon>SymbolControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RasterColorSchemeView.resx">
+      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ScaleControl.resx">
       <DependentUpon>ScaleControl.cs</DependentUpon>

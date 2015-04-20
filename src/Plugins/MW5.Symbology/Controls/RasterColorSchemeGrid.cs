@@ -59,8 +59,12 @@ namespace MW5.Plugins.Symbology.Controls
             if (model != null)
             {
                 model.ShowDropDowns = value;
-                Grid.Refresh();
             }
+        }
+
+        public void RefreshGrid()
+        {
+            Grid.Refresh();
         }
 
         private void Grid_TableControlCellDoubleClick(object sender, GridTableControlCellClickEventArgs e)

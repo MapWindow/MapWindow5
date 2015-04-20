@@ -38,5 +38,7 @@ namespace MW5.Api.Interfaces
         bool FromGdiPlusBitmap(Image image);
 
         int NumBands { get; }
+
+        GdalDataType DataType { get; }
     }
 }

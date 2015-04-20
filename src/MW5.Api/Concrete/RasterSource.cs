@@ -193,5 +193,18 @@ namespace MW5.Api.Concrete
             get { return _image.AllowGridRendering == tkGridRendering.grForceForAllFormats; }
             set { _image.AllowGridRendering = tkGridRendering.grForceForAllFormats; }
         }
+
+        public override GdalDataType DataType
+        {
+            get
+            {
+                if (NumBands > 0)
+                {
+                    return Bands[1].DataType;
+                }
+
+                return GdalDataType.Unknown;
+            }
+        }
     }
 }

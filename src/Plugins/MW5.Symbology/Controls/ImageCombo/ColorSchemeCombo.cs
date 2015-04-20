@@ -30,6 +30,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Gets or sets the type of the color schemes to populate the combobox with.
         /// </summary>
+        /// <remarks>This property must be set after control's size. </remarks>
         public SchemeTarget SchemeTarget
         {
             get { return _schemeTarget; }

@@ -36,7 +36,7 @@
     {
         SingleBand = 0,
         MultiBand = 1,
-        PsuedoColors = 2,
+        PseudoColors = 2,
         BuiltInColorTable = 3,
     }
  }

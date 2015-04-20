@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Plugins.Mvp;
-using MW5.Plugins.Services;
-using Syncfusion.Drawing;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid;
-using Syncfusion.Windows.Forms.Grid.Grouping;
-using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls
 {
@@ -60,12 +50,9 @@ namespace MW5.UI.Controls
         {
             if (rowIndex < 2)
             {
-                //OnDraw(g, clientRectangle, rowIndex, colIndex, style);
+                OnDraw(g, clientRectangle, rowIndex, colIndex, style);
                 return;
             }
-
-            bool showDropDowns = ((GridCellColorModel)Model).ShowDropDowns;
-            ShowDropDownButton = showDropDowns;
 
             var r = new Rectangle(clientRectangle.X + 5, clientRectangle.Y + 2, clientRectangle.Width - 10, clientRectangle.Height - 4);
             g.FillRectangle(new SolidBrush(GetValue(rowIndex, colIndex)), r);

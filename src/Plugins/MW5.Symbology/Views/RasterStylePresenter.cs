@@ -50,8 +50,10 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterStyleCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
-                    scheme.SetPredefined(View.BandMinValue, View.BandMaxValue, (PredefinedColors)View.SelectedPredefinedColorScheme);
-                    View.ColorScheme = scheme;
+
+                    var colors = View.Colors;
+                    scheme.SetPredefined(colors.BandMinValue, colors.BandMaxValue, (PredefinedColors)colors.SelectedPredefinedColorScheme);
+                    colors.ColorScheme = scheme;
                     break;
                 case RasterStyleCommand.Apply:
                     Apply();
@@ -63,18 +65,21 @@ namespace MW5.Plugins.Symbology.Views
 
         private void Apply()
         {
-            if (View.ColorScheme != null && _raster != null)
+            View.UiToModel();
+
+            var colors = View.Colors;
+            if (colors.ColorScheme != null && _raster != null)
             {
                 _raster.ForceGridRendering = true;
-                _raster.ActiveBandIndex = View.ActiveBandIndex;
-                _raster.CustomColorScheme = View.ColorScheme;
+                _raster.ActiveBandIndex = colors.ActiveBandIndex;
+                _raster.CustomColorScheme = colors.ColorScheme;
                 _context.Map.Redraw();
             }
         }
 
         public override bool ViewOkClicked()
         {
-            View.UiToModel();
+            Apply();
             
             return true;
         }

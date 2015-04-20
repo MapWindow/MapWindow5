@@ -13,11 +13,6 @@ namespace MW5.Plugins.Symbology.Views.Abstract
     {
         void UiToModel();
 
-        double BandMinValue { get; }
-        double BandMaxValue { get; }
-        int SelectedPredefinedColorScheme { get; }
-        int ActiveBandIndex { get; }
-
-        RasterColorScheme ColorScheme  { get; set; }
+        IRasterColorSchemeView Colors { get; }
     }
 }

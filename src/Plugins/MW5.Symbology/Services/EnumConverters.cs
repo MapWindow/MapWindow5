@@ -36,7 +36,7 @@ namespace MW5.Plugins.Symbology.Services
                     return "Single band grey";
                 case RasterRendering.MultiBand:
                     return "Multiband RGB";
-                case RasterRendering.PsuedoColors:
+                case RasterRendering.PseudoColors:
                     return "Single band pseudo colors";
                 case RasterRendering.BuiltInColorTable:
                     return "Built-in color table";

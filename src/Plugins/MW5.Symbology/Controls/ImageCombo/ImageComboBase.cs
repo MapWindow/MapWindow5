@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -29,6 +30,20 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             EnabledChanged += (s, e) => RefreshImageList();
 
             DrawMode = DrawMode.OwnerDrawFixed;
+        }
+
+        [Browsable(false)]
+        public new DrawMode DrawMode
+        {
+            get { return base.DrawMode; }
+            set { base.DrawMode = value; }
+        }
+
+        [Browsable(false)]
+        public new ComboBoxStyle DropDownStyle
+        {
+            get { return base.DropDownStyle; }
+            set { base.DropDownStyle = value; }
         }
 
         #if COMBOBOX_ADV

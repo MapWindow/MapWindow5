@@ -11,6 +11,9 @@ namespace MW5.UI.Controls
 {
     public class GridCellColorModel: GridDropDownCellModel
     {
+        private GridCellColorRenderer _renderer;
+        private bool _showDropDowns;
+
         public GridCellColorModel(GridModel grid) : base(grid)
         {
             ButtonBarSize = new Size(16, 20);
@@ -20,11 +23,23 @@ namespace MW5.UI.Controls
         {
         }
 
-        public bool ShowDropDowns { get; set; }
+        public bool ShowDropDowns 
+        {
+            get { return _showDropDowns; }
+            set
+            {
+                _showDropDowns = value;
+                if (_renderer != null)
+                {
+                    _renderer.ShowDropDownButton = value;
+                }
+            }
+         }
 
         public override GridCellRendererBase CreateRenderer(Syncfusion.Windows.Forms.Grid.GridControlBase control)
         {
-            return new GridCellColorRenderer(control, this);
+            _renderer = new GridCellColorRenderer(control, this);
+            return _renderer;
         }
     }
 }

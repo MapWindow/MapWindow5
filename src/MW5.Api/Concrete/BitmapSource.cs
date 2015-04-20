@@ -332,5 +332,10 @@ namespace MW5.Api.Concrete
         {
             get { return 3; }
         }
+
+        public virtual GdalDataType DataType
+        {
+            get { return GdalDataType.Byte; }
+        }
     }
 }
