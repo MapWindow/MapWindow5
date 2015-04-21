@@ -19,14 +19,14 @@ namespace MW5.Data.Services
 
         public void ImportLayer()
         {
-            var connection = PromtUserForConnection();
+            var connection = PromptUserForConnection();
             if (connection != null)
             {
                 
             }
         }
 
-        public DatabaseConnection PromtUserForConnection(GeoDatabaseType? databaseType = null)
+        public DatabaseConnection PromptUserForConnection(GeoDatabaseType? databaseType = null)
         {
             var p = _context.Container.GetInstance<AddConnectionPresenter>();
 
