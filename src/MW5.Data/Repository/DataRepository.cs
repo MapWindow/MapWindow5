@@ -86,7 +86,7 @@ namespace MW5.Data.Repository
 
         public void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null)
         {
-            var connection = _databaseService.PromtUserForConnection(databaseType);
+            var connection = _databaseService.PromptUserForConnection(databaseType);
             if (connection != null)
             {
                 AddConnection(connection);

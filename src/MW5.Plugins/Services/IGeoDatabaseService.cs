@@ -11,6 +11,6 @@ namespace MW5.Plugins.Services
     public interface IGeoDatabaseService
     {
         void ImportLayer();
-        DatabaseConnection PromtUserForConnection(GeoDatabaseType? databaseType = null);
+        DatabaseConnection PromptUserForConnection(GeoDatabaseType? databaseType = null);
     }
 }

@@ -68,7 +68,7 @@ namespace MW5.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.AddDatabaseLayer:
-                    var connection = _databaseService.PromtUserForConnection();
+                    var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)
                     {
                         MessageService.Current.Info("Layer selection isn't implemented yet. It works in data repository though.");
