@@ -1,6 +1,6 @@
 ﻿namespace MW5.Data.Repository
 {
-    public interface IFolderItem : IRepositoryItem
+    public interface IFolderItem : IExpandableItem
     {
         string GetPath();
         bool Root { get; }

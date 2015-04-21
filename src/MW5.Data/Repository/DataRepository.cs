@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using MW5.Data.Views;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -17,6 +18,7 @@ namespace MW5.Data.Repository
     /// </summary>
     public class DataRepository: IRepository
     {
+        private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
         private readonly IApplicationContainer _container;
         private readonly List<string> _folders;
@@ -27,10 +29,12 @@ namespace MW5.Data.Repository
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
         public event EventHandler<ConnectionEventArgs> ConnectionRemoved;
 
-        public DataRepository(IFileDialogService fileDialogService, IApplicationContainer container)
+        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService, IApplicationContainer container)
         {
+            if (databaseService == null) throw new ArgumentNullException("databaseService");
             if (container == null) throw new ArgumentNullException("container");
 
+            _databaseService = databaseService;
             _fileDialogService = fileDialogService;
             _container = container;
             _folders = new List<string>();
@@ -80,12 +84,12 @@ namespace MW5.Data.Repository
             }
         }
 
-        public void AddConnection()
+        public void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null)
         {
-            var p = _container.GetInstance<AddConnectionPresenter>();
-            if (p.Run())
+            var connection = _databaseService.PromtUserForConnection(databaseType);
+            if (connection != null)
             {
-                AddConnection(p.Connection);
+                AddConnection(connection);
             }
         }
 

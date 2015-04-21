@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Properties;
@@ -19,6 +20,7 @@ namespace MW5.Data.Repository
 {
     public sealed class RepositoryTreeView: TreeViewBase, IRepositoryView
     {
+        private HashSet<LayerIdentity> _layers;  // storing layers from the last update to be use on folder expansion
         private IRepository _repository;
         private bool _initialized;
 
@@ -58,23 +60,20 @@ namespace MW5.Data.Repository
             _repository.ConnectionAdded += RepositoryConnectionAdded;
             _repository.ConnectionRemoved += RepositoryConnectionRemoved;
 
+            AfterExpand += RepositoryTreeView_AfterExpand;
+
             _initialized = true;
         }
 
         private void PopulateTree()
         {
-            // databases
-            var dbs = Items.AddItem(RepositoryItemType.Databases);
-            var postGis = dbs.SubItems.AddItem(RepositoryItemType.PostGis);
+            PopulateDatabases();
 
-            foreach (var cn in _repository.Connections.Where(cn => cn.DatabaseType == GeoDatabaseType.PostGis))
-            {
-                postGis.SubItems.AddDatabase(cn);
-            }
-            
-            dbs.Expand();
-            postGis.Expand();
+            PopulateFileSystem();
+        }
 
+        private void PopulateFileSystem()
+        {
             // file system
             var folders = Items.AddItem(RepositoryItemType.FileSystem);
 
@@ -86,16 +85,44 @@ namespace MW5.Data.Repository
             folders.Expand();
         }
 
+        private void PopulateDatabases()
+        {
+            // databases
+            var dbs = Items.AddItem(RepositoryItemType.Databases);
+
+            var dict = new Dictionary<GeoDatabaseType, IServerItem>();
+            var values = Enum.GetValues(typeof(GeoDatabaseType));
+
+            foreach (GeoDatabaseType value in values)
+            {
+                var item = dbs.SubItems.AddServer(value);
+                dict.Add(value, item);
+            }
+
+            foreach (var cn in _repository.Connections)
+            {
+                var server = dict[cn.DatabaseType];
+                server.SubItems.AddDatabase(cn);
+            }
+
+            dbs.Expand();
+
+            foreach (var item in dbs.SubItems)
+            {
+                item.Expand();
+            }
+        }
+
         private void RepositoryConnectionRemoved(object sender, ConnectionEventArgs e)
         {
-            var item = GetDatabaseRoot(e.Connection.DatabaseType);
+            var item = GetServer(e.Connection.DatabaseType);
             var databaseItem = item.SubItems.OfType<IDatabaseItem>().FirstOrDefault(db => db.Connection == e.Connection);
             item.SubItems.Remove(databaseItem);
         }
 
         private void RepositoryConnectionAdded(object sender, ConnectionEventArgs e)
         {
-            var item = GetDatabaseRoot(e.Connection.DatabaseType);
+            var item = GetServer(e.Connection.DatabaseType);
             item.SubItems.AddDatabase(e.Connection);
         }
 
@@ -130,7 +157,10 @@ namespace MW5.Data.Repository
                 Resources.img_databases_16,
                 Resources.img_database_16,
                 Resources.img_postgis_16,
-                Resources.img_raster
+                Resources.img_raster,
+                Resources.img_mssql16,
+                Resources.img_sqlite16,
+                Resources.img_oracle16,
             };
         }
 
@@ -139,18 +169,10 @@ namespace MW5.Data.Repository
             get { return new RepositoryItemCollection(Nodes); }
         }
 
-        public IRepositoryItem GetDatabaseRoot(GeoDatabaseType databaseType)
+        public IRepositoryItem GetServer(GeoDatabaseType databaseType)
         {
-            switch (databaseType)
-            {
-                case GeoDatabaseType.PostGis:
-                    return GetSpecialItem(RepositoryItemType.PostGis);
-                case GeoDatabaseType.SpatiaLite:
-                case GeoDatabaseType.Oracle:
-                case GeoDatabaseType.MsSql:
-                default:
-                    throw new ArgumentOutOfRangeException("databaseType");
-            }
+            var item = GetSpecialItem(RepositoryItemType.Databases);
+            return item.SubItems.OfType<IServerItem>().FirstOrDefault(db => db.DatabaseType == databaseType);
         }
 
         public IRepositoryItem GetSpecialItem(RepositoryItemType type)
@@ -273,7 +295,36 @@ namespace MW5.Data.Repository
             var layerItem = RepositoryItem.Get(arr[0]) as IDatabaseLayerItem;
             if (layerItem != null)
             {
-                DoDragDrop(layerItem.Serialize(), DragDropEffects.Copy);
+                DoDragDrop(layerItem.Identity.Serialize(), DragDropEffects.Copy);
+            }
+        }
+
+        public void UpdateState(HashSet<LayerIdentity> layers)
+        {
+            _layers = layers;
+
+            var fs = GetSpecialItem(RepositoryItemType.FileSystem);
+            if (fs != null)
+            {
+                fs.SubItems.UpdateState(layers);
+            }
+
+            var root = GetSpecialItem(RepositoryItemType.Databases);
+            if (root != null)
+            {
+                foreach (var server in root.SubItems)
+                {
+                    server.SubItems.UpdateState(layers);
+                }
+            }
+        }
+
+        private void RepositoryTreeView_AfterExpand(object sender, TreeViewAdvNodeEventArgs e)
+        {
+            var item = RepositoryItem.Get(e.Node);
+            if (item != null && _layers != null)
+            {
+                item.SubItems.UpdateState(_layers);
             }
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
@@ -72,9 +73,9 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool RemoveLayer(string filename)
+        public bool RemoveLayer(LayerIdentity identity)
         {
-            var layers = _context.Map.Layers.Where(l => l.Filename.EqualsIgnoreCase(filename));
+            var layers = _context.Map.Layers.Where(l => l.Identity == identity);
             BeginBatch();
 
             bool result = false;
@@ -138,6 +139,25 @@ namespace MW5.Services.Concrete
             }
 
             return result;
+        }
+
+        public bool AddLayerIdentity(LayerIdentity identity)
+        {
+            if (identity == null)
+            {
+                return false;
+            }
+
+            switch (identity.IdentityType)
+            {
+                case LayerIdentityType.File:
+                    return AddLayersFromFilenameCore(identity.Filename);
+                case LayerIdentityType.OgrDatasource:
+                    return AddDatabaseLayer(identity.Connection, identity.Query);
+                default:
+                    Logger.Current.Warn("Unexpected layer identity");
+                    return false;
+            }
         }
 
         public bool AddDatabaseLayer(string connection, string layerName)

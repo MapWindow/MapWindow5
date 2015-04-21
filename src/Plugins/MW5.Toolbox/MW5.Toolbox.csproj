@@ -78,6 +78,10 @@
       <Name>MW5.Api</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Data\MW5.Data.csproj">
+      <Project>{12476697-03B6-4944-92C1-AE7214A13F0B}</Project>
+      <Name>MW5.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
@@ -87,6 +91,10 @@
       <Project>{DD259453-611A-4AD5-878E-385CB2C89DF5}</Project>
       <Name>MW5.Projections</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>

@@ -79,10 +79,7 @@ namespace MW5.Plugins.Mvp
 
         private void Init(TModel model)
         {
-            if (model == null)
-            {
-                throw new ArgumentNullException("model");
-            }
+            if (model == null) return;
 
             _model = model;
             View.InitInternal(model);

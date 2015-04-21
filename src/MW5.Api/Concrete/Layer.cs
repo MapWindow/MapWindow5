@@ -102,9 +102,25 @@ namespace MW5.Api.Concrete
       
         public string Filename
         {
-            get { return _map.get_LayerFilename(_layerHandle); }
+            get
+            {
+                return _map.get_LayerFilename(_layerHandle);
+            }
         }
 
+        public LayerIdentity Identity
+        {
+            get
+            {
+                if (LayerType == LayerType.VectorLayer)
+                {
+                    var ogr = VectorSource;
+                    return new LayerIdentity(ogr.ConnectionString, ogr.SourceQuery);
+                }
+                
+                return new LayerIdentity(Filename);
+            }
+        }
       
         public int Position
         {

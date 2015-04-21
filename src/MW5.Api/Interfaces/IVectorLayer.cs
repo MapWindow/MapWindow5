@@ -32,5 +32,6 @@ namespace MW5.Api.Interfaces
         bool Open(string filename, bool forUpdate = false);
         bool Open(string connectionString, string layerName, bool forUpdate = false);
         bool OpenFromQuery(string connectionString, string sql);
+        void ReloadFromSource();
     }
 }

@@ -24,16 +24,20 @@ namespace MW5.Menu
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
         private readonly IProjectService _projectService;
+        private readonly IGeoDatabaseService _databaseService;
 
-        public MenuListener(IAppContext context, ILayerService layerService, IProjectService projectService)
+        public MenuListener(IAppContext context, ILayerService layerService, IProjectService projectService, 
+                             IGeoDatabaseService databaseService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (projectService == null) throw new ArgumentNullException("projectService");
+            if (databaseService == null) throw new ArgumentNullException("databaseService");
 
             _context = context;
             _layerService = layerService;
             _projectService = projectService;
+            _databaseService = databaseService;
 
             var appContext = context as AppContext;
             if (appContext != null)
@@ -64,7 +68,11 @@ namespace MW5.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.AddDatabaseLayer:
-                    _context.Container.Run<AddConnectionPresenter>();
+                    var connection = _databaseService.PromtUserForConnection();
+                    if (connection != null)
+                    {
+                        MessageService.Current.Info("Layer selection isn't implemented yet. It works in data repository though.");
+                    }
                     break;
                 case MenuKeys.AddLayer:
                     _layerService.AddLayer(DataSourceType.All);

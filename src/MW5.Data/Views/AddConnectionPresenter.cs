@@ -13,86 +13,76 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Data.Views
 {
-    public class AddConnectionPresenter: BasePresenter<IAddConnectionView>
+    public class AddConnectionPresenter: BasePresenter<IAddConnectionView, AddConnectionModel>
     {
-        private readonly PostGisConnectionParams _postGisParams = new PostGisConnectionParams();
+        private readonly IFileDialogService _fileDialog;
+        private readonly PostGisConnection _postGis = new PostGisConnection();
 
-        public AddConnectionPresenter(IAddConnectionView view) : base(view)
+        public AddConnectionPresenter(IAddConnectionView view, IFileDialogService fileDialog) : base(view)
         {
-            view.Init(_postGisParams);
+            if (fileDialog == null) throw new ArgumentNullException("fileDialog");
+            _fileDialog = fileDialog;
+
+            view.Init(_postGis);
 
             view.TestConnection += TestConnection;
+
+            view.ConnectionChanged += OnConnectionChanged;
         }
 
         public DatabaseConnection Connection
         {
             get
             {
-                var param = View.GetPostGisParams();
-                return new DatabaseConnection(View.DatabaseType, param.Database, param.GetPostGisConnection());
+                var param = View.GetConnection();
+                return new DatabaseConnection(View.DatabaseType, param.Name, param.GetConnection());
             }
         }
 
         public override bool ViewOkClicked()
         {
-            var param = View.GetPostGisParams();
+            var param = View.GetConnection();
+            if (param == null)
+            {
+                MessageService.Current.Info("Failed to retrieve connection parameters");
+                return false;
+            }
 
-            return ValidateInput(param);
+            return param.Validate();
         }
 
-        private bool ValidateInput(PostGisConnectionParams param)
+        private void OnConnectionChanged()
         {
-            if (string.IsNullOrWhiteSpace(param.Host))
-            {
-                MessageService.Current.Warn("No host name is provided.");
-                return false;
-            }
-
-            int port;
-            if (!Int32.TryParse(param.PortString, out port))
-            {
-                MessageService.Current.Warn("Port must be an integer number.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(param.UserName))
-            {
-                MessageService.Current.Warn("No user name is provided.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(param.Database))
-            {
-                MessageService.Current.Warn("No database name is provided.");
-                return false;
-            }
-
-            return true;
+            var cn = View.GetConnection();
+            var cs = cn.BuildConnection();
+            View.SetRawConnection(cs);
         }
 
         private void TestConnection()
         {
-            if (View.DatabaseType != GeoDatabaseType.PostGis)
+            if (View.DatabaseType == GeoDatabaseType.Oracle)
             {
                 MessageService.Current.Info("Not implemented");
                 return;
             }
 
-            var param = View.GetPostGisParams();
-
-            if (!ValidateInput(param))
+            var info = View.GetConnection();
+            if (!info.Validate())
             {
                 return;
             }
 
-            string cs = param.GetPostGisConnection();
+            string cs = info.GetConnection();
 
+            bool result;
             using (var ds = new VectorDatasource())
             {
-                if (!ds.Open(cs))
+                result = ds.Open(cs);
+                if (!result)
                 {
                     MessageService.Current.Warn("Failed to open connection: " + ds.GdalLastErrorMsg);
                 }
@@ -101,6 +91,13 @@ namespace MW5.Data.Views
                     MessageService.Current.Info("Connected successfully");
                 }
             }
+
+            Logger.Current.Info("Testing connection: {0}\n{1}", cs, result ? "Success": "Failure");
+        }
+
+        public override void Initialize()
+        {
+
         }
     }
 }

@@ -55,6 +55,11 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public void ReloadFromSource()
+        {
+            _layer.ReloadFromSource();
+        }
+
         public bool Open(string filename, bool forUpdate = false)
         {
             return _layer.OpenFromFile(filename, forUpdate);

@@ -28,10 +28,17 @@ namespace MW5.Plugins.Toolbox
         {
             var toolbox = _context.Toolbox;
 
+            // TODO: create groups and tools in one step (i.e. Add without Create)
             var group = toolbox.CreateGroup("Projections", GroupKeys.Projections, _plugin.Identity);
             toolbox.Groups.Add(group);
 
             var tool = CreateTool("Identify projection", ToolKeys.IdentitfyProjection);
+            group.Tools.Add(tool);
+
+            group = toolbox.CreateGroup("GeoDatabases", GroupKeys.GeoDatabases, _plugin.Identity);
+            toolbox.Groups.Add(group);
+
+            tool = CreateTool("Import layer in geodatabase", ToolKeys.ImportLayerInGeodatabase);
             group.Tools.Add(tool);
         }
 

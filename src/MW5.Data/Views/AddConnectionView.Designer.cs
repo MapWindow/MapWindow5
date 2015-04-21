@@ -33,18 +33,36 @@ namespace MW5.Data.Views
             this.components = new System.ComponentModel.Container();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.txtPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.txtUserName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.txtDatabase = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.txtPort = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPostGisPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPostGisUserName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPostGisDatabase = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPostGisPort = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.txtHost = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtPostGisHost = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtMssqlServer = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtMssqlDatabase = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.optSqlAuthentication = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.optWindowsAuthentication = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.txtMssqlUserName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtMssqlPassword = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtMssqlConnection = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnChooseSpatialLite = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.label11 = new System.Windows.Forms.Label();
+            this.txtSpatiaLiteDatabase = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
@@ -52,11 +70,23 @@ namespace MW5.Data.Views
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageAdv1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDatabase)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPort)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHost)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPassword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisUserName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisDatabase)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPort)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).BeginInit();
+            this.tabPageAdv2.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlServer)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlDatabase)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.optSqlAuthentication)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optWindowsAuthentication)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlUserName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlPassword)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlConnection)).BeginInit();
+            this.tabPageAdv3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSpatiaLiteDatabase)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -65,93 +95,96 @@ namespace MW5.Data.Views
             // 
             this.tabControlAdv1.ActiveTabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(471, 323);
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(488, 367);
             this.tabControlAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabControlAdv1.BorderWidth = 0;
             this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
-            this.tabControlAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
             this.tabControlAdv1.FixedSingleBorderColor = System.Drawing.Color.Silver;
             this.tabControlAdv1.FocusOnTabClick = false;
+            this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 50);
             this.tabControlAdv1.Location = new System.Drawing.Point(7, 7);
             this.tabControlAdv1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControlAdv1.Name = "tabControlAdv1";
-            this.tabControlAdv1.PersistTabState = true;
+            this.tabControlAdv1.Padding = new System.Drawing.Point(6, 12);
             this.tabControlAdv1.RotateTextWhenVertical = true;
-            this.tabControlAdv1.Size = new System.Drawing.Size(471, 323);
+            this.tabControlAdv1.Size = new System.Drawing.Size(488, 367);
             this.tabControlAdv1.TabIndex = 0;
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererBlendLight);
+            this.tabControlAdv1.TextAlignment = System.Drawing.StringAlignment.Near;
+            this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
             // 
             // tabPageAdv1
             // 
-            this.tabPageAdv1.Controls.Add(this.txtPassword);
-            this.tabPageAdv1.Controls.Add(this.txtUserName);
-            this.tabPageAdv1.Controls.Add(this.txtDatabase);
-            this.tabPageAdv1.Controls.Add(this.txtPort);
+            this.tabPageAdv1.Controls.Add(this.txtPostGisPassword);
+            this.tabPageAdv1.Controls.Add(this.txtPostGisUserName);
+            this.tabPageAdv1.Controls.Add(this.txtPostGisDatabase);
+            this.tabPageAdv1.Controls.Add(this.txtPostGisPort);
             this.tabPageAdv1.Controls.Add(this.label5);
             this.tabPageAdv1.Controls.Add(this.label4);
             this.tabPageAdv1.Controls.Add(this.label3);
             this.tabPageAdv1.Controls.Add(this.label2);
-            this.tabPageAdv1.Controls.Add(this.txtHost);
+            this.tabPageAdv1.Controls.Add(this.txtPostGisHost);
             this.tabPageAdv1.Controls.Add(this.label1);
             this.tabPageAdv1.Image = global::MW5.Data.Properties.Resources.img_postgis;
             this.tabPageAdv1.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv1.Location = new System.Drawing.Point(80, 1);
+            this.tabPageAdv1.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv1.Name = "tabPageAdv1";
             this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(390, 321);
+            this.tabPageAdv1.Size = new System.Drawing.Size(367, 365);
             this.tabPageAdv1.TabIndex = 1;
-            this.tabPageAdv1.Text = "General";
+            this.tabPageAdv1.Text = "PostGIS";
             this.tabPageAdv1.ThemesEnabled = false;
             // 
-            // txtPassword
+            // txtPostGisPassword
             // 
-            this.txtPassword.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtPassword.Location = new System.Drawing.Point(108, 240);
-            this.txtPassword.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtPassword.Name = "txtPassword";
-            this.txtPassword.PasswordChar = '●';
-            this.txtPassword.Size = new System.Drawing.Size(224, 20);
-            this.txtPassword.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPassword.TabIndex = 14;
-            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPostGisPassword.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtPostGisPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisPassword.Location = new System.Drawing.Point(108, 240);
+            this.txtPostGisPassword.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisPassword.Name = "txtPostGisPassword";
+            this.txtPostGisPassword.PasswordChar = '●';
+            this.txtPostGisPassword.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisPassword.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisPassword.TabIndex = 14;
+            this.txtPostGisPassword.UseSystemPasswordChar = true;
             // 
-            // txtUserName
+            // txtPostGisUserName
             // 
-            this.txtUserName.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtUserName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtUserName.Location = new System.Drawing.Point(108, 192);
-            this.txtUserName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(224, 20);
-            this.txtUserName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtUserName.TabIndex = 12;
-            this.txtUserName.Text = "postgres";
+            this.txtPostGisUserName.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtPostGisUserName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisUserName.Location = new System.Drawing.Point(108, 192);
+            this.txtPostGisUserName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisUserName.Name = "txtPostGisUserName";
+            this.txtPostGisUserName.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisUserName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisUserName.TabIndex = 12;
+            this.txtPostGisUserName.Text = "postgres";
             // 
-            // txtDatabase
+            // txtPostGisDatabase
             // 
-            this.txtDatabase.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtDatabase.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtDatabase.Location = new System.Drawing.Point(108, 144);
-            this.txtDatabase.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtDatabase.Name = "txtDatabase";
-            this.txtDatabase.Size = new System.Drawing.Size(224, 20);
-            this.txtDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtDatabase.TabIndex = 10;
+            this.txtPostGisDatabase.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtPostGisDatabase.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisDatabase.Location = new System.Drawing.Point(108, 144);
+            this.txtPostGisDatabase.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisDatabase.Name = "txtPostGisDatabase";
+            this.txtPostGisDatabase.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisDatabase.TabIndex = 10;
             // 
-            // txtPort
+            // txtPostGisPort
             // 
-            this.txtPort.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtPort.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtPort.Location = new System.Drawing.Point(108, 96);
-            this.txtPort.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(224, 20);
-            this.txtPort.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtPort.TabIndex = 8;
-            this.txtPort.Text = "5432";
+            this.txtPostGisPort.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtPostGisPort.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisPort.Location = new System.Drawing.Point(108, 96);
+            this.txtPostGisPort.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisPort.Name = "txtPostGisPort";
+            this.txtPostGisPort.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisPort.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisPort.TabIndex = 8;
+            this.txtPostGisPort.Text = "5432";
             // 
             // label5
             // 
@@ -189,17 +222,17 @@ namespace MW5.Data.Views
             this.label2.TabIndex = 9;
             this.label2.Text = "Port";
             // 
-            // txtHost
+            // txtPostGisHost
             // 
-            this.txtHost.BeforeTouchSize = new System.Drawing.Size(224, 20);
-            this.txtHost.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtHost.Location = new System.Drawing.Point(108, 48);
-            this.txtHost.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtHost.Name = "txtHost";
-            this.txtHost.Size = new System.Drawing.Size(224, 20);
-            this.txtHost.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtHost.TabIndex = 7;
-            this.txtHost.Text = "127.0.0.1";
+            this.txtPostGisHost.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtPostGisHost.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtPostGisHost.Location = new System.Drawing.Point(108, 48);
+            this.txtPostGisHost.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtPostGisHost.Name = "txtPostGisHost";
+            this.txtPostGisHost.Size = new System.Drawing.Size(224, 20);
+            this.txtPostGisHost.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtPostGisHost.TabIndex = 7;
+            this.txtPostGisHost.Text = "127.0.0.1";
             // 
             // label1
             // 
@@ -212,27 +245,239 @@ namespace MW5.Data.Views
             // 
             // tabPageAdv2
             // 
-            this.tabPageAdv2.Image = null;
-            this.tabPageAdv2.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv2.Location = new System.Drawing.Point(80, 1);
+            this.tabPageAdv2.Controls.Add(this.groupBox2);
+            this.tabPageAdv2.Controls.Add(this.groupBox1);
+            this.tabPageAdv2.Controls.Add(this.label10);
+            this.tabPageAdv2.Controls.Add(this.txtMssqlConnection);
+            this.tabPageAdv2.Image = global::MW5.Data.Properties.Resources.img_mssql24;
+            this.tabPageAdv2.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageAdv2.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv2.Name = "tabPageAdv2";
             this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(390, 321);
+            this.tabPageAdv2.Size = new System.Drawing.Size(367, 365);
             this.tabPageAdv2.TabIndex = 2;
-            this.tabPageAdv2.Text = "Info";
+            this.tabPageAdv2.Text = "MS SQL";
             this.tabPageAdv2.ThemesEnabled = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtMssqlServer);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.txtMssqlDatabase);
+            this.groupBox2.Location = new System.Drawing.Point(13, 17);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(341, 94);
+            this.groupBox2.TabIndex = 35;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Server and database";
+            // 
+            // txtMssqlServer
+            // 
+            this.txtMssqlServer.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtMssqlServer.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMssqlServer.Location = new System.Drawing.Point(92, 23);
+            this.txtMssqlServer.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMssqlServer.Name = "txtMssqlServer";
+            this.txtMssqlServer.Size = new System.Drawing.Size(224, 20);
+            this.txtMssqlServer.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMssqlServer.TabIndex = 16;
+            this.txtMssqlServer.Text = ".\\";
+            this.txtMssqlServer.TextChanged += new System.EventHandler(this.ParametersChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 26);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(38, 13);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "Server";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(15, 63);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 13);
+            this.label8.TabIndex = 19;
+            this.label8.Text = "Database";
+            // 
+            // txtMssqlDatabase
+            // 
+            this.txtMssqlDatabase.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtMssqlDatabase.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMssqlDatabase.Location = new System.Drawing.Point(92, 60);
+            this.txtMssqlDatabase.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMssqlDatabase.Name = "txtMssqlDatabase";
+            this.txtMssqlDatabase.Size = new System.Drawing.Size(224, 20);
+            this.txtMssqlDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMssqlDatabase.TabIndex = 18;
+            this.txtMssqlDatabase.TextChanged += new System.EventHandler(this.ParametersChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.optSqlAuthentication);
+            this.groupBox1.Controls.Add(this.optWindowsAuthentication);
+            this.groupBox1.Controls.Add(this.txtMssqlUserName);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.txtMssqlPassword);
+            this.groupBox1.Location = new System.Drawing.Point(13, 117);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(341, 120);
+            this.groupBox1.TabIndex = 26;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Authentication";
+            // 
+            // optSqlAuthentication
+            // 
+            this.optSqlAuthentication.BeforeTouchSize = new System.Drawing.Size(107, 21);
+            this.optSqlAuthentication.Location = new System.Drawing.Point(134, 19);
+            this.optSqlAuthentication.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.optSqlAuthentication.Name = "optSqlAuthentication";
+            this.optSqlAuthentication.Size = new System.Drawing.Size(107, 21);
+            this.optSqlAuthentication.TabIndex = 25;
+            this.optSqlAuthentication.TabStop = false;
+            this.optSqlAuthentication.Text = "SQL Server";
+            this.optSqlAuthentication.ThemesEnabled = false;
+            this.optSqlAuthentication.CheckChanged += new System.EventHandler(this.optSqlAuthentication_CheckChanged);
+            // 
+            // optWindowsAuthentication
+            // 
+            this.optWindowsAuthentication.BeforeTouchSize = new System.Drawing.Size(75, 21);
+            this.optWindowsAuthentication.Checked = true;
+            this.optWindowsAuthentication.Location = new System.Drawing.Point(247, 19);
+            this.optWindowsAuthentication.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.optWindowsAuthentication.Name = "optWindowsAuthentication";
+            this.optWindowsAuthentication.Size = new System.Drawing.Size(75, 21);
+            this.optWindowsAuthentication.TabIndex = 24;
+            this.optWindowsAuthentication.Text = "Windows";
+            this.optWindowsAuthentication.ThemesEnabled = false;
+            // 
+            // txtMssqlUserName
+            // 
+            this.txtMssqlUserName.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtMssqlUserName.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMssqlUserName.Location = new System.Drawing.Point(98, 46);
+            this.txtMssqlUserName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMssqlUserName.Name = "txtMssqlUserName";
+            this.txtMssqlUserName.Size = new System.Drawing.Size(224, 20);
+            this.txtMssqlUserName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMssqlUserName.TabIndex = 20;
+            this.txtMssqlUserName.TextChanged += new System.EventHandler(this.ParametersChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(21, 49);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(58, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "User name";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(21, 86);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 13);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "Password";
+            // 
+            // txtMssqlPassword
+            // 
+            this.txtMssqlPassword.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtMssqlPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMssqlPassword.Location = new System.Drawing.Point(98, 83);
+            this.txtMssqlPassword.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMssqlPassword.Name = "txtMssqlPassword";
+            this.txtMssqlPassword.PasswordChar = '●';
+            this.txtMssqlPassword.Size = new System.Drawing.Size(224, 20);
+            this.txtMssqlPassword.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMssqlPassword.TabIndex = 22;
+            this.txtMssqlPassword.UseSystemPasswordChar = true;
+            this.txtMssqlPassword.TextChanged += new System.EventHandler(this.ParametersChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(10, 240);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(89, 13);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "Connection string";
+            // 
+            // txtMssqlConnection
+            // 
+            this.txtMssqlConnection.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtMssqlConnection.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMssqlConnection.Location = new System.Drawing.Point(13, 256);
+            this.txtMssqlConnection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMssqlConnection.Multiline = true;
+            this.txtMssqlConnection.Name = "txtMssqlConnection";
+            this.txtMssqlConnection.Size = new System.Drawing.Size(341, 91);
+            this.txtMssqlConnection.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMssqlConnection.TabIndex = 24;
+            this.txtMssqlConnection.TextChanged += new System.EventHandler(this.RawConnectionChanged);
             // 
             // tabPageAdv3
             // 
-            this.tabPageAdv3.Image = null;
-            this.tabPageAdv3.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv3.Location = new System.Drawing.Point(80, 1);
+            this.tabPageAdv3.Controls.Add(this.btnChooseSpatialLite);
+            this.tabPageAdv3.Controls.Add(this.label11);
+            this.tabPageAdv3.Controls.Add(this.txtSpatiaLiteDatabase);
+            this.tabPageAdv3.Image = global::MW5.Data.Properties.Resources.img_sqlite24;
+            this.tabPageAdv3.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageAdv3.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv3.Name = "tabPageAdv3";
             this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(390, 321);
+            this.tabPageAdv3.Size = new System.Drawing.Size(367, 365);
             this.tabPageAdv3.TabIndex = 3;
-            this.tabPageAdv3.Text = "Rendering";
+            this.tabPageAdv3.Text = "SpatiaLite";
             this.tabPageAdv3.ThemesEnabled = false;
+            // 
+            // btnChooseSpatialLite
+            // 
+            this.btnChooseSpatialLite.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnChooseSpatialLite.IsBackStageButton = false;
+            this.btnChooseSpatialLite.Location = new System.Drawing.Point(275, 60);
+            this.btnChooseSpatialLite.Name = "btnChooseSpatialLite";
+            this.btnChooseSpatialLite.Size = new System.Drawing.Size(75, 23);
+            this.btnChooseSpatialLite.TabIndex = 2;
+            this.btnChooseSpatialLite.Text = "Choose database";
+            this.btnChooseSpatialLite.Click += new System.EventHandler(this.btnChooseSpatialLite_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(17, 18);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 13);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Database:";
+            // 
+            // txtSpatiaLiteDatabase
+            // 
+            this.txtSpatiaLiteDatabase.BeforeTouchSize = new System.Drawing.Size(330, 20);
+            this.txtSpatiaLiteDatabase.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtSpatiaLiteDatabase.Location = new System.Drawing.Point(20, 34);
+            this.txtSpatiaLiteDatabase.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtSpatiaLiteDatabase.Name = "txtSpatiaLiteDatabase";
+            this.txtSpatiaLiteDatabase.Size = new System.Drawing.Size(330, 20);
+            this.txtSpatiaLiteDatabase.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtSpatiaLiteDatabase.TabIndex = 0;
+            // 
+            // tabPageAdv4
+            // 
+            this.tabPageAdv4.Image = global::MW5.Data.Properties.Resources.img_oracle24;
+            this.tabPageAdv4.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageAdv4.Location = new System.Drawing.Point(120, 1);
+            this.tabPageAdv4.Name = "tabPageAdv4";
+            this.tabPageAdv4.ShowCloseButton = true;
+            this.tabPageAdv4.Size = new System.Drawing.Size(367, 365);
+            this.tabPageAdv4.TabIndex = 4;
+            this.tabPageAdv4.Text = "Oracle";
+            this.tabPageAdv4.ThemesEnabled = false;
             // 
             // btnCancel
             // 
@@ -242,7 +487,7 @@ namespace MW5.Data.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(386, 6);
+            this.btnCancel.Location = new System.Drawing.Point(402, 6);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 32;
@@ -255,7 +500,7 @@ namespace MW5.Data.Views
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(295, 6);
+            this.btnOk.Location = new System.Drawing.Point(311, 6);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 31;
@@ -269,9 +514,9 @@ namespace MW5.Data.Views
             this.gradientPanel1.Controls.Add(this.btnCancel);
             this.gradientPanel1.Controls.Add(this.btnOk);
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gradientPanel1.Location = new System.Drawing.Point(7, 330);
+            this.gradientPanel1.Location = new System.Drawing.Point(7, 377);
             this.gradientPanel1.Name = "gradientPanel1";
-            this.gradientPanel1.Size = new System.Drawing.Size(471, 35);
+            this.gradientPanel1.Size = new System.Drawing.Size(488, 35);
             this.gradientPanel1.TabIndex = 33;
             // 
             // btnTestConnection
@@ -293,7 +538,7 @@ namespace MW5.Data.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BorderThickness = 0;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(485, 372);
+            this.ClientSize = new System.Drawing.Size(502, 419);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.gradientPanel1);
             this.Name = "AddConnectionView";
@@ -303,11 +548,27 @@ namespace MW5.Data.Views
             this.tabControlAdv1.ResumeLayout(false);
             this.tabPageAdv1.ResumeLayout(false);
             this.tabPageAdv1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPassword)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtUserName)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDatabase)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtPort)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtHost)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPassword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisUserName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisDatabase)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisPort)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPostGisHost)).EndInit();
+            this.tabPageAdv2.ResumeLayout(false);
+            this.tabPageAdv2.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlServer)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlDatabase)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.optSqlAuthentication)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.optWindowsAuthentication)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlUserName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlPassword)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMssqlConnection)).EndInit();
+            this.tabPageAdv3.ResumeLayout(false);
+            this.tabPageAdv3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSpatiaLiteDatabase)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
             this.gradientPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -318,15 +579,15 @@ namespace MW5.Data.Views
 
         private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
-        private TextBoxExt txtPassword;
-        private TextBoxExt txtUserName;
-        private TextBoxExt txtDatabase;
-        private TextBoxExt txtPort;
+        private TextBoxExt txtPostGisPassword;
+        private TextBoxExt txtPostGisUserName;
+        private TextBoxExt txtPostGisDatabase;
+        private TextBoxExt txtPostGisPort;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
-        private TextBoxExt txtHost;
+        private TextBoxExt txtPostGisHost;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv2;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv3;
@@ -334,5 +595,23 @@ namespace MW5.Data.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
         private GradientPanel gradientPanel1;
         private Syncfusion.Windows.Forms.ButtonAdv btnTestConnection;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private TextBoxExt txtMssqlUserName;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private TextBoxExt txtMssqlPassword;
+        private System.Windows.Forms.Label label10;
+        private TextBoxExt txtMssqlConnection;
+        private TextBoxExt txtMssqlDatabase;
+        private TextBoxExt txtMssqlServer;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private RadioButtonAdv optSqlAuthentication;
+        private RadioButtonAdv optWindowsAuthentication;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private TabPageAdv tabPageAdv4;
+        private Syncfusion.Windows.Forms.ButtonAdv btnChooseSpatialLite;
+        private System.Windows.Forms.Label label11;
+        private TextBoxExt txtSpatiaLiteDatabase;
     }
 }

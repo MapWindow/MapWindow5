@@ -13,6 +13,7 @@
         Vector = 0,
         Raster = 1,
         All = 2,
+        SpatiaLite = 3,
     }
 
     public enum ProjectState

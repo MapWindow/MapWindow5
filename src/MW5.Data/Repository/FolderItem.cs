@@ -82,7 +82,11 @@ namespace MW5.Data.Repository
                 default:
                     throw new ArgumentOutOfRangeException("format");
             }
+        }
 
+        public bool ExpandedOnce
+        {
+            get { return _node.ExpandedOnce; }
         }
     }
 }

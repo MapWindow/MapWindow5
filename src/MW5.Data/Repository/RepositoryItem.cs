@@ -42,8 +42,9 @@ namespace MW5.Data.Repository
             {
                 case RepositoryItemType.FileSystem:
                 case RepositoryItemType.Databases:
-                case RepositoryItemType.PostGis:
                     return new RepositoryItem(node);
+                case RepositoryItemType.Server:
+                    return new ServerItem(node);
                 case RepositoryItemType.Folder:
                     return new FolderItem(node);
                 case RepositoryItemType.Vector:

@@ -19,8 +19,8 @@ namespace MW5.Data.Repository
                     return "Vector layer";
                 case RepositoryItemType.Databases:
                     return "Spatial Databases";
-                case RepositoryItemType.PostGis:
-                    return "PostGIS";
+                case RepositoryItemType.Server:
+                    return "Server";
                 case RepositoryItemType.Database:
                     return "Database";
                 default:

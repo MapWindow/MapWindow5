@@ -145,9 +145,15 @@ namespace MW5.Plugins.DebugWindow
                 return;
             }
 
+            string filename = _context.Layers.ItemByHandle(e.LayerHandle).Filename;
+            if (File.Exists(filename))
+            {
+                filename = Path.GetFileName(filename);
+            }
+
             _debugWindow.Write(
                 "MapListener.PluginOnChooseLayer", 
-                "Selected layer name: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
+                "Selected layer name: " + filename);
         }
 
         /// <summary>
@@ -231,7 +237,7 @@ namespace MW5.Plugins.DebugWindow
         /// <param name="e">
         /// The e.
         /// </param>
-        private void PluginOnLayerRemoved(IMuteMap map, LayerRemovedEventArgs e)
+        private void PluginOnLayerRemoved(IMuteLegend map, LayerEventArgs e)
         {
             _debugWindow.Write("MapListener.PluginOnLayerRemoved", e.LayerHandle.ToString(CultureInfo.InvariantCulture));
         }

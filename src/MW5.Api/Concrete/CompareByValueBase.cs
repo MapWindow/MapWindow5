@@ -1,5 +1,8 @@
-﻿namespace MW5.Api.Concrete
+﻿using System;
+
+namespace MW5.Api.Concrete
 {
+    [Serializable]
 #pragma warning disable 660,661
     public abstract class CompareByValueBase
 #pragma warning restore 660,661

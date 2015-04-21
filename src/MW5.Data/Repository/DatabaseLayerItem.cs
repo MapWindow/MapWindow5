@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
@@ -41,9 +42,9 @@ namespace MW5.Data.Repository
             get { return Metadata.Projection; }
         }
 
-        public string Serialize()
+        public LayerIdentity Identity
         {
-            return string.Format("OgrConnection|{0}|{1}", Connection, Name);
+            get { return new LayerIdentity(Metadata.Connection, Metadata.Name); }
         }
 
         public bool AddedToMap

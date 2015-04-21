@@ -37,8 +37,10 @@ namespace MW5.Plugins.DebugWindow
         {
             if (this.Visible)
             {
-                this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
+                // it causes exception when error is reported from background thread
+                //this.DebugTextbox.AppendText(string.Format("[{0}]: {1}{2}", prefix, message, Environment.NewLine));
             }
         }
+
     }
 }

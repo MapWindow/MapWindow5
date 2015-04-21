@@ -147,6 +147,7 @@ namespace MW5.UI.Style
 
                 if (tab.Alignment == TabAlignment.Left)
                 {
+                    tab.TextLineAlignment = StringAlignment.Near;
                     tab.ActiveTabFont = tab.Font;
                     tab.Padding = new Point(7, 10);
                     tab.ActiveTabColor = Color.FromKnownColor(KnownColor.Control);         // 200

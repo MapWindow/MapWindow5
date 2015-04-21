@@ -98,6 +98,8 @@ namespace MW5.Services.Concrete
                     return GeoSource.RasterFilter;
                 case DataSourceType.Vector:
                     return GeoSource.VectorFilter;
+                case DataSourceType.SpatiaLite:
+                    return "SpatiaLite databases|*.sqlite";
             }
             return "All files|*.*";
         }

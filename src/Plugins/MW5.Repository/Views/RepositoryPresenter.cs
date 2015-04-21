@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
@@ -39,13 +40,6 @@ namespace MW5.Plugins.Repository.Views
             _view = view;
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
-
-            var legend = context.Legend as ILegend;
-            if (legend != null)
-            {
-                legend.LayerAdded += (s, e) => UpdateItemState();
-                legend.LayerRemoved += (s, e) => UpdateItemState();
-            }
         }
 
         public Control GetInternalObject()
@@ -110,26 +104,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void AddLayerToMap()
         {
-            var item = GetSelectedItem<IRepositoryItem>();
-            if (item == null)
-            {
-                return;
-            }
-
-            switch (item.Type)
-            {
-                case RepositoryItemType.Image:
-                case RepositoryItemType.Vector:
-                    AddFileToMap(item as IFileItem);
-                    break;
-                case RepositoryItemType.DatabaseLayer:
-                    AddDatabaseLayerToMap(item as IDatabaseLayerItem);
-                    break;
-            }
-        }
-
-        private void AddDatabaseLayerToMap(IDatabaseLayerItem layer)
-        {
+            var layer = GetSelectedItem<ILayerItem>();
             if (layer == null)
             {
                 return;
@@ -137,34 +112,15 @@ namespace MW5.Plugins.Repository.Views
 
             if (layer.AddedToMap)
             {
-                _layerService.RemoveLayer(layer.Serialize());
+                _layerService.RemoveLayer(layer.Identity);
             }
             else
             {
-                if (_layerService.AddDatabaseLayer(layer.Connection, layer.Name))
+                if (_layerService.AddLayerIdentity(layer.Identity))
                 {
                     int handle = _layerService.LastLayerHandle;
                     _context.Map.ZoomToLayer(handle);
                 }
-            }
-        }
-
-        private void AddFileToMap(IFileItem file)
-        {
-            if (file == null)
-            {
-                return;
-            }
-
-            if (file.AddedToMap)
-            {
-                _layerService.RemoveLayer(file.Filename);
-            }
-            else
-            {
-                _layerService.AddLayersFromFilename(file.Filename);
-                int handle = _layerService.LastLayerHandle;
-                _context.Map.ZoomToLayer(handle);
             }
         }
 
@@ -261,10 +217,10 @@ namespace MW5.Plugins.Repository.Views
 
         private void AddConnection()
         {
-            var item = GetSelectedItem<IRepositoryItem>();
-            if (item.Type == RepositoryItemType.PostGis)
+            var item = GetSelectedItem<IRepositoryItem>() as IServerItem;
+            if (item != null)
             {
-                _repository.AddConnection();
+                _repository.AddConnectionWithPrompt(item.DatabaseType);
             }
         }
 
@@ -284,26 +240,6 @@ namespace MW5.Plugins.Repository.Views
             if (e.Item is IFileItem || e.Item is IDatabaseLayerItem)
             {
                 RunCommand(RepositoryCommand.AddToMap);
-            }
-        }
-
-        /// <summary>
-        /// Marks items that were added to the map
-        /// </summary>
-        private void UpdateItemState()
-        {
-            var dict = _context.Map.GetFilenames().Select(n => n.ToLower()).Distinct().ToDictionary(item => item, item => item);
-
-            var fs = View.Tree.GetSpecialItem(RepositoryItemType.FileSystem);
-            if (fs != null)
-            {
-                fs.SubItems.UpdateState(dict);
-            }
-
-            var db = View.Tree.GetSpecialItem(RepositoryItemType.PostGis);
-            if (db != null)
-            {
-                db.SubItems.UpdateState(dict);
             }
         }
     }

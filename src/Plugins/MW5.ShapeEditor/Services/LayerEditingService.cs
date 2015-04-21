@@ -4,6 +4,7 @@ using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -64,8 +65,6 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// <summary>
         /// Saves changes for the layer with specified handle.
         /// </summary>
-        /// <param name="layerHandle">Handle of the layer.</param>
-        /// <returns>True on success.</returns>
         public bool SaveLayerChanges(int layerHandle)
         {
             string layerName = _context.Layers.ItemByHandle(layerHandle).Name;
@@ -76,37 +75,92 @@ namespace MW5.Plugins.ShapeEditor.Services
             switch (result)
             {
                 case DialogResult.Yes:
+                    return SaveChangesCore(layerHandle);
                 case DialogResult.No:
-                    var sf = _context.Layers.GetFeatureSet(layerHandle);
-                    var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
-
-                    bool save = result == DialogResult.Yes;
-                    bool success = false;
-
-                    if (ogrLayer != null)
-                    {
-                        int savedCount;
-                        SaveResult saveResult = ogrLayer.SaveChanges(out savedCount);
-                        success = saveResult == SaveResult.AllSaved || saveResult == SaveResult.NoChanges;
-                        string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
-                        MessageService.Current.Info(msg);
-                    }
-                    else
-                    {
-                        success = sf.StopEditingShapes(save, true);
-                    }
-
-                    if (success)
-                    {
-                        sf.InteractiveEditing = false;
-                        _context.Map.GeometryEditor.Clear();
-                        _context.Map.History.ClearForLayer(layerHandle);
-                    }
-                    _context.Map.Redraw();
+                    DiscardChangesCore(layerHandle);
                     return true;
-                case DialogResult.Cancel:
                 default:
                     return false;
+            }
+        }
+
+        /// <summary>
+        /// Saves changes for shapefile or OGR layer.
+        /// </summary>
+        private bool SaveChangesCore(int layerHandle)
+        {
+            var sf = _context.Layers.GetFeatureSet(layerHandle);
+            var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
+
+            bool success;
+
+            if (ogrLayer != null)
+            {
+                int savedCount;
+                SaveResult saveResult = ogrLayer.SaveChanges(out savedCount);
+                success = saveResult == SaveResult.AllSaved || saveResult == SaveResult.NoChanges;
+                
+                if (!success)
+                {
+                    Logger.Current.Warn("Failed to save OGR layer changes: " + ogrLayer.Filename);
+                    DisplayOgrErrors(ogrLayer);
+                }
+
+                string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
+                MessageService.Current.Info(msg);
+            }
+            else
+            {
+                success = sf.StopEditingShapes();
+            }
+
+            if (success)
+            {
+                CloseEditing(layerHandle);
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Discards changes for the layer.
+        /// </summary>
+        private void DiscardChangesCore(int layerHandle)
+        {
+            var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
+            
+            if (ogrLayer != null)
+            {
+                ogrLayer.ReloadFromSource();
+            }
+            else
+            {
+                var sf = _context.Layers.GetFeatureSet(layerHandle);
+                sf.StopEditingShapes(false, true);
+            }
+            
+            CloseEditing(layerHandle);
+        }
+
+        /// <summary>
+        /// Closes editing session for layer (changes should be saved or discarded prior to this call).
+        /// </summary>
+        private void CloseEditing(int layerHandle)
+        {
+            var sf = _context.Layers.GetFeatureSet(layerHandle);
+            sf.InteractiveEditing = false;
+            _context.Map.GeometryEditor.Clear();
+            _context.Map.History.ClearForLayer(layerHandle);
+            _context.Map.Redraw();
+        }
+
+        private void DisplayOgrErrors(IVectorLayer layer)
+        {
+            var logger = Logger.Current;
+            for (int i = 0; i < layer.UpdateSourceErrorCount; i++)
+            {
+                logger.Warn("Failed to save feature {0}: {1}", null, layer.get_UpdateSourceErrorGeometryIndex(i),
+                    layer.get_UpdateSourceErrorMsg(i));
             }
         }
 

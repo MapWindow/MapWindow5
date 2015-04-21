@@ -10,11 +10,14 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Data.Views.Abstract
 {
-    public interface IAddConnectionView: IView
+    public interface IAddConnectionView: IView<AddConnectionModel>
     {
-        void Init(PostGisConnectionParams info);
-        PostGisConnectionParams GetPostGisParams();
-        event Action TestConnection;
+        string Name { get; }
+        void Init(ConnectionBase info);
+        ConnectionBase GetConnection();
         GeoDatabaseType DatabaseType { get; set; }
+        void SetRawConnection(string cs);
+        event Action TestConnection;
+        event Action ConnectionChanged;
     }
 }

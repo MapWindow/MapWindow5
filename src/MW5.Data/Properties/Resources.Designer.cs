@@ -133,6 +133,46 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_mssql16 {
+            get {
+                object obj = ResourceManager.GetObject("img_mssql16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_mssql24 {
+            get {
+                object obj = ResourceManager.GetObject("img_mssql24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_oracle16 {
+            get {
+                object obj = ResourceManager.GetObject("img_oracle16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_oracle24 {
+            get {
+                object obj = ResourceManager.GetObject("img_oracle24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_point {
             get {
                 object obj = ResourceManager.GetObject("img_point", resourceCulture);
@@ -176,6 +216,26 @@ namespace MW5.Data.Properties {
         internal static System.Drawing.Bitmap img_raster {
             get {
                 object obj = ResourceManager.GetObject("img_raster", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_sqlite16 {
+            get {
+                object obj = ResourceManager.GetObject("img_sqlite16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_sqlite24 {
+            get {
+                object obj = ResourceManager.GetObject("img_sqlite24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

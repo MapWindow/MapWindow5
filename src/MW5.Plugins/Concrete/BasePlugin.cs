@@ -97,6 +97,7 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<LogEventArgs> LogEntryAdded_;
         internal EventHandler<MenuItemEventArgs> ItemClicked_;
         internal EventHandler<CancelEventArgs> ProjectClosing_;
+        internal EventHandler<EventArgs> ProjectClosed_;
         internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
         internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
@@ -138,6 +139,12 @@ namespace MW5.Plugins.Concrete
             remove { ProjectClosing_ -= value; }
         }
 
+        public event EventHandler<EventArgs> ProjectClosed
+        {
+            add { ProjectClosed_ += value; }
+            remove { ProjectClosed_ -= value; }
+        }
+
         #endregion
 
         #region Legend events
@@ -148,6 +155,8 @@ namespace MW5.Plugins.Concrete
         internal LegendEventHandler<LayerEventArgs> LayerDiagramsClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerLabelsClicked_;
         internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
+        internal LegendEventHandler<LayerEventArgs> LayerAdded_;
+        internal LegendEventHandler<LayerEventArgs> LayerRemoved_;
 
         public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
         {
@@ -185,6 +194,18 @@ namespace MW5.Plugins.Concrete
             remove { LayerStyleClicked_ -= value; }
         }
 
+        public event LegendEventHandler<LayerEventArgs> LayerAdded
+        {
+            add { LayerAdded_ += value; }
+            remove { LayerAdded_ -= value; }
+        }
+
+        public event LegendEventHandler<LayerEventArgs> LayerRemoved
+        {
+            add { LayerRemoved_ += value; }
+            remove { LayerRemoved_ -= value; }
+        }
+
         #endregion
 
         #region Map events
@@ -196,7 +217,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
         internal MapEventHandler<EventArgs> HistoryChanged_;
-        internal LegendEventHandler<LayerEventArgs> LayerAdded_;
+        
         internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseDown_;
         internal MapEventHandler<MouseEventArgs> MouseMove_;
@@ -243,14 +264,7 @@ namespace MW5.Plugins.Concrete
 
         public event MapEventHandler<FileDroppedEventArgs> FileDropped;
         public event MapEventHandler<GridOpenedEventArgs> GridOpened;
-        public event LegendEventHandler<LayerEventArgs> LayerAdded
-        {
-            add { LayerAdded_ += value; }
-            remove { LayerAdded_ -= value; }
-        }
-
         public event MapEventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-        public event MapEventHandler<LayerRemovedEventArgs> LayerRemoved;
         public event MapEventHandler<LayerReprojectedEventArgs> LayerReprojected;
         public event MapEventHandler<MeasuringChangedEventArgs> MeasuringChanged;
 

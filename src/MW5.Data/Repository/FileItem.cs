@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using MW5.Api.Concrete;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository
@@ -8,6 +9,11 @@ namespace MW5.Data.Repository
     {
         internal FileItem(TreeNodeAdv node) : base(node)
         {
+        }
+
+        public LayerIdentity Identity
+        {
+            get { return new LayerIdentity(Filename); }
         }
 
         public string Filename

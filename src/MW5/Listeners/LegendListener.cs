@@ -48,6 +48,12 @@ namespace MW5.Listeners
             _legend.LayerLabelsClicked += LayerLabelsClicked;
             _legend.LayerDiagramsClicked += _legend_LayerDiagramsClicked;
             _legend.LayerCategoryClicked += LayerCategoryClicked;
+            _legend.LayerRemoved += LegendLayerRemoved;
+        }
+
+        private void LegendLayerRemoved(object sender, LayerEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.LayerRemoved_, sender as IMuteLegend, e);
         }
 
         private void LegendLayerAdded(object sender, LayerEventArgs e)

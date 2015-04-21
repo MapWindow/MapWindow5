@@ -9,5 +9,6 @@ namespace MW5.Plugins.Toolbox
     public static class GroupKeys
     {
         public const string Projections = "Projections";
+        public const string GeoDatabases = "GeoDatabases";
     }
 }

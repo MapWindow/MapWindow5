@@ -98,19 +98,21 @@ namespace MW5.Services.Concrete
                 return false;
             }
             
-            if (TryCloseProject())
+            if (TryCloseCore())
             {
                 _context.Map.GeometryEditor.Clear();
                 _context.Legend.Groups.Clear();
                 _context.Legend.Layers.Clear();
                 _context.Map.SetDefaultExtents();
                 _context.Locator.Clear();
+
+                _broadcaster.BroadcastEvent(p => p.ProjectClosed_, this, args);
                 return true;
             }
             return false;
         }
 
-        private bool TryCloseProject()
+        private bool TryCloseCore()
         {
             var state = State;
             switch (state)

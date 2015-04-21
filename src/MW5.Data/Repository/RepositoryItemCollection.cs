@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Data.Enums;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -50,6 +52,16 @@ namespace MW5.Data.Repository
             var node = CreateNode(type);
             node.Text = type.EnumToString();
             return AddNode(node);
+        }
+
+        public IServerItem AddServer(GeoDatabaseType databaseType)
+        {
+            var node = CreateNode(RepositoryItemType.Server);
+            node.LeftImageIndices = new[] { GetServerIcon(databaseType) };
+            node.Text = databaseType.EnumToString();
+            node.TagObject = new ServerItemMetadata(databaseType);
+            node.ExpandedOnce = true;
+            return AddNode(node) as IServerItem;
         }
 
         public IFolderItem AddFolder(string path, bool root)
@@ -121,6 +133,23 @@ namespace MW5.Data.Repository
             return RepositoryItem.Get(node);
         }
 
+        private static int GetServerIcon(GeoDatabaseType type)
+        {
+            switch (type)
+            {
+                case GeoDatabaseType.PostGis:
+                    return (int)RepositoryIcon.PostGis;
+                case GeoDatabaseType.SpatiaLite:
+                    return (int)RepositoryIcon.Sqlite;
+                case GeoDatabaseType.MsSql:
+                    return (int) RepositoryIcon.MsSql;
+                case GeoDatabaseType.Oracle:
+                    return (int)RepositoryIcon.Oracle;
+                default:
+                    throw new ArgumentOutOfRangeException("type");
+            }
+        }
+
         private static int GetVectorIcon(GeometryType type)
         {
             switch (type)
@@ -153,35 +182,27 @@ namespace MW5.Data.Repository
                     return (int)RepositoryIcon.Raster;
                 case RepositoryItemType.Databases:
                     return (int)RepositoryIcon.Databases;
-                case RepositoryItemType.PostGis:
-                    return (int)RepositoryIcon.PostGis;
                 case RepositoryItemType.Database:
+                case RepositoryItemType.Server:
                     return (int)RepositoryIcon.Database;
             }
 
             throw new ApplicationException("Unexpected repository item type.");
         }
 
-        public void UpdateState(Dictionary<string, string> filenames)
+        public void UpdateState(HashSet<LayerIdentity> filenames)
         {
             foreach (var item in this)
             {
-                var file = item as IFileItem;
+                var file = item as ILayerItem;
                 if (file != null)
                 {
-                    bool selected = filenames.ContainsKey(file.Filename.ToLower());
+                    bool selected = filenames.Contains(file.Identity);
                     file.AddedToMap = selected;
                 }
 
-                var databaseLayer = item as IDatabaseLayerItem;
-                if (databaseLayer != null)
-                {
-                    string filename = databaseLayer.Serialize().ToLower();
-                    bool selected = filenames.ContainsKey(filename);
-                    databaseLayer.AddedToMap = selected;
-                }
-
-                if (item is IFolderItem || item is IDatabaseItem)
+                var folder = item as IExpandableItem;
+                if (folder != null)
                 {
                     item.SubItems.UpdateState(filenames);
                 }

@@ -39,5 +39,10 @@ namespace MW5.Data.Repository
 
             _node.ExpandedOnce = true;
         }
+
+        public bool ExpandedOnce
+        {
+            get { return _node.ExpandedOnce; }
+        }
     }
 }

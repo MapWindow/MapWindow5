@@ -12,7 +12,7 @@ namespace MW5.Data.Enums
         Folder = 1,
         Vector = 2,
         Databases = 3,
-        PostGis = 4,
+        Server = 4,
         Database = 5,
         Image = 6,
         DatabaseLayer = 7,
@@ -30,6 +30,9 @@ namespace MW5.Data.Enums
         Database = 7,
         PostGis = 8,
         Raster = 9,
+        MsSql = 10,
+        Sqlite = 11,
+        Oracle = 12,
     }
 
     public enum FormatType

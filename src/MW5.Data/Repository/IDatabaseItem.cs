@@ -7,7 +7,7 @@ using MW5.Plugins.Concrete;
 
 namespace MW5.Data.Repository
 {
-    public interface IDatabaseItem: IRepositoryItem
+    public interface IDatabaseItem: IExpandableItem
     {
         DatabaseConnection Connection { get; }
     }

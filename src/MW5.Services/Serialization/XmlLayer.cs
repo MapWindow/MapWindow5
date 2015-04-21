@@ -2,6 +2,7 @@
 using System.Runtime.Serialization;
 using System.Xml;
 using MW5.Api;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
@@ -16,7 +17,7 @@ namespace MW5.Services.Serialization
         public XmlLayer(ILegendLayer layer)
         {
             Layer = LayerToXmlElement(layer);
-            Filename = layer.Filename;
+            Identity = layer.Identity;
             Expanded = layer.Expanded;
             HideFromLegend = layer.HideFromLegend;
             ColorSchemeCaption = layer.SymbologyCaption;
@@ -46,7 +47,7 @@ namespace MW5.Services.Serialization
         [DataMember] public bool HideFromLegend { get; set; }
         [DataMember] public string ColorSchemeCaption { get; set; }
         [DataMember] public XmlElement Layer { get; set; }
-        [DataMember] public string Filename { get; set; }
+        [DataMember] public LayerIdentity Identity { get; set; }
         [DataMember] public LayerType LayerType { get; set; }
     }
 }

@@ -157,6 +157,7 @@
     <Compile Include="Services\IConfigService.cs" />
     <Compile Include="Services\IBroadcasterService.cs" />
     <Compile Include="Services\IFileDialogService.cs" />
+    <Compile Include="Services\IGeoDatabaseService.cs" />
     <Compile Include="Services\ILayerService.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IPluginManager.cs" />

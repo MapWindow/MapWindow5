@@ -1,9 +1,10 @@
-﻿namespace MW5.Data.Repository
+﻿using MW5.Api.Concrete;
+
+namespace MW5.Data.Repository
 {
-    public interface IFileItem : IRepositoryItem
+    public interface IFileItem : ILayerItem
     {
         string Filename { get; }
         IFolderItem Folder { get; }
-        bool AddedToMap { get; set; }
     }
 }

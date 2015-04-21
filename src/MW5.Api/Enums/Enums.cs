@@ -1389,4 +1389,10 @@
         Rgb = 1,
         Grayscale = 2,
     }
+
+    public enum LayerIdentityType
+    {
+        File = 0,
+        OgrDatasource,
+    }
 }

@@ -89,7 +89,7 @@ namespace MW5.Plugins.Repository.Views
                 case RepositoryItemType.FileSystem:
                     SetFileSystemContextMenu();
                     return;
-                case RepositoryItemType.PostGis:
+                case RepositoryItemType.Server:
                     SetDatabaseRootContextMenu();
                     return;
                 case RepositoryItemType.Image:

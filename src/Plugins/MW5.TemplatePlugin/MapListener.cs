@@ -140,9 +140,13 @@ namespace MW5.Plugins.TemplatePlugin
                 return;
             }
 
-            _sampleDockWindow.Write(
-                "MapListener.PluginOnLayerSelected", 
-                "Selected layer: " + Path.GetFileName(_context.Layers.ItemByHandle(e.LayerHandle).Filename));
+            string filename = _context.Layers.ItemByHandle(e.LayerHandle).Filename;
+            if (File.Exists(filename))
+            {
+                filename = Path.GetFileName(filename);
+            }
+
+            _sampleDockWindow.Write("MapListener.PluginOnLayerSelected", "Selected layer: " + filename);
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 
 namespace MW5.Plugins.Interfaces
@@ -17,7 +18,7 @@ namespace MW5.Plugins.Interfaces
         void AddFolderLink(string path);
         void RemoveFolderLink(string path, bool silent);
 
-        void AddConnection();
+        void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null);
         void AddConnection(DatabaseConnection connection);
         void RemoveConnection(DatabaseConnection connection, bool silent);
 

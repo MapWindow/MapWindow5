@@ -9,5 +9,6 @@ namespace MW5.Plugins.Toolbox
     public static class ToolKeys
     {
         public const string IdentitfyProjection = "IdentifyProjection";
+        public const string ImportLayerInGeodatabase = "ImpoartLayerInGeodatabase";
     }
 }

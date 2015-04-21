@@ -12,6 +12,7 @@ namespace MW5.Plugins.Repository
     {
         private RepositoryPresenter _repositoryPresenter;
         private DockPanelService _dockPanelService;
+        private LegendListener _legendListener;
 
         public override void RegisterServices(IApplicationContainer container)
         {
@@ -22,6 +23,7 @@ namespace MW5.Plugins.Repository
         {
             _repositoryPresenter = context.Container.GetSingleton<RepositoryPresenter>();
             _dockPanelService = context.Container.GetSingleton<DockPanelService>();
+            _legendListener = context.Container.GetSingleton<LegendListener>();
         }
 
         public override void Terminate()
