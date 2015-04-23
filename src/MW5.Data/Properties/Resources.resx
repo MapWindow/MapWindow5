@@ -172,4 +172,16 @@
   <data name="img_oracle24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_oracle24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_help24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_help24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_log24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_log24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_options24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_options24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_tools24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_tools24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

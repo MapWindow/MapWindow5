@@ -9,7 +9,7 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// A tool that can be added to the GIS toolbox.
     /// </summary>
-    public class GisTool : IGisTool
+    public class ToolNode : IGisTool
     {
         private readonly TreeNode _node;
         private readonly PluginIdentity _identity;
@@ -18,7 +18,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Creates a new instance of GIS tool class
         /// </summary>
-        internal GisTool(string name, string key, PluginIdentity identity)
+        internal ToolNode(string name, string key, PluginIdentity identity)
         {
             if (identity == null) throw new ArgumentNullException("identity");
 

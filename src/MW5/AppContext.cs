@@ -48,6 +48,7 @@ namespace MW5
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
         private IToolbox _toolbox;
+        private IRepository _repository;
 
         private bool _initialized;
 
@@ -67,7 +68,7 @@ namespace MW5
         /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
         /// Perhaps property injection can be used.</remarks>
         internal void Init(IMainView mainView, IProjectService project, IConfigService configService, 
-                        LegendPresenter legendPresenter)
+                        LegendPresenter legendPresenter, IRepository repository)
         {
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
@@ -87,6 +88,7 @@ namespace MW5
             _project = project;
             _map = mainView.Map;
             _configService = configService;
+            _repository = repository;
 
             InitToolbox();
 
@@ -206,6 +208,11 @@ namespace MW5
         public AppConfig Config
         {
             get { return _configService.Config; }
+        }
+
+        public IRepository Repository
+        {
+            get { return _repository; }
         }
 
         public void SetMapProjection(ISpatialReference projection)

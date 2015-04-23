@@ -123,9 +123,29 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_help24 {
+            get {
+                object obj = ResourceManager.GetObject("img_help24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_line {
             get {
                 object obj = ResourceManager.GetObject("img_line", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_log24 {
+            get {
+                object obj = ResourceManager.GetObject("img_log24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -146,6 +166,16 @@ namespace MW5.Data.Properties {
         internal static System.Drawing.Bitmap img_mssql24 {
             get {
                 object obj = ResourceManager.GetObject("img_mssql24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_options24 {
+            get {
+                object obj = ResourceManager.GetObject("img_options24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -236,6 +266,16 @@ namespace MW5.Data.Properties {
         internal static System.Drawing.Bitmap img_sqlite24 {
             get {
                 object obj = ResourceManager.GetObject("img_sqlite24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tools24 {
+            get {
+                object obj = ResourceManager.GetObject("img_tools24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

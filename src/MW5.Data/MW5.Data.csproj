@@ -108,6 +108,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\Abstract\IAddConnectionView.cs" />
+    <Compile Include="Views\Abstract\IImportLayerView.cs" />
     <Compile Include="Views\AddConnectionModel.cs" />
     <Compile Include="Views\AddConnectionView.cs">
       <SubType>Form</SubType>
@@ -116,6 +117,13 @@
       <DependentUpon>AddConnectionView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\AddConnectionPresenter.cs" />
+    <Compile Include="Views\ImportLayerPresenter.cs" />
+    <Compile Include="Views\ImportLayerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ImportLayerView.Designer.cs">
+      <DependentUpon>ImportLayerView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -128,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AddConnectionView.resx">
       <DependentUpon>AddConnectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ImportLayerView.resx">
+      <DependentUpon>ImportLayerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -201,6 +212,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_oracle24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_log24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_options24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_tools24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_help24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

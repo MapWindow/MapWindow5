@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Concrete
@@ -26,5 +27,24 @@ namespace MW5.Plugins.Concrete
         
         [DataMember]
         public string ConnectionString { get; private set; }
+
+        public IEnumerable<string> GetSchemas()
+        {
+            using (var source = new VectorDatasource())
+            {
+                if (source.Open(ConnectionString))
+                {
+                    foreach (var s in source.GetShemas())
+                    {
+                        yield return s;
+                    }
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            return DatabaseType + ": " + Name;
+        }
     }
 }

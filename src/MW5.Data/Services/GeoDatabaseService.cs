@@ -19,11 +19,8 @@ namespace MW5.Data.Services
 
         public void ImportLayer()
         {
-            var connection = PromptUserForConnection();
-            if (connection != null)
-            {
-                
-            }
+            
+            _context.Container.Run<ImportLayerPresenter>();
         }
 
         public DatabaseConnection PromptUserForConnection(GeoDatabaseType? databaseType = null)

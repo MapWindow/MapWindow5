@@ -10,6 +10,9 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections.UI.Forms;
 using MW5.Shared;
+using MW5.Tools.Model;
+using MW5.Tools.Tools.Database;
+using MW5.Tools.Views;
 
 namespace MW5.Plugins.Toolbox
 {
@@ -41,7 +44,7 @@ namespace MW5.Plugins.Toolbox
                     }
                     break;
                 case ToolKeys.ImportLayerInGeodatabase:
-                    _databaseService.ImportLayer();
+                    _context.Container.Run<GisToolPresenter, GisToolBase>(new ImportLayerTool());
                     break;
                 default:
                     string msg = "No handler was found for the specified key: " + e.Tool.Key;

@@ -8,7 +8,7 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Group of tools in the toolbox.
     /// </summary>
-    public class ToolboxGroup : IToolboxGroup
+    public class GroupNode : IToolboxGroup
     {
         private readonly TreeNode _node;
         private string _name;
@@ -17,7 +17,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Creates a new instance of GIS tool class
         /// </summary>
-        internal ToolboxGroup(string name, string description, PluginIdentity identity)
+        internal GroupNode(string name, string description, PluginIdentity identity)
         {
             if (identity == null) throw new ArgumentNullException("identity");
             
@@ -77,7 +77,7 @@ namespace MW5.Tools.Toolbox
                     throw new NullReferenceException();
                 }
                 
-                return new ToolboxGroups(_node.Nodes);
+                return new GroupCollection(_node.Nodes);
             }
         }
 

@@ -33,13 +33,14 @@ namespace MW5.Views
         private readonly StatusBarListener _statusBarListener;
         private readonly MenuUpdater _menuUpdater;
 
-        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService, 
-                             IConfigService configService, LegendPresenter legendPresenter)
+        public MainPresenter(IAppContext context, IMainView view, IProjectService projectService,
+                             IConfigService configService, LegendPresenter legendPresenter, IRepository repository)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
             if (projectService == null) throw new ArgumentNullException("projectService");
             if (configService == null) throw new ArgumentNullException("configService");
+            if (repository == null) throw new ArgumentNullException("repository");
 
             _context = context;
             _projectService = projectService;
@@ -56,7 +57,7 @@ namespace MW5.Views
                     throw new InvalidCastException("Invalid type of IAppContext instance");
                 }
 
-                appContext.Init(view, projectService, configService, legendPresenter);
+                appContext.Init(view, projectService, configService, legendPresenter, repository);
 
                 view.Map.Initialize();
                 view.ViewClosing += OnViewClosing;

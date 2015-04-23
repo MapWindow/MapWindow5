@@ -17,7 +17,8 @@ namespace MW5.Data
             container.RegisterView<IAddConnectionView, AddConnectionView>()
                 .RegisterSingleton<IRepository, DataRepository>()
                 .RegisterService<IGeoDatabaseService, GeoDatabaseService>()
-                .RegisterService<AddConnectionModel>();
+                .RegisterService<AddConnectionModel>()
+                .RegisterService<IImportLayerView, ImportLayerView>();
 
             EnumHelper.RegisterConverter(new RepositoryItemTypeConverter());
         }

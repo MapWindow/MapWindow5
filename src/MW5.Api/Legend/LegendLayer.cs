@@ -543,5 +543,10 @@ namespace MW5.Api.Legend
         internal bool ExpansionBoxForceAllowed = false;
 
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

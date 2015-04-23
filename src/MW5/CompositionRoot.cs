@@ -39,6 +39,7 @@ namespace MW5
             Projections.CompositionRoot.Compose(container);
             UI.CompositionRoot.Compose(container);
             Data.CompositionRoot.Compose(container);
+            Tools.CompositionRoot.Compose(container);
 
             CommandBarHelper.InitMenuColors();
 

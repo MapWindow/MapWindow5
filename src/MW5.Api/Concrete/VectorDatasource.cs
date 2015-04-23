@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -238,6 +240,18 @@ namespace MW5.Api.Concrete
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public IEnumerable<string> GetShemas()
+        {
+            var arr = _datasource.GetSchemas() as string[];
+            if (arr != null)
+            {
+                foreach (var item in arr.ToList())
+                {
+                    yield return item;
+                }
+            }
         }
     }
 }

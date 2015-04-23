@@ -29,7 +29,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public void Add(IGisTool item)
         {
-            var tool = item as GisTool;
+            var tool = item as ToolNode;
             if (tool == null)
             {
                 throw new InvalidCastException("A tool must be created by calling GisToolBox.CreateTool.");

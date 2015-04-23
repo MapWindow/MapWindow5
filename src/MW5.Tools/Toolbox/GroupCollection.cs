@@ -11,14 +11,14 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Provides access to the list of groups of group toolbox.
     /// </summary>
-    public class ToolboxGroups: IToolboxGroups
+    public class GroupCollection: IToolboxGroups
     {
         private readonly TreeNodeCollection _nodes = null;
 
         /// <summary>
         /// Creates a new instance of GisToolboxGroups class. 
         /// </summary>
-        internal ToolboxGroups(TreeNodeCollection nodes)
+        internal GroupCollection(TreeNodeCollection nodes)
         {
             if (nodes == null) throw new NullReferenceException();
             _nodes = nodes;
@@ -31,7 +31,7 @@ namespace MW5.Tools.Toolbox
         {
             if (Equals(item)) throw new InvalidOperationException();
             
-            var group = item as ToolboxGroup;
+            var group = item as GroupNode;
             if (group == null)
             {
                 throw new InvalidCastException();
@@ -46,7 +46,7 @@ namespace MW5.Tools.Toolbox
                 }
             }
 
-            TreeNode node = ((ToolboxGroup)item).Node;
+            TreeNode node = ((GroupNode)item).Node;
 
             if (i < _nodes.Count)
             {

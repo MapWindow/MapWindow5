@@ -121,7 +121,7 @@ namespace MW5.Tools.Toolbox
         {
             get 
             {
-                return new ToolboxGroups(_tree.Nodes);
+                return new GroupCollection(_tree.Nodes);
             }
         }
 
@@ -138,7 +138,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IGisTool CreateTool(string name, string key, PluginIdentity identity)
         {
-            var tool = new GisTool(name, key, identity);
+            var tool = new ToolNode(name, key, identity);
             return tool;
         }
 
@@ -147,7 +147,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolboxGroup CreateGroup(string name, string description, PluginIdentity identity)
         {
-            return new ToolboxGroup(name, description, identity);
+            return new GroupNode(name, description, identity);
         }
 
         /// <summary>

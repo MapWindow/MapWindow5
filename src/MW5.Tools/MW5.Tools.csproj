@@ -51,6 +51,7 @@
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -64,18 +65,69 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Views\Controls\BooleanParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\BooleanParameterControl.Designer.cs">
+      <DependentUpon>BooleanParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\ComboParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\ComboParameterControl.Designer.cs">
+      <DependentUpon>ComboParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\LayerParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\LayerParameterControl.Designer.cs">
+      <DependentUpon>LayerParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\IParameterControl.cs" />
+    <Compile Include="Views\Controls\ParameterControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\ParameterControlBase.Designer.cs">
+      <DependentUpon>ParameterControlBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\StringParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\StringParameterControl.Designer.cs">
+      <DependentUpon>StringParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Tools\Database\ImportLayerTool.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Model\Parameters\BooleanParameter.cs" />
+    <Compile Include="Model\GisToolAttribute.cs" />
+    <Compile Include="Model\GisToolBase.cs" />
+    <Compile Include="Model\Parameters\LayerParameter.cs" />
+    <Compile Include="Model\OptionalParameterAttribute.cs" />
+    <Compile Include="Model\Parameters\OptionsParameter.cs" />
+    <Compile Include="Model\RequiredParameterAttribute.cs" />
+    <Compile Include="Model\Parameters\StringParameter.cs" />
+    <Compile Include="Model\Parameters\BaseParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Toolbox\GisTool.cs" />
+    <Compile Include="Views\GisToolPresenter.cs" />
+    <Compile Include="Views\GisToolView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GisToolView.Designer.cs">
+      <DependentUpon>GisToolView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\IGisToolView.cs" />
+    <Compile Include="Toolbox\ToolNode.cs" />
     <Compile Include="Toolbox\GisToolbox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Toolbox\ToolboxGroup.cs" />
-    <Compile Include="Toolbox\ToolboxGroups.cs" />
+    <Compile Include="Toolbox\GroupNode.cs" />
+    <Compile Include="Toolbox\GroupCollection.cs" />
     <Compile Include="Toolbox\ToolCollection.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -87,11 +139,30 @@
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Views\Controls\BooleanParameterControl.resx">
+      <DependentUpon>BooleanParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\ComboParameterControl.resx">
+      <DependentUpon>ComboParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\LayerParameterControl.resx">
+      <DependentUpon>LayerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\StringParameterControl.resx">
+      <DependentUpon>StringParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GisToolView.resx">
+      <DependentUpon>GisToolView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +173,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_tool.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_help24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_log24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_options24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_tools24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
