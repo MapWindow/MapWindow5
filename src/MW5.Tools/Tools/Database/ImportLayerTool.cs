@@ -67,10 +67,27 @@ namespace MW5.Tools.Tools.Database
         /// </summary>
         private string PrepareOptions()
         {
-            string s = string.Empty;
+            var list = new List<string>();
+
             if (!string.IsNullOrWhiteSpace(Schema.Value))
             {
-                s += "SCHEMA=" + Schema.Value;
+                list.Add("SCHEMA=" + Schema.Value);
+            }
+
+            if (Database.Value != null && Database.Value.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql)
+            {
+                list.Add("ENGINE=MyISAM ");    // Spatial indexes aren't supported otherwise http ://stackoverflow.com/questions/18379808/the-used-table-type-doesnt-support-spatial-indexes
+            }
+
+            if (Overwrite.Value)
+            {
+                list.Add("OVERWRITE=TRUE");
+            }
+
+            string s = string.Empty;
+            foreach (var item in list)
+            {
+                s += item + ";";
             }
 
             return s;

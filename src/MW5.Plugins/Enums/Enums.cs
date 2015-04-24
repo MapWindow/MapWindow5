@@ -6,6 +6,7 @@
         SpatiaLite = 1,
         Oracle = 2,
         MsSql = 3,
+        MySql = 4,
     }
 
     public enum DataSourceType

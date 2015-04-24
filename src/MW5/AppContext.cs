@@ -110,7 +110,7 @@ namespace MW5
 
         private void InitToolbox()
         {
-            var toolbox = new GisToolbox();
+            var toolbox = new ToolboxControl();
             toolbox.ToolClicked += toolbox_ToolClicked;
             _toolbox = toolbox;
         }

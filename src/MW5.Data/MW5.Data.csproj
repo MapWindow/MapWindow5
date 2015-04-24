@@ -48,10 +48,18 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4" />
+    <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Grid.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Shared.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Tools.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -59,6 +67,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
@@ -68,6 +79,7 @@
     <Compile Include="Db\ConnectionBase.cs" />
     <Compile Include="Db\IConnectionParams.cs" />
     <Compile Include="Db\MssqlConnection.cs" />
+    <Compile Include="Db\MySqlConnection.cs" />
     <Compile Include="Db\PostGisConnection.cs" />
     <Compile Include="Db\SpatiaLiteConnection.cs" />
     <Compile Include="Enums\Enums.cs" />
@@ -108,6 +120,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Views\Abstract\IAddConnectionView.cs" />
+    <Compile Include="Views\Abstract\IDatabaseLayersView.cs" />
     <Compile Include="Views\Abstract\IImportLayerView.cs" />
     <Compile Include="Views\AddConnectionModel.cs" />
     <Compile Include="Views\AddConnectionView.cs">
@@ -117,6 +130,17 @@
       <DependentUpon>AddConnectionView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\AddConnectionPresenter.cs" />
+    <Compile Include="Views\Controls\DatabaseLayersGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\VectorLayerInfo.cs" />
+    <Compile Include="Views\DatabaseLayersPresenter.cs" />
+    <Compile Include="Views\DatabaseLayersView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DatabaseLayersView.Designer.cs">
+      <DependentUpon>DatabaseLayersView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportLayerPresenter.cs" />
     <Compile Include="Views\ImportLayerView.cs">
       <SubType>Form</SubType>
@@ -136,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AddConnectionView.resx">
       <DependentUpon>AddConnectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DatabaseLayersView.resx">
+      <DependentUpon>DatabaseLayersView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ImportLayerView.resx">
       <DependentUpon>ImportLayerView.cs</DependentUpon>
@@ -224,6 +251,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_help24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_mysql16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_mysql24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

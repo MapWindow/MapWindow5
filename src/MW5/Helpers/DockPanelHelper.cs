@@ -56,9 +56,9 @@ namespace MW5.Helpers
             var toolboxControl = context.GetDockPanelObject(DefaultDockPanel.Toolbox);
 
             var toolbox = context.DockPanels.Add(toolboxControl, DockPanelKeys.Toolbox, PluginIdentity.Default);
-            toolbox.Caption = "GIS Toolbox";
-            toolbox.DockTo(context.DockPanels.Legend, DockPanelState.Tabbed, PanelSize);
-            toolbox.SetIcon(Resources.ico_tools);
+            toolbox.Caption = "Toolbox";
+            toolbox.DockTo(null, DockPanelState.Right, PanelSize);
+            toolbox.SetIcon(Resources.ico_toolbox24);
         }
 
         private static void InitLocator(ISerializableContext context)

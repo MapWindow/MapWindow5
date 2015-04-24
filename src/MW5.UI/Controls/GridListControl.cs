@@ -35,6 +35,8 @@ namespace MW5.UI.Controls
             SetDefaults();
 
             AttachEvents();
+
+            _grid.BorderStyle = BorderStyle.None;
         }
 
         private void AttachEvents()

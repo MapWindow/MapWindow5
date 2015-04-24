@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
@@ -13,12 +14,12 @@ namespace MW5.Tools.Toolbox
     /// </summary>
     public class GroupCollection: IToolboxGroups
     {
-        private readonly TreeNodeCollection _nodes = null;
+        private readonly TreeNodeAdvCollection _nodes = null;
 
         /// <summary>
         /// Creates a new instance of GisToolboxGroups class. 
         /// </summary>
-        internal GroupCollection(TreeNodeCollection nodes)
+        internal GroupCollection(TreeNodeAdvCollection nodes)
         {
             if (nodes == null) throw new NullReferenceException();
             _nodes = nodes;
@@ -46,7 +47,7 @@ namespace MW5.Tools.Toolbox
                 }
             }
 
-            TreeNode node = ((GroupNode)item).Node;
+            TreeNodeAdv node = ((GroupNode)item).Node;
 
             if (i < _nodes.Count)
             {

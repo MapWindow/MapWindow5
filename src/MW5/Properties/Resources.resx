@@ -241,4 +241,7 @@
   <data name="img_options" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ico_toolbox24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ico_toolbox24.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

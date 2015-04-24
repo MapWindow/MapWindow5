@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
@@ -10,7 +11,7 @@ namespace MW5.Tools.Toolbox
     /// </summary>
     public class GroupNode : IToolboxGroup
     {
-        private readonly TreeNode _node;
+        private readonly TreeNodeAdv _node;
         private string _name;
         private readonly PluginIdentity _identity;
 
@@ -26,7 +27,7 @@ namespace MW5.Tools.Toolbox
 
             Description = description;
 
-            _node = new TreeNode {Text = name, ImageIndex = GisToolbox.IconFolder};
+            _node = new TreeNodeAdv {Text = name, LeftImageIndices = new [] {ToolboxControl.IconFolder}};
             _node.Expand();
             _node.Tag = this;
         }
@@ -89,18 +90,11 @@ namespace MW5.Tools.Toolbox
         {
             get
             {
-                return _node.IsExpanded;
+                return _node.Expanded;
             }
             set
             {
-                if (value)
-                {
-                    _node.Expand();
-                }
-                else
-                {
-                    _node.Collapse();
-                }
+                _node.Expanded = value;
             }
         }
 
@@ -112,7 +106,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Source tree node for the group
         /// </summary>
-        internal TreeNode Node
+        internal TreeNodeAdv Node
         {
             get { return _node; }
         }

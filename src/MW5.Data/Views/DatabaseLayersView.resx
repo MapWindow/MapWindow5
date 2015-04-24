@@ -117,35 +117,45 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="img_folder_closed" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_folder_closed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_folder_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_folder_open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_help24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_help24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_log24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_log24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_options24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_options24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_tool" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_tool.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_tools24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_tools24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="TestKey" xml:space="preserve">
-    <value>TestValue</value>
-  </data>
-  <data name="img_tool16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_tool16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_toolbox16" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_toolbox16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <metadata name="imageList1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <data name="imageList1.ImageStream" mimetype="application/x-microsoft.net.object.binary.base64">
+    <value>
+        AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
+        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
+        ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAy
+        BwAAAk1TRnQBSQFMAgEBAwEAAQgBAAEIAQABEAEAARABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFA
+        AwABEAMAAQEBAAEgBgABEP8A/wD/AP8AFgADEQEWAU0BTwFNAY4BUwFWAVMBowMwAUjwAAFQAVIBUAGq
+        AXwBoQF8Af4BjAG+AYwB/wFfAWwBXwHUNAADCAELA08BkwNJAX+wAAFSAVMBUgHPAYIBrAGCAf8BjAG+
+        AYwB/wFkAXUBZAHnNAADOQFYAWMBcAFjAfcBZQF3AWUB5wMTARmsAAMgASwBUgFZAVIB8AFYAWEBWAHy
+        AUoBTAFKAY00AAMDAQQBVgFYAVYB5gF1AZcBdQH/AVYBVwFWAco4AAMCAQMDBAEGGAABGwEcARsBJQFC
+        AkMBbQMaASNMAAMRARYDHwEqAwABATgAAxsBJQFpAXsBaQHrAWgBfAFoAfoDNAFOLAADEgEYAU8BUQFQ
+        AZABbQGFAW4B9gFxAYsBcgH8AWABbAFjAcMBSwFNAUwBgwMyAUkDCAEKARkCGgEiAUYBSAFHAXYBagF+
+        AWsB6wF4AZwBeAH7AW4BiAFwAfYBVQFYAVYBqAEUAhUBG4wAA00BiwGEAbABhAH/AVYBWwFWAbAsAAFJ
+        AUoBSQF8AYwBuAGMAf8BlwHNAZcB/wGTAcgBkwH/AZABwwGQAf8BiQG5AYkB/wFsAYgBbQH5AVQBWQFW
+        AfsBXgFoAV8B8wF2AZYBdwH+AYwBvgGMAf8BjAG+AYwB/wGMAb4BjAH/AYQBrwGEAf8BTQFPAU4BiVAA
+        AxEBFgNBAWgDOAFVAwgBCwwAAwgBCwM4AVUDQQFoAxEBFhAAAxkBIgFbAWIBWwHtAWwBggFsAfoDNAFO
+        KAABYQFqAWIBuwGdAdUBnQH/AZoB0AGaAf8BlgHLAZYB/wGSAccBkgH/AY8BwQGPAf8BjQG/AY0B/wGM
+        Ab4BjAH/AYwBvgGMAf8BjAG+AYwB/wGMAb4BjAH/AYwBvgGMAf8BjAG+AYwB/wGMAb4BjAH/AVwBZQFe
+        AbNMAAMBAQIBVAFVAVQB7gF5AZsBeQH+AW0BiQFtAf0DRwF5DAADRwF5AW0BiQFtAf0BeQGbAXkB/gFU
+        AVUBVAHuAwEBAhAAAzEBSQFtAYMBbQH6AVIBVgFSAfkDTwH/A08B/wNPAf8DTwH/A08B/wNPAf8DRQF0
+        DAABagF7AWwB0AGfAdgBnwH/AZwB0wGcAf8BmAHOAZgB/wGVAcoBlQH/AZEBxQGRAf8BjQHAAY0B/wGM
+        Ab4BjAH/AYwBvgGMAf8BjAG+AYwB/wGMAb4BjAH/AYwBvgGMAf8BjAG+AYwB/wGMAb4BjAH/AV0BZwFf
+        AbdMAAMfASoBXAFnAVwB8gGMAb4BjAH/AYwBvgGMAf8BVQFXAVUBowwAAVUBVwFVAaMBjAG+AYwB/wGM
+        Ab4BjAH/AVwBZwFcAfIDHwEqFAABWgFfAVoBswFtAYcBbQH/AW0BhwFtAf8BbQGHAW0B/wFtAYcBbQH/
+        AW0BhwFtAf8BbQGHAW0B/wFtAYcBbQH/A0cBegwAAV0BYwFdAbABngHWAZ4B/wGeAdcBngH/AZsB0gGb
+        Af8BlwHNAZcB/wGTAcgBkwH/AZABwwGQAf8BjQG/AY0B/wGMAb4BjAH/AYwBvgGMAf8BjAG+AYwB/wGM
+        Ab4BjAH/AYwBvgGMAf8BjAG9AYwB/wFWAVsBVwGhTAADAQECAVQBVQFUAe4BeQGbAXkB/gFtAYkBbQH9
+        A0cBeQwAA0cBeQFtAYkBbQH9AXkBmwF5Af4BVAFVAVQB7gMBAQJEAAE3ATgBNwFSAXABhgFxAfgBoAHZ
+        AaAB/wGdAdUBnQH/AZkB0AGZAf8BlgHLAZYB/wGSAccBkgH/AY4BwQGOAf8BjAG+AYwB/wGMAb4BjAH/
+        AYkBuAGJAf8BiwG8AYsB/wGMAb4BjAH/AXIBkgFzAf8BQQFCAUEBZ1AAAxEBFgNBAWgDOAFVAwgBCwwA
+        AwgBCwM4AVUDQQFoAxEBFkgAAwMBBAFOAU8BTgGMAXIBiQFyAesBigG1AYoB/gGQAcABkQH/AY4BvQGO
+        Af8BfwGmAYAB/AFxAYwBcgH8AWYBdQFmAdcBUwFXAVQBmQFJAUsBSgF9AUkCSgF/AU4BUAFPAY0BQwFF
+        AUQBbgMKAQ3MAAMOARIBUQFUAVIBlwFYAVwBWAG8AVkBXgFbAcQBSgFLAUoBfwMOARNcAAFCAU0BPgcA
+        AT4DAAEoAwABQAMAARADAAEBAQABAQUAAYAXAAP/AQAG/wIABv8CAAb/AgAG/wIAAQ8F/wIAAQ8B/wGP
+        A/8CAAEPAf8BhwP/AgABDwH/AYcB/wHnAeMCAAGPAf8BwwH/AYADAAL/AeMB/wGAAwAB8ALhAf8BgAMA
+        AuAB8AEDAYADAALgAfgBAwGAAwAC4AL/AYADAAHwAeEC/wGAAwAE/wHgAX8CAAs=
+</value>
   </data>
 </root>

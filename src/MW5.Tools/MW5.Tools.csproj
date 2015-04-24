@@ -66,6 +66,9 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Toolbox\ToolboxTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\Controls\BooleanParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -123,7 +126,7 @@
     </Compile>
     <Compile Include="Views\IGisToolView.cs" />
     <Compile Include="Toolbox\ToolNode.cs" />
-    <Compile Include="Toolbox\GisToolbox.cs">
+    <Compile Include="Toolbox\ToolboxControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Toolbox\GroupNode.cs" />
@@ -185,6 +188,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_tools24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_tool16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_toolbox16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

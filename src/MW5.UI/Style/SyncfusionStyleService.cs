@@ -26,91 +26,101 @@ namespace MW5.UI.Style
             ApplyStyle(form.Controls);
         }
 
-        public void ApplyStyle(Control control)
-        {
-            ApplyStyle(control.Controls);
-        }
-
         private void ApplyStyle(Control.ControlCollection controls)
         {
             for (int i = controls.Count - 1; i >= 0; i--)
             {
                 var control = controls[i];
 
-                var lbl = control as Label;
-                if (lbl != null)
-                {
-                    lbl.BackColor = Color.Transparent;
-                }
+                ApplyStyle(control);
+            }
+        }
 
-                var btn = control as ButtonAdv;
-                if (btn != null)
-                {
-                    btn.KeepFocusRectangle = false;
+        public void ApplyStyle(Control control)
+        {
+            var lbl = control as Label;
+            if (lbl != null)
+            {
+                lbl.BackColor = Color.Transparent;
+            }
+
+            var btn = control as ButtonAdv;
+            if (btn != null)
+            {
+                btn.KeepFocusRectangle = false;
 #if STYLE2010   
                     btn.Appearance = ButtonAppearance.Office2010;
                     btn.UseVisualStyle = true;
 #else
-                    btn.Appearance= ButtonAppearance.Classic;
-                    btn.UseVisualStyle = false;
-                    btn.UseVisualStyleBackColor = true;
-                    btn.ForeColor = Color.Black;
+                btn.Appearance = ButtonAppearance.Classic;
+                btn.UseVisualStyle = false;
+                btn.UseVisualStyleBackColor = true;
+                btn.ForeColor = Color.Black;
 #endif
-                }
+            }
 
-                var cbo = control as ComboBoxAdv;
-                if (cbo != null)
-                {
-                    cbo.Style = _settings.VisualStyle;
-                }
+            var cbo = control as ComboBoxAdv;
+            if (cbo != null)
+            {
+                cbo.Style = _settings.VisualStyle;
+            }
 
-                var txt = control as TextBoxExt;
-                if (txt != null)
-                {
-                    txt.Style = _settings.TextboxTheme;
-                }
+            var txt = control as TextBoxExt;
+            if (txt != null)
+            {
+                txt.Style = _settings.TextboxTheme;
+            }
 
-                var chk = control as CheckBoxAdv;
-                if (chk != null)
-                {
-                    chk.Style = _settings.CheckboxStyle;
-                    chk.MetroColor = Color.DimGray;
-                }
+            var chk = control as CheckBoxAdv;
+            if (chk != null)
+            {
+                chk.Style = _settings.CheckboxStyle;
+                chk.MetroColor = Color.DimGray;
+            }
 
-                var rad = control as RadioButtonAdv;
-                if (rad != null)
-                {
-                    rad.Style = _settings.RadioButtonStyle;
-                }
+            var rad = control as RadioButtonAdv;
+            if (rad != null)
+            {
+                rad.Style = _settings.RadioButtonStyle;
+            }
 
-                var grid = control as GridGroupingControl;
-                if (grid != null)
-                {
+            var grid = control as GridGroupingControl;
+            if (grid != null)
+            {
 #if STYLE2010   
                     grid.GridOfficeScrollBars = OfficeScrollBars.Office2010;
                     grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
 #else
-                    grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
-                    grid.GridVisualStyles = GridVisualStyles.Custom;
-                    grid.TableOptions.GridVisualStyles = GridVisualStyles.Custom;
+                grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
+                grid.GridVisualStyles = GridVisualStyles.Custom;
+                grid.TableOptions.GridVisualStyles = GridVisualStyles.Custom;
 #endif
-                }
+            }
 
-                var tree = control as TreeViewAdv;
-                if (tree != null)
-                {
-                    tree.MetroColor = _metroColor;
+            var tree = control as TreeViewAdv;
+            if (tree != null)
+            {
+                tree.MetroColor = _metroColor;
 #if STYLE2010
                     tree.Style = TreeStyle.Office2010;
 #else
-                    tree.Style = TreeStyle.Metro;
+                tree.Style = TreeStyle.Metro;
 #endif
-                }
-
-                ApplyTabStyle(control);
-
-                ApplyStyle(control.Controls);
             }
+
+            var splitter = control as SplitContainerAdv;
+            if (splitter != null)
+            {
+#if STYLE2010
+                    splitter.Style = global::Syncfusion.Windows.Forms.Tools.Enums.Style.Office2007Blue;
+#else
+                splitter.Style = Syncfusion.Windows.Forms.Tools.Enums.Style.Mozilla;
+#endif
+            }
+
+            ApplyTabStyle(control);
+
+            ApplyStyle(control.Controls);
         }
 
         private void ApplyTabStyle(Control control)

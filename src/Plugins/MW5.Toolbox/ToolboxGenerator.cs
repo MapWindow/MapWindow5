@@ -33,12 +33,14 @@ namespace MW5.Plugins.Toolbox
             toolbox.Groups.Add(group);
 
             var tool = CreateTool("Identify projection", ToolKeys.IdentitfyProjection);
+            tool.Description = "Tries to identify projection string provided by user as on of the known ones";
             group.Tools.Add(tool);
 
             group = toolbox.CreateGroup("GeoDatabases", GroupKeys.GeoDatabases, _plugin.Identity);
             toolbox.Groups.Add(group);
 
-            tool = CreateTool("Import layer in geodatabase", ToolKeys.ImportLayerInGeodatabase);
+            tool = CreateTool("Import layer", ToolKeys.ImportLayerInGeodatabase);
+            tool.Description = "Imports layer in the geodatabase";
             group.Tools.Add(tool);
         }
 

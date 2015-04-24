@@ -5,21 +5,21 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Properties;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
     /// <summary>
-    /// GisToolbox control
+    /// Toolbox control
     /// </summary>
-    public class GisToolbox : SplitContainerAdv, IToolbox 
+    public class ToolboxControl : SplitContainerAdv, IToolbox 
     {
         // icon indices
         internal const int IconFolder = 0;
-        internal const int IconFolderOpen = 1;
-        internal const int IconTool = 2;
-        
-        private TreeView _tree;
+        internal const int IconTool = 1;
+
+        private ToolboxTreeView _tree;
         private RichTextBox _textbox;
 
         public event EventHandler<ToolboxToolEventArgs> ToolClicked;
@@ -31,17 +31,11 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public GisToolbox()
+        public ToolboxControl()
         {
             Init();
 
             AddEventHandlers();
-
-#if STYLE2010
-            Style = global::Syncfusion.Windows.Forms.Tools.Enums.Style.Office2007Blue;
-#else
-            Style = global::Syncfusion.Windows.Forms.Tools.Enums.Style.Mozilla;
-#endif
         }
 
         private void Init()
@@ -54,19 +48,39 @@ namespace MW5.Tools.Toolbox
             InitTextBox();
 
             SplitterDistance = Convert.ToInt32(Height * 0.9);
-
-            InitImageList();
         }
 
         private void InitTreeView()
         {
-            _tree = new TreeView
+            _tree = new ToolboxTreeView
             {
                 BorderStyle = BorderStyle.None,
                 Dock = DockStyle.Fill
             };
+
+
+            _tree.PrepareToolTip += PrepareToolTip;
+
             Panel1.Controls.Add(_tree);
             Panel1MinSize = 0;
+        }
+
+        private void PrepareToolTip(object sender, ToolTipEventArgs e)
+        {
+            e.Cancel = true;        // don't show them
+            return;
+
+            if (_tree.SelectedTool == null)
+            {
+                e.Cancel = true;
+            }
+
+            var tool = _tree.SelectedTool;
+            if (tool != null)
+            {
+                e.ToolTip.Header.Text = tool.Name;
+                e.ToolTip.Body.Text = tool.Description;
+            }
         }
 
         private void InitTextBox()
@@ -87,29 +101,13 @@ namespace MW5.Tools.Toolbox
 
         private void AddEventHandlers()
         {
-            _tree.BeforeExpand += GeoprocessingTreeBeforeExpand;
-            _tree.BeforeCollapse += GeoprocessingTreeBeforeCollapse;
-            _tree.AfterSelect += GeoprocessingTreeAfterSelect;
-            _tree.NodeMouseDoubleClick += TreeNodeMouseDoubleClick;
+            _tree.AfterSelect += TreeAfterSelect;
+            _tree.MouseDoubleClick += TreeMouseDoubleClick;
             ToolSelected += GisToolbox_ToolSelected;
             GroupSelected += GisToolbox_GroupSelected;
         }
 
-	    private void InitImageList()
-	    {
-	        ImageList imageList = new ImageList {ColorDepth = ColorDepth.Depth32Bit};
 
-	        Bitmap bmp = new Bitmap(Resources.img_folder_closed, new Size(16, 16));
-		    imageList.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_folder_open, new Size(16, 16));
-		    imageList.Images.Add(bmp);
-
-            bmp = new Bitmap(Resources.img_tool, new Size(16, 16));
-		    imageList.Images.Add(bmp);
-
-		    _tree.ImageList = imageList;
-        }
         #endregion
 
         #region IGisToolBox Members
@@ -189,71 +187,40 @@ namespace MW5.Tools.Toolbox
         #region Events
 
         /// <summary>
-        /// Sets the closed state of folder
+        /// Fires events, sets the same icons for selected mode as for regular mode
         /// </summary>
-        private void GeoprocessingTreeBeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        void TreeAfterSelect(object sender, EventArgs e)
         {
-            if (e.Node == null) return;
-
-            if (e.Node.ImageIndex != IconFolderOpen) return;
-
-            e.Node.ImageIndex = IconFolder;
-            e.Node.SelectedImageIndex = IconFolder;
-        }
-
-        /// <summary>
-        /// Sets the opened state of folder
-        /// </summary>
-        private void GeoprocessingTreeBeforeExpand(object sender, TreeViewCancelEventArgs e)
-        {
-            if (e.Node == null) return;
-
-            if (e.Node.ImageIndex != IconFolder) return;
-
-            e.Node.ImageIndex = IconFolderOpen;
-            e.Node.SelectedImageIndex = IconFolderOpen;
-        }
-
-        /// <summary>
-	    /// Fires events, sets the same icons for selected mode as for regular mode
-	    /// </summary>
-	    private void GeoprocessingTreeAfterSelect(object sender, TreeViewEventArgs e)
-	    {
-            if (e.Node == null) return;
-
-            e.Node.SelectedImageIndex = e.Node.ImageIndex;
-            if ((e.Node.Tag != null)) 
+            if (_tree.SelectedNode == null)
             {
-                if (e.Node.ImageIndex == IconTool)
-                {
-                    var tool = e.Node.Tag as IGisTool;
-                    if (tool != null)
-                    {
-                        FireToolSelected(tool);
-                    }
-                }
-                else
-                {
-                    var group = e.Node.Tag as IToolboxGroup;
-                    if (group != null)
-                    {
-                        FireGroupSelected(group);
-                    }
-                }
+                return;
             }
-	    }
+
+            var tool = _tree.SelectedNode.Tag as IGisTool;
+            if (tool != null)
+            {
+                FireToolSelected(tool);
+            }
+
+            var group = _tree.SelectedNode.Tag as IToolboxGroup;
+            if (group != null)
+            {
+                FireGroupSelected(group);
+            }
+        }
 
         /// <summary>
         /// Generates tool clicked event for plug-ins
         /// </summary>
-        private void TreeNodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void TreeMouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (e.Node == null || e.Node.Tag == null || e.Node.Tag is IToolboxGroup)
+            var node = _tree.SelectedNode;
+            if (node == null || node.Tag is IToolboxGroup)
             {
                 return;
             }
-            
-            var tool = e.Node.Tag as IGisTool;
+
+            var tool = node.Tag as IGisTool;
             if (tool != null)
             {
                 FireToolClicked(tool);

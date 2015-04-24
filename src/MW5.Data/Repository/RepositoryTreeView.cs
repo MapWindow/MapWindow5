@@ -161,6 +161,7 @@ namespace MW5.Data.Repository
                 Resources.img_mssql16,
                 Resources.img_sqlite16,
                 Resources.img_oracle16,
+                Resources.img_mysql16,
             };
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Data.Views;
 using MW5.Plugins;
@@ -71,7 +72,13 @@ namespace MW5.Menu
                     var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)
                     {
-                        MessageService.Current.Info("Layer selection isn't implemented yet. It works in data repository though.");
+                        using (var ds = new VectorDatasource())
+                        {
+                            if (ds.Open(connection.ConnectionString))
+                            {
+                                _context.Container.Run<DatabaseLayersPresenter, VectorDatasource>(ds);
+                            }
+                        }
                     }
                     break;
                 case MenuKeys.AddLayer:

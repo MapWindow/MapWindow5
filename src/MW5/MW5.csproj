@@ -388,6 +388,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\ico_toolbox24.ico" />
+    <None Include="Resources\img_toolbox16.png" />
     <None Include="Resources\img_options.png" />
     <None Include="Resources\ico_tools.ico" />
   </ItemGroup>

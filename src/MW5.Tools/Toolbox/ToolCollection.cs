@@ -5,6 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
@@ -13,12 +14,12 @@ namespace MW5.Tools.Toolbox
     /// </summary>
     internal class ToolCollection : IToolCollection
     {
-        private readonly TreeNodeCollection _nodes = null;
+        private readonly TreeNodeAdvCollection _nodes = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolCollection"/> class.
         /// </summary>
-        internal ToolCollection(TreeNodeCollection nodes)
+        internal ToolCollection(TreeNodeAdvCollection nodes)
         {
             if (nodes == null) throw new NullReferenceException();
             _nodes = nodes;

@@ -33,6 +33,7 @@ namespace MW5.Data.Enums
         MsSql = 10,
         Sqlite = 11,
         Oracle = 12,
+        MySql = 13,
     }
 
     public enum FormatType

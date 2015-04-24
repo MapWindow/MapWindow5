@@ -82,9 +82,7 @@ namespace MW5.Tools.Views
         {
             // TODO: validate
 
-            Model.Run();
-
-            return true;
+            return Model.Run();
         }
     }
 }

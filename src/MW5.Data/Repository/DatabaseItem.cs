@@ -32,6 +32,11 @@ namespace MW5.Data.Repository
                 {
                     foreach (var layer in ds)
                     {
+                        if (Metadata.Connection.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql && string.IsNullOrWhiteSpace(layer.GeometryColumnName))
+                        {
+                            continue;   // MySQL driver lists all tables as layers even if they don't have geometry column
+                        }
+
                         SubItems.AddDatabaseLayer(layer);
                     }
                 }

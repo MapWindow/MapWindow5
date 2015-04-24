@@ -10,5 +10,10 @@ namespace MW5.Tools.Model.Parameters
         {
             return Control ?? (Control = new BooleanParameterControl());
         }
+
+        public bool Value
+        {
+            get { return (bool) Control.AsBase.GetValue(); }
+        }
     }
 }

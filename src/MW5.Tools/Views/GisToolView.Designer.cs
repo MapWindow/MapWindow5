@@ -31,7 +31,6 @@ namespace MW5.Tools.Views
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.comboBoxAdv2 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -230,6 +229,7 @@ namespace MW5.Tools.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(565, 418);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);

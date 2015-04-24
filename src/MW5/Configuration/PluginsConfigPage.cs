@@ -36,7 +36,7 @@ namespace MW5.Configuration
             PrepareToolTip += ListControlPrepareToolTip;
         }
 
-        void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
+        private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {

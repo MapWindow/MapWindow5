@@ -59,6 +59,8 @@ namespace MW5.Data.Views
                         return GeoDatabaseType.SpatiaLite;
                     case 3:
                         return GeoDatabaseType.Oracle;
+                    case 4:
+                        return GeoDatabaseType.MySql;
                 }
 
                 throw new IndexOutOfRangeException("tabControlAdv1.SelectedIndex");
@@ -79,6 +81,9 @@ namespace MW5.Data.Views
                         break;
                     case GeoDatabaseType.Oracle:
                         tabControlAdv1.SelectedIndex = 3;
+                        break;
+                    case GeoDatabaseType.MySql:
+                        tabControlAdv1.SelectedIndex = 4;
                         break;
                 }
             }
@@ -153,6 +158,16 @@ namespace MW5.Data.Views
                         WindowsAuthentication = optWindowsAuthentication.Checked,
                         RawConnection = txtMssqlConnection.Text
                     };
+                case GeoDatabaseType.MySql:
+                    return new MySqlConnection()
+                    {
+                        Host = txtMySqlHost.Text,
+                        PortString = txtMySqlPort.Text,
+                        Database = txtMySqlDatabase.Text,
+                        UserName = txtMySqlUser.Text,
+                        Password = txtPostGisPassword.Text,
+                        RawConnection = ""
+                    };
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -189,6 +204,8 @@ namespace MW5.Data.Views
         {
             switch (DatabaseType)
             {
+                case GeoDatabaseType.MySql:
+                    break;
                 case GeoDatabaseType.PostGis:
                     break;
                 case GeoDatabaseType.SpatiaLite:

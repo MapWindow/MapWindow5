@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
@@ -11,7 +12,7 @@ namespace MW5.Tools.Toolbox
     /// </summary>
     public class ToolNode : IGisTool
     {
-        private readonly TreeNode _node;
+        private readonly TreeNodeAdv _node;
         private readonly PluginIdentity _identity;
         private string _name;
 
@@ -24,7 +25,7 @@ namespace MW5.Tools.Toolbox
 
             _identity = identity;
             _name = name;
-            _node = new TreeNode {Text = _name, ImageIndex = GisToolbox.IconTool, Tag = this};
+            _node = new TreeNodeAdv { Text = _name, LeftImageIndices = new int []{ToolboxControl.IconTool}, Tag = this };
 
             Key = key;
         }
@@ -70,7 +71,7 @@ namespace MW5.Tools.Toolbox
             get { return _identity; }
         }
 
-        internal TreeNode Node
+        internal TreeNodeAdv Node
         {
             get { return _node; }
         }

@@ -173,6 +173,26 @@ namespace MW5.Data.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_mysql16 {
+            get {
+                object obj = ResourceManager.GetObject("img_mysql16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_mysql24 {
+            get {
+                object obj = ResourceManager.GetObject("img_mysql24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_options24 {
             get {
                 object obj = ResourceManager.GetObject("img_options24", resourceCulture);
