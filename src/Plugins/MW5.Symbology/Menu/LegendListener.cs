@@ -108,7 +108,7 @@ namespace MW5.Plugins.Symbology.Menu
             {
                 case LayerType.Shapefile:
                 case LayerType.VectorLayer:
-                    using (var form = new LayerStyleForm(_context, layer))
+                    using (var form = new VectorStyleForm(_context, layer))
                     {
                         _context.View.ShowChildView(form);
                         e.Handled = true;

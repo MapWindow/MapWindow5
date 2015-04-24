@@ -81,6 +81,15 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\AttributesControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AttributesControl.Designer.cs">
+      <DependentUpon>AttributesControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AttributeGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Controls\CategoriesGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -247,20 +256,12 @@
     <Compile Include="Forms\Style\ChartStyleForm.Designer.cs">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Layer\LayerStyleFormAppearance.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormCategories.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormCharts.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormExpression.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormGeneral.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormLabels.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleForm.cs">
+    <Compile Include="Forms\Layer\VectorStyleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Layer\LayerStyleForm.Designer.cs">
-      <DependentUpon>LayerStyleForm.cs</DependentUpon>
+    <Compile Include="Forms\Layer\VectorStyleForm.Designer.cs">
+      <DependentUpon>VectorStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Layer\LayerStyleFormMode.Designer.cs" />
-    <Compile Include="Forms\Layer\LayerStyleFormVisibility.Designer.cs" />
     <Compile Include="Forms\Style\AddLabelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -408,6 +409,9 @@
     <None Include="Resources\img_sql.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\AttributesControl.resx">
+      <DependentUpon>AttributesControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ColorPicker\Office2007ColorPlate.resx">
       <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
     </EmbeddedResource>
@@ -459,8 +463,8 @@
     <EmbeddedResource Include="Forms\Style\ChartStyleForm.resx">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Layer\LayerStyleForm.resx">
-      <DependentUpon>LayerStyleForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Layer\VectorStyleForm.resx">
+      <DependentUpon>VectorStyleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Style\AddLabelsForm.resx">
       <DependentUpon>AddLabelsForm.cs</DependentUpon>
@@ -622,6 +626,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_show24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_table24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

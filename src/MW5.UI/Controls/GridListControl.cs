@@ -329,6 +329,7 @@ namespace MW5.UI.Controls
             var name = GetPropertyName(propertySelector);
             if (name != string.Empty)
             {
+                
                 return _grid.TableDescriptor.Columns[name];
             }
 
@@ -337,10 +338,15 @@ namespace MW5.UI.Controls
 
         public int GetColumnIndex(Expression<Func<T, object>> propertySelector)
         {
-           var column = GetColumn(propertySelector);
+             return GetRelativeColumnIndex(propertySelector) + Grid.TableDescriptor.GetColumnIndentCount();
+        }
+
+        public int GetRelativeColumnIndex(Expression<Func<T, object>> propertySelector)
+        {
+            var column = GetColumn(propertySelector);
             if (column != null)
             {
-                return column.GetRelativeColumnIndex() + Grid.TableDescriptor.GetColumnIndentCount();
+                return column.GetRelativeColumnIndex();
             }
 
             return -1;

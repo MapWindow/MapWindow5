@@ -10,7 +10,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
-    partial class LayerStyleForm
+    partial class VectorStyleForm
     {
         /// <summary>
         /// Required designer variable.
@@ -44,7 +44,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LayerStyleForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleForm));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControl1 = new MW5.UI.Controls.TabPropertiesControl();
@@ -110,6 +110,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnCategoryRemove = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCategoryAppearance = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCategoryGenerate = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.tabFields = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.label10 = new System.Windows.Forms.Label();
+            this.attributesControl1 = new MW5.Plugins.Symbology.Controls.AttributesControl();
             this.tabLabels = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnLabelsClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupLabelAppearance = new System.Windows.Forms.GroupBox();
@@ -204,6 +207,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.udMinSize)).BeginInit();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).BeginInit();
+            this.tabFields.SuspendLayout();
             this.tabLabels.SuspendLayout();
             this.groupLabelAppearance.SuspendLayout();
             this.panelLabels.SuspendLayout();
@@ -273,6 +277,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabControl1.Controls.Add(this.tabInfo);
             this.tabControl1.Controls.Add(this.tabDefault);
             this.tabControl1.Controls.Add(this.tabCategories);
+            this.tabControl1.Controls.Add(this.tabFields);
             this.tabControl1.Controls.Add(this.tabLabels);
             this.tabControl1.Controls.Add(this.tabCharts);
             this.tabControl1.Controls.Add(this.tabVisibility);
@@ -1067,6 +1072,36 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnCategoryGenerate.Text = "Generate";
             this.btnCategoryGenerate.UseVisualStyleBackColor = true;
             this.btnCategoryGenerate.Click += new System.EventHandler(this.btnCategoryGenerate_Click);
+            // 
+            // tabFields
+            // 
+            this.tabFields.Controls.Add(this.label10);
+            this.tabFields.Controls.Add(this.attributesControl1);
+            this.tabFields.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_table24;
+            this.tabFields.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabFields.Location = new System.Drawing.Point(119, 0);
+            this.tabFields.Name = "tabFields";
+            this.tabFields.ShowCloseButton = true;
+            this.tabFields.Size = new System.Drawing.Size(520, 425);
+            this.tabFields.TabIndex = 16;
+            this.tabFields.Text = "Fields";
+            this.tabFields.ThemesEnabled = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(11, 15);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(131, 13);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Attribute fields of the layer:";
+            // 
+            // attributesControl1
+            // 
+            this.attributesControl1.Location = new System.Drawing.Point(14, 43);
+            this.attributesControl1.Name = "attributesControl1";
+            this.attributesControl1.Size = new System.Drawing.Size(492, 359);
+            this.attributesControl1.TabIndex = 0;
             // 
             // tabLabels
             // 
@@ -1917,7 +1952,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
-            // LayerStyleForm
+            // VectorStyleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1934,7 +1969,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "LayerStyleForm";
+            this.Name = "VectorStyleForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Layer properties";
@@ -1971,6 +2006,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).EndInit();
+            this.tabFields.ResumeLayout(false);
+            this.tabFields.PerformLayout();
             this.tabLabels.ResumeLayout(false);
             this.groupLabelAppearance.ResumeLayout(false);
             this.panelLabels.ResumeLayout(false);
@@ -2149,5 +2186,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private ComboBoxAdv cboMinScale;
         private System.Windows.Forms.Label label13;
         private DynamicVisibilityControl dynamicVisibilityControl1;
+        private TabPageAdv tabFields;
+        private AttributesControl attributesControl1;
+        private System.Windows.Forms.Label label10;
     }
 }
