@@ -6,6 +6,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -14,10 +15,13 @@ namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterStyleView: RasterStyleViewBase, IRasterStyleView
     {
+        private readonly IAppContext _context;
         private IImageSource _imageSource;
 
-        public RasterStyleView()
+        public RasterStyleView(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
             InitializeComponent();
 
             InitControls();
@@ -29,11 +33,10 @@ namespace MW5.Plugins.Symbology.Views
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
             cboOverviewType.AddItemsFromEnum<RasterOverviewType>();
-            cboDynamicScaleMode.AddItemsFromEnum<DynamicVisibilityMode>();
             
             cboOverviewType.SetValue(RasterOverviewType.External);
             cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
-            cboDynamicScaleMode.SetValue(DynamicVisibilityMode.ZoomLevels);
+            cboDynamicScaleMode.SetValue(DynamicVisibilityMode.Zoom);
         }
 
         /// <summary>
@@ -42,6 +45,8 @@ namespace MW5.Plugins.Symbology.Views
         public void Initialize()
         {
             _imageSource = Model.ImageSource;
+
+            dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
             rasterColorSchemeView.Initialize(Raster);
 
@@ -138,6 +143,9 @@ namespace MW5.Plugins.Symbology.Views
         {
             _imageSource.DownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
             _imageSource.UpsamplingMode = cboUpsampling.GetValue<InterpolationType>();
+
+            dynamicVisibilityControl1.ApplyChanges();
+
             Model.Visible = chkLayerVisible.Checked;
         }
 

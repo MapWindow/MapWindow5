@@ -192,6 +192,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                 UpdateCharts();
             }
 
+            dynamicVisibilityControl1.ApplyChanges();
+
             _shapefile.VisibilityExpression = txtLayerExpression.Text;
 
             RefreshControlsState(null, null);

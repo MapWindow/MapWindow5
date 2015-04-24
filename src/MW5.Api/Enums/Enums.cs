@@ -1334,8 +1334,8 @@
 
     public enum DynamicVisibilityMode
     {
-        Scales = 0,
-        ZoomLevels = 1,
+        Scale = 0,
+        Zoom = 1,
     }
 
     public enum ColorInterpretation

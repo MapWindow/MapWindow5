@@ -94,6 +94,12 @@
     <Compile Include="Controls\DataGridViewBase.Designer.cs">
       <DependentUpon>DataGridViewBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DynamicVisibilityControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DynamicVisibilityControl.Designer.cs">
+      <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageCombo\ColorSchemeCollection.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>
@@ -408,6 +414,9 @@
     <EmbeddedResource Include="Controls\ColorPicker\Office2007MenuHelper.resx">
       <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DynamicVisibilityControl.resx">
+      <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ListControls\CharacterControl.resx">
       <DependentUpon>CharacterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -607,6 +616,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cursor_label_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_hide24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_show24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

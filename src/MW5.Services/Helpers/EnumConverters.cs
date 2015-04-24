@@ -160,10 +160,10 @@ namespace MW5.Services.Helpers
         {
             switch (value)
             {
-                case DynamicVisibilityMode.Scales:
+                case DynamicVisibilityMode.Scale:
                     return "Map scales";
-                case DynamicVisibilityMode.ZoomLevels:
-                    return "Tile zoom levels";
+                case DynamicVisibilityMode.Zoom:
+                    return "Zoom levels";
             }
             return "";
         }

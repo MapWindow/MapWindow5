@@ -49,17 +49,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControl1 = new MW5.UI.Controls.TabPropertiesControl();
             this.tabGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.btnSetMaxScale = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.cboMaxScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.btnSetMinScale = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cboMinScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkDynamicVisibility = new System.Windows.Forms.CheckBox();
+            this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.txtBriefInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.btnProjectionDetails = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -168,6 +158,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.chkSpatialIndex = new System.Windows.Forms.CheckBox();
             this.chkFastMode = new System.Windows.Forms.CheckBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboMaxScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboMinScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.groupLine = new System.Windows.Forms.GroupBox();
             this.lblMultilinePattern = new System.Windows.Forms.Label();
             this.panelLineOptions = new System.Windows.Forms.Panel();
@@ -190,11 +183,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
@@ -236,6 +224,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).BeginInit();
             this.groupModeDescription.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
             this.groupLine.SuspendLayout();
             this.panelLineOptions.SuspendLayout();
             this.groupPoint.SuspendLayout();
@@ -303,7 +294,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // tabGeneral
             // 
-            this.tabGeneral.Controls.Add(this.groupBox8);
+            this.tabGeneral.Controls.Add(this.dynamicVisibilityControl1);
             this.tabGeneral.Controls.Add(this.txtBriefInfo);
             this.tabGeneral.Controls.Add(this.label2);
             this.tabGeneral.Controls.Add(this.btnProjectionDetails);
@@ -326,133 +317,24 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabGeneral.Text = "General";
             this.tabGeneral.ThemesEnabled = false;
             // 
-            // groupBox8
+            // dynamicVisibilityControl1
             // 
-            this.groupBox8.Controls.Add(this.panel1);
-            this.groupBox8.Controls.Add(this.chkDynamicVisibility);
-            this.groupBox8.Location = new System.Drawing.Point(23, 202);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(238, 210);
-            this.groupBox8.TabIndex = 178;
-            this.groupBox8.TabStop = false;
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.comboBoxAdv1);
-            this.panel1.Controls.Add(this.btnSetMaxScale);
-            this.panel1.Controls.Add(this.cboMaxScale);
-            this.panel1.Controls.Add(this.btnSetMinScale);
-            this.panel1.Controls.Add(this.label20);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.cboMinScale);
-            this.panel1.Location = new System.Drawing.Point(10, 23);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(222, 173);
-            this.panel1.TabIndex = 136;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 12);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 13);
-            this.label10.TabIndex = 8;
-            this.label10.Text = "Scale mode:";
-            // 
-            // comboBoxAdv1
-            // 
-            this.comboBoxAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxAdv1.BeforeTouchSize = new System.Drawing.Size(199, 21);
-            this.comboBoxAdv1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBoxAdv1.Location = new System.Drawing.Point(11, 28);
-            this.comboBoxAdv1.Name = "comboBoxAdv1";
-            this.comboBoxAdv1.Size = new System.Drawing.Size(199, 21);
-            this.comboBoxAdv1.TabIndex = 7;
-            // 
-            // btnSetMaxScale
-            // 
-            this.btnSetMaxScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSetMaxScale.BeforeTouchSize = new System.Drawing.Size(51, 24);
-            this.btnSetMaxScale.IsBackStageButton = false;
-            this.btnSetMaxScale.Location = new System.Drawing.Point(159, 123);
-            this.btnSetMaxScale.Name = "btnSetMaxScale";
-            this.btnSetMaxScale.Size = new System.Drawing.Size(51, 24);
-            this.btnSetMaxScale.TabIndex = 5;
-            this.btnSetMaxScale.Text = "Current";
-            this.btnSetMaxScale.UseVisualStyleBackColor = true;
-            // 
-            // cboMaxScale
-            // 
-            this.cboMaxScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboMaxScale.BeforeTouchSize = new System.Drawing.Size(142, 21);
-            this.cboMaxScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMaxScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboMaxScale.Location = new System.Drawing.Point(11, 126);
-            this.cboMaxScale.Name = "cboMaxScale";
-            this.cboMaxScale.Size = new System.Drawing.Size(142, 21);
-            this.cboMaxScale.TabIndex = 4;
-            // 
-            // btnSetMinScale
-            // 
-            this.btnSetMinScale.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSetMinScale.BeforeTouchSize = new System.Drawing.Size(51, 24);
-            this.btnSetMinScale.IsBackStageButton = false;
-            this.btnSetMinScale.Location = new System.Drawing.Point(159, 74);
-            this.btnSetMinScale.Name = "btnSetMinScale";
-            this.btnSetMinScale.Size = new System.Drawing.Size(51, 24);
-            this.btnSetMinScale.TabIndex = 6;
-            this.btnSetMinScale.Text = "Current";
-            this.btnSetMinScale.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(12, 110);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(108, 13);
-            this.label20.TabIndex = 2;
-            this.label20.Text = "Maximal visible scale:";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 61);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(105, 13);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "Minimal visible scale:";
-            // 
-            // cboMinScale
-            // 
-            this.cboMinScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboMinScale.BeforeTouchSize = new System.Drawing.Size(141, 21);
-            this.cboMinScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboMinScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboMinScale.Location = new System.Drawing.Point(12, 77);
-            this.cboMinScale.Name = "cboMinScale";
-            this.cboMinScale.Size = new System.Drawing.Size(141, 21);
-            this.cboMinScale.TabIndex = 3;
-            // 
-            // chkDynamicVisibility
-            // 
-            this.chkDynamicVisibility.AutoSize = true;
-            this.chkDynamicVisibility.Location = new System.Drawing.Point(10, 0);
-            this.chkDynamicVisibility.Name = "chkDynamicVisibility";
-            this.chkDynamicVisibility.Size = new System.Drawing.Size(125, 17);
-            this.chkDynamicVisibility.TabIndex = 0;
-            this.chkDynamicVisibility.Text = "Use dynamic visibility";
-            this.chkDynamicVisibility.UseVisualStyleBackColor = true;
+            this.dynamicVisibilityControl1.CurrentScale = 0D;
+            this.dynamicVisibilityControl1.CurrentZoom = 0;
+            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(24, 202);
+            this.dynamicVisibilityControl1.MaxScale = 1000000D;
+            this.dynamicVisibilityControl1.MaxZoom = 24;
+            this.dynamicVisibilityControl1.MinScale = 100D;
+            this.dynamicVisibilityControl1.MinZoom = 1;
+            this.dynamicVisibilityControl1.Mode = MW5.Api.Enums.DynamicVisibilityMode.Scale;
+            this.dynamicVisibilityControl1.Name = "dynamicVisibilityControl1";
+            this.dynamicVisibilityControl1.Size = new System.Drawing.Size(228, 210);
+            this.dynamicVisibilityControl1.TabIndex = 171;
+            this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
             // 
             // txtBriefInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtBriefInfo.Location = new System.Drawing.Point(130, 155);
             this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -485,7 +367,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // txtProjection
             // 
-            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProjection.Location = new System.Drawing.Point(130, 114);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -506,7 +388,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // txtDatasourceName
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(364, 20);
+            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtDatasourceName.Location = new System.Drawing.Point(130, 73);
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -1026,7 +908,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbCategories
             // 
-            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbCategories.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1034,6 +915,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.icbCategories.Location = new System.Drawing.Point(19, 25);
             this.icbCategories.Name = "icbCategories";
             this.icbCategories.OutlineColor = System.Drawing.Color.Black;
+            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbCategories.Size = new System.Drawing.Size(137, 21);
             this.icbCategories.TabIndex = 106;
             // 
@@ -1436,16 +1318,15 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // icbChartColorScheme
             // 
-            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbChartColorScheme.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
             this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbChartColorScheme.FormattingEnabled = true;
-            //this.icbChartColorScheme.ItemHeight = 16;
             this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
             this.icbChartColorScheme.Name = "icbChartColorScheme";
             this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
-            this.icbChartColorScheme.Size = new System.Drawing.Size(114, 22);
+            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
             this.icbChartColorScheme.TabIndex = 22;
             this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.icbChartColorScheme_SelectedIndexChanged);
             // 
@@ -1778,6 +1659,42 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.imageList1.Images.SetKeyName(8, "img_eye24.png");
             this.imageList1.Images.SetKeyName(9, "img_label24.png");
             // 
+            // comboBoxAdv1
+            // 
+            this.comboBoxAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboBoxAdv1.BeforeTouchSize = new System.Drawing.Size(199, 21);
+            this.comboBoxAdv1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxAdv1.Location = new System.Drawing.Point(11, 28);
+            this.comboBoxAdv1.Name = "comboBoxAdv1";
+            this.comboBoxAdv1.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxAdv1.TabIndex = 7;
+            // 
+            // cboMaxScale
+            // 
+            this.cboMaxScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboMaxScale.BeforeTouchSize = new System.Drawing.Size(142, 21);
+            this.cboMaxScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMaxScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboMaxScale.Location = new System.Drawing.Point(11, 126);
+            this.cboMaxScale.Name = "cboMaxScale";
+            this.cboMaxScale.Size = new System.Drawing.Size(142, 21);
+            this.cboMaxScale.TabIndex = 4;
+            // 
+            // cboMinScale
+            // 
+            this.cboMinScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboMinScale.BeforeTouchSize = new System.Drawing.Size(141, 21);
+            this.cboMinScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboMinScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboMinScale.Location = new System.Drawing.Point(12, 77);
+            this.cboMinScale.Name = "cboMinScale";
+            this.cboMinScale.Size = new System.Drawing.Size(141, 21);
+            this.cboMinScale.TabIndex = 3;
+            // 
             // groupLine
             // 
             this.groupLine.Controls.Add(this.lblMultilinePattern);
@@ -2026,13 +1943,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabControl1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
@@ -2086,6 +1996,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupModeDescription.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
             this.groupLine.ResumeLayout(false);
             this.groupLine.PerformLayout();
             this.panelLineOptions.ResumeLayout(false);
@@ -2231,17 +2144,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private System.Windows.Forms.Label label3;
         private TextBoxExt txtDatasourceName;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label10;
         private ComboBoxAdv comboBoxAdv1;
-        private Syncfusion.Windows.Forms.ButtonAdv btnSetMaxScale;
         private ComboBoxAdv cboMaxScale;
-        private Syncfusion.Windows.Forms.ButtonAdv btnSetMinScale;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label11;
         private ComboBoxAdv cboMinScale;
-        private System.Windows.Forms.CheckBox chkDynamicVisibility;
         private System.Windows.Forms.Label label13;
+        private DynamicVisibilityControl dynamicVisibilityControl1;
     }
 }

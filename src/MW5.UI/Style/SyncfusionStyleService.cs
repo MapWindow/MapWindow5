@@ -120,7 +120,14 @@ namespace MW5.UI.Style
 
             ApplyTabStyle(control);
 
-            ApplyStyle(control.Controls);
+            if (control is ComboBoxAdv)
+            {
+                // it will apply style to inner textbox otherwise which doesn't look good
+            }
+            else
+            {
+                ApplyStyle(control.Controls);
+            }
         }
 
         private void ApplyTabStyle(Control control)

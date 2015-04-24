@@ -69,6 +69,7 @@
     <Compile Include="Concrete\LayerIdentity.cs" />
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />
+    <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\SymbologyRendererBase.cs" />
     <Compile Include="Legend\VectorSymbologyRenderer.cs" />

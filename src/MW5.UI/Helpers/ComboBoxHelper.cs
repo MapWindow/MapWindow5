@@ -28,6 +28,11 @@ namespace MW5.UI.Helpers
         
         public static T GetValue<T>(this ComboBoxAdv box) where T: struct, IConvertible
         {
+            if (box.SelectedItem == null)
+            {
+                return default(T);
+            }
+
             var item = box.SelectedItem as ComboBoxEnumItem<T>;
             if (item == null)
             {

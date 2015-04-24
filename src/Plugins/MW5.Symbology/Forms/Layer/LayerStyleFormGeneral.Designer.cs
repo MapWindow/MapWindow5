@@ -43,6 +43,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             txtProjection.Text = _layer.Projection.Name;
 
+            dynamicVisibilityControl1.Initialize(_layer, _context.Map.CurrentZoom, _context.Map.CurrentScale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) =>
+            {
+                MarkStateChanged();
+            };
+
             PopulateBriefInfo();
         }
 

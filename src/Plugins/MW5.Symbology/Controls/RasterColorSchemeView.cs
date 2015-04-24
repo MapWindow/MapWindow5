@@ -24,7 +24,10 @@ namespace MW5.Plugins.Symbology.Controls
         {
             InitializeComponent();
 
-            colorSchemeCombo1.SelectedIndex = 0;
+            if (colorSchemeCombo1.Items.Count > 0)
+            {
+                colorSchemeCombo1.SelectedIndex = 0;
+            }
         }
 
         public void Initialize(IRasterSource raster)
