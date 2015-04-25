@@ -337,5 +337,53 @@ namespace MW5.Api.Concrete
         {
             get { return GdalDataType.Byte; }
         }
+
+        public float Brightness
+        {
+            get { return _image.Brightness; }
+            set { _image.Brightness = value; }
+        }
+
+        public float Contrast
+        {
+            get { return _image.Contrast; }
+            set { _image.Contrast = value; }
+        }
+
+        public float Hue
+        {
+            get { return _image.Hue; }
+            set { _image.Hue = value; }
+        }
+
+        public float Saturation
+        {
+            get { return _image.Saturation; }
+            set { _image.Saturation = value; }
+        }
+
+        public float Gamma
+        {
+            get { return _image.Gamma; }
+            set { _image.Gamma = value; }
+        }
+
+        public Color ColorizeColor
+        {
+            get { return ColorHelper.UintToColor(_image.ColorizeColor); }
+            set { _image.ColorizeColor = ColorHelper.ColorToUInt(value); }
+        }
+
+        public float ColorizeIntensity
+        {
+            get { return _image.ColorizeIntensity; }
+            set { _image.ColorizeIntensity = value; }
+        }
+
+        public bool Greyscale
+        {
+            get { return _image.SetToGrey; }
+            set { _image.SetToGrey = value; }
+        }
     }
 }

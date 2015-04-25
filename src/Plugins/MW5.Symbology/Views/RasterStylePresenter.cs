@@ -51,10 +51,12 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterStyleCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
-
                     var colorView = View.Colors;
                     scheme.SetPredefined(colorView.BandMinValue, colorView.BandMaxValue, (PredefinedColors)colorView.SelectedPredefinedColorScheme);
                     colorView.ColorScheme = scheme;
+                    break;
+                case RasterStyleCommand.ClearColorAdjustments:
+                    View.ClearColorAdjustments();
                     break;
                 case RasterStyleCommand.Apply:
                     Apply();

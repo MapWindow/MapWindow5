@@ -1339,7 +1339,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             int numFeatures = _featureSet.Features.Count;
             var type = EnumHelper.EnumToString(_featureSet.GeometryType).ToLower();
-            txtBriefInfo.Text = string.Format("Features count: {0}; geometry type: {1}", numFeatures, type);
+            txtBriefInfo.Text = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
         }
 
         private string GetLayerDescription()

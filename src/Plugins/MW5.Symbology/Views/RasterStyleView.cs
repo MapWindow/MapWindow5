@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -7,6 +8,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -17,6 +19,7 @@ namespace MW5.Plugins.Symbology.Views
     {
         private readonly IAppContext _context;
         private IImageSource _imageSource;
+        private static int _lastTabIndex = 0;
 
         public RasterStyleView(IAppContext context)
         {
@@ -25,6 +28,10 @@ namespace MW5.Plugins.Symbology.Views
             InitializeComponent();
 
             InitControls();
+
+            tabControlAdv1.SelectedIndex = _lastTabIndex;
+
+            FormClosed += (s, e) => _lastTabIndex = tabControlAdv1.SelectedIndex;
         }
 
         private void InitControls()
@@ -37,6 +44,8 @@ namespace MW5.Plugins.Symbology.Views
             cboOverviewType.SetValue(RasterOverviewType.External);
             cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
             cboDynamicScaleMode.SetValue(DynamicVisibilityMode.Zoom);
+
+            panelColorize.DataBindings.Add("Enabled", chkColorize, "Checked");
         }
 
         /// <summary>
@@ -85,6 +94,8 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnBuildOverviews;
                 yield return btnClearOverviews;
                 yield return btnApply;
+                yield return btnClearColorAdjustments;
+
                 foreach (var btn in rasterColorSchemeView.Buttons)
                 {
                     yield return btn;
@@ -120,6 +131,17 @@ namespace MW5.Plugins.Symbology.Views
 
             cboDownsampling.SetValue(_imageSource.DownsamplingMode);
             cboUpsampling.SetValue(_imageSource.UpsamplingMode);
+            
+            tbrBrightness.SetValue(_imageSource.Brightness * 20.0f);
+            tbrConstrast.SetValue(_imageSource.Contrast * 20.0f);
+            tbrSaturation.SetValue(_imageSource.Saturation * 20.0f);
+            tbrHue.SetValue(_imageSource.Hue);
+            tbrGamma.SetValue(_imageSource.Gamma * 20.0f);
+            tbrColorizeIntensity.SetValue(_imageSource.ColorizeIntensity * 100.0f);
+
+            clpColorize.Color = _imageSource.ColorizeColor;
+            chkGreyScale.Checked = _imageSource.Greyscale;
+            chkColorize.Checked = _imageSource.ColorizeIntensity > 0.0f;
         }
 
         private void ModelToUiRaster()
@@ -143,11 +165,32 @@ namespace MW5.Plugins.Symbology.Views
         {
             _imageSource.DownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
             _imageSource.UpsamplingMode = cboUpsampling.GetValue<InterpolationType>();
+            _imageSource.Brightness = tbrBrightness.Value/20.0f;
+            _imageSource.Contrast = tbrConstrast.Value / 20.0f;
+            _imageSource.Saturation = tbrSaturation.Value / 20.0f;
+            _imageSource.Hue = tbrHue.Value;
+            _imageSource.Gamma = tbrGamma.Value / 20.0f;
+            _imageSource.ColorizeColor = clpColorize.Color;
+            _imageSource.ColorizeIntensity = chkColorize.Checked ? tbrColorizeIntensity.Value / 100.0f : 0.0f;
+            _imageSource.Greyscale = chkGreyScale.Checked;
 
             dynamicVisibilityControl1.ApplyChanges();
 
             Model.Visible = chkLayerVisible.Checked;
         }
+
+        public void ClearColorAdjustments()
+        {
+            tbrBrightness.Value = 0;
+            tbrConstrast.Value = 20;
+            tbrSaturation.Value = 20;
+            tbrHue.Value = 0;
+            tbrGamma.Value = 20;
+            tbrColorizeIntensity.Value = 0;
+            chkColorize.Checked = false;
+            chkGreyScale.Checked = false;
+        }
+
 
         private void UiToModelRaster()
         {

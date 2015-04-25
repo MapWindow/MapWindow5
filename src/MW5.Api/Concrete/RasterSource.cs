@@ -148,12 +148,6 @@ namespace MW5.Api.Concrete
             set { _image.UseHistogram = value; }
         }
 
-        public bool SetToGrey
-        {
-            get { return _image.SetToGrey; }
-            set { _image.SetToGrey = value; }
-        }
-
         public PaletteInterpretation PaletteInterpretation
         {
             get { return (PaletteInterpretation)_image.PaletteInterpretation2; }

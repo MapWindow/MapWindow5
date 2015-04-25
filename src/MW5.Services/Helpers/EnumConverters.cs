@@ -110,9 +110,9 @@ namespace MW5.Services.Helpers
                 case InterpolationType.None:
                     return "None";
                 case InterpolationType.HighQualityBilinear:
-                    return "High Quality Bilinear";
+                    return "High quality bilinear";
                 case InterpolationType.HighQualityBicubic:
-                    return "High Quality Bicubic";
+                    return "High quality bicubic";
             }
             return "";
         }

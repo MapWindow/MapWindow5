@@ -140,6 +140,7 @@
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Helpers\RectangleHelper.cs" />
+    <Compile Include="Helpers\TrackbarHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

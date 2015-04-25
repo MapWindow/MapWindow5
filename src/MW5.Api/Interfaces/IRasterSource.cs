@@ -31,8 +31,6 @@ namespace MW5.Api.Interfaces
         /// </summary>
         bool UseHistogram { get; set; }
 
-        bool SetToGrey { get; set; }
-
         PaletteInterpretation PaletteInterpretation { get; }
 
         bool IsRgb { get; }

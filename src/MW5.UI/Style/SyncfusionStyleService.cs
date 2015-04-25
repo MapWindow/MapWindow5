@@ -118,6 +118,14 @@ namespace MW5.UI.Style
 #endif
             }
 
+            var trackBar = control as TrackBarEx;
+            if (trackBar != null)
+            {
+                trackBar.Style = TrackBarEx.Theme.Metro;
+                trackBar.ChannelHeight = 6;
+                trackBar.ForeColor = Color.DimGray;
+            }
+
             ApplyTabStyle(control);
 
             if (control is ComboBoxAdv)

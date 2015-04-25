@@ -14,5 +14,6 @@ namespace MW5.Plugins.Symbology.Views
         GenerateColorScheme = 3,
         CalculateMinMax = 4,
         Apply = 5,
+        ClearColorAdjustments = 6,
     }
 }

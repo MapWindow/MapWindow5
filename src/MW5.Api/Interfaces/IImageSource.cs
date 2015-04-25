@@ -40,5 +40,15 @@ namespace MW5.Api.Interfaces
         int NumBands { get; }
 
         GdalDataType DataType { get; }
+
+        // GDI+ color matrix adjustments
+        float Brightness { get; set; }
+        float Contrast { get; set; }
+        float Hue { get; set; }
+        float Saturation { get; set; }
+        float Gamma { get; set; }
+        Color ColorizeColor { get; set; }
+        float ColorizeIntensity { get; set; }
+        bool Greyscale { get; set; }
     }
 }
