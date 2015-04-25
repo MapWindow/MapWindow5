@@ -12,6 +12,7 @@ using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms.Chart;
 
 namespace MW5.Plugins.Symbology.Views
 {
@@ -36,6 +37,9 @@ namespace MW5.Plugins.Symbology.Views
 
         private void InitControls()
         {
+            chartControl1.Series.Clear();
+            chartControl1.Series.Add(new ChartSeries());
+
             cboDownsampling.AddItemsFromEnum<InterpolationType>();
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
@@ -95,6 +99,7 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnClearOverviews;
                 yield return btnApply;
                 yield return btnClearColorAdjustments;
+                yield return btnCalculateHistogram;
 
                 foreach (var btn in rasterColorSchemeView.Buttons)
                 {
@@ -191,6 +196,22 @@ namespace MW5.Plugins.Symbology.Views
             chkGreyScale.Checked = false;
         }
 
+        public void SetHistogram(RasterHistogram ht)
+        {
+            chartControl1.Series.Clear();
+            var series = new ChartSeries();
+
+            if (ht != null)
+            {
+                for (int i = 0; i < ht.NumBuckets; i++)
+                {
+                    series.Points.Add(ht.get_Value(i), ht.get_Count(i));
+                }
+            }
+
+            chartControl1.Series.Add(series);
+            chartControl1.PrimaryYAxis.ValueType = ChartValueType.Double;
+        }
 
         private void UiToModelRaster()
         {

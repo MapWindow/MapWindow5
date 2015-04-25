@@ -69,6 +69,7 @@
     <Compile Include="Concrete\LayerIdentity.cs" />
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />
+    <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\SymbologyRendererBase.cs" />
@@ -303,9 +304,7 @@
       <Name>MW5.Shared</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plugins\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

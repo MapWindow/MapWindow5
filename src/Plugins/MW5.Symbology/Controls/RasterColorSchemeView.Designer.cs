@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.groupPseudoColors = new System.Windows.Forms.GroupBox();
             this.btnGenerateColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.btnCalculateMinMax = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label17 = new System.Windows.Forms.Label();
             this.cboSelectedBand = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -41,18 +42,20 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cboRasterRendering = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this.cboClassification = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.groupPseudoColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMinimum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).BeginInit();
             this.SuspendLayout();
             // 
             // groupPseudoColors
             // 
+            this.groupPseudoColors.Controls.Add(this.cboClassification);
             this.groupPseudoColors.Controls.Add(this.btnGenerateColorScheme);
             this.groupPseudoColors.Controls.Add(this.colorSchemeCombo1);
             this.groupPseudoColors.Controls.Add(this.btnCalculateMinMax);
@@ -64,7 +67,7 @@
             this.groupPseudoColors.Controls.Add(this.label15);
             this.groupPseudoColors.Location = new System.Drawing.Point(276, 50);
             this.groupPseudoColors.Name = "groupPseudoColors";
-            this.groupPseudoColors.Size = new System.Drawing.Size(212, 242);
+            this.groupPseudoColors.Size = new System.Drawing.Size(212, 280);
             this.groupPseudoColors.TabIndex = 18;
             this.groupPseudoColors.TabStop = false;
             this.groupPseudoColors.Text = "Selected band";
@@ -73,17 +76,29 @@
             // 
             this.btnGenerateColorScheme.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.IsBackStageButton = false;
-            this.btnGenerateColorScheme.Location = new System.Drawing.Point(121, 208);
+            this.btnGenerateColorScheme.Location = new System.Drawing.Point(121, 247);
             this.btnGenerateColorScheme.Name = "btnGenerateColorScheme";
             this.btnGenerateColorScheme.Size = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.TabIndex = 13;
             this.btnGenerateColorScheme.Text = "Generate";
             // 
+            // colorSchemeCombo1
+            // 
+            this.colorSchemeCombo1.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
+            this.colorSchemeCombo1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.colorSchemeCombo1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.colorSchemeCombo1.Location = new System.Drawing.Point(16, 220);
+            this.colorSchemeCombo1.Name = "colorSchemeCombo1";
+            this.colorSchemeCombo1.OutlineColor = System.Drawing.Color.Black;
+            this.colorSchemeCombo1.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
+            this.colorSchemeCombo1.Size = new System.Drawing.Size(180, 21);
+            this.colorSchemeCombo1.TabIndex = 0;
+            // 
             // btnCalculateMinMax
             // 
             this.btnCalculateMinMax.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnCalculateMinMax.IsBackStageButton = false;
-            this.btnCalculateMinMax.Location = new System.Drawing.Point(121, 131);
+            this.btnCalculateMinMax.Location = new System.Drawing.Point(121, 166);
             this.btnCalculateMinMax.Name = "btnCalculateMinMax";
             this.btnCalculateMinMax.Size = new System.Drawing.Size(75, 23);
             this.btnCalculateMinMax.TabIndex = 10;
@@ -92,7 +107,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(13, 165);
+            this.label17.Location = new System.Drawing.Point(13, 204);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(71, 13);
             this.label17.TabIndex = 12;
@@ -103,7 +118,7 @@
             this.cboSelectedBand.BeforeTouchSize = new System.Drawing.Size(180, 21);
             this.cboSelectedBand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboSelectedBand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboSelectedBand.Location = new System.Drawing.Point(16, 30);
+            this.cboSelectedBand.Location = new System.Drawing.Point(16, 65);
             this.cboSelectedBand.Name = "cboSelectedBand";
             this.cboSelectedBand.Size = new System.Drawing.Size(180, 21);
             this.cboSelectedBand.TabIndex = 4;
@@ -115,7 +130,7 @@
             this.txtMaximum.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtMaximum.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMaximum.DoubleValue = 1D;
-            this.txtMaximum.Location = new System.Drawing.Point(95, 94);
+            this.txtMaximum.Location = new System.Drawing.Point(95, 129);
             this.txtMaximum.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMaximum.Name = "txtMaximum";
             this.txtMaximum.NullString = "";
@@ -127,7 +142,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(18, 68);
+            this.label14.Location = new System.Drawing.Point(18, 103);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(48, 13);
             this.label14.TabIndex = 6;
@@ -139,7 +154,7 @@
             this.txtMinimum.BeforeTouchSize = new System.Drawing.Size(100, 20);
             this.txtMinimum.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMinimum.DoubleValue = 1D;
-            this.txtMinimum.Location = new System.Drawing.Point(95, 61);
+            this.txtMinimum.Location = new System.Drawing.Point(95, 96);
             this.txtMinimum.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMinimum.Name = "txtMinimum";
             this.txtMinimum.NullString = "";
@@ -151,7 +166,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(18, 101);
+            this.label15.Location = new System.Drawing.Point(18, 136);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(51, 13);
             this.label15.TabIndex = 7;
@@ -188,18 +203,6 @@
             this.chkUseHistogram.Text = "Use histogram";
             this.chkUseHistogram.ThemesEnabled = false;
             // 
-            // colorSchemeCombo1
-            // 
-            this.colorSchemeCombo1.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
-            this.colorSchemeCombo1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.colorSchemeCombo1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.colorSchemeCombo1.Location = new System.Drawing.Point(16, 181);
-            this.colorSchemeCombo1.Name = "colorSchemeCombo1";
-            this.colorSchemeCombo1.OutlineColor = System.Drawing.Color.Black;
-            this.colorSchemeCombo1.Size = new System.Drawing.Size(180, 21);
-            this.colorSchemeCombo1.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
-            this.colorSchemeCombo1.TabIndex = 0;
-            // 
             // rasterColorSchemeGrid1
             // 
             this.rasterColorSchemeGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -219,6 +222,16 @@
             this.rasterColorSchemeGrid1.ToolTipMaxWidth = 450;
             this.rasterColorSchemeGrid1.WrapText = true;
             // 
+            // cboClassification
+            // 
+            this.cboClassification.BeforeTouchSize = new System.Drawing.Size(180, 21);
+            this.cboClassification.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboClassification.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboClassification.Location = new System.Drawing.Point(16, 29);
+            this.cboClassification.Name = "cboClassification";
+            this.cboClassification.Size = new System.Drawing.Size(180, 21);
+            this.cboClassification.TabIndex = 19;
+            // 
             // RasterColorSchemeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -237,6 +250,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMinimum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -258,5 +272,6 @@
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboRasterRendering;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkUseHistogram;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboClassification;
     }
 }

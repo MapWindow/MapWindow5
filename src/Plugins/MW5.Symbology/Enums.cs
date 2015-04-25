@@ -39,5 +39,11 @@
         PseudoColors = 2,
         BuiltInColorTable = 3,
     }
+
+    public enum RasterClassification
+    {
+        EqualIntervals = 1,
+        UniqueValues = 2,
+    }
  }
 

@@ -4,7 +4,7 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Concrete
 {
-    public class RasterBand //: IGdalRasterBand
+    public class RasterBand
     {
         private readonly GdalRasterBand _band;
 
@@ -17,6 +17,18 @@ namespace MW5.Api.Concrete
         public double NoDataValue
         {
             get { return _band.NodataValue; }
+        }
+
+        public RasterHistogram GetDefaultHistogram(bool forceCalculate)
+        {
+            var ht = _band.GetDefaultHistogram(forceCalculate);
+            return ht != null ? new RasterHistogram(ht) : null;
+        }
+
+        public RasterHistogram GetHistogram(double minValue, double maxValue, int numBuckets, bool includeOutOfRange = false, bool allowApproximate = true)
+        {
+            var ht = _band.GetHistogram(minValue, maxValue, numBuckets, includeOutOfRange, allowApproximate);
+            return ht != null ? new RasterHistogram(ht) : null;
         }
 
         public double Minimum
@@ -111,6 +123,17 @@ namespace MW5.Api.Concrete
         {
             get { return (ColorInterpretation)_band.ColorInterpretation; }
             set { _band.ColorInterpretation = (tkColorInterpretation)value; }
+        }
+
+        public int[] GetUniqueValues()
+        {
+            object arr;
+            if (_band.GetUniqueValues(10000, out arr))
+            {
+                return arr as int[];
+            }
+
+            return null;
         }
     }
 }

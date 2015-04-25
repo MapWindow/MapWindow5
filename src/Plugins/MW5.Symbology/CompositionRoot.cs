@@ -20,6 +20,7 @@ namespace MW5.Plugins.Symbology
 
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
             EnumHelper.RegisterConverter(new RasterRenderingConverter());
+            EnumHelper.RegisterConverter(new RasterClassificationConverter());
         }
     }
 }

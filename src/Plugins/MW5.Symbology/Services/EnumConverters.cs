@@ -45,4 +45,20 @@ namespace MW5.Plugins.Symbology.Services
             return string.Empty;
         }
     }
+
+    internal class RasterClassificationConverter : IEnumConverter<RasterClassification>
+    {
+        public string GetString(RasterClassification value)
+        {
+            switch (value)
+            {
+                case RasterClassification.EqualIntervals:
+                    return "Equal intervals";
+                case RasterClassification.UniqueValues:
+                    return "Unique values";
+            }
+
+            return string.Empty;
+        }
+    }
 }

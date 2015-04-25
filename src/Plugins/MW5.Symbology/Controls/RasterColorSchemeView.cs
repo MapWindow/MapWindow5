@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Views.Abstract;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology.Controls
@@ -28,6 +29,8 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 colorSchemeCombo1.SelectedIndex = 0;
             }
+
+            cboClassification.AddItemsFromEnum<RasterClassification>();
         }
 
         public void Initialize(IRasterSource raster)
@@ -44,6 +47,8 @@ namespace MW5.Plugins.Symbology.Controls
             FillBandCombo();
 
             ChangeRenderingMode();
+
+            cboClassification.SetValue(RasterClassification.EqualIntervals);
         }
 
         [Browsable(false)]

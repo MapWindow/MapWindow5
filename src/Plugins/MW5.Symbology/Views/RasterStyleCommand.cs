@@ -15,5 +15,6 @@ namespace MW5.Plugins.Symbology.Views
         CalculateMinMax = 4,
         Apply = 5,
         ClearColorAdjustments = 6,
+        CalculateHistogram = 7,
     }
 }

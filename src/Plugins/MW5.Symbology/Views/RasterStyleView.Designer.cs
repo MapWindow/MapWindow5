@@ -34,11 +34,11 @@ namespace MW5.Plugins.Symbology.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RasterStyleView));
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv3 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv4 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
@@ -85,6 +85,9 @@ namespace MW5.Plugins.Symbology.Views
             this.clpColorize = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
             this.chkColorize = new System.Windows.Forms.CheckBox();
             this.chkGreyScale = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.tabPageAdv7 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnCalculateHistogram = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.chartControl1 = new Syncfusion.Windows.Forms.Chart.ChartControl();
             this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
@@ -133,6 +136,7 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGreyScale)).BeginInit();
+            this.tabPageAdv7.SuspendLayout();
             this.tabPageAdv5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
@@ -156,6 +160,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
+            this.tabControlAdv1.Controls.Add(this.tabPageAdv7);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv5);
             this.tabControlAdv1.Controls.Add(this.tabPageAdv6);
             this.tabControlAdv1.FocusOnTabClick = false;
@@ -365,23 +370,23 @@ namespace MW5.Plugins.Symbology.Views
             // rasterInfoTreeView1
             // 
             this.rasterInfoTreeView1.AutoAdjustMultiLineHeight = true;
-            treeNodeAdvStyleInfo2.ThemesEnabled = false;
+            treeNodeAdvStyleInfo1.ThemesEnabled = false;
             this.rasterInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo2),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo2),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo2)});
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
             this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(515, 441);
             this.rasterInfoTreeView1.BorderColor = System.Drawing.Color.Silver;
             this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            treeColumnAdv3.Highlighted = false;
-            treeColumnAdv3.Text = "Name";
-            treeColumnAdv3.Width = 260;
-            treeColumnAdv4.Highlighted = false;
-            treeColumnAdv4.Text = "Value";
-            treeColumnAdv4.Width = 200;
+            treeColumnAdv1.Highlighted = false;
+            treeColumnAdv1.Text = "Name";
+            treeColumnAdv1.Width = 260;
+            treeColumnAdv2.Highlighted = false;
+            treeColumnAdv2.Text = "Value";
+            treeColumnAdv2.Width = 200;
             this.rasterInfoTreeView1.Columns.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv[] {
-            treeColumnAdv3,
-            treeColumnAdv4});
+            treeColumnAdv1,
+            treeColumnAdv2});
             this.rasterInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
             this.rasterInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rasterInfoTreeView1.FullRowSelect = true;
@@ -735,6 +740,58 @@ namespace MW5.Plugins.Symbology.Views
             this.chkGreyScale.Text = "Greyscale";
             this.chkGreyScale.ThemesEnabled = false;
             // 
+            // tabPageAdv7
+            // 
+            this.tabPageAdv7.Controls.Add(this.btnCalculateHistogram);
+            this.tabPageAdv7.Controls.Add(this.chartControl1);
+            this.tabPageAdv7.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_histogram24;
+            this.tabPageAdv7.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageAdv7.Location = new System.Drawing.Point(120, 1);
+            this.tabPageAdv7.Name = "tabPageAdv7";
+            this.tabPageAdv7.ShowCloseButton = true;
+            this.tabPageAdv7.Size = new System.Drawing.Size(515, 441);
+            this.tabPageAdv7.TabIndex = 7;
+            this.tabPageAdv7.Text = "Histogram";
+            this.tabPageAdv7.ThemesEnabled = false;
+            // 
+            // btnCalculateHistogram
+            // 
+            this.btnCalculateHistogram.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnCalculateHistogram.IsBackStageButton = false;
+            this.btnCalculateHistogram.Location = new System.Drawing.Point(421, 394);
+            this.btnCalculateHistogram.Name = "btnCalculateHistogram";
+            this.btnCalculateHistogram.Size = new System.Drawing.Size(85, 26);
+            this.btnCalculateHistogram.TabIndex = 1;
+            this.btnCalculateHistogram.Text = "Calculate";
+            // 
+            // chartControl1
+            // 
+            this.chartControl1.ChartArea.CursorLocation = new System.Drawing.Point(0, 0);
+            this.chartControl1.ChartArea.CursorReDraw = false;
+            this.chartControl1.DataSourceName = "[none]";
+            this.chartControl1.ElementsSpacing = 0;
+            this.chartControl1.IsWindowLess = false;
+            // 
+            // 
+            // 
+            this.chartControl1.Legend.Location = new System.Drawing.Point(402, 11);
+            this.chartControl1.Legend.Visible = false;
+            this.chartControl1.Localize = null;
+            this.chartControl1.Location = new System.Drawing.Point(15, 29);
+            this.chartControl1.Name = "chartControl1";
+            this.chartControl1.PrimaryXAxis.Crossing = double.NaN;
+            this.chartControl1.PrimaryXAxis.Margin = true;
+            this.chartControl1.PrimaryXAxis.Title = "Pixel Values";
+            this.chartControl1.PrimaryYAxis.Crossing = double.NaN;
+            this.chartControl1.PrimaryYAxis.Margin = true;
+            this.chartControl1.PrimaryYAxis.Title = "Frequencies";
+            this.chartControl1.Size = new System.Drawing.Size(491, 359);
+            this.chartControl1.TabIndex = 0;
+            // 
+            // 
+            // 
+            this.chartControl1.Title.Name = "Default";
+            // 
             // tabPageAdv5
             // 
             this.tabPageAdv5.Controls.Add(this.configPanelControl1);
@@ -1023,6 +1080,7 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorize.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGreyScale)).EndInit();
+            this.tabPageAdv7.ResumeLayout(false);
             this.tabPageAdv5.ResumeLayout(false);
             this.tabPageAdv5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -1108,5 +1166,8 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Label label17;
         private ButtonAdv btnClearColorAdjustments;
         private System.Windows.Forms.Panel panelColorize;
+        private TabPageAdv tabPageAdv7;
+        private ButtonAdv btnCalculateHistogram;
+        private Syncfusion.Windows.Forms.Chart.ChartControl chartControl1;
     }
 }
