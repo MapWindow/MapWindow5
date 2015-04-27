@@ -7,7 +7,6 @@ namespace MW5.Plugins.Mvp
 {
     public interface IView : IViewInternal
     {
-        void UpdateView();
         ButtonBase OkButton { get; }
     }
 

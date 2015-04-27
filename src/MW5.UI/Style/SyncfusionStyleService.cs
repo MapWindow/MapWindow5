@@ -59,6 +59,12 @@ namespace MW5.UI.Style
 #endif
             }
 
+            var panel = control as GradientPanel;
+            if (panel != null)
+            {
+                panel.BorderStyle = BorderStyle.None;
+            }
+
             var cbo = control as ComboBoxAdv;
             if (cbo != null)
             {

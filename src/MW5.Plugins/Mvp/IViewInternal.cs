@@ -14,6 +14,8 @@ namespace MW5.Plugins.Mvp
         bool Visible { get; }
         event Action OkClicked;
         ViewStyle Style { get; }
+        void BeforeClose();
+        void UpdateView();
     }
 
     public interface IViewInternal<TModel>: IViewInternal

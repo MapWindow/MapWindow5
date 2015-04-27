@@ -58,7 +58,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.rasterInfoTreeView1 = new MW5.Plugins.Symbology.Controls.RasterInfoTreeView();
             this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.rasterColorSchemeView = new MW5.Plugins.Symbology.Controls.RasterColorSchemeView();
+            this._rasterColorSchemeControl = new MW5.Plugins.Symbology.Controls.RasterColorSchemeControl();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -86,8 +86,6 @@ namespace MW5.Plugins.Symbology.Views
             this.chkColorize = new System.Windows.Forms.CheckBox();
             this.chkGreyScale = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.tabPageAdv7 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.btnCalculateHistogram = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.chartControl1 = new Syncfusion.Windows.Forms.Chart.ChartControl();
             this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
@@ -109,6 +107,7 @@ namespace MW5.Plugins.Symbology.Views
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.histogramControl1 = new MW5.Plugins.Symbology.Controls.HistogramControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageAdv1.SuspendLayout();
@@ -189,9 +188,8 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv1.Controls.Add(this.label3);
             this.tabPageAdv1.Controls.Add(this.txtLayerName);
             this.tabPageAdv1.Controls.Add(this.label2);
-            this.tabPageAdv1.Image = null;
-            this.tabPageAdv1.ImageIndex = 0;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv1.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_options;
+            this.tabPageAdv1.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv1.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv1.Margin = new System.Windows.Forms.Padding(20);
             this.tabPageAdv1.Name = "tabPageAdv1";
@@ -356,9 +354,8 @@ namespace MW5.Plugins.Symbology.Views
             // tabPageAdv2
             // 
             this.tabPageAdv2.Controls.Add(this.rasterInfoTreeView1);
-            this.tabPageAdv2.Image = null;
-            this.tabPageAdv2.ImageIndex = 1;
-            this.tabPageAdv2.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv2.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
+            this.tabPageAdv2.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv2.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv2.Name = "tabPageAdv2";
             this.tabPageAdv2.ShowCloseButton = true;
@@ -425,10 +422,9 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageAdv4
             // 
-            this.tabPageAdv4.Controls.Add(this.rasterColorSchemeView);
-            this.tabPageAdv4.Image = null;
-            this.tabPageAdv4.ImageIndex = 2;
-            this.tabPageAdv4.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv4.Controls.Add(this._rasterColorSchemeControl);
+            this.tabPageAdv4.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
+            this.tabPageAdv4.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv4.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv4.Name = "tabPageAdv4";
             this.tabPageAdv4.ShowCloseButton = true;
@@ -437,13 +433,13 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv4.Text = "Colors";
             this.tabPageAdv4.ThemesEnabled = false;
             // 
-            // rasterColorSchemeView
+            // _rasterColorSchemeControl
             // 
-            this.rasterColorSchemeView.ColorScheme = null;
-            this.rasterColorSchemeView.Location = new System.Drawing.Point(6, 5);
-            this.rasterColorSchemeView.Name = "rasterColorSchemeView";
-            this.rasterColorSchemeView.Size = new System.Drawing.Size(500, 433);
-            this.rasterColorSchemeView.TabIndex = 0;
+            this._rasterColorSchemeControl.ColorScheme = null;
+            this._rasterColorSchemeControl.Location = new System.Drawing.Point(6, 5);
+            this._rasterColorSchemeControl.Name = "_rasterColorSchemeControl";
+            this._rasterColorSchemeControl.Size = new System.Drawing.Size(500, 433);
+            this._rasterColorSchemeControl.TabIndex = 0;
             // 
             // tabPageAdv3
             // 
@@ -452,9 +448,8 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv3.Controls.Add(this.groupBox2);
             this.tabPageAdv3.Controls.Add(this.groupBox1);
             this.tabPageAdv3.Controls.Add(this.chkGreyScale);
-            this.tabPageAdv3.Image = null;
-            this.tabPageAdv3.ImageIndex = 3;
-            this.tabPageAdv3.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv3.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_contrast24;
+            this.tabPageAdv3.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv3.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv3.Name = "tabPageAdv3";
             this.tabPageAdv3.ShowCloseButton = true;
@@ -742,8 +737,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageAdv7
             // 
-            this.tabPageAdv7.Controls.Add(this.btnCalculateHistogram);
-            this.tabPageAdv7.Controls.Add(this.chartControl1);
+            this.tabPageAdv7.Controls.Add(this.histogramControl1);
             this.tabPageAdv7.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_histogram24;
             this.tabPageAdv7.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv7.Location = new System.Drawing.Point(120, 1);
@@ -754,52 +748,13 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv7.Text = "Histogram";
             this.tabPageAdv7.ThemesEnabled = false;
             // 
-            // btnCalculateHistogram
-            // 
-            this.btnCalculateHistogram.BeforeTouchSize = new System.Drawing.Size(85, 26);
-            this.btnCalculateHistogram.IsBackStageButton = false;
-            this.btnCalculateHistogram.Location = new System.Drawing.Point(421, 394);
-            this.btnCalculateHistogram.Name = "btnCalculateHistogram";
-            this.btnCalculateHistogram.Size = new System.Drawing.Size(85, 26);
-            this.btnCalculateHistogram.TabIndex = 1;
-            this.btnCalculateHistogram.Text = "Calculate";
-            // 
-            // chartControl1
-            // 
-            this.chartControl1.ChartArea.CursorLocation = new System.Drawing.Point(0, 0);
-            this.chartControl1.ChartArea.CursorReDraw = false;
-            this.chartControl1.DataSourceName = "[none]";
-            this.chartControl1.ElementsSpacing = 0;
-            this.chartControl1.IsWindowLess = false;
-            // 
-            // 
-            // 
-            this.chartControl1.Legend.Location = new System.Drawing.Point(402, 11);
-            this.chartControl1.Legend.Visible = false;
-            this.chartControl1.Localize = null;
-            this.chartControl1.Location = new System.Drawing.Point(15, 29);
-            this.chartControl1.Name = "chartControl1";
-            this.chartControl1.PrimaryXAxis.Crossing = double.NaN;
-            this.chartControl1.PrimaryXAxis.Margin = true;
-            this.chartControl1.PrimaryXAxis.Title = "Pixel Values";
-            this.chartControl1.PrimaryYAxis.Crossing = double.NaN;
-            this.chartControl1.PrimaryYAxis.Margin = true;
-            this.chartControl1.PrimaryYAxis.Title = "Frequencies";
-            this.chartControl1.Size = new System.Drawing.Size(491, 359);
-            this.chartControl1.TabIndex = 0;
-            // 
-            // 
-            // 
-            this.chartControl1.Title.Name = "Default";
-            // 
             // tabPageAdv5
             // 
             this.tabPageAdv5.Controls.Add(this.configPanelControl1);
             this.tabPageAdv5.Controls.Add(this.label9);
             this.tabPageAdv5.Controls.Add(this.pictureBox2);
-            this.tabPageAdv5.Image = null;
-            this.tabPageAdv5.ImageIndex = 4;
-            this.tabPageAdv5.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv5.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_pyramid24;
+            this.tabPageAdv5.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv5.Location = new System.Drawing.Point(120, 1);
             this.tabPageAdv5.Name = "tabPageAdv5";
             this.tabPageAdv5.ShowCloseButton = true;
@@ -1036,6 +991,13 @@ namespace MW5.Plugins.Symbology.Views
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyle = false;
             // 
+            // histogramControl1
+            // 
+            this.histogramControl1.Location = new System.Drawing.Point(3, 3);
+            this.histogramControl1.Name = "histogramControl1";
+            this.histogramControl1.Size = new System.Drawing.Size(509, 435);
+            this.histogramControl1.TabIndex = 0;
+            // 
             // RasterStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1143,7 +1105,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox chkLayerPreview;
         private ButtonAdv btnApply;
-        private Controls.RasterColorSchemeView rasterColorSchemeView;
+        private Controls.RasterColorSchemeControl _rasterColorSchemeControl;
         private Controls.DynamicVisibilityControl dynamicVisibilityControl1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label1;
@@ -1167,7 +1129,6 @@ namespace MW5.Plugins.Symbology.Views
         private ButtonAdv btnClearColorAdjustments;
         private System.Windows.Forms.Panel panelColorize;
         private TabPageAdv tabPageAdv7;
-        private ButtonAdv btnCalculateHistogram;
-        private Syncfusion.Windows.Forms.Chart.ChartControl chartControl1;
+        private Controls.HistogramControl histogramControl1;
     }
 }

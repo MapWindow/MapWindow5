@@ -30,10 +30,29 @@ namespace MW5.Plugins.Mvp
         protected CommandDispatcher(TView view)
         {
             View = view;
-            WireUpMenus(view);
+            WireUpMenus(view as Control);
         }
 
-        protected void WireUpMenus(IMenuProvider view)
+        private void WireUpMenus(Control parent)
+        {
+            if (parent == null)
+            {
+                return;
+            }
+
+            var provider = parent as IMenuProvider;
+            if (provider != null)
+            {
+                AddHandlers(provider);
+            }
+
+            foreach (Control item in parent.Controls)
+            {
+                WireUpMenus(item);
+            }
+        }
+
+        protected void AddHandlers(IMenuProvider view)
         {
             foreach (var btn in view.Buttons)
             {

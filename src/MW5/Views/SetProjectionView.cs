@@ -70,7 +70,7 @@ namespace MW5.Views
             }
         }
 
-        public void UpdateView()
+        public override void UpdateView()
         {
             cboWellKnown.Enabled = optWellKnown.Checked;
             txtDefinition.Enabled = optDefinition.Checked;

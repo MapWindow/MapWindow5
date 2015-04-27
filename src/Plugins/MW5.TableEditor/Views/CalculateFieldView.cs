@@ -145,10 +145,5 @@ namespace MW5.Plugins.TableEditor.Views
                 AddTextToComputation(lstFunctions.SelectedNode.Text);
             }
         }
-
-        public void UpdateView()
-        {
-
-        }
     }
 }

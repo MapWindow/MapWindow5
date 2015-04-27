@@ -19,7 +19,7 @@ namespace MW5.Api.Concrete
             get { return _band.NodataValue; }
         }
 
-        public RasterHistogram GetDefaultHistogram(bool forceCalculate)
+        public RasterHistogram GetDefaultHistogram(bool forceCalculate = false)
         {
             var ht = _band.GetDefaultHistogram(forceCalculate);
             return ht != null ? new RasterHistogram(ht) : null;

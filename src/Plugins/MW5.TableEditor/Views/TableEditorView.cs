@@ -77,7 +77,7 @@ namespace MW5.Plugins.TableEditor.Views
             UpdateView();
         }
 
-        public void UpdateView()
+        public override void UpdateView()
         {
             int count = RowManager.Count;
             if (count == 0)

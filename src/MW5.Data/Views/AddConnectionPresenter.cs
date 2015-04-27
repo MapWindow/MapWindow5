@@ -94,10 +94,5 @@ namespace MW5.Data.Views
 
             Logger.Current.Info("Testing connection: {0}\n{1}", cs, result ? "Success": "Failure");
         }
-
-        public override void Initialize()
-        {
-
-        }
     }
 }

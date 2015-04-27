@@ -183,7 +183,7 @@ namespace MW5.Data.Views
             }
         }
 
-        public void UpdateView()
+        public override void UpdateView()
         {
             txtMssqlUserName.Enabled = optSqlAuthentication.Checked;
             txtMssqlPassword.Enabled = optSqlAuthentication.Checked;

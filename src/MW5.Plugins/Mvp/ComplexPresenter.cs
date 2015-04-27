@@ -37,6 +37,8 @@ namespace MW5.Plugins.Mvp
 
         private void OnViewOkClickedCore()
         {
+            View.BeforeClose();
+
             if (ViewOkClicked())
             {
                 View.Close();

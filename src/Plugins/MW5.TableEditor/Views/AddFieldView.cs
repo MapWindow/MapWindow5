@@ -53,11 +53,6 @@ namespace MW5.Plugins.TableEditor.Views
             
         }
 
-        public void UpdateView()
-        {
-            // empty
-        }
-
         public ButtonBase OkButton
         {
             get { return btnOk; }

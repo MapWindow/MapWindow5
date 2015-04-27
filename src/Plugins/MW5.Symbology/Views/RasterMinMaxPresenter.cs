@@ -27,10 +27,5 @@ namespace MW5.Plugins.Symbology.Views
         {
             return true;
         }
-
-        public override void Initialize()
-        {
-            
-        }
     }
 }

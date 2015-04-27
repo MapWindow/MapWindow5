@@ -38,8 +38,6 @@ namespace MW5.Plugins.Symbology.Views
         {
             get { return btnOk; }
         }
-
-        
     }
 
     public class RasterMinMaxViewBase : MapWindowView<IRasterSource> {  }

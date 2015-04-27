@@ -89,7 +89,7 @@ namespace MW5.Views
             Application.Run(this);
         }
 
-        public void UpdateView()
+        public override void UpdateView()
         {
             Text = WindowTitle;
             if (!_context.Project.IsEmpty)

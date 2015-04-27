@@ -1,9 +1,11 @@
 ﻿
 using System.ComponentModel;
+using System.Windows.Forms;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    internal partial class NumericUpDownEx : System.Windows.Forms.NumericUpDown 
+    internal partial class NumericUpDownEx : NumericUpDownExt
     {
         /// <summary>
         /// Creates new instance of the NumericUpDownExt class

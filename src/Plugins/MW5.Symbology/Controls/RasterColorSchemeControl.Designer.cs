@@ -1,6 +1,6 @@
 ﻿namespace MW5.Plugins.Symbology.Controls
 {
-    partial class RasterColorSchemeView
+    partial class RasterColorSchemeControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -241,7 +241,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboRasterRendering);
             this.Controls.Add(this.chkUseHistogram);
-            this.Name = "RasterColorSchemeView";
+            this.Name = "RasterColorSchemeControl";
             this.Size = new System.Drawing.Size(500, 437);
             this.groupPseudoColors.ResumeLayout(false);
             this.groupPseudoColors.PerformLayout();

@@ -53,6 +53,16 @@ namespace MW5.UI.Forms
             }
         }
 
+        public virtual void BeforeClose()
+        {
+            // default implementation; can be overriden in child classes
+        }
+
+        public virtual void UpdateView()
+        {
+            // default implementation; can be overriden in child classes
+        }
+
         protected void FireOkClicked()
         {
             Invoke(OkClicked);

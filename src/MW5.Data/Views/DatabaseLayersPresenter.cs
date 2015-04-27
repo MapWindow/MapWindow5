@@ -47,10 +47,5 @@ namespace MW5.Data.Views
 
             return count > 0;
         }
-
-        public override void Initialize()
-        {
-            
-        }
     }
 }

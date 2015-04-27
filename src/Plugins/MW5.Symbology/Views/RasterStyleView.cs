@@ -8,6 +8,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
@@ -37,9 +38,6 @@ namespace MW5.Plugins.Symbology.Views
 
         private void InitControls()
         {
-            chartControl1.Series.Clear();
-            chartControl1.Series.Add(new ChartSeries());
-
             cboDownsampling.AddItemsFromEnum<InterpolationType>();
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
@@ -61,18 +59,20 @@ namespace MW5.Plugins.Symbology.Views
 
             dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
-            rasterColorSchemeView.Initialize(Raster);
+            _rasterColorSchemeControl.Initialize(Raster);
 
             ModelToUi();
 
             txtGdalInfo.Text = GdalUtils.GdalInfo(Model.Filename, "");
 
             rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
+
+            histogramControl1.Initialize(_context.Container, Raster);
         }
 
         public IRasterColorSchemeView Colors
         {
-            get { return rasterColorSchemeView; }
+            get { return _rasterColorSchemeControl; }
         }
 
         public IRasterSource Raster
@@ -99,12 +99,6 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnClearOverviews;
                 yield return btnApply;
                 yield return btnClearColorAdjustments;
-                yield return btnCalculateHistogram;
-
-                foreach (var btn in rasterColorSchemeView.Buttons)
-                {
-                    yield return btn;
-                }
             }
         }
 
@@ -156,7 +150,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            rasterColorSchemeView.ModelToUiRaster();
+            _rasterColorSchemeControl.ModelToUiRaster();
         }
 
         public void UiToModel()
@@ -196,23 +190,6 @@ namespace MW5.Plugins.Symbology.Views
             chkGreyScale.Checked = false;
         }
 
-        public void SetHistogram(RasterHistogram ht)
-        {
-            chartControl1.Series.Clear();
-            var series = new ChartSeries();
-
-            if (ht != null)
-            {
-                for (int i = 0; i < ht.NumBuckets; i++)
-                {
-                    series.Points.Add(ht.get_Value(i), ht.get_Count(i));
-                }
-            }
-
-            chartControl1.Series.Add(series);
-            chartControl1.PrimaryYAxis.ValueType = ChartValueType.Double;
-        }
-
         private void UiToModelRaster()
         {
             if (Raster == null)
@@ -220,12 +197,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            rasterColorSchemeView.UiToModelRaster();
-        }
-
-        public void UpdateView()
-        {
-
+            _rasterColorSchemeControl.UiToModelRaster();
         }
     }
 

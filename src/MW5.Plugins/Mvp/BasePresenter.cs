@@ -27,6 +27,8 @@ namespace MW5.Plugins.Mvp
 
         private void OnViewOkClicked()
         {
+            View.BeforeClose();
+
             if (ViewOkClicked())
             {
                 View.Close();
@@ -75,7 +77,10 @@ namespace MW5.Plugins.Mvp
             return Success;
         }
 
-        public abstract void Initialize();
+        public virtual void Initialize()
+        {
+            
+        }
 
         private void Init(TModel model)
         {

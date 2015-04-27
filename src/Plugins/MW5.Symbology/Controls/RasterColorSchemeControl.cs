@@ -9,19 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public partial class RasterColorSchemeView : UserControl, IRasterColorSchemeView
+    public partial class RasterColorSchemeControl : UserControl, IRasterColorSchemeView, IMenuProvider
     {
         private RasterColorScheme _pseudoColorsScheme;
         private RasterColorScheme _colorScheme;
         private IRasterSource _raster;
 
-        public RasterColorSchemeView()
+        public RasterColorSchemeControl()
         {
             InitializeComponent();
 
@@ -44,7 +45,7 @@ namespace MW5.Plugins.Symbology.Controls
 
             InitRenderModeCombo();
 
-            FillBandCombo();
+            Helpers.ComboBoxHelper.AddRasterBands(cboSelectedBand, _raster);
 
             ChangeRenderingMode();
 
@@ -153,26 +154,6 @@ namespace MW5.Plugins.Symbology.Controls
             cboRasterRendering.SelectedIndex = 0;
         }
 
-        /// <summary>
-        /// Fills the band combo.
-        /// </summary>
-        private void FillBandCombo()
-        {
-            cboSelectedBand.Items.Clear();
-
-            for (int i = 1; i <= _raster.Bands.Count; i++)
-            {
-                var band = _raster.Bands[i];
-                string bandName = "Band " + i + " (" + band.ColorInterpretation + ")";
-                cboSelectedBand.Items.Add(bandName);
-            }
-
-            if (cboSelectedBand.Items.Count > 0)
-            {
-                cboSelectedBand.SelectedIndex = 0;
-            }
-        }
-
         public void ModelToUiRaster()
         {
             chkUseHistogram.Checked = _raster.UseHistogram;
@@ -181,6 +162,11 @@ namespace MW5.Plugins.Symbology.Controls
         public void UiToModelRaster()
         {
             _raster.UseHistogram = chkUseHistogram.Checked;
+        }
+
+        public IEnumerable<ToolStripItemCollection> ToolStrips
+        {
+            get { yield break; }
         }
 
         public IEnumerable<Control> Buttons

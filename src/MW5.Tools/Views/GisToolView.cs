@@ -62,11 +62,6 @@ namespace MW5.Tools.Views
             }
         }
 
-        public void UpdateView()
-        {
-            
-        }
-
         public ButtonBase OkButton
         {
             get { return btnOk; }

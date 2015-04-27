@@ -111,6 +111,12 @@
     <Compile Include="Controls\DynamicVisibilityControl.Designer.cs">
       <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\HistogramControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\HistogramControl.Designer.cs">
+      <DependentUpon>HistogramControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ImageCombo\ColorSchemeCollection.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>
@@ -118,11 +124,11 @@
     <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\RasterColorSchemeView.cs">
+    <Compile Include="Controls\RasterColorSchemeControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RasterColorSchemeView.Designer.cs">
-      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
+    <Compile Include="Controls\RasterColorSchemeControl.Designer.cs">
+      <DependentUpon>RasterColorSchemeControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\RasterColorSchemeGrid.cs">
       <SubType>UserControl</SubType>
@@ -141,6 +147,7 @@
     <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
+    <Compile Include="Helpers\ComboBoxHelper.cs" />
     <Compile Include="Helpers\RectangleHelper.cs" />
     <Compile Include="Helpers\TrackbarHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -358,9 +365,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Legacy\SymbologyPluginLegacy.cs" />
     <Compile Include="Services\SymbologyMetadata.cs" />
+    <Compile Include="Views\Abstract\IHistogramOptionsView.cs" />
     <Compile Include="Views\Abstract\IRasterColorSchemeView.cs" />
     <Compile Include="Views\Abstract\IRasterMinMaxView.cs" />
     <Compile Include="Views\Abstract\IRasterStyleView.cs" />
+    <Compile Include="Views\HistogramOptionsModel.cs" />
+    <Compile Include="Views\HistogramOptionsPresenter.cs" />
+    <Compile Include="Views\HistogramOptionsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\HistogramOptionsView.Designer.cs">
+      <DependentUpon>HistogramOptionsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\RasterMinMaxPresenter.cs" />
     <Compile Include="Views\RasterMinMaxView.cs">
       <SubType>Form</SubType>
@@ -424,6 +440,9 @@
     <EmbeddedResource Include="Controls\DynamicVisibilityControl.resx">
       <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\HistogramControl.resx">
+      <DependentUpon>HistogramControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ListControls\CharacterControl.resx">
       <DependentUpon>CharacterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -439,8 +458,8 @@
     <EmbeddedResource Include="Controls\ListControls\SymbolControl.resx">
       <DependentUpon>SymbolControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RasterColorSchemeView.resx">
-      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\RasterColorSchemeControl.resx">
+      <DependentUpon>RasterColorSchemeControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ScaleControl.resx">
       <DependentUpon>ScaleControl.cs</DependentUpon>
@@ -514,6 +533,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\HistogramOptionsView.resx">
+      <DependentUpon>HistogramOptionsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RasterMinMaxView.resx">
       <DependentUpon>RasterMinMaxView.cs</DependentUpon>
@@ -635,6 +657,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_histogram24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_colors24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_contrast24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_info24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_pyramid24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_tools24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_palette24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_palette241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_palette.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

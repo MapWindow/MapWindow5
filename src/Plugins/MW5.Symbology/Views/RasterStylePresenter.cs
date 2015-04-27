@@ -59,23 +59,11 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterStyleCommand.ClearColorAdjustments:
                     View.ClearColorAdjustments();
                     break;
-                case RasterStyleCommand.CalculateHistogram:
-                    CalculateHistogram();
-                    break;
                 case RasterStyleCommand.Apply:
                     Apply();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
-            }
-        }
-
-        private void CalculateHistogram()
-        {
-            if (_raster != null)
-            {
-                var ht = _raster.ActiveBand.GetDefaultHistogram(true);
-                View.SetHistogram(ht);
             }
         }
 

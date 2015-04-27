@@ -41,11 +41,6 @@ namespace MW5.Services.Views
             _layerTypeComboBox.SetValue(GeometryType.Point);
         }
 
-        public void UpdateView()
-        {
-            
-        }
-
         public ButtonBase OkButton
         {
             get { return _okButton; }

@@ -14,6 +14,5 @@ namespace MW5.Plugins.Symbology.Views.Abstract
         void UiToModel();
         IRasterColorSchemeView Colors { get; }
         void ClearColorAdjustments();
-        void SetHistogram(RasterHistogram histogram);
     }
 }
