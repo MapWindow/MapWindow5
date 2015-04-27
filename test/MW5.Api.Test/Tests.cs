@@ -194,7 +194,7 @@ namespace MW5.API.Test
                     logger.Info("No data value: " + band.NoDataValue);
                     logger.Info("Minimum: " + band.Minimum);
                     logger.Info("Maximum: " + band.Maximum);
-                    logger.Info("Overview count: " + band.OverviewCount);
+                    logger.Info("Overview count: " + band.Overviews.Count);
                     logger.Info("Color interpretation: " + band.ColorInterpretation);
                 }
             }

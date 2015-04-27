@@ -65,8 +65,10 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Concrete\DatasourceDriver.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />
     <Compile Include="Concrete\LayerIdentity.cs" />
+    <Compile Include="Concrete\RasterOverviewCollection.cs" />
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />

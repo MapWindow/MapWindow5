@@ -1,6 +1,7 @@
 ﻿using System;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
@@ -39,11 +40,6 @@ namespace MW5.Api.Concrete
         public double Maximum
         {
             get { return _band.Maximum; }
-        }
-
-        public int OverviewCount
-        {
-            get { return _band.OverviewCount; }
         }
 
         public GdalDataType DataType
@@ -134,6 +130,11 @@ namespace MW5.Api.Concrete
             }
 
             return null;
+        }
+
+        public IRasterBandCollection Overviews
+        {
+            get { return new RasterOverviewCollection(_band); }
         }
     }
 }

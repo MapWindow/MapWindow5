@@ -2,7 +2,7 @@
 
 namespace MW5.Shared
 {
-    public interface IEnumConverter<T> where T : struct, IConvertible
+    public interface IEnumConverter<T> where T : IConvertible
     {
         string GetString(T value);
     }

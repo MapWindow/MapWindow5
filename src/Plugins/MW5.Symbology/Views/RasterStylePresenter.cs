@@ -16,7 +16,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Views
 {
-    public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterStyleCommand, ILayer>
+    public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterCommand, ILayer>
     {
         private readonly IAppContext _context;
         private IRasterSource _raster;
@@ -27,39 +27,32 @@ namespace MW5.Plugins.Symbology.Views
             _context = context;
         }
 
-        public override void RunCommand(RasterStyleCommand command)
+        public override void RunCommand(RasterCommand command)
         {
             switch (command)
             {
-                case RasterStyleCommand.ProjectionDetails:
+                case RasterCommand.ProjectionDetails:
                     using (var form = new Projections.UI.Forms.ProjectionPropertiesForm(Model.Projection))
                     {
                         AppViewFactory.Instance.ShowChildView(form);
                     }
                     break;
-                case RasterStyleCommand.BuildOverviews:
-                    MessageService.Current.Info("About to build overviews");
-                    break;
-                case RasterStyleCommand.ClearOverviews:
-                    MessageService.Current.Info("About to clear overviews");
-                    break;
-                case RasterStyleCommand.CalculateMinMax:
+                case RasterCommand.CalculateMinMax:
                     if (_context.Container.Run<RasterMinMaxPresenter, IRasterSource>(_raster))
                     {
                         // TODO: set the resulting values
                     }
                     break;
-                case RasterStyleCommand.GenerateColorScheme:
-
+                case RasterCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
                     var colorView = View.Colors;
                     scheme.SetPredefined(colorView.BandMinValue, colorView.BandMaxValue, (PredefinedColors)colorView.SelectedPredefinedColorScheme);
                     colorView.ColorScheme = scheme;
                     break;
-                case RasterStyleCommand.ClearColorAdjustments:
+                case RasterCommand.ClearColorAdjustments:
                     View.ClearColorAdjustments();
                     break;
-                case RasterStyleCommand.Apply:
+                case RasterCommand.Apply:
                     Apply();
                     break;
                 default:

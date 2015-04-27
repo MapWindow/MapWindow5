@@ -398,7 +398,8 @@ namespace MW5.Api.Legend
         {
             try
             {
-                // temporary: checking random property to be sure the object is valid
+                // TODO: find out why sometimes there is an exception here!!!
+                // checking random property to be sure the object is valid
                 var k = g.DpiX;
             }
             catch (Exception ex)

@@ -40,11 +40,6 @@ namespace MW5.Plugins.Symbology.Views
         {
             cboDownsampling.AddItemsFromEnum<InterpolationType>();
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
-            cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
-            cboOverviewType.AddItemsFromEnum<RasterOverviewType>();
-            
-            cboOverviewType.SetValue(RasterOverviewType.External);
-            cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
             cboDynamicScaleMode.SetValue(DynamicVisibilityMode.Zoom);
 
             panelColorize.DataBindings.Add("Enabled", chkColorize, "Checked");
@@ -57,9 +52,9 @@ namespace MW5.Plugins.Symbology.Views
         {
             _imageSource = Model.ImageSource;
 
-            dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
+            _dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
-            _rasterColorSchemeControl.Initialize(Raster);
+            _colorSchemeControl.Initialize(Raster);
 
             ModelToUi();
 
@@ -68,11 +63,13 @@ namespace MW5.Plugins.Symbology.Views
             rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
 
             histogramControl1.Initialize(_context.Container, Raster);
+
+            _overviewControl1.Initialize(Raster);
         }
 
         public IRasterColorSchemeView Colors
         {
-            get { return _rasterColorSchemeControl; }
+            get { return _colorSchemeControl; }
         }
 
         public IRasterSource Raster
@@ -95,8 +92,6 @@ namespace MW5.Plugins.Symbology.Views
             get
             {
                 yield return btnProjectionDetails;
-                yield return btnBuildOverviews;
-                yield return btnClearOverviews;
                 yield return btnApply;
                 yield return btnClearColorAdjustments;
             }
@@ -150,7 +145,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _rasterColorSchemeControl.ModelToUiRaster();
+            _colorSchemeControl.ModelToUiRaster();
         }
 
         public void UiToModel()
@@ -173,7 +168,7 @@ namespace MW5.Plugins.Symbology.Views
             _imageSource.ColorizeIntensity = chkColorize.Checked ? tbrColorizeIntensity.Value / 100.0f : 0.0f;
             _imageSource.Greyscale = chkGreyScale.Checked;
 
-            dynamicVisibilityControl1.ApplyChanges();
+            _dynamicVisibilityControl1.ApplyChanges();
 
             Model.Visible = chkLayerVisible.Checked;
         }
@@ -197,7 +192,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _rasterColorSchemeControl.UiToModelRaster();
+            _colorSchemeControl.UiToModelRaster();
         }
     }
 

@@ -155,6 +155,7 @@ namespace MW5.UI.Controls
 
         public int ToolTipMaxWidth { get; set; }
 
+        [Browsable(false)]
         public T SelectedItem
         {
             get

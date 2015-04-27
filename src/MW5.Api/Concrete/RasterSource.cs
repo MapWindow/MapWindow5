@@ -97,6 +97,11 @@ namespace MW5.Api.Concrete
             return _image.BuildOverviews((tkGDALResamplingMethod) method, scales.Count(), scales.ToArray());
         }
 
+        public void ClearOverviews()
+        {
+            _image.ClearOverviews();
+        }
+
         public double BufferDx
         {
             get { return _image.dX; }
@@ -232,6 +237,11 @@ namespace MW5.Api.Concrete
 
                 return scheme;
             }
+        }
+
+        public DatasourceDriver Driver
+        {
+            get { return new DatasourceDriver(_image.GdalDriver); }
         }
 
         public RasterBand ActiveBand

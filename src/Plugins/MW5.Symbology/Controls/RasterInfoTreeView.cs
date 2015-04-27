@@ -9,7 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls
@@ -19,6 +21,19 @@ namespace MW5.Plugins.Symbology.Controls
         public RasterInfoTreeView()
         {
             InitializeComponent();
+
+            this.ToolTipControl.Popup += ToolTipControl_Popup;
+            this.ToolTipControl.BeforePopup += ToolTipControl_BeforePopup;
+        }
+
+        void ToolTipControl_BeforePopup(object sender, CancelEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        void ToolTipControl_Popup(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void Initialize(IRasterSource raster)
@@ -27,14 +42,33 @@ namespace MW5.Plugins.Symbology.Controls
 
             Nodes.Clear();
 
-            var root = GetRasterInfo(raster);
-
-            var bandsData = GetBandsInfo(raster);
-            root.AddSubItem(bandsData);
+            var root = PopulateTree(raster);
 
             var node = AddSubItems(Nodes, root);
 
             node.ExpandAll();
+        }
+
+        private NodeData PopulateTree(IRasterSource raster)
+        {
+            var root = new NodeData(" ");
+
+            var general = new NodeData("General");
+            general.AddSubItem("Size", string.Format("{0}×{1}", raster.Width, raster.Height));
+            general.AddSubItem("Palette", raster.PaletteInterpretation.ToString());
+            general.AddSubItem("Bands", raster.NumBands);
+
+            root.AddSubItem(general);
+
+            var driver = GetDriverInfo(raster);
+            root.AddSubItem(driver);
+
+            var bandsData = GetBandsInfo(raster);
+            root.AddSubItem(bandsData);
+
+            AddBounds(root, raster);
+
+            return root;
         }
 
         private TreeNodeAdv AddSubItems(TreeNodeAdvCollection nodes, NodeData data)
@@ -57,16 +91,23 @@ namespace MW5.Plugins.Symbology.Controls
             return node;
         }
 
-        private NodeData GetRasterInfo(IRasterSource raster)
+        private NodeData GetDriverInfo(IRasterSource raster)
         {
-            var root = new NodeData("Raster Info");
+            var root = new NodeData("Driver");
+            var driver = raster.Driver;
 
-            var general = new NodeData("General");
-            general.AddSubItem("Width", raster.Width);
-            general.AddSubItem("Height", raster.Height);
-            general.AddSubItem("Palette", raster.PaletteInterpretation.ToString());
-            root.AddSubItem(general);
+            var values = Enum.GetValues(typeof(GdalDriverMetadata));
+            foreach (GdalDriverMetadata item in values)
+            {
+                string s = driver.get_Metadata(item);
+                root.AddSubItem(item.EnumToString(), s);
+            }
 
+            return root;
+        }
+
+        private void AddBounds(NodeData root, IRasterSource raster)
+        {
             var bounds = new NodeData("Bounds");
             bounds.AddSubItem("Dx", raster.Dx);
             bounds.AddSubItem("Dy", raster.Dy);
@@ -82,8 +123,6 @@ namespace MW5.Plugins.Symbology.Controls
             buffer.AddSubItem("XllCenter", raster.BufferXllCenter);
             buffer.AddSubItem("YllCenter", raster.BufferYllCenter);
             root.AddSubItem(buffer);
-
-            return root;
         }
 
         private NodeData GetBandsInfo(IRasterSource raster)
@@ -100,9 +139,9 @@ namespace MW5.Plugins.Symbology.Controls
                 bandNode.AddSubItem("Unit type", band.UnitType);
                 bandNode.AddSubItem("Minimum", band.Minimum);
                 bandNode.AddSubItem("Maximum", band.Maximum);
-                bandNode.AddSubItem("No data value", band.NoDataValue);
+                bandNode.AddSubItem("No data value", band.NoDataValue.ToString(CultureInfo.InvariantCulture));
                 bandNode.AddSubItem("Color interpretation", band.ColorInterpretation.ToString());
-                bandNode.AddSubItem("Overview count", band.OverviewCount);
+                bandNode.AddSubItem("Overview count", band.Overviews.Count);
 
                 var metadata = GetMetadata(band);
                 if (metadata != null)

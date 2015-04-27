@@ -41,7 +41,7 @@ namespace MW5.Plugins.Symbology.Controls
         public void AddSubItem(string name, double value)
         {
             CheckSubItems();
-            _subItems.Add(new NodeData(name, value.ToString(CultureInfo.InvariantCulture)));
+            _subItems.Add(new NodeData(name, value.ToString("0.####", CultureInfo.InvariantCulture)));
         }
 
         public IEnumerable<NodeData> SubItems

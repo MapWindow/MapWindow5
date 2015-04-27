@@ -11,6 +11,7 @@ namespace MW5.Api.Interfaces
         int NumOverviews { get; }
     
         bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
+        void ClearOverviews();
 
         double BufferDx { get; }
         double BufferDy { get; }
@@ -57,24 +58,26 @@ namespace MW5.Api.Interfaces
 
         RasterColorScheme GrayScaleColorScheme { get; }
 
+        DatasourceDriver Driver { get; }
+
         //bool AllowHillshade { get; set; }
-        
+
         //GridColorScheme GridProxyColorScheme { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }
-        
+
         //int BufferSize { get; set; }
         //bool ClearGdalCache { get; set; }
-        
+
         //bool GridRendering { get; }
 
         //string SourceFilename { get; }
-        
+
         //string SourceGridName { get; }
-        
+
         //bool IsGridProxy { get; }
 
         //bool _pushSchemetkRaster(GridColorScheme cScheme);
-        
+
         //void Deserialize(string newVal);
 
         //bool GetImageBitsDC(int hDC);
