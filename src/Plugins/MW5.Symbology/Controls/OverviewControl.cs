@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Symbology.Controls
@@ -17,6 +19,7 @@ namespace MW5.Plugins.Symbology.Controls
     public partial class OverviewControl : UserControl
     {
         private IRasterSource _raster;
+        private List<OverviewScale> _overviews;
 
         public OverviewControl()
         {
@@ -43,12 +46,37 @@ namespace MW5.Plugins.Symbology.Controls
                 return;
             }
 
-            //var list = Overviews.ToList();
-            var list = PotentialOverviews.ToList();
-            _overviewGrid1.DataSource = list;
+            _overviews = Overviews;
+            _overviewGrid1.DataSource = _overviews;
         }
 
-        private IEnumerable<OverviewScale> Overviews
+        private List<OverviewScale> Overviews
+        {
+            get
+            {
+                var list = ExistingOverviews.ToList();
+                foreach (var item in list)
+                {
+                    item.Selected = true;
+                }
+
+                // now check what overviews are expected to be here and add them if they are missing
+                var set = new HashSet<OverviewScale>(list);
+                var candidates = PotentialOverviews.ToList();
+
+                foreach (var item in candidates)
+                {
+                    if (!set.Contains(item))
+                    {
+                        list.Add(item);
+                    }
+                }
+
+                return list;
+            }
+        }
+
+        private IEnumerable<OverviewScale> ExistingOverviews
         {
             get
             {
@@ -109,13 +137,43 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void btnClearOverviews_Click(object sender, EventArgs e)
         {
-            _raster.ClearOverviews();
+            bool result = _raster.ClearOverviews();
+
+            ShowOverviews();
+
+            if (result)
+            {
+                MessageService.Current.Info("Overviews were cleared.");
+            }
+            else
+            {
+                MessageService.Current.Warn("Failed to clear overviews.");
+            }
         }
 
         private void btnBuildOverviews_Click(object sender, EventArgs e)
         {
-            var scales = new List<int>() { 2, 4, 8 };
-            _raster.BuildOverviews(cboOverviewSampling.GetValue<RasterOverviewSampling>(), scales);
+            //var scales = new List<int>() { 2, 4, 8 };
+            var scales = _overviews.Select(ov => ov.RatioCore).ToList();
+            Logger.Current.Info("Scales to calculate overviews: " + string.Join(", ", scales));
+
+            if (scales.Count == 0)
+            {
+                MessageService.Current.Info("No scales are chosen to calculate overviews for.");
+                return;
+            }
+
+            bool result = _raster.BuildOverviews(cboOverviewSampling.GetValue<RasterOverviewSampling>(), scales);
+            if (result)
+            {
+                MessageService.Current.Info("Overviews were built.");
+            }
+            else
+            {
+                MessageService.Current.Warn("Failed to built overviews.");
+            }
+
+            ShowOverviews();
         }
     }
 }

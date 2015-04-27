@@ -97,9 +97,9 @@ namespace MW5.Api.Concrete
             return _image.BuildOverviews((tkGDALResamplingMethod) method, scales.Count(), scales.ToArray());
         }
 
-        public void ClearOverviews()
+        public bool ClearOverviews()
         {
-            _image.ClearOverviews();
+            return _image.ClearOverviews();
         }
 
         public double BufferDx

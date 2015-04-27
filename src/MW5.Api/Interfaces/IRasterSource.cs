@@ -11,7 +11,7 @@ namespace MW5.Api.Interfaces
         int NumOverviews { get; }
     
         bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
-        void ClearOverviews();
+        bool ClearOverviews();
 
         double BufferDx { get; }
         double BufferDy { get; }

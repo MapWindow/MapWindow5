@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public class OverviewScale
+    public class OverviewScale : IEquatable<OverviewScale>
     {
         private readonly int _totalWidth;
         private int _totalHeight;
 
         public OverviewScale(int totalWidth, int totalHeight, int ratio)
         {
-            Width = totalWidth / ratio;
-            Height = totalHeight / ratio;
+            Width = Convert.ToInt32(totalWidth / (double)ratio);
+            Height = Convert.ToInt32(totalHeight / (double)ratio);
             _totalHeight = totalHeight;
             _totalWidth = totalWidth;
         }
@@ -32,11 +32,20 @@ namespace MW5.Plugins.Symbology.Controls
         [DisplayName(@" ")]
         public bool Selected { get; set; }
 
+        [Browsable(false)]
+        public int RatioCore
+        {
+            get
+            {
+                return (int)(_totalWidth / (double)Width + 0.5);
+            }
+        }
+
         public string Ratio
         {
             get
             {
-                return string.Format("1:{0}", (_totalWidth/(double) Width).ToString("0.##"));
+                return string.Format("1:{0}", (_totalWidth/(double) Width).ToString("0.#"));
             }
         }
 
@@ -49,6 +58,21 @@ namespace MW5.Plugins.Symbology.Controls
         public string Resolution
         {
             get { return string.Format("{0} × {1}", Width, Height); }
+        }
+
+        public bool Equals(OverviewScale other)
+        {
+            return Width == other.Width && Height == other.Height;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as OverviewScale);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Width + Height).GetHashCode();
         }
     }
 }
