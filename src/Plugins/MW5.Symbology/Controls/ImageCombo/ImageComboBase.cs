@@ -78,10 +78,10 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
         protected override void OnDrawItem(DrawItemEventArgs e)
         {
-            DrawItem(e.Index, e.Bounds, e.Graphics, e.Font, e.ForeColor, e.State, e.DrawBackground);
+            DrawItemCore(e.Index, e.Bounds, e.Graphics, e.Font, e.ForeColor, e.State, e.DrawBackground);
         }
 
-        private void DrawItem(int itemIndex, Rectangle bounds, Graphics g, Font initFont, Color foreColor, DrawItemState state, Action drawBackground)
+        private void DrawItemCore(int itemIndex, Rectangle bounds, Graphics g, Font initFont, Color foreColor, DrawItemState state, Action drawBackground)
         {
             // check if it is an item from the Items collection
             if (itemIndex < 0)

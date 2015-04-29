@@ -128,6 +128,33 @@ namespace MW5.Plugins
 
                 _plugins.Add(p);
             }
+
+            #if DEBUG
+                // I didn't caught anything by this check so far;
+                // Perhaps better just to check for particular assemblies in Plugins folder
+                // and display warning if they are present
+                CheckDuplicatedAssemblies();
+            #endif
+        }
+
+        /// <summary>
+        /// Checks if the same assembly was loaded from different locations in the app domain.
+        /// Most likely from Plugins folder if "Copy local" flag wasn't turned off.
+        /// </summary>
+        private void CheckDuplicatedAssemblies()
+        {
+            var list = LoadedAssemblyChecker.GetConflictingAssemblies();
+            foreach (var info in list)
+            {
+                string s = string.Format("Detected multiple load of assembly {0} from ", info.Key);
+                
+                foreach(string location in info.Value)
+                {
+                    s += string.Format("\t{0}", location);
+                }
+
+                Logger.Current.Warn(s);
+            }
         }
 
         /// <summary>

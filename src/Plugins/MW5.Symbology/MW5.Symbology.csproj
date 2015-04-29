@@ -49,7 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="Syncfusion.Chart.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Chart.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
@@ -417,6 +417,7 @@
     <ProjectReference Include="..\..\MW5.Projections\MW5.Projections.csproj">
       <Project>{DD259453-611A-4AD5-878E-385CB2C89DF5}</Project>
       <Name>MW5.Projections</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Services\MW5.Services.csproj">
       <Project>{54BB55DA-DBDC-47E5-8DEC-DE325F35F074}</Project>

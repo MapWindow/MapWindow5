@@ -76,9 +76,10 @@ namespace MW5.Helpers
 
         public static void SaveLayout(this DockingManager dockingManager)
         {
-            var sr = GetSerializer();
-            dockingManager.SaveDockState(sr);
-            sr.PersistNow();
+            //TODO: restore; it requires unique names for all panels in order to work
+            //var sr = GetSerializer();
+            //dockingManager.SaveDockState(sr);
+            //sr.PersistNow();
         }
 
         private static AppStateSerializer GetSerializer()

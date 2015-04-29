@@ -29,11 +29,6 @@ namespace MW5.Plugins.Symbology.Views
             
         }
 
-        public void UpdateView()
-        {
-            
-        }
-
         public ButtonBase OkButton
         {
             get { return btnOk; }

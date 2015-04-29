@@ -70,17 +70,17 @@ namespace MW5.Tools.Toolbox
             e.Cancel = true;        // don't show them
             return;
 
-            if (_tree.SelectedTool == null)
-            {
-                e.Cancel = true;
-            }
+            //if (_tree.SelectedTool == null)
+            //{
+            //    e.Cancel = true;
+            //}
 
-            var tool = _tree.SelectedTool;
-            if (tool != null)
-            {
-                e.ToolTip.Header.Text = tool.Name;
-                e.ToolTip.Body.Text = tool.Description;
-            }
+            //var tool = _tree.SelectedTool;
+            //if (tool != null)
+            //{
+            //    e.ToolTip.Header.Text = tool.Name;
+            //    e.ToolTip.Body.Text = tool.Description;
+            //}
         }
 
         private void InitTextBox()

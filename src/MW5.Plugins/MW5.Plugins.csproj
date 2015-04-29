@@ -104,6 +104,7 @@
     <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="Helpers\ConfigPathHelper.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
+    <Compile Include="Helpers\LoadedAssemblyChecker.cs" />
     <Compile Include="Interfaces\IDockPanelView.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
     <Compile Include="Interfaces\IDockPanel.cs" />
