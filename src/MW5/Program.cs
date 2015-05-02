@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using System.Windows.Threading;
 using MW5.Api.Static;
 using MW5.DI.Castle;
 // using MW5.DI.LightInject;
@@ -11,6 +12,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
+using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.UI.Helpers;
 using MW5.Views;
@@ -27,17 +29,36 @@ namespace MW5
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            
+
+            // TODO: need to initialize logger without application container
             var container = CreateContainer();
             CompositionRoot.Compose(container);
             var logger = container.Resolve<ILoggingService>();      // this will initialize Logger.Current
             logger.Info("APPLICATION STARUP");
+
+            AttachExceptionHandler();
 
             LoadConfig(container);
 
             container.Run<MainPresenter>();
 
             //configService.Save();   // it's saved on closing ConfigView
+        }
+
+        private static void AttachExceptionHandler()
+        {
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            
+            // Occurs when a thread exception is thrown and uncaught during execution of a delegate by way of Invoke or BeginInvoke.
+            //Dispatcher.CurrentDispatcher.UnhandledException += CurrentDispatcher_UnhandledException;
+        }
+
+        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.Current.Error("AppDoman unhandled exception", e.ExceptionObject as Exception, "");
+            var ex = e.ExceptionObject as Exception;
+            string s = ex != null ? ex.Message : "not a System.Exception";
+            MessageBox.Show("Unhandled exception : " + s);
         }
 
         private static void LoadConfig(IApplicationContainer container)

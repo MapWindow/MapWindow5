@@ -160,3 +160,4 @@ $RECYCLE.BIN/
 src/packages/
 !src/packages/repositories.config
 src/MW5.Prototype
+install/*
