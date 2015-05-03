@@ -101,13 +101,13 @@ Source: "{#OcxBinPath}\zlib1.dll"; DestDir: "{app}\MapWinGIS\"; Flags: ignorever
 Source: "{#OcxBinPath}\MapWinGIS.ocx"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 
 ;; IntelliSense:
-Source: "{#OcxSetupPath}\AxInterop.MapWinGIS.xml"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
-Source: "{#OcxSetupPath}\Interop.MapWinGIS.xml"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
+;Source: "{#OcxSetupPath}\AxInterop.MapWinGIS.xml"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
+;Source: "{#OcxSetupPath}\Interop.MapWinGIS.xml"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
 
 ;; Licenses
 ;Source: "{#OcxSetupPath}\Licenses\GDALLicense.rtf"; DestDir: "{app}\Licenses\"; Flags: ignoreversion; Components: MapWindow
 ;Source: "{#OcxSetupPath}\Licenses\GISInternalsLicense.rtf"; DestDir: "{app}\Licenses\"; Flags: ignoreversion; Components: MapWindow
-Source: "{#OcxSetupPath}\Licenses\MapWinGIS.rtf"; DestDir: "{app}\Licenses\"; Flags: ignoreversion; Components: MapWindow
+;Source: "{#OcxSetupPath}\Licenses\MapWinGIS.rtf"; DestDir: "{app}\Licenses\"; Flags: ignoreversion; Components: MapWindow
 
 ;; GDAL Plugins:
 ;Source: "{#OcxBinPath}\gdalplugins\gdal_ECW_JP2ECW.dll"; DestDir: "{app}\MapWinGIS\gdalplugins\"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: ECW
