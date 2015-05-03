@@ -129,8 +129,8 @@ Source: "{#ExeBinPath}\*.manifest"; DestDir: "{app}"; Flags: ignoreversion recur
 Source: "{#ExeBinPath}\Projections\*"; DestDir: "{app}\Projections"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 
 ;; To register the ocx:
-Source: "regMapWinGIS.cmd"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
-Source: "unregMapWinGIS.cmd"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
+;Source: "regMapWinGIS.cmd"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
+;Source: "unregMapWinGIS.cmd"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
 ;Source: "SetEnv.exe"; DestDir: "{app}\MapWinGIS\"; Flags: ignoreversion; Components: MapWindow
 
 ;; VC++ files
@@ -149,11 +149,11 @@ BeveledLabel={#MyAppName}
 ;Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
 #endif
 ;Run some command files:
-Filename: "{app}\MapWinGIS\regMapWinGIS.cmd"; WorkingDir: "{app}"; Flags: runhidden
+;Filename: "{app}\MapWinGIS\regMapWinGIS.cmd"; WorkingDir: "{app}"; Flags: runhidden
 Filename: "{app}\MapWindow.exe"; Flags: shellexec runasoriginaluser postinstall nowait skipifsilent; Description: "Start MapWindow GIS"
 
 [UninstallRun]
-Filename: "{app}\MapWinGIS\unregMapWinGIS.cmd"; WorkingDir: "{app}"; Flags: runhidden
+;Filename: "{app}\MapWinGIS\unregMapWinGIS.cmd"; WorkingDir: "{app}"; Flags: runhidden
 
 [Registry]
 ;; Add location of MapWinGIS to path, needed for netcdf.dll
