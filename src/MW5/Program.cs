@@ -58,6 +58,11 @@ namespace MW5
             Logger.Current.Error("AppDoman unhandled exception", e.ExceptionObject as Exception, "");
             var ex = e.ExceptionObject as Exception;
             string s = ex != null ? ex.Message : "not a System.Exception";
+            if (ex != null && ex.InnerException != null)
+            {
+                s += Environment.NewLine + ex.InnerException.Message;
+            }
+
             MessageBox.Show("Unhandled exception : " + s);
         }
 
