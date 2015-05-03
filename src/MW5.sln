@@ -80,7 +80,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Tools", "MW5.Tools\MW5.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Repository", "Plugins\MW5.Repository\MW5.Repository.csproj", "{CD714868-A96A-41E6-8679-DBB28E04B349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.CopyLocal", "MW5.CopyLocal\MW5.CopyLocal.csproj", "{9ECEB23D-EE57-432E-A180-A73D43218E87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.PostBuild", "MW5.PostBuild\MW5.PostBuild.csproj", "{9ECEB23D-EE57-432E-A180-A73D43218E87}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
