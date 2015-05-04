@@ -851,13 +851,14 @@
         MesuringStopped = 2,
     }
 
-    public enum AngleDisplay
+    public enum BearingType
     {
-        Azimuth = 0,
-        RussianRhumb = 1,
-        ClockwiseBearing = 2,
-        CounterClockwiseBearing = 3,
-        None = 4,
+        Absolute = 0,
+        ReducedNde = 1,
+        ReducedNed = 2,
+        Relative = 3,
+        LeftAngle = 4,
+        RightAngle = 5,
     }
 
     public enum AreaDisplay

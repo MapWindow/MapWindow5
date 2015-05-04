@@ -22,6 +22,7 @@ namespace MW5.Services.Concrete
 
         public LogLevel Level { get; set; }
 
+        [Browsable(false)]
         public string Message { get; private set; }
         
         [Browsable(false)]
@@ -29,6 +30,21 @@ namespace MW5.Services.Concrete
 
         [DisplayName("Time")]
         public DateTime TimeStamp { get; private set; }
+
+        public string DetailedMessage
+        {
+            get
+            {
+                string s = Message;
+
+                if (Exception != null)
+                {
+                    s += Environment.NewLine + Exception.Message + Environment.NewLine + Exception.StackTrace;
+                }
+
+                return s;
+            }
+        }
 
         public override string ToString()
         {

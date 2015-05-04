@@ -98,8 +98,8 @@ namespace MW5.Api.Concrete
 
         public bool DisplayAngles
         {
-            get { return _measuring.DisplayAngles; }
-            set { _measuring.DisplayAngles = value; }
+            get { return _measuring.ShowBearing; }
+            set { _measuring.ShowBearing = value; }
         }
 
         public bool IsUsingEllipsoid

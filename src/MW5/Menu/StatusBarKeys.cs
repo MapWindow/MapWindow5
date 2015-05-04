@@ -28,5 +28,7 @@ namespace MW5.Menu
         public const string TileProvider = "statusTileProvider";
         public const string ProgressMsg = "statusProgressMsg";
         public const string ProgressBar = "statusProgressBar";
+
+        public const string MapScale = "statusMapScale";
     }
 }

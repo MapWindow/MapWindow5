@@ -42,13 +42,23 @@ namespace MW5.Menu
                 appContext.Broadcaster.StatusItemClicked += PluginManager_MenuItemClicked;
             }
 
-            var map = context.Map as IMap;
+            AddMapEventHandlers();
+        }
+
+        private void AddMapEventHandlers()
+        {
+            var map = _context.Map as IMap;
             if (map == null)
             {
                 throw new InvalidCastException("Map must implement IMap interface");
             }
+
             map.ProjectionChanged += MapProjectionChanged;
+
+            map.ExtentsChanged += map_ExtentsChanged;
         }
+
+        
 
         private void InitStatusBar()
         {
@@ -82,7 +92,9 @@ namespace MW5.Menu
             bar.Items.AddLabel("Selected: ", StatusBarKeys.SelectedCount, Identity).BeginGroup = true;
 
             bar.AlignNewItemsRight = true;
-            bar.Items.AddLabel("Tile provider", StatusBarKeys.TileProvider, Identity);
+
+            bar.Items.AddLabel("", StatusBarKeys.MapScale, Identity);
+            bar.Items.AddLabel("Tile provider", StatusBarKeys.TileProvider, Identity).BeginGroup = true;
             
             var progressMsg = bar.Items.AddLabel("Progress", StatusBarKeys.ProgressMsg, Identity);
             progressMsg.BeginGroup = true;
@@ -220,6 +232,12 @@ namespace MW5.Menu
             var item = _context.StatusBar.FindItem(StatusBarKeys.ProjectionDropDown, Identity);
             var p = _context.Map.Projection;
             item.Text = !p.IsEmpty ? p.Name : "Not defined";
+        }
+
+        private void map_ExtentsChanged(object sender, EventArgs e)
+        {
+            var item = _context.StatusBar.FindItem(StatusBarKeys.MapScale, Identity);
+            item.Text = string.Format("1:{0}", Convert.ToInt32(_context.Map.CurrentScale));
         }
     }
 }

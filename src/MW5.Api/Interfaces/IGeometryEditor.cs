@@ -5,7 +5,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IGeometryEditor: IComWrapper
     {
-        AngleDisplay AngleDisplayMode { get; set; }
+        BearingType BearingTypeMode { get; set; }
         double Area { get; }
         AreaDisplay AreaDisplay { get; set; }
         EditorBehavior EditorBehavior { get; set; }

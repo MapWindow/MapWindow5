@@ -32,7 +32,7 @@ namespace MW5.Api.Helpers
             }
             catch (Exception ex)
             {
-                Logger.Current.Warn("Failed to read file", ex);
+                Logger.Current.Warn("Failed to read file: " + filename, ex);
             }
 
             return GeometryType.None;

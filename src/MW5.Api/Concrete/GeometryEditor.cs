@@ -21,10 +21,10 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public AngleDisplay AngleDisplayMode
+        public BearingType BearingTypeMode
         {
-            get { return (AngleDisplay)_editor.AngleDisplayMode; }
-            set { _editor.AngleDisplayMode = (tkAngleDisplay)value; }
+            get { return (BearingType)_editor.BearingType; }
+            set { _editor.BearingType = (tkBearingType)value; }
         }
 
         public double Area

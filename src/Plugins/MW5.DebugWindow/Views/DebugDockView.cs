@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using MW5.Plugins.DebugWindow.Views.Abstract;
 using MW5.Plugins.Interfaces;
+using MW5.Services.Concrete;
 using MW5.Shared;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Grid;
@@ -70,6 +71,7 @@ namespace MW5.Plugins.DebugWindow.Views
             _listControl.HotTracking = true;
 
             _listControl.DataSource = Logger.Current.Entries;
+            Logger.Current.EntryAdded += Current_EntryAdded;
 
             _listControl.GetColumnStyle(r => r.TimeStamp).Format = "hh:mm:ss.fff";
 
@@ -82,6 +84,12 @@ namespace MW5.Plugins.DebugWindow.Views
             _listControl.AutoAdjustRowHeights = true;
 
             _listControl.SetColumnIcon(r => r.Level, GetIcon);
+        }
+
+        void Current_EntryAdded(object sender, LogEventArgs e)
+        {
+            // TODO: do it for the last row only
+            _listControl.AdjustRowHeights();
         }
 
         private int GetIcon(ILogEntry entry)
