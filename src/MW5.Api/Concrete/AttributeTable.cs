@@ -98,7 +98,7 @@ namespace MW5.Api.Concrete
             return _table.StartEditingTable();
         }
 
-        public bool StopEditing(bool applyChanges)
+        public bool StopEditing(bool applyChanges = true)
         {
             return _table.StopEditingTable(applyChanges);
         }

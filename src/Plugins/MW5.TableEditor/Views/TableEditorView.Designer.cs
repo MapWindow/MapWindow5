@@ -101,6 +101,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnClose.IsBackStageButton = false;
             this.btnClose.Location = new System.Drawing.Point(628, 9);
@@ -111,6 +112,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnSaveChanges
             // 
+            this.btnSaveChanges.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSaveChanges.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnSaveChanges.IsBackStageButton = false;
             this.btnSaveChanges.Location = new System.Drawing.Point(537, 9);
@@ -420,6 +422,7 @@ namespace MW5.Plugins.TableEditor.Views
             this._grid.BackgroundColor = System.Drawing.Color.LightGray;
             this._grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._grid.CurrentCellBorderColor = System.Drawing.Color.Empty;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));

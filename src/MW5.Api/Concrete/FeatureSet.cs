@@ -626,6 +626,21 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool FeatureSelected(int shapeIndex)
+        {
+            return _shapefile.ShapeSelected[shapeIndex];
+        }
+
+        public void FeatureSelected(int shapeIndex, bool value)
+        {
+            _shapefile.ShapeSelected[shapeIndex] = value;
+        }
+
+        public int NumFeatures
+        {
+            get { return _shapefile.NumShapes; }
+        }
+
         public bool FixUpShapes(out IFeatureSet result)
         {
             Shapefile sf = null;

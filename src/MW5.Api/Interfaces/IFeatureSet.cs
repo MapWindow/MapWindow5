@@ -88,6 +88,11 @@ namespace MW5.Api.Interfaces
 
         IList<int> SelectedIndices { get; }
 
+        bool FeatureSelected(int shapeIndex);
+        void FeatureSelected(int shapeIndex, bool value);
+
+        int NumFeatures { get; }
+
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);

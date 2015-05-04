@@ -72,15 +72,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AxInterop.MapWinGIS">
-      <HintPath>..\..\MW5.Api\obj\x86\Debug\AxInterop.MapWinGIS.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Interop.MapWinGIS">
-      <HintPath>..\..\MW5.Api\obj\x86\Debug\Interop.MapWinGIS.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -124,7 +115,6 @@
     <Compile Include="Views\Abstract\IDeleteFieldsView.cs" />
     <Compile Include="Views\Abstract\IRenameFieldView.cs" />
     <Compile Include="Views\Abstract\ITableEditorView.cs" />
-    <Compile Include="Legacy\AppContextWrapper.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Editor\RowInfo.cs" />
     <Compile Include="Editor\RowManager.cs" />
@@ -153,93 +143,6 @@
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuListener.cs" />
-    <Compile Include="Legacy\ShapeData.cs" />
-    <Compile Include="Legacy\ShapefileWrapper.cs" />
-    <Compile Include="Forms\DeleteFieldForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\DeleteFieldForm.Designer.cs">
-      <DependentUpon>DeleteFieldForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\FieldCalculatorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\FieldCalculatorForm.Designer.cs">
-      <DependentUpon>FieldCalculatorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\HelpForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\HelpForm.Designer.cs">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\JoinExcelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\JoinExcelForm.Designer.cs">
-      <DependentUpon>JoinExcelForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ImportExtDataForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ImportExtDataForm.Designer.cs">
-      <DependentUpon>ImportExtDataForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\JoinManagerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\JoinManagerForm.Designer.cs">
-      <DependentUpon>JoinManagerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\JoinNativeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\JoinNativeForm.Designer.cs">
-      <DependentUpon>JoinNativeForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\NewFieldForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\NewFieldForm.Designer.cs">
-      <DependentUpon>NewFieldForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\QueryBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\QueryBuilderForm.Designer.cs">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\RenameFieldForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\RenameFieldForm.Designer.cs">
-      <DependentUpon>RenameFieldForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TableEditorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TableEditorForm.Designer.cs">
-      <DependentUpon>TableEditorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\TextCalculatorForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\TextCalculatorForm.Designer.cs">
-      <DependentUpon>TextCalculatorForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\UpdateMeasurementsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\UpdateMeasurementsForm.Designer.cs">
-      <DependentUpon>UpdateMeasurementsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\UpdateSelectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\UpdateSelectionForm.Designer.cs">
-      <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Legacy\Main.cs" />
     <Compile Include="Views\TableEditorPresenter.cs" />
     <Compile Include="ProjectListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -266,47 +169,6 @@
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\DeleteFieldForm.resx">
-      <DependentUpon>DeleteFieldForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\FieldCalculatorForm.resx">
-      <DependentUpon>FieldCalculatorForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\HelpForm.resx">
-      <DependentUpon>HelpForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\JoinExcelForm.resx">
-      <DependentUpon>JoinExcelForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ImportExtDataForm.resx">
-      <DependentUpon>ImportExtDataForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\JoinManagerForm.resx">
-      <DependentUpon>JoinManagerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\JoinNativeForm.resx">
-      <DependentUpon>JoinNativeForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\NewFieldForm.resx">
-      <DependentUpon>NewFieldForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\QueryBuilderForm.resx">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\RenameFieldForm.resx">
-      <DependentUpon>RenameFieldForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TableEditorForm.resx">
-      <DependentUpon>TableEditorForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\CalculateFieldView.resx">
       <DependentUpon>CalculateFieldView.cs</DependentUpon>
     </EmbeddedResource>
@@ -318,18 +180,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TableEditorView.resx">
       <DependentUpon>TableEditorView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\TextCalculatorForm.resx">
-      <DependentUpon>TextCalculatorForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateMeasurementsForm.resx">
-      <DependentUpon>UpdateMeasurementsForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateSelectionForm.resx">
-      <DependentUpon>UpdateSelectionForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -386,6 +236,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_layer_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\" />
+    <Folder Include="Legacy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

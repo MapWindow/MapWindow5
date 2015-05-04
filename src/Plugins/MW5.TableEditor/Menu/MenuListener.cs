@@ -1,12 +1,9 @@
 ﻿using System;
-using MapWinGIS;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.TableEditor.BO;
 using MW5.Plugins.TableEditor.Editor;
-using MW5.Plugins.TableEditor.Forms;
 using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Views;
 using MW5.UI.Menu;

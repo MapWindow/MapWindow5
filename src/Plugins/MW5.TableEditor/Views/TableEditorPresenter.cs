@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using MapWinGIS;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -14,7 +13,7 @@ namespace MW5.Plugins.TableEditor.Views
     {
         private readonly IAppContext _context;
         private readonly RowManager _rowManager;
-        private Shapefile _shapefile;
+        private IFeatureSet _shapefile;
 
         public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager) 
             : base(view)
@@ -75,8 +74,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override void Initialize()
         {
-            var sf = Model.FeatureSet.InternalObject as Shapefile;
-            _shapefile = sf;
+            _shapefile = Model.FeatureSet;
         }
 
         public override void RunCommand(TableEditorCommand command)
@@ -94,16 +92,16 @@ namespace MW5.Plugins.TableEditor.Views
             switch (command)
             {
                 case TableEditorCommand.StartEdit:
-                    if (!_shapefile.Table.EditingTable)
+                    if (!_shapefile.Table.EditMode)
                     {
-                        _shapefile.Table.StartEditingTable();
+                        _shapefile.Table.StartEditing();
                     }
                     View.UpdateView();
                     break;
                 case TableEditorCommand.SaveChanges:
-                    if (_shapefile.Table.EditingTable)
+                    if (_shapefile.Table.EditMode)
                     {
-                        _shapefile.Table.StopEditingTable();
+                        _shapefile.Table.StopEditing();
                     }
                     View.UpdateView();
                     break;
@@ -175,7 +173,7 @@ namespace MW5.Plugins.TableEditor.Views
                     return true;
 
                 case TableEditorCommand.ClearSelection:
-                    _shapefile.SelectNone();
+                    _shapefile.ClearSelection();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();

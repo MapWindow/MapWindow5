@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
@@ -15,8 +15,6 @@ namespace MW5.Plugins.TableEditor.Editor
         private int[] _filterMap;           // row index -> real index
         private bool[] _filterMask;         // in real indices
         private bool _filtered;
-
-        
 
         public int SortColumnIndex
         {
@@ -52,14 +50,14 @@ namespace MW5.Plugins.TableEditor.Editor
             return _sortingMap[rowIndex];
         }
 
-        public void Reset(Shapefile sf)
+        public void Reset(IFeatureSet sf)
         {
             ClearSorting(sf);
 
             ClearFilter();
         }
 
-        private void ClearSorting(Shapefile sf)
+        private void ClearSorting(IFeatureSet sf)
         {
             int numRows = sf.Table.NumRows;
             _sortingMap = new int[sf.Table.NumRows];
@@ -79,17 +77,17 @@ namespace MW5.Plugins.TableEditor.Editor
             _filterMap = new int[0];
         }
 
-        public void FilterSelected(Shapefile sf)
+        public void FilterSelected(IFeatureSet sf)
         {
-            int numShapes = sf.NumShapes;
+            int numShapes = sf.Features.Count;
             _filterMap = new int[sf.NumSelected];
-            _filterMask = new bool[sf.NumShapes];
+            _filterMask = new bool[numShapes];
             int count = 0;
 
             for (int i = 0; i < numShapes; i++)
             {
                 int realIndex = _sortingMap[i];
-                bool selected = sf.ShapeSelected[realIndex];
+                bool selected = sf.FeatureSelected(realIndex);
                 if (selected)
                 {
                     _filterMap[count] = realIndex;

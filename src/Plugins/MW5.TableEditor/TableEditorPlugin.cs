@@ -1,22 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
-using MW5.Plugins.TableEditor.BO;
-using MW5.Plugins.TableEditor.Forms;
-using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Menu;
-using MW5.Shared;
-using MW5.UI.Forms;
-using MW5.UI.Helpers;
-
 
 namespace MW5.Plugins.TableEditor
 {

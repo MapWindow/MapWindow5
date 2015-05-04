@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using MapWinGIS;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
     internal class TableEditorGrid: VirtualGrid
     {
-        private Shapefile _shapefile;
-        private Table _table;
+        private IFeatureSet _shapefile;
+        private IAttributeTable _table;
 
         public TableEditorGrid()
         {
@@ -20,7 +22,7 @@ namespace MW5.Plugins.TableEditor.Editor
         }
 
         [Browsable(false)]
-        public Shapefile TableSource
+        public IFeatureSet TableSource
         {
             get { return _shapefile; }
             set
@@ -42,18 +44,17 @@ namespace MW5.Plugins.TableEditor.Editor
             }
         }
 
-        protected override Shapefile Shapefile
+        protected override IFeatureSet FeatureSet
         {
             get { return _shapefile; }
         }
 
-        private void InitColumns(Table table)
+        private void InitColumns(IAttributeTable table)
         {
             Columns.Clear();
 
-            for (int i = 0; i < table.NumFields; i++)
+            foreach(var fld in table.Fields)
             {
-                var fld = table.Field[i];
                 var cmn = new DataGridViewTextBoxColumn
                 {
                     HeaderText = fld.Name,
@@ -72,7 +73,7 @@ namespace MW5.Plugins.TableEditor.Editor
         private void GridCellValueNeeded(object sender, DataGridViewCellValueEventArgs e)
         {
             int realIndex = RowManager.RealIndex(e.RowIndex);
-            e.Value = _table.CellValue[e.ColumnIndex, realIndex];
+            e.Value = _table.CellValue(e.ColumnIndex, realIndex);
         }
 
         private void SetSortGlyph(int cmnIndex, bool ascending)
@@ -105,16 +106,16 @@ namespace MW5.Plugins.TableEditor.Editor
                 ascending = !RowManager.SortAscending;
             }
 
-            var fld = _table.Field[e.ColumnIndex];
+            var fld = _table.Fields[e.ColumnIndex];
             switch (fld.Type)
             {
-                case FieldType.STRING_FIELD:
+                case AttributeType.String:
                     SortByColumn<string>(e.ColumnIndex, ascending);
                     break;
-                case FieldType.INTEGER_FIELD:
+                case AttributeType.Integer:
                     SortByColumn<int>(e.ColumnIndex, ascending);
                     break;
-                case FieldType.DOUBLE_FIELD:
+                case AttributeType.Double:
                     SortByColumn<double>(e.ColumnIndex, ascending);
                     break;
             }
@@ -133,7 +134,7 @@ namespace MW5.Plugins.TableEditor.Editor
 
             for (int i = 0; i < _table.NumRows; i++)
             {
-                var val = _table.CellValue[cmnIndex, i];
+                var val = _table.CellValue(cmnIndex, i);
                 if (isString && val == null)
                 {
                     val = defValue;

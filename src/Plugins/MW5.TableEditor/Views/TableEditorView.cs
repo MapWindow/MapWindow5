@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using MapWinGIS;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
@@ -32,7 +31,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public void Initialize()
         {
-            SetDatasource(Model.FeatureSet.InternalObject as Shapefile);
+            SetDatasource(Model.FeatureSet);
         }
 
         public override Mvp.ViewStyle Style
@@ -70,7 +69,7 @@ namespace MW5.Plugins.TableEditor.Views
             SetDatasource(_grid.TableSource);
         }
 
-        public void SetDatasource(Shapefile sf)
+        public void SetDatasource(IFeatureSet sf)
         {
             _grid.TableSource = sf;
 
@@ -107,7 +106,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         private void UpdateSelectedCount()
         {
-            string msg = string.Format("{0} of {1} selected", _grid.TableSource.NumSelected, _grid.TableSource.NumShapes);
+            string msg = string.Format("{0} of {1} selected", _grid.TableSource.NumSelected, _grid.TableSource.NumFeatures);
             _lblAmountSelected.Text = msg;
         }
 

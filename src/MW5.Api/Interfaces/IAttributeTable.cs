@@ -10,7 +10,7 @@ namespace MW5.Api.Interfaces
 
         bool EditMode { get; }
         bool StartEditing();
-        bool StopEditing(bool applyChanges);
+        bool StopEditing(bool applyChanges = true);
 
         int NumRows { get; }
         bool EditCellValue(int fieldIndex, int rowIndex, object newVal);

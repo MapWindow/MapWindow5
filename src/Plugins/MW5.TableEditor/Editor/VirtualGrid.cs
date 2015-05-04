@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
@@ -32,7 +32,7 @@ namespace MW5.Plugins.TableEditor.Editor
             CellPainting += VirtualGrid_CellPainting;
         }
         
-        protected abstract Shapefile Shapefile { get; }
+        protected abstract IFeatureSet FeatureSet { get; }
 
         public Color SelectionColor
         {
@@ -58,7 +58,7 @@ namespace MW5.Plugins.TableEditor.Editor
 
             int realIndex = _rowManager.RealIndex(e.RowIndex);
 
-            if (Shapefile.ShapeSelected[realIndex])
+            if (FeatureSet.FeatureSelected(realIndex))
             {
                 e.PaintParts &= ~DataGridViewPaintParts.Background;
                 e.PaintHeader(false);
@@ -70,7 +70,7 @@ namespace MW5.Plugins.TableEditor.Editor
         {
             int realIndex = _rowManager.RealIndex(e.RowIndex);
 
-            if (Shapefile.ShapeSelected[realIndex])
+            if (FeatureSet.FeatureSelected(realIndex))
             {
                 var r = new Rectangle(e.RowBounds.Left, e.RowBounds.Top, RowHeadersWidth, e.RowBounds.Height);
                 var brush = new SolidBrush(Color.FromArgb(64, _selectionColor));
@@ -116,17 +116,17 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private void OnRowHeaderClicked(int rowIndex, Keys keys)
         {
-            var sf = Shapefile;
+            var sf = FeatureSet;
 
             if (keys != Keys.Shift && keys != Keys.Control)
             {
-                sf.SelectNone();
+                sf.ClearSelection();
             }
 
             if (keys == Keys.Shift && _lastIndex != -1)
             {
                 int realIndex = RowManager.RealIndex(_lastIndex);
-                bool state = sf.ShapeSelected[realIndex];
+                bool state = sf.FeatureSelected(realIndex);
 
                 int min = Math.Min(_lastIndex, rowIndex);
                 int max = Math.Max(_lastIndex, rowIndex);
@@ -134,13 +134,13 @@ namespace MW5.Plugins.TableEditor.Editor
                 for (int i = min; i <= max; i++)
                 {
                     realIndex = RowManager.RealIndex(i);
-                    sf.ShapeSelected[realIndex] = state;
+                    sf.FeatureSelected(realIndex, state);
                 }
             }
             else
             {
                 int realIndex = RowManager.RealIndex(rowIndex);
-                sf.ShapeSelected[realIndex] = !sf.ShapeSelected[realIndex];
+                sf.FeatureSelected(realIndex, !sf.FeatureSelected(realIndex));
             }
 
             _lastIndex = rowIndex;
