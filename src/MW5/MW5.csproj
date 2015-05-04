@@ -208,6 +208,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SetProjectionView.resx">
       <DependentUpon>SetProjectionView.cs</DependentUpon>

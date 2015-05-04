@@ -26,7 +26,15 @@ namespace MW5.Plugins.Symbology
         internal static SymbologyMetadata Metadata(int layerHandle)
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
-            return service.Get(layerHandle);
+            var data = service.Get(layerHandle);
+            if (data == null)
+            {
+                // if plugin was loaded after the layer
+                AttachMetadata(layerHandle);
+                data = service.Get(layerHandle);
+            }
+
+            return data;
         }
 
         internal static void AttachMetadata(int layerHandle)

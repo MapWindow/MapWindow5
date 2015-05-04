@@ -151,11 +151,19 @@ namespace MW5.UI.Docking
                 throw new NullReferenceException();
             }
 
-            _dockingManager.SetEnableDocking(control, true);
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ApplicationException("Dock panel must have a unique key.");
+            }
+
             if (_dict.ContainsKey(control))
             {
-                throw new ApplicationException("This control has been already added as a docking window");
+                throw new ApplicationException("This control has been already added as a docking window.");
             }
+
+            control.Name = key;     // to save / restore layout each dock panel must have a key
+
+            _dockingManager.SetEnableDocking(control, true);
 
             _dict.Add(control, new DockPanelInfo(identity, key));
 

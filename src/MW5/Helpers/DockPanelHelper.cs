@@ -10,6 +10,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Properties;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
+using MW5.Shared;
 using MW5.UI.Docking;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
@@ -44,7 +45,6 @@ namespace MW5.Helpers
         private static void InitLegend(ISerializableContext context)
         {
             var legendControl = context.GetDockPanelObject(DefaultDockPanel.Legend);
-
             var legend = context.DockPanels.Add(legendControl, DockPanelKeys.Legend, PluginIdentity.Default);
             legend.Caption = "Legend";
             legend.DockTo(null, DockPanelState.Left, PanelSize);
@@ -63,9 +63,9 @@ namespace MW5.Helpers
 
         private static void InitLocator(ISerializableContext context)
         {
-            var toolboControl = context.GetDockPanelObject(DefaultDockPanel.Locator);
+            var locatorControl = context.GetDockPanelObject(DefaultDockPanel.Locator);
 
-            var locator = context.DockPanels.Add(toolboControl, DockPanelKeys.Preview, PluginIdentity.Default);
+            var locator = context.DockPanels.Add(locatorControl, DockPanelKeys.Preview, PluginIdentity.Default);
             locator.Caption = "Locator";
             locator.SetIcon(Resources.ico_zoom_to_layer);
             locator.DockTo(context.DockPanels.Legend, DockPanelState.Bottom, PanelSize);
@@ -76,10 +76,18 @@ namespace MW5.Helpers
 
         public static void SaveLayout(this DockingManager dockingManager)
         {
-            //TODO: restore; it requires unique names for all panels in order to work
-            //var sr = GetSerializer();
-            //dockingManager.SaveDockState(sr);
-            //sr.PersistNow();
+            var sr = GetSerializer();
+            dockingManager.SaveDockState(sr);
+            sr.PersistNow();
+        }
+
+        public static void RestoreLayout(this DockingManager dockingManager)
+        {
+            var sr = GetSerializer();
+            if (!dockingManager.LoadDockState(sr))
+            {
+                Logger.Current.Warn("Failed to restore the state of dock panels.");
+            }
         }
 
         private static AppStateSerializer GetSerializer()

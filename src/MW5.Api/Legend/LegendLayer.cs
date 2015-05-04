@@ -258,7 +258,12 @@ namespace MW5.Api.Legend
         /// </summary>
         public T GetCustomObject<T>(object key) where T : class, ILayerMetadataBase
         {
-            return _customObjects[key] as T;
+            if (_customObjects.ContainsKey(key))
+            {
+                return _customObjects[key] as T;
+            }
+
+            return default(T);
         }
 
         /// <summary>

@@ -69,7 +69,7 @@ namespace MW5.Plugins.DebugWindow.Menu
         /// The plugin.
         /// </param>
         /// <param name="debugWindow">
-        /// The sample dock wi
+        /// The sample dock window
         /// </param>
         public MenuListener(IAppContext context, DebugWindowPlugin plugin, DebugWindow debugWindow)
         {
@@ -117,6 +117,7 @@ namespace MW5.Plugins.DebugWindow.Menu
             }
 
             panels.Lock();
+
             var panel = panels.Add(_debugWindow, DOCKPANELKEY, _plugin.Identity);
             panel.Caption = "Debug window";
             panel.SetIcon(Resources.ico_bug);

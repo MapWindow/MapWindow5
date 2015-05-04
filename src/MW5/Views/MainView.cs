@@ -33,8 +33,6 @@ namespace MW5.Views
 
             ToolTipHelper.Init(superToolTip1);
 
-            FormClosed += (s, e) => _dockingManager1.SaveLayout();
-
             FormClosing += MainView_FormClosing;
 
             // setting bar item text before form is shown results in creation of duplicated bar item;
@@ -52,6 +50,10 @@ namespace MW5.Views
             if (!FireViewClosing())
             {
                 e.Cancel = true;
+            }
+            else
+            {
+                _dockingManager1.SaveLayout();
             }
         }
 
@@ -86,6 +88,8 @@ namespace MW5.Views
 
         public override void ShowView(IWin32Window parent = null)
         {
+            _dockingManager1.RestoreLayout();
+
             Application.Run(this);
         }
 
@@ -112,11 +116,6 @@ namespace MW5.Views
         public ButtonBase OkButton
         {
             get { return null; }
-        }
-
-        public void Initialize(object param)
-        {
-            
         }
 
         #endregion
