@@ -37,8 +37,6 @@ namespace MW5.Plugins.Symbology.Views
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
@@ -720,28 +718,11 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(515, 441);
             this.rasterInfoTreeView1.BorderColor = System.Drawing.Color.Silver;
             this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            treeColumnAdv1.Highlighted = false;
-            treeColumnAdv1.Text = "Name";
-            treeColumnAdv1.Width = 260;
-            treeColumnAdv2.Highlighted = false;
-            treeColumnAdv2.Text = "Value";
-            treeColumnAdv2.Width = 200;
-            this.rasterInfoTreeView1.Columns.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv[] {
-            treeColumnAdv1,
-            treeColumnAdv2});
             this.rasterInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
             this.rasterInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rasterInfoTreeView1.FullRowSelect = true;
-            this.rasterInfoTreeView1.GutterSpace = 12;
             // 
             // 
             // 
-            this.rasterInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rasterInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.rasterInfoTreeView1.HelpTextControl.Name = "m_helpText";
-            this.rasterInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
-            this.rasterInfoTreeView1.HelpTextControl.TabIndex = 0;
-            this.rasterInfoTreeView1.HelpTextControl.Text = "help text";
             this.rasterInfoTreeView1.HideSelection = false;
             this.rasterInfoTreeView1.Location = new System.Drawing.Point(0, 0);
             this.rasterInfoTreeView1.Margin = new System.Windows.Forms.Padding(5);
@@ -754,16 +735,6 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.TabIndex = 0;
             this.rasterInfoTreeView1.Text = "rasterInfoTreeView1";
             this.rasterInfoTreeView1.ThemesEnabled = false;
-            // 
-            // 
-            // 
-            this.rasterInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
-            this.rasterInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.rasterInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.rasterInfoTreeView1.ToolTipControl.Name = "m_toolTip";
-            this.rasterInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
-            this.rasterInfoTreeView1.ToolTipControl.TabIndex = 1;
-            this.rasterInfoTreeView1.ToolTipControl.Text = "toolTip";
             // 
             // tabPageAdv6
             // 

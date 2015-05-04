@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    internal class NodeData
+    public class NodeData
     {
         private List<NodeData> _subItems;
 

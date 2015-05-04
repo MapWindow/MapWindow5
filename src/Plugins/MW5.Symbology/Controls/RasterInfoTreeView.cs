@@ -16,24 +16,12 @@ using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public partial class RasterInfoTreeView : MultiColumnTreeView
+    public partial class RasterInfoTreeView : InfoTreeViewBase
     {
         public RasterInfoTreeView()
         {
             InitializeComponent();
 
-            this.ToolTipControl.Popup += ToolTipControl_Popup;
-            this.ToolTipControl.BeforePopup += ToolTipControl_BeforePopup;
-        }
-
-        void ToolTipControl_BeforePopup(object sender, CancelEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        void ToolTipControl_Popup(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public void Initialize(IRasterSource raster)
@@ -69,26 +57,6 @@ namespace MW5.Plugins.Symbology.Controls
             AddBounds(root, raster);
 
             return root;
-        }
-
-        private TreeNodeAdv AddSubItems(TreeNodeAdvCollection nodes, NodeData data)
-        {
-            var node = GetNode(data);
-            nodes.Add(node);
-
-            foreach (var item in data.SubItems)
-            {
-                AddSubItems(node.Nodes, item);
-            }
-
-            return node;
-        }
-
-        private TreeNodeAdv GetNode(NodeData data)
-        {
-            var node = new TreeNodeAdv(data.Name);
-            node.SubItems.Add(new TreeNodeAdvSubItem(data.Value));
-            return node;
         }
 
         private NodeData GetDriverInfo(IRasterSource raster)

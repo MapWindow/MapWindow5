@@ -5,7 +5,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    internal partial class NumericUpDownEx : NumericUpDownExt
+    internal partial class NumericUpDownEx : NumericUpDown
     {
         /// <summary>
         /// Creates new instance of the NumericUpDownExt class

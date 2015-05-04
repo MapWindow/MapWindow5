@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.UI.Style
 {
@@ -124,12 +125,28 @@ namespace MW5.UI.Style
 #endif
             }
 
+            var multiTreeView = control as MultiColumnTreeView;
+            if (multiTreeView != null)
+            {
+                multiTreeView.Style = MultiColumnVisualStyle.Metro;
+            }
+
             var trackBar = control as TrackBarEx;
             if (trackBar != null)
             {
                 trackBar.Style = TrackBarEx.Theme.Metro;
                 trackBar.ChannelHeight = 6;
                 trackBar.ForeColor = Color.DimGray;
+            }
+
+            var upDown = control as NumericUpDownExt;
+            if (upDown != null)
+            {
+#if STYLE2010
+                upDown.VisualStyle = VisualStyle.VS2010;
+#else
+                upDown.VisualStyle = VisualStyle.Metro;
+#endif
             }
 
             ApplyTabStyle(control);

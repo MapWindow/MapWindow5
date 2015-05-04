@@ -366,7 +366,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             // general tab
             toolTip1.SetToolTip(txtLayerName, "The name of layer. \nEditable. Can be different from the name of the source file");
-            toolTip1.SetToolTip(txtLayerSource, "Source file information. Can be copied and pasted");
             toolTip1.SetToolTip(chkLayerVisible, "Toggles the visibility of the layer");
             toolTip1.SetToolTip(btnOk, "Closes the window. Saves the settings.");
 
@@ -395,14 +394,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // TODO: should be written for the rest tabs
         }
         #endregion
-
-        /// <summary>
-        /// Reverts the changes and closes the form
-        /// </summary>
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         /// <summary>
         /// Cancels the changes made by user
@@ -529,11 +520,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // default options
             var options = _featureSet.Style;
 
-            groupPoint.Top = groupFill.Top;
-            groupPoint.Left = groupFill.Left;
-
-            groupLine.Top = groupFill.Top;
-            groupLine.Left = groupFill.Left;
+            ControlHelper.MakeSameSize(groupFill, groupPoint);
+            ControlHelper.MakeSameSize(groupFill, groupLine);
 
             groupFill.Visible = false;
             groupLine.Visible = false;
@@ -1320,11 +1308,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             txtLayerName.Text = _layer.Name;
 
-            txtLayerSource.Text = GetLayerDescription();
-
             txtDatasourceName.Text = _layer.Filename;
 
             txtProjection.Text = _layer.Projection.Name;
+
+            txtComments.Text = _layer.Description;
 
             dynamicVisibilityControl1.Initialize(_layer, _context.Map.CurrentZoom, _context.Map.CurrentScale);
             dynamicVisibilityControl1.ValueChanged += (s, e) =>
@@ -1333,51 +1321,15 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             };
 
             PopulateBriefInfo();
+
+            vectorInfoTreeView1.Initialize(_layer);
         }
 
         private void PopulateBriefInfo()
         {
             int numFeatures = _featureSet.Features.Count;
-            var type = EnumHelper.EnumToString(_featureSet.GeometryType).ToLower();
+            var type = _featureSet.GeometryType.EnumToString().ToLower();
             txtBriefInfo.Text = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
-        }
-
-        private string GetLayerDescription()
-        {
-            string s = "";
-
-            var map = _context.Map;
-            txtComments.Text = _layer.Description;
-
-            var ext = _featureSet.Envelope;
-            //string units = Globals.get_MapUnits();
-            string units = "";
-            string type = _featureSet.GeometryType.ToString();
-
-            var ogr = _layer.VectorSource;
-            if (ogr != null)
-            {
-                s += "Datasource type: OGR layer" + Environment.NewLine;
-                s += "Driver name: " + ogr.DriverName + Environment.NewLine;
-                s += "Connection string: " + ogr.ConnectionString + Environment.NewLine;
-                s += "Layer type: " + ogr.SourceType.ToString() + Environment.NewLine;
-                s += "Name or query: " + ogr.SourceQuery + Environment.NewLine;
-                s += "Support editing: " + ogr.get_SupportsEditing(SaveType.SaveAll) + Environment.NewLine;
-                s += "Dynamic loading: " + ogr.DynamicLoading + "\n";
-            }
-            else
-            {
-                s += "Datasource type: ESRI Shapefile" + Environment.NewLine;
-            }
-
-            s += "Type: " + type + Environment.NewLine +
-                        "Number of shapes: " + _featureSet.Features.Count + Environment.NewLine +
-                        "Selected: " + _featureSet.NumSelected + Environment.NewLine +
-                        "Source: " + _featureSet.Filename + Environment.NewLine +
-                        "Bounds X: " + String.Format("{0:F2}", ext.MaxX) + " to " + String.Format("{0:F2}", ext.MaxX) + units + Environment.NewLine +
-                        "Bounds Y: " + String.Format("{0:F2}", ext.MinY) + " to " + String.Format("{0:F2}", ext.MaxY) + units + Environment.NewLine +
-                        "Projection: " + _featureSet.Projection.ExportToProj4();
-            return s;
         }
 
         /// <summary>

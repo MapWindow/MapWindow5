@@ -13,6 +13,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Properties;
+using MW5.Shared;
 using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -41,8 +42,8 @@ namespace MW5.Plugins.Symbology.Controls
 
             InitZooms();
 
-            MakeSameSize(cboMinScale, cboMinZoom);
-            MakeSameSize(cboMaxScale, cboMaxZoom);
+            ControlHelper.MakeSameSize(cboMinScale, cboMinZoom);
+            ControlHelper.MakeSameSize(cboMaxScale, cboMaxZoom);
         }
 
         public void Initialize(IDynamicVisibilityTarget target, int currentZoom, double currentScale)
@@ -227,14 +228,6 @@ namespace MW5.Plugins.Symbology.Controls
             }
 
             pictureBox1.Image = visible ? Resources.img_show24 : Resources.img_hide24;
-        }
-
-        private void MakeSameSize(Control source, Control target)
-        {
-            target.Left = source.Left;
-            target.Top = source.Top;
-            target.Width = source.Width;
-            target.Dock = source.Dock;
         }
 
         private void chkDynamicVisibility_CheckedChanged(object sender, EventArgs e)

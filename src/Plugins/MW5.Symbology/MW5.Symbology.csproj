@@ -128,6 +128,9 @@
     <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\InfoTreeViewBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OverviewScale.cs" />
     <Compile Include="Controls\OverviewGrid.cs">
       <SubType>UserControl</SubType>
@@ -157,6 +160,9 @@
       <DependentUpon>RasterInfoTreeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\NodeData.cs" />
+    <Compile Include="Controls\VectorInfoTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />

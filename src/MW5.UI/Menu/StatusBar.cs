@@ -8,6 +8,7 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Menu
@@ -152,6 +153,13 @@ namespace MW5.UI.Menu
             }
 
             _progressMessage.Text = message;
+
+            if (percent > _progressBar.Maximum || percent < _progressBar.Minimum)
+            {
+                Logger.Current.Warn("Invalid progress value: {0}; Message: {1}", null, percent, message);
+                return;
+            }
+
             _progressBar.Value = percent;
             if (!_progressMessage.Visible)
             {

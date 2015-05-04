@@ -39,8 +39,16 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv3 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv4 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv5 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv6 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -64,11 +72,15 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.txtLayerName = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.txtLayerSource = new System.Windows.Forms.RichTextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.transpMain = new MW5.Plugins.Symbology.Controls.TransparencyControl();
+            this.groupPoint = new System.Windows.Forms.GroupBox();
+            this.udDefaultSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.label9 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.clpPointFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
             this.groupFill = new System.Windows.Forms.GroupBox();
             this.icbFillStyle = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
             this.clpPolygonFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
@@ -81,6 +93,13 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnDefaultChange = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.groupLine = new System.Windows.Forms.GroupBox();
+            this.icbLineWidth = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.label16 = new System.Windows.Forms.Label();
+            this.panelLineOptions = new System.Windows.Forms.Panel();
+            this.lblMultilinePattern = new System.Windows.Forms.Label();
+            this.clpDefaultOutline = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.label21 = new System.Windows.Forms.Label();
             this.tabCategories = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.dgvCategories = new MW5.Plugins.Symbology.Controls.CategoriesGrid();
@@ -164,18 +183,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboMaxScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboMinScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.groupLine = new System.Windows.Forms.GroupBox();
-            this.lblMultilinePattern = new System.Windows.Forms.Label();
-            this.panelLineOptions = new System.Windows.Forms.Panel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.icbLineWidth = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
-            this.clpDefaultOutline = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
-            this.label21 = new System.Windows.Forms.Label();
-            this.groupPoint = new System.Windows.Forms.GroupBox();
-            this.udDefaultSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.label4 = new System.Windows.Forms.Label();
-            this.clpPointFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
-            this.label9 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.txtComments = new System.Windows.Forms.RichTextBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
@@ -191,12 +198,17 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).BeginInit();
             this.tabDefault.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupPoint.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).BeginInit();
             this.groupFill.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupLine.SuspendLayout();
+            this.panelLineOptions.SuspendLayout();
             this.tabCategories.SuspendLayout();
             this.groupBox12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
@@ -231,10 +243,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
-            this.groupLine.SuspendLayout();
-            this.panelLineOptions.SuspendLayout();
-            this.groupPoint.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).BeginInit();
             this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -264,7 +272,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // tabControl1
             // 
@@ -339,7 +346,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // txtBriefInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(364, 20);
             this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtBriefInfo.Location = new System.Drawing.Point(130, 155);
             this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -372,7 +379,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // txtProjection
             // 
-            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(364, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProjection.Location = new System.Drawing.Point(130, 114);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -393,7 +400,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // txtDatasourceName
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(364, 20);
             this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtDatasourceName.Location = new System.Drawing.Point(130, 73);
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -426,12 +433,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this.axMap1.CurrentScale = 26.689620483345568D;
+            this.axMap1.CurrentScale = 146.12306998412413D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
             this.axMap1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
             this.axMap1.GrabProjectionFromData = true;
             this.axMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -507,11 +513,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             // tabInfo
             // 
-            this.tabInfo.Controls.Add(this.txtLayerSource);
-            this.tabInfo.Controls.Add(this.label13);
-            this.tabInfo.Image = null;
-            this.tabInfo.ImageIndex = 1;
-            this.tabInfo.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabInfo.Controls.Add(this.vectorInfoTreeView1);
+            this.tabInfo.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
+            this.tabInfo.ImageSize = new System.Drawing.Size(24, 24);
             this.tabInfo.Location = new System.Drawing.Point(119, 0);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.ShowCloseButton = true;
@@ -520,33 +524,54 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
             // 
-            // txtLayerSource
+            // vectorInfoTreeView1
             // 
-            this.txtLayerSource.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLayerSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtLayerSource.Location = new System.Drawing.Point(18, 36);
-            this.txtLayerSource.Name = "txtLayerSource";
-            this.txtLayerSource.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.txtLayerSource.Size = new System.Drawing.Size(486, 372);
-            this.txtLayerSource.TabIndex = 1;
-            this.txtLayerSource.Text = "";
+            this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
+            this.vectorInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
+            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
+            this.vectorInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vectorInfoTreeView1.FullRowSelect = true;
+            this.vectorInfoTreeView1.GutterSpace = 12;
             // 
-            // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(15, 20);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(110, 13);
-            this.label13.TabIndex = 2;
-            this.label13.Text = "Additional information:";
+            // 
+            this.vectorInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.vectorInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.HelpTextControl.Name = "m_helpText";
+            this.vectorInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
+            this.vectorInfoTreeView1.HelpTextControl.TabIndex = 0;
+            this.vectorInfoTreeView1.HelpTextControl.Text = "help text";
+            this.vectorInfoTreeView1.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.Name = "vectorInfoTreeView1";
+            this.vectorInfoTreeView1.ShowColumnsHeader = false;
+            this.vectorInfoTreeView1.Size = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.TabIndex = 0;
+            this.vectorInfoTreeView1.Text = "vectorInfoTreeView1";
+            // 
+            // 
+            // 
+            this.vectorInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
+            this.vectorInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.vectorInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.ToolTipControl.Name = "m_toolTip";
+            this.vectorInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
+            this.vectorInfoTreeView1.ToolTipControl.TabIndex = 1;
+            this.vectorInfoTreeView1.ToolTipControl.Text = "toolTip";
             // 
             // tabDefault
             // 
             this.tabDefault.Controls.Add(this.groupBox3);
+            this.tabDefault.Controls.Add(this.groupPoint);
             this.tabDefault.Controls.Add(this.groupFill);
             this.tabDefault.Controls.Add(this.groupBox16);
             this.tabDefault.Controls.Add(this.groupBox5);
             this.tabDefault.Controls.Add(this.btnDefaultChange);
+            this.tabDefault.Controls.Add(this.groupLine);
             this.tabDefault.Image = null;
             this.tabDefault.ImageIndex = 5;
             this.tabDefault.ImageSize = new System.Drawing.Size(16, 16);
@@ -579,6 +604,62 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.transpMain.TabIndex = 177;
             this.transpMain.Value = ((byte)(255));
             this.transpMain.ValueChanged += new MW5.Plugins.Symbology.Controls.TransparencyControl.ValueChangedDeleg(this.transpMain_ValueChanged);
+            // 
+            // groupPoint
+            // 
+            this.groupPoint.Controls.Add(this.udDefaultSize);
+            this.groupPoint.Controls.Add(this.label9);
+            this.groupPoint.Controls.Add(this.label4);
+            this.groupPoint.Controls.Add(this.clpPointFill);
+            this.groupPoint.Location = new System.Drawing.Point(19, 321);
+            this.groupPoint.Name = "groupPoint";
+            this.groupPoint.Size = new System.Drawing.Size(240, 104);
+            this.groupPoint.TabIndex = 179;
+            this.groupPoint.TabStop = false;
+            this.groupPoint.Text = "Point";
+            // 
+            // udDefaultSize
+            // 
+            this.udDefaultSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.udDefaultSize.Location = new System.Drawing.Point(23, 69);
+            this.udDefaultSize.Name = "udDefaultSize";
+            this.udDefaultSize.Size = new System.Drawing.Size(52, 20);
+            this.udDefaultSize.TabIndex = 182;
+            this.udDefaultSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(107, 73);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(52, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Point size";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(107, 31);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(45, 13);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Fill color";
+            // 
+            // clpPointFill
+            // 
+            this.clpPointFill.Color = System.Drawing.Color.White;
+            this.clpPointFill.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpPointFill.DropDownHeight = 1;
+            this.clpPointFill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpPointFill.FormattingEnabled = true;
+            this.clpPointFill.IntegralHeight = false;
+            this.clpPointFill.Items.AddRange(new object[] {
+            "Color"});
+            this.clpPointFill.Location = new System.Drawing.Point(23, 28);
+            this.clpPointFill.Name = "clpPointFill";
+            this.clpPointFill.Size = new System.Drawing.Size(57, 21);
+            this.clpPointFill.TabIndex = 167;
+            this.clpPointFill.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // groupFill
             // 
@@ -726,6 +807,86 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnDefaultChange.UseVisualStyleBackColor = true;
             this.btnDefaultChange.Click += new System.EventHandler(this.btnDrawingOptions_Click);
             // 
+            // groupLine
+            // 
+            this.groupLine.Controls.Add(this.icbLineWidth);
+            this.groupLine.Controls.Add(this.label16);
+            this.groupLine.Controls.Add(this.panelLineOptions);
+            this.groupLine.Location = new System.Drawing.Point(265, 319);
+            this.groupLine.Name = "groupLine";
+            this.groupLine.Size = new System.Drawing.Size(240, 107);
+            this.groupLine.TabIndex = 178;
+            this.groupLine.TabStop = false;
+            this.groupLine.Text = "Outline";
+            // 
+            // icbLineWidth
+            // 
+            this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
+            this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
+            this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
+            this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.icbLineWidth.FormattingEnabled = true;
+            this.icbLineWidth.Location = new System.Drawing.Point(26, 75);
+            this.icbLineWidth.Name = "icbLineWidth";
+            this.icbLineWidth.OutlineColor = System.Drawing.Color.Black;
+            this.icbLineWidth.Size = new System.Drawing.Size(72, 21);
+            this.icbLineWidth.TabIndex = 4;
+            this.icbLineWidth.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(118, 78);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(55, 13);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "Line width";
+            // 
+            // panelLineOptions
+            // 
+            this.panelLineOptions.Controls.Add(this.lblMultilinePattern);
+            this.panelLineOptions.Controls.Add(this.clpDefaultOutline);
+            this.panelLineOptions.Controls.Add(this.label21);
+            this.panelLineOptions.Location = new System.Drawing.Point(19, 24);
+            this.panelLineOptions.Name = "panelLineOptions";
+            this.panelLineOptions.Size = new System.Drawing.Size(215, 34);
+            this.panelLineOptions.TabIndex = 177;
+            // 
+            // lblMultilinePattern
+            // 
+            this.lblMultilinePattern.AutoSize = true;
+            this.lblMultilinePattern.Location = new System.Drawing.Point(3, 9);
+            this.lblMultilinePattern.Name = "lblMultilinePattern";
+            this.lblMultilinePattern.Size = new System.Drawing.Size(202, 13);
+            this.lblMultilinePattern.TabIndex = 177;
+            this.lblMultilinePattern.Text = "       Multiline pattern: no options available";
+            // 
+            // clpDefaultOutline
+            // 
+            this.clpDefaultOutline.Color = System.Drawing.Color.White;
+            this.clpDefaultOutline.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpDefaultOutline.DropDownHeight = 1;
+            this.clpDefaultOutline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpDefaultOutline.FormattingEnabled = true;
+            this.clpDefaultOutline.IntegralHeight = false;
+            this.clpDefaultOutline.Items.AddRange(new object[] {
+            "Color"});
+            this.clpDefaultOutline.Location = new System.Drawing.Point(7, 6);
+            this.clpDefaultOutline.Name = "clpDefaultOutline";
+            this.clpDefaultOutline.Size = new System.Drawing.Size(57, 21);
+            this.clpDefaultOutline.TabIndex = 176;
+            this.clpDefaultOutline.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(75, 9);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(53, 13);
+            this.label21.TabIndex = 3;
+            this.label21.Text = "Line color";
+            // 
             // tabCategories
             // 
             this.tabCategories.Controls.Add(this.groupBox12);
@@ -737,9 +898,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.tabCategories.Controls.Add(this.btnCategoryRemove);
             this.tabCategories.Controls.Add(this.btnCategoryAppearance);
             this.tabCategories.Controls.Add(this.btnCategoryGenerate);
-            this.tabCategories.Image = null;
-            this.tabCategories.ImageIndex = 2;
-            this.tabCategories.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabCategories.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
+            this.tabCategories.ImageSize = new System.Drawing.Size(24, 24);
             this.tabCategories.Location = new System.Drawing.Point(119, 0);
             this.tabCategories.Name = "tabCategories";
             this.tabCategories.ShowCloseButton = true;
@@ -1729,142 +1889,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.cboMinScale.Size = new System.Drawing.Size(141, 21);
             this.cboMinScale.TabIndex = 3;
             // 
-            // groupLine
-            // 
-            this.groupLine.Controls.Add(this.lblMultilinePattern);
-            this.groupLine.Controls.Add(this.panelLineOptions);
-            this.groupLine.Location = new System.Drawing.Point(723, 170);
-            this.groupLine.Name = "groupLine";
-            this.groupLine.Size = new System.Drawing.Size(299, 74);
-            this.groupLine.TabIndex = 178;
-            this.groupLine.TabStop = false;
-            this.groupLine.Text = "Outline";
-            // 
-            // lblMultilinePattern
-            // 
-            this.lblMultilinePattern.AutoSize = true;
-            this.lblMultilinePattern.Location = new System.Drawing.Point(16, 33);
-            this.lblMultilinePattern.Name = "lblMultilinePattern";
-            this.lblMultilinePattern.Size = new System.Drawing.Size(202, 13);
-            this.lblMultilinePattern.TabIndex = 177;
-            this.lblMultilinePattern.Text = "       Multiline pattern: no options available";
-            // 
-            // panelLineOptions
-            // 
-            this.panelLineOptions.Controls.Add(this.label16);
-            this.panelLineOptions.Controls.Add(this.icbLineWidth);
-            this.panelLineOptions.Controls.Add(this.clpDefaultOutline);
-            this.panelLineOptions.Controls.Add(this.label21);
-            this.panelLineOptions.Location = new System.Drawing.Point(19, 24);
-            this.panelLineOptions.Name = "panelLineOptions";
-            this.panelLineOptions.Size = new System.Drawing.Size(282, 34);
-            this.panelLineOptions.TabIndex = 177;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(220, 9);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(55, 13);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "Line width";
-            // 
-            // icbLineWidth
-            // 
-            this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
-            this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
-            this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbLineWidth.FormattingEnabled = true;
-            this.icbLineWidth.Location = new System.Drawing.Point(142, 6);
-            this.icbLineWidth.Name = "icbLineWidth";
-            this.icbLineWidth.OutlineColor = System.Drawing.Color.Black;
-            this.icbLineWidth.Size = new System.Drawing.Size(72, 21);
-            this.icbLineWidth.TabIndex = 4;
-            this.icbLineWidth.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // clpDefaultOutline
-            // 
-            this.clpDefaultOutline.Color = System.Drawing.Color.White;
-            this.clpDefaultOutline.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpDefaultOutline.DropDownHeight = 1;
-            this.clpDefaultOutline.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpDefaultOutline.FormattingEnabled = true;
-            this.clpDefaultOutline.IntegralHeight = false;
-            this.clpDefaultOutline.Items.AddRange(new object[] {
-            "Color"});
-            this.clpDefaultOutline.Location = new System.Drawing.Point(7, 6);
-            this.clpDefaultOutline.Name = "clpDefaultOutline";
-            this.clpDefaultOutline.Size = new System.Drawing.Size(57, 21);
-            this.clpDefaultOutline.TabIndex = 176;
-            this.clpDefaultOutline.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(75, 9);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(53, 13);
-            this.label21.TabIndex = 3;
-            this.label21.Text = "Line color";
-            // 
-            // groupPoint
-            // 
-            this.groupPoint.Controls.Add(this.udDefaultSize);
-            this.groupPoint.Controls.Add(this.label4);
-            this.groupPoint.Controls.Add(this.clpPointFill);
-            this.groupPoint.Controls.Add(this.label9);
-            this.groupPoint.Location = new System.Drawing.Point(723, 260);
-            this.groupPoint.Name = "groupPoint";
-            this.groupPoint.Size = new System.Drawing.Size(299, 77);
-            this.groupPoint.TabIndex = 179;
-            this.groupPoint.TabStop = false;
-            this.groupPoint.Text = "Point";
-            // 
-            // udDefaultSize
-            // 
-            this.udDefaultSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.udDefaultSize.Location = new System.Drawing.Point(154, 29);
-            this.udDefaultSize.Name = "udDefaultSize";
-            this.udDefaultSize.Size = new System.Drawing.Size(52, 20);
-            this.udDefaultSize.TabIndex = 182;
-            this.udDefaultSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(89, 32);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(45, 13);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Fill color";
-            // 
-            // clpPointFill
-            // 
-            this.clpPointFill.Color = System.Drawing.Color.White;
-            this.clpPointFill.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpPointFill.DropDownHeight = 1;
-            this.clpPointFill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpPointFill.FormattingEnabled = true;
-            this.clpPointFill.IntegralHeight = false;
-            this.clpPointFill.Items.AddRange(new object[] {
-            "Color"});
-            this.clpPointFill.Location = new System.Drawing.Point(23, 28);
-            this.clpPointFill.Name = "clpPointFill";
-            this.clpPointFill.Size = new System.Drawing.Size(57, 21);
-            this.clpPointFill.TabIndex = 167;
-            this.clpPointFill.SelectedColorChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(212, 31);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(52, 13);
-            this.label9.TabIndex = 7;
-            this.label9.Text = "Point size";
-            // 
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this.txtComments);
@@ -1959,8 +1983,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.ClientSize = new System.Drawing.Size(660, 475);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupPoint);
-            this.Controls.Add(this.groupLine);
             this.Controls.Add(this.btnSaveChanges);
             this.Controls.Add(this.chkRedrawMap);
             this.Controls.Add(this.btnCancel);
@@ -1983,15 +2005,22 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.tabInfo.ResumeLayout(false);
-            this.tabInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).EndInit();
             this.tabDefault.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.groupPoint.ResumeLayout(false);
+            this.groupPoint.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).EndInit();
             this.groupFill.ResumeLayout(false);
             this.groupFill.PerformLayout();
             this.groupBox16.ResumeLayout(false);
             this.groupBox16.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupLine.ResumeLayout(false);
+            this.groupLine.PerformLayout();
+            this.panelLineOptions.ResumeLayout(false);
+            this.panelLineOptions.PerformLayout();
             this.tabCategories.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
@@ -2035,13 +2064,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
-            this.groupLine.ResumeLayout(false);
-            this.groupLine.PerformLayout();
-            this.panelLineOptions.ResumeLayout(false);
-            this.panelLineOptions.PerformLayout();
-            this.groupPoint.ResumeLayout(false);
-            this.groupPoint.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -2171,7 +2193,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private System.Windows.Forms.GroupBox groupBox13;
         private System.Windows.Forms.CheckBox chkEditMode;
         private TabPageAdv tabInfo;
-        private System.Windows.Forms.RichTextBox txtLayerSource;
         private System.Windows.Forms.ImageList imageList1;
         private TextBoxExt txtBriefInfo;
         private System.Windows.Forms.Label label2;
@@ -2183,10 +2204,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private ComboBoxAdv comboBoxAdv1;
         private ComboBoxAdv cboMaxScale;
         private ComboBoxAdv cboMinScale;
-        private System.Windows.Forms.Label label13;
         private DynamicVisibilityControl dynamicVisibilityControl1;
         private TabPageAdv tabFields;
         private AttributesControl attributesControl1;
         private System.Windows.Forms.Label label10;
+        private VectorInfoTreeView vectorInfoTreeView1;
     }
 }
