@@ -138,7 +138,7 @@ namespace MW5.UI.Menu
             }
 
             // clear the index
-            var keys = this.Select(item => item.UniqueKey).ToList();
+            var keys = this.Where(item => item.HasKey).Select(item => item.UniqueKey).ToList();
             foreach (var uniqueKey in keys)
             {
                 MenuIndex.Remove(uniqueKey);

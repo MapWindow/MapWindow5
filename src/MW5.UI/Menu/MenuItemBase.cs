@@ -10,6 +10,8 @@ namespace MW5.UI.Menu
 {
     internal abstract class MenuItemBase
     {
+        public abstract bool HasKey { get; }
+
         public string Key
         {
             get { return Metadata.Key; }
@@ -20,7 +22,6 @@ namespace MW5.UI.Menu
             get { return Metadata.Tag; }
             set { Metadata.Tag = value; }
         }
-
 
         public PluginIdentity PluginIdentity
         {

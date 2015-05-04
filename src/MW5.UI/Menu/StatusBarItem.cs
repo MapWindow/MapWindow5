@@ -75,6 +75,11 @@ namespace MW5.UI.Menu
             set { _item.Enabled = value; }
         }
 
+        public override bool HasKey
+        {
+            get { return _item.Tag is MenuItemMetadata; }
+        }
+
         protected override MenuItemMetadata Metadata
         {
             get

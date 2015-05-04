@@ -47,6 +47,11 @@ namespace MW5.Plugins.Interfaces
         string Key { get; }
 
         /// <summary>
+        /// Gets a value indicating whether this menu item has key.
+        /// </summary>
+        bool HasKey { get; }
+
+        /// <summary>
         /// Gets/Sets the visibility state of this item
         /// </summary>
         bool Visible { get; set; }

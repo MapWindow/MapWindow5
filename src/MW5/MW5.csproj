@@ -214,7 +214,7 @@
     </EmbeddedResource>
     <None Include="..\postbuild.bat">
       <Link>postbuild.bat</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

@@ -174,7 +174,7 @@ namespace MW5.Plugins
 
                 ValidatePlugins();
             }
-            catch (ReflectionTypeLoadException ex)
+            catch (Exception ex)
             {
                 Logger.Current.Error("Failed to initialize plugin manager", ex);
             }
