@@ -12,5 +12,6 @@
         Refresh = 7,
         AddConnection = 8,
         RemoveConnection = 9,
+        RemoveLayer = 10,
     }
 }

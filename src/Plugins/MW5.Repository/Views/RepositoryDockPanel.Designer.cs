@@ -50,6 +50,7 @@ namespace MW5.Plugins.Repository.Views
             this.mnuAddConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
+            this.mnuRemoveLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -105,10 +106,11 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRefresh,
             this.mnuOpenLocation,
             this.mnuAddConnection,
-            this.mnuRemoveConnection});
+            this.mnuRemoveConnection,
+            this.mnuRemoveLayer});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 246);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 268);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
@@ -211,6 +213,12 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1.ToolTipControl.Text = "toolTip";
             this.treeViewAdv1.ToolTipDuration = 3000;
             // 
+            // mnuRemoveLayer
+            // 
+            this.mnuRemoveLayer.Name = "mnuRemoveLayer";
+            this.mnuRemoveLayer.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveLayer.Text = "Remove layer";
+            // 
             // RepositoryDockPanel
             // 
             this.Controls.Add(this.treeViewAdv1);
@@ -243,5 +251,6 @@ namespace MW5.Plugins.Repository.Views
         private ToolStripMenuItem mnuOpenLocation;
         private ToolStripMenuItem mnuAddConnection;
         private ToolStripMenuItem mnuRemoveConnection;
+        private ToolStripMenuItem mnuRemoveLayer;
     }
 }

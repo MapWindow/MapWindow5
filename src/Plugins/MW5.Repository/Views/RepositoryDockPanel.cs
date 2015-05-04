@@ -113,12 +113,25 @@ namespace MW5.Plugins.Repository.Views
         private void SetDatabaseLayerContextMenu(IDatabaseLayerItem layer)
         {
             mnuAddToMap.Text = layer.AddedToMap ? "Remove from the map" : "Add to the map";
-            contextMenuStripEx1.Items.Add(mnuAddToMap);
+
+            contextMenuStripEx1.Items.AddRange(
+            new ToolStripItem[]
+                {
+                    mnuAddToMap, 
+                    new ToolStripSeparator(), 
+                    mnuRemoveLayer, 
+                });
         }
 
         private void SetDatabaseContextMenu()
         {
-            contextMenuStripEx1.Items.Add(mnuRemoveConnection);
+            contextMenuStripEx1.Items.AddRange(
+            new ToolStripItem[]
+                {
+                    mnuRemoveConnection, 
+                    new ToolStripSeparator(), 
+                    mnuRefresh, 
+                });
         }
 
         private void SetDatabaseRootContextMenu()

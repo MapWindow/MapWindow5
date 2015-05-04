@@ -10,5 +10,6 @@ namespace MW5.Data.Repository
         void Expand();
         void Refresh();
         bool Loaded { get; }
+        IRepositoryItem Parent { get; }
     }
 }

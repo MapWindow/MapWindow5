@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -73,7 +73,7 @@ namespace MW5.Plugins.Repository.Views
                     AddFolderToMap();
                     break;
                 case RepositoryCommand.Refresh:
-                    RefreshFolder();
+                    RefreshItem();
                     break;
                 case RepositoryCommand.AddConnection:
                     AddConnection();
@@ -81,6 +81,39 @@ namespace MW5.Plugins.Repository.Views
                 case RepositoryCommand.RemoveConnection:
                     RemoveConnection();
                     break;
+                case RepositoryCommand.RemoveLayer:
+                    RemoveDatabaseLayer();
+                    break;
+            }
+        }
+
+        private void RemoveDatabaseLayer()
+        {
+            var layer = GetSelectedItem<IDatabaseLayerItem>();
+            if (layer != null)
+            {
+                var db = layer.Parent as IDatabaseItem;
+                if (db != null)
+                {
+                    var ds = new VectorDatasource();
+                    if (ds.Open(db.Connection.ConnectionString))
+                    {
+                        int layerIndex = ds.LayerIndexByName(layer.Name);
+                        if (MessageService.Current.Ask("Do you want to remove database layer: " + layer.Name + "?"))
+                        {
+                            if (ds.DeleteLayer(layerIndex))
+                            {
+                                MessageService.Current.Info("Layer was removed: " + layer.Name);
+                            }
+                            else
+                            {
+                                MessageService.Current.Warn("Failed to remove layer.");
+                            }
+
+                            db.Refresh();
+                        }
+                    }
+                }
             }
         }
 
@@ -181,12 +214,12 @@ namespace MW5.Plugins.Repository.Views
             }
         }
 
-        private void RefreshFolder()
+        private void RefreshItem()
         {
-            var folder = GetSelectedItem<IFolderItem>();
-            if (folder != null)
+            var item = GetSelectedItem<IRepositoryItem>();
+            if (item is IFolderItem || item is IDatabaseItem)
             {
-                folder.Refresh();
+                item.Refresh();
             }
         }
 

@@ -10,8 +10,9 @@ namespace MW5.Data.Repository
     internal class FolderItem : MetadataItem<FolderItemMetadata>, IFolderItem
     {
         private const string VectorFormats = "shp|kml|dgn|dxf|gml|mif|tab";
-        private const string ImageFormats = "tif|png";
-        private const string GridFormats = "asc";
+        private const string ImageFormats = "tif|png|hdr.adf|asc|bt|bil|bmp|dem|ecw|img|gif|map|jp2|jpg|sid|pgm|pnm|png|ppm|vrt|tif|ntf";
+
+        private const string GridFormats = "sta.adf|bgd|asc|tif|cel0.ddf|arc|aux|pix|dem|dhm|dt0|img|dt1|bil|nc";
         private const string SearchRegex = @"$(?<=\.({0}))";
         
         private static readonly Regex VectorRegex = new Regex(GetSearchRegex(FormatType.Vector), RegexOptions.IgnoreCase);
