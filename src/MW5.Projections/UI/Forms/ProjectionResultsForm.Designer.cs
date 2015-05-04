@@ -84,7 +84,6 @@ namespace MW5.Projections.UI.Forms
             this.projectionMap1.ExtentHistory = 20;
             this.projectionMap1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this.projectionMap1.Extents = envelope1;
             spatialReference1.Tag = "";
             this.projectionMap1.Projection = spatialReference1;
             this.projectionMap1.GrabProjectionFromData = true;

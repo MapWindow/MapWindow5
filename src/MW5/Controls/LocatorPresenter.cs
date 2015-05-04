@@ -41,7 +41,7 @@ namespace MW5.Controls
         private void LocatorExtentsChanged(object sender, ExtentsEventArgs e)
         {
             _noEvents = true;
-            _mainMap.Extents = e.Extents;
+            _mainMap.ZoomToExtents(e.Extents);
             _noEvents = false;
         }
 

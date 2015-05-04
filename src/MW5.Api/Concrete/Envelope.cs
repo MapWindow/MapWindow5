@@ -160,5 +160,12 @@ namespace MW5.Api.Concrete
         {
             return new Envelope(MinX - dx/2, MaxX + dx/2, MinY - dy/2, MaxY + dy/2);
         }
+
+        public void Union(IEnvelope env)
+        {
+            if (env == null) return;
+
+            SetBounds(Math.Min(env.MinX, MinX), Math.Max(env.MaxX, MaxX), Math.Min(env.MinY, MinY), Math.Max(env.MaxY, MaxY));
+        }
     }
 }

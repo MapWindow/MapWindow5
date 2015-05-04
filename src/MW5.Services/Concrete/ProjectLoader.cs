@@ -87,7 +87,7 @@ namespace MW5.Services.Concrete
             var e = project.Map.Envelope;
             if (e != null)
             {
-                _context.Map.Extents = new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY);
+                _context.Map.ZoomToExtents(new Envelope(e.MinX, e.MaxX, e.MinY, e.MaxY));
             }
         }
 

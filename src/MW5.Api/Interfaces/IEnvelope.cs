@@ -21,5 +21,6 @@ namespace MW5.Api.Interfaces
         IEnvelope Adjust(double xyRatio);
         bool PointWithin(double x, double y);
         IEnvelope Inflate(double dx, double dy);
+        void Union(IEnvelope env);
     }
 }

@@ -34,6 +34,7 @@ namespace MW5.Api.Interfaces
         void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode);
 
         ISpatialReference Projection { get; }
+        IEnvelope Envelope { get; }
 
         #region Not implemented
 

@@ -369,7 +369,6 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this._projectionMap1.Extents = envelope1;
             this._projectionMap1.GrabProjectionFromData = true;
             this._projectionMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this._projectionMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;

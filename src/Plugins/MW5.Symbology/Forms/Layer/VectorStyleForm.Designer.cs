@@ -432,7 +432,6 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.axMap1.ExtentHistory = 20;
             this.axMap1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this.axMap1.Extents = envelope1;
             this.axMap1.GrabProjectionFromData = true;
             this.axMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;

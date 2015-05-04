@@ -28,6 +28,7 @@ namespace MW5
             container.RegisterSingleton<IMainView, MainView>()
                 .RegisterSingleton<IAppContext, AppContext>()
                 .RegisterView<ISetProjectionView, SetProjectionView>()
+                .RegisterView<ILegendGroupView, LegendGroupView>()
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterSingleton<IAppView, AppView>()
                 .RegisterInstance<IApplicationContainer>(container)

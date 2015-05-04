@@ -14,5 +14,10 @@ namespace MW5.Controls
         RemoveLayer = 3,
         OpenFileLocation = 4,
         Properties = 5,
+        GroupProperties = 6,
+        RemoveGroup = 7,
+        ZoomToGroup = 8,
+        AddGroup = 9,
+        AddLayer = 10,
     }
 }

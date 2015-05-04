@@ -161,7 +161,7 @@ namespace MW5.Projections.UI.Controls
                 ext.SetBounds(-180.0 - dx / 4.0, 180.0 + dx / 4.0, cs.Bottom - dy / 4.0, cs.Top + dy / 4.0);
             }
 
-            Extents = ext;
+            ZoomToExtents(ext);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace MW5.Projections.UI.Controls
                 double dy = sfExt.MaxY - sfExt.MinY;
                 var ext = new Envelope();
                 ext.SetBounds(sfExt.MinX - dx / 4.0,  sfExt.MaxM + dx / 4.0, sfExt.MinY - dy / 4.0, sfExt.MaxY + dy / 4.0);
-                Extents = ext;
+                ZoomToExtents(ext);
             }
         }
 

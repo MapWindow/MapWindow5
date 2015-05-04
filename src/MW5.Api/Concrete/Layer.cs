@@ -299,6 +299,15 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public IEnvelope Envelope
+        {
+            get
+            {
+                var box = _map.get_layerExtents(_layerHandle);
+                return box != null ? new Envelope(box) : null;
+            }
+        }
+
         #region Deprecated
 
         // bool get_ShapeLayerDrawFill(int layerHandle);

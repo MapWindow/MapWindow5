@@ -115,7 +115,6 @@ namespace MW5.Views
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this._mapControl1.Extents = envelope1;
             this._mapControl1.GrabProjectionFromData = true;
             this._mapControl1.InertiaOnPanning = AutoToggle.Auto;
             this._mapControl1.KnownExtents = KnownExtents.None;

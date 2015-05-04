@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.legendControl1 = new MW5.Api.Legend.LegendControl(this.components);
-            this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
+            this.contextMenuLayer = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
             this.mnuZoomToLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +40,16 @@
             this.mnuRemoveLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuProperties = new System.Windows.Forms.ToolStripMenuItem();
-            this.contextMenuStripEx1.SuspendLayout();
+            this.contextMenuGroup = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
+            this.mnuAddGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAddLayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuZoomToGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuRemoveGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuGroupProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuLayer.SuspendLayout();
+            this.contextMenuGroup.SuspendLayout();
             this.SuspendLayout();
             // 
             // legendControl1
@@ -59,10 +68,10 @@
             this.legendControl1.Size = new System.Drawing.Size(233, 325);
             this.legendControl1.TabIndex = 0;
             // 
-            // contextMenuStripEx1
+            // contextMenuLayer
             // 
-            this.contextMenuStripEx1.DropShadowEnabled = false;
-            this.contextMenuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.contextMenuLayer.DropShadowEnabled = false;
+            this.contextMenuLayer.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuZoomToLayer,
             this.toolStripSeparator1,
             this.mnuSaveStyle,
@@ -72,10 +81,10 @@
             this.mnuRemoveLayer,
             this.toolStripSeparator3,
             this.mnuProperties});
-            this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
-            this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(169, 154);
-            this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
+            this.contextMenuLayer.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
+            this.contextMenuLayer.Name = "contextMenuStripEx1";
+            this.contextMenuLayer.Size = new System.Drawing.Size(169, 154);
+            this.contextMenuLayer.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuZoomToLayer
             // 
@@ -128,6 +137,61 @@
             this.mnuProperties.Size = new System.Drawing.Size(168, 22);
             this.mnuProperties.Text = "Properties";
             // 
+            // contextMenuGroup
+            // 
+            this.contextMenuGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuAddGroup,
+            this.mnuAddLayer,
+            this.toolStripSeparator5,
+            this.mnuZoomToGroup,
+            this.mnuRemoveGroup,
+            this.toolStripSeparator4,
+            this.mnuGroupProperties});
+            this.contextMenuGroup.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
+            this.contextMenuGroup.Name = "contextMenuGroup";
+            this.contextMenuGroup.Size = new System.Drawing.Size(156, 126);
+            this.contextMenuGroup.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            // 
+            // mnuAddGroup
+            // 
+            this.mnuAddGroup.Name = "mnuAddGroup";
+            this.mnuAddGroup.Size = new System.Drawing.Size(155, 22);
+            this.mnuAddGroup.Text = "Add group";
+            // 
+            // mnuAddLayer
+            // 
+            this.mnuAddLayer.Name = "mnuAddLayer";
+            this.mnuAddLayer.Size = new System.Drawing.Size(155, 22);
+            this.mnuAddLayer.Text = "Add layer";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(152, 6);
+            // 
+            // mnuZoomToGroup
+            // 
+            this.mnuZoomToGroup.Name = "mnuZoomToGroup";
+            this.mnuZoomToGroup.Size = new System.Drawing.Size(155, 22);
+            this.mnuZoomToGroup.Text = "Zoom to group";
+            // 
+            // mnuRemoveGroup
+            // 
+            this.mnuRemoveGroup.Name = "mnuRemoveGroup";
+            this.mnuRemoveGroup.Size = new System.Drawing.Size(155, 22);
+            this.mnuRemoveGroup.Text = "Remove group";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(152, 6);
+            // 
+            // mnuGroupProperties
+            // 
+            this.mnuGroupProperties.Name = "mnuGroupProperties";
+            this.mnuGroupProperties.Size = new System.Drawing.Size(155, 22);
+            this.mnuGroupProperties.Text = "Properties";
+            // 
             // LegendDockPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -135,7 +199,8 @@
             this.Controls.Add(this.legendControl1);
             this.Name = "LegendDockPanel";
             this.Size = new System.Drawing.Size(233, 325);
-            this.contextMenuStripEx1.ResumeLayout(false);
+            this.contextMenuLayer.ResumeLayout(false);
+            this.contextMenuGroup.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -143,7 +208,7 @@
         #endregion
 
         private Api.Legend.LegendControl legendControl1;
-        private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuStripEx1;
+        private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuLayer;
         private System.Windows.Forms.ToolStripMenuItem mnuZoomToLayer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveStyle;
@@ -153,5 +218,13 @@
         private System.Windows.Forms.ToolStripMenuItem mnuRemoveLayer;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem mnuProperties;
+        private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuGroup;
+        private System.Windows.Forms.ToolStripMenuItem mnuRemoveGroup;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem mnuGroupProperties;
+        private System.Windows.Forms.ToolStripMenuItem mnuZoomToGroup;
+        private System.Windows.Forms.ToolStripMenuItem mnuAddGroup;
+        private System.Windows.Forms.ToolStripMenuItem mnuAddLayer;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }

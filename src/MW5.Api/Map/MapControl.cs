@@ -382,7 +382,7 @@ namespace MW5.Api.Map
         public IEnvelope Extents
         {
             get { return new Envelope(_map.Extents as Extents); }
-            set { _map.Extents = value.GetInternal(); }
+            
         }
 
         [Browsable(false)]
@@ -628,6 +628,14 @@ namespace MW5.Api.Map
                 return filename;
             }
             return null;
+        }
+
+        public void ZoomToExtents(IEnvelope extents)
+        {
+            if (extents != null)
+            {
+                _map.Extents = extents.GetInternal();
+            }
         }
     }
 }

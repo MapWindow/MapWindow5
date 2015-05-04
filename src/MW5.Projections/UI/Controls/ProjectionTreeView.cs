@@ -135,7 +135,7 @@ namespace MW5.Projections.UI.Controls
         {
             return new[]
             {
-                Resources.img_folder,
+                Resources.img_folder_open,
                 Resources.img_folder_open,
                 Resources.img_globe,
                 Resources.img_map,

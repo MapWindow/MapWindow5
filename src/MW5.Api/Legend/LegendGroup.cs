@@ -380,5 +380,31 @@ namespace MW5.Api.Legend
         {
             return g.MeasureString(Text, font);
         }
+
+        /// <summary>
+        /// Gets the combined extents of all layers within the group.
+        /// </summary>
+        public IEnvelope Envelope
+        {
+            get
+            {
+                IEnvelope env = null;
+                var layer = Layers.FirstOrDefault();
+                if (layer != null)
+                {
+                    env = layer.Envelope;
+                }
+
+                if (env != null)
+                {
+                    foreach (var l in Layers)
+                    {
+                        env.Union(l.Envelope);
+                    }
+                }
+
+                return env;
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace MW5.Api.Interfaces
         ILayer GetLayer(int layerHandle);
         IFeatureSet GetFeatureSet(int layerHandle);
 
-        IEnvelope Extents { get; set; }
+        IEnvelope Extents { get; }
         IEnvelope GeographicExtents { get; }
         bool SetGeographicExtents(IEnvelope pVal);
         bool SetGeographicExtents2(double xLongitude, double yLatitude, double widthKilometers);
@@ -42,6 +42,7 @@ namespace MW5.Api.Interfaces
         void ZoomIn(double percent);
         void ZoomOut(double percent);
         void ZoomToLayer(int layerHandle);
+        void ZoomToExtents(IEnvelope extents);
         void ZoomToMaxExtents();
         void ZoomToMaxVisibleExtents();
         int ZoomToPrev();

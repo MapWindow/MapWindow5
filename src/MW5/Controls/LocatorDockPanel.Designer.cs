@@ -54,7 +54,6 @@ namespace MW5.Controls
             this.mapControl1.ExtentHistory = 20;
             this.mapControl1.ExtentPad = 0.02D;
             envelope1.Tag = "";
-            this.mapControl1.Extents = envelope1;
             spatialReference1.Tag = "";
             this.mapControl1.Projection = spatialReference1;
             this.mapControl1.GrabProjectionFromData = true;

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Legend.Abstract
 {
@@ -74,5 +75,7 @@ namespace MW5.Api.Legend.Abstract
         void AddLayer(ILegendLayer layer);
 
         void InsertLayer(int position, ILegendLayer layer);
+
+        IEnvelope Envelope { get; }
     }
 }

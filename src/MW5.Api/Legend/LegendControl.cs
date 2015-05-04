@@ -315,8 +315,8 @@ namespace MW5.Api.Legend
             this.Icons.Images.SetKeyName(7, "img_label_grey.png");
             this.Icons.Images.SetKeyName(8, "pen.png");
             this.Icons.Images.SetKeyName(9, "database5.png");
-            this.Icons.Images.SetKeyName(10, "folder.png");
-            this.Icons.Images.SetKeyName(11, "folder_open.png");
+            this.Icons.Images.SetKeyName(10, "img_folder_open.png");
+            this.Icons.Images.SetKeyName(11, "img_folder_open.png");
             this.Icons.Images.SetKeyName(12, "tag_gray.png");
             this.Icons.Images.SetKeyName(13, "tag_blue.png");
             this.Icons.Images.SetKeyName(14, "");

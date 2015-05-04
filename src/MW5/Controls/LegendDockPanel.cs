@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Legend.Abstract;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI.Controls;
@@ -21,19 +22,42 @@ namespace MW5.Controls
             InitializeComponent();
 
             legendControl1.LayerMouseUp += LegendLayerMouseUp;
+            legendControl1.GroupMouseUp += LegendGroupMouseUp;
+            legendControl1.LegendClick += OnLegendClick;
         }
+
+        public int SelectedGroupHandle { get; private set; }
 
         public IMuteLegend Legend
         {
             get { return legendControl1; }
         }
 
-        private void LegendLayerMouseUp(object sender, Api.Legend.Events.LayerMouseEventArgs e)
+        private void LegendGroupMouseUp(object sender, GroupMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                SelectedGroupHandle = e.GroupHandle;
+                var pnt = PointToClient(Cursor.Position);
+                contextMenuGroup.Show(this, pnt);
+            }
+        }
+
+        private void LegendLayerMouseUp(object sender, LayerMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
                 var pnt = PointToClient(Cursor.Position);
-                contextMenuStripEx1.Show(this, pnt);
+                contextMenuLayer.Show(this, pnt);
+            }
+        }
+
+        private void OnLegendClick(object sender, LegendClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                var pnt = PointToClient(Cursor.Position);
+                contextMenuGroup.Show(this, pnt);
             }
         }
 
@@ -41,7 +65,8 @@ namespace MW5.Controls
         {
             get 
             {
-                yield return contextMenuStripEx1.Items;
+                yield return contextMenuLayer.Items;
+                yield return contextMenuGroup.Items;
             }
         }
 
