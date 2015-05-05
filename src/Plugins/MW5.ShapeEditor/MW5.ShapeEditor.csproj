@@ -63,6 +63,14 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="Context\ContextMenuView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Context\ContextMenuView.Designer.cs">
+      <DependentUpon>ContextMenuView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Context\ContextMenuPresenter.cs" />
+    <Compile Include="Context\EditorCommand.cs" />
     <Compile Include="Services\IGeoprocessingService.cs" />
     <Compile Include="Services\ILayerEditingService.cs" />
     <Compile Include="CompositionRoot.cs" />
@@ -118,6 +126,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Context\ContextMenuView.resx">
+      <DependentUpon>ContextMenuView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
