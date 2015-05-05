@@ -1,28 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Enums;
-using MW5.Plugins.IdentifierTestPlugin.Properties;
+using MW5.Plugins.Identifier.Properties;
+using MW5.Plugins.Identifier.Views;
 using MW5.Plugins.Interfaces;
 
-namespace MW5.Plugins.IdentifierTestPlugin.Menu
+namespace MW5.Plugins.Identifier.Menu
 {
     public class DockPanelService
     {
-        private string DOCK_PANEL_KEY = "IdentifierPluginDockPanel";
+        private const string DockPanelKey = "IdentifierPluginDockPanel";
 
-        public DockPanelService(IAppContext context, IdentifierDockPanel identifierControl, IdentifierTestPlugin plugin)
+        public DockPanelService(IAppContext context, IdentifierPresenter presenter, IdentifierPlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (identifierControl == null) throw new ArgumentNullException("identifierControl");
+            if (presenter == null) throw new ArgumentNullException("presenter");
             if (plugin == null) throw new ArgumentNullException("plugin");
 
             var panels = context.DockPanels;
 
             panels.Lock();
-            var panel = panels.Add(identifierControl, DOCK_PANEL_KEY, plugin.Identity);
+            var panel = panels.Add(presenter.GetInternalObject(), DockPanelKey, plugin.Identity);
             panel.Caption = "Identifier";
             panel.SetIcon(Resources.ico_identify);
 

@@ -58,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		SolutionItems\Template-How-To.txt = SolutionItems\Template-How-To.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.IdentifierTestPlugin", "Plugins\MW5.IdentifierTestPlugin\MW5.IdentifierTestPlugin.csproj", "{D6AD6FF4-56BC-4929-9AF7-256D0E5A5F0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Identifier", "Plugins\MW5.Identifier\MW5.Identifier.csproj", "{D6AD6FF4-56BC-4929-9AF7-256D0E5A5F0D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.DebugWindow", "Plugins\MW5.DebugWindow\MW5.DebugWindow.csproj", "{C364E06F-9A33-4BAE-8C19-E9CEE95A1205}"
 EndProject

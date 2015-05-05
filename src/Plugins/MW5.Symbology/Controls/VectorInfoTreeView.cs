@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls
@@ -13,6 +14,8 @@ namespace MW5.Plugins.Symbology.Controls
     {
         public void Initialize(ILayer layer)
         {
+            CreateColumns();
+
             if (layer == null) return;
 
             Nodes.Clear();

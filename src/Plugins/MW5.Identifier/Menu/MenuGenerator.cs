@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
-namespace MW5.Plugins.IdentifierTestPlugin.Menu
+namespace MW5.Plugins.Identifier.Menu
 {
     public class MenuGenerator
     {
         private readonly IAppContext _context;
         private readonly MenuCommands _commands;
 
-        public MenuGenerator(IAppContext context, IdentifierTestPlugin plugin)
+        public MenuGenerator(IAppContext context, IdentifierPlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");

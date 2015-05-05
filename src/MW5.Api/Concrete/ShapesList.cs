@@ -9,7 +9,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class ShapesList: IEnumerable<SelectionItem>, IShapesList
+    public class ShapesList: IShapesList
     {
         private readonly SelectionList _list;
 

@@ -87,6 +87,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ImageComboItem.cs" />
+    <Compile Include="Controls\InfoTreeViewBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\NetColorPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -112,6 +115,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
+    <Compile Include="Controls\NodeData.cs" />
     <Compile Include="Controls\Office2007ColorPicker.cs">
       <SubType>Component</SubType>
     </Compile>

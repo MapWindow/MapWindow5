@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.IdentifierTestPlugin.Menu
+﻿namespace MW5.Plugins.Identifier.Menu
 {
     public class MenuKeys
     {

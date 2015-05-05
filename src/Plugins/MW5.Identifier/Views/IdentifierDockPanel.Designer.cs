@@ -1,0 +1,173 @@
+﻿using MW5.UI.Controls;
+
+namespace MW5.Plugins.Identifier.Views
+{
+    partial class IdentifierDockPanel
+    {
+        /// <summary> 
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary> 
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Component Designer generated code
+
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            this._cboIdentifierMode = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolClear = new System.Windows.Forms.ToolStripButton();
+            this.infoTreeViewBase1 = new MW5.UI.Controls.InfoTreeViewBase();
+            ((System.ComponentModel.ISupportInitialize)(this._cboIdentifierMode)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.toolStripEx1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.infoTreeViewBase1)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // _cboIdentifierMode
+            // 
+            this._cboIdentifierMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._cboIdentifierMode.BeforeTouchSize = new System.Drawing.Size(223, 21);
+            this._cboIdentifierMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._cboIdentifierMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this._cboIdentifierMode.Location = new System.Drawing.Point(45, 5);
+            this._cboIdentifierMode.Name = "_cboIdentifierMode";
+            this._cboIdentifierMode.Size = new System.Drawing.Size(223, 21);
+            this._cboIdentifierMode.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(34, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Mode";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this._cboIdentifierMode);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel1.Location = new System.Drawing.Point(0, 215);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(268, 29);
+            this.panel1.TabIndex = 5;
+            // 
+            // toolStripEx1
+            // 
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolClear});
+            this.toolStripEx1.Location = new System.Drawing.Point(0, 0);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.ShowItemToolTips = true;
+            this.toolStripEx1.Size = new System.Drawing.Size(268, 25);
+            this.toolStripEx1.TabIndex = 45;
+            this.toolStripEx1.Text = "toolStripEx1";
+            // 
+            // toolClear
+            // 
+            this.toolClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolClear.Image = global::MW5.Plugins.Identifier.Properties.Resources.img_clear;
+            this.toolClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolClear.Name = "toolClear";
+            this.toolClear.Size = new System.Drawing.Size(23, 22);
+            this.toolClear.Text = "Clear";
+            // 
+            // infoTreeViewBase1
+            // 
+            this.infoTreeViewBase1.AutoAdjustMultiLineHeight = true;
+            this.infoTreeViewBase1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo2)});
+            this.infoTreeViewBase1.BeforeTouchSize = new System.Drawing.Size(268, 190);
+            this.infoTreeViewBase1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.infoTreeViewBase1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
+            this.infoTreeViewBase1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.infoTreeViewBase1.FullRowSelect = true;
+            this.infoTreeViewBase1.GutterSpace = 12;
+            // 
+            // 
+            // 
+            this.infoTreeViewBase1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.infoTreeViewBase1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this.infoTreeViewBase1.HelpTextControl.Name = "m_helpText";
+            this.infoTreeViewBase1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
+            this.infoTreeViewBase1.HelpTextControl.TabIndex = 0;
+            this.infoTreeViewBase1.HelpTextControl.Text = "help text";
+            this.infoTreeViewBase1.Location = new System.Drawing.Point(0, 25);
+            this.infoTreeViewBase1.Name = "infoTreeViewBase1";
+            this.infoTreeViewBase1.ShowColumnsHeader = false;
+            this.infoTreeViewBase1.Size = new System.Drawing.Size(268, 190);
+            this.infoTreeViewBase1.TabIndex = 46;
+            this.infoTreeViewBase1.Text = "infoTreeViewBase1";
+            // 
+            // 
+            // 
+            this.infoTreeViewBase1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
+            this.infoTreeViewBase1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.infoTreeViewBase1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this.infoTreeViewBase1.ToolTipControl.Name = "m_toolTip";
+            this.infoTreeViewBase1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
+            this.infoTreeViewBase1.ToolTipControl.TabIndex = 1;
+            this.infoTreeViewBase1.ToolTipControl.Text = "toolTip";
+            // 
+            // IdentifierDockPanel
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.infoTreeViewBase1);
+            this.Controls.Add(this.toolStripEx1);
+            this.Controls.Add(this.panel1);
+            this.Name = "IdentifierDockPanel";
+            this.Size = new System.Drawing.Size(268, 244);
+            ((System.ComponentModel.ISupportInitialize)(this._cboIdentifierMode)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.infoTreeViewBase1)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
+        }
+
+        #endregion
+
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv _cboIdentifierMode;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel1;
+        private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
+        private System.Windows.Forms.ToolStripButton toolClear;
+        private InfoTreeViewBase infoTreeViewBase1;
+
+    }
+}

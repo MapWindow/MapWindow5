@@ -31,6 +31,8 @@ namespace MW5.Plugins.Symbology.Views
 
             InitControls();
 
+            rasterInfoTreeView1.CreateColumns();
+
             tabControlAdv1.SelectedIndex = _lastTabIndex;
 
             FormClosed += (s, e) => _lastTabIndex = tabControlAdv1.SelectedIndex;

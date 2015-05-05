@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using MW5.Plugins.Concrete;
-using MW5.Plugins.IdentifierTestPlugin.Properties;
+using MW5.Plugins.Identifier.Properties;
 
-namespace MW5.Plugins.IdentifierTestPlugin.Menu
+namespace MW5.Plugins.Identifier.Menu
 {
     public class MenuCommands : CommandProviderBase
     {

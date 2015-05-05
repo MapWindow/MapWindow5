@@ -1,20 +1,16 @@
-﻿
-using System;
-using MW5.Api;
+﻿using System;
 using MW5.Api.Enums;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
-using MW5.Plugins.IdentifierTestPlugin.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Menu;
 
-namespace MW5.Plugins.IdentifierTestPlugin.Menu
+namespace MW5.Plugins.Identifier.Menu
 {
     public class MenuListener: MenuServiceBase
     {
-        private readonly IdentifierTestPlugin _plugin;
+        private readonly IdentifierPlugin _plugin;
         
-        public MenuListener(IAppContext context, IdentifierTestPlugin plugin):
+        public MenuListener(IAppContext context, IdentifierPlugin plugin):
             base(context, plugin.Identity)
         {
             if (plugin == null) throw new ArgumentNullException("plugin");

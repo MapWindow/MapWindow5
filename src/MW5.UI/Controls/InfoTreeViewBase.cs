@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
+﻿using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
-namespace MW5.Plugins.Symbology.Controls
+namespace MW5.UI.Controls
 {
     public class InfoTreeViewBase: MultiColumnTreeView
     {
-        public InfoTreeViewBase()
-        {
-            Init();
-        }
-
-        private void Init()
+        public void CreateColumns()
         {
             Columns.Clear();
 
@@ -35,9 +25,8 @@ namespace MW5.Plugins.Symbology.Controls
             GutterSpace = 12;
         }
 
-        protected TreeNodeAdv AddSubItems(TreeNodeAdvCollection nodes, NodeData data)
+        public TreeNodeAdv AddSubItems(TreeNodeAdvCollection nodes, NodeData data)
         {
-            
             var node = GetNode(data);
             nodes.Add(node);
 

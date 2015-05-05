@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MW5.Plugins.Symbology.Controls
+namespace MW5.UI.Controls
 {
     public class NodeData
     {
@@ -32,16 +28,20 @@ namespace MW5.Plugins.Symbology.Controls
             _subItems.Add(pair);
         }
 
-        public void AddSubItem(string name, string value)
+        public NodeData AddSubItem(string name, string value)
         {
             CheckSubItems();
-            _subItems.Add(new NodeData(name, value));
+            var data = new NodeData(name, value);
+            _subItems.Add(data);
+            return data;
         }
 
-        public void AddSubItem(string name, double value)
+        public NodeData AddSubItem(string name, double value)
         {
             CheckSubItems();
-            _subItems.Add(new NodeData(name, value.ToString("0.####", CultureInfo.InvariantCulture)));
+            var data = new NodeData(name, value.ToString("0.####", CultureInfo.InvariantCulture));
+            _subItems.Add(data);
+            return data;
         }
 
         public IEnumerable<NodeData> SubItems

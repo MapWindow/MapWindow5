@@ -12,6 +12,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Shared;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls

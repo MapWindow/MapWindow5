@@ -7,12 +7,11 @@ using MW5.Api.Concrete;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IShapesList
+    public interface IShapesList : IEnumerable<SelectionItem>
     {
         void Add(int layerHandle, int shapeIndex);
         void Clear();
         int Count { get; }
         void RemoveByLayerHandle(int layerHandle);
-        IEnumerator<SelectionItem> GetEnumerator();
     }
 }

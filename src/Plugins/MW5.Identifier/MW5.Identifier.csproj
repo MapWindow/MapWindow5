@@ -7,7 +7,7 @@
     <ProjectGuid>{D6AD6FF4-56BC-4929-9AF7-256D0E5A5F0D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MW5.Plugins.IdentifierTestPlugin</RootNamespace>
+    <RootNamespace>MW5.Plugins.Identifier</RootNamespace>
     <AssemblyName>MW5.IdentifierTestPlugin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -51,15 +51,22 @@
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="MW5.Projections">
+      <HintPath>..\..\MW5.Projections\bin\x86\Debug\MW5.Projections.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Chart.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.Chart.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -91,8 +98,8 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="IdentifierModeConverter.cs" />
+    <Compile Include="Enums\EnumConverter.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Listeners\MapListener.cs" />
     <Compile Include="Menu\DockPanelService.cs" />
     <Compile Include="Menu\MenuCommands.cs">
@@ -106,14 +113,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="IdentifierTestPlugin.cs" />
+    <Compile Include="IdentifierPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IdentifierDockPanel.cs">
+    <Compile Include="Views\IdentifierDockPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="IdentifierDockPanel.Designer.cs">
+    <Compile Include="Views\IdentifierDockPanel.Designer.cs">
       <DependentUpon>IdentifierDockPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\IdentifierPresenter.cs" />
+    <Compile Include="Views\IIdentifierView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
@@ -147,7 +156,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="IdentifierDockPanel.resx">
+    <EmbeddedResource Include="Views\IdentifierDockPanel.resx">
       <DependentUpon>IdentifierDockPanel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -156,6 +165,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_identify.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_clear.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

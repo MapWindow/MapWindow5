@@ -1,27 +1,21 @@
-﻿using System.Diagnostics;
-using MW5.Api.Helpers;
-using MW5.Plugins.Concrete;
-using MW5.Plugins.IdentifierTestPlugin.Listeners;
-using MW5.Plugins.IdentifierTestPlugin.Menu;
-using MW5.Plugins.IdentifierTestPlugin.Properties;
+﻿using MW5.Plugins.Concrete;
+using MW5.Plugins.Identifier.Listeners;
+using MW5.Plugins.Identifier.Menu;
+using MW5.Plugins.Identifier.Views;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
-using MW5.Plugins.Services;
-using MW5.Shared;
-using MW5.UI.Helpers;
 
-namespace MW5.Plugins.IdentifierTestPlugin
+namespace MW5.Plugins.Identifier
 {
     [MapWindowPlugin()]
-    public class IdentifierTestPlugin: BasePlugin
+    public class IdentifierPlugin: BasePlugin
     {
         private IAppContext _context;
         private DockPanelService _dockPanelService;
         private MenuListener _menuListener;
         private MenuGenerator _menuGenerator;
         private MapListener _mapListener;
-        private IdentifierDockPanel _identifierControl;
 
         public override void RegisterServices(IApplicationContainer container)
         {
@@ -31,9 +25,6 @@ namespace MW5.Plugins.IdentifierTestPlugin
         public override void Initialize(IAppContext context)
         {
             _context = context;
-
-            // will better to preserve state if plugin is unloaded, therefore singleton
-            _identifierControl = context.Container.GetSingleton<IdentifierDockPanel>();
 
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
