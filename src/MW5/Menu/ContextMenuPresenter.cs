@@ -48,7 +48,15 @@ namespace MW5.Menu
         {
             switch (command)
             {
-              
+                case ContextMenuCommand.ZoomIn:
+                    _context.Map.ZoomIn();
+                    return true;
+                case ContextMenuCommand.ZoomOut:
+                    _context.Map.ZoomOut();
+                    return true;
+                case ContextMenuCommand.ZoomToMaxExtents:
+                    _context.Map.ZoomToMaxVisibleExtents();
+                    return true;
             }
 
             return false;

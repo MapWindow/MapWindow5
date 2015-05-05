@@ -16,6 +16,9 @@ namespace MW5.Menu
         Degrees = 5,
         Minutes = 6,
         Seconds = 7,
-        MeasuringProperties = 8
+        MeasuringProperties = 8,
+        ZoomIn = 9,
+        ZoomOut = 10,
+        ZoomToMaxExtents = 11,
     }
 }

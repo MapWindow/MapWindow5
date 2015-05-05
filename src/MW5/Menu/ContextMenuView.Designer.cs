@@ -44,7 +44,13 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.ctxMeasuringProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.contextZooming = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
-            this.toolStripMenuItem12 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxScale = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxZoomIn = new System.Windows.Forms.ToolStripMenuItem();
+            this.ctxZoomOut = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxZoomToLayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.ctxZoomToMaxExtents = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMeasuring.SuspendLayout();
             this.contextZooming.SuspendLayout();
             this.SuspendLayout();
@@ -63,7 +69,7 @@
             this.ctxMeasuringProperties});
             this.contextMeasuring.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMeasuring.Name = "contextMeasuring";
-            this.contextMeasuring.Size = new System.Drawing.Size(176, 176);
+            this.contextMeasuring.Size = new System.Drawing.Size(176, 154);
             this.contextMeasuring.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // ctxUndoPoint
@@ -158,17 +164,57 @@
             // contextZooming
             // 
             this.contextZooming.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem12});
+            this.ctxZoomIn,
+            this.ctxZoomOut,
+            this.toolStripSeparator5,
+            this.ctxZoomToLayer,
+            this.ctxZoomToMaxExtents,
+            this.toolStripSeparator1,
+            this.ctxScale});
             this.contextZooming.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextZooming.Name = "contextMeasuring";
-            this.contextZooming.Size = new System.Drawing.Size(102, 26);
+            this.contextZooming.Size = new System.Drawing.Size(186, 148);
             this.contextZooming.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
-            // toolStripMenuItem12
+            // ctxScale
             // 
-            this.toolStripMenuItem12.Name = "toolStripMenuItem12";
-            this.toolStripMenuItem12.Size = new System.Drawing.Size(101, 22);
-            this.toolStripMenuItem12.Text = "Scale";
+            this.ctxScale.Name = "ctxScale";
+            this.ctxScale.Size = new System.Drawing.Size(185, 22);
+            this.ctxScale.Text = "Scale";
+            // 
+            // ctxZoomIn
+            // 
+            this.ctxZoomIn.Name = "ctxZoomIn";
+            this.ctxZoomIn.Size = new System.Drawing.Size(185, 22);
+            this.ctxZoomIn.Text = "Zoom in";
+            // 
+            // ctxZoomOut
+            // 
+            this.ctxZoomOut.Name = "ctxZoomOut";
+            this.ctxZoomOut.Size = new System.Drawing.Size(185, 22);
+            this.ctxZoomOut.Text = "Zoom out";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(182, 6);
+            // 
+            // ctxZoomToLayer
+            // 
+            this.ctxZoomToLayer.Name = "ctxZoomToLayer";
+            this.ctxZoomToLayer.Size = new System.Drawing.Size(185, 22);
+            this.ctxZoomToLayer.Text = "Zoom to layer";
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(182, 6);
+            // 
+            // ctxZoomToMaxExtents
+            // 
+            this.ctxZoomToMaxExtents.Name = "ctxZoomToMaxExtents";
+            this.ctxZoomToMaxExtents.Size = new System.Drawing.Size(185, 22);
+            this.ctxZoomToMaxExtents.Text = "Zoom to max extents";
             // 
             // ContextMenuView
             // 
@@ -199,7 +245,13 @@
         private System.Windows.Forms.ToolStripMenuItem ctxSeconds;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripMenuItem ctxMeasuringProperties;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem12;
+        private System.Windows.Forms.ToolStripMenuItem ctxScale;
+        private System.Windows.Forms.ToolStripMenuItem ctxZoomIn;
+        private System.Windows.Forms.ToolStripMenuItem ctxZoomOut;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem ctxZoomToLayer;
+        private System.Windows.Forms.ToolStripMenuItem ctxZoomToMaxExtents;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 
     }
 }

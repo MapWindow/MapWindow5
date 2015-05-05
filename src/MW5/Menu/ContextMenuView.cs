@@ -21,7 +21,12 @@ namespace MW5.Menu
 
             InitializeComponent();
 
+            ctxScale.Tag = 0;   // to avoid automatic handler
+            ctxZoomToLayer.Tag = 0;  // to avoid automatic handler
+
             contextMeasuring.Opening += MeasuringMenuOpening;
+
+            contextZooming.Opening += ZoomingMenuOpening;
         }
 
         public ContextMenuStrip MeasuringMenu
@@ -48,6 +53,75 @@ namespace MW5.Menu
             get { yield break; }
         }
 
+        private void ZoomingMenuOpening(object sender, CancelEventArgs e)
+        {
+            InitScaleMenu();
+
+            InitLayersMenu();
+        }
+
+        private void InitLayersMenu()
+        {
+            
+            ctxZoomToLayer.DropDownItems.Clear();
+
+            foreach (var layer in _context.Map.Layers.Where(l => l.Visible))
+            {
+                var item = ctxZoomToLayer.DropDownItems.Add(layer.Name);
+                item.Tag = layer.Handle;
+                item.Click += OnZoomToLayerClick;
+            }
+        }
+
+        private void InitScaleMenu()
+        {
+            ctxScale.DropDownItems.Clear();
+
+            ctxScale.DropDownItems.Add("1: " + _context.Map.CurrentScale.ToString("0.0"));
+            ctxScale.DropDownItems.Add(new ToolStripSeparator());
+
+            int[] scales = {
+                100,
+                1000,
+                5000,
+                10000,
+                25000,
+                50000,
+                100000,
+                250000,
+                500000,
+                1000000,
+                5000000,
+                1000000,
+            };
+
+            foreach (var scale in scales)
+            {
+                var item = ctxScale.DropDownItems.Add("1: " + scale);
+                item.Tag = scale;
+                item.Click += OnSetScale;
+            }
+        }
+
+        private void OnZoomToLayerClick(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripItem;
+            if (item != null)
+            {
+                int layerHandle = (int)item.Tag;
+                _context.Map.ZoomToLayer(layerHandle);
+            }
+        }
+
+        private void OnSetScale(object sender, EventArgs e)
+        {
+            var item = sender as ToolStripItem;
+            if (item != null)
+            {
+                _context.Map.CurrentScale = (int) item.Tag;
+            }
+        }
+
         private void MeasuringMenuOpening(object sender, CancelEventArgs e)
         {
             var options = _context.Map.Measuring.Options;
@@ -59,14 +133,6 @@ namespace MW5.Menu
             ctxDegrees.Checked = options.AngleFormat == AngleFormat.Degrees;
             ctxMinutes.Checked = options.AngleFormat == AngleFormat.Minutes;
             ctxSeconds.Checked = options.AngleFormat == AngleFormat.Seconds;
-        }
-
-        private void DisableAll(ContextMenuStrip menu)
-        {
-            foreach (var item in menu.Items.OfType<ToolStripMenuItem>())
-            {
-                item.Enabled = false;
-            }
         }
     }
 }

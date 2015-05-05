@@ -27,6 +27,7 @@ namespace MW5.Api.Map
             _map.SendMouseDown = true;
             _map.SendMouseUp = true;
             _map.SendMouseMove = true;
+            _map.TrapRMouseDown = false;
 
             AllowDrop = true;
 
