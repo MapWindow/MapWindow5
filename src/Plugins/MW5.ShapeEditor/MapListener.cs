@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.ShapeEditor.Context;
-using MW5.Plugins.ShapeEditor.Menu;
+using MW5.Plugins.ShapeEditor.Views;
 
 namespace MW5.Plugins.ShapeEditor
 {
@@ -28,11 +24,31 @@ namespace MW5.Plugins.ShapeEditor
 
             _contextMenuPresenter = contextMenuPresenter;
 
-            plugin.ChooseLayer += plugin_ChooseLayer;
-            plugin.MouseUp += MapMouseUp;
+            plugin.ChooseLayer += OnChooseLayer;
+            plugin.MouseUp += OnMapMouseUp;
+            plugin.BeforeDeleteShape += OnBeforeDeleteShape;
+            plugin.AfterShapeEdit += OnAfterShapeEdit;
+            plugin.ShapeValidationFailed += OnShapeValidationFailed;
         }
 
-        private void MapMouseUp(IMuteMap map, MouseEventArgs e)
+        private void OnBeforeDeleteShape(IMuteMap map, BeforeDeleteShapeEventArgs e)
+        {
+            string s = string.Empty;
+            switch (e.Target)
+            {
+                case DeleteTarget.Shape: s = "shape";
+                    break;
+                case DeleteTarget.Part: s = "part";
+                    break;
+                case DeleteTarget.Vertex: s = "vertex";
+                    break;
+            }
+
+            s = string.Format("Do you want to delete {0}?", s);
+            e.Cancel = !MessageService.Current.Ask(s);
+        }
+
+        private void OnMapMouseUp(IMuteMap map, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Right)
             {
@@ -70,13 +86,36 @@ namespace MW5.Plugins.ShapeEditor
             }
         }
 
-        private  void plugin_ChooseLayer(IMuteMap map, Api.Events.ChooseLayerEventArgs e)
+        private void OnChooseLayer(IMuteMap map, ChooseLayerEventArgs e)
         {
             var layer = map.Layers.Current;
             if (layer != null)
             {
                 e.LayerHandle = layer.Handle;
             }
+        }
+
+        private void OnAfterShapeEdit(IMuteMap map, AfterShapeEditEventArgs e)
+        {
+            if (e.Operation == UndoOperation.AddShape)
+            {
+                var fs = _context.Map.GetFeatureSet(e.LayerHandle);
+                if (fs != null)
+                {
+                    var layer = _context.Layers.ItemByHandle(e.LayerHandle);
+                    var model = new AttributeViewModel(layer, e.ShapeIndex);
+
+                    if (_context.Container.Run<AttributePresenter, AttributeViewModel>(model))
+                    {
+                        
+                    }
+                }
+            }
+        }
+
+        private void OnShapeValidationFailed(IMuteMap map, ShapeValidationFailedEventArgs e)
+        {
+            MessageService.Current.Warn("Validation failed: " + e.ErrorMessage);
         }
     }
 }

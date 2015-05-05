@@ -48,6 +48,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.Shared.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
@@ -97,6 +98,15 @@
     <Compile Include="ShapeEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Views\AttributePresenter.cs" />
+    <Compile Include="Views\AttributeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AttributeView.Designer.cs">
+      <DependentUpon>AttributeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AttributeViewModel.cs" />
+    <Compile Include="Views\Abstract\IAttributeView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
@@ -133,6 +143,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AttributeView.resx">
+      <DependentUpon>AttributeView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

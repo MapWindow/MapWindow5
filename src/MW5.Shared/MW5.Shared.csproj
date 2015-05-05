@@ -88,7 +88,7 @@
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StringBuilderHelper.cs" />
     <Compile Include="StringHelper.cs" />
-    <Compile Include="Win32ApiHelper.cs" />
+    <Compile Include="Win32Api.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

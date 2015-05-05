@@ -9,6 +9,8 @@ using MW5.Plugins.ShapeEditor.Context;
 using MW5.Plugins.ShapeEditor.Helpers;
 using MW5.Plugins.ShapeEditor.Menu;
 using MW5.Plugins.ShapeEditor.Services;
+using MW5.Plugins.ShapeEditor.Views;
+using MW5.Plugins.ShapeEditor.Views.Abstract;
 using MW5.Services;
 
 namespace MW5.Plugins.ShapeEditor
@@ -20,7 +22,8 @@ namespace MW5.Plugins.ShapeEditor
             container.RegisterSingleton<IGeoprocessingService, GeoprocessingService>()
                 .RegisterSingleton<ILayerEditingService, LayerEditingService>()
                 .RegisterService<ContextMenuView>()
-                .RegisterSingleton<ContextMenuPresenter>();
+                .RegisterSingleton<ContextMenuPresenter>()
+                .RegisterService<IAttributeView, AttributeView>();
         }
     }
 }

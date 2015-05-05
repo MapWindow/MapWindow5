@@ -52,7 +52,7 @@ namespace MW5.DI.Castle
 
         public TService GetInstance<TService>() where TService : class
         {
-            // TODO: is there a way to check if component is registered
+            // is there a way to check if component is registered?
             // http ://docs.castleproject.org/Windsor.Conditional-component-registration.ashx
             _container.Register(Component.For<TService>().LifestyleTransient().OnlyNewServices());
             return _container.Resolve<TService>();

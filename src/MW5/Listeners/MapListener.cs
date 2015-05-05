@@ -42,6 +42,7 @@ namespace MW5.Listeners
 
         private void RegisterEvents()
         {
+            _map.AfterShapeEdit += MapAfterShapeEdit;
             _map.BeforeDeleteShape += MapBeforeDeleteShape;
             _map.BeforeShapeEdit += MapBeforeShapeEdit;
             _map.ChooseLayer += MapChooseLayer;
@@ -62,6 +63,11 @@ namespace MW5.Listeners
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        private void MapAfterShapeEdit(object sender, AfterShapeEditEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.AfterShapeEdit_, sender as IMuteMap, e);
         }
 
         private void MapMouseMove(object sender, MouseEventArgs e)
