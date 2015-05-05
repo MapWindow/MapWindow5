@@ -27,6 +27,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.UI;
+using MW5.UI.Enums;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Style

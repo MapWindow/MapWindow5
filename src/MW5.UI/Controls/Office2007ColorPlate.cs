@@ -2,9 +2,9 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using MW5.Plugins.Symbology.Properties;
+using MW5.UI.Properties;
 
-namespace MW5.Plugins.Symbology.Controls.ColorPicker
+namespace MW5.UI.Controls
 {
     [DesignTimeVisible(false)]
 	internal partial class Office2007ColorPlate : UserControl

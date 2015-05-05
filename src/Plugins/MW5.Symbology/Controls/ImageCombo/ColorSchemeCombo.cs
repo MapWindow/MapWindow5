@@ -12,6 +12,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.UI.Controls;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {

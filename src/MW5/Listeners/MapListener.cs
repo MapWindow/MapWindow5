@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
+using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 
@@ -16,20 +18,22 @@ namespace MW5.Listeners
     {
         private readonly IBroadcasterService _broadcaster;
         private readonly ILayerService _layerService;
+        private readonly ContextMenuPresenter _contextMenuPresenter;
         private readonly IMap _map;
         private readonly IAppContext _context;
 
-        public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService)
+        public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService,
+                ContextMenuPresenter contextMenuPresenter)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
+            if (layerService == null) throw new ArgumentNullException("layerService");
+            if (contextMenuPresenter == null) throw new ArgumentNullException("contextMenuPresenter");
+
             _context = context;
             _broadcaster = broadcaster;
             _layerService = layerService;
-            
-            if (_broadcaster == null || _context == null || layerService == null)
-            {
-
-                throw new NullReferenceException("Failed to initialize map listener.");
-            }
+            _contextMenuPresenter = contextMenuPresenter;
 
             _map = _context.Map as IMap;
             if (_map == null)
@@ -127,6 +131,11 @@ namespace MW5.Listeners
         private void MapMouseUp(object sender, MouseEventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.MouseUp_, sender as IMuteMap, e);
+
+            if (e.Button == MouseButtons.Right)     // TODO: don't handle if it was handled by plugins
+            {
+                ShowContextMenu(e.X, e.Y);
+            }
         }
 
         private void MapBeforeShapeEdit(object sender, BeforeShapeEditEventArgs e)
@@ -162,6 +171,34 @@ namespace MW5.Listeners
                 case Keys.Down:
                     e.IsInputKey = true;
                     return;
+            }
+        }
+
+        private void ShowContextMenu(int x, int y)
+        {
+            var parent = _map as Control;
+            if (parent == null)
+            {
+                return;
+            }
+
+            ContextMenuStrip menu = null;
+
+            switch (_map.MapCursor)
+            {
+                case MapCursor.Measure:
+                    menu = _contextMenuPresenter.MeasuringMenu;
+                    break;
+                case MapCursor.ZoomIn:
+                case MapCursor.ZoomOut:
+                case MapCursor.Pan:
+                     menu = _contextMenuPresenter.ZoomingMenu;
+                    break;
+            }
+
+            if (menu != null)
+            {
+                menu.Show(parent, x, y);
             }
         }
     }

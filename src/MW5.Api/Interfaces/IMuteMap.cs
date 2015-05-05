@@ -61,7 +61,7 @@ namespace MW5.Api.Interfaces
         IGeometryEditor GeometryEditor { get; }
         TileManager Tiles { get; }
         IdentifierSettings Identifier { get; }
-        GeoMeasurer Measuring { get; }
+        MeasuringTool Measuring { get; }
         HistoryList History { get; }
         DrawingLayers Drawing { get; }
 

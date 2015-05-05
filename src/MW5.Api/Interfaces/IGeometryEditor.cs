@@ -5,24 +5,16 @@ namespace MW5.Api.Interfaces
 {
     public interface IGeometryEditor: IComWrapper
     {
-        BearingType BearingTypeMode { get; set; }
         double Area { get; }
-        AreaDisplay AreaDisplay { get; set; }
         EditorBehavior EditorBehavior { get; set; }
         EditorState EditorState { get; }
-        Color FillColor { get; set; }
-        byte AlpaFillTransparency { get; set; }
         bool HasChanges { get; }
         LayerSelectionMode HighlightVertices { get; set; }
-        bool IndicesVisible { get; set; }
         bool IsDigitizing { get; }
         bool IsEmpty { get; }
         bool IsUsingEllipsoid { get; }
         int LayerHandle { get; }
         double Length { get; }
-        LengthDisplay LengthDisplayMode { get; set; }
-        Color LineColor { get; set; }
-        float LineWidth { get; set; }
         int NumPoints { get; }
         IGeometry RawData { get; }
         int SelectedVertex { get; set; }
@@ -32,7 +24,6 @@ namespace MW5.Api.Interfaces
         double SnapTolerance { get; set; }
         IGeometry ValidatedShape { get; }
         EditorValidation ValidationMode { get; set; }
-        bool VerticesVisible { get; set; }
         void Clear();
         void CopyStyleFrom(IGeometryStyle style);
         ICoordinate GetPoint(int pointIndex);
@@ -45,5 +36,6 @@ namespace MW5.Api.Interfaces
         bool StartOverlay(EditorOverlay overlayType);
         bool StartUnboundShape(GeometryType geomType);
         bool UndoPoint();
+        IMeasuringSettings Settings { get; }
     }
 }

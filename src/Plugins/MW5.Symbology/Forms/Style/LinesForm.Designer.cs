@@ -1,8 +1,9 @@
 ﻿using MW5.Plugins.Symbology.Controls;
-using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Controls.ListControls;
 using MW5.Plugins.Symbology.Properties;
+using MW5.UI.Controls;
+using MW5.UI.Enums;
 
 namespace MW5.Plugins.Symbology.Forms.Style
 {
@@ -43,12 +44,12 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabLine = new System.Windows.Forms.TabPage();
-            this.transparencyControl1 = new MW5.Plugins.Symbology.Controls.TransparencyControl();
+            this.transparencyControl1 = new TransparencyControl();
             this.groupLine = new System.Windows.Forms.GroupBox();
-            this.icbLineWidth = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.icbLineWidth = new ImageCombo();
             this.label21 = new System.Windows.Forms.Label();
-            this.clpOutline = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
-            this.icbLineType = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.clpOutline = new Office2007ColorPicker(this.components);
+            this.icbLineType = new ImageCombo();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,7 +62,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.cboVerticesType = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.clpVerticesColor = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpVerticesColor = new Office2007ColorPicker(this.components);
             this.chkVerticesVisible = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.btnRemoveStyle = new System.Windows.Forms.Button();
@@ -76,12 +77,12 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.label7 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.udMarkerOffset = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.clpMarkerOutline = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpMarkerOutline = new Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.udMarkerSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.cboOrientation = new System.Windows.Forms.ComboBox();
             this.pointSymbolControl1 = new MW5.Plugins.Symbology.Controls.ListControls.SymbolControl();
-            this.clpMarkerFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpMarkerFill = new Office2007ColorPicker(this.components);
             this.udMarkerInterval = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.chkMarkerFlipFirst = new System.Windows.Forms.CheckBox();
             this.btnApply = new System.Windows.Forms.Button();
@@ -211,7 +212,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.transparencyControl1.Size = new System.Drawing.Size(190, 32);
             this.transparencyControl1.TabIndex = 143;
             this.transparencyControl1.Value = ((byte)(255));
-            this.transparencyControl1.ValueChanged += new MW5.Plugins.Symbology.Controls.TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
+            this.transparencyControl1.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
             // 
             // groupLine
             // 
@@ -231,7 +232,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Blue;
             this.icbLineWidth.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -271,7 +272,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbLineType.Color1 = System.Drawing.Color.Blue;
             this.icbLineType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineType.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
+            this.icbLineType.ComboStyle = ImageComboStyle.Common;
             this.icbLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineType.FormattingEnabled = true;

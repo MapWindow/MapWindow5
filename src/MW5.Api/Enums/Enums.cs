@@ -865,7 +865,7 @@
     {
         Metric = 0,
         Hectars = 1,
-        None = 2,
+        American = 2,
     }
 
     public enum EditorBehavior
@@ -892,8 +892,8 @@
 
     public enum LengthDisplay
     {
-        None = 0,
         Metric = 1,
+        American = 2,
     }
 
     public enum EditorValidation
@@ -1395,5 +1395,20 @@
     {
         File = 0,
         OgrDatasource,
+    }
+
+    public enum AngleFormat
+    {
+        Degrees = 0,
+        Minutes = 1,
+        Seconds = 2,
+        Radians = 3,
+    }
+
+    public enum UndoShortcut
+    {
+        None = 0,
+        CtrlZ = 1,
+        RightMouseButton = 2,
     }
 }

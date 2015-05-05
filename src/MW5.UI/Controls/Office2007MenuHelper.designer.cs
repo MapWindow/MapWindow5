@@ -1,4 +1,4 @@
-namespace MW5.Plugins.Symbology.Controls.ColorPicker
+namespace MW5.UI.Controls
 {
 	internal partial class Office2007MenuHelper
 	{

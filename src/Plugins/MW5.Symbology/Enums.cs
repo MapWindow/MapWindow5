@@ -1,19 +1,6 @@
 ﻿namespace MW5.Plugins.Symbology
 {
-    /// <summary>
-    ///  Available styles for image combo. All apart from common have fixed set of icons.
-    /// </summary>
-    internal enum ImageComboStyle
-    {
-        Common = 0,
-        LineStyle = 1,
-        LineWidth = 2,
-        LinearGradient = 3,
-        FrameType = 4,
-        PointShape = 5,
-        HatchStyle = 6,
-        HatchStyleWithNone = 9,
-    }
+
 
     internal enum SymbologyType
     {

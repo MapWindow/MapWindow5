@@ -326,9 +326,9 @@ namespace MW5.Api.Map
         }
 
         [Browsable(false)]
-        public GeoMeasurer Measuring
+        public MeasuringTool Measuring
         {
-            get { return new GeoMeasurer(_map.Measuring); }
+            get { return new MeasuringTool(_map.Measuring); }
         }
 
         [Browsable(false)]

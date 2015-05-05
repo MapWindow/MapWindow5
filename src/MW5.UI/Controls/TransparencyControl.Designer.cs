@@ -1,4 +1,4 @@
-﻿namespace MW5.Plugins.Symbology.Controls
+﻿namespace MW5.UI.Controls
 {
     partial class TransparencyControl
     {

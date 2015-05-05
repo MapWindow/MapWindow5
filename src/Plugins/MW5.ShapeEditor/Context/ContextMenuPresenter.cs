@@ -199,26 +199,5 @@ namespace MW5.Plugins.ShapeEditor.Context
             }
             return false;
         }
-
-
-        //private void AttachHandlers()
-        //{
-        //    var editor = _context.Map.GeometryEditor;
-
-        //    ctxNoHighlighting.Click += (s, e) => editor.HighlightVertices = LayerSelectionMode.NoLayer;
-        //    ctxHighlightAllLayers.Click += (s, e) => editor.HighlightVertices = LayerSelectionMode.AllLayers;
-        //    ctxHighlightCurrentLayer.Click += (s, e) => editor.HighlightVertices = LayerSelectionMode.ActiveLayer;
-
-        //    ctxNoSnapping.Click += (s, e) => editor.SnapBehavior = LayerSelectionMode.NoLayer;
-        //    ctxSnapCurrentLayer.Click += (s, e) => editor.SnapBehavior = LayerSelectionMode.ActiveLayer;
-        //    ctxSnapAllLayers.Click += (s, e) => editor.SnapBehavior = LayerSelectionMode.AllLayers;
-
-        //    ctxFinishShape.Click += (s, e) => editor.SaveChanges();
-        //    ctxCancelShape.Click += (s, e) => editor.Clear();
-
-        //    ctxUndoPoint.Click += (s, e) => editor.UndoPoint();
-        //}
-
-
     }
 }

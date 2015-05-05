@@ -78,7 +78,7 @@ namespace MW5.Plugins.Symbology.Views
             this.label17 = new System.Windows.Forms.Label();
             this.tbrColorizeIntensity = new System.Windows.Forms.TrackBar();
             this.label16 = new System.Windows.Forms.Label();
-            this.clpColorize = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpColorize = new Office2007ColorPicker(this.components);
             this.chkColorize = new System.Windows.Forms.CheckBox();
             this.chkGreyScale = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.tabPageAdv7 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
@@ -972,7 +972,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox chkColorize;
-        private Controls.ColorPicker.Office2007ColorPicker clpColorize;
+        private Office2007ColorPicker clpColorize;
         private CheckBoxAdv chkGreyScale;
         private System.Windows.Forms.TrackBar tbrHue;
         private System.Windows.Forms.TrackBar tbrSaturation;

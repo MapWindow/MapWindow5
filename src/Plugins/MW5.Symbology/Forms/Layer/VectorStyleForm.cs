@@ -38,6 +38,7 @@ using MW5.Plugins.Symbology.Services;
 using MW5.Projections.UI.Forms;
 using MW5.Shared;
 using MW5.UI;
+using MW5.UI.Enums;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms.Layer

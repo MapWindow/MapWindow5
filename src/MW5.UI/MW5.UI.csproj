@@ -80,11 +80,18 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
-    <Compile Include="Controls\ColorPicker.cs">
+    <Compile Include="Controls\ImageCombo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageComboBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ImageComboItem.cs" />
+    <Compile Include="Controls\NetColorPicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ColorPicker.Designer.cs">
-      <DependentUpon>ColorPicker.cs</DependentUpon>
+    <Compile Include="Controls\NetColorPicker.Designer.cs">
+      <DependentUpon>NetColorPicker.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConfigPanelControl.cs">
       <SubType>Component</SubType>
@@ -105,6 +112,24 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\IGridList.cs" />
+    <Compile Include="Controls\Office2007ColorPicker.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\Office2007ColorPicker.Designer.cs">
+      <DependentUpon>Office2007ColorPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Office2007ColorPlate.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Office2007ColorPlate.Designer.cs">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Office2007MenuHelper.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Office2007MenuHelper.designer.cs">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TabPropertiesControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -112,9 +137,16 @@
       <DependentUpon>TabPropertiesControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolTipGridEventArgs.cs" />
+    <Compile Include="Controls\TransparencyControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TransparencyControl.Designer.cs">
+      <DependentUpon>TransparencyControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WatermarkTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Forms\AppView.cs" />
     <Compile Include="Forms\MapWindowView2.cs">
       <SubType>Form</SubType>
@@ -203,14 +235,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\ColorPicker.resx">
-      <DependentUpon>ColorPicker.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\NetColorPicker.resx">
+      <DependentUpon>NetColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ConfigPanelControl.resx">
       <DependentUpon>ConfigPanelControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Office2007ColorPlate.resx">
+      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Office2007MenuHelper.resx">
+      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabPropertiesControl.resx">
       <DependentUpon>TabPropertiesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TransparencyControl.resx">
+      <DependentUpon>TransparencyControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>
@@ -237,6 +278,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_clear_textbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\palette.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

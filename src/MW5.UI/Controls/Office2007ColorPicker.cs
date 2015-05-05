@@ -3,9 +3,9 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace MW5.Plugins.Symbology.Controls.ColorPicker
+namespace MW5.UI.Controls
 {
-	internal partial class Office2007ColorPicker : ComboBox
+	public partial class Office2007ColorPicker : ComboBox
 	{
 		Office2007MenuHelper _colorPlate;
 

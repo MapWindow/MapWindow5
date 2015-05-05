@@ -22,7 +22,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace MW5.Plugins.Symbology.Controls
+namespace MW5.UI.Controls
 {
     [ToolboxItem(false)]
     public partial class TransparencyControl : UserControl

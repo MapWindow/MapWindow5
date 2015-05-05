@@ -1,6 +1,6 @@
 ﻿namespace MW5.UI.Controls
 {
-    partial class ColorPicker
+    partial class NetColorPicker
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorPicker));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NetColorPicker));
             Syncfusion.Windows.Forms.MetroColorTable metroColorTable1 = new Syncfusion.Windows.Forms.MetroColorTable();
             this.watermarkTextbox1 = new MW5.UI.Controls.WatermarkTextbox();
             this.colorUIControl1 = new Syncfusion.Windows.Forms.ColorUIControl();
@@ -81,7 +81,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.colorUIControl1);
             this.Controls.Add(this.watermarkTextbox1);
-            this.Name = "ColorPicker";
+            this.Name = "NetColorPicker";
             this.Size = new System.Drawing.Size(264, 313);
             ((System.ComponentModel.ISupportInitialize)(this.watermarkTextbox1)).EndInit();
             this.ResumeLayout(false);

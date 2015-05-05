@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MW5.UI.Controls
 {
-    public partial class ColorPicker : UserControl
+    public partial class NetColorPicker : UserControl
     {
-        public ColorPicker()
+        public NetColorPicker()
         {
             InitializeComponent();
         }

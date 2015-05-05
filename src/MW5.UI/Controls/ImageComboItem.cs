@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace MW5.Plugins.Symbology.Controls.ImageCombo
+namespace MW5.UI.Controls
 {
     /// <summary>
     /// An item of ImageComboBox

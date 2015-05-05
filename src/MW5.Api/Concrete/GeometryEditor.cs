@@ -21,21 +21,9 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public BearingType BearingTypeMode
-        {
-            get { return (BearingType)_editor.BearingType; }
-            set { _editor.BearingType = (tkBearingType)value; }
-        }
-
         public double Area
         {
             get { return _editor.Area; }
-        }
-
-        public AreaDisplay AreaDisplay
-        {
-            get { return (AreaDisplay)_editor.AreaDisplayMode; }
-            set { _editor.AreaDisplayMode = (tkAreaDisplayMode)value; }
         }
 
         public EditorBehavior EditorBehavior
@@ -49,18 +37,6 @@ namespace MW5.Api.Concrete
             get { return (EditorState)_editor.EditorState; }
         }
 
-        public Color FillColor
-        {
-            get { return ColorHelper.UintToColor(_editor.FillColor); }
-            set { _editor.FillColor = ColorHelper.ColorToUInt(value); }
-        }
-        
-        public byte AlpaFillTransparency
-        {
-            get { return _editor.FillTransparency; }
-            set { _editor.FillTransparency = value; }
-        }
-
         public bool HasChanges
         {
             get { return _editor.HasChanges; }
@@ -72,12 +48,6 @@ namespace MW5.Api.Concrete
             set { _editor.HighlightVertices = (tkLayerSelection)value; }
         }
         
-        public bool IndicesVisible
-        {
-            get { return _editor.IndicesVisible; }
-            set { _editor.IndicesVisible = value; }
-        }
-
         public bool IsDigitizing
         {
             get { return _editor.IsDigitizing; }
@@ -101,24 +71,6 @@ namespace MW5.Api.Concrete
         public double Length
         {
             get { return _editor.Length; }
-        }
-
-        public LengthDisplay LengthDisplayMode
-        {
-            get { return (LengthDisplay)_editor.LengthDisplayMode; }
-            set { _editor.LengthDisplayMode = (tkLengthDisplayMode)value; }
-        }
-
-        public Color LineColor
-        {
-            get { return ColorHelper.UintToColor(_editor.LineColor); }
-            set { _editor.LineColor = ColorHelper.ColorToUInt(value); }
-        }
-        
-        public float LineWidth
-        {
-            get { return _editor.LineWidth; }
-            set { _editor.LineWidth = value; }
         }
 
         public int NumPoints
@@ -171,12 +123,6 @@ namespace MW5.Api.Concrete
             set { _editor.ValidationMode = (tkEditorValidation)value; }
         }
         
-        public bool VerticesVisible
-        {
-            get { return _editor.VerticesVisible; }
-            set { _editor.VerticesVisible = value; }
-        }
-
         public void Clear()
         {
             _editor.Clear();
@@ -240,6 +186,11 @@ namespace MW5.Api.Concrete
         public bool UndoPoint()
         {
             return _editor.UndoPoint();
+        }
+
+        public IMeasuringSettings Settings
+        {
+            get { return new EditorSettings(_editor); }
         }
 
         public object InternalObject

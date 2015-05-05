@@ -25,6 +25,7 @@ namespace MW5.Helpers
             map.GeometryEditor.SnapBehavior = LayerSelectionMode.NoLayer;
             map.Identifier.HotTracking = false;
             map.ResizeBehavior = ResizeBehavior.KeepScale;
+            map.Measuring.UndoButton = UndoShortcut.CtrlZ;
         }
 
         public static void InitMapConfig()

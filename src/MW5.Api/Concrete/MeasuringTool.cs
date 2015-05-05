@@ -5,11 +5,11 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class GeoMeasurer: IComWrapper
+    public class MeasuringTool: IComWrapper
     {
         private readonly Measuring _measuring;
 
-        public GeoMeasurer(Measuring measuring)
+        public MeasuringTool(Measuring measuring)
         {
             _measuring = measuring;
             if (measuring == null)
@@ -96,12 +96,6 @@ namespace MW5.Api.Concrete
             set { _measuring.Persistent = value; }
         }
 
-        public bool DisplayAngles
-        {
-            get { return _measuring.ShowBearing; }
-            set { _measuring.ShowBearing = value; }
-        }
-
         public bool IsUsingEllipsoid
         {
             get { return _measuring.IsUsingEllipsoid; }
@@ -110,6 +104,17 @@ namespace MW5.Api.Concrete
         public bool IsEmpty
         {
             get { return _measuring.IsEmpty; }
+        }
+
+        public IMeasuringSettings Options
+        {
+            get { return new MeasurerSettings(_measuring); }
+        }
+
+        public UndoShortcut UndoButton
+        {
+            get { return (UndoShortcut)_measuring.UndoButton; }
+            set { _measuring.UndoButton = (tkUndoShortcut)value; }
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using MW5.Plugins.Symbology.Controls;
-using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Properties;
+using MW5.UI.Controls;
+using MW5.UI.Enums;
 
 namespace MW5.Plugins.Symbology.Forms.Categories
 {
@@ -46,8 +47,8 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.groupExpression = new System.Windows.Forms.GroupBox();
             this.txtExpression = new System.Windows.Forms.TextBox();
             this.groupFill = new System.Windows.Forms.GroupBox();
-            this.icbFillStyle = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
-            this.clpPolygonFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.icbFillStyle = new ImageCombo();
+            this.clpPolygonFill = new Office2007ColorPicker(this.components);
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.btnCategoryStyle = new System.Windows.Forms.Button();
@@ -57,14 +58,14 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             this.btnGenerate = new System.Windows.Forms.Button();
             this.btnCategoryMoveUp = new System.Windows.Forms.Button();
             this.groupLine = new System.Windows.Forms.GroupBox();
-            this.clpLine = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpLine = new Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
-            this.icbLineWidth = new MW5.Plugins.Symbology.Controls.ImageCombo.ImageCombo();
+            this.icbLineWidth = new ImageCombo();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupPoint = new System.Windows.Forms.GroupBox();
-            this.clpPointFill = new MW5.Plugins.Symbology.Controls.ColorPicker.Office2007ColorPicker(this.components);
+            this.clpPointFill = new Office2007ColorPicker(this.components);
             this.udPointSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnApply = new System.Windows.Forms.Button();
@@ -229,7 +230,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             this.icbFillStyle.Color1 = System.Drawing.Color.Gray;
             this.icbFillStyle.Color2 = System.Drawing.Color.Gray;
-            this.icbFillStyle.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
+            this.icbFillStyle.ComboStyle = ImageComboStyle.Common;
             this.icbFillStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFillStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFillStyle.FormattingEnabled = true;
@@ -375,7 +376,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
             this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ComboStyle = MW5.Plugins.Symbology.ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;

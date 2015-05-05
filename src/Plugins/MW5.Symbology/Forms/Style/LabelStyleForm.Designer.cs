@@ -17,8 +17,9 @@
 // ********************************************************************************************************
 
 using MW5.Plugins.Symbology.Controls;
-using MW5.Plugins.Symbology.Controls.ColorPicker;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
+using MW5.UI.Controls;
+using MW5.UI.Enums;
 
 namespace MW5.Plugins.Symbology.Forms.Style
 {

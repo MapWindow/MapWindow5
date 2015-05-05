@@ -125,9 +125,6 @@
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ImageCombo\ImageComboBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\InfoTreeViewBase.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -164,7 +161,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Enums.cs" />
-    <Compile Include="Controls\ImageCombo\ImageComboItem.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Helpers\ComboBoxHelper.cs" />
@@ -186,27 +182,6 @@
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Services\LabelStylerRenderer.cs" />
     <Compile Include="Helpers\LabelHelper.cs" />
-    <Compile Include="Controls\ColorPicker\Office2007ColorPicker.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Controls\ColorPicker\Office2007ColorPicker.Designer.cs">
-      <DependentUpon>Office2007ColorPicker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPicker\Office2007ColorPlate.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ColorPicker\Office2007ColorPlate.Designer.cs">
-      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ColorPicker\Office2007MenuHelper.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\ColorPicker\Office2007MenuHelper.designer.cs">
-      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\ImageCombo\ImageCombo.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\ListControls\CharacterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -245,12 +220,6 @@
     </Compile>
     <Compile Include="Controls\ScaleControl.Designer.cs">
       <DependentUpon>ScaleControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\TransparencyControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\TransparencyControl.Designer.cs">
-      <DependentUpon>TransparencyControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Categories\AddCategoriesForm.cs">
       <SubType>Form</SubType>
@@ -452,12 +421,6 @@
     <EmbeddedResource Include="Controls\AttributesControl.resx">
       <DependentUpon>AttributesControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ColorPicker\Office2007ColorPlate.resx">
-      <DependentUpon>Office2007ColorPlate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ColorPicker\Office2007MenuHelper.resx">
-      <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DynamicVisibilityControl.resx">
       <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -487,9 +450,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ScaleControl.resx">
       <DependentUpon>ScaleControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\TransparencyControl.resx">
-      <DependentUpon>TransparencyControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Categories\AddCategoriesForm.resx">
       <DependentUpon>AddCategoriesForm.cs</DependentUpon>

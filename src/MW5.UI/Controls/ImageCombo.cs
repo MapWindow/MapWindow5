@@ -16,22 +16,19 @@
 // Date            Changed By      Notes
 // ********************************************************************************************************
 
-using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Symbology.Helpers;
+using MW5.UI.Enums;
 
-namespace MW5.Plugins.Symbology.Controls.ImageCombo
+namespace MW5.UI.Controls
 {
     /// <summary>
     /// Image combo to store the icons for symbology plug-in
     /// </summary>
-    internal class ImageCombo : ImageComboBase
+    public class ImageCombo : ImageComboBase
     {
         private ImageComboStyle _style;
         
