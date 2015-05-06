@@ -18,6 +18,23 @@ namespace MW5.Plugins.Identifier.Views
             _context = context;
 
             view.ModeChanged += OnIdentifierModeChanged;
+            view.ShapeSelected += OnShapeSelected;
+        }
+
+        private void OnShapeSelected(object sender, Controls.ShapeEventArgs e)
+        {
+            var shapes = _context.Map.IdentifiedShapes;
+            shapes.Clear();
+            shapes.Add(e.LayerHandle, e.ShapeIndex);
+
+            if (View.ZoomToShape)
+            {
+                _context.Map.ZoomToShape(e.LayerHandle, e.ShapeIndex);
+            }
+            else
+            {
+                _context.Map.Redraw(RedrawType.SkipDataLayers);    
+            }
         }
 
         private void OnIdentifierModeChanged()

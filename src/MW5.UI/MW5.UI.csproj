@@ -87,7 +87,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ImageComboItem.cs" />
-    <Compile Include="Controls\InfoTreeViewBase.cs">
+    <Compile Include="Controls\TwoColumnTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\NetColorPicker.cs">

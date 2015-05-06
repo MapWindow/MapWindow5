@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Events;
+using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -16,32 +19,25 @@ namespace MW5.Plugins.Identifier.Views
 {
     public partial class IdentifierDockPanel: DockPanelControlBase, IIdentifierView
     {
-        private readonly IAppContext _context;
         public event Action ModeChanged;
+        public event EventHandler<ShapeEventArgs> ShapeSelected;
 
         public IdentifierDockPanel(IAppContext context)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
-
             InitializeComponent();
 
-            infoTreeViewBase1.CreateColumns();
+            _treeView.CreateColumns();
 
             InitModeCombo();
 
-            Resize += IdentifierDockPanel_Resize;
-        }
+            _treeView.Initialize(context);
 
-        private void IdentifierDockPanel_Resize(object sender, EventArgs e)
-        {
-            const int padding = 20;
-            int cmnWidth = (Width - padding) / 2;
-            
-            infoTreeViewBase1.Columns[1].Width = cmnWidth;
-            infoTreeViewBase1.Columns[0].Width = cmnWidth;
-        }
+            _treeView.AfterSelect += NodeAfterSelect;
 
+            toolZoomToShape.Tag = 0;
+            toolZoomToShape.Click += (s, e) => { toolZoomToShape.Checked = !toolZoomToShape.Checked; };
+        }
+        
         private void InitModeCombo()
         {
             _cboIdentifierMode.AddItemsFromEnum<IdentifierPluginMode>();
@@ -49,81 +45,24 @@ namespace MW5.Plugins.Identifier.Views
             _cboIdentifierMode.SelectedIndexChanged += (s, e) => FireModeChanged();
         }
 
+        public void UpdateView()
+        {
+            _treeView.UpdateView();
+        }
+
         public IdentifierPluginMode Mode
         {
             get { return _cboIdentifierMode.GetValue<IdentifierPluginMode>(); }
         }
 
-        public void UpdateView()
+        public bool ZoomToShape
         {
-            infoTreeViewBase1.Nodes.Clear();
-
-            var root = GetLayerData();
-
-            infoTreeViewBase1.AddSubItems(infoTreeViewBase1.Nodes, root);
-
-            infoTreeViewBase1.ExpandAll();
-        }
-
-        private NodeData GetLayerData()
-        {
-            var root = new NodeData("Layers");
-
-            var layers = _context.Map.IdentifiedShapes.Select(item => item.LayerHandle).Distinct();
-            foreach (var layerHandle in layers)
-            {
-                AddLayerNode(root, layerHandle);
-            }
-
-            return root;
-        }
-
-        private void AddLayerNode(NodeData root, int layerHandle)
-        {
-            var layer = _context.Map.Layers.ItemByHandle(layerHandle);
-            if (layer == null)
-            {
-                return;
-            }
-            
-            var fs = layer.FeatureSet;
-
-            if (fs == null)
-            {
-                return;
-            }
-
-            var layerNode = new NodeData(layer.Name);
-
-            AddShapeNodes(layerNode, fs, layerHandle);
-
-            root.AddSubItem(layerNode);
-        }
-
-        private void AddShapeNodes(NodeData layerNode, IFeatureSet fs, int layerHandle)
-        {
-            var shapes = _context.Map.IdentifiedShapes
-                            .Where(item => item.LayerHandle == layerHandle)
-                            .Select(item => item.ShapeIndex)
-                            .ToList();
-
-            foreach (var shapeIndex in shapes)
-            {
-                var nodeShape = layerNode.AddSubItem("Shape index", shapeIndex.ToString());
-
-                var fields = fs.Table.Fields;
-                for (int i = 0; i < fields.Count; i++)
-                {
-                    var fld = fields[i];
-                    var value = fs.Table.CellValue(i, shapeIndex);
-                    nodeShape.AddSubItem(fld.Name, value != null ? value.ToString(): "<null>");
-                }
-            }
+            get { return toolZoomToShape.Checked; }
         }
 
         public void Clear()
         {
-            infoTreeViewBase1.Nodes.Clear();
+            _treeView.Nodes.Clear();
         }
 
         private void FireModeChanged()
@@ -132,6 +71,24 @@ namespace MW5.Plugins.Identifier.Views
             if (handler != null)
             {
                 handler();
+            }
+        }
+
+        private void NodeAfterSelect(object sender, EventArgs e)
+        {
+            var data = _treeView.SelectedNodeMetadata;
+            if (data != null && data.NodeType == IdentifierNodeType.Geometry)
+            {
+                FireShapeSelected(data.LayerHandle, data.ShapeIndex);
+            }
+        }
+
+        private void FireShapeSelected(int layerHandle, int shapeIndex)
+        {
+            var handler = ShapeSelected;
+            if (handler != null)
+            {
+                handler(this, new ShapeEventArgs(layerHandle, shapeIndex));
             }
         }
 

@@ -10,7 +10,7 @@ using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public class VectorInfoTreeView : InfoTreeViewBase
+    public class VectorInfoTreeView : TwoColumnTreeView
     {
         public void Initialize(ILayer layer)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace MW5.UI.Controls
@@ -7,20 +8,24 @@ namespace MW5.UI.Controls
     {
         private List<NodeData> _subItems;
 
-        public NodeData(string name)
-        {
-            Name = name;
-            Value = string.Empty;
-        }
+        public NodeData(string name) :
+            this(name, string.Empty) { }
 
         public NodeData(string name, string value)
         {
             Name = name;
             Value = value;
+            ImageIndex = -1;
+            Expanded = true;
+            LargerHeight = false;
         }
 
         public string Name { get; private set; }
-        public string Value { get; private set; }
+        public string Value { get; set; }
+        public int ImageIndex { get; set; }
+        public bool Expanded { get; set; }
+        public bool LargerHeight { get; set; }
+        public object Metadata { get; set; }
 
         public void AddSubItem(NodeData pair)
         {

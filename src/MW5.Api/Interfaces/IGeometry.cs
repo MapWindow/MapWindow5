@@ -19,6 +19,7 @@ namespace MW5.Api.Interfaces
         string IsValidReason { get; }
         double Length { get; }
         double Perimeter { get; }
+        double Area { get; }
         IGeometry Boundary();
         IGeometry Buffer(double distance, int numSegments);
 

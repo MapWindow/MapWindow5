@@ -17,7 +17,7 @@ using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public partial class RasterInfoTreeView : InfoTreeViewBase
+    public partial class RasterInfoTreeView : TwoColumnTreeView
     {
         public RasterInfoTreeView()
         {

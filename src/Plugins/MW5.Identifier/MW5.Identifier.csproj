@@ -98,6 +98,8 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\IdentifierNodeMetadata.cs" />
+    <Compile Include="Controls\ShapeEventArgs.cs" />
     <Compile Include="Enums\EnumConverter.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Listeners\MapListener.cs" />
@@ -122,6 +124,9 @@
       <DependentUpon>IdentifierDockPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IdentifierPresenter.cs" />
+    <Compile Include="Controls\IdentifierTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\IIdentifierView.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +173,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_clear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_point.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_polygon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_calculator16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_clear24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_zoom_to_layer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

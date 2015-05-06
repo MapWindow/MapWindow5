@@ -126,6 +126,11 @@ namespace MW5.Api.Concrete
             get { return _shape.Perimeter; }
         }
 
+        public double Area
+        {
+            get { return _shape.Area; }
+        }
+
         public IGeometry Boundary()
         {
             return new Geometry(_shape.Boundary());
