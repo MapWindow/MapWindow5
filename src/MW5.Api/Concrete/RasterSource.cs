@@ -203,7 +203,17 @@ namespace MW5.Api.Concrete
                 {
                     return RenderingType.Grid;
                 }
-                
+
+                if (_image.ForceSingleBandRendering)
+                {
+                    return RenderingType.Grayscale;
+                }
+
+                if (_image.UseRgbBandMapping)
+                {
+                    return RenderingType.Rgb;
+                }
+
                 return _image.NoBands == 1 ? RenderingType.Grayscale : RenderingType.Rgb;
             }
         }
@@ -213,11 +223,25 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                // TODO: just a stub; shoud be stored in the IImage object instead
                 var scheme = new RasterColorScheme();
-                scheme.AddInterval(new RasterInterval() {LowColor = Color.Red, Caption = "Red: Band 1"});
-                scheme.AddInterval(new RasterInterval() { LowColor = Color.Green, Caption = "Green: Band 2" });
-                scheme.AddInterval(new RasterInterval() { LowColor = Color.Blue, Caption = "Blue: Band 3" });
+
+                // default RGB, there is no active remapping                    
+                scheme.AddInterval(new RasterInterval() { LowColor = Color.Red, Caption = "Band 1 (Red)" });
+                scheme.AddInterval(new RasterInterval() { LowColor = Color.Green, Caption = "Band 2 (Green)" });
+                scheme.AddInterval(new RasterInterval() { LowColor = Color.Blue, Caption = "Band 3 (Blue)" });
+
+                if (_image.UseRgbBandMapping)
+                {
+                    string name = GetBandFullName(_image.RedBandIndex);
+                    scheme[0].Caption = string.IsNullOrWhiteSpace(name) ? "<None>" : name;
+
+                    name = GetBandFullName(_image.GreenBandIndex);
+                    scheme[1].Caption = string.IsNullOrWhiteSpace(name) ? "<None>" : name;
+
+                    name = GetBandFullName(_image.BlueBandIndex);
+                    scheme[2].Caption = string.IsNullOrWhiteSpace(name) ? "<None>" : name;
+                }
+                
                 return scheme;
             }
         }
@@ -228,6 +252,7 @@ namespace MW5.Api.Concrete
             {
                 var scheme = new RasterColorScheme();
                 
+                // TODO: udpate
                 scheme.AddInterval(new RasterInterval()
                 {
                     LowColor = Color.White,
@@ -272,6 +297,17 @@ namespace MW5.Api.Concrete
         {
             get { return _image.ForceSingleBandRendering; }
             set { _image.ForceSingleBandRendering = value; }
+        }
+
+        public string GetBandFullName(int bandIndex)
+        {
+            var band = _image.Band[bandIndex];
+            if (band != null)
+            {
+                return "Band " + bandIndex + " (" + band.ColorInterpretation + ")";
+            }
+
+            return string.Empty;
         }
 
         public RasterBand ActiveBand

@@ -133,7 +133,8 @@ namespace MW5.Api.Legend
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_symbologyCaption))
+                // TODO: restore
+                //if (string.IsNullOrWhiteSpace(_symbologyCaption))
                 {
                     if (IsVector)
                     {
@@ -153,7 +154,7 @@ namespace MW5.Api.Legend
                             case RenderingType.Rgb:
                                 return "RGB";
                             case RenderingType.Grayscale:
-                                return "Band 1: greyscale";
+                                return string.Format(raster.GetBandFullName(raster.ActiveBandIndex)) + ": greyscale";
                         }
                     }
                 }

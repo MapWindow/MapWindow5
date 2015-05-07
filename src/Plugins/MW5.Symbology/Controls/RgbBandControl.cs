@@ -47,22 +47,22 @@ namespace MW5.Plugins.Symbology.Controls
 
         public void ApplyChanges()
         {
-            _raster.RedBandIndex = cboRed.SelectedIndex + 1;
-            _raster.GreenBandIndex = cboGreen.SelectedIndex + 1;
-            _raster.BlueBandIndex = cboBlue.SelectedIndex + 1;
+            _raster.RedBandIndex = cboRed.SelectedIndex;
+            _raster.GreenBandIndex = cboGreen.SelectedIndex;
+            _raster.BlueBandIndex = cboBlue.SelectedIndex;
             _raster.UseRgbBandMapping = true;
         }
 
         private void InitComboBoxes()
         {
-            cboRed.AddRasterBands(_raster);
-            cboRed.SetSelectedIndexSafe(_raster.RedBandIndex - 1);
+            cboRed.AddRasterBands(_raster, true);
+            cboRed.SetSelectedIndexSafe(_raster.RedBandIndex);
 
-            cboGreen.AddRasterBands(_raster);
-            cboGreen.SetSelectedIndexSafe(_raster.GreenBandIndex - 1);
+            cboGreen.AddRasterBands(_raster, true);
+            cboGreen.SetSelectedIndexSafe(_raster.GreenBandIndex);
 
-            cboBlue.AddRasterBands(_raster);
-            cboBlue.SetSelectedIndexSafe(_raster.BlueBandIndex - 1);
+            cboBlue.AddRasterBands(_raster, true);
+            cboBlue.SetSelectedIndexSafe(_raster.BlueBandIndex);
         }
     }
 }

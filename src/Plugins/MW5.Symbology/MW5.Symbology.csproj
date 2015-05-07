@@ -165,7 +165,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
-    <Compile Include="Helpers\SymbologyComboBoxHelper.cs" />
+    <Compile Include="Helpers\RasterComboBoxHelper.cs" />
     <Compile Include="Helpers\RectangleHelper.cs" />
     <Compile Include="Helpers\TrackbarHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

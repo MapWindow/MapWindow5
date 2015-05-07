@@ -53,7 +53,6 @@ namespace MW5.Api.Interfaces
 
         RasterBand ActiveBand { get; }
 
-        // temporary
         RasterColorScheme RgbBandMapping { get; }
 
         RasterColorScheme GrayScaleColorScheme { get; }
@@ -69,6 +68,8 @@ namespace MW5.Api.Interfaces
         bool UseRgbBandMapping { get; set; }
 
         bool ForceSingleBandRendering { get; set; }
+
+        string GetBandFullName(int bandIndex);
 
         //bool AllowHillshade { get; set; }
 

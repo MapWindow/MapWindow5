@@ -65,6 +65,8 @@ namespace MW5.Plugins.Symbology.Views
             View.UiToModel();
 
             var colors = View.Colors;
+            _raster.ForceSingleBandRendering = false;
+            _raster.UseRgbBandMapping = false;
 
             switch (colors.Rendering)
             {
@@ -75,6 +77,7 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterRendering.MultiBandRgb:
                     _raster.AllowGridRendering = GridRendering.Never;
+                    _raster.UseRgbBandMapping = true;
                     break;
                 case RasterRendering.BuiltInColorTable:
                     _raster.AllowGridRendering = GridRendering.ForGridsOnly;

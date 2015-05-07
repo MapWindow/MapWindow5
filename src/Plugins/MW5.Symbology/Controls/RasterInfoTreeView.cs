@@ -106,8 +106,11 @@ namespace MW5.Plugins.Symbology.Controls
                 var bandNode = new NodeData("Band " + i);
                 bandNode.AddSubItem("Data type", band.DataType.ToString());
                 bandNode.AddSubItem("Unit type", band.UnitType);
-                bandNode.AddSubItem("Minimum", band.Minimum);
-                bandNode.AddSubItem("Maximum", band.Maximum);
+                
+                // TODO: restore; temporarily commented
+                //bandNode.AddSubItem("Minimum", band.Minimum);
+                //bandNode.AddSubItem("Maximum", band.Maximum);
+
                 bandNode.AddSubItem("No data value", band.NoDataValue.ToString(CultureInfo.InvariantCulture));
                 bandNode.AddSubItem("Color interpretation", band.ColorInterpretation.ToString());
                 bandNode.AddSubItem("Overview count", band.Overviews.Count);
