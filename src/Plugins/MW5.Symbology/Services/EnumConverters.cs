@@ -34,10 +34,10 @@ namespace MW5.Plugins.Symbology.Services
             {
                 case RasterRendering.SingleBand:
                     return "Single band greyscale";
-                case RasterRendering.MultiBand:
+                case RasterRendering.MultiBandRgb:
                     return "Multiband RGB";
-                case RasterRendering.PseudoColors:
-                    return "Single band pseudo colors";
+                case RasterRendering.ColorScheme:
+                    return "Single band color scheme";
                 case RasterRendering.BuiltInColorTable:
                     return "Built-in color table";
             }

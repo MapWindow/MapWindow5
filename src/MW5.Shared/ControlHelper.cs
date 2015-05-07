@@ -14,7 +14,7 @@ namespace MW5.Shared
             target.Left = source.Left;
             target.Top = source.Top;
             target.Width = source.Width;
-            target.Dock = source.Dock;
+            target.Height = source.Height;
         }
     }
 }

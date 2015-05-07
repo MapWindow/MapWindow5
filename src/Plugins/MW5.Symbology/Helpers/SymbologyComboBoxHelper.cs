@@ -8,7 +8,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
-    public static class ComboBoxHelper
+    public static class SymbologyComboBoxHelper
     {
         public static void AddRasterBands(this ComboBoxAdv combo, IRasterSource raster)
         {

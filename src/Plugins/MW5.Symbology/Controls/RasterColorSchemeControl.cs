@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -45,11 +47,17 @@ namespace MW5.Plugins.Symbology.Controls
 
             InitRenderModeCombo();
 
-            Helpers.ComboBoxHelper.AddRasterBands(cboSelectedBand, _raster);
+            cboSelectedBand.AddRasterBands(_raster);
 
             ChangeRenderingMode();
 
             cboClassification.SetValue(RasterClassification.EqualIntervals);
+
+            rgbBandControl1.Initialize(_raster);
+
+            groupSingleBand.Top = rgbBandControl1.Top;
+
+            cboSingleBand.AddRasterBands(_raster);
         }
 
         [Browsable(false)]
@@ -68,9 +76,9 @@ namespace MW5.Plugins.Symbology.Controls
                 {
                     case RasterRendering.SingleBand:
                     case RasterRendering.BuiltInColorTable:
-                    case RasterRendering.MultiBand:
+                    case RasterRendering.MultiBandRgb:
                         break;
-                    case RasterRendering.PseudoColors:
+                    case RasterRendering.ColorScheme:
                         _pseudoColorsScheme = value;
                         break;
                     default:
@@ -96,7 +104,15 @@ namespace MW5.Plugins.Symbology.Controls
 
         public int ActiveBandIndex
         {
-            get { return cboSelectedBand.SelectedIndex + 1; }
+            get
+            {
+                if (Rendering == RasterRendering.SingleBand)
+                {
+                    return cboSingleBand.SelectedIndex + 1;
+                }
+                
+                return cboSelectedBand.SelectedIndex + 1;
+            }
         }
 
         public RasterRendering Rendering
@@ -110,15 +126,22 @@ namespace MW5.Plugins.Symbology.Controls
         private void ChangeRenderingMode()
         {
             var rendering = Rendering;
-            groupPseudoColors.Visible = rendering == RasterRendering.PseudoColors;
+            groupPseudoColors.Visible = rendering == RasterRendering.ColorScheme;
+
+            rasterColorSchemeGrid1.Visible = Rendering == RasterRendering.BuiltInColorTable || 
+                                             Rendering == RasterRendering.ColorScheme;
+            
+            rgbBandControl1.Visible = Rendering == RasterRendering.MultiBandRgb;
+
+            groupSingleBand.Visible = Rendering == RasterRendering.SingleBand;
 
             switch (Rendering)
             {
+                case RasterRendering.MultiBandRgb:
                 case RasterRendering.SingleBand:
-                case RasterRendering.MultiBand:
                     ColorScheme = null;
                     break;
-                case RasterRendering.PseudoColors:
+                case RasterRendering.ColorScheme:
                     ColorScheme = _pseudoColorsScheme;
                     break;
                 case RasterRendering.BuiltInColorTable:
@@ -139,10 +162,10 @@ namespace MW5.Plugins.Symbology.Controls
 
             if (_raster.NumBands > 1)
             {
-                list.Add(RasterRendering.MultiBand);
+                list.Add(RasterRendering.MultiBandRgb);
             }
 
-            list.Add(RasterRendering.PseudoColors);
+            list.Add(RasterRendering.ColorScheme);
 
             if (_raster.HasBuiltInColorTable)
             {
@@ -162,6 +185,11 @@ namespace MW5.Plugins.Symbology.Controls
         public void UiToModelRaster()
         {
             _raster.UseHistogram = chkUseHistogram.Checked;
+
+            if (Rendering == RasterRendering.MultiBandRgb)
+            {
+                rgbBandControl1.ApplyChanges();
+            }
         }
 
         public IEnumerable<ToolStripItemCollection> ToolStrips

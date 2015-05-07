@@ -22,8 +22,8 @@
     public enum RasterRendering
     {
         SingleBand = 0,
-        MultiBand = 1,
-        PseudoColors = 2,
+        MultiBandRgb = 1,
+        ColorScheme = 2,
         BuiltInColorTable = 3,
     }
 

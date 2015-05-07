@@ -69,14 +69,20 @@ namespace MW5.Plugins.Symbology.Views
             switch (colors.Rendering)
             {
                 case RasterRendering.SingleBand:
-                case RasterRendering.MultiBand:
-                case RasterRendering.BuiltInColorTable:
-                    _raster.ForceGridRendering = false;
+                    _raster.AllowGridRendering = GridRendering.Never;
+                    _raster.ForceSingleBandRendering = true;
+                    _raster.ActiveBandIndex = colors.ActiveBandIndex;
                     break;
-                case RasterRendering.PseudoColors:
+                case RasterRendering.MultiBandRgb:
+                    _raster.AllowGridRendering = GridRendering.Never;
+                    break;
+                case RasterRendering.BuiltInColorTable:
+                    _raster.AllowGridRendering = GridRendering.ForGridsOnly;
+                    break;
+                case RasterRendering.ColorScheme:
                     if (colors.ColorScheme != null && _raster != null)
                     {
-                        _raster.ForceGridRendering = true;
+                        _raster.AllowGridRendering = GridRendering.ForceForAllFormats;
                         _raster.ActiveBandIndex = colors.ActiveBandIndex;
                         _raster.CustomColorScheme = colors.ColorScheme;
                     }

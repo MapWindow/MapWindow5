@@ -57,5 +57,13 @@ namespace MW5.UI.Helpers
                  }
              }
         }
+
+        public static void SetSelectedIndexSafe(this ComboBoxAdv comboBox, int selectedIndex)
+        {
+            if (selectedIndex >= 0 && selectedIndex < comboBox.Items.Count)
+            {
+                comboBox.SelectedIndex = selectedIndex;
+            }
+        }
     }
 }

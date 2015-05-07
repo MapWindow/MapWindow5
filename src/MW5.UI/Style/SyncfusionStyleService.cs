@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Shared;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
@@ -39,12 +40,55 @@ namespace MW5.UI.Style
 
         public void ApplyStyle(Control control)
         {
+            ApplyLabelStyle(control);
+
+            ApplyButtonStyle(control);
+
+            ApplyGradientPanelStyle(control);
+
+            ApplyComboBoxStyle(control);
+
+            ApplyTextBoxStyle(control);
+
+            ApplyCheckboxStyle(control);
+
+            ApplyRadioButtonStyle(control);
+
+            ApplyTreeViewStyle(control);
+
+            ApplySplitterStyle(control);
+
+            ApplyMultiColumnTreeViewStyle(control);
+
+            ApplyTrackBarStyle(control);
+
+            ApplyNumericUpDownStyle(control);
+
+            ApplyTabStyle(control);
+
+            ApplyGridStyle(control);
+
+            if (control is ComboBoxAdv)
+            {
+                // it will apply style to inner textbox otherwise which doesn't look good
+            }
+            else
+            {
+                ApplyStyle(control.Controls);
+            }
+        }
+
+        private void ApplyLabelStyle(Control control)
+        {
             var lbl = control as Label;
             if (lbl != null)
             {
                 lbl.BackColor = Color.Transparent;
             }
+        }
 
+        private void ApplyButtonStyle(Control control)
+        {
             var btn = control as ButtonAdv;
             if (btn != null)
             {
@@ -59,51 +103,56 @@ namespace MW5.UI.Style
                 btn.ForeColor = Color.Black;
 #endif
             }
+        }
 
+        private void ApplyGradientPanelStyle(Control control)
+        {
             var panel = control as GradientPanel;
             if (panel != null)
             {
                 panel.BorderStyle = BorderStyle.None;
             }
+        }
 
+        private void ApplyComboBoxStyle(Control control)
+        {
             var cbo = control as ComboBoxAdv;
             if (cbo != null)
             {
                 cbo.Style = _settings.VisualStyle;
             }
+        }
 
+        private void ApplyTextBoxStyle(Control control)
+        {
             var txt = control as TextBoxExt;
             if (txt != null)
             {
                 txt.Style = _settings.TextboxTheme;
             }
+        }
 
+        private void ApplyCheckboxStyle(Control control)
+        {
             var chk = control as CheckBoxAdv;
             if (chk != null)
             {
                 chk.Style = _settings.CheckboxStyle;
                 chk.MetroColor = Color.DimGray;
             }
+        }
 
+        private void ApplyRadioButtonStyle(Control control)
+        {
             var rad = control as RadioButtonAdv;
             if (rad != null)
             {
                 rad.Style = _settings.RadioButtonStyle;
             }
+        }
 
-            var grid = control as GridGroupingControl;
-            if (grid != null)
-            {
-#if STYLE2010   
-                    grid.GridOfficeScrollBars = OfficeScrollBars.Office2010;
-                    grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
-#else
-                grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
-                grid.GridVisualStyles = GridVisualStyles.Custom;
-                grid.TableOptions.GridVisualStyles = GridVisualStyles.Custom;
-#endif
-            }
-
+        private void ApplyTreeViewStyle(Control control)
+        {
             var tree = control as TreeViewAdv;
             if (tree != null)
             {
@@ -114,7 +163,10 @@ namespace MW5.UI.Style
                 tree.Style = TreeStyle.Metro;
 #endif
             }
+        }
 
+        private void ApplySplitterStyle(Control control)
+        {
             var splitter = control as SplitContainerAdv;
             if (splitter != null)
             {
@@ -124,13 +176,19 @@ namespace MW5.UI.Style
                 splitter.Style = Syncfusion.Windows.Forms.Tools.Enums.Style.Mozilla;
 #endif
             }
+        }
 
+        private void ApplyMultiColumnTreeViewStyle(Control control)
+        {
             var multiTreeView = control as MultiColumnTreeView;
             if (multiTreeView != null)
             {
                 multiTreeView.Style = MultiColumnVisualStyle.Metro;
             }
+        }
 
+        private void ApplyTrackBarStyle(Control control)
+        {
             var trackBar = control as TrackBarEx;
             if (trackBar != null)
             {
@@ -138,7 +196,10 @@ namespace MW5.UI.Style
                 trackBar.ChannelHeight = 6;
                 trackBar.ForeColor = Color.DimGray;
             }
+        }
 
+        private void ApplyNumericUpDownStyle(Control control)
+        {
             var upDown = control as NumericUpDownExt;
             if (upDown != null)
             {
@@ -148,17 +209,41 @@ namespace MW5.UI.Style
                 upDown.VisualStyle = VisualStyle.Metro;
 #endif
             }
+        }
 
-            ApplyTabStyle(control);
+        private void ApplyGridStyle(Control control)
+        {
+            var grid = control as GridGroupingControl;
+            if (grid != null)
+            {
+                WrapByGrdientPanel(grid);
+#if STYLE2010   
+                grid.GridOfficeScrollBars = OfficeScrollBars.Office2010;
+                grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
+#else
+                grid.GridOfficeScrollBars = OfficeScrollBars.Metro;
+                grid.GridVisualStyles = GridVisualStyles.Custom;
+                grid.TableOptions.GridVisualStyles = GridVisualStyles.Custom;
+#endif
+            }
+        }
 
-            if (control is ComboBoxAdv)
+        private void WrapByGrdientPanel(Control control)
+        {
+            // it seems there is no way to set decent looking border for TabControlAdv
+            // so let's insert gradient panel
+            var panel = new GradientPanel
             {
-                // it will apply style to inner textbox otherwise which doesn't look good
-            }
-            else
-            {
-                ApplyStyle(control.Controls);
-            }
+                BorderColor = Color.LightGray,
+                BorderStyle = BorderStyle.FixedSingle,
+            };
+
+            ControlHelper.MakeSameSize(control, panel);
+
+            control.Parent.Controls.Add(panel);
+            control.Parent.Controls.Remove(control);
+            panel.Controls.Add(control);
+            control.Dock = DockStyle.Fill;
         }
 
         private void ApplyTabStyle(Control control)
@@ -166,25 +251,11 @@ namespace MW5.UI.Style
             var tab = control as TabControlAdv;
             if (tab != null)
             {
-#if STYLE2010
-                    tab.TabStyle = typeof(TabRendererOffice2007);
-#else
-                // it seems there is no way to set decent looking border for TabControlAdv
-                // so let's insert gradient panel
-                var panel = new GradientPanel
-                {
-                    BorderColor = Color.LightGray,
-                    BorderStyle = BorderStyle.FixedSingle,
-                    Left = tab.Left,
-                    Top = tab.Top,
-                    Width = tab.Width,
-                    Height = tab.Height
-                };
+                WrapByGrdientPanel(tab);
 
-                tab.Parent.Controls.Add(panel);
-                tab.Parent.Controls.Remove(tab);
-                panel.Controls.Add(tab);
-                tab.Dock = DockStyle.Fill;
+#if STYLE2010
+                tab.TabStyle = typeof(TabRendererOffice2007);
+#else
 
                 tab.PersistTabState = false;
                 tab.BorderStyle = BorderStyle.None;

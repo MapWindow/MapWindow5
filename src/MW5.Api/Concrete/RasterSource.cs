@@ -189,10 +189,10 @@ namespace MW5.Api.Concrete
             set { _image.CustomColorScheme = value.GetInternal(); }
         }
 
-        public bool ForceGridRendering
+        public GridRendering AllowGridRendering
         {
-            get { return _image.AllowGridRendering == tkGridRendering.grForceForAllFormats; }
-            set { _image.AllowGridRendering = value ? tkGridRendering.grForceForAllFormats : tkGridRendering.grForGridsOnly; }
+            get { return (GridRendering)_image.AllowGridRendering; }
+            set { _image.AllowGridRendering = (tkGridRendering) value; }
         }
 
         public RenderingType RenderingType
@@ -242,6 +242,36 @@ namespace MW5.Api.Concrete
         public DatasourceDriver Driver
         {
             get { return new DatasourceDriver(_image.GdalDriver); }
+        }
+
+        public int RedBandIndex
+        {
+            get { return _image.RedBandIndex; }
+            set { _image.RedBandIndex = value; }
+        }
+
+        public int GreenBandIndex
+        {
+            get { return _image.GreenBandIndex; }
+            set { _image.GreenBandIndex = value; }
+        }
+
+        public int BlueBandIndex
+        {
+            get { return _image.BlueBandIndex; }
+            set { _image.BlueBandIndex = value; }
+        }
+
+        public bool UseRgbBandMapping
+        {
+            get { return _image.UseRgbBandMapping; }
+            set { _image.UseRgbBandMapping = value; }
+        }
+
+        public bool ForceSingleBandRendering
+        {
+            get { return _image.ForceSingleBandRendering; }
+            set { _image.ForceSingleBandRendering = value; }
         }
 
         public RasterBand ActiveBand

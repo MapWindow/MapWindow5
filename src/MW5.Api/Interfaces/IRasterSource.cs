@@ -47,7 +47,7 @@ namespace MW5.Api.Interfaces
         /// </summary>
         RasterColorScheme CustomColorScheme { get; set; }
 
-        bool ForceGridRendering { get; set; }
+        GridRendering AllowGridRendering { get; set; }
 
         RenderingType RenderingType { get; }
 
@@ -59,6 +59,16 @@ namespace MW5.Api.Interfaces
         RasterColorScheme GrayScaleColorScheme { get; }
 
         DatasourceDriver Driver { get; }
+
+        int RedBandIndex { get; set; }
+
+        int GreenBandIndex { get; set; }
+
+        int BlueBandIndex { get; set; }
+
+        bool UseRgbBandMapping { get; set; }
+
+        bool ForceSingleBandRendering { get; set; }
 
         //bool AllowHillshade { get; set; }
 

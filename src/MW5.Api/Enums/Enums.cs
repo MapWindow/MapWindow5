@@ -1411,4 +1411,11 @@
         CtrlZ = 1,
         RightMouseButton = 2,
     }
+
+    public enum GridRendering
+    {
+        ForceForAllFormats = 0,
+        ForGridsOnly = 1,
+        Never = 2,
+    }
 }

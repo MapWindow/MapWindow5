@@ -153,13 +153,19 @@
     <Compile Include="Controls\RasterInfoTreeView.Designer.cs">
       <DependentUpon>RasterInfoTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RgbBandControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\RgbBandControl.Designer.cs">
+      <DependentUpon>RgbBandControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\VectorInfoTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Enums.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
-    <Compile Include="Helpers\ComboBoxHelper.cs" />
+    <Compile Include="Helpers\SymbologyComboBoxHelper.cs" />
     <Compile Include="Helpers\RectangleHelper.cs" />
     <Compile Include="Helpers\TrackbarHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -443,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RasterColorSchemeControl.resx">
       <DependentUpon>RasterColorSchemeControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\RgbBandControl.resx">
+      <DependentUpon>RgbBandControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ScaleControl.resx">
       <DependentUpon>ScaleControl.cs</DependentUpon>
