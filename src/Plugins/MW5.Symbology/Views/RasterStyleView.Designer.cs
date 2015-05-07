@@ -1,4 +1,5 @@
-﻿using MW5.UI.Controls;
+﻿using System.Windows.Forms;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -42,8 +43,8 @@ namespace MW5.Plugins.Symbology.Views
             this._dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.chkLayerPreview = new System.Windows.Forms.CheckBox();
-            this.chkLayerVisible = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkLayerPreview = new CheckBox();
+            this.chkLayerVisible = new CheckBox();
             this.txtBriefInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label5 = new System.Windows.Forms.Label();
             this.btnProjectionDetails = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -58,6 +59,8 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbrTransparency = new System.Windows.Forms.TrackBar();
             this.tbrHue = new System.Windows.Forms.TrackBar();
             this.tbrSaturation = new System.Windows.Forms.TrackBar();
             this.tbrGamma = new System.Windows.Forms.TrackBar();
@@ -78,9 +81,9 @@ namespace MW5.Plugins.Symbology.Views
             this.label17 = new System.Windows.Forms.Label();
             this.tbrColorizeIntensity = new System.Windows.Forms.TrackBar();
             this.label16 = new System.Windows.Forms.Label();
-            this.clpColorize = new Office2007ColorPicker(this.components);
+            this.clpColorize = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkColorize = new System.Windows.Forms.CheckBox();
-            this.chkGreyScale = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkGreyScale = new CheckBox();
             this.tabPageAdv7 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.histogramControl1 = new MW5.Plugins.Symbology.Controls.HistogramControl();
             this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
@@ -99,12 +102,13 @@ namespace MW5.Plugins.Symbology.Views
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
+            this.chkUseTransparentColor = new CheckBox();
+            this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageAdv1.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLayerVisible)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
@@ -112,6 +116,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv4.SuspendLayout();
             this.tabPageAdv3.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrHue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrSaturation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrGamma)).BeginInit();
@@ -123,7 +128,6 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBox1.SuspendLayout();
             this.panelColorize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGreyScale)).BeginInit();
             this.tabPageAdv7.SuspendLayout();
             this.tabPageAdv5.SuspendLayout();
             this.tabPageAdv2.SuspendLayout();
@@ -236,18 +240,15 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkLayerVisible
             // 
-            this.chkLayerVisible.BeforeTouchSize = new System.Drawing.Size(63, 21);
             this.chkLayerVisible.Location = new System.Drawing.Point(433, 24);
-            this.chkLayerVisible.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkLayerVisible.Name = "chkLayerVisible";
             this.chkLayerVisible.Size = new System.Drawing.Size(63, 21);
             this.chkLayerVisible.TabIndex = 179;
             this.chkLayerVisible.Text = "Visible";
-            this.chkLayerVisible.ThemesEnabled = false;
             // 
             // txtBriefInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(101, 20);
             this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtBriefInfo.Location = new System.Drawing.Point(128, 145);
             this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -279,7 +280,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtProjection
             // 
-            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(101, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProjection.Location = new System.Drawing.Point(128, 104);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -300,7 +301,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtDatasourceName
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(101, 20);
             this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtDatasourceName.Location = new System.Drawing.Point(128, 63);
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -321,7 +322,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtLayerName
             // 
-            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(101, 20);
             this.txtLayerName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtLayerName.Location = new System.Drawing.Point(128, 24);
             this.txtLayerName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -362,6 +363,8 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageAdv3
             // 
+            this.tabPageAdv3.Controls.Add(this.clpTransparent);
+            this.tabPageAdv3.Controls.Add(this.chkUseTransparentColor);
             this.tabPageAdv3.Controls.Add(this.btnClearColorAdjustments);
             this.tabPageAdv3.Controls.Add(this.groupBox3);
             this.tabPageAdv3.Controls.Add(this.groupBox2);
@@ -389,6 +392,8 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.tbrTransparency);
             this.groupBox3.Controls.Add(this.tbrHue);
             this.groupBox3.Controls.Add(this.tbrSaturation);
             this.groupBox3.Controls.Add(this.tbrGamma);
@@ -405,6 +410,26 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBox3.TabIndex = 64;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Adjustments";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(248, 133);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 63;
+            this.label6.Text = "Transparency";
+            // 
+            // tbrTransparency
+            // 
+            this.tbrTransparency.AutoSize = false;
+            this.tbrTransparency.Location = new System.Drawing.Point(243, 149);
+            this.tbrTransparency.Maximum = 255;
+            this.tbrTransparency.Name = "tbrTransparency";
+            this.tbrTransparency.Size = new System.Drawing.Size(209, 24);
+            this.tbrTransparency.SmallChange = 10;
+            this.tbrTransparency.TabIndex = 62;
+            this.tbrTransparency.TickFrequency = 15;
             // 
             // tbrHue
             // 
@@ -645,14 +670,11 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkGreyScale
             // 
-            this.chkGreyScale.BeforeTouchSize = new System.Drawing.Size(150, 21);
-            this.chkGreyScale.Location = new System.Drawing.Point(35, 291);
-            this.chkGreyScale.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkGreyScale.Location = new System.Drawing.Point(265, 293);
             this.chkGreyScale.Name = "chkGreyScale";
-            this.chkGreyScale.Size = new System.Drawing.Size(150, 21);
+            this.chkGreyScale.Size = new System.Drawing.Size(139, 21);
             this.chkGreyScale.TabIndex = 57;
             this.chkGreyScale.Text = "Greyscale";
-            this.chkGreyScale.ThemesEnabled = false;
             // 
             // tabPageAdv7
             // 
@@ -723,6 +745,12 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // 
             // 
+            this.rasterInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rasterInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this.rasterInfoTreeView1.HelpTextControl.Name = "m_helpText";
+            this.rasterInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
+            this.rasterInfoTreeView1.HelpTextControl.TabIndex = 0;
+            this.rasterInfoTreeView1.HelpTextControl.Text = "help text";
             this.rasterInfoTreeView1.HideSelection = false;
             this.rasterInfoTreeView1.Location = new System.Drawing.Point(0, 0);
             this.rasterInfoTreeView1.Margin = new System.Windows.Forms.Padding(5);
@@ -735,6 +763,16 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.TabIndex = 0;
             this.rasterInfoTreeView1.Text = "rasterInfoTreeView1";
             this.rasterInfoTreeView1.ThemesEnabled = false;
+            // 
+            // 
+            // 
+            this.rasterInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
+            this.rasterInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.rasterInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this.rasterInfoTreeView1.ToolTipControl.Name = "m_toolTip";
+            this.rasterInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
+            this.rasterInfoTreeView1.ToolTipControl.TabIndex = 1;
+            this.rasterInfoTreeView1.ToolTipControl.Text = "toolTip";
             // 
             // tabPageAdv6
             // 
@@ -868,6 +906,29 @@ namespace MW5.Plugins.Symbology.Views
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyle = false;
             // 
+            // chkUseTransparentColor
+            // 
+            this.chkUseTransparentColor.Location = new System.Drawing.Point(35, 293);
+            this.chkUseTransparentColor.Name = "chkUseTransparentColor";
+            this.chkUseTransparentColor.Size = new System.Drawing.Size(137, 21);
+            this.chkUseTransparentColor.TabIndex = 65;
+            this.chkUseTransparentColor.Text = "Transparent color";
+            // 
+            // clpTransparent
+            // 
+            this.clpTransparent.Color = System.Drawing.Color.Black;
+            this.clpTransparent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpTransparent.DropDownHeight = 1;
+            this.clpTransparent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpTransparent.FormattingEnabled = true;
+            this.clpTransparent.IntegralHeight = false;
+            this.clpTransparent.Items.AddRange(new object[] {
+            "Color"});
+            this.clpTransparent.Location = new System.Drawing.Point(178, 293);
+            this.clpTransparent.Name = "clpTransparent";
+            this.clpTransparent.Size = new System.Drawing.Size(73, 21);
+            this.clpTransparent.TabIndex = 66;
+            // 
             // RasterStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -886,7 +947,6 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLayerVisible)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
@@ -895,6 +955,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageAdv3.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrHue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrSaturation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrGamma)).EndInit();
@@ -909,7 +970,6 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorize.ResumeLayout(false);
             this.panelColorize.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGreyScale)).EndInit();
             this.tabPageAdv7.ResumeLayout(false);
             this.tabPageAdv5.ResumeLayout(false);
             this.tabPageAdv2.ResumeLayout(false);
@@ -947,7 +1007,7 @@ namespace MW5.Plugins.Symbology.Views
         private ComboBoxAdv cboMaxScale;
         private ComboBoxAdv cboMinScale;
         private ComboBoxAdv cboDynamicScaleMode;
-        private CheckBoxAdv chkLayerVisible;
+        private CheckBox chkLayerVisible;
         private System.Windows.Forms.Label label12;
         private ComboBoxAdv cboDownsampling;
         private System.Windows.Forms.Label label11;
@@ -973,7 +1033,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox chkColorize;
         private Office2007ColorPicker clpColorize;
-        private CheckBoxAdv chkGreyScale;
+        private CheckBox chkGreyScale;
         private System.Windows.Forms.TrackBar tbrHue;
         private System.Windows.Forms.TrackBar tbrSaturation;
         private System.Windows.Forms.TrackBar tbrGamma;
@@ -988,5 +1048,9 @@ namespace MW5.Plugins.Symbology.Views
         private Controls.HistogramControl histogramControl1;
         private Controls.OverviewControl _overviewControl1;
         private SuperToolTip superToolTip1;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TrackBar tbrTransparency;
+        private Office2007ColorPicker clpTransparent;
+        private CheckBox chkUseTransparentColor;
     }
 }

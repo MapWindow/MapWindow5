@@ -301,6 +301,11 @@ namespace MW5.Api.Concrete
 
         public string GetBandFullName(int bandIndex)
         {
+            if (bandIndex < 1 || bandIndex > NumBands)
+            {
+                return string.Empty;
+            }
+
             var band = _image.Band[bandIndex];
             if (band != null)
             {

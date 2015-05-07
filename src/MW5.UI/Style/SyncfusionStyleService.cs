@@ -138,7 +138,7 @@ namespace MW5.UI.Style
             if (chk != null)
             {
                 chk.Style = _settings.CheckboxStyle;
-                chk.MetroColor = Color.DimGray;
+                chk.MetroColor = Color.Black;
             }
         }
 

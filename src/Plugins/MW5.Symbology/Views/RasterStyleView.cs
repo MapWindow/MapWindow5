@@ -134,10 +134,13 @@ namespace MW5.Plugins.Symbology.Views
             tbrHue.SetValue(_imageSource.Hue);
             tbrGamma.SetValue(_imageSource.Gamma * 20.0f);
             tbrColorizeIntensity.SetValue(_imageSource.ColorizeIntensity * 100.0f);
+            tbrTransparency.SetValue((float)(_imageSource.Transparency * 255.0f));
 
+            clpTransparent.Color = _imageSource.TransparentColorFrom;
             clpColorize.Color = _imageSource.ColorizeColor;
             chkGreyScale.Checked = _imageSource.Greyscale;
             chkColorize.Checked = _imageSource.ColorizeIntensity > 0.0f;
+            chkUseTransparentColor.Checked = _imageSource.UseTransparentColor;
         }
 
         private void ModelToUiRaster()
@@ -164,11 +167,23 @@ namespace MW5.Plugins.Symbology.Views
             _imageSource.Brightness = tbrBrightness.Value/20.0f;
             _imageSource.Contrast = tbrConstrast.Value / 20.0f;
             _imageSource.Saturation = tbrSaturation.Value / 20.0f;
+            _imageSource.Transparency = tbrTransparency.Value/255.0;
             _imageSource.Hue = tbrHue.Value;
             _imageSource.Gamma = tbrGamma.Value / 20.0f;
             _imageSource.ColorizeColor = clpColorize.Color;
             _imageSource.ColorizeIntensity = chkColorize.Checked ? tbrColorizeIntensity.Value / 100.0f : 0.0f;
             _imageSource.Greyscale = chkGreyScale.Checked;
+
+            if (chkUseTransparentColor.Checked)
+            {
+                _imageSource.TransparentColorFrom = clpTransparent.Color;
+                _imageSource.TransparentColorTo = clpTransparent.Color;
+                _imageSource.UseTransparentColor = true;
+            }
+            else
+            {
+                _imageSource.UseTransparentColor = false;
+            }
 
             _dynamicVisibilityControl1.ApplyChanges();
 
@@ -183,6 +198,7 @@ namespace MW5.Plugins.Symbology.Views
             tbrHue.Value = 0;
             tbrGamma.Value = 20;
             tbrColorizeIntensity.Value = 0;
+            tbrTransparency.Value = 255;
             chkColorize.Checked = false;
             chkGreyScale.Checked = false;
         }
