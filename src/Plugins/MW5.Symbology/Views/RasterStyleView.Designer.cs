@@ -55,7 +55,7 @@ namespace MW5.Plugins.Symbology.Views
             this.txtLayerName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this._colorSchemeControlSchemeControl = new MW5.Plugins.Symbology.Controls.RasterColorSchemeControl();
+            this._colorSchemeControl = new MW5.Plugins.Symbology.Controls.RasterColorSchemeControl();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -342,7 +342,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageAdv4
             // 
-            this.tabPageAdv4.Controls.Add(this._colorSchemeControlSchemeControl);
+            this.tabPageAdv4.Controls.Add(this._colorSchemeControl);
             this.tabPageAdv4.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
             this.tabPageAdv4.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv4.Location = new System.Drawing.Point(120, 1);
@@ -355,11 +355,11 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // _colorSchemeControl
             // 
-            this._colorSchemeControlSchemeControl.ColorScheme = null;
-            this._colorSchemeControlSchemeControl.Location = new System.Drawing.Point(6, 5);
-            this._colorSchemeControlSchemeControl.Name = "_colorSchemeControlSchemeControl";
-            this._colorSchemeControlSchemeControl.Size = new System.Drawing.Size(500, 433);
-            this._colorSchemeControlSchemeControl.TabIndex = 0;
+            this._colorSchemeControl.ColorScheme = null;
+            this._colorSchemeControl.Location = new System.Drawing.Point(6, 5);
+            this._colorSchemeControl.Name = "_colorSchemeControl";
+            this._colorSchemeControl.Size = new System.Drawing.Size(500, 433);
+            this._colorSchemeControl.TabIndex = 0;
             // 
             // tabPageAdv3
             // 
@@ -1021,7 +1021,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox chkLayerPreview;
         private ButtonAdv btnApply;
-        private Controls.RasterColorSchemeControl _colorSchemeControlSchemeControl;
+        private Controls.RasterColorSchemeControl _colorSchemeControl;
         private Controls.DynamicVisibilityControl _dynamicVisibilityControl1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label1;

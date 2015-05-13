@@ -92,7 +92,7 @@ namespace MW5.Api.Legend
                 g.FillRectangle(brush, r);
                 g.DrawRectangle(Pens.Gray, r);
 
-                DrawText(g, item.Caption, textRect, Font, Color.Black);
+                DrawText(g, item.ToString(), textRect, Font, Color.Black);
 
                 r.Y += Constants.CsItemHeightAndPad();
                 textRect.Y += Constants.CsItemHeightAndPad();

@@ -40,7 +40,7 @@ namespace MW5.Services.Concrete
 
         void IApplicationCallback.Error(string tagOfSender, string errorMsg)
         {
-            Debug("Error reported: " + errorMsg);
+            Debug(errorMsg);
         }
 
         void IApplicationCallback.Progress(string tagOfSender, int percent, string message)

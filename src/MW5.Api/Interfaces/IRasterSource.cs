@@ -87,6 +87,8 @@ namespace MW5.Api.Interfaces
 
         bool ReverseGreyScale { get; set; }
 
+        bool IgnoreColorTable { get; set; }
+
         //bool AllowHillshade { get; set; }
 
         //GridColorScheme GridProxyColorScheme { get; }

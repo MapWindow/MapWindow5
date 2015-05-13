@@ -55,10 +55,6 @@ namespace MW5.Plugins.Symbology.Controls
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
             rgbBandControl1.Initialize(_raster);
-
-            groupSingleBand.Top = rgbBandControl1.Top;
-
-            cboSingleBand.AddRasterBands(_raster);
         }
 
         [Browsable(false)]
@@ -91,13 +87,19 @@ namespace MW5.Plugins.Symbology.Controls
         public double BandMinValue
         {
             get { return txtMinimum.DoubleValue; }
-            set { txtMinimum.DoubleValue = value; }
+            set
+            {
+                txtMinimum.DoubleValue = Math.Floor(value * 100.0) / 100.0;
+            }
         }
 
         public double BandMaxValue
         {
             get { return txtMaximum.DoubleValue; }
-            set { txtMaximum.DoubleValue = value; }
+            set
+            {
+                txtMaximum.DoubleValue = Math.Ceiling(value * 100.0) / 100.0; ;
+            }
         }
 
         public int SelectedPredefinedColorScheme
@@ -107,15 +109,7 @@ namespace MW5.Plugins.Symbology.Controls
 
         public int ActiveBandIndex
         {
-            get
-            {
-                if (Rendering == RasterRendering.SingleBand)
-                {
-                    return cboSingleBand.SelectedIndex + 1;
-                }
-                
-                return cboSelectedBand.SelectedIndex + 1;
-            }
+            get { return cboSelectedBand.SelectedIndex + 1; }
         }
 
         public RasterRendering Rendering
@@ -135,7 +129,6 @@ namespace MW5.Plugins.Symbology.Controls
                                              Rendering == RasterRendering.ColorScheme;
             
             rgbBandControl1.Visible = Rendering == RasterRendering.MultiBandRgb;
-            groupSingleBand.Visible = Rendering == RasterRendering.SingleBand;
             groupColorScheme.Visible = Rendering == RasterRendering.ColorScheme;
 
             switch (Rendering)
@@ -212,6 +205,7 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 yield return btnGenerateColorScheme;
                 yield return btnCalculateMinMax;
+                yield return btnDefaultMinMax;
             }
         }
 
@@ -220,8 +214,8 @@ namespace MW5.Plugins.Symbology.Controls
             var bandIndex = cboSelectedBand.SelectedIndex + 1;
             if (bandIndex >= 1)
             {
-                txtMinimum.DoubleValue = _raster.GetBandMinimum(bandIndex);
-                txtMaximum.DoubleValue = _raster.GetBandMaximum(bandIndex);
+                BandMinValue = _raster.GetBandMinimum(bandIndex);
+                BandMaxValue = _raster.GetBandMaximum(bandIndex);
             }
         }
 

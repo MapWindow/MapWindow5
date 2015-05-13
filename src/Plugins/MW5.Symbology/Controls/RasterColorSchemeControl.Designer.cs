@@ -42,15 +42,14 @@
             this.cboRasterRendering = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.label2 = new System.Windows.Forms.Label();
-            this.cboSingleBand = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.groupSingleBand = new System.Windows.Forms.GroupBox();
             this.chkAlphaRendering = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.chkHillShade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.groupColorScheme = new System.Windows.Forms.GroupBox();
-            this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
+            this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
             this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this.btnDefaultMinMax = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -58,8 +57,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboSingleBand)).BeginInit();
-            this.groupSingleBand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHillShade)).BeginInit();
             this.groupColorScheme.SuspendLayout();
@@ -68,6 +65,7 @@
             // 
             // groupMinMax
             // 
+            this.groupMinMax.Controls.Add(this.btnDefaultMinMax);
             this.groupMinMax.Controls.Add(this.btnCalculateMinMax);
             this.groupMinMax.Controls.Add(this.cboSelectedBand);
             this.groupMinMax.Controls.Add(this.txtMaximum);
@@ -76,7 +74,7 @@
             this.groupMinMax.Controls.Add(this.label15);
             this.groupMinMax.Location = new System.Drawing.Point(276, 50);
             this.groupMinMax.Name = "groupMinMax";
-            this.groupMinMax.Size = new System.Drawing.Size(212, 151);
+            this.groupMinMax.Size = new System.Drawing.Size(212, 166);
             this.groupMinMax.TabIndex = 18;
             this.groupMinMax.TabStop = false;
             this.groupMinMax.Text = "Selected band";
@@ -85,11 +83,11 @@
             // 
             this.btnCalculateMinMax.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnCalculateMinMax.IsBackStageButton = false;
-            this.btnCalculateMinMax.Location = new System.Drawing.Point(120, 121);
+            this.btnCalculateMinMax.Location = new System.Drawing.Point(120, 132);
             this.btnCalculateMinMax.Name = "btnCalculateMinMax";
             this.btnCalculateMinMax.Size = new System.Drawing.Size(75, 23);
             this.btnCalculateMinMax.TabIndex = 10;
-            this.btnCalculateMinMax.Text = "Calculate";
+            this.btnCalculateMinMax.Text = "Custom...";
             // 
             // cboSelectedBand
             // 
@@ -195,7 +193,7 @@
             // chkUseHistogram
             // 
             this.chkUseHistogram.BeforeTouchSize = new System.Drawing.Size(133, 21);
-            this.chkUseHistogram.Location = new System.Drawing.Point(370, 376);
+            this.chkUseHistogram.Location = new System.Drawing.Point(370, 391);
             this.chkUseHistogram.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkUseHistogram.Name = "chkUseHistogram";
             this.chkUseHistogram.Size = new System.Drawing.Size(133, 21);
@@ -212,30 +210,10 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Color scheme";
             // 
-            // cboSingleBand
-            // 
-            this.cboSingleBand.BeforeTouchSize = new System.Drawing.Size(204, 21);
-            this.cboSingleBand.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboSingleBand.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboSingleBand.Location = new System.Drawing.Point(21, 32);
-            this.cboSingleBand.Name = "cboSingleBand";
-            this.cboSingleBand.Size = new System.Drawing.Size(204, 21);
-            this.cboSingleBand.TabIndex = 20;
-            // 
-            // groupSingleBand
-            // 
-            this.groupSingleBand.Controls.Add(this.cboSingleBand);
-            this.groupSingleBand.Location = new System.Drawing.Point(15, 251);
-            this.groupSingleBand.Name = "groupSingleBand";
-            this.groupSingleBand.Size = new System.Drawing.Size(243, 69);
-            this.groupSingleBand.TabIndex = 21;
-            this.groupSingleBand.TabStop = false;
-            this.groupSingleBand.Text = "Active band";
-            // 
             // chkAlphaRendering
             // 
             this.chkAlphaRendering.BeforeTouchSize = new System.Drawing.Size(107, 21);
-            this.chkAlphaRendering.Location = new System.Drawing.Point(370, 349);
+            this.chkAlphaRendering.Location = new System.Drawing.Point(370, 364);
             this.chkAlphaRendering.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkAlphaRendering.Name = "chkAlphaRendering";
             this.chkAlphaRendering.Size = new System.Drawing.Size(107, 21);
@@ -246,7 +224,7 @@
             // chkHillShade
             // 
             this.chkHillShade.BeforeTouchSize = new System.Drawing.Size(88, 21);
-            this.chkHillShade.Location = new System.Drawing.Point(276, 376);
+            this.chkHillShade.Location = new System.Drawing.Point(276, 391);
             this.chkHillShade.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkHillShade.Name = "chkHillShade";
             this.chkHillShade.Size = new System.Drawing.Size(88, 21);
@@ -259,23 +237,12 @@
             this.groupColorScheme.Controls.Add(this.cboClassification);
             this.groupColorScheme.Controls.Add(this.colorSchemeCombo1);
             this.groupColorScheme.Controls.Add(this.btnGenerateColorScheme);
-            this.groupColorScheme.Location = new System.Drawing.Point(276, 207);
+            this.groupColorScheme.Location = new System.Drawing.Point(276, 222);
             this.groupColorScheme.Name = "groupColorScheme";
             this.groupColorScheme.Size = new System.Drawing.Size(212, 124);
             this.groupColorScheme.TabIndex = 24;
             this.groupColorScheme.TabStop = false;
             this.groupColorScheme.Text = "Color scheme";
-            // 
-            // chkReverse
-            // 
-            this.chkReverse.BeforeTouchSize = new System.Drawing.Size(88, 21);
-            this.chkReverse.Location = new System.Drawing.Point(276, 349);
-            this.chkReverse.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkReverse.Name = "chkReverse";
-            this.chkReverse.Size = new System.Drawing.Size(88, 21);
-            this.chkReverse.TabIndex = 25;
-            this.chkReverse.Text = "Reverse";
-            this.chkReverse.ThemesEnabled = false;
             // 
             // colorSchemeCombo1
             // 
@@ -288,6 +255,17 @@
             this.colorSchemeCombo1.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
             this.colorSchemeCombo1.Size = new System.Drawing.Size(180, 21);
             this.colorSchemeCombo1.TabIndex = 0;
+            // 
+            // chkReverse
+            // 
+            this.chkReverse.BeforeTouchSize = new System.Drawing.Size(88, 21);
+            this.chkReverse.Location = new System.Drawing.Point(276, 364);
+            this.chkReverse.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkReverse.Name = "chkReverse";
+            this.chkReverse.Size = new System.Drawing.Size(88, 21);
+            this.chkReverse.TabIndex = 25;
+            this.chkReverse.Text = "Reverse";
+            this.chkReverse.ThemesEnabled = false;
             // 
             // rgbBandControl1
             // 
@@ -315,6 +293,16 @@
             this.rasterColorSchemeGrid1.ToolTipMaxWidth = 450;
             this.rasterColorSchemeGrid1.WrapText = true;
             // 
+            // btnDefaultMinMax
+            // 
+            this.btnDefaultMinMax.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnDefaultMinMax.IsBackStageButton = false;
+            this.btnDefaultMinMax.Location = new System.Drawing.Point(39, 132);
+            this.btnDefaultMinMax.Name = "btnDefaultMinMax";
+            this.btnDefaultMinMax.Size = new System.Drawing.Size(75, 23);
+            this.btnDefaultMinMax.TabIndex = 11;
+            this.btnDefaultMinMax.Text = "Default";
+            // 
             // RasterColorSchemeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -323,7 +311,6 @@
             this.Controls.Add(this.groupColorScheme);
             this.Controls.Add(this.chkHillShade);
             this.Controls.Add(this.chkAlphaRendering);
-            this.Controls.Add(this.groupSingleBand);
             this.Controls.Add(this.rgbBandControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupMinMax);
@@ -341,8 +328,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboSingleBand)).EndInit();
-            this.groupSingleBand.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHillShade)).EndInit();
             this.groupColorScheme.ResumeLayout(false);
@@ -365,8 +350,6 @@
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboClassification;
         private System.Windows.Forms.Label label2;
         private RgbBandControl rgbBandControl1;
-        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboSingleBand;
-        private System.Windows.Forms.GroupBox groupSingleBand;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkAlphaRendering;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkHillShade;
         private Syncfusion.Windows.Forms.ButtonAdv btnCalculateMinMax;
@@ -376,5 +359,6 @@
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupColorScheme;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverse;
+        private Syncfusion.Windows.Forms.ButtonAdv btnDefaultMinMax;
     }
 }

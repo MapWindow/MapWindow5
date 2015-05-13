@@ -32,7 +32,10 @@ namespace MW5.Shared
         {
             try
             {
-                Process.Start(path);
+                string args = string.Format("/e, /select, \"{0}\"", path);
+
+                ProcessStartInfo info = new ProcessStartInfo {FileName = "explorer", Arguments = args};
+                Process.Start(info);
             }
             catch (Exception ex)
             {

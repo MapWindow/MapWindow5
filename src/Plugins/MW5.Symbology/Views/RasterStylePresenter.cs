@@ -12,6 +12,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
+using MW5.Projections.UI.Forms;
 using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Views
@@ -31,21 +32,30 @@ namespace MW5.Plugins.Symbology.Views
         {
             switch (command)
             {
+                case RasterCommand.DefaultMinMax:
+                    {
+                        var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
+                        View.ColorSchemeControl.BandMinValue = band.Minimum;
+                        View.ColorSchemeControl.BandMaxValue = band.Maximum; 
+                        break;
+                    }
                 case RasterCommand.ProjectionDetails:
-                    using (var form = new Projections.UI.Forms.ProjectionPropertiesForm(Model.Projection))
+                    using (var form = new ProjectionPropertiesForm(Model.Projection))
                     {
                         AppViewFactory.Instance.ShowChildView(form);
                     }
                     break;
                 case RasterCommand.CalculateMinMax:
-                    var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
-                    var model = new RasterMinMaxModel(band);
-                    if (_context.Container.Run<RasterMinMaxPresenter, RasterMinMaxModel>(model))
                     {
-                        View.ColorSchemeControl.BandMinValue = model.Min;
-                        View.ColorSchemeControl.BandMaxValue = model.Max;
+                        var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
+                        var model = new RasterMinMaxModel(band);
+                        if (_context.Container.Run<RasterMinMaxPresenter, RasterMinMaxModel>(model))
+                        {
+                            View.ColorSchemeControl.BandMinValue = model.Min;
+                            View.ColorSchemeControl.BandMaxValue = model.Max;
+                        }
+                        break;
                     }
-                    break;
                 case RasterCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
                     var colorView = View.ColorSchemeControl;
@@ -70,6 +80,7 @@ namespace MW5.Plugins.Symbology.Views
             var colors = View.ColorSchemeControl;
             _raster.ForceSingleBandRendering = false;
             _raster.UseRgbBandMapping = false;
+            _raster.IgnoreColorTable = true;
 
             switch (colors.Rendering)
             {
@@ -84,12 +95,13 @@ namespace MW5.Plugins.Symbology.Views
                     _raster.UseRgbBandMapping = true;
                     break;
                 case RasterRendering.BuiltInColorTable:
-                    _raster.AllowGridRendering = GridRendering.ForGridsOnly;
+                    _raster.AllowGridRendering = GridRendering.Never;
+                    _raster.IgnoreColorTable = false;
                     break;
                 case RasterRendering.ColorScheme:
+                    _raster.AllowGridRendering = GridRendering.ForceForAllFormats;
                     if (colors.ColorScheme != null && _raster != null)
                     {
-                        //_raster.AllowGridRendering = GridRendering.ForceForAllFormats;
                         _raster.ActiveBandIndex = colors.ActiveBandIndex;
                         _raster.CustomColorScheme = colors.ColorScheme;
                     }

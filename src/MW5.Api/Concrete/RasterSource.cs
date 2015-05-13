@@ -358,6 +358,12 @@ namespace MW5.Api.Concrete
             set { _image.ReverseGreyscale = value; }
         }
 
+        public bool IgnoreColorTable
+        {
+            get { return _image.IgnoreColorTable; }
+            set { _image.IgnoreColorTable = value; }
+        }
+
         public RasterBand ActiveBand
         {
             get { return Bands[_image.SourceGridBandIndex]; }

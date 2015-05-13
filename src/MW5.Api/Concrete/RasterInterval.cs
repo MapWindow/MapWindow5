@@ -93,5 +93,25 @@ namespace MW5.Api.Concrete
             get { return _colorBreak.Caption; }
             set { _colorBreak.Caption = value; }
         }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrWhiteSpace(Caption))
+            {
+                return Caption;     // TODO: perhaps both caption and values are needed
+            }
+
+            string s = string.Empty;
+            if (LowValue != HighValue)
+            {
+                s += string.Format("{0} - {1}", LowValue, HighValue);
+            }
+            else
+            {
+                s += string.Format("{0}", LowValue);
+            }
+
+            return s;
+        }
     }
 }
