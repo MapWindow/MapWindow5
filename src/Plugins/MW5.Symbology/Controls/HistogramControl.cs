@@ -31,6 +31,8 @@ namespace MW5.Plugins.Symbology.Controls
 
         public void Initialize(IApplicationContainer container, IRasterSource raster)
         {
+            if (raster == null) return;
+
             if (container == null) throw new ArgumentNullException("container");
 
             _container = container;

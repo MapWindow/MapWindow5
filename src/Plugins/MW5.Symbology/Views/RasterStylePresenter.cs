@@ -76,6 +76,20 @@ namespace MW5.Plugins.Symbology.Views
             
             View.UiToModel();
 
+            ApplyRedneringMode();
+
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+
+            return true;
+        }
+
+        private void ApplyRedneringMode()
+        {
+            if (_raster == null)
+            {
+                return;
+            }
+            
             var colors = View.ColorSchemeControl;
             _raster.ForceSingleBandRendering = false;
             _raster.UseRgbBandMapping = false;
@@ -109,10 +123,6 @@ namespace MW5.Plugins.Symbology.Views
                     Logger.Current.Warn("Unexpected RasterRendering enum value: " + colors.Rendering);
                     break;
             }
-
-            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
-
-            return true;
         }
 
         public override bool ViewOkClicked()

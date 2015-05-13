@@ -39,12 +39,12 @@ namespace MW5.Plugins.Symbology.Views
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
-            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabPageGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.chkLayerPreview = new CheckBox();
-            this.chkLayerVisible = new CheckBox();
+            this.chkLayerPreview = new System.Windows.Forms.CheckBox();
+            this.chkLayerVisible = new System.Windows.Forms.CheckBox();
             this.txtBriefInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label5 = new System.Windows.Forms.Label();
             this.btnProjectionDetails = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -54,9 +54,11 @@ namespace MW5.Plugins.Symbology.Views
             this.label3 = new System.Windows.Forms.Label();
             this.txtLayerName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
-            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabPageColors = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._colorSchemeControl = new MW5.Plugins.Symbology.Controls.RasterColorSchemeControl();
-            this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabPageRendering = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.chkUseTransparentColor = new System.Windows.Forms.CheckBox();
             this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -83,15 +85,14 @@ namespace MW5.Plugins.Symbology.Views
             this.label16 = new System.Windows.Forms.Label();
             this.clpColorize = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkColorize = new System.Windows.Forms.CheckBox();
-            this.chkGreyScale = new CheckBox();
-            this.tabPageAdv7 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.chkGreyScale = new System.Windows.Forms.CheckBox();
+            this.tabPageHistogram = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.histogramControl1 = new MW5.Plugins.Symbology.Controls.HistogramControl();
-            this.tabPageAdv5 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabPagePyramids = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._overviewControl1 = new MW5.Plugins.Symbology.Controls.OverviewControl();
-            this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabPageInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rasterInfoTreeView1 = new MW5.Plugins.Symbology.Controls.RasterInfoTreeView();
-            this.tabPageAdv6 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.txtGdalInfo = new System.Windows.Forms.RichTextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.cboOverviewType = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboOverviewSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -102,19 +103,17 @@ namespace MW5.Plugins.Symbology.Views
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
-            this.chkUseTransparentColor = new CheckBox();
-            this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
-            this.tabPageAdv1.SuspendLayout();
+            this.tabPageGeneral.SuspendLayout();
             this.groupBox10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).BeginInit();
-            this.tabPageAdv4.SuspendLayout();
-            this.tabPageAdv3.SuspendLayout();
+            this.tabPageColors.SuspendLayout();
+            this.tabPageRendering.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrHue)).BeginInit();
@@ -128,11 +127,10 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBox1.SuspendLayout();
             this.panelColorize.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).BeginInit();
-            this.tabPageAdv7.SuspendLayout();
-            this.tabPageAdv5.SuspendLayout();
-            this.tabPageAdv2.SuspendLayout();
+            this.tabPageHistogram.SuspendLayout();
+            this.tabPagePyramids.SuspendLayout();
+            this.tabPageInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rasterInfoTreeView1)).BeginInit();
-            this.tabPageAdv6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboDynamicScaleMode)).BeginInit();
@@ -147,13 +145,12 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabControlAdv1.BorderVisible = true;
             this.tabControlAdv1.BorderWidth = 1;
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv7);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv5);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv6);
+            this.tabControlAdv1.Controls.Add(this.tabPageGeneral);
+            this.tabControlAdv1.Controls.Add(this.tabPageColors);
+            this.tabControlAdv1.Controls.Add(this.tabPageRendering);
+            this.tabControlAdv1.Controls.Add(this.tabPageHistogram);
+            this.tabControlAdv1.Controls.Add(this.tabPagePyramids);
+            this.tabControlAdv1.Controls.Add(this.tabPageInfo);
             this.tabControlAdv1.FocusOnTabClick = false;
             this.tabControlAdv1.ImageList = this.imageList1;
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 50);
@@ -166,31 +163,31 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererBlendLight);
             this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
             // 
-            // tabPageAdv1
+            // tabPageGeneral
             // 
-            this.tabPageAdv1.Controls.Add(this._dynamicVisibilityControl1);
-            this.tabPageAdv1.Controls.Add(this.groupBox10);
-            this.tabPageAdv1.Controls.Add(this.chkLayerVisible);
-            this.tabPageAdv1.Controls.Add(this.txtBriefInfo);
-            this.tabPageAdv1.Controls.Add(this.label5);
-            this.tabPageAdv1.Controls.Add(this.btnProjectionDetails);
-            this.tabPageAdv1.Controls.Add(this.txtProjection);
-            this.tabPageAdv1.Controls.Add(this.label4);
-            this.tabPageAdv1.Controls.Add(this.txtDatasourceName);
-            this.tabPageAdv1.Controls.Add(this.label3);
-            this.tabPageAdv1.Controls.Add(this.txtLayerName);
-            this.tabPageAdv1.Controls.Add(this.label2);
-            this.tabPageAdv1.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_options;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv1.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv1.Margin = new System.Windows.Forms.Padding(20);
-            this.tabPageAdv1.Name = "tabPageAdv1";
-            this.tabPageAdv1.Padding = new System.Windows.Forms.Padding(5);
-            this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv1.TabIndex = 1;
-            this.tabPageAdv1.Text = "General";
-            this.tabPageAdv1.ThemesEnabled = false;
+            this.tabPageGeneral.Controls.Add(this._dynamicVisibilityControl1);
+            this.tabPageGeneral.Controls.Add(this.groupBox10);
+            this.tabPageGeneral.Controls.Add(this.chkLayerVisible);
+            this.tabPageGeneral.Controls.Add(this.txtBriefInfo);
+            this.tabPageGeneral.Controls.Add(this.label5);
+            this.tabPageGeneral.Controls.Add(this.btnProjectionDetails);
+            this.tabPageGeneral.Controls.Add(this.txtProjection);
+            this.tabPageGeneral.Controls.Add(this.label4);
+            this.tabPageGeneral.Controls.Add(this.txtDatasourceName);
+            this.tabPageGeneral.Controls.Add(this.label3);
+            this.tabPageGeneral.Controls.Add(this.txtLayerName);
+            this.tabPageGeneral.Controls.Add(this.label2);
+            this.tabPageGeneral.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_options;
+            this.tabPageGeneral.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageGeneral.Location = new System.Drawing.Point(120, 1);
+            this.tabPageGeneral.Margin = new System.Windows.Forms.Padding(20);
+            this.tabPageGeneral.Name = "tabPageGeneral";
+            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(5);
+            this.tabPageGeneral.ShowCloseButton = true;
+            this.tabPageGeneral.Size = new System.Drawing.Size(515, 441);
+            this.tabPageGeneral.TabIndex = 1;
+            this.tabPageGeneral.Text = "General";
+            this.tabPageGeneral.ThemesEnabled = false;
             // 
             // _dynamicVisibilityControl1
             // 
@@ -340,44 +337,70 @@ namespace MW5.Plugins.Symbology.Views
             this.label2.TabIndex = 0;
             this.label2.Text = "Layer name";
             // 
-            // tabPageAdv4
+            // tabPageColors
             // 
-            this.tabPageAdv4.Controls.Add(this._colorSchemeControl);
-            this.tabPageAdv4.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
-            this.tabPageAdv4.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv4.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv4.Name = "tabPageAdv4";
-            this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv4.TabIndex = 4;
-            this.tabPageAdv4.Text = "Colors";
-            this.tabPageAdv4.ThemesEnabled = false;
+            this.tabPageColors.Controls.Add(this._colorSchemeControl);
+            this.tabPageColors.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
+            this.tabPageColors.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageColors.Location = new System.Drawing.Point(120, 1);
+            this.tabPageColors.Name = "tabPageColors";
+            this.tabPageColors.ShowCloseButton = true;
+            this.tabPageColors.Size = new System.Drawing.Size(515, 441);
+            this.tabPageColors.TabIndex = 4;
+            this.tabPageColors.Text = "Colors";
+            this.tabPageColors.ThemesEnabled = false;
             // 
             // _colorSchemeControl
             // 
+            this._colorSchemeControl.BandMaxValue = 1D;
+            this._colorSchemeControl.BandMinValue = 1D;
+            this._colorSchemeControl.ColorScheme = null;
             this._colorSchemeControl.Location = new System.Drawing.Point(6, 5);
             this._colorSchemeControl.Name = "_colorSchemeControl";
             this._colorSchemeControl.Size = new System.Drawing.Size(500, 433);
             this._colorSchemeControl.TabIndex = 0;
             // 
-            // tabPageAdv3
+            // tabPageRendering
             // 
-            this.tabPageAdv3.Controls.Add(this.clpTransparent);
-            this.tabPageAdv3.Controls.Add(this.chkUseTransparentColor);
-            this.tabPageAdv3.Controls.Add(this.btnClearColorAdjustments);
-            this.tabPageAdv3.Controls.Add(this.groupBox3);
-            this.tabPageAdv3.Controls.Add(this.groupBox2);
-            this.tabPageAdv3.Controls.Add(this.groupBox1);
-            this.tabPageAdv3.Controls.Add(this.chkGreyScale);
-            this.tabPageAdv3.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_contrast24;
-            this.tabPageAdv3.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv3.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv3.Name = "tabPageAdv3";
-            this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv3.TabIndex = 3;
-            this.tabPageAdv3.Text = "Rendering";
-            this.tabPageAdv3.ThemesEnabled = false;
+            this.tabPageRendering.Controls.Add(this.clpTransparent);
+            this.tabPageRendering.Controls.Add(this.chkUseTransparentColor);
+            this.tabPageRendering.Controls.Add(this.btnClearColorAdjustments);
+            this.tabPageRendering.Controls.Add(this.groupBox3);
+            this.tabPageRendering.Controls.Add(this.groupBox2);
+            this.tabPageRendering.Controls.Add(this.groupBox1);
+            this.tabPageRendering.Controls.Add(this.chkGreyScale);
+            this.tabPageRendering.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_contrast24;
+            this.tabPageRendering.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageRendering.Location = new System.Drawing.Point(120, 1);
+            this.tabPageRendering.Name = "tabPageRendering";
+            this.tabPageRendering.ShowCloseButton = true;
+            this.tabPageRendering.Size = new System.Drawing.Size(515, 441);
+            this.tabPageRendering.TabIndex = 3;
+            this.tabPageRendering.Text = "Rendering";
+            this.tabPageRendering.ThemesEnabled = false;
+            // 
+            // clpTransparent
+            // 
+            this.clpTransparent.Color = System.Drawing.Color.Black;
+            this.clpTransparent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpTransparent.DropDownHeight = 1;
+            this.clpTransparent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpTransparent.FormattingEnabled = true;
+            this.clpTransparent.IntegralHeight = false;
+            this.clpTransparent.Items.AddRange(new object[] {
+            "Color"});
+            this.clpTransparent.Location = new System.Drawing.Point(178, 293);
+            this.clpTransparent.Name = "clpTransparent";
+            this.clpTransparent.Size = new System.Drawing.Size(73, 21);
+            this.clpTransparent.TabIndex = 66;
+            // 
+            // chkUseTransparentColor
+            // 
+            this.chkUseTransparentColor.Location = new System.Drawing.Point(35, 293);
+            this.chkUseTransparentColor.Name = "chkUseTransparentColor";
+            this.chkUseTransparentColor.Size = new System.Drawing.Size(137, 21);
+            this.chkUseTransparentColor.TabIndex = 65;
+            this.chkUseTransparentColor.Text = "Transparent color";
             // 
             // btnClearColorAdjustments
             // 
@@ -675,18 +698,18 @@ namespace MW5.Plugins.Symbology.Views
             this.chkGreyScale.TabIndex = 57;
             this.chkGreyScale.Text = "Greyscale";
             // 
-            // tabPageAdv7
+            // tabPageHistogram
             // 
-            this.tabPageAdv7.Controls.Add(this.histogramControl1);
-            this.tabPageAdv7.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_histogram24;
-            this.tabPageAdv7.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv7.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv7.Name = "tabPageAdv7";
-            this.tabPageAdv7.ShowCloseButton = true;
-            this.tabPageAdv7.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv7.TabIndex = 7;
-            this.tabPageAdv7.Text = "Histogram";
-            this.tabPageAdv7.ThemesEnabled = false;
+            this.tabPageHistogram.Controls.Add(this.histogramControl1);
+            this.tabPageHistogram.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_histogram24;
+            this.tabPageHistogram.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageHistogram.Location = new System.Drawing.Point(120, 1);
+            this.tabPageHistogram.Name = "tabPageHistogram";
+            this.tabPageHistogram.ShowCloseButton = true;
+            this.tabPageHistogram.Size = new System.Drawing.Size(515, 441);
+            this.tabPageHistogram.TabIndex = 7;
+            this.tabPageHistogram.Text = "Histogram";
+            this.tabPageHistogram.ThemesEnabled = false;
             // 
             // histogramControl1
             // 
@@ -695,18 +718,18 @@ namespace MW5.Plugins.Symbology.Views
             this.histogramControl1.Size = new System.Drawing.Size(509, 435);
             this.histogramControl1.TabIndex = 0;
             // 
-            // tabPageAdv5
+            // tabPagePyramids
             // 
-            this.tabPageAdv5.Controls.Add(this._overviewControl1);
-            this.tabPageAdv5.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_pyramid24;
-            this.tabPageAdv5.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv5.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv5.Name = "tabPageAdv5";
-            this.tabPageAdv5.ShowCloseButton = true;
-            this.tabPageAdv5.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv5.TabIndex = 5;
-            this.tabPageAdv5.Text = "Pyramids";
-            this.tabPageAdv5.ThemesEnabled = false;
+            this.tabPagePyramids.Controls.Add(this._overviewControl1);
+            this.tabPagePyramids.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_pyramid24;
+            this.tabPagePyramids.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPagePyramids.Location = new System.Drawing.Point(120, 1);
+            this.tabPagePyramids.Name = "tabPagePyramids";
+            this.tabPagePyramids.ShowCloseButton = true;
+            this.tabPagePyramids.Size = new System.Drawing.Size(515, 441);
+            this.tabPagePyramids.TabIndex = 5;
+            this.tabPagePyramids.Text = "Pyramids";
+            this.tabPagePyramids.ThemesEnabled = false;
             // 
             // _overviewControl1
             // 
@@ -715,18 +738,28 @@ namespace MW5.Plugins.Symbology.Views
             this._overviewControl1.Size = new System.Drawing.Size(503, 283);
             this._overviewControl1.TabIndex = 0;
             // 
-            // tabPageAdv2
+            // tabPageInfo
             // 
-            this.tabPageAdv2.Controls.Add(this.rasterInfoTreeView1);
-            this.tabPageAdv2.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
-            this.tabPageAdv2.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv2.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv2.Name = "tabPageAdv2";
-            this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv2.TabIndex = 2;
-            this.tabPageAdv2.Text = "Info";
-            this.tabPageAdv2.ThemesEnabled = false;
+            this.tabPageInfo.Controls.Add(this.richTextBox1);
+            this.tabPageInfo.Controls.Add(this.rasterInfoTreeView1);
+            this.tabPageInfo.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
+            this.tabPageInfo.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabPageInfo.Location = new System.Drawing.Point(120, 1);
+            this.tabPageInfo.Name = "tabPageInfo";
+            this.tabPageInfo.ShowCloseButton = true;
+            this.tabPageInfo.Size = new System.Drawing.Size(515, 441);
+            this.tabPageInfo.TabIndex = 2;
+            this.tabPageInfo.Text = "Info";
+            this.tabPageInfo.ThemesEnabled = false;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Location = new System.Drawing.Point(5, 14);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(505, 412);
+            this.richTextBox1.TabIndex = 6;
+            this.richTextBox1.Text = "";
             // 
             // rasterInfoTreeView1
             // 
@@ -772,28 +805,6 @@ namespace MW5.Plugins.Symbology.Views
             this.rasterInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this.rasterInfoTreeView1.ToolTipControl.TabIndex = 1;
             this.rasterInfoTreeView1.ToolTipControl.Text = "toolTip";
-            // 
-            // tabPageAdv6
-            // 
-            this.tabPageAdv6.Controls.Add(this.txtGdalInfo);
-            this.tabPageAdv6.Image = null;
-            this.tabPageAdv6.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv6.Location = new System.Drawing.Point(120, 1);
-            this.tabPageAdv6.Name = "tabPageAdv6";
-            this.tabPageAdv6.ShowCloseButton = true;
-            this.tabPageAdv6.Size = new System.Drawing.Size(515, 441);
-            this.tabPageAdv6.TabIndex = 6;
-            this.tabPageAdv6.Text = "Temp info";
-            this.tabPageAdv6.ThemesEnabled = false;
-            // 
-            // txtGdalInfo
-            // 
-            this.txtGdalInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtGdalInfo.Location = new System.Drawing.Point(11, 14);
-            this.txtGdalInfo.Name = "txtGdalInfo";
-            this.txtGdalInfo.Size = new System.Drawing.Size(505, 412);
-            this.txtGdalInfo.TabIndex = 5;
-            this.txtGdalInfo.Text = "";
             // 
             // imageList1
             // 
@@ -905,29 +916,6 @@ namespace MW5.Plugins.Symbology.Views
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyle = false;
             // 
-            // chkUseTransparentColor
-            // 
-            this.chkUseTransparentColor.Location = new System.Drawing.Point(35, 293);
-            this.chkUseTransparentColor.Name = "chkUseTransparentColor";
-            this.chkUseTransparentColor.Size = new System.Drawing.Size(137, 21);
-            this.chkUseTransparentColor.TabIndex = 65;
-            this.chkUseTransparentColor.Text = "Transparent color";
-            // 
-            // clpTransparent
-            // 
-            this.clpTransparent.Color = System.Drawing.Color.Black;
-            this.clpTransparent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.clpTransparent.DropDownHeight = 1;
-            this.clpTransparent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.clpTransparent.FormattingEnabled = true;
-            this.clpTransparent.IntegralHeight = false;
-            this.clpTransparent.Items.AddRange(new object[] {
-            "Color"});
-            this.clpTransparent.Location = new System.Drawing.Point(178, 293);
-            this.clpTransparent.Name = "clpTransparent";
-            this.clpTransparent.Size = new System.Drawing.Size(73, 21);
-            this.clpTransparent.TabIndex = 66;
-            // 
             // RasterStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -941,8 +929,8 @@ namespace MW5.Plugins.Symbology.Views
             this.Text = "Raster Layer Properties";
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
-            this.tabPageAdv1.ResumeLayout(false);
-            this.tabPageAdv1.PerformLayout();
+            this.tabPageGeneral.ResumeLayout(false);
+            this.tabPageGeneral.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -950,8 +938,8 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).EndInit();
-            this.tabPageAdv4.ResumeLayout(false);
-            this.tabPageAdv3.ResumeLayout(false);
+            this.tabPageColors.ResumeLayout(false);
+            this.tabPageRendering.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).EndInit();
@@ -969,11 +957,10 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorize.ResumeLayout(false);
             this.panelColorize.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrColorizeIntensity)).EndInit();
-            this.tabPageAdv7.ResumeLayout(false);
-            this.tabPageAdv5.ResumeLayout(false);
-            this.tabPageAdv2.ResumeLayout(false);
+            this.tabPageHistogram.ResumeLayout(false);
+            this.tabPagePyramids.ResumeLayout(false);
+            this.tabPageInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.rasterInfoTreeView1)).EndInit();
-            this.tabPageAdv6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboDynamicScaleMode)).EndInit();
@@ -986,11 +973,11 @@ namespace MW5.Plugins.Symbology.Views
         #endregion
 
         private TabControlAdv tabControlAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv2;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv4;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv3;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv5;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageGeneral;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageInfo;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageColors;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageRendering;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPagePyramids;
         private System.Windows.Forms.ImageList imageList1;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
@@ -1013,8 +1000,6 @@ namespace MW5.Plugins.Symbology.Views
         private ComboBoxAdv cboUpsampling;
         private ComboBoxAdv cboOverviewType;
         private ComboBoxAdv cboOverviewSampling;
-        private TabPageAdv tabPageAdv6;
-        private System.Windows.Forms.RichTextBox txtGdalInfo;
         private Controls.RasterInfoTreeView rasterInfoTreeView1;
         private System.Windows.Forms.GroupBox groupBox10;
         private System.Windows.Forms.PictureBox pictureBox1;
@@ -1043,7 +1028,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Label label17;
         private ButtonAdv btnClearColorAdjustments;
         private System.Windows.Forms.Panel panelColorize;
-        private TabPageAdv tabPageAdv7;
+        private TabPageAdv tabPageHistogram;
         private Controls.HistogramControl histogramControl1;
         private Controls.OverviewControl _overviewControl1;
         private SuperToolTip superToolTip1;
@@ -1051,5 +1036,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.TrackBar tbrTransparency;
         private Office2007ColorPicker clpTransparent;
         private CheckBox chkUseTransparentColor;
+        private RichTextBox richTextBox1;
     }
 }

@@ -56,17 +56,30 @@ namespace MW5.Plugins.Symbology.Views
 
             _dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
-            _colorSchemeControl.Initialize(Raster);
-
             ModelToUi();
 
-            txtGdalInfo.Text = GdalUtils.GdalInfo(Model.Filename, "");
+            richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
 
-            rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
+            if (Raster != null)
+            {
+                _colorSchemeControl.Initialize(Raster);
 
-            histogramControl1.Initialize(_context.Container, Raster);
+                rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
 
-            _overviewControl1.Initialize(Raster);
+                histogramControl1.Initialize(_context.Container, Raster);
+
+                _overviewControl1.Initialize(Raster);
+
+                richTextBox1.Visible = false;
+            }
+            else
+            {
+                tabControlAdv1.TabPages.Remove(tabPageColors);
+                tabControlAdv1.TabPages.Remove(tabPageHistogram);
+                tabControlAdv1.TabPages.Remove(tabPagePyramids);
+
+                richTextBox1.Visible = true;
+            }
         }
 
         public IRasterColorSchemeView ColorSchemeControl
