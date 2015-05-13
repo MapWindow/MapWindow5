@@ -36,7 +36,7 @@ namespace MW5.Api.Concrete
                     return null;
                 }
 
-                return new RasterBand(_image.Band[index]);
+                return new RasterBand(_image.Band[index], index);
             }
         }
 

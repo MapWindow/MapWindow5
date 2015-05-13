@@ -8,11 +8,18 @@ namespace MW5.Api.Concrete
     public class RasterBand
     {
         private readonly GdalRasterBand _band;
+        private int _index;
 
-        internal RasterBand(GdalRasterBand band)
+        internal RasterBand(GdalRasterBand band, int index)
         {
             if (band == null) throw new ArgumentNullException("band");
             _band = band;
+            _index = index;
+        }
+
+        public int Index
+        {
+            get { return _index; }
         }
 
         public double NoDataValue

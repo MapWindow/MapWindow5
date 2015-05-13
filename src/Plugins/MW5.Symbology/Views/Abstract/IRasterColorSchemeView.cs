@@ -18,5 +18,7 @@ namespace MW5.Plugins.Symbology.Views.Abstract
         RasterRendering Rendering { get; }
 
         RasterColorScheme ColorScheme { get; set; }
+
+        bool ValidateUserInput();
     }
 }

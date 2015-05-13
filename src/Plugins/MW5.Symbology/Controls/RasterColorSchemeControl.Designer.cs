@@ -282,7 +282,7 @@
             // 
             this.rgbBandControl1.Location = new System.Drawing.Point(15, 66);
             this.rgbBandControl1.Name = "rgbBandControl1";
-            this.rgbBandControl1.Size = new System.Drawing.Size(243, 163);
+            this.rgbBandControl1.Size = new System.Drawing.Size(243, 194);
             this.rgbBandControl1.TabIndex = 20;
             // 
             // rasterColorSchemeGrid1

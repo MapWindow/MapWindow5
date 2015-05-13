@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.cboRed = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboGreen = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -36,6 +37,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.cboAlpha = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.btnDefaultMapping = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.cboRed)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboGreen)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboBlue)).BeginInit();
@@ -55,24 +58,24 @@
             // 
             this.cboRed.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboRed.BeforeTouchSize = new System.Drawing.Size(182, 21);
+            this.cboRed.BeforeTouchSize = new System.Drawing.Size(177, 21);
             this.cboRed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboRed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboRed.Location = new System.Drawing.Point(63, 11);
             this.cboRed.Name = "cboRed";
-            this.cboRed.Size = new System.Drawing.Size(182, 21);
+            this.cboRed.Size = new System.Drawing.Size(177, 21);
             this.cboRed.TabIndex = 1;
             // 
             // cboGreen
             // 
             this.cboGreen.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboGreen.BeforeTouchSize = new System.Drawing.Size(182, 21);
+            this.cboGreen.BeforeTouchSize = new System.Drawing.Size(177, 21);
             this.cboGreen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboGreen.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboGreen.Location = new System.Drawing.Point(63, 48);
             this.cboGreen.Name = "cboGreen";
-            this.cboGreen.Size = new System.Drawing.Size(182, 21);
+            this.cboGreen.Size = new System.Drawing.Size(177, 21);
             this.cboGreen.TabIndex = 3;
             // 
             // label2
@@ -88,12 +91,12 @@
             // 
             this.cboBlue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboBlue.BeforeTouchSize = new System.Drawing.Size(182, 21);
+            this.cboBlue.BeforeTouchSize = new System.Drawing.Size(177, 21);
             this.cboBlue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboBlue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboBlue.Location = new System.Drawing.Point(63, 87);
             this.cboBlue.Name = "cboBlue";
-            this.cboBlue.Size = new System.Drawing.Size(182, 21);
+            this.cboBlue.Size = new System.Drawing.Size(177, 21);
             this.cboBlue.TabIndex = 5;
             // 
             // label3
@@ -118,18 +121,44 @@
             // 
             this.cboAlpha.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboAlpha.BeforeTouchSize = new System.Drawing.Size(182, 21);
+            this.cboAlpha.BeforeTouchSize = new System.Drawing.Size(177, 21);
             this.cboAlpha.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboAlpha.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboAlpha.Location = new System.Drawing.Point(63, 127);
             this.cboAlpha.Name = "cboAlpha";
-            this.cboAlpha.Size = new System.Drawing.Size(182, 21);
+            this.cboAlpha.Size = new System.Drawing.Size(177, 21);
             this.cboAlpha.TabIndex = 7;
+            // 
+            // btnDefaultMapping
+            // 
+            this.btnDefaultMapping.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDefaultMapping.BeforeTouchSize = new System.Drawing.Size(111, 23);
+            this.btnDefaultMapping.IsBackStageButton = false;
+            this.btnDefaultMapping.Location = new System.Drawing.Point(58, 163);
+            this.btnDefaultMapping.Name = "btnDefaultMapping";
+            this.btnDefaultMapping.Size = new System.Drawing.Size(111, 23);
+            this.btnDefaultMapping.TabIndex = 8;
+            this.btnDefaultMapping.Text = "Default mapping";
+            this.btnDefaultMapping.Click += new System.EventHandler(this.btnDefaultMapping_Click);
+            // 
+            // btnClear
+            // 
+            this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClear.BeforeTouchSize = new System.Drawing.Size(65, 23);
+            this.btnClear.IsBackStageButton = false;
+            this.btnClear.Location = new System.Drawing.Point(175, 163);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(65, 23);
+            this.btnClear.TabIndex = 9;
+            this.btnClear.Text = "Clear";
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // RgbBandControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.btnDefaultMapping);
             this.Controls.Add(this.cboAlpha);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.cboBlue);
@@ -139,7 +168,7 @@
             this.Controls.Add(this.cboRed);
             this.Controls.Add(this.label1);
             this.Name = "RgbBandControl";
-            this.Size = new System.Drawing.Size(259, 158);
+            this.Size = new System.Drawing.Size(254, 199);
             ((System.ComponentModel.ISupportInitialize)(this.cboRed)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboGreen)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboBlue)).EndInit();
@@ -159,5 +188,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboAlpha;
+        private Syncfusion.Windows.Forms.ButtonAdv btnDefaultMapping;
+        private Syncfusion.Windows.Forms.ButtonAdv btnClear;
     }
 }

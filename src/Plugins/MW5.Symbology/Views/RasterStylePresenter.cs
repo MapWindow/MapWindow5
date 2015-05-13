@@ -67,21 +67,9 @@ namespace MW5.Plugins.Symbology.Views
             }
         }
 
-        private bool Validate()
-        {
-            if (View.ColorSchemeControl.Rendering == RasterRendering.ColorScheme &&
-                View.ColorSchemeControl.ColorScheme == null || View.ColorSchemeControl.ColorScheme.NumBreaks == 0)
-            {
-                MessageService.Current.Info("No color scheme is specified. Use Generate button to do it.");
-                return false;
-            }
-
-            return true;
-        }
-
         private bool Apply()
         {
-            if (!Validate())
+            if (!View.ColorSchemeControl.ValidateUserInput())
             {
                 return false;
             }

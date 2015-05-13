@@ -11,6 +11,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views;
 using MW5.Plugins.Symbology.Views.Abstract;
@@ -230,6 +231,35 @@ namespace MW5.Plugins.Symbology.Controls
             var scheme = new RasterColorScheme();
             scheme.SetPredefined(BandMinValue, BandMaxValue, (PredefinedColors)SelectedPredefinedColorScheme);
             ColorScheme = scheme;
+        }
+
+        public bool ValidateUserInput()
+        {
+            switch (Rendering)
+            {
+                case RasterRendering.Unknown:
+                    break;
+                case RasterRendering.SingleBand:
+                    break;
+                case RasterRendering.Rgb:
+                    if (!rgbBandControl1.HasMapping())
+                    {
+                        MessageService.Current.Info("No RGB mapping is specified. Please select at least one of R, G, B bands.");
+                        return false;
+                    }
+                    break;
+                case RasterRendering.ColorScheme:
+                    if (_colorScheme == null || _colorScheme.NumBreaks == 0)
+                    {
+                        MessageService.Current.Info("No color scheme is specified. Use Generate button to do it.");
+                        return false;
+                    }
+                    break;
+                case RasterRendering.BuiltInColorTable:
+                    break;
+            }
+
+            return true;
         }
     }
 }

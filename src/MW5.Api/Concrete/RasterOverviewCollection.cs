@@ -36,7 +36,7 @@ namespace MW5.Api.Concrete
                 }
 
                 var ov = _band.Overview[index];
-                return ov != null ? new RasterBand(ov) : null;
+                return ov != null ? new RasterBand(ov, index) : null;
             }
         }
 
