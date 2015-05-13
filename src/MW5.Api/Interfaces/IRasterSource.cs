@@ -49,7 +49,7 @@ namespace MW5.Api.Interfaces
 
         GridRendering AllowGridRendering { get; set; }
 
-        RenderingType RenderingType { get; }
+        RasterRendering RenderingType { get; }
 
         RasterBand ActiveBand { get; }
 
@@ -73,7 +73,7 @@ namespace MW5.Api.Interfaces
 
         string GetBandFullName(int bandIndex);
 
-        bool AlphaRendering { get; set; }
+        bool UseActiveBandAsAlpha { get; set; }
 
         bool GridRendering { get; }
 

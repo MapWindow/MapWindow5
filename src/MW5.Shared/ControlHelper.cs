@@ -16,5 +16,11 @@ namespace MW5.Shared
             target.Width = source.Width;
             target.Height = source.Height;
         }
+
+        public static void MakeSameLocation(Control source, Control target)
+        {
+            target.Left = source.Left;
+            target.Top = source.Top;
+        }
     }
 }

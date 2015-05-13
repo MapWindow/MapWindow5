@@ -73,8 +73,25 @@ namespace MW5.Plugins.Symbology.Views
             }
         }
 
-        private void Apply()
+        private bool Validate()
         {
+            if (View.ColorSchemeControl.Rendering == RasterRendering.ColorScheme &&
+                View.ColorSchemeControl.ColorScheme == null || View.ColorSchemeControl.ColorScheme.NumBreaks == 0)
+            {
+                MessageService.Current.Info("No color scheme is specified. Use Generate button to do it.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool Apply()
+        {
+            if (!Validate())
+            {
+                return false;
+            }
+            
             View.UiToModel();
 
             var colors = View.ColorSchemeControl;
@@ -90,7 +107,7 @@ namespace MW5.Plugins.Symbology.Views
                     _raster.ActiveBandIndex = colors.ActiveBandIndex;
                     _raster.SetBandMinMax(colors.ActiveBandIndex, colors.BandMinValue, colors.BandMaxValue);
                     break;
-                case RasterRendering.MultiBandRgb:
+                case RasterRendering.Rgb:
                     _raster.AllowGridRendering = GridRendering.Never;
                     _raster.UseRgbBandMapping = true;
                     break;
@@ -112,13 +129,13 @@ namespace MW5.Plugins.Symbology.Views
             }
 
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+
+            return true;
         }
 
         public override bool ViewOkClicked()
         {
-            Apply();
-            
-            return true;
+            return Apply();
         }
 
         public override void Initialize()

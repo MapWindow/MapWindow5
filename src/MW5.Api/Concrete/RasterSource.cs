@@ -195,29 +195,14 @@ namespace MW5.Api.Concrete
             set { _image.AllowGridRendering = (tkGridRendering) value; }
         }
 
-        public RenderingType RenderingType
+        public RasterRendering RenderingType
         {
             get
             {
-                if (_image.GridRendering)
-                {
-                    return RenderingType.Grid;
-                }
-
-                if (_image.ForceSingleBandRendering)
-                {
-                    return RenderingType.Grayscale;
-                }
-
-                if (_image.UseRgbBandMapping)
-                {
-                    return RenderingType.Rgb;
-                }
-
-                return _image.NoBands == 1 ? RenderingType.Grayscale : RenderingType.Rgb;
+                var value = (RasterRendering)_image.RenderingMode;
+                return value;
             }
         }
-
 
         public RasterColorScheme RgbBandMapping
         {
@@ -323,10 +308,10 @@ namespace MW5.Api.Concrete
             return string.Empty;
         }
 
-        public bool AlphaRendering
+        public bool UseActiveBandAsAlpha
         {
-            get { return _image.AlphaRendering; }
-            set { _image.AlphaRendering = value; }
+            get { return _image.UseActiveBandAsAlpha; }
+            set { _image.UseActiveBandAsAlpha = value; }
         }
 
         public bool GridRendering

@@ -355,7 +355,6 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // _colorSchemeControl
             // 
-            this._colorSchemeControl.ColorScheme = null;
             this._colorSchemeControl.Location = new System.Drawing.Point(6, 5);
             this._colorSchemeControl.Name = "_colorSchemeControl";
             this._colorSchemeControl.Size = new System.Drawing.Size(500, 433);

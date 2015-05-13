@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -34,8 +35,8 @@ namespace MW5.Plugins.Symbology.Services
             {
                 case RasterRendering.SingleBand:
                     return "Single band greyscale";
-                case RasterRendering.MultiBandRgb:
-                    return "Multiband RGB";
+                case RasterRendering.Rgb:
+                    return "RGB";
                 case RasterRendering.ColorScheme:
                     return "Color scheme";
                 case RasterRendering.BuiltInColorTable:

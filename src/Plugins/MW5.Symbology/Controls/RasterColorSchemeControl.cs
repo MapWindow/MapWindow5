@@ -46,11 +46,13 @@ namespace MW5.Plugins.Symbology.Controls
                 return;
             }
 
+            ControlHelper.MakeSameLocation(chkUseHistogram, chkHillshade);
+
             InitRenderModeCombo();
 
             cboSelectedBand.AddRasterBands(_raster);
 
-            ChangeRenderingMode();
+            OnChangeRenderingMode();
 
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
@@ -73,7 +75,7 @@ namespace MW5.Plugins.Symbology.Controls
                 {
                     case RasterRendering.SingleBand:
                     case RasterRendering.BuiltInColorTable:
-                    case RasterRendering.MultiBandRgb:
+                    case RasterRendering.Rgb:
                         break;
                     case RasterRendering.ColorScheme:
                         _pseudoColorsScheme = value;
@@ -120,20 +122,26 @@ namespace MW5.Plugins.Symbology.Controls
         /// <summary>
         /// Sets datasource for color scheme grid.
         /// </summary>
-        private void ChangeRenderingMode()
+        private void OnChangeRenderingMode()
         {
             var rendering = Rendering;
-            groupMinMax.Visible = rendering != RasterRendering.MultiBandRgb;
+            groupMinMax.Visible = rendering != RasterRendering.Rgb;
 
-            rasterColorSchemeGrid1.Visible = Rendering == RasterRendering.BuiltInColorTable || 
-                                             Rendering == RasterRendering.ColorScheme;
+            rasterColorSchemeGrid1.Visible = rendering == RasterRendering.BuiltInColorTable || 
+                                             rendering == RasterRendering.ColorScheme;
             
-            rgbBandControl1.Visible = Rendering == RasterRendering.MultiBandRgb;
-            groupColorScheme.Visible = Rendering == RasterRendering.ColorScheme;
+            rgbBandControl1.Visible = rendering == RasterRendering.Rgb;
+            groupColorScheme.Visible = rendering == RasterRendering.ColorScheme;
+
+            chkHillshade.Visible = rendering == RasterRendering.ColorScheme;
+
+            chkUseHistogram.Visible = rendering == RasterRendering.Rgb || rendering == RasterRendering.SingleBand;
+            chkReverse.Visible = rendering == RasterRendering.Rgb || rendering == RasterRendering.SingleBand;
+            chkAlphaRendering.Visible = rendering == RasterRendering.SingleBand;
 
             switch (Rendering)
             {
-                case RasterRendering.MultiBandRgb:
+                case RasterRendering.Rgb:
                 case RasterRendering.SingleBand:
                     ColorScheme = null;
                     break;
@@ -158,7 +166,7 @@ namespace MW5.Plugins.Symbology.Controls
 
             if (_raster.NumBands > 1)
             {
-                list.Add(RasterRendering.MultiBandRgb);
+                list.Add(RasterRendering.Rgb);
             }
 
             list.Add(RasterRendering.ColorScheme);
@@ -170,25 +178,25 @@ namespace MW5.Plugins.Symbology.Controls
 
             cboRasterRendering.Items.AddRange(ComboBoxHelper.GetComboItems(list).ToArray<object>());
 
-            cboRasterRendering.SelectedIndex = 0;
+            cboRasterRendering.SetValue(_raster.RenderingType);
         }
 
         public void ModelToUiRaster()
         {
             chkUseHistogram.Checked = _raster.UseHistogram;
-            chkAlphaRendering.Checked = _raster.AlphaRendering;
-            chkHillShade.Checked = _raster.GridRendering;
+            chkAlphaRendering.Checked = _raster.UseActiveBandAsAlpha;
+            chkHillshade.Checked = _raster.GridRendering;
             chkReverse.Checked = _raster.ReverseGreyScale;
         }
 
         public void UiToModelRaster()
         {
             _raster.UseHistogram = chkUseHistogram.Checked;
-            _raster.AlphaRendering = chkAlphaRendering.Checked;
-            _raster.AllowGridRendering = chkHillShade.Checked ? GridRendering.ForceForAllFormats : GridRendering.Never;
+            _raster.UseActiveBandAsAlpha = chkAlphaRendering.Checked;
+            _raster.AllowGridRendering = chkHillshade.Checked ? GridRendering.ForceForAllFormats : GridRendering.Never;
             _raster.ReverseGreyScale = chkReverse.Checked;
 
-            if (Rendering == RasterRendering.MultiBandRgb)
+            if (Rendering == RasterRendering.Rgb)
             {
                 rgbBandControl1.ApplyChanges();
             }
@@ -221,7 +229,7 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void cboRasterRendering_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ChangeRenderingMode();
+            OnChangeRenderingMode();
         }
     }
 }

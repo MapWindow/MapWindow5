@@ -1775,6 +1775,14 @@ namespace MW5.Api.Legend
                     break;
                 case LegendRedraw.LegendAndMap:
                     _map.Redraw();
+
+                    // TODO: eirther trigger legend redraw immediately after data layers redraw
+                    // or determine rendering mode before actual rendering
+                    Application.DoEvents();
+    
+                    // map redraw isn't synchronous (Invalidate), but legend displays for raster
+                    // layers rendering type that was used during redraw, so we must ensure
+                    // that map redraw is finished first
                     RedrawCore();
                     break;
                 case LegendRedraw.LegendAndMapForce:

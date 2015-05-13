@@ -50,14 +50,20 @@ namespace MW5.Api.Legend
 
             switch (raster.RenderingType)
             {
-                case RenderingType.Grid:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
+                case RasterRendering.SingleBand:
+                    RenderColorScheme(g, layer, bounds, ref r, raster.GrayScaleColorScheme, true, true);
                     break;
-                case RenderingType.Rgb:
+                case RasterRendering.Rgb:
                     RenderColorScheme(g, layer, bounds, ref r, raster.RgbBandMapping, false);
                     break;
-                case RenderingType.Grayscale:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.GrayScaleColorScheme, true, true);
+                case RasterRendering.ColorScheme:
+                    RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
+                    break;
+                case RasterRendering.BuiltInColorTable:
+                    RenderColorScheme(g, layer, bounds, ref r, raster.Bands[1].ColorTable, true, true);
+                    break;
+                case RasterRendering.Unknown:
+                    RenderColorScheme(g, layer, bounds, ref r, null, true, true);
                     break;
             }
 
@@ -69,13 +75,16 @@ namespace MW5.Api.Legend
         /// </summary>
         private void RenderColorScheme(Graphics g, LegendLayer layer, Rectangle bounds, ref Rectangle r, RasterColorScheme scheme, bool gradients, bool horizontal = false)
         {
-            if (scheme == null) return;
-
             var textRect = new Rectangle(
                 r.Left + Constants.IconWidth + 3,
                 r.Top,
                 bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
                 Constants.TextHeight);
+
+            if (scheme == null)
+            {
+                return;
+            }
 
             int count = 0;
             foreach (var item in scheme)

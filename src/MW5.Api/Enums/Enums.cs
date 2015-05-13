@@ -1384,11 +1384,13 @@
         CFloat64 = 11,
     }
 
-    public enum RenderingType
+    public enum RasterRendering
     {
-        Grid = 0,
-        Rgb = 1,
-        Grayscale = 2,
+        Unknown = 0,
+        SingleBand = 1,
+        Rgb = 2,
+        ColorScheme = 3,
+        BuiltInColorTable = 4,
     }
 
     public enum LayerIdentityType

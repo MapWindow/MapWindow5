@@ -19,14 +19,6 @@
         Raster = 2,
     }
 
-    public enum RasterRendering
-    {
-        SingleBand = 0,
-        MultiBandRgb = 1,
-        ColorScheme = 2,
-        BuiltInColorTable = 3,
-    }
-
     public enum RasterClassification
     {
         EqualIntervals = 1,

@@ -30,6 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.groupMinMax = new System.Windows.Forms.GroupBox();
+            this.btnDefaultMinMax = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCalculateMinMax = new Syncfusion.Windows.Forms.ButtonAdv();
             this.cboSelectedBand = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.txtMaximum = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
@@ -43,13 +44,12 @@
             this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.label2 = new System.Windows.Forms.Label();
             this.chkAlphaRendering = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkHillShade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkHillshade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.groupColorScheme = new System.Windows.Forms.GroupBox();
             this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
             this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
-            this.btnDefaultMinMax = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -58,7 +58,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHillShade)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).BeginInit();
             this.groupColorScheme.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).BeginInit();
             this.SuspendLayout();
@@ -78,6 +78,16 @@
             this.groupMinMax.TabIndex = 18;
             this.groupMinMax.TabStop = false;
             this.groupMinMax.Text = "Selected band";
+            // 
+            // btnDefaultMinMax
+            // 
+            this.btnDefaultMinMax.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnDefaultMinMax.IsBackStageButton = false;
+            this.btnDefaultMinMax.Location = new System.Drawing.Point(39, 132);
+            this.btnDefaultMinMax.Name = "btnDefaultMinMax";
+            this.btnDefaultMinMax.Size = new System.Drawing.Size(75, 23);
+            this.btnDefaultMinMax.TabIndex = 11;
+            this.btnDefaultMinMax.Text = "Default";
             // 
             // btnCalculateMinMax
             // 
@@ -192,11 +202,11 @@
             // 
             // chkUseHistogram
             // 
-            this.chkUseHistogram.BeforeTouchSize = new System.Drawing.Size(133, 21);
-            this.chkUseHistogram.Location = new System.Drawing.Point(370, 391);
+            this.chkUseHistogram.BeforeTouchSize = new System.Drawing.Size(107, 21);
+            this.chkUseHistogram.Location = new System.Drawing.Point(276, 364);
             this.chkUseHistogram.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkUseHistogram.Name = "chkUseHistogram";
-            this.chkUseHistogram.Size = new System.Drawing.Size(133, 21);
+            this.chkUseHistogram.Size = new System.Drawing.Size(107, 21);
             this.chkUseHistogram.TabIndex = 14;
             this.chkUseHistogram.Text = "Use histogram";
             this.chkUseHistogram.ThemesEnabled = false;
@@ -213,7 +223,7 @@
             // chkAlphaRendering
             // 
             this.chkAlphaRendering.BeforeTouchSize = new System.Drawing.Size(107, 21);
-            this.chkAlphaRendering.Location = new System.Drawing.Point(370, 364);
+            this.chkAlphaRendering.Location = new System.Drawing.Point(276, 391);
             this.chkAlphaRendering.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkAlphaRendering.Name = "chkAlphaRendering";
             this.chkAlphaRendering.Size = new System.Drawing.Size(107, 21);
@@ -223,14 +233,14 @@
             // 
             // chkHillShade
             // 
-            this.chkHillShade.BeforeTouchSize = new System.Drawing.Size(88, 21);
-            this.chkHillShade.Location = new System.Drawing.Point(276, 391);
-            this.chkHillShade.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkHillShade.Name = "chkHillShade";
-            this.chkHillShade.Size = new System.Drawing.Size(88, 21);
-            this.chkHillShade.TabIndex = 23;
-            this.chkHillShade.Text = "Hill shade";
-            this.chkHillShade.ThemesEnabled = false;
+            this.chkHillshade.BeforeTouchSize = new System.Drawing.Size(88, 21);
+            this.chkHillshade.Location = new System.Drawing.Point(389, 391);
+            this.chkHillshade.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkHillshade.Name = "chkHillshade";
+            this.chkHillshade.Size = new System.Drawing.Size(88, 21);
+            this.chkHillshade.TabIndex = 23;
+            this.chkHillshade.Text = "Hill shade";
+            this.chkHillshade.ThemesEnabled = false;
             // 
             // groupColorScheme
             // 
@@ -259,7 +269,7 @@
             // chkReverse
             // 
             this.chkReverse.BeforeTouchSize = new System.Drawing.Size(88, 21);
-            this.chkReverse.Location = new System.Drawing.Point(276, 364);
+            this.chkReverse.Location = new System.Drawing.Point(389, 364);
             this.chkReverse.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkReverse.Name = "chkReverse";
             this.chkReverse.Size = new System.Drawing.Size(88, 21);
@@ -293,23 +303,13 @@
             this.rasterColorSchemeGrid1.ToolTipMaxWidth = 450;
             this.rasterColorSchemeGrid1.WrapText = true;
             // 
-            // btnDefaultMinMax
-            // 
-            this.btnDefaultMinMax.BeforeTouchSize = new System.Drawing.Size(75, 23);
-            this.btnDefaultMinMax.IsBackStageButton = false;
-            this.btnDefaultMinMax.Location = new System.Drawing.Point(39, 132);
-            this.btnDefaultMinMax.Name = "btnDefaultMinMax";
-            this.btnDefaultMinMax.Size = new System.Drawing.Size(75, 23);
-            this.btnDefaultMinMax.TabIndex = 11;
-            this.btnDefaultMinMax.Text = "Default";
-            // 
             // RasterColorSchemeControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.chkReverse);
             this.Controls.Add(this.groupColorScheme);
-            this.Controls.Add(this.chkHillShade);
+            this.Controls.Add(this.chkHillshade);
             this.Controls.Add(this.chkAlphaRendering);
             this.Controls.Add(this.rgbBandControl1);
             this.Controls.Add(this.label2);
@@ -329,7 +329,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHillShade)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).EndInit();
             this.groupColorScheme.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).EndInit();
             this.ResumeLayout(false);
@@ -351,7 +351,7 @@
         private System.Windows.Forms.Label label2;
         private RgbBandControl rgbBandControl1;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkAlphaRendering;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkHillShade;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkHillshade;
         private Syncfusion.Windows.Forms.ButtonAdv btnCalculateMinMax;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboSelectedBand;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaximum;

@@ -147,14 +147,20 @@ namespace MW5.Api.Legend
                     {
                         switch (raster.RenderingType)
                         {
-                            case RenderingType.Grid:
+                            case RasterRendering.SingleBand:
+                                return string.Format(raster.GetBandFullName(raster.ActiveBandIndex)) + ": greyscale";
+                            case RasterRendering.Rgb:
+                                return "RGB";
+                            case RasterRendering.ColorScheme:
                                 var band = raster.ActiveBand;    
                                 string interp = band != null ? "(" + band.ColorInterpretation + ")" : "";
                                 return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands, interp);
-                            case RenderingType.Rgb:
-                                return "RGB";
-                            case RenderingType.Grayscale:
-                                return string.Format(raster.GetBandFullName(raster.ActiveBandIndex)) + ": greyscale";
+                            case RasterRendering.BuiltInColorTable:
+                                return "Indexed";
+                            case RasterRendering.Unknown:
+                                return "Unknown";
+                            default:
+                                throw new ArgumentOutOfRangeException();
                         }
                     }
                 }
@@ -179,16 +185,18 @@ namespace MW5.Api.Legend
                 {
                     switch (raster.RenderingType)
                     {
-                        case RenderingType.Grid:
+                        case RasterRendering.SingleBand:
+                            return 1;
+                        case RasterRendering.Rgb:
+                            return 3;       // TODO: maybe 4 because of alpha
+                        case RasterRendering.ColorScheme:
                             var scheme = raster.CustomColorScheme;
                             return scheme != null ? scheme.NumBreaks : 0;
-                        case RenderingType.Rgb:
-                            return 3;
-                        case RenderingType.Grayscale:
-                            return 1;
+                        case RasterRendering.BuiltInColorTable:
+                            return raster.Bands[1].ColorTable.NumBreaks;
+                        case RasterRendering.Unknown:
+                            return 0;
                     }
-                    
-                    return raster.NumBands == 1 ? 1 : 3;
                 }
 
                 return 0;
@@ -237,7 +245,7 @@ namespace MW5.Api.Legend
                         return LegendLayerType.Image;
                     }
 
-                    return raster.RenderingType == RenderingType.Rgb ? LegendLayerType.Image : LegendLayerType.Grid;
+                    return raster.RenderingType == RasterRendering.Rgb ? LegendLayerType.Image : LegendLayerType.Grid;
                 }
 
                 return LegendLayerType.Invalid;
