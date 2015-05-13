@@ -55,8 +55,15 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             _schemeList = ColorSchemeProvider.GetList(SchemeTarget);
             if (_schemeList != null)
             {
+                int index = SelectedIndex;
+
                 _schemeList.ListChanged += OnListChanged;
                 GenerateItems();
+
+                if (index >= 0 && index < Items.Count)
+                {
+                    SelectedIndex = index;
+                }
             }
         }
 

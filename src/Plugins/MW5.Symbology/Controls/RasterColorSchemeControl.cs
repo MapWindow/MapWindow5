@@ -21,7 +21,6 @@ namespace MW5.Plugins.Symbology.Controls
 {
     public partial class RasterColorSchemeControl : UserControl, IRasterColorSchemeView, IMenuProvider
     {
-        private RasterColorScheme _pseudoColorsScheme;
         private RasterColorScheme _colorScheme;
         private IRasterSource _raster;
 
@@ -35,6 +34,8 @@ namespace MW5.Plugins.Symbology.Controls
             }
 
             cboClassification.AddItemsFromEnum<RasterClassification>();
+
+            colorSchemeCombo1.UpdateItems();
         }
 
         public void Initialize(IRasterSource raster)
@@ -45,6 +46,8 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 return;
             }
+
+            ColorScheme = _raster.CustomColorScheme;
 
             ControlHelper.MakeSameLocation(chkUseHistogram, chkHillshade);
 
@@ -65,25 +68,16 @@ namespace MW5.Plugins.Symbology.Controls
             get { return _colorScheme; }
             set
             {
+                SetColorSchemeCore(value);
                 _colorScheme = value;
-                
-                rasterColorSchemeGrid1.ShowDropDowns(Rendering != RasterRendering.BuiltInColorTable);
-
-                rasterColorSchemeGrid1.DataSource = value != null ? value.ToList() : null;
-
-                switch (Rendering)
-                {
-                    case RasterRendering.SingleBand:
-                    case RasterRendering.BuiltInColorTable:
-                    case RasterRendering.Rgb:
-                        break;
-                    case RasterRendering.ColorScheme:
-                        _pseudoColorsScheme = value;
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
             }
+        }
+
+        public void SetColorSchemeCore(RasterColorScheme value)
+        {
+            rasterColorSchemeGrid1.ShowDropDowns(Rendering != RasterRendering.BuiltInColorTable);
+
+            rasterColorSchemeGrid1.DataSource = value != null ? value.ToList() : null;
         }
 
         public double BandMinValue
@@ -143,14 +137,14 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 case RasterRendering.Rgb:
                 case RasterRendering.SingleBand:
-                    ColorScheme = null;
+                    SetColorSchemeCore(null);
                     break;
                 case RasterRendering.ColorScheme:
-                    ColorScheme = _pseudoColorsScheme;
+                    SetColorSchemeCore(_colorScheme);
                     break;
                 case RasterRendering.BuiltInColorTable:
                     var table = _raster.Bands[1].ColorTable;
-                    ColorScheme = table;
+                    SetColorSchemeCore(table);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -211,7 +205,6 @@ namespace MW5.Plugins.Symbology.Controls
         {
             get
             {
-                yield return btnGenerateColorScheme;
                 yield return btnCalculateMinMax;
                 yield return btnDefaultMinMax;
             }
@@ -230,6 +223,13 @@ namespace MW5.Plugins.Symbology.Controls
         private void cboRasterRendering_SelectedIndexChanged(object sender, EventArgs e)
         {
             OnChangeRenderingMode();
+        }
+
+        private void btnGenerateColorScheme_Click(object sender, EventArgs e)
+        {
+            var scheme = new RasterColorScheme();
+            scheme.SetPredefined(BandMinValue, BandMaxValue, (PredefinedColors)SelectedPredefinedColorScheme);
+            ColorScheme = scheme;
         }
     }
 }

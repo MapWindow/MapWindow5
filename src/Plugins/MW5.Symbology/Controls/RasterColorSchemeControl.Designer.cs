@@ -179,6 +179,7 @@
             this.btnGenerateColorScheme.Size = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.TabIndex = 13;
             this.btnGenerateColorScheme.Text = "Generate";
+            this.btnGenerateColorScheme.Click += new System.EventHandler(this.btnGenerateColorScheme_Click);
             // 
             // label1
             // 
@@ -231,7 +232,7 @@
             this.chkAlphaRendering.Text = "Alpha rendering";
             this.chkAlphaRendering.ThemesEnabled = false;
             // 
-            // chkHillShade
+            // chkHillshade
             // 
             this.chkHillshade.BeforeTouchSize = new System.Drawing.Size(88, 21);
             this.chkHillshade.Location = new System.Drawing.Point(389, 391);

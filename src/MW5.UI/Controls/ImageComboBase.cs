@@ -78,7 +78,7 @@ namespace MW5.UI.Controls
         private void DrawItemCore(int itemIndex, Rectangle bounds, Graphics g, Font initFont, Color foreColor, DrawItemState state, Action drawBackground)
         {
             // check if it is an item from the Items collection
-            if (itemIndex < 0)
+            if (itemIndex < 0 || itemIndex >= Items.Count)
             {
                 // not an item, draw the text (indented)
                 g.DrawString(Text, initFont, new SolidBrush(foreColor), bounds.Left + _list.ImageSize.Width, bounds.Top);
