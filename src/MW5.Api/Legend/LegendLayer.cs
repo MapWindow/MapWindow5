@@ -543,11 +543,6 @@ namespace MW5.Api.Legend
         /// </summary>
         internal EventHandler<LayerPaintEventArgs> ExpansionBoxCustomRenderFunction = null;
 
-        /// <summary>
-        /// Allows you to force the expansion box option to be shown, e.g. you're planning to use ExpansionBoxCustomRenderFunction.
-        /// </summary>
-        internal bool ExpansionBoxForceAllowed = false;
-
         #endregion
 
         public override string ToString()

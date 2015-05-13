@@ -54,5 +54,10 @@ namespace MW5.Api.Legend
         // dimensions for easy click text
         internal int Top { get; set; }
         internal int Width { get; set; }
+
+        internal bool PointWithin(Point pnt)
+        {
+            return pnt.X >= Left && pnt.Y >= Top && pnt.X <= Left + Width && pnt.Y <= Top + Height;
+        }
     }
 }

@@ -32,9 +32,6 @@ namespace MW5.Api.Legend
             return bounds.Top + Constants.ItemHeight + Constants.VerticalPad;
         }
 
-        /// <summary>
-        /// The draw text.
-        /// </summary>
         protected void DrawText(Graphics g, string text, Rectangle rect, Font font, Color penColor)
         {
             var pen = new Pen(penColor);

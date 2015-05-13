@@ -1161,6 +1161,9 @@ namespace MW5.Api.Legend
                     if (curTop + rect.Height > 0 || curTop < ClientRectangle.Height)
                     {
                         DrawBox(g, rect, _boxLineColor, SelectionColor);
+
+                        var el = new LayerElement(LayerElementType.ExpansionBox, rect);
+                        lyr.Elements.Add(el);
                     }
                 }
             }
@@ -1196,6 +1199,9 @@ namespace MW5.Api.Legend
 
                 // draw a grey background if the layer is in dynamic visibility mode.
                 DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
+
+                var el = new LayerElement(LayerElementType.CheckBox, new Rectangle(curLeft, curTop, Constants.CheckBoxSize, Constants.CheckBoxSize));
+                lyr.Elements.Add(el);
             }
 
             // ----------------------------------------------------------
@@ -1553,6 +1559,7 @@ namespace MW5.Api.Legend
                     var curHeight = lyr.Height;
                     var bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
+                    // TODO: use layer.Elements instead recalculation of all bounds
                     if (bounds.Contains(point))
                     {
                         // we are inside the Layer boundaries,
@@ -1580,22 +1587,25 @@ namespace MW5.Api.Legend
                         curHeight = Constants.ExpandBoxSize;
                         bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
-                        if (lyr.IsRaster)
-                        {
-                            if (bounds.Contains(point) && (lyr.RasterSymbologyCount > 0 || lyr.ExpansionBoxForceAllowed))
-                            {
-                                element.ExpansionBox = true;
-                                return lyr;
-                            }
-
-                            // we aren't in the checkbox or the expansion box
-                            return lyr;
-                        }
-
                         if (bounds.Contains(point))
                         {
                             // We are in the Expansion box
                             element.ExpansionBox = true;
+                            return lyr;
+                        }
+
+                        if (lyr.IsRaster)
+                        {
+                            foreach (var item in lyr.Elements)
+                            {
+                                if (item.ElementType == LayerElementType.RasterColorInterval && item.PointWithin(point))
+                                {
+                                    element.ColorBox = true;
+                                    element.CategoryIndex = -1;
+                                    return lyr;
+                                }
+                            }
+                            
                             return lyr;
                         }
 

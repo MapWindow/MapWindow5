@@ -88,7 +88,10 @@
         ChartsCaption = 7,
         Charts = 8,
         ChartField = 9,
-        ChartFieldName = 10
+        ChartFieldName = 10,
+        CheckBox = 11,
+        ExpansionBox = 12,
+        RasterColorInterval = 13,
     }
 
     public enum LegendRedraw

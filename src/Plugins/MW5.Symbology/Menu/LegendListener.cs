@@ -90,6 +90,15 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerStyleClicked(IMuteLegend legend, LayerEventArgs e)
         {
+            var layer = legend.Layers.Current;
+            if (layer.LayerType == LayerType.Image || layer.LayerType == LayerType.Grid)
+            {
+                // TODO: open colors tab
+                _context.Container.Run<RasterStylePresenter, ILayer>(layer);
+                e.Handled = true;
+                return;
+            }
+            
             var fs = legend.Map.GetFeatureSet(e.LayerHandle);
             if (fs != null)
             {

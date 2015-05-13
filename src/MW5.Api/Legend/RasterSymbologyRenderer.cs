@@ -51,13 +51,13 @@ namespace MW5.Api.Legend
             switch (raster.RenderingType)
             {
                 case RenderingType.Grid:
-                    RenderColorScheme(g, bounds, ref r, raster.CustomColorScheme, true);
+                    RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
                     break;
                 case RenderingType.Rgb:
-                    RenderColorScheme(g, bounds, ref r, raster.RgbBandMapping, false);
+                    RenderColorScheme(g, layer, bounds, ref r, raster.RgbBandMapping, false);
                     break;
                 case RenderingType.Grayscale:
-                    RenderColorScheme(g, bounds, ref r, raster.GrayScaleColorScheme, true, true);
+                    RenderColorScheme(g, layer, bounds, ref r, raster.GrayScaleColorScheme, true, true);
                     break;
             }
 
@@ -67,7 +67,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Renders color scheme (rectangle and name for each break).
         /// </summary>
-        private void RenderColorScheme(Graphics g, Rectangle bounds, ref Rectangle r, RasterColorScheme scheme, bool gradients, bool horizontal = false)
+        private void RenderColorScheme(Graphics g, LegendLayer layer, Rectangle bounds, ref Rectangle r, RasterColorScheme scheme, bool gradients, bool horizontal = false)
         {
             if (scheme == null) return;
 
@@ -77,6 +77,7 @@ namespace MW5.Api.Legend
                 bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
                 Constants.TextHeight);
 
+            int count = 0;
             foreach (var item in scheme)
             {
                 Brush brush;
@@ -92,10 +93,14 @@ namespace MW5.Api.Legend
                 g.FillRectangle(brush, r);
                 g.DrawRectangle(Pens.Gray, r);
 
+                layer.Elements.Add(new LayerElement(LayerElementType.RasterColorInterval, r, count));
+
                 DrawText(g, item.ToString(), textRect, Font, Color.Black);
 
                 r.Y += Constants.CsItemHeightAndPad();
                 textRect.Y += Constants.CsItemHeightAndPad();
+
+                count++;
             }
         }
     }

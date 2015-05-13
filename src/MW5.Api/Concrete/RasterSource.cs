@@ -251,14 +251,16 @@ namespace MW5.Api.Concrete
             get
             {
                 var scheme = new RasterColorScheme();
-                
-                // TODO: udpate
-                scheme.AddInterval(new RasterInterval()
+
+                var interval = new RasterInterval()
                 {
-                    LowColor = Color.White,
-                    HighColor = Color.Black,
-                    Caption = "0 - 255"     // TODO: should depend on min / max really used
-                });
+                    LowColor = ReverseGreyScale ? Color.White : Color.Black,
+                    HighColor = ReverseGreyScale ? Color.Black : Color.White,
+                    LowValue = GetBandMinimum(ActiveBandIndex),
+                    HighValue = GetBandMaximum(ActiveBandIndex),
+                };
+
+                scheme.AddInterval(interval);
 
                 return scheme;
             }
