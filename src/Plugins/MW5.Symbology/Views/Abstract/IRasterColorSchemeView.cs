@@ -9,8 +9,8 @@ namespace MW5.Plugins.Symbology.Views.Abstract
 {
     public interface IRasterColorSchemeView
     {
-        double BandMinValue { get; }
-        double BandMaxValue { get; }
+        double BandMinValue { get; set; }
+        double BandMaxValue { get; set; }
         int SelectedPredefinedColorScheme { get; }
         int ActiveBandIndex { get; }
 

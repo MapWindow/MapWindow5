@@ -12,7 +12,7 @@ namespace MW5.Plugins.Symbology.Views.Abstract
     public interface IRasterStyleView: IComplexView<ILayer>
     {
         void UiToModel();
-        IRasterColorSchemeView Colors { get; }
+        IRasterColorSchemeView ColorSchemeControl { get; }
         void ClearColorAdjustments();
     }
 }

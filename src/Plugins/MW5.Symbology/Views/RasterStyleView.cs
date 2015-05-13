@@ -56,7 +56,7 @@ namespace MW5.Plugins.Symbology.Views
 
             _dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
-            _colorSchemeControl.Initialize(Raster);
+            _colorSchemeControlSchemeControl.Initialize(Raster);
 
             ModelToUi();
 
@@ -69,9 +69,9 @@ namespace MW5.Plugins.Symbology.Views
             _overviewControl1.Initialize(Raster);
         }
 
-        public IRasterColorSchemeView Colors
+        public IRasterColorSchemeView ColorSchemeControl
         {
-            get { return _colorSchemeControl; }
+            get { return _colorSchemeControlSchemeControl; }
         }
 
         public IRasterSource Raster
@@ -150,7 +150,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _colorSchemeControl.ModelToUiRaster();
+            _colorSchemeControlSchemeControl.ModelToUiRaster();
         }
 
         public void UiToModel()
@@ -210,7 +210,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _colorSchemeControl.UiToModelRaster();
+            _colorSchemeControlSchemeControl.UiToModelRaster();
         }
     }
 

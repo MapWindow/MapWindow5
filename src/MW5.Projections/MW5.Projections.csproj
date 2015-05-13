@@ -122,11 +122,11 @@
     <Compile Include="UI\Controls\ProjectionTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="BL\Territory.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="UI\Controls\ProjectionTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BL\Territory.cs" />
-    <Compile Include="Enums.cs" />
     <Compile Include="UI\Forms\AssignProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>

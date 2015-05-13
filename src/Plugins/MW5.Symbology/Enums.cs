@@ -32,5 +32,12 @@
         EqualIntervals = 1,
         UniqueValues = 2,
     }
- }
+
+    public enum MinMaxCalculationType
+    {
+        Precise = 0,
+        PercentRange = 1,
+        StdDev = 2,
+    }
+}
 

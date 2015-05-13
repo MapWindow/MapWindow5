@@ -65,11 +65,27 @@ namespace MW5.Api.Interfaces
 
         int BlueBandIndex { get; set; }
 
+        int AlphaBandIndex { get; set; }
+
         bool UseRgbBandMapping { get; set; }
 
         bool ForceSingleBandRendering { get; set; }
 
         string GetBandFullName(int bandIndex);
+
+        bool AlphaRendering { get; set; }
+
+        bool GridRendering { get; }
+
+        double GetBandMinimum(int bandIndex);
+
+        double GetBandMaximum(int bandIndex);
+
+        bool SetBandMinMax(int bandIndex, double min, double max);
+
+        bool SetDefaultMinMax(int bandIndex);
+
+        bool ReverseGreyScale { get; set; }
 
         //bool AllowHillshade { get; set; }
 

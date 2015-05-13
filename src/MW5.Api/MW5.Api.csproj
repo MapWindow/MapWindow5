@@ -70,6 +70,7 @@
     <Compile Include="Concrete\GridBandCollection.cs" />
     <Compile Include="Concrete\LayerIdentity.cs" />
     <Compile Include="Concrete\MeasurerSettings.cs" />
+    <Compile Include="Concrete\RasterBandStatistics.cs" />
     <Compile Include="Concrete\RasterOverviewCollection.cs" />
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />

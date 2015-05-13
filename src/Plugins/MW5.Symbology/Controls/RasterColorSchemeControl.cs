@@ -12,6 +12,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Views;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -90,11 +91,13 @@ namespace MW5.Plugins.Symbology.Controls
         public double BandMinValue
         {
             get { return txtMinimum.DoubleValue; }
+            set { txtMinimum.DoubleValue = value; }
         }
 
         public double BandMaxValue
         {
             get { return txtMaximum.DoubleValue; }
+            set { txtMaximum.DoubleValue = value; }
         }
 
         public int SelectedPredefinedColorScheme
@@ -126,14 +129,14 @@ namespace MW5.Plugins.Symbology.Controls
         private void ChangeRenderingMode()
         {
             var rendering = Rendering;
-            groupPseudoColors.Visible = rendering == RasterRendering.ColorScheme;
+            groupMinMax.Visible = rendering != RasterRendering.MultiBandRgb;
 
             rasterColorSchemeGrid1.Visible = Rendering == RasterRendering.BuiltInColorTable || 
                                              Rendering == RasterRendering.ColorScheme;
             
             rgbBandControl1.Visible = Rendering == RasterRendering.MultiBandRgb;
-
             groupSingleBand.Visible = Rendering == RasterRendering.SingleBand;
+            groupColorScheme.Visible = Rendering == RasterRendering.ColorScheme;
 
             switch (Rendering)
             {
@@ -180,11 +183,17 @@ namespace MW5.Plugins.Symbology.Controls
         public void ModelToUiRaster()
         {
             chkUseHistogram.Checked = _raster.UseHistogram;
+            chkAlphaRendering.Checked = _raster.AlphaRendering;
+            chkHillShade.Checked = _raster.GridRendering;
+            chkReverse.Checked = _raster.ReverseGreyScale;
         }
 
         public void UiToModelRaster()
         {
             _raster.UseHistogram = chkUseHistogram.Checked;
+            _raster.AlphaRendering = chkAlphaRendering.Checked;
+            _raster.AllowGridRendering = chkHillShade.Checked ? GridRendering.ForceForAllFormats : GridRendering.Never;
+            _raster.ReverseGreyScale = chkReverse.Checked;
 
             if (Rendering == RasterRendering.MultiBandRgb)
             {
@@ -211,9 +220,8 @@ namespace MW5.Plugins.Symbology.Controls
             var bandIndex = cboSelectedBand.SelectedIndex + 1;
             if (bandIndex >= 1)
             {
-                var band = _raster.Bands[bandIndex];
-                txtMinimum.DoubleValue = band.Minimum;
-                txtMaximum.DoubleValue = band.Maximum;
+                txtMinimum.DoubleValue = _raster.GetBandMinimum(bandIndex);
+                txtMaximum.DoubleValue = _raster.GetBandMaximum(bandIndex);
             }
         }
 

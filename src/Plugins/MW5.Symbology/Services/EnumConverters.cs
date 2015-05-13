@@ -37,7 +37,7 @@ namespace MW5.Plugins.Symbology.Services
                 case RasterRendering.MultiBandRgb:
                     return "Multiband RGB";
                 case RasterRendering.ColorScheme:
-                    return "Single band color scheme";
+                    return "Color scheme";
                 case RasterRendering.BuiltInColorTable:
                     return "Built-in color table";
             }

@@ -287,6 +287,12 @@ namespace MW5.Api.Concrete
             set { _image.BlueBandIndex = value; }
         }
 
+        public int AlphaBandIndex
+        {
+            get { return _image.AlphaBandIndex; }
+            set { _image.AlphaBandIndex = value; }
+        }
+
         public bool UseRgbBandMapping
         {
             get { return _image.UseRgbBandMapping; }
@@ -313,6 +319,43 @@ namespace MW5.Api.Concrete
             }
 
             return string.Empty;
+        }
+
+        public bool AlphaRendering
+        {
+            get { return _image.AlphaRendering; }
+            set { _image.AlphaRendering = value; }
+        }
+
+        public bool GridRendering
+        {
+            get { return _image.GridRendering; }
+        }
+
+        public double GetBandMinimum(int bandIndex)
+        {
+            return _image.BandMinimum[bandIndex];
+        }
+
+        public double GetBandMaximum(int bandIndex)
+        {
+            return _image.BandMaximum[bandIndex];
+        }
+
+        public bool SetBandMinMax(int bandIndex, double min, double max)
+        {
+            return _image.SetBandMinMax(bandIndex, min, max);
+        }
+
+        public bool SetDefaultMinMax(int bandIndex)
+        {
+            return _image.SetDefaultMinMax(bandIndex);
+        }
+
+        public bool ReverseGreyScale
+        {
+            get { return _image.ReverseGreyscale; }
+            set { _image.ReverseGreyscale = value; }
         }
 
         public RasterBand ActiveBand

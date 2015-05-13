@@ -38,14 +38,17 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case RasterCommand.CalculateMinMax:
-                    if (_context.Container.Run<RasterMinMaxPresenter, IRasterSource>(_raster))
+                    var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
+                    var model = new RasterMinMaxModel(band);
+                    if (_context.Container.Run<RasterMinMaxPresenter, RasterMinMaxModel>(model))
                     {
-                        // TODO: set the resulting values
+                        View.ColorSchemeControl.BandMinValue = model.Min;
+                        View.ColorSchemeControl.BandMaxValue = model.Max;
                     }
                     break;
                 case RasterCommand.GenerateColorScheme:
                     var scheme = new RasterColorScheme();
-                    var colorView = View.Colors;
+                    var colorView = View.ColorSchemeControl;
                     scheme.SetPredefined(colorView.BandMinValue, colorView.BandMaxValue, (PredefinedColors)colorView.SelectedPredefinedColorScheme);
                     colorView.ColorScheme = scheme;
                     break;
@@ -64,7 +67,7 @@ namespace MW5.Plugins.Symbology.Views
         {
             View.UiToModel();
 
-            var colors = View.Colors;
+            var colors = View.ColorSchemeControl;
             _raster.ForceSingleBandRendering = false;
             _raster.UseRgbBandMapping = false;
 
@@ -74,6 +77,7 @@ namespace MW5.Plugins.Symbology.Views
                     _raster.AllowGridRendering = GridRendering.Never;
                     _raster.ForceSingleBandRendering = true;
                     _raster.ActiveBandIndex = colors.ActiveBandIndex;
+                    _raster.SetBandMinMax(colors.ActiveBandIndex, colors.BandMinValue, colors.BandMaxValue);
                     break;
                 case RasterRendering.MultiBandRgb:
                     _raster.AllowGridRendering = GridRendering.Never;
@@ -85,7 +89,7 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterRendering.ColorScheme:
                     if (colors.ColorScheme != null && _raster != null)
                     {
-                        _raster.AllowGridRendering = GridRendering.ForceForAllFormats;
+                        //_raster.AllowGridRendering = GridRendering.ForceForAllFormats;
                         _raster.ActiveBandIndex = colors.ActiveBandIndex;
                         _raster.CustomColorScheme = colors.ColorScheme;
                     }

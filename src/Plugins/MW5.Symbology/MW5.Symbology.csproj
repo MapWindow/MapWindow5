@@ -368,6 +368,7 @@
     <Compile Include="Views\HistogramOptionsView.Designer.cs">
       <DependentUpon>HistogramOptionsView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\RasterMinMaxModel.cs" />
     <Compile Include="Views\RasterMinMaxPresenter.cs" />
     <Compile Include="Views\RasterMinMaxView.cs">
       <SubType>Form</SubType>

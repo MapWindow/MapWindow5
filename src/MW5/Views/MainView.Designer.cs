@@ -35,13 +35,12 @@ namespace MW5.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this._dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.parentBarItem3 = new Syncfusion.Windows.Forms.Tools.XPMenus.ParentBarItem();
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
-            this._mapControl1 = new BoundMapControl();
+            this._mapControl1 = new MW5.Api.Map.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
@@ -61,6 +60,7 @@ namespace MW5.Views
             this._dockingManager1.DockLayoutStream = ((System.IO.MemoryStream)(resources.GetObject("_dockingManager1.DockLayoutStream")));
             this._dockingManager1.DockTabAlignment = Syncfusion.Windows.Forms.Tools.DockTabAlignmentStyle.Left;
             this._dockingManager1.DockTabHeight = 26;
+            this._dockingManager1.EnableAutoAdjustCaption = true;
             this._dockingManager1.HostControl = this;
             this._dockingManager1.ImageList = this.imageList1;
             this._dockingManager1.InActiveCaptionBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212))))));
@@ -107,43 +107,43 @@ namespace MW5.Views
             // 
             // _mapControl1
             // 
-            this._mapControl1.AnimationOnZooming = AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 19.54781143512292D;
+            this._mapControl1.AllowDrop = true;
+            this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
+            this._mapControl1.CurrentScale = 13.87264037331304D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
             this._mapControl1.GrabProjectionFromData = true;
-            this._mapControl1.InertiaOnPanning = AutoToggle.Auto;
-            this._mapControl1.KnownExtents = KnownExtents.None;
+            this._mapControl1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
+            this._mapControl1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
             this._mapControl1.Latitude = 0F;
             this._mapControl1.Legend = null;
             this._mapControl1.Location = new System.Drawing.Point(0, 0);
             this._mapControl1.Longitude = 0F;
-            this._mapControl1.MapCursor = MapCursor.ZoomIn;
-            this._mapControl1.MapProjection = MapProjection.None;
-            this._mapControl1.MapUnits = UnitsOfMeasure.Meters;
+            this._mapControl1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
+            this._mapControl1.MapProjection = MW5.Api.Enums.MapProjection.None;
+            this._mapControl1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
             this._mapControl1.MouseWheelSpeed = 0.5D;
             this._mapControl1.Name = "_mapControl1";
             spatialReference1.Tag = "";
             this._mapControl1.Projection = spatialReference1;
-            this._mapControl1.ResizeBehavior = ResizeBehavior.Classic;
+            this._mapControl1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this._mapControl1.ReuseTileBuffer = true;
-            this._mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
+            this._mapControl1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
             this._mapControl1.ScalebarVisible = true;
-            this._mapControl1.ShowCoordinates = CoordinatesDisplay.Auto;
+            this._mapControl1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
             this._mapControl1.ShowRedrawTime = false;
             this._mapControl1.ShowVersionNumber = false;
             this._mapControl1.Size = new System.Drawing.Size(434, 338);
-            this._mapControl1.SystemCursor = SystemCursor.MapDefault;
+            this._mapControl1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this._mapControl1.TabIndex = 0;
             this._mapControl1.Tag = "";
-            this._mapControl1.TileProvider = TileProvider.OpenStreetMap;
+            this._mapControl1.TileProvider = MW5.Api.Enums.TileProvider.OpenStreetMap;
             this._mapControl1.UdCursorHandle = 0;
             this._mapControl1.UseSeamlessPan = false;
-            this._mapControl1.ZoomBehavior = ZoomBehavior.UseTileLevels;
+            this._mapControl1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
             this._mapControl1.ZoomPercent = 0.3D;
             // 
             // _mainFrameBarManager1
@@ -152,7 +152,7 @@ namespace MW5.Views
             this._mainFrameBarManager1.AutoPersistCustomization = false;
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
-            this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.MapWindowView";
+            this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.Forms.MapWindowView";
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
@@ -194,6 +194,7 @@ namespace MW5.Views
             // superToolTip1
             // 
             this.superToolTip1.MetroColor = System.Drawing.Color.White;
+            this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
             this.superToolTip1.VisualStyle = Syncfusion.Windows.Forms.Tools.SuperToolTip.Appearance.Metro;
             // 
             // statusStripEx1

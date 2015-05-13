@@ -15,18 +15,42 @@ namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterMinMaxView : RasterMinMaxViewBase, IRasterMinMaxView
     {
-        public event Action CalculateClicked;
-
         public RasterMinMaxView()
         {
             InitializeComponent();
-
-            btnCalculate.Click += (s, e) => Invoke(CalculateClicked);
         }
 
         public void Initialize()
         {
-            
+            optPrecise.Checked = Model.CalculationType == MinMaxCalculationType.Precise;
+            optRange.Checked = Model.CalculationType == MinMaxCalculationType.PercentRange;
+            optStdDev.Checked = Model.CalculationType == MinMaxCalculationType.StdDev;
+
+            txtRangeMin.DoubleValue = Model.RangeLowPercent;
+            txtRangeMax.DoubleValue = Model.RangeHightPercent;
+            txtStdDev.DoubleValue = Model.StdDevRange;
+        }
+
+        public void UiToModel()
+        {
+            if (optPrecise.Checked)
+            {
+                Model.CalculationType = MinMaxCalculationType.Precise;
+            }
+
+            if (optRange.Checked)
+            {
+                Model.CalculationType = MinMaxCalculationType.PercentRange;
+            }
+
+            if (optStdDev.Checked)
+            {
+                Model.CalculationType = MinMaxCalculationType.StdDev;
+            }
+
+            Model.RangeLowPercent = txtRangeMin.DoubleValue;
+            Model.RangeHightPercent = txtRangeMax.DoubleValue;
+            Model.StdDevRange = txtStdDev.DoubleValue;
         }
 
         public ButtonBase OkButton
@@ -35,5 +59,5 @@ namespace MW5.Plugins.Symbology.Views
         }
     }
 
-    public class RasterMinMaxViewBase : MapWindowView<IRasterSource> {  }
+    public class RasterMinMaxViewBase : MapWindowView<RasterMinMaxModel> {  }
 }

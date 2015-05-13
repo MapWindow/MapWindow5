@@ -8,8 +8,8 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Symbology.Views.Abstract
 {
-    public interface IRasterMinMaxView: IView<IRasterSource>
+    public interface IRasterMinMaxView : IView<RasterMinMaxModel>
     {
-        event Action CalculateClicked;
+        void UiToModel();
     }
 }

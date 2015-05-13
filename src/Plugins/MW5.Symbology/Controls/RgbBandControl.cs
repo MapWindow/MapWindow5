@@ -45,11 +45,18 @@ namespace MW5.Plugins.Symbology.Controls
             get { return cboBlue.SelectedIndex; }
         }
 
+        public int AlphaBandIndex
+        {
+            get { return cboAlpha.SelectedIndex; }
+        }
+
         public void ApplyChanges()
         {
             _raster.RedBandIndex = cboRed.SelectedIndex;
             _raster.GreenBandIndex = cboGreen.SelectedIndex;
             _raster.BlueBandIndex = cboBlue.SelectedIndex;
+            _raster.AlphaBandIndex = cboAlpha.SelectedIndex;
+
             _raster.UseRgbBandMapping = true;
         }
 
@@ -63,6 +70,9 @@ namespace MW5.Plugins.Symbology.Controls
 
             cboBlue.AddRasterBands(_raster, true);
             cboBlue.SetSelectedIndexSafe(_raster.BlueBandIndex);
+
+            cboAlpha.AddRasterBands(_raster, true);
+            cboAlpha.SetSelectedIndexSafe(_raster.AlphaBandIndex);
         }
     }
 }

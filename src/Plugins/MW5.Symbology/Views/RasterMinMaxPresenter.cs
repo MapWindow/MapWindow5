@@ -11,20 +11,19 @@ using MW5.Plugins.Symbology.Views.Abstract;
 
 namespace MW5.Plugins.Symbology.Views
 {
-    public class RasterMinMaxPresenter: BasePresenter<IRasterMinMaxView, IRasterSource>
+    public class RasterMinMaxPresenter: BasePresenter<IRasterMinMaxView, RasterMinMaxModel>
     {
         public RasterMinMaxPresenter(IRasterMinMaxView view) : base(view)
         {
-            view.CalculateClicked += view_CalculateClicked;
+            
         }
-
-        private void view_CalculateClicked()
-        {
-            MessageService.Current.Info("About to do calculations.");
-        } 
 
         public override bool ViewOkClicked()
         {
+            View.UiToModel();
+
+            Model.Calculate();
+            
             return true;
         }
     }

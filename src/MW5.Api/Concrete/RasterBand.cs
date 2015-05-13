@@ -136,5 +136,23 @@ namespace MW5.Api.Concrete
         {
             get { return new RasterOverviewCollection(_band); }
         }
+
+        public RasterBandStatistics GetStatistics(bool allowApproximate, bool forceCalculation)
+        {
+            double min, max, mean, stdDev;
+
+            if (_band.GetStatistics(allowApproximate, forceCalculation, out min, out max, out mean, out stdDev))
+            {
+                return new RasterBandStatistics()
+                {
+                    Min = min,
+                    Max = max,
+                    Mean = mean,
+                    StdDev = stdDev
+                };
+            }
+
+            return null;
+        }
     }
 }

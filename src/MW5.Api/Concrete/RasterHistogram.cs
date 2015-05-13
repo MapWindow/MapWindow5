@@ -41,5 +41,16 @@ namespace MW5.Api.Concrete
         {
             return _histogram.Value[bucketIndex];
         }
+
+        public int get_TotalCount()
+        {
+            int count = 0;
+            for (int i = 0; i < NumBuckets; i++)
+            {
+                count += get_Count(i);
+            }
+
+            return count;
+        }
     }
 }
