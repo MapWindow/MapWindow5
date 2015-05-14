@@ -60,7 +60,7 @@ namespace MW5.Plugins.DebugWindow.Views
                 _listControl.Adapter.AddFilterMatch(entry => entry.Level, level);
             }
 
-            _listControl.Adapter.AddFilterLike(entry => entry.Message, watermarkTextbox1.Text);
+            _listControl.Adapter.AddFilterLike(entry => entry.DetailedMessage, watermarkTextbox1.Text);
         }
 
         private void InitGrid()

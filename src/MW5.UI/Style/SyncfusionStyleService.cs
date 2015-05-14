@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using MW5.Shared;
+using MW5.UI.Controls;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
@@ -216,7 +217,12 @@ namespace MW5.UI.Style
             var grid = control as GridGroupingControl;
             if (grid != null)
             {
-                WrapByGrdientPanel(grid);
+                var customGrid = grid as CustomGridControl;
+                if (customGrid == null || customGrid.WrapWithPanel)
+                {
+                    WrapByGradientPanel(grid);
+                }
+                
 #if STYLE2010   
                 grid.GridOfficeScrollBars = OfficeScrollBars.Office2010;
                 grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
@@ -228,7 +234,7 @@ namespace MW5.UI.Style
             }
         }
 
-        private void WrapByGrdientPanel(Control control)
+        private void WrapByGradientPanel(Control control)
         {
             // it seems there is no way to set decent looking border for TabControlAdv
             // so let's insert gradient panel
@@ -236,13 +242,23 @@ namespace MW5.UI.Style
             {
                 BorderColor = Color.LightGray,
                 BorderStyle = BorderStyle.FixedSingle,
-                Anchor = control.Anchor
+                Anchor = control.Anchor,
+                Dock = control.Dock
             };
+
+            if (panel.Dock == DockStyle.Fill)
+            {
+                panel.BringToFront();
+            }
 
             ControlHelper.MakeSameSize(control, panel);
 
-            control.Parent.Controls.Add(panel);
-            control.Parent.Controls.Remove(control);
+            if (control.Parent != null)
+            {
+                control.Parent.Controls.Add(panel);
+                control.Parent.Controls.Remove(control);
+            }
+
             panel.Controls.Add(control);
             control.Dock = DockStyle.Fill;
         }
@@ -252,7 +268,7 @@ namespace MW5.UI.Style
             var tab = control as TabControlAdv;
             if (tab != null)
             {
-                WrapByGrdientPanel(tab);
+                WrapByGradientPanel(tab);
 
 #if STYLE2010
                 tab.TabStyle = typeof(TabRendererOffice2007);

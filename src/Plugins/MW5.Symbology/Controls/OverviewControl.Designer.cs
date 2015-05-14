@@ -43,6 +43,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -69,10 +70,14 @@
             // 
             // _overviewGrid1
             // 
-            this._overviewGrid1.DataSource = null;
+            this._overviewGrid1.AllowCurrentCell = true;
+            this._overviewGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this._overviewGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._overviewGrid1.FreezeCaption = false;
             this._overviewGrid1.Location = new System.Drawing.Point(286, 53);
             this._overviewGrid1.Name = "_overviewGrid1";
-            this._overviewGrid1.Size = new System.Drawing.Size(214, 110);
+            this._overviewGrid1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this._overviewGrid1.Size = new System.Drawing.Size(197, 110);
             this._overviewGrid1.TabIndex = 50;
             // 
             // btnClearOverviews
@@ -180,6 +185,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();

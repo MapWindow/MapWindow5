@@ -38,6 +38,7 @@ namespace MW5.Data.Views
             databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
 
             databaseLayersGrid1.Adapter.AdjustColumnWidths();
+            databaseLayersGrid1.Adapter.HotTracking = true;
         }
 
         private int GetIcon(VectorLayerInfo info)

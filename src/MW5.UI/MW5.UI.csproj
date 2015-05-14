@@ -80,6 +80,9 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\CustomGridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\ImageCombo.cs">
       <SubType>Component</SubType>
     </Compile>

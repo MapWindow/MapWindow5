@@ -9,6 +9,7 @@ namespace MW5.Shared.Log
 {
     public interface ILogEntry
     {
+        string DetailedMessage { get; }
         string Message { get; }
         LogLevel Level { get;  }
         [Browsable(false)]

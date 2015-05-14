@@ -12,7 +12,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.UI.Controls
 {
-    public abstract class StronglyTypedGrid<T> : GridGroupingControl
+    public abstract class StronglyTypedGrid<T> : CustomGridControl
             where T : class
     {
         public GridAdapter<T> Adapter { get; protected set; }

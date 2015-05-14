@@ -10,6 +10,9 @@ namespace MW5.Plugins.DebugWindow.Controls
 {
     public class LogEntryGrid: StronglyTypedGrid<ILogEntry>
     {
-
+        public LogEntryGrid()
+        {
+            WrapWithPanel = false;
+        }
     }
 }
