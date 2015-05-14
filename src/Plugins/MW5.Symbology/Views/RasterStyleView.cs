@@ -56,10 +56,6 @@ namespace MW5.Plugins.Symbology.Views
 
             _dynamicVisibilityControl1.Initialize(Model, _context.Map.CurrentZoom, _context.Map.CurrentScale);
 
-            ModelToUi();
-
-            richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
-
             if (Raster != null)
             {
                 _colorSchemeControl.Initialize(Raster);
@@ -80,6 +76,10 @@ namespace MW5.Plugins.Symbology.Views
 
                 richTextBox1.Visible = true;
             }
+
+            ModelToUi();
+
+            richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
         }
 
         public IRasterColorSchemeView ColorSchemeControl

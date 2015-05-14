@@ -77,7 +77,7 @@ namespace MW5.Plugins.Symbology.Controls
                 return;
             }
 
-            var interval = this[e.Inner.RowIndex];
+            var interval = this[e.Inner.RowIndex - 2];
 
             using (var dialog = new ColorDialog())
             {
