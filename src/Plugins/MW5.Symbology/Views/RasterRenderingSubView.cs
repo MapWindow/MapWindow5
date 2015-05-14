@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -13,19 +9,16 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
-using MW5.Plugins.Symbology.Views;
-using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Helpers;
 
-namespace MW5.Plugins.Symbology.Controls
+namespace MW5.Plugins.Symbology.Views
 {
-    public partial class RasterColorSchemeControl : UserControl, IRasterColorSchemeView, IMenuProvider
+    public partial class RasterRenderingSubView : RasterRenderingSubViewBase, ISubView
     {
         private RasterColorScheme _colorScheme;
-        private IRasterSource _raster;
 
-        public RasterColorSchemeControl()
+        public RasterRenderingSubView() 
         {
             InitializeComponent();
 
@@ -39,28 +32,26 @@ namespace MW5.Plugins.Symbology.Controls
             colorSchemeCombo1.UpdateItems();
         }
 
-        public void Initialize(IRasterSource raster)
+        public void Initialize()
         {
-            _raster = raster;
-
-            if (_raster == null)
+            if (Model == null)
             {
                 return;
             }
 
-            ColorScheme = _raster.CustomColorScheme;
+            ColorScheme = Model.CustomColorScheme;
 
             ControlHelper.MakeSameLocation(chkUseHistogram, chkHillshade);
 
             InitRenderModeCombo();
 
-            cboSelectedBand.AddRasterBands(_raster);
+            cboSelectedBand.AddRasterBands(Model);
 
             OnChangeRenderingMode();
 
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
-            rgbBandControl1.Initialize(_raster);
+            rgbBandControl1.Initialize(Model);
         }
 
         [Browsable(false)]
@@ -144,7 +135,7 @@ namespace MW5.Plugins.Symbology.Controls
                     SetColorSchemeCore(_colorScheme);
                     break;
                 case RasterRendering.BuiltInColorTable:
-                    var table = _raster.Bands[1].ColorTable;
+                    var table = Model.Bands[1].ColorTable;
                     SetColorSchemeCore(table);
                     break;
                 default:
@@ -159,37 +150,37 @@ namespace MW5.Plugins.Symbology.Controls
         {
             var list = new List<RasterRendering> { RasterRendering.SingleBand };
 
-            if (_raster.NumBands > 1)
+            if (Model.NumBands > 1)
             {
                 list.Add(RasterRendering.Rgb);
             }
 
             list.Add(RasterRendering.ColorScheme);
 
-            if (_raster.HasBuiltInColorTable)
+            if (Model.HasBuiltInColorTable)
             {
                 list.Add(RasterRendering.BuiltInColorTable);
             }
 
             cboRasterRendering.Items.AddRange(ComboBoxHelper.GetComboItems(list).ToArray<object>());
 
-            cboRasterRendering.SetValue(_raster.RenderingType);
+            cboRasterRendering.SetValue(Model.RenderingType);
         }
 
         public void ModelToUiRaster()
         {
-            chkUseHistogram.Checked = _raster.UseHistogram;
-            chkAlphaRendering.Checked = _raster.UseActiveBandAsAlpha;
-            chkHillshade.Checked = _raster.GridRendering;
-            chkReverse.Checked = _raster.ReverseGreyScale;
+            chkUseHistogram.Checked = Model.UseHistogram;
+            chkAlphaRendering.Checked = Model.UseActiveBandAsAlpha;
+            chkHillshade.Checked = Model.GridRendering;
+            chkReverse.Checked = Model.ReverseGreyScale;
         }
 
         public void UiToModelRaster()
         {
-            _raster.UseHistogram = chkUseHistogram.Checked;
-            _raster.UseActiveBandAsAlpha = chkAlphaRendering.Checked;
-            _raster.AllowGridRendering = chkHillshade.Checked ? GridRendering.ForceForAllFormats : GridRendering.Never;
-            _raster.ReverseGreyScale = chkReverse.Checked;
+            Model.UseHistogram = chkUseHistogram.Checked;
+            Model.UseActiveBandAsAlpha = chkAlphaRendering.Checked;
+            Model.AllowGridRendering = chkHillshade.Checked ? GridRendering.ForceForAllFormats : GridRendering.Never;
+            Model.ReverseGreyScale = chkReverse.Checked;
 
             if (Rendering == RasterRendering.Rgb)
             {
@@ -208,6 +199,7 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 yield return btnCalculateMinMax;
                 yield return btnDefaultMinMax;
+                yield return btnEditColorScheme;
             }
         }
 
@@ -216,8 +208,8 @@ namespace MW5.Plugins.Symbology.Controls
             var bandIndex = cboSelectedBand.SelectedIndex + 1;
             if (bandIndex >= 1)
             {
-                BandMinValue = _raster.GetBandMinimum(bandIndex);
-                BandMaxValue = _raster.GetBandMaximum(bandIndex);
+                BandMinValue = Model.GetBandMinimum(bandIndex);
+                BandMaxValue = Model.GetBandMaximum(bandIndex);
             }
         }
 
@@ -262,4 +254,6 @@ namespace MW5.Plugins.Symbology.Controls
             return true;
         }
     }
+
+    public class RasterRenderingSubViewBase : SubViewBase<IRasterSource> { }
 }

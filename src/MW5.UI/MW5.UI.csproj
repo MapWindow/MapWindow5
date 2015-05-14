@@ -107,13 +107,11 @@
     </Compile>
     <Compile Include="Controls\GridCellColorModel.cs" />
     <Compile Include="Controls\GridCellColorRenderer.cs" />
-    <Compile Include="Controls\GridControlBase.cs">
+    <Compile Include="Controls\StronglyTypedGrid.cs">
       <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\GridListControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="Controls\GridAdapter.cs" />
     <Compile Include="Controls\IGridList.cs" />
     <Compile Include="Controls\NodeData.cs" />
     <Compile Include="Controls\Office2007ColorPicker.cs">

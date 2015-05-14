@@ -12,15 +12,20 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.UI.Controls
 {
-    public class GridControlBase: GridGroupingControl
+    public abstract class StronglyTypedGrid<T> : GridGroupingControl
+            where T : class
     {
-        public GridControlBase()
+        public GridAdapter<T> Adapter { get; protected set; }
+
+        protected StronglyTypedGrid()
         {
             InitStyle();
 
             InitGroupOptions();
 
             InitRowSelection();
+
+            Adapter = new GridAdapter<T>(this);
         }
 
         public bool AllowCurrentCell

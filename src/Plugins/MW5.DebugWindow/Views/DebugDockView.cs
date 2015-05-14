@@ -52,44 +52,46 @@ namespace MW5.Plugins.DebugWindow.Views
 
         private void UpdateFilter()
         {
-            _listControl.ClearFilter();
+            _listControl.Adapter.ClearFilter();
             
             var level = comboBoxAdv1.GetValue<LogLevel>();
             if (level != LogLevel.All)
             {
-                _listControl.AddFilterMatch(entry => entry.Level, level);
+                _listControl.Adapter.AddFilterMatch(entry => entry.Level, level);
             }
 
-            _listControl.AddFilterLike(entry => entry.Message, watermarkTextbox1.Text);
+            _listControl.Adapter.AddFilterLike(entry => entry.Message, watermarkTextbox1.Text);
         }
 
         private void InitGrid()
         {
             _listControl.BorderStyle = BorderStyle.None;
-            _listControl.ReadOnly = true;
-            _listControl.WrapText = true;
-            _listControl.HotTracking = true;
+
+            var adapter = _listControl.Adapter;
+            adapter.ReadOnly = true;
+            adapter.WrapText = true;
+            adapter.HotTracking = true;
 
             _listControl.DataSource = Logger.Current.Entries;
             Logger.Current.EntryAdded += Current_EntryAdded;
 
-            _listControl.GetColumnStyle(r => r.TimeStamp).Format = "hh:mm:ss.fff";
+            adapter.GetColumnStyle(r => r.TimeStamp).Format = "hh:mm:ss.fff";
 
-            var style = _listControl.GetColumnStyle(r => r.Level);
+            var style = adapter.GetColumnStyle(r => r.Level);
             style.ImageList = imageList1;
             style.ImageIndex = 0;
 
-            _listControl.AdjustColumnWidths();
-            _listControl.AdjustRowHeights();
-            _listControl.AutoAdjustRowHeights = true;
+            adapter.AdjustColumnWidths();
+            adapter.AdjustRowHeights();
+            adapter.AutoAdjustRowHeights = true;
 
-            _listControl.SetColumnIcon(r => r.Level, GetIcon);
+            adapter.SetColumnIcon(r => r.Level, GetIcon);
         }
 
         void Current_EntryAdded(object sender, LogEventArgs e)
         {
             // TODO: do it for the last row only
-            _listControl.AdjustRowHeights();
+            _listControl.Adapter.AdjustRowHeights();
         }
 
         private int GetIcon(ILogEntry entry)

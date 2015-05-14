@@ -9,12 +9,9 @@ using MW5.Plugins.Services;
 
 namespace MW5.Plugins.Mvp
 {
-    public abstract class CommandDispatcher<TView, TCommand>
+    public abstract class CommandDispatcher<TCommand>
         where TCommand : struct, IConvertible
-        where TView: IMenuProvider
     {
-        public TView View { get; private set; }
-
         public abstract void RunCommand(TCommand command);
 
         protected virtual void CommandNotFound(string itemName)
@@ -22,18 +19,7 @@ namespace MW5.Plugins.Mvp
             MessageService.Current.Info("No handler was found for the item with the key: " + itemName);
         }
 
-        protected CommandDispatcher()
-        {
-            
-        }
-
-        protected CommandDispatcher(TView view)
-        {
-            View = view;
-            WireUpMenus(view as Control);
-        }
-
-        private void WireUpMenus(Control parent)
+        protected void WireUpMenus(Control parent)
         {
             if (parent == null)
             {
@@ -46,10 +32,10 @@ namespace MW5.Plugins.Mvp
                 AddHandlers(provider);
             }
 
-            foreach (Control item in parent.Controls)
-            {
-                WireUpMenus(item);
-            }
+            //foreach (Control item in parent.Controls)
+            //{
+            //    WireUpMenus(item);
+            //}
         }
 
         protected void AddHandlers(IMenuProvider view)

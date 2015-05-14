@@ -4,7 +4,7 @@ using MW5.UI.Controls;
 
 namespace MW5.Data.Views.Controls
 {
-    public class DatabaseLayersGrid: GridListControl<VectorLayerInfo>
+    public class DatabaseLayersGrid: StronglyTypedGrid<VectorLayerInfo>
     {
         public DatabaseLayersGrid()
         {
@@ -15,7 +15,7 @@ namespace MW5.Data.Views.Controls
         {
             if (e.KeyCode == Keys.Space)
             {
-                ToggleProperty(info => info.Selected);
+                Adapter.ToggleProperty(info => info.Selected);
             }
         }
     }

@@ -32,12 +32,12 @@ namespace MW5.Data.Views
             databaseLayersGrid1.DataSource = layers;
             _layers = layers;
 
-            var style = databaseLayersGrid1.GetColumnStyle(r => r.Name);
+            var style = databaseLayersGrid1.Adapter.GetColumnStyle(r => r.Name);
             style.ImageList = imageList1;
             style.ImageIndex = 0;
-            databaseLayersGrid1.SetColumnIcon(r => r, GetIcon);
+            databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
 
-            databaseLayersGrid1.AdjustColumnWidths();
+            databaseLayersGrid1.Adapter.AdjustColumnWidths();
         }
 
         private int GetIcon(VectorLayerInfo info)

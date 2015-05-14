@@ -55,7 +55,6 @@ namespace MW5.Plugins.Symbology.Views
             this.txtLayerName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageColors = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this._colorSchemeControl = new MW5.Plugins.Symbology.Controls.RasterColorSchemeControl();
             this.tabPageRendering = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkUseTransparentColor = new System.Windows.Forms.CheckBox();
@@ -339,7 +338,6 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageColors
             // 
-            this.tabPageColors.Controls.Add(this._colorSchemeControl);
             this.tabPageColors.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
             this.tabPageColors.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageColors.Location = new System.Drawing.Point(120, 1);
@@ -349,16 +347,6 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageColors.TabIndex = 4;
             this.tabPageColors.Text = "Colors";
             this.tabPageColors.ThemesEnabled = false;
-            // 
-            // _colorSchemeControl
-            // 
-            this._colorSchemeControl.BandMaxValue = 1D;
-            this._colorSchemeControl.BandMinValue = 1D;
-            this._colorSchemeControl.ColorScheme = null;
-            this._colorSchemeControl.Location = new System.Drawing.Point(6, 5);
-            this._colorSchemeControl.Name = "_colorSchemeControl";
-            this._colorSchemeControl.Size = new System.Drawing.Size(500, 433);
-            this._colorSchemeControl.TabIndex = 0;
             // 
             // tabPageRendering
             // 
@@ -1005,7 +993,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.CheckBox chkLayerPreview;
         private ButtonAdv btnApply;
-        private Controls.RasterColorSchemeControl _colorSchemeControl;
         private Controls.DynamicVisibilityControl _dynamicVisibilityControl1;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label1;

@@ -236,6 +236,7 @@ namespace MW5.UI.Style
             {
                 BorderColor = Color.LightGray,
                 BorderStyle = BorderStyle.FixedSingle,
+                Anchor = control.Anchor
             };
 
             ControlHelper.MakeSameSize(control, panel);

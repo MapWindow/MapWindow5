@@ -94,7 +94,7 @@
       <DependentUpon>AttributesControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\AttributeGrid.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\CategoriesGrid.cs">
       <SubType>Component</SubType>
@@ -127,7 +127,7 @@
     </Compile>
     <Compile Include="Controls\OverviewScale.cs" />
     <Compile Include="Controls\OverviewGrid.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\OverviewControl.cs">
       <SubType>UserControl</SubType>
@@ -135,14 +135,15 @@
     <Compile Include="Controls\OverviewControl.Designer.cs">
       <DependentUpon>OverviewControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\RasterColorSchemeControl.cs">
+    <Compile Include="Views\RasterRenderingCommand.cs" />
+    <Compile Include="Views\RasterRenderingSubView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\RasterColorSchemeControl.Designer.cs">
-      <DependentUpon>RasterColorSchemeControl.cs</DependentUpon>
+    <Compile Include="Views\RasterRenderingSubView.Designer.cs">
+      <DependentUpon>RasterRenderingSubView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\RasterColorSchemeGrid.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\RasterColorSchemeGrid.Designer.cs">
       <DependentUpon>RasterColorSchemeGrid.cs</DependentUpon>
@@ -153,6 +154,7 @@
     <Compile Include="Controls\RasterInfoTreeView.Designer.cs">
       <DependentUpon>RasterInfoTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\RasterRenderingPresenter.cs" />
     <Compile Include="Controls\RgbBandControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -357,6 +359,7 @@
     <Compile Include="Legacy\SymbologyPluginLegacy.cs" />
     <Compile Include="Services\SymbologyMetadata.cs" />
     <Compile Include="Views\Abstract\IHistogramOptionsView.cs" />
+    <Compile Include="Views\Abstract\IRasterColorSchemeControl.cs" />
     <Compile Include="Views\Abstract\IRasterColorSchemeView.cs" />
     <Compile Include="Views\Abstract\IRasterMinMaxView.cs" />
     <Compile Include="Views\Abstract\IRasterStyleView.cs" />
@@ -367,6 +370,14 @@
     </Compile>
     <Compile Include="Views\HistogramOptionsView.Designer.cs">
       <DependentUpon>HistogramOptionsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RasterColorSchemeCommand.cs" />
+    <Compile Include="Views\RasterColorSchemePresenter.cs" />
+    <Compile Include="Views\RasterColorSchemeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\RasterColorSchemeView.Designer.cs">
+      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\RasterMinMaxModel.cs" />
     <Compile Include="Views\RasterMinMaxPresenter.cs" />
@@ -448,8 +459,8 @@
     <EmbeddedResource Include="Controls\OverviewControl.resx">
       <DependentUpon>OverviewControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\RasterColorSchemeControl.resx">
-      <DependentUpon>RasterColorSchemeControl.cs</DependentUpon>
+    <EmbeddedResource Include="Views\RasterRenderingSubView.resx">
+      <DependentUpon>RasterRenderingSubView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\RgbBandControl.resx">
       <DependentUpon>RgbBandControl.cs</DependentUpon>
@@ -526,6 +537,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\HistogramOptionsView.resx">
       <DependentUpon>HistogramOptionsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RasterColorSchemeView.resx">
+      <DependentUpon>RasterColorSchemeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RasterMinMaxView.resx">
       <DependentUpon>RasterMinMaxView.cs</DependentUpon>

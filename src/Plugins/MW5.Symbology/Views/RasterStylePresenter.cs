@@ -32,30 +32,14 @@ namespace MW5.Plugins.Symbology.Views
         {
             switch (command)
             {
-                case RasterCommand.DefaultMinMax:
-                    {
-                        var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
-                        View.ColorSchemeControl.BandMinValue = band.Minimum;
-                        View.ColorSchemeControl.BandMaxValue = band.Maximum; 
-                        break;
-                    }
+
                 case RasterCommand.ProjectionDetails:
                     using (var form = new ProjectionPropertiesForm(Model.Projection))
                     {
                         AppViewFactory.Instance.ShowChildView(form);
                     }
                     break;
-                case RasterCommand.CalculateMinMax:
-                    {
-                        var band = _raster.Bands[View.ColorSchemeControl.ActiveBandIndex];
-                        var model = new RasterMinMaxModel(band);
-                        if (_context.Container.Run<RasterMinMaxPresenter, RasterMinMaxModel>(model))
-                        {
-                            View.ColorSchemeControl.BandMinValue = model.Min;
-                            View.ColorSchemeControl.BandMaxValue = model.Max;
-                        }
-                        break;
-                    }
+
                 case RasterCommand.ClearColorAdjustments:
                     View.ClearColorAdjustments();
                     break;
@@ -69,7 +53,7 @@ namespace MW5.Plugins.Symbology.Views
 
         private bool Apply()
         {
-            if (!View.ColorSchemeControl.ValidateUserInput())
+            if (!View.RenderingSubView.ValidateUserInput())
             {
                 return false;
             }
@@ -90,7 +74,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
             
-            var colors = View.ColorSchemeControl;
+            var colors = View.RenderingSubView;
             _raster.ForceSingleBandRendering = false;
             _raster.UseRgbBandMapping = false;
             _raster.IgnoreColorTable = true;

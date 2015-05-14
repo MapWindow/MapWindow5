@@ -69,20 +69,11 @@
             // 
             // _overviewGrid1
             // 
-            this._overviewGrid1.AutoAdjustRowHeights = false;
             this._overviewGrid1.DataSource = null;
-            this._overviewGrid1.HotTracking = false;
-            this._overviewGrid1.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
             this._overviewGrid1.Location = new System.Drawing.Point(286, 53);
             this._overviewGrid1.Name = "_overviewGrid1";
-            this._overviewGrid1.ReadOnly = false;
-            this._overviewGrid1.ShowEditors = true;
-            this._overviewGrid1.ShowSuperTooltips = false;
             this._overviewGrid1.Size = new System.Drawing.Size(214, 110);
             this._overviewGrid1.TabIndex = 50;
-            this._overviewGrid1.ToolTipDuration = 3000;
-            this._overviewGrid1.ToolTipMaxWidth = 450;
-            this._overviewGrid1.WrapText = true;
             // 
             // btnClearOverviews
             // 

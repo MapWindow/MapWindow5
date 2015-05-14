@@ -132,6 +132,7 @@
     <Compile Include="Mvp\AppViewFactory.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
     <Compile Include="Mvp\CommandDispatcher.cs" />
+    <Compile Include="Mvp\CommandDispatcher2.cs" />
     <Compile Include="Mvp\ComplexPresenter.cs" />
     <Compile Include="Mvp\IApplicationContainer.cs" />
     <Compile Include="Interfaces\IComboBoxItem.cs" />
@@ -145,9 +146,14 @@
     <Compile Include="Interfaces\IToolbarCollection.cs" />
     <Compile Include="Mvp\IComplexView.cs" />
     <Compile Include="Mvp\IPresenter.cs" />
+    <Compile Include="Mvp\ISubView.cs" />
     <Compile Include="Mvp\IView.cs" />
     <Compile Include="Mvp\IMenuProvider.cs" />
     <Compile Include="Mvp\IViewInternal.cs" />
+    <Compile Include="Mvp\SubViewBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Mvp\SubViewPresenter.cs" />
     <Compile Include="Mvp\ViewStyle.cs" />
     <Compile Include="PluginBroadcaster.cs" />
     <Compile Include="Interfaces\IAppContext.cs" />

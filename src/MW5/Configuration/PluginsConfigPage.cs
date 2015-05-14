@@ -33,20 +33,20 @@ namespace MW5.Configuration
             DataSource = _pluginProvider.List;
             KeyDown += PluginsConfigPage_KeyDown;
 
-            PrepareToolTip += ListControlPrepareToolTip;
+            Adapter.PrepareToolTip += ListControlPrepareToolTip;
         }
 
         private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
-                ToggleProperty(info => info.Selected);
+                Adapter.ToggleProperty(info => info.Selected);
             }
         }
 
         private void ListControlPrepareToolTip(object sender, UI.Controls.ToolTipGridEventArgs e)
         {
-            var info = this[e.RecordIndex];
+            var info = Adapter[e.RecordIndex];
             if (info != null)
             {
                 e.ToolTip.Header.Text = info.Name;

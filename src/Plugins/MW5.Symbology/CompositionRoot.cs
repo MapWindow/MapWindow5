@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views;
 using MW5.Plugins.Symbology.Views.Abstract;
@@ -17,7 +18,10 @@ namespace MW5.Plugins.Symbology
         {
             container.RegisterView<IRasterStyleView, RasterStyleView>().
                 RegisterView<IRasterMinMaxView, RasterMinMaxView>().
-                RegisterView<IHistogramOptionsView, HistogramOptionsView>();
+                RegisterView<IRasterColorSchemeView, RasterColorSchemeView>().
+                RegisterView<IHistogramOptionsView, HistogramOptionsView>().
+                RegisterService<RasterRenderingSubView>().
+                RegisterService<RasterRenderingPresenter>();
 
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
             EnumHelper.RegisterConverter(new RasterRenderingConverter());

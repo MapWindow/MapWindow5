@@ -18,19 +18,22 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls
 {
-    public class GridListControl<T> : UserControl, IGridList<T>
+    /// <summary>
+    /// Provides strongly typed API for Syncfusion's GridGroupControl
+    /// </summary>
+    public class GridAdapter<T>
         where T: class
     {
         private readonly Dictionary<string, Func<T, int>> _iconSelectors = new Dictionary<string, Func<T, int>>();
         private SuperToolTip _lastTooltip = new SuperToolTip();
-        private GridControlBase _grid;
+        private readonly GridGroupingControl _grid;
         private int _mouseOverIndex = 0;
         private bool _autoAdjustRowHeights;
 
-        public GridListControl()
+        public GridAdapter(GridGroupingControl grid)
         {
-            _grid = new GridControlBase {Dock = DockStyle.Fill};
-            Controls.Add(_grid);
+            if (grid == null) throw new ArgumentNullException("grid");
+            _grid = grid;
 
             SetDefaults();
 
@@ -128,7 +131,7 @@ namespace MW5.UI.Controls
             AdjustRowHeights();
         }
 
-        public new event KeyEventHandler KeyDown
+        public event KeyEventHandler KeyDown
         {
             add { _grid.TableControl.KeyDown += value; }
             remove { _grid.TableControl.KeyDown -= value; }
@@ -140,7 +143,7 @@ namespace MW5.UI.Controls
             set { _grid.DataSource = value; }
         }
 
-        public GridControlBase Grid
+        public GridGroupingControl Grid
         {
             get { return _grid; }
         }
@@ -221,7 +224,7 @@ namespace MW5.UI.Controls
             {
                 _mouseOverIndex = e.Inner.RowIndex;
                 
-                Refresh();
+                _grid.Refresh();
             }
         }
 
@@ -242,7 +245,7 @@ namespace MW5.UI.Controls
             lock (_lastTooltip)
             {
                 _lastTooltip.Hide();
-                _lastTooltip = new SuperToolTip(this);
+                _lastTooltip = new SuperToolTip(_grid);
 
                 int columnCount = _grid.TableDescriptor.Columns.Count;
 
@@ -252,7 +255,7 @@ namespace MW5.UI.Controls
                     Y = _grid.TableControl.RowIndexToVScrollPixelPos(rowIndex + RowOffset)
                 };
 
-                pnt = PointToScreen(pnt);
+                pnt = _grid.PointToScreen(pnt);
 
                 var info = new ToolTipInfo();
                 var args = new ToolTipGridEventArgs(info, rowIndex); 
@@ -330,7 +333,6 @@ namespace MW5.UI.Controls
             var name = GetPropertyName(propertySelector);
             if (name != string.Empty)
             {
-                
                 return _grid.TableDescriptor.Columns[name];
             }
 
@@ -489,7 +491,5 @@ namespace MW5.UI.Controls
             var desc = new RecordFilterDescriptor(propertyName, op, new[] { condition });
             _grid.TableDescriptor.RecordFilters.Add(desc);
         }
-
-        
     }
 }

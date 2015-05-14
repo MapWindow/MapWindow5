@@ -140,22 +140,13 @@ namespace MW5.Plugins.DebugWindow.Views
             // 
             // _listControl
             // 
-            this._listControl.AutoAdjustRowHeights = false;
             this._listControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._listControl.DataSource = null;
             this._listControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._listControl.HotTracking = false;
-            this._listControl.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
             this._listControl.Location = new System.Drawing.Point(0, 30);
             this._listControl.Name = "_listControl";
-            this._listControl.ReadOnly = false;
-            this._listControl.ShowEditors = true;
-            this._listControl.ShowSuperTooltips = false;
             this._listControl.Size = new System.Drawing.Size(575, 65);
             this._listControl.TabIndex = 44;
-            this._listControl.ToolTipDuration = 3000;
-            this._listControl.ToolTipMaxWidth = 450;
-            this._listControl.WrapText = true;
             // 
             // DebugDockView
             // 

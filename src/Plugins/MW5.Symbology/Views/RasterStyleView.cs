@@ -1,33 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Mvp;
+using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
-using Syncfusion.Windows.Forms.Chart;
 
 namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterStyleView: RasterStyleViewBase, IRasterStyleView
     {
         private readonly IAppContext _context;
+        private readonly RasterRenderingPresenter _renderingPresenter;
         private IImageSource _imageSource;
         private static int _lastTabIndex = 0;
 
-        public RasterStyleView(IAppContext context)
+        public RasterStyleView(IAppContext context, RasterRenderingPresenter renderingPresenter)
         {
             if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            if (renderingPresenter == null) throw new ArgumentNullException("renderingPresenter");
+            
             InitializeComponent();
+
+            _context = context;
+            _renderingPresenter = renderingPresenter;
+
+            renderingPresenter.View.Dock = DockStyle.Fill;
+            tabPageColors.Controls.Add(renderingPresenter.View);
 
             InitControls();
 
@@ -58,7 +62,7 @@ namespace MW5.Plugins.Symbology.Views
 
             if (Raster != null)
             {
-                _colorSchemeControl.Initialize(Raster);
+                _renderingPresenter.Initialize(Raster);
 
                 rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
 
@@ -82,9 +86,9 @@ namespace MW5.Plugins.Symbology.Views
             richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
         }
 
-        public IRasterColorSchemeView ColorSchemeControl
+        public RasterRenderingSubView RenderingSubView
         {
-            get { return _colorSchemeControl; }
+            get { return _renderingPresenter.View; }
         }
 
         public IRasterSource Raster
@@ -163,7 +167,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _colorSchemeControl.ModelToUiRaster();
+            _renderingPresenter.View.ModelToUiRaster();
         }
 
         public void UiToModel()
@@ -223,7 +227,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            _colorSchemeControl.UiToModelRaster();
+            _renderingPresenter.View.UiToModelRaster();
         }
     }
 

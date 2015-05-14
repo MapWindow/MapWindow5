@@ -9,7 +9,7 @@ using Syncfusion.Grouping;
 
 namespace MW5.Configuration
 {
-    internal class PluginInfoGrid: GridListControl<PluginInfo>
+    internal class PluginInfoGrid: StronglyTypedGrid<PluginInfo>
     {
 
     }

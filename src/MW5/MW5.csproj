@@ -109,7 +109,7 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="Configuration\PluginInfoGrid.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\LegendCommand.cs" />
     <Compile Include="Controls\LegendDockPanel.cs">
@@ -150,7 +150,7 @@
     <Compile Include="Configuration\Plugins\PluginInfo.cs" />
     <Compile Include="Configuration\Plugins\PluginProvider.cs" />
     <Compile Include="Configuration\PluginsConfigPage.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Configuration\PluginsConfigPage.Designer.cs">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>

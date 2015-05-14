@@ -74,20 +74,12 @@ namespace MW5.Data.Views
             this.databaseLayersGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.databaseLayersGrid1.AutoAdjustRowHeights = false;
             this.databaseLayersGrid1.DataSource = null;
-            this.databaseLayersGrid1.HotTracking = false;
-            this.databaseLayersGrid1.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
             this.databaseLayersGrid1.Location = new System.Drawing.Point(12, 12);
             this.databaseLayersGrid1.Name = "databaseLayersGrid1";
-            this.databaseLayersGrid1.ReadOnly = false;
-            this.databaseLayersGrid1.ShowEditors = true;
-            this.databaseLayersGrid1.ShowSuperTooltips = false;
             this.databaseLayersGrid1.Size = new System.Drawing.Size(490, 293);
             this.databaseLayersGrid1.TabIndex = 35;
-            this.databaseLayersGrid1.ToolTipDuration = 3000;
-            this.databaseLayersGrid1.ToolTipMaxWidth = 450;
-            this.databaseLayersGrid1.WrapText = true;
+            
             // 
             // imageList1
             // 

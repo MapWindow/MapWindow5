@@ -35,13 +35,9 @@ namespace MW5.Configuration
             // 
             // PluginsConfigPage
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.HotTracking = true;
             this.Name = "PluginsConfigPage";
-            this.ShowSuperTooltips = true;
             this.Size = new System.Drawing.Size(337, 385);
             this.ResumeLayout(false);
 

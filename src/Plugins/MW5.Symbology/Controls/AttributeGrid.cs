@@ -8,7 +8,7 @@ using MW5.UI.Controls;
 
 namespace MW5.Plugins.Symbology.Controls
 {
-    public class AttributeGrid: GridListControl<FeatureField>
+    public class AttributeGrid: StronglyTypedGrid<FeatureField>
     {
     }
 }

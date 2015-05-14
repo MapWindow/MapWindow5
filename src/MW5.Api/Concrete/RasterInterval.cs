@@ -46,7 +46,7 @@ namespace MW5.Api.Concrete
             set { _colorBreak.Key = value; }
         }
 
-        [Browsable(false)]
+        [DisplayName("Color2")]
         public Color HighColor
         {
             get { return ColorHelper.UintToColor(_colorBreak.HighColor); }
@@ -60,7 +60,7 @@ namespace MW5.Api.Concrete
             set { _colorBreak.LowColor = ColorHelper.ColorToUInt(value); }
         }
 
-        [Browsable(false)]
+        [DisplayName("Value2")]
         public double HighValue
         {
             get { return _colorBreak.HighValue; }

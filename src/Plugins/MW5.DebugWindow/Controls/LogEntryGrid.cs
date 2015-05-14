@@ -8,7 +8,8 @@ using MW5.UI.Controls;
 
 namespace MW5.Plugins.DebugWindow.Controls
 {
-    public class LogEntryGrid: GridListControl<ILogEntry>
+    public class LogEntryGrid: StronglyTypedGrid<ILogEntry>
     {
+
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace MW5.Plugins.Symbology.Controls
+﻿using MW5.Plugins.Symbology.Controls;
+
+namespace MW5.Plugins.Symbology.Views
 {
-    partial class RasterColorSchemeControl
+    partial class RasterRenderingSubView
     {
         /// <summary> 
         /// Required designer variable.
@@ -50,6 +52,7 @@
             this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
             this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -289,25 +292,27 @@
             // 
             this.rasterColorSchemeGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.rasterColorSchemeGrid1.AutoAdjustRowHeights = false;
             this.rasterColorSchemeGrid1.DataSource = null;
-            this.rasterColorSchemeGrid1.HotTracking = false;
-            this.rasterColorSchemeGrid1.HotTrackingColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
             this.rasterColorSchemeGrid1.Location = new System.Drawing.Point(15, 66);
             this.rasterColorSchemeGrid1.Name = "rasterColorSchemeGrid1";
-            this.rasterColorSchemeGrid1.ReadOnly = false;
-            this.rasterColorSchemeGrid1.ShowEditors = true;
-            this.rasterColorSchemeGrid1.ShowSuperTooltips = false;
-            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(243, 369);
+            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(243, 334);
             this.rasterColorSchemeGrid1.TabIndex = 17;
-            this.rasterColorSchemeGrid1.ToolTipDuration = 3000;
-            this.rasterColorSchemeGrid1.ToolTipMaxWidth = 450;
-            this.rasterColorSchemeGrid1.WrapText = true;
             // 
-            // RasterColorSchemeControl
+            // btnEditColorScheme
+            // 
+            this.btnEditColorScheme.BeforeTouchSize = new System.Drawing.Size(68, 23);
+            this.btnEditColorScheme.IsBackStageButton = false;
+            this.btnEditColorScheme.Location = new System.Drawing.Point(15, 406);
+            this.btnEditColorScheme.Name = "btnEditColorScheme";
+            this.btnEditColorScheme.Size = new System.Drawing.Size(68, 23);
+            this.btnEditColorScheme.TabIndex = 26;
+            this.btnEditColorScheme.Text = "Edit";
+            // 
+            // RasterRenderingControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnEditColorScheme);
             this.Controls.Add(this.chkReverse);
             this.Controls.Add(this.groupColorScheme);
             this.Controls.Add(this.chkHillshade);
@@ -319,7 +324,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboRasterRendering);
             this.Controls.Add(this.chkUseHistogram);
-            this.Name = "RasterColorSchemeControl";
+            this.Name = "RasterRenderingSubView";
             this.Size = new System.Drawing.Size(500, 440);
             this.groupMinMax.ResumeLayout(false);
             this.groupMinMax.PerformLayout();
@@ -342,7 +347,7 @@
 
         private System.Windows.Forms.GroupBox groupMinMax;
         private Syncfusion.Windows.Forms.ButtonAdv btnGenerateColorScheme;
-        private ImageCombo.ColorSchemeCombo colorSchemeCombo1;
+        private Controls.ImageCombo.ColorSchemeCombo colorSchemeCombo1;
         private System.Windows.Forms.Label label14;
         private RasterColorSchemeGrid rasterColorSchemeGrid1;
         private System.Windows.Forms.Label label1;
@@ -361,5 +366,6 @@
         private System.Windows.Forms.GroupBox groupColorScheme;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverse;
         private Syncfusion.Windows.Forms.ButtonAdv btnDefaultMinMax;
+        private Syncfusion.Windows.Forms.ButtonAdv btnEditColorScheme;
     }
 }

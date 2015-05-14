@@ -1,7 +1,5 @@
 ﻿namespace MW5.Plugins.Symbology
 {
-
-
     internal enum SymbologyType
     {
         Default = 0,

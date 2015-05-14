@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.UI.Controls;
 
-namespace MW5.Plugins.Symbology.Controls
+namespace MW5.Plugins.Mvp
 {
-    public class OverviewGrid: StronglyTypedGrid<OverviewScale>
+    public interface ISubView: IMenuProvider
     {
+        void Initialize();
     }
 }

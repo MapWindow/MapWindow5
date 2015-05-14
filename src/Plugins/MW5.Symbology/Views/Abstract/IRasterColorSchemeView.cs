@@ -4,21 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
-using MW5.Api.Enums;
+using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.Symbology.Views.Abstract
 {
-    public interface IRasterColorSchemeView
+    public interface IRasterColorSchemeView: IView<RasterColorScheme>, IMenuProvider
     {
-        double BandMinValue { get; set; }
-        double BandMaxValue { get; set; }
-        int SelectedPredefinedColorScheme { get; }
-        int ActiveBandIndex { get; }
-
-        RasterRendering Rendering { get; }
-
-        RasterColorScheme ColorScheme { get; set; }
-
-        bool ValidateUserInput();
     }
 }
