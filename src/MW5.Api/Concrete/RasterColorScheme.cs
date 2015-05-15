@@ -169,5 +169,10 @@ namespace MW5.Api.Concrete
         {
             return GetEnumerator();
         }
+
+        public bool ApplyColors(SchemeType schemeType, ColorRamp colorScheme, bool gradientWithinCategories)
+        {
+            return _scheme.ApplyColors((tkColorSchemeType)schemeType, colorScheme.GetInternal(), gradientWithinCategories);
+        }
     }
 }

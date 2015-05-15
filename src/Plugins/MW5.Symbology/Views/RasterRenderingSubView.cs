@@ -71,7 +71,12 @@ namespace MW5.Plugins.Symbology.Views
                 _colorScheme = value;
             }
         }
-        
+
+        public int NumBreaks
+        {
+            get { return (int)udBreakCount.Value; }
+        }
+
         public double BandMinValue
         {
             get { return txtMinimum.DoubleValue; }
@@ -102,6 +107,11 @@ namespace MW5.Plugins.Symbology.Views
         public RasterClassification Classification
         {
             get { return cboClassification.GetValue<RasterClassification>(); }
+        }
+
+        public bool GradientWithinCategory
+        {
+            get { return chkGradientWithinCategory.Checked; }
         }
 
         /// <summary>

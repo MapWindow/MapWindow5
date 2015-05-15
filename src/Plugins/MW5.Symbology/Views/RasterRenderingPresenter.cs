@@ -77,7 +77,11 @@ namespace MW5.Plugins.Symbology.Views
                         var band = Model.Bands[View.ActiveBandIndex];
                         if (band != null)
                         {
-                            scheme = band.GenerateColorScheme(Classification.EqualCount, 8);
+                            scheme = band.GenerateColorScheme(Classification.EqualCount, View.NumBreaks);
+
+                            var ramp = new ColorRamp();
+                            ramp.SetColors((PredefinedColors)View.SelectedPredefinedColorScheme);
+                            scheme.ApplyColors(SchemeType.Graduated, ramp, View.GradientWithinCategory);
                         }
                     }
                     break;
@@ -92,6 +96,10 @@ namespace MW5.Plugins.Symbology.Views
                                 MessageService.Current.Info("To many values for unique values classification (256 is max).");
                                 return;
                             }
+
+                            var ramp = new ColorRamp();
+                            ramp.SetColors((PredefinedColors)View.SelectedPredefinedColorScheme);
+                            scheme.ApplyColors(SchemeType.Random, ramp, View.GradientWithinCategory);
                         }
                     }
                     break;
