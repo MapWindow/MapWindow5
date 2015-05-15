@@ -111,7 +111,6 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).BeginInit();
-            this.tabPageColors.SuspendLayout();
             this.tabPageRendering.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).BeginInit();
@@ -244,7 +243,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtBriefInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(299, 20);
             this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtBriefInfo.Location = new System.Drawing.Point(128, 145);
             this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -276,7 +275,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtProjection
             // 
-            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtProjection.BeforeTouchSize = new System.Drawing.Size(299, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProjection.Location = new System.Drawing.Point(128, 104);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -297,7 +296,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtDatasourceName
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(299, 20);
             this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtDatasourceName.Location = new System.Drawing.Point(128, 63);
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -318,7 +317,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // txtLayerName
             // 
-            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtLayerName.BeforeTouchSize = new System.Drawing.Size(299, 20);
             this.txtLayerName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtLayerName.Location = new System.Drawing.Point(128, 24);
             this.txtLayerName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -926,7 +925,6 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).EndInit();
-            this.tabPageColors.ResumeLayout(false);
             this.tabPageRendering.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();

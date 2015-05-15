@@ -57,6 +57,8 @@ namespace MW5.Plugins.Symbology.Services
                     return "Equal intervals";
                 case RasterClassification.UniqueValues:
                     return "Unique values";
+                case RasterClassification.EqualCount:
+                    return "Equal count";
             }
 
             return string.Empty;

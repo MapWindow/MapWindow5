@@ -134,7 +134,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             {
                 var sch = new ColorRamp();
                 sch.SetColors(value);
-                var blend = ColorScheme2ColorBlend(sch);
+                var blend = sch.ColorScheme2ColorBlend();
                 List.Add(blend);
             }
         }
@@ -196,7 +196,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 var sch = new ColorRamp();
                 if (i == 0) sch.SetColors(PredefinedColors.FallLeaves);
                 if (i == 1) sch.SetColors(PredefinedColors.DeadSea);
-                blend = ColorScheme2ColorBlend(sch);
+                blend = sch.ColorScheme2ColorBlend();
                 List.Add(blend);
             }
 
@@ -232,30 +232,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             blend.Positions[1] = 1.0f;
             List.Add(blend);
         }
-
-        /// <summary>
-        /// Converts MapWinGis color scheme to color blend
-        /// </summary>
-        private ColorBlend ColorScheme2ColorBlend(ColorRamp scheme)
-        {
-            if (scheme == null)
-            {
-                return null;
-            }
-
-            if (scheme.Count == 0)
-                return null;
-
-            var blend = new ColorBlend(scheme.Count);
-
-            for (int i = 0; i < scheme.Count; i++)
-            {
-                blend.Positions[i] = (float)scheme[i].Value;
-                blend.Colors[i] = scheme[i].Color;
-            }
-            return blend;
-        }
-
+        
         /// <summary>
         /// Saves the list of color schemes to XML file
         /// </summary>

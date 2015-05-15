@@ -55,14 +55,51 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterRenderingCommand.GenerateColorScheme:
                     {
-                        var scheme = new RasterColorScheme();
-                        scheme.SetPredefined(View.BandMinValue, View.BandMaxValue, (PredefinedColors)View.SelectedPredefinedColorScheme);
-                        View.ColorScheme = scheme;
+                        GenerateColorScheme();
                     }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
             }
+        }
+
+        private void GenerateColorScheme()
+        {
+            var scheme = new RasterColorScheme();
+
+            switch (View.Classification)
+            {
+                case RasterClassification.EqualIntervals:
+                    scheme.SetPredefined(View.BandMinValue, View.BandMaxValue, (PredefinedColors)View.SelectedPredefinedColorScheme);
+                    break;
+                case RasterClassification.EqualCount:
+                    {
+                        var band = Model.Bands[View.ActiveBandIndex];
+                        if (band != null)
+                        {
+                            scheme = band.GenerateColorScheme(Classification.EqualCount, 8);
+                        }
+                    }
+                    break;
+                case RasterClassification.UniqueValues:
+                    {
+                        var band = Model.Bands[View.ActiveBandIndex];
+                        if (band != null)
+                        {
+                            scheme = band.GenerateColorScheme(Classification.UniqueValues, 256);
+                            if (scheme == null)
+                            {
+                                MessageService.Current.Info("To many values for unique values classification (256 is max).");
+                                return;
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            View.ColorScheme = scheme;
         }
 
         public bool ValidateUserInput()

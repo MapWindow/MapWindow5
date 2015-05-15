@@ -8,7 +8,7 @@ namespace MW5.Api.Concrete
     public class RasterBand
     {
         private readonly GdalRasterBand _band;
-        private int _index;
+        private readonly int _index;
 
         internal RasterBand(GdalRasterBand band, int index)
         {
@@ -160,6 +160,12 @@ namespace MW5.Api.Concrete
             }
 
             return null;
+        }
+
+        public RasterColorScheme GenerateColorScheme(Classification classification, int numBreaks)
+        {
+            var scheme = _band.GenerateColorScheme((tkClassificationType) classification, numBreaks);
+            return scheme != null ? new RasterColorScheme(scheme) : null;
         }
     }
 }

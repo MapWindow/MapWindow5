@@ -71,28 +71,17 @@ namespace MW5.Plugins.Symbology.Views
                 _colorScheme = value;
             }
         }
-
-        public void SetColorSchemeCore(RasterColorScheme value)
-        {
-            _colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
-        }
-
+        
         public double BandMinValue
         {
             get { return txtMinimum.DoubleValue; }
-            set
-            {
-                txtMinimum.DoubleValue = Math.Floor(value * 100.0) / 100.0;
-            }
+            set { txtMinimum.DoubleValue = Math.Floor(value*100.0)/100.0; }
         }
 
         public double BandMaxValue
         {
             get { return txtMaximum.DoubleValue; }
-            set
-            {
-                txtMaximum.DoubleValue = Math.Ceiling(value * 100.0) / 100.0; ;
-            }
+            set { txtMaximum.DoubleValue = Math.Ceiling(value*100.0)/100.0; }
         }
 
         public int SelectedPredefinedColorScheme
@@ -110,6 +99,11 @@ namespace MW5.Plugins.Symbology.Views
             get { return cboRasterRendering.GetValue<RasterRendering>(); }
         }
 
+        public RasterClassification Classification
+        {
+            get { return cboClassification.GetValue<RasterClassification>(); }
+        }
+
         /// <summary>
         /// Sets datasource for color scheme grid.
         /// </summary>
@@ -118,8 +112,8 @@ namespace MW5.Plugins.Symbology.Views
             var rendering = Rendering;
             groupMinMax.Visible = rendering != RasterRendering.Rgb;
 
-            _colorSchemeGrid.Visible = rendering == RasterRendering.BuiltInColorTable || 
-                                             rendering == RasterRendering.ColorScheme;
+            _colorSchemeGrid.Visible = rendering == RasterRendering.BuiltInColorTable ||
+                                       rendering == RasterRendering.ColorScheme;
 
             _colorSchemeGrid.Adapter.ReadOnly = true;
 
@@ -160,7 +154,7 @@ namespace MW5.Plugins.Symbology.Views
         /// </summary>
         private void InitRenderModeCombo()
         {
-            var list = new List<RasterRendering> { RasterRendering.SingleBand };
+            var list = new List<RasterRendering> {RasterRendering.SingleBand};
 
             if (Model.NumBands > 1)
             {
@@ -231,7 +225,10 @@ namespace MW5.Plugins.Symbology.Views
             OnChangeRenderingMode();
         }
 
-
+        public void SetColorSchemeCore(RasterColorScheme value)
+        {
+            _colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
+        }
     }
 
     public class RasterRenderingSubViewBase : SubViewBase<IRasterSource> { }

@@ -20,7 +20,8 @@
     public enum RasterClassification
     {
         EqualIntervals = 1,
-        UniqueValues = 2,
+        EqualCount = 2,
+        UniqueValues = 3,
     }
 
     public enum MinMaxCalculationType

@@ -14,7 +14,7 @@ namespace MW5.Api.Concrete
 {
     public class FeatureCategoryList : IFeatureCategoryList
     {
-        private ShapefileCategories _categories;
+        private readonly ShapefileCategories _categories;
 
         internal FeatureCategoryList(ShapefileCategories categories)
         {

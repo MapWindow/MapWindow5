@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -168,6 +169,23 @@ namespace MW5.Api.Concrete
         public void SetColors(PredefinedColors ramp)
         {
             _scheme.SetColors4((PredefinedColorScheme)ramp);
+        }
+
+        public ColorBlend ColorScheme2ColorBlend()
+        {
+            if (Count == 0)
+            {
+                return null;
+            }
+
+            var blend = new ColorBlend(Count);
+
+            for (int i = 0; i < Count; i++)
+            {
+                blend.Positions[i] = (float)this[i].Value;
+                blend.Colors[i] = this[i].Color;
+            }
+            return blend;
         }
     }
 }
