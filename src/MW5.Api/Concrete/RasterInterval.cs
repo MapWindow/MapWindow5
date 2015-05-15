@@ -99,6 +99,13 @@ namespace MW5.Api.Concrete
             set { _colorBreak.Caption = value; }
         }
 
+        [DisplayName(" ")]
+        public bool Visible
+        {
+            get { return _colorBreak.Visible; }
+            set { _colorBreak.Visible = value; }
+        }
+
         public override string ToString()
         {
             if (!string.IsNullOrWhiteSpace(Caption))

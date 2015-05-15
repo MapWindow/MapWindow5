@@ -65,49 +65,47 @@ namespace MW5.Plugins.Symbology.Views
 
         private void GenerateColorScheme()
         {
-            var scheme = new RasterColorScheme();
+            RasterColorScheme scheme = null;
+
+            var band = Model.Bands[View.ActiveBandIndex];
+            if (band == null)
+            {
+                return;
+            }
+
+            double minValue = View.BandMinValue;
+            double maxValue = View.BandMaxValue;
 
             switch (View.Classification)
             {
                 case RasterClassification.EqualIntervals:
-                    scheme.SetPredefined(View.BandMinValue, View.BandMaxValue, (PredefinedColors)View.SelectedPredefinedColorScheme);
+                    scheme = band.Classify(minValue, maxValue, Classification.EqualIntervals, View.NumBreaks);
                     break;
                 case RasterClassification.EqualCount:
-                    {
-                        var band = Model.Bands[View.ActiveBandIndex];
-                        if (band != null)
-                        {
-                            scheme = band.GenerateColorScheme(Classification.EqualCount, View.NumBreaks);
-
-                            var ramp = new ColorRamp();
-                            ramp.SetColors((PredefinedColors)View.SelectedPredefinedColorScheme);
-                            scheme.ApplyColors(SchemeType.Graduated, ramp, View.GradientWithinCategory);
-                        }
-                    }
+                    scheme = band.Classify(minValue, maxValue, Classification.EqualCount, View.NumBreaks);
                     break;
                 case RasterClassification.UniqueValues:
+                    scheme = band.Classify(minValue, maxValue, Classification.UniqueValues, 256);
+                    if (scheme == null)
                     {
-                        var band = Model.Bands[View.ActiveBandIndex];
-                        if (band != null)
-                        {
-                            scheme = band.GenerateColorScheme(Classification.UniqueValues, 256);
-                            if (scheme == null)
-                            {
-                                MessageService.Current.Info("To many values for unique values classification (256 is max).");
-                                return;
-                            }
-
-                            var ramp = new ColorRamp();
-                            ramp.SetColors((PredefinedColors)View.SelectedPredefinedColorScheme);
-                            scheme.ApplyColors(SchemeType.Random, ramp, View.GradientWithinCategory);
-                        }
+                        MessageService.Current.Info("To many values for unique values classification (256 is max).");
+                        return;
                     }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
-            View.ColorScheme = scheme;
+
+            if (scheme != null)
+            {
+                var ramp = new ColorRamp();
+                ramp.SetColors((PredefinedColors) View.SelectedPredefinedColorScheme);
+
+                var type = View.Classification == RasterClassification.UniqueValues ? SchemeType.Random : SchemeType.Graduated;
+                scheme.ApplyColors(type, ramp, View.GradientWithinCategory);
+
+                View.ColorScheme = scheme;
+            }
         }
 
         public bool ValidateUserInput()

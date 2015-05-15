@@ -60,6 +60,12 @@ namespace MW5.Plugins.Symbology.Controls
                     cmn.Width = Adapter.ReadOnly ? 40 : 70;
                 }
 
+                var cmn2 = Adapter.GetColumn(item => item.Visible);
+                if (cmn2 != null)
+                {
+                    cmn2.Width = 30;
+                }
+
                 UpdateColumnVisibility();
             }
         }
@@ -68,16 +74,16 @@ namespace MW5.Plugins.Symbology.Controls
         {
             Adapter.HideColumns();
 
+            Adapter.ShowColumn(item => item.Visible);
+            Adapter.ShowColumn(item => item.LowColor);
+            Adapter.ShowColumn(item => item.HighColor);
+
             if (!Extended)
             {
-                Adapter.ShowColumn(item => item.LowColor);
-                Adapter.ShowColumn(item => item.HighColor);
                 Adapter.ShowColumn(item => item.Range);
             }
             else
             {
-                Adapter.ShowColumn(item => item.LowColor);
-                Adapter.ShowColumn(item => item.HighColor);
                 Adapter.ShowColumn(item => item.LowValue);
                 Adapter.ShowColumn(item => item.HighValue);
                 Adapter.ShowColumn(item => item.Caption);

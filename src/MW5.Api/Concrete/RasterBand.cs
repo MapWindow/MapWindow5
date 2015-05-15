@@ -162,9 +162,9 @@ namespace MW5.Api.Concrete
             return null;
         }
 
-        public RasterColorScheme GenerateColorScheme(Classification classification, int numBreaks)
+        public RasterColorScheme Classify(double minValue, double maxValue, Classification classification, int numBreaks)
         {
-            var scheme = _band.GenerateColorScheme((tkClassificationType) classification, numBreaks);
+            var scheme = _band.Classify(minValue, maxValue, (tkClassificationType) classification, numBreaks);
             return scheme != null ? new RasterColorScheme(scheme) : null;
         }
     }
