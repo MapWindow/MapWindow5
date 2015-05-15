@@ -89,7 +89,8 @@ namespace MW5.Api.Interfaces
 
         bool IgnoreColorTable { get; set; }
 
-        //bool AllowHillshade { get; set; }
+        // TODO: consider if it's necessary
+        bool AllowHillshade { get; set; }
 
         //GridColorScheme GridProxyColorScheme { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }

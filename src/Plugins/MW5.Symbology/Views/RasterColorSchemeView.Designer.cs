@@ -35,22 +35,34 @@
             this.btnAddInterval = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnRemoveInterval = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.chkContinuousColor = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkContinuousValues = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            ((System.ComponentModel.ISupportInitialize)(this.chkContinuousColor)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkContinuousValues)).BeginInit();
+            this.chkGradientWithinCategory = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            ((System.ComponentModel.ISupportInitialize)(this.rasterColorSchemeGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // rasterColorSchemeGrid1
             // 
-            this.rasterColorSchemeGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.rasterColorSchemeGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.rasterColorSchemeGrid1.DataSource = null;
+            this.rasterColorSchemeGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this.rasterColorSchemeGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.rasterColorSchemeGrid1.Extended = false;
+            this.rasterColorSchemeGrid1.FreezeCaption = false;
             this.rasterColorSchemeGrid1.Location = new System.Drawing.Point(12, 12);
             this.rasterColorSchemeGrid1.Name = "rasterColorSchemeGrid1";
-            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(394, 386);
+            this.rasterColorSchemeGrid1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.rasterColorSchemeGrid1.ShowGradient = true;
+            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(398, 386);
             this.rasterColorSchemeGrid1.TabIndex = 18;
+            this.rasterColorSchemeGrid1.TableDescriptor.VisibleColumns.AddRange(new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor[] {
+            new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Visible"),
+            new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("LowColor"),
+            new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("HighColor"),
+            new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Range")});
+            this.rasterColorSchemeGrid1.TableOptions.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.rasterColorSchemeGrid1.WrapWithPanel = true;
             // 
             // btnCancel
             // 
@@ -61,7 +73,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(404, 425);
+            this.btnCancel.Location = new System.Drawing.Point(408, 461);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 40;
@@ -74,7 +86,7 @@
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(313, 425);
+            this.btnOk.Location = new System.Drawing.Point(317, 461);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 39;
@@ -86,7 +98,7 @@
             this.btnAddInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnAddInterval.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnAddInterval.IsBackStageButton = false;
-            this.btnAddInterval.Location = new System.Drawing.Point(418, 12);
+            this.btnAddInterval.Location = new System.Drawing.Point(422, 12);
             this.btnAddInterval.Name = "btnAddInterval";
             this.btnAddInterval.Size = new System.Drawing.Size(75, 23);
             this.btnAddInterval.TabIndex = 41;
@@ -97,7 +109,7 @@
             this.btnRemoveInterval.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRemoveInterval.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnRemoveInterval.IsBackStageButton = false;
-            this.btnRemoveInterval.Location = new System.Drawing.Point(418, 41);
+            this.btnRemoveInterval.Location = new System.Drawing.Point(422, 41);
             this.btnRemoveInterval.Name = "btnRemoveInterval";
             this.btnRemoveInterval.Size = new System.Drawing.Size(75, 23);
             this.btnRemoveInterval.TabIndex = 42;
@@ -108,43 +120,41 @@
             this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClear.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnClear.IsBackStageButton = false;
-            this.btnClear.Location = new System.Drawing.Point(418, 70);
+            this.btnClear.Location = new System.Drawing.Point(422, 70);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 43;
             this.btnClear.Text = "Clear";
             // 
-            // chkContinuousColor
+            // chkGradientWithinCategory
             // 
-            this.chkContinuousColor.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkContinuousColor.BeforeTouchSize = new System.Drawing.Size(113, 21);
-            this.chkContinuousColor.Location = new System.Drawing.Point(12, 404);
-            this.chkContinuousColor.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkContinuousColor.Name = "chkContinuousColor";
-            this.chkContinuousColor.Size = new System.Drawing.Size(113, 21);
-            this.chkContinuousColor.TabIndex = 44;
-            this.chkContinuousColor.Text = "Continuous color";
-            this.chkContinuousColor.ThemesEnabled = false;
+            this.chkGradientWithinCategory.BeforeTouchSize = new System.Drawing.Size(159, 21);
+            this.chkGradientWithinCategory.Location = new System.Drawing.Point(16, 23);
+            this.chkGradientWithinCategory.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkGradientWithinCategory.Name = "chkGradientWithinCategory";
+            this.chkGradientWithinCategory.Size = new System.Drawing.Size(159, 21);
+            this.chkGradientWithinCategory.TabIndex = 44;
+            this.chkGradientWithinCategory.Text = "Gradient within category";
+            this.chkGradientWithinCategory.ThemesEnabled = false;
+            this.chkGradientWithinCategory.CheckStateChanged += new System.EventHandler(this.chkGradientWithinCategory_CheckStateChanged);
             // 
-            // chkContinuousValues
+            // groupBox1
             // 
-            this.chkContinuousValues.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chkContinuousValues.BeforeTouchSize = new System.Drawing.Size(150, 21);
-            this.chkContinuousValues.Location = new System.Drawing.Point(131, 404);
-            this.chkContinuousValues.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkContinuousValues.Name = "chkContinuousValues";
-            this.chkContinuousValues.Size = new System.Drawing.Size(150, 21);
-            this.chkContinuousValues.TabIndex = 45;
-            this.chkContinuousValues.Text = "Continuous values";
-            this.chkContinuousValues.ThemesEnabled = false;
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.chkGradientWithinCategory);
+            this.groupBox1.Location = new System.Drawing.Point(2, 397);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(408, 56);
+            this.groupBox1.TabIndex = 47;
+            this.groupBox1.TabStop = false;
             // 
             // RasterColorSchemeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(501, 463);
-            this.Controls.Add(this.chkContinuousValues);
-            this.Controls.Add(this.chkContinuousColor);
+            this.ClientSize = new System.Drawing.Size(505, 499);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnRemoveInterval);
             this.Controls.Add(this.btnAddInterval);
@@ -153,8 +163,9 @@
             this.Controls.Add(this.rasterColorSchemeGrid1);
             this.Name = "RasterColorSchemeView";
             this.Text = "Edit raster color scheme";
-            ((System.ComponentModel.ISupportInitialize)(this.chkContinuousColor)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkContinuousValues)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.rasterColorSchemeGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).EndInit();
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -167,7 +178,7 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnAddInterval;
         private Syncfusion.Windows.Forms.ButtonAdv btnRemoveInterval;
         private Syncfusion.Windows.Forms.ButtonAdv btnClear;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkContinuousColor;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkContinuousValues;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkGradientWithinCategory;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

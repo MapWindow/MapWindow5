@@ -174,5 +174,21 @@ namespace MW5.Api.Concrete
         {
             return _scheme.ApplyColors((tkColorSchemeType)schemeType, colorScheme.GetInternal(), gradientWithinCategories);
         }
+
+        public bool GradientWithinCategory
+        {
+            get
+            {
+                foreach (var item in this)
+                {
+                    if (item.ColoringType != GridColoringType.Random)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }

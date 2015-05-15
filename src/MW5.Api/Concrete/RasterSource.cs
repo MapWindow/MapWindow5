@@ -15,7 +15,7 @@ namespace MW5.Api.Concrete
         public RasterSource(Image image)
             : base(image)
         {
-
+            
         }
 
         #region Static methods
@@ -349,6 +349,12 @@ namespace MW5.Api.Concrete
         {
             get { return _image.IgnoreColorTable; }
             set { _image.IgnoreColorTable = value; }
+        }
+
+        public bool AllowHillshade
+        {
+            get { return _image.AllowHillshade; }
+            set { _image.AllowHillshade = true; }
         }
 
         public RasterBand ActiveBand

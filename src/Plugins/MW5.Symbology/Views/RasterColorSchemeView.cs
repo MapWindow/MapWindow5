@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
@@ -40,8 +41,17 @@ namespace MW5.Plugins.Symbology.Views
 
         public void Initialize()
         {
-            _intervals = Model != null ? new BindingList<RasterInterval>(Model.ToList()) : null;
+            if (Model == null)
+            {
+                _intervals = null;
+                rasterColorSchemeGrid1.DataSource = _intervals;
+                return;
+            }
+            
+            _intervals = new BindingList<RasterInterval>(Model.ToList());
             rasterColorSchemeGrid1.DataSource = _intervals;
+            chkGradientWithinCategory.Checked = Model.GradientWithinCategory;
+            rasterColorSchemeGrid1.ShowGradient = chkGradientWithinCategory.Checked;
         }
 
         public BindingList<RasterInterval> Intervals
@@ -71,6 +81,18 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnAddInterval;
                 yield return btnRemoveInterval;
                 yield return btnClear;
+            }
+        }
+
+        private void chkGradientWithinCategory_CheckStateChanged(object sender, EventArgs e)
+        {
+            rasterColorSchemeGrid1.ShowGradient = chkGradientWithinCategory.Checked;
+
+            foreach (var item in _intervals)
+            {
+                item.ColoringType = chkGradientWithinCategory.Checked
+                    ? GridColoringType.Gradient
+                    : GridColoringType.Random;
             }
         }
     }

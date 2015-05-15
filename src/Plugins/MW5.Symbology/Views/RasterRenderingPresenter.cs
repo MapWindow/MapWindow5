@@ -98,6 +98,11 @@ namespace MW5.Plugins.Symbology.Views
 
             if (scheme != null)
             {
+                bool singleColor = View.Classification == RasterClassification.UniqueValues ||
+                                   !View.GradientWithinCategory;
+
+                scheme.ApplyColoringType(singleColor ? GridColoringType.Random : GridColoringType.Hillshade);
+                
                 var ramp = new ColorRamp();
                 ramp.SetColors((PredefinedColors) View.SelectedPredefinedColorScheme);
 

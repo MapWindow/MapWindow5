@@ -19,6 +19,7 @@ namespace MW5.Plugins.Symbology.Controls
         public const string ModelName = "ColorModel";
         public const int RowHeight = 20;
         public const int ColorColumnWidth = 70;
+        private bool _showGradient = true;
 
         public RasterColorSchemeGrid()
         {
@@ -46,27 +47,42 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 base.DataSource = value;
 
-                Adapter.AdjustColumnWidths();
+                AdjustColumnsWidth();
 
-                GridColumnDescriptor[] columns = 
+                UpdateColumnVisibility();
+            }
+        }
+
+        public bool ShowGradient
+        {
+            get { return _showGradient; }
+            set
+            {
+                _showGradient = value;
+                UpdateColumnVisibility();
+            }
+        }
+
+        private void AdjustColumnsWidth()
+        {
+            Adapter.AdjustColumnWidths();
+
+            GridColumnDescriptor[] columns = 
                 {
                     Adapter.GetColumn(item => item.LowColor),
                     Adapter.GetColumn(item => item.HighColor)
                 };
 
-                foreach (var cmn in columns.Where(cmn => cmn != null))
-                {
-                    cmn.Appearance.AnyRecordFieldCell.CellType = ModelName;
-                    cmn.Width = Adapter.ReadOnly ? 40 : 70;
-                }
+            foreach (var cmn in columns.Where(cmn => cmn != null))
+            {
+                cmn.Appearance.AnyRecordFieldCell.CellType = ModelName;
+                cmn.Width = Adapter.ReadOnly ? 40 : 70;
+            }
 
-                var cmn2 = Adapter.GetColumn(item => item.Visible);
-                if (cmn2 != null)
-                {
-                    cmn2.Width = 30;
-                }
-
-                UpdateColumnVisibility();
+            var cmn2 = Adapter.GetColumn(item => item.Visible);
+            if (cmn2 != null)
+            {
+                cmn2.Width = 30;
             }
         }
 
@@ -76,7 +92,11 @@ namespace MW5.Plugins.Symbology.Controls
 
             Adapter.ShowColumn(item => item.Visible);
             Adapter.ShowColumn(item => item.LowColor);
-            Adapter.ShowColumn(item => item.HighColor);
+
+            if (ShowGradient)
+            {
+                Adapter.ShowColumn(item => item.HighColor);
+            }
 
             if (!Extended)
             {
