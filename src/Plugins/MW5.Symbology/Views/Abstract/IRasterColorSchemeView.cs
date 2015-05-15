@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,5 +11,7 @@ namespace MW5.Plugins.Symbology.Views.Abstract
 {
     public interface IRasterColorSchemeView: IView<RasterColorScheme>, IMenuProvider
     {
+        BindingList<RasterInterval> Intervals { get; }
+        RasterInterval SelectedInterval { get; }
     }
 }

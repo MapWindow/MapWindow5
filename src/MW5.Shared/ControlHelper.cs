@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace MW5.Shared
 {
-    public class ControlHelper
+    public static class ControlHelper
     {
-        public static void MakeSameSize(Control source, Control target)
+        public static void MakeSameSize(this Control source, Control target)
         {
             target.Left = source.Left;
             target.Top = source.Top;
@@ -17,7 +17,7 @@ namespace MW5.Shared
             target.Height = source.Height;
         }
 
-        public static void MakeSameLocation(Control source, Control target)
+        public static void MakeSameLocation(this Control source, Control target)
         {
             target.Left = source.Left;
             target.Top = source.Top;

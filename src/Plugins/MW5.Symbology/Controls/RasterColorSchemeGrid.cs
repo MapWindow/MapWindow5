@@ -26,9 +26,7 @@ namespace MW5.Plugins.Symbology.Controls
 
             Extended = false;
 
-            BorderStyle = BorderStyle.None;
             Table.DefaultRecordRowHeight = RowHeight;
-            AllowCurrentCell = true;
 
             var model = new GridCellColorModel(TableControl.Model);
             TableControl.Model.CellModels.Add(ModelName, model);
@@ -37,7 +35,6 @@ namespace MW5.Plugins.Symbology.Controls
         }
 
         public bool Extended { get; set; }
-
 
         public new object DataSource
         {
@@ -60,7 +57,7 @@ namespace MW5.Plugins.Symbology.Controls
                 foreach (var cmn in columns.Where(cmn => cmn != null))
                 {
                     cmn.Appearance.AnyRecordFieldCell.CellType = ModelName;
-                    cmn.Width = ColorColumnWidth;
+                    cmn.Width = Adapter.ReadOnly ? 40 : 70;
                 }
 
                 UpdateColumnVisibility();
@@ -69,15 +66,17 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void UpdateColumnVisibility()
         {
+            var columns = TableDescriptor.VisibleColumns;
+            columns.Clear();
+
             if (!Extended)
             {
-                TableDescriptor.VisibleColumns.Remove("HighColor");
-                TableDescriptor.VisibleColumns.Remove("HighValue");
+                columns.Add("LowColor");        // use reflection
+                columns.Add("HighColor");
+                columns.Add("Range");
             }
             else
             {
-                var columns = TableDescriptor.VisibleColumns;
-                columns.Clear();
                 columns.Add("LowColor");        // use reflection
                 columns.Add("HighColor");
                 columns.Add("LowValue");
@@ -102,13 +101,18 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void Grid_TableControlCellDoubleClick(object sender, GridTableControlCellClickEventArgs e)
         {
+            if (Adapter.ReadOnly)
+            {
+                return;
+            }
+
             int columnIndex = Adapter.GetColumnIndex(item => item.LowColor);
             if (e.Inner.ColIndex != columnIndex)
             {
                 return;
             }
 
-            var interval = Adapter[e.Inner.RowIndex - 2];
+            var interval = Adapter[e.Inner.RowIndex - 2];       // TODO: don't use constant
 
             using (var dialog = new ColorDialog())
             {

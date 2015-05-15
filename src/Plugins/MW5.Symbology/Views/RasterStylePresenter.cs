@@ -53,28 +53,28 @@ namespace MW5.Plugins.Symbology.Views
 
         private bool Apply()
         {
-            if (!View.RenderingSubView.ValidateUserInput())
+            if (!View.RenderingPresenter.ValidateUserInput())
             {
                 return false;
             }
             
             View.UiToModel();
 
-            ApplyRedneringMode();
+            ApplyRenderingMode();
 
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
 
             return true;
         }
 
-        private void ApplyRedneringMode()
+        private void ApplyRenderingMode()
         {
             if (_raster == null)
             {
                 return;
             }
             
-            var colors = View.RenderingSubView;
+            var colors = View.RenderingPresenter.View;
             _raster.ForceSingleBandRendering = false;
             _raster.UseRgbBandMapping = false;
             _raster.IgnoreColorTable = true;

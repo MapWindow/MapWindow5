@@ -86,9 +86,9 @@ namespace MW5.Plugins.Symbology.Views
             richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
         }
 
-        public RasterRenderingSubView RenderingSubView
+        public RasterRenderingPresenter RenderingPresenter
         {
-            get { return _renderingPresenter.View; }
+            get { return _renderingPresenter; }
         }
 
         public IRasterSource Raster

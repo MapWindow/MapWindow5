@@ -34,8 +34,6 @@ namespace MW5.Configuration
             KeyDown += PluginsConfigPage_KeyDown;
 
             Adapter.PrepareToolTip += ListControlPrepareToolTip;
-            Adapter.HotTracking = true;
-            Adapter.ShowSuperTooltips = true;
         }
 
         private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)

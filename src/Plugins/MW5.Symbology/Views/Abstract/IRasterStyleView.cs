@@ -13,7 +13,7 @@ namespace MW5.Plugins.Symbology.Views.Abstract
     public interface IRasterStyleView: IComplexView<ILayer>
     {
         void UiToModel();
-        RasterRenderingSubView RenderingSubView { get; }
+        RasterRenderingPresenter RenderingPresenter { get; }
         void ClearColorAdjustments();
     }
 }

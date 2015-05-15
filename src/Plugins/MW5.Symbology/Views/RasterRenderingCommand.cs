@@ -5,5 +5,6 @@
         CalculateMinMax = 0,
         DefaultMinMax = 1,
         EditColorScheme = 2,
+        GenerateColorScheme = 3,
     }
 }

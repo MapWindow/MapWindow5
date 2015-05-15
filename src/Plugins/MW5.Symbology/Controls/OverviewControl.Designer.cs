@@ -70,7 +70,6 @@
             // 
             // _overviewGrid1
             // 
-            this._overviewGrid1.AllowCurrentCell = true;
             this._overviewGrid1.BackColor = System.Drawing.SystemColors.Window;
             this._overviewGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._overviewGrid1.FreezeCaption = false;

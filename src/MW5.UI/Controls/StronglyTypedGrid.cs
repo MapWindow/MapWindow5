@@ -27,27 +27,7 @@ namespace MW5.UI.Controls
 
             Adapter = new GridAdapter<T>(this);
         }
-
-        public bool AllowCurrentCell
-        {
-            get { return ActivateCurrentCellBehavior == GridCellActivateAction.None; }
-            set
-            {
-                if (!value)
-                {
-                    Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.None;
-                    ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
-                    ActivateCurrentCellBehavior = GridCellActivateAction.None;
-                }
-                else
-                {
-                    Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.WhiteCurrentCell;
-                    ActivateCurrentCellBehavior = GridCellActivateAction.SetCurrent;
-                    ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
-                }
-            }
-        }
-
+        
         public Color SelectionBackColor
         {
             get { return TableOptions.SelectionBackColor; }
@@ -62,7 +42,6 @@ namespace MW5.UI.Controls
             BrowseOnly = false;
             ShowRowHeaders = false;
             ShowColumnHeaders = true;
-            AllowCurrentCell = false;
         }
 
         private void InitGroupOptions()

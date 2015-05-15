@@ -13,13 +13,31 @@ namespace MW5.Plugins.Symbology.Views
     public class RasterColorSchemePresenter
         : ComplexPresenter<IRasterColorSchemeView, RasterColorSchemeCommand, RasterColorScheme>
     {
+        private readonly IRasterColorSchemeView _view;
+
         public RasterColorSchemePresenter(IRasterColorSchemeView view) : base(view)
         {
+            if (view == null) throw new ArgumentNullException("view");
+            _view = view;
         }
 
         public override void Initialize()
         {
-            
+        }
+
+        public RasterColorScheme ColorScheme
+        {
+            get
+            {
+                var scheme = new RasterColorScheme();
+
+                foreach (var item in View.Intervals)
+                {
+                    scheme.AddInterval(item);
+                }
+
+                return scheme;
+            }
         }
 
         public override void RunCommand(RasterColorSchemeCommand command)
@@ -27,11 +45,25 @@ namespace MW5.Plugins.Symbology.Views
             switch (command)
             {
                 case RasterColorSchemeCommand.AddInterval:
-                    MessageService.Current.Info("About to add interval");
+                    var interval = new RasterInterval()
+                    {
+                        LowValue = 0.0,
+                        HighValue = 0.0,
+                    };
+                    _view.Intervals.Add(interval);
                     break;
                 case RasterColorSchemeCommand.RemoveInterval:
+                    var item = _view.SelectedInterval;
+                    if (item != null)
+                    {
+                        View.Intervals.Remove(item);
+                    }
                     break;
                 case RasterColorSchemeCommand.Clear:
+                    if (MessageService.Current.Ask("Do you want to remove all the intervals?"))
+                    {
+                        _view.Intervals.Clear();
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");

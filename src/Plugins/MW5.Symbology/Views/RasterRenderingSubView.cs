@@ -18,18 +18,20 @@ namespace MW5.Plugins.Symbology.Views
     {
         private RasterColorScheme _colorScheme;
 
-        public RasterRenderingSubView() 
+        public RasterRenderingSubView()
         {
             InitializeComponent();
+
+            _colorSchemeGrid.ShowDropDowns(false);
+
+            cboClassification.AddItemsFromEnum<RasterClassification>();
+
+            colorSchemeCombo1.UpdateItems();
 
             if (colorSchemeCombo1.Items.Count > 0)
             {
                 colorSchemeCombo1.SelectedIndex = 0;
             }
-
-            cboClassification.AddItemsFromEnum<RasterClassification>();
-
-            colorSchemeCombo1.UpdateItems();
         }
 
         public void Initialize()
@@ -41,7 +43,7 @@ namespace MW5.Plugins.Symbology.Views
 
             ColorScheme = Model.CustomColorScheme;
 
-            ControlHelper.MakeSameLocation(chkUseHistogram, chkHillshade);
+            chkUseHistogram.MakeSameLocation(chkHillshade);
 
             InitRenderModeCombo();
 
@@ -52,6 +54,11 @@ namespace MW5.Plugins.Symbology.Views
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
             rgbBandControl1.Initialize(Model);
+        }
+
+        public bool HasRgbMapping
+        {
+            get { return rgbBandControl1.HasMapping(); }
         }
 
         [Browsable(false)]
@@ -67,9 +74,7 @@ namespace MW5.Plugins.Symbology.Views
 
         public void SetColorSchemeCore(RasterColorScheme value)
         {
-            rasterColorSchemeGrid1.ShowDropDowns(Rendering != RasterRendering.BuiltInColorTable);
-
-            rasterColorSchemeGrid1.DataSource = value != null ? value.ToList() : null;
+            _colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
         }
 
         public double BandMinValue
@@ -113,9 +118,11 @@ namespace MW5.Plugins.Symbology.Views
             var rendering = Rendering;
             groupMinMax.Visible = rendering != RasterRendering.Rgb;
 
-            rasterColorSchemeGrid1.Visible = rendering == RasterRendering.BuiltInColorTable || 
+            _colorSchemeGrid.Visible = rendering == RasterRendering.BuiltInColorTable || 
                                              rendering == RasterRendering.ColorScheme;
-            
+
+            _colorSchemeGrid.Adapter.ReadOnly = true;
+
             rgbBandControl1.Visible = rendering == RasterRendering.Rgb;
             groupColorScheme.Visible = rendering == RasterRendering.ColorScheme;
 
@@ -125,6 +132,11 @@ namespace MW5.Plugins.Symbology.Views
             chkReverse.Visible = rendering == RasterRendering.Rgb || rendering == RasterRendering.SingleBand;
             chkAlphaRendering.Visible = rendering == RasterRendering.SingleBand;
 
+            UpdateActiveColorScheme();
+        }
+
+        private void UpdateActiveColorScheme()
+        {
             switch (Rendering)
             {
                 case RasterRendering.Rgb:
@@ -200,6 +212,7 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnCalculateMinMax;
                 yield return btnDefaultMinMax;
                 yield return btnEditColorScheme;
+                yield return btnGenerateColorScheme;
             }
         }
 
@@ -218,41 +231,7 @@ namespace MW5.Plugins.Symbology.Views
             OnChangeRenderingMode();
         }
 
-        private void btnGenerateColorScheme_Click(object sender, EventArgs e)
-        {
-            var scheme = new RasterColorScheme();
-            scheme.SetPredefined(BandMinValue, BandMaxValue, (PredefinedColors)SelectedPredefinedColorScheme);
-            ColorScheme = scheme;
-        }
 
-        public bool ValidateUserInput()
-        {
-            switch (Rendering)
-            {
-                case RasterRendering.Unknown:
-                    break;
-                case RasterRendering.SingleBand:
-                    break;
-                case RasterRendering.Rgb:
-                    if (!rgbBandControl1.HasMapping())
-                    {
-                        MessageService.Current.Info("No RGB mapping is specified. Please select at least one of R, G, B bands.");
-                        return false;
-                    }
-                    break;
-                case RasterRendering.ColorScheme:
-                    if (_colorScheme == null || _colorScheme.NumBreaks == 0)
-                    {
-                        MessageService.Current.Info("No color scheme is specified. Use Generate button to do it.");
-                        return false;
-                    }
-                    break;
-                case RasterRendering.BuiltInColorTable:
-                    break;
-            }
-
-            return true;
-        }
     }
 
     public class RasterRenderingSubViewBase : SubViewBase<IRasterSource> { }

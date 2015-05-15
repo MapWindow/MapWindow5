@@ -88,6 +88,11 @@ namespace MW5.Api.Concrete
             set { _colorBreak.GradientModel = (GradientModel)value; }
         }
 
+        public string Range
+        {
+            get { return ToString(); }
+        }
+
         public string Caption
         {
             get { return _colorBreak.Caption; }

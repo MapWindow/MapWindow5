@@ -51,7 +51,7 @@ namespace MW5.Plugins.Symbology.Views
             this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
-            this.rasterColorSchemeGrid1 = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this._colorSchemeGrid = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
             this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
@@ -182,7 +182,6 @@ namespace MW5.Plugins.Symbology.Views
             this.btnGenerateColorScheme.Size = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.TabIndex = 13;
             this.btnGenerateColorScheme.Text = "Generate";
-            this.btnGenerateColorScheme.Click += new System.EventHandler(this.btnGenerateColorScheme_Click);
             // 
             // label1
             // 
@@ -290,13 +289,13 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // rasterColorSchemeGrid1
             // 
-            this.rasterColorSchemeGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this._colorSchemeGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.rasterColorSchemeGrid1.DataSource = null;
-            this.rasterColorSchemeGrid1.Location = new System.Drawing.Point(15, 66);
-            this.rasterColorSchemeGrid1.Name = "rasterColorSchemeGrid1";
-            this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(243, 334);
-            this.rasterColorSchemeGrid1.TabIndex = 17;
+            this._colorSchemeGrid.DataSource = null;
+            this._colorSchemeGrid.Location = new System.Drawing.Point(15, 66);
+            this._colorSchemeGrid.Name = "_colorSchemeGrid";
+            this._colorSchemeGrid.Size = new System.Drawing.Size(243, 334);
+            this._colorSchemeGrid.TabIndex = 17;
             // 
             // btnEditColorScheme
             // 
@@ -320,7 +319,7 @@ namespace MW5.Plugins.Symbology.Views
             this.Controls.Add(this.rgbBandControl1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.groupMinMax);
-            this.Controls.Add(this.rasterColorSchemeGrid1);
+            this.Controls.Add(this._colorSchemeGrid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboRasterRendering);
             this.Controls.Add(this.chkUseHistogram);
@@ -349,7 +348,7 @@ namespace MW5.Plugins.Symbology.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnGenerateColorScheme;
         private Controls.ImageCombo.ColorSchemeCombo colorSchemeCombo1;
         private System.Windows.Forms.Label label14;
-        private RasterColorSchemeGrid rasterColorSchemeGrid1;
+        private RasterColorSchemeGrid _colorSchemeGrid;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboRasterRendering;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkUseHistogram;

@@ -11,6 +11,11 @@ namespace MW5.Configuration
 {
     internal class PluginInfoGrid: StronglyTypedGrid<PluginInfo>
     {
-
+        public PluginInfoGrid()
+        {
+            Adapter.HotTracking = true;
+            Adapter.ShowSuperTooltips = true;
+            Adapter.ReadOnly = true;
+        }
     }
 }

@@ -16,10 +16,14 @@ namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterColorSchemeView : RasterColorSchemeViewBase, IRasterColorSchemeView
     {
+        private BindingList<RasterInterval> _intervals;
+
         public RasterColorSchemeView()
         {
             InitializeComponent();
             rasterColorSchemeGrid1.Extended = true;
+            rasterColorSchemeGrid1.Adapter.ReadOnly = false;
+            rasterColorSchemeGrid1.ShowDropDowns(true);
         }
 
         public override ViewStyle Style
@@ -36,8 +40,18 @@ namespace MW5.Plugins.Symbology.Views
 
         public void Initialize()
         {
-            rasterColorSchemeGrid1.DataSource = Model != null ? Model.ToList() : null;
-            rasterColorSchemeGrid1.ShowDropDowns(true);
+            _intervals = Model != null ? new BindingList<RasterInterval>(Model.ToList()) : null;
+            rasterColorSchemeGrid1.DataSource = _intervals;
+        }
+
+        public BindingList<RasterInterval> Intervals
+        {
+            get { return _intervals; }
+        }
+
+        public RasterInterval SelectedInterval
+        {
+            get { return rasterColorSchemeGrid1.Adapter.SelectedItem; }
         }
 
         public ButtonBase OkButton

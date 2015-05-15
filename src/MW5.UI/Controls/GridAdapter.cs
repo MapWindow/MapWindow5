@@ -71,6 +71,7 @@ namespace MW5.UI.Controls
             {
                 _grid.BrowseOnly = value;
                 ShowEditors = !_grid.BrowseOnly;
+                AllowCurrentCell = !_grid.BrowseOnly;
             }
         }
 
@@ -490,6 +491,26 @@ namespace MW5.UI.Controls
 
             var desc = new RecordFilterDescriptor(propertyName, op, new[] { condition });
             _grid.TableDescriptor.RecordFilters.Add(desc);
+        }
+
+        public bool AllowCurrentCell
+        {
+            get { return _grid.ActivateCurrentCellBehavior == GridCellActivateAction.None; }
+            set
+            {
+                if (!value)
+                {
+                    _grid.Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.None;
+                    _grid.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
+                    _grid.ActivateCurrentCellBehavior = GridCellActivateAction.None;
+                }
+                else
+                {
+                    _grid.Table.TableOptions.ListBoxSelectionCurrentCellOptions = GridListBoxSelectionCurrentCellOptions.WhiteCurrentCell;
+                    _grid.ActivateCurrentCellBehavior = GridCellActivateAction.SetCurrent;
+                    _grid.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
+                }
+            }
         }
     }
 }
