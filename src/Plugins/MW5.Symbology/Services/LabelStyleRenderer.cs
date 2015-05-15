@@ -27,14 +27,14 @@ namespace MW5.Plugins.Symbology.Services
     /// <summary>
     /// A class to encapsulating label properties and drawing
     /// </summary>
-    internal class LabelStylerRenderer
+    internal class LabelStyleRenderer
     {
         private readonly ILabelStyle _style;
 
         /// <summary>
         /// Initializes a new instance of the LabelStyle class
         /// </summary>
-        public LabelStylerRenderer(ILabelStyle style)
+        public LabelStyleRenderer(ILabelStyle style)
         {
             _style = style;
         }

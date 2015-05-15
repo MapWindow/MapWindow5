@@ -184,7 +184,7 @@
     <Compile Include="Legacy\InputBoxHelper.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeProvider.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
-    <Compile Include="Services\LabelStylerRenderer.cs" />
+    <Compile Include="Services\LabelStyleRenderer.cs" />
     <Compile Include="Helpers\LabelHelper.cs" />
     <Compile Include="Controls\ListControls\CharacterControl.cs">
       <SubType>UserControl</SubType>

@@ -237,7 +237,7 @@ namespace MW5.UI.Controls
                 return;
             }
 
-            int rowIndex = GetSelectedIndex();
+            int rowIndex = GetSelectedRowIndex();
             if (rowIndex == -1)
             {
                 return;
@@ -253,13 +253,13 @@ namespace MW5.UI.Controls
                 var pnt = new Point
                 {
                     X = _grid.TableControl.ColIndexToHScrollPixelPos(columnCount),
-                    Y = _grid.TableControl.RowIndexToVScrollPixelPos(rowIndex + RowOffset)
+                    Y = _grid.TableControl.RowIndexToVScrollPixelPos(rowIndex)
                 };
 
                 pnt = _grid.PointToScreen(pnt);
 
                 var info = new ToolTipInfo();
-                var args = new ToolTipGridEventArgs(info, rowIndex); 
+                var args = new ToolTipGridEventArgs(info, RowIndexToRecordIndex(rowIndex)); 
                 
                 FirePrepareTooltip(args);
                 if (args.Cancel)
@@ -288,7 +288,7 @@ namespace MW5.UI.Controls
             }
         }
 
-        private int GetSelectedIndex()
+        private int GetSelectedRecordIndex()
         {
             if (_grid.Table.SelectedRecords.Count == 0)
             {
@@ -296,6 +296,17 @@ namespace MW5.UI.Controls
             }
 
             return _grid.Table.SelectedRecords[0].GetSourcePosition();
+        }
+
+        private int GetSelectedRowIndex()
+        {
+            var rec = GetSelectedRecord();
+            if (rec != null)
+            {
+                return rec.GetRowIndex();
+            }
+
+            return -1;
         }
 
         private Record GetSelectedRecord()
@@ -427,11 +438,6 @@ namespace MW5.UI.Controls
             }
         }
 
-        private int RowOffset
-        {
-            get { return 2; }
-        }
-
         public void SetColumnIcon(Expression<Func<T, object>> propertySelector,
             Func<T, int> imageSelector)
         {
@@ -449,15 +455,18 @@ namespace MW5.UI.Controls
                 return;
             }
 
-            int rowIndex = e.TableCellIdentity.RowIndex;
-            if (rowIndex < RowOffset) return;
+            int recordIndex = RowIndexToRecordIndex(e.TableCellIdentity.RowIndex);
+            if (recordIndex == -1)
+            {
+                return;
+            }
 
             string name = e.TableCellIdentity.Column.Name;
 
             Func<T, int> fn;
             if (_iconSelectors.TryGetValue(name, out fn))
             {
-                var r = _grid.Table.FilteredRecords[rowIndex - RowOffset];
+                var r = _grid.Table.Records[recordIndex]; 
                 if (r != null)
                 {
                     e.Style.ImageIndex = fn(r.GetData() as T);
@@ -511,6 +520,37 @@ namespace MW5.UI.Controls
                     _grid.ShowCurrentCellBorderBehavior = GridShowCurrentCellBorder.HideAlways;
                 }
             }
+        }
+
+        public void ShowColumn(Expression<Func<T, object>> propertySelector)
+        {
+            string propertyName = GetTypedPropertyName(propertySelector);
+            _grid.TableDescriptor.VisibleColumns.Add(propertyName);
+        }
+
+        public void HideColumns()
+        {
+            _grid.TableDescriptor.VisibleColumns.Clear();
+        }
+
+        
+        /// <summary>
+        /// Converts row index returned by various events (includes header and grouping rows) to the record index 
+        /// (datasource based).
+        /// </summary>
+        /// <param name="rowIndex">Index of the row.</param>
+        /// <remarks>https ://www.syncfusion.com/kb/497/how-do-i-get-the-position-of-a-row-in-datasource-from-the-currentcells-rowindex</remarks>
+        public int RowIndexToRecordIndex(int rowIndex)
+        {
+            var table = _grid.TableControl.Table;
+
+            var el = table.DisplayElements[rowIndex];
+            if (el != null && el.ParentRecord != null)
+            {
+                return table.FilteredRecords.IndexOf(el.ParentRecord);
+            }
+
+            return -1;
         }
     }
 }

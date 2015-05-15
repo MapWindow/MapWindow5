@@ -119,7 +119,7 @@ namespace MW5.Plugins.Symbology.Helpers
             g.SmoothingMode = SmoothingMode.HighQuality;
 
             // drawing the label
-            var style = new LabelStylerRenderer(category);
+            var style = new LabelStyleRenderer(category);
             if (sf.Labels.Items.Count > 0 || forceDrawing)
             {
                 // drawing base point

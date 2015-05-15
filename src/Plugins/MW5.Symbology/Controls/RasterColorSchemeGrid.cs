@@ -66,22 +66,21 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void UpdateColumnVisibility()
         {
-            var columns = TableDescriptor.VisibleColumns;
-            columns.Clear();
+            Adapter.HideColumns();
 
             if (!Extended)
             {
-                columns.Add("LowColor");        // use reflection
-                columns.Add("HighColor");
-                columns.Add("Range");
+                Adapter.ShowColumn(item => item.LowColor);
+                Adapter.ShowColumn(item => item.HighColor);
+                Adapter.ShowColumn(item => item.Range);
             }
             else
             {
-                columns.Add("LowColor");        // use reflection
-                columns.Add("HighColor");
-                columns.Add("LowValue");
-                columns.Add("HighValue");
-                columns.Add("Caption");
+                Adapter.ShowColumn(item => item.LowColor);
+                Adapter.ShowColumn(item => item.HighColor);
+                Adapter.ShowColumn(item => item.LowValue);
+                Adapter.ShowColumn(item => item.HighValue);
+                Adapter.ShowColumn(item => item.Caption);
             }
         }
 
@@ -106,13 +105,20 @@ namespace MW5.Plugins.Symbology.Controls
                 return;
             }
 
-            int columnIndex = Adapter.GetColumnIndex(item => item.LowColor);
-            if (e.Inner.ColIndex != columnIndex)
+            int cmnIndex1 = Adapter.GetColumnIndex(item => item.LowColor);
+            int cmnIndex2 = Adapter.GetColumnIndex(item => item.HighColor);
+            if (e.Inner.ColIndex != cmnIndex1 && e.Inner.ColIndex != cmnIndex2)
             {
                 return;
             }
 
-            var interval = Adapter[e.Inner.RowIndex - 2];       // TODO: don't use constant
+            int recIndex = Adapter.RowIndexToRecordIndex(e.Inner.RowIndex);
+            if (recIndex == -1)
+            {
+                return;
+            }
+
+            var interval = Adapter[recIndex];
 
             using (var dialog = new ColorDialog())
             {
