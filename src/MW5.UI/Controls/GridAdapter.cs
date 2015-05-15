@@ -524,7 +524,7 @@ namespace MW5.UI.Controls
 
         public void ShowColumn(Expression<Func<T, object>> propertySelector)
         {
-            string propertyName = GetTypedPropertyName(propertySelector);
+            string propertyName = GetPropertyName(propertySelector);
             _grid.TableDescriptor.VisibleColumns.Add(propertyName);
         }
 
