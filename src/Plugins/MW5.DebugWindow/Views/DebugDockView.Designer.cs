@@ -140,7 +140,6 @@ namespace MW5.Plugins.DebugWindow.Views
             // 
             // _listControl
             // 
-            this._listControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._listControl.DataSource = null;
             this._listControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this._listControl.Location = new System.Drawing.Point(0, 30);

@@ -222,7 +222,9 @@ namespace MW5.UI.Style
                 {
                     WrapByGradientPanel(grid);
                 }
-                
+
+                grid.BorderStyle = BorderStyle.None;
+
 #if STYLE2010   
                 grid.GridOfficeScrollBars = OfficeScrollBars.Office2010;
                 grid.GridVisualStyles = GridVisualStyles.Office2010Blue;
@@ -251,7 +253,7 @@ namespace MW5.UI.Style
                 panel.BringToFront();
             }
 
-            ControlHelper.MakeSameSize(control, panel);
+            panel.MakeSameSize(control);
 
             if (control.Parent != null)
             {

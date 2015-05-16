@@ -113,6 +113,7 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnProjectionDetails;
                 yield return btnApply;
                 yield return btnClearColorAdjustments;
+                yield return btnOpenFolder;
             }
         }
 
@@ -137,10 +138,10 @@ namespace MW5.Plugins.Symbology.Views
             }
             txtProjection.Text =  projName;
 
-            const string format = "{0} × {1} pixels; bands: {2}; {3} data type; rendered as {4}";
+            const string format = "{0} × {1} pixels; bands: {2}; {3} data type";
 
-            txtBriefInfo.Text = string.Format(format, _imageSource.Width, _imageSource.Height, 
-                                _imageSource.NumBands, _imageSource.DataType,  "unknown");
+            txtBriefInfo.Text = string.Format(format, _imageSource.Width, _imageSource.Height,
+                                _imageSource.NumBands, _imageSource.DataType);
 
             cboDownsampling.SetValue(_imageSource.DownsamplingMode);
             cboUpsampling.SetValue(_imageSource.UpsamplingMode);

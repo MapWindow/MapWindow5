@@ -521,8 +521,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // default options
             var options = _featureSet.Style;
 
-            ControlHelper.MakeSameSize(groupFill, groupPoint);
-            ControlHelper.MakeSameSize(groupFill, groupLine);
+            groupPoint.MakeSameSize(groupFill);
+            groupLine.MakeSameSize(groupFill);
 
             groupFill.Visible = false;
             groupLine.Visible = false;

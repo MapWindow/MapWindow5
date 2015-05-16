@@ -40,6 +40,7 @@ namespace MW5.Plugins.Symbology.Views
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnOpenFolder = new Syncfusion.Windows.Forms.ButtonAdv();
             this._dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -55,6 +56,7 @@ namespace MW5.Plugins.Symbology.Views
             this.txtLayerName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPageColors = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.label8 = new System.Windows.Forms.Label();
             this.tabPageRendering = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkUseTransparentColor = new System.Windows.Forms.CheckBox();
@@ -111,6 +113,7 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).BeginInit();
+            this.tabPageColors.SuspendLayout();
             this.tabPageRendering.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).BeginInit();
@@ -163,6 +166,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageGeneral
             // 
+            this.tabPageGeneral.Controls.Add(this.btnOpenFolder);
             this.tabPageGeneral.Controls.Add(this._dynamicVisibilityControl1);
             this.tabPageGeneral.Controls.Add(this.groupBox10);
             this.tabPageGeneral.Controls.Add(this.chkLayerVisible);
@@ -187,11 +191,21 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageGeneral.Text = "General";
             this.tabPageGeneral.ThemesEnabled = false;
             // 
+            // btnOpenFolder
+            // 
+            this.btnOpenFolder.BeforeTouchSize = new System.Drawing.Size(63, 23);
+            this.btnOpenFolder.IsBackStageButton = false;
+            this.btnOpenFolder.Location = new System.Drawing.Point(433, 60);
+            this.btnOpenFolder.Name = "btnOpenFolder";
+            this.btnOpenFolder.Size = new System.Drawing.Size(63, 23);
+            this.btnOpenFolder.TabIndex = 181;
+            this.btnOpenFolder.Text = "Open";
+            // 
             // _dynamicVisibilityControl1
             // 
             this._dynamicVisibilityControl1.CurrentScale = 0D;
             this._dynamicVisibilityControl1.CurrentZoom = 0;
-            this._dynamicVisibilityControl1.Location = new System.Drawing.Point(22, 213);
+            this._dynamicVisibilityControl1.Location = new System.Drawing.Point(22, 195);
             this._dynamicVisibilityControl1.MaxScale = 1000000D;
             this._dynamicVisibilityControl1.MaxZoom = 24;
             this._dynamicVisibilityControl1.MinScale = 100D;
@@ -206,11 +220,12 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.groupBox10.Controls.Add(this.pictureBox1);
             this.groupBox10.Controls.Add(this.chkLayerPreview);
-            this.groupBox10.Location = new System.Drawing.Point(269, 213);
+            this.groupBox10.Location = new System.Drawing.Point(269, 195);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(227, 210);
             this.groupBox10.TabIndex = 180;
             this.groupBox10.TabStop = false;
+            this.groupBox10.Visible = false;
             // 
             // pictureBox1
             // 
@@ -302,7 +317,7 @@ namespace MW5.Plugins.Symbology.Views
             this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtDatasourceName.Name = "txtDatasourceName";
             this.txtDatasourceName.ReadOnly = true;
-            this.txtDatasourceName.Size = new System.Drawing.Size(368, 20);
+            this.txtDatasourceName.Size = new System.Drawing.Size(299, 20);
             this.txtDatasourceName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtDatasourceName.TabIndex = 3;
             // 
@@ -337,6 +352,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabPageColors
             // 
+            this.tabPageColors.Controls.Add(this.label8);
             this.tabPageColors.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_palette;
             this.tabPageColors.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageColors.Location = new System.Drawing.Point(120, 1);
@@ -346,6 +362,16 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageColors.TabIndex = 4;
             this.tabPageColors.Text = "Colors";
             this.tabPageColors.ThemesEnabled = false;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(12, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(287, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "RasterRenderingSubView will be added here during runtime";
+            this.label8.Visible = false;
             // 
             // tabPageRendering
             // 
@@ -907,7 +933,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(641, 491);
+            this.ClientSize = new System.Drawing.Size(642, 491);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);
@@ -925,6 +951,8 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtLayerName)).EndInit();
+            this.tabPageColors.ResumeLayout(false);
+            this.tabPageColors.PerformLayout();
             this.tabPageRendering.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -1022,5 +1050,7 @@ namespace MW5.Plugins.Symbology.Views
         private Office2007ColorPicker clpTransparent;
         private CheckBox chkUseTransparentColor;
         private RichTextBox richTextBox1;
+        private ButtonAdv btnOpenFolder;
+        private Label label8;
     }
 }

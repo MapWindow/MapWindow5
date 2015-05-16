@@ -44,19 +44,20 @@ namespace MW5.Plugins.Symbology.Views
             this.label1 = new System.Windows.Forms.Label();
             this.cboRasterRendering = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.label2 = new System.Windows.Forms.Label();
             this.chkAlphaRendering = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.chkHillshade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.groupColorScheme = new System.Windows.Forms.GroupBox();
+            this.groupBuildColorScheme = new System.Windows.Forms.GroupBox();
+            this.chkReverseColorScheme = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.cboGradientModel = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkGradientWithinCategory = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.udBreakCount = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
-            this._colorSchemeGrid = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
+            this.colorSchemeGrid = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
             this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.cboGradientModel = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.panelSingleBand = new System.Windows.Forms.Panel();
+            this.panelColorScheme = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -66,13 +67,16 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).BeginInit();
-            this.groupColorScheme.SuspendLayout();
+            this.groupBuildColorScheme.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkReverseColorScheme)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBreakCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._colorSchemeGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorSchemeGrid)).BeginInit();
             this.panelSingleBand.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.panelColorScheme)).BeginInit();
+            this.panelColorScheme.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupMinMax
@@ -84,7 +88,7 @@ namespace MW5.Plugins.Symbology.Views
             this.groupMinMax.Controls.Add(this.label14);
             this.groupMinMax.Controls.Add(this.txtMinimum);
             this.groupMinMax.Controls.Add(this.label15);
-            this.groupMinMax.Location = new System.Drawing.Point(276, 50);
+            this.groupMinMax.Location = new System.Drawing.Point(296, 43);
             this.groupMinMax.Name = "groupMinMax";
             this.groupMinMax.Size = new System.Drawing.Size(212, 166);
             this.groupMinMax.TabIndex = 18;
@@ -181,12 +185,13 @@ namespace MW5.Plugins.Symbology.Views
             this.cboClassification.Name = "cboClassification";
             this.cboClassification.Size = new System.Drawing.Size(135, 21);
             this.cboClassification.TabIndex = 19;
+            this.cboClassification.SelectedIndexChanged += new System.EventHandler(this.cboClassification_SelectedIndexChanged);
             // 
             // btnGenerateColorScheme
             // 
             this.btnGenerateColorScheme.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.IsBackStageButton = false;
-            this.btnGenerateColorScheme.Location = new System.Drawing.Point(125, 138);
+            this.btnGenerateColorScheme.Location = new System.Drawing.Point(120, 138);
             this.btnGenerateColorScheme.Name = "btnGenerateColorScheme";
             this.btnGenerateColorScheme.Size = new System.Drawing.Size(75, 23);
             this.btnGenerateColorScheme.TabIndex = 13;
@@ -223,15 +228,6 @@ namespace MW5.Plugins.Symbology.Views
             this.chkUseHistogram.Text = "Use histogram";
             this.chkUseHistogram.ThemesEnabled = false;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 50);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(71, 13);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "Color scheme";
-            // 
             // chkAlphaRendering
             // 
             this.chkAlphaRendering.BeforeTouchSize = new System.Drawing.Size(107, 21);
@@ -254,31 +250,53 @@ namespace MW5.Plugins.Symbology.Views
             this.chkHillshade.Text = "Hill shade";
             this.chkHillshade.ThemesEnabled = false;
             // 
-            // groupColorScheme
+            // groupBuildColorScheme
             // 
-            this.groupColorScheme.Controls.Add(this.cboGradientModel);
-            this.groupColorScheme.Controls.Add(this.chkGradientWithinCategory);
-            this.groupColorScheme.Controls.Add(this.chkHillshade);
-            this.groupColorScheme.Controls.Add(this.colorSchemeCombo1);
-            this.groupColorScheme.Controls.Add(this.btnGenerateColorScheme);
-            this.groupColorScheme.Controls.Add(this.udBreakCount);
-            this.groupColorScheme.Controls.Add(this.cboClassification);
-            this.groupColorScheme.Location = new System.Drawing.Point(276, 222);
-            this.groupColorScheme.Name = "groupColorScheme";
-            this.groupColorScheme.Size = new System.Drawing.Size(212, 173);
-            this.groupColorScheme.TabIndex = 24;
-            this.groupColorScheme.TabStop = false;
-            this.groupColorScheme.Text = "Color scheme";
+            this.groupBuildColorScheme.Controls.Add(this.chkReverseColorScheme);
+            this.groupBuildColorScheme.Controls.Add(this.cboGradientModel);
+            this.groupBuildColorScheme.Controls.Add(this.chkGradientWithinCategory);
+            this.groupBuildColorScheme.Controls.Add(this.chkHillshade);
+            this.groupBuildColorScheme.Controls.Add(this.colorSchemeCombo1);
+            this.groupBuildColorScheme.Controls.Add(this.btnGenerateColorScheme);
+            this.groupBuildColorScheme.Controls.Add(this.udBreakCount);
+            this.groupBuildColorScheme.Controls.Add(this.cboClassification);
+            this.groupBuildColorScheme.Location = new System.Drawing.Point(296, 215);
+            this.groupBuildColorScheme.Name = "groupBuildColorScheme";
+            this.groupBuildColorScheme.Size = new System.Drawing.Size(212, 174);
+            this.groupBuildColorScheme.TabIndex = 24;
+            this.groupBuildColorScheme.TabStop = false;
+            this.groupBuildColorScheme.Text = "Color scheme";
+            // 
+            // chkReverseColorScheme
+            // 
+            this.chkReverseColorScheme.BeforeTouchSize = new System.Drawing.Size(77, 21);
+            this.chkReverseColorScheme.Location = new System.Drawing.Point(120, 84);
+            this.chkReverseColorScheme.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkReverseColorScheme.Name = "chkReverseColorScheme";
+            this.chkReverseColorScheme.Size = new System.Drawing.Size(77, 21);
+            this.chkReverseColorScheme.TabIndex = 48;
+            this.chkReverseColorScheme.Text = "Reverse";
+            this.chkReverseColorScheme.ThemesEnabled = false;
+            // 
+            // cboGradientModel
+            // 
+            this.cboGradientModel.BeforeTouchSize = new System.Drawing.Size(180, 21);
+            this.cboGradientModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboGradientModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboGradientModel.Location = new System.Drawing.Point(15, 111);
+            this.cboGradientModel.Name = "cboGradientModel";
+            this.cboGradientModel.Size = new System.Drawing.Size(180, 21);
+            this.cboGradientModel.TabIndex = 47;
             // 
             // chkGradientWithinCategory
             // 
-            this.chkGradientWithinCategory.BeforeTouchSize = new System.Drawing.Size(156, 21);
+            this.chkGradientWithinCategory.BeforeTouchSize = new System.Drawing.Size(99, 21);
             this.chkGradientWithinCategory.Location = new System.Drawing.Point(15, 84);
             this.chkGradientWithinCategory.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkGradientWithinCategory.Name = "chkGradientWithinCategory";
-            this.chkGradientWithinCategory.Size = new System.Drawing.Size(156, 21);
+            this.chkGradientWithinCategory.Size = new System.Drawing.Size(99, 21);
             this.chkGradientWithinCategory.TabIndex = 27;
-            this.chkGradientWithinCategory.Text = "Gradient within category";
+            this.chkGradientWithinCategory.Text = "Gradient";
             this.chkGradientWithinCategory.ThemesEnabled = false;
             this.chkGradientWithinCategory.CheckStateChanged += new System.EventHandler(this.chkGradientWithinCategory_CheckStateChanged);
             // 
@@ -329,79 +347,75 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // rgbBandControl1
             // 
-            this.rgbBandControl1.Location = new System.Drawing.Point(15, 66);
+            this.rgbBandControl1.Location = new System.Drawing.Point(15, 444);
             this.rgbBandControl1.Name = "rgbBandControl1";
-            this.rgbBandControl1.Size = new System.Drawing.Size(243, 194);
+            this.rgbBandControl1.Size = new System.Drawing.Size(252, 193);
             this.rgbBandControl1.TabIndex = 20;
             // 
-            // _colorSchemeGrid
+            // colorSchemeGrid
             // 
-            this._colorSchemeGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this._colorSchemeGrid.BackColor = System.Drawing.SystemColors.Window;
-            this._colorSchemeGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this._colorSchemeGrid.Extended = false;
-            this._colorSchemeGrid.FreezeCaption = false;
-            this._colorSchemeGrid.Location = new System.Drawing.Point(15, 66);
-            this._colorSchemeGrid.Name = "_colorSchemeGrid";
-            this._colorSchemeGrid.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this._colorSchemeGrid.ShowGradient = true;
-            this._colorSchemeGrid.Size = new System.Drawing.Size(243, 368);
-            this._colorSchemeGrid.TabIndex = 17;
-            this._colorSchemeGrid.TableDescriptor.VisibleColumns.AddRange(new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor[] {
+            this.colorSchemeGrid.BackColor = System.Drawing.SystemColors.Window;
+            this.colorSchemeGrid.Dock = System.Windows.Forms.DockStyle.Top;
+            this.colorSchemeGrid.Extended = false;
+            this.colorSchemeGrid.FreezeCaption = false;
+            this.colorSchemeGrid.Location = new System.Drawing.Point(0, 0);
+            this.colorSchemeGrid.Name = "colorSchemeGrid";
+            this.colorSchemeGrid.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.colorSchemeGrid.ShowGradient = true;
+            this.colorSchemeGrid.Size = new System.Drawing.Size(272, 357);
+            this.colorSchemeGrid.TabIndex = 17;
+            this.colorSchemeGrid.TableDescriptor.VisibleColumns.AddRange(new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor[] {
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Visible"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("LowColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("HighColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Range")});
-            this._colorSchemeGrid.TableOptions.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this._colorSchemeGrid.WrapWithPanel = true;
+            this.colorSchemeGrid.TableOptions.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            this.colorSchemeGrid.WrapWithPanel = true;
             // 
             // btnEditColorScheme
             // 
             this.btnEditColorScheme.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btnEditColorScheme.BeforeTouchSize = new System.Drawing.Size(68, 23);
             this.btnEditColorScheme.IsBackStageButton = false;
-            this.btnEditColorScheme.Location = new System.Drawing.Point(15, 440);
+            this.btnEditColorScheme.Location = new System.Drawing.Point(3, 362);
             this.btnEditColorScheme.Name = "btnEditColorScheme";
             this.btnEditColorScheme.Size = new System.Drawing.Size(68, 23);
             this.btnEditColorScheme.TabIndex = 26;
             this.btnEditColorScheme.Text = "Edit";
-            // 
-            // cboGradientModel
-            // 
-            this.cboGradientModel.BeforeTouchSize = new System.Drawing.Size(180, 21);
-            this.cboGradientModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboGradientModel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboGradientModel.Location = new System.Drawing.Point(20, 111);
-            this.cboGradientModel.Name = "cboGradientModel";
-            this.cboGradientModel.Size = new System.Drawing.Size(180, 21);
-            this.cboGradientModel.TabIndex = 47;
             // 
             // panelSingleBand
             // 
             this.panelSingleBand.Controls.Add(this.chkUseHistogram);
             this.panelSingleBand.Controls.Add(this.chkAlphaRendering);
             this.panelSingleBand.Controls.Add(this.chkReverse);
-            this.panelSingleBand.Location = new System.Drawing.Point(276, 401);
+            this.panelSingleBand.Location = new System.Drawing.Point(273, 444);
             this.panelSingleBand.Name = "panelSingleBand";
             this.panelSingleBand.Size = new System.Drawing.Size(212, 66);
             this.panelSingleBand.TabIndex = 49;
+            // 
+            // panelColorScheme
+            // 
+            this.panelColorScheme.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.panelColorScheme.Controls.Add(this.colorSchemeGrid);
+            this.panelColorScheme.Controls.Add(this.btnEditColorScheme);
+            this.panelColorScheme.Location = new System.Drawing.Point(15, 49);
+            this.panelColorScheme.Name = "panelColorScheme";
+            this.panelColorScheme.Size = new System.Drawing.Size(272, 385);
+            this.panelColorScheme.TabIndex = 50;
             // 
             // RasterRenderingSubView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panelSingleBand);
-            this.Controls.Add(this.btnEditColorScheme);
-            this.Controls.Add(this.groupColorScheme);
             this.Controls.Add(this.rgbBandControl1);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panelColorScheme);
+            this.Controls.Add(this.panelSingleBand);
+            this.Controls.Add(this.groupBuildColorScheme);
             this.Controls.Add(this.groupMinMax);
-            this.Controls.Add(this._colorSchemeGrid);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboRasterRendering);
             this.Name = "RasterRenderingSubView";
-            this.Size = new System.Drawing.Size(500, 474);
+            this.Size = new System.Drawing.Size(514, 441);
             this.groupMinMax.ResumeLayout(false);
             this.groupMinMax.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).EndInit();
@@ -412,13 +426,16 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).EndInit();
-            this.groupColorScheme.ResumeLayout(false);
+            this.groupBuildColorScheme.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkReverseColorScheme)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBreakCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._colorSchemeGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.colorSchemeGrid)).EndInit();
             this.panelSingleBand.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.panelColorScheme)).EndInit();
+            this.panelColorScheme.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -430,12 +447,11 @@ namespace MW5.Plugins.Symbology.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnGenerateColorScheme;
         private Controls.ImageCombo.ColorSchemeCombo colorSchemeCombo1;
         private System.Windows.Forms.Label label14;
-        private RasterColorSchemeGrid _colorSchemeGrid;
+        private RasterColorSchemeGrid colorSchemeGrid;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboRasterRendering;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkUseHistogram;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboClassification;
-        private System.Windows.Forms.Label label2;
         private RgbBandControl rgbBandControl1;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkAlphaRendering;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkHillshade;
@@ -444,7 +460,7 @@ namespace MW5.Plugins.Symbology.Views
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaximum;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMinimum;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.GroupBox groupColorScheme;
+        private System.Windows.Forms.GroupBox groupBuildColorScheme;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverse;
         private Syncfusion.Windows.Forms.ButtonAdv btnDefaultMinMax;
         private Syncfusion.Windows.Forms.ButtonAdv btnEditColorScheme;
@@ -452,5 +468,7 @@ namespace MW5.Plugins.Symbology.Views
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkGradientWithinCategory;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboGradientModel;
         private System.Windows.Forms.Panel panelSingleBand;
+        private Syncfusion.Windows.Forms.Tools.GradientPanel panelColorScheme;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverseColorScheme;
     }
 }

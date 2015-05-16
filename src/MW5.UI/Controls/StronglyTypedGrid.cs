@@ -29,6 +29,7 @@ namespace MW5.UI.Controls
             Adapter = new GridAdapter<T>(this);
 
             TableControl.CurrentCellValidating += TableControl_CurrentCellValidating;
+
             //TableControl.CurrentCell.ShowErrorIcon = false;
             //TableControl.CurrentCell.ShowErrorMessageBox = false;
         }

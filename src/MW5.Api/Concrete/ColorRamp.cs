@@ -35,18 +35,11 @@ namespace MW5.Api.Concrete
             _scheme = scheme;
         }
 
-        #region IList implementation
-
         public IEnumerator<ColorInterval> GetEnumerator()
         {
             for (var i = 0; i < Count; i++)
             {
-                var cb = this[i];
-                if (cb == null)
-                {
-                    break;
-                }
-                yield return cb;
+                yield return this[i];
             }
         }
 
@@ -82,58 +75,15 @@ namespace MW5.Api.Concrete
             _scheme.Clear();
         }
 
-        public bool Contains(ColorInterval item)
-        {
-            return IndexOf(item) != -1;
-        }
-
-        public void CopyTo(ColorInterval[] array, int arrayIndex)
-        {
-            ArrayHelper.CheckCopyTo(array, arrayIndex, _scheme.NumBreaks);
-            for (int i = 0; i < _scheme.NumBreaks; i++)
-            {
-                array[arrayIndex + i] = this[i];
-            }
-        }
-
-        public bool Remove(ColorInterval item)
-        {
-            return _scheme.Remove(IndexOf(item));
-        }
-
         public int Count
         {
             get { return _scheme.NumBreaks; }
         }
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
-
-        public int IndexOf(ColorInterval item)
-        {
-            for (int i = 0; i < Count; i++)
-            {
-                if (this[i].Equals(item))
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
-
-        public void Insert(int index, ColorInterval item)
-        {
-            throw new NotSupportedException("ColorBreakCollection.Insert method isn't supported");
-        }
-
-        public void RemoveAt(int index)
+        public void Remove(int index)
         {
             _scheme.Remove(index);
         }
-
-        #endregion
 
         public object InternalObject
         {
@@ -169,6 +119,11 @@ namespace MW5.Api.Concrete
         public void SetColors(PredefinedColors ramp)
         {
             _scheme.SetColors4((PredefinedColorScheme)ramp);
+        }
+
+        public void Reverse()
+        {
+            _scheme.Reverse();
         }
 
         public ColorBlend ColorScheme2ColorBlend()

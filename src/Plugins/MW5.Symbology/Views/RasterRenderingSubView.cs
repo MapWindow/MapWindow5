@@ -22,12 +22,19 @@ namespace MW5.Plugins.Symbology.Views
         {
             InitializeComponent();
 
-            groupColorScheme.MakeSameLocation(panelSingleBand);
+            InitBuildColorSchemeGroup();
+
+            rgbBandControl1.MakeSameLocation(panelColorScheme);
+
+            colorSchemeGrid.ShowDropDowns(false);
+        }
+
+        private void InitBuildColorSchemeGroup()
+        {
+            panelSingleBand.MakeSameLocation(groupBuildColorScheme);
 
             cboGradientModel.AddItemsFromEnum<GridGradientModel>();
             cboGradientModel.SetValue(GridGradientModel.Linear);
-
-            _colorSchemeGrid.ShowDropDowns(false);
 
             cboClassification.AddItemsFromEnum<RasterClassification>();
 
@@ -59,9 +66,30 @@ namespace MW5.Plugins.Symbology.Views
             rgbBandControl1.Initialize(Model);
         }
 
+        public bool EqualCount
+        {
+            get { return Classification == RasterClassification.EqualCount; }
+        }
+
         public bool HasRgbMapping
         {
             get { return rgbBandControl1.HasMapping(); }
+        }
+
+        public ColorRamp ColorRamp
+        {
+            get
+            {
+                var ramp = new ColorRamp();
+                ramp.SetColors((PredefinedColors)SelectedPredefinedColorScheme);
+
+                if (chkReverseColorScheme.Checked)
+                {
+                    ramp.Reverse();
+                }
+
+                return ramp;
+            }
         }
 
         [Browsable(false)]
@@ -94,7 +122,10 @@ namespace MW5.Plugins.Symbology.Views
 
         public int NumBreaks
         {
-            get { return (int)udBreakCount.Value; }
+            get
+            {
+                return (int)udBreakCount.Value;
+            }
         }
 
         public double BandMinValue
@@ -147,14 +178,27 @@ namespace MW5.Plugins.Symbology.Views
             var rendering = Rendering;
             groupMinMax.Visible = rendering != RasterRendering.Rgb;
 
-            _colorSchemeGrid.Visible = rendering == RasterRendering.BuiltInColorTable ||
+            colorSchemeGrid.Visible = rendering == RasterRendering.BuiltInColorTable ||
                                        rendering == RasterRendering.ColorScheme;
 
-            _colorSchemeGrid.Adapter.ReadOnly = true;
+            colorSchemeGrid.Adapter.ReadOnly = true;
 
             rgbBandControl1.Visible = rendering == RasterRendering.Rgb;
-            groupColorScheme.Visible = rendering == RasterRendering.ColorScheme;
+            groupBuildColorScheme.Visible = rendering == RasterRendering.ColorScheme;
+            panelColorScheme.Visible = rendering == RasterRendering.ColorScheme ||
+                                       rendering == RasterRendering.BuiltInColorTable;
 
+            if (Rendering == RasterRendering.Rgb)
+            {
+                panelSingleBand.MakeSameLocation(groupMinMax);
+                panelSingleBand.Left -= 20;
+                panelSingleBand.Top += 5;
+            }
+            else
+            {
+                panelSingleBand.MakeSameLocation(groupBuildColorScheme);    
+            }
+            
             panelSingleBand.Visible = rendering != RasterRendering.ColorScheme;
 
             chkUseHistogram.Visible = rendering == RasterRendering.Rgb || rendering == RasterRendering.SingleBand;
@@ -262,17 +306,22 @@ namespace MW5.Plugins.Symbology.Views
 
         public void SetColorSchemeCore(RasterColorScheme value)
         {
-            _colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
+            colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
             
             if (value != null)
             {
-                _colorSchemeGrid.ShowGradient = value.GradientWithinCategory;
+                colorSchemeGrid.ShowGradient = value.GradientWithinCategory;
             }
         }
 
         private void chkGradientWithinCategory_CheckStateChanged(object sender, EventArgs e)
         {
-            _colorSchemeGrid.ShowGradient = chkGradientWithinCategory.Checked;
+            colorSchemeGrid.ShowGradient = chkGradientWithinCategory.Checked;
+        }
+
+        private void cboClassification_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            udBreakCount.Enabled = Classification == RasterClassification.EqualCount;
         }
     }
 

@@ -36,7 +36,6 @@ namespace MW5.Configuration
             // PluginsConfigPage
             // 
             this.BackColor = System.Drawing.Color.White;
-            this.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.Name = "PluginsConfigPage";
             this.Size = new System.Drawing.Size(337, 385);
             this.ResumeLayout(false);

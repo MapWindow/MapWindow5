@@ -65,13 +65,31 @@ namespace MW5.Plugins.Symbology.Views
 
         private void GenerateColorScheme()
         {
-            RasterColorScheme scheme = null;
+            var scheme = Classify();
 
+            if (scheme != null)
+            {
+                bool singleColor = View.Classification == RasterClassification.UniqueValues ||
+                                   !View.GradientWithinCategory;
+
+                scheme.ApplyColoringType(singleColor ? GridColoringType.Random : GridColoringType.Hillshade);
+
+                var type = View.Classification == RasterClassification.UniqueValues ? SchemeType.Random : SchemeType.Graduated;
+                scheme.ApplyColors(type, View.ColorRamp, View.GradientWithinCategory);
+
+                View.ColorScheme = scheme;
+            }
+        }
+
+        private RasterColorScheme Classify()
+        {
             var band = Model.Bands[View.ActiveBandIndex];
             if (band == null)
             {
-                return;
+                return null;
             }
+
+            RasterColorScheme scheme = null;
 
             double minValue = View.BandMinValue;
             double maxValue = View.BandMaxValue;
@@ -79,7 +97,7 @@ namespace MW5.Plugins.Symbology.Views
             switch (View.Classification)
             {
                 case RasterClassification.EqualIntervals:
-                    scheme = band.Classify(minValue, maxValue, Classification.EqualIntervals, View.NumBreaks);
+                    scheme = band.Classify(minValue, maxValue, Classification.EqualIntervals, View.ColorRamp.Count - 1);
                     break;
                 case RasterClassification.EqualCount:
                     scheme = band.Classify(minValue, maxValue, Classification.EqualCount, View.NumBreaks);
@@ -89,28 +107,14 @@ namespace MW5.Plugins.Symbology.Views
                     if (scheme == null)
                     {
                         MessageService.Current.Info("To many values for unique values classification (256 is max).");
-                        return;
+                        return null;
                     }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
 
-            if (scheme != null)
-            {
-                bool singleColor = View.Classification == RasterClassification.UniqueValues ||
-                                   !View.GradientWithinCategory;
-
-                scheme.ApplyColoringType(singleColor ? GridColoringType.Random : GridColoringType.Hillshade);
-                
-                var ramp = new ColorRamp();
-                ramp.SetColors((PredefinedColors) View.SelectedPredefinedColorScheme);
-
-                var type = View.Classification == RasterClassification.UniqueValues ? SchemeType.Random : SchemeType.Graduated;
-                scheme.ApplyColors(type, ramp, View.GradientWithinCategory);
-
-                View.ColorScheme = scheme;
-            }
+            return scheme;
         }
 
         public bool ValidateUserInput()

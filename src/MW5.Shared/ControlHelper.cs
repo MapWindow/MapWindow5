@@ -9,7 +9,7 @@ namespace MW5.Shared
 {
     public static class ControlHelper
     {
-        public static void MakeSameSize(this Control source, Control target)
+        public static void MakeSameSize(this Control target, Control source)
         {
             target.Left = source.Left;
             target.Top = source.Top;
@@ -17,7 +17,7 @@ namespace MW5.Shared
             target.Height = source.Height;
         }
 
-        public static void MakeSameLocation(this Control source, Control target)
+        public static void MakeSameLocation(this Control target , Control source)
         {
             target.Left = source.Left;
             target.Top = source.Top;

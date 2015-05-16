@@ -42,8 +42,8 @@ namespace MW5.Plugins.Symbology.Controls
 
             InitZooms();
 
-            ControlHelper.MakeSameSize(cboMinScale, cboMinZoom);
-            ControlHelper.MakeSameSize(cboMaxScale, cboMaxZoom);
+            cboMinZoom.MakeSameSize(cboMinScale);
+            cboMaxZoom.MakeSameSize(cboMaxScale);
         }
 
         public void Initialize(IDynamicVisibilityTarget target, int currentZoom, double currentScale)

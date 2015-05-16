@@ -32,14 +32,23 @@ namespace MW5.Plugins.Symbology.Views
         {
             switch (command)
             {
-
+                case RasterCommand.OpenFolder:
+                    string filename = Model.Filename;
+                    if (!string.IsNullOrWhiteSpace(filename))
+                    {
+                        PathHelper.OpenFolderWithExplorer(filename);
+                    }
+                    else
+                    {
+                        MessageService.Current.Info("Can't find the datasource.");
+                    }
+                    break;
                 case RasterCommand.ProjectionDetails:
                     using (var form = new ProjectionPropertiesForm(Model.Projection))
                     {
                         AppViewFactory.Instance.ShowChildView(form);
                     }
                     break;
-
                 case RasterCommand.ClearColorAdjustments:
                     View.ClearColorAdjustments();
                     break;
