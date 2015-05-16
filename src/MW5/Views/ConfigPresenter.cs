@@ -71,7 +71,7 @@ namespace MW5.Views
 
         private void InitPages()
         {
-            _view.Pages.Add(new GeneralConfigPage(_configService));
+            _view.Pages.Add(new GeneralConfigPage(_configService, _context.Map));
             _view.Pages.Add(new PluginsConfigPage(_manager, _context));
 
             foreach (var page in _view.Pages)

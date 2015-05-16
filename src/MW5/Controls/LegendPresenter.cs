@@ -118,8 +118,7 @@ namespace MW5.Controls
                         var layer = Legend.Layers.Current;
                         if (layer != null && File.Exists(layer.Filename))
                         {
-                            string path = Path.GetDirectoryName(layer.Filename);
-                            Shared.PathHelper.OpenFolderWithExplorer(path);
+                            Shared.PathHelper.OpenFolderWithExplorer(layer.Filename);
                         }
                         else
                         {

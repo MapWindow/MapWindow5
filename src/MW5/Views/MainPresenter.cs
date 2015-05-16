@@ -60,6 +60,8 @@ namespace MW5.Views
                 appContext.Init(view, projectService, configService, legendPresenter, repository);
 
                 view.Map.Initialize();
+                view.Map.ApplyConfig(configService);
+
                 view.ViewClosing += OnViewClosing;
                 view.ViewUpdating += OnViewUpdating;
 

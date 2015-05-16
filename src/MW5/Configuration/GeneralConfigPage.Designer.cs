@@ -33,11 +33,13 @@
             this.chkLoadLastProject = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.chkShowRedrawTime = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).BeginInit();
             this.SuspendLayout();
             // 
             // configPanelControl2
@@ -45,6 +47,7 @@
             this.configPanelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl2.Controls.Add(this.chkShowRedrawTime);
             this.configPanelControl2.Controls.Add(this.chkLoadSymbology);
             this.configPanelControl2.Controls.Add(this.chkLoadLastProject);
             this.configPanelControl2.HeaderText = "General options";
@@ -97,6 +100,17 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "Some long description of the general options. Here is some more.\r\n";
             // 
+            // chkShowRedrawTime
+            // 
+            this.chkShowRedrawTime.BeforeTouchSize = new System.Drawing.Size(188, 21);
+            this.chkShowRedrawTime.Location = new System.Drawing.Point(18, 89);
+            this.chkShowRedrawTime.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkShowRedrawTime.Name = "chkShowRedrawTime";
+            this.chkShowRedrawTime.Size = new System.Drawing.Size(188, 21);
+            this.chkShowRedrawTime.TabIndex = 10;
+            this.chkShowRedrawTime.Text = "Show redraw time";
+            this.chkShowRedrawTime.ThemesEnabled = false;
+            // 
             // GeneralConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -113,6 +127,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -125,6 +140,7 @@
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkLoadLastProject;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowRedrawTime;
 
     }
 }

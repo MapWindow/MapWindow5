@@ -8,6 +8,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Plugins.Services;
 
 namespace MW5.Helpers
 {
@@ -36,6 +37,18 @@ namespace MW5.Helpers
             MapConfig.ReprojectLayersOnAdding = false;
             MapConfig.OgrLayerForceUpdateMode = true;
             MapConfig.LoadSymbologyOnAddLayer = true;
+            
+            // It can be overridden in Grid.OpenAsImage,
+            // but not proxy tricks by default
+            MapConfig.GridProxyMode = GridProxyMode.NoProxy;    
+        }
+
+        public static void ApplyConfig(this IMuteMap map, IConfigService configService)
+        {
+            var config = configService.Config;
+            MapConfig.LoadSymbologyOnAddLayer = config.LoadSymbology;
+
+            map.ShowRedrawTime = config.ShowRedrawTime;
         }
     }
 }

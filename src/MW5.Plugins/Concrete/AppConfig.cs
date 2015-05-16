@@ -14,8 +14,12 @@ namespace MW5.Plugins.Concrete
             LoadSymbology = true;
             LoadLastProject = true;
             LastProjectPath = "";
+            ShowRedrawTime = false;
             FavoriteProjections = new List<int>();
         }
+
+        [DataMember]
+        public bool ShowRedrawTime { get; set; }
 
         [DataMember]
         public bool LoadSymbology { get; set; }
