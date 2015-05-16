@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -37,6 +38,8 @@ namespace MW5.Plugins.Symbology.Views
 
             rasterInfoTreeView1.CreateColumns();
 
+            toolStyle.Tag = 0;      // to not attach onclick handler to it
+            
             tabControlAdv1.SelectedIndex = _lastTabIndex;
 
             FormClosed += (s, e) => _lastTabIndex = tabControlAdv1.SelectedIndex;
@@ -103,7 +106,7 @@ namespace MW5.Plugins.Symbology.Views
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield break; }
+            get { yield return toolStripEx1.Items; }
         }
 
         public IEnumerable<Control> Buttons

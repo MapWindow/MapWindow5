@@ -244,6 +244,8 @@ namespace MW5.Plugins.Symbology.Views
                 list.Add(RasterRendering.BuiltInColorTable);
             }
 
+            cboRasterRendering.Items.Clear();
+
             cboRasterRendering.Items.AddRange(ComboBoxHelper.GetComboItems(list).ToArray<object>());
 
             cboRasterRendering.SetValue(Model.RenderingType);

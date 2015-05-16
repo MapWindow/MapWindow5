@@ -104,6 +104,10 @@ namespace MW5.Plugins.Symbology.Views
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnApply = new Syncfusion.Windows.Forms.ButtonAdv();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolLoadStyle = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
@@ -137,6 +141,7 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.cboDynamicScaleMode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
+            this.toolStripEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControlAdv1
@@ -929,11 +934,55 @@ namespace MW5.Plugins.Symbology.Views
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyle = false;
             // 
+            // toolStripEx1
+            // 
+            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStyle});
+            this.toolStripEx1.Location = new System.Drawing.Point(9, 462);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
+            this.toolStripEx1.TabIndex = 39;
+            this.toolStripEx1.Text = "Style";
+            this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
+            // 
+            // toolStyle
+            // 
+            this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolLoadStyle,
+            this.toolSaveStyle});
+            this.toolStyle.ForeColor = System.Drawing.Color.Black;
+            this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
+            this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStyle.Name = "toolStyle";
+            this.toolStyle.Size = new System.Drawing.Size(61, 22);
+            this.toolStyle.Text = "Style";
+            // 
+            // toolSaveStyle
+            // 
+            this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
+            this.toolSaveStyle.Name = "toolSaveStyle";
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolSaveStyle.Text = "Save style";
+            // 
+            // toolLoadStyle
+            // 
+            this.toolLoadStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_folder_open;
+            this.toolLoadStyle.Name = "toolLoadStyle";
+            this.toolLoadStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolLoadStyle.Text = "Load style";
+            // 
             // RasterStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(642, 491);
+            this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);
@@ -980,7 +1029,10 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.cboDynamicScaleMode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -1052,5 +1104,9 @@ namespace MW5.Plugins.Symbology.Views
         private RichTextBox richTextBox1;
         private ButtonAdv btnOpenFolder;
         private Label label8;
+        private ToolStripEx toolStripEx1;
+        private ToolStripDropDownButton toolStyle;
+        private ToolStripMenuItem toolSaveStyle;
+        private ToolStripMenuItem toolLoadStyle;
     }
 }

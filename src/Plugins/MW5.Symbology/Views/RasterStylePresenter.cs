@@ -55,6 +55,26 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterCommand.Apply:
                     Apply();
                     break;
+                case RasterCommand.LoadStyle:
+                    { 
+                        string description = string.Empty;
+                        bool result = Model.LoadOptions("", ref description);
+                        
+                        if (result)
+                        {
+                            View.Initialize();
+                            Apply();
+                        }
+
+                        MessageService.Current.Info(result ? "Layer options are loaded." : "Failed to load layer options.");
+                    }
+                    break;
+                case RasterCommand.SaveStyle:
+                    {
+                        bool result = Model.SaveOptions("", true, "");
+                        MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
+                    }
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
             }

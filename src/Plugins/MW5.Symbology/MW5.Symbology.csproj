@@ -135,6 +135,11 @@
     <Compile Include="Controls\OverviewControl.Designer.cs">
       <DependentUpon>OverviewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\RasterRenderingCommand.cs" />
     <Compile Include="Views\RasterRenderingSubView.cs">
       <SubType>UserControl</SubType>
@@ -170,11 +175,6 @@
     <Compile Include="Helpers\RasterComboBoxHelper.cs" />
     <Compile Include="Helpers\RectangleHelper.cs" />
     <Compile Include="Helpers\TrackbarHelper.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\EnumConverters.cs" />
     <Compile Include="Services\LabelMoveData.cs" />
     <Compile Include="Services\LabelMover.cs" />
@@ -688,6 +688,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_palette.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_save1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

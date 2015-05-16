@@ -69,6 +69,8 @@ namespace MW5.UI.Style
 
             ApplyGridStyle(control);
 
+            ApplySplitButtonStyle(control);
+
             if (control is ComboBoxAdv)
             {
                 // it will apply style to inner textbox otherwise which doesn't look good
@@ -76,6 +78,16 @@ namespace MW5.UI.Style
             else
             {
                 ApplyStyle(control.Controls);
+            }
+        }
+
+        private void ApplySplitButtonStyle(Control control)
+        {
+            var btn = control as SplitButton;
+            if (btn != null)
+            {
+                btn.Style = SplitButtonVisualStyle.Default;
+                //btn.BackColor = Color.Gray;
             }
         }
 

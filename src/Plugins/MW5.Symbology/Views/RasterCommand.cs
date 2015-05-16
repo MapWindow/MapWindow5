@@ -12,5 +12,7 @@ namespace MW5.Plugins.Symbology.Views
         Apply = 1,
         ClearColorAdjustments = 2,
         OpenFolder = 3,
+        SaveStyle = 4,
+        LoadStyle = 5,
     }
 }
