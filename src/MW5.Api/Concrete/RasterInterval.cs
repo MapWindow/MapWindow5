@@ -116,11 +116,11 @@ namespace MW5.Api.Concrete
             string s = string.Empty;
             if (LowValue != HighValue)
             {
-                s += string.Format("{0} - {1}", LowValue, HighValue);
+                s += string.Format("{0:g6} - {1:g6}", LowValue, HighValue);
             }
             else
             {
-                s += string.Format("{0}", LowValue);
+                s += string.Format("{0:g6}", LowValue);
             }
 
             return s;

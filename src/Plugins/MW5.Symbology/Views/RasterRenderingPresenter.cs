@@ -5,6 +5,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.Symbology.Controls.ImageCombo;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Views
@@ -56,6 +57,12 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterRenderingCommand.GenerateColorScheme:
                     {
                         GenerateColorScheme();
+                    }
+                    break;
+                case RasterRenderingCommand.EditColorSchemeList:
+                    using (var form = new ColorSchemesForm(_context, View.ColorSchemes))
+                    {
+                        _context.View.ShowChildView(form, View);
                     }
                     break;
                 default:

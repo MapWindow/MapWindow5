@@ -39,10 +39,7 @@ namespace MW5.Plugins.Symbology.Controls
 
         public new object DataSource
         {
-            get
-            {
-                return base.DataSource;
-            }
+            get { return base.DataSource; }
             set
             {
                 base.DataSource = value;
@@ -50,6 +47,8 @@ namespace MW5.Plugins.Symbology.Controls
                 AdjustColumnsWidth();
 
                 UpdateColumnVisibility();
+
+                UpdateColumnFormat();
             }
         }
 
@@ -67,11 +66,11 @@ namespace MW5.Plugins.Symbology.Controls
         {
             Adapter.AdjustColumnWidths();
 
-            GridColumnDescriptor[] columns = 
-                {
-                    Adapter.GetColumn(item => item.LowColor),
-                    Adapter.GetColumn(item => item.HighColor)
-                };
+            GridColumnDescriptor[] columns =
+            {
+                Adapter.GetColumn(item => item.LowColor),
+                Adapter.GetColumn(item => item.HighColor)
+            };
 
             foreach (var cmn in columns.Where(cmn => cmn != null))
             {
@@ -83,6 +82,20 @@ namespace MW5.Plugins.Symbology.Controls
             if (cmn2 != null)
             {
                 cmn2.Width = 30;
+            }
+        }
+
+        private void UpdateColumnFormat()
+        {
+            GridColumnDescriptor[] columns =
+            {
+                Adapter.GetColumn(item => item.LowValue),
+                Adapter.GetColumn(item => item.HighValue)
+            };
+
+            foreach (var cmn in columns.Where(cmn => cmn != null))
+            {
+                cmn.Appearance.AnyCell.Format = "g6";
             }
         }
 

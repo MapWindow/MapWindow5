@@ -8,6 +8,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -66,11 +67,12 @@ namespace MW5.Plugins.Symbology.Views
             rgbBandControl1.Initialize(Model);
         }
 
-        public bool EqualCount
-        {
-            get { return Classification == RasterClassification.EqualCount; }
-        }
 
+        internal ColorSchemeCollection ColorSchemes
+        {
+            get { return colorSchemeCombo1.ColorSchemes; }
+        }
+        
         public bool HasRgbMapping
         {
             get { return rgbBandControl1.HasMapping(); }
@@ -80,15 +82,15 @@ namespace MW5.Plugins.Symbology.Views
         {
             get
             {
-                var ramp = new ColorRamp();
-                ramp.SetColors((PredefinedColors)SelectedPredefinedColorScheme);
+                var blend = colorSchemeCombo1.GetSelectedItem();
+                var scheme = blend.ToColorScheme();
 
                 if (chkReverseColorScheme.Checked)
                 {
-                    ramp.Reverse();
+                    scheme.Reverse();
                 }
 
-                return ramp;
+                return scheme;
             }
         }
 
@@ -138,11 +140,6 @@ namespace MW5.Plugins.Symbology.Views
         {
             get { return txtMaximum.DoubleValue; }
             set { txtMaximum.DoubleValue = Math.Ceiling(value*100.0)/100.0; }
-        }
-
-        public int SelectedPredefinedColorScheme
-        {
-            get { return colorSchemeCombo1.SelectedIndex; }
         }
 
         public int ActiveBandIndex
@@ -286,6 +283,7 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnDefaultMinMax;
                 yield return btnEditColorScheme;
                 yield return btnGenerateColorScheme;
+                yield return btnEditColorSchemeList;
             }
         }
 

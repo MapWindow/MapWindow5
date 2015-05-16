@@ -58,6 +58,7 @@ namespace MW5.Plugins.Symbology.Views
             this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panelSingleBand = new System.Windows.Forms.Panel();
             this.panelColorScheme = new Syncfusion.Windows.Forms.Tools.GradientPanel();
+            this.btnEditColorSchemeList = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -252,6 +253,7 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // groupBuildColorScheme
             // 
+            this.groupBuildColorScheme.Controls.Add(this.btnEditColorSchemeList);
             this.groupBuildColorScheme.Controls.Add(this.chkReverseColorScheme);
             this.groupBuildColorScheme.Controls.Add(this.cboGradientModel);
             this.groupBuildColorScheme.Controls.Add(this.chkGradientWithinCategory);
@@ -309,7 +311,7 @@ namespace MW5.Plugins.Symbology.Views
             this.colorSchemeCombo1.Name = "colorSchemeCombo1";
             this.colorSchemeCombo1.OutlineColor = System.Drawing.Color.Black;
             this.colorSchemeCombo1.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
-            this.colorSchemeCombo1.Size = new System.Drawing.Size(180, 21);
+            this.colorSchemeCombo1.Size = new System.Drawing.Size(144, 21);
             this.colorSchemeCombo1.TabIndex = 0;
             // 
             // udBreakCount
@@ -403,6 +405,16 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorScheme.Size = new System.Drawing.Size(272, 385);
             this.panelColorScheme.TabIndex = 50;
             // 
+            // btnEditColorSchemeList
+            // 
+            this.btnEditColorSchemeList.BeforeTouchSize = new System.Drawing.Size(30, 23);
+            this.btnEditColorSchemeList.IsBackStageButton = false;
+            this.btnEditColorSchemeList.Location = new System.Drawing.Point(165, 55);
+            this.btnEditColorSchemeList.Name = "btnEditColorSchemeList";
+            this.btnEditColorSchemeList.Size = new System.Drawing.Size(30, 23);
+            this.btnEditColorSchemeList.TabIndex = 49;
+            this.btnEditColorSchemeList.Text = "...";
+            // 
             // RasterRenderingSubView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -470,5 +482,6 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Panel panelSingleBand;
         private Syncfusion.Windows.Forms.Tools.GradientPanel panelColorScheme;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverseColorScheme;
+        private Syncfusion.Windows.Forms.ButtonAdv btnEditColorSchemeList;
     }
 }
