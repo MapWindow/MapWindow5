@@ -40,7 +40,7 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterRenderingCommand.DefaultMinMax:
                     {
                         var band = Model.Bands[View.ActiveBandIndex];
-                        View.BandMinValue = band.Minimum;
+                        View.BandMinValue = band.Minimum;           // TODO: use compute
                         View.BandMaxValue = band.Maximum;
                     }
                     break;

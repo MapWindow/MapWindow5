@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
@@ -17,15 +18,20 @@ namespace MW5.Plugins.Symbology.Views
 {
     public partial class RasterRenderingSubView : RasterRenderingSubViewBase, ISubView
     {
+        private readonly IAppContext _context;
         private RasterColorScheme _colorScheme;
 
-        public RasterRenderingSubView()
+        public RasterRenderingSubView(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
+
             InitializeComponent();
 
             InitBuildColorSchemeGroup();
 
-            rgbBandControl1.MakeSameLocation(panelColorScheme);
+            rgbBandControl1.Top = panelColorScheme.Top;
+            rgbBandControl1.Left = 0;
 
             colorSchemeGrid.ShowDropDowns(false);
         }
@@ -64,7 +70,7 @@ namespace MW5.Plugins.Symbology.Views
 
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
-            rgbBandControl1.Initialize(Model);
+            rgbBandControl1.Initialize(_context, Model);
         }
 
 
@@ -187,9 +193,8 @@ namespace MW5.Plugins.Symbology.Views
 
             if (Rendering == RasterRendering.Rgb)
             {
-                panelSingleBand.MakeSameLocation(groupMinMax);
-                panelSingleBand.Left -= 20;
-                panelSingleBand.Top += 5;
+                panelSingleBand.Left = 10;
+                panelSingleBand.Top = rgbBandControl1.Top + rgbBandControl1.Height;
             }
             else
             {

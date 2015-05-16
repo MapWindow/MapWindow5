@@ -167,5 +167,10 @@ namespace MW5.Api.Concrete
             var scheme = _band.Classify(minValue, maxValue, (tkClassificationType) classification, numBreaks);
             return scheme != null ? new RasterColorScheme(scheme) : null;
         }
+
+        public bool ComputeMinMax(bool allowApproximate, out double min, out double max)
+        {
+            return _band.ComputeMinMax(allowApproximate, out min, out max);
+        }
     }
 }

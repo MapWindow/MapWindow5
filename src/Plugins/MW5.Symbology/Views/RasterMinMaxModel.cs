@@ -15,7 +15,6 @@ namespace MW5.Plugins.Symbology.Views
 
         public RasterMinMaxModel(RasterBand band)
         {
-            if (band == null) throw new ArgumentNullException("band");
             _band = band;
 
             RangeLowPercent = 2.0;
@@ -25,11 +24,20 @@ namespace MW5.Plugins.Symbology.Views
 
         public void Calculate()
         {
+            if (_band == null)
+            {
+                return;
+            }
+
             switch (CalculationType)
             {
                 case MinMaxCalculationType.Precise:
-                    Min = _band.Minimum;
-                    Max = _band.Maximum;
+                    double min, max;
+                    if (_band.ComputeMinMax(false, out min, out max))
+                    {
+                        Min = min;
+                        Max = max;
+                    }
                     break;
                 case MinMaxCalculationType.StdDev:
                     var stats = _band.GetStatistics(false, true);
@@ -43,7 +51,7 @@ namespace MW5.Plugins.Symbology.Views
                     Max = stats.Mean + StdDevRange * stats.StdDev;
                     break;
                 case MinMaxCalculationType.PercentRange:
-                    double bandMin = _band.Minimum;
+                    double bandMin = _band.Minimum;     // TODO: use compute
                     double bandMax = _band.Maximum;
 
                     var ht = _band.GetHistogram(bandMin, bandMax, 512);

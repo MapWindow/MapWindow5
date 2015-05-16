@@ -71,6 +71,8 @@ namespace MW5.UI.Style
 
             ApplySplitButtonStyle(control);
 
+            ApplyDoubleTextBoxStyle(control);
+
             if (control is ComboBoxAdv)
             {
                 // it will apply style to inner textbox otherwise which doesn't look good
@@ -78,6 +80,15 @@ namespace MW5.UI.Style
             else
             {
                 ApplyStyle(control.Controls);
+            }
+        }
+
+        private void ApplyDoubleTextBoxStyle(Control control)
+        {
+            var txt = control as DoubleTextBox;
+            if (txt != null)
+            {
+                txt.NegativeColor = Color.Black;
             }
         }
 

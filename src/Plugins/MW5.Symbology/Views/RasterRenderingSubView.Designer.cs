@@ -47,6 +47,7 @@ namespace MW5.Plugins.Symbology.Views
             this.chkAlphaRendering = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.chkHillshade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.groupBuildColorScheme = new System.Windows.Forms.GroupBox();
+            this.btnEditColorSchemeList = new Syncfusion.Windows.Forms.ButtonAdv();
             this.chkReverseColorScheme = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.cboGradientModel = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkGradientWithinCategory = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
@@ -58,7 +59,6 @@ namespace MW5.Plugins.Symbology.Views
             this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panelSingleBand = new System.Windows.Forms.Panel();
             this.panelColorScheme = new Syncfusion.Windows.Forms.Tools.GradientPanel();
-            this.btnEditColorSchemeList = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupMinMax.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaximum)).BeginInit();
@@ -130,7 +130,7 @@ namespace MW5.Plugins.Symbology.Views
             // txtMaximum
             // 
             this.txtMaximum.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.txtMaximum.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtMaximum.BeforeTouchSize = new System.Drawing.Size(64, 20);
             this.txtMaximum.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMaximum.DoubleValue = 1D;
             this.txtMaximum.Location = new System.Drawing.Point(94, 95);
@@ -155,7 +155,7 @@ namespace MW5.Plugins.Symbology.Views
             // txtMinimum
             // 
             this.txtMinimum.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.txtMinimum.BeforeTouchSize = new System.Drawing.Size(101, 20);
+            this.txtMinimum.BeforeTouchSize = new System.Drawing.Size(64, 20);
             this.txtMinimum.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMinimum.DoubleValue = 1D;
             this.txtMinimum.Location = new System.Drawing.Point(94, 62);
@@ -269,6 +269,16 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBuildColorScheme.TabStop = false;
             this.groupBuildColorScheme.Text = "Color scheme";
             // 
+            // btnEditColorSchemeList
+            // 
+            this.btnEditColorSchemeList.BeforeTouchSize = new System.Drawing.Size(30, 23);
+            this.btnEditColorSchemeList.IsBackStageButton = false;
+            this.btnEditColorSchemeList.Location = new System.Drawing.Point(165, 55);
+            this.btnEditColorSchemeList.Name = "btnEditColorSchemeList";
+            this.btnEditColorSchemeList.Size = new System.Drawing.Size(30, 23);
+            this.btnEditColorSchemeList.TabIndex = 49;
+            this.btnEditColorSchemeList.Text = "...";
+            // 
             // chkReverseColorScheme
             // 
             this.chkReverseColorScheme.BeforeTouchSize = new System.Drawing.Size(77, 21);
@@ -349,9 +359,9 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // rgbBandControl1
             // 
-            this.rgbBandControl1.Location = new System.Drawing.Point(15, 444);
+            this.rgbBandControl1.Location = new System.Drawing.Point(3, 440);
             this.rgbBandControl1.Name = "rgbBandControl1";
-            this.rgbBandControl1.Size = new System.Drawing.Size(252, 193);
+            this.rgbBandControl1.Size = new System.Drawing.Size(493, 228);
             this.rgbBandControl1.TabIndex = 20;
             // 
             // colorSchemeGrid
@@ -390,7 +400,7 @@ namespace MW5.Plugins.Symbology.Views
             this.panelSingleBand.Controls.Add(this.chkUseHistogram);
             this.panelSingleBand.Controls.Add(this.chkAlphaRendering);
             this.panelSingleBand.Controls.Add(this.chkReverse);
-            this.panelSingleBand.Location = new System.Drawing.Point(273, 444);
+            this.panelSingleBand.Location = new System.Drawing.Point(296, 674);
             this.panelSingleBand.Name = "panelSingleBand";
             this.panelSingleBand.Size = new System.Drawing.Size(212, 66);
             this.panelSingleBand.TabIndex = 49;
@@ -405,16 +415,6 @@ namespace MW5.Plugins.Symbology.Views
             this.panelColorScheme.Size = new System.Drawing.Size(272, 385);
             this.panelColorScheme.TabIndex = 50;
             // 
-            // btnEditColorSchemeList
-            // 
-            this.btnEditColorSchemeList.BeforeTouchSize = new System.Drawing.Size(30, 23);
-            this.btnEditColorSchemeList.IsBackStageButton = false;
-            this.btnEditColorSchemeList.Location = new System.Drawing.Point(165, 55);
-            this.btnEditColorSchemeList.Name = "btnEditColorSchemeList";
-            this.btnEditColorSchemeList.Size = new System.Drawing.Size(30, 23);
-            this.btnEditColorSchemeList.TabIndex = 49;
-            this.btnEditColorSchemeList.Text = "...";
-            // 
             // RasterRenderingSubView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -427,7 +427,7 @@ namespace MW5.Plugins.Symbology.Views
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboRasterRendering);
             this.Name = "RasterRenderingSubView";
-            this.Size = new System.Drawing.Size(514, 441);
+            this.Size = new System.Drawing.Size(514, 443);
             this.groupMinMax.ResumeLayout(false);
             this.groupMinMax.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSelectedBand)).EndInit();
