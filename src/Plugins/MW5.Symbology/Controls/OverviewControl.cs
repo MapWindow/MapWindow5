@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -27,7 +28,9 @@ namespace MW5.Plugins.Symbology.Controls
 
             cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
             cboOverviewType.AddItemsFromEnum(new[] {RasterOverviewType.External});
+            cboCompression.AddItemsFromEnum<TiffCompression>();
 
+            cboCompression.SetValue(MapConfig.CompressOverviews);
             cboOverviewType.SetValue(RasterOverviewType.External);
             cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
         }
@@ -104,37 +107,14 @@ namespace MW5.Plugins.Symbology.Controls
                     int xSize = band.XSize;
                     int ySize = band.YSize;
 
-                    foreach (var ratio in GetDefaultOverviewRatios())
+                    foreach (var ratio in _raster.GetDefaultOverviewRatios())
                     {
                         yield return new OverviewScale(xSize, ySize, ratio);
                     }
                 }
             }
         }
-
-        private IEnumerable<int> GetDefaultOverviewRatios()
-        {
-            var band = _raster.Bands[1];
-            if (band == null)
-            {
-                yield break;
-            }
-            
-            const int maxSize = 512;
-
-            double w = band.XSize;
-            double h = band.YSize;
-            int ratio = 2;
-            
-            while (w/2 > maxSize || h/2 > maxSize)
-            {
-                yield return ratio;
-                w /= 2.0;
-                h /= 2.0;
-                ratio *= 2;
-            }
-        }
-
+        
         private void btnClearOverviews_Click(object sender, EventArgs e)
         {
             bool result = _raster.ClearOverviews();
@@ -153,7 +133,6 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void btnBuildOverviews_Click(object sender, EventArgs e)
         {
-            //var scales = new List<int>() { 2, 4, 8 };
             var scales = _overviews.Where(item => item.Selected).Select(ov => ov.RatioCore).ToList();
             Logger.Current.Info("Scales to calculate overviews: " + string.Join(", ", scales));
 
@@ -162,6 +141,8 @@ namespace MW5.Plugins.Symbology.Controls
                 MessageService.Current.Info("No scales are chosen to calculate overviews for.");
                 return;
             }
+
+            MapConfig.CompressOverviews = cboCompression.GetValue<TiffCompression>();
 
             bool result = _raster.BuildOverviews(cboOverviewSampling.GetValue<RasterOverviewSampling>(), scales);
             if (result)

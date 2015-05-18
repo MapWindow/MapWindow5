@@ -34,6 +34,11 @@ namespace MW5.Plugins.Services
         IEnumerable<BasePlugin> ActivePlugins { get; }
 
         /// <summary>
+        /// Gets list of all active plugins + a plugin events listener of the main app.
+        /// </summary>
+        IEnumerable<BasePlugin> ListeningPlugins { get; }
+
+        /// <summary>
         /// Validates the list of plugins loaded by MEF.
         /// </summary>
         void ValidatePlugins();

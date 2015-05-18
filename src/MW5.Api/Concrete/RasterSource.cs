@@ -91,10 +91,48 @@ namespace MW5.Api.Concrete
             get { return _image.NumOverviews; }
         }
 
+        public bool BuildDefaultOverviews(RasterOverviewSampling method)
+        {
+            return BuildOverviews(method, GetDefaultOverviewRatios());
+        }
+
         public bool BuildOverviews(RasterOverviewSampling method, IEnumerable<int> scales)
         {
             scales = scales.ToList();
             return _image.BuildOverviews((tkGDALResamplingMethod) method, scales.Count(), scales.ToArray());
+        }
+
+        public bool NeedsOverviews
+        {
+            get { return _image.NumOverviews == 0 && GetDefaultOverviewRatios().Any(); }
+        }
+
+        public IEnumerable<int> GetDefaultOverviewRatios()
+        {
+            if (NumBands == 0)
+            {
+                yield break;
+            }
+
+            var band = Bands[1];
+            if (band == null)
+            {
+                yield break;
+            }
+
+            const int maxSize = 256;        // TODO: make a constant
+
+            double w = band.XSize;
+            double h = band.YSize;
+            int ratio = 2;
+
+            while (w / 2 > maxSize || h / 2 > maxSize)
+            {
+                yield return ratio;
+                w /= 2.0;
+                h /= 2.0;
+                ratio *= 2;
+            }
         }
 
         public bool ClearOverviews()

@@ -17,7 +17,8 @@ namespace MW5.Plugins
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterSingleton<IBroadcasterService, PluginBroadcaster>()
-                .RegisterSingleton<IPluginManager, PluginManager>();
+                .RegisterSingleton<IPluginManager, PluginManager>()
+                .RegisterSingleton<MainAppPlugin>();
 
             EnumHelper.RegisterConverter(new GdalDriverMetadataConverter());
         }

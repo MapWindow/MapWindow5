@@ -9,9 +9,12 @@ namespace MW5.Api.Interfaces
     public interface IRasterSource : IImageSource
     {
         int NumOverviews { get; }
-    
+
+        bool BuildDefaultOverviews(RasterOverviewSampling method);
         bool BuildOverviews(RasterOverviewSampling  method, IEnumerable<int> scales);
         bool ClearOverviews();
+        bool NeedsOverviews { get; }
+        IEnumerable<int> GetDefaultOverviewRatios();
 
         double BufferDx { get; }
         double BufferDy { get; }

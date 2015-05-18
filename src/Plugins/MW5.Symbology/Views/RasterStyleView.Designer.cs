@@ -106,8 +106,8 @@ namespace MW5.Plugins.Symbology.Views
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
             this.toolLoadStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
@@ -751,9 +751,11 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // _overviewControl1
             // 
-            this._overviewControl1.Location = new System.Drawing.Point(3, 0);
+            this._overviewControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._overviewControl1.Location = new System.Drawing.Point(0, 0);
             this._overviewControl1.Name = "_overviewControl1";
-            this._overviewControl1.Size = new System.Drawing.Size(503, 283);
+            this._overviewControl1.Padding = new System.Windows.Forms.Padding(10);
+            this._overviewControl1.Size = new System.Drawing.Size(515, 441);
             this._overviewControl1.TabIndex = 0;
             // 
             // tabPageInfo
@@ -946,7 +948,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
             this.toolStripEx1.TabIndex = 39;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -963,19 +965,19 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStyle.Size = new System.Drawing.Size(61, 22);
             this.toolStyle.Text = "Style";
             // 
-            // toolSaveStyle
-            // 
-            this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
-            this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
-            this.toolSaveStyle.Text = "Save style";
-            // 
             // toolLoadStyle
             // 
             this.toolLoadStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_folder_open;
             this.toolLoadStyle.Name = "toolLoadStyle";
-            this.toolLoadStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolLoadStyle.Size = new System.Drawing.Size(127, 22);
             this.toolLoadStyle.Text = "Load style";
+            // 
+            // toolSaveStyle
+            // 
+            this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
+            this.toolSaveStyle.Name = "toolSaveStyle";
+            this.toolSaveStyle.Size = new System.Drawing.Size(127, 22);
+            this.toolSaveStyle.Text = "Save style";
             // 
             // RasterStyleView
             // 

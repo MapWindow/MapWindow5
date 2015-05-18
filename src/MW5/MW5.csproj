@@ -126,6 +126,7 @@
       <DependentUpon>LocatorDockPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\LocatorPresenter.cs" />
+    <Compile Include="Listeners\MainPluginListener.cs" />
     <Compile Include="Menu\ContextMenuCommand.cs" />
     <Compile Include="Menu\ContextMenuPresenter.cs" />
     <Compile Include="Menu\ContextMenuView.cs">
@@ -136,6 +137,7 @@
     </Compile>
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
+    <Compile Include="Views\Abstract\ICreatePyramidsView.cs" />
     <Compile Include="Views\Abstract\ILegendGroupView.cs" />
     <Compile Include="Views\Abstract\IMeasuringView.cs" />
     <Compile Include="Views\Abstract\IProjectionView.cs" />
@@ -167,6 +169,13 @@
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
+    <Compile Include="Views\CreatePyramidsPresenter.cs" />
+    <Compile Include="Views\CreatePyramidsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CreatePyramidsView.Designer.cs">
+      <DependentUpon>CreatePyramidsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\LegendGroupPresenter.cs" />
     <Compile Include="Views\LegendGroupView.cs">
       <SubType>Form</SubType>
@@ -233,6 +242,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ConfigView.resx">
       <DependentUpon>ConfigView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CreatePyramidsView.resx">
+      <DependentUpon>CreatePyramidsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LegendGroupView.resx">
       <DependentUpon>LegendGroupView.cs</DependentUpon>

@@ -5,6 +5,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Legend.Events;
 using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
@@ -23,21 +24,21 @@ namespace MW5.Services.Concrete
     {
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;
-        private readonly IBroadcasterService _broadcasterService;
+        private readonly IBroadcasterService _broadcaster;
         private readonly IProjectionMismatchService _mismatchTester;
         private int _lastLayerHandle;
         private bool _withinBatch;
 
         public LayerService(IAppContext context, IFileDialogService fileDialogService, 
-            IBroadcasterService broadcasterService, IProjectionMismatchService mismatchTester)
+            IBroadcasterService broadcaster, IProjectionMismatchService mismatchTester)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
-            if (broadcasterService == null) throw new ArgumentNullException("broadcasterService");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
 
             _context = context;
             _fileDialogService = fileDialogService;
-            _broadcasterService = broadcasterService;
+            _broadcaster = broadcaster;
             _mismatchTester = mismatchTester;
         }
 
@@ -56,7 +57,7 @@ namespace MW5.Services.Concrete
         private bool RemoveLayerCore(int layerHandle, bool silent)
         {
             var args = new LayerRemoveEventArgs(layerHandle);
-            _broadcasterService.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
+            _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
             if (args.Cancel)
             {
                 return false;
@@ -205,24 +206,22 @@ namespace MW5.Services.Concrete
             var layers = _context.Map.Layers;
             foreach (var layer in LayerSourceHelper.GetLayers(ds))
             {
-                
-                
-                ILayerSource newLayer;
-                var result = _mismatchTester.TestLayer(layer, out newLayer);
+                // projection mistmatch testing
+                bool abort;
+                var newLayer = TestProjectionMismatch(layer, out abort);
 
-                switch (result)
+                if (abort)
                 {
-                    case TestingResult.Ok:
-                        newLayer = layer;
-                        break;
-                    case TestingResult.Substituted:
-                        // do nothing; user new layer
-                        break;
-                    case TestingResult.SkipFile:
-                    case TestingResult.Error:
-                        continue;
-                    case TestingResult.CancelOperation:
-                        return false;
+                    return false;
+                }
+
+                // ask plugins if they don't object
+                var args = new DatasourceCancelEventArgs(newLayer);
+                _broadcaster.BroadcastEvent(p => p.BeforeLayerAdded_, _context.Map, args);
+
+                if (args.Cancel)
+                {
+                    return false;
                 }
 
                 int layerHandle = layers.Add(newLayer);
@@ -234,6 +233,37 @@ namespace MW5.Services.Concrete
             }
 
             return addedCount > 0;  // currently at least one should be success to return success
+        }
+
+
+        /// <summary>
+        /// Tests if datasources projection matches map projection. Performs reprojection is needed or
+        /// substitues original datasources with reprojected version created earlier.
+        /// </summary>
+        private ILayerSource TestProjectionMismatch(ILayerSource layer, out bool abort)
+        {
+            abort = false;
+
+            ILayerSource newLayer;
+            var result = _mismatchTester.TestLayer(layer, out newLayer);
+
+            switch (result)
+            {
+                case TestingResult.Ok:
+                    newLayer = layer;
+                    break;
+                case TestingResult.Substituted:
+                    // do nothing; user new layer
+                    break;
+                case TestingResult.SkipFile:
+                case TestingResult.Error:
+                    return null;
+                case TestingResult.CancelOperation:
+                    abort = true;
+                    return null;
+            }
+
+            return newLayer;
         }
 
         public void ZoomToSelected()

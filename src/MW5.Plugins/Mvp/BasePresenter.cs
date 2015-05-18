@@ -11,7 +11,7 @@ namespace MW5.Plugins.Mvp
     public abstract class BasePresenter<TView> : IPresenter
         where TView: IView
     {
-        protected TView View { get; private set; }
+        public TView View { get; private set; }
 
         public bool Success { get; protected set;}
 

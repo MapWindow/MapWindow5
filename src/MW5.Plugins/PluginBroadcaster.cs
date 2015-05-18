@@ -81,9 +81,9 @@ namespace MW5.Plugins
         /// </summary>
         private List<BasePlugin> GetActiveList(Guid? defaultHandler)
         {
-            var handler = defaultHandler != null ? _manager.ActivePlugins.FirstOrDefault(p => p.Identity.Guid == defaultHandler) : null;
-            
-            var plugins = handler == null ? _manager.ActivePlugins : _manager.ActivePlugins.Where(p => p != handler);
+            var handler = defaultHandler != null ? _manager.ListeningPlugins.FirstOrDefault(p => p.Identity.Guid == defaultHandler) : null;
+
+            var plugins = handler == null ? _manager.ListeningPlugins : _manager.ListeningPlugins.Where(p => p != handler);
             var list = plugins.ToList();
 
             if (handler != null)

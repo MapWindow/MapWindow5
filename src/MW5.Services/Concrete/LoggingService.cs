@@ -85,6 +85,29 @@ namespace MW5.Services.Concrete
             Log(string.Format(msg, param), LogLevel.Fatal, ex);
         }
 
+        public void Write(string msg, LogLevel level, params object[] param)
+        {
+            switch (level)
+            {
+                case LogLevel.Info:
+                case LogLevel.All:
+                    Info(msg, param);
+                    break;
+                case LogLevel.Debug:
+                    Debug(msg, param);
+                    break;
+                case LogLevel.Warn:
+                    Warn(msg, null, param);
+                    break;
+                case LogLevel.Error:
+                    Error(msg, null, param);
+                    break;
+                case LogLevel.Fatal:
+                    Fatal(msg, null, param);
+                    break;
+            }
+        }
+
         public IReadOnlyList<ILogEntry> Entries
         {
             get { return _entries; }

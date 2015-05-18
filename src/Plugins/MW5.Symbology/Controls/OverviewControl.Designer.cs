@@ -31,7 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OverviewControl));
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
-            this._overviewGrid1 = new MW5.Plugins.Symbology.Controls.OverviewGrid();
+            this.cboCompression = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnClearOverviews = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label8 = new System.Windows.Forms.Label();
             this.btnBuildOverviews = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -41,12 +42,14 @@
             this.cboOverviewSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this._overviewGrid1 = new MW5.Plugins.Symbology.Controls.OverviewGrid();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboCompression)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // configPanelControl1
@@ -54,6 +57,8 @@
             this.configPanelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl1.Controls.Add(this.cboCompression);
+            this.configPanelControl1.Controls.Add(this.label1);
             this.configPanelControl1.Controls.Add(this._overviewGrid1);
             this.configPanelControl1.Controls.Add(this.btnClearOverviews);
             this.configPanelControl1.Controls.Add(this.label8);
@@ -65,25 +70,35 @@
             this.configPanelControl1.HeaderText = "Pyramid generation";
             this.configPanelControl1.Location = new System.Drawing.Point(4, 111);
             this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(500, 179);
+            this.configPanelControl1.Size = new System.Drawing.Size(500, 228);
             this.configPanelControl1.TabIndex = 52;
             // 
-            // _overviewGrid1
+            // cboCompression
             // 
-            this._overviewGrid1.BackColor = System.Drawing.SystemColors.Window;
-            this._overviewGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this._overviewGrid1.FreezeCaption = false;
-            this._overviewGrid1.Location = new System.Drawing.Point(262, 53);
-            this._overviewGrid1.Name = "_overviewGrid1";
-            this._overviewGrid1.Size = new System.Drawing.Size(221, 110);
-            this._overviewGrid1.TabIndex = 50;
-            this._overviewGrid1.WrapWithPanel = true;
+            this.cboCompression.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cboCompression.BeforeTouchSize = new System.Drawing.Size(235, 21);
+            this.cboCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCompression.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboCompression.Location = new System.Drawing.Point(10, 153);
+            this.cboCompression.Name = "cboCompression";
+            this.cboCompression.Size = new System.Drawing.Size(235, 21);
+            this.cboCompression.TabIndex = 51;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(11, 137);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 50;
+            this.label1.Text = "Compression:";
             // 
             // btnClearOverviews
             // 
             this.btnClearOverviews.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnClearOverviews.IsBackStageButton = false;
-            this.btnClearOverviews.Location = new System.Drawing.Point(92, 140);
+            this.btnClearOverviews.Location = new System.Drawing.Point(92, 190);
             this.btnClearOverviews.Name = "btnClearOverviews";
             this.btnClearOverviews.Size = new System.Drawing.Size(75, 23);
             this.btnClearOverviews.TabIndex = 48;
@@ -103,7 +118,7 @@
             // 
             this.btnBuildOverviews.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this.btnBuildOverviews.IsBackStageButton = false;
-            this.btnBuildOverviews.Location = new System.Drawing.Point(11, 140);
+            this.btnBuildOverviews.Location = new System.Drawing.Point(11, 190);
             this.btnBuildOverviews.Name = "btnBuildOverviews";
             this.btnBuildOverviews.Size = new System.Drawing.Size(75, 23);
             this.btnBuildOverviews.TabIndex = 47;
@@ -172,6 +187,35 @@
             this.pictureBox2.TabIndex = 50;
             this.pictureBox2.TabStop = false;
             // 
+            // _overviewGrid1
+            // 
+            this._overviewGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._overviewGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this._overviewGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this._overviewGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this._overviewGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this._overviewGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
+            this._overviewGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this._overviewGrid1.FreezeCaption = false;
+            this._overviewGrid1.Location = new System.Drawing.Point(264, 53);
+            this._overviewGrid1.Name = "_overviewGrid1";
+            this._overviewGrid1.Size = new System.Drawing.Size(233, 150);
+            this._overviewGrid1.TabIndex = 49;
+            this._overviewGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
+            this._overviewGrid1.TableOptions.AllowDropDownCell = true;
+            this._overviewGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
+            this._overviewGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
+            this._overviewGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
+            this._overviewGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this._overviewGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
+            this._overviewGrid1.Text = "overviewGrid1";
+            this._overviewGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            this._overviewGrid1.TopLevelGroupOptions.ShowCaption = false;
+            this._overviewGrid1.TopLevelGroupOptions.ShowColumnHeaders = true;
+            this._overviewGrid1.VersionInfo = "0.0.1.0";
+            this._overviewGrid1.WrapWithPanel = true;
+            // 
             // OverviewControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,14 +224,15 @@
             this.Controls.Add(this.label9);
             this.Controls.Add(this.pictureBox2);
             this.Name = "OverviewControl";
-            this.Size = new System.Drawing.Size(513, 283);
+            this.Size = new System.Drawing.Size(513, 344);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboCompression)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOverviewSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._overviewGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -205,6 +250,8 @@
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboOverviewSampling;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PictureBox pictureBox2;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboCompression;
+        private System.Windows.Forms.Label label1;
         private OverviewGrid _overviewGrid1;
     }
 }

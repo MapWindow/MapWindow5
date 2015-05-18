@@ -20,6 +20,7 @@ namespace MW5.Plugins.Symbology
                 RegisterView<IRasterMinMaxView, RasterMinMaxView>().
                 RegisterView<IRasterColorSchemeView, RasterColorSchemeView>().
                 RegisterView<IHistogramOptionsView, HistogramOptionsView>().
+                
                 RegisterService<RasterRenderingSubView>().
                 RegisterService<RasterRenderingPresenter>();
 

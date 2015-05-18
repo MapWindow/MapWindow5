@@ -271,6 +271,12 @@ namespace MW5.Api.Static
             return new Utils().ComUsageReport[unreleasedOnly];
         }
 
+        public static TiffCompression CompressOverviews
+        {
+            get { return (TiffCompression)_settings.CompressOverviews; }
+            set { _settings.CompressOverviews = (tkTiffCompression)value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

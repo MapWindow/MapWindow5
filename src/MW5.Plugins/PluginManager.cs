@@ -24,6 +24,8 @@ namespace MW5.Plugins
     {
         private const string PluginDirectory = "Plugins";
 
+        private MainAppPlugin _mainPlugin;
+
         private readonly IApplicationContainer _container;
 
         [ImportMany] 
@@ -31,7 +33,7 @@ namespace MW5.Plugins
         private IEnumerable<Lazy<IPlugin, IPluginMetadata>> _mefPlugins;     // found by MEF
         #pragma warning restore 649
 
-        private List<BasePlugin> _plugins = new List<BasePlugin>();      // all valid plugins
+        private readonly List<BasePlugin> _plugins = new List<BasePlugin>();      // all valid plugins
 
         private readonly HashSet<PluginIdentity> _active = new HashSet<PluginIdentity>();
 
@@ -40,11 +42,13 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IApplicationContainer container)
+        public PluginManager(IApplicationContainer container, MainAppPlugin mainPlugin)
         {
             if (container == null) throw new ArgumentNullException("container");
+            if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
 
             _container = container;
+            _mainPlugin = mainPlugin;
         }
 
         /// <summary>
@@ -74,6 +78,14 @@ namespace MW5.Plugins
             {
                 // TODO: cache it each time the list of plugins changes to spare the time on search for each event
                 return _plugins.Where(p => _active.Contains(p.Identity)).ToList();
+            }
+        }
+
+        public IEnumerable<BasePlugin> ListeningPlugins
+        {
+            get
+            {
+                return (new[] { _mainPlugin }).Concat(_plugins.Where(p => _active.Contains(p.Identity)));
             }
         }
 

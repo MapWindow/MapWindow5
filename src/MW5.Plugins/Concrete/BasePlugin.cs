@@ -156,6 +156,7 @@ namespace MW5.Plugins.Concrete
         internal LegendEventHandler<LayerEventArgs> LayerLabelsClicked_;
         internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerAdded_;
+        
         internal LegendEventHandler<LayerEventArgs> LayerRemoved_;
 
         public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
@@ -212,6 +213,7 @@ namespace MW5.Plugins.Concrete
 
         // backing fields
         internal MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit_;
+        internal MapEventHandler<DatasourceCancelEventArgs> BeforeLayerAdded_;
         internal MapEventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit_;
         internal MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape_;
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
@@ -242,6 +244,12 @@ namespace MW5.Plugins.Concrete
         {
             add { BeforeDeleteShape_ += value; }
             remove { BeforeDeleteShape_ -= value; }
+        }
+
+        public event MapEventHandler<DatasourceCancelEventArgs> BeforeLayerAdded
+        {
+            add { BeforeLayerAdded_ += value; }
+            remove { BeforeLayerAdded_ -= value; }
         }
 
         public event MapEventHandler<BeforeShapeEditEventArgs> BeforeShapeEdit

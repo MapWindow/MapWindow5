@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Concrete
@@ -15,6 +16,10 @@ namespace MW5.Plugins.Concrete
             LoadLastProject = true;
             LastProjectPath = "";
             ShowRedrawTime = false;
+            NeverShowPyramidDialog = false;
+            CreatePyramidsOnOpening = true;
+            PyramidCompression = TiffCompression.Auto;
+            PyramidSampling = RasterOverviewSampling.Nearest;
             FavoriteProjections = new List<int>();
         }
 
@@ -44,6 +49,18 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool ProjectionShowLoadingReport { get; set; }
+
+        [DataMember]
+        public bool NeverShowPyramidDialog { get; set; }
+
+        [DataMember]
+        public bool CreatePyramidsOnOpening { get; set; }
+
+        [DataMember]
+        public TiffCompression PyramidCompression { get; set; }
+
+        [DataMember]
+        public RasterOverviewSampling PyramidSampling { get; set; }
 
         /// <summary>
         /// List of EPSG codes for favorite projections

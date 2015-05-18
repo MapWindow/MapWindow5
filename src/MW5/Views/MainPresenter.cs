@@ -30,6 +30,7 @@ namespace MW5.Views
         private readonly MenuGenerator _menuGenerator;
         private readonly MapListener _mapListener;
         private readonly LegendListener _legendListener;
+        private readonly MainPluginListener _mainPluginListener;
         private readonly StatusBarListener _statusBarListener;
         private readonly MenuUpdater _menuUpdater;
 
@@ -69,6 +70,7 @@ namespace MW5.Views
                 _menuGenerator = container.GetSingleton<MenuGenerator>();
                 _menuListener = container.GetSingleton<MenuListener>();
                 _mapListener = container.GetSingleton<MapListener>();
+                _mainPluginListener = container.GetSingleton<MainPluginListener>();
                 _legendListener = container.GetSingleton<LegendListener>();
                 _statusBarListener = container.GetSingleton<StatusBarListener>();
                 _menuUpdater = new MenuUpdater(_context, appContext.Map, PluginIdentity.Default);
