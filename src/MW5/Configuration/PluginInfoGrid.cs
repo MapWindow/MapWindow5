@@ -15,7 +15,8 @@ namespace MW5.Configuration
         {
             Adapter.HotTracking = true;
             Adapter.ShowSuperTooltips = true;
-            Adapter.ReadOnly = true;
+            Adapter.ReadOnly = false;
+            Adapter.AllowCurrentCell = false;
         }
     }
 }

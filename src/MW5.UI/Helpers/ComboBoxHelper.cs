@@ -16,6 +16,20 @@ namespace MW5.UI.Helpers
             return items.Select(item => new ComboBoxEnumItem<T>(item, EnumHelper.GetToStringFunction<T>()));
         }
 
+        public static void AddItemsFromEnum<T>(this ComboBoxAdv box, IEnumerable<T> items) where T : struct, IConvertible
+        {
+            if (items == null)
+            {
+                throw new ArgumentNullException("items");
+            }
+
+            var comboItems = GetComboItems(items);
+            foreach (var item in comboItems)
+            {
+                box.Items.Add(item);
+            }
+        }
+
         public static void AddItemsFromEnum<T>(this ComboBoxAdv box) where T: struct, IConvertible
         {
             var t = new T();

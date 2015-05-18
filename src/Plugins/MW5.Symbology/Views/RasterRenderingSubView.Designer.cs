@@ -372,7 +372,6 @@ namespace MW5.Plugins.Symbology.Views
             this.colorSchemeGrid.FreezeCaption = false;
             this.colorSchemeGrid.Location = new System.Drawing.Point(0, 0);
             this.colorSchemeGrid.Name = "colorSchemeGrid";
-            this.colorSchemeGrid.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.colorSchemeGrid.ShowGradient = true;
             this.colorSchemeGrid.Size = new System.Drawing.Size(272, 357);
             this.colorSchemeGrid.TabIndex = 17;
@@ -381,7 +380,6 @@ namespace MW5.Plugins.Symbology.Views
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("LowColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("HighColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Range")});
-            this.colorSchemeGrid.TableOptions.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.colorSchemeGrid.WrapWithPanel = true;
             // 
             // btnEditColorScheme

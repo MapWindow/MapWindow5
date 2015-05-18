@@ -14,8 +14,9 @@ namespace MW5.Plugins.Symbology.Controls
 
         public OverviewScale(int totalWidth, int totalHeight, int ratio)
         {
-            Width = Convert.ToInt32(totalWidth / (double)ratio);
-            Height = Convert.ToInt32(totalHeight / (double)ratio);
+            Width = (totalWidth + ratio - 1) / ratio;       // see gt_overview.cpp GTIFFBuildOverviews
+            Height = (totalHeight + ratio - 1) / ratio;       // see gt_overview.cpp GTIFFBuildOverviews
+            
             _totalHeight = totalHeight;
             _totalWidth = totalWidth;
         }

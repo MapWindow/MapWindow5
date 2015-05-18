@@ -50,7 +50,6 @@
             this.rasterColorSchemeGrid1.FreezeCaption = false;
             this.rasterColorSchemeGrid1.Location = new System.Drawing.Point(12, 12);
             this.rasterColorSchemeGrid1.Name = "rasterColorSchemeGrid1";
-            this.rasterColorSchemeGrid1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.rasterColorSchemeGrid1.ShowGradient = true;
             this.rasterColorSchemeGrid1.Size = new System.Drawing.Size(525, 397);
             this.rasterColorSchemeGrid1.TabIndex = 18;
@@ -59,7 +58,6 @@
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("LowColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("HighColor"),
             new Syncfusion.Windows.Forms.Grid.Grouping.GridVisibleColumnDescriptor("Range")});
-            this.rasterColorSchemeGrid1.TableOptions.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             this.rasterColorSchemeGrid1.WrapWithPanel = true;
             // 
             // btnCancel

@@ -73,16 +73,16 @@ namespace MW5.UI.Controls
             }
         }
 
+        private Color SelectionBackColor
+        {
+            get { return _grid.TableOptions.SelectionBackColor; }
+            set { _grid.TableOptions.SelectionBackColor = value; }
+        }
+
         public bool WrapText
         {
             get { return _grid.TableDescriptor.Appearance.AnyCell.WrapText; }
             set { _grid.TableDescriptor.Appearance.AnyCell.WrapText = value; }
-        }
-
-        public new BorderStyle BorderStyle
-        {
-            get { return _grid.BorderStyle; }
-            set { _grid.BorderStyle = value; }
         }
 
         public bool ShowEditors

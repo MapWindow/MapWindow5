@@ -26,7 +26,7 @@ namespace MW5.Plugins.Symbology.Controls
             InitializeComponent();
 
             cboOverviewSampling.AddItemsFromEnum<RasterOverviewSampling>();
-            cboOverviewType.AddItemsFromEnum<RasterOverviewType>();
+            cboOverviewType.AddItemsFromEnum(new[] {RasterOverviewType.External});
 
             cboOverviewType.SetValue(RasterOverviewType.External);
             cboOverviewSampling.SetValue(RasterOverviewSampling.Nearest);
@@ -154,7 +154,7 @@ namespace MW5.Plugins.Symbology.Controls
         private void btnBuildOverviews_Click(object sender, EventArgs e)
         {
             //var scales = new List<int>() { 2, 4, 8 };
-            var scales = _overviews.Select(ov => ov.RatioCore).ToList();
+            var scales = _overviews.Where(item => item.Selected).Select(ov => ov.RatioCore).ToList();
             Logger.Current.Info("Scales to calculate overviews: " + string.Join(", ", scales));
 
             if (scales.Count == 0)

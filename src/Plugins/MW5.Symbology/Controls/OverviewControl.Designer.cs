@@ -73,11 +73,11 @@
             this._overviewGrid1.BackColor = System.Drawing.SystemColors.Window;
             this._overviewGrid1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._overviewGrid1.FreezeCaption = false;
-            this._overviewGrid1.Location = new System.Drawing.Point(286, 53);
+            this._overviewGrid1.Location = new System.Drawing.Point(262, 53);
             this._overviewGrid1.Name = "_overviewGrid1";
-            this._overviewGrid1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            this._overviewGrid1.Size = new System.Drawing.Size(197, 110);
+            this._overviewGrid1.Size = new System.Drawing.Size(221, 110);
             this._overviewGrid1.TabIndex = 50;
+            this._overviewGrid1.WrapWithPanel = true;
             // 
             // btnClearOverviews
             // 
@@ -114,12 +114,12 @@
             // 
             this.cboOverviewType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboOverviewType.BeforeTouchSize = new System.Drawing.Size(246, 21);
+            this.cboOverviewType.BeforeTouchSize = new System.Drawing.Size(234, 21);
             this.cboOverviewType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOverviewType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboOverviewType.Location = new System.Drawing.Point(11, 53);
             this.cboOverviewType.Name = "cboOverviewType";
-            this.cboOverviewType.Size = new System.Drawing.Size(246, 21);
+            this.cboOverviewType.Size = new System.Drawing.Size(234, 21);
             this.cboOverviewType.TabIndex = 41;
             // 
             // label6
@@ -144,12 +144,12 @@
             // 
             this.cboOverviewSampling.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboOverviewSampling.BeforeTouchSize = new System.Drawing.Size(247, 21);
+            this.cboOverviewSampling.BeforeTouchSize = new System.Drawing.Size(235, 21);
             this.cboOverviewSampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOverviewSampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboOverviewSampling.Location = new System.Drawing.Point(10, 102);
             this.cboOverviewSampling.Name = "cboOverviewSampling";
-            this.cboOverviewSampling.Size = new System.Drawing.Size(247, 21);
+            this.cboOverviewSampling.Size = new System.Drawing.Size(235, 21);
             this.cboOverviewSampling.TabIndex = 42;
             // 
             // label9
