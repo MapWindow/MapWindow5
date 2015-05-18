@@ -33,6 +33,7 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
+        private readonly MainAppPlugin _mainPlugin;
 
         private IMap _map;
         private IMenu _menu;
@@ -52,14 +53,17 @@ namespace MW5
 
         private bool _initialized;
 
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService,
+                MainAppPlugin mainPlugin)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
+            if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
 
             _container = container;
             _projectionDatabase = projectionDatabase;
             _styleService = styleService;
+            _mainPlugin = mainPlugin;
         }
 
         /// <summary>
@@ -101,7 +105,7 @@ namespace MW5
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
-            _locator = new LocatorPresenter(_map);
+            _locator = new LocatorPresenter(_map, _mainPlugin);
 
             this.InitDocking();
 

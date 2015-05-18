@@ -17,6 +17,12 @@ namespace MW5.Plugins.Identifier.Listeners
             _identifierPresenter = identifierPresenter;
 
             plugin.ShapeIdentified += _plugin_ShapeIdentified;
+            plugin.ProjectClosed += plugin_ProjectClosed;
+        }
+
+        private void plugin_ProjectClosed(object sender, EventArgs e)
+        {
+            _identifierPresenter.RunCommand(Enums.IdentifierCommand.Clear);
         }
 
         private void _plugin_ShapeIdentified(IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)

@@ -74,14 +74,14 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             InitControls();
 
-            RestoreSelectedIconCollection();
-
             Options2Gui();
             _noEvents = false;
 
             AttachListeners();
 
             InitIconsAndFonts();
+
+            RestoreSelectedIconCollection();
 
             DrawPreview();
 
@@ -181,7 +181,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 return;
             }
             
-            iconControl1.SelectedIndex = settings.IconIndex;
             chkScaleIcons.Checked = settings.ScaleIcons;
 
             string name = settings.IconCollection.ToLower();
@@ -191,6 +190,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 if (cboIconCollection.Items[i].ToString().ToLower() == name)
                 {
                     cboIconCollection.SelectedIndex = i;
+                    iconControl1.SelectedIndex = settings.IconIndex;
                     break;
                 }
             }
@@ -292,7 +292,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             
             foreach(var item in cboIconCollection.Items)
             {
-                if (item.ToString().ToLower() == "standard")
+                if (item.ToString().ToLower() == "events")
                 {
                     cboIconCollection.SelectedItem = item;
                     break;
@@ -406,26 +406,31 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 catch {}
             }
             
-            
             iconControl1.FilePath = path;
-            //lblCopyright.Text = "";
 
-            //string filename = path + @"\copyright.txt";
-            //if (File.Exists(filename))
-            //{
-            //    StreamReader reader = null;
-            //    try
-            //    {
-            //        reader = new StreamReader(filename);
-            //        lblCopyright.Text = reader.ReadLine();
-            //    }
-            //    finally
-            //    {
-            //        if (reader != null)
-            //            reader.Close();
-            //    }
-            //}
+            UpdateCopyrightMessage(path);
         }
+
+        private void UpdateCopyrightMessage(string path)
+        {
+            lblCopyright.Text = "";
+
+            string filename = path + @"\copyright.txt";
+            if (!File.Exists(filename)) return;
+
+            StreamReader reader = null;
+            try
+            {
+                reader = new StreamReader(filename);
+                lblCopyright.Text = reader.ReadLine();
+            }
+            finally
+            {
+                if (reader != null)
+                    reader.Close();
+            }
+        }
+
         #endregion
 
         #region FontCharacters
@@ -657,17 +662,19 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// <summary>
         ///  Updates all the control with the selected outline color
         /// </summary>
-        void clpOutline_SelectedColorChanged(object sender, EventArgs e)
+        private void clpOutline_SelectedColorChanged(object sender, EventArgs e)
         {
             _style.Line.Color =  clpOutline.Color;
             
-            // TODO: implement
-            //symbolControl1.ForeColor = clpFillColor.Color;
-            //characterControl1.ForeColor = clpFillColor.Color;
-            //icbPointShape.Color1 = clpFillColor.Color;
+            symbolControl1.ForeColor = clpFillColor.Color;
+            characterControl1.ForeColor = clpFillColor.Color;
+            icbPointShape.Color1 = clpFillColor.Color;
 
             if (!_noEvents)
+            {
                 btnApply.Enabled = true;
+            }
+                
             DrawPreview();
         }
         #endregion
