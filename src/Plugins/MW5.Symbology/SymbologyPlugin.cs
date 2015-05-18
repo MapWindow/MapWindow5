@@ -43,6 +43,12 @@ namespace MW5.Plugins.Symbology
             service.Save(layerHandle, new SymbologyMetadata());
         }
 
+        internal static void SaveMetadata(int layerHandle, SymbologyMetadata metadata)
+        {
+            var service = _context.Container.Resolve<SymbologyMetadataService>();
+            service.Save(layerHandle, new SymbologyMetadata());
+        }
+
         public override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);

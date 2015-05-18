@@ -76,6 +76,10 @@ namespace MW5.Api.Legend
             }
 
             var caption = layer.SymbologyCaption;
+            if (string.IsNullOrWhiteSpace(caption))
+            {
+                caption = "Categories";
+            }
 
             DrawCategoriesCaption(g, bounds, ref top, caption, Font);
 

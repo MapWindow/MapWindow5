@@ -27,11 +27,12 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
-using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
+using PathHelper = MW5.Plugins.Symbology.Helpers.PathHelper;
 
 namespace MW5.Plugins.Symbology.Forms.Style
 {
@@ -40,6 +41,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         private static int _tabIndex;
 
         private readonly IMuteLegend _legend;
+        private readonly ILegendLayer _layer;
         private readonly IGeometryStyle _style;
         private bool _noEvents;
         private string _initState;
@@ -51,6 +53,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// </summary>
         public PointsForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle options, bool applyDisabled)
         {
+            if (layer == null) throw new ArgumentNullException("layer");
+
             InitializeComponent();
             
             if (options == null || legend == null)
@@ -59,6 +63,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
 
             _legend = legend;
+            _layer = layer;
 
             // setting values to the controls
             _style = options;
@@ -67,10 +72,24 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             btnApply.Visible = !applyDisabled;
 
-            clpFillColor.SelectedColorChanged += clpFillColor_SelectedColorChanged;
-            cboIconCollection.SelectedIndexChanged += CboIconCollectionSelectedIndexChanged;
-            cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
+            InitControls();
 
+            RestoreSelectedIconCollection();
+
+            Options2Gui();
+            _noEvents = false;
+
+            AttachListeners();
+
+            InitIconsAndFonts();
+
+            DrawPreview();
+
+            tabControl1.SelectedIndex = _tabIndex;
+        }
+
+        private void InitControls()
+        {
             icbPointShape.ComboStyle = ImageComboStyle.PointShape;
             icbLineType.ComboStyle = ImageComboStyle.LineStyle;
             icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
@@ -93,7 +112,10 @@ namespace MW5.Plugins.Symbology.Forms.Style
             cboGradientType.Items.Add("Linear");
             cboGradientType.Items.Add("Retangular");
             cboGradientType.Items.Add("Circle");
+        }
 
+        private void InitIconsAndFonts()
+        {
             var marker = _style.Marker;
 
             // character control
@@ -104,33 +126,16 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // icon control
             RefreshIconCombo();
 
-            chkScaleIcons.Checked = marker.IconScaleX != 1.0 || marker.IconScaleY != 1.0;
+            chkScaleIcons.Checked = !NumericHelper.Equal(marker.IconScaleX, 1.0) ||
+                                    !NumericHelper.Equal(marker.IconScaleY, 1.0);
+        }
 
-            //if (layer != null)
-            //{
-                //SymbologySettings settings = Globals.get_LayerSettings(m_layer.Handle);
-                //if (settings != null)
-                //{
-                //    iconControl1.SelectedIndex = settings.IconIndex;
-                //    chkScaleIcons.Checked = settings.ScaleIcons;
-                //    string name = settings.IconCollection.ToLower();
-                //    for (int i = 0; i < cboIconCollection.Items.Count; i++)
-                //    {
-                //        if (cboIconCollection.Items[i].ToString().ToLower() == name)
-                //        {
-                //            cboIconCollection.SelectedIndex = i;
-                //            break;
-                //        }
-                //    }
-                //}
-            //}
+        private void AttachListeners()
+        {
+            clpFillColor.SelectedColorChanged += clpFillColor_SelectedColorChanged;
+            cboIconCollection.SelectedIndexChanged += CboIconCollectionSelectedIndexChanged;
+            cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
 
-            Options2Gui();
-            _noEvents = false;
-
-            // -----------------------------------------------------
-            // adding event handlers
-            // -----------------------------------------------------
             udRotation.ValueChanged += Gui2Options;
             udPointNumSides.ValueChanged += Gui2Options;
             udSideRatio.ValueChanged += Gui2Options;
@@ -142,9 +147,9 @@ namespace MW5.Plugins.Symbology.Forms.Style
             icbLineType.SelectedIndexChanged += Gui2Options;
             icbLineWidth.SelectedIndexChanged += Gui2Options;
             clpOutline.SelectedColorChanged += clpOutline_SelectedColorChanged;
-            
+
             chkFillVisible.CheckedChanged += Gui2Options;
-            
+
             iconControl1.SelectionChanged += IconControl1SelectionChanged;
             chkScaleIcons.CheckedChanged += Gui2Options;
 
@@ -161,11 +166,36 @@ namespace MW5.Plugins.Symbology.Forms.Style
             clpGradient2.SelectedColorChanged += Gui2Options;
             udGradientRotation.ValueChanged += Gui2Options;
             cboGradientType.SelectedIndexChanged += Gui2Options;
-
-            DrawPreview();
-
-            tabControl1.SelectedIndex = _tabIndex;
         }
+
+        private void RestoreSelectedIconCollection()
+        {
+            if (_layer == null)
+            {
+                return;
+            }
+
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+            if (settings == null)
+            {
+                return;
+            }
+            
+            iconControl1.SelectedIndex = settings.IconIndex;
+            chkScaleIcons.Checked = settings.ScaleIcons;
+
+            string name = settings.IconCollection.ToLower();
+
+            for (int i = 0; i < cboIconCollection.Items.Count; i++)
+            {
+                if (cboIconCollection.Items[i].ToString().ToLower() == name)
+                {
+                    cboIconCollection.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
         #endregion
 
         #region ChangingFill
@@ -212,44 +242,48 @@ namespace MW5.Plugins.Symbology.Forms.Style
         #endregion
 
         #region Icons
+        
         /// <summary>
         /// Fills the image combo with the names of icons collectins (folders) 
         /// </summary>
         private void RefreshIconCombo()
         {
             cboIconCollection.Items.Clear();
-            
-            string path = PathHelper.GetIconsPath();
+            cboIconCollection.Enabled = false;
+            chkScaleIcons.Enabled = false;
+
+            var path = PathHelper.GetIconsPath();
             if (!Directory.Exists(path))
             {
-                cboIconCollection.Enabled = false;
-                chkScaleIcons.Enabled = false;
+                Logger.Current.Warn("Haven't found icons folder: " + path);
                 return;
             }
 
             string[] directories = Directory.GetDirectories(path);
             if (directories.Length <= 0)
             {
-                // TODO: report error 
+                Logger.Current.Warn("No subfolders in the icons folder: " + path);
                 return;
             }
 
-            for (int i = 0; i < directories.Length; i++)
+            cboIconCollection.Enabled = true;
+            chkScaleIcons.Enabled = true;
+
+            foreach (string d in directories)
             {
-                string[] files = Directory.GetFiles(directories[i]);
+                string[] files = Directory.GetFiles(d);
                     
                 foreach(var file in files)
                 {
-                    string ext = Path.GetExtension(file).ToLower();
-                    if (ext == ".png")          //ext == ".bmp" || 
+                    if (Path.GetExtension(file).ContainsIgnoreCase(".png"))
                     {
-                        string name = directories[i].Substring(path.Length);
+                        string name = d.Substring(path.Length);
                         cboIconCollection.Items.Add(name);
                         break;
                     }
                 }
-                    
             }
+
             if (cboIconCollection.Items.Count <= 0)
             {
                 cboIconCollection.Enabled = false;
@@ -264,6 +298,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                     break;
                 }
             }
+
             if (cboIconCollection.SelectedItem == null)
             {
                 cboIconCollection.SelectedIndex = 0;
@@ -644,14 +679,15 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             _tabIndex = tabControl1.SelectedIndex;
 
-            SymbologyMetadata settings = null; //Globals.get_LayerSettings(_layer.Handle, _mapWin);
+            var settings = SymbologyPlugin.Metadata(_layer.Handle);
 
             if (settings != null)
             {
                 settings.IconCollection = cboIconCollection.Text;
                 settings.ScaleIcons = chkScaleIcons.Checked;
                 settings.IconIndex = iconControl1.SelectedIndex;
-                //Globals.SaveLayerSettings(_layer.Handle, settings, _mapWin);
+
+                SymbologyPlugin.SaveMetadata(_layer.Handle, settings);
             }
 
             if (_style.Serialize() != _initState)

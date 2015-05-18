@@ -427,8 +427,9 @@ namespace MW5.Api.Legend
                 {
                     case tkPointSymbolType.ptSymbolPicture:
                     {
-                        var defaultHeight = (options.Picture.Height*options.PictureScaleY) + 2
-                                            <= Constants.CsItemHeight || options.Picture == null;
+                        var defaultHeight = (options.Picture.Height * options.PictureScaleY) + 2 <= Constants.CsItemHeight || 
+                                            options.Picture == null || options.Picture.IsEmpty;
+
                         return defaultHeight
                             ? Constants.CsItemHeight + 2
                             : (int) ((options.Picture.Height*options.PictureScaleY) + 2);
@@ -471,8 +472,8 @@ namespace MW5.Api.Legend
                 switch (options.PointType)
                 {
                     case tkPointSymbolType.ptSymbolPicture:
-                        width = options.Picture.Width*options.PictureScaleX <= Constants.IconWidth
-                                || options.Picture == null
+                        width = options.Picture.Width * options.PictureScaleX <= Constants.IconWidth
+                                || options.Picture == null || options.Picture.IsEmpty
                             ? Constants.IconWidth
                             : (int) (options.Picture.Width*options.PictureScaleX);
                         break;

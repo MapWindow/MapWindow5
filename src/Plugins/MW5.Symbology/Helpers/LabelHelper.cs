@@ -65,7 +65,7 @@ namespace MW5.Plugins.Symbology.Helpers
         /// <summary>
         /// Draws preview based on the category options and expression stored in the Labels class
         /// </summary>
-        internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, System.Windows.Forms.PictureBox canvas, bool forceDrawing)
+        internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, PictureBox canvas, bool forceDrawing)
         {
             string expression = (sf.Labels.Expression == "" && sf.Labels.Items.Count != 0) ? "<no expression>" : sf.Labels.Expression;
             DrawPreview(category, sf, canvas, expression, forceDrawing);
@@ -200,9 +200,9 @@ namespace MW5.Plugins.Symbology.Helpers
         /// </summary>
         internal static void GenerateCategories(IMuteLegend legend, int layerHandle)
         {
-            var lyr = legend.Layers.ItemByHandle(layerHandle);
-            var sf = lyr.FeatureSet;
-            var lb = sf.Labels;
+            //var lyr = legend.Layers.ItemByHandle(layerHandle);
+            //var sf = lyr.FeatureSet;
+            //var lb = sf.Labels;
 
             //sf.Labels.ClearCategories();
             //for (int i = 0; i < sf.Categories.Count; i++)

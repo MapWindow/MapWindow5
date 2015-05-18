@@ -61,11 +61,32 @@ namespace MW5.Plugins.Symbology.Forms.Style
             _options = options;
             _metadata = SymbologyPlugin.Metadata(layer.Handle);
             _legend = legend;
+
             btnApply.Visible = !applyDisabled;
 
             _initState = options.Serialize();
 
             _noEvents = true;
+
+            InitControls();
+
+            InitTextures();
+
+            _noEvents = false;
+
+            cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
+
+            Options2Ui();
+
+            AttachListeners();
+
+            DrawPreview();
+
+            tabControl1.SelectedIndex = _tabPage;
+        }
+
+        private void InitControls()
+        {
             groupPicture.Parent = tabPage2;
             groupPicture.Top = groupGradient.Top;
             groupPicture.Left = groupGradient.Left;
@@ -92,18 +113,19 @@ namespace MW5.Plugins.Symbology.Forms.Style
             cboVerticesType.Items.Clear();
             cboVerticesType.Items.Add("Square");
             cboVerticesType.Items.Add("Circle");
-            
+
             icbHatchStyle.ComboStyle = ImageComboStyle.HatchStyle;
             icbLineType.ComboStyle = ImageComboStyle.LineStyle;
             icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
+        }
 
-            // loading icons
+        private void InitTextures()
+        {
             string path = PathHelper.GetTexturesPath();
             if (System.IO.Directory.Exists(path))
             {
                 iconControl1.FilePath = path;
                 iconControl1.Textures = true;
-
                 iconControl1.SelectedIndex = _metadata.IconIndex;
             }
             else
@@ -111,16 +133,10 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 udScaleX.Enabled = false;
                 udScaleY.Enabled = false;
             }
+        }
 
-            _noEvents = false;
-
-            cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
-
-            Options2Ui();
-
-            // -----------------------------------------------------
-            // adding event handlers
-            // -----------------------------------------------------
+        private void AttachListeners()
+        {
             // fill
             chkFillVisible.CheckedChanged += Ui2Options;
             clpFill.SelectedColorChanged += Ui2Options;
@@ -153,11 +169,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
             udScaleY.ValueChanged += Ui2Options;
 
             iconControl1.SelectionChanged += iconControl1_SelectionChanged;
-
-            DrawPreview();
-
-            tabControl1.SelectedIndex = _tabPage;
         }
+
         #endregion
 
         /// <summary>
