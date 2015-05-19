@@ -23,30 +23,20 @@ namespace MW5.Controls
     public class LocatorPresenter : ILocator
     {
         private readonly IMap _mainMap;
-        private readonly MainAppPlugin _plugin;
         private readonly LocatorDockPanel _view;
         private bool _noEvents = false;
 
-        public LocatorPresenter(IMap map, MainAppPlugin plugin)
+        public LocatorPresenter(IMap map)
         {
             if (map == null) throw new ArgumentNullException("map");
-            if (plugin == null) throw new ArgumentNullException("plugin");
 
             _mainMap = map;
-            _plugin = plugin;
             _mainMap.ExtentsChanged += MainMapExtentsChanged;
-
-            _plugin.ProjectClosed += OnProjectClosed;
 
             _view = new LocatorDockPanel();
             _view.UpdateFullExtents += () => UpdatePreview(true);
             _view.UpdateWithCurrentExtents += () => UpdatePreview(false);
             _view.LocatorExtentsChanged += LocatorExtentsChanged;
-        }
-
-        private void OnProjectClosed(object sender, EventArgs e)
-        {
-            Clear();
         }
 
         private void LocatorExtentsChanged(object sender, ExtentsEventArgs e)

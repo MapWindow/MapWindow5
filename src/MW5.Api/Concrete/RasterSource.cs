@@ -170,6 +170,22 @@ namespace MW5.Api.Concrete
             get { return _image.YllCenter; }
         }
 
+        public int BufferOffsetX
+        {
+            get { return _image.BufferOffsetX; }
+        }
+
+        public int BufferOffsetY
+        {
+            get { return _image.BufferOffsetY; }
+        }
+
+        public void ImageToBuffer(int imageX, int imageY, out int bufferX, out int bufferY)
+        {
+            bufferX = imageX - _image.BufferOffsetX;
+            bufferY = imageY - _image.BufferOffsetY;
+        }
+
         public void BufferToProjection(int bufferX, int bufferY, out double projX, out double projY)
         {
             _image.BufferToProjection(bufferX, bufferY, out projX, out projY);

@@ -20,6 +20,7 @@
         Line = 1,
         Polygon = 2,
         Calculated = 3,
+        Raster = 4,
     }
 
     public enum IdentifierNodeType

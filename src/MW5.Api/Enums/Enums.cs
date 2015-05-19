@@ -1420,4 +1420,11 @@
         ForGridsOnly = 1,
         Never = 2,
     }
+
+    public enum SelectedLayerType
+    {
+        Undefined = 0,
+        Vector = 1,
+        Raster = 2,
+    }
 }

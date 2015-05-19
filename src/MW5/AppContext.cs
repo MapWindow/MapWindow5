@@ -105,7 +105,7 @@ namespace MW5
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
-            _locator = new LocatorPresenter(_map, _mainPlugin);
+            _locator = new LocatorPresenter(_map);
 
             this.InitDocking();
 

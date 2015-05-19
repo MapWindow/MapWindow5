@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Identifier.Enums;
@@ -42,7 +44,8 @@ namespace MW5.Plugins.Identifier.Controls
                 Resources.img_point,
                 Resources.img_line,
                 Resources.img_polygon,
-                Resources.img_calculator16
+                Resources.img_calculator16,
+                Resources.img_raster
             };
         }
 
@@ -85,25 +88,130 @@ namespace MW5.Plugins.Identifier.Controls
                 return;
             }
 
-            var fs = layer.FeatureSet;
-
-            if (fs == null)
+            if (AddVectorLayerNode(root, layer))
             {
                 return;
             }
 
+            AddRasterLayerNode(root, layer);
+        }
+
+        private bool AddRasterLayerNode(NodeData root, ILayer layer)
+        {
+            var img = layer.ImageSource;
+
+            if (img == null)
+            {
+                return false;
+            }
+
             var layerNode = new NodeData(layer.Name.ToUpper())
             {
-                ImageIndex = (int)GetIconForFeatureSet(fs), 
+                ImageIndex = (int)IdentifierIcon.Raster,
                 LargerHeight = true
             };
-            
-            AddShapeNodes(layerNode, fs, layerHandle);
 
-            layerNode.Value = layerNode.SubItems.Count() + " geometries";
-            layerNode.Metadata = new IdentifierNodeMetadata(layerHandle);
+            AddPixelNodes(layerNode, img, layer.Handle);
+
+            layerNode.Value = layerNode.SubItems.Count() + " pixels";
+            layerNode.Metadata = new IdentifierNodeMetadata(layer.Handle);
 
             root.AddSubItem(layerNode);
+
+            return true;
+        }
+
+        private bool AddVectorLayerNode(NodeData root, ILayer layer)
+        {
+            var fs = layer.FeatureSet;
+
+            if (fs == null)
+            {
+                return false;
+            }
+
+            var layerNode = new NodeData(layer.Name.ToUpper())
+            {
+                ImageIndex = (int)GetIconForFeatureSet(fs),
+                LargerHeight = true
+            };
+
+            AddShapeNodes(layerNode, fs, layer.Handle);
+
+            layerNode.Value = layerNode.SubItems.Count() + " geometries";
+            layerNode.Metadata = new IdentifierNodeMetadata(layer.Handle);
+
+            root.AddSubItem(layerNode);
+
+            return true;
+        }
+
+        private void AddPixelNodes(NodeData layerNode, IImageSource img, int layerHandle)
+        {
+            var pixels = _context.Map.IdentifiedShapes
+                .Where(item => item.LayerHandle == layerHandle).ToList();
+
+            foreach (var pixel in pixels)
+            {
+                var nodePixel = layerNode.AddSubItem("Pixel", string.Format("(row = {0}, cmn = {1})", pixel.RasterX, pixel.RasterY));
+
+                var raster = img as IRasterSource;
+                if (raster != null)
+                {
+                    DisplayRasterInfo(raster, nodePixel, pixel);
+                }
+                else
+                {
+                    AddColor(nodePixel, img.GetPixel(pixel.RasterX, pixel.RasterY));
+                }
+            }
+        }
+
+        private void DisplayRasterInfo(IRasterSource raster, NodeData nodePixel, SelectionItem pixel)
+        {
+            int bufferX, bufferY;
+            raster.ImageToBuffer(pixel.RasterX, pixel.RasterY, out bufferX, out bufferY);
+
+            if (raster.RenderingType != RasterRendering.Rgb)
+            {
+                var band = raster.ActiveBand;
+                if (band != null)
+                {
+                    var nodeBand = nodePixel.AddSubItem("Band", raster.ActiveBandIndex);
+
+                    double value;
+                    if (band.GetValue(pixel.RasterX, pixel.RasterY, out value))
+                    {
+                        nodeBand.AddSubItem("Value", value.ToString(CultureInfo.InvariantCulture));
+                    }
+                    else
+                    {
+                        nodeBand.AddSubItem("Value", "Failed to retrieve");
+                    }
+
+                    nodeBand.AddSubItem("Interpretation", band.ColorInterpretation.EnumToString());
+                }
+            }
+            else
+            {
+                // TODO: display values for RGB rendering                        
+                nodePixel.AddSubItem("RGB values", "Not implemented");
+            }
+
+            AddColor(nodePixel, raster.GetPixel(bufferY, bufferX));
+
+            var nodeBuffer = nodePixel.AddSubItem("Buffer", " ");
+            nodeBuffer.AddSubItem("BufferX", bufferX);
+            nodeBuffer.AddSubItem("BufferY", bufferY);
+        }
+
+        private void AddColor(NodeData parent, Color color)
+        {
+            NodeData data = parent.AddSubItem("Color", "");
+            data.AddSubItem("R", color.R);
+            data.AddSubItem("G", color.G);
+            data.AddSubItem("B", color.B);
+            data.AddSubItem("A", color.A);
         }
 
         private void AddShapeNodes(NodeData layerNode, IFeatureSet fs, int layerHandle)

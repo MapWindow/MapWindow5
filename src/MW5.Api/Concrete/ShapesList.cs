@@ -21,7 +21,12 @@ namespace MW5.Api.Concrete
 
         public void Add(int layerHandle, int shapeIndex)
         {
-            _list.Add(layerHandle, shapeIndex);
+            _list.AddShape(layerHandle, shapeIndex);
+        }
+
+        public void AddPixel(int layerHandle, int rasterX, int rasterY)
+        {
+            _list.AddPixel(layerHandle, rasterX, rasterY);
         }
 
         public void Clear()

@@ -172,5 +172,10 @@ namespace MW5.Api.Concrete
         {
             return _band.ComputeMinMax(allowApproximate, out min, out max);
         }
+
+        public bool GetValue(int column, int row, out double value)
+        {
+            return _band.get_Value(column, row, out value);
+        }
     }
 }

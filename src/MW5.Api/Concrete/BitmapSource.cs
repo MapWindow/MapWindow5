@@ -219,14 +219,14 @@ namespace MW5.Api.Concrete
 
         public Color GetPixel(int row, int column)
         {
-            int val = _image.Value[row, column];
-            return ColorHelper.IntToColor(val);
+            uint val = _image.ValueWithAlpha[row, column];
+            return ColorHelper.UintWithAlphaToColor(val);
         }
 
         public void SetPixel(int row, int column, Color color)
         {
-            var val = ColorHelper.ColorToInt(color);
-            _image.Value[row, column] = val;
+            var val = ColorHelper.ColorToUIntWithAlpha(color);
+            _image.ValueWithAlpha[row, column] = val;
         }
 
         #region ILayerSource members
