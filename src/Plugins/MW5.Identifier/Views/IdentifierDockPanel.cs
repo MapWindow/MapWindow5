@@ -1,27 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
-using MW5.Api.Enums;
-using MW5.Api.Events;
-using MW5.Api.Interfaces;
-using MW5.Api.Legend.Events;
 using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Mvp;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
-using Syncfusion.Windows.Forms.Tools;
-using Action = System.Action;
 
 namespace MW5.Plugins.Identifier.Views
 {
     public partial class IdentifierDockPanel: DockPanelControlBase, IIdentifierView
     {
         public event Action ModeChanged;
-        public event EventHandler<ShapeEventArgs> ShapeSelected;
-        public event EventHandler<RasterEventArgs> PixelSelected;
+        public event Action ItemSelected;
 
         public IdentifierDockPanel(IAppContext context)
         {
@@ -51,6 +42,16 @@ namespace MW5.Plugins.Identifier.Views
             _treeView.UpdateView();
         }
 
+        public IEnumerable<IdentifierNodeMetadata> GetLayerItems(int handle)
+        {
+            return _treeView.GetLayerItems(handle);
+        }
+
+        public IdentifierNodeMetadata SelectedItem
+        {
+            get { return _treeView.SelectedNodeMetadata; }
+        }
+
         public IdentifierPluginMode Mode
         {
             get { return _cboIdentifierMode.GetValue<IdentifierPluginMode>(); }
@@ -75,38 +76,21 @@ namespace MW5.Plugins.Identifier.Views
             }
         }
 
+        private void FireItemSelected()
+        {
+            var handler = ItemSelected;
+            if (handler != null)
+            {
+                handler();
+            }
+        }
+
         private void NodeAfterSelect(object sender, EventArgs e)
         {
             var data = _treeView.SelectedNodeMetadata;
             if (data != null)
             {
-                switch (data.NodeType)
-                {
-                    case IdentifierNodeType.Geometry:
-                        FireShapeSelected(data.LayerHandle, data.ShapeIndex);
-                        break;
-                    case IdentifierNodeType.Pixel:
-                        FirePixelSelected(data.LayerHandle, data.RasterX, data.RasterY);
-                        break;
-                }
-            }
-        }
-
-        private void FirePixelSelected(int layerHandle, int rasterX, int rasterY)
-        {
-            var handler = PixelSelected;
-            if (handler != null)
-            {
-                handler(this, new RasterEventArgs(layerHandle, rasterX, rasterY));
-            }
-        }
-
-        private void FireShapeSelected(int layerHandle, int shapeIndex)
-        {
-            var handler = ShapeSelected;
-            if (handler != null)
-            {
-                handler(this, new ShapeEventArgs(layerHandle, shapeIndex));
+                FireItemSelected();
             }
         }
 

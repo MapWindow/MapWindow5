@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Events;
+using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -18,22 +19,65 @@ namespace MW5.Plugins.Identifier.Views
             _context = context;
 
             view.ModeChanged += OnIdentifierModeChanged;
-            view.ShapeSelected += OnShapeSelected;
-            view.PixelSelected += OnPixelSelected;
+            view.ItemSelected += OnItemSelected;
         }
 
-        private void OnPixelSelected(object sender, Controls.RasterEventArgs e)
+        private void OnItemSelected()
+        {
+            var item = View.SelectedItem;
+            if (item != null)
+            {
+                switch (item.NodeType)
+                {
+                    case IdentifierNodeType.Layer:
+                        OnLayerSelected(item);
+                        break;
+                    case IdentifierNodeType.Geometry:
+                        OnShapeSelected(item);
+                        break;
+                    case IdentifierNodeType.Attribute:
+                        break;
+                    case IdentifierNodeType.Pixel:
+                        OnPixelSelected(item);
+                        break;
+                }
+            }
+        }
+
+        private void OnLayerSelected(IdentifierNodeMetadata layer)
         {
             var shapes = _context.Map.IdentifiedShapes;
             shapes.Clear();
-            shapes.AddPixel(e.LayerHandle, e.RasterX, e.RasterY);
+
+            var items = View.GetLayerItems(layer.LayerHandle);
+            foreach(var item in items)
+            {
+                switch (item.NodeType)
+                {
+                    case IdentifierNodeType.Geometry:
+                        shapes.AddShape(item.LayerHandle, item.ShapeIndex);
+                        break;
+                    case IdentifierNodeType.Pixel:
+                        shapes.AddPixel(item.LayerHandle, item.RasterX, item.RasterY);
+                        break;
+                }
+            }
+
+            _context.Map.Redraw(RedrawType.SkipDataLayers);
+        }
+
+        private void OnPixelSelected(IdentifierNodeMetadata pixel)
+        {
+            var shapes = _context.Map.IdentifiedShapes;
+            shapes.Clear();
+            shapes.AddPixel(pixel.LayerHandle, pixel.RasterX, pixel.RasterY);
 
             if (View.ZoomToShape)
             {
-                var img = _context.Map.GetImage(e.LayerHandle);
+                var img = _context.Map.GetImage(pixel.LayerHandle);
                 if (img != null)
                 {
-                    var bounds = img.GetPixelBounds(e.RasterX, e.RasterY);
+                    var bounds = img.GetPixelBounds(pixel.RasterX, pixel.RasterY);
                     bounds = bounds.Inflate(bounds.Width*10, bounds.Height*10);
                     _context.Map.ZoomToExtents(bounds);
                 }
@@ -44,15 +88,15 @@ namespace MW5.Plugins.Identifier.Views
             }
         }
 
-        private void OnShapeSelected(object sender, Controls.ShapeEventArgs e)
+        private void OnShapeSelected(IdentifierNodeMetadata shape)
         {
             var shapes = _context.Map.IdentifiedShapes;
             shapes.Clear();
-            shapes.AddShape(e.LayerHandle, e.ShapeIndex);
+            shapes.AddShape(shape.LayerHandle, shape.ShapeIndex);
 
             if (View.ZoomToShape)
             {
-                _context.Map.ZoomToShape(e.LayerHandle, e.ShapeIndex);
+                _context.Map.ZoomToShape(shape.LayerHandle, shape.ShapeIndex);
             }
             else
             {

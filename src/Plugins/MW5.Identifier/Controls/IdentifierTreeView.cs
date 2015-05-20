@@ -11,6 +11,7 @@ using MW5.Plugins.Identifier.Properties;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.UI.Controls;
+using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Identifier.Controls
 {
@@ -64,6 +65,23 @@ namespace MW5.Plugins.Identifier.Controls
             foreach (var item in root.SubItems)
             {
                 AddSubItems(Nodes, item);    
+            }
+        }
+
+        public IEnumerable<IdentifierNodeMetadata> GetLayerItems(int handle)
+        {
+            foreach (TreeNodeAdv node in Nodes)
+            {
+                var data = node.Tag as IdentifierNodeMetadata;
+                if (data != null && data.LayerHandle == handle)
+                {
+                    foreach (TreeNodeAdv item in node.Nodes)
+                    {
+                        yield return item.Tag as IdentifierNodeMetadata;
+                    }
+
+                    break;
+                }
             }
         }
 
@@ -147,12 +165,13 @@ namespace MW5.Plugins.Identifier.Controls
         private void AddPixelNodes(NodeData layerNode, IImageSource img, int layerHandle)
         {
             var pixels = _context.Map.IdentifiedShapes
-                .Where(item => item.LayerHandle == layerHandle).ToList();
-
+                .Where(item => item.LayerHandle == layerHandle).Reverse().ToList();
+                
             foreach (var pixel in pixels)
             {
                 var nodePixel = layerNode.AddSubItem("Pixel", string.Format("(row = {0}, cmn = {1})", pixel.RasterX, pixel.RasterY));
                 nodePixel.Metadata = new IdentifierNodeMetadata(layerHandle, pixel.RasterX, pixel.RasterY);
+                nodePixel.Expanded = false;
 
                 var raster = img as IRasterSource;
                 if (raster != null)
@@ -163,6 +182,11 @@ namespace MW5.Plugins.Identifier.Controls
                 {
                     AddColor(nodePixel, img.GetPixel(pixel.RasterX, pixel.RasterY));
                 }
+            }
+
+            if (layerNode.SubItems.Any())
+            {
+                layerNode.SubItems.First().Expanded = true;
             }
         }
 

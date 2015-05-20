@@ -99,8 +99,6 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Controls\IdentifierNodeMetadata.cs" />
-    <Compile Include="Controls\RasterEventArgs.cs" />
-    <Compile Include="Controls\ShapeEventArgs.cs" />
     <Compile Include="Enums\EnumConverter.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Listeners\MapListener.cs" />
