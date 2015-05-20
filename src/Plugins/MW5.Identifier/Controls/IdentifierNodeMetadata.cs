@@ -22,13 +22,23 @@ namespace MW5.Plugins.Identifier.Controls
             NodeType = IdentifierNodeType.Geometry;
         }
 
+        public IdentifierNodeMetadata(int layerHandle, int rasterX, int rasterY)
+        {
+            LayerHandle = layerHandle;
+            RasterX = rasterX;
+            RasterY = rasterY;
+            NodeType = IdentifierNodeType.Pixel;
+        }
+
         public IdentifierNodeMetadata()
         {
             NodeType = IdentifierNodeType.Attribute;
         }
 
-        public IdentifierNodeType NodeType { get; set; }
-        public int LayerHandle { get; set; }
-        public int ShapeIndex { get; set; }
+        public IdentifierNodeType NodeType { get; private set; }
+        public int LayerHandle { get; private set; }
+        public int ShapeIndex { get; private set; }
+        public int RasterX { get; private set; }
+        public int RasterY { get; private set; }
     }
 }

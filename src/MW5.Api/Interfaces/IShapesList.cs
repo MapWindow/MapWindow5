@@ -9,7 +9,8 @@ namespace MW5.Api.Interfaces
 {
     public interface IShapesList : IEnumerable<SelectionItem>
     {
-        void Add(int layerHandle, int shapeIndex);
+        void AddShape(int layerHandle, int shapeIndex);
+        void AddPixel(int layerHandle, int rasterX, int rasterY);
         void Clear();
         int Count { get; }
         void RemoveByLayerHandle(int layerHandle);

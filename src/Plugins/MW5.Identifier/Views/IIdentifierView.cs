@@ -18,6 +18,7 @@ namespace MW5.Plugins.Identifier.Views
         void Clear();
         event Action ModeChanged;
         event EventHandler<ShapeEventArgs> ShapeSelected;
+        event EventHandler<RasterEventArgs> PixelSelected;
         void UpdateView();
     }
 }

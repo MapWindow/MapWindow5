@@ -96,13 +96,13 @@ namespace MW5.Plugins.Identifier.Controls
             AddRasterLayerNode(root, layer);
         }
 
-        private bool AddRasterLayerNode(NodeData root, ILayer layer)
+        private void AddRasterLayerNode(NodeData root, ILayer layer)
         {
             var img = layer.ImageSource;
 
             if (img == null)
             {
-                return false;
+                return;
             }
 
             var layerNode = new NodeData(layer.Name.ToUpper())
@@ -117,8 +117,6 @@ namespace MW5.Plugins.Identifier.Controls
             layerNode.Metadata = new IdentifierNodeMetadata(layer.Handle);
 
             root.AddSubItem(layerNode);
-
-            return true;
         }
 
         private bool AddVectorLayerNode(NodeData root, ILayer layer)
@@ -154,6 +152,7 @@ namespace MW5.Plugins.Identifier.Controls
             foreach (var pixel in pixels)
             {
                 var nodePixel = layerNode.AddSubItem("Pixel", string.Format("(row = {0}, cmn = {1})", pixel.RasterX, pixel.RasterY));
+                nodePixel.Metadata = new IdentifierNodeMetadata(layerHandle, pixel.RasterX, pixel.RasterY);
 
                 var raster = img as IRasterSource;
                 if (raster != null)

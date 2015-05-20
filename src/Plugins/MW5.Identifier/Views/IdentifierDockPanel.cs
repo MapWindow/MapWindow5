@@ -21,6 +21,7 @@ namespace MW5.Plugins.Identifier.Views
     {
         public event Action ModeChanged;
         public event EventHandler<ShapeEventArgs> ShapeSelected;
+        public event EventHandler<RasterEventArgs> PixelSelected;
 
         public IdentifierDockPanel(IAppContext context)
         {
@@ -77,9 +78,26 @@ namespace MW5.Plugins.Identifier.Views
         private void NodeAfterSelect(object sender, EventArgs e)
         {
             var data = _treeView.SelectedNodeMetadata;
-            if (data != null && data.NodeType == IdentifierNodeType.Geometry)
+            if (data != null)
             {
-                FireShapeSelected(data.LayerHandle, data.ShapeIndex);
+                switch (data.NodeType)
+                {
+                    case IdentifierNodeType.Geometry:
+                        FireShapeSelected(data.LayerHandle, data.ShapeIndex);
+                        break;
+                    case IdentifierNodeType.Pixel:
+                        FirePixelSelected(data.LayerHandle, data.RasterX, data.RasterY);
+                        break;
+                }
+            }
+        }
+
+        private void FirePixelSelected(int layerHandle, int rasterX, int rasterY)
+        {
+            var handler = PixelSelected;
+            if (handler != null)
+            {
+                handler(this, new RasterEventArgs(layerHandle, rasterX, rasterY));
             }
         }
 

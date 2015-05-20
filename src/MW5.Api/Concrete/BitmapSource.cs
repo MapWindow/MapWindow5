@@ -107,6 +107,14 @@ namespace MW5.Api.Concrete
             set { _image.YllCenter = value; }
         }
 
+        public IEnvelope GetPixelBounds(int col, int row)
+        {
+            double x, y, x2, y2;
+            _image.ImageToProjection(col, row, out x, out y);
+            _image.ImageToProjection(col + 1, row + 1, out x2, out y2);
+            return new Envelope(x, x2, Math.Min(y, y2), Math.Max(y, y2));
+        }
+
         public Color TransparentColorFrom
         {
             get { return ColorHelper.UintToColor(_image.TransparencyColor); }

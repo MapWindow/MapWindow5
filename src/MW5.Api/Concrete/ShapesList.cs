@@ -19,7 +19,7 @@ namespace MW5.Api.Concrete
             _list = list;
         }
 
-        public void Add(int layerHandle, int shapeIndex)
+        public void AddShape(int layerHandle, int shapeIndex)
         {
             _list.AddShape(layerHandle, shapeIndex);
         }

@@ -28,5 +28,6 @@
         Layer = 0,
         Geometry = 1,
         Attribute = 2,
+        Pixel = 3,
     }
 }

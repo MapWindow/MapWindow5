@@ -61,6 +61,16 @@ namespace MW5.Api.Map
             return null;
         }
 
+        public IImageSource GetImage(int layerHandle)
+        {
+            var layer = GetLayer(layerHandle);
+            if (layer != null)
+            {
+                return layer.ImageSource;
+            }
+            return null;
+        }
+
         public CustomCursor CustomCursor
         {
             get

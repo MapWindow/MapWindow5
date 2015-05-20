@@ -31,6 +31,7 @@ namespace MW5.Api.Interfaces
         TileProvider TileProvider { get; set; }
         ILayer GetLayer(int layerHandle);
         IFeatureSet GetFeatureSet(int layerHandle);
+        IImageSource GetImage(int layerHandle);
         AngleFormat ShowCoordinatesFormat { get; set; }
 
         IEnvelope Extents { get; }

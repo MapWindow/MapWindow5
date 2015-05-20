@@ -19,13 +19,36 @@ namespace MW5.Plugins.Identifier.Views
 
             view.ModeChanged += OnIdentifierModeChanged;
             view.ShapeSelected += OnShapeSelected;
+            view.PixelSelected += OnPixelSelected;
+        }
+
+        private void OnPixelSelected(object sender, Controls.RasterEventArgs e)
+        {
+            var shapes = _context.Map.IdentifiedShapes;
+            shapes.Clear();
+            shapes.AddPixel(e.LayerHandle, e.RasterX, e.RasterY);
+
+            if (View.ZoomToShape)
+            {
+                var img = _context.Map.GetImage(e.LayerHandle);
+                if (img != null)
+                {
+                    var bounds = img.GetPixelBounds(e.RasterX, e.RasterY);
+                    bounds = bounds.Inflate(bounds.Width*10, bounds.Height*10);
+                    _context.Map.ZoomToExtents(bounds);
+                }
+            }
+            else
+            {
+                _context.Map.Redraw(RedrawType.SkipDataLayers);
+            }
         }
 
         private void OnShapeSelected(object sender, Controls.ShapeEventArgs e)
         {
             var shapes = _context.Map.IdentifiedShapes;
             shapes.Clear();
-            shapes.Add(e.LayerHandle, e.ShapeIndex);
+            shapes.AddShape(e.LayerHandle, e.ShapeIndex);
 
             if (View.ZoomToShape)
             {
@@ -54,6 +77,12 @@ namespace MW5.Plugins.Identifier.Views
             }
         }
 
+        public void RemoveLayer(int layerHandle)
+        {
+            _context.Map.IdentifiedShapes.RemoveByLayerHandle(layerHandle);
+            View.UpdateView();
+        }
+
         public void ShapeIdentified(int layerHandle, int shapeIndex)
         {
             View.UpdateView();
@@ -64,7 +93,9 @@ namespace MW5.Plugins.Identifier.Views
             switch (command)
             {
                 case IdentifierCommand.Clear:
+                    _context.Map.IdentifiedShapes.Clear();
                     View.Clear();
+                    _context.Map.Redraw(RedrawType.SkipDataLayers);
                     break;
             }
         }

@@ -11,7 +11,8 @@ namespace MW5.Api.Interfaces
         int Width { get; }
         double XllCenter { get; set; }
         double YllCenter { get; set; }
-        
+        IEnvelope GetPixelBounds(int col, int row);
+
         Color TransparentColorFrom { get; set; }
         Color TransparentColorTo { get; set; }
         bool UseTransparentColor { get; set; }
