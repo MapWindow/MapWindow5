@@ -220,9 +220,10 @@ namespace MW5.Api.Concrete
             _image.ImageToProjection(imageX, imageY, out projX, out projY);
         }
 
-        public void ProjectionToImage(double projX, double projY, out int imageX, out int imageY)
+        public bool ProjectionToImage(double projX, double projY, out int imageX, out int imageY)
         {
             _image.ProjectionToImage(projX, projY, out imageX, out imageY);
+            return imageX >= 0 && imageX < Width && imageY >= 0 && imageY < Height;
         }
 
         public Color GetPixel(int row, int column)

@@ -16,10 +16,12 @@ namespace MW5.Api.Interfaces
         string Description { get; set; }
         bool LayerVisibleAtCurrentScale { get; }
         bool IsVector { get; }
+        bool IsRaster { get; }
         LayerIdentity Identity { get; }
 
         IFeatureSet FeatureSet { get ; }
         IImageSource ImageSource { get; }
+        IRasterSource Raster { get; }
         ILayerSource LayerSource { get; }
         VectorLayer VectorSource { get; }
         ILabelsLayer Labels { get; }

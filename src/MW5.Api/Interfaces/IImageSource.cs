@@ -30,7 +30,7 @@ namespace MW5.Api.Interfaces
         bool Save(string filename, bool writeWorldFile = false, ImageFormat fileType = ImageFormat.UseFileExtension);
 
         void ImageToProjection(int imageX, int imageY, out double projX, out double projY);
-        void ProjectionToImage(double projX, double projY, out int imageX, out int imageY);
+        bool ProjectionToImage(double projX, double projY, out int imageX, out int imageY);
 
         Color GetPixel(int row, int column);
         void SetPixel(int row, int column, Color pVal);

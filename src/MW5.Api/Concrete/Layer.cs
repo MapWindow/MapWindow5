@@ -108,6 +108,11 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool IsRaster
+        {
+            get { return LayerType == LayerType.Grid || LayerType == LayerType.Image; }
+        }
+
         public LayerIdentity Identity
         {
             get
@@ -181,6 +186,11 @@ namespace MW5.Api.Concrete
                 var img = _map.get_Image(_layerHandle);
                 return img != null ? BitmapSource.Wrap(img) : null;
             }
+        }
+
+        public IRasterSource Raster
+        {
+            get { return ImageSource as IRasterSource; }
         }
 
         public ILayerSource LayerSource

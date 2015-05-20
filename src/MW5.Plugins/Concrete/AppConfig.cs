@@ -18,10 +18,14 @@ namespace MW5.Plugins.Concrete
             ShowRedrawTime = false;
             NeverShowPyramidDialog = false;
             CreatePyramidsOnOpening = true;
+            ShowValuesOnMouseMove = true;
             PyramidCompression = TiffCompression.Auto;
             PyramidSampling = RasterOverviewSampling.Nearest;
             FavoriteProjections = new List<int>();
         }
+
+        [DataMember]
+        public bool ShowValuesOnMouseMove { get; set; }
 
         [DataMember]
         public bool ShowRedrawTime { get; set; }

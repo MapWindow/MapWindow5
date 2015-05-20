@@ -22,6 +22,7 @@ namespace MW5.UI.Menu
 
         public const string ProgressMsg = "statusProgressMsg";
         public const string ProgressBar = "statusProgressBar";
+        public const string CustomInfo = "statusSelectedCount";
 
         internal StatusBar(object bar, IMenuIndex menuIndex, PluginIdentity identity)
         {
@@ -52,6 +53,16 @@ namespace MW5.UI.Menu
             _menuIndex.RemoveItemsForPlugin(identity);
 
             ItemCollectionBase.RemoveItems(Items, identity);
+        }
+
+        public void ShowInfo(string message)
+        {
+            var item = FindItem(CustomInfo, PluginIdentity.Default);
+            if (item != null)
+            {
+                item.Text = message;
+                _bar.Refresh();
+            }
         }
 
         IMenuItemCollection IToolbar.Items

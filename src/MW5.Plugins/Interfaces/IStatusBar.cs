@@ -15,5 +15,6 @@ namespace MW5.Plugins.Interfaces
         bool AlignNewItemsRight { get; set; }
         new IStatusItemCollection Items { get; }
         void RemoveItemsForPlugin(PluginIdentity identity);
+        void ShowInfo(string message);
     }
 }
