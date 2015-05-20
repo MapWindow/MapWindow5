@@ -184,22 +184,107 @@ namespace MW5.Plugins.Identifier.Controls
                             ? value.ToString(CultureInfo.InvariantCulture)
                             : "Failed to retrieve");
 
-                    nodeBand.AddSubItem("Data type", raster.DataType.EnumToString());
+                    ShowRasterCellInfo(nodeBand, raster);
 
                     nodeBand.AddSubItem("Interpretation", band.ColorInterpretation.EnumToString());
 
-                    nodeBand.AddSubItem("Cell size", string.Format("{0} × {1}", raster.BufferDx, raster.BufferDy));
+                    ShowLocalStatistics(nodePixel, band, pixel);
                 }
             }
             else
             {
-                // TODO: display values for RGB rendering                        
-                nodePixel.AddSubItem("RGB values", "Not implemented");
+                var nodeInfo = nodePixel.AddSubItem("Info", " ");
+                ShowRasterCellInfo(nodeInfo, raster);
             }
 
             AddColor(nodePixel, raster.GetPixel(bufferY, bufferX));
 
+            if (raster.RenderingType == RasterRendering.Rgb)
+            {
+                if (raster.UseRgbBandMapping)
+                {
+                    NodeData nodeRgb = nodePixel.AddSubItem("RGB mapping", " ");
+
+                    DisplayRgbMapping(nodeRgb, raster, pixel);
+                }
+            }
+
             DisplayPixelPosition(nodePixel, pixel, raster);
+        }
+
+        private void ShowLocalStatistics(NodeData parent, RasterBand band, SelectionItem pixel)
+        {
+            double min, max, mean, stdDev;
+            int count;
+
+            const int range = 2;      // TODO: add as a parameter
+
+            if (!band.ComputeLocalStatistics(pixel.RasterX, pixel.RasterY, range, out min, out max, out mean, out stdDev,
+                out count))
+            {
+                parent.AddSubItem("Local stats", "<failed to compute>");
+            }
+            else
+            {
+                var nodeStats = parent.AddSubItem("Local stats", range + " pixel range");
+                nodeStats.AddSubItem("Minimum", min);
+                nodeStats.AddSubItem("Maximum", max);
+                nodeStats.AddSubItem("Mean", mean);
+                nodeStats.AddSubItem("Std. deviation", stdDev);
+                nodeStats.AddSubItem("Count", count);
+            }
+        }
+
+        private void ShowRasterCellInfo(NodeData node, IRasterSource raster)
+        {
+            node.AddSubItem("Data type", raster.DataType.EnumToString());
+
+            node.AddSubItem("Cell size", string.Format("{0} × {1}", raster.BufferDx, raster.BufferDy));
+        }
+
+        private void DisplayRgbMapping(NodeData nodeRgb, IRasterSource raster, SelectionItem pixel)
+        {
+            var indices = new List<int>();
+            if (!raster.UseRgbBandMapping)
+            {
+                for (int i = 1; i <= Math.Max(4, raster.NumBands); i++)
+                {
+                    indices.Add(i);
+                }
+            }
+            else
+            {
+                indices.Add(raster.RedBandIndex);
+                indices.Add(raster.GreenBandIndex);
+                indices.Add(raster.BlueBandIndex);
+                indices.Add(raster.AlphaBandIndex);
+            }
+
+            for (int i = 0; i < indices.Count; i++)
+            {
+                if (indices[i] <= 0 || indices[i] >= raster.NumBands)
+                {
+                    continue;
+                }
+
+                string channel = ((RgbChannel) i).EnumToString();
+                var nodeBand = nodeRgb.AddSubItem("Band " + (i + 1), channel);
+
+                var band = raster.Bands[indices[i]];
+                if (band != null)
+                {
+                    double value;
+                    nodeBand.AddSubItem("Value",
+                         band.GetValue(pixel.RasterX, pixel.RasterY, out value)
+                             ? value.ToString(CultureInfo.InvariantCulture)
+                             : "Failed to retrieve");
+
+                    if (raster.UseRgbBandMapping)
+                    {
+                        nodeBand.AddSubItem("Original index", indices[i]);
+                    }
+                }
+            }
         }
 
         private void DisplayPixelPosition(NodeData nodePixel, SelectionItem pixel, IRasterSource raster)

@@ -177,5 +177,11 @@ namespace MW5.Api.Concrete
         {
             return _band.get_Value(column, row, out value);
         }
+
+        public bool ComputeLocalStatistics(int column, int row, int range, out double min, out double max,
+            out double mean, out double stdDev, out int count)
+        {
+            return _band.ComputeLocalStatistics(column, row, range, out min, out max, out mean, out stdDev, out count);
+        }
     }
 }

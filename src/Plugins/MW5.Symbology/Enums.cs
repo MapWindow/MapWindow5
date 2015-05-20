@@ -30,13 +30,5 @@
         PercentRange = 1,
         StdDev = 2,
     }
-
-    public enum RgbChannel
-    {
-        Red = 0,
-        Green = 1,
-        Blue = 2,
-        Alpha = 3,
-    }
 }
 
