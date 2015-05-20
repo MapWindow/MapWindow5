@@ -158,7 +158,7 @@ namespace MW5.Plugins.Identifier.Controls
                 var raster = img as IRasterSource;
                 if (raster != null)
                 {
-                    DisplayRasterInfo(raster, nodePixel, pixel);
+                    DisplayPixelInfo(raster, nodePixel, pixel);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace MW5.Plugins.Identifier.Controls
             }
         }
 
-        private void DisplayRasterInfo(IRasterSource raster, NodeData nodePixel, SelectionItem pixel)
+        private void DisplayPixelInfo(IRasterSource raster, NodeData nodePixel, SelectionItem pixel)
         {
             int bufferX, bufferY;
             raster.ImageToBuffer(pixel.RasterX, pixel.RasterY, out bufferX, out bufferY);
@@ -180,16 +180,16 @@ namespace MW5.Plugins.Identifier.Controls
                     var nodeBand = nodePixel.AddSubItem("Band", raster.ActiveBandIndex);
 
                     double value;
-                    if (band.GetValue(pixel.RasterX, pixel.RasterY, out value))
-                    {
-                        nodeBand.AddSubItem("Value", value.ToString(CultureInfo.InvariantCulture));
-                    }
-                    else
-                    {
-                        nodeBand.AddSubItem("Value", "Failed to retrieve");
-                    }
+                    nodeBand.AddSubItem("Value",
+                        band.GetValue(pixel.RasterX, pixel.RasterY, out value)
+                            ? value.ToString(CultureInfo.InvariantCulture)
+                            : "Failed to retrieve");
+
+                    nodeBand.AddSubItem("Data type", raster.DataType.EnumToString());
 
                     nodeBand.AddSubItem("Interpretation", band.ColorInterpretation.EnumToString());
+
+                    nodeBand.AddSubItem("Cell size", string.Format("{0} × {1}", raster.BufferDx, raster.BufferDy));
                 }
             }
             else
@@ -200,9 +200,25 @@ namespace MW5.Plugins.Identifier.Controls
 
             AddColor(nodePixel, raster.GetPixel(bufferY, bufferX));
 
-            var nodeBuffer = nodePixel.AddSubItem("Buffer", " ");
-            nodeBuffer.AddSubItem("BufferX", bufferX);
-            nodeBuffer.AddSubItem("BufferY", bufferY);
+            DisplayPixelPosition(nodePixel, pixel, raster);
+        }
+
+        private void DisplayPixelPosition(NodeData nodePixel, SelectionItem pixel, IRasterSource raster)
+        {
+            var nodeBuffer = nodePixel.AddSubItem("Position", " ");
+
+            double projX, projY;
+            raster.ImageToProjection(pixel.RasterX, pixel.RasterY, out projX, out projY);
+
+            double degX, degY;
+            if (_context.Map.ProjToDegrees(projX, projY, out degX, out degY))
+            {
+                nodeBuffer.AddSubItem("Latitude", GeoAngle.FromDouble(degY).ToString());
+                nodeBuffer.AddSubItem("Longitude", GeoAngle.FromDouble(degX).ToString());
+            }
+            
+            nodeBuffer.AddSubItem("Projected X", projX.ToString("0.0"));
+            nodeBuffer.AddSubItem("Projected Y", projY.ToString("0.0"));
         }
 
         private void AddColor(NodeData parent, Color color)

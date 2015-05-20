@@ -32,16 +32,16 @@ namespace MW5.Plugins.Identifier.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             this._cboIdentifierMode = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
-            this._treeView = new MW5.Plugins.Identifier.Controls.IdentifierTreeView();
             this.toolZoomToShape = new System.Windows.Forms.ToolStripButton();
             this.toolClear = new System.Windows.Forms.ToolStripButton();
+            this._treeView = new MW5.Plugins.Identifier.Controls.IdentifierTreeView();
             ((System.ComponentModel.ISupportInitialize)(this._cboIdentifierMode)).BeginInit();
             this.panel1.SuspendLayout();
             this.toolStripEx1.SuspendLayout();
@@ -52,12 +52,12 @@ namespace MW5.Plugins.Identifier.Views
             // 
             this._cboIdentifierMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this._cboIdentifierMode.BeforeTouchSize = new System.Drawing.Size(223, 21);
+            this._cboIdentifierMode.BeforeTouchSize = new System.Drawing.Size(211, 21);
             this._cboIdentifierMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._cboIdentifierMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._cboIdentifierMode.Location = new System.Drawing.Point(45, 5);
             this._cboIdentifierMode.Name = "_cboIdentifierMode";
-            this._cboIdentifierMode.Size = new System.Drawing.Size(223, 21);
+            this._cboIdentifierMode.Size = new System.Drawing.Size(211, 21);
             this._cboIdentifierMode.TabIndex = 1;
             // 
             // label1
@@ -96,13 +96,37 @@ namespace MW5.Plugins.Identifier.Views
             this.toolStripEx1.TabIndex = 45;
             this.toolStripEx1.Text = "toolStripEx1";
             // 
+            // toolZoomToShape
+            // 
+            this.toolZoomToShape.Checked = true;
+            this.toolZoomToShape.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.toolZoomToShape.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolZoomToShape.Image = global::MW5.Plugins.Identifier.Properties.Resources.icon_zoom_to_layer;
+            this.toolZoomToShape.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolZoomToShape.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolZoomToShape.Name = "toolZoomToShape";
+            this.toolZoomToShape.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
+            this.toolZoomToShape.Size = new System.Drawing.Size(38, 32);
+            this.toolZoomToShape.Text = "toolStripButton1";
+            // 
+            // toolClear
+            // 
+            this.toolClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolClear.Image = global::MW5.Plugins.Identifier.Properties.Resources.img_clear24;
+            this.toolClear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolClear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolClear.Name = "toolClear";
+            this.toolClear.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
+            this.toolClear.Size = new System.Drawing.Size(38, 32);
+            this.toolClear.Text = "Clear";
+            // 
             // _treeView
             // 
             this._treeView.AutoAdjustMultiLineHeight = true;
             this._treeView.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo2),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo2),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo2)});
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
             this._treeView.BeforeTouchSize = new System.Drawing.Size(268, 180);
             this._treeView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this._treeView.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
@@ -138,30 +162,6 @@ namespace MW5.Plugins.Identifier.Views
             this._treeView.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this._treeView.ToolTipControl.TabIndex = 1;
             this._treeView.ToolTipControl.Text = "toolTip";
-            // 
-            // toolZoomToShape
-            // 
-            this.toolZoomToShape.Checked = true;
-            this.toolZoomToShape.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolZoomToShape.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolZoomToShape.Image = global::MW5.Plugins.Identifier.Properties.Resources.icon_zoom_to_layer;
-            this.toolZoomToShape.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolZoomToShape.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolZoomToShape.Name = "toolZoomToShape";
-            this.toolZoomToShape.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.toolZoomToShape.Size = new System.Drawing.Size(38, 32);
-            this.toolZoomToShape.Text = "toolStripButton1";
-            // 
-            // toolClear
-            // 
-            this.toolClear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolClear.Image = global::MW5.Plugins.Identifier.Properties.Resources.img_clear24;
-            this.toolClear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolClear.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolClear.Name = "toolClear";
-            this.toolClear.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
-            this.toolClear.Size = new System.Drawing.Size(38, 32);
-            this.toolClear.Text = "Clear";
             // 
             // IdentifierDockPanel
             // 

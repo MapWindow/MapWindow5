@@ -27,6 +27,7 @@ namespace MW5.Helpers
             map.Identifier.HotTracking = false;
             map.ResizeBehavior = ResizeBehavior.KeepScale;
             map.Measuring.UndoButton = UndoShortcut.CtrlZ;
+            map.ShowCoordinatesFormat = AngleFormat.Seconds;
         }
 
         public static void InitMapConfig()

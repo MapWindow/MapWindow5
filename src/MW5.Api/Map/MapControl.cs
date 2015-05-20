@@ -451,6 +451,12 @@ namespace MW5.Api.Map
             set { _map.TileProvider = (tkTileProvider) value; }
         }
 
+        public AngleFormat ShowCoordinatesFormat
+        {
+            get { return (AngleFormat)_map.ShowCoordinatesFormat; }
+            set { _map.ShowCoordinatesFormat = (tkAngleFormat)value; }
+        }
+
         public void ZoomIn()
         {
             _map.ZoomIn(0.3);
