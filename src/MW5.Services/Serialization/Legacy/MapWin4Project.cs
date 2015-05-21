@@ -171,22 +171,20 @@ namespace MW5.Services.Serialization.Legacy
         public class Previewmap
         {
             [XmlAttribute(AttributeName = "dx")]
-            public string dx { get; set; }
+            public string Dx { get; set; }
 
             [XmlAttribute(AttributeName = "dy")]
-            public string dy { get; set; }
+            public string Dy { get; set; }
 
             [XmlAttribute(AttributeName = "xllcenter")]
-            public string xllcenter { get; set; }
+            public string XllCenter { get; set; }
 
             [XmlAttribute(AttributeName = "yllcenter")]
-            public string yllcenter { get; set; }
+            public string YllCenter { get; set; }
 
             [XmlElement(ElementName = "Image")]
             public ImageType Image { get; set; }
-
         }
-
 
         public class ApplicationPlugins
         {

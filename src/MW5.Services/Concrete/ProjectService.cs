@@ -258,32 +258,31 @@ namespace MW5.Services.Concrete
             {
                 return;
             }
+
             Logger.Current.Info("Start opening legacy MapWindow 4 project: " + filename);
 
             using (var reader = new StreamReader(filename))
             {
                 string state = reader.ReadToEnd();
-                MapWin4Project project = null;
 
                 try
                 {
-                    project = state.DeserializeFromXml<MapWin4Project>();
+                    var project = state.DeserializeFromXml<MapWin4Project>();
+                    bool result = _projectLoaderLegacy.Restore(project, filename);
+
+                    _filename = string.Empty;       // it must be saved in a new format
+
+                    if (!silent)
+                    {
+                        MessageService.Current.Info("Project was loaded: " + result);
+                    }
+
+                    Logger.Current.Info("Project was loaded: " + result);
                 }
                 catch
                 {
                     MessageService.Current.Warn("Invalid project format: " + filename);
-                    return;
                 }
-
-                bool result = _projectLoaderLegacy.Restore(project, filename);
-                _filename = string.Empty;       // it must be saved in a new format
-
-                if (!silent)
-                {
-                    MessageService.Current.Info("Project was loaded: " + result);
-                }
-
-                Logger.Current.Info("Project was loaded: " + result);
             }
         }
 

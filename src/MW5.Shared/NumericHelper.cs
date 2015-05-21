@@ -32,5 +32,10 @@ namespace MW5.Shared
             return Math.Abs(val2 - val1) > Tolerance;
         }
 
+        public static double Parse(string value, double defaultValue)
+        {
+            double result;
+            return  double.TryParse(value, out result) ? result : defaultValue;
+        }
     }
 }

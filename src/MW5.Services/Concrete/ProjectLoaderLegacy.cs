@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -38,6 +39,11 @@ namespace MW5.Services.Concrete
         /// </summary>
         public bool Restore(MapWin4Project project, string filename)
         {
+            if (project == null)
+            {
+                return false;
+            }
+
             _context.Map.Lock();
             _context.Legend.Lock();
 
@@ -47,17 +53,17 @@ namespace MW5.Services.Concrete
             {
                 _layerService.BeginBatch();
 
+                RestoreMapProjection(project, filename);
+
                 RestoreLayers(project, path);
 
                 RestoreGroups(project);
 
                 MapLayerToGroups(project);
 
-                //RestoreMapProjection(project);
+                RestoreExtents(project);
 
-                //RestoreExtents(project);
-
-                //RestoreLocator(project);
+                RestoreLocator(project);
 
                 return true;
             }
@@ -68,6 +74,75 @@ namespace MW5.Services.Concrete
                 _context.Legend.Unlock();
                 _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             }
+        }
+
+        private void RestoreExtents(MapWin4Project project)
+        {
+            if (project.MapwinGis == null || project.MapwinGis.Mapstate == null)
+            {
+                return;
+            }
+
+            var state = project.MapwinGis.Mapstate;
+
+            try
+            {
+                var env = new Envelope(double.Parse(state.ExtentsLeft),
+                    double.Parse(state.ExtentsRight),
+                    double.Parse(state.ExtentsBottom),
+                    double.Parse(state.ExtentsTop));
+
+                _context.Map.ZoomToExtents(env);
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Info("Failed to parse project extents: " + ex.Message);
+            }
+        }
+
+        private void RestoreMapProjection(MapWin4Project project, string filename)
+        {
+            if (project.MapWindow == null)
+            {
+                return;
+            }
+
+            if (project.MapWindow.ProjectProjectionWKT == null && project.MapWindow.ProjectProjection == null)
+            {
+                Logger.Current.Info("No projection found int the project file: " + filename);
+                return;
+            }
+
+                    
+            var sr = new SpatialReference();
+            if (!sr.ImportFromAutoDetect(project.MapWindow.ProjectProjectionWKT))
+            {
+                if (!sr.ImportFromAutoDetect(project.MapWindow.ProjectProjection))
+                {
+                    Logger.Current.Info("Failed to parse project projection: " + filename);
+                    return;
+                }
+            }
+
+            _context.SetMapProjection(sr);
+        }
+
+        private void RestoreLocator(MapWin4Project project)
+        {
+            if (project.MapWindow == null || project.MapWindow.PreviewMap == null)
+            {
+                return;
+            }
+
+            var xmlPreview = project.MapWindow.PreviewMap;
+            var bitmap = _imageSerializationService.ConvertStringToImage(xmlPreview.Image.Value, xmlPreview.Image.Type);
+
+            double dx = NumericHelper.Parse(xmlPreview.Dx, 1.0);
+            double dy = NumericHelper.Parse(xmlPreview.Dy, 1.0);
+            double xll = NumericHelper.Parse(xmlPreview.XllCenter, 0.0);
+            double yll = NumericHelper.Parse(xmlPreview.YllCenter, 0.0);
+
+            _context.Locator.RestorePicture(bitmap as System.Drawing.Image, dx, dy, xll, yll);
         }
 
         private void RestoreLayers(MapWin4Project project, string path)
