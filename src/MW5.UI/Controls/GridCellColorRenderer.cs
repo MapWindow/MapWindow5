@@ -50,7 +50,7 @@ namespace MW5.UI.Controls
         {
             if (rowIndex < 2)
             {
-                OnDraw(g, clientRectangle, rowIndex, colIndex, style);
+                base.OnDraw(g, clientRectangle, rowIndex, colIndex, style);
                 return;
             }
 

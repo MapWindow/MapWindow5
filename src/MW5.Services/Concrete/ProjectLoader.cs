@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -8,8 +9,10 @@ using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Services.Controls;
 using MW5.Services.Serialization;
 using MW5.Services.Serialization.Legacy;
+using MW5.Services.Views;
 using MW5.Shared;
 
 namespace MW5.Services.Concrete
@@ -50,7 +53,10 @@ namespace MW5.Services.Concrete
 
                 RestorePlugins(project);
 
-                RestoreLayers(project);
+                if (!RestoreLayers(project))
+                {
+                    return false;
+                }
 
                 RestoreGroups(project);
 
@@ -104,37 +110,75 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private void RestoreLayers(XmlProject project)
+        private bool RestoreLayers(XmlProject project)
         {
+            if (!ValidateLayers(project))
+            {
+                return false;
+            }
+
             var layers = _context.Map.Layers;
+
             foreach (var xmlLayer in project.Layers)
             {
-                if (xmlLayer.Identity.IdentityType == Api.Enums.LayerIdentityType.File)
-                {
-                    // in case project has moved, let's try to use relative filename
-                    if (!File.Exists(xmlLayer.Identity.Filename))
-                    {
-                        string filename = project.Settings.UpdateLayerPath(xmlLayer.Identity.Filename);
-
-                        if (!File.Exists(filename))
-                        {
-                            // TODO: ask user what to do
-                            Logger.Current.Warn("Failed to find layer: " + xmlLayer.Identity.Filename);
-                            continue;
-                        }
-                        
-                        // substitute with relative one
-                        xmlLayer.Identity.Filename = filename;
-                    }
-                }
-                
-                if (_layerService.AddLayerIdentity(xmlLayer.Identity)) 
+                if (_layerService.AddLayerIdentity(xmlLayer.Identity))
                 {
                     int handle = _layerService.LastLayerHandle;
                     var layer = layers.ItemByHandle(handle) as ILegendLayer;
                     xmlLayer.RestoreLayer(layer);
                 }
             }
+
+            return true;
+        }
+
+        private bool ValidateLayers(XmlProject project)
+        {
+            var missingLayers = new List<MissingLayer>();
+
+            // in case project has moved, let's try to use relative filename
+            foreach (var xmlLayer in project.Layers)
+            {
+                if (xmlLayer.Identity.IdentityType == Api.Enums.LayerIdentityType.File)
+                {
+                    if (!File.Exists(xmlLayer.Identity.Filename))
+                    {
+                        string filename = project.Settings.UpdateLayerPath(xmlLayer.Identity.Filename);
+
+                        if (!File.Exists(filename))
+                        {
+                            var ml = new MissingLayer(xmlLayer.Name, xmlLayer.Identity.Filename, xmlLayer);
+                            missingLayers.Add(ml);
+                            
+                            continue;
+                        }
+
+                        // substitute with relative one
+                        xmlLayer.Identity.Filename = filename;
+                    }
+                }
+            }
+
+            // if it didn't help, let's ask offer the user to find them
+            if (missingLayers.Any())
+            {
+                var p = _context.Container.GetInstance<MissingLayersPresenter>();
+                if (!p.Run(missingLayers))
+                {
+                    return false;
+                }
+
+                foreach (var layer in missingLayers)
+                {
+                    var xmlLayer = layer.Tag as XmlLayer;
+                    if (xmlLayer != null && File.Exists(layer.Filename))
+                    {
+                        xmlLayer.Identity.Filename = layer.Filename;
+                    }
+                }
+            }
+
+            return true;
         }
 
         private void RestoreGroups(XmlProject project)

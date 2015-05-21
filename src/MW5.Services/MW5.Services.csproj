@@ -54,6 +54,9 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -77,6 +80,10 @@
     <Compile Include="Concrete\ConfigService.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Concrete\ProjectLoaderLegacy.cs" />
+    <Compile Include="Controls\MissingLayer.cs" />
+    <Compile Include="Controls\MissingLayersGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Concrete\LogEntry.cs" />
     <Compile Include="Concrete\LoggingService.cs" />
@@ -92,6 +99,7 @@
     <Compile Include="Serialization\XmlMapLocator.cs" />
     <Compile Include="Serialization\XmlProjectSettings.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />
+    <Compile Include="Views\Abstract\IMissingLayersView.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializableContext.cs" />
@@ -114,6 +122,13 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ICreateLayerView.cs" />
+    <Compile Include="Views\MissingLayersPresenter.cs" />
+    <Compile Include="Views\MissingLayersView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\MissingLayersView.Designer.cs">
+      <DependentUpon>MissingLayersView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -146,6 +161,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Views\CreateLayerView.resx">
       <DependentUpon>CreateLayerView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\MissingLayersView.resx">
+      <DependentUpon>MissingLayersView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

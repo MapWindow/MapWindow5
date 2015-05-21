@@ -36,7 +36,7 @@ namespace MW5.UI.Controls
             }
          }
 
-        public override GridCellRendererBase CreateRenderer(Syncfusion.Windows.Forms.Grid.GridControlBase control)
+        public override GridCellRendererBase CreateRenderer(GridControlBase control)
         {
             _renderer = new GridCellColorRenderer(control, this) {ShowDropDownButton = _showDropDowns};
             return _renderer;

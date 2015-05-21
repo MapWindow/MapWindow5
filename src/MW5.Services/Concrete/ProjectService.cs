@@ -106,16 +106,21 @@ namespace MW5.Services.Concrete
             
             if (TryCloseCore())
             {
-                _context.Map.GeometryEditor.Clear();
-                _context.Legend.Groups.Clear();
-                _context.Legend.Layers.Clear();
-                _context.Map.SetDefaultExtents();
-                _context.Locator.Clear();
+                Clear();
 
                 _broadcaster.BroadcastEvent(p => p.ProjectClosed_, this, args);
                 return true;
             }
             return false;
+        }
+
+        private void Clear()
+        {
+            _context.Map.GeometryEditor.Clear();
+            _context.Legend.Groups.Clear();
+            _context.Legend.Layers.Clear();
+            _context.Map.SetDefaultExtents();
+            _context.Locator.Clear();
         }
 
         private bool TryCloseCore()
@@ -299,7 +304,13 @@ namespace MW5.Services.Concrete
                 var project = state.Deserialize<XmlProject>();
                 project.Settings.LoadAsFilename = filename;
 
-                _projectLoader.Restore(project);
+                if (!_projectLoader.Restore(project))
+                {
+                    Clear();
+                    SetEmptyProject();
+                    return;
+                }
+
                 _filename = filename;
 
                 if (!silent)

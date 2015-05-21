@@ -24,7 +24,8 @@ namespace MW5.Services
                 .RegisterService<ProjectLoaderLegacy>()
                 .RegisterSingleton<ITempFileService, TempFileService>()
                 .RegisterSingleton<IConfigService, ConfigService>()
-                .RegisterSingleton<IProjectLoader, ProjectLoader>();
+                .RegisterSingleton<IProjectLoader, ProjectLoader>()
+                .RegisterView<IMissingLayersView, MissingLayersView>();
 
             EnumHelper.RegisterConverter(new LogLevelConverter());
             EnumHelper.RegisterConverter(new GeometryTypeConverter());

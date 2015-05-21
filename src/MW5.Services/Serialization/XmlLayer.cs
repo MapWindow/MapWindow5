@@ -23,6 +23,7 @@ namespace MW5.Services.Serialization
             ColorSchemeCaption = layer.SymbologyCaption;
             Guid = layer.Guid;
             LayerType = layer.LayerType;
+            Name = layer.Name;
         }
 
         public void RestoreLayer(ILegendLayer layer)
@@ -42,6 +43,7 @@ namespace MW5.Services.Serialization
             return doc.DocumentElement;
         }
 
+        [DataMember] public string Name { get; set; }
         [DataMember] public Guid Guid { get; set; }
         [DataMember] public bool Expanded { get; set; }
         [DataMember] public bool HideFromLegend { get; set; }

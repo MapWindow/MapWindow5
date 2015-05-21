@@ -83,6 +83,8 @@
     <Compile Include="Controls\CustomGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\OpenFileDialogCellModel.cs" />
+    <Compile Include="Controls\OpenFileDialogCellRenderer.cs" />
     <Compile Include="Controls\ImageCombo.cs">
       <SubType>Component</SubType>
     </Compile>
