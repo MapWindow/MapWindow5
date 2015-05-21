@@ -49,13 +49,11 @@ namespace MW5.Services.Concrete
 
                 RestoreLayers(project, path);
 
+                RestoreGroups(project);
+
+                MapLayerToGroups(project);
+
                 //RestoreMapProjection(project);
-
-                //RestorePlugins(project);
-
-                //RestoreLayers(project);
-
-                //RestoreGroups(project);
 
                 //RestoreExtents(project);
 
@@ -70,8 +68,6 @@ namespace MW5.Services.Concrete
                 _context.Legend.Unlock();
                 _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             }
-
-            return false;
         }
 
         private void RestoreLayers(MapWin4Project project, string path)
@@ -102,34 +98,59 @@ namespace MW5.Services.Concrete
                 {
                     var layer = _context.Layers.ItemByHandle(_layerService.LastLayerHandle);
 
-                    if (layer != null)
+                    if (layer == null) continue;
+                    layer.Name = xmlLayer.LayerName;
+
+                    string state = xmlLayer.SerializeToXml();
+                    layer.Deserialize(state);
+                }
+            }
+        }
+
+        private void RestoreGroups(MapWin4Project project)
+        {
+            if (project.MapWindow == null || project.MapWindow.Groups == null || project.MapWindow.Layers == null)
+            {
+                Logger.Current.Info("Failed to find Groups node in the legacy project file.");
+                return;
+            }
+            
+            var xmlGroups = project.MapWindow.Groups;
+            var groups = _context.Legend.Groups;
+
+            foreach (var xmlGroup in xmlGroups)
+            {
+                var group = groups.Add(xmlGroup.Name);
+                group.Expanded = xmlGroup.IsExpanded();
+            }
+        }
+
+        private void MapLayerToGroups(MapWin4Project project)
+        {
+            var groups = _context.Legend.Groups;
+            
+            var layers = project.MapWindow.Layers;
+            var legendLayers = _context.Legend.Layers;
+
+            foreach (var xmlLayer in layers)
+            {
+                var layer = legendLayers.FirstOrDefault(l => l.Name.EqualsIgnoreCase(xmlLayer.Name));
+                if (layer != null)
+                {
+                    var g = groups.GetGroupSafe(xmlLayer.GroupIndex + 1);
+                    if (g != null)
                     {
-                        string state = xmlLayer.SerializeToXml();
-                        layer.Deserialize(state);
+                        _context.Layers.MoveLayer(layer.Handle, g.Handle);
+                        layer.Expanded = xmlLayer.IsExpanded();
                     }
                 }
             }
 
-            //if (mapWinProject.MapwinGis.Layers != null)
-            //{
-            //    // Loop through all layers
-            //    foreach (var prjLayer in mapWinProject.MapwinGis.Layers)
-            //    {
-                   
-            //    }
-
-            //    // Restore the state of the map
-            //    RestoreMapState(mapWinProject, mapWinControl, projectFile);
-
-            //    // Fill data from the mapwindow-section
-            //    FillMapWindowData(mapWinProject, aggregator, layers);
-
-            //    //// Add the layers to a group
-            //    //AddLayerToGroup(aggregator, layers);
-
-            //    // Give aggregator signal that layer has been added
-            //    aggregator.LayerAdded();
-            //}
+            // removing data layers group to which layers are added originally
+            if (groups.Count > 1 && !groups[0].Layers.Any())
+            {
+                groups.Remove(groups[0].Handle);
+            }
         }
     }
 }

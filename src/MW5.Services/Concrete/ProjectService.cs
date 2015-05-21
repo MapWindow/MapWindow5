@@ -263,11 +263,19 @@ namespace MW5.Services.Concrete
             using (var reader = new StreamReader(filename))
             {
                 string state = reader.ReadToEnd();
+                MapWin4Project project = null;
 
-                var project = state.DeserializeFromXml<MapWin4Project>();
+                try
+                {
+                    project = state.DeserializeFromXml<MapWin4Project>();
+                }
+                catch
+                {
+                    MessageService.Current.Warn("Invalid project format: " + filename);
+                    return;
+                }
 
                 bool result = _projectLoaderLegacy.Restore(project, filename);
-
                 _filename = string.Empty;       // it must be saved in a new format
 
                 if (!silent)

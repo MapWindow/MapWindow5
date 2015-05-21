@@ -13,8 +13,8 @@ namespace MW5.Api.Legend
     /// </summary>
     public class LegendGroups: ILegendGroups
     {
-        private const string NEW_GROUP_NAME = "New Group";
-        private const string DATA_LAYERS_CAPTION = "Data Layers";
+        private const string NewGroupName = "New Group";
+        private const string DataLayersCaption = "Data Layers";
         private const int InvalidGroup = -1;
 
         protected readonly LegendControl _legend;
@@ -63,13 +63,23 @@ namespace MW5.Api.Legend
             }
         }
 
+        public ILegendGroup GetGroupSafe(int position)
+        {
+            if (position >= 0 && position < Count)
+            {
+                return _allGroups[position];
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Adds a new group to the legend at the topmost position
         /// </summary>
         /// <returns>Handle to the group on success, -1 on failure</returns>
         public ILegendGroup Add()
         {
-            return Add(NEW_GROUP_NAME);
+            return Add(NewGroupName);
         }
 
         /// <summary>
@@ -127,7 +137,7 @@ namespace MW5.Api.Legend
         {
             var grp = new LegendGroup(_legend, _positions.Count)
             {
-                Text = caption.Length < 1 ? NEW_GROUP_NAME : caption,
+                Text = caption.Length < 1 ? NewGroupName : caption,
             };
 
             _positions.Add(InvalidGroup);
@@ -338,7 +348,7 @@ namespace MW5.Api.Legend
         /// <returns> True on success, False otherwise </returns>
         protected internal bool MoveGroup(int groupHandle, int newPos)
         {
-            if (IsValidHandle(groupHandle))
+            if (!IsValidHandle(groupHandle))
             {
                 throw new IndexOutOfRangeException("Invalid group handle");
             }
@@ -391,7 +401,7 @@ namespace MW5.Api.Legend
                 // we have to create or find a group to put this layer into
                 if (_allGroups.Count == 0)
                 {
-                    grp = CreateGroup(DATA_LAYERS_CAPTION, -1);
+                    grp = CreateGroup(DataLayersCaption, -1);
                     //GroupPositions[grp.Handle] = _groups.Count - 1;   // TODO: remove after testing
                     _legend.FireGroupAdded(grp.Handle);
                 }
@@ -458,7 +468,7 @@ namespace MW5.Api.Legend
             }
         }
 
-        internal LegendGroup GetGroup(int index)
+        internal LegendGroup GetGroupInternal(int index)
         {
             return _allGroups[index] as LegendGroup;
         }

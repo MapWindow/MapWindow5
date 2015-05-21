@@ -353,7 +353,7 @@ namespace MW5.Api.Legend
                 return false;
             }
 
-            var grp = _groups.GetGroup(groupIndex);
+            var grp = _groups.GetGroupInternal(groupIndex);
             grp.LayersInternal.RemoveAt(layerIndex);
 
             _map.RemoveLayer(layerHandle);
@@ -823,7 +823,7 @@ namespace MW5.Api.Legend
                     // figure out how tall the image is going to need to be
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = _groups.GetGroup(i);
+                        grp = _groups.GetGroupInternal(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
@@ -847,7 +847,7 @@ namespace MW5.Api.Legend
                     // now draw the snapshot
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = _groups.GetGroup(i);
+                        grp = _groups.GetGroupInternal(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
@@ -955,7 +955,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = _groups.GetGroup(i);
+                var grp = _groups.GetGroupInternal(i);
                 var itemCount = grp.Layers.Count;
 
                 for (var j = 0; j < itemCount; j++)
@@ -1461,7 +1461,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = _groups.GetGroup(i);
+                var grp = _groups.GetGroupInternal(i);
 
                 // set group header bounds
                 var curLeft = Constants.GrpIndent;
@@ -1541,7 +1541,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = _groups.GetGroup(i);
+                var grp = _groups.GetGroupInternal(i);
 
                 if (grp.Expanded == false)
                 {
@@ -1837,7 +1837,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < _groups.Count; i++)
             {
-                var g = _groups.GetGroup(i);
+                var g = _groups.GetGroupInternal(i);
                 g.RecalcHeight();
                 retval += g.Height + Constants.ItemPad;
             }
@@ -1865,7 +1865,7 @@ namespace MW5.Api.Legend
 
             for (var i = _groups.Count - 1; i >= 0; i--)
             {
-                var grp = _groups.GetGroup(i);
+                var grp = _groups.GetGroupInternal(i);
                 grp.Top = curTop;
                 if (grp.Expanded)
                 {
@@ -1929,7 +1929,7 @@ namespace MW5.Api.Legend
 
                 for (var i = numGroups - 1; i >= 0; i--)
                 {
-                    var grp = _groups.GetGroup(i);
+                    var grp = _groups.GetGroupInternal(i);
                     grp.ScheduleHeightRecalc();
 
                     if (rect.Top + grp.Height < ClientRectangle.Top)
@@ -2057,7 +2057,7 @@ namespace MW5.Api.Legend
             var lyr = FindClickedLayer(pnt, ref element);
             if (lyr != null)
             {
-                grp = _groups.GetGroup(element.GroupIndex);
+                grp = _groups.GetGroupInternal(element.GroupIndex);
                 if (element.CheckBox)
                 {
                     var newState = !_map.get_LayerVisible(lyr.Handle);
@@ -2072,7 +2072,7 @@ namespace MW5.Api.Legend
 
                     _map.set_LayerVisible(lyr.Handle, newState);
 
-                    grp = _groups.GetGroup(element.GroupIndex);
+                    grp = _groups.GetGroupInternal(element.GroupIndex);
                     grp.UpdateGroupVisibility();
 
                     FireEvent(this, LayerCheckboxClicked, new LayerEventArgs(lyr.Handle));
@@ -2280,7 +2280,7 @@ namespace MW5.Api.Legend
                     if (_dragInfo.TargetGroupIndex != Constants.InvalidIndex)
                     {
                         var targetGroup = Groups[_dragInfo.TargetGroupIndex];
-                        grp = _groups.GetGroup(_dragInfo.DragGroupIndex);
+                        grp = _groups.GetGroupInternal(_dragInfo.DragGroupIndex);
 
                         int newPos;
 
@@ -2376,7 +2376,7 @@ namespace MW5.Api.Legend
             _map.LockWindow(tkLockMode.lmLock);
             for (var i = grpCount - 1; i >= 0; i--)
             {
-                var grp = _groups.GetGroup(i);
+                var grp = _groups.GetGroupInternal(i);
                 var lyrCount = grp.Layers.Count;
                 for (var j = lyrCount - 1; j >= 0; j--)
                 {
@@ -2450,7 +2450,7 @@ namespace MW5.Api.Legend
             {
                 if (grpIndex >= 0 && grpIndex < _groups.Count)
                 {
-                    grp = _groups.GetGroup(grpIndex);
+                    grp = _groups.GetGroupInternal(grpIndex);
                 }
 
                 int drawY = 0;
@@ -2482,12 +2482,12 @@ namespace MW5.Api.Legend
                         // the mouse is either above the top layer or below the bottom layer
                         if (grpIndex < 0)
                         {
-                            var g = _groups.GetGroup(0);
+                            var g = _groups.GetGroupInternal(0);
                             drawY =  g.Top + g.Height;
                         }
                         else
                         {
-                            drawY = _groups.GetGroup(_groups.Count - 1).Top;
+                            drawY = _groups.GetGroupInternal(_groups.Count - 1).Top;
                         }
                     }
                     else
@@ -2552,8 +2552,8 @@ namespace MW5.Api.Legend
                 return;
             }
 
-            var topGroup = _groups.GetGroup(grpCount - 1);
-            var bottomGroup = _groups.GetGroup(0);
+            var topGroup = _groups.GetGroupInternal(grpCount - 1);
+            var bottomGroup = _groups.GetGroupInternal(0);
 
             if (_dragInfo.DraggingLayer)
             {
@@ -2578,7 +2578,7 @@ namespace MW5.Api.Legend
                 // not the bottom or the top, so we must search for the correct one
                 for (var i = grpCount - 1; i >= 0; i--)
                 {
-                    grp = _groups.GetGroup(i);
+                    grp = _groups.GetGroupInternal(i);
 
                     var grpHeight = grp.Height;
 
@@ -2621,7 +2621,7 @@ namespace MW5.Api.Legend
                                 if (i > 0)
                                 {
                                     // if the group is not the bottom group
-                                    var tempGroup = _groups.GetGroup(i - 1);
+                                    var tempGroup = _groups.GetGroupInternal(i - 1);
                                     if (yPosition <= tempGroup.Top && yPosition > lyr.Top + lyr.Height)
                                     {
                                         _dragInfo.TargetGroupIndex = i;
@@ -2674,7 +2674,7 @@ namespace MW5.Api.Legend
                 // we have to compare against all groups because we aren't at the top or bottom
                 for (var i = grpCount - 1; i >= 0; i--)
                 {
-                    grp = _groups.GetGroup(i);
+                    grp = _groups.GetGroupInternal(i);
 
                     if (yPosition < grp.Top + grp.Height)
                     {
@@ -2712,7 +2712,7 @@ namespace MW5.Api.Legend
                 int currentPositionInGroup;
                 FindLayerByHandle(layerHandle, out sourceGroupIndex, out currentPositionInGroup);
 
-                var sourceGroup = _groups.GetGroup(sourceGroupIndex);
+                var sourceGroup = _groups.GetGroupInternal(sourceGroupIndex);
                 var destinationGroup = Groups.ItemByHandle(targetGroupHandle);
 
                 if (currentPositionInGroup != targetPositionInGroup || sourceGroup.Handle != destinationGroup.Handle)

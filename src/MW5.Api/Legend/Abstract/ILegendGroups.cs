@@ -22,6 +22,11 @@ namespace MW5.Api.Legend.Abstract
         ILegendGroup this[int position] { get; }
 
         /// <summary>
+        /// Gets the group at specified index. If the index is out of range a null will be returned.
+        /// </summary>
+        ILegendGroup GetGroupSafe(int position);
+
+        /// <summary>
         /// Adds a new group to the legend at the topmost position
         /// </summary>
         /// <returns>Handle to the group on success, -1 on failure</returns>

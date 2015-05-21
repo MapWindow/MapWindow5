@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
 using System.Xml.Serialization;
+using MW5.Shared;
 
 namespace MW5.Services.Serialization.Legacy
 {
@@ -119,16 +122,21 @@ namespace MW5.Services.Serialization.Legacy
             public string Expanded { get; set; }
 
             [XmlAttribute(AttributeName = "Handle")]
-            public string Handle { get; set; }
+            public int Handle { get; set; }
 
             [XmlAttribute(AttributeName = "PositionInGroup")]
-            public string PositionInGroup { get; set; }
+            public int PositionInGroup { get; set; }
 
             [XmlAttribute(AttributeName = "GroupIndex")]
-            public string GroupIndex { get; set; }
+            public int GroupIndex { get; set; }
 
             [XmlAttribute(AttributeName = "GroupName")]
             public string GroupName { get; set; }
+
+            public bool IsExpanded()
+            {
+                return BooleanHelper.Parse(Expanded);
+            }
         }
 
         public class Group
@@ -140,10 +148,15 @@ namespace MW5.Services.Serialization.Legacy
             public string Expanded { get; set; }
 
             [XmlAttribute(AttributeName = "Position")]
-            public string Position { get; set; }
+            public int Position { get; set; }
 
             [XmlElement(ElementName = "Image")]
             public ImageType Image { get; set; }
+
+            public bool IsExpanded()
+            {
+                return BooleanHelper.Parse(Expanded);
+            }
         }
 
         public class ImageType

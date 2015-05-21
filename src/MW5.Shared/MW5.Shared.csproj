@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="ArrayHelper.cs" />
     <Compile Include="AssemblyHelper.cs" />
+    <Compile Include="BooleanHelper.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="ControlHelper.cs" />
     <Compile Include="DataContractSerializationHelper.cs" />
