@@ -60,8 +60,6 @@ namespace MW5.Api.Interfaces
 
         RasterBand ActiveBand { get; }
 
-        RasterColorScheme RgbBandMapping { get; }
-
         RasterColorScheme GrayScaleColorScheme { get; }
 
         DatasourceDriver Driver { get; }

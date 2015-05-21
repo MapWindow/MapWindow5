@@ -155,19 +155,19 @@ namespace MW5.Api.Concrete
 
         public InterpolationType DownsamplingMode
         {
-            get { return (InterpolationType)_image.DownsamplingMode; }
-            set { _image.DownsamplingMode = (tkInterpolationMode)value; }
+            get { return (InterpolationType) _image.DownsamplingMode; }
+            set { _image.DownsamplingMode = (tkInterpolationMode) value; }
         }
 
         public InterpolationType UpsamplingMode
         {
-            get { return (InterpolationType)_image.UpsamplingMode; }
-            set { _image.UpsamplingMode = (tkInterpolationMode)value; }
+            get { return (InterpolationType) _image.UpsamplingMode; }
+            set { _image.UpsamplingMode = (tkInterpolationMode) value; }
         }
 
         public ImageFormat ImageFormat
         {
-            get { return (ImageFormat)_image.ImageType; }
+            get { return (ImageFormat) _image.ImageType; }
         }
 
         public InRamState InRamState
@@ -192,7 +192,7 @@ namespace MW5.Api.Concrete
 
         public ImageSourceType SourceType
         {
-            get { return (ImageSourceType)_image.SourceType; }
+            get { return (ImageSourceType) _image.SourceType; }
         }
 
         public void Close()
@@ -210,9 +210,10 @@ namespace MW5.Api.Concrete
             _image.Clear(ColorHelper.ColorToUInt(color));
         }
 
-        public bool Save(string filename, bool writeWorldFile = false, ImageFormat fileType = ImageFormat.UseFileExtension)
+        public bool Save(string filename, bool writeWorldFile = false,
+            ImageFormat fileType = ImageFormat.UseFileExtension)
         {
-            return _image.Save(filename, writeWorldFile, (ImageType)fileType);
+            return _image.Save(filename, writeWorldFile, (ImageType) fileType);
         }
 
         public void ImageToProjection(int imageX, int imageY, out double projX, out double projY)
@@ -333,7 +334,7 @@ namespace MW5.Api.Concrete
             }
 
             OleImageHelper utils = new OleImageHelper();
-            Picture = (IPictureDisp)utils.GetIPictureFromPicture(image);
+            Picture = (IPictureDisp) utils.GetIPictureFromPicture(image);
             return true;
         }
 
@@ -393,6 +394,20 @@ namespace MW5.Api.Concrete
         {
             get { return _image.SetToGrey; }
             set { _image.SetToGrey = value; }
+        }
+
+        public virtual RasterColorScheme RgbBandMapping
+        {
+            get
+            {
+                var scheme = new RasterColorScheme();
+
+                scheme.AddInterval(new RasterInterval() {LowColor = Color.Red, Caption = "Band 1 (Red)"});
+                scheme.AddInterval(new RasterInterval() {LowColor = Color.Green, Caption = "Band 2 (Green)"});
+                scheme.AddInterval(new RasterInterval() {LowColor = Color.Blue, Caption = "Band 3 (Blue)"});
+
+                return scheme;
+            }
         }
     }
 }

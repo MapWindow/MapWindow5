@@ -30,14 +30,16 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool Open(string filter, out string filename)
+        public bool Open(string filter, out string filename, int filterIndex = -1)
         {
-           filename = string.Empty;
+            filename = string.Empty;
             string[] filenames;
-            if (OpenFileCore(filter, false, out filenames))
+
+            if (OpenFileCore(filter, false, filterIndex, out filenames))
             {
                 filename = filenames[0];
             }
+
             return filename != string.Empty;
         }
 
@@ -45,7 +47,7 @@ namespace MW5.Services.Concrete
         {
             filename = string.Empty;
             string[] filenames;
-            if (OpenFileCore(GetLayerFilter(layerType), false, out filenames))
+            if (OpenFileCore(GetLayerFilter(layerType), false, -1, out filenames))
             {
                 filename = filenames[0];
             }
@@ -54,7 +56,7 @@ namespace MW5.Services.Concrete
 
         public bool OpenFiles(DataSourceType layerType, out string[] filenames)
         {
-            return OpenFileCore(GetLayerFilter(layerType), true, out filenames);
+            return OpenFileCore(GetLayerFilter(layerType), true, -1, out filenames);
         }
 
         public bool ChooseFolder(string initialPath, out string chosenPath)
@@ -73,18 +75,22 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        private bool OpenFileCore(string filter, bool multiSelect, out string[] filenames)
+        private bool OpenFileCore(string filter, bool multiSelect, int filterIndex, out string[] filenames)
         {
             filenames = null;
+
             using (var dialog = new OpenFileDialog())
             {
                 dialog.Multiselect = multiSelect;
                 dialog.Filter = filter;
+                dialog.FilterIndex = filterIndex;
+
                 if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
                 {
                     filenames = dialog.FileNames;
                 }
             }
+
             return filenames != null;
         }
 

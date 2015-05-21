@@ -38,33 +38,42 @@ namespace MW5.Api.Legend
 
         private void DrawCategories(Graphics g, LegendLayer layer, Rectangle bounds, ref int top)
         {
-            var raster = layer.ImageSource as IRasterSource;
-            if (raster == null)
+            var img = layer.ImageSource;
+            if (img == null)
             {
                 return;
             }
+
+            var raster = img as IRasterSource;
 
             var left = bounds.Left + Constants.TextLeftPad;
 
             var r = new Rectangle(left, top + 1, Constants.IconWidth, Constants.CsItemHeight - 2);
 
-            switch (raster.RenderingType)
+            if (raster != null)
             {
-                case RasterRendering.SingleBand:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.GrayScaleColorScheme, true, true);
-                    break;
-                case RasterRendering.Rgb:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.RgbBandMapping, false);
-                    break;
-                case RasterRendering.ColorScheme:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
-                    break;
-                case RasterRendering.BuiltInColorTable:
-                    RenderColorScheme(g, layer, bounds, ref r, raster.Bands[1].ColorTable, true, true);
-                    break;
-                case RasterRendering.Unknown:
-                    RenderColorScheme(g, layer, bounds, ref r, null, true, true);
-                    break;
+                switch (raster.RenderingType)
+                {
+                    case RasterRendering.SingleBand:
+                        RenderColorScheme(g, layer, bounds, ref r, raster.GrayScaleColorScheme, true, true);
+                        break;
+                    case RasterRendering.Rgb:
+                        RenderColorScheme(g, layer, bounds, ref r, raster.RgbBandMapping, false);
+                        break;
+                    case RasterRendering.ColorScheme:
+                        RenderColorScheme(g, layer, bounds, ref r, raster.CustomColorScheme, true);
+                        break;
+                    case RasterRendering.BuiltInColorTable:
+                        RenderColorScheme(g, layer, bounds, ref r, raster.Bands[1].ColorTable, true, true);
+                        break;
+                    case RasterRendering.Unknown:
+                        RenderColorScheme(g, layer, bounds, ref r, null, true, true);
+                        break;
+                }
+            }
+            else
+            {
+                RenderColorScheme(g, layer, bounds, ref r, img.RgbBandMapping, false);
             }
 
             top = r.Y;

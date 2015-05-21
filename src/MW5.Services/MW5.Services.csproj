@@ -76,6 +76,7 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\ConfigService.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
+    <Compile Include="Concrete\ProjectLoaderLegacy.cs" />
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Concrete\LogEntry.cs" />
     <Compile Include="Concrete\LoggingService.cs" />
@@ -87,13 +88,14 @@
     <Compile Include="Concrete\ProjectLoader.cs" />
     <Compile Include="Serialization\IProjectLoader.cs" />
     <Compile Include="Concrete\ImageSerializationService.cs" />
+    <Compile Include="Serialization\Legacy\MapWin4Project.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializableContext.cs" />
     <Compile Include="Serialization\Legacy\MapWindow4Config.cs" />
-    <Compile Include="Serialization\Legacy\MapWindow4Project.cs" />
+    <Compile Include="Serialization\Legacy\MapWin4XsdProject.cs" />
     <Compile Include="Serialization\XmlConfig.cs" />
     <Compile Include="Serialization\XmlEnvelope.cs" />
     <Compile Include="Serialization\XmlGroup.cs" />
@@ -145,9 +147,7 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Serialization\Utility\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

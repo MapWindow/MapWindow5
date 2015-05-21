@@ -90,7 +90,7 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerStyleClicked(IMuteLegend legend, LayerEventArgs e)
         {
-            var layer = legend.Layers.Current;
+            var layer = legend.Layers.ItemByHandle(e.LayerHandle);
             if (layer.LayerType == LayerType.Image || layer.LayerType == LayerType.Grid)
             {
                 // TODO: open colors tab

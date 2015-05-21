@@ -258,7 +258,7 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public RasterColorScheme RgbBandMapping
+        public override RasterColorScheme RgbBandMapping
         {
             get
             {

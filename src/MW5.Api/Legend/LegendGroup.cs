@@ -192,8 +192,8 @@ namespace MW5.Api.Legend
                 if (_recalcHeight)
                 {
                     RecalcHeight();
-                    _recalcHeight = false;
                 }
+
                 return _height;
             }
         }
@@ -258,9 +258,8 @@ namespace MW5.Api.Legend
 
             if (_expanded)
             {
-                for (var i = 0; i < _layers.Count; i++)
+                foreach (var lyr in _layers)
                 {
-                    var lyr = _layers[i];
                     if (!lyr.HideFromLegend)
                     {
                         _height += lyr.Height;
@@ -271,6 +270,8 @@ namespace MW5.Api.Legend
             {
                 _height = Constants.ItemHeight;
             }
+
+            _recalcHeight = false;
         }
 
         private void UpdateLayerVisibility()

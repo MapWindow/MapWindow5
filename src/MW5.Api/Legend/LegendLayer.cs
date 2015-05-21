@@ -108,6 +108,7 @@ namespace MW5.Api.Legend
 
             set
             {
+                _recalcHeight = true;
                 _expanded = value;
                 _legend.Redraw();
             }
@@ -152,9 +153,10 @@ namespace MW5.Api.Legend
                             case RasterRendering.Rgb:
                                 return "RGB";
                             case RasterRendering.ColorScheme:
-                                var band = raster.ActiveBand;    
+                                var band = raster.ActiveBand;
                                 string interp = band != null ? "(" + band.ColorInterpretation + ")" : "";
-                                return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands, interp);
+                                return string.Format("Band: {0} of {1} {2}", raster.ActiveBandIndex, raster.NumBands,
+                                    interp);
                             case RasterRendering.BuiltInColorTable:
                                 return "Indexed";
                             case RasterRendering.Unknown:
@@ -162,6 +164,10 @@ namespace MW5.Api.Legend
                             default:
                                 throw new ArgumentOutOfRangeException();
                         }
+                    }
+                    else
+                    {
+                        return "RGB";
                     }
                 }
 
@@ -180,6 +186,11 @@ namespace MW5.Api.Legend
         {
             get
             {
+                if (ImageSource == null)
+                {
+                    return 0;
+                }
+                
                 var raster = ImageSource as IRasterSource;
                 if (raster != null)
                 {
@@ -188,18 +199,20 @@ namespace MW5.Api.Legend
                         case RasterRendering.SingleBand:
                             return 1;
                         case RasterRendering.Rgb:
-                            return 3;       // TODO: maybe 4 because of alpha
+                            return 3; // TODO: maybe 4 because of alpha
                         case RasterRendering.ColorScheme:
                             var scheme = raster.CustomColorScheme;
                             return scheme != null ? scheme.NumBreaks : 0;
                         case RasterRendering.BuiltInColorTable:
                             return raster.Bands[1].ColorTable.NumBreaks;
-                        case RasterRendering.Unknown:
-                            return 0;
                     }
-                }
 
-                return 0;
+                    return 0;
+                }
+                else
+                {
+                    return 3;   // common RGB
+                }
             }
         }
 
@@ -365,7 +378,7 @@ namespace MW5.Api.Legend
             {
                 if (RasterSymbologyCount > 0)
                 {
-                    ret += !string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
+                    ret += Constants.CsItemHeightAndPad(); //!string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
 
                     ret += RasterSymbologyCount * Constants.CsItemHeightAndPad();
                 }

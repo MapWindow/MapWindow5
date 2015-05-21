@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
@@ -41,6 +42,8 @@ namespace MW5.Api.Interfaces
         int NumBands { get; }
 
         GdalDataType DataType { get; }
+
+        RasterColorScheme RgbBandMapping { get; }
 
         // GDI+ color matrix adjustments
         float Brightness { get; set; }

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Api.Legend;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -49,6 +50,13 @@ namespace MW5.Helpers
             legend.Caption = "Legend";
             legend.DockTo(null, DockPanelState.Left, PanelSize);
             legend.SetIcon(Resources.ico_legend);
+
+            //var parent = legendControl.Parent;
+            //parent.MouseWheel += (s, e) =>
+            //{
+            //    var control = legendControl as LegendControl;
+            //    if (control != null) control.HandleOnMouseWheel(e);
+            //};
         }
 
         private static void InitToolbox(ISerializableContext context)

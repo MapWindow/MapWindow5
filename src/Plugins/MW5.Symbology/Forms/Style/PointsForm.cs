@@ -27,6 +27,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 using MW5.UI;
@@ -54,19 +55,16 @@ namespace MW5.Plugins.Symbology.Forms.Style
         public PointsForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle options, bool applyDisabled)
         {
             if (layer == null) throw new ArgumentNullException("layer");
+            if (options == null) throw new ArgumentNullException("options");
+            if (legend == null) throw new ArgumentNullException("legend");
 
             InitializeComponent();
             
-            if (options == null || legend == null)
-            {
-                throw new Exception("PointsForm: Unexpected null parameter");
-            }
-
             _legend = legend;
             _layer = layer;
+            _style = options;
 
             // setting values to the controls
-            _style = options;
             _initState = _style.Serialize();
             _noEvents = true;
 
@@ -77,13 +75,13 @@ namespace MW5.Plugins.Symbology.Forms.Style
             Options2Gui();
             _noEvents = false;
 
-            AttachListeners();
-
             InitIconsAndFonts();
 
             RestoreSelectedIconCollection();
 
             DrawPreview();
+
+            AttachListeners();
 
             tabControl1.SelectedIndex = _tabIndex;
         }
@@ -125,6 +123,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             // icon control
             RefreshIconCombo();
+
+            UpdateIconsList();
 
             chkScaleIcons.Checked = !NumericHelper.Equal(marker.IconScaleX, 1.0) ||
                                     !NumericHelper.Equal(marker.IconScaleY, 1.0);
@@ -367,48 +367,60 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// </summary>
         private void CboIconCollectionSelectedIndexChanged(object sender, EventArgs e)
         {
+            UpdateIconsList();
+        }
+
+        private void UpdateIconsList()
+        {
             string path = PathHelper.GetIconsPath();
             path += cboIconCollection.Text;
 
-            if (Directory.Exists(path))
-            {
-                iconControl1.CellWidth = 32;
-                iconControl1.CellHeight = 32;
-
-                // let's try to determine real size by first file
-                try
-                {
-                    string[] files = Directory.GetFiles(path);
-                    foreach (string name in files)
-                    {
-                        string ext = Path.GetExtension(name);
-                        if (ext == ".png")          //ext == ".bmp" || 
-                        {
-                            Bitmap bmp = new Bitmap(name);
-                            if (bmp.Width <= 16 || bmp.Height <= 16)
-                            {
-                                // do nothing - use 32
-                            }
-                            else if (bmp.Width < 48 && bmp.Height < 48)
-                            {
-                                iconControl1.CellWidth = bmp.Height < bmp.Width ? bmp.Height + 16 : bmp.Width + 16;
-                                iconControl1.CellHeight = iconControl1.CellWidth;
-                            }
-                            else
-                            {
-                                iconControl1.CellWidth = 48 + 16;
-                                iconControl1.CellHeight = iconControl1.CellWidth;
-                            }
-                            break;
-                        }
-                    }
-                }
-                catch {}
-            }
-            
-            iconControl1.FilePath = path;
+            LoadIcons(path);
 
             UpdateCopyrightMessage(path);
+
+            iconControl1.FilePath = path;
+        }
+
+        private void LoadIcons(string path)
+        {
+            if (!Directory.Exists(path)) return;
+
+            iconControl1.CellWidth = 32;
+            iconControl1.CellHeight = 32;
+
+            // let's try to determine real size by first file
+            try
+            {
+                string[] files = Directory.GetFiles(path);
+                foreach (string name in files)
+                {
+                    string ext = Path.GetExtension(name);
+                    if (ext == ".png") //ext == ".bmp" || 
+                    {
+                        Bitmap bmp = new Bitmap(name);
+                        if (bmp.Width <= 16 || bmp.Height <= 16)
+                        {
+                            // do nothing - use 32
+                        }
+                        else if (bmp.Width < 48 && bmp.Height < 48)
+                        {
+                            iconControl1.CellWidth = bmp.Height < bmp.Width ? bmp.Height + 16 : bmp.Width + 16;
+                            iconControl1.CellHeight = iconControl1.CellWidth;
+                        }
+                        else
+                        {
+                            iconControl1.CellWidth = 48 + 16;
+                            iconControl1.CellHeight = iconControl1.CellWidth;
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Failed to load icon: " + ex.Message);
+            }
         }
 
         private void UpdateCopyrightMessage(string path)

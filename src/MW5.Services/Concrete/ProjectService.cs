@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins;
@@ -9,33 +10,38 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
+using MW5.Services.Serialization.Legacy;
 using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
     public class ProjectService: IProjectService, IProject
     {
-        private const string ProjectFilter = "*.mwproj|*.mwproj";
+        private const string ProjectFilter = "MapWindow 5 project (*.mwproj)|*.mwproj|MapWindow 4 project (*.mwprj)|*.mwprj|All projects|*.mwprj;*.mwproj";
+        private const int ProjectFilterIndex = 3;
 
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileService;
         private readonly IBroadcasterService _broadcaster;
         private readonly IProjectLoader _projectLoader;
+        private readonly ProjectLoaderLegacy _projectLoaderLegacy;
         private string _filename = string.Empty;
         private bool _modified;
 
         public ProjectService(IAppContext context, IFileDialogService fileService, 
-         IBroadcasterService broadcaster, IProjectLoader projectLoader)
+         IBroadcasterService broadcaster, IProjectLoader projectLoader, ProjectLoaderLegacy projectLoaderLegacy)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (fileService == null) throw new ArgumentNullException("fileService");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
             if (projectLoader == null) throw new ArgumentNullException("projectLoader");
+            if (projectLoaderLegacy == null) throw new ArgumentNullException("projectLoaderLegacy");
 
             _context = context;
             _fileService = fileService;
             _broadcaster = broadcaster;
             _projectLoader = projectLoader;
+            _projectLoaderLegacy = projectLoaderLegacy;
         }
 
         public bool IsEmpty
@@ -207,23 +213,30 @@ namespace MW5.Services.Concrete
         public bool Open()
         {
             string filename;
-            if (_fileService.Open(ProjectFilter, out filename))
+            if (_fileService.Open(ProjectFilter, out filename, ProjectFilterIndex))
             {
                 if (!TryClose())
                 {
                     return false;
                 }
-                
-                Open(filename);
+
+                if (filename.ToLower().EndsWith(".mwproj"))
+                {
+                    Open(filename);
+                }
+                else
+                {
+                    OpenLegacyProject(filename);
+                }
             }
             return false;
         }
 
-        public void Open(string filename, bool silent = false)
+        private bool CheckProjectFilename(string filename, bool silent)
         {
             if (string.IsNullOrWhiteSpace(filename))
             {
-                return;
+                return false;
             }
 
             if (!File.Exists(filename))
@@ -232,6 +245,44 @@ namespace MW5.Services.Concrete
                 {
                     MessageService.Current.Info("Project file wasn't found: " + filename);
                 }
+                
+                return false;
+            }
+
+            return true;
+        }
+
+        public void OpenLegacyProject(string filename, bool silent = false)
+        {
+            if (!CheckProjectFilename(filename, silent))
+            {
+                return;
+            }
+            Logger.Current.Info("Start opening legacy MapWindow 4 project: " + filename);
+
+            using (var reader = new StreamReader(filename))
+            {
+                string state = reader.ReadToEnd();
+
+                var project = state.DeserializeFromXml<MapWin4Project>();
+
+                bool result = _projectLoaderLegacy.Restore(project, filename);
+
+                _filename = string.Empty;       // it must be saved in a new format
+
+                if (!silent)
+                {
+                    MessageService.Current.Info("Project was loaded: " + result);
+                }
+
+                Logger.Current.Info("Project was loaded: " + result);
+            }
+        }
+
+        public void Open(string filename, bool silent = false)
+        {
+            if (!CheckProjectFilename(filename, silent))
+            {
                 return;
             }
 

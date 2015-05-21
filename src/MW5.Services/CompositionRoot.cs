@@ -21,6 +21,7 @@ namespace MW5.Services
                 .RegisterSingleton<IProjectService, ProjectService>()
                 .RegisterService<ICreateLayerView, CreateLayerView>()
                 .RegisterService<ImageSerializationService>()
+                .RegisterService<ProjectLoaderLegacy>()
                 .RegisterSingleton<ITempFileService, TempFileService>()
                 .RegisterSingleton<IConfigService, ConfigService>()
                 .RegisterSingleton<IProjectLoader, ProjectLoader>();

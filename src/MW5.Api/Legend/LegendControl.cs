@@ -71,6 +71,8 @@ namespace MW5.Api.Legend
             ShowGroupIcons = true;
             ShowLabels = false;
             DrawLines = true;
+
+            MouseWheel += (s, e) => OnMouseWheel(e);
         }
 
         /// <summary>
@@ -1775,14 +1777,6 @@ namespace MW5.Api.Legend
                     break;
                 case LegendRedraw.LegendAndMap:
                     _map.Redraw();
-
-                    // TODO: eirther trigger legend redraw immediately after data layers redraw
-                    // or determine rendering mode before actual rendering
-                    Application.DoEvents();
-    
-                    // map redraw isn't synchronous (Invalidate), but legend displays for raster
-                    // layers rendering type that was used during redraw, so we must ensure
-                    // that map redraw is finished first
                     RedrawCore();
                     break;
                 case LegendRedraw.LegendAndMapForce:
@@ -1909,7 +1903,8 @@ namespace MW5.Api.Legend
                 if (totalHeight > Height)
                 {
                     _vScrollBar.Minimum = 0;
-                    _vScrollBar.SmallChange = Constants.ItemHeight;
+
+                    _vScrollBar.SmallChange = totalHeight / 10;
                     _vScrollBar.LargeChange = Height;
                     _vScrollBar.Maximum = totalHeight;
 
@@ -1965,7 +1960,7 @@ namespace MW5.Api.Legend
         {
             // there is an exception accidentally occuring in LegendControl.SwapBuffers; 
             // perhaps it's caused by concurrency issues; let's try a lock
-            //lock (this)     
+            lock (this)     
             {
                 SetCanvas(e.Graphics);
 
@@ -2087,9 +2082,10 @@ namespace MW5.Api.Legend
 
                 if (element.ExpansionBox)
                 {
+                    Lock();
                     lyr.Expanded = !lyr.Expanded;
                     FireEvent(this, LayerPropertiesChanged, new LayerEventArgs(lyr.Handle));
-                    Redraw();
+                    Unlock();
                     return;
                 }
 
@@ -2155,7 +2151,7 @@ namespace MW5.Api.Legend
                 SelectedLayerHandle = lyr.Handle;
 
                 FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
-                
+
                 return;
             }
 
@@ -2245,6 +2241,15 @@ namespace MW5.Api.Legend
                 case MouseButtons.Right:
                     HandleRightMouseDown(sender, e);
                     break;
+            }
+
+
+            // During the update of UI after selection of a layer focus is set to some other control;
+            // TODO: would be good to explore why it happens;
+            // a quick fix for now to make mouse wheel scrolling work
+            if (Parent != null)
+            {
+                Parent.Focus();
             }
         }
 
