@@ -90,6 +90,7 @@
     <Compile Include="Concrete\ImageSerializationService.cs" />
     <Compile Include="Serialization\Legacy\MapWin4Project.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
+    <Compile Include="Serialization\XmlProjectSettings.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

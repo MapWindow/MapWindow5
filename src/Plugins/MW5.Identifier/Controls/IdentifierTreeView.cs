@@ -263,7 +263,7 @@ namespace MW5.Plugins.Identifier.Controls
         {
             node.AddSubItem("Data type", raster.DataType.EnumToString());
 
-            node.AddSubItem("Cell size", string.Format("{0} × {1}", raster.BufferDx, raster.BufferDy));
+            node.AddSubItem("Cell size", string.Format("{0:g5} × {1:g5}", raster.BufferDx, raster.BufferDy));
         }
 
         private void DisplayRgbMapping(NodeData nodeRgb, IRasterSource raster, SelectionItem pixel)
@@ -286,7 +286,7 @@ namespace MW5.Plugins.Identifier.Controls
 
             for (int i = 0; i < indices.Count; i++)
             {
-                if (indices[i] <= 0 || indices[i] >= raster.NumBands)
+                if (indices[i] <= 0 || indices[i] > raster.NumBands)
                 {
                     continue;
                 }

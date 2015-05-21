@@ -42,5 +42,23 @@ namespace MW5.Shared
                 Logger.Current.Warn("Failed to open folder: " + path, ex);
             }
         }
+
+        // http ://stackoverflow.com/questions/703281/getting-path-relative-to-the-current-working-directory
+        public static string GetRelativePath(string basePath, string otherPath)
+        {
+            Uri pathUri = new Uri(otherPath);
+
+            basePath = Path.GetDirectoryName(basePath);
+
+            if (string.IsNullOrWhiteSpace(basePath))
+            {
+                return string.Empty;
+            }
+
+            basePath += Path.DirectorySeparatorChar;
+
+            Uri folderUri = new Uri(basePath);
+            return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
+        }
     }
 }

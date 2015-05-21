@@ -78,7 +78,7 @@ namespace MW5.Services.Concrete
                     using (var r = new StreamReader(_filename))
                     {
                         var oldState = r.ReadToEnd();
-                        var state = SerializeMapState();
+                        var state = SerializeMapState(_filename);
                         return state.EqualsIgnoreCase(oldState) && !_modified ? ProjectState.NoChanges : ProjectState.HasChanges;
                     }
                 }
@@ -190,7 +190,7 @@ namespace MW5.Services.Concrete
 
         private void SaveProject(string filename)
         {
-            string state = SerializeMapState();
+            var state = SerializeMapState(filename);
 
             try
             {
@@ -297,6 +297,7 @@ namespace MW5.Services.Concrete
             {
                 string state = reader.ReadToEnd();
                 var project = state.Deserialize<XmlProject>();
+                project.Settings.LoadAsFilename = filename;
 
                 _projectLoader.Restore(project);
                 _filename = filename;
@@ -326,9 +327,9 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private string SerializeMapState()
+        private string SerializeMapState(string filename)
         {
-            var project = new XmlProject(_context as ISerializableContext);
+            var project = new XmlProject(_context as ISerializableContext, filename);
             return project.Serialize(false);
         }
 

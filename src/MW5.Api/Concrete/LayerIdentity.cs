@@ -26,7 +26,7 @@ namespace MW5.Api.Concrete
         }
 
         [DataMember]
-        public string Filename { get; private set; }
+        public string Filename { get; set; }
         
         [DataMember]
         public string Connection { get; private set; }

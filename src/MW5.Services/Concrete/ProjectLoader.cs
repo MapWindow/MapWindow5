@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -8,6 +10,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Serialization;
 using MW5.Services.Serialization.Legacy;
+using MW5.Shared;
 
 namespace MW5.Services.Concrete
 {
@@ -106,6 +109,25 @@ namespace MW5.Services.Concrete
             var layers = _context.Map.Layers;
             foreach (var xmlLayer in project.Layers)
             {
+                if (xmlLayer.Identity.IdentityType == Api.Enums.LayerIdentityType.File)
+                {
+                    // in case project has moved, let's try to use relative filename
+                    if (!File.Exists(xmlLayer.Identity.Filename))
+                    {
+                        string filename = project.Settings.UpdateLayerPath(xmlLayer.Identity.Filename);
+
+                        if (!File.Exists(filename))
+                        {
+                            // TODO: ask user what to do
+                            Logger.Current.Warn("Failed to find layer: " + xmlLayer.Identity.Filename);
+                            continue;
+                        }
+                        
+                        // substitute with relative one
+                        xmlLayer.Identity.Filename = filename;
+                    }
+                }
+                
                 if (_layerService.AddLayerIdentity(xmlLayer.Identity)) 
                 {
                     int handle = _layerService.LastLayerHandle;

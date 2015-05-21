@@ -19,7 +19,7 @@ namespace MW5.Services.Serialization
     [DataContract(Name="MapWindow5")]
     public class XmlProject
     {
-        public XmlProject(ISerializableContext context)
+        public XmlProject(ISerializableContext context, string filename)
         {
             Layers = context.Legend.Layers.Select(l => new XmlLayer(l)).ToList();
 
@@ -37,6 +37,8 @@ namespace MW5.Services.Serialization
                 Envelope = new XmlEnvelope(context.Map.Extents)
             };
 
+            Settings = new XmlProjectSettings {SavedAsFilename = filename};
+
             if (!context.Locator.Empty)
             {
                 var service = context.Container.GetInstance<ImageSerializationService>();
@@ -46,8 +48,10 @@ namespace MW5.Services.Serialization
 
         [DataMember] public XmlMap Map { get; set; }
         [DataMember] public XmlMapLocator Locator { get; set; }
+        [DataMember] public XmlProjectSettings Settings { get; set; }
         [DataMember] public List<XmlGroup> Groups { get; set; }
         [DataMember] public List<XmlLayer> Layers { get; set; }
         [DataMember] public List<XmlPlugin> Plugins { get; set; }
+        
     }
 }
