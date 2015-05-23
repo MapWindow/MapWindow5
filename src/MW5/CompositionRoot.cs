@@ -31,6 +31,7 @@ namespace MW5
                 .RegisterView<ISetProjectionView, SetProjectionView>()
                 .RegisterView<ILegendGroupView, LegendGroupView>()
                 .RegisterView<IMeasuringView, MeasuringView>()
+                .RegisterView<IAboutView, AboutView>()
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterSingleton<IAppView, AppView>()

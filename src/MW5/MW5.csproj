@@ -111,6 +111,10 @@
     <Compile Include="Configuration\PluginInfoGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\AssembliesGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\AssemblyInfo.cs" />
     <Compile Include="Controls\LegendCommand.cs" />
     <Compile Include="Controls\LegendDockPanel.cs">
       <SubType>UserControl</SubType>
@@ -126,6 +130,7 @@
       <DependentUpon>LocatorDockPanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\LocatorPresenter.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Listeners\MainPluginListener.cs" />
     <Compile Include="Menu\ContextMenuCommand.cs" />
     <Compile Include="Menu\ContextMenuPresenter.cs" />
@@ -137,6 +142,14 @@
     </Compile>
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
+    <Compile Include="Views\AboutPresenter.cs" />
+    <Compile Include="Views\AboutView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AboutView.Designer.cs">
+      <DependentUpon>AboutView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Abstract\IAboutView.cs" />
     <Compile Include="Views\Abstract\ICreatePyramidsView.cs" />
     <Compile Include="Views\Abstract\ILegendGroupView.cs" />
     <Compile Include="Views\Abstract\IMeasuringView.cs" />
@@ -239,6 +252,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\AboutView.resx">
+      <DependentUpon>AboutView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ConfigView.resx">
       <DependentUpon>ConfigView.cs</DependentUpon>
@@ -451,6 +467,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\mapwindow_logo.png" />
+    <None Include="Resources\img_mapwindow24.png" />
+    <None Include="Resources\img_component32.png" />
     <None Include="Resources\img_palette.png" />
     <None Include="Resources\img_compass.png" />
     <None Include="Resources\img_measure_length.png" />

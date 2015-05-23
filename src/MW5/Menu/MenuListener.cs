@@ -68,6 +68,10 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.About:
+                    var p = _context.Container.GetInstance<AboutPresenter>();
+                    p.Run();
+                    break;
                 case MenuKeys.AddDatabaseLayer:
                     var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)

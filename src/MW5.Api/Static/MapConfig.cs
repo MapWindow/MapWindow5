@@ -6,7 +6,7 @@ namespace MW5.Api.Static
 {
     public static class MapConfig
     {
-        private static GlobalSettings _settings = new GlobalSettings();
+        private static readonly GlobalSettings _settings = new GlobalSettings();
 
         static MapConfig()
         {
