@@ -57,9 +57,7 @@ namespace MW5.Menu
 
             map.ExtentsChanged += map_ExtentsChanged;
         }
-
         
-
         private void InitStatusBar()
         {
             var bar = _context.StatusBar;

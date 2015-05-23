@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -22,6 +23,7 @@ using MW5.UI.Docking;
 using MW5.UI.Forms;
 using MW5.UI.Menu;
 using MW5.UI.Style;
+using MW5.Views;
 
 namespace MW5
 {

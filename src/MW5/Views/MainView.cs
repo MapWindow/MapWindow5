@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -8,6 +9,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -30,6 +32,7 @@ namespace MW5.Views
             InitializeComponent();
 
             statusStripEx1.Items.Clear();
+            statusStripEx1.Refresh();
 
             ToolTipHelper.Init(superToolTip1);
 
@@ -89,6 +92,14 @@ namespace MW5.Views
         public override void ShowView(IWin32Window parent = null)
         {
             _dockingManager1.RestoreLayout();
+
+            Program.Timer.Stop();
+            Logger.Current.Info("Loading time: " + Program.Timer.Elapsed);
+
+            SplashView.Instance.Close();
+
+            ShowInTaskbar = true;
+            _context.DockPanels.Unlock();
 
             Application.Run(this);
         }

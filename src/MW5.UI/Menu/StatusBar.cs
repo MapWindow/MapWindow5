@@ -10,6 +10,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
@@ -19,6 +20,7 @@ namespace MW5.UI.Menu
         private readonly IMenuIndex _menuIndex;
         private ToolStripItem _progressMessage;
         private ToolStripProgressBar _progressBar;
+        private MainFrameBarManager _menuManager;
 
         public const string ProgressMsg = "statusProgressMsg";
         public const string ProgressBar = "statusProgressBar";

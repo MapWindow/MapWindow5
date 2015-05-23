@@ -67,14 +67,16 @@ namespace MW5.Views
                 view.ViewUpdating += OnViewUpdating;
 
                 var container = context.Container;
+                _statusBarListener = container.GetSingleton<StatusBarListener>();
                 _menuGenerator = container.GetSingleton<MenuGenerator>();
                 _menuListener = container.GetSingleton<MenuListener>();
                 _mapListener = container.GetSingleton<MapListener>();
                 _mainPluginListener = container.GetSingleton<MainPluginListener>();
                 _legendListener = container.GetSingleton<LegendListener>();
-                _statusBarListener = container.GetSingleton<StatusBarListener>();
+                
                 _menuUpdater = new MenuUpdater(_context, appContext.Map, PluginIdentity.Default);
 
+                SplashView.Instance.ShowStatus("Loading plugins");
                 appContext.InitPlugins(configService); // must be called after docking is initialized
 
                 LoadLastProject();

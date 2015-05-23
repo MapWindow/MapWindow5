@@ -232,6 +232,12 @@
     <Compile Include="Views\SetProjectionView.Designer.cs">
       <DependentUpon>SetProjectionView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\SplashView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SplashView.Designer.cs">
+      <DependentUpon>SplashView.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Configuration\GeneralConfigPage.resx">
       <DependentUpon>GeneralConfigPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -274,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SetProjectionView.resx">
       <DependentUpon>SetProjectionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SplashView.resx">
+      <DependentUpon>SplashView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\postbuild.bat">
       <Link>postbuild.bat</Link>
@@ -467,6 +476,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_mapwindow_logo.png" />
     <None Include="Resources\mapwindow_logo.png" />
     <None Include="Resources\img_mapwindow24.png" />
     <None Include="Resources\img_component32.png" />

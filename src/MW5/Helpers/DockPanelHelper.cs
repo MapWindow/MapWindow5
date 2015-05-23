@@ -37,7 +37,7 @@ namespace MW5.Helpers
             }
             finally
             {
-                panels.Unlock();
+                //panels.Unlock();
             }
 
             context.DockPanels.Legend.TabPosition = 0;

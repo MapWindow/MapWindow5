@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Threading;
 using MW5.Api.Static;
@@ -21,6 +22,8 @@ namespace MW5
 {
     static class Program
     {
+        public static Stopwatch Timer = new Stopwatch();
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -30,6 +33,13 @@ namespace MW5
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            var splashScreen = SplashView.Instance;
+            splashScreen.ShowStatus("Composing DI container");
+            splashScreen.Show();
+            Application.DoEvents();
+
+            Timer.Start();
+
             // TODO: need to initialize logger without application container
             var container = CreateContainer();
             CompositionRoot.Compose(container);
@@ -38,11 +48,13 @@ namespace MW5
 
             AttachExceptionHandler();
 
+            splashScreen.ShowStatus("Loading config");
+
             LoadConfig(container);
 
-            container.Run<MainPresenter>();
+            splashScreen.ShowStatus("Running application");
 
-            //configService.Save();   // it's saved on closing ConfigView
+            container.Run<MainPresenter>();
         }
 
         private static void AttachExceptionHandler()

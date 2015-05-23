@@ -109,7 +109,7 @@ namespace MW5.Views
             // 
             this._mapControl1.AllowDrop = true;
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 13.87264037331304D;
+            this._mapControl1.CurrentScale = 4.9584060519968247D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -134,6 +134,7 @@ namespace MW5.Views
             this._mapControl1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
             this._mapControl1.ScalebarVisible = true;
             this._mapControl1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this._mapControl1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
             this._mapControl1.ShowRedrawTime = false;
             this._mapControl1.ShowVersionNumber = false;
             this._mapControl1.Size = new System.Drawing.Size(434, 338);
@@ -219,6 +220,7 @@ namespace MW5.Views
             this.Controls.Add(this.dockingClientPanel1);
             this.Controls.Add(this.statusStripEx1);
             this.Name = "MainView";
+            this.ShowInTaskbar = false;
             this.Text = "MapWindow 5";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).EndInit();

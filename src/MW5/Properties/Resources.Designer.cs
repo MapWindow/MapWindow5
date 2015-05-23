@@ -493,6 +493,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_mapwindow_logo {
+            get {
+                object obj = ResourceManager.GetObject("img_mapwindow_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_mapwindow24 {
             get {
                 object obj = ResourceManager.GetObject("img_mapwindow24", resourceCulture);

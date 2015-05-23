@@ -248,7 +248,10 @@ namespace MW5.Data.Repository
                     if (fileItem != null)
                     {
                         string filename = fileItem.Filename;
-                        PopulateToolTip(e.ToolTip, filename);
+                        if (!PopulateToolTip(e.ToolTip, filename))
+                        {
+                            e.Cancel = true;
+                        }
                     }
                     return;
                 case RepositoryItemType.DatabaseLayer:
@@ -269,14 +272,20 @@ namespace MW5.Data.Repository
             tooltip.Body.Text += "Projection: " + item.Projection.ExportToProj4();
         }
 
-        private void PopulateToolTip(ToolTipInfo tooltip, string filename)
+        private bool PopulateToolTip(ToolTipInfo tooltip, string filename)
         {
             tooltip.Header.Text = Path.GetFileName(filename);
             
             using (var ds = GeoSource.Open(filename))
             {
-                tooltip.Body.Text = ds.ToolTipText;
+                if (ds != null)
+                {
+                    tooltip.Body.Text = ds.ToolTipText;
+                    return true;
+                }
             }
+
+            return false;
         }
 
         private void RepositoryTreeView_ItemDrag(object sender, ItemDragEventArgs e)
