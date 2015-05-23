@@ -34,17 +34,18 @@ namespace MW5.Services.Views
             this.components = new System.ComponentModel.Container();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.missingLayersGrid1 = new MissingLayersGrid();
+            this.missingLayersGrid1 = new MW5.Services.Controls.MissingLayersGrid();
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.missingLayersGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(405, 307);
+            this.btnCancel.Location = new System.Drawing.Point(415, 313);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 8;
@@ -53,9 +54,10 @@ namespace MW5.Services.Views
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(90, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(309, 307);
+            this.btnOk.Location = new System.Drawing.Point(319, 313);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(90, 26);
             this.btnOk.TabIndex = 7;
@@ -64,16 +66,19 @@ namespace MW5.Services.Views
             // 
             // missingLayersGrid1
             // 
+            this.missingLayersGrid1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.missingLayersGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.missingLayersGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
-            this.missingLayersGrid1.Appearance.AnyCell.Borders.Right = new GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.missingLayersGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.missingLayersGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
             this.missingLayersGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
             this.missingLayersGrid1.BackColor = System.Drawing.SystemColors.Window;
             this.missingLayersGrid1.FreezeCaption = false;
-            this.missingLayersGrid1.Location = new System.Drawing.Point(5, 38);
+            this.missingLayersGrid1.Location = new System.Drawing.Point(8, 34);
             this.missingLayersGrid1.Name = "missingLayersGrid1";
-            this.missingLayersGrid1.Size = new System.Drawing.Size(495, 263);
+            this.missingLayersGrid1.Size = new System.Drawing.Size(495, 273);
             this.missingLayersGrid1.TabIndex = 9;
             this.missingLayersGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
             this.missingLayersGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
@@ -90,7 +95,7 @@ namespace MW5.Services.Views
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 9);
+            this.label1.Location = new System.Drawing.Point(6, 14);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(389, 13);
             this.label1.TabIndex = 10;
@@ -101,7 +106,7 @@ namespace MW5.Services.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(502, 336);
+            this.ClientSize = new System.Drawing.Size(510, 351);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.missingLayersGrid1);
             this.Controls.Add(this.btnCancel);

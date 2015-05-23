@@ -24,6 +24,7 @@ namespace MW5.Services.Serialization
             Guid = layer.Guid;
             LayerType = layer.LayerType;
             Name = layer.Name;
+            SkipLoading = false;
         }
 
         public void RestoreLayer(ILegendLayer layer)
@@ -51,5 +52,7 @@ namespace MW5.Services.Serialization
         [DataMember] public XmlElement Layer { get; set; }
         [DataMember] public LayerIdentity Identity { get; set; }
         [DataMember] public LayerType LayerType { get; set; }
+
+        public bool SkipLoading { get; set; }
     }
 }

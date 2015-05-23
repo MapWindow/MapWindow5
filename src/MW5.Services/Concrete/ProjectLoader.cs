@@ -121,6 +121,12 @@ namespace MW5.Services.Concrete
 
             foreach (var xmlLayer in project.Layers)
             {
+                if (xmlLayer.SkipLoading)
+                {
+                    Logger.Current.Info("Layer loading was skipped: " + xmlLayer.Identity);
+                    continue;
+                }
+                
                 if (_layerService.AddLayerIdentity(xmlLayer.Identity))
                 {
                     int handle = _layerService.LastLayerHandle;
@@ -132,10 +138,8 @@ namespace MW5.Services.Concrete
             return true;
         }
 
-        private bool ValidateLayers(XmlProject project)
+        private void TryFindLayers(XmlProject project, List<MissingLayer> missingLayers)
         {
-            var missingLayers = new List<MissingLayer>();
-
             // in case project has moved, let's try to use relative filename
             foreach (var xmlLayer in project.Layers)
             {
@@ -147,9 +151,10 @@ namespace MW5.Services.Concrete
 
                         if (!File.Exists(filename))
                         {
-                            var ml = new MissingLayer(xmlLayer.Name, xmlLayer.Identity.Filename, xmlLayer);
+                            var ml = new MissingLayer(xmlLayer.Name, xmlLayer.Identity.Filename, xmlLayer.LayerType, xmlLayer);
+
                             missingLayers.Add(ml);
-                            
+
                             continue;
                         }
 
@@ -158,6 +163,13 @@ namespace MW5.Services.Concrete
                     }
                 }
             }
+        }
+
+        private bool ValidateLayers(XmlProject project)
+        {
+            var missingLayers = new List<MissingLayer>();
+
+            TryFindLayers(project, missingLayers);
 
             // if it didn't help, let's ask offer the user to find them
             if (missingLayers.Any())
@@ -171,9 +183,16 @@ namespace MW5.Services.Concrete
                 foreach (var layer in missingLayers)
                 {
                     var xmlLayer = layer.Tag as XmlLayer;
-                    if (xmlLayer != null && File.Exists(layer.Filename))
+                    if (xmlLayer != null )
                     {
-                        xmlLayer.Identity.Filename = layer.Filename;
+                        if (File.Exists(layer.Filename))
+                        {
+                            xmlLayer.Identity.Filename = layer.Filename;
+                        }
+                        else
+                        {
+                            xmlLayer.SkipLoading = true;
+                        }
                     }
                 }
             }

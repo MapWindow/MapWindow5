@@ -93,6 +93,11 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Concrete\ProjectLoader.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Serialization\IProjectLoader.cs" />
     <Compile Include="Concrete\ImageSerializationService.cs" />
     <Compile Include="Serialization\Legacy\MapWin4Project.cs" />
@@ -157,8 +162,15 @@
     <Content Include="Data\MapWindow4Project.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\img_raster.png" />
+    <None Include="Resources\img_geometry.png" />
+    <None Include="Resources\img_question32.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CreateLayerView.resx">
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </EmbeddedResource>

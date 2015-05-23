@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Shared;
 using Syncfusion.Diagnostics;
 using Syncfusion.GridHelperClasses;
 using Syncfusion.Windows.Forms.Grid;
@@ -44,7 +45,8 @@ namespace MW5.UI.Controls
                     string path = Path.GetDirectoryName(s);
                     _dialog.InitialDirectory = path;
                     _dialog.FileName = Path.GetFileName(s);
-                    _dialog.Filter = "Custom|*" + Path.GetExtension(s);
+                    string filter = "*" + Path.GetExtension(s);
+                    _dialog.Filter = filter + "|" + filter;
                 }
                 catch {}   // ignore
 
@@ -57,13 +59,12 @@ namespace MW5.UI.Controls
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Logger.Current.Warn("OpenFileDialogCellRenderer: failed to edit datasource path.", ex);
             }
         }
 
         protected override Rectangle OnLayout(int rowIndex, int colIndex, GridStyleInfo style, Rectangle innerBounds, Rectangle[] buttonsBounds)
         {
-            TraceUtil.TraceCurrentMethodInfo(rowIndex, colIndex, style, innerBounds, buttonsBounds);
             Rectangle rightArea;
 
             if (Grid.IsRightToLeft())
