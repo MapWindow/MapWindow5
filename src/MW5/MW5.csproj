@@ -115,6 +115,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AssemblyInfo.cs" />
+    <Compile Include="Controls\DriversGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\LegendCommand.cs" />
     <Compile Include="Controls\LegendDockPanel.cs">
       <SubType>UserControl</SubType>
@@ -152,6 +155,7 @@
     </Compile>
     <Compile Include="Views\Abstract\IAboutView.cs" />
     <Compile Include="Views\Abstract\ICreatePyramidsView.cs" />
+    <Compile Include="Views\Abstract\IDriversView.cs" />
     <Compile Include="Views\Abstract\ILegendGroupView.cs" />
     <Compile Include="Views\Abstract\IMeasuringView.cs" />
     <Compile Include="Views\Abstract\IProjectionView.cs" />
@@ -190,10 +194,10 @@
     <Compile Include="Views\CreatePyramidsView.Designer.cs">
       <DependentUpon>CreatePyramidsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ErrorView.cs">
+    <Compile Include="Forms\ErrorView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\ErrorView.Designer.cs">
+    <Compile Include="Forms\ErrorView.Designer.cs">
       <DependentUpon>ErrorView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\LegendGroupPresenter.cs" />
@@ -239,11 +243,18 @@
     <Compile Include="Views\SetProjectionView.Designer.cs">
       <DependentUpon>SetProjectionView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\SplashView.cs">
+    <Compile Include="Forms\SplashView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\SplashView.Designer.cs">
+    <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DriversPresenter.cs" />
+    <Compile Include="Views\DriversView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DriversView.Designer.cs">
+      <DependentUpon>DriversView.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Configuration\GeneralConfigPage.resx">
       <DependentUpon>GeneralConfigPage.cs</DependentUpon>
@@ -275,8 +286,11 @@
     <EmbeddedResource Include="Views\CreatePyramidsView.resx">
       <DependentUpon>CreatePyramidsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\ErrorView.resx">
+    <EmbeddedResource Include="Forms\ErrorView.resx">
       <DependentUpon>ErrorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DriversView.resx">
+      <DependentUpon>DriversView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LegendGroupView.resx">
       <DependentUpon>LegendGroupView.cs</DependentUpon>
@@ -291,7 +305,7 @@
     <EmbeddedResource Include="Views\SetProjectionView.resx">
       <DependentUpon>SetProjectionView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\SplashView.resx">
+    <EmbeddedResource Include="Forms\SplashView.resx">
       <DependentUpon>SplashView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\postbuild.bat">

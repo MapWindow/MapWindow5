@@ -21,7 +21,7 @@ namespace MW5
                 // in delegates called by Invoke or BeginInvoke.
                 Dispatcher.CurrentDispatcher.UnhandledException += CurrentDispatcher_UnhandledException;
 
-                // last resotr, the app will terminate anyway
+                // last resort, the app will be terminated anyway
                 AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             }
         }

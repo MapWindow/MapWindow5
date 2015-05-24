@@ -68,9 +68,11 @@ namespace MW5.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.SupportedDrivers:
+                    _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
+                    break;
                 case MenuKeys.About:
-                    var p = _context.Container.GetInstance<AboutPresenter>();
-                    p.Run();
+                    _context.Container.Run<AboutPresenter>();
                     break;
                 case MenuKeys.AddDatabaseLayer:
                     var connection = _databaseService.PromptUserForConnection();

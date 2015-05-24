@@ -10,7 +10,7 @@ namespace MW5.Api.Concrete
 {
     public class DatasourceDriver
     {
-        private IGdalDriver _driver;
+        private readonly IGdalDriver _driver;
 
         internal DatasourceDriver(IGdalDriver driver)
         {
@@ -40,6 +40,11 @@ namespace MW5.Api.Concrete
             var s = _driver.MetadataItem[metadataIndex];
             var parts = s.Split('=');
             return parts.Length == 2 ? parts[1] : string.Empty;
+        }
+
+        public string Description
+        {
+            get { return _driver.Description; }
         }
     }
 }

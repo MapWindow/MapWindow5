@@ -34,6 +34,7 @@
         public const string ClearSelection = "ClearSelection";
 
         public const string About = "HelpAbout";
+        public const string SupportedDrivers = "HelpSupportedDrivers";
     }
 }
 

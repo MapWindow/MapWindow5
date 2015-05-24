@@ -66,6 +66,7 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="Concrete\DatasourceDriver.cs" />
+    <Compile Include="Concrete\DriverManager.cs" />
     <Compile Include="Concrete\EditorSettings.cs" />
     <Compile Include="Concrete\GeoAngle.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />

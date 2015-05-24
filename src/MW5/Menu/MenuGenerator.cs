@@ -90,7 +90,11 @@ namespace MW5.Menu
         private void InitHelpMenu()
         {
             var items = _context.Menu.HelpMenu.SubItems;
-            items.AddButton("About", MenuKeys.About, PluginIdentity.Default);
+            items.AddButton("Supported drivers", MenuKeys.SupportedDrivers, PluginIdentity.Default);
+            items.AddButton("About", MenuKeys.About, PluginIdentity.Default).BeginGroup = true;
+
+            _context.Menu.HelpMenu.Update();
+            
         }
 
         #endregion
