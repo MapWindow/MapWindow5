@@ -12,6 +12,7 @@ using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Services.Concrete;
 using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.Shared.Log;
@@ -35,16 +36,15 @@ namespace MW5
 
             ExceptionHandler.Attach();
 
+            var logger = new LoggingService();      // this will initialize Logger.Current
+            logger.Info("APPLICATION STARUP");
+
             ShowSplashScreen();
 
             Timer.Start();
 
-            // TODO: need to initialize logger without application container
             var container = CreateContainer();
             CompositionRoot.Compose(container);
-            var logger = container.Resolve<ILoggingService>();      // this will initialize Logger.Current
-            
-            logger.Info("APPLICATION STARUP");
 
             SplashView.Instance.ShowStatus("Loading config");
             LoadConfig(container);

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
-using MW5.Plugins.Mvp;
-using MW5.Plugins.Services;
 using MW5.Shared;
-using MW5.UI.Forms;
 using MW5.Views;
 
 namespace MW5
@@ -32,7 +26,7 @@ namespace MW5
             }
         }
 
-        private static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
             Logger.Current.Error("Application_ThreadException", e.Exception);
 

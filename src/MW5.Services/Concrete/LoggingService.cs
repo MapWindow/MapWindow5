@@ -15,27 +15,36 @@ namespace MW5.Services.Concrete
 
         private readonly SortableBindingList<ILogEntry> _entries = new SortableBindingList<ILogEntry>();
 
-        private readonly IAppContext _context;
+        private IAppContext _context;
 
         public event EventHandler<LogEventArgs> EntryAdded;
 
-        public LoggingService(IAppContext context)
+        public LoggingService()
         {
+            _log4NetLogger = LogManager.GetLogger(typeof(Logger));
+
+            if (Logger.Current == null)
+            {
+                Logger.Current = this;
+            }
+        }
+
+        public void Init(object appContext)
+        {
+            var context = appContext as IAppContext;
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
-
-            _log4NetLogger = LogManager.GetLogger(typeof(Logger));
 
             var broadcaster = _context.Container.Resolve<IBroadcasterService>();
             EntryAdded += (s, e) =>
             {
                 broadcaster.BroadcastEvent(p => p.LogEntryAdded_, this, new LogEventArgs(e.Entry));
             };
+        }
 
-            if (Logger.Current == null)
-            {
-                Logger.Current = this;
-            }
+        private bool AppContextReady()
+        {
+            return _context != null && _context.Initialized;
         }
 
         void IApplicationCallback.Error(string tagOfSender, string errorMsg)
@@ -45,7 +54,7 @@ namespace MW5.Services.Concrete
 
         void IApplicationCallback.Progress(string tagOfSender, int percent, string message)
         {
-            if (_context.Initialized)
+            if (AppContextReady())
             {
                 _context.StatusBar.ShowProgress(message, percent);
             }
@@ -53,7 +62,7 @@ namespace MW5.Services.Concrete
 
         void IApplicationCallback.ClearProgress()
         {
-            if (_context.Initialized)
+            if (AppContextReady())
             {
                 _context.StatusBar.HideProgress();
             }

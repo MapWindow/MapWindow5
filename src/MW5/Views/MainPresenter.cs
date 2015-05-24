@@ -59,7 +59,7 @@ namespace MW5.Views
                 }
 
                 appContext.Init(view, projectService, configService, legendPresenter, repository);
-
+                
                 view.Map.Initialize();
                 view.Map.ApplyConfig(configService);
 
@@ -78,6 +78,10 @@ namespace MW5.Views
 
                 SplashView.Instance.ShowStatus("Loading plugins");
                 appContext.InitPlugins(configService); // must be called after docking is initialized
+
+                // this will display progress updates and debug window
+                // file based-logger is already working
+                Logger.Current.Init(appContext);       
 
                 LoadLastProject();
             }
