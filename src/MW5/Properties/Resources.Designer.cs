@@ -473,6 +473,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_broken_robot {
+            get {
+                object obj = ResourceManager.GetObject("img_broken_robot", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_compass {
             get {
                 object obj = ResourceManager.GetObject("img_compass", resourceCulture);
@@ -486,6 +496,26 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap img_component32 {
             get {
                 object obj = ResourceManager.GetObject("img_component32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_error_orange32 {
+            get {
+                object obj = ResourceManager.GetObject("img_error_orange32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_error_red32 {
+            get {
+                object obj = ResourceManager.GetObject("img_error_red32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

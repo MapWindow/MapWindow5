@@ -131,6 +131,7 @@
     </Compile>
     <Compile Include="Controls\LocatorPresenter.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="ExceptionHandler.cs" />
     <Compile Include="Listeners\MainPluginListener.cs" />
     <Compile Include="Menu\ContextMenuCommand.cs" />
     <Compile Include="Menu\ContextMenuPresenter.cs" />
@@ -188,6 +189,12 @@
     </Compile>
     <Compile Include="Views\CreatePyramidsView.Designer.cs">
       <DependentUpon>CreatePyramidsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ErrorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ErrorView.Designer.cs">
+      <DependentUpon>ErrorView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\LegendGroupPresenter.cs" />
     <Compile Include="Views\LegendGroupView.cs">
@@ -267,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CreatePyramidsView.resx">
       <DependentUpon>CreatePyramidsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ErrorView.resx">
+      <DependentUpon>ErrorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LegendGroupView.resx">
       <DependentUpon>LegendGroupView.cs</DependentUpon>
@@ -476,6 +486,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_broken_robot.jpg" />
+    <None Include="Resources\img_error_red32.png" />
+    <None Include="Resources\img_error_orange32.png" />
     <None Include="Resources\img_mapwindow_logo.png" />
     <None Include="Resources\mapwindow_logo.png" />
     <None Include="Resources\img_mapwindow24.png" />

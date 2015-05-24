@@ -33,10 +33,9 @@ namespace MW5
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var splashScreen = SplashView.Instance;
-            splashScreen.ShowStatus("Composing DI container");
-            splashScreen.Show();
-            Application.DoEvents();
+            ExceptionHandler.Attach();
+
+            ShowSplashScreen();
 
             Timer.Start();
 
@@ -44,39 +43,25 @@ namespace MW5
             var container = CreateContainer();
             CompositionRoot.Compose(container);
             var logger = container.Resolve<ILoggingService>();      // this will initialize Logger.Current
+            
             logger.Info("APPLICATION STARUP");
 
-            AttachExceptionHandler();
-
-            splashScreen.ShowStatus("Loading config");
-
+            SplashView.Instance.ShowStatus("Loading config");
             LoadConfig(container);
 
-            splashScreen.ShowStatus("Running application");
-
+            SplashView.Instance.ShowStatus("Running application");
             container.Run<MainPresenter>();
         }
 
-        private static void AttachExceptionHandler()
+        private static void ShowSplashScreen()
         {
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-            
-            // Occurs when a thread exception is thrown and uncaught during execution of a delegate by way of Invoke or BeginInvoke.
-            //Dispatcher.CurrentDispatcher.UnhandledException += CurrentDispatcher_UnhandledException;
+            var splashScreen = SplashView.Instance;
+            splashScreen.ShowStatus("Composing DI container");
+            splashScreen.Show();
+            Application.DoEvents();
         }
 
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Logger.Current.Error("AppDoman unhandled exception", e.ExceptionObject as Exception, "");
-            var ex = e.ExceptionObject as Exception;
-            string s = ex != null ? ex.Message : "not a System.Exception";
-            if (ex != null && ex.InnerException != null)
-            {
-                s += Environment.NewLine + ex.InnerException.Message;
-            }
-
-            MessageBox.Show("Unhandled exception : " + s);
-        }
+       
 
         private static void LoadConfig(IApplicationContainer container)
         {

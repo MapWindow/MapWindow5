@@ -7,6 +7,29 @@ namespace MW5.Services.Helpers
 {
     internal static class ExceptionHelper
     {
+        public static string ExceptionToString(this Exception ex)
+        {
+            string msg = string.Empty;
+            ExceptionToString(ex, ref msg);
+            return msg;
+        }
+
+        private static void ExceptionToString(Exception ex, ref string msg)
+        {
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                msg += Environment.NewLine + Environment.NewLine;
+            }
+
+            msg += "Description: " + ex.Message.ToUpper() + Environment.NewLine + Environment.NewLine;
+            msg += "Stack trace: " + Environment.NewLine + ex.StackTrace;
+
+            if (ex.InnerException != null)
+            {
+                ExceptionToString(ex.InnerException, ref msg);
+            }
+        }
+        
         internal static string Report(Exception ex)
         {
             if (ex is ReflectionTypeLoadException)
