@@ -181,8 +181,11 @@ namespace MW5.UI.Style
             if (tree != null)
             {
                 tree.MetroColor = _metroColor;
+                tree.BorderColor = Color.LightGray;
+                tree.BorderStyle = BorderStyle.FixedSingle;
+
 #if STYLE2010
-                    tree.Style = TreeStyle.Office2010;
+                tree.Style = TreeStyle.Office2010;
 #else
                 tree.Style = TreeStyle.Metro;
 #endif
@@ -304,22 +307,21 @@ namespace MW5.UI.Style
                 tab.BorderVisible = false;
                 tab.FocusOnTabClick = false;
                 tab.RotateTextWhenVertical = true;
-                tab.TabStyle = typeof(TabRendererMetro);
 
                 if (tab.Alignment == TabAlignment.Left)
                 {
+                    tab.TabStyle = typeof(TabRendererMetro);
                     tab.TextLineAlignment = StringAlignment.Near;
                     tab.ActiveTabFont = tab.Font;
                     tab.Padding = new Point(7, 10);
-                    tab.ActiveTabColor = Color.FromKnownColor(KnownColor.Control);         // 200
-                    tab.TabPanelBackColor = Color.Gray;      //112; 141
+                    tab.ActiveTabColor = Color.FromKnownColor(KnownColor.Control); 
+                    tab.TabPanelBackColor = Color.Gray; 
                     tab.InactiveTabColor = Color.Gray;
                 }
                 else
                 {
                     tab.Padding = new Point(10, 5);
-                    //tab.TabPanelBackColor = Color.FromArgb(141, 141, 141);
-                    //tab.InactiveTabColor = Color.FromArgb(141, 141, 141);
+                    tab.TabStyle = typeof(TabRendererBlendDark);
                 }
 
                 tab.FixedSingleBorderColor = _metroColor;

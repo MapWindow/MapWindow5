@@ -13,6 +13,7 @@ using MW5.Data.Properties;
 using MW5.Data.Views.Abstract;
 using MW5.Data.Views.Controls;
 using MW5.UI.Forms;
+using MW5.UI.Helpers;
 
 namespace MW5.Data.Views
 {
@@ -37,7 +38,7 @@ namespace MW5.Data.Views
             style.ImageIndex = 0;
             databaseLayersGrid1.Adapter.SetColumnIcon(r => r, GetIcon);
 
-            databaseLayersGrid1.Adapter.AdjustColumnWidths();
+            databaseLayersGrid1.AdjustColumnWidths();
             databaseLayersGrid1.Adapter.HotTracking = true;
         }
 

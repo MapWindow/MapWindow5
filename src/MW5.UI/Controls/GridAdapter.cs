@@ -11,6 +11,7 @@ using MW5.Api.Events;
 using MW5.Plugins.Concrete;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.UI.Helpers;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
@@ -98,16 +99,6 @@ namespace MW5.UI.Controls
             }
         }
 
-        public void AdjustColumnWidths()
-        {
-            _grid.TableModel.ColWidths.ResizeToFit(GridRangeInfo.Table());
-        }
-
-        public void AdjustRowHeights()
-        {
-            _grid.TableModel.RowHeights.ResizeToFit(GridRangeInfo.Table());
-        }
-
         public bool AutoAdjustRowHeights
         {
             get { return _autoAdjustRowHeights; }
@@ -127,7 +118,7 @@ namespace MW5.UI.Controls
 
         private void TableModel_ColWidthsChanged(object sender, GridRowColSizeChangedEventArgs e)
         {
-            AdjustRowHeights();
+            _grid.AdjustRowHeights();
         }
 
         public event KeyEventHandler KeyDown
@@ -178,7 +169,6 @@ namespace MW5.UI.Controls
             {
                 if (index < 0 || index >= _grid.Table.Records.Count)
                 {
-                    Logger.Current.Warn("GridListControl: Invalid invalid index");
                     return null;
                 }
                 

@@ -9,6 +9,9 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls
 {
+    /// <summary>
+    /// Syncfusion's TreeViewAdv with support of icon list and tooltips.
+    /// </summary>
     public abstract class TreeViewBase: TreeViewAdv
     {
         private SuperToolTip _lastTooltip = new SuperToolTip();
@@ -21,7 +24,11 @@ namespace MW5.UI.Controls
             LostFocus += (s, e) => HideToolTip();
 
             CreateImageList();
+
+            ShowSuperTooltip = true;
         }
+
+        public bool ShowSuperTooltip { get; set; }
 
         public int ToolTipDuration { get; set; }
 
@@ -56,6 +63,12 @@ namespace MW5.UI.Controls
             lock (_lastTooltip)
             {
                 _lastTooltip.Hide();
+
+                if (!ShowSuperTooltip)
+                {
+                    return;
+                }
+
                 _lastTooltip = new SuperToolTip(this);
 
                 var rect = SelectedNode.TextBounds;

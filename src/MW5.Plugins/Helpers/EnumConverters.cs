@@ -44,6 +44,18 @@ namespace MW5.Plugins.Helpers
                     return "Layer creation option list";
                 case GdalDriverMetadata.OgrDriver:
                     return "Is OGR driver";
+                case GdalDriverMetadata.Raster:
+                    return "Is raster";
+                case GdalDriverMetadata.Vector:
+                    return "Is vector";
+                case GdalDriverMetadata.NotNullFields:
+                    return "Not null fields";
+                case GdalDriverMetadata.DefaultFields:
+                    return "Default fields";
+                case GdalDriverMetadata.NotNullGeometries:
+                    return "Not null geometries";
+                case GdalDriverMetadata.CreateFieldDataTypes:
+                    return "Creation field data types";
             }
 
             return string.Empty;

@@ -6,6 +6,24 @@ namespace MW5.Shared
 {
     public static class PathHelper
     {
+        public static void OpenUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                Logger.Current.Warn("Attempt to open an empty link.");
+                return;
+            }
+            
+            try
+            {
+                Process.Start(url);
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to open link: " + url, ex);
+            }
+        }
+
         public static String GetFullPathWithoutExtension(String path)
         {
             return Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path));

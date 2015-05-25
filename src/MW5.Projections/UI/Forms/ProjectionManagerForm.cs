@@ -12,6 +12,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
 using MW5.Projections.BL;
+using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Forms;
 
@@ -92,15 +93,8 @@ namespace MW5.Projections.UI.Forms
         /// </summary>
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            try
-            {
-                string link = "http://spatialreference.org/ref/epsg/" + txtCode.Text + "/";
-                System.Diagnostics.Process.Start(link);
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Info("Unable to open link that was clicked." + Environment.NewLine + ex.Message);
-            }
+            string url = "http://spatialreference.org/ref/epsg/" + txtCode.Text + "/";
+            PathHelper.OpenUrl(url);
         }
         
         /// <summary>

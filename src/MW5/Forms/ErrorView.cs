@@ -90,14 +90,7 @@ namespace MW5.Views
         {
             Clipboard.SetText(_exception.ExceptionToString());
 
-            try
-            {
-                Process.Start(ReportIssueUrl);
-            }
-            catch (Exception ex)
-            {
-                Logger.Current.Warn("Failed to open URL: " + ReportIssueUrl, ex);
-            }
+            PathHelper.OpenUrl(ReportIssueUrl);
         }
 
         private void treeViewAdv1_AfterSelect(object sender, EventArgs e)

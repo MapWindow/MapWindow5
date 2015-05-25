@@ -136,6 +136,7 @@ namespace MW5.Projections.UI.Forms
             this._projectionTreeView1.RecalculateExpansion = false;
             this._projectionTreeView1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this._projectionTreeView1.ShowFocusRect = true;
+            this._projectionTreeView1.ShowSuperTooltip = true;
             this._projectionTreeView1.Size = new System.Drawing.Size(450, 443);
             this._projectionTreeView1.SuspendExpandRecalculate = true;
             this._projectionTreeView1.TabIndex = 4;
@@ -156,7 +157,7 @@ namespace MW5.Projections.UI.Forms
             this.txtSearch.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.txtSearch.Cue = null;
-            this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtSearch.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.txtSearch.FarImage = global::MW5.Projections.Properties.Resources.img_clear_textbox;
             this.txtSearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.txtSearch.Location = new System.Drawing.Point(12, 12);

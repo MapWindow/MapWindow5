@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Controls;
+using MW5.Data.Views;
+using MW5.Data.Views.Abstract;
 using MW5.Helpers;
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
@@ -32,7 +34,7 @@ namespace MW5
                 .RegisterView<ILegendGroupView, LegendGroupView>()
                 .RegisterView<IMeasuringView, MeasuringView>()
                 .RegisterView<IAboutView, AboutView>()
-                .RegisterView<IDriversView, DriversView>()
+                
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterSingleton<IAppView, AppView>()

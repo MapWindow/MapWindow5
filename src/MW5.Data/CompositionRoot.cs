@@ -1,4 +1,5 @@
 ﻿using MW5.Api.Helpers;
+using MW5.Data.Enums;
 using MW5.Data.Repository;
 using MW5.Data.Services;
 using MW5.Data.Views;
@@ -15,6 +16,7 @@ namespace MW5.Data
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterView<IAddConnectionView, AddConnectionView>()
+                .RegisterView<IDriversView, DriversView>()
                 .RegisterSingleton<IRepository, DataRepository>()
                 .RegisterService<IGeoDatabaseService, GeoDatabaseService>()
                 .RegisterService<AddConnectionModel>()
@@ -22,6 +24,7 @@ namespace MW5.Data
                 .RegisterService<IDatabaseLayersView, DatabaseLayersView>();
 
             EnumHelper.RegisterConverter(new RepositoryItemTypeConverter());
+            EnumHelper.RegisterConverter(new DriverFilterConverter());
         }
     }
 }

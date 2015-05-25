@@ -83,6 +83,8 @@
     <Compile Include="Controls\CustomGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\LinkLabelCellModelEx.cs" />
+    <Compile Include="Controls\LinkLabelCellRendererEx.cs" />
     <Compile Include="Controls\OpenFileDialogCellModel.cs" />
     <Compile Include="Controls\OpenFileDialogCellRenderer.cs" />
     <Compile Include="Controls\ImageCombo.cs">
@@ -160,6 +162,7 @@
     </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Helpers\GridHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
     <Compile Include="Legacy\LayersDialog.cs">
       <SubType>Form</SubType>

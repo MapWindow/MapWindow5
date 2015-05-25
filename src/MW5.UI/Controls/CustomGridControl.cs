@@ -34,7 +34,6 @@ namespace MW5.UI.Controls
         [Browsable(false)]
         public bool WrapWithPanel { get; set; }
 
-
         /// <summary>
         /// Checks if the values typed in double and integer columns are numbers.
         /// </summary>

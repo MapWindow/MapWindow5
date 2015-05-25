@@ -1030,6 +1030,12 @@
         VirtualIo = 12,
         LayerCreationOptionList = 13,
         OgrDriver = 14,
+        Raster = 15,
+        Vector = 16,
+        NotNullFields = 17,
+        DefaultFields = 18,
+        NotNullGeometries = 19,
+        CreateFieldDataTypes = 20,
     }
 
     public enum DataType
@@ -1434,5 +1440,16 @@
         Green = 1,
         Blue = 2,
         Alpha = 3,
+    }
+
+    public enum DriverFilter
+    {
+        All = 0,
+        Create = 1,
+        CreateCopy = 2,
+        VirtualIo = 3,
+        HasCreationOptions = 4,
+        HasOpenOptions = 5,
+        HasLayerCreationOptions = 6,
     }
 }

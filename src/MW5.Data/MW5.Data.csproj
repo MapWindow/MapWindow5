@@ -63,6 +63,7 @@
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Syncfusion.GridHelperClasses.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grouping.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -100,6 +101,7 @@
     <Compile Include="Db\MySqlConnection.cs" />
     <Compile Include="Db\PostGisConnection.cs" />
     <Compile Include="Db\SpatiaLiteConnection.cs" />
+    <Compile Include="Enums\Converters.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Repository\IExpandableItem.cs" />
     <Compile Include="Repository\ILayerItem.cs" />
@@ -139,6 +141,7 @@
     </Compile>
     <Compile Include="Views\Abstract\IAddConnectionView.cs" />
     <Compile Include="Views\Abstract\IDatabaseLayersView.cs" />
+    <Compile Include="Views\Abstract\IDriversView.cs" />
     <Compile Include="Views\Abstract\IImportLayerView.cs" />
     <Compile Include="Views\AddConnectionModel.cs" />
     <Compile Include="Views\AddConnectionView.cs">
@@ -151,6 +154,15 @@
     <Compile Include="Views\Controls\DatabaseLayersGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Views\Controls\DriverMetadataGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\DriverOptionsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\DriversTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Views\Controls\VectorLayerInfo.cs" />
     <Compile Include="Views\DatabaseLayersPresenter.cs" />
     <Compile Include="Views\DatabaseLayersView.cs">
@@ -158,6 +170,13 @@
     </Compile>
     <Compile Include="Views\DatabaseLayersView.Designer.cs">
       <DependentUpon>DatabaseLayersView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DriversPresenter.cs" />
+    <Compile Include="Views\DriversView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\DriversView.Designer.cs">
+      <DependentUpon>DriversView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportLayerPresenter.cs" />
     <Compile Include="Views\ImportLayerView.cs">
@@ -181,6 +200,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DatabaseLayersView.resx">
       <DependentUpon>DatabaseLayersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\DriversView.resx">
+      <DependentUpon>DriversView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ImportLayerView.resx">
       <DependentUpon>ImportLayerView.cs</DependentUpon>

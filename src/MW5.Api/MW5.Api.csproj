@@ -60,6 +60,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
@@ -67,6 +68,8 @@
     </Compile>
     <Compile Include="Concrete\DatasourceDriver.cs" />
     <Compile Include="Concrete\DriverManager.cs" />
+    <Compile Include="Concrete\DriverMetadata.cs" />
+    <Compile Include="Concrete\DriverOption.cs" />
     <Compile Include="Concrete\EditorSettings.cs" />
     <Compile Include="Concrete\GeoAngle.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />

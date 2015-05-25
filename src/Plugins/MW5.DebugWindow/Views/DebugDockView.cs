@@ -81,8 +81,8 @@ namespace MW5.Plugins.DebugWindow.Views
             style.ImageList = imageList1;
             style.ImageIndex = 0;
 
-            adapter.AdjustColumnWidths();
-            adapter.AdjustRowHeights();
+            _listControl.AdjustColumnWidths();
+            _listControl.AdjustRowHeights();
             adapter.AutoAdjustRowHeights = true;
 
             adapter.SetColumnIcon(r => r.Level, GetIcon);
@@ -91,7 +91,7 @@ namespace MW5.Plugins.DebugWindow.Views
         void Current_EntryAdded(object sender, LogEventArgs e)
         {
             // TODO: do it for the last row only
-            _listControl.Adapter.AdjustRowHeights();
+            _listControl.AdjustRowHeights();
         }
 
         private int GetIcon(ILogEntry entry)

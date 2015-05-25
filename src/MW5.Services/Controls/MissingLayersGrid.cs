@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Services.Properties;
 using MW5.UI.Controls;
+using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Services.Controls
@@ -87,7 +88,7 @@ namespace MW5.Services.Controls
 
         private void UpdateColumnState()
         {
-            Adapter.AdjustColumnWidths();
+            this.AdjustColumnWidths();
 
             var style = Adapter.GetColumnStyle(item => item.Name);
             if (style != null)
