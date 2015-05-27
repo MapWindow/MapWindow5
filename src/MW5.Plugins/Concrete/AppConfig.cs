@@ -98,7 +98,13 @@ namespace MW5.Plugins.Concrete
         public bool NeverShowPyramidDialog { get; set; }
 
         [DataMember]
+        public bool NeverShowSpatialIndexDialog { get; set; }
+
+        [DataMember]
         public bool CreatePyramidsOnOpening { get; set; }
+
+        [DataMember]
+        public bool CreateSpatialIndexOnOpening { get; set; }
 
         [DataMember]
         public TiffCompression PyramidCompression { get; set; }

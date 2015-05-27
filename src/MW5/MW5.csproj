@@ -108,6 +108,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Configuration\LayerConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\LayerConfigPage.Designer.cs">
+      <DependentUpon>LayerConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\MapConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -261,6 +267,9 @@
     <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Configuration\LayerConfigPage.resx">
+      <DependentUpon>LayerConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration\MapConfigPage.resx">
       <DependentUpon>MapConfigPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -508,6 +517,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_open_layer32.png" />
     <None Include="Resources\img_globe32.png" />
     <None Include="Resources\img_plugin32.png" />
     <None Include="Resources\img_map32.png" />

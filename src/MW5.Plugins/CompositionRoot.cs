@@ -28,6 +28,8 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new ScalebarUnitsConverter());
             EnumHelper.RegisterConverter(new ResizeBehaviorConverter());
             EnumHelper.RegisterConverter(new AutoToggleConverter());
+            EnumHelper.RegisterConverter(new ProjectionAbsenceConverter());
+            EnumHelper.RegisterConverter(new ProjectionMistmatchConverter());
         }
     }
 }

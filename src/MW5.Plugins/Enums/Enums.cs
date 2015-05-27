@@ -154,6 +154,7 @@
         General = 0,
         Map = 1,
         Plugins = 2,
-        Custom = 3,
+        LayerOpening = 3,
+        Custom = 4,
     }
 }

@@ -55,7 +55,7 @@ namespace MW5.Listeners
 
             var config = _configService.Config;
 
-            if (config.NeverShowProjectionDialog && config.CreatePyramidsOnOpening)
+            if (config.NeverShowPyramidDialog && config.CreatePyramidsOnOpening)
             {
                 MapConfig.CompressOverviews = config.PyramidCompression;
                 bool result = raster.BuildDefaultOverviews(config.PyramidSampling);

@@ -34,6 +34,7 @@ namespace MW5.Views
             _pages.Clear();
             _pages.Add(new GeneralConfigPage(_configeService, _context.Map));
             _pages.Add(new MapConfigPage(_configeService, _context.Map));
+            _pages.Add(new LayerConfigPage(_configeService));
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
         }
 

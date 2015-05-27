@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
+using MW5.Plugins.Enums;
 using MW5.Shared;
 
 namespace MW5.Plugins.Helpers
@@ -188,6 +189,42 @@ namespace MW5.Plugins.Helpers
                     return "Orange";
                 case ZoomBoxStyle.Blue:
                     return "Blue";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ProjectionMistmatchConverter : IEnumConverter<ProjectionMismatch>
+    {
+        public string GetString(Enums.ProjectionMismatch value)
+        {
+            switch (value)
+            {
+                case ProjectionMismatch.IgnoreMismatch:
+                    return "Ignore mismatch";
+                case ProjectionMismatch.Reproject:
+                    return "Reproject";
+                case ProjectionMismatch.SkipFile:
+                    return "Skip file";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ProjectionAbsenceConverter : IEnumConverter<ProjectionAbsence>
+    {
+        public string GetString(Enums.ProjectionAbsence value)
+        {
+            switch (value)
+            {
+                case ProjectionAbsence.AssignFromProject:
+                    return "Assign from project";
+                case ProjectionAbsence.IgnoreAbsence:
+                    return "Ignore absence";
+                case ProjectionAbsence.SkipFile:
+                    return "SKip file";
             }
 
             return string.Empty;
