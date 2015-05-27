@@ -109,7 +109,7 @@ namespace MW5.Views
             // 
             this._mapControl1.AllowDrop = true;
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 3.5188688110945212D;
+            this._mapControl1.CurrentScale = 2.4972617369057897D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -196,6 +196,7 @@ namespace MW5.Views
             // 
             this.superToolTip1.MetroColor = System.Drawing.Color.White;
             this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
+            this.superToolTip1.UseFading = Syncfusion.Windows.Forms.Tools.SuperToolTip.FadingType.System;
             this.superToolTip1.VisualStyle = Syncfusion.Windows.Forms.Tools.SuperToolTip.Appearance.Metro;
             // 
             // statusStripEx1

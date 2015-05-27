@@ -11,4 +11,5 @@ namespace MW5.Enums
         All = 0,
         Referenced = 1,
     }
+
 }

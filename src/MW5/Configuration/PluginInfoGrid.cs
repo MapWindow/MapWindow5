@@ -17,6 +17,7 @@ namespace MW5.Configuration
             Adapter.ShowSuperTooltips = true;
             Adapter.ReadOnly = false;
             Adapter.AllowCurrentCell = false;
+            WrapWithPanel = false;
         }
     }
 }

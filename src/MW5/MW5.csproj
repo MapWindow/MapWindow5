@@ -108,6 +108,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Configuration\MapConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\MapConfigPage.Designer.cs">
+      <DependentUpon>MapConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\PluginInfoGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -115,6 +121,15 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AssemblyInfo.cs" />
+    <Compile Include="Controls\ConfigPageHeader.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigPageHeader.Designer.cs">
+      <DependentUpon>ConfigPageHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ConfigTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\LegendCommand.cs" />
     <Compile Include="Controls\LegendDockPanel.cs">
       <SubType>UserControl</SubType>
@@ -183,6 +198,7 @@
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
+    <Compile Include="Views\ConfigViewModel.cs" />
     <Compile Include="Views\CreatePyramidsPresenter.cs" />
     <Compile Include="Views\CreatePyramidsView.cs">
       <SubType>Form</SubType>
@@ -245,11 +261,17 @@
     <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Configuration\MapConfigPage.resx">
+      <DependentUpon>MapConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration\GeneralConfigPage.resx">
       <DependentUpon>GeneralConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ConfigPageHeader.resx">
+      <DependentUpon>ConfigPageHeader.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LegendDockPanel.resx">
       <DependentUpon>LegendDockPanel.cs</DependentUpon>
@@ -486,6 +508,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_globe32.png" />
+    <None Include="Resources\img_plugin32.png" />
+    <None Include="Resources\img_map32.png" />
     <None Include="Resources\img_raster.png" />
     <None Include="Resources\img_geometry.png" />
     <None Include="Resources\img_broken_robot.jpg" />

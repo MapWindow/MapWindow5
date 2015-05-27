@@ -1,4 +1,6 @@
-﻿namespace MW5.Views
+﻿using MW5.Controls;
+
+namespace MW5.Views
 {
     partial class ConfigView
     {
@@ -29,13 +31,19 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this._treeViewAdv1 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
+            this._treeViewAdv1 = new MW5.Controls.ConfigTreeView();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnOpenFolder = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnSave = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.panelContent = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lblDescription = new System.Windows.Forms.Label();
+            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             ((System.ComponentModel.ISupportInitialize)(this._treeViewAdv1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
+            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _treeViewAdv1
@@ -71,6 +79,7 @@
             this._treeViewAdv1.SelectedNodeForeColor = System.Drawing.Color.Black;
             this._treeViewAdv1.ShowFocusRect = false;
             this._treeViewAdv1.ShowRootLines = false;
+            this._treeViewAdv1.ShowSuperTooltip = false;
             this._treeViewAdv1.Size = new System.Drawing.Size(174, 425);
             this._treeViewAdv1.TabIndex = 0;
             this._treeViewAdv1.Text = "treeViewAdv1";
@@ -85,6 +94,7 @@
             this._treeViewAdv1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this._treeViewAdv1.ToolTipControl.TabIndex = 1;
             this._treeViewAdv1.ToolTipControl.Text = "toolTip";
+            this._treeViewAdv1.ToolTipDuration = 0;
             // 
             // btnCancel
             // 
@@ -115,19 +125,6 @@
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyle = false;
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.Silver;
-            this.panel1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.panel1.Location = new System.Drawing.Point(192, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(1);
-            this.panel1.Size = new System.Drawing.Size(504, 425);
-            this.panel1.TabIndex = 9;
-            // 
             // btnOpenFolder
             // 
             this.btnOpenFolder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -156,32 +153,78 @@
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyle = false;
             // 
+            // panelContent
+            // 
+            this.panelContent.Location = new System.Drawing.Point(-1, 50);
+            this.panelContent.Name = "panelContent";
+            this.panelContent.Size = new System.Drawing.Size(502, 372);
+            this.panelContent.TabIndex = 15;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::MW5.Properties.Resources.img_options;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.TabIndex = 14;
+            this.pictureBox1.TabStop = false;
+            // 
+            // lblDescription
+            // 
+            this.lblDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDescription.Location = new System.Drawing.Point(41, 3);
+            this.lblDescription.Name = "lblDescription";
+            this.lblDescription.Size = new System.Drawing.Size(458, 44);
+            this.lblDescription.TabIndex = 13;
+            this.lblDescription.Text = "Some long description of the general options. ";
+            // 
+            // gradientPanel1
+            // 
+            this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
+            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel1.Controls.Add(this.panelContent);
+            this.gradientPanel1.Controls.Add(this.lblDescription);
+            this.gradientPanel1.Controls.Add(this.pictureBox1);
+            this.gradientPanel1.Location = new System.Drawing.Point(192, 12);
+            this.gradientPanel1.Name = "gradientPanel1";
+            this.gradientPanel1.Size = new System.Drawing.Size(504, 425);
+            this.gradientPanel1.TabIndex = 16;
+            // 
             // ConfigView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(708, 475);
+            this.Controls.Add(this.gradientPanel1);
             this.Controls.Add(this._treeViewAdv1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnOpenFolder);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Name = "ConfigView";
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this._treeViewAdv1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
+            this.gradientPanel1.ResumeLayout(false);
+            this.gradientPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private Syncfusion.Windows.Forms.Tools.TreeViewAdv _treeViewAdv1;
+        private ConfigTreeView _treeViewAdv1;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
-        private System.Windows.Forms.Panel panel1;
         private Syncfusion.Windows.Forms.ButtonAdv btnOpenFolder;
         private Syncfusion.Windows.Forms.ButtonAdv btnSave;
+        private System.Windows.Forms.Panel panelContent;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lblDescription;
+        private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
     }
 }

@@ -12,7 +12,7 @@ namespace MW5.UI.Style
 {
     public class SyncfusionStyleService : IStyleService
     {
-        private Color _metroColor = Color.FromArgb(22, 165, 220);
+        private readonly Color _metroColor = Color.FromArgb(22, 165, 220);
         private readonly ControlStyleSettings _settings;
 
         public SyncfusionStyleService(ControlStyleSettings settings)
@@ -134,7 +134,9 @@ namespace MW5.UI.Style
             var panel = control as GradientPanel;
             if (panel != null)
             {
-                panel.BorderStyle = BorderStyle.None;
+                //panel.BorderStyle = BorderStyle.None;
+                //panel.BorderStyle = BorderStyle.FixedSingle;
+                //panel.BorderColor = Color.LightGray;
             }
         }
 
@@ -183,6 +185,11 @@ namespace MW5.UI.Style
                 tree.MetroColor = _metroColor;
                 tree.BorderColor = Color.LightGray;
                 tree.BorderStyle = BorderStyle.FixedSingle;
+
+                if (tree is TreeViewBase && !(tree as TreeViewBase).ApplyStyle)
+                {
+                    return;
+                }
 
 #if STYLE2010
                 tree.Style = TreeStyle.Office2010;
@@ -264,6 +271,11 @@ namespace MW5.UI.Style
 
         private void WrapByGradientPanel(Control control)
         {
+            if (control.Parent is GradientPanel)
+            {
+                return;     // no need to apply it twice     
+            }
+            
             // it seems there is no way to set decent looking border for TabControlAdv
             // so let's insert gradient panel
             var panel = new GradientPanel

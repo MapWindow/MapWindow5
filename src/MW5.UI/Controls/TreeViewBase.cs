@@ -23,10 +23,16 @@ namespace MW5.UI.Controls
             AfterSelect += TreeViewBase_AfterSelect;
             LostFocus += (s, e) => HideToolTip();
 
+            IconSize = 16;
+
             CreateImageList();
 
             ShowSuperTooltip = true;
+
+            ApplyStyle = true;
         }
+
+        public bool ApplyStyle { get; set; }
 
         public bool ShowSuperTooltip { get; set; }
 
@@ -34,16 +40,21 @@ namespace MW5.UI.Controls
 
         protected abstract IEnumerable<Bitmap> OnCreateImageList();
 
-        private void CreateImageList()
+        protected int IconSize { get; set; }
+
+        protected void CreateImageList()
         {
             var icons = OnCreateImageList();
             
-            var list = new ImageList() { ColorDepth = ColorDepth.Depth32Bit };
+            var list = new ImageList()
+            {
+                ColorDepth = ColorDepth.Depth32Bit,
+                ImageSize = new Size(IconSize, IconSize)
+            };
 
-            const int size = 16;
             foreach (var icon in icons)
             {
-                var bmp = new Bitmap(icon, new Size(size, size));
+                var bmp = new Bitmap(icon, new Size(IconSize, IconSize));
                 list.Images.Add(bmp);
             }
 

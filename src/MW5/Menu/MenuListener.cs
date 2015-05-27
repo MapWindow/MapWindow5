@@ -124,7 +124,8 @@ namespace MW5.Menu
             switch (itemKey)
             {
                 case MenuKeys.Settings:
-                    _context.Container.Run<ConfigPresenter>();
+                    var model = _context.Container.GetInstance<ConfigViewModel>();
+                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     return true;
                 case MenuKeys.SetProjection:
                     _context.Container.Run<SetProjectionPresenter>();

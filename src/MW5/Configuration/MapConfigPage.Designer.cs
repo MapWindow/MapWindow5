@@ -1,6 +1,6 @@
 ﻿namespace MW5.Configuration
 {
-    partial class GeneralConfigPage
+    partial class MapConfigPage
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,13 +30,9 @@
         {
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             this.chkShowRedrawTime = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkLoadSymbology = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkLoadLastProject = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).BeginInit();
             this.SuspendLayout();
             // 
             // configPanelControl2
@@ -45,18 +41,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.configPanelControl2.Controls.Add(this.chkShowRedrawTime);
-            this.configPanelControl2.Controls.Add(this.chkLoadSymbology);
-            this.configPanelControl2.Controls.Add(this.chkLoadLastProject);
-            this.configPanelControl2.HeaderText = "General options";
+            this.configPanelControl2.HeaderText = "Map options";
             this.configPanelControl2.Location = new System.Drawing.Point(7, 13);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(370, 128);
+            this.configPanelControl2.Size = new System.Drawing.Size(370, 149);
             this.configPanelControl2.TabIndex = 8;
             // 
             // chkShowRedrawTime
             // 
             this.chkShowRedrawTime.BeforeTouchSize = new System.Drawing.Size(188, 21);
-            this.chkShowRedrawTime.Location = new System.Drawing.Point(18, 89);
+            this.chkShowRedrawTime.Location = new System.Drawing.Point(16, 38);
             this.chkShowRedrawTime.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowRedrawTime.Name = "chkShowRedrawTime";
             this.chkShowRedrawTime.Size = new System.Drawing.Size(188, 21);
@@ -64,54 +58,26 @@
             this.chkShowRedrawTime.Text = "Show redraw time";
             this.chkShowRedrawTime.ThemesEnabled = false;
             // 
-            // chkLoadSymbology
-            // 
-            this.chkLoadSymbology.BeforeTouchSize = new System.Drawing.Size(188, 21);
-            this.chkLoadSymbology.DrawFocusRectangle = false;
-            this.chkLoadSymbology.Location = new System.Drawing.Point(18, 35);
-            this.chkLoadSymbology.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.chkLoadSymbology.Name = "chkLoadSymbology";
-            this.chkLoadSymbology.Size = new System.Drawing.Size(188, 21);
-            this.chkLoadSymbology.Style = Syncfusion.Windows.Forms.Tools.CheckBoxAdvStyle.Metro;
-            this.chkLoadSymbology.TabIndex = 2;
-            this.chkLoadSymbology.Text = "Load Symbology for Layers";
-            this.chkLoadSymbology.ThemesEnabled = false;
-            // 
-            // chkLoadLastProject
-            // 
-            this.chkLoadLastProject.BeforeTouchSize = new System.Drawing.Size(188, 21);
-            this.chkLoadLastProject.Location = new System.Drawing.Point(18, 62);
-            this.chkLoadLastProject.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkLoadLastProject.Name = "chkLoadLastProject";
-            this.chkLoadLastProject.Size = new System.Drawing.Size(188, 21);
-            this.chkLoadLastProject.TabIndex = 3;
-            this.chkLoadLastProject.Text = "Load Last Project on Startup";
-            this.chkLoadLastProject.ThemesEnabled = false;
-            // 
-            // GeneralConfigPage
+            // MapConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.configPanelControl2);
-            this.Name = "GeneralConfigPage";
+            this.Name = "MapConfigPage";
             this.Padding = new System.Windows.Forms.Padding(10);
             this.Size = new System.Drawing.Size(390, 297);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private UI.Controls.ConfigPanelControl configPanelControl2;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkLoadSymbology;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkLoadLastProject;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowRedrawTime;
+        private UI.Controls.ConfigPanelControl configPanelControl2;
 
     }
 }

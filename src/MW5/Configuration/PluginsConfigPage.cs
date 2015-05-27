@@ -4,8 +4,10 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Configuration.Plugins;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Properties;
 using MW5.Services.Config;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
@@ -56,7 +58,7 @@ namespace MW5.Configuration
 
         public string PageName
         {
-            get { return "Application Plugins"; }
+            get { return "Plugins"; }
         }
 
         public void Save()
@@ -72,6 +74,27 @@ namespace MW5.Configuration
                     _manager.LoadPlugin(plugin.Identity, _context);
                 }
             }
+        }
+
+        public Bitmap Icon
+        {
+            get { return Resources.img_plugin32; }
+        }
+
+        public bool PluginPage
+        {
+            get { return false; }
+        }
+
+        public ConfigPageType PageTypeType
+        {
+            get { return ConfigPageType.Plugins; }
+        }
+
+        public string Description
+        {
+            get { return "Plugins checked in this list will become a permanent part of application, i.e." +
+                         "will be loaded in this list and won't listed in the plugins menu for unloading."; }
         }
     }
 }

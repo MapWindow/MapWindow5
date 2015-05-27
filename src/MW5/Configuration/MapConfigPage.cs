@@ -10,12 +10,12 @@ using MW5.Services.Config;
 
 namespace MW5.Configuration
 {
-    public partial class GeneralConfigPage : UserControl, IConfigPage
+    public partial class MapConfigPage : UserControl, IConfigPage
     {
         private readonly IConfigService _configService;
         private readonly IMuteMap _map;
 
-        public GeneralConfigPage(IConfigService configService, IMuteMap map)
+        public MapConfigPage(IConfigService configService, IMuteMap map)
         {
             if (configService == null) throw new ArgumentNullException("configService");
             if (map == null) throw new ArgumentNullException("map");
@@ -31,21 +31,17 @@ namespace MW5.Configuration
         private void Init()
         {
             var config = _configService.Config;
-            chkLoadLastProject.Checked = config.LoadLastProject;
-            chkLoadSymbology.Checked = config.LoadSymbology;
             chkShowRedrawTime.Checked = config.ShowRedrawTime;
         }
 
         public string PageName
         {
-            get { return "General"; }
+            get { return "Map"; }
         }
 
         public void Save()
         {
             var config = _configService.Config;
-            config.LoadLastProject = chkLoadLastProject.Checked;
-            config.LoadSymbology = chkLoadSymbology.Checked;
             config.ShowRedrawTime = chkShowRedrawTime.Checked;
 
             _map.ApplyConfig(_configService);
@@ -53,7 +49,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_options; }
+            get { return Resources.img_globe32; }
         }
 
         public bool PluginPage
@@ -63,12 +59,12 @@ namespace MW5.Configuration
 
         public ConfigPageType PageTypeType
         {
-            get { return ConfigPageType.General; }
+            get { return ConfigPageType.Map; }
         }
 
         public string Description
         {
-            get { return "Here is a description of general settings."; }
+            get { return "Here is a description of map settings."; }
         }
     }
 }

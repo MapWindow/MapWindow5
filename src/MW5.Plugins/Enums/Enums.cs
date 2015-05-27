@@ -148,4 +148,12 @@
         //     The CommandBar is in a floating state.
         Float = 32,
     }
+
+    public enum ConfigPageType
+    {
+        General = 0,
+        Map = 1,
+        Plugins = 2,
+        Custom = 3,
+    }
 }

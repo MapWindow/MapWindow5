@@ -13,39 +13,32 @@ using MW5.Views.Abstract;
 
 namespace MW5.Views
 {
-    internal class ConfigPresenter: BasePresenter<IConfigView>
+    internal class ConfigPresenter: BasePresenter<IConfigView, ConfigViewModel>
     {
-        private readonly IAppContext _context;
-        private readonly IConfigView _view;
         private readonly IConfigService _configService;
-        private readonly IPluginManager _manager;
         private readonly IStyleService _styleService;
 
-        public ConfigPresenter(IAppContext context, IConfigView view, IConfigService configService, IPluginManager manager,
-                                IStyleService styleService)
+        public ConfigPresenter( IConfigView view, IConfigService configService, IStyleService styleService)
             : base(view)
         {
-            if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
             if (configService == null) throw new ArgumentNullException("configService");
-            if (manager == null) throw new ArgumentNullException("manager");
             if (styleService == null) throw new ArgumentNullException("styleService");
 
-            _context = context;
-            _view = view;
             _configService = configService;
-            _manager = manager;
             _styleService = styleService;
 
-            InitPages();
-
-            _view.Initialize();
-
-            view.OpenFolderClicked += view_OpenFolderClicked;
-            view.SaveClicked += view_SaveClicked;
+            view.OpenFolderClicked += OnOpenFolderClicked;
+            view.SaveClicked += OnSaveClicked;
+            view.PageShown += OnPageShown;
         }
 
-        private void view_SaveClicked()
+        private void OnPageShown()
+        {
+            _styleService.ApplyStyle(View as Form);
+        }
+
+        private void OnSaveClicked()
         {
             ApplySettings();
             bool result = _configService.Save();
@@ -55,7 +48,7 @@ namespace MW5.Views
             }
         }
 
-        private void view_OpenFolderClicked()
+        private void OnOpenFolderClicked()
         {
             string path = _configService.ConfigPath;
             PathHelper.OpenFolderWithExplorer(path);
@@ -63,20 +56,9 @@ namespace MW5.Views
 
         private void ApplySettings()
         {
-            foreach (var page in _view.Pages)
+            foreach (var page in Model.Pages)
             {
                 page.Save();
-            }
-        }
-
-        private void InitPages()
-        {
-            _view.Pages.Add(new GeneralConfigPage(_configService, _context.Map));
-            _view.Pages.Add(new PluginsConfigPage(_manager, _context));
-
-            foreach (var page in _view.Pages)
-            {
-                _styleService.ApplyStyle(page as Control);
             }
         }
 
