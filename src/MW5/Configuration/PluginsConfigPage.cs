@@ -15,7 +15,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Configuration
 {
-    internal partial class PluginsConfigPage : PluginInfoGrid, IConfigPage
+    internal partial class PluginsConfigPage : PluginGrid, IConfigPage
     {
         private readonly PluginProvider _pluginProvider;
         private readonly IPluginManager _manager;

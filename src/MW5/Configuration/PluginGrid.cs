@@ -9,9 +9,9 @@ using Syncfusion.Grouping;
 
 namespace MW5.Configuration
 {
-    internal class PluginInfoGrid: StronglyTypedGrid<PluginInfo>
+    internal class PluginGrid: StronglyTypedGrid<PluginInfo>
     {
-        public PluginInfoGrid()
+        public PluginGrid()
         {
             Adapter.HotTracking = true;
             Adapter.ShowSuperTooltips = true;

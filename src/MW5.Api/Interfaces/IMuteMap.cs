@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Events;
@@ -115,6 +117,10 @@ namespace MW5.Api.Interfaces
         DecorationRectangle FocusRectangle { get; }
 
         bool LoadMapState(string filename);
+
+        ZoomBoxStyle ZoomBoxStyle { get; set; }
+
+        Color BackgroundColor { get; set; }
 
         #region Not implemented
 

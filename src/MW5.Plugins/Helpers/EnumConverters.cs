@@ -61,4 +61,136 @@ namespace MW5.Plugins.Helpers
             return string.Empty;
         }
     }
+
+    public class AutoToggleConverter : IEnumConverter<AutoToggle>
+    {
+        public string GetString(AutoToggle value)
+        {
+            switch (value)
+            {
+                case AutoToggle.Auto:
+                    return "Auto";
+                case AutoToggle.True:
+                    return "Always";
+                case AutoToggle.False:
+                    return "Never";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ResizeBehaviorConverter : IEnumConverter<ResizeBehavior>
+    {
+        public string GetString(ResizeBehavior value)
+        {
+            switch (value)
+            {
+                case ResizeBehavior.Classic:
+                    return "Classic";
+                case ResizeBehavior.Modern:
+                    return "Modern";
+                case ResizeBehavior.Intuitive:
+                    return "Intuitive";
+                case ResizeBehavior.Warp:
+                    return "Warp";
+                case ResizeBehavior.KeepScale:
+                    return "Keep scale";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ScalebarUnitsConverter : IEnumConverter<ScalebarUnits>
+    {
+        public string GetString(ScalebarUnits value)
+        {
+            switch (value)
+            {
+                case ScalebarUnits.Metric:
+                    return "Metric";
+                case ScalebarUnits.American:
+                    return "American";
+                case ScalebarUnits.GoogleStyle:
+                    return "Google style";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ZoomBehaviorConverter : IEnumConverter<ZoomBehavior>
+    {
+        public string GetString(ZoomBehavior value)
+        {
+            switch (value)
+            {
+                case ZoomBehavior.Default:
+                    return "Default (no discrete levels)";
+                case ZoomBehavior.UseTileLevels:
+                    return "Snap to tile levels";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class MouseWheelDirectionConverter : IEnumConverter<MouseWheelDirection>
+    {
+        public string GetString(MouseWheelDirection value)
+        {
+            switch (value)
+            {
+                case MouseWheelDirection.Forward:
+                    return "Forward";
+                case MouseWheelDirection.Reverse:
+                    return "Reverse";
+                case MouseWheelDirection.None:
+                    return "None";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ZoombarVerbosityConverter : IEnumConverter<ZoomBarVerbosity>
+    {
+        public string GetString(ZoomBarVerbosity value)
+        {
+            switch (value)
+            {
+                case ZoomBarVerbosity.ZoomOnly:
+                    return "Show zoom level only";
+                case ZoomBarVerbosity.Full:
+                    return "Show full info";
+                case ZoomBarVerbosity.None:
+                    return "Don't show any info";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class ZoomBoxStyleConverter : IEnumConverter<ZoomBoxStyle>
+    {
+        public string GetString(ZoomBoxStyle value)
+        {
+            switch (value)
+            {
+                case ZoomBoxStyle.RubberBand:
+                    return "Rubber band";
+                case ZoomBoxStyle.Gray:
+                    return "Gray";
+                case ZoomBoxStyle.GrayInverted:
+                    return "Inverted gray";
+                case ZoomBoxStyle.Orange:
+                    return "Orange";
+                case ZoomBoxStyle.Blue:
+                    return "Blue";
+            }
+
+            return string.Empty;
+        }
+    }
 }

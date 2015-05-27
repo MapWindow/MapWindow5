@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
@@ -22,13 +23,52 @@ namespace MW5.Plugins.Concrete
             PyramidCompression = TiffCompression.Auto;
             PyramidSampling = RasterOverviewSampling.Nearest;
             FavoriteProjections = new List<int>();
+            InnertiaOnPanning = AutoToggle.Auto;
+            AnimationOnZooming = AutoToggle.Auto;
+            ResizeBehavior = ResizeBehavior.KeepScale;
+            ScalebarUnits = ScalebarUnits.GoogleStyle;
+            ZoomBarVerbosity = ZoomBarVerbosity.Full;
+            ZoomBoxStyle = ZoomBoxStyle.Blue;
         }
+
+        [DataMember]
+        public AutoToggle AnimationOnZooming { get; set; }
+
+        [DataMember]
+        public ResizeBehavior ResizeBehavior { get; set; }
+
+        [DataMember]
+        public ScalebarUnits ScalebarUnits { get; set; }
+
+        [DataMember]
+        public ZoomBarVerbosity ZoomBarVerbosity { get; set; }
+        
+        [DataMember]
+        public ZoomBoxStyle ZoomBoxStyle { get; set; }
+
+        [DataMember]
+        public AutoToggle InnertiaOnPanning { get; set; }
+
+        [DataMember]
+        public ZoomBehavior ZoomBehavior { get; set; }
+
+        [DataMember]
+        public MouseWheelDirection MouseWheelDirection { get; set; }
+
+        [DataMember]
+        public Color MapBackgroundColor { get; set; }
 
         [DataMember]
         public bool ShowValuesOnMouseMove { get; set; }
 
         [DataMember]
         public bool ShowRedrawTime { get; set; }
+
+        [DataMember]
+        public bool ShowScalebar { get; set; }
+
+        [DataMember]
+        public bool ShowZoombar { get; set; }
 
         [DataMember]
         public bool LoadSymbology { get; set; }

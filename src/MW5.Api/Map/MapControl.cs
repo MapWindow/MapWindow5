@@ -9,6 +9,7 @@ using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Api.Map
 {
@@ -643,6 +644,18 @@ namespace MW5.Api.Map
             {
                 _map.Extents = extents.GetInternal();
             }
+        }
+
+        public ZoomBoxStyle ZoomBoxStyle
+        {
+            get { return (ZoomBoxStyle) _map.ZoomBoxStyle; }
+            set { _map.ZoomBoxStyle = (tkZoomBoxStyle)value; }
+        }
+
+        public Color BackgroundColor
+        {
+            get { return _map.CtlbackColor; }
+            set { _map.CtlbackColor = value; }
         }
     }
 }

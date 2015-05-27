@@ -62,13 +62,6 @@ namespace MW5.Shared
             return (uint)(c.A << 24 | c.B << 16 | c.G << 8 | c.R);
         }
 
-        public static int ColorToaInt(Color c)
-        {
-            int retval = c.B << 16;
-            retval += c.G << 8;
-            return retval + c.R;
-        }
-
         public static uint ToUInt(this Color? color)
         {
             uint result = 16777215;

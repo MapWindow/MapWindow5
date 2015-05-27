@@ -114,18 +114,18 @@
     <Compile Include="Configuration\MapConfigPage.Designer.cs">
       <DependentUpon>MapConfigPage.cs</DependentUpon>
     </Compile>
-    <Compile Include="Configuration\PluginInfoGrid.cs">
+    <Compile Include="Configuration\PluginGrid.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AssembliesGrid.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AssemblyInfo.cs" />
-    <Compile Include="Controls\ConfigPageHeader.cs">
+    <Compile Include="Controls\ConfigPageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ConfigPageHeader.Designer.cs">
-      <DependentUpon>ConfigPageHeader.cs</DependentUpon>
+    <Compile Include="Controls\ConfigPageControl.Designer.cs">
+      <DependentUpon>ConfigPageControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ConfigTreeView.cs">
       <SubType>Component</SubType>
@@ -270,8 +270,8 @@
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigPageHeader.resx">
-      <DependentUpon>ConfigPageHeader.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\ConfigPageControl.resx">
+      <DependentUpon>ConfigPageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LegendDockPanel.resx">
       <DependentUpon>LegendDockPanel.cs</DependentUpon>

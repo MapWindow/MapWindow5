@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Helpers;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
+using MW5.Shared;
+using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
@@ -25,13 +28,41 @@ namespace MW5.Configuration
 
             InitializeComponent();
 
-            Init();
+            InitControls();
+
+            Initialize();
         }
 
-        private void Init()
+        private void InitControls()
+        {
+            cboAnimationOnZooming.AddItemsFromEnum<AutoToggle>();
+            cboInertiaOnPanning.AddItemsFromEnum<AutoToggle>();
+            cboMapResizeBehavior.AddItemsFromEnum<ResizeBehavior>();
+            cboScalebarUnits.AddItemsFromEnum<ScalebarUnits>();
+            cboZoombarVerbosity.AddItemsFromEnum<ZoomBarVerbosity>();
+            cboZoomBoxStyle.AddItemsFromEnum<ZoomBoxStyle>();
+            cboZoomBehavior.AddItemsFromEnum<ZoomBehavior>();
+            cboMouseWheelDirection.AddItemsFromEnum<MouseWheelDirection>();
+        }
+
+        private void Initialize()
         {
             var config = _configService.Config;
+            
             chkShowRedrawTime.Checked = config.ShowRedrawTime;
+            chkShowScalebar.Checked = config.ShowScalebar;
+            chkShowZoombar.Checked = config.ShowZoombar;
+
+            cboAnimationOnZooming.SetValue(config.AnimationOnZooming);
+            cboMapResizeBehavior.SetValue(config.ResizeBehavior);
+            cboScalebarUnits.SetValue(config.ScalebarUnits);
+            cboZoombarVerbosity.SetValue(config.ZoomBarVerbosity);
+            cboZoomBoxStyle.SetValue(config.ZoomBoxStyle);
+            cboInertiaOnPanning.SetValue(config.InnertiaOnPanning);
+            cboZoomBehavior.SetValue(config.ZoomBehavior);
+            cboMouseWheelDirection.SetValue(config.MouseWheelDirection);
+
+            clpBackground.Color = config.MapBackgroundColor;
         }
 
         public string PageName
@@ -43,6 +74,19 @@ namespace MW5.Configuration
         {
             var config = _configService.Config;
             config.ShowRedrawTime = chkShowRedrawTime.Checked;
+            config.ShowZoombar = chkShowZoombar.Checked;
+            config.ShowScalebar = chkShowScalebar.Checked;
+
+            config.AnimationOnZooming = cboAnimationOnZooming.GetValue<AutoToggle>();
+            config.ResizeBehavior = cboMapResizeBehavior.GetValue<ResizeBehavior>();
+            config.ScalebarUnits = cboScalebarUnits.GetValue<ScalebarUnits>();
+            config.ZoomBarVerbosity = cboZoombarVerbosity.GetValue<ZoomBarVerbosity>();
+            config.ZoomBoxStyle = cboZoomBoxStyle.GetValue<ZoomBoxStyle>();
+            config.InnertiaOnPanning = cboInertiaOnPanning.GetValue<AutoToggle>();
+            config.ZoomBehavior = cboZoomBehavior.GetValue<ZoomBehavior>();
+            config.MouseWheelDirection = cboMouseWheelDirection.GetValue<MouseWheelDirection>();
+
+            config.MapBackgroundColor = clpBackground.Color;
 
             _map.ApplyConfig(_configService);
         }
@@ -64,7 +108,7 @@ namespace MW5.Configuration
 
         public string Description
         {
-            get { return "Here is a description of map settings."; }
+            get { return "Settings that change appearance, behavior and widgets shown on the map."; }
         }
     }
 }

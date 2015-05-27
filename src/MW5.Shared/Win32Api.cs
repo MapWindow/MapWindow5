@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -30,5 +31,11 @@ namespace MW5.Shared
             IntPtr focusedHandle = GetFocus();
             return focusedHandle != IntPtr.Zero ? Control.FromHandle(focusedHandle) : null;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr WindowFromPoint(Point pt);
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
     }
 }

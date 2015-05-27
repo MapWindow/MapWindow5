@@ -50,6 +50,36 @@ namespace MW5.Helpers
             MapConfig.LoadSymbologyOnAddLayer = config.LoadSymbology;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
+            map.ZoomBar.Visible = config.ShowZoombar;
+            map.ScalebarVisible = config.ShowScalebar;
+
+            map.InertiaOnPanning = config.InnertiaOnPanning;
+            map.AnimationOnZooming = config.AnimationOnZooming;
+            map.ZoomBoxStyle = config.ZoomBoxStyle;
+            map.ResizeBehavior = config.ResizeBehavior;
+            map.ZoomBar.Verbosity = config.ZoomBarVerbosity;
+            map.ScalebarUnits = config.ScalebarUnits;
+            map.ZoomBehavior = config.ZoomBehavior;
+
+            map.BackgroundColor = config.MapBackgroundColor;
+
+            ApplyMouseWheelDirection(map, config.MouseWheelDirection);
+        }
+
+        private static void ApplyMouseWheelDirection(this IMuteMap map, MouseWheelDirection direction)
+        {
+            switch (direction)
+            {
+                case MouseWheelDirection.Forward:
+                    map.MouseWheelSpeed = 0.5;
+                    break;
+                case MouseWheelDirection.Reverse:
+                    map.MouseWheelSpeed = 2.0;
+                    break;
+                case MouseWheelDirection.None:
+                    map.MouseWheelSpeed = 1.0;
+                    break;
+            }
         }
     }
 }

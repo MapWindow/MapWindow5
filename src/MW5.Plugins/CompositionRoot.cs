@@ -21,6 +21,13 @@ namespace MW5.Plugins
                 .RegisterSingleton<MainAppPlugin>();
 
             EnumHelper.RegisterConverter(new GdalDriverMetadataConverter());
+            EnumHelper.RegisterConverter(new ZoomBoxStyleConverter());
+            EnumHelper.RegisterConverter(new ZoombarVerbosityConverter());
+            EnumHelper.RegisterConverter(new MouseWheelDirectionConverter());
+            EnumHelper.RegisterConverter(new ZoomBehaviorConverter());
+            EnumHelper.RegisterConverter(new ScalebarUnitsConverter());
+            EnumHelper.RegisterConverter(new ResizeBehaviorConverter());
+            EnumHelper.RegisterConverter(new AutoToggleConverter());
         }
     }
 }

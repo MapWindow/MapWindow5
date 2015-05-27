@@ -1452,4 +1452,20 @@
         HasOpenOptions = 5,
         HasLayerCreationOptions = 6,
     }
+
+    public enum ZoomBoxStyle
+    {
+        RubberBand = 0,
+        Gray = 1,
+        GrayInverted = 2,
+        Orange = 3,
+        Blue = 4,
+    }
+
+    public enum MouseWheelDirection
+    {
+        Forward = 0,
+        Reverse = 1,
+        None = 2,
+    }
 }

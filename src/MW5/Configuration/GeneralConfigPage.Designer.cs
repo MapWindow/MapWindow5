@@ -50,7 +50,7 @@
             this.configPanelControl2.HeaderText = "General options";
             this.configPanelControl2.Location = new System.Drawing.Point(7, 13);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(370, 128);
+            this.configPanelControl2.Size = new System.Drawing.Size(370, 126);
             this.configPanelControl2.TabIndex = 8;
             // 
             // chkShowRedrawTime

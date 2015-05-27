@@ -21,6 +21,8 @@ namespace MW5.UI.Controls
             InitializeComponent();
 
             AddLabel();
+
+            BorderStyle = BorderStyle.None;
         }
 
         private void AddLabel()
