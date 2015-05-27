@@ -43,6 +43,8 @@ namespace MW5.Configuration
             cboZoomBoxStyle.AddItemsFromEnum<ZoomBoxStyle>();
             cboZoomBehavior.AddItemsFromEnum<ZoomBehavior>();
             cboMouseWheelDirection.AddItemsFromEnum<MouseWheelDirection>();
+            cboCoordinateDisplay.AddItemsFromEnum<CoordinatesDisplay>();
+            cboAngleFormat.AddItemsFromEnum<AngleFormat>();
         }
 
         private void Initialize()
@@ -52,6 +54,7 @@ namespace MW5.Configuration
             chkShowRedrawTime.Checked = config.ShowRedrawTime;
             chkShowScalebar.Checked = config.ShowScalebar;
             chkShowZoombar.Checked = config.ShowZoombar;
+            chkShowCoordinates.Checked = config.ShowCoordinates;
 
             cboAnimationOnZooming.SetValue(config.AnimationOnZooming);
             cboMapResizeBehavior.SetValue(config.ResizeBehavior);
@@ -61,6 +64,10 @@ namespace MW5.Configuration
             cboInertiaOnPanning.SetValue(config.InnertiaOnPanning);
             cboZoomBehavior.SetValue(config.ZoomBehavior);
             cboMouseWheelDirection.SetValue(config.MouseWheelDirection);
+            cboCoordinateDisplay.SetValue(config.CoordinateDisplay);
+            cboAngleFormat.SetValue(config.CoordinateAngleFormat);
+
+            udCoordinatePrecision.SetValue(config.CoordinatePrecision);
 
             clpBackground.Color = config.MapBackgroundColor;
         }
@@ -76,6 +83,7 @@ namespace MW5.Configuration
             config.ShowRedrawTime = chkShowRedrawTime.Checked;
             config.ShowZoombar = chkShowZoombar.Checked;
             config.ShowScalebar = chkShowScalebar.Checked;
+            config.ShowCoordinates = chkShowCoordinates.Checked;
 
             config.AnimationOnZooming = cboAnimationOnZooming.GetValue<AutoToggle>();
             config.ResizeBehavior = cboMapResizeBehavior.GetValue<ResizeBehavior>();
@@ -85,6 +93,10 @@ namespace MW5.Configuration
             config.InnertiaOnPanning = cboInertiaOnPanning.GetValue<AutoToggle>();
             config.ZoomBehavior = cboZoomBehavior.GetValue<ZoomBehavior>();
             config.MouseWheelDirection = cboMouseWheelDirection.GetValue<MouseWheelDirection>();
+            config.CoordinateDisplay = cboCoordinateDisplay.GetValue<CoordinatesDisplay>();
+            config.CoordinateAngleFormat = cboAngleFormat.GetValue<AngleFormat>();
+
+            config.CoordinatePrecision = (int)udCoordinatePrecision.Value;
 
             config.MapBackgroundColor = clpBackground.Color;
 

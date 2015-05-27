@@ -53,6 +53,9 @@ namespace MW5.Helpers
             map.ZoomBar.Visible = config.ShowZoombar;
             map.ScalebarVisible = config.ShowScalebar;
 
+            map.ShowCoordinates = config.ShowCoordinates ? config.CoordinateDisplay : CoordinatesDisplay.None;
+            map.ShowCoordinatesFormat = config.CoordinateAngleFormat;
+
             map.InertiaOnPanning = config.InnertiaOnPanning;
             map.AnimationOnZooming = config.AnimationOnZooming;
             map.ZoomBoxStyle = config.ZoomBoxStyle;

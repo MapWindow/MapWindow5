@@ -7,6 +7,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
+using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
@@ -25,14 +26,23 @@ namespace MW5.Configuration
 
             InitializeComponent();
 
-            Init();
+            InitControls();
+
+            Initialize();
         }
 
-        private void Init()
+        private void InitControls()
+        {
+            cboSymbologyStorage.AddItemsFromEnum<SymbologyStorage>();
+        }
+
+        private void Initialize()
         {
             var config = _configService.Config;
             chkLoadLastProject.Checked = config.LoadLastProject;
             chkLoadSymbology.Checked = config.LoadSymbology;
+            chkShowWelcomeDialog.Checked = config.ShowWelcomeDialog;
+            cboSymbologyStorage.SetValue(config.SymbolobyStorage);
         }
 
         public string PageName
@@ -45,6 +55,8 @@ namespace MW5.Configuration
             var config = _configService.Config;
             config.LoadLastProject = chkLoadLastProject.Checked;
             config.LoadSymbology = chkLoadSymbology.Checked;
+            config.ShowWelcomeDialog = chkShowWelcomeDialog.Checked;
+            config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
 
             _map.ApplyConfig(_configService);
         }

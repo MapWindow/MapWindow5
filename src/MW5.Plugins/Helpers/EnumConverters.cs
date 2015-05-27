@@ -215,7 +215,7 @@ namespace MW5.Plugins.Helpers
 
     public class ProjectionAbsenceConverter : IEnumConverter<ProjectionAbsence>
     {
-        public string GetString(Enums.ProjectionAbsence value)
+        public string GetString(ProjectionAbsence value)
         {
             switch (value)
             {
@@ -225,6 +225,22 @@ namespace MW5.Plugins.Helpers
                     return "Ignore absence";
                 case ProjectionAbsence.SkipFile:
                     return "SKip file";
+            }
+
+            return string.Empty;
+        }
+    }
+
+    public class SymbologyStorageConverter : IEnumConverter<SymbologyStorage>
+    {
+        public string GetString(SymbologyStorage value)
+        {
+            switch (value)
+            {
+                case SymbologyStorage.Project:
+                    return "Project";
+                case SymbologyStorage.StyleFile:
+                    return "Style file (.mwleg)";
             }
 
             return string.Empty;

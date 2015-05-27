@@ -29,7 +29,21 @@ namespace MW5.Plugins.Concrete
             ScalebarUnits = ScalebarUnits.GoogleStyle;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
+            ShowWelcomeDialog = true;
+            CreateSpatialIndexOnOpening = true;
+            NeverShowSpatialIndexDialog = false;
+            SymbolobyStorage = SymbologyStorage.Project;
+            ShowCoordinates = true;
+            CoordinateDisplay = CoordinatesDisplay.Auto;
+            CoordinateAngleFormat = AngleFormat.Seconds;
+            CoordinatePrecision = 3;
         }
+
+        [DataMember]
+        public bool ShowWelcomeDialog { get; set; }
+
+        [DataMember]
+        public SymbologyStorage SymbolobyStorage { get; set; }
 
         [DataMember]
         public AutoToggle AnimationOnZooming { get; set; }
@@ -69,6 +83,18 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool ShowZoombar { get; set; }
+
+        [DataMember]
+        public bool ShowCoordinates { get; set; }
+
+        [DataMember]
+        public CoordinatesDisplay CoordinateDisplay { get; set; }
+
+        [DataMember]
+        public AngleFormat CoordinateAngleFormat { get; set; }
+
+        [DataMember]
+        public int CoordinatePrecision { get; set; }
 
         [DataMember]
         public bool LoadSymbology { get; set; }

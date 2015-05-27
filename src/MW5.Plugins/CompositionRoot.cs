@@ -30,6 +30,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new AutoToggleConverter());
             EnumHelper.RegisterConverter(new ProjectionAbsenceConverter());
             EnumHelper.RegisterConverter(new ProjectionMistmatchConverter());
+            EnumHelper.RegisterConverter(new SymbologyStorageConverter());
         }
     }
 }

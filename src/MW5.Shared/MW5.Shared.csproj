@@ -78,6 +78,7 @@
     <Compile Include="Log\LogEventArgs.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LogLevel.cs" />
+    <Compile Include="NumericUpDownHelper.cs" />
     <Compile Include="OleImageHelper.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -157,4 +157,10 @@
         LayerOpening = 3,
         Custom = 4,
     }
+
+    public enum SymbologyStorage
+    {
+        Project = 0,
+        StyleFile = 1,
+    }
 }
