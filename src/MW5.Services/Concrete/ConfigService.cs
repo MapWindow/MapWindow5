@@ -18,7 +18,6 @@ namespace MW5.Services.Concrete
     {
         private readonly IPluginManager _manager;
         private readonly IRepository _repository;
-        private AppConfig _config;
         private List<Guid> _applicationPlugins;
 
         public ConfigService(IPluginManager manager, IRepository repository)
@@ -29,12 +28,12 @@ namespace MW5.Services.Concrete
             _manager = manager;
             _repository = repository;
 
-            _config = new AppConfig();
+            AppConfig.Instance = new AppConfig();
         }
 
         public AppConfig Config
         {
-            get { return _config; }
+            get { return AppConfig.Instance; }
         }
 
         public IEnumerable<Guid> ApplicationPlugins
@@ -97,7 +96,10 @@ namespace MW5.Services.Concrete
 
         private XmlConfig GetXmlConfig()
         {
-            var xmlConfig = new XmlConfig { Settings = _config };
+            var xmlConfig = new XmlConfig
+            {
+                Settings = AppConfig.Instance
+            };
 
             var plugins = _manager.ApplicationPlugins.Select(p => new XmlPlugin()
             {
@@ -113,7 +115,7 @@ namespace MW5.Services.Concrete
 
         private void ApplyXmlConfig(XmlConfig xmlConfig)
         {
-            _config = xmlConfig.Settings;
+            AppConfig.Instance = xmlConfig.Settings;
             _applicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
 
             if (xmlConfig.Repository != null)

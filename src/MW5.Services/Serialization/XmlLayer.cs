@@ -8,15 +8,34 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
+using MW5.Shared;
 
 namespace MW5.Services.Serialization
 {
     [DataContract]
     public class XmlLayer
     {
+        public bool ProjectStorage
+        {
+            get { return AppConfig.Instance.SymbolobyStorage == SymbologyStorage.Project; }
+        }
+
         public XmlLayer(ILegendLayer layer)
         {
-            Layer = LayerToXmlElement(layer);
+            if (ProjectStorage)
+            {
+                Layer = LayerToXmlElement(layer);
+            }
+            else
+            {
+                if (layer.SaveOptions("", true, ""))
+                {
+                    Logger.Current.Warn("Failed to save layer options: " + layer.Name);
+                }
+            }
+
             Identity = layer.Identity;
             Expanded = layer.Expanded;
             HideFromLegend = layer.HideFromLegend;
@@ -29,7 +48,19 @@ namespace MW5.Services.Serialization
 
         public void RestoreLayer(ILegendLayer layer)
         {
-            layer.Deserialize(Layer.OuterXml);
+            if (Layer != null)
+            {
+                layer.Deserialize(Layer.OuterXml);
+            }
+            else
+            {
+                if (!ProjectStorage)
+                {
+                    string description = string.Empty;
+                    layer.LoadOptions("", ref description);
+                }
+            }
+
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.SymbologyCaption = ColorSchemeCaption;

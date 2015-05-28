@@ -12,6 +12,8 @@ namespace MW5.Plugins.Concrete
         private List<int> _favoriteProjections;
         private CoordinatesDisplay _coordinatesDisplay;
 
+        public static AppConfig Instance { get; internal set; }
+
         public AppConfig()
         {
             LoadSymbology = true;

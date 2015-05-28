@@ -238,7 +238,7 @@ namespace MW5.Plugins.Helpers
             switch (value)
             {
                 case SymbologyStorage.Project:
-                    return "Project";
+                    return "Project file";
                 case SymbologyStorage.StyleFile:
                     return "Style file (.mwleg)";
             }
