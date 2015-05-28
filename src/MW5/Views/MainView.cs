@@ -62,6 +62,7 @@ namespace MW5.Views
 
         public event EventHandler<CancelEventArgs> ViewClosing;
         public event EventHandler<RenderedEventArgs> ViewUpdating;
+        public event Action BeforeShow;
 
         private void FireViewUpdating(bool rendered)
         {
@@ -100,6 +101,8 @@ namespace MW5.Views
 
             ShowInTaskbar = true;
             _context.DockPanels.Unlock();
+
+            Invoke(BeforeShow);
 
             Application.Run(this);
         }
@@ -160,16 +163,5 @@ namespace MW5.Views
 
         #endregion
 
-        private bool flag = false;
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cp = base.CreateParams;
-                if (flag)
-                    cp.ExStyle |= 0x02000000;  // Turn on WS_EX_COMPOSITED
-                return cp;
-            }
-        } 
     }
 }

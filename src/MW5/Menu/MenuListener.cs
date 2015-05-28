@@ -49,31 +49,23 @@ namespace MW5.Menu
 
         private void MenuItemClicked(object sender, MenuItemEventArgs e)
         {
-            if (HandleCursorChanged(e.ItemKey))
-            {
-                return;
-            }
+            RunCommand(e.ItemKey);
+        }
 
-            if (HandleProjectCommand(e.ItemKey))
+        public void RunCommand(string menuKey)
+        {
+            if (HandleCursorChanged(menuKey) ||
+                HandleProjectCommand(menuKey) ||
+                HandleDialogs(menuKey) ||
+                HandleHelpMenu(menuKey))
             {
                 _context.View.Update();
                 return;
             }
 
-            if (HandleDialogs(e.ItemKey))
+            switch (menuKey)
             {
-                _context.View.Update();
-                return;
-            }
-
-            switch (e.ItemKey)
-            {
-                case MenuKeys.SupportedDrivers:
-                    _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
-                    break;
-                case MenuKeys.About:
-                    _context.Container.Run<AboutPresenter>();
-                    break;
+              
                 case MenuKeys.AddDatabaseLayer:
                     var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)
@@ -112,11 +104,30 @@ namespace MW5.Menu
                     _layerService.ZoomToSelected();
                     break;
                 default:
-                    MessageService.Current.Info("There is no handler for menu item with key: " + e.ItemKey);
+                    MessageService.Current.Info("There is no handler for menu item with key: " + menuKey);
                     break;
             }
 
             _context.View.Update();
+        }
+
+        private bool HandleHelpMenu(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.Welcome:
+                    var model = new WelcomeViewModel(AppConfig.Instance.RecentProjects);
+                    _context.Container.Run<WelcomePresenter, WelcomeViewModel>(model);
+                    return true;
+                case MenuKeys.SupportedDrivers:
+                    _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
+                    return true;
+                case MenuKeys.About:
+                    _context.Container.Run<AboutPresenter>();
+                    return true;
+            }
+            
+            return false;
         }
 
         private bool HandleDialogs(string itemKey)

@@ -35,6 +35,7 @@
 
         public const string About = "HelpAbout";
         public const string SupportedDrivers = "HelpSupportedDrivers";
+        public const string Welcome = "HelpWelcome";
     }
 }
 

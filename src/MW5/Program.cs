@@ -61,8 +61,6 @@ namespace MW5
             Application.DoEvents();
         }
 
-       
-
         private static void LoadConfig(IApplicationContainer container)
         {
             MapInitializer.InitMapConfig();

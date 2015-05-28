@@ -85,6 +85,9 @@
     </Compile>
     <Compile Include="Controls\LinkLabelCellModelEx.cs" />
     <Compile Include="Controls\LinkLabelCellRendererEx.cs" />
+    <Compile Include="Controls\LinkLabelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\OpenFileDialogCellModel.cs" />
     <Compile Include="Controls\OpenFileDialogCellRenderer.cs" />
     <Compile Include="Controls\ImageCombo.cs">

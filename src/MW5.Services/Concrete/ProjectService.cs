@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
@@ -206,6 +207,8 @@ namespace MW5.Services.Concrete
                     _filename = filename;
                     _modified = false;
 
+                    AppConfig.Instance.AddRecentProject(filename);
+
                     MessageService.Current.Info("Project was saved: " + filename);
                 }
             }
@@ -310,6 +313,8 @@ namespace MW5.Services.Concrete
                     SetEmptyProject();
                     return;
                 }
+
+                AppConfig.Instance.AddRecentProject(filename);
 
                 _filename = filename;
 

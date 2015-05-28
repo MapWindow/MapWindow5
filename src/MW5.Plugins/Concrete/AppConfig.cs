@@ -9,6 +9,7 @@ namespace MW5.Plugins.Concrete
     [DataContract(Name="Settings")]
     public class AppConfig
     {
+        private List<string> _recentProjects;
         private List<int> _favoriteProjections;
         private CoordinatesDisplay _coordinatesDisplay;
 
@@ -150,6 +151,30 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
+
+        [DataMember]
+        public List<string> RecentProjects
+        {
+            get { return _recentProjects ?? (_recentProjects = new List<string>()); }
+            set { _recentProjects = value; }
+        }
+
+        public void AddRecentProject(string path)
+        {
+            path = path.ToLower();
+
+            if (RecentProjects.Contains(path))
+            {
+                RecentProjects.Remove(path);
+            }
+
+            RecentProjects.Add(path);
+
+            if (RecentProjects.Count > 3)
+            {
+                RecentProjects.RemoveAt(0);
+            }
+        }
 
         /// <summary>
         /// List of EPSG codes for favorite projections

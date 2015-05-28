@@ -65,6 +65,7 @@ namespace MW5.Views
 
                 view.ViewClosing += OnViewClosing;
                 view.ViewUpdating += OnViewUpdating;
+                view.BeforeShow += OnBeforeShow;
 
                 var container = context.Container;
                 _statusBarListener = container.GetSingleton<StatusBarListener>();
@@ -89,6 +90,14 @@ namespace MW5.Views
             {
                 view.Map.Unlock();
                 context.Legend.Unlock();
+            }
+        }
+
+        private void OnBeforeShow()
+        {
+            if (AppConfig.Instance.ShowWelcomeDialog)
+            {
+                _menuListener.RunCommand(MenuKeys.Welcome);
             }
         }
 

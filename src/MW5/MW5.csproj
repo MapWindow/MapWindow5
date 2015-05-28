@@ -209,6 +209,7 @@
     <Compile Include="Menu\TilesMenuHelper.cs" />
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Menu\ViewMenuHelper.cs" />
+    <Compile Include="Views\Abstract\IWelcomeView.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
     <Compile Include="Views\ConfigViewModel.cs" />
     <Compile Include="Views\CreatePyramidsPresenter.cs" />
@@ -273,6 +274,14 @@
     <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WelcomePresenter.cs" />
+    <Compile Include="Views\WelcomeView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WelcomeView.Designer.cs">
+      <DependentUpon>WelcomeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WelcomeViewModel.cs" />
     <EmbeddedResource Include="Configuration\LayerConfigPage.resx">
       <DependentUpon>LayerConfigPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -333,6 +342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplashView.resx">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WelcomeView.resx">
+      <DependentUpon>WelcomeView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="..\postbuild.bat">
       <Link>postbuild.bat</Link>
@@ -526,6 +538,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_paypal24.png" />
+    <None Include="Resources\img_docs24.png" />
+    <None Include="Resources\img_book24.png" />
     <None Include="Resources\img_folder_open32.png" />
     <None Include="Resources\img_tune32.png" />
     <None Include="Resources\img_open_layer32.png" />
