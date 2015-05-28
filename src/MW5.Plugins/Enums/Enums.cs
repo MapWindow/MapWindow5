@@ -155,7 +155,8 @@
         Map = 1,
         Plugins = 2,
         LayerOpening = 3,
-        Custom = 4,
+        Widgets = 4,
+        Custom = 5,
     }
 
     public enum SymbologyStorage

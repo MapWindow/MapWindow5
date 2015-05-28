@@ -523,6 +523,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_folder_open32 {
+            get {
+                object obj = ResourceManager.GetObject("img_folder_open32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_geometry {
             get {
                 object obj = ResourceManager.GetObject("img_geometry", resourceCulture);
@@ -626,6 +636,16 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap img_raster {
             get {
                 object obj = ResourceManager.GetObject("img_raster", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tune32 {
+            get {
+                object obj = ResourceManager.GetObject("img_tune32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

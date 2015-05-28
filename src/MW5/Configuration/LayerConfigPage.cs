@@ -79,7 +79,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_open_layer32; }
+            get { return Resources.img_folder_open32; }
         }
 
         public bool PluginPage

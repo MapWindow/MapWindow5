@@ -1,0 +1,103 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
+using MW5.Plugins.Enums;
+using MW5.Plugins.Services;
+using MW5.Properties;
+using MW5.Services.Config;
+using MW5.Shared;
+using MW5.UI.Helpers;
+
+namespace MW5.Configuration
+{
+    public partial class WidgetsConfigPage : UserControl, IConfigPage
+    {
+        private readonly IConfigService _configService;
+
+        public WidgetsConfigPage(IConfigService configService)
+        {
+            if (configService == null) throw new ArgumentNullException("configService");
+            _configService = configService;
+
+            InitializeComponent();
+
+            InitControls();
+
+            Initialize();
+        }
+
+        private void InitControls()
+        {
+            cboScalebarUnits.AddItemsFromEnum<ScalebarUnits>();
+            cboZoombarVerbosity.AddItemsFromEnum<ZoomBarVerbosity>();
+            cboCoordinateDisplay.AddItemsFromEnum<CoordinatesDisplay>();
+            cboAngleFormat.AddItemsFromEnum<AngleFormat>();
+        }
+
+        private void Initialize()
+        {
+            var config = _configService.Config;
+
+            chkShowRedrawTime.Checked = config.ShowRedrawTime;
+            chkShowScalebar.Checked = config.ShowScalebar;
+            chkShowZoombar.Checked = config.ShowZoombar;
+            chkShowCoordinates.Checked = config.ShowCoordinates;
+            
+            cboScalebarUnits.SetValue(config.ScalebarUnits);
+            cboZoombarVerbosity.SetValue(config.ZoomBarVerbosity);
+            cboCoordinateDisplay.SetValue(config.CoordinateDisplay);
+            cboAngleFormat.SetValue(config.CoordinateAngleFormat);
+
+            udCoordinatePrecision.SetValue(config.CoordinatePrecision);
+        }
+
+        public string PageName
+        {
+            get { return "Widgets"; }
+        }
+
+        public void Save()
+        {
+            var config = _configService.Config;
+
+            config.ShowRedrawTime = chkShowRedrawTime.Checked;
+            config.ShowZoombar = chkShowZoombar.Checked;
+            config.ShowScalebar = chkShowScalebar.Checked;
+            config.ShowCoordinates = chkShowCoordinates.Checked;
+            config.ScalebarUnits = cboScalebarUnits.GetValue<ScalebarUnits>();
+            config.ZoomBarVerbosity = cboZoombarVerbosity.GetValue<ZoomBarVerbosity>();
+            config.CoordinateDisplay = cboCoordinateDisplay.GetValue<CoordinatesDisplay>();
+            config.CoordinateAngleFormat = cboAngleFormat.GetValue<AngleFormat>();
+
+            config.CoordinatePrecision = (int)udCoordinatePrecision.Value;
+        }
+
+        public Bitmap Icon
+        {
+            get { return Resources.img_tune32; }
+        }
+
+        public bool PluginPage
+        {
+            get { return false; }
+        }
+
+        public ConfigPageType PageTypeType
+        {
+            get { return ConfigPageType.Widgets; }
+        }
+
+        public string Description
+        {
+            get { return "Widgets and information that can be displayed on the map."; }
+        }
+    }
+}

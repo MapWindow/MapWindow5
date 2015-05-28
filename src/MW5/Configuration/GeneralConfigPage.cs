@@ -14,15 +14,11 @@ namespace MW5.Configuration
     public partial class GeneralConfigPage : UserControl, IConfigPage
     {
         private readonly IConfigService _configService;
-        private readonly IMuteMap _map;
 
-        public GeneralConfigPage(IConfigService configService, IMuteMap map)
+        public GeneralConfigPage(IConfigService configService)
         {
             if (configService == null) throw new ArgumentNullException("configService");
-            if (map == null) throw new ArgumentNullException("map");
-
             _configService = configService;
-            _map = map;
 
             InitializeComponent();
 
@@ -57,8 +53,6 @@ namespace MW5.Configuration
             config.LoadSymbology = chkLoadSymbology.Checked;
             config.ShowWelcomeDialog = chkShowWelcomeDialog.Checked;
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
-
-            _map.ApplyConfig(_configService);
         }
 
         public Bitmap Icon
