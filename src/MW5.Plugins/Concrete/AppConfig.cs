@@ -10,6 +10,7 @@ namespace MW5.Plugins.Concrete
     public class AppConfig
     {
         private List<int> _favoriteProjections;
+        private CoordinatesDisplay _coordinatesDisplay;
 
         public AppConfig()
         {
@@ -34,7 +35,7 @@ namespace MW5.Plugins.Concrete
             NeverShowSpatialIndexDialog = false;
             SymbolobyStorage = SymbologyStorage.Project;
             ShowCoordinates = true;
-            CoordinateDisplay = CoordinatesDisplay.Auto;
+            CoordinatesDisplay = CoordinatesDisplay.Auto;
             CoordinateAngleFormat = AngleFormat.Seconds;
             CoordinatePrecision = 3;
         }
@@ -88,7 +89,17 @@ namespace MW5.Plugins.Concrete
         public bool ShowCoordinates { get; set; }
 
         [DataMember]
-        public CoordinatesDisplay CoordinateDisplay { get; set; }
+        public CoordinatesDisplay CoordinatesDisplay
+        {
+            get
+            {
+                return _coordinatesDisplay == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : _coordinatesDisplay;
+            }
+            set 
+            {
+                _coordinatesDisplay = value == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : value;
+            }
+        }
 
         [DataMember]
         public AngleFormat CoordinateAngleFormat { get; set; }

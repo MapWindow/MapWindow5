@@ -38,8 +38,15 @@ namespace MW5.Configuration
         {
             cboScalebarUnits.AddItemsFromEnum<ScalebarUnits>();
             cboZoombarVerbosity.AddItemsFromEnum<ZoomBarVerbosity>();
-            cboCoordinateDisplay.AddItemsFromEnum<CoordinatesDisplay>();
             cboAngleFormat.AddItemsFromEnum<AngleFormat>();
+
+            var list = new List<CoordinatesDisplay>()
+            {
+                CoordinatesDisplay.Auto,
+                CoordinatesDisplay.Degrees,
+                CoordinatesDisplay.MapUnits
+            };
+            cboCoordinateDisplay.AddItemsFromEnum(list);
         }
 
         private void Initialize()
@@ -53,7 +60,7 @@ namespace MW5.Configuration
             
             cboScalebarUnits.SetValue(config.ScalebarUnits);
             cboZoombarVerbosity.SetValue(config.ZoomBarVerbosity);
-            cboCoordinateDisplay.SetValue(config.CoordinateDisplay);
+            cboCoordinateDisplay.SetValue(config.CoordinatesDisplay);
             cboAngleFormat.SetValue(config.CoordinateAngleFormat);
 
             udCoordinatePrecision.SetValue(config.CoordinatePrecision);
@@ -74,7 +81,7 @@ namespace MW5.Configuration
             config.ShowCoordinates = chkShowCoordinates.Checked;
             config.ScalebarUnits = cboScalebarUnits.GetValue<ScalebarUnits>();
             config.ZoomBarVerbosity = cboZoombarVerbosity.GetValue<ZoomBarVerbosity>();
-            config.CoordinateDisplay = cboCoordinateDisplay.GetValue<CoordinatesDisplay>();
+            config.CoordinatesDisplay = cboCoordinateDisplay.GetValue<CoordinatesDisplay>();
             config.CoordinateAngleFormat = cboAngleFormat.GetValue<AngleFormat>();
 
             config.CoordinatePrecision = (int)udCoordinatePrecision.Value;

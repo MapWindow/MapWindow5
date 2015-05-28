@@ -29,6 +29,12 @@
         private void InitializeComponent()
         {
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
+            this.cboScalebarUnits = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label4 = new System.Windows.Forms.Label();
+            this.chkShowScalebar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboZoombarVerbosity = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.chkShowZoombar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.chkShowRedrawTime = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.udCoordinatePrecision = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
@@ -37,24 +43,18 @@
             this.cboCoordinateDisplay = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label10 = new System.Windows.Forms.Label();
             this.chkShowCoordinates = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.cboScalebarUnits = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.label4 = new System.Windows.Forms.Label();
-            this.chkShowScalebar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cboZoombarVerbosity = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkShowZoombar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udCoordinatePrecision)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAngleFormat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCoordinateDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkShowCoordinates)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             this.SuspendLayout();
@@ -74,82 +74,6 @@
             this.configPanelControl1.Name = "configPanelControl1";
             this.configPanelControl1.Size = new System.Drawing.Size(443, 130);
             this.configPanelControl1.TabIndex = 17;
-            // 
-            // chkShowRedrawTime
-            // 
-            this.chkShowRedrawTime.BeforeTouchSize = new System.Drawing.Size(188, 21);
-            this.chkShowRedrawTime.Location = new System.Drawing.Point(16, 149);
-            this.chkShowRedrawTime.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkShowRedrawTime.Name = "chkShowRedrawTime";
-            this.chkShowRedrawTime.Size = new System.Drawing.Size(188, 21);
-            this.chkShowRedrawTime.TabIndex = 10;
-            this.chkShowRedrawTime.Text = "Show redraw time";
-            this.chkShowRedrawTime.ThemesEnabled = false;
-            // 
-            // udCoordinatePrecision
-            // 
-            this.udCoordinatePrecision.Location = new System.Drawing.Point(242, 120);
-            this.udCoordinatePrecision.Name = "udCoordinatePrecision";
-            this.udCoordinatePrecision.Size = new System.Drawing.Size(75, 20);
-            this.udCoordinatePrecision.TabIndex = 25;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(169, 122);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
-            this.label12.TabIndex = 24;
-            this.label12.Text = "precision";
-            // 
-            // cboAngleFormat
-            // 
-            this.cboAngleFormat.BeforeTouchSize = new System.Drawing.Size(173, 21);
-            this.cboAngleFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboAngleFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboAngleFormat.Location = new System.Drawing.Point(242, 82);
-            this.cboAngleFormat.Name = "cboAngleFormat";
-            this.cboAngleFormat.Size = new System.Drawing.Size(173, 21);
-            this.cboAngleFormat.TabIndex = 23;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(169, 86);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 13);
-            this.label11.TabIndex = 22;
-            this.label11.Text = "angle format";
-            // 
-            // cboCoordinateDisplay
-            // 
-            this.cboCoordinateDisplay.BeforeTouchSize = new System.Drawing.Size(173, 21);
-            this.cboCoordinateDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCoordinateDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboCoordinateDisplay.Location = new System.Drawing.Point(242, 42);
-            this.cboCoordinateDisplay.Name = "cboCoordinateDisplay";
-            this.cboCoordinateDisplay.Size = new System.Drawing.Size(173, 21);
-            this.cboCoordinateDisplay.TabIndex = 21;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(169, 46);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 13);
-            this.label10.TabIndex = 20;
-            this.label10.Text = "display type";
-            // 
-            // chkShowCoordinates
-            // 
-            this.chkShowCoordinates.BeforeTouchSize = new System.Drawing.Size(126, 21);
-            this.chkShowCoordinates.Location = new System.Drawing.Point(16, 42);
-            this.chkShowCoordinates.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
-            this.chkShowCoordinates.Name = "chkShowCoordinates";
-            this.chkShowCoordinates.Size = new System.Drawing.Size(126, 21);
-            this.chkShowCoordinates.TabIndex = 19;
-            this.chkShowCoordinates.Text = "Show coordinates";
-            this.chkShowCoordinates.ThemesEnabled = false;
             // 
             // cboScalebarUnits
             // 
@@ -211,6 +135,88 @@
             this.chkShowZoombar.Text = "Show zoombar";
             this.chkShowZoombar.ThemesEnabled = false;
             // 
+            // chkShowRedrawTime
+            // 
+            this.chkShowRedrawTime.BeforeTouchSize = new System.Drawing.Size(188, 21);
+            this.chkShowRedrawTime.Location = new System.Drawing.Point(16, 149);
+            this.chkShowRedrawTime.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkShowRedrawTime.Name = "chkShowRedrawTime";
+            this.chkShowRedrawTime.Size = new System.Drawing.Size(188, 21);
+            this.chkShowRedrawTime.TabIndex = 10;
+            this.chkShowRedrawTime.Text = "Show redraw time";
+            this.chkShowRedrawTime.ThemesEnabled = false;
+            // 
+            // udCoordinatePrecision
+            // 
+            this.udCoordinatePrecision.Enabled = false;
+            this.udCoordinatePrecision.Location = new System.Drawing.Point(242, 120);
+            this.udCoordinatePrecision.Name = "udCoordinatePrecision";
+            this.udCoordinatePrecision.Size = new System.Drawing.Size(75, 20);
+            this.udCoordinatePrecision.TabIndex = 25;
+            this.udCoordinatePrecision.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(169, 122);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "precision";
+            // 
+            // cboAngleFormat
+            // 
+            this.cboAngleFormat.BeforeTouchSize = new System.Drawing.Size(173, 21);
+            this.cboAngleFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboAngleFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboAngleFormat.Location = new System.Drawing.Point(242, 82);
+            this.cboAngleFormat.Name = "cboAngleFormat";
+            this.cboAngleFormat.Size = new System.Drawing.Size(173, 21);
+            this.cboAngleFormat.TabIndex = 23;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(169, 86);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(65, 13);
+            this.label11.TabIndex = 22;
+            this.label11.Text = "angle format";
+            // 
+            // cboCoordinateDisplay
+            // 
+            this.cboCoordinateDisplay.BeforeTouchSize = new System.Drawing.Size(173, 21);
+            this.cboCoordinateDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCoordinateDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboCoordinateDisplay.Location = new System.Drawing.Point(242, 42);
+            this.cboCoordinateDisplay.Name = "cboCoordinateDisplay";
+            this.cboCoordinateDisplay.Size = new System.Drawing.Size(173, 21);
+            this.cboCoordinateDisplay.TabIndex = 21;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(169, 46);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(62, 13);
+            this.label10.TabIndex = 20;
+            this.label10.Text = "display type";
+            // 
+            // chkShowCoordinates
+            // 
+            this.chkShowCoordinates.BeforeTouchSize = new System.Drawing.Size(126, 21);
+            this.chkShowCoordinates.Location = new System.Drawing.Point(16, 42);
+            this.chkShowCoordinates.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
+            this.chkShowCoordinates.Name = "chkShowCoordinates";
+            this.chkShowCoordinates.Size = new System.Drawing.Size(126, 21);
+            this.chkShowCoordinates.TabIndex = 19;
+            this.chkShowCoordinates.Text = "Show coordinates";
+            this.chkShowCoordinates.ThemesEnabled = false;
+            // 
             // configPanelControl2
             // 
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -241,15 +247,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udCoordinatePrecision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAngleFormat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCoordinateDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkShowCoordinates)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             this.configPanelControl2.PerformLayout();
