@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Events;
 using MW5.Api.Static;
@@ -36,13 +37,63 @@ namespace MW5.Listeners
 
         private void BeforeLayerAdded(IMuteMap map, DatasourceCancelEventArgs e)
         {
-            var ds = e.Datasource as IRasterSource;
-            if (ds != null)
+            var raster = e.Datasource as IRasterSource;
+            if (raster != null)
             {
-                if (!UpdateOverviews(ds))
+                if (!UpdateOverviews(raster))
                 {
                     e.Cancel = true;
                 }
+            }
+
+            var fs = e.Datasource as IFeatureSet;
+            if (fs != null)
+            {
+                CreateSpatialIndex(fs);
+            }
+        }
+
+        private bool NeedsSpatialIndex(IFeatureSet fs, int minFeatureCount)
+        {
+            return fs.SourceType == FeatureSourceType.DiskBased &&
+                   fs.NumFeatures >= minFeatureCount &&
+                   fs.SpatialIndex.DiskIndexExists;
+        }
+
+        private void CreateSpatialIndex(IFeatureSet fs)
+        {
+            if (fs.LayerType != LayerType.Shapefile)
+            {
+                return;
+            }
+
+            var config = _configService.Config;
+
+            if (!NeedsSpatialIndex(fs, config.SpatialIndexFeatureCount))
+            {
+                return;
+            }
+
+            if (config.ShowSpatialIndexDialog)
+            {
+                // TODO: implement
+                return;
+            }
+
+            if (!config.CreateSpatialIndexOnOpening)
+            {
+                return;
+            }
+
+            bool result = fs.SpatialIndex.CreateDiskIndex();
+
+            if (result)
+            {
+                Logger.Current.Info("Spatial index is build for shapefile: " + fs.Filename);
+            }
+            else
+            {
+                Logger.Current.Warn("Failed to build spatial index for shapefile: " + fs.Filename);
             }
         }
 
@@ -55,7 +106,7 @@ namespace MW5.Listeners
 
             var config = _configService.Config;
 
-            if (config.NeverShowPyramidDialog && config.CreatePyramidsOnOpening)
+            if (config.ShowPyramidDialog && config.CreatePyramidsOnOpening)
             {
                 MapConfig.CompressOverviews = config.PyramidCompression;
                 bool result = raster.BuildDefaultOverviews(config.PyramidSampling);
@@ -78,7 +129,7 @@ namespace MW5.Listeners
                 return false;
             }
             
-            config.NeverShowPyramidDialog = presenter.DontShowAgain;
+            config.ShowPyramidDialog = presenter.DontShowAgain;
             config.CreatePyramidsOnOpening = presenter.Result == DialogResult.Yes;
             config.PyramidCompression = presenter.View.Compression;
             config.PyramidSampling = presenter.View.Sampling;

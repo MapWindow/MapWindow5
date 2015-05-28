@@ -46,9 +46,9 @@ namespace MW5.Configuration
 
             chkCreatePyramids.Checked = config.CreatePyramidsOnOpening;
             chkCreateSpatialIndex.Checked = config.CreateSpatialIndexOnOpening;
-            chkProjectionDialog.Checked = !config.NeverShowProjectionDialog;
-            chkPyramidsDialog.Checked = !config.NeverShowPyramidDialog;
-            chkSpatialIndexDialog.Checked = !config.NeverShowSpatialIndexDialog;
+            chkProjectionDialog.Checked = config.ShowProjectionDialog;
+            chkPyramidsDialog.Checked = config.ShowPyramidDialog;
+            chkSpatialIndexDialog.Checked = config.ShowSpatialIndexDialog;
 
             cboProjectionAbsence.SetValue(config.ProjectionAbsence);
             cboProjectionMismatch.SetValue(config.ProjectionMismatch);
@@ -67,9 +67,9 @@ namespace MW5.Configuration
 
             config.CreatePyramidsOnOpening = chkCreatePyramids.Checked;
             config.CreateSpatialIndexOnOpening = chkCreateSpatialIndex.Checked;
-            config.NeverShowProjectionDialog = !chkProjectionDialog.Checked;
-            config.NeverShowPyramidDialog = !chkPyramidsDialog.Checked;
-            config.NeverShowSpatialIndexDialog = !chkSpatialIndexDialog.Checked;
+            config.ShowProjectionDialog = chkProjectionDialog.Checked;
+            config.ShowPyramidDialog = chkPyramidsDialog.Checked;
+            config.ShowSpatialIndexDialog = chkSpatialIndexDialog.Checked;
 
             config.ProjectionAbsence = cboProjectionAbsence.GetValue<ProjectionAbsence>();
             config.ProjectionMismatch = cboProjectionMismatch.GetValue<ProjectionMismatch>();

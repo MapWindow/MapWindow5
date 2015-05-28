@@ -21,7 +21,7 @@ namespace MW5.Plugins.Concrete
             LoadLastProject = true;
             LastProjectPath = "";
             ShowRedrawTime = false;
-            NeverShowPyramidDialog = false;
+            ShowPyramidDialog = false;
             CreatePyramidsOnOpening = true;
             ShowValuesOnMouseMove = true;
             PyramidCompression = TiffCompression.Auto;
@@ -35,12 +35,13 @@ namespace MW5.Plugins.Concrete
             ZoomBoxStyle = ZoomBoxStyle.Blue;
             ShowWelcomeDialog = true;
             CreateSpatialIndexOnOpening = true;
-            NeverShowSpatialIndexDialog = false;
+            ShowSpatialIndexDialog = false;
             SymbolobyStorage = SymbologyStorage.Project;
             ShowCoordinates = true;
             CoordinatesDisplay = CoordinatesDisplay.Auto;
             CoordinateAngleFormat = AngleFormat.Seconds;
             CoordinatePrecision = 3;
+            SpatialIndexFeatureCount = 10000;
         }
 
         [DataMember]
@@ -126,7 +127,7 @@ namespace MW5.Plugins.Concrete
         public ProjectionAbsence ProjectionAbsence { get; set; }
 
         [DataMember]
-        public bool NeverShowProjectionDialog { get; set; }
+        public bool ShowProjectionDialog { get; set; }
 
         [DataMember]
         public bool ProjectionShowWarnings { get; set; }
@@ -135,10 +136,10 @@ namespace MW5.Plugins.Concrete
         public bool ProjectionShowLoadingReport { get; set; }
 
         [DataMember]
-        public bool NeverShowPyramidDialog { get; set; }
+        public bool ShowPyramidDialog { get; set; }
 
         [DataMember]
-        public bool NeverShowSpatialIndexDialog { get; set; }
+        public bool ShowSpatialIndexDialog { get; set; }
 
         [DataMember]
         public bool CreatePyramidsOnOpening { get; set; }
@@ -151,6 +152,8 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
+
+        public int SpatialIndexFeatureCount { get; set; }
 
         [DataMember]
         public List<string> RecentProjects

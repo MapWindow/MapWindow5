@@ -4,11 +4,13 @@ namespace MW5.Plugins.Services
 {
     public class MessageService: IMessageService
     {
-        private const string AppName = "MapWindow 5";
+        public const string AppName = "MapWindow 5";
+        private static IMessageService _service;
 
         public static IMessageService Current
         {
-            get { return new MessageService(); }
+            get { return _service ?? (_service = new MessageService()); }
+            set { _service = value; }
         }
 
         public void Warn(string message)

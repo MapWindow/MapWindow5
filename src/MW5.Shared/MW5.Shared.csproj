@@ -48,6 +48,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.Shared.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -90,6 +91,7 @@
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StringBuilderHelper.cs" />
     <Compile Include="StringHelper.cs" />
+    <Compile Include="TextMeasurer.cs" />
     <Compile Include="Win32Api.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>

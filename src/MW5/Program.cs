@@ -32,11 +32,12 @@ namespace MW5
         static void Main()
         {
             Application.EnableVisualStyles();
+
             Application.SetCompatibleTextRenderingDefault(false);
 
             ExceptionHandler.Attach();
 
-            var logger = new LoggingService();      // this will initialize Logger.Current
+            var logger = new LoggingService();
             logger.Info("APPLICATION STARUP");
 
             ShowSplashScreen();

@@ -15,7 +15,7 @@ namespace MW5.Services
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterService<IFileDialogService, FileDialogService>()
-                .RegisterService<IMessageService, MessageService>()
+                .RegisterService<IMessageService, MessageService>()     // FlexibleMessageService
                 .RegisterSingleton<ILayerService, LayerService>()
                 .RegisterSingleton<ILoggingService, LoggingService>()
                 .RegisterSingleton<IProjectService, ProjectService>()

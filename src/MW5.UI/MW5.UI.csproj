@@ -163,6 +163,12 @@
     <Compile Include="Forms\MapWindowView2.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\CustomDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CustomDialog.Designer.cs">
+      <DependentUpon>CustomDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\GridHelper.cs" />
@@ -265,6 +271,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TransparencyControl.resx">
       <DependentUpon>TransparencyControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CustomDialog.resx">
+      <DependentUpon>CustomDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>
