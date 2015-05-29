@@ -29,7 +29,7 @@ namespace MW5.Shared
         /// <returns></returns>
         public static bool Equal(double val1, double val2)
         {
-            return Math.Abs(val2 - val1) > Tolerance;
+            return Math.Abs(val2 - val1) <= Tolerance;
         }
 
         public static double Parse(string value, double defaultValue)

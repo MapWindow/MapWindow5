@@ -40,23 +40,23 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
-            this.transpFill = new TransparencyControl();
+            this.transpFill = new MW5.UI.Controls.TransparencyControl();
             this.pnlFillPicture = new System.Windows.Forms.Panel();
-            this.udScaleY = new NumericUpDownEx(this.components);
+            this.udScaleY = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label9 = new System.Windows.Forms.Label();
-            this.udScaleX = new NumericUpDownEx(this.components);
+            this.udScaleX = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label8 = new System.Windows.Forms.Label();
             this.groupGradient = new System.Windows.Forms.GroupBox();
             this.pnlFillGradient = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.udGradientRotation = new NumericUpDownEx(this.components);
+            this.udGradientRotation = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.cboGradientBounds = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboGradientType = new System.Windows.Forms.ComboBox();
-            this.clpGradient2 = new Office2007ColorPicker(this.components);
-            this.clpFill = new Office2007ColorPicker(this.components);
+            this.clpGradient2 = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.clpFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboFillType = new System.Windows.Forms.ComboBox();
@@ -66,23 +66,23 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.label22 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.transpOutline = new TransparencyControl();
-            this.icbLineWidth = new ImageCombo();
-            this.icbLineType = new ImageCombo();
-            this.clpOutline = new Office2007ColorPicker(this.components);
+            this.transpOutline = new MW5.UI.Controls.TransparencyControl();
+            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
+            this.icbLineType = new MW5.UI.Controls.ImageCombo();
+            this.clpOutline = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.udVerticesSize = new NumericUpDownEx(this.components);
+            this.udVerticesSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.chkVerticesFillVisible = new System.Windows.Forms.CheckBox();
             this.label29 = new System.Windows.Forms.Label();
             this.cboVerticesType = new System.Windows.Forms.ComboBox();
             this.label28 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
-            this.clpVerticesColor = new Office2007ColorPicker(this.components);
+            this.clpVerticesColor = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.pnlFillHatch = new System.Windows.Forms.Panel();
-            this.icbHatchStyle = new ImageCombo();
+            this.icbHatchStyle = new MW5.UI.Controls.ImageCombo();
             this.chkFillBgTransparent = new System.Windows.Forms.CheckBox();
-            this.clpHatchBack = new Office2007ColorPicker(this.components);
+            this.clpHatchBack = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.chkOutlineVisible = new System.Windows.Forms.CheckBox();
@@ -93,7 +93,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.btnOk = new System.Windows.Forms.Button();
             this.groupHatch = new System.Windows.Forms.GroupBox();
             this.groupPicture = new System.Windows.Forms.GroupBox();
-            this.iconControl1 = new IconControl();
+            this.textureControl1 = new MW5.Plugins.Symbology.Controls.ListControls.IconControl();
             this.btnApply = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctPreview)).BeginInit();
@@ -184,7 +184,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.transpFill.Size = new System.Drawing.Size(247, 32);
             this.transpFill.TabIndex = 91;
             this.transpFill.Value = ((byte)(255));
-            this.transpFill.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transpOutline_ValueChanged);
+            this.transpFill.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpOutline_ValueChanged);
             // 
             // pnlFillPicture
             // 
@@ -402,7 +402,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(17, 106);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 13);
+            this.label6.Size = new System.Drawing.Size(31, 13);
             this.label6.TabIndex = 87;
             this.label6.Text = "Color";
             // 
@@ -496,13 +496,13 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.transpOutline.Size = new System.Drawing.Size(247, 32);
             this.transpOutline.TabIndex = 135;
             this.transpOutline.Value = ((byte)(255));
-            this.transpOutline.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transpOutline_ValueChanged);
+            this.transpOutline.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpOutline_ValueChanged);
             // 
             // icbLineWidth
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Blue;
             this.icbLineWidth.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -516,7 +516,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbLineType.Color1 = System.Drawing.Color.Blue;
             this.icbLineType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineType.ComboStyle = ImageComboStyle.Common;
+            this.icbLineType.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineType.FormattingEnabled = true;
@@ -651,7 +651,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             this.icbHatchStyle.Color1 = System.Drawing.Color.Blue;
             this.icbHatchStyle.Color2 = System.Drawing.Color.Honeydew;
-            this.icbHatchStyle.ComboStyle = ImageComboStyle.Common;
+            this.icbHatchStyle.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbHatchStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbHatchStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbHatchStyle.FormattingEnabled = true;
@@ -777,7 +777,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             // groupPicture
             // 
-            this.groupPicture.Controls.Add(this.iconControl1);
+            this.groupPicture.Controls.Add(this.textureControl1);
             this.groupPicture.Location = new System.Drawing.Point(640, 82);
             this.groupPicture.Name = "groupPicture";
             this.groupPicture.Size = new System.Drawing.Size(397, 164);
@@ -786,23 +786,22 @@ namespace MW5.Plugins.Symbology.Forms.Style
             // 
             // iconControl1
             // 
-            this.iconControl1.BackColor = System.Drawing.Color.Transparent;
-            this.iconControl1.CellHeight = 48;
-            this.iconControl1.CellWidth = 48;
-            this.iconControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.iconControl1.FilePath = "";
-            this.iconControl1.Font = new System.Drawing.Font("Arial", 25.6F);
-            this.iconControl1.GridColor = System.Drawing.Color.Gray;
-            this.iconControl1.GridVisible = true;
-            this.iconControl1.ItemCount = 0;
-            this.iconControl1.Location = new System.Drawing.Point(3, 16);
-            this.iconControl1.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
-            this.iconControl1.Name = "iconControl1";
-            this.iconControl1.SelectedIndex = -1;
-            this.iconControl1.Size = new System.Drawing.Size(391, 145);
-            this.iconControl1.TabIndex = 73;
-            this.iconControl1.Textures = false;
-            this.iconControl1.SelectionChanged += new ListControl.SelectionChangedDel(this.iconControl1_SelectionChanged_1);
+            this.textureControl1.BackColor = System.Drawing.Color.Transparent;
+            this.textureControl1.CellHeight = 48;
+            this.textureControl1.CellWidth = 48;
+            this.textureControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textureControl1.FilePath = "";
+            this.textureControl1.Font = new System.Drawing.Font("Arial", 25.6F);
+            this.textureControl1.GridColor = System.Drawing.Color.Gray;
+            this.textureControl1.GridVisible = true;
+            this.textureControl1.ItemCount = 0;
+            this.textureControl1.Location = new System.Drawing.Point(3, 16);
+            this.textureControl1.Margin = new System.Windows.Forms.Padding(10, 9, 10, 9);
+            this.textureControl1.Name = "textureControl1";
+            this.textureControl1.SelectedIndex = -1;
+            this.textureControl1.Size = new System.Drawing.Size(391, 145);
+            this.textureControl1.TabIndex = 73;
+            this.textureControl1.Textures = false;
             // 
             // btnApply
             // 
@@ -815,7 +814,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.btnApply.UseVisualStyleBackColor = true;
             this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
             // 
-            // PolygonsForm
+            // PolygonForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -909,7 +908,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private IconControl iconControl1;
+        private IconControl textureControl1;
         private Office2007ColorPicker clpFill;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel pnlFillPicture;

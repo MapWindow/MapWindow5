@@ -19,21 +19,18 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
-using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
-using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
-using MW5.UI;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
-using PathHelper = MW5.Plugins.Symbology.Helpers.PathHelper;
 
 namespace MW5.Plugins.Symbology.Forms.Style
 {
@@ -70,18 +67,20 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             btnApply.Visible = !applyDisabled;
 
+            pointIconControl1.Initialize(_style.Marker);
+
             InitControls();
 
             Options2Gui();
             _noEvents = false;
 
-            InitIconsAndFonts();
-
-            RestoreSelectedIconCollection();
+            InitFonts();
 
             DrawPreview();
 
             AttachListeners();
+
+            UpdateDefaultColor();
 
             tabControl1.SelectedIndex = _tabIndex;
         }
@@ -112,28 +111,18 @@ namespace MW5.Plugins.Symbology.Forms.Style
             cboGradientType.Items.Add("Circle");
         }
 
-        private void InitIconsAndFonts()
+        private void InitFonts()
         {
             var marker = _style.Marker;
 
-            // character control
             cboFontName.SelectedIndexChanged += cboFontName_SelectedIndexChanged;
             RefreshFontList(null, null);
             characterControl1.SelectedCharacterCode = (byte)marker.FontCharacter;
-
-            // icon control
-            RefreshIconCombo();
-
-            UpdateIconsList();
-
-            chkScaleIcons.Checked = !NumericHelper.Equal(marker.IconScaleX, 1.0) ||
-                                    !NumericHelper.Equal(marker.IconScaleY, 1.0);
         }
 
         private void AttachListeners()
         {
             clpFillColor.SelectedColorChanged += clpFillColor_SelectedColorChanged;
-            cboIconCollection.SelectedIndexChanged += CboIconCollectionSelectedIndexChanged;
             cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
 
             udRotation.ValueChanged += Gui2Options;
@@ -150,8 +139,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             chkFillVisible.CheckedChanged += Gui2Options;
 
-            iconControl1.SelectionChanged += IconControl1SelectionChanged;
-            chkScaleIcons.CheckedChanged += Gui2Options;
+            pointIconControl1.SelectedIconChanged += IconControl1SelectionChanged;
+            pointIconControl1.ScaleChanged += () => Gui2Options(null, null);
 
             // character
             characterControl1.SelectionChanged += characterControl1_SelectionChanged;
@@ -168,42 +157,233 @@ namespace MW5.Plugins.Symbology.Forms.Style
             cboGradientType.SelectedIndexChanged += Gui2Options;
         }
 
-        private void RestoreSelectedIconCollection()
+        #endregion
+
+        #region Properties
+
+        private SymbologyMetadata Metadata
         {
-            if (_layer == null)
-            {
-                return;
-            }
-
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
-            if (settings == null)
-            {
-                return;
-            }
-            
-            chkScaleIcons.Checked = settings.ScaleIcons;
-
-            string name = settings.IconCollection.ToLower();
-
-            for (int i = 0; i < cboIconCollection.Items.Count; i++)
-            {
-                if (cboIconCollection.Items[i].ToString().ToLower() == name)
-                {
-                    cboIconCollection.SelectedIndex = i;
-                    iconControl1.SelectedIndex = settings.IconIndex;
-                    break;
-                }
-            }
+            get { return SymbologyPlugin.Metadata(_layer.Handle); }
         }
 
         #endregion
 
-        #region ChangingFill
+        #region Font characters
+        /// <summary>
+        /// Refreshes the list of fonts
+        /// </summary>
+        private void RefreshFontList(object sender, EventArgs e)
+        {
+            cboFontName.Items.Clear();
+
+            if (!chkShowAllFonts.Checked)
+            {
+                foreach (FontFamily family in FontFamily.Families)
+                {
+                    string name = family.Name.ToLower();
+
+                    if (name == "webdings" ||
+                        name == "wingdings" ||
+                        name == "wingdings 2" ||
+                        name == "wingdings 3" ||
+                        name == "times new roman")
+                    {
+                        cboFontName.Items.Add(family.Name);
+                    }
+                }
+            }
+            else
+            {
+                foreach (FontFamily family in FontFamily.Families)
+                {
+                    cboFontName.Items.Add(family.Name);
+                }
+            }
+
+            RestoreSelectedFont();
+        }
+
+        private void RestoreSelectedFont()
+        {
+            var fontName = _style.Marker.FontName;
+
+            foreach (var item in cboFontName.Items)
+            {
+                if (item.ToString().EqualsIgnoreCase(fontName))
+                {
+                    cboFontName.SelectedItem = item;
+                    break;
+                }
+            }
+
+            if (cboFontName.SelectedIndex == -1)
+            {
+                cboFontName.SelectedItem = "Arial";
+            }
+        }
+
+        /// <summary>
+        /// Changing the font in the font control
+        /// </summary>
+        private void cboFontName_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            characterControl1.SetFontName(cboFontName.Text);
+            _style.Marker.FontName = cboFontName.Text;
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Updates the preview with the newly selected character
+        /// </summary>
+        void characterControl1_SelectionChanged()
+        {
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            _style.Marker.Type = MarkerType.FontCharacter;
+            _style.Marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
+            DrawPreview();
+        }
+
+        #endregion
+
+        #region Preview
+
+        /// <summary>
+        /// Draws preview based on the chosen options
+        /// </summary>
+        private void DrawPreview()
+        {
+            if (_noEvents)
+            {
+                return;
+            }
+
+            if (pctPreview.Image != null)
+            {
+                pctPreview.Image.Dispose();
+            }
+
+            var rect = pctPreview.ClientRectangle;
+            var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+            var g = Graphics.FromImage(bmp);
+            
+            _style.DrawPoint(g, 0.0f, 0.0f, rect.Width, rect.Height,  BackColor);
+            
+            pctPreview.Image = bmp;
+        }
+
+        #endregion
+
+        #region Options -> UI
+
+        /// <summary>
+        /// Sets the values entered by user to the class
+        /// </summary>
+        private void Gui2Options(object sender, EventArgs e)
+        {
+            if (_noEvents)
+            {
+                return;
+            }
+
+            var fill = _style.Fill;
+            var marker = _style.Marker;
+
+            marker.Size = (float)udSize.Value;
+
+            marker.UpdatePictureScale(pointIconControl1.ScaleIcons, (int)udSize.Value);
+
+            marker.Rotation = (double)udRotation.Value;
+
+            fill.Color =  clpFillColor.Color;
+
+            marker.VectorMarker = (VectorMarkerType)icbPointShape.SelectedIndex;
+            marker.VectorSideCount = (int)udPointNumSides.Value;
+            marker.VectorMarkerSideRatio = (float)udSideRatio.Value / 10;
+        
+            _style.Line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
+            _style.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
+            _style.Line.Visible = chkOutlineVisible.Checked;
+            fill.Visible = chkFillVisible.Checked;
+            fill.Type = (FillType)cboFillType.SelectedIndex;
+
+            // hatch
+            fill.HatchStyle = (HatchStyle)icbHatchStyle.SelectedIndex;
+            fill.BgTransparent = chkFillBgTransparent.Checked;
+            fill.BgColor =  clpHatchBack.Color;
+
+            // gradient
+            fill.GradientType = (GradientType)cboGradientType.SelectedIndex;
+            fill.Color2 =  clpGradient2.Color;
+            fill.Rotation = (double)udGradientRotation.Value;
+
+            fill.Transparency = transparencyControl1.Value;
+            _style.Line.Transparency = transparencyControl1.Value;
+
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Loads the values of the class instance to the controls
+        /// </summary>
+        private void Options2Gui()
+        {
+            _noEvents = true;
+
+            var marker = _style.Marker;
+            udSize.SetValue(marker.Size);
+            udRotation.SetValue(marker.Rotation);
+            clpFillColor.Color =  _style.Fill.Color;
+
+            // point
+            icbPointShape.SelectedIndex = (int)marker.VectorMarker;
+            udPointNumSides.SetValue(marker.VectorSideCount);
+            udSideRatio.SetValue(marker.VectorMarkerSideRatio * 10.0);
+            
+            // options
+            icbLineType.SelectedIndex = (int)_style.Line.DashStyle;
+            icbLineWidth.SelectedIndex = (int)_style.Line.Width - 1;
+            cboFillType.SelectedIndex = (int)_style.Fill.Type;
+            chkOutlineVisible.Checked = _style.Line.Visible;
+            clpOutline.Color =  _style.Line.Color;
+            chkFillVisible.Checked = _style.Fill.Visible;
+            
+            // hatch
+            icbHatchStyle.SelectedIndex = (int)_style.Fill.HatchStyle;
+            chkFillBgTransparent.Checked = _style.Fill.BgTransparent;
+            clpHatchBack.Color = _style.Fill.BgColor;
+
+            // gradient
+            cboGradientType.SelectedIndex = (int)_style.Fill.GradientType;
+            clpGradient2.Color =  _style.Fill.Color2;
+            udGradientRotation.Value = (decimal)_style.Fill.Rotation;
+
+            transparencyControl1.Value = _style.Fill.Transparency;
+
+            _noEvents = false;
+        }
+
+        #endregion
+
+        #region Event handlers
 
         /// <summary>
         /// Toggles fill type oprions
         /// </summary>
-        void cboFillType_SelectedIndexChanged(object sender, EventArgs e)
+        private void cboFillType_SelectedIndexChanged(object sender, EventArgs e)
         {
             pnlFillGradient.Visible = false;
             pnlFillHatch.Visible = false;
@@ -239,435 +419,51 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             DrawPreview();
         }
-        #endregion
-
-        #region Icons
-        
-        /// <summary>
-        /// Fills the image combo with the names of icons collectins (folders) 
-        /// </summary>
-        private void RefreshIconCombo()
-        {
-            cboIconCollection.Items.Clear();
-            cboIconCollection.Enabled = false;
-            chkScaleIcons.Enabled = false;
-
-            var path = PathHelper.GetIconsPath();
-            if (!Directory.Exists(path))
-            {
-                Logger.Current.Warn("Haven't found icons folder: " + path);
-                return;
-            }
-
-            string[] directories = Directory.GetDirectories(path);
-            if (directories.Length <= 0)
-            {
-                Logger.Current.Warn("No subfolders in the icons folder: " + path);
-                return;
-            }
-
-            cboIconCollection.Enabled = true;
-            chkScaleIcons.Enabled = true;
-
-            foreach (string d in directories)
-            {
-                string[] files = Directory.GetFiles(d);
-                    
-                foreach(var file in files)
-                {
-                    if (Path.GetExtension(file).ContainsIgnoreCase(".png"))
-                    {
-                        string name = d.Substring(path.Length);
-                        cboIconCollection.Items.Add(name);
-                        break;
-                    }
-                }
-            }
-
-            if (cboIconCollection.Items.Count <= 0)
-            {
-                cboIconCollection.Enabled = false;
-                return;
-            }
-            
-            foreach(var item in cboIconCollection.Items)
-            {
-                if (item.ToString().ToLower() == "events")
-                {
-                    cboIconCollection.SelectedItem = item;
-                    break;
-                }
-            }
-
-            if (cboIconCollection.SelectedItem == null)
-            {
-                cboIconCollection.SelectedIndex = 0;
-            }
-        }
 
         /// <summary>
         /// Updates the preview with newly selected icon
         /// </summary>
         private void IconControl1SelectionChanged()
         {
-            string filename = iconControl1.SelectedName;
-            if (string.IsNullOrWhiteSpace(filename))
+            var filename = pointIconControl1.SelectedIconPath;
+            if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
+            {
                 return;
-            
-            var bmp = new Bitmap(filename);
+            }
+
             var clrTransparent = Color.White;
 
             var img = BitmapSource.Open(filename, true);
             {
-                //img.LoadBuffer(50);
-
-                img.TransparentColorFrom =  clrTransparent;
-                img.TransparentColorTo =  clrTransparent;
+                img.TransparentColorFrom = clrTransparent;
+                img.TransparentColorTo = clrTransparent;
                 img.UseTransparentColor = true;
 
                 var marker = _style.Marker;
                 marker.Type = MarkerType.Bitmap;
                 marker.Icon = img;
-
-                UpdatePrictureScale();
+                marker.UpdatePictureScale(pointIconControl1.ScaleIcons, (int)udSize.Value);
 
                 DrawPreview();
             }
-            
-            if (!_noEvents)
-                btnApply.Enabled = true;
-        }
 
-        private void UpdatePrictureScale()
-        {
-            var marker = _style.Marker;
-            if (chkScaleIcons.Checked && marker.Icon != null)
-            {
-                var img = marker.Icon;
-                int size = Math.Max(img.Width, img.Height);
-                if (img.Width > img.Height)
-                {
-                    marker.IconScaleX = (double)udSize.Value / size;
-                    marker.IconScaleY = marker.IconScaleX;
-                }
-                else
-                {
-                    marker.IconScaleY = (double)udSize.Value / size;
-                    marker.IconScaleX = marker.IconScaleY;
-                }
-            }
-            else
-            {
-                marker.IconScaleX = marker.IconScaleY = 1.0;
-            }
-        }
-
-        /// <summary>
-        /// Building new list of icons from the changed path
-        /// </summary>
-        private void CboIconCollectionSelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateIconsList();
-        }
-
-        private void UpdateIconsList()
-        {
-            string path = PathHelper.GetIconsPath();
-            path += cboIconCollection.Text;
-
-            LoadIcons(path);
-
-            UpdateCopyrightMessage(path);
-
-            iconControl1.FilePath = path;
-        }
-
-        private void LoadIcons(string path)
-        {
-            if (!Directory.Exists(path)) return;
-
-            iconControl1.CellWidth = 32;
-            iconControl1.CellHeight = 32;
-
-            // let's try to determine real size by first file
-            try
-            {
-                string[] files = Directory.GetFiles(path);
-                foreach (string name in files)
-                {
-                    string ext = Path.GetExtension(name);
-                    if (ext == ".png") //ext == ".bmp" || 
-                    {
-                        Bitmap bmp = new Bitmap(name);
-                        if (bmp.Width <= 16 || bmp.Height <= 16)
-                        {
-                            // do nothing - use 32
-                        }
-                        else if (bmp.Width < 48 && bmp.Height < 48)
-                        {
-                            iconControl1.CellWidth = bmp.Height < bmp.Width ? bmp.Height + 16 : bmp.Width + 16;
-                            iconControl1.CellHeight = iconControl1.CellWidth;
-                        }
-                        else
-                        {
-                            iconControl1.CellWidth = 48 + 16;
-                            iconControl1.CellHeight = iconControl1.CellWidth;
-                        }
-                        break;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Info("Failed to load icon: " + ex.Message);
-            }
-        }
-
-        private void UpdateCopyrightMessage(string path)
-        {
-            lblCopyright.Text = "";
-
-            string filename = path + @"\copyright.txt";
-            if (!File.Exists(filename)) return;
-
-            StreamReader reader = null;
-            try
-            {
-                reader = new StreamReader(filename);
-                lblCopyright.Text = reader.ReadLine();
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-            }
-        }
-
-        #endregion
-
-        #region FontCharacters
-        /// <summary>
-        /// Refreshes the list of fonts
-        /// </summary>
-        private void RefreshFontList(object sender, EventArgs e)
-        {
-            cboFontName.Items.Clear();
-            if (!chkShowAllFonts.Checked)
-            {
-                foreach (FontFamily family in FontFamily.Families)
-                {
-                    string name = family.Name.ToLower();
-
-                    if (name == "webdings" ||
-                        name == "wingdings" ||
-                        name == "wingdings 2" ||
-                        name == "wingdings 3" ||
-                        name == "times new roman")
-                    {
-                        cboFontName.Items.Add(family.Name);
-                    }
-                }
-            }
-            else
-            {
-                foreach (FontFamily family in FontFamily.Families)
-                {
-                    cboFontName.Items.Add(family.Name);
-                }
-            }
-
-            string fontName = _style.Marker.FontName.ToLower();
-            for (int i = 0; i < cboFontName.Items.Count; i++)
-            {
-                if (cboFontName.Items[i].ToString().ToLower() == fontName)
-                {
-                    cboFontName.SelectedIndex = i;
-                    break;
-                }
-            }
-            if (cboFontName.SelectedIndex == -1)
-            {
-                cboFontName.SelectedItem = "Arial";
-            }
-        }
-
-        /// <summary>
-        /// Changing the font in the font control
-        /// </summary>
-        private void cboFontName_SelectedIndexChanged(object sender, EventArgs e)
-        {
             if (!_noEvents)
             {
                 btnApply.Enabled = true;
             }
-            characterControl1.SetFontName(cboFontName.Text);
-            _style.Marker.FontName = cboFontName.Text;
-            DrawPreview();
         }
 
-        /// <summary>
-        /// Updates the preview with the newly selected character
-        /// </summary>
-        void characterControl1_SelectionChanged()
-        {
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-            _style.Marker.Type = MarkerType.FontCharacter;
-            _style.Marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
-            DrawPreview();
-        }
-        #endregion
-
-        #region Drawing
-        /// <summary>
-        /// Draws preview based on the chosen options
-        /// </summary>
-        private void DrawPreview()
-        {
-            if (_noEvents)
-            {
-                return;
-            }
-
-            if (pctPreview.Image != null)
-            {
-                pctPreview.Image.Dispose();
-            }
-
-            var rect = pctPreview.ClientRectangle;
-            var bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(bmp);
-            
-            _style.DrawPoint(g, 0.0f, 0.0f, rect.Width, rect.Height,  BackColor);
-            
-            pctPreview.Image = bmp;
-        }
-        #endregion
-
-        /// <summary>
-        /// Changes the chosen point symbol
-        /// </summary>
-        private void SymbolControl1SelectionChanged()
-        {
-            var symbol = (VectorMarker)symbolControl1.SelectedIndex;
-            _style.Marker.SetVectorMarker(symbol);
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-
-            Options2Gui();
-            DrawPreview();
-        }
-
-        #region Properties
-        /// <summary>
-        /// Sets the values entered by user to the class
-        /// </summary>
-        private void Gui2Options(object sender, EventArgs e)
-        {
-            if (_noEvents)
-            {
-                return;
-            }
-
-            var fill = _style.Fill;
-            var marker = _style.Marker;
-
-            marker.Size = (float)udSize.Value;
-
-            UpdatePrictureScale();
-
-            marker.Rotation = (double)udRotation.Value;
-
-            fill.Color =  clpFillColor.Color;
-
-            marker.VectorMarker = (VectorMarkerType)icbPointShape.SelectedIndex;
-            marker.VectorSideCount = (int)udPointNumSides.Value;
-            marker.VectorMarkerSideRatio = (float)udSideRatio.Value / 10;
-        
-            _style.Line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
-            _style.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
-            _style.Line.Visible = chkOutlineVisible.Checked;
-            fill.Visible = chkFillVisible.Checked;
-            fill.Type = (FillType)cboFillType.SelectedIndex;
-
-            // hatch
-            fill.HatchStyle = (HatchStyle)icbHatchStyle.SelectedIndex;
-            fill.BgTransparent = chkFillBgTransparent.Checked;
-            fill.BgColor =  clpHatchBack.Color;
-
-            // gradient
-            fill.GradientType = (GradientType)cboGradientType.SelectedIndex;
-            fill.Color2 =  clpGradient2.Color;
-            fill.Rotation = (double)udGradientRotation.Value;
-
-            fill.Transparency = transparencyControl1.Value;
-            _style.Line.Transparency = transparencyControl1.Value;
-
-            if (!_noEvents)
-                btnApply.Enabled = true;
-
-            DrawPreview();
-        }
-
-        /// <summary>
-        /// Loads the values of the class instance to the controls
-        /// </summary>
-        private void Options2Gui()
-        {
-            _noEvents = true;
-
-            var marker = _style.Marker;
-            udSize.SetValue(marker.Size);
-            udRotation.SetValue(marker.Rotation);
-            clpFillColor.Color =  _style.Fill.Color;
-
-            // point
-            icbPointShape.SelectedIndex = (int)marker.Type;
-            udPointNumSides.SetValue(marker.VectorSideCount);
-            udSideRatio.SetValue(marker.VectorMarkerSideRatio * 10.0);
-            
-            // options
-            icbLineType.SelectedIndex = (int)_style.Line.DashStyle;
-            icbLineWidth.SelectedIndex = (int)_style.Line.Width - 1;
-            cboFillType.SelectedIndex = (int)_style.Fill.Type;
-            chkOutlineVisible.Checked = _style.Line.Visible;
-            clpOutline.Color =  _style.Line.Color;
-            chkFillVisible.Checked = _style.Fill.Visible;
-            
-            // hatch
-            icbHatchStyle.SelectedIndex = (int)_style.Fill.HatchStyle;
-            chkFillBgTransparent.Checked = _style.Fill.BgTransparent;
-            clpHatchBack.Color =  _style.Fill.BgColor;
-
-            // gradient
-            cboGradientType.SelectedIndex = (int)_style.Fill.GradientType;
-            clpGradient2.Color =  _style.Fill.Color2;
-            udGradientRotation.Value = (decimal)_style.Fill.Rotation;
-
-            transparencyControl1.Value = _style.Fill.Transparency;
-
-            _noEvents = false;
-        }
-        #endregion
-
-        #region Colors
         /// <summary>
         /// Updates all the controls with the selected fill color
         /// </summary>
         private void clpFillColor_SelectedColorChanged(object sender, EventArgs e)
         {
             _style.Fill.Color =  clpFillColor.Color;
-            symbolControl1.ForeColor = clpFillColor.Color;
-            characterControl1.ForeColor = clpFillColor.Color;
-            icbPointShape.Color1 = clpFillColor.Color;
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
+
+            UpdateDefaultColor();
+
+            if (!_noEvents) btnApply.Enabled = true;
+
             DrawPreview();
         }
 
@@ -678,42 +474,18 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             _style.Line.Color =  clpOutline.Color;
             
+            UpdateDefaultColor();
+
+            if (!_noEvents) btnApply.Enabled = true;
+
+            DrawPreview();
+        }
+
+        private void UpdateDefaultColor()
+        {
             symbolControl1.ForeColor = clpFillColor.Color;
             characterControl1.ForeColor = clpFillColor.Color;
             icbPointShape.Color1 = clpFillColor.Color;
-
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-                
-            DrawPreview();
-        }
-        #endregion
-
-        /// <summary>
-        /// Saves the selected page
-        /// </summary>
-        private void btnOk_Click(object sender, EventArgs e)
-        {
-            _tabIndex = tabControl1.SelectedIndex;
-
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
-
-            if (settings != null)
-            {
-                settings.IconCollection = cboIconCollection.Text;
-                settings.ScaleIcons = chkScaleIcons.Checked;
-                settings.IconIndex = iconControl1.SelectedIndex;
-
-                SymbologyPlugin.SaveMetadata(_layer.Handle, settings);
-            }
-
-            if (_style.Serialize() != _initState)
-            {
-                //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
-                _legend.Redraw(LegendRedraw.LegendAndMap);
-            }
         }
 
         /// <summary>
@@ -725,9 +497,40 @@ namespace MW5.Plugins.Symbology.Forms.Style
         }
 
         /// <summary>
+        /// Changes the chosen point symbol
+        /// </summary>
+        private void SymbolControl1SelectionChanged()
+        {
+            var symbol = (VectorMarker)symbolControl1.SelectedIndex;
+            _style.Marker.SetVectorMarker(symbol);
+
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            Options2Gui();
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Saves the selected page
+        /// </summary>
+        private void btnOk_Click(object sender, EventArgs e)
+        {
+            _tabIndex = tabControl1.SelectedIndex;
+
+            if (_style.Serialize() != _initState)
+            {
+                //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
+                _legend.Redraw(LegendRedraw.LegendAndMap);
+            }
+        }
+
+        /// <summary>
         /// Saves options and redraws map without closing the form
         /// </summary>
-        private void btnApply_Click(object sender, EventArgs e)
+        private void OnApplyClick(object sender, EventArgs e)
         {
             //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
             _legend.Redraw(LegendRedraw.LegendAndMap);
@@ -738,7 +541,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// <summary>
         /// Reverts changes and closes the form
         /// </summary>
-        private void frmPoints_FormClosing(object sender, FormClosingEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
             if (DialogResult == DialogResult.Cancel)
             {
@@ -746,5 +549,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
                 _style.Deserialize(_initState);
             }
         }
+
+        #endregion
     }
 }

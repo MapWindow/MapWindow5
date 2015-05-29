@@ -18,5 +18,6 @@ namespace MW5.Api.Interfaces
         bool Visible { get; set; }
         HatchStyle HatchStyle { get; set; }
         void SetGradient(Color color, byte range);
+        IImageSource Texture { get; set; }
     }
 }

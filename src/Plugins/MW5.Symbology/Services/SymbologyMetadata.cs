@@ -53,16 +53,12 @@ namespace MW5.Plugins.Symbology.Services
         
         public string Comments = "";
 
-        public bool ScaleIcons = false;
-
-        public int IconIndex = -1;
-
-        public string IconCollection = "";
-
         public bool UpdateMapAtOnce = true;
 
         public bool ShowQueryValues = true;
 
         public bool ShowQueryOnMap = false;
+
+        public int IconIndex = -1;
     }
 }

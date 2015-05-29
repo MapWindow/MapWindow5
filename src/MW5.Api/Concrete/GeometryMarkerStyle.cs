@@ -111,5 +111,29 @@ namespace MW5.Api.Concrete
             get { return _style.FontName; }
             set { _style.FontName = value; }
         }
+
+        public void UpdatePictureScale(bool scaleIcons, int iconSize)
+        {
+            if (scaleIcons && Icon != null)
+            {
+                var img = Icon;
+                int size = Math.Max(img.Width, img.Height);
+
+                if (img.Width > img.Height)
+                {
+                    IconScaleX = (double)iconSize / size;
+                    IconScaleY = IconScaleX;
+                }
+                else
+                {
+                    IconScaleY = (double)iconSize / size;
+                    IconScaleX = IconScaleY;
+                }
+            }
+            else
+            {
+                IconScaleX = IconScaleY = 1.0;
+            }
+        }
     }
 }

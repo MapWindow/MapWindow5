@@ -125,6 +125,7 @@
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ListControls\IconInfo.cs" />
     <Compile Include="Controls\OverviewScale.cs" />
     <Compile Include="Controls\OverviewGrid.cs">
       <SubType>Component</SubType>
@@ -135,6 +136,13 @@
     <Compile Include="Controls\OverviewControl.Designer.cs">
       <DependentUpon>OverviewControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PointIconControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PointIconControl.Designer.cs">
+      <DependentUpon>PointIconControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -236,10 +244,6 @@
     </Compile>
     <Compile Include="Forms\Categories\CategoriesForm.Designer.cs">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Categories\GenerateLabelCategoriesForm.cs" />
-    <Compile Include="Forms\Categories\GenerateLabelCategoriesForm.Designer.cs">
-      <DependentUpon>GenerateLabelCategoriesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\Categories\GenerateCategoriesForm.cs">
       <SubType>Form</SubType>
@@ -459,6 +463,9 @@
     <EmbeddedResource Include="Controls\OverviewControl.resx">
       <DependentUpon>OverviewControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PointIconControl.resx">
+      <DependentUpon>PointIconControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\RasterRenderingSubView.resx">
       <DependentUpon>RasterRenderingSubView.cs</DependentUpon>
     </EmbeddedResource>
@@ -473,9 +480,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Categories\GenerateLabelCategoriesForm.resx">
-      <DependentUpon>GenerateLabelCategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Categories\GenerateCategoriesForm.resx">
       <DependentUpon>GenerateCategoriesForm.cs</DependentUpon>

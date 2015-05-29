@@ -16,35 +16,24 @@
 // Date            Changed By      Notes
 // ********************************************************************************************************
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using MW5.Plugins.Services;
+using MW5.Plugins.Symbology.Helpers;
+using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Controls.ListControls
 {
     [ToolboxItem(true)]
     internal partial class IconControl : ListControl
     {
-        // The path to load icons from
-        string _path = string.Empty;
-        bool _textures = false;
-        
-        // Holds the information about the icon
-        internal struct IconInfo
-        {
-            internal Bitmap img;
-            internal string name;
-
-            internal IconInfo(Bitmap image, string filename)
-            {
-                img = image;
-                name = filename;
-            }
-        };
-
-        // The list of icons
-        List<IconInfo> _icons = new List<IconInfo>();
+        private string _path = string.Empty;
+        private bool _textures = false;
+        private readonly List<IconInfo> _icons = new List<IconInfo>();
 
         /// <summary>
         /// Gets or sets the path to the folder
@@ -58,7 +47,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
             set
             {
                 _textures = value;
-                this.Invalidate();
+                Invalidate();
             }
         }
 
@@ -69,65 +58,73 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
         {
             get 
             { 
-                return _path ;
+                return _path;
             }
             set 
             { 
                 _path = value;
                 LoadFromPath(value);
-                this.Invalidate();
+                Invalidate();
             }
         }
 
         /// <summary>
         /// Returns the file with the icon selected
         /// </summary>
-        public string SelectedName
+        public string SelectedPath
         {
             get 
             {
-                int index = base.SelectedIndex;
+                int index = SelectedIndex;
                 if (index >= 0 && index < _icons.Count)
                 {
-                    return _icons[index].name;
+                    return _icons[index].Filename;
                 }
-                else
+
+                return string.Empty;
+            }
+
+            set
+            {
+                for (int i = 0; i < _icons.Count; i++)
                 {
-                    return string.Empty;
+                    if (_icons[i].Filename.EqualsIgnoreCase(value))
+                    {
+                        SelectedIndex = i;
+                        break;
+                    }
                 }
             }
         }
 
-        // Creates a new instance of the IconControl
+        /// <summary>
+        /// Initializes a new instance of the <see cref="IconControl"/> class.
+        /// </summary>
         public IconControl()
         {
             InitializeComponent();
-            this.CellWidth = 32;
-            this.CellHeight = 32;
-            //LoadFromPath(@"f:\ico\");
+            CellWidth = 32;
+            CellHeight = 32;
 
-            this.OnDrawItem += new OnDrawItemDelegate(IconControl_OnDrawItem);
+            OnDrawItem += IconControl_OnDrawItem;
         }
 
         /// <summary>
         /// Loads all the icons form the current path
         /// </summary>
-        /// <param name="path"></param>
         public void LoadFromPath(string path)
         {
-            if (!Directory.Exists(path))
-            {
-                return;
-                //throw new Exception("There is no icon folder in the default location: " + Environment.NewLine + path);
-            }
-            else
-            {
-                _icons.Clear();
-                string[] files = Directory.GetFiles(path);
+            if (!Directory.Exists(path)) return;
 
-                for (int i = 0; i < files.Length; i++)
+            _icons.Clear();
+            string[] files = Directory.GetFiles(path);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                var extension = Path.GetExtension(files[i]);
+                if (extension != null)
                 {
-                    string ext = System.IO.Path.GetExtension(files[i]).ToLower();
+                    string ext = extension.ToLower();
                     if (ext == ".png")          //ext == ".bmp" || 
                     {
                         Bitmap bmp = new Bitmap(files[i]);
@@ -136,15 +133,16 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                     }
                 }
             }
-            this.ItemCount = _icons.Count;
+
+            ItemCount = _icons.Count;
         }
 
         /// <summary>
         /// Draws the next icon from the list
         /// </summary>
-        void IconControl_OnDrawItem(Graphics graphics, RectangleF rect, int itemIndex, bool selected)
+        private void IconControl_OnDrawItem(Graphics graphics, RectangleF rect, int itemIndex, bool selected)
         {
-            var img = _icons[itemIndex].img;
+            var img = _icons[itemIndex].Image;
             if (img != null)
             {
                 RectangleF r = new RectangleF();
@@ -167,6 +165,44 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
                     TextureBrush brush = new TextureBrush(img);
                     graphics.FillRectangle(brush, r);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets CellWidth, CellHeight properties based on the size of the first png icon found at the specified path.
+        /// </summary>
+        public  void ChooseIconCellSize(string path)
+        {
+            if (!Directory.Exists(path))
+            {
+                return;
+            }
+
+            CellWidth = 32;
+            CellHeight = 32;
+
+            // let's try to determine real size by first file
+            try
+            {
+                string[] files = Directory.GetFiles(path);
+                foreach (string filename in files)
+                {
+                    string ext = Path.GetExtension(filename);
+
+                    if (ext.EqualsIgnoreCase(".png"))
+                    {
+                        var size = GdiPlusHelper.GetIconSize(filename);
+                        if (size != default(Size))
+                        {
+                            CellWidth = size.Width;
+                            CellHeight = size.Height;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Failed to load icon: " + ex.Message);
             }
         }
     }

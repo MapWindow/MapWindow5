@@ -471,7 +471,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.linePatternControl1.SelectedIndex = -1;
             this.linePatternControl1.Size = new System.Drawing.Size(299, 279);
             this.linePatternControl1.TabIndex = 0;
-            this.linePatternControl1.SelectionChanged += new MW5.Plugins.Symbology.Controls.ListControls.ListControl.SelectionChangedDel(this.linePatternControl1_SelectionChanged);
+            this.linePatternControl1.SelectionChanged += linePatternControl1_SelectionChanged;
             // 
             // label2
             // 
@@ -627,7 +627,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             this.pointSymbolControl1.SelectedIndex = -1;
             this.pointSymbolControl1.Size = new System.Drawing.Size(364, 54);
             this.pointSymbolControl1.TabIndex = 13;
-            this.pointSymbolControl1.SelectionChanged += new MW5.Plugins.Symbology.Controls.ListControls.ListControl.SelectionChangedDel(this.pointSymbolControl1_SelectionChanged);
+            this.pointSymbolControl1.SelectionChanged += this.pointSymbolControl1_SelectionChanged;
             // 
             // clpMarkerFill
             // 

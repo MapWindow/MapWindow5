@@ -19,5 +19,6 @@ namespace MW5.Api.Interfaces
         bool AlignByBottom { get; set; }
         void SetVectorMarker(VectorMarker symbol);
         string FontName { get; set; }
+        void UpdatePictureScale(bool scaleIcons, int iconSize);
     }
 }

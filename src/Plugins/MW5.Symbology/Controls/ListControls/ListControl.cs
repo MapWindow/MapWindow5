@@ -498,13 +498,15 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
         /// <summary>
         /// Handler for the event when a selected item was changed
         /// </summary>
-        public delegate void SelectionChangedDel();
-        public event SelectionChangedDel SelectionChanged;
+        public event Action SelectionChanged;
 
         protected internal void FireSelectionChanged()
         {
-            if (SelectionChanged != null)
-                SelectionChanged();
+            var handler = SelectionChanged;
+            if (handler != null)
+            {
+                handler();
+            }
         }
 
         /// <summary>

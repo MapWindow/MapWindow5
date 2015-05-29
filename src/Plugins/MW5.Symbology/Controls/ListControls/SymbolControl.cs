@@ -29,7 +29,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
     [ToolboxItem(true)]
     internal partial class SymbolControl : ListControl
     {
-        private List<IGeometryStyle> _icons = new List<IGeometryStyle>();
+        private readonly List<IGeometryStyle> _icons = new List<IGeometryStyle>();
         
         /// <summary>
         ///  Creates a new instance of the PointSymbolControl.
@@ -72,7 +72,7 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
         /// <summary>
         /// Draws an item from the list
         /// </summary>
-        void PointSymbolControl_OnDrawItem(Graphics graphics, RectangleF rect, int itemIndex, bool selected)
+        private void PointSymbolControl_OnDrawItem(Graphics graphics, RectangleF rect, int itemIndex, bool selected)
         {
             var sdo = _icons[itemIndex];
             sdo.DrawPoint(graphics, rect.X + 1.0f, rect.Y +1.0f, (int)rect.Width -2, (int)rect.Height -2, BackColor);

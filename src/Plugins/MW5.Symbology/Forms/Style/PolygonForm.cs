@@ -19,6 +19,8 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
@@ -38,7 +40,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
     {
         private static int _tabPage;
 
-        private readonly IGeometryStyle _options;
+        private readonly IGeometryStyle _style;
         private readonly SymbologyMetadata _metadata;
         private readonly IMuteLegend _legend;
         private string _initState;
@@ -47,24 +49,21 @@ namespace MW5.Plugins.Symbology.Forms.Style
         #region Initialization
         
         /// <summary>
-        /// Creates a new instance of PolygonsForm class
+        /// Creates a new instance of PolygonForm class
         /// </summary>
-        public PolygonForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle options, bool applyDisabled)
+        public PolygonForm(IMuteLegend legend, ILegendLayer layer, IGeometryStyle style, bool applyDisabled)
         {
-            InitializeComponent();
+            if (legend == null) throw new ArgumentNullException("legend");
+            if (layer == null) throw new ArgumentNullException("layer");
+            if (style == null) throw new ArgumentNullException("style");
 
-            if (options == null || layer == null)
-            {
-                throw new Exception("PolygonsForm: unexpected null parameter");
-            }
+            InitializeComponent();
             
-            _options = options;
+            _style = style;
             _metadata = SymbologyPlugin.Metadata(layer.Handle);
             _legend = legend;
 
-            btnApply.Visible = !applyDisabled;
-
-            _initState = options.Serialize();
+            _initState = style.Serialize();
 
             _noEvents = true;
 
@@ -74,7 +73,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             _noEvents = false;
 
-            cboFillType.SelectedIndexChanged += cboFillType_SelectedIndexChanged;
+            cboFillType.SelectedIndexChanged += FillTypeSelectedIndexChanged;
 
             Options2Ui();
 
@@ -83,6 +82,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             DrawPreview();
 
             tabControl1.SelectedIndex = _tabPage;
+            btnApply.Visible = !applyDisabled;
         }
 
         private void InitControls()
@@ -122,11 +122,11 @@ namespace MW5.Plugins.Symbology.Forms.Style
         private void InitTextures()
         {
             string path = PathHelper.GetTexturesPath();
-            if (System.IO.Directory.Exists(path))
+            if (Directory.Exists(path))
             {
-                iconControl1.FilePath = path;
-                iconControl1.Textures = true;
-                iconControl1.SelectedIndex = _metadata.IconIndex;
+                textureControl1.FilePath = path;
+                textureControl1.Textures = true;
+                textureControl1.SelectedIndex = _metadata.IconIndex;
             }
             else
             {
@@ -168,60 +168,36 @@ namespace MW5.Plugins.Symbology.Forms.Style
             udScaleX.ValueChanged += Ui2Options;
             udScaleY.ValueChanged += Ui2Options;
 
-            iconControl1.SelectionChanged += iconControl1_SelectionChanged;
+            textureControl1.SelectionChanged += SelectionTextureChanged;
         }
 
         #endregion
 
         /// <summary>
-        /// Changes the textures
+        /// Changes the texture
         /// </summary>
-        void iconControl1_SelectionChanged()
+        private void SelectionTextureChanged()
         {
-            string filename = iconControl1.SelectedName;
-            if (filename == string.Empty)
+            string filename = textureControl1.SelectedPath;
+            if (string.IsNullOrWhiteSpace(filename))
             {
                 return;
             }
 
-            var clrTransparent = GetTransparentColor(filename);
+            var clrTransparent = GdiPlusHelper.GetTransparentColor(filename);
 
             var img = BitmapSource.Open(filename, true);
             {
-                //img.LoadBuffer(50);
-
                 img.TransparentColorFrom =  clrTransparent;
                 img.TransparentColorTo =  clrTransparent;
                 img.UseTransparentColor = true;
 
-                _options.Marker.Icon = img;
+                _style.Marker.Icon = img;
 
                 DrawPreview();
             }
-        }
 
-        private Color GetTransparentColor(string imageFilename)
-        {
-            var bmp = new Bitmap(imageFilename);
-            var clrTransparent = Color.White;
-            for (int i = 0; i < bmp.Width; i++)
-            {
-                int j;
-                for (j = 0; j < bmp.Height; j++)
-                {
-                    var clr = bmp.GetPixel(i, j);
-                    if (clr.A == 0)
-                    {
-                        clrTransparent = clr;
-                        break;
-                    }
-                }
-                if (j != bmp.Width)
-                {
-                    break;
-                }
-            }
-            return clrTransparent;
+            btnApply.Enabled = true;
         }
 
         #region OptionsExchange
@@ -237,41 +213,41 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
 
             // fill
-            _options.Fill.Visible = chkFillVisible.Checked;
-            _options.Fill.Type = (FillType)cboFillType.SelectedIndex;
-            _options.Fill.Color =  clpFill.Color;
+            _style.Fill.Visible = chkFillVisible.Checked;
+            _style.Fill.Type = (FillType)cboFillType.SelectedIndex;
+            _style.Fill.Color =  clpFill.Color;
 
             // hatch
-            _options.Fill.HatchStyle = (HatchStyle)icbHatchStyle.SelectedIndex;
-            _options.Fill.BgTransparent = chkFillBgTransparent.Checked;
-            _options.Fill.BgColor =  clpHatchBack.Color;
+            _style.Fill.HatchStyle = (HatchStyle)icbHatchStyle.SelectedIndex;
+            _style.Fill.BgTransparent = chkFillBgTransparent.Checked;
+            _style.Fill.BgColor =  clpHatchBack.Color;
 
             // gradient
-            _options.Fill.GradientType = (GradientType)cboGradientType.SelectedIndex;
-            _options.Fill.Color2 =  clpGradient2.Color;
-            _options.Fill.Rotation = (double)udGradientRotation.Value;
-            _options.Fill.GradientBounds = (GradientBounds)cboGradientBounds.SelectedIndex;
+            _style.Fill.GradientType = (GradientType)cboGradientType.SelectedIndex;
+            _style.Fill.Color2 =  clpGradient2.Color;
+            _style.Fill.Rotation = (double)udGradientRotation.Value;
+            _style.Fill.GradientBounds = (GradientBounds)cboGradientBounds.SelectedIndex;
 
             // texture
-            _options.Marker.IconScaleX = (double)udScaleX.Value;
-            _options.Marker.IconScaleY = (double)udScaleY.Value;
+            _style.Marker.IconScaleX = (double)udScaleX.Value;
+            _style.Marker.IconScaleY = (double)udScaleY.Value;
 
             // outline
-            _options.Line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
-            _options.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
-            _options.Line.Visible = chkOutlineVisible.Checked;
-            _options.Line.Color =  clpOutline.Color;
+            _style.Line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
+            _style.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
+            _style.Line.Visible = chkOutlineVisible.Checked;
+            _style.Line.Color =  clpOutline.Color;
 
             // vertices
-            _options.Vertices.Visible = chkVerticesVisible.Checked;
-            _options.Vertices.FillVisible = chkVerticesFillVisible.Checked;
-            _options.Vertices.Size = (int)udVerticesSize.Value;
-            _options.Vertices.Color =  clpVerticesColor.Color;
-            _options.Vertices.VertexType = (VertexType)cboVerticesType.SelectedIndex;
+            _style.Vertices.Visible = chkVerticesVisible.Checked;
+            _style.Vertices.FillVisible = chkVerticesFillVisible.Checked;
+            _style.Vertices.Size = (int)udVerticesSize.Value;
+            _style.Vertices.Color =  clpVerticesColor.Color;
+            _style.Vertices.VertexType = (VertexType)cboVerticesType.SelectedIndex;
 
             // transparency
-            _options.Line.Transparency = transpOutline.Value;
-            _options.Fill.Transparency = transpFill.Value;
+            _style.Line.Transparency = transpOutline.Value;
+            _style.Fill.Transparency = transpFill.Value;
 
             btnApply.Enabled = true;
 
@@ -286,50 +262,52 @@ namespace MW5.Plugins.Symbology.Forms.Style
             _noEvents = true;
 
             // options
-            icbLineType.SelectedIndex = (int)_options.Line.DashStyle;
-            icbLineWidth.SelectedIndex = (int)_options.Line.Width - 1;
-            cboFillType.SelectedIndex = (int)_options.Fill.Type;
-            chkOutlineVisible.Checked = _options.Line.Visible;
-            clpOutline.Color =  _options.Line.Color;
-            chkFillVisible.Checked = _options.Fill.Visible;
+            icbLineType.SelectedIndex = (int)_style.Line.DashStyle;
+            icbLineWidth.SelectedIndex = (int)_style.Line.Width - 1;
+            cboFillType.SelectedIndex = (int)_style.Fill.Type;
+            chkOutlineVisible.Checked = _style.Line.Visible;
+            clpOutline.Color =  _style.Line.Color;
+            chkFillVisible.Checked = _style.Fill.Visible;
 
             // hatch
-            icbHatchStyle.SelectedIndex = (int)_options.Fill.HatchStyle;
-            chkFillBgTransparent.Checked = _options.Fill.BgTransparent;
-            clpHatchBack.Color =  _options.Fill.BgColor;
+            icbHatchStyle.SelectedIndex = (int)_style.Fill.HatchStyle;
+            chkFillBgTransparent.Checked = _style.Fill.BgTransparent;
+            clpHatchBack.Color =  _style.Fill.BgColor;
 
             // gradient
-            cboGradientType.SelectedIndex = (int)_options.Fill.GradientType;
-            clpGradient2.Color =  _options.Fill.Color2;
-            udGradientRotation.Value = (decimal)_options.Fill.Rotation;
+            cboGradientType.SelectedIndex = (int)_style.Fill.GradientType;
+            clpGradient2.Color =  _style.Fill.Color2;
+            udGradientRotation.Value = (decimal)_style.Fill.Rotation;
 
-            clpFill.Color =  _options.Fill.Color;
-            cboGradientBounds.SelectedIndex = (int)_options.Fill.GradientBounds;
-            chkOutlineVisible.Checked = _options.Line.Visible;
+            clpFill.Color =  _style.Fill.Color;
+            cboGradientBounds.SelectedIndex = (int)_style.Fill.GradientBounds;
+            chkOutlineVisible.Checked = _style.Line.Visible;
 
             // texture
-            udScaleX.SetValue(_options.Marker.IconScaleX);
-            udScaleY.SetValue(_options.Marker.IconScaleY);
+            udScaleX.SetValue(_style.Marker.IconScaleX);
+            udScaleY.SetValue(_style.Marker.IconScaleY);
 
             // vertices
-            chkVerticesVisible.Checked = _options.Vertices.Visible;
-            chkVerticesFillVisible.Checked = _options.Vertices.FillVisible;
-            udVerticesSize.SetValue(_options.Vertices.Size);
-            clpVerticesColor.Color =  _options.Vertices.Color;
-            cboVerticesType.SelectedIndex = (int)_options.Vertices.VertexType;
+            chkVerticesVisible.Checked = _style.Vertices.Visible;
+            chkVerticesFillVisible.Checked = _style.Vertices.FillVisible;
+            udVerticesSize.SetValue(_style.Vertices.Size);
+            clpVerticesColor.Color =  _style.Vertices.Color;
+            cboVerticesType.SelectedIndex = (int)_style.Vertices.VertexType;
 
-            transpFill.Value = _options.Fill.Transparency;
-            transpOutline.Value = _options.Line.Transparency;
+            transpFill.Value = _style.Fill.Transparency;
+            transpOutline.Value = _style.Line.Transparency;
 
             _noEvents = false;
         }
+
         #endregion
 
-        #region ChangingFill
+        #region Changing fill
+
         /// <summary>
         /// Changes available fill options
         /// </summary>
-        void cboFillType_SelectedIndexChanged(object sender, EventArgs e)
+        private void FillTypeSelectedIndexChanged(object sender, EventArgs e)
         {
             groupHatch.Visible = false;
             groupPicture.Visible = false;
@@ -356,16 +334,21 @@ namespace MW5.Plugins.Symbology.Forms.Style
             
             if (cboFillType.SelectedIndex >= 0)
             {
-                _options.Fill.Type = (FillType)cboFillType.SelectedIndex;
+                _style.Fill.Type = (FillType)cboFillType.SelectedIndex;
             }
 
             if (!_noEvents)
+            {
                 btnApply.Enabled = true;
+            }
+
             DrawPreview();
         }
+
         #endregion
 
         #region Drawing
+
         /// <summary>
         /// Draws preview based on the chosen options
         /// </summary>
@@ -382,11 +365,16 @@ namespace MW5.Plugins.Symbology.Forms.Style
             }
 
             var rect = pctPreview.ClientRectangle;
-            var bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            var g = Graphics.FromImage(bmp);
-            _options.DrawRectangle(g, 40.0f, 40.0f, rect.Width - 80, rect.Height - 80, true, rect.Width, rect.Height, BackColor);
+            var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
+
+            using (var g = Graphics.FromImage(bmp))
+            {
+                _style.DrawRectangle(g, 40.0f, 40.0f, rect.Width - 80, rect.Height - 80, true, rect.Width, rect.Height, BackColor);
+            }
+
             pctPreview.Image = bmp;
         }
+
         #endregion
 
         /// <summary>
@@ -394,13 +382,18 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// </summary>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            if (_options.Serialize() != _initState)
+            if (_style.Serialize() != _initState)
             {
                 //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
                 _legend.Redraw(LegendRedraw.LegendAndMap);
             }
 
-            //m_layer.SymbologySettings.IconIndex = iconControl1.SelectedIndex;
+            SaveState();
+        }
+
+        private void SaveState()
+        {
+            _metadata.IconIndex = textureControl1.SelectedIndex;
             _tabPage = tabControl1.SelectedIndex;
         }
 
@@ -417,10 +410,12 @@ namespace MW5.Plugins.Symbology.Forms.Style
         /// </summary>
         private void btnApply_Click(object sender, EventArgs e)
         {
-            _legend.Map.Redraw();
-            _legend.Redraw();
+            _legend.Redraw(LegendRedraw.LegendAndMap);
             //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
-            _initState = _options.Serialize();
+
+            SaveState();
+
+            _initState = _style.Serialize();
             btnApply.Enabled = false;
         }
 
@@ -432,20 +427,8 @@ namespace MW5.Plugins.Symbology.Forms.Style
             if (DialogResult == DialogResult.Cancel)
             {
                 _tabPage = tabControl1.SelectedIndex;
-                _options.Deserialize(_initState);
+                _style.Deserialize(_initState);
             }
-        }
-
-        /// <summary>
-        /// Allows to apply newly selected texture
-        /// </summary>
-        private void iconControl1_SelectionChanged_1()
-        {
-            if (_noEvents)
-            {
-                return;
-            }
-            btnApply.Enabled = true;
         }
     }
 }
