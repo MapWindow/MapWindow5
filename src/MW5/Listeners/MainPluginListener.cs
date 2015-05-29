@@ -19,10 +19,10 @@ namespace MW5.Listeners
     public class MainPluginListener
     {
         private readonly IAppContext _context;
-        private readonly MainAppPlugin _plugin;
+        private readonly MainPlugin _plugin;
         private readonly IConfigService _configService;
 
-        public MainPluginListener(IAppContext context, MainAppPlugin plugin, IConfigService configService)
+        public MainPluginListener(IAppContext context, MainPlugin plugin, IConfigService configService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
@@ -35,6 +35,9 @@ namespace MW5.Listeners
             plugin.BeforeLayerAdded += BeforeLayerAdded;
         }
 
+        /// <summary>
+        /// Performs actions necessary before adding layer to the map.
+        /// </summary>
         private void BeforeLayerAdded(IMuteMap map, DatasourceCancelEventArgs e)
         {
             var raster = e.Datasource as IRasterSource;
@@ -49,42 +52,65 @@ namespace MW5.Listeners
             var fs = e.Datasource as IFeatureSet;
             if (fs != null)
             {
-                CreateSpatialIndex(fs);
+                if (!UpdateSpatialIndex(fs))
+                {
+                    e.Cancel = true;
+                }
             }
         }
 
-        private bool NeedsSpatialIndex(IFeatureSet fs, int minFeatureCount)
-        {
-            return fs.SourceType == FeatureSourceType.DiskBased &&
-                   fs.NumFeatures >= minFeatureCount &&
-                   fs.SpatialIndex.DiskIndexExists;
-        }
-
-        private void CreateSpatialIndex(IFeatureSet fs)
+        /// <summary>
+        /// Checks if spatial index is needed for shapefile.
+        /// </summary>
+        private bool UpdateSpatialIndex(IFeatureSet fs)
         {
             if (fs.LayerType != LayerType.Shapefile)
             {
-                return;
+                return true;
             }
 
             var config = _configService.Config;
 
             if (!NeedsSpatialIndex(fs, config.SpatialIndexFeatureCount))
             {
-                return;
+                return true;
             }
 
             if (config.ShowSpatialIndexDialog)
             {
-                // TODO: implement
-                return;
+                var presenter = _context.Container.GetInstance<SpatialIndexPresenter>();
+                if (!presenter.Run())
+                {
+                    return false;
+                }
+
+                config.ShowSpatialIndexDialog = !presenter.DontShowAgain;
+                config.CreateSpatialIndexOnOpening = presenter.Result == DialogResult.Yes;
             }
 
-            if (!config.CreateSpatialIndexOnOpening)
+            if (config.CreateSpatialIndexOnOpening)
             {
-                return;
+                CreateSpatialIndex(fs);
             }
 
+            return true;
+        }
+
+        /// <summary>
+        /// Checks if spatial index is needed for shapefile.
+        /// </summary>
+        private static bool NeedsSpatialIndex(IFeatureSet fs, int minFeatureCount)
+        {
+            return fs.SourceType == FeatureSourceType.DiskBased &&
+                   fs.NumFeatures >= minFeatureCount &&
+                   !fs.SpatialIndex.DiskIndexExists;
+        }
+
+        /// <summary>
+        /// Creates spatial index for shapefile.
+        /// </summary>
+        private void CreateSpatialIndex(IFeatureSet fs)
+        {
             bool result = fs.SpatialIndex.CreateDiskIndex();
 
             if (result)
@@ -97,6 +123,9 @@ namespace MW5.Listeners
             }
         }
 
+        /// <summary>
+        /// Prompts user or automatically creates raster overviews if needed.
+        /// </summary>
         private bool UpdateOverviews(IRasterSource raster)
         {
             if (!raster.NeedsOverviews)
@@ -129,7 +158,7 @@ namespace MW5.Listeners
                 return false;
             }
             
-            config.ShowPyramidDialog = presenter.DontShowAgain;
+            config.ShowPyramidDialog = !presenter.DontShowAgain;
             config.CreatePyramidsOnOpening = presenter.Result == DialogResult.Yes;
             config.PyramidCompression = presenter.View.Compression;
             config.PyramidSampling = presenter.View.Sampling;

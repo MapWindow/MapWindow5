@@ -80,11 +80,25 @@
             // 
             // udSpatialIndexCount
             // 
-            this.udSpatialIndexCount.Enabled = false;
             this.udSpatialIndexCount.Location = new System.Drawing.Point(236, 106);
+            this.udSpatialIndexCount.Maximum = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+            this.udSpatialIndexCount.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             this.udSpatialIndexCount.Name = "udSpatialIndexCount";
             this.udSpatialIndexCount.Size = new System.Drawing.Size(74, 20);
             this.udSpatialIndexCount.TabIndex = 13;
+            this.udSpatialIndexCount.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
             // 
             // label2
             // 

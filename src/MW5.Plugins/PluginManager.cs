@@ -24,7 +24,7 @@ namespace MW5.Plugins
     {
         private const string PluginDirectory = "Plugins";
 
-        private MainAppPlugin _mainPlugin;
+        private MainPlugin _mainPlugin;
 
         private readonly IApplicationContainer _container;
 
@@ -42,7 +42,7 @@ namespace MW5.Plugins
         /// <summary>
         /// Initializes a new instance of the <see cref="PluginManager"/> class.
         /// </summary>
-        public PluginManager(IApplicationContainer container, MainAppPlugin mainPlugin)
+        public PluginManager(IApplicationContainer container, MainPlugin mainPlugin)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");

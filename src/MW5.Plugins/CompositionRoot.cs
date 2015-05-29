@@ -18,7 +18,7 @@ namespace MW5.Plugins
         {
             container.RegisterSingleton<IBroadcasterService, PluginBroadcaster>()
                 .RegisterSingleton<IPluginManager, PluginManager>()
-                .RegisterSingleton<MainAppPlugin>();
+                .RegisterSingleton<MainPlugin>();
 
             EnumHelper.RegisterConverter(new GdalDriverMetadataConverter());
             EnumHelper.RegisterConverter(new ZoomBoxStyleConverter());

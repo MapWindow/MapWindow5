@@ -209,6 +209,7 @@
     <Compile Include="Menu\TilesMenuHelper.cs" />
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Menu\ViewMenuHelper.cs" />
+    <Compile Include="Views\Abstract\ISpatialIndexView.cs" />
     <Compile Include="Views\Abstract\IWelcomeView.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
     <Compile Include="Views\ConfigViewModel.cs" />
@@ -273,6 +274,13 @@
     </Compile>
     <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SpatialIndexPresenter.cs" />
+    <Compile Include="Views\SpatialIndexView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SpatialIndexView.Designer.cs">
+      <DependentUpon>SpatialIndexView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomePresenter.cs" />
     <Compile Include="Views\WelcomeView.cs">
@@ -342,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplashView.resx">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SpatialIndexView.resx">
+      <DependentUpon>SpatialIndexView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\WelcomeView.resx">
       <DependentUpon>WelcomeView.cs</DependentUpon>

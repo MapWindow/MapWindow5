@@ -1570,11 +1570,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                 cboCollisionMode.Enabled = false;
             }
 
+            chkSpatialIndex.Checked = _featureSet.SpatialIndex.UseDiskIndex && _featureSet.SpatialIndex.DiskIndexValid;
+            chkInMemory.Checked = _featureSet.EditingShapes;
+            chkEditMode.Checked = _featureSet.InteractiveEditing;
+            
             // TODO: restore
             //chkFastMode.Checked = _shapefile.FastMode;
-            //chkSpatialIndex.Checked = _shapefile.UseSpatialIndex && _shapefile.IsSpatialIndexValid();
-            //chkInMemory.Checked = _shapefile.EditingShapes;
-            //chkEditMode.Checked = _shapefile.InteractiveEditing;
             //udMinDrawingSize.SetValue((double)_shapefile.MinDrawingSize);
             //udMinLabelingSize.SetValue((double)_shapefile.Labels.MinDrawingSize);
 

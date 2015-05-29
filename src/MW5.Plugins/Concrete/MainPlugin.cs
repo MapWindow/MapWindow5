@@ -6,9 +6,9 @@ namespace MW5.Plugins.Concrete
     /// <summary>
     /// A consumer of plugin events for the main application. Isn't added to the list of plugins.
     /// </summary>
-    public class MainAppPlugin: BasePlugin
+    public class MainPlugin: BasePlugin
     {
-        public MainAppPlugin()
+        public MainPlugin()
         {
             Identity = PluginIdentity.Default;
         }

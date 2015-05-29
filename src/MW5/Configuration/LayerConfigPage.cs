@@ -12,6 +12,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
+using MW5.Shared;
 using MW5.UI.Helpers;
 
 namespace MW5.Configuration
@@ -54,6 +55,8 @@ namespace MW5.Configuration
             cboProjectionMismatch.SetValue(config.ProjectionMismatch);
             cboPyramidCompression.SetValue(config.PyramidCompression);
             cboPyramidsSampling.SetValue(config.PyramidSampling);
+
+            udSpatialIndexCount.SetValue(config.SpatialIndexFeatureCount);
         }
 
         public string PageName
@@ -75,6 +78,8 @@ namespace MW5.Configuration
             config.ProjectionMismatch = cboProjectionMismatch.GetValue<ProjectionMismatch>();
             config.PyramidCompression = cboPyramidCompression.GetValue<TiffCompression>();
             config.PyramidSampling = cboPyramidsSampling.GetValue<RasterOverviewSampling>();
+
+            config.SpatialIndexFeatureCount = (int)udSpatialIndexCount.Value;
         }
 
         public Bitmap Icon
