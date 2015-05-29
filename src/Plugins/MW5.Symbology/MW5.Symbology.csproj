@@ -149,6 +149,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\XmlColorBlend.cs" />
     <Compile Include="Views\RasterRenderingCommand.cs" />
     <Compile Include="Views\RasterRenderingSubView.cs">
       <SubType>UserControl</SubType>

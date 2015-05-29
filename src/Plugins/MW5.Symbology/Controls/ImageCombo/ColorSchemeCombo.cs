@@ -75,8 +75,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         {
             for (int i = 0; i < _schemeList.Count(); i++)
             {
-                // TODO: after serialization we need to compare by value as references will be different
-                if (_schemeList[i] == blend)
+                if (_schemeList[i].CompareByValue(blend))
                 {
                     SelectedIndex = i;
                     break;

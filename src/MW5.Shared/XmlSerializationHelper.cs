@@ -129,9 +129,12 @@ namespace MW5.Shared
         {
             using (var stream = new MemoryStream())
             {
-                var ser = new XmlSerializer(typeof(T), new[] { target.GetType() });
+                var ser = new XmlSerializer(target.GetType());
+                
+                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+                ns.Add(String.Empty, String.Empty);
 
-                ser.Serialize(stream, target);
+                ser.Serialize(stream, target, ns);
                 var doc = new XmlDocument();
 
                 stream.Flush();

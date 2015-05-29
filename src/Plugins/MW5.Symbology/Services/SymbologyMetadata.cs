@@ -10,8 +10,7 @@ using MW5.Plugins.Concrete;
 
 namespace MW5.Plugins.Symbology.Services
 {
-    [Serializable]
-    [XmlType("SymbologyMetadata")]
+    [Serializable, XmlRoot("SymbologyMetadata")]
     public class SymbologyMetadata: LayerMetadataBase
     {
         [DefaultValue(Classification.NaturalBreaks)]
@@ -26,10 +25,16 @@ namespace MW5.Plugins.Symbology.Services
         [DefaultValue(false)]
         public bool CategoriesRandomColors = false;
 
-        // TODO: Make a wrapper. Color isn't serialized by default
-        //http ://stackoverflow.com/questions/376234/best-solution-for-xmlserializer-and-system-drawing-color
+        // ColorBlend has Color[] array, which can't be serialized by default
+        [XmlIgnore]
+        public ColorBlend CategoriesColorScheme = null;
+
         [DefaultValue(null)]
-        public ColorBlend CategoriesColorScheme = null;     
+        public XmlColorBlend CategoriesColorBlend
+        {
+            get { return CategoriesColorScheme != null ? new XmlColorBlend(CategoriesColorScheme) : null; }
+            set { CategoriesColorScheme = value != null ? value.ColorBlend : null; }
+        }
 
         [DefaultValue("")]
         public string CategoriesFieldName = "";

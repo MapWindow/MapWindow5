@@ -40,6 +40,7 @@ using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
+using PathHelper = MW5.Shared.PathHelper;
 
 namespace MW5.Plugins.Symbology.Forms.Layer
 {
@@ -985,7 +986,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             }
 
             _metadata.CategoriesColorScheme = icbCategories.GetSelectedItem();
-            var scheme = ColorBlendHelper.ToColorScheme(_metadata.CategoriesColorScheme);
+            var scheme = _metadata.CategoriesColorScheme.ToColorScheme();
 
             _featureSet.Categories.ApplyColorScheme(chkRandomColors.Checked ? SchemeType.Random : SchemeType.Graduated, scheme);
 
@@ -1301,7 +1302,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             txtDatasourceName.Text = _layer.Filename;
 
-            txtProjection.Text = _layer.Projection.Name;
+            txtProjection.Text = _layer.Projection.IsEmpty ? "<not defined>" : _layer.Projection.Name;
 
             txtComments.Text = _layer.Description;
 
@@ -1792,6 +1793,19 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         {
             bool result = _layer.SaveOptions("", true, "");
             MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
+        }
+
+        private void btnOpenLocation_Click(object sender, EventArgs e)
+        {
+            string filename = _featureSet.Filename;
+            if (!string.IsNullOrWhiteSpace(filename))
+            {
+                PathHelper.OpenFolderWithExplorer(filename);
+            }
+            else
+            {
+                MessageService.Current.Info("Can't find the datasource.");
+            }
         }
     }
 }

@@ -17,6 +17,11 @@ namespace MW5.Plugins.Concrete
 
         public AppConfig()
         {
+            SetDefaults();
+        }
+
+        private void SetDefaults()
+        {
             LoadSymbology = true;
             LoadLastProject = true;
             LastProjectPath = "";
@@ -42,6 +47,12 @@ namespace MW5.Plugins.Concrete
             CoordinateAngleFormat = AngleFormat.Seconds;
             CoordinatePrecision = 3;
             SpatialIndexFeatureCount = 10000;
+        }
+
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context)
+        {
+            SetDefaults();
         }
 
         [DataMember]
