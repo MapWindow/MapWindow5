@@ -246,4 +246,50 @@ namespace MW5.Plugins.Helpers
             return string.Empty;
         }
     }
+
+    public class ColorInterpretationConverter : IEnumConverter<ColorInterpretation>
+    {
+        public string GetString(ColorInterpretation value)
+        {
+            switch (value)
+            {
+                case ColorInterpretation.Undefined:
+                    return "Undefined";
+                case ColorInterpretation.GrayIndex:
+                    return "Gray index";
+                case ColorInterpretation.PaletteIndex:
+                    return "Pallete index";
+                case ColorInterpretation.RedBand:
+                    return "Red";
+                case ColorInterpretation.GreenBand:
+                    return "Green";
+                case ColorInterpretation.BlueBand:
+                    return "Blue";
+                case ColorInterpretation.AlphaBand:
+                    return "Alpha";
+                case ColorInterpretation.HueBand:
+                    return "Hue";
+                case ColorInterpretation.SaturationBand:
+                    return "Saturation";
+                case ColorInterpretation.LightnessBand:
+                    return "Lightness";
+                case ColorInterpretation.CyanBand:
+                    return "Cyan";
+                case ColorInterpretation.MagentaBand:
+                    return "Magenta";
+                case ColorInterpretation.YellowBand:
+                    return "Yellow";
+                case ColorInterpretation.BlackBand:
+                    return "Black";
+                case ColorInterpretation.Yband:
+                    return "Yb band";
+                case ColorInterpretation.CbBand:
+                    return "Cb band";
+                case ColorInterpretation.CrBand:
+                    return "Cr band";
+            }
+
+            return string.Empty;
+        }
+    }
 }

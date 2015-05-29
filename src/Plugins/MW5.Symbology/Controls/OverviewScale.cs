@@ -46,7 +46,7 @@ namespace MW5.Plugins.Symbology.Controls
         {
             get
             {
-                return string.Format("1:{0}", (_totalWidth/(double) Width).ToString("0.#"));
+                return string.Format("1:{0}", (_totalWidth/(double) Width).ToString("0"));
             }
         }
 

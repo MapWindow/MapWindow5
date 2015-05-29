@@ -82,11 +82,11 @@ namespace MW5.Plugins.Symbology.Views
                 tabControlAdv1.TabPages.Remove(tabPagePyramids);
 
                 richTextBox1.Visible = true;
+
+                richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
             }
 
             ModelToUi();
-
-            richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
         }
 
         public RasterRenderingPresenter RenderingPresenter

@@ -6,6 +6,7 @@ using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 using Image = MapWinGIS.Image;
 
 namespace MW5.Api.Concrete
@@ -353,10 +354,10 @@ namespace MW5.Api.Concrete
                 return string.Empty;
             }
 
-            var band = _image.Band[bandIndex];
+            var band = Bands[bandIndex];
             if (band != null)
             {
-                return "Band " + bandIndex + " (" + band.ColorInterpretation + ")";
+                return "Band " + bandIndex + " (" + band.ColorInterpretation.EnumToString().ToLower() + ")";
             }
 
             return string.Empty;
