@@ -103,6 +103,7 @@
     <Compile Include="Serialization\IProjectLoader.cs" />
     <Compile Include="Concrete\ImageSerializationService.cs" />
     <Compile Include="Serialization\Legacy\MapWin4Project.cs" />
+    <Compile Include="Serialization\XmlCustomObject.cs" />
     <Compile Include="Serialization\XmlMapLocator.cs" />
     <Compile Include="Serialization\XmlProjectSettings.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />

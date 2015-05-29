@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -16,9 +17,9 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
-    internal class ColorSchemeCollection
+    internal class ColorSchemeCollection: IEnumerable<ColorBlend>
     {
-        private List<ColorBlend> _list = new List<ColorBlend>();
+        private readonly List<ColorBlend> _list = new List<ColorBlend>();
         private readonly string _filename;
         private readonly SchemeTarget _type;
 
@@ -49,10 +50,14 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         public int SelectedIndex { get; set; }
 
-        public List<ColorBlend> List
+        public void Add(ColorBlend blend)
         {
-            get { return _list; }
-            set { _list = value; }
+            _list.Add(blend);
+        }
+
+        public void Clear()
+        {
+            _list.Clear();
         }
 
         public SchemeTarget Type
@@ -66,15 +71,15 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         public void SetFirstColorScheme(IFeatureSet sf)
         {
             ColorBlend blend = null;
-            if (List.Count <= 0)
+            if (_list.Count <= 0)
             {
                 blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Black; blend.Positions[0] = 0.0f;
                 blend.Colors[1] = Color.Black; blend.Positions[1] = 1.0f;
-                List.Add(blend);
+                _list.Add(blend);
             }
 
-            blend = List[0];
+            blend = _list[0];
             var shpType = sf.GeometryType;
             if (sf.PointOrMultiPoint || shpType == GeometryType.Polygon)
             {
@@ -93,15 +98,15 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         public void SetFirstColorScheme(Color color)
         {
             ColorBlend blend = null;
-            if (List.Count <= 0)
+            if (_list.Count <= 0)
             {
                 blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Black; blend.Positions[0] = 0.0f;
                 blend.Colors[1] = Color.Black; blend.Positions[1] = 1.0f;
-                List.Add(blend);
+                _list.Add(blend);
             }
 
-            blend = List[0];
+            blend = _list[0];
 
             blend.Colors[0] = color;
             blend.Colors[1] = color;
@@ -135,7 +140,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 var sch = new ColorRamp();
                 sch.SetColors(value);
                 var blend = sch.ColorScheme2ColorBlend();
-                List.Add(blend);
+                _list.Add(blend);
             }
         }
 
@@ -148,21 +153,21 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Orange;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.LightBlue;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Pink;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.LightGreen;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Yellow;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
         }
 
         private void AddDefaultVectorSchemes()
@@ -175,21 +180,21 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.White;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.LightBlue;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Orange;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.Yellow;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Orange;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             for (int i = 0; i < 2; i++)
             {
@@ -197,7 +202,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 if (i == 0) sch.SetColors(PredefinedColors.FallLeaves);
                 if (i == 1) sch.SetColors(PredefinedColors.DeadSea);
                 blend = sch.ColorScheme2ColorBlend();
-                List.Add(blend);
+                _list.Add(blend);
             }
 
             // adding to 2 color schemes, as there can be none in the list
@@ -216,21 +221,21 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             blend.Positions[5] = 5.0f / 6.0f;
             blend.Colors[6] = Color.BlueViolet;
             blend.Positions[6] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.LightGray;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.Gray;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
 
             blend = new ColorBlend(2);
             blend.Colors[0] = Color.Pink;
             blend.Positions[0] = 0.0f;
             blend.Colors[1] = Color.LightYellow;
             blend.Positions[1] = 1.0f;
-            List.Add(blend);
+            _list.Add(blend);
         }
         
         /// <summary>
@@ -247,9 +252,9 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             // the first scheme must not be saved
             int j = _type == SchemeTarget.Vector ? 1 : 0;
 
-            for (; j < List.Count; j++)
+            for (; j < _list.Count; j++)
             {
-                ColorBlend scheme = List[j];
+                ColorBlend scheme = _list[j];
                 XmlElement xelScheme = xmlDoc.CreateElement("ColorScheme");
                 for (int i = 0; i < scheme.Colors.Length; i++)
                 {
@@ -297,7 +302,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 var blend = new ColorBlend(2);
                 blend.Colors[0] = Color.Black; blend.Positions[0] = 0.0f;
                 blend.Colors[1] = Color.Black; blend.Positions[1] = 1.0f;
-                List.Add(blend);
+                _list.Add(blend);
             }
 
             foreach (XmlNode nodeScheme in xelSchemes.ChildNodes)
@@ -331,7 +336,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 }
                 if (scheme.Colors.Length == i)
                 {
-                    List.Add(scheme);
+                    _list.Add(scheme);
                 }
             }
             return true;
@@ -358,7 +363,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         public void ReadFromFile(string filename)
         {
-            List.Clear();
+            _list.Clear();
 
             var xmlDoc = new XmlDocument();
 
@@ -368,10 +373,37 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 LoadXml(xmlDoc);
             }
 
-            if (List.Count == 0)
+            if (_list.Count == 0)
             {
                 SetDefaultColorSchemes();
             }
+        }
+
+        public ColorBlend this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= _list.Count)
+                {
+                    Logger.Current.Warn("Invalid color blend index.");
+                    return null;
+                }
+
+                return _list[index];
+            }
+        }
+
+        public IEnumerator<ColorBlend> GetEnumerator()
+        {
+            for (int i = 0; i < _list.Count; i++)
+            {
+                yield return this[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Api;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.UI.Controls;
 
@@ -78,10 +73,10 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
         public void SetSelectedItem(ColorBlend blend)
         {
-            for (int i = 0; i < _schemeList.List.Count; i++)
+            for (int i = 0; i < _schemeList.Count(); i++)
             {
                 // TODO: after serialization we need to compare by value as references will be different
-                if (_schemeList.List[i] == blend)
+                if (_schemeList[i] == blend)
                 {
                     SelectedIndex = i;
                     break;
@@ -92,7 +87,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         [Browsable(false)]
         public ColorBlend GetSelectedItem()
         {
-            return SelectedItem != null ? ColorSchemes.List[SelectedIndex] : null;
+            return SelectedItem != null ? ColorSchemes[SelectedIndex] : null;
         }
 
         /// <summary>
@@ -111,7 +106,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         {
             Items.Clear();
 
-            _itemCount = _schemeList != null ? _schemeList.List.Count : 0;
+            _itemCount = _schemeList != null ? _schemeList.Count() : 0;
 
             for (var i = 0; i < _itemCount; i++)
             {
@@ -139,7 +134,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             for (int i = 0; i < _itemCount; i++)
             {
-                var img = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var img = new Bitmap(imgWidth, imgHeight, PixelFormat.Format32bppArgb);
                 var g = Graphics.FromImage(img);
 
                 if (_schemeList != null)
@@ -148,7 +143,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                     {
                         case SchemeType.Graduated:
                         {
-                            var blend = _schemeList.List[i];
+                            var blend = _schemeList[i];
                             if (blend != null)
                             {
                                 var lgb = new LinearGradientBrush(rect, Color.White, Color.White, 0.0f) {InterpolationColors = blend};
@@ -160,7 +155,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                         }
                         case SchemeType.Random:
                         {
-                            var blend = _schemeList.List[i];
+                            var blend = _schemeList[i];
                             if (blend != null)
                             {
                                 var scheme = blend.ToColorScheme();

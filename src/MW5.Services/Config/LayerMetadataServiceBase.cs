@@ -5,7 +5,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Services.Config
 {
-    public abstract class LayerMetadataServiceBase<T> where T: class, ILayerMetadataBase
+    public abstract class LayerMetadataServiceBase<T> where T: LayerMetadataBase, new()
     {
         private readonly BasePlugin _plugin;
         private readonly IAppContext _context;
@@ -23,9 +23,17 @@ namespace MW5.Services.Config
             var layer = _context.Legend.Layers.ItemByHandle(layerHandle);
             if (layer != null)
             {
-                return layer.GetCustomObject<T>(_plugin.Identity);
+                var o = layer.GetCustomObject<T>(_plugin.Identity.Guid);
+                if (o != null)
+                {
+                    return o;
+                }
             }
-            return null;
+
+            var metadata = new T();
+            Save(layerHandle, metadata);
+
+            return metadata;
         }
 
         public void Save(int layerHandle, T settings)
@@ -33,7 +41,7 @@ namespace MW5.Services.Config
             var layer = _context.Legend.Layers.ItemByHandle(layerHandle);
             if (layer != null)
             {
-                layer.SetCustomObject(settings, _plugin.Identity);
+                layer.SetCustomObject(settings, _plugin.Identity.Guid);
             }
         }
     }

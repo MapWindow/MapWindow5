@@ -60,7 +60,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             _shapefile = sf;
             _layer = layer;
             _selectionMode = selectionMode;
-            _metadata = SymbologyPlugin.Metadata(layer.Handle);
+            _metadata = SymbologyPlugin.GetMetadata(layer.Handle);
             _layerHandle = layer.Handle;
 
             btnTest.Text = selectionMode ? "Select" : "Test";
@@ -294,7 +294,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         private void btnOk_Click(object sender, EventArgs e)
         {
             Tag = richTextBox1.Text;
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+            var settings = SymbologyPlugin.GetMetadata(_layer.Handle);
             settings.ShowQueryValues = chkShowValues.Checked;
             settings.ShowQueryOnMap = chkShowDynamically.Checked;
         }

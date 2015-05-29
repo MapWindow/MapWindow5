@@ -33,7 +33,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
     /// </summary>
     public partial class ColorSchemesForm : MapWindowForm
     {
-        private readonly List<ColorBlend> _list;
         private readonly ColorSchemeCollection _provider;
         private readonly bool _noEvents;
         
@@ -47,7 +46,6 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             if (provider == null) throw new ArgumentNullException("provider");
 
             _provider = provider;
-            _list = provider.List;
 
             InitializeComponent();
 
@@ -55,15 +53,15 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             _listBox1.Items.Clear();
 
             int index = (provider.Type == SchemeTarget.Vector) ? 1 : 0;
-            for (int i = index; i < _list.Count; i++)
+
+            foreach (var blend in _provider)
             {
-                ColorBlend blend = _list[i];
                 if (blend != null)
                 {
                     _listBox1.Items.Add(blend);
                 }
             }
-            
+           
             if (_listBox1.Items.Count == 0)
             {
                 // adding color scheme, as there can be none in the list
@@ -304,9 +302,9 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         private void btnOk_Click(object sender, EventArgs e)
         {
-            var blend = _list[0];
+            var blend = _provider[0];
             var clr = blend.Colors[0];
-            _list.Clear();
+            _provider.Clear();
 
             // dummy color scheme for shapefile
             if (_provider.Type == SchemeTarget.Vector)
@@ -316,7 +314,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 blend.Positions[0] = 0.0f;
                 blend.Colors[1] = clr; 
                 blend.Positions[1] = 1.0f;
-                _list.Add(blend);
+                _provider.Add(blend);
             }
 
             int index = _provider.Type == SchemeTarget.Vector ? 1 : 0;
@@ -326,7 +324,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                 blend = (ColorBlend)_listBox1.Items[i];
                 if (blend != null)
                 {
-                    _list.Add(blend);
+                    _provider.Add(blend);
                 }
             }
 

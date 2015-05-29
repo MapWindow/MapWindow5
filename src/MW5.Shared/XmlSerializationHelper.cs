@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -113,6 +114,32 @@ namespace MW5.Shared
                 }
             }
             return encoding;
+        }
+
+        public static T DeserializeXmlElement<T>(XmlElement el)
+        {
+            XmlReader reader = new XmlNodeReader(el);
+
+            var ser = new XmlSerializer(typeof(T));
+            var o = ser.Deserialize(reader);
+            return (T)o;
+        }
+
+        public static XmlElement SerializeToElement<T>(this T target)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var ser = new XmlSerializer(typeof(T), new[] { target.GetType() });
+
+                ser.Serialize(stream, target);
+                var doc = new XmlDocument();
+
+                stream.Flush();
+                stream.Position = 0;
+
+                doc.Load(stream);
+                return doc.DocumentElement;
+            }
         }
     }
 }

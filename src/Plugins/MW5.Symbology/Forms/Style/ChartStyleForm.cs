@@ -558,10 +558,9 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
         private void UpdateFieldColors()
         {
-            List<ColorBlend> schemes = icbColors.ColorSchemes.List;
-            if (schemes != null && icbColors.SelectedIndex >= 0)
+            if (icbColors.ColorSchemes != null && icbColors.SelectedIndex >= 0)
             {
-                var blend = schemes[icbColors.SelectedIndex];
+                var blend = icbColors.ColorSchemes[icbColors.SelectedIndex];
                 var scheme = blend.ToColorScheme();
                 if (scheme != null)
                 {

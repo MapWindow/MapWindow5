@@ -23,24 +23,10 @@ namespace MW5.Plugins.Symbology
         private LabelMover _labelMover;
         private SymbologyMetadataService _metadataService;
 
-        internal static SymbologyMetadata Metadata(int layerHandle)
+        internal static SymbologyMetadata GetMetadata(int layerHandle)
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
-            var data = service.Get(layerHandle);
-            if (data == null)
-            {
-                // if plugin was loaded after the layer
-                AttachMetadata(layerHandle);
-                data = service.Get(layerHandle);
-            }
-
-            return data;
-        }
-
-        internal static void AttachMetadata(int layerHandle)
-        {
-            var service = _context.Container.Resolve<SymbologyMetadataService>();
-            service.Save(layerHandle, new SymbologyMetadata());
+            return service.Get(layerHandle);
         }
 
         internal static void SaveMetadata(int layerHandle, SymbologyMetadata metadata)

@@ -39,19 +39,13 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv3 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv4 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv5 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv treeColumnAdv6 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleForm));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -75,30 +69,30 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.transpMain = new TransparencyControl();
+            this.transpMain = new MW5.UI.Controls.TransparencyControl();
             this.groupPoint = new System.Windows.Forms.GroupBox();
             this.udDefaultSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.clpPointFill = new Office2007ColorPicker(this.components);
+            this.clpPointFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.groupFill = new System.Windows.Forms.GroupBox();
-            this.icbFillStyle = new ImageCombo();
-            this.clpPolygonFill = new Office2007ColorPicker(this.components);
+            this.icbFillStyle = new MW5.UI.Controls.ImageCombo();
+            this.clpPolygonFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.groupBox16 = new System.Windows.Forms.GroupBox();
-            this.transpSelection = new TransparencyControl();
+            this.transpSelection = new MW5.UI.Controls.TransparencyControl();
             this.label1 = new System.Windows.Forms.Label();
-            this.clpSelection = new Office2007ColorPicker(this.components);
+            this.clpSelection = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnDefaultChange = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupLine = new System.Windows.Forms.GroupBox();
-            this.icbLineWidth = new ImageCombo();
+            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
             this.label16 = new System.Windows.Forms.Label();
             this.panelLineOptions = new System.Windows.Forms.Panel();
             this.lblMultilinePattern = new System.Windows.Forms.Label();
-            this.clpDefaultOutline = new Office2007ColorPicker(this.components);
+            this.clpDefaultOutline = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label21 = new System.Windows.Forms.Label();
             this.tabCategories = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
@@ -137,7 +131,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.groupLabelAppearance = new System.Windows.Forms.GroupBox();
             this.panelLabels = new System.Windows.Forms.Panel();
             this.udLabelFontSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.clpLabelFrame = new Office2007ColorPicker(this.components);
+            this.clpLabelFrame = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label15 = new System.Windows.Forms.Label();
             this.chkShowLabels = new System.Windows.Forms.CheckBox();
             this.chkLabelFrame = new System.Windows.Forms.CheckBox();
@@ -190,6 +184,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
+            this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
+            this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
+            this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -244,6 +241,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
             this.groupBox7.SuspendLayout();
+            this.toolStripEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOk
@@ -433,7 +431,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this.axMap1.CurrentScale = 146.12306998412413D;
+            this.axMap1.BackgroundColor = System.Drawing.Color.White;
+            this.axMap1.CurrentScale = 193.99097222030278D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -449,13 +448,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.axMap1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            spatialReference1.Tag = "";
-            this.axMap1.Projection = spatialReference1;
+            spatialReference2.Tag = "";
+            this.axMap1.Projection = spatialReference2;
             this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
             this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
             this.axMap1.ScalebarVisible = false;
             this.axMap1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.None;
+            this.axMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
             this.axMap1.ShowRedrawTime = false;
             this.axMap1.ShowVersionNumber = false;
             this.axMap1.Size = new System.Drawing.Size(232, 191);
@@ -467,6 +467,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.axMap1.UseSeamlessPan = false;
             this.axMap1.Visible = false;
             this.axMap1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this.axMap1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
             this.axMap1.ZoomPercent = 0.3D;
             // 
             // chkLayerPreview
@@ -528,9 +529,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
             this.vectorInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo2)});
             this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 425);
             this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
@@ -603,7 +604,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.transpMain.Size = new System.Drawing.Size(195, 32);
             this.transpMain.TabIndex = 177;
             this.transpMain.Value = ((byte)(255));
-            this.transpMain.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transpMain_ValueChanged);
+            this.transpMain.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpMain_ValueChanged);
             // 
             // groupPoint
             // 
@@ -678,7 +679,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.icbFillStyle.Color1 = System.Drawing.Color.Gray;
             this.icbFillStyle.Color2 = System.Drawing.Color.Gray;
-            this.icbFillStyle.ComboStyle = ImageComboStyle.Common;
+            this.icbFillStyle.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbFillStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFillStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFillStyle.FormattingEnabled = true;
@@ -745,7 +746,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.transpSelection.Size = new System.Drawing.Size(195, 32);
             this.transpSelection.TabIndex = 176;
             this.transpSelection.Value = ((byte)(255));
-            this.transpSelection.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transpSelection_ValueChanged);
+            this.transpSelection.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpSelection_ValueChanged);
             // 
             // label1
             // 
@@ -823,7 +824,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
             this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -925,14 +926,14 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.dgvCategories.AllowUserToResizeRows = false;
             this.dgvCategories.BackgroundColor = System.Drawing.SystemColors.Window;
             this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
@@ -941,27 +942,27 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.cmnName,
             this.cmnExpression,
             this.cmnCount});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle5;
             this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
             this.dgvCategories.Location = new System.Drawing.Point(3, 16);
             this.dgvCategories.LockUpdate = false;
             this.dgvCategories.Name = "dgvCategories";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategories.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategories.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dgvCategories.RowHeadersVisible = false;
             this.dgvCategories.RowHeadersWidth = 15;
             this.dgvCategories.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -1975,12 +1976,49 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
+            // toolStripEx1
+            // 
+            this.toolStripEx1.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolStripEx1.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripEx1.Image = null;
+            this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStyle});
+            this.toolStripEx1.Location = new System.Drawing.Point(12, 447);
+            this.toolStripEx1.Name = "toolStripEx1";
+            this.toolStripEx1.Office12Mode = false;
+            this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
+            this.toolStripEx1.TabIndex = 167;
+            this.toolStripEx1.Text = "Style";
+            this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
+            // 
+            // toolStyle
+            // 
+            this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolSaveStyle});
+            this.toolStyle.ForeColor = System.Drawing.Color.Black;
+            this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
+            this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStyle.Name = "toolStyle";
+            this.toolStyle.Size = new System.Drawing.Size(61, 22);
+            this.toolStyle.Text = "Style";
+            // 
+            // toolSaveStyle
+            // 
+            this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
+            this.toolSaveStyle.Name = "toolSaveStyle";
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolSaveStyle.Text = "Save style";
+            this.toolSaveStyle.Click += new System.EventHandler(this.toolSaveStyle_Click);
+            // 
             // VectorStyleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(660, 475);
+            this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.btnSaveChanges);
@@ -2065,6 +2103,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
             this.groupBox7.ResumeLayout(false);
+            this.toolStripEx1.ResumeLayout(false);
+            this.toolStripEx1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2209,5 +2249,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         private AttributesControl attributesControl1;
         private System.Windows.Forms.Label label10;
         private VectorInfoTreeView vectorInfoTreeView1;
+        private ToolStripEx toolStripEx1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStyle;
+        private System.Windows.Forms.ToolStripMenuItem toolSaveStyle;
     }
 }

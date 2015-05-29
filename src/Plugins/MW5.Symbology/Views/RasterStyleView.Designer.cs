@@ -160,7 +160,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabControlAdv1.FocusOnTabClick = false;
             this.tabControlAdv1.ImageList = this.imageList1;
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 50);
-            this.tabControlAdv1.Location = new System.Drawing.Point(3, 12);
+            this.tabControlAdv1.Location = new System.Drawing.Point(4, 12);
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.Padding = new System.Drawing.Point(5, 10);
             this.tabControlAdv1.RotateTextWhenVertical = true;
@@ -944,11 +944,11 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStripEx1.Image = null;
             this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStyle});
-            this.toolStripEx1.Location = new System.Drawing.Point(9, 462);
+            this.toolStripEx1.Location = new System.Drawing.Point(10, 462);
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
             this.toolStripEx1.TabIndex = 39;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;

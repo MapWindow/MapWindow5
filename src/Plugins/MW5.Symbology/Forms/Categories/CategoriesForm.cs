@@ -170,7 +170,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             {
                 if (_context.View.ShowChildView(form, this))
                 {
-                    var blend = form.icbColors.ColorSchemes.List[form.icbColors.SelectedIndex];
+                    var blend = form.icbColors.ColorSchemes[form.icbColors.SelectedIndex];
                     var scheme = blend.ToColorScheme();
                     int count = (int) form.numericUpDownExt1.Value;
 

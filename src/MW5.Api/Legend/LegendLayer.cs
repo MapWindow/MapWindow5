@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Xml;
 using System.Xml.Serialization;
 using AxMapWinGIS;
 using MapWinGIS;
@@ -12,6 +14,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Api.Map;
+using MW5.Shared;
 
 namespace MW5.Api.Legend
 {
@@ -22,7 +25,8 @@ namespace MW5.Api.Legend
     {
         private readonly LegendControl _legend;
         private readonly List<LayerElement> _elements; // size and positions of elements
-        private readonly Dictionary<object, ILayerMetadataBase> _customObjects;
+        private readonly Dictionary<Guid, ILayerMetadataBase> _customObjects;
+        private readonly Dictionary<Guid, XmlElement> _rawObjects;
 
         private bool _expanded;
         private object _icon;
@@ -40,10 +44,11 @@ namespace MW5.Api.Legend
             _legend = legend;   // must be the first line in constructor
             _icon = null;
             _elements = new List<LayerElement>();
-            _customObjects = new Dictionary<object, ILayerMetadataBase>();
-            Guid = Guid.NewGuid();
+            _customObjects = new Dictionary<Guid, ILayerMetadataBase>();
+            _rawObjects = new Dictionary<System.Guid, XmlElement>();
             _recalcHeight = true;
 
+            Guid = Guid.NewGuid();
             Expanded = true;
             SmallIconWasDrawn = false;
             SymbologyCaption = "";
@@ -265,11 +270,6 @@ namespace MW5.Api.Legend
             }
         }
 
-        internal bool IsRaster
-        {
-            get { return LayerType == LayerType.Image || LayerType == LayerType.Grid; }
-        }
-
         internal bool IsShapefile
         {
             get { return IsVector; }
@@ -278,11 +278,24 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Returns custom object for specified key
         /// </summary>
-        public T GetCustomObject<T>(object key) where T : class, ILayerMetadataBase
+        public T GetCustomObject<T>(Guid pluginGuid) where T : class, ILayerMetadataBase
         {
-            if (_customObjects.ContainsKey(key))
+            if (_rawObjects.ContainsKey(pluginGuid))
             {
-                return _customObjects[key] as T;
+                XmlElement el = _rawObjects[pluginGuid];
+                
+                var o = XmlSerializationHelper.DeserializeXmlElement<T>(el);
+                if (o != null)
+                {
+                    _rawObjects.Remove(pluginGuid);
+                    _customObjects[pluginGuid] = o;
+                    return o;
+                }
+            }
+
+            if (_customObjects.ContainsKey(pluginGuid))
+            {
+                return _customObjects[pluginGuid] as T;
             }
 
             return default(T);
@@ -291,9 +304,39 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Sets custom object associated with layer
         /// </summary>
-        public void SetCustomObject<T>(T obj, object key) where T: class, ILayerMetadataBase
+        public void SetCustomObject<T>(T obj, Guid key) where T: class, ILayerMetadataBase
         {
             _customObjects[key] = obj;
+        }
+
+        public void RestoreCustomObject(XmlElement el, Guid guid)
+        {
+            _rawObjects[guid] = el;
+        }
+
+        public void ClearCustomObjects()
+        {
+            _customObjects.Clear();
+            _rawObjects.Clear();
+        }
+
+        /// <summary>
+        /// Gets list of objects associated with layer (added by plugins).
+        /// </summary>
+        public IEnumerable<KeyValuePair<Guid, XmlElement>> CustomObjects
+        {
+            get
+            {
+                foreach (var item in _rawObjects)
+                {
+                    yield return item;
+                }
+
+                foreach (var item in _customObjects)
+                {
+                    yield return new KeyValuePair<Guid, XmlElement>(item.Key, item.Value.Serialize());
+                }
+            }
         }
 
         /// <summary>
@@ -440,8 +483,8 @@ namespace MW5.Api.Legend
                 {
                     case tkPointSymbolType.ptSymbolPicture:
                     {
-                        var defaultHeight = (options.Picture.Height * options.PictureScaleY) + 2 <= Constants.CsItemHeight || 
-                                            options.Picture == null || options.Picture.IsEmpty;
+                        var defaultHeight = options.Picture == null || options.Picture.IsEmpty ||
+                                            ((options.Picture.Height * options.PictureScaleY) + 2 <= Constants.CsItemHeight);
 
                         return defaultHeight
                             ? Constants.CsItemHeight + 2
@@ -485,8 +528,8 @@ namespace MW5.Api.Legend
                 switch (options.PointType)
                 {
                     case tkPointSymbolType.ptSymbolPicture:
-                        width = options.Picture.Width * options.PictureScaleX <= Constants.IconWidth
-                                || options.Picture == null || options.Picture.IsEmpty
+                        width = options.Picture == null || options.Picture.IsEmpty ||
+                                (options.Picture.Width * options.PictureScaleX <= Constants.IconWidth)
                             ? Constants.IconWidth
                             : (int) (options.Picture.Width*options.PictureScaleX);
                         break;

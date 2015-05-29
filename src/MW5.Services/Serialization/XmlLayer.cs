@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
 using MW5.Api;
@@ -44,7 +46,11 @@ namespace MW5.Services.Serialization
             LayerType = layer.LayerType;
             Name = layer.Name;
             SkipLoading = false;
+
+            SerializeCustomObjects(layer);
         }
+
+
 
         public void RestoreLayer(ILegendLayer layer)
         {
@@ -61,10 +67,50 @@ namespace MW5.Services.Serialization
                 }
             }
 
+            RestoreCustomObjects(layer);
+
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.SymbologyCaption = ColorSchemeCaption;
             layer.Guid = Guid;
+        }
+
+        private void SerializeCustomObjects(ILegendLayer layer)
+        {
+            CustomObjects = new List<XmlCustomObject>();
+
+            var legendLayer = layer as LegendLayer;
+            if (legendLayer == null)
+            {
+                return;
+            }
+
+            foreach (var item in legendLayer.CustomObjects)
+            {
+                var cob = new XmlCustomObject()
+                {
+                    Object = item.Value,
+                    Guid = item.Key,
+                };
+
+                CustomObjects.Add(cob);
+            }
+        }
+
+        private void RestoreCustomObjects(ILegendLayer layer)
+        {
+            var legendLayer = layer as LegendLayer;
+            if (legendLayer == null)
+            {
+                return;
+            }
+
+            legendLayer.ClearCustomObjects();
+
+            foreach (var cob in CustomObjects)
+            {
+                legendLayer.RestoreCustomObject(cob.Object, cob.Guid);
+            }
         }
 
         private XmlElement LayerToXmlElement(ILegendLayer layer)
@@ -75,6 +121,7 @@ namespace MW5.Services.Serialization
             return doc.DocumentElement;
         }
 
+        [DataMember] public List<XmlCustomObject> CustomObjects { get; set; }
         [DataMember] public string Name { get; set; }
         [DataMember] public Guid Guid { get; set; }
         [DataMember] public bool Expanded { get; set; }

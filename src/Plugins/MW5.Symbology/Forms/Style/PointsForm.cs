@@ -163,7 +163,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
         private SymbologyMetadata Metadata
         {
-            get { return SymbologyPlugin.Metadata(_layer.Handle); }
+            get { return SymbologyPlugin.GetMetadata(_layer.Handle); }
         }
 
         #endregion

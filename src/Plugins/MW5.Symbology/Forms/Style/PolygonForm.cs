@@ -60,7 +60,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
             InitializeComponent();
             
             _style = style;
-            _metadata = SymbologyPlugin.Metadata(layer.Handle);
+            _metadata = SymbologyPlugin.GetMetadata(layer.Handle);
             _legend = legend;
 
             _initState = style.Serialize();

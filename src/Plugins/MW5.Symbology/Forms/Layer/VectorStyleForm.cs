@@ -48,9 +48,9 @@ namespace MW5.Plugins.Symbology.Forms.Layer
     /// </summary>
     public partial class VectorStyleForm : MapWindowForm
     {
-        private const bool _redrawModeIsChanging = false;
+        private const bool RedrawModeIsChanging = false;
 
-        static int _tabIndex = 0;
+        private static int _tabIndex = 0;
 
         private readonly ILayer _layer;
         private readonly IFeatureSet _featureSet;
@@ -75,7 +75,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
             _layer = layer;
 
-            _metadata = SymbologyPlugin.Metadata(_layer.Handle);
+            _metadata = SymbologyPlugin.GetMetadata(_layer.Handle);
             _featureSet = _layer.FeatureSet;
 
             Text = "Layer properties: " + _layer.Name;
@@ -290,7 +290,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             
             // it's assumed that we call redraw when state changed only
-            if (!LockUpdate && !_redrawModeIsChanging)
+            if (!LockUpdate && !RedrawModeIsChanging)
             {
                 MarkStateChanged();
             }
@@ -898,8 +898,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             // cleaning
             if (showWaiting)
             {
-                this.Enabled = true;
-                this.Cursor = Cursors.Default;
+                Enabled = true;
+                Cursor = Cursors.Default;
             }
             else
             {
@@ -1206,21 +1206,11 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         }
 
         /// <summary>
-        /// Updating preview for charts
-        /// </summary>
-        private void optChartBars_CheckedChanged(object sender, EventArgs e)
-        {
-            Ui2Settings(null, null);
-            DrawAllPreviews();
-        }
-
-        /// <summary>
         /// Updating colors of the charts
         /// </summary>
         private void icbChartColorScheme_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var schemes = icbChartColorScheme.ColorSchemes.List;
-            if (schemes != null && icbChartColorScheme.SelectedIndex >= 0)
+            if (icbChartColorScheme.ColorSchemes != null && icbChartColorScheme.SelectedIndex >= 0)
             {
                 Ui2Settings(null, null);
                 DrawChartsPreview();
@@ -1242,10 +1232,10 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         private void UpdateFieldColors()
         {
-            var schemes = icbChartColorScheme.ColorSchemes.List;
+            var schemes = icbChartColorScheme.ColorSchemes;
             if (schemes != null && icbChartColorScheme.SelectedIndex >= 0)
             {
-                var blend = (ColorBlend)schemes[icbChartColorScheme.SelectedIndex];
+                var blend = schemes[icbChartColorScheme.SelectedIndex];
                 var scheme = blend.ToColorScheme();
                 if (scheme != null)
                 {
@@ -1253,7 +1243,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
                     for (int i = 0; i < fieldCount; i++)
                     {
                         var field = _featureSet.Diagrams.Fields[i];
-                        double value = (double)(i) / (double)(fieldCount - 1);
+                        double value = i / (double)(fieldCount - 1);
                         field.Color = scheme.GetGraduatedColor(value);
                     }
                 }
@@ -1796,6 +1786,12 @@ namespace MW5.Plugins.Symbology.Forms.Layer
             _layer.DynamicVisibility = scaleLayer.UseDynamicVisibility;
             RedrawMap();
             Application.DoEvents();
+        }
+
+        private void toolSaveStyle_Click(object sender, EventArgs e)
+        {
+            bool result = _layer.SaveOptions("", true, "");
+            MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
         }
     }
 }

@@ -61,7 +61,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 
             _shapefile = layer.FeatureSet;
 
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+            var settings = SymbologyPlugin.GetMetadata(_layer.Handle);
             
             // classification
             cboClassificationType.Items.Clear();
@@ -114,7 +114,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
 
         private void InitSize()
         {
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+            var settings = SymbologyPlugin.GetMetadata(_layer.Handle);
 
             if (_shapefile.PointOrMultiPoint)
             {
@@ -194,7 +194,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
             ColorRamp scheme = null;
             if (icbColorScheme.SelectedIndex >= 0)
             {
-                var blend = icbColorScheme.ColorSchemes.List[icbColorScheme.SelectedIndex];
+                var blend = icbColorScheme.ColorSchemes[icbColorScheme.SelectedIndex];
                 scheme = blend.ToColorScheme();
             }
 
@@ -221,7 +221,7 @@ namespace MW5.Plugins.Symbology.Forms.Categories
         /// </summary>
         private void SaveSettings()
         {
-            var settings = SymbologyPlugin.Metadata(_layer.Handle);
+            var settings = SymbologyPlugin.GetMetadata(_layer.Handle);
 
             int count;
             settings.CategoriesCount = Int32.TryParse(cboCategoriesCount.Text, out count) ? count : 8;

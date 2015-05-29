@@ -51,8 +51,35 @@ namespace MW5.Shared
                     xmlWriter.Formatting = Formatting.Indented;
                     var ser = new DataContractSerializer(typeof(T), knownTypes, Int32.MaxValue, false, preserveObjectReferences, null);
                     ser.WriteObject(xmlWriter, target);
+
                     return writer.ToString();
                 }
+            }
+        }
+
+        public static T DeserializeXmlElement<T>(XmlElement el, IEnumerable<Type> knownTypes)
+        {
+            XmlReader reader = new XmlNodeReader(el);
+
+            var ser = new DataContractSerializer(typeof(T), knownTypes, Int32.MaxValue, false, false, null);
+            var o = ser.ReadObject(reader);
+            return (T)o;
+        }
+
+        public static XmlElement SerializeToElement<T>(this T target, IEnumerable<Type> knownTypes, bool preserveObjectReferences)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var ser = new DataContractSerializer(typeof(T), knownTypes, Int32.MaxValue, false, preserveObjectReferences, null);
+
+                ser.WriteObject(stream, target);
+                var doc = new XmlDocument();
+
+                stream.Flush();
+                stream.Position = 0;
+
+                doc.Load(stream);
+                return doc.DocumentElement;
             }
         }
     }

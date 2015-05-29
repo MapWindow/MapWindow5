@@ -83,6 +83,7 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Concrete\AppConfig.cs" />
     <Compile Include="Concrete\BasePlugin.cs" />
+    <Compile Include="Concrete\LayerMetadataBase.cs" />
     <Compile Include="Concrete\MainPlugin.cs" />
     <Compile Include="Events\ConnectionEventArgs.cs" />
     <Compile Include="Concrete\DatabaseConnection.cs" />

@@ -35,12 +35,6 @@ namespace MW5.Plugins.Symbology.Menu
             plugin.LayerLabelsClicked += LayerLabelsClicked;
             plugin.LayerDiagramsClicked += LayerDiagramsClicked;
             plugin.LayerCategoryClicked += LayerCategoryClicked;
-            plugin.LayerAdded += LegendLayerAdded;
-        }
-
-        private void LegendLayerAdded(IMuteLegend legend, LayerEventArgs e)
-        {
-            SymbologyPlugin.AttachMetadata(e.LayerHandle);
         }
 
         private void LayerCategoryClicked(IMuteLegend legend, LayerCategoryEventArgs e)
