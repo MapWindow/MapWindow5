@@ -21,7 +21,7 @@ namespace MW5.Listeners
         private readonly ContextMenuPresenter _contextMenuPresenter;
         private readonly IMap _map;
         private readonly IAppContext _context;
-
+        
         public MapListener(IAppContext context, IBroadcasterService broadcaster, ILayerService layerService,
                 ContextMenuPresenter contextMenuPresenter)
         {
@@ -57,6 +57,7 @@ namespace MW5.Listeners
             _map.MouseUp += MapMouseUp;
             _map.MouseDown += MapMouseDown;
             _map.MouseMove += MapMouseMove;
+            _map.MouseDoubleClick += MapMouseDoubleClick;
             _map.SelectionChanged += MapSelectionChanged;
             _map.ShapeIdentified += MapShapeIdentified;
             _map.ShapeValidationFailed += MapShapeValidationFailed;
@@ -72,6 +73,11 @@ namespace MW5.Listeners
         private void MapAfterShapeEdit(object sender, AfterShapeEditEventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.AfterShapeEdit_, sender as IMuteMap, e);
+        }
+
+        private void MapMouseDoubleClick(object sender, EventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.MouseDoubleClick_, sender as IMuteMap, e);
         }
 
         private void MapMouseMove(object sender, MouseEventArgs e)

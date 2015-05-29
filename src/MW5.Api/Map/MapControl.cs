@@ -51,12 +51,6 @@ namespace MW5.Api.Map
         public event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
         public event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
         public event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
-
-        // TODO: check if these events events override default handlers of UserControl
-        public new event EventHandler<MouseEventArgs> MouseDown;
-        public new event EventHandler<MouseEventArgs> MouseMove;
-        public new event EventHandler<MouseEventArgs> MouseUp;
-
         public event EventHandler<EventArgs> ProjectionChanged;
         public event EventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
         public event EventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
@@ -67,6 +61,12 @@ namespace MW5.Api.Map
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
+
+        // overriding default handlers for user control
+        public new event EventHandler<MouseEventArgs> MouseDown;
+        public new event EventHandler<MouseEventArgs> MouseMove;
+        public new event EventHandler<MouseEventArgs> MouseUp;
+        public new event EventHandler<EventArgs> MouseDoubleClick;
 
         #region Hiding Properties from PropertyGrid
 

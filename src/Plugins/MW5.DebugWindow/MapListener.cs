@@ -88,18 +88,12 @@ namespace MW5.Plugins.DebugWindow
             plugin.BeforeRemoveLayer += this.PluginOnBeforeRemoveLayer;
             plugin.ChooseLayer += this.PluginOnChooseLayer;
             plugin.ExtentsChanged += this.PluginOnExtentsChanged;
-            plugin.FileDropped += this.PluginOnFileDropped;
-            plugin.GridOpened += this.PluginOnGridOpened;
             plugin.LayerAdded += this.PluginOnLayerAdded;
-            plugin.LayerProjectionIsEmpty += this.PluginOnLayerProjectionIsEmpty;
             plugin.LayerRemoved += this.PluginOnLayerRemoved;
             plugin.LayerSelected += this.PluginOnLayerSelected;
             plugin.MapCursorChanged += this.PluginOnMapCursorChanged;
-            plugin.ProjectionMismatch += this.PluginOnProjectionMismatch;
             plugin.SelectionChanged += this.PluginOnSelectionChanged;
-            plugin.ShapeHighlighted += this.PluginOnShapeHighlighted;
             plugin.ShapeIdentified += this.PluginOnShapeIdentified;
-            plugin.TilesLoaded += this.PluginOnTilesLoaded;
             plugin.ViewUpdating += this.PluginOnViewUpdating;
             plugin.LogEntryAdded += PluginOnLogEntryAdded;
         }
@@ -171,34 +165,6 @@ namespace MW5.Plugins.DebugWindow
         }
 
         /// <summary>
-        /// On file dropped.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnFileDropped(IMuteMap map, FileDroppedEventArgs e)
-        {
-            _debugWindow.Write("MapListener.PluginOnFileDropped", e.Filename);
-        }
-
-        /// <summary>
-        /// On grid opened.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnGridOpened(IMuteMap map, GridOpenedEventArgs e)
-        {
-            _debugWindow.Write("MapListener.PluginOnGridOpened", e.GridFilename);
-        }
-
-        /// <summary>
         /// On layer added.
         /// </summary>
         /// <param name="map">
@@ -210,22 +176,6 @@ namespace MW5.Plugins.DebugWindow
         private void PluginOnLayerAdded(IMuteLegend legend, LayerEventArgs e)
         {
             _debugWindow.Write("MapListener.PluginOnLayerAdded", e.LayerHandle.ToString(CultureInfo.InvariantCulture));
-        }
-
-        /// <summary>
-        /// On layer projection is empty.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnLayerProjectionIsEmpty(IMuteMap map, LayerProjectionIsEmptyEventArgs e)
-        {
-            _debugWindow.Write(
-                "MapListener.PluginOnLayerProjectionIsEmpty", 
-                e.LayerHandle.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>
@@ -278,22 +228,6 @@ namespace MW5.Plugins.DebugWindow
         }
 
         /// <summary>
-        /// On projection mismatch.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnProjectionMismatch(IMuteMap map, ProjectionMismatchEventArgs e)
-        {
-            _debugWindow.Write(
-                "MapListener.PluginOnProjectionMismatch", 
-                e.LayerHandle.ToString(CultureInfo.InvariantCulture));
-        }
-
-        /// <summary>
         /// On selection changed.
         /// </summary>
         /// <param name="map">
@@ -307,22 +241,6 @@ namespace MW5.Plugins.DebugWindow
             _debugWindow.Write(
                 "MapListener.PluginOnSelectionChanged", 
                 e.LayerHandle.ToString(CultureInfo.InvariantCulture));
-        }
-
-        /// <summary>
-        /// On shape highlighted.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnShapeHighlighted(IMuteMap map, ShapeHightlightedEventArgs e)
-        {
-            _debugWindow.Write(
-                "MapListener.PluginOnShapeHighlighted", 
-                string.Format("layerHandle: {0}, shapeIndex: {1}", e.LayerHandle, e.ShapeIndex));
         }
 
         /// <summary>
@@ -343,20 +261,6 @@ namespace MW5.Plugins.DebugWindow
                 e.PointX,
                 e.PointY);
             _debugWindow.Write("MapListener.PluginOnShapeIdentified", msg);
-        }
-
-        /// <summary>
-        /// On tiles loaded.
-        /// </summary>
-        /// <param name="map">
-        /// The map.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
-        private void PluginOnTilesLoaded(IMuteMap map, TilesLoadedEventArgs e)
-        {
-            _debugWindow.Write("MapListener.PluginOnTilesLoaded", string.Empty);
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace MW5.Api.Map
             _map.BackgroundLoadingStarted += MapBackgroundLoadingStarted;
             _map.BeforeDeleteShape += MapBeforeDeleteShape;
             _map.BeforeShapeEdit += MapBeforeShapeEdit;
-            _map.DblClick += MapDblClick;
+            _map.DblClick += MapDoubleClick;
             _map.ExtentsChanged += MapExtentsChanged;
             _map.FileDropped += MapFileDropped;
             _map.GridOpened += MapGridOpened;
@@ -46,7 +46,7 @@ namespace MW5.Api.Map
             _map.BackgroundLoadingStarted -= MapBackgroundLoadingStarted;
             _map.BeforeDeleteShape -= MapBeforeDeleteShape;
             _map.BeforeShapeEdit -= MapBeforeShapeEdit;
-            _map.DblClick -= MapDblClick;
+            _map.DblClick -= MapDoubleClick;
             _map.ExtentsChanged -= MapExtentsChanged;
             _map.FileDropped -= MapFileDropped;
             _map.GridOpened -= MapGridOpened;
@@ -171,10 +171,9 @@ namespace MW5.Api.Map
             Invoke(sender, ExtentsChanged, e);
         }
         
-        private void MapDblClick(object sender, EventArgs e)
+        private void MapDoubleClick(object sender, EventArgs e)
         {
-            // TODO: investigate how to hide / override events of UserControl
-            throw new NotImplementedException();
+            Invoke(sender, MouseDoubleClick, e);
         }
 
         private void MapChooseLayer(object sender, _DMapEvents_ChooseLayerEvent e)

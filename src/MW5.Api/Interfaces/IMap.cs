@@ -23,6 +23,7 @@ namespace MW5.Api.Interfaces
         event EventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
         event EventHandler<LayerReprojectedEventArgs> LayerReprojected;
         event EventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+        event EventHandler<EventArgs> MouseDoubleClick;
         event EventHandler<MouseEventArgs> MouseDown;
         event EventHandler<MouseEventArgs> MouseMove;
         event EventHandler<MouseEventArgs> MouseUp;

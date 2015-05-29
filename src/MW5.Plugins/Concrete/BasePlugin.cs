@@ -156,7 +156,6 @@ namespace MW5.Plugins.Concrete
         internal LegendEventHandler<LayerEventArgs> LayerLabelsClicked_;
         internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerAdded_;
-        
         internal LegendEventHandler<LayerEventArgs> LayerRemoved_;
 
         public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
@@ -219,11 +218,11 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ChooseLayerEventArgs> ChooseLayer_;
         internal MapEventHandler<EventArgs> ExtentsChanged_;
         internal MapEventHandler<EventArgs> HistoryChanged_;
-        
         internal MapEventHandler<EventArgs> MapCursorChanged_;
         internal MapEventHandler<MouseEventArgs> MouseDown_;
         internal MapEventHandler<MouseEventArgs> MouseMove_;
         internal MapEventHandler<MouseEventArgs> MouseUp_;
+        internal MapEventHandler<EventArgs> MouseDoubleClick_;
         internal MapEventHandler<SelectionChangedEventArgs> SelectionChanged_;
         internal MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified_;
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
@@ -235,10 +234,6 @@ namespace MW5.Plugins.Concrete
             add { AfterShapeEdit_ += value; }
             remove { AfterShapeEdit_ -= value; }
         }
-
-        public event MapEventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
-
-        public event MapEventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
 
         public event MapEventHandler<BeforeDeleteShapeEventArgs> BeforeDeleteShape
         {
@@ -270,18 +265,18 @@ namespace MW5.Plugins.Concrete
             remove { ExtentsChanged_ -= value; }
         }
 
-        public event MapEventHandler<FileDroppedEventArgs> FileDropped;
-        public event MapEventHandler<GridOpenedEventArgs> GridOpened;
-        public event MapEventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
-        public event MapEventHandler<LayerReprojectedEventArgs> LayerReprojected;
-        public event MapEventHandler<MeasuringChangedEventArgs> MeasuringChanged;
-
         public event MapEventHandler<EventArgs> MapCursorChanged
         {
             add { MapCursorChanged_ += value; }
             remove { MapCursorChanged_ -= value; }
         }
-        
+
+        public event MapEventHandler<EventArgs> MouseDoubleClick
+        {
+            add { MouseDoubleClick_ += value; }
+            remove { MouseDoubleClick_ -= value; }
+        }
+
         public event MapEventHandler<MouseEventArgs> MouseDown
         {
             add { MouseDown_ += value; }
@@ -299,17 +294,13 @@ namespace MW5.Plugins.Concrete
             add { MouseUp_ += value; }
             remove { MouseUp_ -= value; }
         }
-
-        public event MapEventHandler<EventArgs> ProjectionChanged;
-        public event MapEventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
-        public event MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
+        
         public event MapEventHandler<SelectionChangedEventArgs> SelectionChanged
         {
             add { SelectionChanged_ += value; }
             remove { SelectionChanged_ -= value; }
         }
 
-        public event MapEventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
         public event MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified
         {
             add { ShapeIdentified_ += value; }
@@ -322,8 +313,6 @@ namespace MW5.Plugins.Concrete
             remove { ShapeValidationFailed_ -= value; }
         }
 
-        public event MapEventHandler<TilesLoadedEventArgs> TilesLoaded;
-
         public event MapEventHandler<EventArgs> HistoryChanged
         {
             add { HistoryChanged_ += value; }
@@ -335,6 +324,24 @@ namespace MW5.Plugins.Concrete
             add { ValidateShape_ += value; }
             remove { ValidateShape_ -= value; }
         }
+
+        #endregion
+
+        #region Unimplemented map events (add to plugin interface if they are actually needed)
+
+        //public event MapEventHandler<FileDroppedEventArgs> FileDropped;
+        //public event MapEventHandler<GridOpenedEventArgs> GridOpened;
+        //public event MapEventHandler<LayerProjectionIsEmptyEventArgs> LayerProjectionIsEmpty;
+        //public event MapEventHandler<LayerReprojectedEventArgs> LayerReprojected;
+        //public event MapEventHandler<MeasuringChangedEventArgs> MeasuringChanged;
+        //public event MapEventHandler<EventArgs> ProjectionChanged;
+        //public event MapEventHandler<ProjectionMismatchEventArgs> ProjectionMismatch;
+        //public event MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal;
+        //public event MapEventHandler<ShapeHightlightedEventArgs> ShapeHighlighted;
+        //public event MapEventHandler<TilesLoadedEventArgs> TilesLoaded;
+        //public event MapEventHandler<BackgroundLoadingFinishedEventArgs> BackgroundLoadingFinished;
+        //public event MapEventHandler<BackgroundLoadingStartedEventArgs> BackgroundLoadingStarted;
+
         #endregion
 
         #region DockPanel events
