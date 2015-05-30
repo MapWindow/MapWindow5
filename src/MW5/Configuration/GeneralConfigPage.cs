@@ -41,6 +41,7 @@ namespace MW5.Configuration
             cboSymbologyStorage.SetValue(config.SymbolobyStorage);
             chkShowPluginInToolTip.Checked = config.ShowPluginInToolTip;
             chkShowMenuToolTips.Checked = config.ShowMenuToolTips;
+            chkDynamicVisibilityWarnings.Checked = config.DisplayDynamicVisibilityWarnings;
         }
 
         public string PageName
@@ -56,6 +57,7 @@ namespace MW5.Configuration
             config.ShowWelcomeDialog = chkShowWelcomeDialog.Checked;
             config.ShowPluginInToolTip = chkShowPluginInToolTip.Checked;
             config.ShowMenuToolTips = chkShowMenuToolTips.Checked;
+            config.DisplayDynamicVisibilityWarnings = chkDynamicVisibilityWarnings.Checked;
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
         }
 

@@ -49,6 +49,7 @@ namespace MW5.Plugins.Concrete
             SpatialIndexFeatureCount = 10000;
             ShowPluginInToolTip = false;
             ShowMenuToolTips = true;
+            DisplayDynamicVisibilityWarnings = true;
         }
 
         [OnDeserializing]
@@ -174,6 +175,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool ShowMenuToolTips { get; set; }
+
+        [DataMember]
+        public bool DisplayDynamicVisibilityWarnings { get; set; }
 
         [DataMember]
         public List<string> RecentProjects

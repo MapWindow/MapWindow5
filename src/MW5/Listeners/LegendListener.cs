@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.UI.Forms;
 
 namespace MW5.Listeners
 {
@@ -49,6 +52,35 @@ namespace MW5.Listeners
             _legend.LayerDiagramsClicked += _legend_LayerDiagramsClicked;
             _legend.LayerCategoryClicked += LayerCategoryClicked;
             _legend.LayerRemoved += LegendLayerRemoved;
+            _legend.LayerVisibleChanged += LegendLayerVisibleChanged;
+        }
+
+        private void LegendLayerVisibleChanged(object sender, LayerCancelEventArgs e)
+        {
+            var layer = _context.Legend.Layers.ItemByHandle(e.LayerHandle);
+            if (layer == null || !layer.DynamicVisibility)
+            {
+                return;
+            }
+
+            if (layer.Visible && !layer.LayerVisibleAtCurrentScale)
+            {
+                e.Cancel = true;
+
+                bool visible = true;
+                if (AppConfig.Instance.DisplayDynamicVisibilityWarnings)
+                {
+                    visible = MessageService.Current.Ask("Dynamic visibility is enabled for this layer. " + Environment.NewLine +
+                                                         "Do you want to disable it and show this layer?");
+                }
+
+                if (visible)
+                {
+                    layer.DynamicVisibility = false;
+                    layer.Visible = true;
+                    _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                }
+            }
         }
 
         private void LegendLayerRemoved(object sender, LayerEventArgs e)
