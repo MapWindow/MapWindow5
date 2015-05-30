@@ -29,6 +29,8 @@ namespace MW5.Plugins.Symbology.Views
             
             InitializeComponent();
 
+            InitialTab = RasterStyleTab.None;
+
             _context = context;
             _renderingPresenter = renderingPresenter;
 
@@ -88,6 +90,21 @@ namespace MW5.Plugins.Symbology.Views
             }
 
             ModelToUi();
+        }
+
+        public RasterStyleTab InitialTab
+        {
+            get { return (RasterStyleTab)_lastTabIndex; }
+            set 
+            {
+                if (value == RasterStyleTab.None) return;
+
+                int index = (int) value;
+                if (index >= 0 && index < tabControlAdv1.TabCount)
+                {
+                    tabControlAdv1.SelectedIndex = index;
+                }
+            }
         }
 
         public RasterRenderingPresenter RenderingPresenter
@@ -224,6 +241,8 @@ namespace MW5.Plugins.Symbology.Views
             chkColorize.Checked = false;
             chkGreyScale.Checked = false;
         }
+
+
 
         private void UiToModelRaster()
         {

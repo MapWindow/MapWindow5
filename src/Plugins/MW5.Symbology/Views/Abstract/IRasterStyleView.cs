@@ -16,5 +16,6 @@ namespace MW5.Plugins.Symbology.Views.Abstract
         void UiToModel();
         RasterRenderingPresenter RenderingPresenter { get; }
         void ClearColorAdjustments();
+        RasterStyleTab InitialTab { get; set; }
     }
 }

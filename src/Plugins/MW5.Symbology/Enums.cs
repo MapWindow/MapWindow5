@@ -30,5 +30,16 @@
         PercentRange = 1,
         StdDev = 2,
     }
+
+    public enum RasterStyleTab
+    {
+        None = -1,
+        General = 0,
+        Colors = 1,
+        Rendering = 2,
+        Histogram = 3,
+        Pyramids = 4,
+        Info = 5,
+    }
 }
 

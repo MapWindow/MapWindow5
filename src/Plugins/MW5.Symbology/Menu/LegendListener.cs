@@ -87,8 +87,9 @@ namespace MW5.Plugins.Symbology.Menu
             var layer = legend.Layers.ItemByHandle(e.LayerHandle);
             if (layer.LayerType == LayerType.Image || layer.LayerType == LayerType.Grid)
             {
-                // TODO: open colors tab
-                _context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
+                var p = _context.Container.GetInstance<RasterStylePresenter>();
+                p.View.InitialTab = RasterStyleTab.Colors;
+                p.Run(layer);
                 e.Handled = true;
                 return;
             }
