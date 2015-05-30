@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
@@ -235,5 +236,5 @@ namespace MW5.Plugins.Symbology.Views
         }
     }
 
-    public class RasterStyleViewBase : MapWindowView<ILayer> { }
+    public class RasterStyleViewBase : MapWindowView<ILegendLayer> { }
 }

@@ -14,6 +14,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
+using MW5.Services.Serialization;
 using MW5.Views;
 
 namespace MW5.Controls
@@ -108,10 +109,19 @@ namespace MW5.Controls
                         new LayerEventArgs(Legend.SelectedLayerHandle));
                     break;
                 case LegendCommand.SaveStyle:
-                    _layerService.SaveStyle();
-                    break;
+                    {
+                        //_layerService.SaveStyle();
+                        var layer = Legend.Layers.Current;
+                        LayerSerializationHelper.SaveSettings(layer);
+                        break;
+                    }
                 case LegendCommand.LoadStyle:
-                    _layerService.LoadStyle();
+                    {
+                        //_layerService.LoadStyle();
+                        var layer = Legend.Layers.Current;
+                        LayerSerializationHelper.LoadSettings(layer, false);
+                        _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                    }
                     break;
                 case LegendCommand.OpenFileLocation:
                     {

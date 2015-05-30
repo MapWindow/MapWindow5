@@ -47,6 +47,8 @@ namespace MW5.Controls
         {
             if (e.Button == MouseButtons.Right)
             {
+                Legend.SelectedLayerHandle = e.LayerHandle;
+
                 var pnt = PointToClient(Cursor.Position);
                 contextMenuLayer.Show(this, pnt);
             }

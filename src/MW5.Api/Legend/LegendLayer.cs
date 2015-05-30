@@ -400,7 +400,7 @@ namespace MW5.Api.Legend
         {
             if (_expanded && ExpansionBoxCustomHeightFunction != null)
             {
-                var args = new LayerMeasureEventArgs(_layerHandle, _legend.Width, Constants.ItemHeight) { Handled = false };
+                var args = new LayerMeasureEventArgs(LayerHandle, _legend.Width, Constants.ItemHeight) { Handled = false };
                 
                 ExpansionBoxCustomHeightFunction.Invoke(this, args);
 
@@ -428,7 +428,7 @@ namespace MW5.Api.Legend
             }
             else
             {
-                var sf = _map.get_Shapefile(Handle);
+                var sf = Map.get_Shapefile(Handle);
 
                 if (sf != null && expanded)
                 {

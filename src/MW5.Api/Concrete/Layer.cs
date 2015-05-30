@@ -13,17 +13,17 @@ namespace MW5.Api.Concrete
 {
     public class Layer: ILayer
     {
-        protected readonly int _layerHandle;
-        protected readonly AxMap _map;
-        protected readonly MapControl _mapControl;
+        protected readonly int LayerHandle;
+        protected readonly AxMap Map;
+        protected readonly MapControl MapControl;
 
         public Layer(MapControl map, int layerHandle)
         {
-            _mapControl = map;
-            _map = map.GetInternal() ;
-            _layerHandle = layerHandle;
+            MapControl = map;
+            Map = map.GetInternal() ;
+            LayerHandle = layerHandle;
 
-            var position = _map.get_LayerPosition(_layerHandle);
+            var position = Map.get_LayerPosition(LayerHandle);
             if (position == -1)
             {
                 throw new IndexOutOfRangeException("Invalid layer handle.");
@@ -32,37 +32,37 @@ namespace MW5.Api.Concrete
 
         internal AxMap AxMap
         {
-            get { return _map; }
+            get { return Map; }
         }
 
         public int Handle
         {
-            get { return _layerHandle; }
+            get { return LayerHandle; }
         }
 
       
         public string Name
         {
-            get { return _map.get_LayerName(_layerHandle); }
+            get { return Map.get_LayerName(LayerHandle); }
 
-            set { _map.set_LayerName(_layerHandle, value); }
+            set { Map.set_LayerName(LayerHandle, value); }
         }
       
         public LayerType LayerType
         {
             get
             {
-                if (_map.get_OgrLayer(_layerHandle) != null)
+                if (Map.get_OgrLayer(LayerHandle) != null)
                 {
                     return LayerType.VectorLayer;
                 }
                 
-                if (_map.get_Shapefile(_layerHandle) != null)
+                if (Map.get_Shapefile(LayerHandle) != null)
                 {
                     return LayerType.Shapefile;
                 }
 
-                if (_map.get_Image(_layerHandle) != null)
+                if (Map.get_Image(LayerHandle) != null)
                 {
                     return LayerType.Image;
                 }
@@ -74,29 +74,29 @@ namespace MW5.Api.Concrete
       
         public bool Visible
         {
-            get { return _map.get_LayerVisible(_layerHandle); }
-            set { _map.set_LayerVisible(_layerHandle, value); }
+            get { return Map.get_LayerVisible(LayerHandle); }
+            set { Map.set_LayerVisible(LayerHandle, value); }
         }
 
       
         public bool DynamicVisibility
         {
-            get { return _map.get_LayerDynamicVisibility(_layerHandle); }
-            set { _map.set_LayerDynamicVisibility(_layerHandle, value); }
+            get { return Map.get_LayerDynamicVisibility(LayerHandle); }
+            set { Map.set_LayerDynamicVisibility(LayerHandle, value); }
         }
 
       
         public int MinVisibleZoom
         {
-            get { return _map.get_LayerMinVisibleZoom(_layerHandle); }
-            set { _map.set_LayerMinVisibleZoom(_layerHandle, value); }
+            get { return Map.get_LayerMinVisibleZoom(LayerHandle); }
+            set { Map.set_LayerMinVisibleZoom(LayerHandle, value); }
         }
 
       
         public int MaxVisibleZoom
         {
-            get { return _map.get_LayerMaxVisibleZoom(_layerHandle); }
-            set { _map.set_LayerMaxVisibleZoom(_layerHandle, value); }
+            get { return Map.get_LayerMaxVisibleZoom(LayerHandle); }
+            set { Map.set_LayerMaxVisibleZoom(LayerHandle, value); }
         }
 
       
@@ -104,7 +104,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                return _map.get_LayerFilename(_layerHandle);
+                return Map.get_LayerFilename(LayerHandle);
             }
         }
 
@@ -129,40 +129,40 @@ namespace MW5.Api.Concrete
       
         public int Position
         {
-            get { return _map.get_LayerPosition(_layerHandle); }
+            get { return Map.get_LayerPosition(LayerHandle); }
         }
 
       
         public string Tag
         {
-            get { return _map.get_LayerKey(_layerHandle); }
-            set { _map.set_LayerKey(_layerHandle, value); }
+            get { return Map.get_LayerKey(LayerHandle); }
+            set { Map.set_LayerKey(LayerHandle, value); }
         }
 
       
         public double MinVisibleScale
         {
-            get { return _map.get_LayerMinVisibleScale(_layerHandle); }
-            set { _map.set_LayerMinVisibleScale(_layerHandle, value); }
+            get { return Map.get_LayerMinVisibleScale(LayerHandle); }
+            set { Map.set_LayerMinVisibleScale(LayerHandle, value); }
         }
 
       
         public double MaxVisibleScale
         {
-            get { return _map.get_LayerMaxVisibleScale(_layerHandle); }
-            set { _map.set_LayerMaxVisibleScale(_layerHandle, value); }
+            get { return Map.get_LayerMaxVisibleScale(LayerHandle); }
+            set { Map.set_LayerMaxVisibleScale(LayerHandle, value); }
         }
 
       
         public string Description
         {
-            get { return _map.get_LayerDescription(_layerHandle); }
-            set { _map.set_LayerDescription(_layerHandle, value); }
+            get { return Map.get_LayerDescription(LayerHandle); }
+            set { Map.set_LayerDescription(LayerHandle, value); }
         }
 
         public bool LayerVisibleAtCurrentScale
         {
-            get { return _map.get_LayerVisibleAtCurrentScale(_layerHandle); }
+            get { return Map.get_LayerVisibleAtCurrentScale(LayerHandle); }
         }
 
         public bool IsVector
@@ -174,7 +174,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var sf = _map.get_Shapefile(_layerHandle);
+                var sf = Map.get_Shapefile(LayerHandle);
                 return sf != null ? new FeatureSet(sf) : null;
             }
         }
@@ -183,7 +183,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var img = _map.get_Image(_layerHandle);
+                var img = Map.get_Image(LayerHandle);
                 return img != null ? BitmapSource.Wrap(img) : null;
             }
         }
@@ -197,7 +197,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                return LayerSourceHelper.ConvertToLayer(_map.get_GetObject(_layerHandle));
+                return LayerSourceHelper.ConvertToLayer(Map.get_GetObject(LayerHandle));
             }
         }
 
@@ -205,7 +205,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var ogr = _map.get_OgrLayer(_layerHandle);
+                var ogr = Map.get_OgrLayer(LayerHandle);
                 return ogr != null ? new VectorLayer(ogr) : null;
             }
         }
@@ -214,34 +214,34 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var labels = _map.get_LayerLabels(_layerHandle);
+                var labels = Map.get_LayerLabels(LayerHandle);
                 return labels != null ? new LabelsLayer(labels) : null;
             }
         }
 
         public bool RemoveOptions(string optionsName)
         {
-            return _map.RemoveLayerOptions(_layerHandle, optionsName);
+            return Map.RemoveLayerOptions(LayerHandle, optionsName);
         }
 
         public bool SaveOptions(string optionsName, bool overwrite, string description)
         {
-            return _map.SaveLayerOptions(_layerHandle, optionsName, overwrite, description);
+            return Map.SaveLayerOptions(LayerHandle, optionsName, overwrite, description);
         }
 
         public bool LoadOptions(string optionsName, ref string description)
         {
-            return _map.LoadLayerOptions(_layerHandle, optionsName, ref description);
+            return Map.LoadLayerOptions(LayerHandle, optionsName, ref description);
         }
 
         public string Serialize()
         {
-            return _map.SerializeLayer(_layerHandle);
+            return Map.SerializeLayer(LayerHandle);
         }
 
         public bool Deserialize(string state)
         {
-            return _map.DeserializeLayer(_layerHandle, state);
+            return Map.DeserializeLayer(LayerHandle, state);
         }
 
         /// <summary>
@@ -293,14 +293,14 @@ namespace MW5.Api.Concrete
                     break;
             }
 
-            _mapControl.FireSelectionChagned(_mapControl, new SelectionChangedEventArgs(Handle, true));
+            MapControl.FireSelectionChagned(MapControl, new SelectionChangedEventArgs(Handle, true));
         }
 
         public ISpatialReference Projection
         {
             get
             {
-                var layerSource = LayerSourceHelper.ConvertToLayer(_map.get_GetObject(_layerHandle));
+                var layerSource = LayerSourceHelper.ConvertToLayer(Map.get_GetObject(LayerHandle));
                 if (layerSource != null)
                 {
                     return layerSource.Projection;
@@ -313,7 +313,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var box = _map.get_layerExtents(_layerHandle);
+                var box = Map.get_layerExtents(LayerHandle);
                 return box != null ? new Envelope(box) : null;
             }
         }

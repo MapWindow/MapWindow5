@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Services.Serialization;
 using MW5.Shared;
 using MW5.Views;
 
@@ -33,6 +35,16 @@ namespace MW5.Listeners
             _configService = configService;
 
             plugin.BeforeLayerAdded += BeforeLayerAdded;
+            plugin.LayerAdded += plugin_LayerAdded;
+        }
+
+        private void plugin_LayerAdded(IMuteLegend legend, LayerEventArgs e)
+        {
+            var layer = _context.Legend.Layers.ItemByHandle(e.LayerHandle);
+            if (layer != null)
+            {
+                LayerSerializationHelper.LoadSettings(layer, true);
+            }
         }
 
         /// <summary>

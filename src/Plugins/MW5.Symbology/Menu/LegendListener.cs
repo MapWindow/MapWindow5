@@ -88,7 +88,7 @@ namespace MW5.Plugins.Symbology.Menu
             if (layer.LayerType == LayerType.Image || layer.LayerType == LayerType.Grid)
             {
                 // TODO: open colors tab
-                _context.Container.Run<RasterStylePresenter, ILayer>(layer);
+                _context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
                 e.Handled = true;
                 return;
             }
@@ -106,7 +106,7 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerDoubleClicked(IMuteLegend legend, LayerEventArgs e)
         {
-            var layer = legend.Map.GetLayer(e.LayerHandle);
+            var layer = legend.Layers.ItemByHandle(e.LayerHandle);
             switch (layer.LayerType)
             {
                 case LayerType.Shapefile:
@@ -119,7 +119,7 @@ namespace MW5.Plugins.Symbology.Menu
                     break;
                 case LayerType.Image:
                 case LayerType.Grid:
-                    _context.Container.Run<RasterStylePresenter, ILayer>(layer);
+                    _context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
                     e.Handled = true;
                     break;
             }

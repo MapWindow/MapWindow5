@@ -36,6 +36,7 @@ using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.Projections.UI.Forms;
+using MW5.Services.Serialization;
 using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Enums;
@@ -53,7 +54,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         private static int _tabIndex = 0;
 
-        private readonly ILayer _layer;
+        private readonly ILegendLayer _layer;
         private readonly IFeatureSet _featureSet;
         private readonly SymbologyMetadata _metadata;
 
@@ -64,7 +65,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
         /// </summary>
-        public VectorStyleForm(IAppContext context, ILayer layer):
+        public VectorStyleForm(IAppContext context, ILegendLayer layer):
             base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -1791,7 +1792,8 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         private void toolSaveStyle_Click(object sender, EventArgs e)
         {
-            bool result = _layer.SaveOptions("", true, "");
+            //bool result = _layer.SaveOptions("", true, "");
+            bool result = LayerSerializationHelper.SaveSettings(_layer);
             MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
         }
 

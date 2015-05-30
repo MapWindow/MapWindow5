@@ -8,16 +8,18 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Projections.UI.Forms;
+using MW5.Services.Serialization;
 using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Views
 {
-    public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterCommand, ILayer>
+    public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterCommand, ILegendLayer>
     {
         private readonly IAppContext _context;
         private IRasterSource _raster;
@@ -56,9 +58,8 @@ namespace MW5.Plugins.Symbology.Views
                     Apply();
                     break;
                 case RasterCommand.LoadStyle:
-                    { 
-                        string description = string.Empty;
-                        bool result = Model.LoadOptions("", ref description);
+                    {
+                        bool result = LayerSerializationHelper.LoadSettings(Model, false);
                         
                         if (result)
                         {
@@ -70,10 +71,7 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case RasterCommand.SaveStyle:
-                    {
-                        bool result = Model.SaveOptions("", true, "");
-                        MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
-                    }
+                    LayerSerializationHelper.SaveSettings(Model);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
