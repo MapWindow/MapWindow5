@@ -234,21 +234,25 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             characterControl1.SetFontName(cboFontName.Text);
             _style.Marker.FontName = cboFontName.Text;
+
             DrawPreview();
         }
 
         /// <summary>
         /// Updates the preview with the newly selected character
         /// </summary>
-        void characterControl1_SelectionChanged()
+        private void characterControl1_SelectionChanged()
         {
             if (!_noEvents)
             {
                 btnApply.Enabled = true;
             }
 
-            _style.Marker.Type = MarkerType.FontCharacter;
-            _style.Marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
+            var marker = _style.Marker;
+            marker.Type = MarkerType.FontCharacter;
+            marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
+            marker.Icon = null;
+
             DrawPreview();
         }
 
@@ -296,22 +300,26 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
             var fill = _style.Fill;
             var marker = _style.Marker;
+            var line = _style.Line;
 
             marker.Size = (float)udSize.Value;
-
             marker.UpdatePictureScale(pointIconControl1.ScaleIcons, (int)udSize.Value);
-
             marker.Rotation = (double)udRotation.Value;
-
-            fill.Color =  clpFillColor.Color;
-
             marker.VectorMarker = (VectorMarkerType)icbPointShape.SelectedIndex;
             marker.VectorSideCount = (int)udPointNumSides.Value;
             marker.VectorMarkerSideRatio = (float)udSideRatio.Value / 10;
-        
-            _style.Line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
-            _style.Line.Width = (float)icbLineWidth.SelectedIndex + 1;
-            _style.Line.Visible = chkOutlineVisible.Checked;
+
+            if (marker.Type != MarkerType.Bitmap)
+            {
+                marker.Icon = null;
+            }
+
+            line.DashStyle = (DashStyle)icbLineType.SelectedIndex;
+            line.Width = (float)icbLineWidth.SelectedIndex + 1;
+            line.Visible = chkOutlineVisible.Checked;
+            line.Transparency = transparencyControl1.Value;
+
+            fill.Color = clpFillColor.Color;
             fill.Visible = chkFillVisible.Checked;
             fill.Type = (FillType)cboFillType.SelectedIndex;
 
@@ -326,7 +334,6 @@ namespace MW5.Plugins.Symbology.Forms.Style
             fill.Rotation = (double)udGradientRotation.Value;
 
             fill.Transparency = transparencyControl1.Value;
-            _style.Line.Transparency = transparencyControl1.Value;
 
             if (!_noEvents)
             {
@@ -503,6 +510,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
         {
             var symbol = (VectorMarker)symbolControl1.SelectedIndex;
             _style.Marker.SetVectorMarker(symbol);
+            _style.Marker.Icon = null;
 
             if (!_noEvents)
             {

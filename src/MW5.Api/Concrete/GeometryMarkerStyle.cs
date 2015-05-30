@@ -22,7 +22,15 @@ namespace MW5.Api.Concrete
         public MarkerType Type
         {
             get { return (MarkerType)_style.PointType; }
-            set { _style.PointType = (tkPointSymbolType)value; }
+            set
+            {
+                if (value != MarkerType.Bitmap)
+                {
+                    Icon = null;
+                }
+
+                _style.PointType = (tkPointSymbolType)value;
+            }
         }
 
         public VectorMarkerType VectorMarker
@@ -68,7 +76,10 @@ namespace MW5.Api.Concrete
                 var img = _style.Picture;
                 return img != null ? BitmapSource.Wrap(img) : null;
             }
-            set { _style.Picture = value.GetInternal(); }
+            set 
+            {
+                _style.Picture = value != null ? value.GetInternal() : null;
+            }
         }
 
         public double IconScaleX

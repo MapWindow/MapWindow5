@@ -28,7 +28,7 @@ namespace MW5.Services.Serialization
         {
             if (ProjectStorage)
             {
-                Layer = LayerToXmlElement(layer);
+                OcxLayer = LayerToXmlElement(layer);
             }
             else
             {
@@ -50,13 +50,11 @@ namespace MW5.Services.Serialization
             SerializeCustomObjects(layer);
         }
 
-
-
         public void RestoreLayer(ILegendLayer layer)
         {
-            if (Layer != null)
+            if (OcxLayer != null)
             {
-                layer.Deserialize(Layer.OuterXml);
+                layer.Deserialize(OcxLayer.OuterXml);
             }
             else
             {
@@ -127,7 +125,7 @@ namespace MW5.Services.Serialization
         [DataMember] public bool Expanded { get; set; }
         [DataMember] public bool HideFromLegend { get; set; }
         [DataMember] public string ColorSchemeCaption { get; set; }
-        [DataMember] public XmlElement Layer { get; set; }
+        [DataMember] public XmlElement OcxLayer { get; set; }
         [DataMember] public LayerIdentity Identity { get; set; }
         [DataMember] public LayerType LayerType { get; set; }
 
