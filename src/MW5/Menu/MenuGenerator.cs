@@ -43,6 +43,8 @@ namespace MW5.Menu
         {
             InitFileMenu();
 
+            InitLayerMenu();
+
             InitViewMenu();
 
             PluginsMenuHelper.Init(_context, _pluginManager);
@@ -64,16 +66,27 @@ namespace MW5.Menu
             var items = _context.Menu.FileMenu.SubItems;
 
             items.AddButton(_commands[MenuKeys.NewMap]);
-            items.AddButton(_commands[MenuKeys.AddLayer], true);
-            items.AddButton(_commands[MenuKeys.AddVectorLayer]);
-            items.AddButton(_commands[MenuKeys.AddRasterLayer]);
-            items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
             items.AddButton(_commands[MenuKeys.OpenProject], true);
             items.AddButton(_commands[MenuKeys.SaveProject], true);
             items.AddButton(_commands[MenuKeys.SaveProjectAs]);
             items.AddButton(_commands[MenuKeys.Quit], true);
 
             _context.Menu.FileMenu.Update();
+        }
+
+        private void InitLayerMenu()
+        {
+            var items = _context.Menu.LayerMenu.SubItems;
+
+            items.AddButton(_commands[MenuKeys.AddLayer]);
+            items.AddButton(_commands[MenuKeys.AddVectorLayer], true);
+            items.AddButton(_commands[MenuKeys.AddRasterLayer]);
+            items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
+            items.AddButton(_commands[MenuKeys.RemoveLayer], true);
+            items.AddButton(_commands[MenuKeys.ClearLayers]);
+            items.AddButton(_commands[MenuKeys.LayerClearSelection], true);
+
+            _context.Menu.LayerMenu.Update();
         }
 
         private void InitViewMenu()
@@ -132,6 +145,8 @@ namespace MW5.Menu
 
             bar.Update();
         }
+
+
 
         private void InitMapToolbar(IToolbar bar)
         {

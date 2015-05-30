@@ -13,6 +13,7 @@ namespace MW5.UI.Menu
         protected readonly IAppContext _context;
         protected readonly PluginIdentity _identity;
         protected IToolbarCollection _toolbars;
+        protected IMenu _menu;
 
         public MenuServiceBase(IAppContext context, PluginIdentity identity)
         {
@@ -22,11 +23,17 @@ namespace MW5.UI.Menu
             _context = context;
             _identity = identity;
             _toolbars = context.Toolbars;
+            _menu = context.Menu;
         }
 
         protected IMenuItem FindToolbarItem(string itemKey)
         {
             return _toolbars.FindItem(itemKey, _identity);
+        }
+
+        protected IMenuItem FindMenuItem(string itemKey)
+        {
+            return _menu.FindItem(itemKey, _identity);
         }
     }
 }

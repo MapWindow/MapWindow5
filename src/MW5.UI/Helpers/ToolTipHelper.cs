@@ -59,8 +59,12 @@ namespace MW5.UI.Helpers
 
             info.Body.Text = string.IsNullOrWhiteSpace(item.Description) ? "There is no description for the item." : item.Description;
 
-            info.Footer.Text = "Plugin: " + item.PluginIdentity.Name;
-            info.Separator = true;
+            if (AppConfig.Instance.ShowPluginInToolTip && 
+                item.PluginIdentity != PluginIdentity.Default)
+            {
+                info.Footer.Text = "Plugin: " + item.PluginIdentity.Name;
+                info.Separator = false;
+            }
 
             if (!hasToolTip)
             {

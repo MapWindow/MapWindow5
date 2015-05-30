@@ -12,17 +12,18 @@ namespace MW5.Plugins.Concrete
     /// </summary>
     public abstract class CommandProviderBase
     {
-        protected Dictionary<string, MenuCommand> _commands = new Dictionary<string, MenuCommand>();
+        protected Dictionary<string, MenuCommand> Commands = new Dictionary<string, MenuCommand>();
 
         protected CommandProviderBase(PluginIdentity identity)
         {
             if (identity == null) throw new ArgumentNullException("identity");
 
             var list = GetCommands();
+
             foreach (var cmd in list)
             {
                 cmd.PluginIdentity = identity;
-                _commands.Add(cmd.Key, cmd);
+                Commands.Add(cmd.Key, cmd);
             }
         }
 
@@ -38,23 +39,8 @@ namespace MW5.Plugins.Concrete
         {
             get
             {
-                return _commands[key];  // don't catch it, if there is a mistake we want to know at once
+                return Commands[key];  // don't catch it, if there is a mistake we want to know at once
             }
         }
-
-        /// <summary>
-        /// Adds to menu.
-        /// </summary>
-        /// <param name="items">Collection of items. Can be accessed either through IToolbar.Items or IDropDownMenuItem.Items.</param>
-        /// <param name="key">The key of commands (MenuKey.CommandName).</param>
-        /// <param name="beginGroup">True in case the item must be preceded by separator.</param>
-        //public void AddToMenu(IMenuItemCollection items, string key, bool beginGroup = false)
-        //{
-        //    var btn = items.AddButton(this[key]);
-        //    if (beginGroup)
-        //    {
-        //        btn.BeginGroup = true;
-        //    }
-        //}
     }
 }

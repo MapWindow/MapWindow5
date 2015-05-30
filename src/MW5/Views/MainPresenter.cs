@@ -75,7 +75,7 @@ namespace MW5.Views
                 _mainPluginListener = container.GetSingleton<MainPluginListener>();
                 _legendListener = container.GetSingleton<LegendListener>();
                 
-                _menuUpdater = new MenuUpdater(_context, appContext.Map, PluginIdentity.Default);
+                _menuUpdater = new MenuUpdater(_context, PluginIdentity.Default);
 
                 SplashView.Instance.ShowStatus("Loading plugins");
                 appContext.InitPlugins(configService); // must be called after docking is initialized

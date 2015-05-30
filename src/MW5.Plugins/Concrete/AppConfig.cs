@@ -47,6 +47,8 @@ namespace MW5.Plugins.Concrete
             CoordinateAngleFormat = AngleFormat.Seconds;
             CoordinatePrecision = 3;
             SpatialIndexFeatureCount = 10000;
+            ShowPluginInToolTip = false;
+            ShowMenuToolTips = true;
         }
 
         [OnDeserializing]
@@ -164,7 +166,14 @@ namespace MW5.Plugins.Concrete
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
 
+        [DataMember]
         public int SpatialIndexFeatureCount { get; set; }
+
+        [DataMember]
+        public bool ShowPluginInToolTip { get; set; }
+
+        [DataMember]
+        public bool ShowMenuToolTips { get; set; }
 
         [DataMember]
         public List<string> RecentProjects

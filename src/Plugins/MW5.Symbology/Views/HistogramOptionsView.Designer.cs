@@ -31,17 +31,17 @@
             this.components = new System.ComponentModel.Container();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.udNumberBuckets = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             this.label4 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtMax = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
             this.txtMin = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            ((System.ComponentModel.ISupportInitialize)(this.udNumberBuckets)).BeginInit();
+            this.udNumberBuckets = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.txtMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMin)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udNumberBuckets)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -70,20 +70,6 @@
             this.btnOk.TabIndex = 39;
             this.btnOk.Text = "Calculate";
             this.btnOk.UseVisualStyle = false;
-            // 
-            // udNumberBuckets
-            // 
-            this.udNumberBuckets.BeforeTouchSize = new System.Drawing.Size(65, 20);
-            this.udNumberBuckets.Location = new System.Drawing.Point(159, 94);
-            this.udNumberBuckets.Maximum = new decimal(new int[] {
-            256,
-            0,
-            0,
-            0});
-            this.udNumberBuckets.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.udNumberBuckets.Name = "udNumberBuckets";
-            this.udNumberBuckets.Size = new System.Drawing.Size(65, 20);
-            this.udNumberBuckets.TabIndex = 46;
             // 
             // label4
             // 
@@ -144,8 +130,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.udNumberBuckets);
+            this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.txtMin);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.txtMax);
@@ -155,6 +141,28 @@
             this.groupBox1.Size = new System.Drawing.Size(246, 133);
             this.groupBox1.TabIndex = 47;
             this.groupBox1.TabStop = false;
+            // 
+            // udNumberBuckets
+            // 
+            this.udNumberBuckets.Location = new System.Drawing.Point(159, 98);
+            this.udNumberBuckets.Maximum = new decimal(new int[] {
+            256,
+            0,
+            0,
+            0});
+            this.udNumberBuckets.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udNumberBuckets.Name = "udNumberBuckets";
+            this.udNumberBuckets.Size = new System.Drawing.Size(62, 20);
+            this.udNumberBuckets.TabIndex = 47;
+            this.udNumberBuckets.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // HistogramOptionsView
             // 
@@ -167,11 +175,11 @@
             this.Controls.Add(this.btnOk);
             this.Name = "HistogramOptionsView";
             this.Text = "Histogram calculation";
-            ((System.ComponentModel.ISupportInitialize)(this.udNumberBuckets)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMin)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udNumberBuckets)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -180,12 +188,12 @@
 
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
-        private Syncfusion.Windows.Forms.Tools.NumericUpDownExt udNumberBuckets;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMax;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMin;
         private System.Windows.Forms.GroupBox groupBox1;
+        private Controls.NumericUpDownEx udNumberBuckets;
     }
 }

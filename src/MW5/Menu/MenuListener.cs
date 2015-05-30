@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Legend;
 using MW5.Data.Views;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
@@ -57,7 +58,8 @@ namespace MW5.Menu
             if (HandleCursorChanged(menuKey) ||
                 HandleProjectCommand(menuKey) ||
                 HandleDialogs(menuKey) ||
-                HandleHelpMenu(menuKey))
+                HandleHelpMenu(menuKey) ||
+                HandleLayerMenu(menuKey))
             {
                 _context.View.Update();
                 return;
@@ -65,29 +67,6 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
-              
-                case MenuKeys.AddDatabaseLayer:
-                    var connection = _databaseService.PromptUserForConnection();
-                    if (connection != null)
-                    {
-                        using (var ds = new VectorDatasource())
-                        {
-                            if (ds.Open(connection.ConnectionString))
-                            {
-                                _context.Container.Run<DatabaseLayersPresenter, VectorDatasource>(ds);
-                            }
-                        }
-                    }
-                    break;
-                case MenuKeys.AddLayer:
-                    _layerService.AddLayer(DataSourceType.All);
-                    break;
-                case MenuKeys.AddRasterLayer:
-                    _layerService.AddLayer(DataSourceType.Raster);
-                    break;
-                case MenuKeys.AddVectorLayer:
-                    _layerService.AddLayer(DataSourceType.Vector);
-                    break;
                 case MenuKeys.ZoomMax:
                     _context.Map.ZoomToMaxExtents();
                     break;
@@ -109,6 +88,54 @@ namespace MW5.Menu
             }
 
             _context.View.Update();
+        }
+
+        private bool HandleLayerMenu(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.AddDatabaseLayer:
+                    var connection = _databaseService.PromptUserForConnection();
+                    if (connection != null)
+                    {
+                        using (var ds = new VectorDatasource())
+                        {
+                            if (ds.Open(connection.ConnectionString))
+                            {
+                                _context.Container.Run<DatabaseLayersPresenter, VectorDatasource>(ds);
+                            }
+                        }
+                    }
+                    return true;
+                case MenuKeys.AddLayer:
+                    _layerService.AddLayer(DataSourceType.All);
+                    return true;
+                case MenuKeys.AddRasterLayer:
+                    _layerService.AddLayer(DataSourceType.Raster);
+                    return true;
+                case MenuKeys.AddVectorLayer:
+                    _layerService.AddLayer(DataSourceType.Vector);
+                    return true;
+                case MenuKeys.LayerClearSelection:
+                    var layer = _context.Legend.SelectedLayer;
+                    if (layer != null && layer.FeatureSet != null)
+                    {
+                        layer.FeatureSet.ClearSelection();
+                        _context.Map.Redraw();
+                    }
+                    return true;
+                case MenuKeys.ClearLayers:
+                    if (MessageService.Current.Ask(
+                            "Do you wan't to remove all layers from the map without closing the project?"))
+                    {
+                        // TODO: this method doesn't fire events properly
+                        _context.Legend.Layers.Clear();
+                        _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                    }
+                    return true;
+            }
+
+            return false;
         }
 
         private bool HandleHelpMenu(string itemKey)
@@ -181,7 +208,7 @@ namespace MW5.Menu
                     _context.Map.MapCursor = MapCursor.ZoomIn;
                     return true;
                 case MenuKeys.ZoomOut:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
+                    _context.Map.MapCursor = MapCursor.ZoomOut;
                     return true;
                 case MenuKeys.Pan:
                     _context.Map.MapCursor = MapCursor.Pan;
@@ -200,7 +227,7 @@ namespace MW5.Menu
                     _context.Map.Measuring.Type = MeasuringType.Distance;
                     _context.Map.MapCursor = MapCursor.Measure;
                     return true;
-                case MenuKeys.Attributes:
+                case MenuKeys.AttributesTool:
                     _context.Map.MapCursor = MapCursor.Identify;
                     return true;
             }

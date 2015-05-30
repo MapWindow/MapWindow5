@@ -11,6 +11,8 @@ namespace MW5.Plugins.Interfaces
     {
         IDropDownMenuItem FileMenu { get; }
 
+        IDropDownMenuItem LayerMenu { get; }
+
         IDropDownMenuItem ViewMenu { get; }
 
         IDropDownMenuItem PluginsMenu { get; }

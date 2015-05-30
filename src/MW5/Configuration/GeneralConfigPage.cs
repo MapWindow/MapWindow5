@@ -39,6 +39,8 @@ namespace MW5.Configuration
             chkLoadSymbology.Checked = config.LoadSymbology;
             chkShowWelcomeDialog.Checked = config.ShowWelcomeDialog;
             cboSymbologyStorage.SetValue(config.SymbolobyStorage);
+            chkShowPluginInToolTip.Checked = config.ShowPluginInToolTip;
+            chkShowMenuToolTips.Checked = config.ShowMenuToolTips;
         }
 
         public string PageName
@@ -52,6 +54,8 @@ namespace MW5.Configuration
             config.LoadLastProject = chkLoadLastProject.Checked;
             config.LoadSymbology = chkLoadSymbology.Checked;
             config.ShowWelcomeDialog = chkShowWelcomeDialog.Checked;
+            config.ShowPluginInToolTip = chkShowPluginInToolTip.Checked;
+            config.ShowMenuToolTips = chkShowMenuToolTips.Checked;
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
         }
 

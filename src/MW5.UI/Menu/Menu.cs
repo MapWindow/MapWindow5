@@ -10,7 +10,7 @@ namespace MW5.UI.Menu
 {
     internal class Menu: IMenu
     {
-        private const string MAIN_MENU_NAME = "MainMenu";
+        private const string MainMenuName = "MainMenu";
         private readonly MenuIndex _menuIndex;
 
         private MainFrameBarManager _menuManager;
@@ -18,6 +18,7 @@ namespace MW5.UI.Menu
         internal void CreateDefaultItems()
         {
             Items.AddDropDown("File", MainMenuKeys.File, PluginIdentity.Default);
+            Items.AddDropDown("Layer", MainMenuKeys.Layer, PluginIdentity.Default);
             Items.AddDropDown("View", MainMenuKeys.View, PluginIdentity.Default);
             Items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
             Items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
@@ -26,7 +27,7 @@ namespace MW5.UI.Menu
 
         internal void CreateMenuBar()
         {
-            var bar = new Bar(_menuManager, MAIN_MENU_NAME)
+            var bar = new Bar(_menuManager, MainMenuName)
             {
                 BarStyle = BarStyle.IsMainMenu | BarStyle.UseWholeRow | BarStyle.Visible
             };
@@ -34,7 +35,7 @@ namespace MW5.UI.Menu
             int index = _menuManager.Bars.Add(bar);
 
             var cbr = _menuManager.GetBarControl(bar);
-            cbr.Tag = new MenuItemMetadata(PluginIdentity.Default, MAIN_MENU_NAME);
+            cbr.Tag = new MenuItemMetadata(PluginIdentity.Default, MainMenuName);
             cbr.AlwaysLeadingEdge = true;
         }
 
@@ -98,7 +99,7 @@ namespace MW5.UI.Menu
 
         public string Key
         {
-            get { return MAIN_MENU_NAME; }
+            get { return MainMenuName; }
         }
 
         public ToolbarDockState DockState
@@ -120,6 +121,11 @@ namespace MW5.UI.Menu
         public IDropDownMenuItem FileMenu
         {
             get { return GetDropDownItem(MainMenuKeys.File); }
+        }
+
+        public IDropDownMenuItem LayerMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.Layer); }
         }
 
         public IDropDownMenuItem ViewMenu

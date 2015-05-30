@@ -164,4 +164,11 @@
         Project = 0,
         StyleFile = 1,
     }
+
+    public enum MenuIndexType
+    {
+        MainMenu = 0,
+        Toolbar = 1,
+        StatusBar = 2,
+    }
 }

@@ -1792,9 +1792,7 @@ namespace MW5.Plugins.Symbology.Forms.Layer
 
         private void toolSaveStyle_Click(object sender, EventArgs e)
         {
-            //bool result = _layer.SaveOptions("", true, "");
-            bool result = LayerSerializationHelper.SaveSettings(_layer);
-            MessageService.Current.Info(result ? "Layer options are saved." : "Failed to save layer options.");
+            LayerSerializationHelper.SaveSettings(_layer);
         }
 
         private void btnOpenLocation_Click(object sender, EventArgs e)

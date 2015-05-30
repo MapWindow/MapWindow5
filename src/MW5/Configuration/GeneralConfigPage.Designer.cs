@@ -1,4 +1,6 @@
-﻿namespace MW5.Configuration
+﻿using System.Windows.Forms;
+
+namespace MW5.Configuration
 {
     partial class GeneralConfigPage
     {
@@ -28,22 +30,52 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.chkShowMenuToolTips = new System.Windows.Forms.CheckBox();
+            this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkShowPluginInToolTip = new System.Windows.Forms.CheckBox();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.label1 = new System.Windows.Forms.Label();
             this.cboSymbologyStorage = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkLoadSymbology = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkLoadSymbology = new System.Windows.Forms.CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
-            this.chkShowWelcomeDialog = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkLoadLastProject = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkShowWelcomeDialog = new System.Windows.Forms.CheckBox();
+            this.chkLoadLastProject = new System.Windows.Forms.CheckBox();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
+            this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSymbologyStorage)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowWelcomeDialog)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).BeginInit();
             this.SuspendLayout();
+            // 
+            // chkShowMenuToolTips
+            // 
+            this.chkShowMenuToolTips.Location = new System.Drawing.Point(15, 72);
+            this.chkShowMenuToolTips.Name = "chkShowMenuToolTips";
+            this.chkShowMenuToolTips.Size = new System.Drawing.Size(283, 21);
+            this.chkShowMenuToolTips.TabIndex = 5;
+            this.chkShowMenuToolTips.Text = "Show tooltips for menu items (needs app restart)";
+            // 
+            // configPanelControl3
+            // 
+            this.configPanelControl3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl3.Controls.Add(this.chkShowMenuToolTips);
+            this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
+            this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.configPanelControl3.HeaderText = "Various";
+            this.configPanelControl3.Location = new System.Drawing.Point(10, 228);
+            this.configPanelControl3.Name = "configPanelControl3";
+            this.configPanelControl3.Size = new System.Drawing.Size(370, 109);
+            this.configPanelControl3.TabIndex = 10;
+            // 
+            // chkShowPluginInToolTip
+            // 
+            this.chkShowPluginInToolTip.Location = new System.Drawing.Point(15, 37);
+            this.chkShowPluginInToolTip.Name = "chkShowPluginInToolTip";
+            this.chkShowPluginInToolTip.Size = new System.Drawing.Size(352, 21);
+            this.chkShowPluginInToolTip.TabIndex = 4;
+            this.chkShowPluginInToolTip.Text = "Show plugin name in toolbar tooltips (needs app restart)";
             // 
             // configPanelControl1
             // 
@@ -79,15 +111,11 @@
             // 
             // chkLoadSymbology
             // 
-            this.chkLoadSymbology.BeforeTouchSize = new System.Drawing.Size(234, 21);
-            this.chkLoadSymbology.DrawFocusRectangle = false;
             this.chkLoadSymbology.Location = new System.Drawing.Point(18, 35);
-            this.chkLoadSymbology.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.chkLoadSymbology.Name = "chkLoadSymbology";
             this.chkLoadSymbology.Size = new System.Drawing.Size(234, 21);
             this.chkLoadSymbology.TabIndex = 2;
             this.chkLoadSymbology.Text = "Load symbology for layers on opening";
-            this.chkLoadSymbology.ThemesEnabled = false;
             // 
             // configPanelControl2
             // 
@@ -103,45 +131,39 @@
             // 
             // chkShowWelcomeDialog
             // 
-            this.chkShowWelcomeDialog.BeforeTouchSize = new System.Drawing.Size(188, 21);
             this.chkShowWelcomeDialog.Location = new System.Drawing.Point(15, 37);
-            this.chkShowWelcomeDialog.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowWelcomeDialog.Name = "chkShowWelcomeDialog";
             this.chkShowWelcomeDialog.Size = new System.Drawing.Size(188, 21);
             this.chkShowWelcomeDialog.TabIndex = 4;
             this.chkShowWelcomeDialog.Text = "Show welcome dialog";
-            this.chkShowWelcomeDialog.ThemesEnabled = false;
             // 
             // chkLoadLastProject
             // 
-            this.chkLoadLastProject.BeforeTouchSize = new System.Drawing.Size(188, 21);
             this.chkLoadLastProject.Location = new System.Drawing.Point(15, 64);
-            this.chkLoadLastProject.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkLoadLastProject.Name = "chkLoadLastProject";
             this.chkLoadLastProject.Size = new System.Drawing.Size(188, 21);
             this.chkLoadLastProject.TabIndex = 3;
             this.chkLoadLastProject.Text = "Load last project on startup";
-            this.chkLoadLastProject.ThemesEnabled = false;
             // 
             // GeneralConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.configPanelControl3);
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(390, 241);
+            this.Size = new System.Drawing.Size(390, 337);
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
+            this.configPanelControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboSymbologyStorage)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadSymbology)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowWelcomeDialog)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkLoadLastProject)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -149,12 +171,15 @@
         #endregion
 
         private UI.Controls.ConfigPanelControl configPanelControl2;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkLoadSymbology;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkLoadLastProject;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowWelcomeDialog;
+        private CheckBox chkLoadSymbology;
+        private CheckBox chkLoadLastProject;
+        private CheckBox chkShowWelcomeDialog;
         private UI.Controls.ConfigPanelControl configPanelControl1;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboSymbologyStorage;
+        private UI.Controls.ConfigPanelControl configPanelControl3;
+        private CheckBox chkShowPluginInToolTip;
+        private CheckBox chkShowMenuToolTips;
 
     }
 }

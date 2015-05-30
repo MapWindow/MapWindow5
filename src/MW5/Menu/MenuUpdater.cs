@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Menu;
@@ -14,21 +15,39 @@ namespace MW5.Menu
 {
     internal class MenuUpdater: MenuServiceBase
     {
+        private readonly IAppContext _context;
         private readonly IMuteMap _map;
+        private readonly IMuteLegend _legend;
 
-        public MenuUpdater(IAppContext context, IMuteMap map, PluginIdentity identity) : base(context, identity)
+        public MenuUpdater(IAppContext context, PluginIdentity identity) : base(context, identity)
         {
-            if (map == null) throw new ArgumentNullException("map");
-            _map = map;
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
+            _map = context.Map;
+            _legend = context.Legend;
         }
 
         public void Update(bool rendered)
+        {
+            UpdateToolbars(rendered);
+
+            UpdateMenu();
+        }
+
+        private void UpdateMenu()
+        {
+            var layer = _legend.Layers.Current;
+            FindMenuItem(MenuKeys.RemoveLayer).Enabled = layer != null;
+            FindMenuItem(MenuKeys.LayerClearSelection).Enabled = layer != null && layer.IsVector;
+            FindMenuItem(MenuKeys.ClearLayers).Enabled = _map.Layers.Any();
+        }
+
+        private void UpdateToolbars(bool rendered)
         {
             // mapControl plays the role of the model here
             FindToolbarItem(MenuKeys.ZoomIn).Checked = _map.MapCursor == MapCursor.ZoomIn;
             FindToolbarItem(MenuKeys.ZoomOut).Checked = _map.MapCursor == MapCursor.ZoomOut;
             FindToolbarItem(MenuKeys.Pan).Checked = _map.MapCursor == MapCursor.Pan;
-            //FindToolbarItem(MenuKeys.Attributes).Checked = _map.MapCursor == MapCursor.Identify;
 
             FindToolbarItem(MenuKeys.SelectByRectangle).Checked = _map.MapCursor == MapCursor.Selection;
             FindToolbarItem(MenuKeys.SelectByPolygon).Checked = _map.MapCursor == MapCursor.SelectByPolygon;
@@ -58,7 +77,6 @@ namespace MW5.Menu
                 var fs = _context.Map.Layers.Current.FeatureSet;
                 if (fs != null)
                 {
-                    //statusSelectedCount.Text = string.Format("Shapes: {0}; selected: {1}", sf.NumShapes, sf.NumSelected);
                     FindToolbarItem(MenuKeys.ClearSelection).Enabled = fs.NumSelected > 0;
                     FindToolbarItem(MenuKeys.ZoomToSelected).Enabled = fs.NumSelected > 0;
                     hasFeatureSet = true;
@@ -67,7 +85,6 @@ namespace MW5.Menu
 
             if (!hasFeatureSet)
             {
-                //statusSelectedCount.Text = "";
                 FindToolbarItem(MenuKeys.ClearSelection).Enabled = false;
                 FindToolbarItem(MenuKeys.ZoomToSelected).Enabled = false;
             }

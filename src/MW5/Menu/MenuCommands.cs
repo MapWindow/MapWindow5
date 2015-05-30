@@ -89,7 +89,7 @@ namespace MW5.Menu
                 new MenuCommand("By Polygon", MenuKeys.SelectByPolygon, null,
                 "Selects features of the vector layer currently selected in the legend with polygon selection tool."),
 
-                new MenuCommand("Attributes", MenuKeys.Attributes, Resources.icon_identify, 
+                new MenuCommand("Attributes", MenuKeys.AttributesTool, Resources.icon_identify, 
                 "Activates tool to display attributes of vector features."),
 
                 new MenuCommand("Zoom to Selected", MenuKeys.ZoomToSelected, Resources.icon_zoom_to_selection,
@@ -97,6 +97,12 @@ namespace MW5.Menu
 
                 new MenuCommand("Clear Selection", MenuKeys.ClearSelection, Resources.icon_clear_selection,
                 "Clears selection from all the vector features."), 
+
+                new MenuCommand("Clear Layer Selection", MenuKeys.LayerClearSelection, Resources.icon_clear_selection,
+                "Clears selection from all features on the current layer."), 
+
+                new MenuCommand("Clear Layers", MenuKeys.ClearLayers, Resources.icon_layer_clear,
+                "Removes all layers from the map."), 
             };
         }
     }

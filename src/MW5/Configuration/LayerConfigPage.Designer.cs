@@ -1,4 +1,6 @@
-﻿namespace MW5.Configuration
+﻿using System.Windows.Forms;
+
+namespace MW5.Configuration
 {
     partial class LayerConfigPage
     {
@@ -31,37 +33,32 @@
             this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
             this.udSpatialIndexCount = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkCreateSpatialIndex = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkSpatialIndexDialog = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkCreateSpatialIndex = new CheckBox();
+            this.chkSpatialIndexDialog = new CheckBox();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.cboPyramidsSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboPyramidCompression = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkCreatePyramids = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkPyramidsDialog = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkCreatePyramids = new CheckBox();
+            this.chkPyramidsDialog = new CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             this.cboProjectionAbsence = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cboProjectionMismatch = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkProjectionDialog = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkProjectionDialog = new CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
             this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSpatialIndexCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkCreateSpatialIndex)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkSpatialIndexDialog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboPyramidsSampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPyramidCompression)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkCreatePyramids)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkPyramidsDialog)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionAbsence)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionMismatch)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkProjectionDialog)).BeginInit();
             this.SuspendLayout();
             // 
             // configPanelControl3
@@ -111,25 +108,19 @@
             // 
             // chkCreateSpatialIndex
             // 
-            this.chkCreateSpatialIndex.BeforeTouchSize = new System.Drawing.Size(277, 21);
             this.chkCreateSpatialIndex.Location = new System.Drawing.Point(21, 72);
-            this.chkCreateSpatialIndex.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkCreateSpatialIndex.Name = "chkCreateSpatialIndex";
             this.chkCreateSpatialIndex.Size = new System.Drawing.Size(277, 21);
             this.chkCreateSpatialIndex.TabIndex = 10;
             this.chkCreateSpatialIndex.Text = "Create spatial index on opening (if it is missing)";
-            this.chkCreateSpatialIndex.ThemesEnabled = false;
             // 
             // chkSpatialIndexDialog
             // 
-            this.chkSpatialIndexDialog.BeforeTouchSize = new System.Drawing.Size(292, 21);
             this.chkSpatialIndexDialog.Location = new System.Drawing.Point(21, 45);
-            this.chkSpatialIndexDialog.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkSpatialIndexDialog.Name = "chkSpatialIndexDialog";
             this.chkSpatialIndexDialog.Size = new System.Drawing.Size(292, 21);
             this.chkSpatialIndexDialog.TabIndex = 9;
             this.chkSpatialIndexDialog.Text = "Show spatial index creation dialog";
-            this.chkSpatialIndexDialog.ThemesEnabled = false;
             // 
             // configPanelControl1
             // 
@@ -187,25 +178,19 @@
             // 
             // chkCreatePyramids
             // 
-            this.chkCreatePyramids.BeforeTouchSize = new System.Drawing.Size(277, 21);
             this.chkCreatePyramids.Location = new System.Drawing.Point(21, 72);
-            this.chkCreatePyramids.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkCreatePyramids.Name = "chkCreatePyramids";
             this.chkCreatePyramids.Size = new System.Drawing.Size(277, 21);
             this.chkCreatePyramids.TabIndex = 10;
             this.chkCreatePyramids.Text = "Create pyramids on opening (if they are missing)";
-            this.chkCreatePyramids.ThemesEnabled = false;
             // 
             // chkPyramidsDialog
             // 
-            this.chkPyramidsDialog.BeforeTouchSize = new System.Drawing.Size(188, 21);
             this.chkPyramidsDialog.Location = new System.Drawing.Point(21, 45);
-            this.chkPyramidsDialog.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkPyramidsDialog.Name = "chkPyramidsDialog";
             this.chkPyramidsDialog.Size = new System.Drawing.Size(188, 21);
             this.chkPyramidsDialog.TabIndex = 9;
             this.chkPyramidsDialog.Text = "Show pyramid creation dialog";
-            this.chkPyramidsDialog.ThemesEnabled = false;
             // 
             // configPanelControl2
             // 
@@ -262,14 +247,11 @@
             // 
             // chkProjectionDialog
             // 
-            this.chkProjectionDialog.BeforeTouchSize = new System.Drawing.Size(292, 21);
             this.chkProjectionDialog.Location = new System.Drawing.Point(21, 45);
-            this.chkProjectionDialog.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkProjectionDialog.Name = "chkProjectionDialog";
             this.chkProjectionDialog.Size = new System.Drawing.Size(292, 21);
             this.chkProjectionDialog.TabIndex = 9;
             this.chkProjectionDialog.Text = "Show projection mismatch dialog";
-            this.chkProjectionDialog.ThemesEnabled = false;
             // 
             // LayerConfigPage
             // 
@@ -285,21 +267,16 @@
             this.configPanelControl3.ResumeLayout(false);
             this.configPanelControl3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udSpatialIndexCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkCreateSpatialIndex)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkSpatialIndexDialog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboPyramidsSampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPyramidCompression)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkCreatePyramids)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkPyramidsDialog)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             this.configPanelControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionAbsence)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjectionMismatch)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkProjectionDialog)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -309,15 +286,15 @@
         private UI.Controls.ConfigPanelControl configPanelControl3;
         private System.Windows.Forms.NumericUpDown udSpatialIndexCount;
         private System.Windows.Forms.Label label2;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkCreateSpatialIndex;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkSpatialIndexDialog;
+        private CheckBox chkCreateSpatialIndex;
+        private CheckBox chkSpatialIndexDialog;
         private UI.Controls.ConfigPanelControl configPanelControl1;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboPyramidCompression;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkCreatePyramids;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkPyramidsDialog;
+        private CheckBox chkCreatePyramids;
+        private CheckBox chkPyramidsDialog;
         private UI.Controls.ConfigPanelControl configPanelControl2;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkProjectionDialog;
+        private CheckBox chkProjectionDialog;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboPyramidsSampling;
         private System.Windows.Forms.Label label4;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboProjectionAbsence;

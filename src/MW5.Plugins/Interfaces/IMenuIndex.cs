@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -17,5 +18,7 @@ namespace MW5.Plugins.Interfaces
         void Clear();
         void SaveMetadata(object key, MenuItemCollectionMetadata metadata);
         MenuItemCollectionMetadata LoadMetadata(object key);
+        MenuIndexType ToolbarType { get; }
+        bool NeedsToolTip { get; }
     }
 }

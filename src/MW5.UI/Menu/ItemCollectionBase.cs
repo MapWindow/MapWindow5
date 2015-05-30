@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
@@ -57,7 +58,10 @@ namespace MW5.UI.Menu
 
             var item = AddButton(command.Text, command.Key, command.Icon, command.PluginIdentity);
 
-            item.Description = command.Description;
+            if (MenuIndex.NeedsToolTip)
+            {
+                item.Description = command.Description;
+            }
 
             if (beginGroup)
             {
