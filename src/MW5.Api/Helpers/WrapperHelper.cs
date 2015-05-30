@@ -43,7 +43,7 @@ namespace MW5.Api.Helpers
             return image.InternalObject as Image;
         }
 
-        public static Field GetInternal(this IFeatureField field)
+        public static Field GetInternal(this IAttributeField field)
         {
             return field.InternalObject as Field;
         }

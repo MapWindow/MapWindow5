@@ -1,20 +1,21 @@
 ﻿using System;
+using System.ComponentModel;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class FeatureField: IFeatureField
+    public class AttributeField: IAttributeField
     {
         private readonly Field _field;
 
-        public FeatureField()
+        public AttributeField()
         {
             _field = new Field();
         }
 
-        internal FeatureField(Field field)
+        internal AttributeField(Field field)
         {
             if (field == null)
             {
@@ -48,6 +49,18 @@ namespace MW5.Api.Concrete
             set { _field.Width = value; }
         }
 
+        public bool Visible
+        {
+            get { return _field.Visible; }
+            set { _field.Visible = value; }
+        }
+
+        public string Alias
+        {
+            get { return _field.Alias; }
+            set { _field.Alias = value; }
+        }
+
         public object InternalObject
         {
             get { return _field; }
@@ -62,6 +75,15 @@ namespace MW5.Api.Concrete
         {
             get { return _field.Key; }
             set { _field.Key = value; }
+        }
+
+        [Browsable(false)]
+        public string DisplayName
+        {
+            get
+            {
+                return !string.IsNullOrWhiteSpace(Alias) ? Alias : Name;
+            }
         }
     }
 }

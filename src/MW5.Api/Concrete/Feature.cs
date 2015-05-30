@@ -170,9 +170,9 @@ namespace MW5.Api.Concrete
             return _shapefile.EditCellValue(fieldIndex, _shapeIndex, value);
         }
 
-        public IFeatureField GetField(int fieldIndex)
+        public IAttributeField GetField(int fieldIndex)
         {
-            return new FeatureField(_shapefile.Field[fieldIndex]);
+            return new AttributeField(_shapefile.Field[fieldIndex]);
         }
 
         #endregion

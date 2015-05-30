@@ -23,11 +23,11 @@ namespace MW5.Plugins.TableEditor.Views
             _view = view;
         }
 
-        private FeatureField Field
+        private AttributeField Field
         {
             get
             {
-                var fld = new FeatureField
+                var fld = new AttributeField
                 {
                     Name = _view.FieldName,
                     Type = _view.FieldType,

@@ -65,7 +65,7 @@ namespace MW5.Data.Views.Controls
 
         void DriverMetadataGrid_TableControlResizingColumns(object sender, Syncfusion.Windows.Forms.Grid.Grouping.GridTableControlResizingColumnsEventArgs e)
         {
-            UI.Helpers.GridHelper.AdjustRowHeights(this);
+            this.AdjustRowHeights();
         }
     }
 }

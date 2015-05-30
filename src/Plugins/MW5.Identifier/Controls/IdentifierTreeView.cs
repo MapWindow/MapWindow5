@@ -17,6 +17,7 @@ namespace MW5.Plugins.Identifier.Controls
 {
     public class IdentifierTreeView: TwoColumnTreeView
     {
+        private const int LocalStatsRange = 2;
         private IAppContext _context;
 
         public IdentifierTreeView()
@@ -241,16 +242,16 @@ namespace MW5.Plugins.Identifier.Controls
             double min, max, mean, stdDev;
             int count;
 
-            const int range = 2;      // TODO: add as a parameter
+            
 
-            if (!band.ComputeLocalStatistics(pixel.RasterX, pixel.RasterY, range, out min, out max, out mean, out stdDev,
+            if (!band.ComputeLocalStatistics(pixel.RasterX, pixel.RasterY, LocalStatsRange, out min, out max, out mean, out stdDev,
                 out count))
             {
                 parent.AddSubItem("Local stats", "<failed to compute>");
             }
             else
             {
-                var nodeStats = parent.AddSubItem("Local stats", range + " pixel range");
+                var nodeStats = parent.AddSubItem("Local stats", LocalStatsRange + " pixel range");
                 nodeStats.AddSubItem("Minimum", min);
                 nodeStats.AddSubItem("Maximum", max);
                 nodeStats.AddSubItem("Mean", mean);
@@ -358,20 +359,7 @@ namespace MW5.Plugins.Identifier.Controls
                 nodeShape.Expanded = false;
                 nodeShape.LargerHeight = true;
 
-                var fields = fs.Table.Fields;
-
-                for (int i = 0; i < fields.Count; i++)
-                {
-                    var fld = fields[i];
-                    var value = fs.Table.CellValue(i, shapeIndex);
-                    nodeShape.AddSubItem(fld.Name, value != null ? value.ToString() : "<null>");
-                    nodeShape.Metadata = new IdentifierNodeMetadata(layerHandle, shapeIndex);
-                }
-
-                var calcNode = nodeShape.AddSubItem("Calculated", string.Empty);
-                calcNode.ImageIndex = (int)IdentifierIcon.Calculated;
-                calcNode.LargerHeight = true;
-                GetCalculatedFields(calcNode, fs.Features[shapeIndex].Geometry, geodesic);
+                DisplayAttributes(fs, nodeShape, shapeIndex, layerHandle, geodesic);
             }
 
             var firstOrDefault = layerNode.SubItems.FirstOrDefault();
@@ -379,6 +367,29 @@ namespace MW5.Plugins.Identifier.Controls
             {
                 firstOrDefault.Expanded = true;
             }
+        }
+
+        private void DisplayAttributes(IFeatureSet fs, NodeData nodeShape, int shapeIndex, int layerHandle, bool geodesic)
+        {
+            var fields = fs.Table.Fields;
+
+            for (int i = 0; i < fields.Count; i++)
+            {
+                var fld = fields[i];
+                if (!fld.Visible)
+                {
+                    continue;
+                }
+
+                var value = fs.Table.CellValue(i, shapeIndex);
+                nodeShape.AddSubItem(fld.DisplayName, value != null ? value.ToString() : "<null>");
+                nodeShape.Metadata = new IdentifierNodeMetadata(layerHandle, shapeIndex);
+            }
+
+            var calcNode = nodeShape.AddSubItem("Calculated", string.Empty);
+            calcNode.ImageIndex = (int)IdentifierIcon.Calculated;
+            calcNode.LargerHeight = true;
+            GetCalculatedFields(calcNode, fs.Features[shapeIndex].Geometry, geodesic);
         }
 
         private void GetCalculatedFields(NodeData root, IGeometry geometry, bool geodesic)

@@ -62,12 +62,19 @@ namespace MW5.Plugins.ShapeEditor.Views
         {
             var fs = Model.Layer.FeatureSet;
             var table = fs.Table;
-            int numFields = table.Fields.Count;
+            int numFields = table.Fields.Count(f => f.Visible);
 
             tableLayoutPanel1.SuspendLayout();
 
-            bool editing = fs.InteractiveEditing;
+            PrepareTableLayout(fs, numFields);
 
+            AddFields(fs);
+
+            tableLayoutPanel1.ResumeLayout();
+        }
+
+        private void PrepareTableLayout(IFeatureSet fs, int numFields)
+        {
             tableLayoutPanel1.RowStyles.Clear();
             tableLayoutPanel1.ColumnStyles.Clear();
 
@@ -78,7 +85,7 @@ namespace MW5.Plugins.ShapeEditor.Views
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
             int columCount = (int)Math.Ceiling(numFields / MaxRows);
-            tableLayoutPanel1.ColumnCount = columCount*3;
+            tableLayoutPanel1.ColumnCount = columCount * 3;
 
             for (int n = 0; n < columCount; n++)
             {
@@ -86,16 +93,32 @@ namespace MW5.Plugins.ShapeEditor.Views
                 tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
                 tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
             }
-            
-            int padding = editing ? 5 : 0;
+        }
 
+        private void AddFields(IFeatureSet fs)
+        {
+            bool editing = fs.InteractiveEditing;
+            int padding = editing ? 5 : 0;
+            var table = fs.Table;
+
+            int numFields = table.Fields.Count;
+
+            int count = 0;
             for (int i = 0; i < numFields; i++)
             {
-                int cmnIndex = (int)(Math.Floor(i / MaxRows) * 3);
-                int rowIndex = i % (int)MaxRows;
+                var field = table.Fields[i];
+                if (!field.Visible)
+                {
+                    continue;
+                }
+                
+                int cmnIndex = (int)(Math.Floor(count / MaxRows) * 3);
+                int rowIndex = count % (int)MaxRows;
+                count++;
+                
 
-                string name = table.Fields[i].Name.ToUpper();
-                var fieldType = table.Fields[i].Type;
+                string name = field.DisplayName.ToUpper();
+                var fieldType = field.Type;
 
                 var lbl = new Label
                 {
@@ -121,7 +144,7 @@ namespace MW5.Plugins.ShapeEditor.Views
                 tableLayoutPanel1.Controls.Add(lbl, cmnIndex + 2, rowIndex);
 
                 var value = fs.Table.CellValue(i, Model.ShapeIndex) ?? GetDefaultValue(fieldType);
-                var control = new TextBox() { ReadOnly = !editing,  Text = value.ToString() };;
+                var control = new TextBox() { ReadOnly = !editing, Text = value.ToString() }; ;
                 control.Dock = DockStyle.Fill;
                 control.Padding = new Padding(padding);
                 control.Tag = i;
@@ -129,8 +152,6 @@ namespace MW5.Plugins.ShapeEditor.Views
 
                 control.Enabled = name.ToLower() != "mwshapeid" && name.ToLower() != OgrFidName.ToLower();
             }
-
-            tableLayoutPanel1.ResumeLayout();
         }
 
         private string OgrFidName

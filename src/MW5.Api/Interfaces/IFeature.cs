@@ -25,6 +25,6 @@
         bool SetDouble(int fieldIndex, double value);
         bool SetInteger(int fieldIndex, int value);
         bool SetString(int fieldIndex, string value);
-        IFeatureField GetField(int fieldIndex);
+        IAttributeField GetField(int fieldIndex);
     }
 }

@@ -14,24 +14,45 @@ namespace MW5.Plugins.Symbology.Controls
 {
     public partial class AttributesControl : UserControl
     {
+        private IFeatureSet _featureSet;
+
         public AttributesControl()
         {
             InitializeComponent();
-            attributeGrid1.Adapter.ShowEditors = false;
-            attributeGrid1.Adapter.HotTracking = true;
         }
 
         public void Initialize(IFeatureSet featureSet)
         {
-            attributeGrid1.DataSource = featureSet.Table.Fields.ToList();
+            if (featureSet == null) throw new ArgumentNullException("featureSet");
+            _featureSet = featureSet;
 
-            int index = attributeGrid1.Adapter.GetRelativeColumnIndex(f => f.Name);
-            if (index != -1)
+            UpdateGrid();
+        }
+
+        private void UpdateGrid()
+        {
+            attributeGrid1.DataSource = _featureSet.Table.Fields.ToList();
+        }
+
+        private void toolCheckAll_Click(object sender, EventArgs e)
+        {
+            ChangeVisibility(true);
+            UpdateGrid();
+        }
+
+        private void toolUncheckAll_Click(object sender, EventArgs e)
+        {
+            ChangeVisibility(false);
+            UpdateGrid();
+        }
+
+        private void ChangeVisibility(bool visible)
+        {
+            var fields = _featureSet.Table.Fields;
+            foreach (var field in fields)
             {
-                attributeGrid1.TableDescriptor.Columns.Move(index, 0);
+                field.Visible = visible;
             }
-
-            attributeGrid1.Adapter.GetColumn(f => f.Name).Width = 100;
         }
     }
 }

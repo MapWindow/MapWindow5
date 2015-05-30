@@ -47,7 +47,7 @@ namespace MW5.Plugins.ShapeEditor.Views
             return true;
         }
 
-        private bool ApplyValue(AttributeTable table, IFeatureField fld, int fieldIndex, string text)
+        private bool ApplyValue(AttributeTable table, IAttributeField fld, int fieldIndex, string text)
         {
             switch (fld.Type)
             {

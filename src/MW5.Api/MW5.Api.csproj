@@ -106,7 +106,7 @@
     <Compile Include="Concrete\DrawingLayers.cs" />
     <Compile Include="Concrete\Envelope.cs" />
     <Compile Include="Concrete\FeatureCategory.cs" />
-    <Compile Include="Concrete\FeatureField.cs" />
+    <Compile Include="Concrete\AttributeField.cs" />
     <Compile Include="Concrete\Feature.cs" />
     <Compile Include="Concrete\FeatureCollection.cs" />
     <Compile Include="Concrete\FeatureFieldList.cs" />
@@ -233,7 +233,7 @@
     <Compile Include="Interfaces\IEnvelope.cs" />
     <Compile Include="Interfaces\IFeatureCategory.cs" />
     <Compile Include="Interfaces\IFeatureCategoryList.cs" />
-    <Compile Include="Interfaces\IFeatureField.cs" />
+    <Compile Include="Interfaces\IAttributeField.cs" />
     <Compile Include="Interfaces\IFeatureSet.cs" />
     <Compile Include="Interfaces\IFeature.cs" />
     <Compile Include="Interfaces\IGeoLabel.cs" />

@@ -57,9 +57,11 @@ namespace MW5.Plugins.TableEditor.Editor
             {
                 var cmn = new DataGridViewTextBoxColumn
                 {
-                    HeaderText = fld.Name,
-                    SortMode = DataGridViewColumnSortMode.Programmatic
+                    HeaderText = fld.DisplayName,
+                    SortMode = DataGridViewColumnSortMode.Programmatic,
+                    Visible = fld.Visible
                 };
+
                 Columns.Add(cmn);
             }
         }

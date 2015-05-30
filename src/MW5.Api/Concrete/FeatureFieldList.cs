@@ -8,7 +8,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class FeatureFieldList: IEnumerable<IFeatureField>
+    public class FeatureFieldList: IEnumerable<IAttributeField>
     {
         private readonly Table _table;
 
@@ -28,13 +28,13 @@ namespace MW5.Api.Concrete
             get { return _table.NumFields; }
         }
 
-        public IFeatureField this[int index]
+        public IAttributeField this[int index]
         {
             get
             {
                 if (index >= 0 && index < _table.NumFields)
                 {
-                    return new FeatureField(_table.Field[index]);
+                    return new AttributeField(_table.Field[index]);
                 }
                 return null;
             }
@@ -42,7 +42,7 @@ namespace MW5.Api.Concrete
             set { _table.EditReplaceField(index, value.GetInternal()); }
         }
 
-        public IFeatureField this[string name]
+        public IAttributeField this[string name]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public IEnumerator<IFeatureField> GetEnumerator()
+        public IEnumerator<IAttributeField> GetEnumerator()
         {
             for (int i = 0; i < _table.NumFields; i++)
             {
@@ -63,7 +63,7 @@ namespace MW5.Api.Concrete
             return GetEnumerator();
         }
 
-        public void Add(IFeatureField item)
+        public void Add(IAttributeField item)
         {
             _table.EditInsertField(item.GetInternal(), _table.NumFields);
         }
@@ -81,7 +81,7 @@ namespace MW5.Api.Concrete
             return _table.EditDeleteField(index);
         }
 
-        public int IndexOf(IFeatureField item)
+        public int IndexOf(IAttributeField item)
         {
             var field = item.GetInternal();
             for (int i = 0; i < _table.NumFields; i++)
@@ -95,7 +95,7 @@ namespace MW5.Api.Concrete
             return -1;
         }
 
-        public void Insert(int index, IFeatureField item)
+        public void Insert(int index, IAttributeField item)
         {
             _table.EditInsertField(item.GetInternal(), index);
         }
