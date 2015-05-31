@@ -13,13 +13,12 @@ namespace MW5.Api.Legend.Renderer
     /// </summary>
     public class LayerRenderer: SymbologyRendererBase
     {
-        private readonly AxMap _map;
+        protected readonly Font BoldFont;
 
-        public LayerRenderer(AxMap map, LegendControl legend) 
+        public LayerRenderer(LegendControlBase legend) 
             : base(legend)
         {
-            if (map == null) throw new ArgumentNullException("map");
-            _map = map;
+            BoldFont = new Font("Arial", 8, FontStyle.Bold);
         }
 
         /// <summary>
@@ -72,6 +71,13 @@ namespace MW5.Api.Legend.Renderer
             }
         }
 
+        /// <summary>
+        /// Dras plus minus/sign for the layer and optionally call custom rendering function to display symbology.
+        /// </summary>
+        /// <param name="g">The g.</param>
+        /// <param name="lyr">The lyr.</param>
+        /// <param name="bounds">The bounds.</param>
+        /// <param name="isSnapshot">if set to <c>true</c> [is snapshot].</param>
         private void DrawLayerExpansionBox(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
             var customRect = new Rectangle(
@@ -103,6 +109,9 @@ namespace MW5.Api.Legend.Renderer
             }
         }
 
+        /// <summary>
+        /// Gets position of text relative to the layer bounds.
+        /// </summary>
         private Point GetTextLocation(Rectangle bounds, bool isSnapshot)
         {
             int curLeft = isSnapshot ? bounds.Left + Constants.CheckLeftPad : bounds.Left + Constants.TextLeftPad;
@@ -110,6 +119,9 @@ namespace MW5.Api.Legend.Renderer
             return new Point(curLeft, curTop);
         }
 
+        /// <summary>
+        /// Draws background of the layer caption when layer is selected.
+        /// </summary>
         private void DrawLayerCaptionBackground(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
             int curLeft = bounds.Left;
@@ -152,8 +164,8 @@ namespace MW5.Api.Legend.Renderer
             }
 
             // draw text
-            var text = _map.get_LayerName(lyr.Handle);
-            textSize = g.MeasureString(text, Legend.InternalFont);
+            var text = Legend.AxMap.get_LayerName(lyr.Handle);
+            textSize = g.MeasureString(text, Legend.Font);
 
             var point = GetTextLocation(bounds, isSnapshot);
 
@@ -161,7 +173,7 @@ namespace MW5.Api.Legend.Renderer
             const int curHeight = Constants.TextHeight;
 
             var rect = new Rectangle(point.X, point.Y, curWidth, curHeight);
-            DrawText(g, text, rect, Legend.InternalFont, Legend.ForeColor);
+            DrawText(g, text, rect, Legend.Font, Legend.ForeColor);
 
             var el = new LayerElement(LayerElementType.Name, rect, text);
             lyr.Elements.Add(el);
@@ -182,16 +194,7 @@ namespace MW5.Api.Legend.Renderer
             int curTop = bounds.Top + Constants.CheckTopPad;
             int curLeft = bounds.Left + Constants.CheckLeftPad;
 
-            var visible = true;
-            if (lyr.DynamicVisibility)
-            {
-                visible = (_map.CurrentScale >= lyr.MinVisibleScale)
-                            && (_map.CurrentScale <= lyr.MaxVisibleScale)
-                            && _map.Tiles.CurrentZoom >= lyr.MinVisibleZoom
-                            && _map.Tiles.CurrentZoom <= lyr.MaxVisibleZoom;
-            }
-
-            visible = visible && _map.get_LayerVisible(lyr.Handle);
+           var visible = lyr.LayerVisibleAtCurrentScale && lyr.Visible;
 
             // draw a grey background if the layer is in dynamic visibility mode.
             DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
@@ -251,7 +254,7 @@ namespace MW5.Api.Legend.Renderer
                         : Legend.BackColor;
                     var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
 
-                    var sf = _map.get_GetObject(lyr.Handle) as Shapefile;
+                    var sf = Legend.AxMap.get_GetObject(lyr.Handle) as Shapefile;
 
                     if (sf != null)
                     {
@@ -297,16 +300,18 @@ namespace MW5.Api.Legend.Renderer
                 }
             }
 
+            var map = Legend.AxMap;
+
             // labels link
             if (bounds.Width > 60 && bounds.Right - textLocation.X - 62 > textSize.Width)
             {
-                var sf = _map.get_Shapefile(lyr.Handle);
+                var sf = map.get_Shapefile(lyr.Handle);
                 if (sf != null)
                 {
                     var top2 = bounds.Top + Constants.IconTopPad;
                     var left2 = bounds.Right - 56;
 
-                    var scale = _map.CurrentScale;
+                    var scale = map.CurrentScale;
                     var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible &&
                                         sf.Labels.Expression.Trim() != string.Empty;
                     labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
@@ -319,7 +324,7 @@ namespace MW5.Api.Legend.Renderer
             // editing icon
             if (bounds.Width > 60 && bounds.Right - textLocation.X - 82 > textSize.Width)
             {
-                var sf = _map.get_Shapefile(lyr.Handle);
+                var sf = map.get_Shapefile(lyr.Handle);
                 if (sf != null && sf.InteractiveEditing)
                 {
                     var top2 = bounds.Top + Constants.IconTopPad;

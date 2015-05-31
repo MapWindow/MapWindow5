@@ -56,6 +56,7 @@
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms" />
@@ -84,6 +85,15 @@
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\Events\DatasourceCancelEventArgs.cs" />
+    <Compile Include="Legend\LegendControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Legend\LegendControl.Designer.cs">
+      <DependentUpon>LegendControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Legend\LegendControlBase.Designer.cs">
+      <DependentUpon>LegendControlBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Legend\LegendHitTest.cs" />
     <Compile Include="Legend\Renderer\GroupRenderer.cs" />
     <Compile Include="Legend\Renderer\LayerRenderer.cs" />
@@ -155,7 +165,7 @@
     <Compile Include="Legend\LegendGroups.cs" />
     <Compile Include="Legend\Abstract\IMuteLegend.cs" />
     <Compile Include="Legend\LayerElement.cs" />
-    <Compile Include="Legend\LegendControl.cs">
+    <Compile Include="Legend\LegendControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Interfaces\ILayerCollection.cs" />
@@ -325,8 +335,8 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Legend\LegendControl.resx">
-      <DependentUpon>LegendControl.cs</DependentUpon>
+    <EmbeddedResource Include="Legend\LegendControlBase.resx">
+      <DependentUpon>LegendControlBase.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Map\MapControl.resx">

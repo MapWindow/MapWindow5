@@ -6,10 +6,10 @@ namespace MW5.Api.Legend.Renderer
 {
     public class SymbologyRendererBase
     {
-        protected readonly LegendControl Legend;
+        protected readonly LegendControlBase Legend;
         private readonly Color _boxLineColor;
 
-        public SymbologyRendererBase(LegendControl legend)
+        public SymbologyRendererBase(LegendControlBase legend)
         {
             if (legend == null) throw new ArgumentNullException("legend");
             Legend = legend;
@@ -34,7 +34,7 @@ namespace MW5.Api.Legend.Renderer
 
         public Font Font
         {
-            get { return Legend.InternalFont; }
+            get { return Legend.Font; }
         }
 
         public int GetSymbologyTop(Rectangle bounds)

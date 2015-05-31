@@ -23,7 +23,7 @@ namespace MW5.Api.Legend
     /// </summary>
     public class LegendLayer : Layer, ILegendLayer
     {
-        private readonly LegendControl _legend;
+        private readonly LegendControlBase _legend;
         private readonly List<LayerElement> _elements; // size and positions of elements
         private readonly Dictionary<Guid, ILayerMetadataBase> _customObjects;
         private readonly Dictionary<Guid, XmlElement> _rawObjects;
@@ -38,7 +38,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendLayer"/> class.
         /// </summary>
-        internal LegendLayer(MapControl map, LegendControl legend, int layerHandle )
+        internal LegendLayer(MapControl map, LegendControlBase legend, int layerHandle )
             : base(map, layerHandle)
         {
             _legend = legend;   // must be the first line in constructor

@@ -9,11 +9,11 @@ using Point = System.Drawing.Point;
 
 namespace MW5.Api.Legend
 {
-    internal class LegendHitTest
+    public class LegendHitTest
     {
-        private readonly LegendControl _legend;
+        private readonly LegendControlBase _legend;
 
-        public LegendHitTest(LegendControl legend)
+        public LegendHitTest(LegendControlBase legend)
         {
             if (legend == null) throw new ArgumentNullException("legend");
             _legend = legend;

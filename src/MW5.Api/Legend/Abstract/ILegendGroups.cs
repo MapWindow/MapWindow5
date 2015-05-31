@@ -108,5 +108,10 @@ namespace MW5.Api.Legend.Abstract
         /// Removes group with specified handle.
         /// </summary>
         bool Remove(int handle);
+
+        /// <summary>
+        /// Moves group to the new position.
+        /// </summary>
+        bool MoveGroup(int groupHandle, int newPos);
     }
 }

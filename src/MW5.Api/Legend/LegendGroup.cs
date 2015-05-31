@@ -177,7 +177,7 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal int Top { get; set; }
 
-        internal void ScheduleHeightRecalc()
+        internal void ScheduleHeightRecalculation()
         {
             _recalcHeight = true;
         }

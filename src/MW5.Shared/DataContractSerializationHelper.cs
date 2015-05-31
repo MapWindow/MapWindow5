@@ -7,6 +7,9 @@ using System.Xml;
 
 namespace MW5.Shared
 {
+    /// <summary>
+    /// Serializes and deserializes objects with DataContractSerializer.
+    /// </summary>
     public static class DataContractSerializationHelper
     {
         private const int MaxStringContentLength = 1048576;

@@ -8,7 +8,7 @@ namespace MW5.Api.Legend.Renderer
     /// </summary>
     public class GroupRenderer: LayerRenderer
     {
-        public GroupRenderer(AxMapWinGIS.AxMap map, LegendControl legend) : base(map, legend)
+        public GroupRenderer(LegendControlBase legend) : base(legend) 
         {
 
         }
@@ -24,7 +24,7 @@ namespace MW5.Api.Legend.Renderer
         {
             int curLeft,
                 curWidth,
-                curTop = bounds.Top + bounds.Top,
+                curTop = bounds.Top,
                 curHeight;
 
             Rectangle rect;
@@ -145,7 +145,7 @@ namespace MW5.Api.Legend.Renderer
             // group name
             if (grp.Handle == Legend.SelectedGroupHandle && !isSnapshot)
             {
-                DrawText(g, grp.Text, rect, Legend.BoldFont);
+                DrawText(g, grp.Text, rect, BoldFont);
             }
             else
             {

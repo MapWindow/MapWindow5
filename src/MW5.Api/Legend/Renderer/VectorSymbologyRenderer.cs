@@ -12,7 +12,7 @@ namespace MW5.Api.Legend.Renderer
         private const string ChartsCaption = "Charts";
         private const string CategoriesCaption = "Categories";
 
-        public VectorSymbologyRenderer(LegendControl legend)
+        public VectorSymbologyRenderer(LegendControlBase legend)
             : base(legend)
         {
         }

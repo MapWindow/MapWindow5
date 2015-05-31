@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 
 namespace MW5.Shared
 {
+    /// <summary>
+    /// Serializesand deserializes objects with XmlSerializer.
+    /// </summary>
     public static class XmlSerializationHelper
     {
         public static string SerializeToXml<T>(this T target)
@@ -24,10 +27,8 @@ namespace MW5.Shared
                 {
                     xmlWriter.Formatting = Formatting.Indented;
 
-                    // Create our own namespaces for the output
+                    // create an empty namespace for output
                     XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-
-                    // Add an empty namespace and empty value
                     ns.Add(String.Empty, String.Empty);
 
                     var ser = new XmlSerializer(typeof(T));
@@ -48,24 +49,18 @@ namespace MW5.Shared
             return DeserializeFromXml<T>(targetString, null);
         }
 
-
         public static T DeserializeFromXml<T>(this string targetString, IEnumerable<Type> knownTypes)
         {
             Encoding encoding = GetXmlDocEncoding(targetString);
 
             using (var stream = new MemoryStream(encoding.GetBytes(targetString)))
             {
-
-                XmlDictionaryReaderQuotas xmlDict = new XmlDictionaryReaderQuotas();
-                xmlDict.MaxStringContentLength = 285192;
+                XmlDictionaryReaderQuotas xmlDict = new XmlDictionaryReaderQuotas {MaxStringContentLength = 285192};
 
                 using (var reader = XmlDictionaryReader.CreateTextReader(stream, xmlDict))
                 {
-                    //MaxStringContentLength 
-
                     var ser = new XmlSerializer(typeof(T));
 
-                    // Deserialize the data and read it from the instance.
                     return (T)ser.Deserialize(reader);
                 }
             }

@@ -17,9 +17,9 @@ namespace MW5.Api.Legend
         private const string DataLayersCaption = "Data Layers";
         private const int InvalidGroup = -1;
 
-        protected readonly LegendControl _legend;
-        protected List<ILegendGroup> _allGroups = new List<ILegendGroup>();
-        protected List<int> _positions = new List<int>();     //Group Position Lookup table (use Group layerHandle as index)
+        private readonly List<ILegendGroup> _allGroups = new List<ILegendGroup>();
+        private readonly List<int> _positions = new List<int>();     //Group Position Lookup table (use Group layerHandle as index)
+        private readonly LegendControl _legend;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendGroups"/> class.
@@ -346,7 +346,7 @@ namespace MW5.Api.Legend
         /// <param name="groupHandle"> layerHandle of group to move </param>
         /// <param name="newPos"> 0-Based index of new location </param>
         /// <returns> True on success, False otherwise </returns>
-        protected internal bool MoveGroup(int groupHandle, int newPos)
+        public bool MoveGroup(int groupHandle, int newPos)
         {
             if (!IsValidHandle(groupHandle))
             {
@@ -402,7 +402,6 @@ namespace MW5.Api.Legend
                 if (_allGroups.Count == 0)
                 {
                     grp = CreateGroup(DataLayersCaption, -1);
-                    //GroupPositions[grp.Handle] = _groups.Count - 1;   // TODO: remove after testing
                     _legend.FireGroupAdded(grp.Handle);
                 }
                 else
@@ -464,13 +463,33 @@ namespace MW5.Api.Legend
                 destinationGroup.RecalcHeight();
                 destinationGroup.UpdateGroupVisibility();
 
-                _legend.SetSelectedGroup(destinationGroup.Handle);
+                _legend.SelectedGroupHandle = destinationGroup.Handle;
             }
         }
 
         internal LegendGroup GetGroupInternal(int index)
         {
             return _allGroups[index] as LegendGroup;
+        }
+
+        /// <summary>
+        /// The calc total draw height.
+        /// </summary>
+        internal int TotalDrawHeight
+        {
+            get
+            {
+                int retval = 0;
+
+                for (var i = 0; i < Count; i++)
+                {
+                    var g = GetGroupInternal(i);
+                    g.RecalcHeight();
+                    retval += g.Height + Constants.ItemPad;
+                }
+
+                return retval;
+            }
         }
 
         #region IEnumerable interface
