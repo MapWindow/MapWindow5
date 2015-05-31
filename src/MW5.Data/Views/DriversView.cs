@@ -35,9 +35,17 @@ namespace MW5.Data.Views
             driversTreeView1.Initialize(Model);
             driversTreeView1.HideSelection = false;
 
-            int rasterCount = Model.Count(item => item.IsRaster);
-            int vectorCount = Model.Count(item => item.IsVector);
-            lblCount.Text = string.Format("Raster formats: {0}. Vector formats: {1}.", rasterCount, vectorCount);
+            if (Model.SelectedDriver != null)
+            {
+                lblCount.Visible = false;
+                Text = "Driver information: " + Model.SelectedDriver.Name;
+            }
+            else
+            {
+                int rasterCount = Model.Count(item => item.IsRaster);
+                int vectorCount = Model.Count(item => item.IsVector);
+                lblCount.Text = string.Format("Raster formats: {0}. Vector formats: {1}.", rasterCount, vectorCount);
+            }
         }
 
         public DriverFilter DriverFilter

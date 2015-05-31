@@ -13,6 +13,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Api.Legend.Renderer;
 using MW5.Api.Map;
 using MW5.Shared;
 using Image = System.Drawing.Image;
@@ -42,14 +43,16 @@ namespace MW5.Api.Legend
         private IContainer components;
 
         private readonly Font _boldFont;
-        private readonly Color _boxLineColor;
+        
         private readonly DragInfo _dragInfo = new DragInfo();
 
         private IMuteMap _mapControl; 
         private AxMap _map;
         
-        protected ImageList Icons;
-        
+        internal ImageList Icons;
+        private GroupRenderer _groupRenderer;
+        private LegendHitTest _hitTest;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendControl"/> class. 
         /// This is the constructor for the <c>LegendControl</c> control.
@@ -60,19 +63,41 @@ namespace MW5.Api.Legend
             InitializeComponent();
 
             _groups = new LegendGroups(this);
+            _hitTest = new LegendHitTest(this);
 
             _lockCount = 0;
             _selectedLayerHandle = -1;
             _selectedGroupHandle = -1;
             _font = new Font("Arial", 8);
             _boldFont = new Font("Arial", 8, FontStyle.Bold);
-            _boxLineColor = Color.Gray;
+
             SelectionColor = Color.FromArgb(255, 240, 240, 240);
             ShowGroupIcons = true;
             ShowLabels = false;
             DrawLines = true;
 
             MouseWheel += (s, e) => OnMouseWheel(e);
+        }
+
+
+        internal VScrollBar VScrollBar
+        {
+            get { return _vScrollBar; }
+        }
+
+        internal int SelectedGroupHandle 
+        {
+            get { return _selectedGroupHandle; }
+        }
+
+        internal Font BoldFont
+        {
+            get { return _boldFont; }
+        }
+
+        public GroupRenderer Renderer
+        {
+            get { return _groupRenderer ?? (_groupRenderer = new GroupRenderer(_map, this)); }
         }
 
         /// <summary>
@@ -98,6 +123,11 @@ namespace MW5.Api.Legend
 
                 _mapControl = value;
             }
+        }
+
+        internal AxMap AxMap
+        {
+            get { return _map; }
         }
 
         /// <summary>
@@ -330,6 +360,7 @@ namespace MW5.Api.Legend
             this.Name = "LegendControl";
             resources.ApplyResources(this, "$this");
             this.DoubleClick += new System.EventHandler(this.LegendDoubleClick);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LegendControl_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.LegendMouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.LegendMouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.LegendMouseUp);
@@ -372,19 +403,7 @@ namespace MW5.Api.Legend
 
             return true;
         }
-
-        /// <summary>
-        /// The draw box.
-        /// </summary>
-        private void DrawBox(Graphics g, Rectangle rect, Color lineColor, Color backColor)
-        {
-            var pen = new Pen(backColor);
-            g.FillRectangle(pen.Brush, rect);
-
-            pen = new Pen(lineColor);
-            g.DrawRectangle(pen, rect);
-        }
-
+        
         /// <summary>
         /// Renders the buffer.
         /// </summary>
@@ -412,251 +431,6 @@ namespace MW5.Api.Legend
 
             g.DrawImage(backBuffer, 0, 0);
             g.Flush(FlushIntention.Sync);
-        }
-
-        /// <summary>
-        /// Draws a group onto a give graphics object (surface)
-        /// </summary>
-        /// <param name="g"> Graphics object with which to draw </param>
-        /// <param name="grp"> Group to be drawn </param>
-        /// <param name="bounds"> Clipping boundaries for this group </param>
-        /// <param name="isSnapshot"> Drawing is handled in special way if this is a Snapshot </param>
-        internal protected void DrawGroup(Graphics g, LegendGroup grp, Rectangle bounds, bool isSnapshot)
-        {
-            int curLeft,
-                curWidth,
-                curTop = bounds.Top + bounds.Top,
-                curHeight;
-
-            Rectangle rect;
-
-            var drawCheck = false;
-
-            // Color BoxBackColor = Color.White;
-            var drawGrayCheckbox = false;
-            grp.Top = bounds.Top;
-
-            if (grp.Visible == Visibility.AllVisible || grp.Visible == Visibility.PartiallyVisible)
-            {
-                drawCheck = true;
-            }
-
-            // draw the border if the group is the one that contains the selected layer and
-            // the group is collapsed
-            if (grp.Handle == _selectedGroupHandle && grp.Expanded == false && isSnapshot == false)
-            {
-                rect = new Rectangle(
-                    Constants.GrpIndent,
-                    curTop,
-                    bounds.Width - Constants.GrpIndent - Constants.ItemRightPad,
-                    Constants.ItemHeight);
-                DrawBox(g, rect, _boxLineColor, SelectionColor);
-            }
-
-            // draw the +- box if there are sub items
-            if (grp.Layers.Any() && isSnapshot == false)
-            {
-                DrawExpansionBox(
-                    g,
-                    bounds.Top + Constants.ExpandBoxTopPad,
-                    Constants.GrpIndent + Constants.ExpandBoxLeftPad,
-                    grp.Expanded);
-            }
-
-            if (grp.Visible == Visibility.PartiallyVisible)
-            {
-                drawGrayCheckbox = true;
-            }
-
-            if (DrawLines && !isSnapshot && grp.Expanded && grp.Layers.Any())
-            {
-                var endY = grp.Top + Constants.ItemHeight;
-
-                var blackPen = new Pen(_boxLineColor);
-                g.DrawLine(
-                    blackPen,
-                    Constants.VertLineIndent,
-                    bounds.Top + Constants.VertLineGrpTopOffset,
-                    Constants.VertLineIndent,
-                    endY);
-            }
-
-            if (bounds.Width > 35 && isSnapshot == false)
-            {
-                if (!grp.StateLocked)
-                {
-                    curLeft = Constants.GrpIndent + Constants.CheckLeftPad;
-                    DrawCheckBox(
-                        g,
-                        bounds.Top + Constants.CheckTopPad,
-                        curLeft,
-                        drawCheck,
-                        drawGrayCheckbox);
-                }
-            }
-
-            if (grp.Icon != null && bounds.Width > 55)
-            {
-                // draw the icon
-                DrawPicture(
-                    g,
-                    bounds.Right - Constants.IconRightPad,
-                    curTop + Constants.IconTopPad,
-                    Constants.IconSize,
-                    Constants.IconSize,
-                    grp.Icon);
-
-                // set the boundaries for text so that the text and icon don't overlap
-                curLeft = isSnapshot ? Constants.GrpIndent : Constants.GrpIndent + Constants.TextLeftPad;
-
-                curTop = bounds.Top + Constants.TextTopPad;
-                curWidth = bounds.Width - curLeft - Constants.TextRightPad;
-                curHeight = Constants.TextHeight;
-                rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-            }
-            else
-            {
-                // Bitmap bmp = MWLite.Symbology.Properties.Resources.folder_open;
-                // DrawPicture(DrawTool, bounds.Right - Constants.ICON_RIGHT_PAD, CurTop + Constants.ICON_TOP_PAD, Constants.ICON_SIZE, Constants.ICON_SIZE, bmp);
-                if (isSnapshot)
-                {
-                    curLeft = Constants.GrpIndent;
-                }
-                else
-                {
-                    curLeft = Constants.GrpIndent + Constants.TextLeftPad;
-                }
-
-                curTop = bounds.Top + Constants.TextTopPad;
-                curWidth = bounds.Width - curLeft - Constants.TextRightPadNoIcon;
-                curHeight = Constants.TextHeight;
-                rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-            }
-
-             // group icon
-             if (ShowGroupIcons)
-             {
-                 const int size = 16;
-                 Bitmap bmp = Icons.GetIcon(grp.Expanded ? LegendIcon.FolderOpened : LegendIcon.Folder) as Bitmap;
-                 rect.Offset(0, -2);
-                 DrawPicture(g, rect.Left, rect.Top, size, size, bmp);
-                 rect = new Rectangle(rect.X + size + 3, rect.Y + 2, rect.Width - size, rect.Height);
-             }
-
-            // group name
-            if (grp.Handle == _selectedGroupHandle && !isSnapshot)
-            {
-                DrawText(g, grp.Text, rect, _boldFont);
-            }
-            else
-            {
-                DrawText(g, grp.Text, rect, _font);
-            }
-
-            // set up the boundaries for drawing list items
-            curTop = bounds.Top + Constants.ItemHeight;
-
-            if (!grp.Expanded && !isSnapshot) return;
-            
-            var itemCount = grp.Layers.Count();
-            var newLeft = bounds.X + Constants.ListItemIndent;
-            var newWidth = bounds.Width - newLeft;
-            rect = new Rectangle(newLeft, curTop, newWidth, bounds.Height - curTop);
-
-            // now draw each of the subitems
-            for (var i = itemCount - 1; i >= 0; i--)
-            {
-                var lyr = grp.LayersInternal[i];
-                lyr.ScheduleHeightRecalc();
-
-                if (lyr.HideFromLegend)
-                {
-                    continue;
-                }
-                
-                // clipping
-                if (rect.Top + lyr.Height < ClientRectangle.Top && isSnapshot == false)
-                {
-                    // update the rectangle for the next layer
-                    rect.Y += lyr.Height;
-                    rect.Height -= lyr.Height;
-
-                    // Skip drawing this layer and move onto the next one
-                    continue;
-                }
-
-                DrawLayer(g, lyr, rect, isSnapshot);
-
-                DrawLayerLines(isSnapshot, g, grp, lyr, i, ref rect);
-
-                // set up the rectangle for the next layer
-                rect.Y += lyr.Height;
-                rect.Height -= lyr.Height;
-
-                if (rect.Top >= ClientRectangle.Bottom && !isSnapshot)
-                {
-                    break;
-                }
-            }
-        }
-
-        private void DrawLayerLines(bool isSnapshot, Graphics g, LegendGroup grp, LegendLayer lyr, int i, ref Rectangle rect)
-        {
-            if (isSnapshot || !DrawLines)
-            {
-                return;
-            }
-            
-            var pen = new Pen(_boxLineColor);
-
-            // draw sub-item vertical line
-            if (i != 0 && !grp.Layers[i - 1].HideFromLegend)
-            {
-                // not the last visible layer
-                g.DrawLine(
-                    pen,
-                    Constants.VertLineIndent,
-                    lyr.Top,
-                    Constants.VertLineIndent,
-                    lyr.Top + lyr.Height + Constants.ItemPad);
-            }
-            else
-            {
-                // only draw down to box, not down to next item in list(since there is no next item)
-                g.DrawLine(
-                    pen,
-                    Constants.VertLineIndent,
-                    lyr.Top,
-                    Constants.VertLineIndent,
-                    (int) (lyr.Top + (.55*Constants.ItemHeight)));
-            }
-
-            // draw Horizontal line over to the Vertical Sub-lyr line
-            int curTop = (int) (rect.Top + (.5*Constants.ItemHeight));
-
-            g.DrawLine(
-                pen,
-                Constants.VertLineIndent,
-                curTop,
-                rect.Left + Constants.ExpandBoxLeftPad - 3,
-                curTop);
-        }
-
-        /// <summary>
-        /// The draw text.
-        /// </summary>
-        private void DrawText(Graphics g, string text, Rectangle rect, Font font, Color penColor)
-        {
-            var pen = new Pen(penColor);
-            g.DrawString(text, font, pen.Brush, rect);
-        }
-
-        /// <summary>
-        /// The draw text.
-        /// </summary>
-        private void DrawText(Graphics g, string text, Rectangle rect, Font font)
-        {
-            DrawText(g, text, rect, font, Color.Black);
         }
 
         /// <summary>
@@ -803,7 +577,7 @@ namespace MW5.Api.Legend
 
                     foreach (LegendLayer layer in visibleLayers)
                     {
-                        DrawLayer(g, layer, rect, true);
+                        Renderer.DrawLayer(g, layer, rect, true);
 
                         var lyrHeight = layer.ExpandedHeight;
 
@@ -854,7 +628,7 @@ namespace MW5.Api.Legend
                             var lyr = grp.LayersInternal[j];
                             if (!lyr.HideFromLegend)
                             {
-                                DrawLayer(g, lyr, rect, true);
+                                Renderer.DrawLayer(g, lyr, rect, true);
 
                                 var lyrHeight = lyr.ExpandedHeight;
 
@@ -908,7 +682,7 @@ namespace MW5.Api.Legend
                 var g = Graphics.FromImage(bmp);
 
                 var rect = new Rectangle(0, 0, imgWidth - 1, lyrHeight - 1);
-                DrawLayer(g, lyr, rect, true);
+                Renderer.DrawLayer(g, lyr, rect, true);
             }
 
             return bmp;
@@ -985,121 +759,6 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The draw check box.
-        /// </summary>
-        private void DrawCheckBox(Graphics g, int itemTop, int itemLeft, bool drawCheck, bool drawGrayBackground)
-        {
-            LegendIcon icon;
-            if (drawCheck)
-            {
-                icon = drawGrayBackground ? LegendIcon.CheckedBoxGray : LegendIcon.CheckedBox;
-            }
-            else
-            {
-                icon = drawGrayBackground ? LegendIcon.UnCheckedBoxGray : LegendIcon.UnCheckedBox;
-            }
-
-            var image = Icons.GetIcon(icon);
-            DrawPicture(g, itemLeft, itemTop, Constants.CheckBoxSize, Constants.CheckBoxSize, image);
-        }
-
-        /// <summary>
-        /// Draws picture in the legend. Picture can be either an image or an icon
-        /// </summary>
-        private void DrawPicture(Graphics g, int picLeft, int picTop, int picWidth, int picHeight, object picture)
-        {
-            if (picture == null)
-            {
-                return;
-            }
-
-            var oldSm = g.SmoothingMode;
-            g.SmoothingMode = SmoothingMode.HighQuality;
-
-            var rect = new Rectangle(picLeft, picTop, picWidth, picHeight);
-
-            var icon = picture as Icon;
-
-            if (icon != null)
-            {
-                g.DrawIcon(icon, rect);
-            }
-            else
-            {
-                // try casting it to an Image
-                Image img = null;
-                try
-                {
-                    img = (Image) picture;
-                }
-                catch (InvalidCastException)
-                {
-                }
-
-                if (img != null)
-                {
-                    g.DrawImage(img, rect);
-                }
-                else
-                {
-                    MapWinGIS.Image mwImg = null;
-                    try
-                    {
-                        mwImg = (MapWinGIS.Image) picture;
-                    }
-                    catch (InvalidCastException)
-                    {
-                    }
-
-                    if (mwImg != null)
-                    {
-                        try
-                        {
-                            img = Image.FromHbitmap(new IntPtr(mwImg.Picture.Handle));
-                            g.DrawImage(img, rect);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-                }
-            }
-
-            g.SmoothingMode = oldSm;
-        }
-
-        /// <summary>
-        /// Expansion box with plus or minus sign
-        /// </summary>
-        private void DrawExpansionBox(Graphics g, int itemTop, int itemLeft, bool expanded)
-        {
-            var pen = new Pen(_boxLineColor, 1);
-
-            var rect = new Rectangle(itemLeft, itemTop, Constants.ExpandBoxSize, Constants.ExpandBoxSize);
-
-            // draw the border
-            DrawBox(g, rect, _boxLineColor, Color.White);
-
-            var midX = (int) (rect.Left + (.5*rect.Width));
-            var midY = (int) (rect.Top + (.5*rect.Height));
-
-            if (!expanded)
-            {
-                // draw a + sign, indicating that there is more to be seen
-                // draw the vertical part
-                g.DrawLine(pen, midX, itemTop + 2, midX, itemTop + Constants.ExpandBoxSize - 2);
-
-                // draw the horizontal part
-                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
-            }
-            else
-            {
-                // draw a - sign
-                g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
-            }
-        }
-
-        /// <summary>
         /// Locks the LegendControl, stopping it from redrawing until it is unlocked.
         /// Use this as a way of adding multiple layers without redrawing between each layer being added.
         /// Make sure to Unlock the LegendControl when done.
@@ -1125,306 +784,14 @@ namespace MW5.Api.Legend
             }
         }
 
-        /// <summary>
-        /// Draws a layer onto a given graphics surface
-        /// </summary>
-        /// <param name="g"> Graphics surface (object) onto which the give layer should be drawn </param>
-        /// <param name="lyr"> Layer object to be drawn </param>
-        /// <param name="bounds"> Rectangle oulining the allowable draw area </param>
-        /// <param name="isSnapshot"> Drawing is done differently when it is a snapshot we are takeing of this layer </param>
-        protected void DrawLayer(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        public LegendGroup FindClickedGroup(Point point, out bool inCheckbox, out bool inExpandbox)
         {
-            lyr.SmallIconWasDrawn = false;
-            lyr.Top = bounds.Top;
-            lyr.Elements.Clear();
-
-            int curLeft;
-            int curTop;
-            int curWidth;
-            int curHeight;
-            Rectangle rect;
-
-            // ------------------------------------------------------
-            // drawing background (with selection if needed)
-            // ------------------------------------------------------
-            if (!isSnapshot)
-            {
-                curLeft = bounds.Left;
-                curTop = bounds.Top;
-                curWidth = bounds.Width - Constants.ItemRightPad;
-                curHeight = lyr.Height;
-                rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                if (lyr.Handle == _selectedLayerHandle && bounds.Width > 25)
-                {
-                    // selects the title only
-                    rect.Height = Constants.ItemHeight;
-
-                    if (curTop + rect.Height > 0 || curTop < ClientRectangle.Height)
-                    {
-                        DrawBox(g, rect, _boxLineColor, SelectionColor);
-
-                        var el = new LayerElement(LayerElementType.ExpansionBox, rect);
-                        lyr.Elements.Add(el);
-                    }
-                }
-            }
-            else
-            {
-                curLeft = bounds.Left;
-                curTop = bounds.Top;
-                curWidth = bounds.Width - 1;
-                curHeight = lyr.ExpandedHeight - 1;
-                rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                DrawBox(g, rect, _boxLineColor, Color.White);
-            }
-
-            // -------------------------------------------------------
-            // drawing checkbox
-            // -------------------------------------------------------
-            if (bounds.Width > 55 && isSnapshot == false)
-            {
-                curTop = bounds.Top + Constants.CheckTopPad;
-                curLeft = bounds.Left + Constants.CheckLeftPad;
-
-                var visible = true;
-                if (lyr.DynamicVisibility)
-                {
-                    visible = (_map.CurrentScale >= lyr.MinVisibleScale)
-                              && (_map.CurrentScale <= lyr.MaxVisibleScale)
-                              && _map.Tiles.CurrentZoom >= lyr.MinVisibleZoom
-                              && _map.Tiles.CurrentZoom <= lyr.MaxVisibleZoom;
-                }
-
-                visible = visible && _map.get_LayerVisible(lyr.Handle);
-
-                // draw a grey background if the layer is in dynamic visibility mode.
-                DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
-
-                var el = new LayerElement(LayerElementType.CheckBox, new Rectangle(curLeft, curTop, Constants.CheckBoxSize, Constants.CheckBoxSize));
-                lyr.Elements.Add(el);
-            }
-
-            // ----------------------------------------------------------
-            // Drawing text
-            // ----------------------------------------------------------
-            var textSize = new SizeF(0.0f, 0.0f);
-            if (bounds.Width > 60)
-            {
-                // draw text
-                var text = _map.get_LayerName(lyr.Handle);
-                textSize = g.MeasureString(text, _font);
-
-                if (isSnapshot)
-                {
-                    curLeft = bounds.Left + Constants.CheckLeftPad;
-                }
-                else
-                {
-                    curLeft = bounds.Left + Constants.TextLeftPad;
-                }
-
-                curTop = bounds.Top + Constants.TextTopPad;
-
-                // CurWidth = bounds.Width - CurLeft - Constants.TEXT_RIGHT_PAD;
-                curWidth = bounds.Width - Constants.TextRightPad - 27;
-                curHeight = Constants.TextHeight;
-
-                rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
-                DrawText(g, text, rect, _font, ForeColor);
-
-                var el = new LayerElement(LayerElementType.Name, rect, text);
-                lyr.Elements.Add(el);
-            }
-
-            // ----------------------------------------------------------
-            // icons to the right of the layer name
-            // ----------------------------------------------------------
-            DrawLayerIcon(g, lyr, bounds, curLeft, textSize, curTop);
-
-            // ----------------------------------------------------------
-            // Drawing expansion box
-            // ----------------------------------------------------------
-            var customRect = new Rectangle(
-                bounds.Left + Constants.CheckLeftPad,
-                lyr.Top + Constants.ItemHeight + Constants.ExpandBoxTopPad,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent -
-                Constants.ExpandBoxLeftPad,
-                bounds.Height - lyr.Top);
-
-            if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
-            {
-                var args = new LayerPaintEventArgs(lyr.Handle, customRect, g);
-                FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
-            }
-
-            if (bounds.Width > 17 && isSnapshot == false)
-            {
-                rect = new Rectangle(
-                    bounds.Left,
-                    bounds.Top,
-                    bounds.Width - Constants.ItemRightPad,
-                    bounds.Height);
-
-                DrawExpansionBox(
-                    g,
-                    rect.Top + Constants.ExpandBoxTopPad,
-                    rect.Left + Constants.ExpandBoxLeftPad,
-                    lyr.Expanded);
-            }
-
-            // ----------------------------------------------------------
-            //   Symbology below the layer name
-            // ----------------------------------------------------------
-            if ((!isSnapshot && !lyr.Expanded) || bounds.Width <= 47)
-            {
-                return;
-            }
-
-            if (lyr.IsVector)
-            {
-                var renderer = new VectorSymbologyRenderer(this);
-                renderer.Render(g, lyr, bounds, isSnapshot);
-            }
-            else
-            {
-                var renderer = new RasterSymbologyRenderer(this);
-                renderer.Render(g, lyr, bounds, isSnapshot);
-            }
+            return _hitTest.FindClickedGroup(point, out inCheckbox, out inExpandbox);
         }
 
-        /// <summary>
-        /// Draws layer icon to the right of the name.
-        /// </summary>
-        private void DrawLayerIcon(Graphics g, LegendLayer lyr, Rectangle bounds, int curLeft, SizeF textSize, int curTop)
+        public LegendLayer FindClickedLayer(Point point, ref ClickedElement element)
         {
-            if (bounds.Width <= 60 || bounds.Right - curLeft - 41 <= textSize.Width)
-            {
-                return;
-            }
-            
-            // -5 (offset)
-            var top = bounds.Top + Constants.IconTopPad;
-            var left = bounds.Right - 36;
-            Image icon;
-
-            var ogrLayer = lyr.VectorSource;
-            if (ogrLayer != null)
-            {
-                icon = Icons.GetIcon(LegendIcon.Database);
-                DrawPicture(g, left, curTop, Constants.IconSize, Constants.IconSize, icon);
-            }
-            else if (lyr.Icon != null)
-            {
-                DrawPicture(g, left, curTop, Constants.IconSize, Constants.IconSize, lyr.Icon);
-            }
-            else if (lyr.Type == LegendLayerType.Image)
-            {
-                icon = Icons.GetIcon(LegendIcon.Image);
-                DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
-            }
-            else if (lyr.Type == LegendLayerType.Grid)
-            {
-                icon = Icons.GetIcon(LegendIcon.Grid);
-                DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
-            }
-            else
-            {
-                // drawing shapefile symbology preview, but only in case the layer is collapsed
-                if (!lyr.Expanded)
-                {
-                    lyr.SmallIconWasDrawn = true;
-
-                    // drawing category symbol
-                    var hdc = g.GetHdc();
-                    var clr = (lyr.Handle == _selectedLayerHandle && bounds.Width > 25)
-                        ? SelectionColor
-                        : BackColor;
-                    var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
-
-                    var sf = _map.get_GetObject(lyr.Handle) as Shapefile;
-
-                    if (sf != null)
-                    {
-                        if (lyr.Type == LegendLayerType.PointShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawPoint(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                        else if (lyr.Type == LegendLayerType.LineShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawLine(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize - 1,
-                                Constants.IconSize - 1,
-                                false,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                        else if (lyr.Type == LegendLayerType.PolygonShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawRectangle(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize - 1,
-                                Constants.IconSize - 1,
-                                false,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                    }
-
-                    g.ReleaseHdc(hdc);
-                }
-            }
-
-            // labels link
-            if (bounds.Width > 60 && bounds.Right - curLeft - 62 > textSize.Width)
-            {
-                var sf = _map.get_Shapefile(lyr.Handle);
-                if (sf != null)
-                {
-                    var top2 = bounds.Top + Constants.IconTopPad;
-                    var left2 = bounds.Right - 56;
-
-                    var scale = _map.CurrentScale;
-                    var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible &&
-                                        sf.Labels.Expression.Trim() != string.Empty;
-                    labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
-
-                    var icon2 = Icons.GetIcon(labelsVisible ? LegendIcon.ActiveLabel : LegendIcon.DimmedLabel);
-                    DrawPicture(g, left2, top2, Constants.IconSize, Constants.IconSize, icon2);
-                }
-            }
-
-            // editing icon
-            if (bounds.Width > 60 && bounds.Right - curLeft - 82 > textSize.Width)
-            {
-                var sf = _map.get_Shapefile(lyr.Handle);
-                if (sf != null && sf.InteractiveEditing)
-                {
-                    var top2 = bounds.Top + Constants.IconTopPad;
-                    var left2 = bounds.Right - 76;
-                    DrawPicture(
-                        g,
-                        left2,
-                        top2,
-                        Constants.IconSize,
-                        Constants.IconSize,
-                        Icons.GetIcon(LegendIcon.Editing));
-                }
-            }
+            return _hitTest.FindClickedLayer(point, ref element);
         }
 
         /// <summary>
@@ -1442,319 +809,6 @@ namespace MW5.Api.Legend
             }
 
             Invalidate();
-        }
-
-        /// <summary>
-        /// Locates the group that was clicked on in the legend, based on the coordinate within the legend (0,0) being top left of legend)
-        /// </summary>
-        /// <param name="point"> The point inside of the legend that was clicked. </param>
-        /// <param name="inCheckbox"> (by reference/out) Indicates whether a group visibilty check box was clicked. </param>
-        /// <param name="inExpandbox"> (by reference/out) Indicates whether the expand box next to a group was clicked. </param>
-        /// <returns> Returns the group that was clicked on or null/nothing. </returns>
-        public LegendGroup FindClickedGroup(Point point, out bool inCheckbox, out bool inExpandbox)
-        {
-            // finds the group that was clicked, i.e. heading of group, not subitems
-            inExpandbox = false;
-            inCheckbox = false;
-
-            var groupCount = _groups.Count;
-
-            for (var i = 0; i < groupCount; i++)
-            {
-                var grp = _groups.GetGroupInternal(i);
-
-                // set group header bounds
-                var curLeft = Constants.GrpIndent;
-                var curWidth = Width - Constants.GrpIndent - Constants.ItemRightPad;
-                var curTop = grp.Top;
-                var curHeight = Constants.ItemHeight;
-                var bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                if (bounds.Contains(point))
-                {
-                    // we are in the group heading
-                    // now check to see if the click was in the expansion box
-                    // +- a little to make the hot spot a little more precise
-                    curLeft = Constants.GrpIndent + Constants.ExpandBoxLeftPad + 1;
-                    curWidth = Constants.ExpandBoxSize - 1;
-                    curTop = grp.Top + Constants.ExpandBoxTopPad + 1;
-                    curHeight = Constants.ExpandBoxSize - 1;
-                    bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                    if (bounds.Contains(point))
-                    {
-                        // we are in the bounds for the expansion box
-                        // but only if there is an expansion box visible
-                        if (grp.Layers.Count > 0)
-                        {
-                            inExpandbox = true;
-                        }
-                    }
-                    else
-                    {
-                        // now check to see if in the check box
-                        curLeft = Constants.GrpIndent + Constants.CheckLeftPad + 1;
-                        curWidth = Constants.CheckBoxSize - 1;
-                        curTop = grp.Top + Constants.CheckTopPad + 1;
-                        curHeight = Constants.CheckBoxSize - 1;
-                        bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-                        if (bounds.Contains(point))
-                        {
-                            inCheckbox = true;
-                        }
-                    }
-
-                    return grp;
-                }
-            }
-
-            return null; // if we get to this point, no group item found
-        }
-
-        /// <summary>
-        /// Locates the layer that was clicked on in the legend, based on the coordinate within the legend (0,0) being top left of legend)
-        /// </summary>
-        /// <param name="point"> The point inside of the legend that was clicked. </param>
-        /// <param name="inCheckBox"> (by reference/out) Indicates whether a layer visibilty check box was clicked. </param>
-        /// <param name="inExpansionBox"> (by reference/out) Indicates whether the expand box next to a layer was clicked. </param>
-        /// <returns> Returns the group that was clicked on or null/nothing. </returns>
-        private LegendLayer FindClickedLayer(Point point, out bool inCheckBox, out bool inExpansionBox)
-        {
-            var element = new ClickedElement();
-            var lyr = FindClickedLayer(point, ref element);
-            inCheckBox = element.CheckBox;
-            inExpansionBox = element.ExpansionBox;
-            return lyr;
-        }
-
-        /// <summary>
-        /// Locates the layer that was clicked on in the legend.
-        /// </summary>
-        /// <param name="point"> The point. </param>
-        /// <param name="element"> The Element. </param>
-        /// <returns> The group that was clicked on or null/nothing. </returns>
-        public LegendLayer FindClickedLayer(Point point, ref ClickedElement element)
-        {
-            var groupCount = _groups.Count;
-
-            element.Nullify();
-
-            for (var i = 0; i < groupCount; i++)
-            {
-                var grp = _groups.GetGroupInternal(i);
-
-                if (grp.Expanded == false)
-                {
-                    continue;
-                }
-
-                var layerCount = grp.Layers.Count;
-
-                for (var j = 0; j < layerCount; j++)
-                {
-                    var lyr = grp.LayersInternal[j];
-
-                    // see if we are inside the current Layer
-                    var curLeft = Constants.ListItemIndent;
-                    var curTop = lyr.Top;
-                    var curWidth = Width - curLeft - Constants.ItemRightPad;
-                    var curHeight = lyr.Height;
-                    var bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                    // TODO: use layer.Elements instead recalculation of all bounds
-                    if (bounds.Contains(point))
-                    {
-                        // we are inside the Layer boundaries,
-                        // but we need to narrow down the search
-                        element.GroupIndex = i;
-
-                        // check to see if in the check box
-                        curLeft = Constants.ListItemIndent + Constants.CheckLeftPad + 1;
-                        curTop = lyr.Top + Constants.CheckTopPad + 1;
-                        curWidth = Constants.CheckBoxSize - 1;
-                        curHeight = Constants.CheckBoxSize - 1;
-                        bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                        if (bounds.Contains(point))
-                        {
-                            // we are in the check box
-                            element.CheckBox = true;
-                            return lyr;
-                        }
-
-                        // check to see if we are in the expansion box for this item
-                        curLeft = Constants.ListItemIndent + Constants.ExpandBoxLeftPad + 1;
-                        curTop = lyr.Top + Constants.ExpandBoxTopPad + 1;
-                        curWidth = Constants.ExpandBoxSize;
-                        curHeight = Constants.ExpandBoxSize;
-                        bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                        if (bounds.Contains(point))
-                        {
-                            // We are in the Expansion box
-                            element.ExpansionBox = true;
-                            return lyr;
-                        }
-
-                        if (lyr.IsRaster)
-                        {
-                            foreach (var item in lyr.Elements)
-                            {
-                                if (item.ElementType == LayerElementType.RasterColorInterval && item.PointWithin(point))
-                                {
-                                    element.ColorBox = true;
-                                    element.CategoryIndex = -1;
-                                    return lyr;
-                                }
-                            }
-                            
-                            return lyr;
-                        }
-
-                        if (!lyr.Expanded && lyr.IsVector && lyr.SmallIconWasDrawn)
-                        {
-                            curHeight = Constants.IconSize;
-                            curWidth = Constants.IconSize;
-                            curTop = lyr.Top + Constants.IconTopPad;
-                            curLeft = Width - 36;
-                            if (_vScrollBar.Visible)
-                            {
-                                curLeft -= _vScrollBar.Width;
-                            }
-
-                            bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-                            if (bounds.Contains(point))
-                            {
-                                element.ColorBox = true;
-                                return lyr;
-                            }
-                        }
-
-                        // layer icon (to the right from the caption)
-                        if ( lyr.IsVector )
-                        {
-                            curHeight = Constants.IconSize;
-                            curWidth = Constants.IconSize;
-                            curTop = lyr.Top + Constants.IconTopPad;
-                            curLeft = Width - 56;
-                            if (_vScrollBar.Visible)
-                            {
-                                curLeft -= _vScrollBar.Width;
-                            }
-
-                            bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-                            if (bounds.Contains(point))
-                            {
-                                element.LabelsIcon = true;
-                                return lyr;
-                            }
-                        }
-
-                        // check to see if we are in the default color box
-                        var sf = _map.get_GetObject(lyr.Handle) as Shapefile;
-
-                        if (sf != null)
-                        {
-                            curHeight = lyr.GetCategoryHeight(sf.DefaultDrawingOptions);
-                            curWidth = lyr.GetCategoryWidth(sf.DefaultDrawingOptions);
-                            curTop = lyr.Top + Constants.ItemHeight + 2;
-                            curLeft = Constants.ListItemIndent + Constants.TextLeftPad;
-                            if (curWidth != Constants.IconWidth)
-                            {
-                                curLeft -= (curWidth - Constants.IconWidth)/2;
-                            }
-
-                            bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                            if (bounds.Contains(point))
-                            {
-                                element.ColorBox = true;
-                                return lyr;
-                            }
-
-                            // check to sse if we are in the label
-                            curHeight = lyr.GetCategoryHeight(sf.DefaultDrawingOptions);
-                            curWidth = lyr.GetCategoryWidth(sf.DefaultDrawingOptions);
-                            curTop = lyr.Top + Constants.ItemHeight + 2;
-                            var maxWidth = lyr.get_MaxIconWidth(sf);
-                            curLeft = bounds.Left + Constants.TextLeftPad + maxWidth + 5;
-                            bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                            if (bounds.Contains(point))
-                            {
-                                element.Label = true;
-                                return lyr;
-                            }
-
-                            // categories
-                            curLeft = Constants.ListItemIndent + Constants.TextLeftPad;
-                            curTop = lyr.Top + Constants.ItemHeight + 2; // name
-                            curTop += curHeight + 2; // default symbology
-
-                            if (sf.Categories.Count > 0)
-                            {
-                                curTop += Constants.CsItemHeight + 2; // categories caption
-
-                                for (var cat = 0; cat < sf.Categories.Count; cat++)
-                                {
-                                    var options = sf.Categories.Item[cat].DrawingOptions;
-                                    curWidth = lyr.GetCategoryWidth(options);
-                                    curHeight = lyr.GetCategoryHeight(options);
-                                    bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                                    curTop += curHeight;
-
-                                    if (bounds.Contains(point))
-                                    {
-                                        element.ColorBox = true;
-                                        element.CategoryIndex = cat;
-                                        return lyr;
-                                    }
-                                }
-                            }
-
-                            if (sf.Charts.NumFields > 0 && sf.Charts.Count > 0)
-                            {
-                                curTop += Constants.CsItemHeight + 2; // charts caption
-                                curWidth = sf.Charts.IconWidth;
-                                curHeight = sf.Charts.IconHeight;
-                                bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                                if (bounds.Contains(point))
-                                {
-                                    element.Charts = true;
-                                    return lyr;
-                                }
-
-                                curTop += curHeight + 2;
-                                curHeight = Constants.IconHeight;
-                                curWidth = Constants.IconWidth;
-
-                                for (var fld = 0; fld < sf.Charts.NumFields; fld++)
-                                {
-                                    bounds = new Rectangle(curLeft, curTop, curWidth, curHeight);
-
-                                    if (bounds.Contains(point))
-                                    {
-                                        element.Charts = true;
-                                        element.ChartFieldIndex = fld;
-
-                                        // MessageBox.Show("Field selected: " + fld.ToString());
-                                        return lyr;
-                                    }
-
-                                    curTop += Constants.CsItemHeight + 2;
-                                }
-                            }
-                        }
-
-                        // nothing was hit
-                        return lyr;
-                    }
-                }
-            }
-
-            return null;
         }
 
         private void RedrawCore()
@@ -1941,7 +995,7 @@ namespace MW5.Api.Legend
                         continue;
                     }
 
-                    DrawGroup(_draw, grp, rect, false);
+                    Renderer.DrawGroup(_draw, grp, rect, false);
                     rect.Y += grp.Height + Constants.ItemPad;
 
                     if (rect.Top >= ClientRectangle.Bottom)
@@ -2353,7 +1407,7 @@ namespace MW5.Api.Legend
             }
 
             // now figure out if we are completing a mouseup on a layer
-            var lyr = FindClickedLayer(pnt, out inCheck, out inExpansion);
+            var lyr = _hitTest.FindClickedLayer(pnt, out inCheck, out inExpansion);
             if (lyr != null && inCheck == false)
             {
                 if (inExpansion == false || lyr.RasterSymbologyCount == 0)
@@ -2789,104 +1843,6 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The draw transparent patch.
-        /// </summary>
-        private void DrawTransparentPatch(Graphics g, int topPos, int leftPos, int boxHeight, int boxWidth,
-            Color outlineColor, bool drawOutline)
-        {
-            var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
-            var pen = new Pen(outlineColor);
-
-            // fill the rectangle with a diagonal hatch
-            Brush brush = new HatchBrush(HatchStyle.LightUpwardDiagonal, _boxLineColor, Color.White);
-            g.FillRectangle(brush, rect);
-
-            if (drawOutline)
-            {
-                g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
-            }
-        }
-
-        /// <summary>
-        /// The draw color patch.
-        /// </summary>
-        private void DrawColorPatch(
-            Graphics g,
-            Color startColor,
-            Color endColor,
-            int topPos,
-            int leftPos,
-            int boxHeight,
-            int boxWidth,
-            Color outlineColor,
-            bool drawOutline)
-        {
-            DrawColorPatch(
-                g,
-                startColor,
-                endColor,
-                topPos,
-                leftPos,
-                boxHeight,
-                boxWidth,
-                outlineColor,
-                drawOutline,
-                LegendLayerType.Invalid);
-        }
-
-        /// <summary>
-        /// The draw color patch.
-        /// </summary>
-        private void DrawColorPatch(
-            Graphics g,
-            Color startColor,
-            Color endColor,
-            int topPos,
-            int leftPos,
-            int boxHeight,
-            int boxWidth,
-            Color outlineColor,
-            bool drawOutline,
-            LegendLayerType layerType)
-        {
-            //TODO: revisit
-            
-            // Note - LayerType == invalid when we don't care :)
-            if (layerType == LegendLayerType.LineShapefile)
-            {
-                if (startColor.A == 0)
-                {
-                    startColor = Color.FromArgb(255, startColor);
-                }
-
-                var pen = new Pen(startColor, 2);
-
-                var oldSmoothingMode = g.SmoothingMode;
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-
-                g.DrawLine(pen, leftPos, topPos + 8, leftPos + 4, topPos + 3);
-                g.DrawLine(pen, leftPos + 4, topPos + 3, leftPos + 9, topPos + 10);
-                g.DrawLine(pen, leftPos + 9, topPos + 10, leftPos + 13, topPos + 4);
-
-                g.SmoothingMode = oldSmoothingMode;
-            }
-            else
-            {
-                var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
-                var pen = new Pen(outlineColor);
-
-                // fill the rectangle with a gradient fill
-                Brush brush = new LinearGradientBrush(rect, startColor, endColor, LinearGradientMode.Horizontal);
-                g.FillRectangle(brush, rect);
-
-                if (drawOutline)
-                {
-                    g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
-                }
-            }
-        }
-
-        /// <summary>
         /// The v scroll bar_ scroll.
         /// </summary>
         private void VScrollBarScroll(object sender, ScrollEventArgs e)
@@ -2944,6 +1900,17 @@ namespace MW5.Api.Legend
             }
 
             return g.Handle;
+        }
+
+        private void LegendControl_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2)
+            {
+                if (SelectedLayer != null)
+                {
+                    
+                }
+            }
         }
 
         /// <summary>

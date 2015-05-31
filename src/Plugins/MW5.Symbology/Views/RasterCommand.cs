@@ -14,5 +14,6 @@ namespace MW5.Plugins.Symbology.Views
         OpenFolder = 3,
         SaveStyle = 4,
         LoadStyle = 5,
+        ShowDriverInfo = 6,
     }
 }

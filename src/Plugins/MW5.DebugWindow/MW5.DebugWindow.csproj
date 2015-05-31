@@ -179,10 +179,10 @@
     <None Include="Resources\bug-24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\bug-multi-size.ico" />
+    <None Include="Resources\img_clear.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\img_clear.png" />
+    <None Include="Resources\ico_bug24.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

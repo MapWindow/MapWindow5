@@ -135,6 +135,7 @@ namespace MW5.Plugins.Symbology.Views
                 yield return btnApply;
                 yield return btnClearColorAdjustments;
                 yield return btnOpenFolder;
+                yield return btnShowDriverInfo;
             }
         }
 

@@ -9,6 +9,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Data.Views;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -72,6 +73,11 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterCommand.SaveStyle:
                     LayerSerializationHelper.SaveSettings(Model);
+                    break;
+                case RasterCommand.ShowDriverInfo:
+                    if (_raster == null) return;
+                    var manager = new DriverManager {SelectedDriver = _raster.Driver};
+                    _context.Container.Run<DriversPresenter, DriverManager>(manager);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");

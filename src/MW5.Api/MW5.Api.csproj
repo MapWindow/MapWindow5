@@ -84,9 +84,12 @@
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\Events\DatasourceCancelEventArgs.cs" />
-    <Compile Include="Legend\SymbologyRendererBase.cs" />
-    <Compile Include="Legend\VectorSymbologyRenderer.cs" />
-    <Compile Include="Legend\RasterSymbologyRenderer.cs" />
+    <Compile Include="Legend\LegendHitTest.cs" />
+    <Compile Include="Legend\Renderer\GroupRenderer.cs" />
+    <Compile Include="Legend\Renderer\LayerRenderer.cs" />
+    <Compile Include="Legend\Renderer\SymbologyRendererBase.cs" />
+    <Compile Include="Legend\Renderer\VectorSymbologyRenderer.cs" />
+    <Compile Include="Legend\Renderer\RasterSymbologyRenderer.cs" />
     <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

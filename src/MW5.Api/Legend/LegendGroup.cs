@@ -224,7 +224,7 @@ namespace MW5.Api.Legend
 
             var rect = new Rectangle(0, 0, imgWidth, expandedHeight);
 
-            _legend.DrawGroup(g, this, rect, true);
+            _legend.Renderer.DrawGroup(g, this, rect, true);
 
             return bmp;
         }

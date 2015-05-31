@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
-namespace MW5.Api.Legend
+namespace MW5.Api.Legend.Renderer
 {
     /// <summary>
     /// Renders symbology preview in the expansion section below the layer.
@@ -119,6 +114,26 @@ namespace MW5.Api.Legend
                 textRect.Y += Constants.CsItemHeightAndPad();
 
                 count++;
+            }
+        }
+
+        /// <summary>
+        /// The draw transparent patch.
+        /// </summary>
+        private void DrawTransparentPatch(Graphics g, int topPos, int leftPos, int boxHeight, int boxWidth, Color outlineColor, bool drawOutline)
+        {
+            // TODO: implement it for color schemes
+
+            var rect = new Rectangle(leftPos, topPos, boxWidth, boxHeight);
+            var pen = new Pen(outlineColor);
+
+            // fill the rectangle with a diagonal hatch
+            Brush brush = new HatchBrush(HatchStyle.LightUpwardDiagonal, Color.Gray, Color.White);
+            g.FillRectangle(brush, rect);
+
+            if (drawOutline)
+            {
+                g.DrawRectangle(pen, leftPos, topPos, boxWidth, boxHeight);
             }
         }
     }

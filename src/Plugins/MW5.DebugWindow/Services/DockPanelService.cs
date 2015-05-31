@@ -29,7 +29,7 @@ namespace MW5.Plugins.DebugWindow.Services
             {
                 var panel = panels.Add(presenter.GetInternalObject(), DockPanelKey, plugin.Identity);
                 panel.Caption = "Debug";
-                panel.SetIcon(Resources.ico_bug);
+                panel.SetIcon(Resources.ico_bug24);
                 panel.DockTo(DockPanelState.Bottom, 300);
                 panel.Visible = false;
             }

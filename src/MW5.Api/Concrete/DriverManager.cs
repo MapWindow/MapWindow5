@@ -22,6 +22,8 @@ namespace MW5.Api.Concrete
             get { return _manager.DriverCount; }
         }
 
+        public DatasourceDriver SelectedDriver { get; set; }
+
         public DatasourceDriver get_Driver(int driverIndex)
         {
             var gdalDriver = _manager.Driver[driverIndex];

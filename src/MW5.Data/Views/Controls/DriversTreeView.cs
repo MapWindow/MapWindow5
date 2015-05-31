@@ -32,7 +32,14 @@ namespace MW5.Data.Views.Controls
 
         public void Initialize(DriverManager manager)
         {
-            _drivers = manager.ToList();
+            if (manager.SelectedDriver != null)
+            {
+                _drivers = new List<DatasourceDriver> {manager.SelectedDriver};
+            }
+            else
+            {
+                _drivers = manager.ToList();
+            }
 
             BuildList();
         }

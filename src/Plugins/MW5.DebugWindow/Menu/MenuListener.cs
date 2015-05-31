@@ -120,9 +120,8 @@ namespace MW5.Plugins.DebugWindow.Menu
 
             var panel = panels.Add(_debugWindow, DOCKPANELKEY, _plugin.Identity);
             panel.Caption = "Debug window";
-            panel.SetIcon(Resources.ico_bug);
+            panel.SetIcon(Resources.ico_bug24);
 
-            // TODO: Read configuration setting to show the window like the last time:
             panel.DockTo(DockPanelState.Bottom, 100);
 
             panels.Unlock();

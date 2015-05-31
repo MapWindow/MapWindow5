@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MapWinGIS;
 
-namespace MW5.Api.Legend
+namespace MW5.Api.Legend.Renderer
 {
     /// <summary>
     /// Renders symbology preview in the expansion section below the layer.
@@ -46,7 +42,7 @@ namespace MW5.Api.Legend
             var top = GetSymbologyTop(bounds);
             var height = layer.GetCategoryHeight(sf.DefaultDrawingOptions) + Constants.VerticalPad;
 
-            if (top + height > _legend.ClientRectangle.Top)
+            if (top + height > Legend.ClientRectangle.Top)
             {
                 DrawShapefileCategory(
                     g,
@@ -172,7 +168,7 @@ namespace MW5.Api.Legend
                 top,
                 bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
                 Constants.TextHeight);
-            DrawText(g, caption, rect, Font, _legend.ForeColor);
+            DrawText(g, caption, rect, Font, Legend.ForeColor);
             top += Constants.CsItemHeight + Constants.VerticalPad;
 
             // storing bounds
@@ -181,7 +177,7 @@ namespace MW5.Api.Legend
 
             // preview
             var hdc = g.GetHdc();
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(_legend.BackColor));
+            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
 
             left = bounds.Left + Constants.TextLeftPad;
             sf.Charts.DrawChart(hdc, left, top, true, backColor);
@@ -241,7 +237,7 @@ namespace MW5.Api.Legend
 
             // drawing category symbol
             var hdc = g.GetHdc();
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(_legend.BackColor));
+            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
 
             var left = bounds.Left + Constants.TextLeftPad;
             if (categoryWidth != Constants.IconWidth)
@@ -315,7 +311,7 @@ namespace MW5.Api.Legend
             var categoryHeight = layer.GetCategoryHeight(options);
             var categoryWidth = layer.GetCategoryWidth(options);
 
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(_legend.BackColor));
+            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
 
             var left = bounds.Left + Constants.TextLeftPad;
             if (categoryWidth != Constants.IconWidth)
@@ -387,7 +383,7 @@ namespace MW5.Api.Legend
                 bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
                 Constants.TextHeight);
 
-            DrawText(g, name, rect, Font, _legend.ForeColor);
+            DrawText(g, name, rect, Font, Legend.ForeColor);
         }
     }
 }

@@ -46,11 +46,9 @@ namespace MW5.Plugins.Symbology.Controls
             general.AddSubItem("Size", string.Format("{0}×{1}", raster.Width, raster.Height));
             general.AddSubItem("Palette", raster.PaletteInterpretation.ToString());
             general.AddSubItem("Bands", raster.NumBands);
+            general.AddSubItem("Driver", raster.Driver.Name);
 
             root.AddSubItem(general);
-
-            var driver = GetDriverInfo(raster);
-            root.AddSubItem(driver);
 
             var bandsData = GetBandsInfo(raster);
             root.AddSubItem(bandsData);
@@ -60,37 +58,19 @@ namespace MW5.Plugins.Symbology.Controls
             return root;
         }
 
-        private NodeData GetDriverInfo(IRasterSource raster)
-        {
-            var root = new NodeData("Driver");
-            var driver = raster.Driver;
-
-            var values = Enum.GetValues(typeof(GdalDriverMetadata));
-            foreach (GdalDriverMetadata item in values)
-            {
-                string s = driver.get_Metadata(item);
-                root.AddSubItem(item.EnumToString(), s);
-            }
-
-            return root;
-        }
-
         private void AddBounds(NodeData root, IRasterSource raster)
         {
             var bounds = new NodeData("Bounds");
-            bounds.AddSubItem("Dx", raster.Dx);
-            bounds.AddSubItem("Dy", raster.Dy);
-            bounds.AddSubItem("XllCenter", raster.XllCenter);
-            bounds.AddSubItem("YllCenter", raster.YllCenter);
+            bounds.AddSubItem("Cell size", string.Format("{0}×{1}", raster.Dx, raster.Dy));
+            bounds.AddSubItem("Lower left corner", string.Format("{0};{1}", raster.XllCenter, raster.YllCenter));
             root.AddSubItem(bounds);
 
             var buffer = new NodeData("Buffer");
             buffer.AddSubItem("Width", raster.BufferWidth);
             buffer.AddSubItem("Height", raster.BufferHeight);
-            buffer.AddSubItem("Dx", raster.BufferDx);
-            buffer.AddSubItem("Dy", raster.BufferDy);
-            buffer.AddSubItem("XllCenter", raster.BufferXllCenter);
-            buffer.AddSubItem("YllCenter", raster.BufferYllCenter);
+            buffer.AddSubItem("Cell size", string.Format("{0}×{1}", raster.BufferDx, raster.BufferDy));
+            buffer.AddSubItem("Lower left corner", string.Format("{0};{1}", raster.BufferXllCenter, raster.BufferYllCenter));
+            
             root.AddSubItem(buffer);
         }
 
