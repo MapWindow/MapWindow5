@@ -486,7 +486,7 @@ namespace MW5.Api.Legend
                     // figure out how tall the image is going to need to be
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = _groups.GetGroupInternal(i);
+                        grp = GetGroup(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
@@ -510,7 +510,7 @@ namespace MW5.Api.Legend
                     // now draw the snapshot
                     for (var i = grpCount - 1; i >= 0; i--)
                     {
-                        grp = _groups.GetGroupInternal(i);
+                        grp = GetGroup(i);
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
@@ -703,7 +703,7 @@ namespace MW5.Api.Legend
 
                 for (var i = numGroups - 1; i >= 0; i--)
                 {
-                    var grp = _groups.GetGroupInternal(i);
+                    var grp = GetGroup(i);
                     grp.ScheduleHeightRecalculation();
 
                     if (rect.Top + grp.Height < ClientRectangle.Top)
@@ -743,7 +743,7 @@ namespace MW5.Api.Legend
 
             for (var i = _groups.Count - 1; i >= 0; i--)
             {
-                var grp = _groups.GetGroupInternal(i);
+                var grp = GetGroup(i);
                 grp.Top = curTop;
 
                 if (grp.Expanded)
@@ -827,7 +827,7 @@ namespace MW5.Api.Legend
                 return false;
             }
 
-            var grp = _groups.GetGroupInternal(groupIndex);
+            var grp = GetGroup(groupIndex);
             grp.LayersInternal.RemoveAt(layerIndex);
 
             _map.RemoveLayer(layerHandle);
@@ -892,7 +892,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = _groups.GetGroupInternal(i);
+                var grp = GetGroup(i);
                 var itemCount = grp.Layers.Count;
 
                 for (var j = 0; j < itemCount; j++)
@@ -983,7 +983,7 @@ namespace MW5.Api.Legend
                 int currentPositionInGroup;
                 FindLayerByHandle(layerHandle, out sourceGroupIndex, out currentPositionInGroup);
 
-                var sourceGroup = _groups.GetGroupInternal(sourceGroupIndex);
+                var sourceGroup = GetGroup(sourceGroupIndex);
                 var destinationGroup = Groups.ItemByHandle(targetGroupHandle);
 
                 if (currentPositionInGroup != targetPositionInGroup || sourceGroup.Handle != destinationGroup.Handle)
@@ -1037,7 +1037,7 @@ namespace MW5.Api.Legend
             _map.LockWindow(tkLockMode.lmLock);
             for (var i = grpCount - 1; i >= 0; i--)
             {
-                var grp = _groups.GetGroupInternal(i);
+                var grp = GetGroup(i);
                 var lyrCount = grp.Layers.Count;
                 for (var j = lyrCount - 1; j >= 0; j--)
                 {

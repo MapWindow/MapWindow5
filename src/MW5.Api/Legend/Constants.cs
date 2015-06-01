@@ -2,7 +2,7 @@
 {
     internal class Constants
     {
-        public const int ItemHeight = 18;
+        public const int ItemHeight = 19; 
         public const int ItemPad = 4;
         public const int ItemRightPad = 5;
         // TEXT

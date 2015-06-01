@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Legend.Abstract;
@@ -15,9 +17,12 @@ namespace MW5.Api.Legend
     /// </summary>
     public partial class LegendControl : LegendControlBase, ILegend
     {
-        private LayerCollection<ILegendLayer> _layers;
         private readonly DragInfo _dragInfo = new DragInfo();
+        private readonly ClickInfo _clickInfo = new ClickInfo();
+        private LayerCollection<ILegendLayer> _layers;
         private Image _dragBuffer;
+        private TextBox _textBox;
+        private LayerElement _activeElement;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendControl"/> class.
@@ -33,11 +38,21 @@ namespace MW5.Api.Legend
 
         private void AttachEventHandlers()
         {
-            DoubleClick += LegendDoubleClick;
+            //DoubleClick += LegendDoubleClick;
             KeyDown += LegendControl_KeyDown;
             MouseDown += LegendMouseDown;
             MouseMove += LegendMouseMove;
             MouseUp += LegendMouseUp;
+
+            _clickInfo.LayerShowProperties += (s, e) =>
+            {
+                FireEvent(this, LayerDoubleClick, new LayerEventArgs(e.LayerHandle));
+            };
+
+            _clickInfo.LayerEditName += (s, e) =>
+            {
+                ShowTextBox(e.LayerHandle);
+            };
         }
 
         #region Events
@@ -188,6 +203,11 @@ namespace MW5.Api.Legend
             }
         }
 
+        private TextBox TextBox
+        {
+            get { return _textBox ?? (_textBox = new TextBox()); }
+        }
+
         #endregion
 
         #region Event handlers
@@ -248,6 +268,11 @@ namespace MW5.Api.Legend
         /// </summary>
         private void LegendMouseMove(object sender, MouseEventArgs e)
         {
+            if (_dragInfo.MouseDown)
+            {
+                _clickInfo.Abort();
+            }
+
             if (_dragInfo.MouseDown && Math.Abs(_dragInfo.StartY - e.Y) > 10)
             {
                 _dragInfo.Dragging = true;
@@ -302,27 +327,123 @@ namespace MW5.Api.Legend
         {
             if (e.KeyCode == Keys.F2)
             {
-                if (SelectedLayer != null)
-                {
-
-                }
+                // TODO: check group as well
+                ShowTextBox(SelectedLayerHandle);
             }
         }
 
         #endregion
 
+        #region Name editing
+
+        /// <summary>
+        /// Displays textbox with layer name.
+        /// </summary>
+        private void ShowTextBox(int layerHandle)
+        {
+            var layer = Layers.ItemByHandle(layerHandle) as LegendLayer;
+            if (layer == null)
+            {
+                return;
+            }
+
+            var el = layer.Elements.FirstOrDefault(item => item.ElementType == LayerElementType.Name &&
+                                                               item.LayerHandle == layer.Handle);
+
+            if (el == null)
+            {
+                return;
+            }
+
+            var txt = TextBox;
+
+            txt.Left = el.Left;
+            txt.Top = el.Top;
+            txt.Width = el.Width + Constants.TextRightPad;
+            txt.Height = el.Height;
+
+            if (txt.Height > el.Height)
+            {
+                int dy = Convert.ToInt32((txt.Height - el.Height) / 2.0);
+                txt.Top -= dy;
+            }
+
+            txt.Text = layer.Name;
+            txt.SelectAll();
+
+            txt.LostFocus += txt_LostFocus;
+            txt.KeyDown += txt_KeyDown;
+
+            Controls.Add(TextBox);
+            TextBox.Focus();
+
+            _activeElement = el;
+        }
+
+        private void txt_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (string.IsNullOrWhiteSpace(TextBox.Text)) return;
+
+                SaveLayerName();
+
+                Controls.Remove(TextBox);
+            }
+        }
+
+        private void txt_LostFocus(object sender, EventArgs e)
+        {
+            Controls.Remove(TextBox);
+
+            if (string.IsNullOrWhiteSpace(TextBox.Text)) return;
+
+            SaveLayerName();
+        }
+
+        private void SaveLayerName()
+        {
+            if (_activeElement == null) return;
+
+            switch (_activeElement.ElementType)
+            {
+                case LayerElementType.Name:
+                    var layer = Layers.ItemByHandle(_activeElement.LayerHandle);
+                    if (layer != null)
+                    {
+                        layer.Name = TextBox.Text;
+                        Redraw();
+                    }
+                    break;
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            Controls.Remove(TextBox);   // discard changes
+
+            base.OnResize(e);
+        }
+
+        #endregion
+
         #region Mouse down
+
         /// <summary>
         /// The handle left mouse down.
         /// </summary>
         private void HandleLeftMouseDown(object sender, MouseEventArgs e)
         {
+            _clickInfo.ClickId++;
+            //Debug.Print("MOUSE CLICK: " + DateTime.Now.ToString("hh:mm:ss.fff"));
+
             if (_dragInfo.Dragging || _dragInfo.MouseDown)
             {
-                // something went wrong and the legend got locked but never got unlocked
                 if (_dragInfo.LegendLocked)
                 {
                     Unlock();
+                    Logger.Current.Warn(
+                    "Legend.HandleLeftMouseDown: something went wrong and the legend got locked but never got unlocked.");
                 }
             }
 
@@ -445,7 +566,6 @@ namespace MW5.Api.Legend
 
                 if (element.Charts && element.ChartFieldIndex == -1)
                 {
-                    // default symbology
                     FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
                     Redraw();
                     return;
@@ -453,13 +573,38 @@ namespace MW5.Api.Legend
 
                 if (element.Charts && element.ChartFieldIndex != -1)
                 {
-                    // category symbology
                     FireEvent(
                         this,
                         LayerChartFieldClicked,
                         new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.ChartFieldIndex));
                     Redraw();
                     return;
+                }
+
+                if (SelectedLayerHandle != lyr.Handle)
+                {
+                    // a click on another layer; if there will be a second one in time
+                    // we shall display propeties, but editing must not start unless there is 
+                    // one more click
+                    //Debug.WriteLine("First click on unselected layer.");
+                    _clickInfo.IsFirstClick = false;
+                    _clickInfo.StartTimer(lyr.Handle, true);
+                }
+                else
+                {
+                    if (_clickInfo.IsFirstClick)
+                    {
+                        // layer already selected, either editing or properties can be invoked
+                        // depending on the presence of the second click in time
+                        //Debug.WriteLine("A click on selected layer.");
+                        _clickInfo.StartTimer(lyr.Handle, false);
+                    }
+                    else
+                    {
+                        _clickInfo.IsDoubleClick = _clickInfo.Milliseconds < SystemInformation.DoubleClickTime;
+                        //Debug.WriteLine("Second click on the selected layer. Is double click: " + _clickInfo.IsDoubleClick);
+                        return;
+                    }
                 }
 
                 // Start dragging operation only if the clicked layer is selected.
@@ -487,6 +632,8 @@ namespace MW5.Api.Legend
 
             Redraw();
         }
+
+
 
         /// <summary>
         /// The handle right mouse down.
@@ -829,10 +976,8 @@ namespace MW5.Api.Legend
         }
 
         /// <summary>
-        /// The draw drag line.
+        /// Drawing the dragging line.
         /// </summary>
-        /// <param name="grpIndex"> The grp index. </param>
-        /// <param name="lyrIndex"> The lyr index. </param>
         private void DrawDragLine(int grpIndex, int lyrIndex)
         {
             LegendGroup grp = null;

@@ -106,7 +106,7 @@ namespace MW5.Api.Legend.Renderer
                 g.FillRectangle(brush, r);
                 g.DrawRectangle(Pens.Gray, r);
 
-                layer.Elements.Add(new LayerElement(LayerElementType.RasterColorInterval, r, count));
+                layer.Elements.Add(new LayerElement(LayerElementType.RasterColorInterval, count, r));
 
                 DrawText(g, item.ToString(), textRect, Font, Color.Black);
 

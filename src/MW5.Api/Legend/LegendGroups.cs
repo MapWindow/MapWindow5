@@ -467,7 +467,7 @@ namespace MW5.Api.Legend
             }
         }
 
-        internal LegendGroup GetGroupInternal(int index)
+        private LegendGroup GetGroup(int index)
         {
             return _allGroups[index] as LegendGroup;
         }
@@ -483,7 +483,7 @@ namespace MW5.Api.Legend
 
                 for (var i = 0; i < Count; i++)
                 {
-                    var g = GetGroupInternal(i);
+                    var g = GetGroup(i);
                     g.RecalcHeight();
                     retval += g.Height + Constants.ItemPad;
                 }

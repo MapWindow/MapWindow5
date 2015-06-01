@@ -84,6 +84,7 @@
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
+    <Compile Include="Legend\ClickInfo.cs" />
     <Compile Include="Legend\Events\DatasourceCancelEventArgs.cs" />
     <Compile Include="Legend\LegendControl.cs">
       <SubType>UserControl</SubType>

@@ -13,12 +13,15 @@ namespace MW5.Api.Legend.Renderer
     /// </summary>
     public class LayerRenderer: SymbologyRendererBase
     {
-        protected readonly Font BoldFont;
-
         public LayerRenderer(LegendControlBase legend) 
             : base(legend)
         {
-            BoldFont = new Font("Arial", 8, FontStyle.Bold);
+            
+        }
+
+        public Font BoldFont
+        {
+            get { return new Font(Legend.Font, FontStyle.Bold); }
         }
 
         /// <summary>
@@ -41,7 +44,7 @@ namespace MW5.Api.Legend.Renderer
             DrawLayerCheckBox(g, lyr, bounds, isSnapshot);
 
             // drawing text
-            var textSize = DrawLayerCaption(g, lyr, bounds, isSnapshot);
+            var textSize = DrawLayerName(g, lyr, bounds, isSnapshot);
 
             // icons to the right of the layer name
             DrawLayerIcon(g, lyr, bounds, textSize, isSnapshot);
@@ -137,7 +140,7 @@ namespace MW5.Api.Legend.Renderer
                     (curTop + rect.Height > 0 || curTop < Legend.ClientRectangle.Height))
                 {
                     DrawRectangle(g, rect, BoxLineColor, Legend.SelectionColor);
-                    var el = new LayerElement(LayerElementType.ExpansionBox, rect);
+                    var el = new LayerElement(LayerElementType.ExpansionBox, lyr.Handle, rect);
                     lyr.Elements.Add(el);
                 }
             }
@@ -154,7 +157,7 @@ namespace MW5.Api.Legend.Renderer
         /// <summary>
         /// Draws the layer caption.
         /// </summary>
-        private SizeF DrawLayerCaption(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        private SizeF DrawLayerName(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
             var textSize = new SizeF(0.0f, 0.0f);
 
@@ -169,13 +172,12 @@ namespace MW5.Api.Legend.Renderer
 
             var point = GetTextLocation(bounds, isSnapshot);
 
-            int curWidth = bounds.Width - Constants.TextRightPad - 27;
-            const int curHeight = Constants.TextHeight;
+            int curWidth = bounds.Width - Constants.TextLeftPad - Constants.TextRightPad;
 
-            var rect = new Rectangle(point.X, point.Y, curWidth, curHeight);
+            var rect = new Rectangle(point.X, point.Y, curWidth, Constants.TextHeight);
             DrawText(g, text, rect, Legend.Font, Legend.ForeColor);
 
-            var el = new LayerElement(LayerElementType.Name, rect, text);
+            var el = new LayerElement(LayerElementType.Name, lyr.Handle, rect);
             lyr.Elements.Add(el);
 
             return textSize;
@@ -199,7 +201,9 @@ namespace MW5.Api.Legend.Renderer
             // draw a grey background if the layer is in dynamic visibility mode.
             DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
 
-            var el = new LayerElement(LayerElementType.CheckBox, new Rectangle(curLeft, curTop, Constants.CheckBoxSize, Constants.CheckBoxSize));
+            var rect = new Rectangle(curLeft, curTop, Constants.CheckBoxSize, Constants.CheckBoxSize);
+            var el = new LayerElement(LayerElementType.CheckBox, lyr.Handle, rect);
+
             lyr.Elements.Add(el);
         }
 

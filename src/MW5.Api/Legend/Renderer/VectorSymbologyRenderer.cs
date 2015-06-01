@@ -172,7 +172,7 @@ namespace MW5.Api.Legend.Renderer
             top += Constants.CsItemHeight + Constants.VerticalPad;
 
             // storing bounds
-            var el = new LayerElement(LayerElementType.Charts, rect);
+            var el = new LayerElement(LayerElementType.Charts, layer.Handle, rect);
             layer.Elements.Add(el);
 
             // preview
@@ -185,7 +185,7 @@ namespace MW5.Api.Legend.Renderer
             g.ReleaseHdc(hdc);
 
             // storing bounds
-            el = new LayerElement(LayerElementType.ChartField, rect);
+            el = new LayerElement(LayerElementType.ChartField, layer.Handle, rect);
             layer.Elements.Add(el);
 
             // fields
@@ -201,7 +201,7 @@ namespace MW5.Api.Legend.Renderer
                 g.DrawRectangle(pen, rect);
 
                 // storing bounds
-                el = new LayerElement(LayerElementType.ChartField, rect, i);
+                el = new LayerElement(LayerElementType.ChartField, i, rect);
                 layer.Elements.Add(el);
 
                 rect = new Rectangle(
@@ -213,7 +213,7 @@ namespace MW5.Api.Legend.Renderer
                 DrawText(g, name, rect, Font, Color.Black);
 
                 // storing bounds
-                el = new LayerElement(LayerElementType.ChartFieldName, rect, name, i);
+                el = new LayerElement(LayerElementType.ChartFieldName, layer.Handle, rect, i);
                 layer.Elements.Add(el);
 
                 top += Constants.CsItemHeight + Constants.VerticalPad;

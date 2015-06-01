@@ -19,6 +19,10 @@ namespace MW5.Api.Legend
             _legend = legend;
         }
 
+        private LegendGroup GetGroup(int index)
+        {
+            return _legend.Groups[index] as LegendGroup;
+        }
 
         /// <summary>
         /// Locates the group that was clicked on in the legend, based on the coordinate within the legend (0,0) being top left of legend)
@@ -43,7 +47,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = groups.GetGroupInternal(i);
+                var grp = GetGroup(i);
 
                 // set group header bounds
                 var curLeft = Constants.GrpIndent;
@@ -122,7 +126,7 @@ namespace MW5.Api.Legend
 
             for (var i = 0; i < groupCount; i++)
             {
-                var grp = groups.GetGroupInternal(i);
+                var grp = GetGroup(i);
 
                 if (grp.Expanded == false)
                 {

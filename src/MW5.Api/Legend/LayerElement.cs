@@ -7,55 +7,47 @@ namespace MW5.Api.Legend
     /// </summary>
     internal class LayerElement
     {
-        internal LayerElement(LayerElementType type, int top, int left, int width, int height)
+        public LayerElement(LayerElementType type, int layerHandle, Rectangle bounds)
+            : this(type, layerHandle, bounds, -1)
         {
-            Text = string.Empty;
-            Index = -1;
-            ElementType = type;
-            Top = top;
-            Left = left;
-            Width = width;
-            Height = height;
         }
 
-        internal LayerElement(LayerElementType type, Rectangle rect, string text, int index)
+        public LayerElement(LayerElementType type, int layerHandle,  Rectangle bounds, int index)
         {
-            Text = string.Empty;
-            Index = -1;
             ElementType = type;
-            Top = rect.Top;
-            Left = rect.Left;
-            Width = rect.Width;
-            Height = rect.Height;
+            LayerHandle = layerHandle;
             Index = index;
+
+            Bounds = bounds;
         }
 
-        internal LayerElement(LayerElementType type, Rectangle rect)
-            : this(type, rect, string.Empty, -1)
+        public LayerElementType ElementType { get; set; }
+        public int LayerHandle { get; set; }
+        public int Index { get; set; }          // of category or field
+
+        public Rectangle Bounds { get; set; }
+
+        public int Left
         {
+            get { return Bounds.X; }
         }
 
-        internal LayerElement(LayerElementType type, Rectangle rect, int index)
-            : this(type, rect, string.Empty, index)
+        public int Top
         {
+            get { return Bounds.Y; }
         }
 
-        internal LayerElement(LayerElementType type, Rectangle rect, string text)
-            : this(type, rect, text, -1)
+        public int Width
         {
+            get { return Bounds.Width; }
         }
 
-        internal LayerElementType ElementType { get; set; }
-        internal int Height { get; set; }
-        internal int Index { get; set; } // of category or field
-        internal int Left { get; set; }
-        internal string Text { get; set; } // associated text (name or caption)
-        
-        // dimensions for easy click text
-        internal int Top { get; set; }
-        internal int Width { get; set; }
+        public int Height
+        {
+            get { return Bounds.Height; }
+        }
 
-        internal bool PointWithin(Point pnt)
+        public bool PointWithin(Point pnt)
         {
             return pnt.X >= Left && pnt.Y >= Top && pnt.X <= Left + Width && pnt.Y <= Top + Height;
         }
