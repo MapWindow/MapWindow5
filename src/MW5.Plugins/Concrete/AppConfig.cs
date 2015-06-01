@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
@@ -11,6 +12,7 @@ namespace MW5.Plugins.Concrete
     {
         private List<string> _recentProjects;
         private List<int> _favoriteProjections;
+        private List<Guid> _applicationPlugins;
         private CoordinatesDisplay _coordinatesDisplay;
 
         public static AppConfig Instance { get; internal set; }
@@ -29,6 +31,7 @@ namespace MW5.Plugins.Concrete
             CreatePyramidsOnOpening = true;
             CreateSpatialIndexOnOpening = true;
             DisplayDynamicVisibilityWarnings = true;
+            FirstRun = true;
             InnertiaOnPanning = AutoToggle.Auto;
             LastProjectPath = "";
             LoadLastProject = true;
@@ -71,6 +74,13 @@ namespace MW5.Plugins.Concrete
         public AutoToggle AnimationOnZooming { get; set; }
 
         [DataMember]
+        public List<Guid> ApplicationPlugins
+        {
+            get { return _applicationPlugins ?? (_applicationPlugins = DefaultApplicationPlugins); }
+            set { _applicationPlugins = value; }
+        }
+
+        [DataMember]
         public AngleFormat CoordinateAngleFormat { get; set; }
 
         [DataMember]
@@ -107,6 +117,9 @@ namespace MW5.Plugins.Concrete
             get { return _favoriteProjections ?? (_favoriteProjections = new List<int>()); }
             set { _favoriteProjections = value; }
         }
+
+        [DataMember]
+        public bool FirstRun { get; set; }
 
         [DataMember]
         public AutoToggle InnertiaOnPanning { get; set; }
@@ -205,7 +218,21 @@ namespace MW5.Plugins.Concrete
         [DataMember]
         public ZoomBoxStyle ZoomBoxStyle { get; set; }
 
-        
+        public List<Guid> DefaultApplicationPlugins
+        {
+            get
+            {
+                return new List<Guid>()
+                {
+                    new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7"),   // Symbology
+                    new Guid("F24E7086-1762-4A7C-8403-D1169309CBC6"),   // Repository
+                    new Guid("65beb2fd-eec2-461c-965e-f20a0cef2aa2"),   // Identifier
+                    new Guid("894E958F-69DD-48DF-B35B-16871EC5D309"),   // Table editor
+                    new Guid("70120ff9-1c6b-49a1-8949-dded8bcef499"),   // Shape editor
+                    new Guid("F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0"),   // Debug window
+                };
+            }
+        }
 
         public void AddRecentProject(string path)
         {

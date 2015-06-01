@@ -97,7 +97,7 @@ namespace MW5.Configuration
             get { return false; }
         }
 
-        public ConfigPageType PageTypeType
+        public ConfigPageType PageType
         {
             get { return ConfigPageType.Widgets; }
         }

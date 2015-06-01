@@ -22,7 +22,7 @@ namespace MW5.Plugins.Repository
         public override void Initialize(IAppContext context)
         {
             _repositoryPresenter = context.Container.GetSingleton<RepositoryPresenter>();
-            _dockPanelService = context.Container.GetSingleton<DockPanelService>();
+            _dockPanelService = context.Container.GetInstance<DockPanelService>();
             _legendListener = context.Container.GetSingleton<LegendListener>();
         }
 

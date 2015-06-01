@@ -39,6 +39,15 @@ namespace MW5.Views
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
         }
 
+        public void ReloadPage(ConfigPageType type)
+        {
+            var page = Pages.FirstOrDefault(p => p.PageType == type);
+            if (page != null)
+            {
+                page.Initialize();
+            }
+        }
+
         public IEnumerable<IConfigPage> Pages
         {
             get { return _pages; }
@@ -46,7 +55,7 @@ namespace MW5.Views
 
         public IConfigPage GetPage(ConfigPageType pageType)
         {
-            return _pages.FirstOrDefault(p => p.PageTypeType == pageType);
+            return _pages.FirstOrDefault(p => p.PageType == pageType);
         }
     }
 }

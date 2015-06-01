@@ -56,7 +56,7 @@ namespace MW5.Views
             }
             else
             {
-                _dockingManager1.SaveLayout();
+                _dockingManager1.SaveLayout(false);
             }
         }
 
@@ -92,7 +92,15 @@ namespace MW5.Views
 
         public override void ShowView(IWin32Window parent = null)
         {
-            _dockingManager1.RestoreLayout();
+            if (AppConfig.Instance.FirstRun)
+            {
+                _dockingManager1.SaveLayout(true);
+                AppConfig.Instance.FirstRun = false;
+            }
+            else
+            {
+                _dockingManager1.RestoreLayout(false);
+            }
 
             Program.Timer.Stop();
             Logger.Current.Info("Loading time: " + Program.Timer.Elapsed);

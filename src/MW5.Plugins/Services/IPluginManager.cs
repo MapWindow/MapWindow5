@@ -66,5 +66,7 @@ namespace MW5.Plugins.Services
         void UnloadPlugin(PluginIdentity identity, IAppContext context);
 
         bool PluginActive(PluginIdentity identity);
+
+        void RestoreApplicationPlugins(IEnumerable<Guid> plugins, IAppContext context);
     }
 }

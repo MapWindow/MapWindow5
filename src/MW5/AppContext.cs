@@ -35,7 +35,6 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
-        private readonly MainPlugin _mainPlugin;
 
         private IMap _map;
         private IMenu _menu;
@@ -55,17 +54,14 @@ namespace MW5
 
         private bool _initialized;
 
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService,
-                MainPlugin mainPlugin)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
-            if (mainPlugin == null) throw new ArgumentNullException("mainPlugin");
 
             _container = container;
             _projectionDatabase = projectionDatabase;
             _styleService = styleService;
-            _mainPlugin = mainPlugin;
         }
 
         /// <summary>
@@ -132,18 +128,10 @@ namespace MW5
             pluginManager.PluginUnloaded += ManagerPluginUnloaded;
             pluginManager.AssemblePlugins();
 
-            if (configService.ApplicationPlugins != null)
+            var guids = configService.Config.ApplicationPlugins;
+            if (guids != null)
             {
-                var dict = configService.ApplicationPlugins.ToDictionary(p => p, p => p);
-                foreach (var p in pluginManager.AllPlugins)
-                {
-                    bool active = dict.ContainsKey(p.Identity.Guid);
-                    p.SetApplicationPlugin(active);
-                    if (active)
-                    {
-                        pluginManager.LoadPlugin(p.Identity, this);
-                    }
-                }
+                _pluginManager.RestoreApplicationPlugins(guids, this);
             }
         }
 

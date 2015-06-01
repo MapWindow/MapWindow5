@@ -270,6 +270,22 @@ namespace MW5.Plugins
             FirePluginUnloaded(identity);
         }
 
+        public void RestoreApplicationPlugins(IEnumerable<Guid> plugins,  IAppContext context)
+        {
+            var dict = new HashSet<Guid>(plugins);
+
+            foreach (var p in AllPlugins)
+            {
+                bool active = dict.Contains(p.Identity.Guid);
+                p.SetApplicationPlugin(active);
+
+                if (active && !PluginActive(p.Identity))
+                {
+                    LoadPlugin(p.Identity, context);
+                }
+            }
+        }
+
         public bool PluginActive(PluginIdentity identity)
         {
             return _active.Contains(identity);

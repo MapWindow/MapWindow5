@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Configuration;
 using MW5.Helpers;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -12,25 +15,33 @@ using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.UI.Style;
 using MW5.Views.Abstract;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Views
 {
     internal class ConfigPresenter: ComplexPresenter<IConfigView, ConfigCommand, ConfigViewModel>
     {
+        private readonly IAppContext _context;
         private readonly IConfigService _configService;
         private readonly IStyleService _styleService;
+        private readonly IPluginManager _pluginManger;
         private readonly IMuteMap _map;
 
-        public ConfigPresenter( IConfigView view, IConfigService configService, IStyleService styleService, IMuteMap map)
+        public ConfigPresenter( IAppContext context, IConfigView view, IConfigService configService, 
+        IStyleService styleService, IPluginManager pluginManger, IMuteMap map)
             : base(view)
         {
+            if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
             if (configService == null) throw new ArgumentNullException("configService");
             if (styleService == null) throw new ArgumentNullException("styleService");
+            if (pluginManger == null) throw new ArgumentNullException("pluginManger");
             if (map == null) throw new ArgumentNullException("map");
 
+            _context = context;
             _configService = configService;
             _styleService = styleService;
+            _pluginManger = pluginManger;
             _map = map;
 
             view.PageShown += OnPageShown;
@@ -45,6 +56,29 @@ namespace MW5.Views
         {
             switch (command)
             {
+                case ConfigCommand.RestorePlugins:
+                    if (!MessageService.Current.Ask("Do you want to restore default set of plugins" +
+                                                    "and location of their panels?"))
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var guids = AppConfig.Instance.DefaultApplicationPlugins;
+                        _pluginManger.RestoreApplicationPlugins(guids, _context);
+                        Model.ReloadPage(ConfigPageType.Plugins);
+
+                        // restoring layout
+                        var view = _context.Container.Resolve<IMainView>();
+                        var manager = view.DockingManager as DockingManager;
+                        manager.RestoreLayout(true);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Current.Error("Failed to restore dock panel layout.", ex);
+                    }
+                    break;
                 case ConfigCommand.Save:
                     ApplySettings();
 
@@ -55,7 +89,7 @@ namespace MW5.Views
                     }
                     break;
                 case ConfigCommand.SetDefaults:
-                    if (MessageService.Current.Ask("Do you want to reset default value for all settings?"))
+                    if (MessageService.Current.Ask("Do you want to reset default value of all settings?"))
                     {
                         _configService.Config.SetDefaults();
                         foreach (var page in Model.Pages)
@@ -63,6 +97,9 @@ namespace MW5.Views
                             page.Initialize();
                         }
                     }
+
+                    ApplySettings();
+
                     break;
                 case ConfigCommand.OpenFolder:
                     string path = _configService.ConfigPath;

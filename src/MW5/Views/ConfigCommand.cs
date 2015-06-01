@@ -11,5 +11,6 @@ namespace MW5.Views
         Save = 0,
         SetDefaults = 1,
         OpenFolder = 2, 
+        RestorePlugins = 3,
     }
 }

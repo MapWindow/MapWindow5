@@ -130,8 +130,14 @@
   <data name="icon_project_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_project_open.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_search" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icon_layer_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_layer_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_label_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_label_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_new_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_new_map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_save" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_save.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,8 +160,14 @@
   <data name="icon_identify" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_identify.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_pan1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_pan1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_docs24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_docs24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_save1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_save1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_layer_raster_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_layer_raster_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_layer_remove" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_layer_remove.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,11 +181,17 @@
   <data name="icon_snapshot" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_snapshot.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_layer_raster_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_layer_raster_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_book24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_book24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_new_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_new_map.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_paypal24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_paypal24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_component32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_component32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_search" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_search.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_layer_db_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_layer_db_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,17 +199,17 @@
   <data name="ico_zoom_to_layer" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_zoom_to_layer.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="mapwindow_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\mapwindow_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_folder_open32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_folder_open32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="img_mapwindow24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_mapwindow24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_map32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_map32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_zoom_max_extents" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_zoom_max_extents.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_layer_vector_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_layer_vector_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="mapwindow_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\mapwindow_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="img_options" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_options.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -211,29 +229,38 @@
   <data name="ico_legend" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_legend.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_layer_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_layer_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_mapwindow24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_mapwindow24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_save1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_save1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_raster" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_raster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_broken_robot" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_broken_robot.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_clear_selection" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_clear_selection.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="icon_layer_vector_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_layer_vector_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_pan1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_pan1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_globe32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_globe32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icon_measure_distance" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_measure_distance.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_label_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_label_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="icon_zoom_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_zoom_in.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_measure_area" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_measure_area.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="img_component32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_component32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_open_layer32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_open_layer32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_layer_database_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_layer_database_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -250,11 +277,20 @@
   <data name="icon_save_as" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_save_as.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icon_folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icon_folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_plugin32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_plugin32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_geometry" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_geometry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ico_tools" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_tools.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="icon_zoom_in" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icon_zoom_in.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_tune32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_tune32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="icon_select" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_select.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -271,40 +307,7 @@
   <data name="icon_layer_create" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon_layer_create.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="img_broken_robot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_broken_robot.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_geometry" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_geometry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_raster" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_raster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_map32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_map32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_plugin32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_plugin32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_globe32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_globe32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_open_layer32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_open_layer32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_tune32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_tune32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_folder_open32" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_folder_open32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_book24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_book24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_docs24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_docs24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="img_paypal24" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\img_paypal24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="img_default24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_default24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

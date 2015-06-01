@@ -27,19 +27,12 @@ namespace MW5.Helpers
             var panels = context.DockPanels;
             panels.Lock();
 
-            try
-            {
-                InitLegend(context);
+            InitLegend(context);
 
-                InitLocator(context);
+            InitLocator(context);
 
-                InitToolbox(context);
-            }
-            finally
-            {
-                //panels.Unlock();
-            }
-
+            InitToolbox(context);
+            
             context.DockPanels.Legend.TabPosition = 0;
         }
 
@@ -50,13 +43,6 @@ namespace MW5.Helpers
             legend.Caption = "Legend";
             legend.DockTo(null, DockPanelState.Left, PanelSize);
             legend.SetIcon(Resources.ico_legend);
-
-            //var parent = legendControl.Parent;
-            //parent.MouseWheel += (s, e) =>
-            //{
-            //    var control = legendControl as LegendControl;
-            //    if (control != null) control.HandleOnMouseWheel(e);
-            //};
         }
 
         private static void InitToolbox(ISerializableContext context)
@@ -82,25 +68,32 @@ namespace MW5.Helpers
             locator.Size = new Size(size.Width, 250);
         }
 
-        public static void SaveLayout(this DockingManager dockingManager)
+        public static void SaveLayout(this DockingManager dockingManager, bool startup)
         {
-            var sr = GetSerializer();
+            var sr = GetSerializer(startup);
             dockingManager.SaveDockState(sr);
             sr.PersistNow();
         }
 
-        public static void RestoreLayout(this DockingManager dockingManager)
+        public static void RestoreLayout(this DockingManager dockingManager, bool startup)
         {
-            var sr = GetSerializer();
+            var sr = GetSerializer(startup);
             if (!dockingManager.LoadDockState(sr))
             {
                 Logger.Current.Warn("Failed to restore the state of dock panels.");
             }
         }
 
-        private static AppStateSerializer GetSerializer()
+        private static AppStateSerializer GetSerializer(bool startup)
         {
-            return new AppStateSerializer(SerializeMode.XMLFile, ConfigPathHelper.GetDockingConfigPath());
+            string path = ConfigPathHelper.GetDockingConfigPath();
+
+            if (startup)
+            {
+                path += "_startup";
+            }
+
+            return new AppStateSerializer(SerializeMode.XMLFile, path);
         }
 
         public static void SerializeDockState(IAppContext context)

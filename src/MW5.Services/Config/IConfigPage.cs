@@ -16,7 +16,7 @@ namespace MW5.Services.Config
         Bitmap Icon { get; }
         bool PluginPage { get; }
         object Tag { get; set; }
-        ConfigPageType PageTypeType { get; }
+        ConfigPageType PageType { get; }
         string Description { get; }
     }
 }

@@ -15,7 +15,6 @@ namespace MW5.Views
     {
         private static string _lastPageName = string.Empty;
 
-        public event Action OpenFolderClicked;
         public event Action SaveClicked;
         public event Action PageShown;
 
@@ -27,7 +26,6 @@ namespace MW5.Views
 
             MouseWheel += (s, e) => configPageControl1.HandleMouseWheel(e);
 
-            btnOpenFolder.Click += (s, e) => Invoke(OpenFolderClicked);
             btnSave.Click += (s, e) => Invoke(SaveClicked);
 
             FormClosed += ConfigView_FormClosed;
@@ -105,16 +103,14 @@ namespace MW5.Views
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield break; }
+            get { yield return toolOptions.DropDownItems; }
         }
 
         public IEnumerable<Control> Buttons
         {
             get
             {
-                yield return btnOpenFolder;
                 yield return btnSave;
-                yield return btnSetDefaults;
             }
         }
     }
