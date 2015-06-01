@@ -490,7 +490,7 @@ namespace MW5.Api.Legend
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
-                            var lyr = grp.LayersInternal[j];
+                            var lyr = grp.LayersList[j];
                             if (!lyr.HideFromLegend)
                             {
                                 imgHeight += lyr.ExpandedHeight - 1;
@@ -514,7 +514,7 @@ namespace MW5.Api.Legend
                         lyrCount = grp.Layers.Count;
                         for (var j = lyrCount - 1; j >= 0; j--)
                         {
-                            var lyr = grp.LayersInternal[j];
+                            var lyr = grp.LayersList[j];
                             if (!lyr.HideFromLegend)
                             {
                                 Renderer.DrawLayer(g, lyr, rect, true);
@@ -751,7 +751,7 @@ namespace MW5.Api.Legend
                     curTop += Constants.ItemHeight;
                     for (var j = grp.Layers.Count - 1; j >= 0; j--)
                     {
-                        var lyr = grp.LayersInternal[j];
+                        var lyr = grp.LayersList[j];
                         if (!lyr.HideFromLegend)
                         {
                             lyr.Top = curTop;
@@ -816,9 +816,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Removes a layer from the list of layers
         /// </summary>
-        /// <param name="layerHandle"> layerHandle of layer to be removed </param>
-        /// <returns> True on success, False otherwise </returns>
-        internal bool RemoveLayer(int layerHandle)
+        internal bool RemoveLayer(int layerHandle, bool batch)
         {
             int groupIndex, layerIndex;
             Layer lyr = FindLayerByHandle(layerHandle, out groupIndex, out layerIndex);
@@ -828,19 +826,22 @@ namespace MW5.Api.Legend
             }
 
             var grp = GetGroup(groupIndex);
-            grp.LayersInternal.RemoveAt(layerIndex);
+            grp.LayersList.RemoveAt(layerIndex);
 
             _map.RemoveLayer(layerHandle);
 
-            if (layerHandle == _selectedLayerHandle)
+            if (layerHandle == _selectedLayerHandle && !batch)
             {
                 _selectedLayerHandle = _map.get_LayerHandle(_map.NumLayers - 1);
 
                 FireEvent(this, LayerSelected, new LayerEventArgs(_selectedLayerHandle));
             }
 
-            grp.RecalcHeight();
-            Redraw();
+            if (!batch)
+            {
+                grp.RecalcHeight();
+                Redraw();
+            }
 
             FireEvent(this, LayerRemoved, new LayerEventArgs(layerHandle));
 
@@ -859,7 +860,7 @@ namespace MW5.Api.Legend
             {
                 var handle = _map.get_LayerHandle(i);
                 var lyr = CreateLayer(handle, _map.get_GetObject(handle));
-                g.LayersInternal.Add(lyr);
+                g.LayersList.Add(lyr);
             }
 
             return g.Handle;
@@ -897,7 +898,7 @@ namespace MW5.Api.Legend
 
                 for (var j = 0; j < itemCount; j++)
                 {
-                    var lyr = grp.LayersInternal[j];
+                    var lyr = grp.LayersList[j];
                     if (lyr.Handle == handle)
                     {
                         groupIndex = i;
@@ -926,29 +927,24 @@ namespace MW5.Api.Legend
         /// </summary>
         internal void ClearLayers()
         {
-            foreach (var g in _groups)
+            _mapControl.Lock();
+            Lock();
+
+            try
             {
-                var legendGroup = g as LegendGroup;
-                if (legendGroup != null)
+                var handles = Layers.Select(item => item.Handle).ToList();
+                foreach (var handle in handles)
                 {
-                    legendGroup.LayersInternal.Clear();
+                    RemoveLayer(handle, true);
                 }
             }
-
-            _map.RemoveAllLayers();
-
-            Redraw();
+            finally
+            {
+                _mapControl.Unlock();
+                Unlock();
+            }
 
             FireLayerSelected(-1);
-        }
-
-        /// <summary>
-        /// Clears all groups
-        /// </summary>
-        internal void ClearGroups()
-        {
-            _map.RemoveAllLayers();
-            Redraw();
         }
 
         internal LegendLayer CreateLayer(int layerHandle, object newLayer)
@@ -1041,7 +1037,7 @@ namespace MW5.Api.Legend
                 var lyrCount = grp.Layers.Count;
                 for (var j = lyrCount - 1; j >= 0; j--)
                 {
-                    Layer lyr = grp.LayersInternal[j];
+                    Layer lyr = grp.LayersList[j];
                     var lyrPosition = _map.get_LayerPosition(lyr.Handle);
                     _map.MoveLayerBottom(lyrPosition);
                 }

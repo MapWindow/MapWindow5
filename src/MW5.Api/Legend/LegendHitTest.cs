@@ -137,7 +137,7 @@ namespace MW5.Api.Legend
 
                 for (var j = 0; j < layerCount; j++)
                 {
-                    var lyr = grp.LayersInternal[j];
+                    var lyr = grp.LayersList[j];
 
                     // see if we are inside the current Layer
                     var curLeft = Constants.ListItemIndent;

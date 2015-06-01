@@ -205,7 +205,7 @@ namespace MW5.Api.Legend
 
         public override bool Remove(int layerHandle)
         {
-            return _legend.RemoveLayer(layerHandle);
+            return _legend.RemoveLayer(layerHandle, false);
         }
 
         public override void Clear()

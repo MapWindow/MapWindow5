@@ -222,9 +222,14 @@ namespace MW5.Api.Map
             Invoke(sender, MapCursorChanged, args);
         }
 
-        internal void FireSelectionChagned(object sender, SelectionChangedEventArgs args)
+        internal void FireSelectionChanged(object sender, SelectionChangedEventArgs args)
         {
             Invoke(sender, SelectionChanged, args);
+        }
+
+        protected void FireMapLocked(object sender, LockedEventArgs args)
+        {
+            Invoke(sender, MapLocked, args);
         }
     }
 }

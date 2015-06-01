@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,6 +37,19 @@ namespace MW5.Listeners
 
             plugin.BeforeLayerAdded += BeforeLayerAdded;
             plugin.LayerAdded += plugin_LayerAdded;
+            plugin.GroupDoubleClick += plugin_GroupDoubleClick;
+        }
+
+        private void plugin_GroupDoubleClick(IMuteLegend legend, GroupEventArgs e)
+        {
+            var group = legend.Groups.ItemByHandle(e.GroupHandle);
+            if (group != null)
+            {
+                if (_context.Container.Run<LegendGroupPresenter, ILegendGroup>(group))
+                {
+                    legend.Redraw();
+                }
+            }
         }
 
         private void plugin_LayerAdded(IMuteLegend legend, LayerEventArgs e)

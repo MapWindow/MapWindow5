@@ -293,7 +293,7 @@ namespace MW5.Api.Concrete
                     break;
             }
 
-            MapControl.FireSelectionChagned(MapControl, new SelectionChangedEventArgs(Handle, true));
+            MapControl.FireSelectionChanged(MapControl, new SelectionChangedEventArgs(Handle, true));
         }
 
         public ISpatialReference Projection

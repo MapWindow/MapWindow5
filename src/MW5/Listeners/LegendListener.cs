@@ -44,6 +44,10 @@ namespace MW5.Listeners
 
         private void RegisterEvents()
         {
+            _legend.GroupAdded += LegendGroupAdded;
+            _legend.GroupDoubleClick += LegendGroupDoubleClick;
+            _legend.GroupRemoved += LegendGroupRemoved;
+
             _legend.LayerAdded += LegendLayerAdded;
             _legend.LayerSelected += LayerSelected;
             _legend.LayerDoubleClick += LayerDoubleClick;
@@ -53,6 +57,21 @@ namespace MW5.Listeners
             _legend.LayerCategoryClicked += LayerCategoryClicked;
             _legend.LayerRemoved += LegendLayerRemoved;
             _legend.LayerVisibleChanged += LegendLayerVisibleChanged;
+        }
+
+        private void LegendGroupAdded(object sender, GroupEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.GroupAdded_, sender as IMuteLegend, e);
+        }
+
+        private void LegendGroupDoubleClick(object sender, GroupEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.GroupDoubleClick_, sender as IMuteLegend, e);
+        }
+
+        private void LegendGroupRemoved(object sender, GroupEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.GroupRemoved_, sender as IMuteLegend, e);
         }
 
         private void LegendLayerVisibleChanged(object sender, LayerCancelEventArgs e)

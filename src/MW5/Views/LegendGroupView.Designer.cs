@@ -33,9 +33,8 @@
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label1 = new System.Windows.Forms.Label();
             this.txtGroupName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblNumLayers = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lblLayerCount = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.txtGroupName)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -44,27 +43,27 @@
             // 
             this.btnCancel.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(81, 29);
+            this.btnCancel.BeforeTouchSize = new System.Drawing.Size(81, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(233, 141);
+            this.btnCancel.Location = new System.Drawing.Point(233, 125);
             this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(81, 29);
-            this.btnCancel.TabIndex = 8;
+            this.btnCancel.Size = new System.Drawing.Size(81, 26);
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             // 
             // btnOk
             // 
             this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.btnOk.BeforeTouchSize = new System.Drawing.Size(84, 29);
+            this.btnOk.BeforeTouchSize = new System.Drawing.Size(84, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(143, 141);
+            this.btnOk.Location = new System.Drawing.Point(143, 125);
             this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(84, 29);
-            this.btnOk.TabIndex = 7;
+            this.btnOk.Size = new System.Drawing.Size(84, 26);
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             // 
             // label1
@@ -85,43 +84,35 @@
             this.txtGroupName.Name = "txtGroupName";
             this.txtGroupName.Size = new System.Drawing.Size(199, 20);
             this.txtGroupName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtGroupName.TabIndex = 10;
+            this.txtGroupName.TabIndex = 1;
+            this.txtGroupName.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtGroupName_KeyDown);
             // 
-            // label2
+            // lblNumLayers
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 79);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 13);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Number of layers:";
+            this.lblNumLayers.AutoSize = true;
+            this.lblNumLayers.Location = new System.Drawing.Point(22, 69);
+            this.lblNumLayers.Name = "lblNumLayers";
+            this.lblNumLayers.Size = new System.Drawing.Size(89, 13);
+            this.lblNumLayers.TabIndex = 11;
+            this.lblNumLayers.Text = "Number of layers:";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.lblLayerCount);
             this.groupBox1.Controls.Add(this.txtGroupName);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblNumLayers);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(302, 123);
-            this.groupBox1.TabIndex = 13;
+            this.groupBox1.Size = new System.Drawing.Size(302, 107);
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
-            // 
-            // lblLayerCount
-            // 
-            this.lblLayerCount.AutoSize = true;
-            this.lblLayerCount.Location = new System.Drawing.Point(114, 79);
-            this.lblLayerCount.Name = "lblLayerCount";
-            this.lblLayerCount.Size = new System.Drawing.Size(0, 13);
-            this.lblLayerCount.TabIndex = 12;
             // 
             // LegendGroupView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(320, 174);
+            this.ClientSize = new System.Drawing.Size(320, 154);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -140,8 +131,7 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtGroupName;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblNumLayers;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label lblLayerCount;
     }
 }

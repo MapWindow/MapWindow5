@@ -54,6 +54,7 @@ namespace MW5.Listeners
             _map.FileDropped += MapFileDropped;
             _map.HistoryChanged += MapHistoryChanged;
             _map.MapCursorChanged += MapCursorChanged;
+            _map.MapLocked += MapLocked;
             _map.MouseUp += MapMouseUp;
             _map.MouseDown += MapMouseDown;
             _map.MouseMove += MapMouseMove;
@@ -69,10 +70,15 @@ namespace MW5.Listeners
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
         }
-
+        
         private void MapAfterShapeEdit(object sender, AfterShapeEditEventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.AfterShapeEdit_, sender as IMuteMap, e);
+        }
+
+        private void MapLocked(object sender, LockedEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.MapLocked_, sender as IMuteMap, e);
         }
 
         private void MapMouseDoubleClick(object sender, EventArgs e)

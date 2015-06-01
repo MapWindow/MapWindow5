@@ -165,7 +165,7 @@ namespace MW5.Api.Legend.Renderer
             // now draw each of the subitems
             for (var i = itemCount - 1; i >= 0; i--)
             {
-                var lyr = grp.LayersInternal[i];
+                var lyr = grp.LayersList[i];
                 lyr.ScheduleHeightRecalc();
 
                 if (lyr.HideFromLegend)

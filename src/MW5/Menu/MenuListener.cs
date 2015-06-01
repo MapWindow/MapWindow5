@@ -125,12 +125,9 @@ namespace MW5.Menu
                     }
                     return true;
                 case MenuKeys.ClearLayers:
-                    if (MessageService.Current.Ask(
-                            "Do you wan't to remove all layers from the map without closing the project?"))
+                    if (MessageService.Current.Ask("Do you wan't to remove all layers from the map?"))
                     {
-                        // TODO: this method doesn't fire events properly
                         _context.Legend.Layers.Clear();
-                        _context.Legend.Redraw(LegendRedraw.LegendAndMap);
                     }
                     return true;
             }

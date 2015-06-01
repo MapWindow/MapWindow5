@@ -30,12 +30,17 @@ namespace MW5.Plugins.Repository
             plugin.LayerAdded += (s, e) => UpdateRepositoryTree();
             plugin.LayerRemoved += (s, e) => UpdateRepositoryTree();
             plugin.ProjectClosed += (s, e) => UpdateRepositoryTree();
+            plugin.MapLocked += (s, e) => UpdateRepositoryTree();
+
         }
 
         private void UpdateRepositoryTree()
         {
-            var list = new HashSet<LayerIdentity>(_context.Map.GetFilenames().Distinct());
-            _presenter.View.Tree.UpdateState(list);
+            if (!_context.Map.IsLocked)
+            {
+                var list = new HashSet<LayerIdentity>(_context.Map.GetFilenames().Distinct());
+                _presenter.View.Tree.UpdateState(list);
+            }
         }
     }
 }

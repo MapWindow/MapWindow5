@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MapWinGIS;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 
@@ -185,20 +186,26 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Removes a group from the list of groups
         /// </summary>
-        /// <param name="handle"> layerHandle of the group to remove </param>
+        /// <param name="groupHandle"> layerHandle of the group to remove </param>
         /// <returns> True on success, False otherwise </returns>
-        public bool Remove(int handle)
+        public bool Remove(int groupHandle)
         {
-            if (!IsValidHandle(handle))
+            return RemoveGroupCore(groupHandle, false);
+        }
+
+        private bool RemoveGroupCore(int groupHandle, bool batch)
+        {
+            if (!IsValidHandle(groupHandle))
             {
                 return false;
             }
-            
-            var index = _positions[handle];
+
+            var index = _positions[groupHandle];
             var grp = _allGroups[index];
 
             // remove any layers within the specified group
             var layerInGroupWasSelected = false;
+
             while (grp.Layers.Count > 0)
             {
                 var lyr = grp.Layers[0].Handle;
@@ -206,20 +213,25 @@ namespace MW5.Api.Legend
                 {
                     layerInGroupWasSelected = true;
                 }
-                _legend.RemoveLayer(lyr);
+
+                _legend.RemoveLayer(lyr, true);
             }
 
             _allGroups.RemoveAt(index);
-            UpdateGroupPositions();
 
-            if (layerInGroupWasSelected)
+            if (!batch)
             {
-                _legend.UpdateSelectedLayer();
+                UpdateGroupPositions();
+
+                if (layerInGroupWasSelected)
+                {
+                    _legend.UpdateSelectedLayer();
+                }
             }
 
             _legend.Redraw();
 
-            _legend.FireGroupRemoved(handle);
+            _legend.FireGroupRemoved(groupHandle);
 
             return true;
         }
@@ -247,19 +259,26 @@ namespace MW5.Api.Legend
         /// </summary>
         public void Clear()
         {
-            ClearCore();
-            
-            // TODO: use event
-            _legend.ClearGroups();
-        }
+            _legend.Lock();
+            _legend.AxMap.LockWindow(tkLockMode.lmLock);
 
-        /// <summary>
-        /// Clears groups only
-        /// </summary>
-        internal void ClearCore()
-        {
-            _allGroups.Clear();
-            _positions.Clear();
+            try
+            {
+                var handles = this.Select(item => item.Handle).ToList();
+
+                foreach (var handle in handles)
+                {
+                    RemoveGroupCore(handle, true);
+                }
+
+                _allGroups.Clear();
+                _positions.Clear();
+            }
+            finally
+            {
+                _legend.Unlock();
+                _legend.AxMap.LockWindow(tkLockMode.lmUnlock);
+            }
         }
 
         /// <summary>
@@ -326,7 +345,7 @@ namespace MW5.Api.Legend
             return this.FirstOrDefault(g =>
             {
                 var legendGroup = g as LegendGroup;
-                return legendGroup != null && legendGroup.LayersInternal.Exists(l => l.Handle == layerHandle);
+                return legendGroup != null && legendGroup.LayersList.Exists(l => l.Handle == layerHandle);
             });
         }
 
@@ -439,20 +458,20 @@ namespace MW5.Api.Legend
                 throw new IndexOutOfRangeException("Invalid layer index");
             }
 
-            var lyr = sourceGroup.LayersInternal[currentPositionInGroup];
-            sourceGroup.LayersInternal.Remove(lyr);
+            var lyr = sourceGroup.LayersList[currentPositionInGroup];
+            sourceGroup.LayersList.Remove(lyr);
 
             if (targetPositionInGroup >= destinationGroup.Layers.Count || targetPositionInGroup == -1)
             {
-                destinationGroup.LayersInternal.Add(lyr);
+                destinationGroup.LayersList.Add(lyr);
             }
             else if (targetPositionInGroup <= 0)
             {
-                destinationGroup.LayersInternal.Insert(0, lyr);
+                destinationGroup.LayersList.Insert(0, lyr);
             }
             else
             {
-                destinationGroup.LayersInternal.Insert(targetPositionInGroup, lyr);
+                destinationGroup.LayersList.Insert(targetPositionInGroup, lyr);
             }
 
             sourceGroup.RecalcHeight();

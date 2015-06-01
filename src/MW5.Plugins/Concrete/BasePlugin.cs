@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Events;
 using MW5.Plugins.Events;
-using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared.Log;
@@ -157,6 +151,27 @@ namespace MW5.Plugins.Concrete
         internal LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked_;
         internal LegendEventHandler<LayerEventArgs> LayerAdded_;
         internal LegendEventHandler<LayerEventArgs> LayerRemoved_;
+        internal LegendEventHandler<GroupEventArgs> GroupDoubleClick_;
+        internal LegendEventHandler<GroupEventArgs> GroupAdded_;
+        internal LegendEventHandler<GroupEventArgs> GroupRemoved_;
+
+        public event LegendEventHandler<GroupEventArgs> GroupAdded
+        {
+            add { GroupAdded_ += value; }
+            remove { GroupAdded_ -= value; }
+        }
+
+        public event LegendEventHandler<GroupEventArgs> GroupDoubleClick
+        {
+            add { GroupDoubleClick_ += value; }
+            remove { GroupDoubleClick_ -= value; }
+        }
+
+        public event LegendEventHandler<GroupEventArgs> GroupRemoved
+        {
+            add { GroupRemoved_ += value; }
+            remove { GroupRemoved_ -= value; }
+        }
 
         public event LegendEventHandler<LayerCategoryEventArgs> LayerCategoryClicked
         {
@@ -227,6 +242,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ShapeIdentifiedEventArgs> ShapeIdentified_;
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
+        internal MapEventHandler<LockedEventArgs> MapLocked_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -269,6 +285,12 @@ namespace MW5.Plugins.Concrete
         {
             add { MapCursorChanged_ += value; }
             remove { MapCursorChanged_ -= value; }
+        }
+
+        public event MapEventHandler<LockedEventArgs> MapLocked
+        {
+            add { MapLocked_ += value; }
+            remove { MapLocked_ -= value; }
         }
 
         public event MapEventHandler<EventArgs> MouseDoubleClick

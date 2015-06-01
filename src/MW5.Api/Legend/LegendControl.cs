@@ -38,7 +38,7 @@ namespace MW5.Api.Legend
 
         private void AttachEventHandlers()
         {
-            //DoubleClick += LegendDoubleClick;
+            DoubleClick += LegendDoubleClick;
             KeyDown += LegendControl_KeyDown;
             MouseDown += LegendMouseDown;
             MouseMove += LegendMouseMove;
@@ -290,7 +290,6 @@ namespace MW5.Api.Legend
             }
         }
 
-
         /// <summary>
         /// The legend double click.
         /// </summary>
@@ -307,18 +306,6 @@ namespace MW5.Api.Legend
                 if (inCheckBox == false && inExpandBox == false)
                 {
                     FireEvent(this, GroupDoubleClick, new GroupEventArgs(grp.Handle));
-                }
-                return;
-            }
-
-            var element = new ClickedElement();
-
-            Layer lyr = FindClickedLayer(pnt, ref element);
-            if (lyr != null)
-            {
-                if (element.CheckBox == false && element.ExpansionBox == false)
-                {
-                    FireEvent(this, LayerDoubleClick, new LayerEventArgs(lyr.Handle));
                 }
             }
         }
@@ -909,7 +896,7 @@ namespace MW5.Api.Legend
                     {
                         for (var j = itemCount - 1; j >= 0; j--)
                         {
-                            var lyr = grp.LayersInternal[j];
+                            var lyr = grp.LayersList[j];
                             if (yPosition <= (lyr.Top + lyr.Height))
                             {
                                 // drop before this item
@@ -1015,8 +1002,8 @@ namespace MW5.Api.Legend
 
                     if (layerCount > lyrIndex && lyrIndex >= 0)
                     {
-                        var itemTop = grp.LayersInternal[lyrIndex].Top;
-                        drawY = itemTop + grp.LayersInternal[lyrIndex].Height;
+                        var itemTop = grp.LayersList[lyrIndex].Top;
+                        drawY = itemTop + grp.LayersList[lyrIndex].Height;
                     }
                     else
                     {

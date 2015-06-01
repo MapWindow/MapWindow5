@@ -148,7 +148,7 @@ namespace MW5.Api.Legend
             get { return _layers.Cast<ILegendLayer>().ToList(); }
         }
 
-        internal List<LegendLayer> LayersInternal
+        internal List<LegendLayer> LayersList
         {
             get { return _layers; }
         }

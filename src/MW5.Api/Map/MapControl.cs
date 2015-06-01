@@ -61,6 +61,7 @@ namespace MW5.Api.Map
         public event EventHandler<TilesLoadedEventArgs> TilesLoaded;
         public event EventHandler<EventArgs> HistoryChanged;
         public event EventHandler<ValidateShapeEventArgs> ValidateShape;
+        public event EventHandler<LockedEventArgs> MapLocked;
 
         // overriding default handlers for user control
         public new event EventHandler<MouseEventArgs> MouseDown;
@@ -260,13 +261,25 @@ namespace MW5.Api.Map
 
         public void Lock()
         {
+            bool locked = IsLocked;
             _map.LockWindow(tkLockMode.lmLock);
+
+            if (!locked)
+            {
+                FireMapLocked(this, new LockedEventArgs(true));
+            }
         }
 
         public bool Unlock()
         {
             _map.LockWindow(tkLockMode.lmUnlock);
-            return _map.IsLocked == tkLockMode.lmLock;
+            
+            if (!IsLocked)
+            {
+                FireMapLocked(this, new LockedEventArgs(false));
+            }
+
+            return IsLocked;
         }
 
         public void Redraw(RedrawType redrawType = RedrawType.All)

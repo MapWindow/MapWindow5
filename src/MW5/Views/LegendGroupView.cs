@@ -23,8 +23,9 @@ namespace MW5.Views
 
         public void Initialize()
         {
+            lblNumLayers.Text = "Number of layers: " + Model.Layers.Count;
             txtGroupName.Text = Model.Text;
-            lblLayerCount.Text = Model.Layers.Count.ToString();
+            txtGroupName.SelectAll();
         }
 
         public ButtonBase OkButton
@@ -35,6 +36,14 @@ namespace MW5.Views
         public string GroupName
         {
             get { return txtGroupName.Text; }
+        }
+
+        private void txtGroupName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FireOkClicked();
+            }
         }
     }
 

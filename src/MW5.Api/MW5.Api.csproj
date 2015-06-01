@@ -81,6 +81,7 @@
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
+    <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
