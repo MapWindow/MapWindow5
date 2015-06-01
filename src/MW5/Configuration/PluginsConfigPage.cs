@@ -17,9 +17,9 @@ namespace MW5.Configuration
 {
     internal partial class PluginsConfigPage : PluginGrid, IConfigPage
     {
-        private readonly PluginProvider _pluginProvider;
         private readonly IPluginManager _manager;
         private readonly IAppContext _context;
+        private PluginProvider _pluginProvider;
 
         public PluginsConfigPage(IPluginManager manager, IAppContext context)
         {
@@ -30,12 +30,17 @@ namespace MW5.Configuration
 
             InitializeComponent();
 
-            _pluginProvider = new PluginProvider(manager);
-            
-            DataSource = _pluginProvider.List;
+            Initialize();
+
             KeyDown += PluginsConfigPage_KeyDown;
 
             Adapter.PrepareToolTip += ListControlPrepareToolTip;
+        }
+
+        public void Initialize()
+        {
+            _pluginProvider = new PluginProvider(_manager);
+            DataSource = _pluginProvider.List;
         }
 
         private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)

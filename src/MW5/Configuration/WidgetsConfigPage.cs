@@ -49,7 +49,7 @@ namespace MW5.Configuration
             cboCoordinateDisplay.AddItemsFromEnum(list);
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             var config = _configService.Config;
 

@@ -151,7 +151,7 @@ namespace MW5.Menu
                     Config.ProjectionShowLoadingReport = !menuItem.Checked;
                     break;
                 case StatusBarKeys.ProjShowWarnings:
-                    Config.ProjectionShowWarnings = !menuItem.Checked;
+                    Config.ShowProjectionDialog = !menuItem.Checked;
                     break;
                 case StatusBarKeys.AbsenseBehavior:
                 case StatusBarKeys.MismatchBehavior:
@@ -186,7 +186,7 @@ namespace MW5.Menu
             FindItem(StatusBarKeys.MismatchSkip).Checked = behavior2 == ProjectionMismatch.SkipFile;
 
             FindItem(StatusBarKeys.ProjShowLoadingReport).Checked = _configService.Config.ProjectionShowLoadingReport;
-            FindItem(StatusBarKeys.ProjShowWarnings).Checked = _configService.Config.ProjectionShowWarnings;
+            FindItem(StatusBarKeys.ProjShowWarnings).Checked = _configService.Config.ShowProjectionDialog;
         }
 
         protected IMenuItem FindItem(string itemKey)

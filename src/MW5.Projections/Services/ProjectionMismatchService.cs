@@ -142,7 +142,7 @@ namespace MW5.Projections.Services
 
                 _usePreviousAnswerMismatch = useForOthers;
                 _context.Config.ProjectionMismatch = (ProjectionMismatch)choice;
-                _context.Config.ShowProjectionDialog = dontShow;
+                _context.Config.ShowProjectionDialog = !dontShow;
             }
 
             var behavior = _context.Config.ProjectionMismatch;
@@ -215,7 +215,7 @@ namespace MW5.Projections.Services
 
                 _usePreviousAnswerAbsence = useForOthers;
                 _context.Config.ProjectionAbsence = (ProjectionAbsence)choice;
-                _context.Config.ShowProjectionDialog = dontShow;
+                _context.Config.ShowProjectionDialog = !dontShow;
             }
 
             // when there is no projection in project, it can't be assign for layer

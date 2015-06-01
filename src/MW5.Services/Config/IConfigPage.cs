@@ -12,6 +12,7 @@ namespace MW5.Services.Config
     {
         string PageName { get; }
         void Save();
+        void Initialize();
         Bitmap Icon { get; }
         bool PluginPage { get; }
         object Tag { get; set; }

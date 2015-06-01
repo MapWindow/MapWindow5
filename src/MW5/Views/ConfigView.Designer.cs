@@ -38,6 +38,7 @@ namespace MW5.Views
             this.btnOpenFolder = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnSave = new Syncfusion.Windows.Forms.ButtonAdv();
             this.configPageControl1 = new MW5.Controls.ConfigPageControl();
+            this.btnSetDefaults = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this._treeViewAdv1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -128,7 +129,7 @@ namespace MW5.Views
             this.btnOpenFolder.BackColor = System.Drawing.Color.White;
             this.btnOpenFolder.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOpenFolder.IsBackStageButton = false;
-            this.btnOpenFolder.Location = new System.Drawing.Point(12, 491);
+            this.btnOpenFolder.Location = new System.Drawing.Point(3, 491);
             this.btnOpenFolder.Name = "btnOpenFolder";
             this.btnOpenFolder.Size = new System.Drawing.Size(85, 26);
             this.btnOpenFolder.TabIndex = 10;
@@ -162,12 +163,27 @@ namespace MW5.Views
             this.configPageControl1.Size = new System.Drawing.Size(521, 473);
             this.configPageControl1.TabIndex = 12;
             // 
+            // btnSetDefaults
+            // 
+            this.btnSetDefaults.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnSetDefaults.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.OfficeXP;
+            this.btnSetDefaults.BackColor = System.Drawing.Color.White;
+            this.btnSetDefaults.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnSetDefaults.IsBackStageButton = false;
+            this.btnSetDefaults.Location = new System.Drawing.Point(94, 491);
+            this.btnSetDefaults.Name = "btnSetDefaults";
+            this.btnSetDefaults.Size = new System.Drawing.Size(85, 26);
+            this.btnSetDefaults.TabIndex = 13;
+            this.btnSetDefaults.Text = "Set defaults";
+            this.btnSetDefaults.UseVisualStyle = false;
+            // 
             // ConfigView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(708, 523);
+            this.Controls.Add(this.btnSetDefaults);
             this.Controls.Add(this.configPageControl1);
             this.Controls.Add(this._treeViewAdv1);
             this.Controls.Add(this.btnSave);
@@ -189,5 +205,6 @@ namespace MW5.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnOpenFolder;
         private Syncfusion.Windows.Forms.ButtonAdv btnSave;
         private ConfigPageControl configPageControl1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnSetDefaults;
     }
 }

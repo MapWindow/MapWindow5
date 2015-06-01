@@ -39,10 +39,9 @@ namespace MW5.Configuration
             cboZoomBoxStyle.AddItemsFromEnum<ZoomBoxStyle>();
             cboZoomBehavior.AddItemsFromEnum<ZoomBehavior>();
             cboMouseWheelDirection.AddItemsFromEnum<MouseWheelDirection>();
-            
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             var config = _configService.Config;
             
@@ -53,7 +52,8 @@ namespace MW5.Configuration
             cboInertiaOnPanning.SetValue(config.InnertiaOnPanning);
             cboZoomBehavior.SetValue(config.ZoomBehavior);
             cboMouseWheelDirection.SetValue(config.MouseWheelDirection);
-            
+
+            chkReuseTileBuffer.Checked = config.ReuseTileBuffer;
 
             clpBackground.Color = config.MapBackgroundColor;
         }
@@ -67,7 +67,6 @@ namespace MW5.Configuration
         {
             var config = _configService.Config;
 
-
             config.AnimationOnZooming = cboAnimationOnZooming.GetValue<AutoToggle>();
             config.ResizeBehavior = cboMapResizeBehavior.GetValue<ResizeBehavior>();
             
@@ -75,6 +74,8 @@ namespace MW5.Configuration
             config.InnertiaOnPanning = cboInertiaOnPanning.GetValue<AutoToggle>();
             config.ZoomBehavior = cboZoomBehavior.GetValue<ZoomBehavior>();
             config.MouseWheelDirection = cboMouseWheelDirection.GetValue<MouseWheelDirection>();
+
+            config.ReuseTileBuffer = chkReuseTileBuffer.Checked;
 
             config.MapBackgroundColor = clpBackground.Color;
         }

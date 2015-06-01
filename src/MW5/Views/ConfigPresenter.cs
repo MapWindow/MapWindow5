@@ -15,7 +15,7 @@ using MW5.Views.Abstract;
 
 namespace MW5.Views
 {
-    internal class ConfigPresenter: BasePresenter<IConfigView, ConfigViewModel>
+    internal class ConfigPresenter: ComplexPresenter<IConfigView, ConfigCommand, ConfigViewModel>
     {
         private readonly IConfigService _configService;
         private readonly IStyleService _styleService;
@@ -33,30 +33,47 @@ namespace MW5.Views
             _styleService = styleService;
             _map = map;
 
-            view.OpenFolderClicked += OnOpenFolderClicked;
-            view.SaveClicked += OnSaveClicked;
             view.PageShown += OnPageShown;
+        }
+
+        public override void Initialize()
+        {
+            
+        }
+
+        public override void RunCommand(ConfigCommand command)
+        {
+            switch (command)
+            {
+                case ConfigCommand.Save:
+                    ApplySettings();
+
+                    bool result = _configService.Save();
+                    if (result)
+                    {
+                        MessageService.Current.Info("Configuration was saved successfully.");
+                    }
+                    break;
+                case ConfigCommand.SetDefaults:
+                    if (MessageService.Current.Ask("Do you want to reset default value for all settings?"))
+                    {
+                        _configService.Config.SetDefaults();
+                        foreach (var page in Model.Pages)
+                        {
+                            page.Initialize();
+                        }
+                    }
+                    break;
+                case ConfigCommand.OpenFolder:
+                    string path = _configService.ConfigPath;
+                    PathHelper.OpenFolderWithExplorer(path);
+                    break;
+            }
         }
 
         private void OnPageShown()
         {
             _styleService.ApplyStyle(View as Form);
-        }
-
-        private void OnSaveClicked()
-        {
-            ApplySettings();
-            bool result = _configService.Save();
-            if (result)
-            {
-                MessageService.Current.Info("Configuration was saved successfully.");
-            }
-        }
-
-        private void OnOpenFolderClicked()
-        {
-            string path = _configService.ConfigPath;
-            PathHelper.OpenFolderWithExplorer(path);
         }
 
         private void ApplySettings()

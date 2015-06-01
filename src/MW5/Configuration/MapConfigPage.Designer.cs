@@ -34,7 +34,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.cboMouseWheelDirection = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label8 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.chkReuseTileBuffer = new System.Windows.Forms.CheckBox();
             this.cboAnimationOnZooming = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label6 = new System.Windows.Forms.Label();
             this.cboZoomBehavior = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -65,7 +65,7 @@
             this.configPanelControl2.Controls.Add(this.label9);
             this.configPanelControl2.Controls.Add(this.cboMouseWheelDirection);
             this.configPanelControl2.Controls.Add(this.label8);
-            this.configPanelControl2.Controls.Add(this.checkBox1);
+            this.configPanelControl2.Controls.Add(this.chkReuseTileBuffer);
             this.configPanelControl2.Controls.Add(this.cboAnimationOnZooming);
             this.configPanelControl2.Controls.Add(this.label6);
             this.configPanelControl2.Controls.Add(this.cboZoomBehavior);
@@ -117,15 +117,15 @@
             this.label8.TabIndex = 23;
             this.label8.Text = "Mouse wheel direction";
             // 
-            // checkBox1
+            // chkReuseTileBuffer
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(13, 227);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(103, 17);
-            this.checkBox1.TabIndex = 22;
-            this.checkBox1.Text = "Reuse tile buffer";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.chkReuseTileBuffer.AutoSize = true;
+            this.chkReuseTileBuffer.Location = new System.Drawing.Point(13, 227);
+            this.chkReuseTileBuffer.Name = "chkReuseTileBuffer";
+            this.chkReuseTileBuffer.Size = new System.Drawing.Size(103, 17);
+            this.chkReuseTileBuffer.TabIndex = 22;
+            this.chkReuseTileBuffer.Text = "Reuse tile buffer";
+            this.chkReuseTileBuffer.UseVisualStyleBackColor = true;
             // 
             // cboAnimationOnZooming
             // 
@@ -275,7 +275,7 @@
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboMapResizeBehavior;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox chkReuseTileBuffer;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboAnimationOnZooming;
         private System.Windows.Forms.Label label6;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboZoomBehavior;

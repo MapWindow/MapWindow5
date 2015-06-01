@@ -212,6 +212,7 @@
     <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Views\Abstract\ISpatialIndexView.cs" />
     <Compile Include="Views\Abstract\IWelcomeView.cs" />
+    <Compile Include="Views\ConfigCommand.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
     <Compile Include="Views\ConfigViewModel.cs" />
     <Compile Include="Views\CreatePyramidsPresenter.cs" />

@@ -32,7 +32,7 @@ namespace MW5.Configuration
             cboSymbologyStorage.AddItemsFromEnum<SymbologyStorage>();
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             var config = _configService.Config;
             chkLoadLastProject.Checked = config.LoadLastProject;

@@ -6,10 +6,8 @@ using MW5.Services.Config;
 
 namespace MW5.Views.Abstract
 {
-    public interface IConfigView: IView<ConfigViewModel>
+    public interface IConfigView: IView<ConfigViewModel>, IMenuProvider
     {
-        event Action OpenFolderClicked;
-        event Action SaveClicked;
         event Action PageShown;
     }
 }

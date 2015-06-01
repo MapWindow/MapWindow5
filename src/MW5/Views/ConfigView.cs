@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -78,6 +79,8 @@ namespace MW5.Views
             {
                 _lastPageName = page.PageName;
             }
+
+            Application.RemoveMessageFilter(this);
         }
 
         private void DisplaySelectedPage()
@@ -98,6 +101,21 @@ namespace MW5.Views
         public ButtonBase OkButton
         {
             get { return btnOk; }
+        }
+
+        public IEnumerable<ToolStripItemCollection> ToolStrips
+        {
+            get { yield break; }
+        }
+
+        public IEnumerable<Control> Buttons
+        {
+            get
+            {
+                yield return btnOpenFolder;
+                yield return btnSave;
+                yield return btnSetDefaults;
+            }
         }
     }
 

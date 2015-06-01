@@ -1,4 +1,6 @@
-﻿namespace MW5.Configuration
+﻿using System.Windows.Forms;
+
+namespace MW5.Configuration
 {
     partial class WidgetsConfigPage
     {
@@ -31,30 +33,26 @@
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.cboScalebarUnits = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label4 = new System.Windows.Forms.Label();
-            this.chkShowScalebar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkShowScalebar = new CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cboZoombarVerbosity = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkShowZoombar = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkShowRedrawTime = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkShowZoombar = new CheckBox();
+            this.chkShowRedrawTime = new CheckBox();
             this.udCoordinatePrecision = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
             this.cboAngleFormat = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label11 = new System.Windows.Forms.Label();
             this.cboCoordinateDisplay = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label10 = new System.Windows.Forms.Label();
-            this.chkShowCoordinates = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkShowCoordinates = new CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udCoordinatePrecision)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAngleFormat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCoordinateDisplay)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowCoordinates)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             this.SuspendLayout();
@@ -96,14 +94,11 @@
             // 
             // chkShowScalebar
             // 
-            this.chkShowScalebar.BeforeTouchSize = new System.Drawing.Size(126, 21);
             this.chkShowScalebar.Location = new System.Drawing.Point(16, 84);
-            this.chkShowScalebar.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowScalebar.Name = "chkShowScalebar";
             this.chkShowScalebar.Size = new System.Drawing.Size(126, 21);
             this.chkShowScalebar.TabIndex = 16;
             this.chkShowScalebar.Text = "Show scale bar";
-            this.chkShowScalebar.ThemesEnabled = false;
             // 
             // label2
             // 
@@ -126,25 +121,19 @@
             // 
             // chkShowZoombar
             // 
-            this.chkShowZoombar.BeforeTouchSize = new System.Drawing.Size(188, 21);
             this.chkShowZoombar.Location = new System.Drawing.Point(16, 40);
-            this.chkShowZoombar.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowZoombar.Name = "chkShowZoombar";
             this.chkShowZoombar.Size = new System.Drawing.Size(188, 21);
             this.chkShowZoombar.TabIndex = 13;
             this.chkShowZoombar.Text = "Show zoombar";
-            this.chkShowZoombar.ThemesEnabled = false;
             // 
             // chkShowRedrawTime
             // 
-            this.chkShowRedrawTime.BeforeTouchSize = new System.Drawing.Size(188, 21);
             this.chkShowRedrawTime.Location = new System.Drawing.Point(16, 149);
-            this.chkShowRedrawTime.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowRedrawTime.Name = "chkShowRedrawTime";
             this.chkShowRedrawTime.Size = new System.Drawing.Size(188, 21);
             this.chkShowRedrawTime.TabIndex = 10;
             this.chkShowRedrawTime.Text = "Show redraw time";
-            this.chkShowRedrawTime.ThemesEnabled = false;
             // 
             // udCoordinatePrecision
             // 
@@ -208,14 +197,11 @@
             // 
             // chkShowCoordinates
             // 
-            this.chkShowCoordinates.BeforeTouchSize = new System.Drawing.Size(126, 21);
             this.chkShowCoordinates.Location = new System.Drawing.Point(16, 42);
-            this.chkShowCoordinates.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkShowCoordinates.Name = "chkShowCoordinates";
             this.chkShowCoordinates.Size = new System.Drawing.Size(126, 21);
             this.chkShowCoordinates.TabIndex = 19;
             this.chkShowCoordinates.Text = "Show coordinates";
-            this.chkShowCoordinates.ThemesEnabled = false;
             // 
             // configPanelControl2
             // 
@@ -248,14 +234,10 @@
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboScalebarUnits)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowScalebar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboZoombarVerbosity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowZoombar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowRedrawTime)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udCoordinatePrecision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAngleFormat)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCoordinateDisplay)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkShowCoordinates)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             this.configPanelControl2.PerformLayout();
@@ -266,20 +248,20 @@
         #endregion
 
         private UI.Controls.ConfigPanelControl configPanelControl1;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowRedrawTime;
+        private CheckBox chkShowRedrawTime;
         private System.Windows.Forms.NumericUpDown udCoordinatePrecision;
         private System.Windows.Forms.Label label12;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboAngleFormat;
         private System.Windows.Forms.Label label11;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboCoordinateDisplay;
         private System.Windows.Forms.Label label10;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowCoordinates;
+        private CheckBox chkShowCoordinates;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboScalebarUnits;
         private System.Windows.Forms.Label label4;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowScalebar;
+        private CheckBox chkShowScalebar;
         private System.Windows.Forms.Label label2;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboZoombarVerbosity;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkShowZoombar;
+        private CheckBox chkShowZoombar;
         private UI.Controls.ConfigPanelControl configPanelControl2;
     }
 }
