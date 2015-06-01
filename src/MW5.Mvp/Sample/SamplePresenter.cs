@@ -4,22 +4,7 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Mvp.Sample
 {
-    public enum SampleCommand
-    {
-        OpenLayer = 0,
-    }
-
-    public interface ISampleView : IComplexView
-    {
-
-    }
-
-    public class SampleViewModel
-    {
-        public string Name { get; set; }
-    }
-
-    public class SamplePresenter : CommandPresenter<ISampleView, SampleCommand>
+    public class SamplePresenter : ComplexPresenter<ISampleView, SampleCommand, SampleViewModel>
     {
         private readonly ISampleView _view;
 
@@ -29,19 +14,27 @@ namespace MW5.Mvp.Sample
             _view = view;
         }
 
-        protected override void CommandNotFound(string itemName)
+        public override void Initialize()
         {
-            Debug.Print("Command not found: " + itemName);
+            Debug.Print("Layer name passed as parameter: " + Model.Name);
         }
 
         public override void RunCommand(SampleCommand command)
         {
             switch (command)
             {
-                case SampleCommand.OpenLayer:
-                    MessageBox.Show("Open layer clicked");
+                case SampleCommand.TestButton:
+                    MessageBox.Show("Button is clicked");
+                    break;
+                case SampleCommand.TestMenu:
+                    MessageBox.Show("Menu is clicked");
                     break;
             }
+        }
+
+        public override bool ViewOkClicked()
+        {
+            return true;
         }
     }
 }

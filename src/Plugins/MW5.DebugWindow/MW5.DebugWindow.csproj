@@ -151,6 +151,7 @@
     <ProjectReference Include="..\..\MW5.Services\MW5.Services.csproj">
       <Project>{54BB55DA-DBDC-47E5-8DEC-DE325F35F074}</Project>
       <Name>MW5.Services</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-de0d-4ffd-b115-af2aeac79cd9}</Project>
