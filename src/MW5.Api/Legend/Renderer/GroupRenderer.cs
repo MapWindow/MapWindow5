@@ -227,7 +227,7 @@ namespace MW5.Api.Legend.Renderer
                     Constants.VertLineIndent,
                     lyr.Top,
                     Constants.VertLineIndent,
-                    (int)(lyr.Top + (.55 * Constants.ItemHeight)));
+                    (int)(lyr.Top + (.5 * Constants.ItemHeight)));
             }
 
             // draw Horizontal line over to the Vertical Sub-lyr line

@@ -356,6 +356,7 @@ namespace MW5.Api.Legend
             }
 
             var txt = TextBox;
+            txt.Visible = true;
 
             txt.Left = el.Left;
             txt.Top = el.Top;
@@ -388,13 +389,17 @@ namespace MW5.Api.Legend
 
                 SaveLayerName();
 
-                Controls.Remove(TextBox);
+                HideTextBox();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                HideTextBox();
             }
         }
 
         private void txt_LostFocus(object sender, EventArgs e)
         {
-            Controls.Remove(TextBox);
+            HideTextBox();
 
             if (string.IsNullOrWhiteSpace(TextBox.Text)) return;
 
@@ -420,9 +425,18 @@ namespace MW5.Api.Legend
 
         protected override void OnResize(EventArgs e)
         {
-            Controls.Remove(TextBox);   // discard changes
+            HideTextBox();
 
             base.OnResize(e);
+        }
+
+        private void HideTextBox()
+        {
+            TextBox.Visible = false;
+
+            Focus();
+
+            Controls.Remove(TextBox); 
         }
 
         #endregion
