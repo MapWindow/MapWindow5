@@ -41,8 +41,10 @@ namespace MW5.Views
             this.toolOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolRestorePlugins = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSetDefaults = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolRestorePlugins = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRestoreToolbars = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this._treeViewAdv1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
             this.SuspendLayout();
@@ -176,8 +178,10 @@ namespace MW5.Views
             this.toolOptions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolOpenFolder,
             this.toolStripSeparator1,
+            this.toolSetDefaults,
+            this.toolStripSeparator2,
             this.toolRestorePlugins,
-            this.toolSetDefaults});
+            this.toolRestoreToolbars});
             this.toolOptions.ForeColor = System.Drawing.Color.Black;
             this.toolOptions.Image = global::MW5.Properties.Resources.icon_settings;
             this.toolOptions.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -189,27 +193,38 @@ namespace MW5.Views
             // 
             this.toolOpenFolder.Image = global::MW5.Properties.Resources.icon_folder;
             this.toolOpenFolder.Name = "toolOpenFolder";
-            this.toolOpenFolder.Size = new System.Drawing.Size(155, 22);
-            this.toolOpenFolder.Text = "Open folder";
+            this.toolOpenFolder.Size = new System.Drawing.Size(162, 22);
+            this.toolOpenFolder.Text = "Open Folder";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(152, 6);
-            // 
-            // toolRestorePlugins
-            // 
-            this.toolRestorePlugins.Image = global::MW5.Properties.Resources.img_plugin32;
-            this.toolRestorePlugins.Name = "toolRestorePlugins";
-            this.toolRestorePlugins.Size = new System.Drawing.Size(155, 22);
-            this.toolRestorePlugins.Text = "Restore plugins";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(159, 6);
             // 
             // toolSetDefaults
             // 
             this.toolSetDefaults.Image = global::MW5.Properties.Resources.img_default24;
             this.toolSetDefaults.Name = "toolSetDefaults";
-            this.toolSetDefaults.Size = new System.Drawing.Size(155, 22);
-            this.toolSetDefaults.Text = "Set defaults";
+            this.toolSetDefaults.Size = new System.Drawing.Size(162, 22);
+            this.toolSetDefaults.Text = "Set Defaults";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(159, 6);
+            // 
+            // toolRestorePlugins
+            // 
+            this.toolRestorePlugins.Image = global::MW5.Properties.Resources.img_plugin32;
+            this.toolRestorePlugins.Name = "toolRestorePlugins";
+            this.toolRestorePlugins.Size = new System.Drawing.Size(162, 22);
+            this.toolRestorePlugins.Text = "Restore Plugins";
+            // 
+            // toolRestoreToolbars
+            // 
+            this.toolRestoreToolbars.Name = "toolRestoreToolbars";
+            this.toolRestoreToolbars.Size = new System.Drawing.Size(162, 22);
+            this.toolRestoreToolbars.Text = "Restore Toolbars";
             // 
             // ConfigView
             // 
@@ -246,5 +261,7 @@ namespace MW5.Views
         private System.Windows.Forms.ToolStripMenuItem toolRestorePlugins;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolOpenFolder;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem toolRestoreToolbars;
     }
 }

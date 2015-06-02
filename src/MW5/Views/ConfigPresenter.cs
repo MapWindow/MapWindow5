@@ -16,6 +16,7 @@ using MW5.Shared;
 using MW5.UI.Style;
 using MW5.Views.Abstract;
 using Syncfusion.Windows.Forms.Tools;
+using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Views
 {
@@ -56,28 +57,19 @@ namespace MW5.Views
         {
             switch (command)
             {
-                case ConfigCommand.RestorePlugins:
-                    if (!MessageService.Current.Ask("Do you want to restore default set of plugins" +
-                                                    "and location of their panels?"))
+                case ConfigCommand.RestoreToolbars:
+                    if (MessageService.Current.Ask("Do you want to restore default location of toolbars?"))
                     {
-                        return;
-                    }
-
-                    try
-                    {
-                        var guids = AppConfig.Instance.DefaultApplicationPlugins;
-                        _pluginManger.RestoreApplicationPlugins(guids, _context);
-                        Model.ReloadPage(ConfigPageType.Plugins);
-
-                        // restoring layout
                         var view = _context.Container.Resolve<IMainView>();
-                        var manager = view.DockingManager as DockingManager;
-                        manager.RestoreLayout(true);
+                        var manager = view.MenuManager as MainFrameBarManager;
+                        if (manager != null)
+                        {
+                            manager.RestoreLayout(true);
+                        }
                     }
-                    catch (Exception ex)
-                    {
-                        Logger.Current.Error("Failed to restore dock panel layout.", ex);
-                    }
+                    break;
+                case ConfigCommand.RestorePlugins:
+                    RestorePlugins();
                     break;
                 case ConfigCommand.Save:
                     ApplySettings();
@@ -105,6 +97,30 @@ namespace MW5.Views
                     string path = _configService.ConfigPath;
                     PathHelper.OpenFolderWithExplorer(path);
                     break;
+            }
+        }
+
+        private void RestorePlugins()
+        {
+            if (!MessageService.Current.Ask("Do you want to restore default set of plugins and location of their panels?"))
+            {
+                return;
+            }
+
+            try
+            {
+                var guids = AppConfig.Instance.DefaultApplicationPlugins;
+                _pluginManger.RestoreApplicationPlugins(guids, _context);
+                Model.ReloadPage(ConfigPageType.Plugins);
+
+                // restoring layout
+                var view = _context.Container.Resolve<IMainView>();
+                var manager = view.DockingManager as DockingManager;
+                manager.RestoreLayout(true);
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Error("Failed to restore dock panel layout.", ex);
             }
         }
 

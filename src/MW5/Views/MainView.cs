@@ -57,6 +57,7 @@ namespace MW5.Views
             else
             {
                 _dockingManager1.SaveLayout(false);
+                _mainFrameBarManager1.SaveLayout(false);
             }
         }
 
@@ -95,11 +96,13 @@ namespace MW5.Views
             if (AppConfig.Instance.FirstRun)
             {
                 _dockingManager1.SaveLayout(true);
+                _mainFrameBarManager1.SaveLayout(true);
                 AppConfig.Instance.FirstRun = false;
             }
             else
             {
                 _dockingManager1.RestoreLayout(false);
+                _mainFrameBarManager1.RestoreLayout(false);
             }
 
             Program.Timer.Stop();

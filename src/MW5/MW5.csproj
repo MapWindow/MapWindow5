@@ -160,6 +160,8 @@
     <Compile Include="Controls\LocatorPresenter.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="Helpers\SyncfusionSerializationHelper.cs" />
+    <Compile Include="Helpers\ToolbarHelper.cs" />
     <Compile Include="Listeners\MainPluginListener.cs" />
     <Compile Include="Menu\ContextMenuCommand.cs" />
     <Compile Include="Menu\ContextMenuPresenter.cs" />

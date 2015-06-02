@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Legend;
 using MW5.Plugins;
@@ -8,6 +9,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
@@ -82,9 +84,24 @@ namespace MW5.Helpers
         public static void RestoreLayout(this DockingManager dockingManager, bool startup)
         {
             var sr = GetSerializer(startup);
+
+            string path = sr.GetPath();
+
+            if (startup && !File.Exists(path))
+            {
+                MessageService.Current.Warn("File with initial state of panels wasn't found: " + path);
+                return;
+            }
+
             if (!dockingManager.LoadDockState(sr))
             {
-                Logger.Current.Warn("Failed to restore the state of dock panels.");
+                const string msg = "Failed to restore the state of dock panels.";
+                Logger.Current.Warn(msg);
+
+                if (startup)
+                {
+                    MessageService.Current.Info(msg);
+                }
             }
         }
 
