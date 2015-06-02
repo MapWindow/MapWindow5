@@ -47,7 +47,15 @@ namespace MW5.Helpers
         public static void ApplyConfig(this IMuteMap map, IConfigService configService)
         {
             var config = configService.Config;
+            
             MapConfig.LoadSymbologyOnAddLayer = config.LoadSymbology;
+            MapConfig.ImageDownsamplingMode = config.RasterDownsamplingMode;
+            MapConfig.ImageUpsamplingMode = config.RasterUpsamplingMode;
+
+            // TODO: apply color scheme creation options
+            //config.RasterCreateColorScheme
+            //config.RasterDefaultColorScheme
+            //config.RasterRandomColorScheme
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

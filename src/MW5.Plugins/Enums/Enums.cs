@@ -157,6 +157,7 @@
         LayerOpening = 3,
         Widgets = 4,
         Custom = 5,
+        Raster = 6,
     }
 
     public enum SymbologyStorage

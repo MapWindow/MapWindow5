@@ -36,6 +36,7 @@ namespace MW5.Views
             _pages.Add(new MapConfigPage(_configeService));
             _pages.Add(new WidgetsConfigPage(_configeService));
             _pages.Add(new LayerConfigPage(_configeService));
+            _pages.Add(new RasterConfigPage(_configeService));
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
         }
 

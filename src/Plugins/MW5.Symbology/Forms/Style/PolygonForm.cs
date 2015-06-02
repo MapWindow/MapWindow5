@@ -121,7 +121,7 @@ namespace MW5.Plugins.Symbology.Forms.Style
 
         private void InitTextures()
         {
-            string path = PathHelper.GetTexturesPath();
+            string path = ResourceHelper.GetTexturesPath();
             if (Directory.Exists(path))
             {
                 textureControl1.FilePath = path;

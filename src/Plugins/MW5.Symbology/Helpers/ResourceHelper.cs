@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
-    internal class PathHelper
+    internal class ResourceHelper
     {
         /// <summary>
         /// Returns path to the default directory with icons

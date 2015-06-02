@@ -124,6 +124,12 @@
     <Compile Include="Configuration\PluginGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Configuration\RasterConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\RasterConfigPage.Designer.cs">
+      <DependentUpon>RasterConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\WidgetsConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -305,6 +311,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\RasterConfigPage.resx">
+      <DependentUpon>RasterConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\WidgetsConfigPage.resx">
       <DependentUpon>WidgetsConfigPage.cs</DependentUpon>

@@ -43,6 +43,11 @@ namespace MW5.Plugins.Concrete
             ProjectionShowLoadingReport = true;
             PyramidCompression = TiffCompression.Auto;
             PyramidSampling = RasterOverviewSampling.Nearest;
+            RasterDownsamplingMode = InterpolationType.Bilinear;
+            RasterUpsamplingMode = InterpolationType.None;
+            RasterCreateColorScheme = true;
+            RasterDefaultColorScheme = PredefinedColors.SummerMountains;
+            RasterRandomColorScheme = true;
             ResizeBehavior = ResizeBehavior.KeepScale;
             ReuseTileBuffer = true;
             ScalebarUnits = ScalebarUnits.GoogleStyle;
@@ -153,6 +158,21 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
+
+        [DataMember]
+        public bool RasterCreateColorScheme { get; set; }
+
+        [DataMember]
+        public PredefinedColors RasterDefaultColorScheme { get; set; }
+
+        [DataMember]
+        public bool RasterRandomColorScheme { get; set; }
+
+        [DataMember]
+        public InterpolationType RasterDownsamplingMode { get; set; }
+
+        [DataMember]
+        public InterpolationType RasterUpsamplingMode { get; set; }
 
         [DataMember]
         public List<string> RecentProjects
