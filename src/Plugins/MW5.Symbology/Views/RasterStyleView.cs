@@ -9,6 +9,7 @@ using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -68,6 +69,7 @@ namespace MW5.Plugins.Symbology.Views
 
             if (Raster != null)
             {
+                _renderingPresenter.View.Metadata = SymbologyPlugin.GetMetadata(Model.Handle);
                 _renderingPresenter.Initialize(Raster);
 
                 rasterInfoTreeView1.Initialize(_imageSource as IRasterSource);
@@ -244,8 +246,6 @@ namespace MW5.Plugins.Symbology.Views
             chkColorize.Checked = false;
             chkGreyScale.Checked = false;
         }
-
-
 
         private void UiToModelRaster()
         {

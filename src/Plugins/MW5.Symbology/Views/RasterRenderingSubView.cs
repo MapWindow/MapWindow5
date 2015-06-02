@@ -11,6 +11,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 using MW5.UI.Helpers;
 
@@ -71,14 +72,41 @@ namespace MW5.Plugins.Symbology.Views
             cboClassification.SetValue(RasterClassification.EqualIntervals);
 
             rgbBandControl1.Initialize(_context, Model);
+
+            LoadMetadata();
         }
 
+        private void LoadMetadata()
+        {
+            if (Metadata == null)
+            {
+                return;
+            }
+
+            cboClassification.SetValue(Metadata.RasterClassification);
+            chkReverseColorScheme.Checked = Metadata.RasterReverseColorScheme;
+            colorSchemeCombo1.SetSelectedItem(Metadata.RasterColorScheme);
+        }
+
+        public void SaveMetadata()
+        {
+            if (Metadata == null)
+            {
+                return;
+            }
+
+            Metadata.RasterClassification = cboClassification.GetValue<RasterClassification>();
+            Metadata.RasterReverseColorScheme = chkReverseColorScheme.Checked;
+            Metadata.RasterColorScheme = colorSchemeCombo1.GetSelectedItem();
+        }
 
         internal ColorSchemeCollection ColorSchemes
         {
             get { return colorSchemeCombo1.ColorSchemes; }
         }
-        
+
+        public SymbologyMetadata Metadata { get; set; }
+
         public bool HasRgbMapping
         {
             get { return rgbBandControl1.HasMapping(); }

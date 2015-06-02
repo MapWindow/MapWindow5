@@ -13,6 +13,8 @@ namespace MW5.Plugins.Symbology.Services
     [Serializable, XmlRoot("SymbologyMetadata")]
     public class SymbologyMetadata: LayerMetadataBase
     {
+        #region Vector settings 
+
         [DefaultValue(Classification.NaturalBreaks)]
         public Classification CategoriesClassification = Classification.NaturalBreaks;
 
@@ -65,5 +67,27 @@ namespace MW5.Plugins.Symbology.Services
 
         [DefaultValue(-1)]
         public int IconIndex = -1;
+        
+        #endregion
+
+        #region Raster settings
+
+        [XmlIgnore]
+        public ColorBlend RasterColorScheme = null;
+
+        [DefaultValue(null)]
+        public XmlColorBlend RasterColorBlend
+        {
+            get { return RasterColorScheme != null ? new XmlColorBlend(RasterColorScheme) : null; }
+            set { RasterColorScheme = value != null ? value.ColorBlend : null; }
+        }
+        
+        [DefaultValue(false)]
+        public bool RasterReverseColorScheme = false;
+
+        [DefaultValue(RasterClassification.EqualIntervals)]
+        public RasterClassification RasterClassification = RasterClassification.EqualIntervals;
+
+        #endregion
     }
 }

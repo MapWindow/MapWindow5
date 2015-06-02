@@ -85,6 +85,8 @@ namespace MW5.Plugins.Symbology.Views
                 scheme.ApplyColors(type, View.ColorRamp, View.GradientWithinCategory);
 
                 View.ColorScheme = scheme;
+
+                View.SaveMetadata();
             }
         }
 
