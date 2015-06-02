@@ -30,6 +30,8 @@
         public const string ZoomIn = "ViewZoomIn";
         public const string ZoomOut = "ZoomOut";
         public const string ZoomMax = "ZoomMax";
+        public const string ZoomPrev = "ZoomPrev";
+        public const string ZoomNext = "ZoomNext";
         public const string ZoomToLayer = "ZoomToLayer";
         public const string Pan = "Pan";
         public const string SetProjection = "SetProjection";

@@ -171,6 +171,8 @@ namespace MW5.Listeners
         private void MapExtentsChanged(object sender, EventArgs e)
         {
             _broadcaster.BroadcastEvent(p => p.ExtentsChanged_, sender as IMuteMap, e);
+
+            _context.View.Update();
         }
 
         private void MapListener_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)

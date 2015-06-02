@@ -49,6 +49,9 @@ namespace MW5.Menu
             FindToolbarItem(MenuKeys.ZoomOut).Checked = _map.MapCursor == MapCursor.ZoomOut;
             FindToolbarItem(MenuKeys.Pan).Checked = _map.MapCursor == MapCursor.Pan;
 
+            FindToolbarItem(MenuKeys.ZoomPrev).Enabled = _map.ExtentHistoryUndoCount > 0;
+            FindToolbarItem(MenuKeys.ZoomNext).Enabled = _map.ExtentHistoryRedoCount > 0;
+
             FindToolbarItem(MenuKeys.SelectByRectangle).Checked = _map.MapCursor == MapCursor.Selection;
             FindToolbarItem(MenuKeys.SelectByPolygon).Checked = _map.MapCursor == MapCursor.SelectByPolygon;
 

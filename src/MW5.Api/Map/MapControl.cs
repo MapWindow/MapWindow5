@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -29,7 +30,7 @@ namespace MW5.Api.Map
             _map.SendMouseUp = true;
             _map.SendMouseMove = true;
             _map.TrapRMouseDown = false;
-
+            
             AllowDrop = true;
 
             DragEnter += MapControl_DragEnter;
@@ -71,6 +72,9 @@ namespace MW5.Api.Map
 
         #region Hiding Properties from PropertyGrid
 
+        /// <summary>
+        /// Don't use this property. Use MapControl.BackGroundColor instead.
+        /// </summary>
         [Browsable(false)]
         public override Color BackColor
         {
@@ -511,6 +515,11 @@ namespace MW5.Api.Map
             return _map.ZoomToPrev();
         }
 
+        public int ZoomToNext()
+        {
+            return _map.ZoomToNext();
+        }
+
         public bool ZoomToSelected(int layerHandle)
         {
             return _map.ZoomToSelected(layerHandle);
@@ -669,6 +678,21 @@ namespace MW5.Api.Map
         {
             get { return _map.CtlbackColor; }
             set { _map.CtlbackColor = value; }
+        }
+
+        public int ExtentHistoryUndoCount
+        {
+            get { return _map.ExtentHistoryUndoCount; }
+        }
+
+        public int ExtentHistoryRedoCount
+        {
+            get { return _map.ExtentHistoryRedoCount; }
+        }
+
+        public void ClearExtentHistory()
+        {
+            _map.ClearExtentHistory();
         }
     }
 }

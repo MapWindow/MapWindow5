@@ -58,6 +58,10 @@ namespace MW5.Helpers
         private static void InitLocator(ISerializableContext context)
         {
             var locatorControl = context.GetDockPanelObject(DefaultDockPanel.Locator);
+            if (locatorControl == null)
+            {
+                return;
+            }
 
             var locator = context.DockPanels.Add(locatorControl, DockPanelKeys.Preview, PluginIdentity.Default);
             locator.Caption = "Locator";

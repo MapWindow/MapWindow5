@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,12 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.ZoomPrev:
+                    _context.Map.ZoomToPrev();
+                    break;
+                case MenuKeys.ZoomNext:
+                    _context.Map.ZoomToNext();
+                    break;
                 case MenuKeys.ZoomMax:
                     _context.Map.ZoomToMaxExtents();
                     break;

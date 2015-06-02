@@ -17,6 +17,7 @@ using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
+using MW5.Plugins.Services;
 using MW5.UI;
 using MW5.UI.Controls;
 
@@ -47,7 +48,7 @@ namespace MW5.Controls
             btnClear.Click += (s, e) => Clear();
             btnDisplayBackground.Click += (s, e) => _backgroundVisible = !btnDisplayBackground.Checked;
             contextMenuStripEx1.Opening += (s, e) => btnDisplayBackground.Checked = _backgroundVisible;
-
+            
             mapControl1.MouseDown += MapMouseDown;
             mapControl1.MouseMove += MapMouseMove;
             mapControl1.MouseUp += MapMouseUp;
@@ -108,6 +109,8 @@ namespace MW5.Controls
         
         internal void UpdateLocatorBox(IEnvelope exts)
         {
+            return;
+
             if (exts == null || Empty)
             {
                 return;
@@ -197,7 +200,7 @@ namespace MW5.Controls
 
         private bool WithinBounds(double xProj, double yProj)
         {
-            if (Empty)
+            if (Empty || _extents == null)
             {
                 return false;
             }

@@ -310,4 +310,10 @@
   <data name="img_default24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_default24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_zoom_next24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_zoom_next24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_zoom_prev24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_zoom_prev24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

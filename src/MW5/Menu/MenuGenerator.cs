@@ -146,8 +146,6 @@ namespace MW5.Menu
             bar.Update();
         }
 
-
-
         private void InitMapToolbar(IToolbar bar)
         {
             var items = bar.Items;
@@ -155,6 +153,8 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.ZoomIn]);
             items.AddButton(_commands[MenuKeys.ZoomOut]);
             items.AddButton(_commands[MenuKeys.ZoomMax]);
+            items.AddButton(_commands[MenuKeys.ZoomPrev]);
+            items.AddButton(_commands[MenuKeys.ZoomNext]);
             items.AddButton(_commands[MenuKeys.ZoomToLayer]);
             items.AddButton(_commands[MenuKeys.Pan]);
             items.AddButton(_commands[MenuKeys.SetProjection], true);

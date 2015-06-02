@@ -109,10 +109,10 @@ namespace MW5.Views
             // 
             this._mapControl1.AllowDrop = true;
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this._mapControl1.CurrentScale = 2.4972617369057897D;
+            this._mapControl1.BackColor = System.Drawing.Color.White;
+            this._mapControl1.CurrentScale = 1.7722502649008838D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
-            this._mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this._mapControl1.ExtentHistory = 20;
             this._mapControl1.ExtentPad = 0.02D;
             this._mapControl1.GrabProjectionFromData = true;
@@ -145,7 +145,9 @@ namespace MW5.Views
             this._mapControl1.UdCursorHandle = 0;
             this._mapControl1.UseSeamlessPan = false;
             this._mapControl1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this._mapControl1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
             this._mapControl1.ZoomPercent = 0.3D;
+            this._mapControl1.Dock = System.Windows.Forms.DockStyle.None;
             // 
             // _mainFrameBarManager1
             // 

@@ -31,56 +31,60 @@ namespace MW5.Controls
         /// </summary>
         private void InitializeComponent()
         {
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
-            this.mapControl1 = new MapControl();
+            this.mapControl1 = new MW5.Api.Map.MapControl();
             this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
+            this.btnDisplayBackground = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.btnUpdateFull = new System.Windows.Forms.ToolStripMenuItem();
             this.btnUpdateCurrent = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.btnClear = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnDisplayBackground = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.contextMenuStripEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mapControl1
             // 
-            this.mapControl1.AnimationOnZooming = AutoToggle.Auto;
+            this.mapControl1.AllowDrop = true;
+            this.mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
+            this.mapControl1.BackColor = System.Drawing.Color.White;
+            this.mapControl1.BackgroundColor = System.Drawing.Color.White;
             this.mapControl1.ContextMenuStrip = this.contextMenuStripEx1;
-            this.mapControl1.CurrentScale = 21.133078334935735D;
+            this.mapControl1.CurrentScale = 66.427059950630564D;
             this.mapControl1.CurrentZoom = -1;
             this.mapControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl1.ExtentHistory = 20;
             this.mapControl1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
-            spatialReference1.Tag = "";
-            this.mapControl1.Projection = spatialReference1;
             this.mapControl1.GrabProjectionFromData = true;
-            this.mapControl1.InertiaOnPanning = AutoToggle.Auto;
-            this.mapControl1.KnownExtents = KnownExtents.None;
+            this.mapControl1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
+            this.mapControl1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
             this.mapControl1.Latitude = 0F;
             this.mapControl1.Location = new System.Drawing.Point(0, 0);
             this.mapControl1.Longitude = 0F;
-            this.mapControl1.MapCursor = MapCursor.ZoomIn;
-            this.mapControl1.MapUnits = UnitsOfMeasure.Meters;
+            this.mapControl1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
+            this.mapControl1.MapProjection = MW5.Api.Enums.MapProjection.None;
+            this.mapControl1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
             this.mapControl1.MouseWheelSpeed = 0.5D;
             this.mapControl1.Name = "mapControl1";
-            this.mapControl1.ResizeBehavior = ResizeBehavior.Classic;
+            spatialReference1.Tag = "";
+            this.mapControl1.Projection = spatialReference1;
+            this.mapControl1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.mapControl1.ReuseTileBuffer = true;
-            this.mapControl1.ScalebarUnits = ScalebarUnits.GoogleStyle;
+            this.mapControl1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
             this.mapControl1.ScalebarVisible = true;
-            this.mapControl1.ShowCoordinates = CoordinatesDisplay.Auto;
+            this.mapControl1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this.mapControl1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
             this.mapControl1.ShowRedrawTime = false;
             this.mapControl1.ShowVersionNumber = false;
             this.mapControl1.Size = new System.Drawing.Size(293, 301);
-            this.mapControl1.SystemCursor = SystemCursor.MapDefault;
+            this.mapControl1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this.mapControl1.TabIndex = 0;
             this.mapControl1.Tag = "";
-            this.mapControl1.TileProvider = TileProvider.OpenStreetMap;
+            this.mapControl1.TileProvider = MW5.Api.Enums.TileProvider.OpenStreetMap;
             this.mapControl1.UdCursorHandle = 0;
             this.mapControl1.UseSeamlessPan = false;
-            this.mapControl1.ZoomBehavior = ZoomBehavior.UseTileLevels;
+            this.mapControl1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this.mapControl1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
             this.mapControl1.ZoomPercent = 0.3D;
             // 
             // contextMenuStripEx1
@@ -95,8 +99,19 @@ namespace MW5.Controls
             this.btnClear});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(213, 126);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(213, 104);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            // 
+            // btnDisplayBackground
+            // 
+            this.btnDisplayBackground.Name = "btnDisplayBackground";
+            this.btnDisplayBackground.Size = new System.Drawing.Size(212, 22);
+            this.btnDisplayBackground.Text = "Background visible";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(209, 6);
             // 
             // btnUpdateFull
             // 
@@ -121,18 +136,7 @@ namespace MW5.Controls
             this.btnClear.Size = new System.Drawing.Size(212, 22);
             this.btnClear.Text = "Clear";
             // 
-            // btnDisplayBackground
-            // 
-            this.btnDisplayBackground.Name = "btnDisplayBackground";
-            this.btnDisplayBackground.Size = new System.Drawing.Size(212, 22);
-            this.btnDisplayBackground.Text = "Background visible";
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(209, 6);
-            // 
-            // PreviewDockPanel
+            // LocatorDockPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

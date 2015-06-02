@@ -693,6 +693,26 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_next24 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_next24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_prev24 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_prev24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap mapwindow_logo {
             get {
                 object obj = ResourceManager.GetObject("mapwindow_logo", resourceCulture);

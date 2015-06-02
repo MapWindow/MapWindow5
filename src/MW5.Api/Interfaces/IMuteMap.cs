@@ -50,6 +50,7 @@ namespace MW5.Api.Interfaces
         void ZoomToMaxExtents();
         void ZoomToMaxVisibleExtents();
         int ZoomToPrev();
+        int ZoomToNext();
         bool ZoomToSelected(int layerHandle);
         void ZoomToShape(int layerHandle, int shape);
         bool ZoomToTileLevel(int zoom);
@@ -121,6 +122,12 @@ namespace MW5.Api.Interfaces
         ZoomBoxStyle ZoomBoxStyle { get; set; }
 
         Color BackgroundColor { get; set; }
+
+        int ExtentHistoryUndoCount { get; }
+
+        int ExtentHistoryRedoCount { get; }
+
+        void ClearExtentHistory();
 
         #region Not implemented
 

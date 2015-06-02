@@ -103,7 +103,10 @@ namespace MW5
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
-            _locator = new LocatorPresenter(_map);
+			// comment this line to prevent locator loading            
+			// may be useful for ocx debugging to not create additional 
+			// instance of map
+			_locator = new LocatorPresenter(_map);  
 
             this.InitDocking();
 
@@ -243,7 +246,7 @@ namespace MW5
                 case DefaultDockPanel.Toolbox:
                     return _toolbox as Control;
                 case DefaultDockPanel.Locator:
-                    return _locator.GetInternalObject();
+                    return _locator != null ? _locator.GetInternalObject() : null;
                 default:
                     throw new ArgumentOutOfRangeException("panel");
             }

@@ -119,6 +119,21 @@ namespace MW5.Controls
 
         private void UpdatePreview(bool fullExtents)
         {
+            int layersCount = _mainMap.Layers.Count;
+
+            if (layersCount == 0 &&
+                (_mainMap.TileProvider == TileProvider.None || _mainMap.Projection.IsEmpty))
+            {
+                MessageService.Current.Info("Map is empty. It's not possible to create an overview image.");
+                return;
+            }
+
+            if (fullExtents && layersCount == 0)
+            {
+                MessageService.Current.Info("No layers are loaded to make snapshot.");
+                return;
+            }
+
             IEnvelope e = fullExtents ? _mainMap.MaxExtents : _mainMap.Extents;
             e = e.Inflate(e.Width*0.1, e.Height*0.1);       // parameter can be introduced
 

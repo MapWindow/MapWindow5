@@ -65,6 +65,12 @@ namespace MW5.Menu
                 new MenuCommand("Zoom Out", MenuKeys.ZoomOut, Resources.icon_zoom_out,
                 "Zooms out the map."),
 
+                new MenuCommand("Zoom to previous", MenuKeys.ZoomPrev, Resources.img_zoom_prev24,
+                "Zooms map to the previous extents recorded in the history."),
+
+                new MenuCommand("Zoom to next", MenuKeys.ZoomNext, Resources.img_zoom_next24,
+                "Zooms map to the next extents recorded in the history."),
+
                 new MenuCommand("Zoom to Maximum Extents", MenuKeys.ZoomMax, Resources.icon_zoom_max_extents,
                 "Zooms map to the maximum extents."),
 
