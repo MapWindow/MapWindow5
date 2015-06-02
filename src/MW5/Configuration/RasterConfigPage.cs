@@ -39,6 +39,7 @@ namespace MW5.Configuration
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboDefaultColorScheme.AddItemsFromEnum<PredefinedColors>();
 
+            
             chkCreateColorScheme.CheckedChanged += (s, e) => RefreshControls();
             chkRandomColorScheme.CheckedChanged += (s, e) => RefreshControls();
         }
@@ -56,6 +57,7 @@ namespace MW5.Configuration
             cboDownsampling.SetValue(config.RasterDownsamplingMode);
             cboDefaultColorScheme.SetValue(config.GridDefaultColorScheme);
 
+            chkUseHistogram.Checked = config.GridUseHistogram;
             chkRandomColorScheme.Checked = config.GridRandomColorScheme;
             chkCreateColorScheme.Checked = !config.GridFavorGreyscale;
 
@@ -70,6 +72,7 @@ namespace MW5.Configuration
             config.RasterDownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
             config.GridDefaultColorScheme = cboDefaultColorScheme.GetValue<PredefinedColors>();
 
+            config.GridUseHistogram = chkUseHistogram.Checked;
             config.GridRandomColorScheme = chkRandomColorScheme.Checked;
             config.GridFavorGreyscale = !chkCreateColorScheme.Checked;
         }

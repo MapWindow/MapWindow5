@@ -69,6 +69,11 @@ namespace MW5.Controls
         {
             TreeNodeAdv selectedNode = null;
 
+            if (lastPageName == null)
+            {
+                lastPageName = string.Empty;
+            }
+
             foreach (var page in _model.Pages)
             {
                 if (page.PageName.ContainsIgnoreCase(lastPageName))

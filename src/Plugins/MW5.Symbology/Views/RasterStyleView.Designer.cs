@@ -35,9 +35,9 @@ namespace MW5.Plugins.Symbology.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RasterStyleView));
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
+            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo2 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabPageGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnOpenFolder = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -92,6 +92,7 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPagePyramids = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._overviewControl1 = new MW5.Plugins.Symbology.Controls.OverviewControl();
             this.tabPageInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnShowDriverInfo = new Syncfusion.Windows.Forms.ButtonAdv();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.rasterInfoTreeView1 = new MW5.Plugins.Symbology.Controls.RasterInfoTreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
@@ -108,7 +109,9 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolLoadStyle = new System.Windows.Forms.ToolStripMenuItem();
             this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnShowDriverInfo = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.toolRemoveStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabPageGeneral.SuspendLayout();
@@ -774,6 +777,16 @@ namespace MW5.Plugins.Symbology.Views
             this.tabPageInfo.Text = "Info";
             this.tabPageInfo.ThemesEnabled = false;
             // 
+            // btnShowDriverInfo
+            // 
+            this.btnShowDriverInfo.BeforeTouchSize = new System.Drawing.Size(113, 23);
+            this.btnShowDriverInfo.IsBackStageButton = false;
+            this.btnShowDriverInfo.Location = new System.Drawing.Point(15, 408);
+            this.btnShowDriverInfo.Name = "btnShowDriverInfo";
+            this.btnShowDriverInfo.Size = new System.Drawing.Size(113, 23);
+            this.btnShowDriverInfo.TabIndex = 7;
+            this.btnShowDriverInfo.Text = "Show driver info";
+            // 
             // richTextBox1
             // 
             this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -789,11 +802,11 @@ namespace MW5.Plugins.Symbology.Views
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.rasterInfoTreeView1.AutoAdjustMultiLineHeight = true;
-            treeNodeAdvStyleInfo1.ThemesEnabled = false;
+            treeNodeAdvStyleInfo2.ThemesEnabled = false;
             this.rasterInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo2),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo2)});
             this.rasterInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(515, 400);
             this.rasterInfoTreeView1.BorderColor = System.Drawing.Color.Silver;
             this.rasterInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -952,7 +965,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
             this.toolStripEx1.TabIndex = 39;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -961,7 +974,10 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolLoadStyle,
-            this.toolSaveStyle});
+            this.toolSaveStyle,
+            this.toolRemoveStyle,
+            this.toolStripSeparator1,
+            this.toolOpenFolder});
             this.toolStyle.ForeColor = System.Drawing.Color.Black;
             this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
             this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -973,25 +989,34 @@ namespace MW5.Plugins.Symbology.Views
             // 
             this.toolLoadStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_folder_open;
             this.toolLoadStyle.Name = "toolLoadStyle";
-            this.toolLoadStyle.Size = new System.Drawing.Size(127, 22);
+            this.toolLoadStyle.Size = new System.Drawing.Size(152, 22);
             this.toolLoadStyle.Text = "Load style";
             // 
             // toolSaveStyle
             // 
             this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
             this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(127, 22);
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
             this.toolSaveStyle.Text = "Save style";
             // 
-            // btnShowDriverInfo
+            // toolRemoveStyle
             // 
-            this.btnShowDriverInfo.BeforeTouchSize = new System.Drawing.Size(113, 23);
-            this.btnShowDriverInfo.IsBackStageButton = false;
-            this.btnShowDriverInfo.Location = new System.Drawing.Point(15, 408);
-            this.btnShowDriverInfo.Name = "btnShowDriverInfo";
-            this.btnShowDriverInfo.Size = new System.Drawing.Size(113, 23);
-            this.btnShowDriverInfo.TabIndex = 7;
-            this.btnShowDriverInfo.Text = "Show driver info";
+            this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_remove16;
+            this.toolRemoveStyle.Name = "toolRemoveStyle";
+            this.toolRemoveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolRemoveStyle.Text = "Remove style";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolOpenFolder
+            // 
+            this.toolOpenFolder.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_hard_disk;
+            this.toolOpenFolder.Name = "toolOpenFolder";
+            this.toolOpenFolder.Size = new System.Drawing.Size(152, 22);
+            this.toolOpenFolder.Text = "Open  folder";
             // 
             // RasterStyleView
             // 
@@ -1125,5 +1150,8 @@ namespace MW5.Plugins.Symbology.Views
         private ToolStripMenuItem toolSaveStyle;
         private ToolStripMenuItem toolLoadStyle;
         private ButtonAdv btnShowDriverInfo;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem toolOpenFolder;
+        private ToolStripMenuItem toolRemoveStyle;
     }
 }

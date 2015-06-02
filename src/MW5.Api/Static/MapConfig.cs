@@ -283,6 +283,12 @@ namespace MW5.Api.Static
             set { _settings.GridFavorGreyscale = value; }
         }
 
+        public static bool GridUseHistogram
+        {
+            get { return _settings.GridUseHistogram; }
+            set { _settings.GridUseHistogram = value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

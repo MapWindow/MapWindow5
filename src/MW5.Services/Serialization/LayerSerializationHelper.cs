@@ -17,6 +17,16 @@ namespace MW5.Services.Serialization
     public static class LayerSerializationHelper
     {
         private const string FileExtension = ".mwlayer";
+        private const string FileExtensionAlt = ".mwsymb";
+
+        private static IEnumerable<string> Extensions
+        {
+            get
+            {
+                yield return FileExtension;
+                yield return FileExtensionAlt;
+            }
+        }
 
         public static bool SaveSettings(ILegendLayer layer)
         {
@@ -43,6 +53,60 @@ namespace MW5.Services.Serialization
             }
 
             return false;
+        }
+
+        public static void RemoveSettings(ILegendLayer layer, bool silent)
+        {
+            if (!CheckFilename(layer.Filename)) return;
+
+            bool existed = false;
+
+            foreach (var ext in Extensions)
+            {
+                string filename = layer.Filename + ext;
+
+                if (!File.Exists(filename)) continue;
+
+                existed = true;
+
+                try
+                {
+                    File.Delete(filename);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Info("Failed to remove style for layer.", ex);
+
+                    if (!silent)
+                    {
+                        MessageService.Current.Warn("Failed to remove style: " + filename);
+                    }
+
+                    return;
+                }
+            }
+
+            if (existed)
+            {
+                MessageService.Current.Info("Layer style was removed.");
+            }
+            else
+            {
+                DisplayStylesNotFound(layer);
+            }
+        }
+
+        private static void DisplayStylesNotFound(ILegendLayer layer)
+        {
+            string msg = "No styles were found for the datasource." + Environment.NewLine + Environment.NewLine +
+                         "Filenames checked: " + Environment.NewLine;
+
+            foreach (var ext in Extensions)
+            {
+                msg += layer.Filename + ext + Environment.NewLine;
+            }
+
+            MessageService.Current.Info(msg);
         }
 
         public static bool LoadSettings(ILegendLayer layer, bool silent)

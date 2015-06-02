@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Services.Config;
 using MW5.Shared;
 using MW5.UI.Forms;
@@ -13,8 +15,6 @@ namespace MW5.Views
 {
     public partial class ConfigView : ConfigViewBase, IConfigView, IMessageFilter
     {
-        private static string _lastPageName = string.Empty;
-
         public event Action SaveClicked;
         public event Action PageShown;
 
@@ -54,7 +54,7 @@ namespace MW5.Views
         {
             _treeViewAdv1.Initialize(Model);
             _treeViewAdv1.AfterSelect += (s, e) => DisplaySelectedPage();
-            _treeViewAdv1.RestoreSelectedNode(_lastPageName);
+            _treeViewAdv1.RestoreSelectedNode(AppConfig.Instance.LastConfigPage);
         }
 
         private IConfigPage SelectedPage
@@ -75,7 +75,7 @@ namespace MW5.Views
             var page = SelectedPage;
             if (page != null)
             {
-                _lastPageName = page.PageName;
+                AppConfig.Instance.LastConfigPage = page.PageName;
             }
 
             Application.RemoveMessageFilter(this);

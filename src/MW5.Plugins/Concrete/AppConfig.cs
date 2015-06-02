@@ -35,6 +35,7 @@ namespace MW5.Plugins.Concrete
             GridFavorGreyscale = true;
             GridDefaultColorScheme = PredefinedColors.SummerMountains;
             GridRandomColorScheme = true;
+            GridUseHistogram = true;
             InnertiaOnPanning = AutoToggle.Auto;
             LastProjectPath = "";
             LoadLastProject = true;
@@ -136,7 +137,13 @@ namespace MW5.Plugins.Concrete
         public bool GridRandomColorScheme { get; set; }
 
         [DataMember]
+        public bool GridUseHistogram { get; set; }
+
+        [DataMember]
         public AutoToggle InnertiaOnPanning { get; set; }
+
+        [DataMember]
+        public string LastConfigPage { get; set; }
 
         [DataMember]
         public string LastProjectPath { get; set; }

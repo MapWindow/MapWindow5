@@ -58,6 +58,9 @@ namespace MW5.Plugins.Symbology.Views
                 case RasterCommand.Apply:
                     Apply();
                     break;
+                case RasterCommand.RemoveStyle:
+                    LayerSerializationHelper.RemoveSettings(Model, false);
+                    break;
                 case RasterCommand.LoadStyle:
                     {
                         bool result = LayerSerializationHelper.LoadSettings(Model, false);

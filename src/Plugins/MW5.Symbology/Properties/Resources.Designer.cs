@@ -273,6 +273,16 @@ namespace MW5.Plugins.Symbology.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_hard_disk {
+            get {
+                object obj = ResourceManager.GetObject("img_hard_disk", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_hide24 {
             get {
                 object obj = ResourceManager.GetObject("img_hide24", resourceCulture);
@@ -346,6 +356,16 @@ namespace MW5.Plugins.Symbology.Properties {
         internal static System.Drawing.Bitmap img_pyramid24 {
             get {
                 object obj = ResourceManager.GetObject("img_pyramid24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove16 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

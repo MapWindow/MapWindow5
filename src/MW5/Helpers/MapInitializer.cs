@@ -55,6 +55,7 @@ namespace MW5.Helpers
             MapConfig.GridFavorGreyscale = config.GridFavorGreyscale;
             MapConfig.DefaultColorSchemeForGrids = config.GridDefaultColorScheme;
             MapConfig.RandomColorSchemeForGrids = config.GridRandomColorScheme;
+            MapConfig.GridUseHistogram = config.GridUseHistogram;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

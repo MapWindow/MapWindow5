@@ -31,6 +31,7 @@ namespace MW5.Configuration
         private void InitializeComponent()
         {
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkCreateColorScheme = new System.Windows.Forms.CheckBox();
             this.chkRandomColorScheme = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.cboDefaultColorScheme = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -39,7 +40,7 @@ namespace MW5.Configuration
             this.cboUpsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboDownsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label12 = new System.Windows.Forms.Label();
-            this.chkCreateColorScheme = new System.Windows.Forms.CheckBox();
+            this.chkUseHistogram = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboDefaultColorScheme)).BeginInit();
@@ -52,21 +53,32 @@ namespace MW5.Configuration
             // configPanelControl1
             // 
             this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl1.Controls.Add(this.chkUseHistogram);
             this.configPanelControl1.Controls.Add(this.chkCreateColorScheme);
             this.configPanelControl1.Controls.Add(this.chkRandomColorScheme);
             this.configPanelControl1.Controls.Add(this.label1);
             this.configPanelControl1.Controls.Add(this.cboDefaultColorScheme);
             this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.configPanelControl1.HeaderText = "Rendering";
+            this.configPanelControl1.HeaderText = "Grid rendering";
             this.configPanelControl1.Location = new System.Drawing.Point(0, 143);
             this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(394, 129);
+            this.configPanelControl1.Size = new System.Drawing.Size(394, 166);
             this.configPanelControl1.TabIndex = 12;
+            // 
+            // chkCreateColorScheme
+            // 
+            this.chkCreateColorScheme.AutoSize = true;
+            this.chkCreateColorScheme.Location = new System.Drawing.Point(24, 78);
+            this.chkCreateColorScheme.Name = "chkCreateColorScheme";
+            this.chkCreateColorScheme.Size = new System.Drawing.Size(323, 17);
+            this.chkCreateColorScheme.TabIndex = 17;
+            this.chkCreateColorScheme.Text = "Use color scheme for new grids (otherwise greyscale rendering)";
+            this.chkCreateColorScheme.UseVisualStyleBackColor = true;
             // 
             // chkRandomColorScheme
             // 
             this.chkRandomColorScheme.AutoSize = true;
-            this.chkRandomColorScheme.Location = new System.Drawing.Point(162, 98);
+            this.chkRandomColorScheme.Location = new System.Drawing.Point(164, 137);
             this.chkRandomColorScheme.Name = "chkRandomColorScheme";
             this.chkRandomColorScheme.Size = new System.Drawing.Size(152, 17);
             this.chkRandomColorScheme.TabIndex = 16;
@@ -76,7 +88,7 @@ namespace MW5.Configuration
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 75);
+            this.label1.Location = new System.Drawing.Point(21, 114);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(107, 13);
             this.label1.TabIndex = 15;
@@ -87,7 +99,7 @@ namespace MW5.Configuration
             this.cboDefaultColorScheme.BeforeTouchSize = new System.Drawing.Size(212, 21);
             this.cboDefaultColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDefaultColorScheme.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboDefaultColorScheme.Location = new System.Drawing.Point(162, 71);
+            this.cboDefaultColorScheme.Location = new System.Drawing.Point(164, 110);
             this.cboDefaultColorScheme.Name = "cboDefaultColorScheme";
             this.cboDefaultColorScheme.Size = new System.Drawing.Size(212, 21);
             this.cboDefaultColorScheme.TabIndex = 4;
@@ -148,15 +160,15 @@ namespace MW5.Configuration
             this.label12.TabIndex = 49;
             this.label12.Text = "Downsampling mode";
             // 
-            // chkCreateColorScheme
+            // chkUseHistogram
             // 
-            this.chkCreateColorScheme.AutoSize = true;
-            this.chkCreateColorScheme.Location = new System.Drawing.Point(22, 39);
-            this.chkCreateColorScheme.Name = "chkCreateColorScheme";
-            this.chkCreateColorScheme.Size = new System.Drawing.Size(323, 17);
-            this.chkCreateColorScheme.TabIndex = 17;
-            this.chkCreateColorScheme.Text = "Use color scheme for new grids (otherwise greyscale rendering)";
-            this.chkCreateColorScheme.UseVisualStyleBackColor = true;
+            this.chkUseHistogram.AutoSize = true;
+            this.chkUseHistogram.Location = new System.Drawing.Point(24, 44);
+            this.chkUseHistogram.Name = "chkUseHistogram";
+            this.chkUseHistogram.Size = new System.Drawing.Size(262, 17);
+            this.chkUseHistogram.TabIndex = 18;
+            this.chkUseHistogram.Text = "Use histogram equalization for greyscale rendering";
+            this.chkUseHistogram.UseVisualStyleBackColor = true;
             // 
             // RasterConfigPage
             // 
@@ -166,7 +178,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "RasterConfigPage";
-            this.Size = new System.Drawing.Size(394, 281);
+            this.Size = new System.Drawing.Size(394, 319);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
@@ -192,5 +204,6 @@ namespace MW5.Configuration
         private Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboDefaultColorScheme;
         private CheckBox chkCreateColorScheme;
+        private CheckBox chkUseHistogram;
     }
 }
