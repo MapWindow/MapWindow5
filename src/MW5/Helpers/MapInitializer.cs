@@ -52,10 +52,9 @@ namespace MW5.Helpers
             MapConfig.ImageDownsamplingMode = config.RasterDownsamplingMode;
             MapConfig.ImageUpsamplingMode = config.RasterUpsamplingMode;
 
-            // TODO: apply color scheme creation options
-            //config.RasterCreateColorScheme
-            //config.RasterDefaultColorScheme
-            //config.RasterRandomColorScheme
+            MapConfig.GridFavorGreyscale = config.GridFavorGreyscale;
+            MapConfig.DefaultColorSchemeForGrids = config.GridDefaultColorScheme;
+            MapConfig.RandomColorSchemeForGrids = config.GridRandomColorScheme;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

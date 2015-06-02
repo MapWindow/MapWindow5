@@ -277,6 +277,12 @@ namespace MW5.Api.Static
             set { _settings.CompressOverviews = (tkTiffCompression)value; }
         }
 
+        public static bool GridFavorGreyscale
+        {
+            get { return _settings.GridFavorGreyscale;  }
+            set { _settings.GridFavorGreyscale = value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

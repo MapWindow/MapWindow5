@@ -38,6 +38,15 @@ namespace MW5.Configuration
             cboDownsampling.AddItemsFromEnum<InterpolationType>();
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboDefaultColorScheme.AddItemsFromEnum<PredefinedColors>();
+
+            chkCreateColorScheme.CheckedChanged += (s, e) => RefreshControls();
+            chkRandomColorScheme.CheckedChanged += (s, e) => RefreshControls();
+        }
+
+        private void RefreshControls()
+        {
+            chkRandomColorScheme.Enabled = chkCreateColorScheme.Checked;
+            cboDefaultColorScheme.Enabled = chkCreateColorScheme.Checked && !chkRandomColorScheme.Checked;
         }
 
         public void Initialize()
@@ -45,10 +54,12 @@ namespace MW5.Configuration
             var config = _configService.Config;
             cboUpsampling.SetValue(config.RasterUpsamplingMode);
             cboDownsampling.SetValue(config.RasterDownsamplingMode);
-            cboDefaultColorScheme.SetValue(config.RasterDefaultColorScheme);
+            cboDefaultColorScheme.SetValue(config.GridDefaultColorScheme);
 
-            chkRandomColorScheme.Checked = config.RasterRandomColorScheme;
-            chkCreateColorScheme.Checked = config.RasterCreateColorScheme;
+            chkRandomColorScheme.Checked = config.GridRandomColorScheme;
+            chkCreateColorScheme.Checked = !config.GridFavorGreyscale;
+
+            RefreshControls();
         }
 
         public void Save()
@@ -57,10 +68,10 @@ namespace MW5.Configuration
 
             config.RasterUpsamplingMode = cboUpsampling.GetValue<InterpolationType>();
             config.RasterDownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
-            config.RasterDefaultColorScheme = cboDefaultColorScheme.GetValue<PredefinedColors>();
+            config.GridDefaultColorScheme = cboDefaultColorScheme.GetValue<PredefinedColors>();
 
-            config.RasterRandomColorScheme = chkRandomColorScheme.Checked;
-            config.RasterCreateColorScheme = chkCreateColorScheme.Checked;
+            config.GridRandomColorScheme = chkRandomColorScheme.Checked;
+            config.GridFavorGreyscale = !chkCreateColorScheme.Checked;
         }
 
         public string PageName

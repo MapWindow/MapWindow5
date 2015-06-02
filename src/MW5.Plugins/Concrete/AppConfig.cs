@@ -32,6 +32,9 @@ namespace MW5.Plugins.Concrete
             CreateSpatialIndexOnOpening = true;
             DisplayDynamicVisibilityWarnings = true;
             FirstRun = true;
+            GridFavorGreyscale = true;
+            GridDefaultColorScheme = PredefinedColors.SummerMountains;
+            GridRandomColorScheme = true;
             InnertiaOnPanning = AutoToggle.Auto;
             LastProjectPath = "";
             LoadLastProject = true;
@@ -45,9 +48,6 @@ namespace MW5.Plugins.Concrete
             PyramidSampling = RasterOverviewSampling.Nearest;
             RasterDownsamplingMode = InterpolationType.Bilinear;
             RasterUpsamplingMode = InterpolationType.None;
-            RasterCreateColorScheme = true;
-            RasterDefaultColorScheme = PredefinedColors.SummerMountains;
-            RasterRandomColorScheme = true;
             ResizeBehavior = ResizeBehavior.KeepScale;
             ReuseTileBuffer = true;
             ScalebarUnits = ScalebarUnits.GoogleStyle;
@@ -127,6 +127,15 @@ namespace MW5.Plugins.Concrete
         public bool FirstRun { get; set; }
 
         [DataMember]
+        public bool GridFavorGreyscale { get; set; }
+
+        [DataMember]
+        public PredefinedColors GridDefaultColorScheme { get; set; }
+
+        [DataMember]
+        public bool GridRandomColorScheme { get; set; }
+
+        [DataMember]
         public AutoToggle InnertiaOnPanning { get; set; }
 
         [DataMember]
@@ -158,16 +167,7 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
-
-        [DataMember]
-        public bool RasterCreateColorScheme { get; set; }
-
-        [DataMember]
-        public PredefinedColors RasterDefaultColorScheme { get; set; }
-
-        [DataMember]
-        public bool RasterRandomColorScheme { get; set; }
-
+       
         [DataMember]
         public InterpolationType RasterDownsamplingMode { get; set; }
 
