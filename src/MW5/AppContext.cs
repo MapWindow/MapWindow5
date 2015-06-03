@@ -215,6 +215,8 @@ namespace MW5
         public void SetMapProjection(ISpatialReference projection)
         {
             this.SetProjection(projection);
+            Map.Redraw();
+            View.Update();
         }
 
         public bool Initialized

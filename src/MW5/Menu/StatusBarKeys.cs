@@ -11,19 +11,9 @@ namespace MW5.Menu
         public const string ProjectionDropDown = "statusProjectionDropDown";
         public const string ChooseProjection = "statusChooseProjection";
         public const string ProjectionProperties = "statusProjectionProperties";
-        public const string ProjShowLoadingReport = "statusProjectionShowLoadingReport";
-        public const string ProjShowWarnings = "statusProjectionShowWarnings";
-        public const string AbsenseBehavior = "statusProjectionAbsenseBehavior";
-        public const string MismatchBehavior = "statusProjectionMismatchBehavior";
+        public const string ProjectionConfig = "statusProjectionConfig";
         public const string SelectedCount = "statusSelectedCount";
-
-        public const string AbsenseIgnore = "statusProjAbsenseIgnore";
-        public const string AbsenseAssign = "statusProjAbsenseAssign";
-        public const string AbsenseSkip = "statusProjAbsenseSkip";
-
-        public const string MismatchIgnore = "statusProjMismatchIgnore";
-        public const string MismatchReproject = "statusProjMismatchReproject";
-        public const string MismatchSkip = "statusProjMismatchSkip";
+        public const string MapUnits = "statusMapUnits";
 
         public const string TileProvider = "statusTileProvider";
         public const string ProgressMsg = "statusProgressMsg";

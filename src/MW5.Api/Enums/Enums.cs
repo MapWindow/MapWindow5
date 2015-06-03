@@ -772,7 +772,7 @@
         Milimeters = 1,
         Centimeters = 2,
         Inches = 3,
-        Feets = 4,
+        Feet = 4,
         Yards = 5,
         Meters = 6,
         Miles = 7,

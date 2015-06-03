@@ -292,4 +292,34 @@ namespace MW5.Plugins.Helpers
             return string.Empty;
         }
     }
+
+    public class UnitsOfMeasureConverter : IEnumConverter<UnitsOfMeasure>
+    {
+        public string GetString(UnitsOfMeasure value)
+        {
+            switch (value)
+            {
+                case UnitsOfMeasure.DecimalDegrees:
+                    return "Decimal degrees";
+                case UnitsOfMeasure.Milimeters:
+                    return "Milimeters";
+                case UnitsOfMeasure.Centimeters:
+                    return "Centimeters";
+                case UnitsOfMeasure.Inches:
+                    return "Inches";
+                case UnitsOfMeasure.Feet:
+                    return "Feet";
+                case UnitsOfMeasure.Yards:
+                    return "Yards";
+                case UnitsOfMeasure.Meters:
+                    return "Meters";
+                case UnitsOfMeasure.Miles:
+                    return "Miles";
+                case UnitsOfMeasure.Kilometers:
+                    return "Kilometers";
+            }
+
+            return string.Empty;
+        }
+    }
 }

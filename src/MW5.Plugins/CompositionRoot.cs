@@ -32,6 +32,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new ProjectionMistmatchConverter());
             EnumHelper.RegisterConverter(new SymbologyStorageConverter());
             EnumHelper.RegisterConverter(new ColorInterpretationConverter());
+            EnumHelper.RegisterConverter(new UnitsOfMeasureConverter());
         }
     }
 }

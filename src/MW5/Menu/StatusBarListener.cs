@@ -18,6 +18,7 @@ using MW5.Projections.UI.Forms;
 using MW5.Properties;
 using MW5.Shared;
 using MW5.UI.Helpers;
+using MW5.Views;
 
 namespace MW5.Menu
 {
@@ -64,30 +65,17 @@ namespace MW5.Menu
 
             var dropDown = bar.Items.AddSplitButton("Not defined", StatusBarKeys.ProjectionDropDown, Identity);
             dropDown.Icon = new MenuIcon(Resources.icon_crs_change);
-            dropDown.DropDownOpening += ProjectionDropDownOpening;
 
             var items = dropDown.SubItems;
             items.AddButton("Choose projection", StatusBarKeys.ChooseProjection, Identity);
-            
-            var item = items.AddDropDown("Absense behavior", StatusBarKeys.AbsenseBehavior, Identity);
-            item.SubItems.AddButton("Assign from project", StatusBarKeys.AbsenseAssign, Identity);
-            item.SubItems.AddButton("Ignore the absense", StatusBarKeys.AbsenseIgnore, Identity);
-            item.SubItems.AddButton("Skip the file", StatusBarKeys.AbsenseSkip, Identity);
-            item.BeginGroup = true;
-
-            item = items.AddDropDown("Mismatch behavior", StatusBarKeys.MismatchBehavior, Identity);
-            item.SubItems.AddButton("Ignore mismatch", StatusBarKeys.MismatchIgnore, Identity);
-            item.SubItems.AddButton("Reproject the file", StatusBarKeys.MismatchReproject, Identity);
-            item.SubItems.AddButton("Skip the file", StatusBarKeys.MismatchSkip, Identity);
-
-            items.AddButton("Show loading report", StatusBarKeys.ProjShowLoadingReport, Identity);
-            items.AddButton("Show warnings", StatusBarKeys.ProjShowWarnings, Identity);
-            
-            items.AddButton("Projection properties", StatusBarKeys.ProjectionProperties, Identity).BeginGroup = true;
+            items.AddButton("Projection properties", StatusBarKeys.ProjectionProperties, Identity);
+            items.AddButton("Settings", StatusBarKeys.ProjectionConfig, Identity).BeginGroup = true; ;
 
             dropDown.Update();
 
+            bar.Items.AddLabel("Map units: ", StatusBarKeys.MapUnits, Identity).BeginGroup = true;
             bar.Items.AddLabel("Selected: ", StatusBarKeys.SelectedCount, Identity).BeginGroup = true;
+            
 
             bar.AlignNewItemsRight = true;
 
@@ -129,33 +117,11 @@ namespace MW5.Menu
                 case StatusBarKeys.ChooseProjection:
                     _context.ChangeProjection();
                     break;
-                case StatusBarKeys.AbsenseAssign:
-                    Config.ProjectionAbsence = ProjectionAbsence.AssignFromProject;
-                    break;
-                case StatusBarKeys.AbsenseIgnore:
-                    Config.ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
-                    break;
-                case StatusBarKeys.AbsenseSkip:
-                    Config.ProjectionAbsence = ProjectionAbsence.SkipFile;
-                    break;
-                case StatusBarKeys.MismatchIgnore:
-                    Config.ProjectionMismatch = ProjectionMismatch.IgnoreMismatch;
-                    break;
-                case StatusBarKeys.MismatchReproject:
-                    Config.ProjectionMismatch = ProjectionMismatch.Reproject;
-                    break;
-                case StatusBarKeys.MismatchSkip:
-                    Config.ProjectionMismatch = ProjectionMismatch.SkipFile;
-                    break;
-                case StatusBarKeys.ProjShowLoadingReport:
-                    Config.ProjectionShowLoadingReport = !menuItem.Checked;
-                    break;
-                case StatusBarKeys.ProjShowWarnings:
-                    Config.ShowProjectionDialog = !menuItem.Checked;
-                    break;
-                case StatusBarKeys.AbsenseBehavior:
-                case StatusBarKeys.MismatchBehavior:
-                    // do nothing
+                case StatusBarKeys.ProjectionConfig:
+                    var model = _context.Container.GetInstance<ConfigViewModel>();
+                    model.UseSelectedPage = true;
+                    model.SelectedPage = ConfigPageType.LayerOpening;
+                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     break;
                 default:
                     MessageService.Current.Info("There is no handler for the item: " + e.ItemKey);
@@ -163,30 +129,9 @@ namespace MW5.Menu
             }
         }
 
-        private AppConfig Config
-        {
-            get { return _configService.Config; }
-        }
-
         private PluginIdentity Identity
         {
             get { return PluginIdentity.Default; }
-        }
-
-        private void ProjectionDropDownOpening(object sender, EventArgs e)
-        {
-            var behavior = _configService.Config.ProjectionAbsence;
-            FindItem(StatusBarKeys.AbsenseAssign).Checked = behavior == ProjectionAbsence.AssignFromProject;
-            FindItem(StatusBarKeys.AbsenseIgnore).Checked = behavior == ProjectionAbsence.IgnoreAbsence;
-            FindItem(StatusBarKeys.AbsenseSkip).Checked = behavior == ProjectionAbsence.SkipFile;
-
-            var behavior2 = _configService.Config.ProjectionMismatch;
-            FindItem(StatusBarKeys.MismatchIgnore).Checked = behavior2 == ProjectionMismatch.IgnoreMismatch;
-            FindItem(StatusBarKeys.MismatchReproject).Checked = behavior2 == ProjectionMismatch.Reproject;
-            FindItem(StatusBarKeys.MismatchSkip).Checked = behavior2 == ProjectionMismatch.SkipFile;
-
-            FindItem(StatusBarKeys.ProjShowLoadingReport).Checked = _configService.Config.ProjectionShowLoadingReport;
-            FindItem(StatusBarKeys.ProjShowWarnings).Checked = _configService.Config.ShowProjectionDialog;
         }
 
         protected IMenuItem FindItem(string itemKey)
@@ -220,6 +165,9 @@ namespace MW5.Menu
                     }
                 }
             }
+
+            var statusUnits = bar.FindItem(StatusBarKeys.MapUnits, Identity);
+            statusUnits.Text = "Units: " + _context.Map.MapUnits.EnumToString().ToLower();
 
             var statusProvider = bar.FindItem(StatusBarKeys.TileProvider, Identity);
             statusProvider.Text = _context.Map.TileProvider.EnumToString();
