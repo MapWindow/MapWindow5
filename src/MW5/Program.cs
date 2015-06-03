@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using MW5.Api.Concrete;
 using MW5.Api.Static;
 using MW5.DI.Castle;
 // using MW5.DI.LightInject;
@@ -37,6 +38,8 @@ namespace MW5
 
             ExceptionHandler.Attach();
 
+            //DumpFormats();
+
             var logger = new LoggingService();
             logger.Info("APPLICATION STARUP");
 
@@ -52,6 +55,14 @@ namespace MW5
 
             SplashView.Instance.ShowStatus("Running application");
             container.Run<MainPresenter>();
+        }
+
+        private static void DumpFormats()
+        {
+            var manager = new DriverManager();
+            manager.DumpExtensions(true);
+
+            manager.DumpExtensions(false);
         }
 
         private static void ShowSplashScreen()

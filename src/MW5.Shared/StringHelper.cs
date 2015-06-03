@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MW5.Shared
 {
@@ -12,6 +14,12 @@ namespace MW5.Shared
         public static bool ContainsIgnoreCase(this string s1, string s2)
         {
             return s1.ToLower().Contains(s2.ToLower());
+        }
+
+        // just as a memo, for not forgeting it
+        public static string Join(IEnumerable<string> list, string separator)
+        {
+            return String.Join(separator, list.ToArray());
         }
     }
 }

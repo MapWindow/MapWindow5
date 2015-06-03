@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Enums;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
@@ -60,6 +63,45 @@ namespace MW5.Api.Concrete
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private IEnumerable<string> GetExtensions(SelectedLayerType layerType, bool forCommodDialog)
+        {
+            List<DatasourceDriver> list = null;
+
+            switch(layerType)
+            {
+                case SelectedLayerType.Undefined:
+                    list = this.ToList();
+                    break;
+                case SelectedLayerType.Vector:
+                    list = this.Where(d => d.IsVector).ToList();
+                    break;
+                case SelectedLayerType.Raster:
+                    list = this.Where(d => d.IsRaster).ToList();
+                    break;
+                default:
+                    return new List<string>();
+            }
+
+            return list.Select(d => d.Extension)
+                       .Where(ext => !string.IsNullOrWhiteSpace(ext))
+                       .OrderBy(ext => ext)
+                       .Select(ext => forCommodDialog ? "*." + ext : ext)
+                       .ToList();
+        }
+
+        public void DumpExtensions(bool openDialog)
+        {
+            var values = Enum.GetValues(typeof (SelectedLayerType));
+
+            foreach (SelectedLayerType value in values)
+            {
+                var list = GetExtensions(value, openDialog);
+                Debug.Print(value + " formats");    
+                Debug.Print(StringHelper.Join(list, "|"));
+                Debug.Print("");
+            }
         }
     }
 }
