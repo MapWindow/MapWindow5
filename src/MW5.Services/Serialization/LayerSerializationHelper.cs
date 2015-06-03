@@ -18,6 +18,7 @@ namespace MW5.Services.Serialization
     {
         private const string FileExtension = ".mwlayer";
         private const string FileExtensionAlt = ".mwsymb";
+        private const string FileExtensionAlt2 = ".mwleg";
 
         private static IEnumerable<string> Extensions
         {
@@ -25,6 +26,7 @@ namespace MW5.Services.Serialization
             {
                 yield return FileExtension;
                 yield return FileExtensionAlt;
+                yield return FileExtensionAlt2;
             }
         }
 

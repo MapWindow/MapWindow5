@@ -182,6 +182,9 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRemoveStyle = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
@@ -426,7 +429,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 1062.0816593373427D;
+            this.axMap1.CurrentScale = 1871.9031385883193D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -1948,7 +1951,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
             this.toolStripEx1.TabIndex = 167;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -1956,7 +1959,10 @@ namespace MW5.Plugins.Symbology.Forms
             // toolStyle
             // 
             this.toolStyle.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolSaveStyle});
+            this.toolSaveStyle,
+            this.toolRemoveStyle,
+            this.toolStripSeparator1,
+            this.toolOpenLocation});
             this.toolStyle.ForeColor = System.Drawing.Color.Black;
             this.toolStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_settings;
             this.toolStyle.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -1968,9 +1974,30 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
             this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(125, 22);
+            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
             this.toolSaveStyle.Text = "Save style";
             this.toolSaveStyle.Click += new System.EventHandler(this.toolSaveStyle_Click);
+            // 
+            // toolRemoveStyle
+            // 
+            this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_remove16;
+            this.toolRemoveStyle.Name = "toolRemoveStyle";
+            this.toolRemoveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolRemoveStyle.Text = "Remove style";
+            this.toolRemoveStyle.Click += new System.EventHandler(this.toolRemoveStyle_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            // 
+            // toolOpenLocation
+            // 
+            this.toolOpenLocation.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_hard_disk;
+            this.toolOpenLocation.Name = "toolOpenLocation";
+            this.toolOpenLocation.Size = new System.Drawing.Size(152, 22);
+            this.toolOpenLocation.Text = "Open folder";
+            this.toolOpenLocation.Click += new System.EventHandler(this.btnOpenLocation_Click);
             // 
             // scaleControl2
             // 
@@ -2247,5 +2274,8 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.ToolStripDropDownButton toolStyle;
         private System.Windows.Forms.ToolStripMenuItem toolSaveStyle;
         private ButtonAdv btnOpenLocation;
+        private System.Windows.Forms.ToolStripMenuItem toolRemoveStyle;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolOpenLocation;
     }
 }

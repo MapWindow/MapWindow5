@@ -1786,5 +1786,10 @@ namespace MW5.Plugins.Symbology.Forms
                 MessageService.Current.Info("Can't find the datasource.");
             }
         }
+
+        private void toolRemoveStyle_Click(object sender, EventArgs e)
+        {
+            LayerSerializationHelper.RemoveSettings(_layer, false);
+        }
     }
 }

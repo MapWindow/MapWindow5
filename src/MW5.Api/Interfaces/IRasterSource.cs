@@ -54,6 +54,8 @@ namespace MW5.Api.Interfaces
         /// </summary>
         RasterColorScheme CustomColorScheme { get; set; }
 
+        RasterColorScheme ActiveColorScheme { get; }
+
         GridRendering AllowGridRendering { get; set; }
 
         RasterRendering RenderingType { get; }

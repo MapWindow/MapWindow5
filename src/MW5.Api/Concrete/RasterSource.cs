@@ -244,6 +244,15 @@ namespace MW5.Api.Concrete
             set { _image.CustomColorScheme = value.GetInternal(); }
         }
 
+        public RasterColorScheme ActiveColorScheme
+        {
+            get
+            {
+                var scheme = _image.ActiveColorScheme;
+                return scheme != null ? new RasterColorScheme(scheme) : null;
+            }
+        }
+
         public GridRendering AllowGridRendering
         {
             get { return (GridRendering)_image.AllowGridRendering; }
@@ -434,7 +443,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var scheme = CustomColorScheme;
+                var scheme = ActiveColorScheme;
                 return scheme != null && scheme.ColoringType == GridColoringType.Hillshade;
             }
         }
@@ -443,7 +452,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var scheme = CustomColorScheme;
+                var scheme = ActiveColorScheme;
                 return scheme.GradientModel;
             }
         }

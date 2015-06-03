@@ -206,7 +206,7 @@ namespace MW5.Api.Legend
                         case RasterRendering.Rgb:
                             return 3; // TODO: maybe 4 because of alpha
                         case RasterRendering.ColorScheme:
-                            var scheme = raster.CustomColorScheme;
+                            var scheme = raster.ActiveColorScheme;
                             return scheme != null ? scheme.NumBreaks : 0;
                         case RasterRendering.BuiltInColorTable:
                             return raster.Bands[1].ColorTable.NumBreaks;

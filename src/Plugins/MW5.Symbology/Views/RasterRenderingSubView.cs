@@ -75,7 +75,7 @@ namespace MW5.Plugins.Symbology.Views
                 return;
             }
 
-            ColorScheme = Model.CustomColorScheme;
+            ColorScheme = Model.ActiveColorScheme;
 
             InitRenderModeCombo();
 
@@ -302,7 +302,7 @@ namespace MW5.Plugins.Symbology.Views
             chkHillshade.Checked = Model.IsUsingHillshade;
             chkReverse.Checked = Model.ReverseGreyScale;
 
-            var colorScheme = Model.CustomColorScheme;
+            var colorScheme = Model.ActiveColorScheme;
             chkGradientWithinCategory.Checked = colorScheme != null && colorScheme.ColorGradientWithinCategory;
 
             var model = Model.GradientModel;
