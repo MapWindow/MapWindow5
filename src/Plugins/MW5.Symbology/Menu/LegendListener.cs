@@ -10,8 +10,6 @@ using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms;
-using MW5.Plugins.Symbology.Forms.Layer;
-using MW5.Plugins.Symbology.Forms.Style;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views;

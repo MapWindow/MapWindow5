@@ -4,8 +4,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Symbology.Forms.Categories;
-using MW5.Plugins.Symbology.Forms.Style;
+using MW5.Plugins.Symbology.Forms;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
