@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MW5.Plugins.Services;
 
 namespace MW5.Configuration.Plugins
 {
-    internal class PluginProvider
+    internal class PluginProvider : IEnumerable<PluginInfo>
     {
-        private IEnumerable<PluginInfo> _list;
+        private readonly IEnumerable<PluginInfo> _list;
 
         public PluginProvider(IPluginManager manager)
         {
@@ -15,9 +16,14 @@ namespace MW5.Configuration.Plugins
             _list = manager.AllPlugins.Select(p => new PluginInfo(p, p.IsApplicationPlugin)).ToList();
         }
 
-        public IEnumerable<PluginInfo> List
+        public IEnumerator<PluginInfo> GetEnumerator()
         {
-            get { return _list; }
+            return _list.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

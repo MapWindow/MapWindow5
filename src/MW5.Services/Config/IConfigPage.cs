@@ -18,5 +18,10 @@ namespace MW5.Services.Config
         object Tag { get; set; }
         ConfigPageType PageType { get; }
         string Description { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the page height can be adjusted to fit the the parent.
+        /// </summary>
+        bool VariableHeight { get; }
     }
 }

@@ -355,6 +355,8 @@ namespace MW5.UI.Controls
             return -1;
         }
 
+       
+
         public void ToggleProperty(Expression<Func<T, bool>> propertySelector)
         {
             var record = GetSelectedRecord();
@@ -369,6 +371,16 @@ namespace MW5.UI.Controls
                 string propertyName = expr.Member.Name;
                 var value = (bool)record.GetValue(propertyName);
                 record.SetValue(propertyName, !value);
+            }
+        }
+
+        public void SetPropertyForEach<TT>(Expression<Func<T, object>> propertySelector, TT value)
+        {
+            string name = GetPropertyName(propertySelector);
+
+            foreach (var r in _grid.Table.Records)
+            {
+                r.SetValue(name, value);
             }
         }
 

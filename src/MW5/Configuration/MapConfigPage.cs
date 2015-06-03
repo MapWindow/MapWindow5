@@ -99,5 +99,10 @@ namespace MW5.Configuration
         {
             get { return "Settings that change appearance, behavior and widgets shown on the map."; }
         }
+
+        public bool VariableHeight
+        {
+            get { return false; }
+        }
     }
 }

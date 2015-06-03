@@ -80,5 +80,10 @@ namespace MW5.Configuration
         {
             get { return "Here is a description of general settings."; }
         }
+
+        public bool VariableHeight
+        {
+            get { return false; }
+        }
     }
 }

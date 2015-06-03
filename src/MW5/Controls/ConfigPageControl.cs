@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Services.Config;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -47,7 +48,16 @@ namespace MW5.Controls
                 panelContent.Controls.Clear();
                 if (value != null)
                 {
-                    panelContent.Height = value.Height;
+                    var page = value as IConfigPage;
+                    if (page != null && page.VariableHeight)
+                    {
+                        panelContent.Height = gradientPanel1.Height - lblDescription.Height - 10;
+                    }
+                    else
+                    {
+                        panelContent.Height = value.Height;
+                    }
+
                     panelContent.Controls.Add(value);
                 }
 

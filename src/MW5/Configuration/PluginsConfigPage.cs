@@ -16,11 +16,12 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Configuration
 {
-    internal partial class PluginsConfigPage : PluginGrid, IConfigPage
+    internal partial class PluginsConfigPage : UserControl, IConfigPage
     {
         private readonly IPluginManager _manager;
         private readonly IAppContext _context;
         private PluginProvider _pluginProvider;
+        private bool _ignoreEvents;
 
         public PluginsConfigPage(IPluginManager manager, IAppContext context)
         {
@@ -31,30 +32,36 @@ namespace MW5.Configuration
 
             InitializeComponent();
 
+            chkSelectAll.CheckedChanged += chkSelectAll_CheckedChanged;
+
             Initialize();
 
             KeyDown += PluginsConfigPage_KeyDown;
 
-            Adapter.PrepareToolTip += ListControlPrepareToolTip;
+            pluginGrid1.Adapter.PrepareToolTip += ListControlPrepareToolTip;
         }
 
         public void Initialize()
         {
             _pluginProvider = new PluginProvider(_manager);
-            DataSource = _pluginProvider.List;
+            pluginGrid1.DataSource = _pluginProvider.ToList();
+
+            _ignoreEvents = true;
+            chkSelectAll.Checked = _pluginProvider.Any(p => !p.Selected);
+            _ignoreEvents = false;
         }
 
         private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
-                Adapter.ToggleProperty(info => info.Selected);
+                pluginGrid1.Adapter.ToggleProperty(info => info.Selected);
             }
         }
 
         private void ListControlPrepareToolTip(object sender, UI.Controls.ToolTipGridEventArgs e)
         {
-            var info = Adapter[e.RecordIndex];
+            var info = pluginGrid1.Adapter[e.RecordIndex];
             if (info != null)
             {
                 e.ToolTip.Header.Text = info.Name;
@@ -69,7 +76,7 @@ namespace MW5.Configuration
 
         public void Save()
         {
-            var list = _pluginProvider.List.Where(p => p.Selected).Select(p => p.BasePlugin.Identity.Guid);
+            var list = _pluginProvider.Where(p => p.Selected).Select(p => p.BasePlugin.Identity.Guid);
             var dict = new HashSet<Guid>(list);
             _manager.RestoreApplicationPlugins(dict, _context);
         }
@@ -93,6 +100,18 @@ namespace MW5.Configuration
         {
             get { return "Plugins checked in this list will become a permanent part of application, i.e." +
                          "will be loaded in this list and won't listed in the plugins menu for unloading."; }
+        }
+
+        public bool VariableHeight
+        {
+            get { return true; }
+        }
+
+        private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            if (_ignoreEvents) return;
+
+            pluginGrid1.Adapter.SetPropertyForEach(item => item.Selected, chkSelectAll.Checked);
         }
     }
 }

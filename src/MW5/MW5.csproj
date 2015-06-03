@@ -202,7 +202,7 @@
     <Compile Include="Configuration\Plugins\PluginInfo.cs" />
     <Compile Include="Configuration\Plugins\PluginProvider.cs" />
     <Compile Include="Configuration\PluginsConfigPage.cs">
-      <SubType>Component</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Configuration\PluginsConfigPage.Designer.cs">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>

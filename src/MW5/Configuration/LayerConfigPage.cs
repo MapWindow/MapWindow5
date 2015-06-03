@@ -101,5 +101,10 @@ namespace MW5.Configuration
         {
             get { return "Defines which actions are to be taken on opening a new layer. "; }
         }
+
+        public bool VariableHeight
+        {
+            get { return false; }
+        }
     }
 }

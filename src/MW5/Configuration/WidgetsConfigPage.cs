@@ -106,5 +106,10 @@ namespace MW5.Configuration
         {
             get { return "Widgets and information that can be displayed on the map."; }
         }
+
+        public bool VariableHeight
+        {
+            get { return false; }
+        }
     }
 }

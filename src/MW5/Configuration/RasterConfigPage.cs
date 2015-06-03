@@ -101,5 +101,10 @@ namespace MW5.Configuration
         {
             get { return "Defines default settings for raster display and opening."; }
         }
+
+        public bool VariableHeight
+        {
+            get { return false; }
+        }
     }
 }
