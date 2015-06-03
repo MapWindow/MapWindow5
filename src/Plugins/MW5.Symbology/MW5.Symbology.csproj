@@ -235,82 +235,82 @@
     <Compile Include="Controls\ScaleControl.Designer.cs">
       <DependentUpon>ScaleControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Categories\AddCategoriesForm.cs">
+    <Compile Include="Forms\AddCategoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Categories\AddCategoriesForm.Designer.cs">
+    <Compile Include="Forms\AddCategoriesForm.Designer.cs">
       <DependentUpon>AddCategoriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Categories\CategoriesForm.cs">
+    <Compile Include="Forms\CategoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Categories\CategoriesForm.Designer.cs">
+    <Compile Include="Forms\CategoriesForm.Designer.cs">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Categories\GenerateCategoriesForm.cs">
+    <Compile Include="Forms\GenerateCategoriesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Categories\GenerateCategoriesForm.Designer.cs">
+    <Compile Include="Forms\GenerateCategoriesForm.Designer.cs">
       <DependentUpon>GenerateCategoriesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\AddChartsForm.cs">
+    <Compile Include="Forms\AddChartsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\AddChartsForm.Designer.cs">
+    <Compile Include="Forms\AddChartsForm.Designer.cs">
       <DependentUpon>AddChartsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\ChartStyleForm.cs">
+    <Compile Include="Forms\ChartStyleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\ChartStyleForm.Designer.cs">
+    <Compile Include="Forms\ChartStyleForm.Designer.cs">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Layer\VectorStyleForm.cs">
+    <Compile Include="Forms\VectorStyleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Layer\VectorStyleForm.Designer.cs">
+    <Compile Include="Forms\VectorStyleForm.Designer.cs">
       <DependentUpon>VectorStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\AddLabelsForm.cs">
+    <Compile Include="Forms\AddLabelsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\AddLabelsForm.Designer.cs">
+    <Compile Include="Forms\AddLabelsForm.Designer.cs">
       <DependentUpon>AddLabelsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\FontGradientForm.cs">
+    <Compile Include="Forms\FontGradientForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\FontGradientForm.Designer.cs">
+    <Compile Include="Forms\FontGradientForm.Designer.cs">
       <DependentUpon>FontGradientForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\LabelStyleForm.cs">
+    <Compile Include="Forms\LabelStyleForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\LabelStyleForm.Designer.cs">
+    <Compile Include="Forms\LabelStyleForm.Designer.cs">
       <DependentUpon>LabelStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\LinesForm.cs">
+    <Compile Include="Forms\LinesForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\LinesForm.Designer.cs">
+    <Compile Include="Forms\LinesForm.Designer.cs">
       <DependentUpon>LinesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\PointsForm.cs">
+    <Compile Include="Forms\PointsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\PointsForm.Designer.cs">
+    <Compile Include="Forms\PointsForm.Designer.cs">
       <DependentUpon>PointsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Style\PolygonForm.cs">
+    <Compile Include="Forms\PolygonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Style\PolygonForm.Designer.cs">
+    <Compile Include="Forms\PolygonForm.Designer.cs">
       <DependentUpon>PolygonForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\AddOptionsForm.cs">
+    <Compile Include="Forms\AddOptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\AddOptionsForm.Designer.cs">
+    <Compile Include="Forms\AddOptionsForm.Designer.cs">
       <DependentUpon>AddOptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\ImageCombo\ColorSchemeForm.cs">
@@ -325,34 +325,34 @@
     <Compile Include="Controls\ImageCombo\ColorSchemesForm.Designer.cs">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\OptionsForm.cs">
+    <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\OptionsForm.Designer.cs">
+    <Compile Include="Forms\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\Options2Form.cs">
+    <Compile Include="Forms\Options2Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\Options2Form.Designer.cs">
+    <Compile Include="Forms\Options2Form.Designer.cs">
       <DependentUpon>Options2Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\OptionsChooserForm.cs">
+    <Compile Include="Forms\OptionsChooserForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\OptionsChooserForm.Designer.cs">
+    <Compile Include="Forms\OptionsChooserForm.Designer.cs">
       <DependentUpon>OptionsChooserForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Options\OptionsManagerForm.cs">
+    <Compile Include="Forms\OptionsManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Options\OptionsManagerForm.Designer.cs">
+    <Compile Include="Forms\OptionsManagerForm.Designer.cs">
       <DependentUpon>OptionsManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Categories\QueryBuilderForm.cs">
+    <Compile Include="Forms\QueryBuilderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Categories\QueryBuilderForm.Designer.cs">
+    <Compile Include="Forms\QueryBuilderForm.Designer.cs">
       <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu\LegendListener.cs" />
@@ -481,43 +481,43 @@
     <EmbeddedResource Include="Controls\ScaleControl.resx">
       <DependentUpon>ScaleControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Categories\AddCategoriesForm.resx">
+    <EmbeddedResource Include="Forms\AddCategoriesForm.resx">
       <DependentUpon>AddCategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Categories\CategoriesForm.resx">
+    <EmbeddedResource Include="Forms\CategoriesForm.resx">
       <DependentUpon>CategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Categories\GenerateCategoriesForm.resx">
+    <EmbeddedResource Include="Forms\GenerateCategoriesForm.resx">
       <DependentUpon>GenerateCategoriesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\AddChartsForm.resx">
+    <EmbeddedResource Include="Forms\AddChartsForm.resx">
       <DependentUpon>AddChartsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\ChartStyleForm.resx">
+    <EmbeddedResource Include="Forms\ChartStyleForm.resx">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Layer\VectorStyleForm.resx">
+    <EmbeddedResource Include="Forms\VectorStyleForm.resx">
       <DependentUpon>VectorStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\AddLabelsForm.resx">
+    <EmbeddedResource Include="Forms\AddLabelsForm.resx">
       <DependentUpon>AddLabelsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\FontGradientForm.resx">
+    <EmbeddedResource Include="Forms\FontGradientForm.resx">
       <DependentUpon>FontGradientForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\LabelStyleForm.resx">
+    <EmbeddedResource Include="Forms\LabelStyleForm.resx">
       <DependentUpon>LabelStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\LinesForm.resx">
+    <EmbeddedResource Include="Forms\LinesForm.resx">
       <DependentUpon>LinesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\PointsForm.resx">
+    <EmbeddedResource Include="Forms\PointsForm.resx">
       <DependentUpon>PointsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Style\PolygonForm.resx">
+    <EmbeddedResource Include="Forms\PolygonForm.resx">
       <DependentUpon>PolygonForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\AddOptionsForm.resx">
+    <EmbeddedResource Include="Forms\AddOptionsForm.resx">
       <DependentUpon>AddOptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ImageCombo\ColorSchemeForm.resx">
@@ -526,19 +526,19 @@
     <EmbeddedResource Include="Controls\ImageCombo\ColorSchemesForm.resx">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\OptionsForm.resx">
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\Options2Form.resx">
+    <EmbeddedResource Include="Forms\Options2Form.resx">
       <DependentUpon>Options2Form.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\OptionsChooserForm.resx">
+    <EmbeddedResource Include="Forms\OptionsChooserForm.resx">
       <DependentUpon>OptionsChooserForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options\OptionsManagerForm.resx">
+    <EmbeddedResource Include="Forms\OptionsManagerForm.resx">
       <DependentUpon>OptionsManagerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Categories\QueryBuilderForm.resx">
+    <EmbeddedResource Include="Forms\QueryBuilderForm.resx">
       <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

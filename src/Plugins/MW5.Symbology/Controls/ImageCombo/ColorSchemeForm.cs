@@ -19,6 +19,7 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.UI;
 using MW5.UI.Controls;
@@ -28,9 +29,8 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 {
     public partial class ColorSchemeForm : MapWindowForm
     {
-        private CheckBox[] _checkboxes;
-        private Office2007ColorPicker[] _colopickers;
-        private NumericUpDown[] _updowns;
+        private readonly CheckBox[] _checkboxes;
+        private readonly Office2007ColorPicker[] _colopickers;
         private  ColorBlend _blend;
         private bool _noEvents;
 
@@ -42,41 +42,47 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             InitializeComponent();
             _blend = blend;
 
-            // initializing controls for editing the chosen color scheme
             _checkboxes = new CheckBox[7];
             _colopickers = new Office2007ColorPicker[7];
-            _updowns = new NumericUpDown[7];
+
+            Initialize();
+
+            Blend2Gui(blend);
+            RefreshControls();
+        }
+
+        private void Initialize()
+        {
+            var updowns = new NumericUpDown[7];
 
             for (int i = 0; i < 7; i++)
             {
-                _checkboxes[i] = new CheckBox();
-                _checkboxes[i].Parent = this;
-                _checkboxes[i].Left = 25;
+                _checkboxes[i] = new CheckBox { Parent = this, Left = 25 };
                 _checkboxes[i].Top = 20 + i * (_checkboxes[i].Height + 13);
-                _checkboxes[i].Text = "Color " + (i + 1).ToString();
+                _checkboxes[i].Text = "Color " + (i + 1);
                 _checkboxes[i].Width = 65;
                 _checkboxes[i].TextAlign = ContentAlignment.MiddleLeft;
-                _checkboxes[i].CheckedChanged += new EventHandler(this.DoUpdate);
+                _checkboxes[i].CheckedChanged += DoUpdate;
 
-                _colopickers[i] = new Office2007ColorPicker();
-                _colopickers[i].Parent = this;
-                _colopickers[i].Left = 90;
-                _colopickers[i].Top = 20 + i * (_checkboxes[i].Height + 13);
-                _colopickers[i].Width = 70;
-                _colopickers[i].SelectedColorChanged += new EventHandler(this.DoUpdate);
+                _colopickers[i] = new Office2007ColorPicker
+                {
+                    Parent = this,
+                    Left = 90,
+                    Top = 20 + i * (_checkboxes[i].Height + 13),
+                    Width = 70
+                };
+                _colopickers[i].SelectedColorChanged += DoUpdate;
 
-                _updowns[i] = new NumericUpDown();
-                _updowns[i].Parent = this;
-                _updowns[i].Left = 180;
-                _updowns[i].Top = 20 + i * (_checkboxes[i].Height + 13);
-                _updowns[i].Width = 50;
-                _updowns[i].Enabled = false;
-                _updowns[i].Visible = false;
-                //_updowns[i].ValueChanged += new EventHandler(this.DoUpdate);
+                updowns[i] = new NumericUpDown
+                {
+                    Parent = this,
+                    Left = 180,
+                    Top = 20 + i * (_checkboxes[i].Height + 13),
+                    Width = 50,
+                    Enabled = false,
+                    Visible = false
+                };
             }
-
-            Blend2GUI(blend);
-            RefreshControls();
         }
 
         public ColorBlend Blend
@@ -90,8 +96,11 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         private void DoUpdate(object sender, EventArgs e)
         {
             if (_noEvents) return;
-            _blend = GUI2Blend();
+
+            _blend = Gui2Blend();
+
             DrawColorBlend(_blend);
+
             RefreshControls();
         }
 
@@ -100,8 +109,10 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         private void RefreshControls()
         {
-            for (int i = 0; i < _checkboxes.Length; i++)
-                _checkboxes[i].Enabled = true;
+            foreach (CheckBox t in _checkboxes)
+            {
+                t.Enabled = true;
+            }
 
             // updating the state of colopickers counting the active breaks
             int count = 0;
@@ -112,25 +123,23 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                     count++;
             }
             
-            // if there are only 2 active breaks present, it won't be possible to turn off them
-            if (count == 2)
+            if (count != 2) return;
+
+            // if there are only 2 active breaks present, it won't be possible to turn them off
+            foreach (CheckBox t in _checkboxes)
             {
-                for (int i = 0; i < _checkboxes.Length; i++)
+                if (t.Checked)
                 {
-                    if (_checkboxes[i].Checked)
-                        _checkboxes[i].Enabled = false;
+                    t.Enabled = false;
                 }
             }
-
-            // comparing new blend with initial for chnages
-            //bool changesMade = !BlendsAreEqual(_initBlend, _blend);
         }
 
         /// <summary>
         /// Sets the values of controls according to color breaks
         /// </summary>
         /// <param name="blend">Color blend to take properties from</param>
-        private void Blend2GUI(ColorBlend blend)
+        private void Blend2Gui(ColorBlend blend)
         {
             if (blend == null) return;
 
@@ -138,22 +147,22 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
             for (int i = 0; i < _colopickers.Length; i++)
             {
                 _colopickers[i].Enabled = false;
-                //_updowns[i].Enabled = false;
                 _checkboxes[i].Enabled = false;
             }
 
             for (int i = 0; i < blend.Colors.Length; i++)
             {
                 _colopickers[i].Color = blend.Colors[i];
-                //_updowns[i].Value = (decimal)blend.Positions[i] * 100;
                 _checkboxes[i].Checked = true;
 
                 _colopickers[i].Enabled = true;
-                //_updowns[i].Enabled = true;
                 _checkboxes[i].Enabled = true;
             }
+
             if (blend.Colors.Length < _checkboxes.Length)
+            {
                 _checkboxes[blend.Colors.Length].Enabled = true;
+            }
 
             // drawing the gradient
             DrawColorBlend(blend);
@@ -164,18 +173,13 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Creates color blend based upon options selected in the GUI
         /// </summary>
-        private ColorBlend GUI2Blend()
+        private ColorBlend Gui2Blend()
         {
-            // how many colors are enabled            
-            int count = 0;
-            for (int i = 0; i < _checkboxes.Length; i++)
-            {
-                if (_checkboxes[i].Checked)
-                    count++;
-            }
+            int count = _checkboxes.Count(t => t.Checked);
 
-            ColorBlend blend = new ColorBlend(count);
+            var blend = new ColorBlend(count);
             int blendCount = 0;
+
             for (int i = 0; i < _colopickers.Length; i++)
             {
                 if (_checkboxes[i].Checked)
@@ -189,32 +193,8 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         }
 
         /// <summary>
-        /// Checks if the 2 color blends are equal
-        /// </summary>
-        /// <returns>True if the 2 blends are equal and false otherwise</returns>
-        //bool BlendsAreEqual(ColorBlend blend1, ColorBlend blend2)
-        //{
-        //    if (blend1 == null || blend2 == null) return false;
-
-        //    if (blend1.Colors.Length != blend2.Colors.Length ||
-        //        blend1.Positions.Length != blend2.Positions.Length)
-        //    {
-        //        return false;
-        //    }
-
-        //    for (int i = 0; i < blend1.Colors.Length; i++)
-        //        if (blend1.Colors[i] != blend2.Colors[i]) return false;
-
-        //    for (int i = 0; i < blend1.Positions.Length; i++)
-        //        if (blend1.Positions[i] != blend2.Positions[i]) return false;
-
-        //    return true;
-        //}
-
-        /// <summary>
         /// Draws current color blend
         /// </summary>
-        /// <param name="blend"></param>
         private void DrawColorBlend(ColorBlend blend)
         {
             if (lblPreview.Image != null)
@@ -222,12 +202,15 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             if (blend == null) return;
 
-            Bitmap bmp = new Bitmap(lblPreview.ClientRectangle.Width, lblPreview.ClientRectangle.Height);
+            var bmp = new Bitmap(lblPreview.ClientRectangle.Width, lblPreview.ClientRectangle.Height);
 
-            LinearGradientBrush lgb = new LinearGradientBrush(lblPreview.ClientRectangle, Color.Transparent, Color.Transparent, 90.0f);
-            lgb.InterpolationColors = blend;
+            var lgb = new LinearGradientBrush(lblPreview.ClientRectangle, Color.Transparent,
+                Color.Transparent, 90.0f)
+            {
+                InterpolationColors = blend
+            };
 
-            Graphics g = Graphics.FromImage(bmp);
+            var g = Graphics.FromImage(bmp);
             g.FillRectangle(lgb, lblPreview.ClientRectangle);
             lgb.Dispose();
             lblPreview.Image = bmp;

@@ -39,8 +39,8 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// <summary>
         /// Initializes a new instance of the frmColorSchemes class
         /// </summary>
-        internal ColorSchemesForm(IAppContext context, ColorSchemeCollection provider) : 
-            base(context)
+        internal ColorSchemesForm(IAppContext context, ColorSchemeCollection provider)
+            : base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (provider == null) throw new ArgumentNullException("provider");
@@ -49,10 +49,18 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
 
             InitializeComponent();
 
-            // adding schemes
-            _listBox1.Items.Clear();
+            Initialize();
 
-            int index = (provider.Type == SchemeTarget.Vector) ? 1 : 0;
+            _noEvents = true;
+
+            RefreshControls();
+
+            _noEvents = false;
+        }
+
+        private void Initialize()
+        {
+            _listBox1.Items.Clear();
 
             foreach (var blend in _provider)
             {
@@ -61,27 +69,27 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
                     _listBox1.Items.Add(blend);
                 }
             }
-           
+
             if (_listBox1.Items.Count == 0)
             {
                 // adding color scheme, as there can be none in the list
                 ColorBlend blend = new ColorBlend(2);
                 blend.Colors[0] = Color.White; blend.Positions[0] = 0.0f;
-                blend.Colors[1] = Color.Black;  blend.Positions[1] = 1.0f;
-                 
+                blend.Colors[1] = Color.Black; blend.Positions[1] = 1.0f;
+
                 _listBox1.Items.Add(blend);
             }
-            _noEvents = true;
 
-            // choosing the first color scheme for editing
-            if (_listBox1.Items.Count > 0)
+            if (_listBox1.Items.Count == 0) return;
+
+            int index = _provider.SelectedIndex;
+            if (index < 0 || index >= _listBox1.Items.Count)
             {
-                _listBox1.SelectedIndex = 0;
-                DrawColorBlend(_listBox1.SelectedItem as ColorBlend);
+                index = 0;
             }
 
-            RefreshControls();
-            _noEvents = false;
+            _listBox1.SelectedIndex = index;
+             DrawColorBlend(_listBox1.SelectedItem as ColorBlend);
         }
 
         /// <summary>

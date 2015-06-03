@@ -95,7 +95,11 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         [Browsable(false)]
         public ColorSchemeCollection ColorSchemes
         {
-            get { return _schemeList; }
+            get
+            {
+                _schemeList.SelectedIndex = SelectedIndex;
+                return _schemeList;
+            }
         }
 
         /// <summary>
