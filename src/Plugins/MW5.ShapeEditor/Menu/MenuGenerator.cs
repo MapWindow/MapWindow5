@@ -13,7 +13,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 {
     internal class MenuGenerator
     {
-        private const string SHAPE_EDITOR_TOOLBAR = "Shape Editor";    // perhaps simply use plugin name as a default
+        private const string ShapeEditorToolbar = "Shape Editor";    // perhaps simply use plugin name as a default
         
         private readonly MenuCommands _commands;
 
@@ -23,7 +23,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             InitToolbar(context, plugin.Identity);
 
-            InitMenu();
+            InitMenu(context, plugin.Identity);
         }
 
         private void InitToolbar(IAppContext context, PluginIdentity identity)
@@ -31,7 +31,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
             var items = context.Toolbars.FileToolbar.Items;
             items.AddButton(_commands[MenuKeys.CreateLayer]);
 
-            var bar = context.Toolbars.Add(SHAPE_EDITOR_TOOLBAR, identity);
+            var bar = context.Toolbars.Add(ShapeEditorToolbar, identity);
             bar.DockState = ToolbarDockState.Top;
 
             items = bar.Items;
@@ -65,9 +65,27 @@ namespace MW5.Plugins.ShapeEditor.Menu
             bar.Update();
         }
 
-        private void InitMenu()
+        private void InitMenu(IAppContext context, PluginIdentity identity)
         {
-            
+            var menu = context.Menu.Items;
+            menu.InsertBefore = context.Menu.LayerMenu;
+
+            var bar = menu.AddDropDown("Edit", MenuKeys.MainMenuEditKey, identity);
+
+            menu.InsertBefore = context.Menu.HelpMenu;
+
+            var items = bar.SubItems;
+
+            items.AddButton(_commands[MenuKeys.Undo]);
+            items.AddButton(_commands[MenuKeys.Redo]);
+
+            items.AddButton(_commands[MenuKeys.Copy], true);
+            items.AddButton(_commands[MenuKeys.Paste]);
+            items.AddButton(_commands[MenuKeys.Cut]);
+
+            items.AddButton(_commands[MenuKeys.DeleteSelected], true);
+
+            bar.Update();
         }
     }    
 }

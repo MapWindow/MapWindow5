@@ -2,6 +2,8 @@
 {
     internal static class MenuKeys
     {
+        public const string MainMenuEditKey = "EditMenu";
+
         public const string CreateLayer = "se_CreateLayer";
         public const string LayerEdit = "se_LayerEdit";
         public const string LayerSave = "se_LayerSave";
@@ -23,5 +25,6 @@
         public const string SplitByPolygon = "se_SplitByPolygon";
         public const string SplitByPolyline = "se_SplitByPolyline";
         public const string PolygonOverlayDropDown = "se_PolygonOverlayDropDown";
+        public const string DeleteSelected = "se_DeleteSelected";
     }
 }

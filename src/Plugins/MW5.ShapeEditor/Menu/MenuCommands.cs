@@ -39,6 +39,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
                 new MenuCommand("Clip by polygon", MenuKeys.ClipByPolygon, null),
                 new MenuCommand("Split by polygon", MenuKeys.SplitByPolygon, null),
                 new MenuCommand("Split by polyline", MenuKeys.SplitByPolyline, Resources.icon_geometry_split_by_polyline),
+
+                new MenuCommand("Delete selected", MenuKeys.DeleteSelected, Resources.img_delete_selected),
             };
         }
     }

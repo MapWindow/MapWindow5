@@ -50,6 +50,9 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             switch (e.ItemKey)
             {
+                case MenuKeys.DeleteSelected:
+                    _geoprocessingService.RemoveShapes();
+                    break;
                 case MenuKeys.CreateLayer:
                     _layerService.CreateLayer();
                     break;

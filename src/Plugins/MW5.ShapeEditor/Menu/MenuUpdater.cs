@@ -30,8 +30,14 @@ namespace MW5.Plugins.ShapeEditor.Menu
             plugin.ViewUpdating += OnViewUpdating;
             plugin.MapCursorChanged += OnMapCursorChanged;
             plugin.HistoryChanged += OnViewUpdating;
-        }
 
+            var item = FindMenuItem(MenuKeys.MainMenuEditKey) as IDropDownMenuItem;
+            if (item != null)
+            {
+                item.DropDownOpening += MenuDropDownOpening;
+            }
+        }
+        
         private void OnMapCursorChanged(IMuteMap sender, EventArgs e)
         {
             var map = _context.Map;
@@ -99,10 +105,24 @@ namespace MW5.Plugins.ShapeEditor.Menu
                FindToolbarItem(MenuKeys.RotateShapes).Enabled = selectedCount > 0;
             }
 
-            var list = new[] { MenuKeys.Copy, MenuKeys.Paste, MenuKeys.Cut, MenuKeys.Undo, MenuKeys.Redo };
+            UpdateCopyPaste(true);
+        }
+
+        private void UpdateCopyPaste(bool toolbar)
+        {
+            var list = new List<string>()
+            {
+                MenuKeys.Copy, MenuKeys.Paste, MenuKeys.Cut, MenuKeys.Undo, MenuKeys.Redo
+            };
+
+            if (!toolbar)
+            {
+                list.Add(MenuKeys.DeleteSelected);
+            }
+
             foreach (var item in list)
             {
-                var menuItem = FindToolbarItem(item);
+                var menuItem = toolbar ? FindToolbarItem(item) : FindMenuItem(item);
                 menuItem.Enabled = GetEnabled(item);
             }
         }
@@ -124,6 +144,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
 
             switch (itemKey)
             {
+                case MenuKeys.DeleteSelected:
+                    return fs.NumSelected > 0 && fs.InteractiveEditing;
                 case MenuKeys.Undo:
                     return map.History.UndoCount > 0;
                 case MenuKeys.Redo:
@@ -136,6 +158,11 @@ namespace MW5.Plugins.ShapeEditor.Menu
                     return !_geoprocessingService.BufferIsEmpty && fs.InteractiveEditing;
             }
             return false;
+        }
+
+        private void MenuDropDownOpening(object sender, EventArgs e)
+        {
+            UpdateCopyPaste(false);
         }
     }
 }
