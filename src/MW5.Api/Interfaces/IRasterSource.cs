@@ -94,16 +94,15 @@ namespace MW5.Api.Interfaces
 
         bool IgnoreColorTable { get; set; }
 
-        // TODO: consider if it's necessary
-        bool AllowHillshade { get; set; }
+        bool IsUsingHillshade { get; }
+
+        GridGradientModel GradientModel { get; }
 
         //GridColorScheme GridProxyColorScheme { get; }
         //PredefinedColorScheme ImageColorScheme { get; set; }
 
         //int BufferSize { get; set; }
         //bool ClearGdalCache { get; set; }
-
-        //bool GridRendering { get; }
 
         //string SourceFilename { get; }
 

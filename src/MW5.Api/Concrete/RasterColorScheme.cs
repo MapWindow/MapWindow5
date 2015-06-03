@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -175,19 +176,60 @@ namespace MW5.Api.Concrete
             return _scheme.ApplyColors((tkColorSchemeType)schemeType, colorScheme.GetInternal(), gradientWithinCategories);
         }
 
-        public bool GradientWithinCategory
+        public bool HasColoringType(GridColoringType type)
+        {
+            return this.Any(item => item.ColoringType == type);
+        }
+
+        /// <summary>
+        /// Gets the coloring type used by color scheme or Mixed if more than one type is used by different intervals.
+        /// </summary>
+        public GridColoringType ColoringType
         {
             get
             {
-                foreach (var item in this)
+                var item = this.FirstOrDefault();
+                if (item != null)
                 {
-                    if (item.ColoringType != GridColoringType.Random)
+                    if (this.Any(br => br.ColoringType != item.ColoringType))
                     {
-                        return true;
+                        return GridColoringType.Mixed;
                     }
+                    
+                    return item.ColoringType;
                 }
 
-                return false;
+                return GridColoringType.Mixed;
+            }
+        }
+
+        /// <summary>
+        /// Gets the gradient model used by color scheme or Mixed if more than one model used by differnt intervals.
+        /// </summary>
+        public GridGradientModel GradientModel
+        {
+            get
+            {
+                var item = this.FirstOrDefault();
+                if (item != null)
+                {
+                    if (this.Any(br => br.GradientModel != item.GradientModel))
+                    {
+                        return GridGradientModel.Mixed;
+                    }
+
+                    return item.GradientModel;
+                }
+
+                return GridGradientModel.Mixed;
+            }
+        }
+
+        public bool ColorGradientWithinCategory
+        {
+            get
+            {
+                return this.Any(item => item.LowColor != item.HighColor);
             }
         }
     }

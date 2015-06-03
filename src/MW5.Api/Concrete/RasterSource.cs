@@ -16,7 +16,7 @@ namespace MW5.Api.Concrete
         public RasterSource(Image image)
             : base(image)
         {
-            
+            _image.AllowHillshade = true;
         }
 
         #region Static methods
@@ -427,6 +427,24 @@ namespace MW5.Api.Concrete
                 }
 
                 return GdalDataType.Unknown;
+            }
+        }
+
+        public bool IsUsingHillshade
+        {
+            get
+            {
+                var scheme = CustomColorScheme;
+                return scheme != null && scheme.ColoringType == GridColoringType.Hillshade;
+            }
+        }
+
+        public GridGradientModel GradientModel
+        {
+            get
+            {
+                var scheme = CustomColorScheme;
+                return scheme.GradientModel;
             }
         }
     }

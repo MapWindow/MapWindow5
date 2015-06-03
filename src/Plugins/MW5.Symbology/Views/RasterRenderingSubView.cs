@@ -39,9 +39,17 @@ namespace MW5.Plugins.Symbology.Views
 
         private void InitBuildColorSchemeGroup()
         {
+            chkGradientWithinCategory.CheckedChanged += chkGradientWithinCategory_CheckedChanged;
+
             panelSingleBand.MakeSameLocation(groupBuildColorScheme);
 
-            cboGradientModel.AddItemsFromEnum<GridGradientModel>();
+            cboGradientModel.AddItemsFromEnum(new List<GridGradientModel>()
+            {
+                GridGradientModel.Logorithmic,
+                GridGradientModel.Linear,
+                GridGradientModel.Exponential,
+            });
+
             cboGradientModel.SetValue(GridGradientModel.Linear);
 
             cboClassification.AddItemsFromEnum<RasterClassification>();
@@ -52,6 +60,12 @@ namespace MW5.Plugins.Symbology.Views
             {
                 colorSchemeCombo1.SelectedIndex = 0;
             }
+        }
+
+        private void chkGradientWithinCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            cboGradientModel.Enabled = chkGradientWithinCategory.Checked;
+            chkHillshade.Enabled = chkGradientWithinCategory.Checked;
         }
 
         public void Initialize()
@@ -86,6 +100,7 @@ namespace MW5.Plugins.Symbology.Views
             cboClassification.SetValue(Metadata.RasterClassification);
             chkReverseColorScheme.Checked = Metadata.RasterReverseColorScheme;
             colorSchemeCombo1.SetSelectedItem(Metadata.RasterColorScheme);
+            udBreakCount.SetValue(Metadata.RasterNumCategories);
         }
 
         public void SaveMetadata()
@@ -98,6 +113,7 @@ namespace MW5.Plugins.Symbology.Views
             Metadata.RasterClassification = cboClassification.GetValue<RasterClassification>();
             Metadata.RasterReverseColorScheme = chkReverseColorScheme.Checked;
             Metadata.RasterColorScheme = colorSchemeCombo1.GetSelectedItem();
+            Metadata.RasterNumCategories = (int)udBreakCount.Value;
         }
 
         internal ColorSchemeCollection ColorSchemes
@@ -136,11 +152,6 @@ namespace MW5.Plugins.Symbology.Views
                 if (_colorScheme != null)
                 {
                     _colorScheme.ApplyGradientModel(GradientModel);
-
-                    if (chkHillshade.Checked)
-                    {
-                        Model.AllowHillshade = true;
-                    }
 
                     _colorScheme.ApplyColoringType(chkHillshade.Checked
                         ? GridColoringType.Hillshade
@@ -288,8 +299,17 @@ namespace MW5.Plugins.Symbology.Views
         {
             chkUseHistogram.Checked = Model.UseHistogram;
             chkAlphaRendering.Checked = Model.UseActiveBandAsAlpha;
-            chkHillshade.Checked = Model.GridRendering;
+            chkHillshade.Checked = Model.IsUsingHillshade;
             chkReverse.Checked = Model.ReverseGreyScale;
+
+            var colorScheme = Model.CustomColorScheme;
+            chkGradientWithinCategory.Checked = colorScheme != null && colorScheme.ColorGradientWithinCategory;
+
+            var model = Model.GradientModel;
+            if (model != GridGradientModel.Mixed)
+            {
+                cboGradientModel.SetValue(model);
+            }
         }
 
         public void UiToModelRaster()
@@ -339,12 +359,12 @@ namespace MW5.Plugins.Symbology.Views
 
         public void SetColorSchemeCore(RasterColorScheme value)
         {
+            bool showGradient = value != null && value.ColoringType != GridColoringType.Random;
+
+            colorSchemeGrid.DataSource = null;              // to avoid flicker on setting ShowGradient
+            colorSchemeGrid.ShowGradient = showGradient;
+
             colorSchemeGrid.DataSource = value != null ? value.ToList() : null;
-            
-            if (value != null)
-            {
-                colorSchemeGrid.ShowGradient = value.GradientWithinCategory;
-            }
         }
 
         private void chkGradientWithinCategory_CheckStateChanged(object sender, EventArgs e)

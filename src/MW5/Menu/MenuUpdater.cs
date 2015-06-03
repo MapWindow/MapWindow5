@@ -77,7 +77,7 @@ namespace MW5.Menu
             bool hasLayer = _context.Legend.SelectedLayerHandle != -1;
             if (hasLayer)
             {
-                var fs = _context.Map.Layers.Current.FeatureSet;
+                var fs = _context.Map.GetFeatureSet(_context.Legend.SelectedLayerHandle);
                 if (fs != null)
                 {
                     FindToolbarItem(MenuKeys.ClearSelection).Enabled = fs.NumSelected > 0;

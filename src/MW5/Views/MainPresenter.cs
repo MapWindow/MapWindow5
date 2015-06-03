@@ -83,8 +83,6 @@ namespace MW5.Views
                 // this will display progress updates and debug window
                 // file based-logger is already working
                 Logger.Current.Init(appContext);       
-
-                LoadLastProject();
             }
             finally
             {
@@ -95,6 +93,8 @@ namespace MW5.Views
 
         private void OnBeforeShow()
         {
+            LoadLastProject();
+
             if (AppConfig.Instance.ShowWelcomeDialog)
             {
                 _menuListener.RunCommand(MenuKeys.Welcome);

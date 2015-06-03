@@ -12,7 +12,7 @@ namespace MW5.Plugins.Symbology.Helpers
     {
         public static void AddRasterBands(this ComboBoxAdv combo, IRasterSource raster, bool withNone = false)
         {
-            if (combo == null) return;      // TODO: should be display anything for BMPs?
+            if (combo == null) return;
 
             combo.Items.Clear();
 
@@ -21,16 +21,15 @@ namespace MW5.Plugins.Symbology.Helpers
                 combo.Items.Add("<none>");
             }
 
-            for (int i = 1; i <= raster.Bands.Count; i++)
+            int bandCount = raster.Bands.Count;
+            for (int i = 1; i <= bandCount; i++)
             {
                 string bandName = raster.GetBandFullName(i);
                 combo.Items.Add(bandName);
             }
 
-            if (combo.Items.Count > 0)
-            {
-                combo.SelectedIndex = 0;
-            }
+            int index = raster.ActiveBandIndex;
+            combo.SelectedIndex = index > 0 && index <= bandCount ? index - 1 : 0;
         }
     }
 }

@@ -113,11 +113,11 @@ namespace MW5.Views
             ShowInTaskbar = true;
             _context.DockPanels.Unlock();
 
-            Invoke(BeforeShow);
-            
             // don't set it initially or it will cause a lot of resizing
             // with reallocation of buffer when panels / toolbars are loaded
             _mapControl1.Dock = DockStyle.Fill;
+
+            Invoke(BeforeShow);
 
             Application.Run(this);
         }

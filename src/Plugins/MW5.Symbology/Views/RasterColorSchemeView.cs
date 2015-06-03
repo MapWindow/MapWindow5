@@ -50,7 +50,7 @@ namespace MW5.Plugins.Symbology.Views
             
             _intervals = new BindingList<RasterInterval>(Model.ToList());
             rasterColorSchemeGrid1.DataSource = _intervals;
-            chkGradientWithinCategory.Checked = Model.GradientWithinCategory;
+            chkGradientWithinCategory.Checked = Model.ColoringType != GridColoringType.Random;
             rasterColorSchemeGrid1.ShowGradient = chkGradientWithinCategory.Checked;
         }
 

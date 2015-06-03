@@ -1102,6 +1102,7 @@
         Hillshade = 0,
         Gradient = 1,
         Random = 2,
+        Mixed = 3,
     }
 
     public enum GridGradientModel
@@ -1109,6 +1110,7 @@
         Logorithmic = 0,
         Linear = 1,
         Exponential = 2,
+        Mixed = 3,
     }
 
     public enum GdalError

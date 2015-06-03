@@ -1,4 +1,5 @@
-﻿using MW5.Plugins.Symbology.Controls;
+﻿using System.Windows.Forms;
+using MW5.Plugins.Symbology.Controls;
 
 namespace MW5.Plugins.Symbology.Views
 {
@@ -43,17 +44,17 @@ namespace MW5.Plugins.Symbology.Views
             this.btnGenerateColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label1 = new System.Windows.Forms.Label();
             this.cboRasterRendering = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkUseHistogram = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkAlphaRendering = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            this.chkHillshade = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkUseHistogram = new CheckBox();
+            this.chkAlphaRendering = new CheckBox();
+            this.chkHillshade = new CheckBox();
             this.groupBuildColorScheme = new System.Windows.Forms.GroupBox();
             this.btnEditColorSchemeList = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.chkReverseColorScheme = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkReverseColorScheme = new CheckBox();
             this.cboGradientModel = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.chkGradientWithinCategory = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkGradientWithinCategory = new CheckBox();
             this.colorSchemeCombo1 = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.udBreakCount = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.chkReverse = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            this.chkReverse = new CheckBox();
             this.rgbBandControl1 = new MW5.Plugins.Symbology.Controls.RgbBandControl();
             this.colorSchemeGrid = new MW5.Plugins.Symbology.Controls.RasterColorSchemeGrid();
             this.btnEditColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -65,15 +66,9 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtMinimum)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).BeginInit();
             this.groupBuildColorScheme.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chkReverseColorScheme)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBreakCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSchemeGrid)).BeginInit();
             this.panelSingleBand.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.panelColorScheme)).BeginInit();
@@ -220,36 +215,27 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkUseHistogram
             // 
-            this.chkUseHistogram.BeforeTouchSize = new System.Drawing.Size(107, 21);
             this.chkUseHistogram.Location = new System.Drawing.Point(15, 8);
-            this.chkUseHistogram.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkUseHistogram.Name = "chkUseHistogram";
             this.chkUseHistogram.Size = new System.Drawing.Size(107, 21);
             this.chkUseHistogram.TabIndex = 14;
             this.chkUseHistogram.Text = "Use histogram";
-            this.chkUseHistogram.ThemesEnabled = false;
             // 
             // chkAlphaRendering
             // 
-            this.chkAlphaRendering.BeforeTouchSize = new System.Drawing.Size(107, 21);
             this.chkAlphaRendering.Location = new System.Drawing.Point(15, 35);
-            this.chkAlphaRendering.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkAlphaRendering.Name = "chkAlphaRendering";
             this.chkAlphaRendering.Size = new System.Drawing.Size(107, 21);
             this.chkAlphaRendering.TabIndex = 22;
             this.chkAlphaRendering.Text = "Alpha rendering";
-            this.chkAlphaRendering.ThemesEnabled = false;
             // 
             // chkHillshade
             // 
-            this.chkHillshade.BeforeTouchSize = new System.Drawing.Size(88, 21);
             this.chkHillshade.Location = new System.Drawing.Point(15, 138);
-            this.chkHillshade.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkHillshade.Name = "chkHillshade";
             this.chkHillshade.Size = new System.Drawing.Size(88, 21);
             this.chkHillshade.TabIndex = 23;
             this.chkHillshade.Text = "Hill shade";
-            this.chkHillshade.ThemesEnabled = false;
             // 
             // groupBuildColorScheme
             // 
@@ -281,14 +267,11 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkReverseColorScheme
             // 
-            this.chkReverseColorScheme.BeforeTouchSize = new System.Drawing.Size(77, 21);
             this.chkReverseColorScheme.Location = new System.Drawing.Point(120, 84);
-            this.chkReverseColorScheme.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkReverseColorScheme.Name = "chkReverseColorScheme";
             this.chkReverseColorScheme.Size = new System.Drawing.Size(77, 21);
             this.chkReverseColorScheme.TabIndex = 48;
             this.chkReverseColorScheme.Text = "Reverse";
-            this.chkReverseColorScheme.ThemesEnabled = false;
             // 
             // cboGradientModel
             // 
@@ -302,14 +285,13 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkGradientWithinCategory
             // 
-            this.chkGradientWithinCategory.BeforeTouchSize = new System.Drawing.Size(99, 21);
+            this.chkGradientWithinCategory.Checked = true;
+            this.chkGradientWithinCategory.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkGradientWithinCategory.Location = new System.Drawing.Point(15, 84);
-            this.chkGradientWithinCategory.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkGradientWithinCategory.Name = "chkGradientWithinCategory";
             this.chkGradientWithinCategory.Size = new System.Drawing.Size(99, 21);
             this.chkGradientWithinCategory.TabIndex = 27;
             this.chkGradientWithinCategory.Text = "Gradient";
-            this.chkGradientWithinCategory.ThemesEnabled = false;
             this.chkGradientWithinCategory.CheckStateChanged += new System.EventHandler(this.chkGradientWithinCategory_CheckStateChanged);
             // 
             // colorSchemeCombo1
@@ -348,14 +330,11 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // chkReverse
             // 
-            this.chkReverse.BeforeTouchSize = new System.Drawing.Size(67, 21);
             this.chkReverse.Location = new System.Drawing.Point(128, 8);
-            this.chkReverse.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.chkReverse.Name = "chkReverse";
             this.chkReverse.Size = new System.Drawing.Size(67, 21);
             this.chkReverse.TabIndex = 25;
             this.chkReverse.Text = "Reverse";
-            this.chkReverse.ThemesEnabled = false;
             // 
             // rgbBandControl1
             // 
@@ -433,15 +412,9 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtMinimum)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboClassification)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboRasterRendering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkUseHistogram)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkAlphaRendering)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHillshade)).EndInit();
             this.groupBuildColorScheme.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chkReverseColorScheme)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboGradientModel)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkGradientWithinCategory)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBreakCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkReverse)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.colorSchemeGrid)).EndInit();
             this.panelSingleBand.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.panelColorScheme)).EndInit();
@@ -460,26 +433,26 @@ namespace MW5.Plugins.Symbology.Views
         private RasterColorSchemeGrid colorSchemeGrid;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboRasterRendering;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkUseHistogram;
+        private CheckBox chkUseHistogram;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboClassification;
         private RgbBandControl rgbBandControl1;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkAlphaRendering;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkHillshade;
+        private CheckBox chkAlphaRendering;
+        private CheckBox chkHillshade;
         private Syncfusion.Windows.Forms.ButtonAdv btnCalculateMinMax;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboSelectedBand;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaximum;
         private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMinimum;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.GroupBox groupBuildColorScheme;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverse;
+        private CheckBox chkReverse;
         private Syncfusion.Windows.Forms.ButtonAdv btnDefaultMinMax;
         private Syncfusion.Windows.Forms.ButtonAdv btnEditColorScheme;
         private NumericUpDownEx udBreakCount;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkGradientWithinCategory;
+        private CheckBox chkGradientWithinCategory;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboGradientModel;
         private System.Windows.Forms.Panel panelSingleBand;
         private Syncfusion.Windows.Forms.Tools.GradientPanel panelColorScheme;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv chkReverseColorScheme;
+        private CheckBox chkReverseColorScheme;
         private Syncfusion.Windows.Forms.ButtonAdv btnEditColorSchemeList;
     }
 }

@@ -88,6 +88,9 @@ namespace MW5.Plugins.Symbology.Services
         [DefaultValue(RasterClassification.EqualIntervals)]
         public RasterClassification RasterClassification = RasterClassification.EqualIntervals;
 
+        [DefaultValue(5)]
+        public int RasterNumCategories = 5;
+
         #endregion
     }
 }
