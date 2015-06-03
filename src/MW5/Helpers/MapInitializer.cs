@@ -74,6 +74,25 @@ namespace MW5.Helpers
 
             map.BackgroundColor = config.MapBackgroundColor;
 
+            var measuring = map.Measuring.Options;
+            measuring.AngleFormat = config.MeasuringAngleFormat;
+            measuring.AnglePrecision = config.MeasuringAnglePrecision;
+            measuring.AreaPrecision = config.MeasuringAreaPrecision;
+            measuring.AreaUnits = config.MeasuringAreaUnits;
+            measuring.BearingType = config.MeasuringBearingType;
+            measuring.FillColor = config.MeasuringFillColor;
+            measuring.FillTransparency = config.MeasuringFillTransparency;
+            measuring.LengthPrecision = config.MeasuringLengthPrecision;
+            measuring.LengthUnits = config.MeasuringLengthUnits;
+            measuring.LineColor = config.MeasuringLineColor;
+            measuring.LineStyle = config.MeasuringLineStyle;
+            measuring.LineWidth = config.MeasuringLineWidth;
+            measuring.PointLabelsVisible = config.MeasuringPointLabelsVisible;
+            measuring.PointsVisible = config.MeasuringPointsVisible;
+            measuring.ShowBearing = config.MeasuringShowBearing;
+            measuring.ShowLength = config.MeasuringShowLength;
+            measuring.ShowTotalLength = config.MeasuringShowTotalLength;
+
             ApplyMouseWheelDirection(map, config.MouseWheelDirection);
         }
 

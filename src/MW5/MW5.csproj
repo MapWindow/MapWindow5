@@ -121,6 +121,12 @@
     <Compile Include="Configuration\MapConfigPage.Designer.cs">
       <DependentUpon>MapConfigPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Configuration\MeasuringConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\MeasuringConfigPage.Designer.cs">
+      <DependentUpon>MeasuringConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\PluginGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -308,6 +314,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\GeneralConfigPage.resx">
       <DependentUpon>GeneralConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\MeasuringConfigPage.resx">
+      <DependentUpon>MeasuringConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\PluginsConfigPage.resx">
       <DependentUpon>PluginsConfigPage.cs</DependentUpon>

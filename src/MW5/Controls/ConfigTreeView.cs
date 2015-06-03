@@ -65,6 +65,24 @@ namespace MW5.Controls
             }
         }
 
+        public void SetSelectedPage(ConfigPageType type)
+        {
+            TreeNodeAdv selectedNode = null;
+
+            var page = _model.Pages.FirstOrDefault(p => p.PageType == type);
+            if (page != null)
+            {
+                var node = NodeForPage(page);
+                if (node != null)
+                {
+                    selectedNode = node;
+                }
+            }
+
+            SelectedNode = selectedNode ?? Nodes[0];
+        }
+
+
         public void RestoreSelectedNode(string lastPageName)
         {
             TreeNodeAdv selectedNode = null;
@@ -78,7 +96,7 @@ namespace MW5.Controls
             {
                 if (page.PageName.ContainsIgnoreCase(lastPageName))
                 {
-                    var node = page.Tag as TreeNodeAdv;
+                    var node = NodeForPage(page);
                     if (node != null)
                     {
                         selectedNode = node;

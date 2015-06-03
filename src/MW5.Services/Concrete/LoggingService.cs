@@ -71,7 +71,6 @@ namespace MW5.Services.Concrete
         public void Info(string msg, params object[] param)
         {
             Log(string.Format(msg, param), LogLevel.Info);
-
         }
 
         public void Debug(string msg, params object[] param)

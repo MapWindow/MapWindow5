@@ -37,6 +37,7 @@ namespace MW5.Views
             _pages.Add(new WidgetsConfigPage(_configeService));
             _pages.Add(new LayerConfigPage(_configeService));
             _pages.Add(new RasterConfigPage(_configeService));
+            _pages.Add(new MeasuringConfigPage(_configeService));
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
         }
 
@@ -48,6 +49,10 @@ namespace MW5.Views
                 page.Initialize();
             }
         }
+
+        public ConfigPageType SelectedPage { get; set; }
+
+        public bool UseSelectedPage { get; set; }
 
         public IEnumerable<IConfigPage> Pages
         {

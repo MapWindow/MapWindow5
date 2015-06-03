@@ -54,7 +54,15 @@ namespace MW5.Views
         {
             _treeViewAdv1.Initialize(Model);
             _treeViewAdv1.AfterSelect += (s, e) => DisplaySelectedPage();
-            _treeViewAdv1.RestoreSelectedNode(AppConfig.Instance.LastConfigPage);
+
+            if (Model.UseSelectedPage)
+            {
+                _treeViewAdv1.SetSelectedPage(Model.SelectedPage);
+            }
+            else
+            {
+                _treeViewAdv1.RestoreSelectedNode(AppConfig.Instance.LastConfigPage);
+            }
         }
 
         private IConfigPage SelectedPage

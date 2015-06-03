@@ -93,7 +93,10 @@ namespace MW5.Menu
                     measuring.Options.AngleFormat = AngleFormat.Seconds;
                     return true;
                 case ContextMenuCommand.MeasuringProperties:
-                    _context.Container.Run<MeasuringPresenter, IMeasuringSettings>(measuring.Options);
+                    var model = _context.Container.GetInstance<ConfigViewModel>();
+                    model.SelectedPage = Plugins.Enums.ConfigPageType.Measuring;
+                    model.UseSelectedPage = true;
+                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     return true;
             }
 

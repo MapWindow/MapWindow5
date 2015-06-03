@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
@@ -41,6 +42,23 @@ namespace MW5.Plugins.Concrete
             LoadLastProject = true;
             LoadSymbology = true;
             MapBackgroundColor = Color.White;
+            MeasuringAngleFormat = AngleFormat.Degrees;
+            MeasuringAnglePrecision = 1;
+            MeasuringAreaPrecision = 1;
+            MeasuringAreaUnits = AreaDisplay.Metric;
+            MeasuringBearingType = BearingType.Absolute;
+            MeasuringFillColor = Color.Orange;
+            MeasuringFillTransparency = 100;
+            MeasuringLengthPrecision = 1;
+            MeasuringLengthUnits = LengthDisplay.Metric;
+            MeasuringLineColor = Color.Orange;
+            MeasuringLineStyle = DashStyle.Solid;
+            MeasuringLineWidth = 2;
+            MeasuringPointLabelsVisible = true;
+            MeasuringPointsVisible = true;
+            MeasuringShowBearing = true;
+            MeasuringShowLength = true;
+            MeasuringShowTotalLength = true;
             MouseWheelDirection = MouseWheelDirection.Forward;
             ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
             ProjectionMismatch = ProjectionMismatch.Reproject;
@@ -68,6 +86,8 @@ namespace MW5.Plugins.Concrete
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
+
+           
         }
 
         [OnDeserializing]
@@ -156,7 +176,58 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public Color MapBackgroundColor { get; set; }
-        
+
+        [DataMember]
+        public AngleFormat MeasuringAngleFormat { get; set; }
+
+        [DataMember]
+        public int MeasuringAnglePrecision { get; set; }
+
+        [DataMember]
+        public int MeasuringAreaPrecision { get; set; }
+
+        [DataMember]
+        public AreaDisplay MeasuringAreaUnits { get; set; }
+
+        [DataMember]
+        public BearingType MeasuringBearingType { get; set; }
+
+        [DataMember]
+        public Color MeasuringFillColor { get; set; }
+
+        [DataMember]
+        public byte MeasuringFillTransparency { get; set; }
+
+        [DataMember]
+        public int MeasuringLengthPrecision { get; set; }
+
+        [DataMember]
+        public LengthDisplay MeasuringLengthUnits { get; set; }
+
+        [DataMember]
+        public Color MeasuringLineColor { get; set; }
+
+        [DataMember]
+        public DashStyle MeasuringLineStyle { get; set; }
+
+        [DataMember]
+        public int MeasuringLineWidth { get; set; }
+
+        [DataMember]
+        public bool MeasuringPointLabelsVisible { get; set; }
+
+        [DataMember]
+        public bool MeasuringPointsVisible { get; set; }
+
+        [DataMember]
+        public bool MeasuringShowBearing { get; set; }
+
+        [DataMember]
+        public bool MeasuringShowLength { get; set; }
+
+        [DataMember]
+        public bool MeasuringShowTotalLength { get; set; }
+
         [DataMember]
         public MouseWheelDirection MouseWheelDirection { get; set; }
 

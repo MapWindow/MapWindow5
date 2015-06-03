@@ -892,8 +892,8 @@
 
     public enum LengthDisplay
     {
-        Metric = 1,
-        American = 2,
+        Metric = 0,
+        American = 1,
     }
 
     public enum EditorValidation

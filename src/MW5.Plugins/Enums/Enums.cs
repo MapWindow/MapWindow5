@@ -158,6 +158,7 @@
         Widgets = 4,
         Custom = 5,
         Raster = 6,
+        Measuring = 7,
     }
 
     public enum SymbologyStorage

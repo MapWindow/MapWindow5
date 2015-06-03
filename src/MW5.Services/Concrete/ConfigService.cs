@@ -55,7 +55,9 @@ namespace MW5.Services.Concrete
             }
             catch (Exception ex)
             {
-                MessageService.Current.Info("Failed to save app config: " + ex.Message);
+                const string msg = "Failed to save app config.";
+                Logger.Current.Error(msg, ex);
+                MessageService.Current.Info(msg);
             }
             return false;
         }
