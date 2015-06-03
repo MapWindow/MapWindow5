@@ -8,6 +8,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -23,6 +24,7 @@ using MW5.Projections.Properties;
 using MW5.Projections.UI.Forms;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Projections.UI.Controls
@@ -297,29 +299,30 @@ namespace MW5.Projections.UI.Controls
         private void AddProjectionToFavorite(CoordinateSystem cs)
         {
             if (cs == null) throw new ArgumentNullException("cs");
+            if (_context == null) return;
 
-            if (_context != null)
+            IList<int> list = _context.Config.FavoriteProjections;
+            if (list.All(prj => prj != cs.Code))
             {
-                IList<int> list = _context.Config.FavoriteProjections;
-                if (list.All(prj => prj != cs.Code))
-                {
-                    list.Add(cs.Code);
+                list.Add(cs.Code);
 
-                    UpdateFavoriteList();
-                }
-                else
-                {
-                    MessageService.Current.Info("Projection is added to the list already.");
-                }
+                UpdateFavoriteList();
+            }
+            else
+            {
+                MessageService.Current.Info("Projection is added to the list already.");
             }
         }
 
         /// <summary>
         /// Adds nodes with favorite projections
         /// </summary>
-        private void UpdateFavoriteList()
+        private void UpdateFavoriteList(bool locked = false)
         {
-            SuspendLayout();
+            if (!locked)
+            {
+                BeginUpdate(BeginUpdateOptions.Invalidate);
+            }
 
             var nodeFavorite = Nodes.Find(Constants.NodeFavorite);
             if (nodeFavorite != null)
@@ -364,16 +367,13 @@ namespace MW5.Projections.UI.Controls
                     }
 
                     nodeFavorite.ExpandAll();
-
-                    var nodeWorld = Nodes.Find(Constants.NodeByRegion);
-                    if (nodeWorld != null && count < 5)
-                    {
-                        nodeWorld.Expand();
-                    }
                 }
             }
 
-            ResumeLayout();
+            if (!locked)
+            {
+                EndUpdate();
+            }
         }
         #endregion
 
@@ -510,11 +510,22 @@ namespace MW5.Projections.UI.Controls
 
             RemoveEmptyChildren(_nodeByRegion);
 
-            UpdateFavoriteList();
+            UpdateFavoriteList(true);
+
+            ExapandWorldNode(true);
 
             EndUpdate();
 
             return true;
+        }
+
+        private void ExapandWorldNode(bool state)
+        {
+            var nodeWorld = Nodes.Find(Constants.NodeByRegion);
+            if (nodeWorld != null)
+            {
+                nodeWorld.Expanded = state;
+            }
         }
 
         private void FillSearchResults(TreeNodeAdv nodeAll, string token)
@@ -958,7 +969,6 @@ namespace MW5.Projections.UI.Controls
             }
         }
 
-
         public void Filter(string text, bool force = false)
         {
             BeginUpdate();
@@ -968,10 +978,7 @@ namespace MW5.Projections.UI.Controls
                 bool empty = string.IsNullOrWhiteSpace(text) || (!force && text.Length <= 2);
 
                 var nodeRegion = Nodes.Find(Constants.NodeByRegion);
-                if (!empty && nodeRegion.Expanded)
-                {
-                    nodeRegion.Expanded = false;
-                }
+                ExapandWorldNode(empty);
                 nodeRegion.Height = empty ? Constants.NodeHeight : 0;    // removing and adding the node works much slower
 
                 var nodeSearch = Nodes.Find(Constants.SearchResults);
