@@ -10,7 +10,7 @@ namespace MW5.Plugins.TableEditor.Menu
     public class MenuGenerator
     {
         private readonly IAppContext _context;
-        private MenuCommands _commands;
+        private readonly MenuCommands _commands;
 
         public MenuGenerator(IAppContext context, TableEditorPlugin plugin)
         {
@@ -19,12 +19,20 @@ namespace MW5.Plugins.TableEditor.Menu
             _commands = new MenuCommands(plugin);
 
             InitToolbars();
+
+            InitMenu();
         }
 
         private void InitToolbars()
         {
             var items = _context.Toolbars.FileToolbar.Items;
             items.AddButton(_commands[MenuKeys.ShowTable]);
+        }
+
+        private void InitMenu()
+        {
+            var menu = _context.Menu.LayerMenu;
+            menu.SubItems.AddButton(_commands[MenuKeys.ShowTable]);
         }
     }
 }

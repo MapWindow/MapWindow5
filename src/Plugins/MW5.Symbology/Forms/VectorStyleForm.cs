@@ -1414,23 +1414,6 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Generating of labels
-        /// </summary>
-        private void btnGenerateLabels_Click(object sender, EventArgs e)
-        {
-            using (var form = new LabelStyleForm(_context, _layer))
-            {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    _featureSet.Labels.Visible = true;
-                    DrawLabelsPreview();
-                    RefreshControlsState(null, null);
-                    RedrawMap();
-                }
-            }
-        }
-
-        /// <summary>
         /// Updates preview of the labels
         /// </summary>
         private void DrawLabelsPreview()

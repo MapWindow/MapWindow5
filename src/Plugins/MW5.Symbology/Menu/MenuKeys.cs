@@ -8,6 +8,9 @@ namespace MW5.Plugins.Symbology.Menu
 {
     internal static class MenuKeys
     {
+        public const string LayerProperties = "sy_LayerProperties";
+        public const string Labels = "sy_Labels";
+        public const string Charts = "sy_Charts";
         public const string QueryBuilder = "sy_QueryBuilder";
         public const string Categories = "sy_Categories";
         public const string LabelMover = "sy_LabelMover";

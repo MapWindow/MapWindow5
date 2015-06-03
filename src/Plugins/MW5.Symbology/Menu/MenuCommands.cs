@@ -20,7 +20,10 @@ namespace MW5.Plugins.Symbology.Menu
             {
                 new MenuCommand("Query builder", MenuKeys.QueryBuilder, Resources.img_sql),
                 new MenuCommand("Categories", MenuKeys.Categories, Resources.layer_vector_thematic_add),
-                new MenuCommand("Label mover", MenuKeys.LabelMover, Resources.label_mover)
+                new MenuCommand("Label mover", MenuKeys.LabelMover, Resources.label_mover),
+                new MenuCommand("Labels", MenuKeys.Labels, Resources.img_label24),
+                new MenuCommand("Charts", MenuKeys.Charts, Resources.img_chart24),
+                new MenuCommand("Layer properties", MenuKeys.LayerProperties, Resources.img_properties24),
             };
         }
     }

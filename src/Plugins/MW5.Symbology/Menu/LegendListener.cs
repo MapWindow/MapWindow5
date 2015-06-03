@@ -105,22 +105,9 @@ namespace MW5.Plugins.Symbology.Menu
 
         private void LayerDoubleClicked(IMuteLegend legend, LayerEventArgs e)
         {
-            var layer = legend.Layers.ItemByHandle(e.LayerHandle);
-            switch (layer.LayerType)
+            if (FormHelper.ShowLayerProperties(_context))
             {
-                case LayerType.Shapefile:
-                case LayerType.VectorLayer:
-                    using (var form = new VectorStyleForm(_context, layer))
-                    {
-                        _context.View.ShowChildView(form);
-                        e.Handled = true;
-                    }
-                    break;
-                case LayerType.Image:
-                case LayerType.Grid:
-                    _context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
-                    e.Handled = true;
-                    break;
+                e.Handled = true;
             }
         }
     }

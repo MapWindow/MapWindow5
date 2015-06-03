@@ -28,7 +28,9 @@ namespace MW5.Plugins.TableEditor.Menu
 
         private void ViewUpdating(object sender, EventArgs e)
         {
-            FindToolbarItem(MenuKeys.ShowTable).Enabled = _context.Map.SelectedFeatureSet != null;
+            bool visible = _context.Map.SelectedFeatureSet != null;
+            FindToolbarItem(MenuKeys.ShowTable).Enabled = visible;
+            FindMenuItem(MenuKeys.ShowTable).Enabled = visible;
         }
 
         private void PluginItemClicked(object sender, MenuItemEventArgs e)

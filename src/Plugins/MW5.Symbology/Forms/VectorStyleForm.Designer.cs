@@ -37,13 +37,13 @@ namespace MW5.Plugins.Symbology.Forms
         {
             this.components = new System.ComponentModel.Container();
             MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleForm));
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
             Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleForm));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControl1 = new MW5.UI.Controls.TabPropertiesControl();
@@ -62,11 +62,14 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkLayerVisible = new System.Windows.Forms.CheckBox();
             this.txtLayerName = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
+            this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.transpMain = new MW5.UI.Controls.TransparencyControl();
             this.groupPoint = new System.Windows.Forms.GroupBox();
+            this.udDefaultSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label9 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.clpPointFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
@@ -91,27 +94,40 @@ namespace MW5.Plugins.Symbology.Forms
             this.label21 = new System.Windows.Forms.Label();
             this.tabCategories = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.dgvCategories = new MW5.Plugins.Symbology.Controls.CategoriesGrid();
+            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
+            this.cmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmnExpression = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cmnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
             this.lstFields1 = new System.Windows.Forms.ListBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.chkRandomColors = new System.Windows.Forms.CheckBox();
             this.chkSetGradient = new System.Windows.Forms.CheckBox();
+            this.icbCategories = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.btnChangeColorScheme = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCategoryClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupVariableSize = new System.Windows.Forms.GroupBox();
+            this.udMaxSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udMinSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label5 = new System.Windows.Forms.Label();
             this.chkUseVariableSize = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.udNumCategories = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.chkUniqueValues = new System.Windows.Forms.CheckBox();
             this.label19 = new System.Windows.Forms.Label();
             this.btnCategoryRemove = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCategoryAppearance = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCategoryGenerate = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabFields = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.attributesControl1 = new MW5.Plugins.Symbology.Controls.AttributesControl();
             this.tabLabels = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnLabelsClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupLabelAppearance = new System.Windows.Forms.GroupBox();
             this.panelLabels = new System.Windows.Forms.Panel();
+            this.udLabelFontSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.clpLabelFrame = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label15 = new System.Windows.Forms.Label();
             this.chkShowLabels = new System.Windows.Forms.CheckBox();
@@ -127,11 +143,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkChartsVisible = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.optChartsPie = new System.Windows.Forms.RadioButton();
+            this.icbChartColorScheme = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
             this.optChartBars = new System.Windows.Forms.RadioButton();
             this.groupCharts = new System.Windows.Forms.GroupBox();
             this.pctCharts = new System.Windows.Forms.PictureBox();
             this.tabVisibility = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.scaleLayer = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.groupBox13 = new System.Windows.Forms.GroupBox();
             this.btnClearLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -142,6 +160,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
+            this.udMinDrawingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udMinLabelingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label6 = new System.Windows.Forms.Label();
             this.groupModeDescription = new System.Windows.Forms.GroupBox();
             this.txtModeDescription = new System.Windows.Forms.RichTextBox();
@@ -162,26 +182,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolStyle = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolSaveStyle = new System.Windows.Forms.ToolStripMenuItem();
-            this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
-            this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
-            this.udDefaultSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.dgvCategories = new MW5.Plugins.Symbology.Controls.CategoriesGrid();
-            this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmnVisible = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.cmnStyle = new System.Windows.Forms.DataGridViewImageColumn();
-            this.cmnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmnExpression = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cmnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.icbCategories = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
-            this.udMaxSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.udMinSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.udNumCategories = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.attributesControl1 = new MW5.Plugins.Symbology.Controls.AttributesControl();
-            this.udLabelFontSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.icbChartColorScheme = new MW5.Plugins.Symbology.Controls.ImageCombo.ColorSchemeCombo();
-            this.scaleLayer = new MW5.Plugins.Symbology.Controls.ScaleControl();
-            this.udMinDrawingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
-            this.udMinLabelingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
@@ -192,9 +192,11 @@ namespace MW5.Plugins.Symbology.Forms
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).BeginInit();
             this.tabDefault.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupPoint.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).BeginInit();
             this.groupFill.SuspendLayout();
             this.groupBox16.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -203,14 +205,19 @@ namespace MW5.Plugins.Symbology.Forms
             this.panelLineOptions.SuspendLayout();
             this.tabCategories.SuspendLayout();
             this.groupBox12.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
             this.groupBox11.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupVariableSize.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinSize)).BeginInit();
             this.groupBox9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).BeginInit();
             this.tabFields.SuspendLayout();
             this.tabLabels.SuspendLayout();
             this.groupLabelAppearance.SuspendLayout();
             this.panelLabels.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelFontSize)).BeginInit();
             this.groupLabelStyle.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctLabelPreview)).BeginInit();
             this.tabCharts.SuspendLayout();
@@ -223,6 +230,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabMode.SuspendLayout();
             this.groupBox21.SuspendLayout();
             this.groupBox19.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).BeginInit();
             this.groupModeDescription.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
@@ -230,15 +239,6 @@ namespace MW5.Plugins.Symbology.Forms
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
             this.groupBox7.SuspendLayout();
             this.toolStripEx1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelFontSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOk
@@ -426,7 +426,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 341.90620520040886D;
+            this.axMap1.CurrentScale = 1062.0816593373427D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -506,6 +506,21 @@ namespace MW5.Plugins.Symbology.Forms
             this.label18.TabIndex = 21;
             this.label18.Text = "Layer name";
             // 
+            // dynamicVisibilityControl1
+            // 
+            this.dynamicVisibilityControl1.CurrentScale = 0D;
+            this.dynamicVisibilityControl1.CurrentZoom = 0;
+            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(24, 202);
+            this.dynamicVisibilityControl1.MaxScale = 1000000D;
+            this.dynamicVisibilityControl1.MaxZoom = 24;
+            this.dynamicVisibilityControl1.MinScale = 100D;
+            this.dynamicVisibilityControl1.MinZoom = 1;
+            this.dynamicVisibilityControl1.Mode = MW5.Api.Enums.DynamicVisibilityMode.Scale;
+            this.dynamicVisibilityControl1.Name = "dynamicVisibilityControl1";
+            this.dynamicVisibilityControl1.Size = new System.Drawing.Size(228, 210);
+            this.dynamicVisibilityControl1.TabIndex = 171;
+            this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
+            // 
             // tabInfo
             // 
             this.tabInfo.Controls.Add(this.vectorInfoTreeView1);
@@ -518,6 +533,45 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabInfo.TabIndex = 15;
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
+            // 
+            // vectorInfoTreeView1
+            // 
+            this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
+            this.vectorInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
+            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
+            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
+            this.vectorInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.vectorInfoTreeView1.FullRowSelect = true;
+            this.vectorInfoTreeView1.GutterSpace = 12;
+            // 
+            // 
+            // 
+            this.vectorInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.vectorInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.HelpTextControl.Name = "m_helpText";
+            this.vectorInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
+            this.vectorInfoTreeView1.HelpTextControl.TabIndex = 0;
+            this.vectorInfoTreeView1.HelpTextControl.Text = "help text";
+            this.vectorInfoTreeView1.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.Name = "vectorInfoTreeView1";
+            this.vectorInfoTreeView1.ShowColumnsHeader = false;
+            this.vectorInfoTreeView1.Size = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.TabIndex = 0;
+            this.vectorInfoTreeView1.Text = "vectorInfoTreeView1";
+            // 
+            // 
+            // 
+            this.vectorInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
+            this.vectorInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.vectorInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.ToolTipControl.Name = "m_toolTip";
+            this.vectorInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
+            this.vectorInfoTreeView1.ToolTipControl.TabIndex = 1;
+            this.vectorInfoTreeView1.ToolTipControl.Text = "toolTip";
             // 
             // tabDefault
             // 
@@ -573,6 +627,15 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupPoint.TabIndex = 179;
             this.groupPoint.TabStop = false;
             this.groupPoint.Text = "Point";
+            // 
+            // udDefaultSize
+            // 
+            this.udDefaultSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.udDefaultSize.Location = new System.Drawing.Point(23, 69);
+            this.udDefaultSize.Name = "udDefaultSize";
+            this.udDefaultSize.Size = new System.Drawing.Size(52, 20);
+            this.udDefaultSize.TabIndex = 182;
+            this.udDefaultSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
             // 
             // label9
             // 
@@ -865,6 +928,103 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Categories";
             // 
+            // dgvCategories
+            // 
+            this.dgvCategories.AllowUserToAddRows = false;
+            this.dgvCategories.AllowUserToDeleteRows = false;
+            this.dgvCategories.AllowUserToResizeRows = false;
+            this.dgvCategories.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ID,
+            this.cmnVisible,
+            this.cmnStyle,
+            this.cmnName,
+            this.cmnExpression,
+            this.cmnCount});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
+            this.dgvCategories.Location = new System.Drawing.Point(3, 16);
+            this.dgvCategories.LockUpdate = false;
+            this.dgvCategories.Name = "dgvCategories";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCategories.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvCategories.RowHeadersVisible = false;
+            this.dgvCategories.RowHeadersWidth = 15;
+            this.dgvCategories.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dgvCategories.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dgvCategories.ShowCellErrors = false;
+            this.dgvCategories.Size = new System.Drawing.Size(360, 200);
+            this.dgvCategories.TabIndex = 93;
+            // 
+            // ID
+            // 
+            this.ID.Frozen = true;
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            this.ID.ReadOnly = true;
+            this.ID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.ID.Visible = false;
+            this.ID.Width = 30;
+            // 
+            // cmnVisible
+            // 
+            this.cmnVisible.HeaderText = "";
+            this.cmnVisible.Name = "cmnVisible";
+            this.cmnVisible.Width = 30;
+            // 
+            // cmnStyle
+            // 
+            this.cmnStyle.HeaderText = "Style";
+            this.cmnStyle.Name = "cmnStyle";
+            this.cmnStyle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.cmnStyle.Width = 50;
+            // 
+            // cmnName
+            // 
+            this.cmnName.HeaderText = "Name";
+            this.cmnName.Name = "cmnName";
+            this.cmnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cmnName.Width = 120;
+            // 
+            // cmnExpression
+            // 
+            this.cmnExpression.HeaderText = "Expression";
+            this.cmnExpression.Name = "cmnExpression";
+            this.cmnExpression.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cmnExpression.Visible = false;
+            this.cmnExpression.Width = 5;
+            // 
+            // cmnCount
+            // 
+            this.cmnCount.HeaderText = "Count";
+            this.cmnCount.Name = "cmnCount";
+            this.cmnCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.cmnCount.Width = 40;
+            // 
             // groupBox11
             // 
             this.groupBox11.Controls.Add(this.lstFields1);
@@ -920,6 +1080,19 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkSetGradient.Text = "Gradient";
             this.chkSetGradient.UseVisualStyleBackColor = true;
             // 
+            // icbCategories
+            // 
+            this.icbCategories.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
+            this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.icbCategories.FormattingEnabled = true;
+            this.icbCategories.Location = new System.Drawing.Point(19, 25);
+            this.icbCategories.Name = "icbCategories";
+            this.icbCategories.OutlineColor = System.Drawing.Color.Black;
+            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbCategories.Size = new System.Drawing.Size(137, 21);
+            this.icbCategories.TabIndex = 106;
+            // 
             // btnChangeColorScheme
             // 
             this.btnChangeColorScheme.BeforeTouchSize = new System.Drawing.Size(28, 21);
@@ -960,6 +1133,20 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupVariableSize.Text = "Variable size";
             this.groupVariableSize.Visible = false;
             // 
+            // udMaxSize
+            // 
+            this.udMaxSize.Location = new System.Drawing.Point(30, 95);
+            this.udMaxSize.Name = "udMaxSize";
+            this.udMaxSize.Size = new System.Drawing.Size(45, 20);
+            this.udMaxSize.TabIndex = 118;
+            // 
+            // udMinSize
+            // 
+            this.udMinSize.Location = new System.Drawing.Point(30, 69);
+            this.udMinSize.Name = "udMinSize";
+            this.udMinSize.Size = new System.Drawing.Size(45, 20);
+            this.udMinSize.TabIndex = 117;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -991,6 +1178,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox9.TabIndex = 123;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Classification";
+            // 
+            // udNumCategories
+            // 
+            this.udNumCategories.Location = new System.Drawing.Point(84, 26);
+            this.udNumCategories.Name = "udNumCategories";
+            this.udNumCategories.Size = new System.Drawing.Size(55, 20);
+            this.udNumCategories.TabIndex = 156;
             // 
             // chkUniqueValues
             // 
@@ -1061,15 +1255,21 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabFields.Text = "Fields";
             this.tabFields.ThemesEnabled = false;
             // 
+            // attributesControl1
+            // 
+            this.attributesControl1.Location = new System.Drawing.Point(3, 3);
+            this.attributesControl1.Name = "attributesControl1";
+            this.attributesControl1.Size = new System.Drawing.Size(514, 419);
+            this.attributesControl1.TabIndex = 0;
+            // 
             // tabLabels
             // 
             this.tabLabels.Controls.Add(this.btnLabelsClear);
             this.tabLabels.Controls.Add(this.groupLabelAppearance);
             this.tabLabels.Controls.Add(this.groupLabelStyle);
             this.tabLabels.Controls.Add(this.btnLabelsAppearance);
-            this.tabLabels.Image = null;
-            this.tabLabels.ImageIndex = 9;
-            this.tabLabels.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabLabels.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_label24;
+            this.tabLabels.ImageSize = new System.Drawing.Size(24, 24);
             this.tabLabels.Location = new System.Drawing.Point(119, 0);
             this.tabLabels.Name = "tabLabels";
             this.tabLabels.ShowCloseButton = true;
@@ -1112,6 +1312,24 @@ namespace MW5.Plugins.Symbology.Forms
             this.panelLabels.Name = "panelLabels";
             this.panelLabels.Size = new System.Drawing.Size(229, 109);
             this.panelLabels.TabIndex = 161;
+            // 
+            // udLabelFontSize
+            // 
+            this.udLabelFontSize.Location = new System.Drawing.Point(19, 60);
+            this.udLabelFontSize.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLabelFontSize.Name = "udLabelFontSize";
+            this.udLabelFontSize.Size = new System.Drawing.Size(51, 20);
+            this.udLabelFontSize.TabIndex = 160;
+            this.udLabelFontSize.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.udLabelFontSize.ValueChanged += new System.EventHandler(this.udLabelFontSize_ValueChanged);
             // 
             // clpLabelFrame
             // 
@@ -1199,9 +1417,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabCharts.Controls.Add(this.btnClearCharts);
             this.tabCharts.Controls.Add(this.groupChartAppearance);
             this.tabCharts.Controls.Add(this.groupCharts);
-            this.tabCharts.Image = null;
-            this.tabCharts.ImageIndex = 6;
-            this.tabCharts.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabCharts.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_chart24;
+            this.tabCharts.ImageSize = new System.Drawing.Size(24, 24);
             this.tabCharts.Location = new System.Drawing.Point(119, 0);
             this.tabCharts.Name = "tabCharts";
             this.tabCharts.ShowCloseButton = true;
@@ -1291,6 +1508,20 @@ namespace MW5.Plugins.Symbology.Forms
             this.optChartsPie.UseVisualStyleBackColor = true;
             this.optChartsPie.CheckedChanged += new System.EventHandler(this.Ui2Settings);
             // 
+            // icbChartColorScheme
+            // 
+            this.icbChartColorScheme.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
+            this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.icbChartColorScheme.FormattingEnabled = true;
+            this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
+            this.icbChartColorScheme.Name = "icbChartColorScheme";
+            this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
+            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
+            this.icbChartColorScheme.TabIndex = 22;
+            this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.icbChartColorScheme_SelectedIndexChanged);
+            // 
             // optChartBars
             // 
             this.optChartBars.AutoSize = true;
@@ -1328,9 +1559,8 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.tabVisibility.Controls.Add(this.groupBox1);
             this.tabVisibility.Controls.Add(this.groupBox13);
-            this.tabVisibility.Image = null;
-            this.tabVisibility.ImageIndex = 8;
-            this.tabVisibility.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabVisibility.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_eye24;
+            this.tabVisibility.ImageSize = new System.Drawing.Size(24, 24);
             this.tabVisibility.Location = new System.Drawing.Point(119, 0);
             this.tabVisibility.Name = "tabVisibility";
             this.tabVisibility.Padding = new System.Windows.Forms.Padding(3);
@@ -1349,6 +1579,25 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox1.TabIndex = 169;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Dynamic visibility";
+            // 
+            // scaleLayer
+            // 
+            this.scaleLayer.BackColor = System.Drawing.Color.Transparent;
+            this.scaleLayer.CurrentScale = -1D;
+            this.scaleLayer.FillColor = System.Drawing.Color.LightGreen;
+            this.scaleLayer.FillColor2 = System.Drawing.Color.LightGreen;
+            this.scaleLayer.Location = new System.Drawing.Point(8, 19);
+            this.scaleLayer.MaximumScale = 1000000000D;
+            this.scaleLayer.MaximumSize = new System.Drawing.Size(300, 1000);
+            this.scaleLayer.MinimimScale = 1.0000004910124416D;
+            this.scaleLayer.MinimumSize = new System.Drawing.Size(80, 200);
+            this.scaleLayer.Name = "scaleLayer";
+            this.scaleLayer.OutlineColor = System.Drawing.Color.DarkGray;
+            this.scaleLayer.SelectionColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.scaleLayer.Size = new System.Drawing.Size(209, 276);
+            this.scaleLayer.TabIndex = 162;
+            this.scaleLayer.UseDynamicVisibility = false;
+            this.scaleLayer.StateChanged += new MW5.Plugins.Symbology.Controls.StateChanged(this.scaleLayer_StateChanged);
             // 
             // groupBox13
             // 
@@ -1465,6 +1714,34 @@ namespace MW5.Plugins.Symbology.Forms
             this.label12.Size = new System.Drawing.Size(48, 13);
             this.label12.TabIndex = 177;
             this.label12.Text = "To label:";
+            // 
+            // udMinDrawingSize
+            // 
+            this.udMinDrawingSize.Location = new System.Drawing.Point(109, 29);
+            this.udMinDrawingSize.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udMinDrawingSize.Name = "udMinDrawingSize";
+            this.udMinDrawingSize.Size = new System.Drawing.Size(53, 20);
+            this.udMinDrawingSize.TabIndex = 176;
+            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.udMinDrawingSize_ValueChanged);
+            this.udMinDrawingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
+            // 
+            // udMinLabelingSize
+            // 
+            this.udMinLabelingSize.Location = new System.Drawing.Point(109, 63);
+            this.udMinLabelingSize.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udMinLabelingSize.Name = "udMinLabelingSize";
+            this.udMinLabelingSize.Size = new System.Drawing.Size(53, 20);
+            this.udMinLabelingSize.TabIndex = 178;
+            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.udMinLabelingSize_ValueChanged);
+            this.udMinLabelingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
             // 
             // label6
             // 
@@ -1695,286 +1972,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolSaveStyle.Text = "Save style";
             this.toolSaveStyle.Click += new System.EventHandler(this.toolSaveStyle_Click);
             // 
-            // dynamicVisibilityControl1
-            // 
-            this.dynamicVisibilityControl1.CurrentScale = 0D;
-            this.dynamicVisibilityControl1.CurrentZoom = 0;
-            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(24, 202);
-            this.dynamicVisibilityControl1.MaxScale = 1000000D;
-            this.dynamicVisibilityControl1.MaxZoom = 24;
-            this.dynamicVisibilityControl1.MinScale = 100D;
-            this.dynamicVisibilityControl1.MinZoom = 1;
-            this.dynamicVisibilityControl1.Mode = MW5.Api.Enums.DynamicVisibilityMode.Scale;
-            this.dynamicVisibilityControl1.Name = "dynamicVisibilityControl1";
-            this.dynamicVisibilityControl1.Size = new System.Drawing.Size(228, 210);
-            this.dynamicVisibilityControl1.TabIndex = 171;
-            this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
-            // 
-            // vectorInfoTreeView1
-            // 
-            this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
-            this.vectorInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
-            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 425);
-            this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
-            this.vectorInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vectorInfoTreeView1.FullRowSelect = true;
-            this.vectorInfoTreeView1.GutterSpace = 12;
-            // 
-            // 
-            // 
-            this.vectorInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.vectorInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.HelpTextControl.Name = "m_helpText";
-            this.vectorInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
-            this.vectorInfoTreeView1.HelpTextControl.TabIndex = 0;
-            this.vectorInfoTreeView1.HelpTextControl.Text = "help text";
-            this.vectorInfoTreeView1.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.Name = "vectorInfoTreeView1";
-            this.vectorInfoTreeView1.ShowColumnsHeader = false;
-            this.vectorInfoTreeView1.Size = new System.Drawing.Size(520, 425);
-            this.vectorInfoTreeView1.TabIndex = 0;
-            this.vectorInfoTreeView1.Text = "vectorInfoTreeView1";
-            // 
-            // 
-            // 
-            this.vectorInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
-            this.vectorInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.vectorInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.ToolTipControl.Name = "m_toolTip";
-            this.vectorInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
-            this.vectorInfoTreeView1.ToolTipControl.TabIndex = 1;
-            this.vectorInfoTreeView1.ToolTipControl.Text = "toolTip";
-            // 
-            // udDefaultSize
-            // 
-            this.udDefaultSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.udDefaultSize.Location = new System.Drawing.Point(23, 69);
-            this.udDefaultSize.Name = "udDefaultSize";
-            this.udDefaultSize.Size = new System.Drawing.Size(52, 20);
-            this.udDefaultSize.TabIndex = 182;
-            this.udDefaultSize.ValueChanged += new System.EventHandler(this.Ui2Settings);
-            // 
-            // dgvCategories
-            // 
-            this.dgvCategories.AllowUserToAddRows = false;
-            this.dgvCategories.AllowUserToDeleteRows = false;
-            this.dgvCategories.AllowUserToResizeRows = false;
-            this.dgvCategories.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.dgvCategories.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategories.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvCategories.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ID,
-            this.cmnVisible,
-            this.cmnStyle,
-            this.cmnName,
-            this.cmnExpression,
-            this.cmnCount});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCategories.DefaultCellStyle = dataGridViewCellStyle2;
-            this.dgvCategories.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvCategories.GridColor = System.Drawing.SystemColors.ButtonFace;
-            this.dgvCategories.Location = new System.Drawing.Point(3, 16);
-            this.dgvCategories.LockUpdate = false;
-            this.dgvCategories.Name = "dgvCategories";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCategories.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
-            this.dgvCategories.RowHeadersVisible = false;
-            this.dgvCategories.RowHeadersWidth = 15;
-            this.dgvCategories.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dgvCategories.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dgvCategories.ShowCellErrors = false;
-            this.dgvCategories.Size = new System.Drawing.Size(360, 200);
-            this.dgvCategories.TabIndex = 93;
-            // 
-            // ID
-            // 
-            this.ID.Frozen = true;
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            this.ID.ReadOnly = true;
-            this.ID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.ID.Visible = false;
-            this.ID.Width = 30;
-            // 
-            // cmnVisible
-            // 
-            this.cmnVisible.HeaderText = "";
-            this.cmnVisible.Name = "cmnVisible";
-            this.cmnVisible.Width = 30;
-            // 
-            // cmnStyle
-            // 
-            this.cmnStyle.HeaderText = "Style";
-            this.cmnStyle.Name = "cmnStyle";
-            this.cmnStyle.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.cmnStyle.Width = 50;
-            // 
-            // cmnName
-            // 
-            this.cmnName.HeaderText = "Name";
-            this.cmnName.Name = "cmnName";
-            this.cmnName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cmnName.Width = 120;
-            // 
-            // cmnExpression
-            // 
-            this.cmnExpression.HeaderText = "Expression";
-            this.cmnExpression.Name = "cmnExpression";
-            this.cmnExpression.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cmnExpression.Visible = false;
-            this.cmnExpression.Width = 5;
-            // 
-            // cmnCount
-            // 
-            this.cmnCount.HeaderText = "Count";
-            this.cmnCount.Name = "cmnCount";
-            this.cmnCount.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.cmnCount.Width = 40;
-            // 
-            // icbCategories
-            // 
-            this.icbCategories.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
-            this.icbCategories.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbCategories.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbCategories.FormattingEnabled = true;
-            this.icbCategories.Location = new System.Drawing.Point(19, 25);
-            this.icbCategories.Name = "icbCategories";
-            this.icbCategories.OutlineColor = System.Drawing.Color.Black;
-            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
-            this.icbCategories.Size = new System.Drawing.Size(137, 21);
-            this.icbCategories.TabIndex = 106;
-            // 
-            // udMaxSize
-            // 
-            this.udMaxSize.Location = new System.Drawing.Point(30, 95);
-            this.udMaxSize.Name = "udMaxSize";
-            this.udMaxSize.Size = new System.Drawing.Size(45, 20);
-            this.udMaxSize.TabIndex = 118;
-            // 
-            // udMinSize
-            // 
-            this.udMinSize.Location = new System.Drawing.Point(30, 69);
-            this.udMinSize.Name = "udMinSize";
-            this.udMinSize.Size = new System.Drawing.Size(45, 20);
-            this.udMinSize.TabIndex = 117;
-            // 
-            // udNumCategories
-            // 
-            this.udNumCategories.Location = new System.Drawing.Point(84, 26);
-            this.udNumCategories.Name = "udNumCategories";
-            this.udNumCategories.Size = new System.Drawing.Size(55, 20);
-            this.udNumCategories.TabIndex = 156;
-            // 
-            // attributesControl1
-            // 
-            this.attributesControl1.Location = new System.Drawing.Point(3, 3);
-            this.attributesControl1.Name = "attributesControl1";
-            this.attributesControl1.Size = new System.Drawing.Size(514, 419);
-            this.attributesControl1.TabIndex = 0;
-            // 
-            // udLabelFontSize
-            // 
-            this.udLabelFontSize.Location = new System.Drawing.Point(19, 60);
-            this.udLabelFontSize.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udLabelFontSize.Name = "udLabelFontSize";
-            this.udLabelFontSize.Size = new System.Drawing.Size(51, 20);
-            this.udLabelFontSize.TabIndex = 160;
-            this.udLabelFontSize.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.udLabelFontSize.ValueChanged += new System.EventHandler(this.udLabelFontSize_ValueChanged);
-            // 
-            // icbChartColorScheme
-            // 
-            this.icbChartColorScheme.ComboStyle = MW5.Api.Enums.SchemeType.Graduated;
-            this.icbChartColorScheme.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
-            this.icbChartColorScheme.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.icbChartColorScheme.FormattingEnabled = true;
-            this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
-            this.icbChartColorScheme.Name = "icbChartColorScheme";
-            this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
-            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
-            this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
-            this.icbChartColorScheme.TabIndex = 22;
-            this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.icbChartColorScheme_SelectedIndexChanged);
-            // 
-            // scaleLayer
-            // 
-            this.scaleLayer.BackColor = System.Drawing.Color.Transparent;
-            this.scaleLayer.CurrentScale = -1D;
-            this.scaleLayer.FillColor = System.Drawing.Color.LightGreen;
-            this.scaleLayer.FillColor2 = System.Drawing.Color.LightGreen;
-            this.scaleLayer.Location = new System.Drawing.Point(8, 19);
-            this.scaleLayer.MaximumScale = 1000000000D;
-            this.scaleLayer.MaximumSize = new System.Drawing.Size(300, 1000);
-            this.scaleLayer.MinimimScale = 1.0000004910124416D;
-            this.scaleLayer.MinimumSize = new System.Drawing.Size(80, 200);
-            this.scaleLayer.Name = "scaleLayer";
-            this.scaleLayer.OutlineColor = System.Drawing.Color.DarkGray;
-            this.scaleLayer.SelectionColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.scaleLayer.Size = new System.Drawing.Size(209, 276);
-            this.scaleLayer.TabIndex = 162;
-            this.scaleLayer.UseDynamicVisibility = false;
-            this.scaleLayer.StateChanged += new MW5.Plugins.Symbology.Controls.StateChanged(this.scaleLayer_StateChanged);
-            // 
-            // udMinDrawingSize
-            // 
-            this.udMinDrawingSize.Location = new System.Drawing.Point(109, 29);
-            this.udMinDrawingSize.Maximum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udMinDrawingSize.Name = "udMinDrawingSize";
-            this.udMinDrawingSize.Size = new System.Drawing.Size(53, 20);
-            this.udMinDrawingSize.TabIndex = 176;
-            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.udMinDrawingSize_ValueChanged);
-            this.udMinDrawingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
-            // 
-            // udMinLabelingSize
-            // 
-            this.udMinLabelingSize.Location = new System.Drawing.Point(109, 63);
-            this.udMinLabelingSize.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udMinLabelingSize.Name = "udMinLabelingSize";
-            this.udMinLabelingSize.Size = new System.Drawing.Size(53, 20);
-            this.udMinLabelingSize.TabIndex = 178;
-            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.udMinLabelingSize_ValueChanged);
-            this.udMinLabelingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
-            // 
             // scaleControl2
             // 
             this.scaleControl2.BackColor = System.Drawing.Color.Transparent;
@@ -2042,10 +2039,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.tabInfo.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).EndInit();
             this.tabDefault.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupPoint.ResumeLayout(false);
             this.groupPoint.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).EndInit();
             this.groupFill.ResumeLayout(false);
             this.groupFill.PerformLayout();
             this.groupBox16.ResumeLayout(false);
@@ -2058,18 +2057,23 @@ namespace MW5.Plugins.Symbology.Forms
             this.panelLineOptions.PerformLayout();
             this.tabCategories.ResumeLayout(false);
             this.groupBox12.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
             this.groupBox11.ResumeLayout(false);
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             this.groupVariableSize.ResumeLayout(false);
             this.groupVariableSize.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinSize)).EndInit();
             this.groupBox9.ResumeLayout(false);
             this.groupBox9.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).EndInit();
             this.tabFields.ResumeLayout(false);
             this.tabLabels.ResumeLayout(false);
             this.groupLabelAppearance.ResumeLayout(false);
             this.panelLabels.ResumeLayout(false);
             this.panelLabels.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelFontSize)).EndInit();
             this.groupLabelStyle.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctLabelPreview)).EndInit();
             this.tabCharts.ResumeLayout(false);
@@ -2085,6 +2089,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox21.ResumeLayout(false);
             this.groupBox19.ResumeLayout(false);
             this.groupBox19.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).EndInit();
             this.groupModeDescription.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -2094,15 +2100,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox7.ResumeLayout(false);
             this.toolStripEx1.ResumeLayout(false);
             this.toolStripEx1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udDefaultSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCategories)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMaxSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelFontSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

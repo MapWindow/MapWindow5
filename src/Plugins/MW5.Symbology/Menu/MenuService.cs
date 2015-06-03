@@ -8,6 +8,7 @@ using MW5.Api;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.UI.Menu;
@@ -30,17 +31,10 @@ namespace MW5.Plugins.Symbology.Menu
 
             InitToolbar();
 
-            _plugin.ItemClicked += PluginItemClicked;
-            _plugin.ViewUpdating += PluginViewUpdating;
-        }
+            InitMenu();
 
-        private void PluginViewUpdating(object sender, EventArgs e)
-        {
-            var fs = _context.Map.SelectedFeatureSet;
-            FindToolbarItem(MenuKeys.QueryBuilder).Enabled = fs != null;
-            FindToolbarItem(MenuKeys.Categories).Enabled = fs != null;
-            
-            FindToolbarItem(MenuKeys.LabelMover).Checked = _context.Map.CustomCursor == LabelMoverCursor.Instance;
+            _plugin.ItemClicked += PluginItemClicked;
+            _plugin.ViewUpdating += (s,e) => UpdateItems(true);
         }
 
         private void PluginItemClicked(object sender, MenuItemEventArgs e)
@@ -56,7 +50,65 @@ namespace MW5.Plugins.Symbology.Menu
                 case MenuKeys.LabelMover:
                     _context.Map.CustomCursor = LabelMoverCursor.Instance;
                     break;
+                case MenuKeys.Labels:
+                    FormHelper.ShowLabels(_context);
+                    break;
+                case MenuKeys.Charts:
+                    FormHelper.ShowCharts(_context);
+                    break;
+                case MenuKeys.LayerProperties:
+                    FormHelper.ShowLayerProperties(_context);
+                    break;
             }
+        }
+
+        private void InitMenu()
+        {
+            var menu = _context.Menu.LayerMenu;
+            var items = menu.SubItems;
+
+            items.InsertBefore = null;
+
+            items.AddButton(_commands[MenuKeys.QueryBuilder], true);
+            items.AddButton(_commands[MenuKeys.Categories]);
+            items.AddButton(_commands[MenuKeys.Labels]);
+            items.AddButton(_commands[MenuKeys.Charts]);
+            items.AddButton(_commands[MenuKeys.LayerProperties], true);
+
+            menu.Update();
+
+            menu.DropDownOpening += (s, e) => UpdateItems(false);
+        }
+
+        private void UpdateItems(bool toolbar)
+        {
+            var fs = _context.Map.SelectedFeatureSet;
+
+            FindItem(MenuKeys.QueryBuilder, toolbar).Enabled = fs != null;
+            FindItem(MenuKeys.Categories, toolbar).Enabled = fs != null;
+
+            if (toolbar)
+            {
+                FindToolbarItem(MenuKeys.LabelMover).Checked = _context.Map.CustomCursor == LabelMoverCursor.Instance;
+            }
+            else
+            {
+                FindMenuItem(MenuKeys.Labels).Enabled = fs != null;
+                FindMenuItem(MenuKeys.Charts).Enabled = fs != null;
+                FindMenuItem(MenuKeys.LayerProperties).Enabled = _context.Map.Layers.Current != null;
+            }
+        }
+
+        private IMenuItem FindItem(string key, bool toolbar)
+        {
+            Func<string, IMenuItem> fn = FindMenuItem;
+
+            if (toolbar)
+            {
+                fn = FindToolbarItem;
+            }
+
+            return fn(key);
         }
 
         private void InitToolbar()

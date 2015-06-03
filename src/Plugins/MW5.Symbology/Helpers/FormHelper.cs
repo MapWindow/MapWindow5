@@ -5,6 +5,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms;
+using MW5.Plugins.Symbology.Views;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
@@ -51,10 +52,7 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = new CategoriesForm(context, context.Map.Layers.Current))
             {
-                if (context.View.ShowChildView(form))
-                {
-
-                }
+                context.View.ShowChildView(form);
             }
         }
 
@@ -68,11 +66,53 @@ namespace MW5.Plugins.Symbology.Helpers
 
             using (var form = new QueryBuilderForm(context.Map.Layers.Current, string.Empty, false))
             {
-                if (context.View.ShowChildView(form))
-                {
-
-                }
+                context.View.ShowChildView(form);
             }
+        }
+
+        internal static void ShowLabels(IAppContext context)
+        {
+            var layer = context.Legend.SelectedLayer;
+            if (layer == null) return;
+            
+            using (var form = new LabelStyleForm(context, layer))
+            {
+                context.View.ShowChildView(form);
+            }
+        }
+
+        internal static void ShowCharts(IAppContext context)
+        {
+            var layer = context.Legend.SelectedLayer;
+            if (layer == null) return;
+
+            using (var form = new ChartStyleForm(context, layer))
+            {
+                context.View.ShowChildView(form);
+            }
+        }
+
+        internal static bool ShowLayerProperties(IAppContext context)
+        {
+            var layer = context.Legend.SelectedLayer;
+            if (layer == null) return false;
+
+            switch (layer.LayerType)
+            {
+                case LayerType.Shapefile:
+                case LayerType.VectorLayer:
+                    using (var form = new VectorStyleForm(context, layer))
+                    {
+                        context.View.ShowChildView(form);
+                        return true;
+                    }
+                case LayerType.Image:
+                case LayerType.Grid:
+                    context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
+                    return true;
+            }
+
+            return false;
         }
     }
 }
