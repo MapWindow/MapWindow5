@@ -130,6 +130,15 @@ namespace MW5.UI.Menu
             _items.RemoveAt(index);
         }
 
+        public void Remove(IMenuItem item)
+        {
+            int index = IndexOf(item);
+            if (index >= 0 && index < _items.Count)
+            {
+                Remove(index);
+            }
+        }
+
         public void Clear()
         {
             // clear the nested menus recursively

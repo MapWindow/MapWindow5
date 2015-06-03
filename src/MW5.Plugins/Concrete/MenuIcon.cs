@@ -5,17 +5,23 @@ namespace MW5.Plugins.Concrete
 {
     public class MenuIcon: IMenuIcon
     {
-        private readonly Icon _icon;
         private readonly Image _image;
+        private readonly bool _useNativeSize;
+
+        public MenuIcon(Image image, bool useNativeSize)
+        {
+            _image = image;
+            _useNativeSize = useNativeSize;
+        }
 
         public MenuIcon(Image image)
         {
             _image = image;
         }
 
-        public MenuIcon(Icon icon)
+        public bool UseNativeSize
         {
-            _icon = icon;
+            get { return _useNativeSize; }
         }
 
         public Image Image

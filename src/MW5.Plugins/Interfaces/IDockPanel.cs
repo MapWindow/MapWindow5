@@ -21,6 +21,7 @@ namespace MW5.Plugins.Interfaces
         bool FloatOnly { get; set; }
         bool AllowFloating { get; set; }
         void SetIcon(Icon icon);
+        Image GetIcon();
         int TabPosition { get; set; }
         bool IsFloating { get; }
         void Float(Rectangle rect, bool tabFloating);

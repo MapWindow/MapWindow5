@@ -40,8 +40,13 @@ namespace MW5.UI.Menu
             get { return new MenuIcon(_item.Image.GetImage()); }
             set
             {
+                if (value == null || value.Image == null) return;
+
                 _item.Image = new ImageExt(value.Image);
-                _item.ImageSize = new Size(IconSize, IconSize);
+                int width = value.UseNativeSize ? value.Image.Width : IconSize;
+                int height = value.UseNativeSize ? value.Image.Height : IconSize;
+
+                _item.ImageSize =  new Size(width, height);
             }
         }
 

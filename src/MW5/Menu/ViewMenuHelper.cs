@@ -59,7 +59,8 @@ namespace MW5.Menu
             var item = _context.Menu.FindItem(MenuKeys.ViewWindows, PluginIdentity.Default) as IDropDownMenuItem;
             if (item != null)
             {
-                item.SubItems.AddButton("-", PluginIdentity.Default);   // dummy to make it open and start dynamic population
+                item.SubItems.AddButton("-", PluginIdentity.Default);
+                    // dummy to make it open and start dynamic population
                 item.DropDownOpening += WindowsDropDownOpening;
             }
         }
@@ -67,17 +68,19 @@ namespace MW5.Menu
         private static void WindowsDropDownOpening(object sender, EventArgs e)
         {
             var menu = sender as IDropDownMenuItem;
-            if (menu != null)
-            {
-                menu.SubItems.Clear(); // old listeners will be removed here
+            if (menu == null) return;
 
-                foreach (var panel in _context.DockPanels)
-                {
-                    var btn = menu.SubItems.AddButton(panel.Caption, PluginIdentity.Default);
-                    btn.ItemClicked += DockWindowsVisibilityClicked;
-                    btn.Checked = panel.Visible;
-                    btn.Tag = panel;
-                }
+            menu.SubItems.Clear();
+            
+            var items = menu.SubItems;
+
+            foreach (var panel in _context.DockPanels.OrderBy(p => p.Caption))
+            {
+                var btn = items.AddButton(panel.Caption, PluginIdentity.Default);
+                btn.ItemClicked += DockWindowsVisibilityClicked;
+                btn.Icon = new MenuIcon(panel.GetIcon(), true);
+                btn.Checked = panel.Visible;
+                btn.Tag = panel;
             }
         }
 

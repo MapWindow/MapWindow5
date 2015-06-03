@@ -11,5 +11,6 @@ namespace MW5.Plugins.Interfaces
     public interface IMenuIcon
     {
         Image Image { get; }
+        bool UseNativeSize { get; }
     }
 }

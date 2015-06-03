@@ -88,6 +88,20 @@ namespace MW5.UI.Docking
             set { _dockingManager.SetAllowFloating(_control, value); }
         }
 
+        public Image GetIcon()
+        {
+            var list = _dockingManager.ImageList;
+            if (list == null) return null;
+
+            int index = _dockingManager.GetDockIcon(_control);
+            if (index >= 0 && index < list.Images.Count)
+            {
+                return list.Images[index];
+            }
+                
+            return null;
+        }
+
         public void SetIcon(Icon icon)
         {
             _dockingManager.SetDockIcon(_control, icon);

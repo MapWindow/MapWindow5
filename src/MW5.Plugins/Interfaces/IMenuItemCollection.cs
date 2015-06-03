@@ -20,6 +20,7 @@ namespace MW5.Plugins.Interfaces
         IMenuItem this[int menuItemIndex] { get; }
         void Insert(IMenuItem item, int index);
         void Remove(int index);
+        void Remove(IMenuItem item);
         void Clear();
         int IndexOf(IMenuItem item);
         int Count { get; }
