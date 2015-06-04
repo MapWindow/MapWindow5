@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -8,6 +11,11 @@ namespace MW5.Api.Concrete
     public class AttributeTable: IAttributeTable
     {
         private readonly Table _table;
+
+        public AttributeTable()
+        {
+            _table = new Table();
+        }
 
         public AttributeTable(string dbfFilename)
         {
@@ -88,6 +96,47 @@ namespace MW5.Api.Concrete
             get { return new FieldJoinCollection(_table); }
         }
 
+        public bool IsJoined
+        {
+            get { return _table.IsJoined; }
+        }
+
+        public bool Join(IAttributeTable table2, string field1, string field2)
+        {
+            return _table.Join(table2.GetInternal(), field1, field2);
+        }
+
+        public bool Join(IAttributeTable table2, string field1, string field2, string filenameToReopen, string joinOptions)
+        {
+            return _table.Join2(table2.GetInternal(), field1, field2, filenameToReopen, joinOptions);
+        }
+
+        public bool Join(IAttributeTable table2, string field1, string field2, string filenameToReopen, string joinOptions,
+            IEnumerable<string> fieldList)
+        {
+            return _table.Join3(table2.GetInternal(), field1, field2, filenameToReopen, joinOptions, fieldList.ToArray());
+        }
+
+        public bool StopJoin(int joinIndex)
+        {
+            return _table.StopJoin(joinIndex);
+        }
+
+        public bool TryJoin(IAttributeTable table2, string fieldTo, string fieldFrom, out int rowCount, out int joinRowCount)
+        {
+            return _table.TryJoin(table2.GetInternal(), fieldTo, fieldFrom, out rowCount, out joinRowCount);
+        }
+
+        public void StopAllJoins()
+        {
+            _table.StopAllJoins();
+        }
+
+        public bool Open(string dbfFilename)
+        {
+            return _table.Open(dbfFilename);
+        }
+
         public bool EditMode
         {
             get { return _table.EditingTable; }
@@ -151,6 +200,30 @@ namespace MW5.Api.Concrete
         public bool SaveAs(string dbfFilename)
         {
             return _table.SaveAs(dbfFilename);
+        }
+
+        public bool FieldIsJoined(int fieldIndex)
+        {
+            return _table.FieldIsJoined[fieldIndex];
+        }
+
+        public int FieldJoinIndex(int fieldIndex)
+        {
+            return _table.FieldJoinIndex[fieldIndex];
+        }
+
+        public IEnumerable<IAttributeField> NativeFields
+        {
+            get
+            {
+                for (int i = 0; i <_table.NumFields; i++)
+                {
+                    if (!_table.FieldIsJoined[i])
+                    {
+                        yield return new AttributeField(_table.Field[i]);
+                    }
+                } 
+            }
         }
     }
 }

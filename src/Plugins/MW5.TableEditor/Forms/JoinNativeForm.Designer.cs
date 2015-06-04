@@ -109,7 +109,6 @@
             this.cboCurrent.Name = "cboCurrent";
             this.cboCurrent.Size = new System.Drawing.Size(130, 21);
             this.cboCurrent.TabIndex = 8;
-            this.cboCurrent.SelectedIndexChanged += new System.EventHandler(this.cboCurrent_SelectedIndexChanged);
             // 
             // cboExternal
             // 
@@ -119,7 +118,6 @@
             this.cboExternal.Name = "cboExternal";
             this.cboExternal.Size = new System.Drawing.Size(130, 21);
             this.cboExternal.TabIndex = 9;
-            this.cboExternal.SelectedIndexChanged += new System.EventHandler(this.cboExternal_SelectedIndexChanged);
             // 
             // label3
             // 
@@ -151,7 +149,6 @@
             this.btnOk.TabIndex = 13;
             this.btnOk.Text = "Join";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
             // 
             // listView1
             // 
@@ -172,7 +169,6 @@
             this.chkAll.TabIndex = 16;
             this.chkAll.Text = "Check all/none";
             this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // lblMatchJoin
             // 

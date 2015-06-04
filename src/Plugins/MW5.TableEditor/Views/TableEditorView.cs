@@ -59,6 +59,11 @@ namespace MW5.Plugins.TableEditor.Views
             base.Hide();
         }
 
+        public void ClearCurrentCell()
+        {
+            _grid.CurrentCell = null;
+        }
+
         private void Clear()
         {
             _grid.TableSource = null;
@@ -78,12 +83,6 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override void UpdateView()
         {
-            int count = RowManager.Count;
-            if (count == 0)
-            {
-                _grid.CurrentCell = null;
-            }
-
             _grid.RowCount = 0;
                 // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
             _grid.RowCount = RowManager.Count;

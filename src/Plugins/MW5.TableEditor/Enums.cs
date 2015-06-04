@@ -14,6 +14,7 @@
         ClearSelection = 9,
         InvertSelection = 10,
         CalculateField = 11,
+        Join = 12,
     }
 
     /// <summary>The unit of area.</summary>
@@ -87,5 +88,13 @@
         Time = 6,
         Other = 7,
         Constants = 8,
+    }
+
+    public enum JoinsCommand
+    {
+        Join = 0,
+        EditJoin = 1,
+        Stop = 2,
+        StopAll = 3,
     }
 }

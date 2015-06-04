@@ -13,7 +13,7 @@ namespace MW5.Plugins.TableEditor.Views
     {
         private readonly IAppContext _context;
         private readonly RowManager _rowManager;
-        private IFeatureSet _shapefile;
+        private IFeatureSet _featureSet;
 
         public TableEditorPresenter(IAppContext context, ITableEditorView view, RowManager rowManager) 
             : base(view)
@@ -43,7 +43,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public bool CheckAndSaveChanges(bool withCancel)
         {
-            if (_shapefile.EditingTable)
+            if (_featureSet.EditingTable)
             {
                 string msg = "Save attribute table changes?";
 
@@ -74,7 +74,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override void Initialize()
         {
-            _shapefile = Model.FeatureSet;
+            _featureSet = Model.FeatureSet;
         }
 
         public override void RunCommand(TableEditorCommand command)
@@ -91,17 +91,22 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.Join:
+                    var table = _featureSet.Table;
+                    _context.Container.Run<JoinsPresenter, IAttributeTable>(table);
+                    View.UpdateDatasource();
+                    break;
                 case TableEditorCommand.StartEdit:
-                    if (!_shapefile.Table.EditMode)
+                    if (!_featureSet.Table.EditMode)
                     {
-                        _shapefile.Table.StartEditing();
+                        _featureSet.Table.StartEditing();
                     }
                     View.UpdateView();
                     break;
                 case TableEditorCommand.SaveChanges:
-                    if (_shapefile.Table.EditMode)
+                    if (_featureSet.Table.EditMode)
                     {
-                        _shapefile.Table.StopEditing();
+                        _featureSet.Table.StopEditing();
                     }
                     View.UpdateView();
                     break;
@@ -149,6 +154,7 @@ namespace MW5.Plugins.TableEditor.Views
         {
             switch (command)
             {
+                
                 case TableEditorCommand.ShowSelected:
                     if (_rowManager.Filtered)
                     {
@@ -156,8 +162,10 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     else
                     {
-                        _rowManager.FilterSelected(_shapefile);
+                        View.ClearCurrentCell();
+                        _rowManager.FilterSelected(_featureSet);
                     }
+
                     View.UpdateView();
                     return true;
 
@@ -166,21 +174,21 @@ namespace MW5.Plugins.TableEditor.Views
                     return true;
 
                 case TableEditorCommand.SelectAll:
-                    _shapefile.SelectAll();
+                    _featureSet.SelectAll();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();
                     return true;
 
                 case TableEditorCommand.ClearSelection:
-                    _shapefile.ClearSelection();
+                    _featureSet.ClearSelection();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();
                     return true;
 
                 case TableEditorCommand.InvertSelection:
-                    _shapefile.InvertSelection();
+                    _featureSet.InvertSelection();
                     View.UpdateView();
                     _context.Map.Redraw();
                     _context.View.Update();

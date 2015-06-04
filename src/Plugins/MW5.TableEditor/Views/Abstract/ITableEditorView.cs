@@ -10,5 +10,6 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
         void SetDatasource(IFeatureSet fs);
         event Action SelectionChanged;
         void Hide();
+        void ClearCurrentCell();
     }
 }

@@ -73,6 +73,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -94,10 +96,20 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="Controls\FieldsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\JoinsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
+    <Compile Include="Views\Abstract\IJoinExcelView.cs" />
+    <Compile Include="Views\Abstract\IJoinsView.cs" />
+    <Compile Include="Views\Abstract\IJoinDbfView.cs" />
     <Compile Include="Views\CalculateFieldPresenter.cs" />
     <Compile Include="Views\CalculateFieldView.cs">
       <SubType>Form</SubType>
@@ -120,6 +132,28 @@
     <Compile Include="Editor\RowManager.cs" />
     <Compile Include="Editor\TableEditorGrid.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\JoinDbfModel.cs" />
+    <Compile Include="Views\JoinDbfPresenter.cs" />
+    <Compile Include="Views\JoinDbfView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\JoinDbfView.Designer.cs">
+      <DependentUpon>JoinDbfView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JoinExcelPresenter.cs" />
+    <Compile Include="Views\JoinExcelView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\JoinExcelView.Designer.cs">
+      <DependentUpon>JoinExcelView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JoinsPresenter.cs" />
+    <Compile Include="Views\JoinsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\JoinsView.Designer.cs">
+      <DependentUpon>JoinsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\RenameFieldPresenter.cs" />
     <Compile Include="Views\RenameFieldView.cs">
@@ -174,6 +208,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\JoinDbfView.resx">
+      <DependentUpon>JoinDbfView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\JoinExcelView.resx">
+      <DependentUpon>JoinExcelView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\JoinsView.resx">
+      <DependentUpon>JoinsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RenameFieldView.resx">
       <DependentUpon>RenameFieldView.cs</DependentUpon>

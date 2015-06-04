@@ -108,6 +108,11 @@ namespace MW5.Api.Helpers
             return operations.InternalObject as Grid;
         }
 
+        public static Table GetInternal(this IAttributeTable table)
+        {
+            return table.InternalObject as Table;
+        }
+
         public static AxMap GetInternal(this MapControl mapControl)
         {
             return mapControl.InternalObject as AxMap;

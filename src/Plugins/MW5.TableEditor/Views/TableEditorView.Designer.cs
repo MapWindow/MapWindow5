@@ -1,4 +1,5 @@
 ﻿using MW5.Plugins.TableEditor.Editor;
+using Syncfusion.Windows.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
@@ -36,14 +37,14 @@ namespace MW5.Plugins.TableEditor.Views
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnSaveChanges = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.btnStartEdit = new System.Windows.Forms.Button();
-            this.btnShowSelected = new System.Windows.Forms.Button();
-            this.btnJoin = new System.Windows.Forms.Button();
-            this.btnUpdateMeasurements = new System.Windows.Forms.Button();
-            this.btnCalculateField = new System.Windows.Forms.Button();
-            this.btnImportFieldsFromDBF = new System.Windows.Forms.Button();
-            this.btnQuery = new System.Windows.Forms.Button();
-            this.btnZoomToSelected = new System.Windows.Forms.Button();
+            this.btnStartEdit = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnShowSelected = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnJoin = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnUpdateMeasurements = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnCalculateField = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnImportFieldsFromDBF = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnQuery = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnZoomToSelected = new Syncfusion.Windows.Forms.ButtonAdv();
             this._lblAmountSelected = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,9 +76,12 @@ namespace MW5.Plugins.TableEditor.Views
             this.updateMeasurementsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this._grid = new MW5.Plugins.TableEditor.Editor.TableEditorGrid();
+            this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.panel1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._grid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
+            this.gradientPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -123,8 +127,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnStartEdit
             // 
+            this.btnStartEdit.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnStartEdit.Image = global::MW5.Plugins.TableEditor.Properties.Resources.icon_layer_edit;
             this.btnStartEdit.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnStartEdit.IsBackStageButton = false;
             this.btnStartEdit.Location = new System.Drawing.Point(6, 3);
             this.btnStartEdit.Name = "btnStartEdit";
             this.btnStartEdit.Size = new System.Drawing.Size(32, 32);
@@ -133,8 +139,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnShowSelected
             // 
+            this.btnShowSelected.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnShowSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnShowSelected.Image")));
             this.btnShowSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnShowSelected.IsBackStageButton = false;
             this.btnShowSelected.Location = new System.Drawing.Point(82, 3);
             this.btnShowSelected.Name = "btnShowSelected";
             this.btnShowSelected.Size = new System.Drawing.Size(32, 32);
@@ -143,8 +151,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnJoin
             // 
+            this.btnJoin.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnJoin.Image = ((System.Drawing.Image)(resources.GetObject("btnJoin.Image")));
             this.btnJoin.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnJoin.IsBackStageButton = false;
             this.btnJoin.Location = new System.Drawing.Point(273, 3);
             this.btnJoin.Name = "btnJoin";
             this.btnJoin.Size = new System.Drawing.Size(32, 32);
@@ -154,8 +164,10 @@ namespace MW5.Plugins.TableEditor.Views
             // btnUpdateMeasurements
             // 
             this.btnUpdateMeasurements.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnUpdateMeasurements.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnUpdateMeasurements.Image = ((System.Drawing.Image)(resources.GetObject("btnUpdateMeasurements.Image")));
             this.btnUpdateMeasurements.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnUpdateMeasurements.IsBackStageButton = false;
             this.btnUpdateMeasurements.Location = new System.Drawing.Point(235, 3);
             this.btnUpdateMeasurements.Name = "btnUpdateMeasurements";
             this.btnUpdateMeasurements.Size = new System.Drawing.Size(32, 32);
@@ -165,8 +177,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnCalculateField
             // 
+            this.btnCalculateField.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnCalculateField.Image = ((System.Drawing.Image)(resources.GetObject("btnCalculateField.Image")));
             this.btnCalculateField.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnCalculateField.IsBackStageButton = false;
             this.btnCalculateField.Location = new System.Drawing.Point(120, 3);
             this.btnCalculateField.Name = "btnCalculateField";
             this.btnCalculateField.Size = new System.Drawing.Size(32, 32);
@@ -176,8 +190,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnImportFieldsFromDBF
             // 
+            this.btnImportFieldsFromDBF.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnImportFieldsFromDBF.Image = ((System.Drawing.Image)(resources.GetObject("btnImportFieldsFromDBF.Image")));
             this.btnImportFieldsFromDBF.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnImportFieldsFromDBF.IsBackStageButton = false;
             this.btnImportFieldsFromDBF.Location = new System.Drawing.Point(197, 3);
             this.btnImportFieldsFromDBF.Name = "btnImportFieldsFromDBF";
             this.btnImportFieldsFromDBF.Size = new System.Drawing.Size(32, 32);
@@ -186,8 +202,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnQuery
             // 
+            this.btnQuery.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnQuery.Image = global::MW5.Plugins.TableEditor.Properties.Resources.filter;
             this.btnQuery.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnQuery.IsBackStageButton = false;
             this.btnQuery.Location = new System.Drawing.Point(158, 3);
             this.btnQuery.Name = "btnQuery";
             this.btnQuery.Size = new System.Drawing.Size(32, 32);
@@ -196,8 +214,10 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // btnZoomToSelected
             // 
+            this.btnZoomToSelected.BeforeTouchSize = new System.Drawing.Size(32, 32);
             this.btnZoomToSelected.Image = ((System.Drawing.Image)(resources.GetObject("btnZoomToSelected.Image")));
             this.btnZoomToSelected.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.btnZoomToSelected.IsBackStageButton = false;
             this.btnZoomToSelected.Location = new System.Drawing.Point(44, 3);
             this.btnZoomToSelected.Name = "btnZoomToSelected";
             this.btnZoomToSelected.Size = new System.Drawing.Size(32, 32);
@@ -432,15 +452,26 @@ namespace MW5.Plugins.TableEditor.Views
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this._grid.DefaultCellStyle = dataGridViewCellStyle1;
             this._grid.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._grid.Location = new System.Drawing.Point(0, 24);
+            this._grid.Location = new System.Drawing.Point(0, 0);
             this._grid.Name = "_grid";
             this._grid.RowManager = null;
             this._grid.SelectionColor = System.Drawing.Color.LightBlue;
             this._grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this._grid.Size = new System.Drawing.Size(725, 371);
+            this._grid.Size = new System.Drawing.Size(723, 369);
             this._grid.TabIndex = 0;
             this._grid.TableSource = null;
             this._grid.VirtualMode = true;
+            // 
+            // gradientPanel1
+            // 
+            this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
+            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel1.Controls.Add(this._grid);
+            this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gradientPanel1.Location = new System.Drawing.Point(0, 24);
+            this.gradientPanel1.Name = "gradientPanel1";
+            this.gradientPanel1.Size = new System.Drawing.Size(725, 371);
+            this.gradientPanel1.TabIndex = 16;
             // 
             // TableEditorView
             // 
@@ -448,7 +479,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(725, 454);
             this.ControlBox = false;
-            this.Controls.Add(this._grid);
+            this.Controls.Add(this.gradientPanel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel1);
             this.Name = "TableEditorView";
@@ -458,6 +489,8 @@ namespace MW5.Plugins.TableEditor.Views
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._grid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
+            this.gradientPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -467,12 +500,12 @@ namespace MW5.Plugins.TableEditor.Views
 
         private TableEditorGrid _grid;
         protected System.Windows.Forms.Panel panel1;
-        internal System.Windows.Forms.Button btnJoin;
-        internal System.Windows.Forms.Button btnUpdateMeasurements;
-        internal System.Windows.Forms.Button btnCalculateField;
-        internal System.Windows.Forms.Button btnImportFieldsFromDBF;
-        internal System.Windows.Forms.Button btnQuery;
-        private System.Windows.Forms.Button btnZoomToSelected;
+        internal ButtonAdv btnJoin;
+        internal ButtonAdv btnUpdateMeasurements;
+        internal ButtonAdv btnCalculateField;
+        internal ButtonAdv btnImportFieldsFromDBF;
+        internal ButtonAdv btnQuery;
+        private ButtonAdv btnZoomToSelected;
         private System.Windows.Forms.Label _lblAmountSelected;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
@@ -502,11 +535,12 @@ namespace MW5.Plugins.TableEditor.Views
         private System.Windows.Forms.ToolStripMenuItem mnuCopyShapeIDs;
         private System.Windows.Forms.ToolStripMenuItem mnuImportExtData;
         private System.Windows.Forms.ToolStripMenuItem updateMeasurementsToolStripMenuItem;
-        internal System.Windows.Forms.Button btnShowSelected;
+        internal ButtonAdv btnShowSelected;
         private System.Windows.Forms.ToolTip toolTip1;
-        internal System.Windows.Forms.Button btnStartEdit;
+        internal ButtonAdv btnStartEdit;
         private Syncfusion.Windows.Forms.ButtonAdv btnClose;
         private Syncfusion.Windows.Forms.ButtonAdv btnSaveChanges;
+        private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
 
     }
 }

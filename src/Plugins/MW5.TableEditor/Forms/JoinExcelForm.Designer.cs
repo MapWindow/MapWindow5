@@ -54,7 +54,6 @@
           this.btnGetColumns.Text = "Get Columns";
           this.btnGetColumns.UseVisualStyleBackColor = true;
           this.btnGetColumns.Visible = false;
-          this.btnGetColumns.Click += new System.EventHandler(this.BtnGetColumnsClick);
           // 
           // cboDelimiter
           // 
@@ -190,7 +189,6 @@
           this.btnOk.TabIndex = 16;
           this.btnOk.Text = "Join";
           this.btnOk.UseVisualStyleBackColor = true;
-          this.btnOk.Click += new System.EventHandler(this.BtnOkClick);
           // 
           // frmJoinExcel
           // 

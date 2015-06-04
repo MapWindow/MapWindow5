@@ -18,11 +18,14 @@ namespace MW5.Plugins.TableEditor
         {
             container.RegisterSingleton<TableEditorPresenter>()
                 .RegisterSingleton<RowManager>()
-                .RegisterService<ICalculateFieldView, CalculateFieldView>()
-                .RegisterService<ITableEditorView, TableEditorView>()
-                .RegisterService<IDeleteFieldsView, DeleteFieldsView>()
-                .RegisterService<IAddFieldView, AddFieldView>()
-                .RegisterService<IRenameFieldView, RenameFieldView>();
+                .RegisterView<ICalculateFieldView, CalculateFieldView>()
+                .RegisterView<ITableEditorView, TableEditorView>()
+                .RegisterView<IDeleteFieldsView, DeleteFieldsView>()
+                .RegisterView<IAddFieldView, AddFieldView>()
+                .RegisterView<IRenameFieldView, RenameFieldView>()
+                .RegisterView<IJoinDbfView, JoinDbfView>()
+                .RegisterView<IJoinExcelView, JoinExcelView>()
+                .RegisterView<IJoinsView, JoinsView>();
 
             EnumHelper.RegisterConverter(new AttributeTypeConverter());
             EnumHelper.RegisterConverter(new CalculatorFunctionCoverter());
