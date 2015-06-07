@@ -14,8 +14,13 @@ namespace MW5.UI.Controls
 
         public WatermarkTextbox()
         {
-            FarImage = Resources.img_clear_textbox;
             MouseDown += OnMouseDown;
+        }
+
+        public bool ShowClearButton
+        {
+            get { return FarImage != null; }
+            set { FarImage = value ? Resources.img_clear_textbox : null; }
         }
 
         [Localizable(true)]
@@ -45,7 +50,7 @@ namespace MW5.UI.Controls
 
         private void OnMouseDown(object sender, MouseEventArgs e)
         {
-            if (e.X > Width - IconSize)
+            if (ShowClearButton && FarImage != null && e.X > Width - IconSize)
             {
                 Text = string.Empty;
             }

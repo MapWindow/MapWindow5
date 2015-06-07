@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
@@ -11,19 +12,28 @@ namespace MW5.Api.Concrete
     public class AttributeTable: IAttributeTable
     {
         private readonly Table _table;
+        private EventHandler<UpdateJoinEventArgs> _handler;
+
+        /// <summary>
+        /// Supports a single listener only.
+        /// </summary>
+        public event EventHandler<UpdateJoinEventArgs> UpdateJoin
+        {
+            add
+            {
+                _handler = value;
+                _table.OnUpdateJoin += OnUpdateJoin;
+            }
+            remove
+            {
+                _handler = null;
+                _table.OnUpdateJoin -= OnUpdateJoin;
+            }
+        }
 
         public AttributeTable()
         {
             _table = new Table();
-        }
-
-        public AttributeTable(string dbfFilename)
-        {
-            _table = new Table();
-            if (!_table.Open(dbfFilename))
-            {
-                throw new ApplicationException("Failed to open dbf table: " + _table.ErrorMsg[_table.LastErrorCode]);
-            }
         }
 
         internal AttributeTable(Table table)
@@ -32,6 +42,14 @@ namespace MW5.Api.Concrete
             if (table == null)
             {
                 throw new NullReferenceException("Internal reference is null.");
+            }
+        }
+
+        private void OnUpdateJoin(string filename, string fieldList, string joinOptions, Table joinSource)
+        {
+            if (_handler != null)
+            {
+                _handler(this, new UpdateJoinEventArgs(filename, fieldList, joinOptions, new AttributeTable(joinSource)));
             }
         }
 
@@ -132,6 +150,16 @@ namespace MW5.Api.Concrete
             _table.StopAllJoins();
         }
 
+        public void CreateNew()
+        {
+            _table.CreateNew("");
+        }
+
+        public bool CreateNew(string filename)
+        {
+            return _table.CreateNew(filename);
+        }
+
         public bool Open(string dbfFilename)
         {
             return _table.Open(dbfFilename);
@@ -220,10 +248,16 @@ namespace MW5.Api.Concrete
                 {
                     if (!_table.FieldIsJoined[i])
                     {
-                        yield return new AttributeField(_table.Field[i]);
+                        yield return new AttributeField(_table.Field[i], i);
                     }
                 } 
+                
             }
+        }
+
+        public string Filename
+        {
+            get { return _table.Filename; }
         }
     }
 }

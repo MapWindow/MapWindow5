@@ -23,12 +23,15 @@ namespace MW5.Plugins.Symbology.Views
     public class RasterStylePresenter: ComplexPresenter<IRasterStyleView, RasterCommand, ILegendLayer>
     {
         private readonly IAppContext _context;
+        private readonly IBroadcasterService _broadcaster;
         private IRasterSource _raster;
 
-        public RasterStylePresenter(IAppContext context, IRasterStyleView view) : base(view)
+        public RasterStylePresenter(IAppContext context, IRasterStyleView view, IBroadcasterService broadcaster) : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
             _context = context;
+            _broadcaster = broadcaster;
         }
 
         public override void RunCommand(RasterCommand command)
@@ -63,7 +66,7 @@ namespace MW5.Plugins.Symbology.Views
                     break;
                 case RasterCommand.LoadStyle:
                     {
-                        bool result = LayerSerializationHelper.LoadSettings(Model, false);
+                        bool result = LayerSerializationHelper.LoadSettings(Model, _broadcaster, false);
                         
                         if (result)
                         {

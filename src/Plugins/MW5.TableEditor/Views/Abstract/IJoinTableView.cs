@@ -10,13 +10,14 @@ using MW5.Plugins.TableEditor.Model;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract
 {
-    public interface IJoinDbfView : IView<JoinDbfModel>
+    public interface IJoinTableView : IView<JoinViewModel>
     {
+        event Action OpenClicked;
         event Action TryJoin;
         FieldWrapper FieldFrom { get; }
         FieldWrapper FieldTo { get; }
         IEnumerable<FieldWrapper> SelectedFields { get; }
         void SetRowCount(int rowCount, int joinRowCount);
-
+        void SetDatasource();
     }
 }

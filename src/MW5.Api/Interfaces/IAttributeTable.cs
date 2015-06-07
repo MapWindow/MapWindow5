@@ -9,6 +9,8 @@ namespace MW5.Api.Interfaces
     {
         FeatureFieldList Fields { get; }
 
+        void CreateNew();
+        bool CreateNew(string filename);
         bool Open(string dbfFilename);
 
         bool EditMode { get; }
@@ -45,6 +47,8 @@ namespace MW5.Api.Interfaces
         bool FieldIsJoined(int fieldIndex);
         int FieldJoinIndex(int fieldIndex);
         IEnumerable<IAttributeField> NativeFields { get; }
+
+        string Filename { get; }
 
         #region Not implemented
 

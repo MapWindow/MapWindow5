@@ -24,16 +24,20 @@ namespace MW5.Listeners
         private readonly IAppContext _context;
         private readonly MainPlugin _plugin;
         private readonly IConfigService _configService;
+        private readonly IBroadcasterService _broadcaster;
 
-        public MainPluginListener(IAppContext context, MainPlugin plugin, IConfigService configService)
+        public MainPluginListener(IAppContext context, MainPlugin plugin, IConfigService configService, 
+                                IBroadcasterService broadcaster)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
             if (configService == null) throw new ArgumentNullException("configService");
+            if (broadcaster == null) throw new ArgumentNullException("broadcaster");
 
             _context = context;
             _plugin = plugin;
             _configService = configService;
+            _broadcaster = broadcaster;
 
             plugin.BeforeLayerAdded += BeforeLayerAdded;
             plugin.LayerAdded += plugin_LayerAdded;
@@ -57,7 +61,7 @@ namespace MW5.Listeners
             var layer = _context.Legend.Layers.ItemByHandle(e.LayerHandle);
             if (layer != null)
             {
-                LayerSerializationHelper.LoadSettings(layer, true);
+                LayerSerializationHelper.LoadSettings(layer, _broadcaster, true);
             }
         }
 

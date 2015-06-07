@@ -457,7 +457,7 @@ namespace MW5.Plugins.TableEditor.Views
             this._grid.RowManager = null;
             this._grid.SelectionColor = System.Drawing.Color.LightBlue;
             this._grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this._grid.Size = new System.Drawing.Size(723, 369);
+            this._grid.Size = new System.Drawing.Size(725, 371);
             this._grid.TabIndex = 0;
             this._grid.TableSource = null;
             this._grid.VirtualMode = true;
@@ -465,7 +465,7 @@ namespace MW5.Plugins.TableEditor.Views
             // gradientPanel1
             // 
             this.gradientPanel1.BorderColor = System.Drawing.Color.LightGray;
-            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gradientPanel1.Controls.Add(this._grid);
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gradientPanel1.Location = new System.Drawing.Point(0, 24);

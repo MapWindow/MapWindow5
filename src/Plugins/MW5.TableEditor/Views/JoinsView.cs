@@ -16,11 +16,15 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public partial class JoinsView : JoinsBaseView, IJoinsView
     {
+        public event Action JoinDoubleClicked
+        {
+            add { joinsGrid1.JoinDoubleClicked += value; }
+            remove { joinsGrid1.JoinDoubleClicked -= value; }
+        }
+
         public JoinsView()
         {
             InitializeComponent();
-
-            // TODO: edit join by double click
         }
 
         public void Initialize()

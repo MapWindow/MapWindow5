@@ -14,6 +14,7 @@ namespace MW5.Plugins.TableEditor
         private MenuListener _menuListener;
         private MapListener _mapListener;
         private MenuGenerator _menuGenerator;
+        private ProjectListener _projectListener;
 
         public override void RegisterServices(IApplicationContainer container)
         {
@@ -28,6 +29,7 @@ namespace MW5.Plugins.TableEditor
             _menuGenerator = _context.Container.GetInstance<MenuGenerator>();
             _menuListener = _context.Container.GetSingleton<MenuListener>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
+            _projectListener = _context.Container.GetSingleton<ProjectListener>();
         }
 
         public override void Terminate()

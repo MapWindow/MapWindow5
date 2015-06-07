@@ -1,4 +1,8 @@
 ﻿using System.Data;
+using MW5.Api.Concrete;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.TableEditor.Helpers
 {
@@ -12,47 +16,63 @@ namespace MW5.Plugins.TableEditor.Helpers
         /// </summary>
         /// <param name="dt"> Data table to make the data from </param>
         /// <param name="tableToFill"> MapWinGIS table to copy the data to </param>
-        /// <returns>True on success</returns>
-        //public static bool FillMapWinGisTable(DataTable dt, Table tableToFill)
-        //{
-        //    if (dt == null)
-        //    {
-        //        return false;
-        //    }
+        public static void FillMapWinGisTable(DataTable dt, IAttributeTable tableToFill)
+        {
+            tableToFill.CreateNew(string.Empty);
 
-        //    tableToFill.CreateNew(string.Empty);
-        //    for (var i = 0; i < dt.Columns.Count; i++)
-        //    {
-        //        var type = FieldType.STRING_FIELD;
-        //        switch (dt.Columns[i].DataType.ToString())
-        //        {
-        //            case "System.String":
-        //                type = FieldType.STRING_FIELD;
-        //                break;
-        //            case "System.Double":
-        //                type = FieldType.DOUBLE_FIELD;
-        //                break;
-        //            case "System.Int32":
-        //                type = FieldType.INTEGER_FIELD;
-        //                break;
-        //        }
+            CopyFields(dt, tableToFill);
 
-        //        tableToFill.EditAddField(dt.Columns[i].ColumnName, type, 6, dt.Columns[i].MaxLength);
-        //    }
+            CopyValues(dt, tableToFill);
+        }
 
-        //    for (var j = 0; j < dt.Rows.Count; j++)
-        //    {
-        //        var index = tableToFill.NumRows;
-        //        if (tableToFill.EditInsertRow(ref index))
-        //        {
-        //            for (var i = 0; i < dt.Columns.Count; i++)
-        //            {
-        //                tableToFill.EditCellValue(i, index, dt.Rows[j][i]);
-        //            }
-        //        }
-        //    }
+        private static void CopyValues(DataTable dt, IAttributeTable tableToFill)
+        {
+            for (var j = 0; j < dt.Rows.Count; j++)
+            {
+                var index = tableToFill.NumRows;
+                if (tableToFill.EditInsertRow(ref index))
+                {
+                    for (var i = 0; i < dt.Columns.Count; i++)
+                    {
+                        tableToFill.EditCellValue(i, index, dt.Rows[j][i]);
+                    }
+                }
+            }
+        }
 
-        //    return true;
-        //}
+        private static void CopyFields(DataTable dt, IAttributeTable tableToFill)
+        {
+            for (var i = 0; i < dt.Columns.Count; i++)
+            {
+                var type = AttributeType.String;
+
+                switch (dt.Columns[i].DataType.ToString())
+                {
+                    case "System.String":
+                        type = AttributeType.String;
+                        break;
+                    case "System.Double":
+                        type = AttributeType.Double;
+                        break;
+                    case "System.Int32":
+                        type = AttributeType.Integer;
+                        break;
+                }
+
+                var fld = new AttributeField
+                {
+                    Name = dt.Columns[i].ColumnName,
+                    Type = type,
+                    Precision = 6,
+                };
+
+                if (dt.Columns[i].MaxLength != -1)
+                {
+                    fld.Width = dt.Columns[i].MaxLength;
+                }
+
+                tableToFill.Fields.Add(fld);
+            }
+        }
     }
 }

@@ -27,8 +27,8 @@ namespace MW5.Controls
         private readonly LegendDockPanel _legendDockPanel;
 
         public LegendPresenter(IAppContext context, ILayerService layerService, IBroadcasterService broadcaster, 
-                               LegendDockPanel legendDockPanel):
-            base(legendDockPanel)
+                               LegendDockPanel legendDockPanel)
+             : base(legendDockPanel)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
@@ -119,7 +119,7 @@ namespace MW5.Controls
                     {
                         //_layerService.LoadStyle();
                         var layer = Legend.Layers.Current;
-                        LayerSerializationHelper.LoadSettings(layer, false);
+                        LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
                         _context.Legend.Redraw(LegendRedraw.LegendAndMap);
                     }
                     break;

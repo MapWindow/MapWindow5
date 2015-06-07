@@ -78,5 +78,21 @@ namespace MW5.Shared
             Uri folderUri = new Uri(basePath);
             return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
+
+        public static string GetAbsolutePath(string name, string basePath)
+        {
+            if (Path.IsPathRooted(name))
+            {
+                return name;
+            }
+
+            string path = Path.GetDirectoryName(basePath);
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                return Path.GetFullPath(Path.Combine(path, name));
+            }
+
+            return name;
+        }
     }
 }

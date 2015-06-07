@@ -95,8 +95,15 @@ namespace MW5.Plugins.Concrete
         internal EventHandler<LayerRemoveEventArgs> BeforeRemoveLayer_;
         internal EventHandler<EventArgs> ViewUpdating_;
         internal EventHandler<ToolboxToolEventArgs> ToolboxToolClicked_;
-
+        internal EventHandler<UpdateJoinEventArgs> UpdateTableJoin_;
+        
         // public events
+        public event EventHandler<UpdateJoinEventArgs> UpdateTableJoin
+        {
+            add { UpdateTableJoin_ += value; }
+            remove { UpdateTableJoin_ -= value; }
+        }
+
         public event EventHandler<LogEventArgs> LogEntryAdded
         {
             add { LogEntryAdded_ += value; }

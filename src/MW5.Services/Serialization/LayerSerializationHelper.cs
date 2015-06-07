@@ -111,7 +111,7 @@ namespace MW5.Services.Serialization
             MessageService.Current.Info(msg);
         }
 
-        public static bool LoadSettings(ILegendLayer layer, bool silent)
+        public static bool LoadSettings(ILegendLayer layer, IBroadcasterService broadcaster, bool silent)
         {
             if (!CheckFilename(layer.Filename)) return false;
 
@@ -128,7 +128,7 @@ namespace MW5.Services.Serialization
                 {
                     string xml = reader.ReadToEnd();
                     var xmlLayer = xml.Deserialize<XmlLayer>();
-                    xmlLayer.RestoreLayer(layer);
+                    xmlLayer.RestoreLayer(layer, broadcaster);
                     return true;
                 }
             }

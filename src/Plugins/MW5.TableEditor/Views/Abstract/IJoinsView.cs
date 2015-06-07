@@ -12,5 +12,6 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
     public interface IJoinsView: IView<IAttributeTable>, IMenuProvider
     {
         FieldJoin SelectedJoin { get; }
+        event Action JoinDoubleClicked;
     }
 }

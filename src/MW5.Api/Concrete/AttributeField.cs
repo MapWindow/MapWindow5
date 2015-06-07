@@ -9,13 +9,14 @@ namespace MW5.Api.Concrete
     public class AttributeField: IAttributeField
     {
         private readonly Field _field;
+        private int _index = -1;
 
         public AttributeField()
         {
             _field = new Field();
         }
 
-        internal AttributeField(Field field)
+        internal AttributeField(Field field, int index)
         {
             if (field == null)
             {
@@ -23,6 +24,12 @@ namespace MW5.Api.Concrete
             }
 
             _field = field;
+            _index = index;
+        }
+
+        public int Index
+        {
+            get { return _index; }
         }
 
         public AttributeType Type

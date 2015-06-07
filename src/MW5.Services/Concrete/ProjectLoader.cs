@@ -21,14 +21,17 @@ namespace MW5.Services.Concrete
     {
         private readonly ImageSerializationService _imageSerializationService;
         private readonly ILayerService _layerService;
+        private readonly IBroadcasterService _broadcaster;
         private readonly ISerializableContext _context;
 
-        public ProjectLoader(IAppContext context, ImageSerializationService imageSerializationService, ILayerService layerService)
+        public ProjectLoader(IAppContext context, ImageSerializationService imageSerializationService, ILayerService layerService,
+            IBroadcasterService broadcaster)
         {
             if (imageSerializationService == null) throw new ArgumentNullException("imageSerializationService");
             if (layerService == null) throw new ArgumentNullException("layerService");
             _imageSerializationService = imageSerializationService;
             _layerService = layerService;
+            _broadcaster = broadcaster;
 
             _context = context as ISerializableContext;
             if (_context == null)
@@ -131,7 +134,7 @@ namespace MW5.Services.Concrete
                 {
                     int handle = _layerService.LastLayerHandle;
                     var layer = layers.ItemByHandle(handle) as ILegendLayer;
-                    xmlLayer.RestoreLayer(layer);
+                    xmlLayer.RestoreLayer(layer, _broadcaster);
                 }
             }
 

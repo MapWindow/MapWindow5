@@ -14,18 +14,15 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class JoinsPresenter: ComplexPresenter<IJoinsView, JoinsCommand, IAttributeTable>
     {
-        private const string OpenDialogFilter = "Dbf tables (*.dbf)|*.dbf|Excel workbooks (*.xls, *.xlsx)|*.xls;*.xlsx|CSV files (*.csv)|*.csv|All|*.csv;*.dbf;*.xls;*.xlsx";
-
         private readonly IAppContext _context;
-        private readonly IFileDialogService _dialogService;
 
-        public JoinsPresenter(IAppContext context, IJoinsView view, IFileDialogService dialogService) : base(view)
+        public JoinsPresenter(IAppContext context, IJoinsView view) : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
 
             _context = context;
-            _dialogService = dialogService;
+
+            View.JoinDoubleClicked += EditJoin;
         }
 
         public override void Initialize()
@@ -64,27 +61,11 @@ namespace MW5.Plugins.TableEditor.Views
         /// </summary>
         private void Join()
         {
-            string filename;
-            if (!_dialogService.Open(OpenDialogFilter, out filename, 4))
+            var model = new JoinViewModel(Model);
+            
+            if (_context.Container.Run<JoinTablePresenter, JoinViewModel>(model))
             {
-                return;
-            }
-
-            filename = filename.ToLower();
-
-            if (IsDbf(filename))
-            {
-                var model = new JoinDbfModel(Model, filename);
-                if (!model.IsValid) return;
-
-                if (_context.Container.Run<JoinDbfPresenter, JoinDbfModel>(model))
-                {
-                    View.UpdateView();
-                }
-            }
-            else
-            {
-                MessageService.Current.Info("About to perform Excel join.");
+                View.UpdateView();
             }
         }
 
@@ -101,15 +82,9 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
-            if (!IsDbf(join.Filename))
-            {
-                MessageService.Current.Info("Editing of the join isn't available for this type of datasource.");
-            }
-            
-            var model = new JoinDbfModel(Model, join.Filename, join);
-            if (!model.IsValid) return;
+            var model = new JoinViewModel(Model, join);
 
-            if (_context.Container.Run<JoinDbfPresenter, JoinDbfModel>(model))
+            if (_context.Container.Run<JoinTablePresenter, JoinViewModel>(model))
             {
                 View.UpdateView();
             }
@@ -141,16 +116,6 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             View.UpdateView();
-        }
-
-        private bool IsDbf(string filename)
-        {
-            if (string.IsNullOrWhiteSpace(filename))
-            {
-                return false;
-            }
-
-            return filename.ToLower().EndsWith(".dbf");
         }
 
         public override bool ViewOkClicked()

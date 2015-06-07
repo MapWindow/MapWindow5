@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Xml;
@@ -12,6 +14,7 @@ using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Services;
 using MW5.Shared;
 
 namespace MW5.Services.Serialization
@@ -19,6 +22,8 @@ namespace MW5.Services.Serialization
     [DataContract]
     public class XmlLayer
     {
+        private IBroadcasterService _broadcaster;
+        
         public bool ProjectStorage
         {
             get { return AppConfig.Instance.SymbolobyStorage == SymbologyStorage.Project; }
@@ -50,8 +55,16 @@ namespace MW5.Services.Serialization
             SerializeCustomObjects(layer);
         }
 
-        public void RestoreLayer(ILegendLayer layer)
+        public void RestoreLayer(ILegendLayer layer, IBroadcasterService broadcaster)
         {
+            AttributeTable table = null;
+            if (layer.FeatureSet != null)
+            {
+                table = layer.FeatureSet.Table;
+                table.UpdateJoin += table_UpdateJoin;
+                _broadcaster = broadcaster;
+            }
+
             if (OcxLayer != null)
             {
                 layer.Deserialize(OcxLayer.OuterXml);
@@ -65,12 +78,29 @@ namespace MW5.Services.Serialization
                 }
             }
 
+            if (table != null)
+            {
+                table.UpdateJoin -= table_UpdateJoin;
+                _broadcaster = null;
+            }
+
             RestoreCustomObjects(layer);
 
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.SymbologyCaption = ColorSchemeCaption;
             layer.Guid = Guid;
+        }
+
+        private void table_UpdateJoin(object sender, Api.Events.UpdateJoinEventArgs e)
+        {
+            if (_broadcaster == null)
+            {
+                Logger.Current.Warn("No broadcaster attached to UpdateTableJoin event.");
+                return;
+            }
+
+            _broadcaster.BroadcastEvent(p => p.UpdateTableJoin_, sender, e);
         }
 
         private void SerializeCustomObjects(ILegendLayer layer)

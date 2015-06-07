@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using MapWinGIS;
 
 namespace MW5.Api.Concrete
@@ -15,6 +16,17 @@ namespace MW5.Api.Concrete
             _joinIndex = joinIndex;
         }
 
+        [DisplayName("Filename")]
+        public string DisplayName
+        {
+            get
+            {
+                string path = _table.JoinFilename[_joinIndex];
+                return Path.GetFileName(path);
+            }
+        }
+
+        [Browsable(false)]
         public string Filename
         {
             get { return _table.JoinFilename[_joinIndex]; }
@@ -55,6 +67,15 @@ namespace MW5.Api.Concrete
             {
                 var s = _table.JoinFields[_joinIndex];
                 return string.IsNullOrWhiteSpace(s) ? "<all>" : s;
+            }
+        }
+
+        [Browsable(false)]
+        public string Options
+        {
+            get
+            {
+                return _table.JoinOptions[_joinIndex];
             }
         }
     }

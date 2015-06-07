@@ -74,6 +74,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
+    <Reference Include="Syncfusion.Grid.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL" />
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -99,17 +100,28 @@
     <Compile Include="Controls\FieldsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\FieldsListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FieldsListView.Designer.cs">
+      <DependentUpon>FieldsListView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\JoinsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Editor\SortItem.cs" />
+    <Compile Include="Forms\JoinExcelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\JoinExcelForm.Designer.cs">
+      <DependentUpon>JoinExcelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
-    <Compile Include="Views\Abstract\IJoinExcelView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
-    <Compile Include="Views\Abstract\IJoinDbfView.cs" />
+    <Compile Include="Views\Abstract\IJoinTableView.cs" />
     <Compile Include="Views\CalculateFieldPresenter.cs" />
     <Compile Include="Views\CalculateFieldView.cs">
       <SubType>Form</SubType>
@@ -133,22 +145,17 @@
     <Compile Include="Editor\TableEditorGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\JoinDbfModel.cs" />
-    <Compile Include="Views\JoinDbfPresenter.cs" />
-    <Compile Include="Views\JoinDbfView.cs">
+    <Compile Include="Views\JoinsPresenter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\JoinViewModel.cs" />
+    <Compile Include="Views\JoinTablePresenter.cs" />
+    <Compile Include="Views\JoinTableView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\JoinDbfView.Designer.cs">
-      <DependentUpon>JoinDbfView.cs</DependentUpon>
+    <Compile Include="Views\JoinTableView.Designer.cs">
+      <DependentUpon>JoinTableView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\JoinExcelPresenter.cs" />
-    <Compile Include="Views\JoinExcelView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\JoinExcelView.Designer.cs">
-      <DependentUpon>JoinExcelView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\JoinsPresenter.cs" />
     <Compile Include="Views\JoinsView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -191,7 +198,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\NumericHelper.cs" />
-    <Compile Include="Services\MapUnitsService.cs" />
+    <Compile Include="Views\Services\MapUnitsService.cs" />
     <Compile Include="Helpers\XlsImportHelper.cs" />
     <Compile Include="Views\AddFieldPresenter.cs" />
     <Compile Include="Views\AddFieldView.cs">
@@ -203,17 +210,17 @@
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Forms\JoinExcelForm.resx">
+      <DependentUpon>JoinExcelForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\CalculateFieldView.resx">
       <DependentUpon>CalculateFieldView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\JoinDbfView.resx">
-      <DependentUpon>JoinDbfView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\JoinExcelView.resx">
-      <DependentUpon>JoinExcelView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\JoinTableView.resx">
+      <DependentUpon>JoinTableView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\JoinsView.resx">
       <DependentUpon>JoinsView.cs</DependentUpon>
@@ -281,7 +288,6 @@
     <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\" />
     <Folder Include="Legacy\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

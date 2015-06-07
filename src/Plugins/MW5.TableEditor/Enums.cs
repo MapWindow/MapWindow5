@@ -97,4 +97,11 @@
         Stop = 2,
         StopAll = 3,
     }
+
+    public enum JoinSourceType
+    {
+        Dbf = 0,
+        Xls = 1,
+        Csv = 2,
+    }
 }

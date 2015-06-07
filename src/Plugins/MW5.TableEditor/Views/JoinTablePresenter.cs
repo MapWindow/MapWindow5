@@ -12,11 +12,32 @@ using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public class JoinDbfPresenter : BasePresenter<IJoinDbfView, JoinDbfModel>
+    public class JoinTablePresenter : BasePresenter<IJoinTableView, JoinViewModel>
     {
-        public JoinDbfPresenter(IJoinDbfView view) : base(view)
+        private const string OpenDialogFilter = "Dbf tables (*.dbf)|*.dbf|Excel workbooks (*.xls, *.xlsx)|*.xls;*.xlsx|CSV files (*.csv)|*.csv|All|*.csv;*.dbf;*.xls;*.xlsx";
+        private readonly IFileDialogService _dialogService;
+        private bool _hasMatches;
+
+        public JoinTablePresenter(IJoinTableView view, IFileDialogService dialogService) : base(view)
         {
+            if (dialogService == null) throw new ArgumentNullException("dialogService");
+            _dialogService = dialogService;
             view.TryJoin += view_TryJoin;
+            view.OpenClicked += view_OpenClicked;
+        }
+
+        private void view_OpenClicked()
+        {
+            string filename;
+            if (!_dialogService.Open(OpenDialogFilter, out filename, 4))
+            {
+                return;
+            }
+
+            if (Model.OpenDatasource(filename))
+            {
+                View.SetDatasource();
+            }
         }
 
         private void view_TryJoin()
@@ -31,7 +52,12 @@ namespace MW5.Plugins.TableEditor.Views
             if (Model.Table.TryJoin(Model.External, View.FieldTo.Name, View.FieldFrom.Name, out rowCount, out joinRowCount))
             {
                 View.SetRowCount(rowCount, joinRowCount);
+                _hasMatches = rowCount > 0;
+                return;
             }
+
+            View.SetRowCount(0, 0);
+            _hasMatches = false;
         }
 
         private bool Validate()
@@ -48,6 +74,12 @@ namespace MW5.Plugins.TableEditor.Views
                 return false;
             }
 
+            if (!_hasMatches)
+            {
+                MessageService.Current.Info("Unable to join. No matching field values were found.");
+                return false;
+            }
+
             return true;
         }
 
@@ -57,16 +89,16 @@ namespace MW5.Plugins.TableEditor.Views
 
             var fields = View.SelectedFields.Select(f => f.Name);
 
-            if (Model.EditJoin != null)
+            if (Model.Join != null)
             {
-                if (!Model.Table.StopJoin(Model.EditJoin.JoinIndex))
+                if (!Model.Table.StopJoin(Model.Join.JoinIndex))
                 {
-                    Logger.Current.Warn("Failed to stop join: " + Model.EditJoin.Filename);
+                    Logger.Current.Warn("Failed to stop join: " + Model.Join.Filename);
                     return false;
                 }
             }
-            
-            bool result = Model.Table.Join(Model.External, View.FieldTo.Name, View.FieldFrom.Name, Model.Filename, "", fields);
+
+            bool result = Model.Table.Join(Model.External, View.FieldTo.Name, View.FieldFrom.Name, Model.Filename, Model.GetOptionsString(), fields);
             if (!result)
             {
                 MessageService.Current.Warn("Failed to join tables.");

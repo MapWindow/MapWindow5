@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
@@ -11,6 +12,8 @@ namespace MW5.Plugins.TableEditor.Editor
 {
     internal class TableEditorGrid: VirtualGrid
     {
+        private readonly Color _joinColumnBackColor = Color.OldLace;
+
         private IFeatureSet _shapefile;
         private IAttributeTable _table;
 
@@ -59,8 +62,13 @@ namespace MW5.Plugins.TableEditor.Editor
                 {
                     HeaderText = fld.DisplayName,
                     SortMode = DataGridViewColumnSortMode.Programmatic,
-                    Visible = fld.Visible
+                    Visible = fld.Visible,
                 };
+
+                if (table.FieldIsJoined(fld.Index))
+                {
+                    cmn.CellTemplate.Style.BackColor = _joinColumnBackColor;    
+                }
 
                 Columns.Add(cmn);
             }

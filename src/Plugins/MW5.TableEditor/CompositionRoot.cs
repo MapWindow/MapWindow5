@@ -23,8 +23,7 @@ namespace MW5.Plugins.TableEditor
                 .RegisterView<IDeleteFieldsView, DeleteFieldsView>()
                 .RegisterView<IAddFieldView, AddFieldView>()
                 .RegisterView<IRenameFieldView, RenameFieldView>()
-                .RegisterView<IJoinDbfView, JoinDbfView>()
-                .RegisterView<IJoinExcelView, JoinExcelView>()
+                .RegisterView<IJoinTableView, JoinTableView>()
                 .RegisterView<IJoinsView, JoinsView>();
 
             EnumHelper.RegisterConverter(new AttributeTypeConverter());

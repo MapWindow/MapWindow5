@@ -8,7 +8,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.UI.Helpers
 {
-    public static class GridHelper
+    public static class GroupingGridHelper
     {
         public static void AdjustColumnWidths(this GridGroupingControl grid)
         {

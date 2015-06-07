@@ -33,24 +33,7 @@ namespace MW5.Plugins.TableEditor
 
             _plugin.LayerSelected += LayerSelected;
             _plugin.SelectionChanged += SelectionChanged;
-
-            // TODO: handle update table join event
         }
-
-        //  /// <summary>
-        //  /// Restores join operation
-        //  /// </summary>
-        //  /// <param name="filename">Filename of the join source to restore</param>
-        //  /// <param name="fieldNames">The name of fieds to be included in table</param>
-        //  /// <param name="joinOptions">Options specific for particular data source, like separator for csv or worksheet name for Excel</param>
-        //  /// <param name="tableToFill">Table to be filled from source and consumed by ocx</param>
-        //  private void Project_OnUpdateTableJoin(string filename, string fieldNames, string joinOptions, Table tableToFill)
-        //  {
-        //    if (this.handleEvents)
-        //    {
-        //      BOShapeData.Table_OnUpdateJoin(filename, fieldNames, joinOptions, tableToFill);
-        //    }
-        //  }
 
         private void SelectionChanged(IMuteMap map, SelectionChangedEventArgs e)
         {

@@ -172,7 +172,7 @@ namespace MW5.Api.Concrete
 
         public IAttributeField GetField(int fieldIndex)
         {
-            return new AttributeField(_shapefile.Field[fieldIndex]);
+            return new AttributeField(_shapefile.Field[fieldIndex], fieldIndex);
         }
 
         #endregion

@@ -171,7 +171,7 @@
     </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Helpers\GridHelper.cs" />
+    <Compile Include="Helpers\GroupingGridHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
     <Compile Include="Legacy\LayersDialog.cs">
       <SubType>Form</SubType>

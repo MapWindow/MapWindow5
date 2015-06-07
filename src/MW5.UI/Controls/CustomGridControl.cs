@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 
@@ -26,6 +27,8 @@ namespace MW5.UI.Controls
             WrapWithPanel = true;
 
             TableControl.CurrentCellValidating += TableControl_CurrentCellValidating;
+            
+            TableControlCellClick += OnTableControlCellClick;
 
             //TableControl.CurrentCell.ShowErrorIcon = false;
             //TableControl.CurrentCell.ShowErrorMessageBox = false;
@@ -33,6 +36,24 @@ namespace MW5.UI.Controls
 
         [Browsable(false)]
         public bool WrapWithPanel { get; set; }
+
+        /// <summary>
+        /// Toggling checkbox checked state by clicking on cell outside it.
+        /// </summary>
+        private void OnTableControlCellClick(object sender, GridTableControlCellClickEventArgs e)
+        {
+            var model = Table.TableModel[e.Inner.RowIndex, e.Inner.ColIndex];
+            if (model == null)
+            {
+                return;
+            }
+
+            var cellType = model.CellType;
+            if (!string.IsNullOrWhiteSpace(cellType) && cellType.EqualsIgnoreCase("CheckBox"))
+            {
+                model.CellValue = !(bool)(model.CellValue);
+            }
+        }
 
         /// <summary>
         /// Checks if the values typed in double and integer columns are numbers.

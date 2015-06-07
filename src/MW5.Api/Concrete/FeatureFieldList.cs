@@ -21,8 +21,6 @@ namespace MW5.Api.Concrete
             }
         }
 
-        #region IList members
-
         public int Count
         {
             get { return _table.NumFields; }
@@ -34,7 +32,7 @@ namespace MW5.Api.Concrete
             {
                 if (index >= 0 && index < _table.NumFields)
                 {
-                    return new AttributeField(_table.Field[index]);
+                    return new AttributeField(_table.Field[index], index);
                 }
                 return null;
             }
@@ -99,8 +97,6 @@ namespace MW5.Api.Concrete
         {
             _table.EditInsertField(item.GetInternal(), index);
         }
-
-        #endregion
 
         public int IndexByName(string fieldName)
         {
