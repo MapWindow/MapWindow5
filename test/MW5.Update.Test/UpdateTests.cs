@@ -131,8 +131,10 @@ namespace MW5.Update.Test
                     return;
                 }
 
+                string content = null;
                 using (var reader = new StreamReader(stream))
                 {
+                    content = reader.ReadToEnd();
                     var serializer = new JsonSerializer();
                     var availableInstallers =
                         (Dictionary<string, InstallerInfo>)

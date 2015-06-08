@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using MW5.Plugins.Enums;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -11,7 +8,7 @@ using MW5.Views.Abstract;
 
 namespace MW5.Views
 {
-    public class WelcomePresenter: BasePresenter<IWelcomeView, WelcomeViewModel>
+    public class WelcomePresenter : BasePresenter<IWelcomeView, WelcomeViewModel>
     {
         private readonly ILayerService _layerService;
         private readonly IProjectService _projectService;
@@ -23,13 +20,18 @@ namespace MW5.Views
             _layerService = layerService;
             _projectService = projectService;
 
-            view.GettingStartedClicked += () => PathHelper.OpenUrl("https://mapwindow5.codeplex.com/documentation");
+            view.GettingStartedClicked += () => PathHelper.OpenUrl("http://www.mapwindow.org/documentation/mapwindow5/getting-started.html");
             view.DocumentsClicked += () => PathHelper.OpenUrl("https://mapwindow5.codeplex.com/documentation");
-            view.DonateClicked += () => PathHelper.OpenUrl("http://www.mapwindow.org/pages/donate.php");
+            view.DonateClicked += () => PathHelper.OpenUrl("http://www.mapwindow.org/documentation/mapwindow5/support.html");
             view.LogoClicked += () => PathHelper.OpenUrl("http://mapwindow5.codeplex.com");
              
             view.OpenLayerClicked += OpenLayerClicked;
             view.OpenProjectClicked += OpenProjectClicked;
+        }
+
+        public override bool ViewOkClicked()
+        {
+            return true;
         }
 
         private void OpenLayerClicked()
@@ -47,16 +49,16 @@ namespace MW5.Views
                 MessageService.Current.Info("Invalid project reference.");
                 return;
             }
-
-            // showing dialog
+            
             if (View.ProjectId == -1)
             {
-                if (_projectService.Open())
+                // showing file open dialog:
+                if (!_projectService.Open())
                 {
+                    // Pressed cancel:
                     View.Close();
                     return;
                 }
-
             }
 
             // recent project
@@ -64,11 +66,6 @@ namespace MW5.Views
             _projectService.Open(path);
 
             View.Close();
-        }
-
-        public override bool ViewOkClicked()
-        {
-            return true;
         }
     }
 }

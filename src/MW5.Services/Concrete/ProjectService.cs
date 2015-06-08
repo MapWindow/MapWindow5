@@ -309,6 +309,12 @@ namespace MW5.Services.Concrete
             {
                 string state = reader.ReadToEnd();
                 var project = state.Deserialize<XmlProject>();
+                if (project.Settings == null)
+                {
+                    // TODO: What to do, create new one?   
+                    project.Settings = new XmlProjectSettings();
+                }
+
                 project.Settings.LoadAsFilename = filename;
 
                 if (!_projectLoader.Restore(project))
