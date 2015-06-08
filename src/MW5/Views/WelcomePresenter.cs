@@ -53,12 +53,12 @@ namespace MW5.Views
             if (View.ProjectId == -1)
             {
                 // showing file open dialog:
-                if (!_projectService.Open())
+                if (_projectService.Open())
                 {
-                    // Pressed cancel:
                     View.Close();
-                    return;
                 }
+
+                return;    // it was cancelled, let the user go on working with form
             }
 
             // recent project

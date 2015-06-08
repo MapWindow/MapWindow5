@@ -234,13 +234,12 @@ namespace MW5.Services.Concrete
 
                 if (filename.ToLower().EndsWith(".mwproj"))
                 {
-                    Open(filename);
+                    return Open(filename);
                 }
-                else
-                {
-                    OpenLegacyProject(filename);
-                }
+                
+                return OpenLegacyProject(filename);
             }
+
             return false;
         }
 
@@ -264,11 +263,11 @@ namespace MW5.Services.Concrete
             return true;
         }
 
-        public void OpenLegacyProject(string filename, bool silent = false)
+        public bool OpenLegacyProject(string filename, bool silent = false)
         {
             if (!CheckProjectFilename(filename, silent))
             {
-                return;
+                return false;
             }
 
             Logger.Current.Info("Start opening legacy MapWindow 4 project: " + filename);
@@ -290,28 +289,35 @@ namespace MW5.Services.Concrete
                     }
 
                     Logger.Current.Info("Project was loaded: " + result);
+
+                    return true;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    MessageService.Current.Warn("Invalid project format: " + filename);
+                    string msg = "Invalid project format: " + filename;
+                    Logger.Current.Warn(msg, ex);
+                    MessageService.Current.Warn(msg);
                 }
             }
+
+            return false;
         }
 
-        public void Open(string filename, bool silent = false)
+        public bool Open(string filename, bool silent = false)
         {
             if (!CheckProjectFilename(filename, silent))
             {
-                return;
+                return false;
             }
 
             using (var reader = new StreamReader(filename))
             {
                 string state = reader.ReadToEnd();
                 var project = state.Deserialize<XmlProject>();
+
                 if (project.Settings == null)
                 {
-                    // TODO: What to do, create new one?   
+                    // in case of a bit older project version, where no such settings existed
                     project.Settings = new XmlProjectSettings();
                 }
 
@@ -321,7 +327,7 @@ namespace MW5.Services.Concrete
                 {
                     Clear();
                     SetEmptyProject();
-                    return;
+                    return false;
                 }
 
                 AppConfig.Instance.AddRecentProject(filename);
@@ -334,6 +340,8 @@ namespace MW5.Services.Concrete
                 }
 
                 Logger.Current.Info("Project was loaded: " + filename);
+
+                return true;
             }
 
             //OnProjectChanged();
