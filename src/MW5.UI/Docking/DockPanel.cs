@@ -16,17 +16,17 @@ namespace MW5.UI.Docking
     {
         private readonly DockingManager _dockingManager;
         private readonly Control _control;
-        private readonly Form _mainForm;
+        private readonly Control _parent;
 
-        internal DockPanel(DockingManager dockingManager, Control control, Form mainForm)
+        internal DockPanel(DockingManager dockingManager, Control control, Control parent)
         {
             if (dockingManager == null) throw new ArgumentNullException("dockingManager");
             if (control == null) throw new ArgumentNullException("control");
-            if (mainForm == null) throw new ArgumentNullException("mainForm");
+            if (parent == null) throw new ArgumentNullException("parent");
 
             _dockingManager = dockingManager;
             _control = control;
-            _mainForm = mainForm;
+            _parent = parent;
         }
 
         public Control Control
@@ -55,7 +55,8 @@ namespace MW5.UI.Docking
             {
                 return;     // no need to throw exception if it not visible
             }
-            var ctrl = parent != null ? parent.Control : _mainForm;
+
+            var ctrl = parent != null ? parent.Control : _parent;
             _dockingManager.DockControl(_control, ctrl, DockHelper.MapWindowToSyncfusion(state), size);
         }
 

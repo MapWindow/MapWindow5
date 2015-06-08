@@ -4,6 +4,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.TableEditor.Menu;
+using MW5.Plugins.TableEditor.Services;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -15,6 +16,7 @@ namespace MW5.Plugins.TableEditor
         private MapListener _mapListener;
         private MenuGenerator _menuGenerator;
         private ProjectListener _projectListener;
+        private DockPanelService _dockPanelService;
 
         public override void RegisterServices(IApplicationContainer container)
         {
@@ -30,6 +32,7 @@ namespace MW5.Plugins.TableEditor
             _menuListener = _context.Container.GetSingleton<MenuListener>();
             _mapListener = _context.Container.GetSingleton<MapListener>();
             _projectListener = _context.Container.GetSingleton<ProjectListener>();
+            _dockPanelService = _context.Container.GetInstance<DockPanelService>();
         }
 
         public override void Terminate()

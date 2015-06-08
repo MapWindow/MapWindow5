@@ -42,15 +42,15 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.clb.CheckOnClick = true;
             this.clb.FormattingEnabled = true;
-            this.clb.Location = new System.Drawing.Point(20, 35);
+            this.clb.Location = new System.Drawing.Point(12, 35);
             this.clb.Name = "clb";
-            this.clb.Size = new System.Drawing.Size(274, 139);
+            this.clb.Size = new System.Drawing.Size(278, 169);
             this.clb.TabIndex = 12;
             // 
             // Label1
             // 
             this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Label1.Location = new System.Drawing.Point(17, 16);
+            this.Label1.Location = new System.Drawing.Point(12, 16);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(100, 16);
             this.Label1.TabIndex = 9;
@@ -64,7 +64,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(213, 183);
+            this.btnCancel.Location = new System.Drawing.Point(205, 210);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 32;
@@ -77,7 +77,7 @@
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(123, 183);
+            this.btnOk.Location = new System.Drawing.Point(115, 210);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 31;
@@ -88,7 +88,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(310, 221);
+            this.ClientSize = new System.Drawing.Size(302, 241);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.clb);

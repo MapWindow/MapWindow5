@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Helpers;
+using MW5.Plugins.TableEditor.Services;
 using MW5.Plugins.TableEditor.Views;
 using MW5.UI.Menu;
 
@@ -38,10 +40,16 @@ namespace MW5.Plugins.TableEditor.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.ShowTable:
-                    var layer = _context.Map.Layers.Current;
+                    var layer = _context.Legend.SelectedLayer;
                     if (layer.IsVector)
                     {
-                        _presenter.Run(layer);
+                        _presenter.OpenTable(layer);
+                    }
+
+                    var panel = _context.DockPanels.Find(DockPanelService.TableEditorDockPanelKey);
+                    if (panel != null && !panel.Visible)
+                    {
+                        panel.Visible = true;
                     }
                     break;
             }

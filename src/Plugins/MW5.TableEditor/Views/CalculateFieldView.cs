@@ -19,7 +19,7 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class CalculateFieldView : MapWindowView<IFeatureSet>, ICalculateFieldView
+    public partial class CalculateFieldView : CalculateFieldViewBase, ICalculateFieldView
     {
         public CalculateFieldView()
         {
@@ -146,4 +146,6 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
     }
+
+    public class CalculateFieldViewBase : MapWindowView<IFeatureSet> { }
 }

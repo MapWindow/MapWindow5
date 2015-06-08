@@ -56,22 +56,25 @@ namespace MW5.Services.Concrete
 
         private bool RemoveLayerCore(int layerHandle, bool silent)
         {
+            var layer = _context.Map.GetLayer(layerHandle);
+
+            if (!silent)
+            {
+                if (!MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
+                {
+                    return false;
+                }
+            }
+
             var args = new LayerRemoveEventArgs(layerHandle);
             _broadcaster.BroadcastEvent(p => p.BeforeRemoveLayer_, _context.Legend, args);
             if (args.Cancel)
             {
                 return false;
             }
-
-            var layer = _context.Map.GetLayer(layerHandle);
-            
-            if (silent || MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))
-            {
-                _context.Map.Layers.Remove(layerHandle);
-                return true;
-            }
-
-            return false;
+                
+            _context.Map.Layers.Remove(layerHandle);
+            return true;
         }
 
         public bool RemoveLayer(LayerIdentity identity)

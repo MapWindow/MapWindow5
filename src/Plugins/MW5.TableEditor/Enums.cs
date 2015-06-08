@@ -15,6 +15,9 @@
         InvertSelection = 10,
         CalculateField = 11,
         Join = 12,
+        LayoutTabbed = 13,
+        LayoutHorizontal = 14,
+        LayoutVertical = 15,
     }
 
     /// <summary>The unit of area.</summary>

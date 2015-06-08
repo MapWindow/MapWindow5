@@ -70,6 +70,7 @@
     <Compile Include="ColorHelper.cs" />
     <Compile Include="ControlHelper.cs" />
     <Compile Include="DataContractSerializationHelper.cs" />
+    <Compile Include="DataGridViewHelper.cs" />
     <Compile Include="EnumHelper.cs" />
     <Compile Include="EventHelper.cs" />
     <Compile Include="Log\IApplicationCallback.cs" />

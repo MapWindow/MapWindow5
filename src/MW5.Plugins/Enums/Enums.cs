@@ -33,6 +33,7 @@
         Top = 3,
         Bottom = 4,
         Tabbed = 5,
+        Fill = 6,
     }
 
     public enum DockPanels
@@ -172,5 +173,12 @@
         MainMenu = 0,
         Toolbar = 1,
         StatusBar = 2,
+    }
+
+    public enum TableEditorLayout
+    {
+        Tabbed = 0,
+        Vertical = 1,
+        Horizontal = 2,
     }
 }

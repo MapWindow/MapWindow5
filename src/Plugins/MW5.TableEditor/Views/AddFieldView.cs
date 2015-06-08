@@ -18,7 +18,7 @@ using MW5.UI.Helpers;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class AddFieldView : MapWindowView<IAttributeTable>, IAddFieldView
+    public partial class AddFieldView : AddFieldViewBase, IAddFieldView
     {
         public AddFieldView()
         {
@@ -58,4 +58,6 @@ namespace MW5.Plugins.TableEditor.Views
             get { return btnOk; }
         }
     }
+
+    public class AddFieldViewBase : MapWindowView<IAttributeTable> { }
 }

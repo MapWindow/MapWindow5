@@ -83,11 +83,10 @@ namespace MW5.Plugins.Concrete
             ShowZoombar = true;
             SpatialIndexFeatureCount = 10000;
             SymbolobyStorage = SymbologyStorage.Project;
+            TableEditorLayout = TableEditorLayout.Tabbed;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
-
-           
         }
 
         [OnDeserializing]
@@ -306,6 +305,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public SymbologyStorage SymbolobyStorage { get; set; }
+
+        [DataMember]
+        public TableEditorLayout TableEditorLayout { get; set; }
 
         [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }

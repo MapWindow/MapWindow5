@@ -10,7 +10,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    internal class TableEditorGrid: VirtualGrid
+    public class TableEditorGrid: VirtualGrid
     {
         private readonly Color _joinColumnBackColor = Color.OldLace;
 
@@ -43,7 +43,15 @@ namespace MW5.Plugins.TableEditor.Editor
 
                 RowManager.Reset(_shapefile);
 
+                RowCount = 0;
+                
+                // this will clear all rows at once or else it will try to remove them one by one (veeeery slow)
                 RowCount = _table.NumRows;
+
+                bool editing = TableSource.EditingTable;
+                ReadOnly = !editing;
+
+                Invalidate();
             }
         }
 

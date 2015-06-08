@@ -5,7 +5,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Editor
 {
-    internal abstract class VirtualGrid: DataGridView
+    public abstract class VirtualGrid: DataGridView
     {
         protected RowManager _rowManager;
         private Color _selectionColor = Color.LightBlue;

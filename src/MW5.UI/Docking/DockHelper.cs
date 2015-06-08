@@ -26,6 +26,8 @@ namespace MW5.UI.Docking
                     return DockPanelState.Right;
                 case DockingStyle.Tabbed:
                     return DockPanelState.Tabbed;
+                case DockingStyle.Fill:
+                    return DockPanelState.Fill;
                 case DockingStyle.None:
                 default:
                     return DockPanelState.None;
@@ -47,6 +49,8 @@ namespace MW5.UI.Docking
                 case DockPanelState.Tabbed:
                     return DockingStyle.Tabbed;
                 case DockPanelState.None:
+                case DockPanelState.Fill:
+                    return DockingStyle.Fill;
                 default:
                     return DockingStyle.None;
             }

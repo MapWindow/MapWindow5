@@ -21,11 +21,6 @@ namespace MW5.Plugins.Mvp
 
         protected void WireUpMenus(Control parent)
         {
-            if (parent == null)
-            {
-                return;
-            }
-
             var provider = parent as IMenuProvider;
             if (provider != null)
             {

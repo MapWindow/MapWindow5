@@ -34,6 +34,7 @@ namespace MW5.Plugins.TableEditor
 
             plugin.BeforeRemoveLayer += BeforeRemoveLayer;
             plugin.UpdateTableJoin += OnUpdateTableJoin;
+            plugin.LayerRemoved += plugin_LayerRemoved;
         }
 
         private void OnUpdateTableJoin(object sender, Api.Events.UpdateJoinEventArgs e)
@@ -56,6 +57,11 @@ namespace MW5.Plugins.TableEditor
             model.ReloadExternal(e.TableToFill, e.Options);
         }
 
+        private void plugin_LayerRemoved(Api.Legend.Abstract.IMuteLegend legend, Api.Legend.Events.LayerEventArgs e)
+        {
+            _presenter.CloseTable(e.LayerHandle);
+        }
+
         private void BeforeRemoveLayer(object sender, LayerRemoveEventArgs e)
         {
             if (!_presenter.HasLayer(e.LayerHandle))
@@ -63,7 +69,7 @@ namespace MW5.Plugins.TableEditor
                 return;
             }
 
-            if (!_presenter.CheckAndSaveChanges(true))
+            if (!_presenter.CheckAndSaveChanges(e.LayerHandle, true))
             {
                 e.Cancel = true;
             }

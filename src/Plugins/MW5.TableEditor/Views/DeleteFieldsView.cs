@@ -16,7 +16,7 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class DeleteFieldsView : MapWindowView<IAttributeTable>, IDeleteFieldsView
+    public partial class DeleteFieldsView : DeleteFieldsViewBase, IDeleteFieldsView
     {
         public DeleteFieldsView()
         {
@@ -58,4 +58,6 @@ namespace MW5.Plugins.TableEditor.Views
             btnOk.Enabled = clb.SelectedItems.Count > 0;
         }
     }
+
+    public class DeleteFieldsViewBase: MapWindowView<IAttributeTable> { }
 }

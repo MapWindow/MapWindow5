@@ -110,15 +110,17 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Editor\SortItem.cs" />
-    <Compile Include="Forms\JoinExcelForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\JoinExcelForm.Designer.cs">
-      <DependentUpon>JoinExcelForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\ITablePanel.cs" />
+    <Compile Include="Model\TablePanel.cs" />
+    <Compile Include="Model\TablePanelCancelEventArgs.cs" />
+    <Compile Include="Model\TablePanelCollection.cs" />
+    <Compile Include="Model\DockPanelMetadata.cs" />
+    <Compile Include="Model\TablePanelEventArgs.cs" />
+    <Compile Include="Model\TablePanelInfo.cs" />
+    <Compile Include="Services\DockPanelService.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
@@ -170,7 +172,7 @@
       <DependentUpon>RenameFieldView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TableEditorView.cs">
-      <SubType>Form</SubType>
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Views\TableEditorView.Designer.cs">
       <DependentUpon>TableEditorView.cs</DependentUpon>
@@ -210,9 +212,6 @@
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\JoinExcelForm.resx">
-      <DependentUpon>JoinExcelForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\CalculateFieldView.resx">
       <DependentUpon>CalculateFieldView.cs</DependentUpon>
     </EmbeddedResource>
@@ -288,7 +287,14 @@
     <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Forms\" />
     <Folder Include="Legacy\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico_table24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_save1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

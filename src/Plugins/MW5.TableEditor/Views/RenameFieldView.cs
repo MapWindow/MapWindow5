@@ -15,7 +15,7 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class RenameFieldView : MapWindowView<IAttributeTable>, IRenameFieldView
+    public partial class RenameFieldView : RenameFieldViewBase, IRenameFieldView
     {
         public RenameFieldView()
         {
@@ -47,4 +47,6 @@ namespace MW5.Plugins.TableEditor.Views
             get { return btnOk; }
         }
     }
+
+    public class RenameFieldViewBase : MapWindowView<IAttributeTable> { }
 }
