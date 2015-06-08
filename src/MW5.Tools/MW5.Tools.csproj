@@ -73,6 +73,7 @@
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPoints.cs" />
     <Compile Include="Views\Controls\BooleanParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -199,6 +200,7 @@
   <ItemGroup>
     <None Include="Resources\img_toolbox16.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -42,6 +42,24 @@ namespace MW5.Plugins.Toolbox
             tool = CreateTool("Import layer", ToolKeys.ImportLayerInGeodatabase);
             tool.Description = "Imports layer in the geodatabase";
             group.Tools.Add(tool);
+
+            // TODO: Make this easier. Perhaps using reflection. Namespace of tool is MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+            // 1) New tool in new group
+            group = toolbox.CreateGroup("Geoprocesssing", GroupKeys.Geoprocessing, _plugin.Identity);
+            toolbox.Groups.Add(group);
+
+            // 2) Create subgroup
+            var subgroup = toolbox.CreateGroup("VectorGeometryTools", GroupKeys.VectorGeometryTools, _plugin.Identity);
+            group.SubGroups.Add(subgroup);
+
+            // 3) Create tool:
+            tool = CreateTool("Random points", ToolKeys.RandomPoints);
+            tool.Description = "Create a new shapefile with random points";
+
+            // 4) Add tool to subgroup:
+            subgroup.Tools.Add(tool);
+
+            // TODO: Let the icons be changed, preferable in the tools class itself.
         }
 
         private IGisTool CreateTool(string name, string key)
