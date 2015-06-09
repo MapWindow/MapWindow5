@@ -14,9 +14,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     using System;
     using System.Threading;
 
+    using MW5.Api.Concrete;
+    using MW5.Api.Enums;
     using MW5.Api.Interfaces;
     using MW5.Plugins.Interfaces;
     using MW5.Plugins.Services;
+    using MW5.Shared;
     using MW5.Tools.Model;
     using MW5.Tools.Model.Parameters;
     using MW5.Tools.Properties;
@@ -31,29 +34,23 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     {
         #region Public Properties
 
-        /// <summary>
-        /// Gets or sets the input layer.
-        /// </summary>
+        /// <summary>Gets or sets the input layer.</summary>
         [RequiredParameter("Layer for bounding box", 0)]
         public LayerParameter InputLayer { get; set; }
 
-        /// <summary>
-        /// Gets or sets the new layer name.
-        /// </summary>
+        /// <summary>Gets or sets the new layer name.</summary>
         [RequiredParameter("New layer name", 1)]
         public StringParameter NewLayerName { get; set; }
 
-        /// <summary>
-        /// Gets or sets the num points.
-        /// </summary>
+        /// <summary>Gets or sets the overwrite.</summary>
+        [RequiredParameter("Overwrite output file", 2)]
+        public BooleanParameter Overwrite { get; set; }
+
+        /// <summary>Gets or sets the num points.</summary>
         [RequiredParameter("Number of points", 3)]
         public StringParameter NumPoints { get; set; }
 
-        /// <summary>
-        /// Gets or sets the overwrite.
-        /// </summary>
-        [RequiredParameter("Overwrite", 4)]
-        public BooleanParameter Overwrite { get; set; }
+        // TODO: Add optional parameters
 
         #endregion
 
@@ -62,31 +59,30 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Initializes lists of options.
         /// </summary>
-        /// <param name="context">
-        /// The context.
-        /// </param>
+        /// <param name="context">The context.</param>
         public override void Initialize(IAppContext context)
         {
             // TODO: Set default value for NumPoints
+            // TODO: Set title of View
+            // TODO: Make new parameter to select a new file location for NewLayerName
         }
 
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
+        /// <returns>True on success</returns>
         public override bool Run()
         {
+            Logger.Current.Info("Run create random points tool");
             var fs = this.InputLayer.Value.FeatureSet;
-            var newLayerName = this.NewLayerName.Value;
-            int numPoints;
-            if (int.TryParse(this.NumPoints.Value, out numPoints))
+
+            ulong numPoints;
+            if (ulong.TryParse(this.NumPoints.Value, out numPoints))
             {
-                return RunCore(fs, newLayerName, numPoints);
+                return RunCore(fs, this.NewLayerName.Value, numPoints, this.Overwrite.Value);
             }
 
-            MessageService.Current.Warn("Number points is invalid");
+            Logger.Current.Error("Number points is invalid");
             return false;
         }
 
@@ -97,27 +93,26 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Core processing.
         /// </summary>
-        /// <param name="inputLayer">
-        /// The input Layer.
-        /// </param>
-        /// <param name="newLayerName">
-        /// The new Layer Name.
-        /// </param>
-        /// <param name="numPoints">
-        /// The num Points.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
-        private static bool RunCore(ILayerSource inputLayer, string newLayerName, int numPoints)
+        /// <param name="inputLayer">The input Layer.</param>
+        /// <param name="newLayerName">The new Layer Name.</param>
+        /// <param name="numPoints">The number points that needs to be created.</param>
+        /// <param name="overwrite">Overwrite the output file or not</param>
+        /// <returns>True on success.</returns>
+        private static bool RunCore(ILayerSource inputLayer, string newLayerName, ulong numPoints, bool overwrite)
         {
+            // TODO: Open log tab of view
+
+            Logger.Current.Debug("Creating {0} random points", numPoints);
+
             // Needed to create a random value between a range of doubles:
             const int Multiplier = 10000000;
 
             // Load shapefile to get bounds:
             var envelop = inputLayer.Envelope;
-            MessageService.Current.Info("envelop.minX: " + envelop.MinX);
-            MessageService.Current.Info("envelop.maxX: " + envelop.MaxX);
+
+            // Create a new shapefile:
+            var featureSet = new FeatureSet(GeometryType.Point);
+            featureSet.Projection.CopyFrom(inputLayer.Projection);
 
             // Init randomizers:
             var randomX = new Random();
@@ -126,18 +121,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             Thread.Sleep(1);
             var randomY = new Random();
 
-            var x = randomX.Next((int)Math.Round(envelop.MinX * Multiplier), (int)Math.Round(envelop.MaxX * Multiplier))
-                    / Multiplier;
-            var y = randomY.Next((int)Math.Round(envelop.MinY * Multiplier), (int)Math.Round(envelop.MaxY * Multiplier))
-                    / Multiplier;
-            MessageService.Current.Info("x: " + x);
-            MessageService.Current.Info("y: " + y);
+            for (ulong i = 0; i < numPoints; i++)
+            {
+                var x = randomX.Next(
+                    (int)Math.Round(envelop.MinX * Multiplier),
+                    (int)Math.Round(envelop.MaxX * Multiplier)) / Multiplier;
+                var y = randomY.Next(
+                    (int)Math.Round(envelop.MinY * Multiplier),
+                    (int)Math.Round(envelop.MaxY * Multiplier)) / Multiplier;
+                var feature = new Geometry(GeometryType.Point);
+                feature.Points.Add(new Coordinate(x, y));
+                featureSet.Features.EditAdd(feature);
+            }
+
+            Logger.Current.Debug("New feature set has {0} features", featureSet.NumFeatures);
 
             // Create new shapefile:
-            MessageService.Current.Warn("Warning");
-            MessageService.Current.Info("Layer was imported: " + newLayerName);
+            featureSet.SaveAsShapefile(newLayerName);
+            featureSet.Dispose();
+            Logger.Current.Info("Layer ({0}) with random points is created: ", newLayerName);
 
-            return false;
+            return true;
         }
 
         #endregion

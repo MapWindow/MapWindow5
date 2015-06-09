@@ -16,6 +16,8 @@ using MW5.Tools.Views;
 
 namespace MW5.Plugins.Toolbox
 {
+    using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+
     public class ToolboxListener
     {
         private readonly IAppContext _context;
@@ -42,9 +44,13 @@ namespace MW5.Plugins.Toolbox
                     {
                         _context.View.ShowChildView(form);
                     }
+
                     break;
                 case ToolKeys.ImportLayerInGeodatabase:
                     _context.Container.Run<GisToolPresenter, GisToolBase>(new ImportLayerTool());
+                    break;
+                case ToolKeys.RandomPoints:
+                    _context.Container.Run<GisToolPresenter, GisToolBase>(new RandomPoints());
                     break;
                 default:
                     string msg = "No handler was found for the specified key: " + e.Tool.Key;
