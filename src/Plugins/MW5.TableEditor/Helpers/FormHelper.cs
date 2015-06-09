@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MW5.UI.Controls;
 
 namespace MW5.Plugins.TableEditor.Helpers
 {
@@ -18,7 +19,7 @@ namespace MW5.Plugins.TableEditor.Helpers
         {
             var form = new Form();
             var label = new Label();
-            var textBox = new TextBox();
+            var textBox = new WatermarkTextbox();
             var buttonOk = new Button();
             var buttonCancel = new Button();
 

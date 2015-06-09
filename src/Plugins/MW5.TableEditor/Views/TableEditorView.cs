@@ -210,6 +210,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             mnuExportFeatures.Enabled = true;
             mnuFind.Enabled = true;
+            mnuFindNext.Enabled = true;
             mnuQuery.Enabled = true;
 
             mnuLayoutHorizontal.Enabled = true;

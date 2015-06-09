@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.TableEditor.Model;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.TableEditor.Editor
@@ -171,6 +172,44 @@ namespace MW5.Plugins.TableEditor.Editor
             var result = list.Select(item => item.RealIndex);
 
             RowManager.SetSorting(cmnIndex, ascending, result);
+        }
+
+        public bool FindNext(SearchInfo info)
+        {
+            for (var i = info.RowIndex; i < Rows.Count; i++)
+            {
+                for (var j = 0; j < Columns.Count; j++)
+                {
+                    if (i == info.RowIndex && j <= info.ColumnIndex)
+                    {
+                        continue;
+                    }
+
+                    if (this[j, i].Value == null)
+                    {
+                        continue;
+                    }
+
+                    if (!this[j, i].Visible)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        var cellValue = this[j, i].Value.ToString();
+                        if (cellValue.ToLower().Contains(info.Token))
+                        {
+                            CurrentCell = this[j, i];
+                            info.AddNewMatch(i, j);
+                            return true;
+                        }
+                    }
+                    catch {}
+                }
+            }
+
+            return false;
         }
     }
 }

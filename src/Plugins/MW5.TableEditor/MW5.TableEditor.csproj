@@ -115,6 +115,7 @@
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />
     <Compile Include="Model\MeasurementInfo.cs" />
+    <Compile Include="Model\SearchInfo.cs" />
     <Compile Include="Model\TablePanel.cs" />
     <Compile Include="Model\TablePanelCancelEventArgs.cs" />
     <Compile Include="Model\TablePanelCollection.cs" />

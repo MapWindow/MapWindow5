@@ -11,6 +11,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Editor;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
 
@@ -233,6 +234,70 @@ namespace MW5.Plugins.TableEditor.Views
                     FeatureSet.InvertSelection();
                     OnViewSelectionChanged(View.ActiveLayerHandle);
                     break;
+                case TableEditorCommand.Find:
+                    Find();
+                    break;
+                case TableEditorCommand.FindNext:
+                    FindNext();
+                    break;
+            }
+        }
+
+        private void Find()
+        {
+            var token = string.Empty;
+
+            if (FormHelper.InputBox("Find", "Search:", ref token) != DialogResult.OK ||
+                string.IsNullOrWhiteSpace(token))
+            {
+                return;
+            }
+
+            var info = GetTableInfo(View.ActiveLayerHandle);
+            if (info == null)
+            {
+                return;
+            }
+
+            info.SearchInfo.StartNewSearch(token);
+
+            FindNext();
+        }
+
+        private void FindNext()
+        {
+            var info = GetTableInfo(View.ActiveLayerHandle);
+            if (info == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(info.SearchInfo.Token))
+            {
+                MessageService.Current.Info("No search word is specified");
+                return;
+            }
+
+            if (!info.Grid.FindNext(info.SearchInfo))
+            {
+                if (info.SearchInfo.Count == 0)
+                {
+                    MessageService.Current.Info("No occurencies of the search word were found.");
+                }
+                else if (info.SearchInfo.Count == 1)
+                {
+                    info.Grid.CurrentCell = info.Grid[info.SearchInfo.ColumnIndex, info.SearchInfo.RowIndex];
+                    MessageService.Current.Info("There is only one instance of search word.");
+                }
+                else
+                {
+                    if (MessageService.Current.Ask("The search has reached the end of the table. " + Environment.NewLine +
+                                                   "Do you want to restart it?"))
+                    {
+                        info.SearchInfo.StartNewSearch(info.SearchInfo.Token);
+                        FindNext();
+                    }
+                }
             }
         }
 

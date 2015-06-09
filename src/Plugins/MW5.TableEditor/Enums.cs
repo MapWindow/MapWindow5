@@ -19,6 +19,8 @@
         LayoutHorizontal = 14,
         LayoutVertical = 15,
         UpdateMeasurements = 16,
+        Find = 17,
+        FindNext = 18,
     }
 
     /// <summary>

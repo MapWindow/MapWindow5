@@ -19,6 +19,7 @@ namespace MW5.Plugins.TableEditor.Model
             Grid = grid;
             Layer = layer;
             Panel = panel;
+            SearchInfo = new SearchInfo();
         }
 
         public TableEditorGrid Grid { get; private set; }
@@ -26,5 +27,7 @@ namespace MW5.Plugins.TableEditor.Model
         public ILegendLayer Layer { get; private set; }
 
         public ITablePanel Panel { get; private set; }
+
+        public SearchInfo SearchInfo { get; private set; }
     }
 }
