@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
+using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor.Model
 {
@@ -19,7 +20,6 @@ namespace MW5.Plugins.TableEditor.Model
             Grid = grid;
             Layer = layer;
             Panel = panel;
-            SearchInfo = new SearchInfo();
         }
 
         public TableEditorGrid Grid { get; private set; }
@@ -28,6 +28,8 @@ namespace MW5.Plugins.TableEditor.Model
 
         public ITablePanel Panel { get; private set; }
 
-        public SearchInfo SearchInfo { get; private set; }
+        //public SearchInfo SearchInfo { get; private set; }
+
+        public FindReplacePresenter FindReplace { get; set;}
     }
 }

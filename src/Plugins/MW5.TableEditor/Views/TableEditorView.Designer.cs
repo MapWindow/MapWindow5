@@ -77,7 +77,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuLayoutHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLayoutTabbed = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNoLayers = new System.Windows.Forms.Label();
-            this.mnuFindNext = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
             this.SuspendLayout();
@@ -140,19 +139,19 @@ namespace MW5.Plugins.TableEditor.Views
             // mnuStartEdit
             // 
             this.mnuStartEdit.Name = "mnuStartEdit";
-            this.mnuStartEdit.Size = new System.Drawing.Size(145, 22);
+            this.mnuStartEdit.Size = new System.Drawing.Size(152, 22);
             this.mnuStartEdit.Text = "Start editing";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(142, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuSaveChanges
             // 
             this.mnuSaveChanges.Name = "mnuSaveChanges";
-            this.mnuSaveChanges.Size = new System.Drawing.Size(145, 22);
-            this.mnuSaveChanges.Text = "Save changes";
+            this.mnuSaveChanges.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveChanges.Text = "Stop editing";
             // 
             // toolStripSeparator1
             // 
@@ -303,7 +302,6 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.toolTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuFind,
-            this.mnuFindNext,
             this.mnuReplace,
             this.toolStripSeparator7,
             this.mnuImportFieldDefinitions,
@@ -414,13 +412,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.lblNoLayers.Text = "No layers are opened in the table editor.";
             this.lblNoLayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // mnuFindNext
-            // 
-            this.mnuFindNext.Name = "mnuFindNext";
-            this.mnuFindNext.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.mnuFindNext.Size = new System.Drawing.Size(272, 22);
-            this.mnuFindNext.Text = "Find next";
-            // 
             // TableEditorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -481,7 +472,6 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolStripMenuItem mnuSaveChanges;
         private ToolStripMenuItem mnuUpdateMeasurements;
         private ToolStripSeparator toolStripSeparator7;
-        private ToolStripMenuItem mnuFindNext;
 
     }
 }

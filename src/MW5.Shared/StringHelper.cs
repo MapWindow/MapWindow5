@@ -16,6 +16,11 @@ namespace MW5.Shared
             return s1.ToLower().Contains(s2.ToLower());
         }
 
+        public static bool StartsWithIgnoreCase(this string s1, string s2)
+        {
+            return s1.ToLower().StartsWith(s2.ToLower());
+        }
+
         // just as a memo, for not forgeting it
         public static string Join(IEnumerable<string> list, string separator)
         {

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -235,70 +237,33 @@ namespace MW5.Plugins.TableEditor.Views
                     OnViewSelectionChanged(View.ActiveLayerHandle);
                     break;
                 case TableEditorCommand.Find:
-                    Find();
+                    Find(false);
                     break;
-                case TableEditorCommand.FindNext:
-                    FindNext();
+                case TableEditorCommand.Replace:
+                    Find(true);
                     break;
             }
         }
 
-        private void Find()
-        {
-            var token = string.Empty;
-
-            if (FormHelper.InputBox("Find", "Search:", ref token) != DialogResult.OK ||
-                string.IsNullOrWhiteSpace(token))
-            {
-                return;
-            }
-
-            var info = GetTableInfo(View.ActiveLayerHandle);
-            if (info == null)
-            {
-                return;
-            }
-
-            info.SearchInfo.StartNewSearch(token);
-
-            FindNext();
-        }
-
-        private void FindNext()
+        private void Find(bool replace)
         {
             var info = GetTableInfo(View.ActiveLayerHandle);
-            if (info == null)
+            if (info == null) return;
+
+            if (info.FindReplace != null && info.FindReplace.Model.Replace != replace)
             {
-                return;
+                info.FindReplace.View.Close();
+                info.FindReplace = null;
             }
 
-            if (string.IsNullOrWhiteSpace(info.SearchInfo.Token))
+            if (info.FindReplace == null)
             {
-                MessageService.Current.Info("No search word is specified");
-                return;
+                info.FindReplace = _context.Container.GetInstance<FindReplacePresenter>();
             }
 
-            if (!info.Grid.FindNext(info.SearchInfo))
-            {
-                if (info.SearchInfo.Count == 0)
-                {
-                    MessageService.Current.Info("No occurencies of the search word were found.");
-                }
-                else if (info.SearchInfo.Count == 1)
-                {
-                    info.Grid.CurrentCell = info.Grid[info.SearchInfo.ColumnIndex, info.SearchInfo.RowIndex];
-                    MessageService.Current.Info("There is only one instance of search word.");
-                }
-                else
-                {
-                    if (MessageService.Current.Ask("The search has reached the end of the table. " + Environment.NewLine +
-                                                   "Do you want to restart it?"))
-                    {
-                        info.SearchInfo.StartNewSearch(info.SearchInfo.Token);
-                        FindNext();
-                    }
-                }
-            }
+            var model = new FindReplaceModel(info.Grid, info.Layer, replace);
+
+            info.FindReplace.Run(model);
         }
 
         private void ShowSelected()
@@ -415,8 +380,15 @@ namespace MW5.Plugins.TableEditor.Views
         {
             if (_tables.ContainsKey(layerHandle))
             {
-                View.Panels.Remove(_tables[layerHandle].Panel);
+                var info = _tables[layerHandle];
+                
+                View.Panels.Remove(info.Panel);
                 _tables.Remove(layerHandle);
+
+                if (info.FindReplace != null)
+                {
+                    info.FindReplace.View.ForceClose();
+                }
             }
 
             View.UpdateView();

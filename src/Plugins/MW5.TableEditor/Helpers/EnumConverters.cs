@@ -58,5 +58,37 @@ namespace MW5.Plugins.TableEditor.Helpers
         }
     }
 
+    public class SearchDirectionConverter : IEnumConverter<SearchDirection>
+    {
+        public string GetString(SearchDirection value)
+        {
+            switch (value)
+            {
+                case SearchDirection.Down:
+                    return "Down";
+                case SearchDirection.Up:
+                    return "Up";
+            }
 
+            return string.Empty;
+        }
+    }
+
+    public class MatchTypeConverter : IEnumConverter<MatchType>
+    {
+        public string GetString(MatchType value)
+        {
+            switch (value)
+            {
+                case MatchType.Contains:
+                    return "Contains";
+                case MatchType.Match:
+                    return "Whole field";
+                case MatchType.Start:
+                    return "Start of field";
+            }
+
+            return string.Empty;
+        }
+    }
 }

@@ -113,6 +113,7 @@
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\FindReplaceFieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />
     <Compile Include="Model\MeasurementInfo.cs" />
     <Compile Include="Model\SearchInfo.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Model\TablePanelInfo.cs" />
     <Compile Include="Services\DockPanelService.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
+    <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
     <Compile Include="Views\Abstract\IUpdateMeasurements.cs" />
@@ -150,6 +152,8 @@
     <Compile Include="Editor\TableEditorGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Views\FindReplaceModel.cs" />
+    <Compile Include="Views\FindReplacePresenter.cs" />
     <Compile Include="Views\JoinsPresenter.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -173,6 +177,12 @@
     </Compile>
     <Compile Include="Views\RenameFieldView.Designer.cs">
       <DependentUpon>RenameFieldView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FindReplaceView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FindReplaceView.Designer.cs">
+      <DependentUpon>FindReplaceView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TableEditorView.cs">
       <SubType>UserControl</SubType>
@@ -226,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FindReplaceView.resx">
+      <DependentUpon>FindReplaceView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\JoinTableView.resx">
       <DependentUpon>JoinTableView.cs</DependentUpon>

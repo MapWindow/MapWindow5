@@ -50,6 +50,11 @@ namespace MW5.Views
 
         void MainView_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // if there are hidden child forms which override FormClosing
+            // the initial value is set to true: https ://msdn.microsoft.com/en-us/library/system.windows.forms.form.formclosing%28v=vs.110%29.aspx
+            // currently it may be the case with non-modal Find / Replace form in the table editor
+            e.Cancel = false;   
+
             if (!FireViewClosing())
             {
                 e.Cancel = true;

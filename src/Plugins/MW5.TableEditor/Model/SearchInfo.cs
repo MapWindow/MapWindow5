@@ -3,37 +3,113 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
+using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Model
 {
     public class SearchInfo
     {
+        private string _token;
+        private MatchType _matchType;
+        private bool _caseSensitive;
+        private int _fieldIndex;
+
         public SearchInfo()
         {
             Count = 0;
-            RowIndex = 0;
-            ColumnIndex = 0;
             Token = string.Empty;
+            ReplaceWith = string.Empty;
+            MatchType = MatchType.Contains;
+            CaseSensitive = true;
+            FieldIndex = -1;
         }
 
-        public int Count { get; private set; }
-        public int RowIndex { get; private set; }
-        public int ColumnIndex { get; private set; }
-        public string Token { get; set; }
-
-        public void StartNewSearch(string token)
+        public string ReplaceWith { get; set; }
+                
+        public string Token 
         {
-            RowIndex = 0;
-            ColumnIndex = 0;
+            get { return _token; }
+            set
+            {
+                if (_token != value) NewSearch = true;
+                _token = value;
+            }
+        }
+
+        public MatchType MatchType
+        {
+            get { return _matchType; }
+            set
+            {
+                if (_matchType != value) NewSearch = true;
+                _matchType = value;
+            }
+        }
+
+        public bool CaseSensitive
+        {
+            get { return _caseSensitive; }
+            set
+            {
+                if (_caseSensitive != value) NewSearch = true;
+                _caseSensitive = value;
+            }
+        }
+
+        public int FieldIndex
+        {
+            get { return _fieldIndex; }
+            set
+            {
+                if (_fieldIndex != value) NewSearch = true;
+                _fieldIndex = value;
+            }
+        }
+
+        public bool NewSearch { get; set; }
+        public bool Finished { get; set; }
+        public bool RestartSearch { get; set; }
+        public int Count { get; set; }
+        public int StartRowIndex { get; set; }
+        public int StartColumnIndex { get; set; }
+
+        public void Clear()
+        {
+            NewSearch = false;
+            Finished = false;
+            RestartSearch = false;
             Count = 0;
-            Token = token.ToLower();
         }
 
-        public void AddNewMatch(int rowIndex, int columnIndex)
+        public bool Match(string value)
         {
-            RowIndex = rowIndex;
-            ColumnIndex = columnIndex;
-            Count++;
+            if (CaseSensitive)
+            {
+                switch (MatchType)
+                {
+                    case MatchType.Contains:
+                        return value.Contains(Token);
+                    case MatchType.Match:
+                        return value.Equals(Token);
+                    case MatchType.Start:
+                        return value.StartsWith(Token);
+                }
+            }
+            else
+            {
+                switch (MatchType)
+                {
+                    case MatchType.Contains:
+                        return value.ContainsIgnoreCase(Token);
+                    case MatchType.Match:
+                        return value.EqualsIgnoreCase(Token);
+                    case MatchType.Start:
+                        return value.StartsWithIgnoreCase(Token);
+                }
+            }
+
+            return false;
         }
     }
 }

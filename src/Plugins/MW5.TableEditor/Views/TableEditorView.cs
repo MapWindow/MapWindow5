@@ -194,6 +194,7 @@ namespace MW5.Plugins.TableEditor.Views
             mnuImportExtData.Enabled = editing;
             mnuImportFieldDefinitions.Enabled = editing;
             mnuZoomToEdited.Enabled = editing;
+            mnuReplace.Enabled = editing;
 
             bool hasSelection = fs.NumSelected > 0;
             mnuClearSelection.Enabled = hasSelection;
@@ -210,7 +211,6 @@ namespace MW5.Plugins.TableEditor.Views
 
             mnuExportFeatures.Enabled = true;
             mnuFind.Enabled = true;
-            mnuFindNext.Enabled = true;
             mnuQuery.Enabled = true;
 
             mnuLayoutHorizontal.Enabled = true;

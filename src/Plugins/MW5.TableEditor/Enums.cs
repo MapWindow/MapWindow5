@@ -21,6 +21,7 @@
         UpdateMeasurements = 16,
         Find = 17,
         FindNext = 18,
+        Replace = 19,
     }
 
     /// <summary>
@@ -75,5 +76,24 @@
         Ignore = 0,
         ExitingField = 1,
         NewField = 2,
+    }
+
+    public enum MatchType
+    {
+        Contains = 0,
+        Match = 1,
+        Start = 2,
+    }
+
+    public enum SearchDirection
+    {
+        Down = 0,
+        Up = 1,
+    }
+
+    public enum FindReplaceFieldType
+    {
+        Regular = 0,
+        All = 1,
     }
 }

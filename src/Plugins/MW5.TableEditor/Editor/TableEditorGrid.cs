@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Model;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.TableEditor.Editor
@@ -17,13 +23,18 @@ namespace MW5.Plugins.TableEditor.Editor
 
         private IFeatureSet _shapefile;
         private IAttributeTable _table;
+        private bool _ignoreCurrentCellChange;
+        private bool _currentCellChanged;
 
         public TableEditorGrid()
         {
             CellValueNeeded += GridCellValueNeeded;
             CellValuePushed += GridCellValuePushed;
             ColumnHeaderMouseClick += GridColumnHeaderMouseClick;
+            CurrentCellChanged += OnCurrentCellChanged;
         }
+
+        
 
         [Browsable(false)]
         public IFeatureSet TableSource
@@ -72,6 +83,7 @@ namespace MW5.Plugins.TableEditor.Editor
                     HeaderText = fld.DisplayName,
                     SortMode = DataGridViewColumnSortMode.Programmatic,
                     Visible = fld.Visible,
+                    Tag = fld,
                 };
 
                 if (table.FieldIsJoined(fld.Index))
@@ -176,40 +188,222 @@ namespace MW5.Plugins.TableEditor.Editor
 
         public bool FindNext(SearchInfo info)
         {
-            for (var i = info.RowIndex; i < Rows.Count; i++)
+            int rowIndex = CurrentCell != null ? CurrentCell.RowIndex : 0;
+            int colIndex = CurrentCell != null ? CurrentCell.ColumnIndex : 0;
+
+            if (_currentCellChanged)
             {
-                for (var j = 0; j < Columns.Count; j++)
+                info.NewSearch = true;
+                _currentCellChanged = false;
+            }
+
+            if (info.NewSearch)
+            {
+                info.Clear();
+                info.StartRowIndex = rowIndex;
+                info.StartColumnIndex = colIndex;
+            }
+
+            if (info.RestartSearch)
+            {
+                info.Clear();
+                rowIndex = info.StartRowIndex;
+                colIndex = info.StartColumnIndex;
+            }
+
+            if (info.Finished)
+            {
+                return false;
+            }
+
+            colIndex++;
+
+            // search from the current cell to the end
+            bool result = FindBelow(info, rowIndex, colIndex);
+
+            if (result) return true;
+
+            if (info.Finished) return false;
+            
+            return FindBelow(info, 0, 0);
+        }
+
+        private bool FindBelow(SearchInfo info, int rowIndex, int colIndex)
+        {
+            for (var i = rowIndex; i < Rows.Count; i++)
+            {
+                if (FindWithinRow(info, i, colIndex))
                 {
-                    if (i == info.RowIndex && j <= info.ColumnIndex)
-                    {
-                        continue;
-                    }
+                    return true;
+                }
 
-                    if (this[j, i].Value == null)
-                    {
-                        continue;
-                    }
+                colIndex = 0;  // all remaining records should be searched entirely
 
-                    if (!this[j, i].Visible)
-                    {
-                        continue;
-                    }
+                if (info.Finished) return false;
+            }
 
-                    try
+            return false;
+        }
+
+        private bool FindWithinRow(SearchInfo info, int rowIndex, int startAtColumnIndex = 0)
+        {
+            for (var j = startAtColumnIndex; j < Columns.Count; j++)
+            {
+                if (rowIndex == info.StartRowIndex && j == info.StartColumnIndex)
+                {
+                    info.Finished = true;
+                }
+
+                if (info.FieldIndex != -1 && j != info.FieldIndex)
+                {
+                    continue;       // it's wrong column
+                }
+
+                if (!this[j, rowIndex].Visible || this[j, rowIndex].Value == null)
+                {
+                    continue;
+                }
+
+                try
+                {
+                    var cellValue = this[j, rowIndex].Value.ToString();
+
+                    if (info.Match(cellValue))
                     {
-                        var cellValue = this[j, i].Value.ToString();
-                        if (cellValue.ToLower().Contains(info.Token))
-                        {
-                            CurrentCell = this[j, i];
-                            info.AddNewMatch(i, j);
-                            return true;
-                        }
+                        info.Count++;
+                        _ignoreCurrentCellChange = true;
+                        CurrentCell = this[j, rowIndex];
+                        _ignoreCurrentCellChange = false;
+                        return true;
                     }
-                    catch {}
+                }
+                catch { }
+
+                if (info.Finished)
+                {
+                    return false;
                 }
             }
 
             return false;
+        }
+
+        private void OnCurrentCellChanged(object sender, EventArgs e)
+        {
+            if (!_ignoreCurrentCellChange)
+            {
+                _currentCellChanged = true;
+            }
+        }
+
+        private IAttributeField GetField(int columnIndex)
+        {
+            return Columns[columnIndex].Tag as IAttributeField;
+        }
+
+        public bool Replace(SearchInfo info)
+        {
+            if (ReplaceCurrentCell(info))
+            {
+                FindNext(info);
+                return true;
+            }
+
+            if (FindNext(info))
+            {
+                return true;    // let's make it visible what is about to be replaced
+            }
+
+            return false;
+        }
+
+        private bool ReplaceCurrentCell(SearchInfo info)
+        {
+            if (CurrentCell == null) return false;
+
+            if (ValidateColumnForReplace(info, CurrentCell.ColumnIndex))
+            {
+                if (ReplaceCellValue(info, CurrentCell.ColumnIndex, CurrentCell.RowIndex))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool ValidateColumnForReplace(SearchInfo info, int columnIndex)
+        {
+            if (info.FieldIndex != -1 && info.FieldIndex != columnIndex)
+            {
+                return false;
+            }
+
+            if (!ValidateReplaceValue(columnIndex, info.ReplaceWith))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ReplaceCellValue(SearchInfo info, int colIndex, int rowIndex)
+        {
+            try
+            {
+                var cellValue = this[colIndex, rowIndex].Value.ToString();
+
+                if (!info.Match(cellValue)) return false;
+
+                var options = info.CaseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase;
+
+                this[colIndex, rowIndex].Value = Regex.Replace(cellValue, info.Token, info.ReplaceWith, options);
+
+                return true;
+            }
+            catch
+            {
+            }
+
+            return false;
+        }
+
+        public int ReplaceAll(SearchInfo info)
+        {
+            int count = 0;
+            
+            for (var j = 0; j < Columns.Count; j++)
+            {
+                ValidateColumnForReplace(info, j);
+
+                for (var i = 0; i < Rows.Count; i++)
+                {
+                    if (ReplaceCellValue(info, j, i))
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        private bool ValidateReplaceValue(int colIndex, string newValue)
+        {
+            var fld = GetField(colIndex);
+            if (fld == null) return true;
+
+            switch (fld.Type)
+            {
+                case AttributeType.String:
+                    return true;
+                case AttributeType.Integer:
+                    return NumericHelper.IsNumeric(newValue, NumberStyles.Integer);
+                case AttributeType.Double:
+                    return NumericHelper.IsNumeric(newValue, NumberStyles.Float);
+            }
+
+            return true;
         }
     }
 }
