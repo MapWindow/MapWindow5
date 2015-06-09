@@ -31,6 +31,7 @@ namespace MW5.Tools.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.comboBoxAdv2 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -235,7 +236,7 @@ namespace MW5.Tools.Views
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Name = "GisToolView";
-            this.Text = "Import layer";
+            this.Text = "GisToolView";
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
