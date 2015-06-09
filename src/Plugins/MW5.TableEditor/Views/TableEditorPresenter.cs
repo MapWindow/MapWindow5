@@ -145,6 +145,10 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.UpdateMeasurements:
+                    _context.Container.Run<UpdateMeasurementsPresenter, IAttributeTable>(table);
+                    View.UpdateDatasource();
+                    break;
                 case TableEditorCommand.Join:
                     _context.Container.Run<JoinsPresenter, IAttributeTable>(table);
                     View.UpdateDatasource();

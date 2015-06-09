@@ -29,7 +29,7 @@ namespace MW5.Plugins.TableEditor.Helpers
         }
     }
 
-    public class CalculatorFunctionCoverter : IEnumConverter<CalculatorFunction>
+    public class CalculatorFunctionConverter : IEnumConverter<CalculatorFunction>
     {
         public string GetString(CalculatorFunction value)
         {
@@ -57,4 +57,6 @@ namespace MW5.Plugins.TableEditor.Helpers
             return string.Empty;
         }
     }
+
+
 }

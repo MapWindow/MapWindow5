@@ -92,5 +92,10 @@ namespace MW5.Api.Concrete
                 return !string.IsNullOrWhiteSpace(Alias) ? Alias : Name;
             }
         }
+
+        public override string ToString()
+        {
+            return DisplayName;
+        }
     }
 }

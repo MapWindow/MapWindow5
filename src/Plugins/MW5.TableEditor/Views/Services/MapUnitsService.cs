@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MW5.Plugins.TableEditor.Services
+namespace MW5.Plugins.TableEditor.Views.Services
 {
     /// <summary>The class using units of measurement</summary>
     public class MapUnitsService
@@ -24,31 +24,31 @@ namespace MW5.Plugins.TableEditor.Services
                 // Step 1: convert to mapUnits to meters:
                 switch (MapUnits)
                 {
-                    case UnitOfArea.Centimeters:
+                    case AreaUnits.Centimeters:
                         mapUnits = ConversionFactorsSqUnits.CentimetersToMeters;
                         break;
-                    case UnitOfArea.DecimalDegrees:
+                    case AreaUnits.DecimalDegrees:
                         mapUnits = ConversionFactorsSqUnits.KilometersToMeters;
                         break;
-                    case UnitOfArea.Feet:
+                    case AreaUnits.Feet:
                         mapUnits = ConversionFactorsSqUnits.FeetToMeters;
                         break;
-                    case UnitOfArea.Inches:
+                    case AreaUnits.Inches:
                         mapUnits = ConversionFactorsSqUnits.InchesToMeters;
                         break;
-                    case UnitOfArea.Kilometers:
+                    case AreaUnits.Kilometers:
                         mapUnits = ConversionFactorsSqUnits.KilometersToMeters;
                         break;
-                    case UnitOfArea.Miles:
+                    case AreaUnits.Miles:
                         mapUnits = ConversionFactorsSqUnits.MilesToMeters;
                         break;
-                    case UnitOfArea.Millimeters:
+                    case AreaUnits.Millimeters:
                         mapUnits = ConversionFactorsSqUnits.MillimeterToMeters;
                         break;
-                    case UnitOfArea.Yards:
+                    case AreaUnits.Yards:
                         mapUnits = ConversionFactorsSqUnits.YardsToMeters;
                         break;
-                    case UnitOfArea.Acres:
+                    case AreaUnits.Acres:
                         mapUnits = ConversionFactorsSqUnits.AcresToMeters;
 
                         // When using acres feet are more likely to be wanted for perimeter, thanks to Jack for pointing this out.
@@ -58,7 +58,7 @@ namespace MW5.Plugins.TableEditor.Services
                         }
 
                         break;
-                    case UnitOfArea.Hectares:
+                    case AreaUnits.Hectares:
                         mapUnits = ConversionFactorsSqUnits.HectaresToMeters;
                         if (MeasurementType != MeasurementTypes.Area)
                         {
@@ -72,7 +72,7 @@ namespace MW5.Plugins.TableEditor.Services
                 }
 
                 if (MeasurementType == MeasurementTypes.Area
-                    && !(MapUnits == UnitOfArea.Acres || MapUnits == UnitOfArea.Hectares))
+                    && !(MapUnits == AreaUnits.Acres || MapUnits == AreaUnits.Hectares))
                 {
                     mapUnits *= mapUnits; // Squared
                 }
@@ -80,30 +80,30 @@ namespace MW5.Plugins.TableEditor.Services
                 // Step 2: convert to calcUnits to meters:
                 switch (CalculatedUnits)
                 {
-                    case UnitOfArea.Centimeters:
+                    case AreaUnits.Centimeters:
                         calculatesUnits = ConversionFactorsSqUnits.CentimetersToMeters;
                         break;
-                    case UnitOfArea.DecimalDegrees:
+                    case AreaUnits.DecimalDegrees:
                         throw decDegException;
-                    case UnitOfArea.Feet:
+                    case AreaUnits.Feet:
                         calculatesUnits = ConversionFactorsSqUnits.FeetToMeters;
                         break;
-                    case UnitOfArea.Inches:
+                    case AreaUnits.Inches:
                         calculatesUnits = ConversionFactorsSqUnits.InchesToMeters;
                         break;
-                    case UnitOfArea.Kilometers:
+                    case AreaUnits.Kilometers:
                         calculatesUnits = ConversionFactorsSqUnits.KilometersToMeters;
                         break;
-                    case UnitOfArea.Miles:
+                    case AreaUnits.Miles:
                         calculatesUnits = ConversionFactorsSqUnits.MilesToMeters;
                         break;
-                    case UnitOfArea.Millimeters:
+                    case AreaUnits.Millimeters:
                         calculatesUnits = ConversionFactorsSqUnits.MillimeterToMeters;
                         break;
-                    case UnitOfArea.Yards:
+                    case AreaUnits.Yards:
                         calculatesUnits = ConversionFactorsSqUnits.YardsToMeters;
                         break;
-                    case UnitOfArea.Acres:
+                    case AreaUnits.Acres:
                         calculatesUnits = ConversionFactorsSqUnits.AcresToMeters;
                         if (MeasurementType != MeasurementTypes.Area)
                         {
@@ -111,7 +111,7 @@ namespace MW5.Plugins.TableEditor.Services
                         }
 
                         break;
-                    case UnitOfArea.Hectares:
+                    case AreaUnits.Hectares:
                         calculatesUnits = ConversionFactorsSqUnits.HectaresToMeters;
                         if (MeasurementType != MeasurementTypes.Area)
                         {
@@ -125,7 +125,7 @@ namespace MW5.Plugins.TableEditor.Services
                 }
 
                 if (MeasurementType == MeasurementTypes.Area
-                    && !(CalculatedUnits == UnitOfArea.Acres || CalculatedUnits == UnitOfArea.Hectares))
+                    && !(CalculatedUnits == AreaUnits.Acres || CalculatedUnits == AreaUnits.Hectares))
                 {
                     calculatesUnits *= calculatesUnits; // Squared
                 }
@@ -184,10 +184,10 @@ namespace MW5.Plugins.TableEditor.Services
         public MeasurementTypes MeasurementType { get; set; }
 
         /// <summary>Gets or sets CalculatedUnits.</summary>
-        public UnitOfArea CalculatedUnits { get; set; }
+        public AreaUnits CalculatedUnits { get; set; }
 
         /// <summary>Gets or sets MapUnits.</summary>
-        public UnitOfArea MapUnits { get; set; }
+        public AreaUnits MapUnits { get; set; }
 
         #endregion
 
@@ -200,7 +200,7 @@ namespace MW5.Plugins.TableEditor.Services
         {
             try
             {
-                if (MapUnits == UnitOfArea.Unknown || CalculatedUnits == UnitOfArea.Unknown)
+                if (MapUnits == AreaUnits.Unknown || CalculatedUnits == AreaUnits.Unknown)
                 {
                     throw new Exception("Incorrect use of convertUnits.\n Units must be set before calling");
                 }
@@ -222,7 +222,7 @@ namespace MW5.Plugins.TableEditor.Services
         /// <summary>Gets the units from the proj4 string</summary>
         /// <param name="prj4">The prj4 string</param>
         /// <returns>The unit</returns>
-        public UnitOfArea GetUnitsFromProj4(string prj4)
+        public AreaUnits GetUnitsFromProj4(string prj4)
         {
             try
             {
@@ -241,12 +241,12 @@ namespace MW5.Plugins.TableEditor.Services
                     {
                         if (unitPart[1] == "m")
                         {
-                            return UnitOfArea.Meters;
+                            return AreaUnits.Meters;
                         }
 
                         if (unitPart[1] == "us-ft")
                         {
-                            return UnitOfArea.Feet;
+                            return AreaUnits.Feet;
                         }
                     }
                 }
@@ -255,7 +255,7 @@ namespace MW5.Plugins.TableEditor.Services
                     // Is it latlong?
                     if (prj4.ToLower().Contains("longlat") || prj4.ToLower().Contains("latlong"))
                     {
-                        return UnitOfArea.DecimalDegrees;
+                        return AreaUnits.DecimalDegrees;
                     }
                 }
             }
@@ -264,13 +264,13 @@ namespace MW5.Plugins.TableEditor.Services
                 throw new Exception("Error in GetUnitsFromProj4: \n" + ex);
             }
 
-            return UnitOfArea.Meters;
+            return AreaUnits.Meters;
         }
 
         /// <summary>The string to uom.</summary>
         /// <param name="text">The string to convert.</param>
         /// <returns>The unit</returns>
-        public UnitOfArea StringToUom(string text)
+        public AreaUnits StringToUom(string text)
         {
             try
             {
@@ -279,29 +279,29 @@ namespace MW5.Plugins.TableEditor.Services
                 switch (tmp)
                 {
                     case "Centimeters":
-                        return UnitOfArea.Centimeters;
+                        return AreaUnits.Centimeters;
                     case "DecimalDegrees":
-                        return UnitOfArea.DecimalDegrees;
+                        return AreaUnits.DecimalDegrees;
                     case "Feet":
-                        return UnitOfArea.Feet;
+                        return AreaUnits.Feet;
                     case "Inches":
-                        return UnitOfArea.Inches;
+                        return AreaUnits.Inches;
                     case "Kilometers":
-                        return UnitOfArea.Kilometers;
+                        return AreaUnits.Kilometers;
                     case "Meters":
-                        return UnitOfArea.Meters;
+                        return AreaUnits.Meters;
                     case "Miles":
-                        return UnitOfArea.Miles;
+                        return AreaUnits.Miles;
                     case "Millimeters":
-                        return UnitOfArea.Millimeters;
+                        return AreaUnits.Millimeters;
                     case "Yards":
-                        return UnitOfArea.Yards;
+                        return AreaUnits.Yards;
                     case "Hectares":
-                        return UnitOfArea.Hectares;
+                        return AreaUnits.Hectares;
                     case "Acres":
-                        return UnitOfArea.Acres;
+                        return AreaUnits.Acres;
                     default:
-                        return UnitOfArea.Meters;
+                        return AreaUnits.Meters;
                 }
             }
             catch (Exception ex)

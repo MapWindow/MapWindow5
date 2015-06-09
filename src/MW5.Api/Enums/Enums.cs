@@ -779,6 +779,18 @@
         Kilometers = 8,
     }
 
+    public enum AreaUnits
+    {
+        SquareInches,
+        SquareFeet,
+        SquareYards,
+        SquareMeters,
+        SquareMiles,
+        SquareKilometers,
+        Hectares,
+        Acres,
+    }
+
     public enum ZoomBarVerbosity
     {
         ZoomOnly = 0,

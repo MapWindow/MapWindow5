@@ -168,4 +168,32 @@ namespace MW5.Services.Helpers
             return "";
         }
     }
+
+    public class AreaUnitsConverter : IEnumConverter<AreaUnits>
+    {
+        public string GetString(AreaUnits value)
+        {
+            switch (value)
+            {
+                case AreaUnits.SquareInches:
+                    return "Square inches";
+                case AreaUnits.SquareFeet:
+                    return "Square feet";
+                case AreaUnits.SquareYards:
+                    return "Square yards";
+                case AreaUnits.SquareMeters:
+                    return "Square meters";
+                case AreaUnits.SquareMiles:
+                    return "Square miles";
+                case AreaUnits.SquareKilometers:
+                    return "Square kilometers";
+                case AreaUnits.Hectares:
+                    return "Hectars";
+                case AreaUnits.Acres:
+                    return "Acreas";
+            }
+
+            return string.Empty;
+        }
+    }
 }

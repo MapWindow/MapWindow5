@@ -18,6 +18,7 @@ namespace MW5.Plugins.TableEditor
         {
             container.RegisterSingleton<TableEditorPresenter>()
                 .RegisterService<ITableEditorView, TableEditorView>()
+                .RegisterView<IUpdateMeasurementsView, UpdateMeasurementsView>()
                 .RegisterView<ICalculateFieldView, CalculateFieldView>()
                 .RegisterView<IDeleteFieldsView, DeleteFieldsView>()
                 .RegisterView<IAddFieldView, AddFieldView>()
@@ -26,7 +27,7 @@ namespace MW5.Plugins.TableEditor
                 .RegisterView<IJoinsView, JoinsView>();
 
             EnumHelper.RegisterConverter(new AttributeTypeConverter());
-            EnumHelper.RegisterConverter(new CalculatorFunctionCoverter());
+            EnumHelper.RegisterConverter(new CalculatorFunctionConverter());
         }
     }
 }

@@ -18,47 +18,7 @@
         LayoutTabbed = 13,
         LayoutHorizontal = 14,
         LayoutVertical = 15,
-    }
-
-    /// <summary>The unit of area.</summary>
-    /// <remarks>This should be in the MW core</remarks>
-    public enum UnitOfArea
-    {
-        /// <summary>The decimal degrees.</summary>
-        DecimalDegrees,
-
-        /// <summary>The millimeters.</summary>
-        Millimeters,
-
-        /// <summary>The centimeters.</summary>
-        Centimeters,
-
-        /// <summary>The inches.</summary>
-        Inches,
-
-        /// <summary>The feet.</summary>
-        Feet,
-
-        /// <summary>The yards.</summary>
-        Yards,
-
-        /// <summary>The meters.</summary>
-        Meters,
-
-        /// <summary>The miles.</summary>
-        Miles,
-
-        /// <summary>The kilometers.</summary>
-        Kilometers,
-
-        /// <summary>The hectares.</summary>
-        Hectares,
-
-        /// <summary>The acres.</summary>
-        Acres,
-
-        /// <summary>The unknown unit</summary>
-        Unknown
+        UpdateMeasurements = 16,
     }
 
     /// <summary>
@@ -106,5 +66,12 @@
         Dbf = 0,
         Xls = 1,
         Csv = 2,
+    }
+
+    public enum UpdateMeasurementType
+    {
+        Ignore = 0,
+        ExitingField = 1,
+        NewField = 2,
     }
 }

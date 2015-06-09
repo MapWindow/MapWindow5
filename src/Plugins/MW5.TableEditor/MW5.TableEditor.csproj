@@ -114,6 +114,7 @@
     <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />
+    <Compile Include="Model\MeasurementInfo.cs" />
     <Compile Include="Model\TablePanel.cs" />
     <Compile Include="Model\TablePanelCancelEventArgs.cs" />
     <Compile Include="Model\TablePanelCollection.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
+    <Compile Include="Views\Abstract\IUpdateMeasurements.cs" />
     <Compile Include="Views\CalculateFieldPresenter.cs" />
     <Compile Include="Views\CalculateFieldView.cs">
       <SubType>Form</SubType>
@@ -200,7 +202,6 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\NumericHelper.cs" />
-    <Compile Include="Views\Services\MapUnitsService.cs" />
     <Compile Include="Helpers\XlsImportHelper.cs" />
     <Compile Include="Views\AddFieldPresenter.cs" />
     <Compile Include="Views\AddFieldView.cs">
@@ -210,6 +211,13 @@
       <DependentUpon>AddFieldView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
+    <Compile Include="Views\UpdateMeasurementsPresenter.cs" />
+    <Compile Include="Views\UpdateMeasurementsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\UpdateMeasurementsView.Designer.cs">
+      <DependentUpon>UpdateMeasurementsView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\CalculateFieldView.resx">
@@ -237,6 +245,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AddFieldView.resx">
       <DependentUpon>AddFieldView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UpdateMeasurementsView.resx">
+      <DependentUpon>UpdateMeasurementsView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -289,12 +300,22 @@
   <ItemGroup>
     <Folder Include="Forms\" />
     <Folder Include="Legacy\" />
+    <Folder Include="Views\Services\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ico_table24.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_save1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_geometry.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_measure_length.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_line.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

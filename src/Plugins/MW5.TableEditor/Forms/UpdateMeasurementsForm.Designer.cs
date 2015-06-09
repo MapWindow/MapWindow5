@@ -78,7 +78,7 @@
             // btnUpdate
             // 
             this.btnUpdate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUpdate.Location = new System.Drawing.Point(197, 326);
+            this.btnUpdate.Location = new System.Drawing.Point(197, 446);
             this.btnUpdate.Name = "btnUpdate";
             this.btnUpdate.Size = new System.Drawing.Size(75, 23);
             this.btnUpdate.TabIndex = 0;
@@ -113,7 +113,7 @@
             this.mainGroupbox.Controls.Add(this.AreaGroupbox);
             this.mainGroupbox.Location = new System.Drawing.Point(12, 70);
             this.mainGroupbox.Name = "mainGroupbox";
-            this.mainGroupbox.Size = new System.Drawing.Size(260, 243);
+            this.mainGroupbox.Size = new System.Drawing.Size(260, 360);
             this.mainGroupbox.TabIndex = 3;
             this.mainGroupbox.TabStop = false;
             this.mainGroupbox.Text = "Select an attribute";
@@ -444,7 +444,7 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 325);
+            this.progressBar1.Location = new System.Drawing.Point(12, 446);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(180, 23);
             this.progressBar1.TabIndex = 7;
@@ -453,7 +453,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(282, 361);
+            this.ClientSize = new System.Drawing.Size(282, 481);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CalculateUnitsCombo);
