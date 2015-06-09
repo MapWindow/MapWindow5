@@ -10,5 +10,7 @@ namespace MW5.Plugins.Toolbox
     {
         public const string Projections = "Projections";
         public const string GeoDatabases = "GeoDatabases";
+        public const string Geoprocessing = "Geoprocessing";
+        public const string VectorGeometryTools = "VectorGeometryTools";
     }
 }
