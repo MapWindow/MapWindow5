@@ -46,11 +46,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [RequiredParameter("Overwrite output file", 2)]
         public BooleanParameter Overwrite { get; set; }
 
-        /// <summary>Gets or sets the num points.</summary>
+        /// <summary>Gets or sets the number of random points.</summary>
         [RequiredParameter("Number of points", 3)]
         public StringParameter NumPoints { get; set; }
 
-        // TODO: Add optional parameters
+        /// <summary>As demo an optional value</summary>
+        [OptionalParameter("Some optional value", 4)]
+        public StringParameter OptionalValue { get; set; }
 
         #endregion
 
@@ -65,6 +67,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             // TODO: Set default value for NumPoints
             // TODO: Set title of View
             // TODO: Make new parameter to select a new file location for NewLayerName
+            // TODO: Set manual, local html file or remote local html file.
         }
 
         /// <summary>
@@ -73,6 +76,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <returns>True on success</returns>
         public override bool Run()
         {
+            Logger.Current.Debug("Optional value: " + this.OptionalValue.Value);
             Logger.Current.Info("Run create random points tool");
             var fs = this.InputLayer.Value.FeatureSet;
 
@@ -101,7 +105,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         private static bool RunCore(ILayerSource inputLayer, string newLayerName, ulong numPoints, bool overwrite)
         {
             // TODO: Open log tab of view
-
+            
+            // TODO: Log to log tab
             Logger.Current.Debug("Creating {0} random points", numPoints);
 
             // Needed to create a random value between a range of doubles:

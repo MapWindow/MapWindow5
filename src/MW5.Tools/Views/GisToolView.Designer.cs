@@ -45,6 +45,7 @@ namespace MW5.Tools.Views
             this.stringParameterControl2 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.stringParameterControl1 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.panelOptional = new System.Windows.Forms.Panel();
             this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
@@ -52,6 +53,7 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.SuspendLayout();
             this.tabPageAdv1.SuspendLayout();
             this.panelRequired.SuspendLayout();
+            this.tabPageAdv2.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAdv2
@@ -192,6 +194,7 @@ namespace MW5.Tools.Views
             // 
             // tabPageAdv2
             // 
+            this.tabPageAdv2.Controls.Add(this.panelOptional);
             this.tabPageAdv2.Image = global::MW5.Tools.Properties.Resources.img_options24;
             this.tabPageAdv2.ImageSize = new System.Drawing.Size(24, 24);
             this.tabPageAdv2.Location = new System.Drawing.Point(123, 1);
@@ -201,6 +204,15 @@ namespace MW5.Tools.Views
             this.tabPageAdv2.TabIndex = 2;
             this.tabPageAdv2.Text = "Optional";
             this.tabPageAdv2.ThemesEnabled = false;
+            // 
+            // panelOptional
+            // 
+            this.panelOptional.AutoScroll = true;
+            this.panelOptional.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelOptional.Location = new System.Drawing.Point(0, 0);
+            this.panelOptional.Name = "panelOptional";
+            this.panelOptional.Size = new System.Drawing.Size(425, 370);
+            this.panelOptional.TabIndex = 0;
             // 
             // tabPageAdv3
             // 
@@ -242,6 +254,7 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.ResumeLayout(false);
             this.tabPageAdv1.ResumeLayout(false);
             this.panelRequired.ResumeLayout(false);
+            this.tabPageAdv2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -263,5 +276,6 @@ namespace MW5.Tools.Views
         private Controls.StringParameterControl stringParameterControl3;
         private Controls.StringParameterControl stringParameterControl2;
         private Controls.StringParameterControl stringParameterControl1;
+        private System.Windows.Forms.Panel panelOptional;
     }
 }
