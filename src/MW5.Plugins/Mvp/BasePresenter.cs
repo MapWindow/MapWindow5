@@ -9,11 +9,11 @@ namespace MW5.Plugins.Mvp
     /// </summary>
     /// <typeparam name="TView">The type of the view.</typeparam>
     public abstract class BasePresenter<TView> : IPresenter
-        where TView: IView
+        where TView : IView
     {
         public TView View { get; private set; }
 
-        public bool Success { get; protected set;}
+        public bool Success { get; protected set; }
 
         protected BasePresenter(TView view)
         {
@@ -60,9 +60,10 @@ namespace MW5.Plugins.Mvp
     {
         protected TModel _model;
 
-        protected BasePresenter( TView view): base(view)
+        protected BasePresenter(TView view)
+            : base(view)
         {
-            
+
         }
 
         public TModel Model
@@ -79,7 +80,7 @@ namespace MW5.Plugins.Mvp
 
         public virtual void Initialize()
         {
-            
+
         }
 
         private void Init(TModel model)

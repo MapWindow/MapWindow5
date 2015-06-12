@@ -1,53 +1,101 @@
-﻿using System;
-using System.Windows.Forms;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GroupNode.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015
+// </copyright>
+// <summary>
+//   Group of tools in the toolbox.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
+
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
     /// <summary>
-    /// Group of tools in the toolbox.
+    ///     Group of tools in the toolbox.
     /// </summary>
     public class GroupNode : IToolboxGroup
     {
+        #region Fields
+
+        private readonly PluginIdentity _identity;
         private readonly TreeNodeAdv _node;
         private string _name;
-        private readonly PluginIdentity _identity;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
-        /// Creates a new instance of GIS tool class
+        /// Initializes a new instance of the <see cref="GroupNode"/> class.
+        ///     Creates a new instance of GIS tool class
         /// </summary>
+        /// <param name="name">
+        /// The name.
+        /// </param>
+        /// <param name="description">
+        /// The description.
+        /// </param>
+        /// <param name="identity">
+        /// The identity.
+        /// </param>
         internal GroupNode(string name, string description, PluginIdentity identity)
         {
-            if (identity == null) throw new ArgumentNullException("identity");
-            
+            if (identity == null)
+            {
+                throw new ArgumentNullException("identity");
+            }
+
             _identity = identity;
             _name = name;
 
             Description = description;
 
-            _node = new TreeNodeAdv {Text = name, LeftImageIndices = new [] {ToolboxControl.IconFolder}};
+            _node = new TreeNodeAdv { Text = name, LeftImageIndices = new[] { ToolboxControl.IconFolder } };
             _node.Expand();
             _node.Tag = this;
         }
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>
-        /// Description of the tool
+        ///     Description of the tool
         /// </summary>
         public string Description { get; set; }
 
         /// <summary>
-        /// A property to store additional data associated with tool
+        ///     Gets or sets the expanded state of group in treeview
         /// </summary>
-        public object Tag { get; set; }
+        public bool Expanded
+        {
+            get
+            {
+                return _node.Expanded;
+            }
+
+            set
+            {
+                _node.Expanded = value;
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the name of tool
+        ///     Gets or sets the name of tool
         /// </summary>
         public string Name
         {
-            get{ return _name; }
+            get
+            {
+                return _name;
+            }
+
             set
             {
                 _name = value;
@@ -59,56 +107,64 @@ namespace MW5.Tools.Toolbox
         }
 
         /// <summary>
-        /// Gets list of tools for current group
+        /// Gets identity of the plugin that created this group.
         /// </summary>
-        public IToolCollection Tools
+        public PluginIdentity PluginIdentity
         {
-            get { return new ToolCollection(_node.Nodes); }
+            get
+            {
+                return _identity;
+            }
         }
 
+
         /// <summary>
-        /// Gets list of child groups fro current group
+        /// List of sub groups inside the group
         /// </summary>
         public IToolboxGroups SubGroups
         {
-            get 
+            get
             {
                 if (_node == null)
                 {
                     throw new NullReferenceException();
                 }
-                
+
                 return new GroupCollection(_node.Nodes);
             }
         }
 
-        
         /// <summary>
-        /// Gets or sets the expanded state of group in treeview
+        ///     A property to store additional data associated with tool
         /// </summary>
-        public bool Expanded
+        public object Tag { get; set; }
+
+        /// <summary>
+        ///     Gets list of tools for current group
+        /// </summary>
+        public IToolCollection Tools
         {
             get
             {
-                return _node.Expanded;
-            }
-            set
-            {
-                _node.Expanded = value;
+                return new ToolCollection(_node.Nodes);
             }
         }
 
-        public PluginIdentity PluginIdentity
-        {
-            get { return _identity; }
-        }
+        #endregion
+
+        #region Properties
 
         /// <summary>
-        /// Source tree node for the group
+        ///     Source tree node for the group
         /// </summary>
         internal TreeNodeAdv Node
         {
-            get { return _node; }
+            get
+            {
+                return _node;
+            }
         }
+
+        #endregion
     }
 }

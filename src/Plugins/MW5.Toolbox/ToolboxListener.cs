@@ -1,41 +1,78 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Data.Views;
-using MW5.Plugins.Concrete;
-using MW5.Plugins.Events;
-using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
-using MW5.Projections.UI.Forms;
-using MW5.Shared;
-using MW5.Tools.Model;
-using MW5.Tools.Tools.Database;
-using MW5.Tools.Views;
-
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ToolboxListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015
+// </copyright>
+// <summary>
+//   The toolbox listener.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 namespace MW5.Plugins.Toolbox
 {
-    using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+    using System;
 
+    using MW5.Plugins.Events;
+    using MW5.Plugins.Interfaces;
+    using MW5.Plugins.Services;
+    using MW5.Projections.UI.Forms;
+    using MW5.Tools.Model;
+    using MW5.Tools.Tools.Database;
+    using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+    using MW5.Tools.Views;
+
+    /// <summary>
+    /// The toolbox listener.
+    /// </summary>
     public class ToolboxListener
     {
+        #region Fields
+
         private readonly IAppContext _context;
+
         private readonly IGeoDatabaseService _databaseService;
 
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToolboxListener"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="plugin">The plugin.</param>
+        /// <param name="databaseService">The database service.</param>
         public ToolboxListener(IAppContext context, ToolboxPlugin plugin, IGeoDatabaseService databaseService)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (plugin == null) throw new ArgumentNullException("plugin");
-            if (databaseService == null) throw new ArgumentNullException("databaseService");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            if (plugin == null)
+            {
+                throw new ArgumentNullException("plugin");
+            }
+
+            if (databaseService == null)
+            {
+                throw new ArgumentNullException("databaseService");
+            }
 
             _context = context;
             _databaseService = databaseService;
 
-            plugin.ToolboxToolClicked += plugin_ToolboxToolClicked;
+            plugin.ToolboxToolClicked += this.Plugin_ToolboxToolClicked;
         }
 
-        private void plugin_ToolboxToolClicked(object sender, ToolboxToolEventArgs e)
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Handles the ToolboxToolClicked event of the Plugin control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ToolboxToolEventArgs"/> instance containing the event data.</param>
+        private void Plugin_ToolboxToolClicked(object sender, ToolboxToolEventArgs e)
         {
             switch (e.Tool.Key)
             {
@@ -53,10 +90,12 @@ namespace MW5.Plugins.Toolbox
                     _context.Container.Run<GisToolPresenter, GisToolBase>(new RandomPoints());
                     break;
                 default:
-                    string msg = "No handler was found for the specified key: " + e.Tool.Key;
+                    var msg = "No handler was found for the specified key: " + e.Tool.Key;
                     MessageService.Current.Info(msg);
                     break;
             }
         }
+
+        #endregion
     }
 }
