@@ -87,13 +87,13 @@ namespace MW5.Tools.Views
         /// <summary>
         /// The generate controls.
         /// </summary>
-        /// <param name="requiredParameters"></param>
-        /// <param name="optionalParameters"></param>
-        public void GenerateControls(IEnumerable<BaseParameter> requiredParameters, IEnumerable<BaseParameter> optionalParameters)
+        /// <param name="parameters"></param>
+        public void GenerateControls(IEnumerable<BaseParameter> parameters)
         {
             // Add controls to the panels:
-            GenerateControlsOnPanel(panelRequired, requiredParameters);
-            GenerateControlsOnPanel(panelOptional, optionalParameters);
+            parameters = parameters.ToList();
+            GenerateControlsOnPanel(panelRequired, parameters.Where(p => p.Required));
+            GenerateControlsOnPanel(panelOptional, parameters.Where(p => !p.Required));
         }
 
         /// <summary>

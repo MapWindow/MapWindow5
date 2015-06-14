@@ -30,8 +30,8 @@ namespace MW5.Tools.Views
         #region Fields
 
         private readonly IAppContext _context;
-        private bool _requiredInitialized;
-        private bool _optionalInitialized;
+
+        private bool _initialized;
 
         #endregion
 
@@ -58,88 +58,44 @@ namespace MW5.Tools.Views
         #region Properties
 
         /// <summary>
-        /// Gets the required parameters.
+        /// Gets combined list of required and optional parameters.
         /// </summary>
-        private IEnumerable<BaseParameter> RequiredParameters
+        private IEnumerable<BaseParameter> GetParameters()
         {
-            get
+            if (_initialized)
             {
-                if (_requiredInitialized)
+                throw new ApplicationException("RequiredParameters must be read only once");
+            }
+ 
+            _initialized = true;
+
+            var properties = Model.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
                 {
-                    throw new ApplicationException("RequiredParameters must be read only once");
+                    continue;
                 }
 
-                var properties = Model.GetType().GetProperties();
-                foreach (var prop in properties)
-                {
-                    if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
-                    {
-                        continue;
-                    }
+                var attr =
+                    Attribute.GetCustomAttribute(prop, typeof(ParameterAttribute)) as
+                    ParameterAttribute;
 
+                if (attr != null)
+                {
                     var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
                     if (param != null)
                     {
-                        prop.SetValue(this.Model, param);
-
-                        var attr =
-                            Attribute.GetCustomAttribute(prop, typeof(RequiredParameterAttribute)) as
-                            RequiredParameterAttribute;
-                        if (attr != null)
-                        {
-                            param.Index = attr.Index;
-                            param.DisplayName = attr.DisplayName;
-                        }
+                        prop.SetValue(Model, param);
+                        param.Index = attr.Index;
+                        param.DisplayName = attr.DisplayName;
+                        param.Required = attr is RequiredParameterAttribute;
+                        yield return param;
                     }
-
-                    yield return param;
                 }
-
-                _requiredInitialized = true;
             }
         }
 
-        /// <summary>
-        /// Gets the required parameters.
-        /// </summary>
-        private IEnumerable<BaseParameter> OptionalParameters
-        {
-            get
-            {
-                if (_optionalInitialized)
-                {
-                    throw new ApplicationException("OptionalParameters must be read only once");
-                }
-
-                var properties = Model.GetType().GetProperties();
-                foreach (var prop in properties)
-                {
-                    if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
-                    {
-                        continue;
-                    }
-
-                    var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
-                    if (param != null)
-                    {
-                        prop.SetValue(this.Model, param);
-
-                        var attr =
-                            Attribute.GetCustomAttribute(prop, typeof(OptionalParameterAttribute)) as
-                            OptionalParameterAttribute;
-                        if (attr != null)
-                        {
-                            param.Index = attr.Index;
-                            param.DisplayName = attr.DisplayName;
-                        }
-                    }
-
-                    yield return param;
-                }
-
-                _optionalInitialized = true;
-            }
-        }
         #endregion
 
         #region Public Methods and Operators
@@ -149,13 +105,11 @@ namespace MW5.Tools.Views
         /// </summary>
         public override void Initialize()
         {
-            var requiredParameters = this.RequiredParameters.ToList();
-            var optionalParameters = this.OptionalParameters.ToList();
+            var list = GetParameters().ToList();
 
-            InitParameters(requiredParameters);
-            InitParameters(optionalParameters);
+            InitParameters(list);
 
-            View.GenerateControls(requiredParameters, optionalParameters);
+            View.GenerateControls(list);
         }
 
         /// <summary>

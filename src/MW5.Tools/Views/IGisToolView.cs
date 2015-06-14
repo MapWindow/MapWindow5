@@ -29,9 +29,8 @@ namespace MW5.Tools.Views
         /// <summary>
         /// Generate the controls.
         /// </summary>
-        /// <param name="requiredParameters">The required parameters</param>
-        /// <param name="optionalParameters">The optional parameters</param>
-        void GenerateControls(IEnumerable<BaseParameter> requiredParameters, IEnumerable<BaseParameter> optionalParameters);
+        /// <param name="parameters">The parameters</param>
+        void GenerateControls(IEnumerable<BaseParameter> parameters);
 
         #endregion
     }

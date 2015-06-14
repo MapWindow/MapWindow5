@@ -66,6 +66,11 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public int Index { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="BaseParameter"/> is required.
+        /// </summary>
+        public bool Required { get; set; }
+
         #endregion
 
         #region Public Methods and Operators
