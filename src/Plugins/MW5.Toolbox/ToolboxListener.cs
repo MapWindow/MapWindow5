@@ -30,17 +30,20 @@ namespace MW5.Plugins.Toolbox
 
         private readonly IGeoDatabaseService _databaseService;
 
+        private readonly ILayerService _layerService;
+
         #endregion
 
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolboxListener"/> class.
+        /// Initializes a new instance of the <see cref="ToolboxListener" /> class.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="plugin">The plugin.</param>
         /// <param name="databaseService">The database service.</param>
-        public ToolboxListener(IAppContext context, ToolboxPlugin plugin, IGeoDatabaseService databaseService)
+        /// <param name="layerService">The layer service.</param>
+        public ToolboxListener(IAppContext context, ToolboxPlugin plugin, IGeoDatabaseService databaseService, ILayerService layerService)
         {
             if (context == null)
             {
@@ -57,8 +60,14 @@ namespace MW5.Plugins.Toolbox
                 throw new ArgumentNullException("databaseService");
             }
 
+            if (layerService == null)
+            {
+                throw new ArgumentNullException("layerService");
+            }
+
             _context = context;
             _databaseService = databaseService;
+            _layerService = layerService;
 
             plugin.ToolboxToolClicked += this.Plugin_ToolboxToolClicked;
         }
@@ -87,7 +96,7 @@ namespace MW5.Plugins.Toolbox
                     _context.Container.Run<GisToolPresenter, GisToolBase>(new ImportLayerTool());
                     break;
                 case ToolKeys.RandomPoints:
-                    _context.Container.Run<GisToolPresenter, GisToolBase>(new RandomPoints());
+                    _context.Container.Run<GisToolPresenter, GisToolBase>(new RandomPoints(_layerService));
                     break;
                 default:
                     var msg = "No handler was found for the specified key: " + e.Tool.Key;

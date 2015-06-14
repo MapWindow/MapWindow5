@@ -33,17 +33,11 @@ namespace MW5.Tools.Toolbox
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupNode"/> class.
-        ///     Creates a new instance of GIS tool class
         /// </summary>
-        /// <param name="name">
-        /// The name.
-        /// </param>
-        /// <param name="description">
-        /// The description.
-        /// </param>
-        /// <param name="identity">
-        /// The identity.
-        /// </param>
+        /// <param name="name">The name.</param>
+        /// <param name="description">The description.</param>
+        /// <param name="identity">The identity.</param>
+        /// <exception cref="System.ArgumentNullException">identity</exception>
         internal GroupNode(string name, string description, PluginIdentity identity)
         {
             if (identity == null)
@@ -54,7 +48,7 @@ namespace MW5.Tools.Toolbox
             _identity = identity;
             _name = name;
 
-            Description = description;
+            this.Description = description;
 
             _node = new TreeNodeAdv { Text = name, LeftImageIndices = new[] { ToolboxControl.IconFolder } };
             _node.Expand();

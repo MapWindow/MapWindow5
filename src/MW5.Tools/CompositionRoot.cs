@@ -24,7 +24,7 @@ namespace MW5.Tools
         #region Public Methods and Operators
 
         /// <summary>
-        /// The compose.
+        /// Composes the specified container.
         /// </summary>
         /// <param name="container">The container.</param>
         public static void Compose(IApplicationContainer container)

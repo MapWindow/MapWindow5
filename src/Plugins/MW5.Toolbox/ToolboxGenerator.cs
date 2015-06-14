@@ -1,27 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Plugins.Concrete;
-using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ToolboxGenerator.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015
+// </copyright>
+// <summary>
+//   Defines the ToolboxGenerator type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace MW5.Plugins.Toolbox
 {
+    using System;
+
+    using MW5.Plugins.Interfaces;
+
     public class ToolboxGenerator
     {
+        #region Fields
+
         private readonly IAppContext _context;
+
         private readonly ToolboxPlugin _plugin;
 
+        #endregion
+
+        #region Constructors and Destructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToolboxGenerator"/> class.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="plugin">The plugin.</param>
         public ToolboxGenerator(IAppContext context, ToolboxPlugin plugin)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            if (plugin == null) throw new ArgumentNullException("plugin");
+            if (context == null)
+            {
+                throw new ArgumentNullException("context");
+            }
+
+            if (plugin == null)
+            {
+                throw new ArgumentNullException("plugin");
+            }
+
             _context = context;
             _plugin = plugin;
 
             Init();
+        }
+
+        #endregion
+
+        #region Methods
+
+        private IGisTool CreateTool(string name, string key)
+        {
+            return _context.Toolbox.CreateTool(name, key, _plugin.Identity);
         }
 
         private void Init()
@@ -62,9 +95,6 @@ namespace MW5.Plugins.Toolbox
             // TODO: Let the icons be changed, preferable in the tools class itself.
         }
 
-        private IGisTool CreateTool(string name, string key)
-        {
-            return _context.Toolbox.CreateTool(name, key, _plugin.Identity);
-        }
+        #endregion
     }
 }

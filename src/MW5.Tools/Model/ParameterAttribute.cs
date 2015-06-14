@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MW5.Tools.Model
 {
-    public abstract class ParameterAttribute: Attribute
+    public abstract class ParameterAttribute : Attribute
     {
         #region Constructors and Destructors
 

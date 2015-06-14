@@ -35,6 +35,7 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Gets or sets the options.
         /// </summary>
+        /// <value>The options.</value>
         public IEnumerable<T> Options
         {
             get
@@ -61,13 +62,15 @@ namespace MW5.Tools.Model.Parameters
             get
             {
                 var control = Control as ComboParameterControl;
-                if (control != null)
+                if (control == null)
                 {
-                    var value = control.GetValue();
-                    if (value != null)
-                    {
-                        return (T)value;
-                    }
+                    return default(T);
+                }
+
+                var value = control.GetValue();
+                if (value != null)
+                {
+                    return (T)value;
                 }
 
                 return default(T);
@@ -78,20 +81,21 @@ namespace MW5.Tools.Model.Parameters
 
         #region Public Methods and Operators
 
+
         /// <summary>
-        /// The create control.
+        /// Create the control.
         /// </summary>
-        /// <returns>
-        /// The <see cref="ParameterControlBase"/>.
-        /// </returns>
+        /// <returns>The <see cref="ParameterControlBase" />.</returns>
         public override ParameterControlBase CreateControl()
         {
-            if (Control == null)
+            if (Control != null)
             {
-                var control = new ComboParameterControl { ButtonVisible = false };
-                control.SetOptions(_options); // ensure that previously specified options are applied
-                Control = control;
+                return Control;
             }
+
+            var control = new ComboParameterControl { ButtonVisible = false };
+            control.SetOptions(_options); // ensure that previously specified options are applied
+            Control = control;
 
             return Control;
         }

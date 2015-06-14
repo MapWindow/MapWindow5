@@ -6,7 +6,6 @@
 //   The gis tool presenter.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
-
 namespace MW5.Tools.Views
 {
     #region
@@ -55,49 +54,6 @@ namespace MW5.Tools.Views
 
         #endregion
 
-        #region Properties
-
-        /// <summary>
-        /// Gets combined list of required and optional parameters.
-        /// </summary>
-        private IEnumerable<BaseParameter> GetParameters()
-        {
-            if (_initialized)
-            {
-                throw new ApplicationException("RequiredParameters must be read only once");
-            }
- 
-            _initialized = true;
-
-            var properties = Model.GetType().GetProperties();
-            foreach (var prop in properties)
-            {
-                if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
-                {
-                    continue;
-                }
-
-                var attr =
-                    Attribute.GetCustomAttribute(prop, typeof(ParameterAttribute)) as
-                    ParameterAttribute;
-
-                if (attr != null)
-                {
-                    var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
-                    if (param != null)
-                    {
-                        prop.SetValue(Model, param);
-                        param.Index = attr.Index;
-                        param.DisplayName = attr.DisplayName;
-                        param.Required = attr is RequiredParameterAttribute;
-                        yield return param;
-                    }
-                }
-            }
-        }
-
-        #endregion
-
         #region Public Methods and Operators
 
         /// <summary>
@@ -125,6 +81,43 @@ namespace MW5.Tools.Views
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Gets combined list of required and optional parameters.
+        /// </summary>
+        private IEnumerable<BaseParameter> GetParameters()
+        {
+            if (_initialized)
+            {
+                throw new ApplicationException("RequiredParameters must be read only once");
+            }
+
+            _initialized = true;
+
+            var properties = Model.GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
+                {
+                    continue;
+                }
+
+                var attr = Attribute.GetCustomAttribute(prop, typeof(ParameterAttribute)) as ParameterAttribute;
+
+                if (attr != null)
+                {
+                    var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
+                    if (param != null)
+                    {
+                        prop.SetValue(Model, param);
+                        param.Index = attr.Index;
+                        param.DisplayName = attr.DisplayName;
+                        param.Required = attr is RequiredParameterAttribute;
+                        yield return param;
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Initialize the parameters.

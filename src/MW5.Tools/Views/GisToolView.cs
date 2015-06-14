@@ -11,17 +11,15 @@ namespace MW5.Tools.Views
 {
     #region
 
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Forms;
-    using System.Windows.Forms.VisualStyles;
-
     using MW5.Plugins.Interfaces;
     using MW5.Tools.Model;
     using MW5.Tools.Model.Parameters;
     using MW5.Tools.Views.Controls;
     using MW5.UI.Forms;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Windows.Forms;
 
     #endregion
 

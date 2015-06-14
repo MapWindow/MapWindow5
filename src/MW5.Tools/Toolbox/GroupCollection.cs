@@ -38,12 +38,9 @@ namespace MW5.Tools.Toolbox
         #region Constructors and Destructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupCollection"/> class. 
-        /// Creates a new instance of GisToolboxGroups class.
+        /// Initializes a new instance of the <see cref="GroupCollection"/> class.
         /// </summary>
-        /// <param name="nodes">
-        /// The nodes.
-        /// </param>
+        /// <param name="nodes">The nodes.</param>
         internal GroupCollection(TreeNodeAdvCollection nodes)
         {
             if (nodes == null)
@@ -74,11 +71,9 @@ namespace MW5.Tools.Toolbox
         #region Public Methods and Operators
 
         /// <summary>
-        /// Adds new tool to the group
+        /// Adds the specified item.
         /// </summary>
-        /// <param name="item">
-        /// The item.
-        /// </param>
+        /// <param name="item">The item.</param>
         public void Add(IToolboxGroup item)
         {
             if (Equals(item))
@@ -131,12 +126,8 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Returns a value indicating whether list of groups contain particular group.
         /// </summary>
-        /// <param name="item">
-        /// The item.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
+        /// <param name="item">The item.</param>
+        /// <returns>True on found</returns>
         public bool Contains(IToolboxGroup item)
         {
             if (item == null)
@@ -157,10 +148,10 @@ namespace MW5.Tools.Toolbox
         }
 
         /// <summary>
-        /// The get enumerator.
+        /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerator"/>.
+        /// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
         /// </returns>
         public IEnumerator<IToolboxGroup> GetEnumerator()
         {
@@ -176,12 +167,8 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Removes the specified item.
         /// </summary>
-        /// <param name="item">
-        /// The item.
-        /// </param>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
+        /// <param name="item">The item.</param>
+        /// <returns>True on successfully removed</returns>
         public bool Remove(IToolboxGroup item)
         {
             foreach (var node in _nodes.Cast<TreeNode>().Where(node => node.Tag as IToolboxGroup == item))
@@ -194,11 +181,9 @@ namespace MW5.Tools.Toolbox
         }
 
         /// <summary>
-        /// The remove items for plugin.
+        /// Removes the items for plugin.
         /// </summary>
-        /// <param name="identity">
-        /// The identity.
-        /// </param>
+        /// <param name="identity">The identity.</param>
         public void RemoveItemsForPlugin(PluginIdentity identity)
         {
             for (var i = _nodes.Count - 1; i >= 0; i--)
@@ -227,14 +212,14 @@ namespace MW5.Tools.Toolbox
         #region Explicit Interface Methods
 
         /// <summary>
-        /// The get enumerator.
+        /// Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// The <see cref="IEnumerator"/>.
+        /// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return this.GetEnumerator();
         }
 
         #endregion

@@ -35,6 +35,7 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Gets the layer control.
         /// </summary>
+        /// <value>The layer control.</value>
         public LayerParameterControl LayerControl
         {
             get
@@ -57,26 +58,20 @@ namespace MW5.Tools.Model.Parameters
         #endregion
 
         #region Public Methods and Operators
-
+        
         /// <summary>
-        /// The create control.
+        /// Create the layer control.
         /// </summary>
-        /// <returns>
-        /// The <see cref="ParameterControlBase"/>.
-        /// </returns>
+        /// <returns>The <see cref="ParameterControlBase" />.</returns>
         public override ParameterControlBase CreateControl()
         {
             return Control ?? (Control = new LayerParameterControl(_layers));
         }
 
         /// <summary>
-        /// The set layers.
+        /// Sets the layers.
         /// </summary>
-        /// <param name="layers">
-        /// The layers.
-        /// </param>
-        /// <exception cref="ArgumentNullException">
-        /// </exception>
+        /// <param name="layers">The layers.</param>
         public void SetLayers(IEnumerable<ILayer> layers)
         {
             if (layers == null)

@@ -10,6 +10,8 @@ using MW5.Shared;
 
 namespace MW5.Api.Static
 {
+    using System.Linq;
+
     public static class GeoSource
     {
         private static readonly FileManager _manager;
@@ -17,25 +19,6 @@ namespace MW5.Api.Static
         static GeoSource()
         {
             _manager = new FileManager();
-        }
-
-        private static IDatasource TryOpenAsDatabaseLayer(string filename)
-        {
-            // the expected format is: "OgrConnection|<connection>|<query_or_layer_name>"
-                        
-            if (filename == null || !filename.ToLower().StartsWith("ogrconnection"))
-            {
-                return null;
-            }
-
-            var parts = filename.Split('|');
-            if (parts.Length == 3)
-            {
-                var source = _manager.OpenFromDatabase(parts[1], parts[2]);
-                return LayerSourceHelper.Convert(source);
-            }
-
-            return null;
         }
 
         public static IDatasource Open(string filename, OpenStrategy openStrategy = OpenStrategy.AutoDetect)
@@ -189,6 +172,11 @@ namespace MW5.Api.Static
             get { return _manager.SupportedGdalFormats; }
         }
 
+        /// <summary>
+        /// Removes the specified shapefile, including all linked files like .dbf, .prj
+        /// </summary>
+        /// <param name="filename">The shapefile filename.</param>
+        /// <returns>True in success</returns>
         public static bool Remove(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))
@@ -201,26 +189,44 @@ namespace MW5.Api.Static
                 return true;
             }
 
-            if (filename.ToLower().EndsWith(".shp"))
+            if (!filename.ToLower().EndsWith(".shp"))
             {
-                string[] exts = {".shp", ".shx", ".dbf", ".prj", ".lbl", ".chart", ".mwd", ".mwx", ".shp.mwsymb", ".mwsr"};
-                filename = PathHelper.GetFullPathWithoutExtension(filename);
-                foreach (var ext in exts)
-                {
-                    string path = filename + ext;
-                    try
-                    {
-                        File.Delete(path);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.Current.Info("Failed to remove file: {}", ex, path);
-                    }
-                }
-                return true;
+                throw new InvalidOperationException("Unsupported file type.");
             }
 
-            throw new InvalidOperationException("Unsupported file type.");
+            string[] exts = { ".shp", ".shx", ".dbf", ".prj", ".lbl", ".chart", ".mwd", ".mwx", ".shp.mwsymb", ".mwsr" };
+            filename = PathHelper.GetFullPathWithoutExtension(filename);
+            foreach (var path in exts.Select(ext => filename + ext))
+            {
+                try
+                {
+                    File.Delete(path);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Info("Failed to remove file: {}", ex, path);
+                }
+            }
+
+            return true;
+        }
+
+        private static IDatasource TryOpenAsDatabaseLayer(string filename)
+        {
+            // the expected format is: "OgrConnection|<connection>|<query_or_layer_name>"
+            if (filename == null || !filename.ToLower().StartsWith("ogrconnection"))
+            {
+                return null;
+            }
+
+            var parts = filename.Split('|');
+            if (parts.Length == 3)
+            {
+                var source = _manager.OpenFromDatabase(parts[1], parts[2]);
+                return LayerSourceHelper.Convert(source);
+            }
+
+            return null;
         }
     }
 }
