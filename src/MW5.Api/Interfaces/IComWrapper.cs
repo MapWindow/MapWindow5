@@ -1,8 +1,12 @@
 ﻿namespace MW5.Api.Interfaces
 {
-    public interface IComWrapper
+    public interface ISimpleComWrapper
     {
         object InternalObject { get; }
+    }
+
+    public interface IComWrapper: ISimpleComWrapper
+    {
         string LastError { get; }
         string Tag { get; set; }
     }

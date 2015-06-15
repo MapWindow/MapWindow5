@@ -5,7 +5,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class RasterBand
+    public class RasterBand : ISimpleComWrapper
     {
         private readonly GdalRasterBand _band;
         private readonly int _index;
@@ -182,6 +182,11 @@ namespace MW5.Api.Concrete
             out double mean, out double stdDev, out int count)
         {
             return _band.ComputeLocalStatistics(column, row, range, out min, out max, out mean, out stdDev, out count);
+        }
+
+        public object InternalObject
+        {
+            get { return _band; }
         }
     }
 }
