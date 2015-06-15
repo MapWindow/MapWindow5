@@ -106,6 +106,12 @@
     <Compile Include="Controls\FieldsListView.Designer.cs">
       <DependentUpon>FieldsListView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FunctionTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FunctionTreeView.Designer.cs">
+      <DependentUpon>FunctionTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\JoinsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -125,6 +131,7 @@
     <Compile Include="Model\TablePanelInfo.cs" />
     <Compile Include="Services\DockPanelService.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
+    <Compile Include="Views\Abstract\IFieldCalculatorView.cs" />
     <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
@@ -151,6 +158,14 @@
     <Compile Include="Editor\RowManager.cs" />
     <Compile Include="Editor\TableEditorGrid.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\FieldCalculatorModel.cs" />
+    <Compile Include="Views\FieldCalculatorPresenter.cs" />
+    <Compile Include="Views\FieldCalculatorView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FieldCalculatorView.Designer.cs">
+      <DependentUpon>FieldCalculatorView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FindReplaceModel.cs" />
     <Compile Include="Views\FindReplacePresenter.cs" />
@@ -236,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FieldCalculatorView.resx">
+      <DependentUpon>FieldCalculatorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FindReplaceView.resx">
       <DependentUpon>FindReplaceView.cs</DependentUpon>
@@ -330,6 +348,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_line.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

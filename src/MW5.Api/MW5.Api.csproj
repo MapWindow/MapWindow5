@@ -73,7 +73,7 @@
     <Compile Include="Concrete\DriverOption.cs" />
     <Compile Include="Concrete\EditorSettings.cs" />
     <Compile Include="Concrete\ExpressionFunction.cs" />
-    <Compile Include="Concrete\ExpressionParser.cs" />
+    <Compile Include="Concrete\ExpressionEvaluator.cs" />
     <Compile Include="Concrete\GeoAngle.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />
     <Compile Include="Concrete\LayerIdentity.cs" />

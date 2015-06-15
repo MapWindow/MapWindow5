@@ -693,7 +693,7 @@ namespace MW5.Plugins.Symbology.Forms
             else
             {
                 string err = "";
-                if (!_shapefile.Table.TestExpression(expr, TableValueType.String, ref err))
+                if (!_shapefile.Table.TestExpression(expr, TableValueType.String, out err))
                 {
                     lblResult.ForeColor = Color.Red;
                     lblResult.Text = err;

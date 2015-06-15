@@ -30,8 +30,8 @@ namespace MW5.Api.Interfaces
         bool SaveAs(string dbfFilename);
 
         bool Calculate(string expression, int rowIndex, out object result, out string errorString);
-        bool TestExpression(string expression, TableValueType returnType, ref string errorString);
-        bool ParseExpression(string expression, ref string errorString);
+        bool TestExpression(string expression, TableValueType returnType, out string errorString);
+        bool ParseExpression(string expression, out string errorString);
         bool Query(string expression, ref object result, ref string errorString);
 
         FieldJoinCollection Joins { get; }

@@ -235,9 +235,9 @@ namespace MW5.Plugins.Symbology.Forms
             }
             
             object result = null;
-            string err = string.Empty;
+            string err;
 
-            if (!tbl.ParseExpression(richTextBox1.Text, ref err))
+            if (!tbl.ParseExpression(richTextBox1.Text, out err))
             {
                 return;
             }

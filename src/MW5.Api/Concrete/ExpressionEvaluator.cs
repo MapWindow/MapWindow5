@@ -9,11 +9,16 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class ExpressionParser: ISimpleComWrapper, IEnumerable<IFunction>
+    public class ExpressionEvaluator: ISimpleComWrapper, IEnumerable<ExpressionFunction>
     {
         private readonly Expression _expression;
 
-        internal ExpressionParser(Expression expression)
+        public ExpressionEvaluator()
+        {
+            _expression = new Expression();
+        }
+
+        internal ExpressionEvaluator(Expression expression)
         {
             if (expression == null) throw new ArgumentNullException("expression");
 
@@ -55,11 +60,15 @@ namespace MW5.Api.Concrete
             return _expression.SupportedFunction[functionIndex];
         }
 
-        public IEnumerator<IFunction> GetEnumerator()
+        public IEnumerator<ExpressionFunction> GetEnumerator()
         {
             for (int i = 0; i < NumSupportedFunctions; i++)
             {
-                yield return get_SupportedFunction(i);
+                var fn = get_SupportedFunction(i);
+                if (fn != null)
+                {
+                    yield return new ExpressionFunction(fn);
+                }
             }
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -43,9 +44,9 @@ namespace MW5.Api.Concrete
             get { return _function.NumParameters; }
         }
 
-        public tkFunctionGroup Group
+        public FunctionGroup Group
         {
-            get { return _function.Group; }
+            get { return (FunctionGroup)_function.Group; }
         }
     }
 }

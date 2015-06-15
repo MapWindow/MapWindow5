@@ -94,13 +94,15 @@ namespace MW5.Api.Concrete
             return _table.Calculate(expression, rowIndex, out result, out errorString);
         }
 
-        public bool TestExpression(string expression, TableValueType returnType, ref string errorString)
+        public bool TestExpression(string expression, TableValueType returnType, out string errorString)
         {
+            errorString = string.Empty;
             return _table.TestExpression(expression, (tkValueType)returnType, ref errorString);
         }
 
-        public bool ParseExpression(string expression, ref string errorString)
+        public bool ParseExpression(string expression, out string errorString)
         {
+            errorString = string.Empty;
             return _table.ParseExpression(expression, ref errorString);
         }
 

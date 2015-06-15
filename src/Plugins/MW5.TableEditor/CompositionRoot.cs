@@ -18,6 +18,7 @@ namespace MW5.Plugins.TableEditor
         {
             container.RegisterSingleton<TableEditorPresenter>()
                 .RegisterService<ITableEditorView, TableEditorView>()
+                .RegisterView<IFieldCalculatorView, FieldCalculatorView>()
                 .RegisterView<IUpdateMeasurementsView, UpdateMeasurementsView>()
                 .RegisterView<ICalculateFieldView, CalculateFieldView>()
                 .RegisterView<IDeleteFieldsView, DeleteFieldsView>()

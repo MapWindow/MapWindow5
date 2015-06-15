@@ -26,5 +26,10 @@ namespace MW5.Shared
         {
             return String.Join(separator, list.ToArray());
         }
+
+        public static string Fill(string pattern, int count)
+        {
+            return Enumerable.Range(0, count).Aggregate(string.Empty, (current, item) => current + pattern);
+        }
     }
 }

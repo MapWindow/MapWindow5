@@ -1482,4 +1482,13 @@
         Reverse = 1,
         None = 2,
     }
+
+    public enum FunctionGroup
+    {
+        Math = 0,
+        Strings = 1,
+        Geometry = 2,
+        Branching = 3,
+        Conversion = 4,
+    }
 }

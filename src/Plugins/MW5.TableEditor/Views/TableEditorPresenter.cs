@@ -191,7 +191,9 @@ namespace MW5.Plugins.TableEditor.Views
                     View.UpdateView();
                     break;
                 case TableEditorCommand.CalculateField:
-                    if (_context.Container.Run<CalculateFieldPresenter, IFeatureSet>(FeatureSet))
+                    // TODO: choose current selected field
+                    var model = new FieldCalculatorModel(table, table.Fields[0]);
+                    if (_context.Container.Run<FieldCalculatorPresenter, FieldCalculatorModel>(model))
                     {
                         View.UpdateDatasource();
                     }
