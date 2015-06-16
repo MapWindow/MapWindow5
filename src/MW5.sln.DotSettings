@@ -15,7 +15,8 @@
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=SuggestUseVarKeywordEverywhere/@EntryIndexedValue">WARNING</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UnusedAutoPropertyAccessor_002ELocal/@EntryIndexedValue">HINT</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/InspectionSeverities/=UnusedMethodReturnValue_002ELocal/@EntryIndexedValue">HINT</s:String>
-	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=Full_0020Cleanup/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="Full Cleanup"&gt;&lt;RemoveCodeRedundancies&gt;True&lt;/RemoveCodeRedundancies&gt;&lt;CSUseAutoProperty&gt;True&lt;/CSUseAutoProperty&gt;&lt;CSMakeFieldReadonly&gt;True&lt;/CSMakeFieldReadonly&gt;&lt;CSUseVar&gt;&lt;BehavourStyle&gt;CAN_CHANGE_TO_IMPLICIT&lt;/BehavourStyle&gt;&lt;LocalVariableStyle&gt;ALWAYS_IMPLICIT&lt;/LocalVariableStyle&gt;&lt;ForeachVariableStyle&gt;ALWAYS_IMPLICIT&lt;/ForeachVariableStyle&gt;&lt;/CSUseVar&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;EmbraceInRegion&gt;False&lt;/EmbraceInRegion&gt;&lt;RegionName&gt;&lt;/RegionName&gt;&lt;/CSOptimizeUsings&gt;&lt;CSShortenReferences&gt;True&lt;/CSShortenReferences&gt;&lt;CSReorderTypeMembers&gt;True&lt;/CSReorderTypeMembers&gt;&lt;CSReformatCode&gt;True&lt;/CSReformatCode&gt;&lt;StyleCop.Documentation&gt;&lt;SA1600ElementsMustBeDocumented&gt;False&lt;/SA1600ElementsMustBeDocumented&gt;&lt;SA1604ElementDocumentationMustHaveSummary&gt;False&lt;/SA1604ElementDocumentationMustHaveSummary&gt;&lt;SA1609PropertyDocumentationMustHaveValueDocumented&gt;False&lt;/SA1609PropertyDocumentationMustHaveValueDocumented&gt;&lt;SA1611ElementParametersMustBeDocumented&gt;False&lt;/SA1611ElementParametersMustBeDocumented&gt;&lt;SA1615ElementReturnValueMustBeDocumented&gt;False&lt;/SA1615ElementReturnValueMustBeDocumented&gt;&lt;SA1617VoidReturnValueMustNotBeDocumented&gt;True&lt;/SA1617VoidReturnValueMustNotBeDocumented&gt;&lt;SA1618GenericTypeParametersMustBeDocumented&gt;True&lt;/SA1618GenericTypeParametersMustBeDocumented&gt;&lt;SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes&gt;True&lt;/SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes&gt;&lt;SA1628DocumentationTextMustBeginWithACapitalLetter&gt;True&lt;/SA1628DocumentationTextMustBeginWithACapitalLetter&gt;&lt;SA1629DocumentationTextMustEndWithAPeriod&gt;True&lt;/SA1629DocumentationTextMustEndWithAPeriod&gt;&lt;SA1633SA1641UpdateFileHeader&gt;InsertMissing&lt;/SA1633SA1641UpdateFileHeader&gt;&lt;SA1639FileHeaderMustHaveSummary&gt;True&lt;/SA1639FileHeaderMustHaveSummary&gt;&lt;SA1642ConstructorSummaryDocumentationMustBeginWithStandardText&gt;True&lt;/SA1642ConstructorSummaryDocumentationMustBeginWithStandardText&gt;&lt;SA1643DestructorSummaryDocumentationMustBeginWithStandardText&gt;True&lt;/SA1643DestructorSummaryDocumentationMustBeginWithStandardText&gt;&lt;SA1644DocumentationHeadersMustNotContainBlankLines&gt;True&lt;/SA1644DocumentationHeadersMustNotContainBlankLines&gt;&lt;/StyleCop.Documentation&gt;&lt;CssAlphabetizeProperties&gt;True&lt;/CssAlphabetizeProperties&gt;&lt;CssReformatCode&gt;True&lt;/CssReformatCode&gt;&lt;HtmlReformatCode&gt;True&lt;/HtmlReformatCode&gt;&lt;JsInsertSemicolon&gt;True&lt;/JsInsertSemicolon&gt;&lt;XMLReformatCode&gt;True&lt;/XMLReformatCode&gt;&lt;/Profile&gt;</s:String>
+	
+	<s:String x:Key="/Default/CodeStyle/CodeCleanup/Profiles/=MapWindow_0020cleanup/@EntryIndexedValue">&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;Profile name="MapWindow cleanup"&gt;&lt;RemoveCodeRedundancies&gt;True&lt;/RemoveCodeRedundancies&gt;&lt;CSUseAutoProperty&gt;True&lt;/CSUseAutoProperty&gt;&lt;CSMakeFieldReadonly&gt;True&lt;/CSMakeFieldReadonly&gt;&lt;CSUseVar&gt;&lt;BehavourStyle&gt;CAN_CHANGE_TO_IMPLICIT&lt;/BehavourStyle&gt;&lt;LocalVariableStyle&gt;ALWAYS_IMPLICIT&lt;/LocalVariableStyle&gt;&lt;ForeachVariableStyle&gt;ALWAYS_IMPLICIT&lt;/ForeachVariableStyle&gt;&lt;/CSUseVar&gt;&lt;CSOptimizeUsings&gt;&lt;OptimizeUsings&gt;True&lt;/OptimizeUsings&gt;&lt;EmbraceInRegion&gt;False&lt;/EmbraceInRegion&gt;&lt;RegionName&gt;&lt;/RegionName&gt;&lt;/CSOptimizeUsings&gt;&lt;CSShortenReferences&gt;True&lt;/CSShortenReferences&gt;&lt;CSReorderTypeMembers&gt;True&lt;/CSReorderTypeMembers&gt;&lt;CSReformatCode&gt;True&lt;/CSReformatCode&gt;&lt;StyleCop.Documentation&gt;&lt;SA1600ElementsMustBeDocumented&gt;False&lt;/SA1600ElementsMustBeDocumented&gt;&lt;SA1604ElementDocumentationMustHaveSummary&gt;False&lt;/SA1604ElementDocumentationMustHaveSummary&gt;&lt;SA1609PropertyDocumentationMustHaveValueDocumented&gt;False&lt;/SA1609PropertyDocumentationMustHaveValueDocumented&gt;&lt;SA1611ElementParametersMustBeDocumented&gt;False&lt;/SA1611ElementParametersMustBeDocumented&gt;&lt;SA1615ElementReturnValueMustBeDocumented&gt;False&lt;/SA1615ElementReturnValueMustBeDocumented&gt;&lt;SA1617VoidReturnValueMustNotBeDocumented&gt;True&lt;/SA1617VoidReturnValueMustNotBeDocumented&gt;&lt;SA1618GenericTypeParametersMustBeDocumented&gt;True&lt;/SA1618GenericTypeParametersMustBeDocumented&gt;&lt;SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes&gt;True&lt;/SA1626SingleLineCommentsMustNotUseDocumentationStyleSlashes&gt;&lt;SA1628DocumentationTextMustBeginWithACapitalLetter&gt;True&lt;/SA1628DocumentationTextMustBeginWithACapitalLetter&gt;&lt;SA1629DocumentationTextMustEndWithAPeriod&gt;True&lt;/SA1629DocumentationTextMustEndWithAPeriod&gt;&lt;SA1633SA1641UpdateFileHeader&gt;InsertMissing&lt;/SA1633SA1641UpdateFileHeader&gt;&lt;SA1639FileHeaderMustHaveSummary&gt;True&lt;/SA1639FileHeaderMustHaveSummary&gt;&lt;SA1642ConstructorSummaryDocumentationMustBeginWithStandardText&gt;True&lt;/SA1642ConstructorSummaryDocumentationMustBeginWithStandardText&gt;&lt;SA1643DestructorSummaryDocumentationMustBeginWithStandardText&gt;True&lt;/SA1643DestructorSummaryDocumentationMustBeginWithStandardText&gt;&lt;SA1644DocumentationHeadersMustNotContainBlankLines&gt;True&lt;/SA1644DocumentationHeadersMustNotContainBlankLines&gt;&lt;/StyleCop.Documentation&gt;&lt;CssAlphabetizeProperties&gt;True&lt;/CssAlphabetizeProperties&gt;&lt;CssReformatCode&gt;True&lt;/CssReformatCode&gt;&lt;HtmlReformatCode&gt;True&lt;/HtmlReformatCode&gt;&lt;JsInsertSemicolon&gt;True&lt;/JsInsertSemicolon&gt;&lt;XMLReformatCode&gt;True&lt;/XMLReformatCode&gt;&lt;CSUpdateFileHeader&gt;True&lt;/CSUpdateFileHeader&gt;&lt;/Profile&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeCleanup/RecentlyUsedProfile/@EntryValue">Full Cleanup</s:String>
 	<s:String x:Key="/Default/CodeStyle/CodeCleanup/SilentCleanupProfile/@EntryValue">Default: Full Cleanup</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGN_LINQ_QUERY/@EntryValue">True</s:Boolean>
@@ -47,7 +48,8 @@
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/MODIFIERS_ORDER/@EntryValue">public protected internal private static new abstract virtual override sealed readonly extern unsafe volatile async</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_CONSTRUCTOR_INITIALIZER_ON_SAME_LINE/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_FIELD_ATTRIBUTE_ON_SAME_LINE/@EntryValue">False</s:Boolean>
-	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_ACCESSOR_ON_SINGLE_LINE/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_ACCESSORHOLDER_ON_SINGLE_LINE/@EntryValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_SIMPLE_ACCESSOR_ON_SINGLE_LINE/@EntryValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_TYPE_CONSTRAINTS_ON_SAME_LINE/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/PLACE_WHILE_ON_NEW_LINE/@EntryValue">True</s:Boolean>
 	<s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/REDUNDANT_THIS_QUALIFIER_STYLE/@EntryValue">DO_NOT_USE</s:String>
@@ -69,94 +71,39 @@
 &lt;!-- Last updated 15.05.2012 --&gt;&#xD;
 &lt;Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns"&gt;&#xD;
 &#xD;
-  &lt;!-- Do not reorder COM interfaces --&gt;&#xD;
-  &lt;Pattern&gt;&#xD;
-    &lt;Match&gt;&#xD;
-      &lt;And Weight="2000"&gt;&#xD;
-        &lt;Kind Is="interface"/&gt;&#xD;
-        &lt;Or&gt;&#xD;
-          &lt;HasAttribute CLRName="System.Runtime.InteropServices.InterfaceTypeAttribute"/&gt;&#xD;
-          &lt;HasAttribute CLRName="System.Runtime.InteropServices.ComImport"/&gt;&#xD;
-        &lt;/Or&gt;&#xD;
-      &lt;/And&gt;&#xD;
-    &lt;/Match&gt;&#xD;
-  &lt;/Pattern&gt;&#xD;
-&#xD;
-  &lt;!-- Do not reorder P/Invoke structs --&gt;&#xD;
-  &lt;Pattern&gt;&#xD;
-    &lt;Match&gt;&#xD;
-      &lt;And Weight="2000"&gt;&#xD;
-        &lt;Or&gt;&#xD;
-          &lt;Kind Is="struct"/&gt;&#xD;
-          &lt;Kind Is="class"/&gt;&#xD;
-        &lt;/Or&gt;&#xD;
-        &lt;HasAttribute CLRName="System.Runtime.InteropServices.StructLayoutAttribute"/&gt;&#xD;
-      &lt;/And&gt;&#xD;
-    &lt;/Match&gt;&#xD;
-  &lt;/Pattern&gt;&#xD;
-&#xD;
-  &lt;!-- Do not reorder P/Invoke classes (called xxxNativeMethods) --&gt;&#xD;
-  &lt;Pattern&gt;&#xD;
-    &lt;Match&gt;&#xD;
-      &lt;And Weight="2000"&gt;&#xD;
-        &lt;Kind Is="class"/&gt;&#xD;
-        &lt;Name Is=".*NativeMethods" /&gt;&#xD;
-      &lt;/And&gt;&#xD;
-    &lt;/Match&gt;&#xD;
-  &lt;/Pattern&gt;&#xD;
-&#xD;
-  &lt;!-- StyleCop pattern --&gt;&#xD;
+  &lt;!-- /////////////////////////////////////// --&gt;&#xD;
+  &lt;!-- DEFAULT PATTERN WITH REGIONS --&gt;&#xD;
+  &lt;!-- /////////////////////////////////////// --&gt;&#xD;
   &lt;Pattern RemoveAllRegions="true"&gt;&#xD;
     &lt;Match&gt;&#xD;
-      &lt;Or Weight="1000" &gt;&#xD;
-        &lt;Kind Is="class" /&gt;&#xD;
-        &lt;Kind Is="struct" /&gt;&#xD;
-        &lt;Kind Is="interface"/&gt;&#xD;
-      &lt;/Or&gt;&#xD;
+      &lt;And&gt;&#xD;
+         &lt;HasAttribute CLRName="MW5.Shared.HasRegionsAttribute" /&gt;&#xD;
+         &lt;Or Weight="1000" &gt;&#xD;
+           &lt;Kind Is="class" /&gt;&#xD;
+           &lt;Kind Is="struct" /&gt;&#xD;
+           &lt;Kind Is="interface"/&gt;&#xD;
+         &lt;/Or&gt;&#xD;
+      &lt;/And&gt;&#xD;
     &lt;/Match&gt;&#xD;
 &#xD;
-    &lt;!-- Constants --&gt;&#xD;
+    &lt;!-- Fields and constants --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
-        &lt;Kind Is="constant"/&gt;&#xD;
+        &lt;Or&gt;&#xD;
+           &lt;Kind Is="constant"/&gt;&#xD;
+           &lt;Kind Is="field"/&gt;&#xD;
+        &lt;/Or&gt;&#xD;
       &lt;/Match&gt;&#xD;
       &lt;Sort&gt;&#xD;
-        &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Constants"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- Static fields --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
-          &lt;Kind Is="field"/&gt;&#xD;
-          &lt;Static /&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
+        &lt;Kind /&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
         &lt;Readonly/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Static Fields"/&gt;&#xD;
+      &lt;!-- &lt;Group Region="Fields"/&gt; --&gt;&#xD;
     &lt;/Entry&gt;&#xD;
 &#xD;
-    &lt;!-- Fields --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;Kind Is="field"/&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
-        &lt;Readonly/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Fields"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- constructors and destructors --&gt;&#xD;
+    &lt;!-- Constructors --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
         &lt;Or Weight="200"&gt;&#xD;
@@ -169,7 +116,7 @@
         &lt;Kind Order="constructor destructor"/&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Constructors and Destructors"/&gt;&#xD;
+      &lt;!-- &lt;Group Region="Constructors"/&gt; --&gt;&#xD;
     &lt;/Entry&gt;&#xD;
 &#xD;
     &lt;!-- delegates --&gt;&#xD;
@@ -188,38 +135,7 @@
     &lt;!-- public events --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
           &lt;Kind Is="event"/&gt;&#xD;
-          &lt;Access Is="public"/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;Access Order="public" /&gt;&#xD;
-        &lt;Static /&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Events"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- interface events --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
-          &lt;Kind Is="event"/&gt;&#xD;
-          &lt;ImplementsInterface/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Events" /&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- other events --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;Kind Is="event"/&gt;&#xD;
       &lt;/Match&gt;&#xD;
       &lt;Sort&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
@@ -256,38 +172,7 @@
     &lt;!-- public properties --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
           &lt;Kind Is="property"/&gt;&#xD;
-          &lt;Access Is="public"/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;Access Order="public"/&gt;&#xD;
-        &lt;Static/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Properties"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- interface properties --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
-          &lt;Kind Is="property"/&gt;&#xD;
-          &lt;ImplementsInterface/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Properties" /&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- other properties --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;Kind Is="property"/&gt;&#xD;
       &lt;/Match&gt;&#xD;
       &lt;Sort&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
@@ -297,41 +182,10 @@
       &lt;Group Region="Properties"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
 &#xD;
-    &lt;!-- public indexers --&gt;&#xD;
+    &lt;!-- indexers --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
           &lt;Kind Is="indexer" Weight="1000" /&gt;&#xD;
-          &lt;Access Is="public"/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;Access Order="public" /&gt;&#xD;
-        &lt;Static/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Indexers"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- interface indexers --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
-          &lt;Kind Is="indexer" Weight="1000"/&gt;&#xD;
-          &lt;ImplementsInterface/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Indexers" /&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- other indexers --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;Kind Is="indexer" Weight="1000" /&gt;&#xD;
       &lt;/Match&gt;&#xD;
       &lt;Sort&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
@@ -345,11 +199,8 @@
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
         &lt;And&gt;&#xD;
-          &lt;Or&gt;&#xD;
             &lt;Kind Is="method"/&gt;&#xD;
-            &lt;Kind Is="operator"/&gt;&#xD;
-          &lt;/Or&gt;&#xD;
-          &lt;Access Is="public"/&gt;&#xD;
+            &lt;Access Is="public"/&gt;&#xD;
         &lt;/And&gt;&#xD;
       &lt;/Match&gt;&#xD;
       &lt;Sort&gt;&#xD;
@@ -357,22 +208,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Methods and Operators"/&gt;&#xD;
-    &lt;/Entry&gt;&#xD;
-&#xD;
-    &lt;!-- interface methods --&gt;&#xD;
-    &lt;Entry&gt;&#xD;
-      &lt;Match&gt;&#xD;
-        &lt;And&gt;&#xD;
-          &lt;Kind Is="method"/&gt;&#xD;
-          &lt;ImplementsInterface/&gt;&#xD;
-        &lt;/And&gt;&#xD;
-      &lt;/Match&gt;&#xD;
-      &lt;Sort&gt;&#xD;
-        &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
-        &lt;Name/&gt;&#xD;
-      &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Methods" /&gt;&#xD;
+      &lt;Group Region="Public Methods"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
 &#xD;
     &lt;!-- other methods --&gt;&#xD;
@@ -431,13 +267,137 @@
     &lt;Entry/&gt;&#xD;
 &#xD;
   &lt;/Pattern&gt;&#xD;
+&#xD;
+  &lt;!-- /////////////////////////////////////// --&gt;&#xD;
+  &lt;!-- DEFAULT PATTERN W/O REGIONS    --&gt;&#xD;
+  &lt;!-- /////////////////////////////////////// --&gt;&#xD;
+  &lt;Pattern RemoveAllRegions="true"&gt;&#xD;
+&#xD;
+    &lt;!--public delegate--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;And Weight="100"&gt;&#xD;
+          &lt;Access Is="public"/&gt;&#xD;
+          &lt;Kind Is="delegate"/&gt;&#xD;
+        &lt;/And&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Name/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--public enum--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;And Weight="100"&gt;&#xD;
+          &lt;Access Is="public"/&gt;&#xD;
+          &lt;Kind Is="enum"/&gt;&#xD;
+        &lt;/And&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Name/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+&#xD;
+    &lt;!--static fields and constants--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;Or&gt;&#xD;
+          &lt;Kind Is="constant"/&gt;&#xD;
+          &lt;And&gt;&#xD;
+            &lt;Kind Is="field"/&gt;&#xD;
+            &lt;Static/&gt;&#xD;
+          &lt;/And&gt;&#xD;
+        &lt;/Or&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Kind Order="constant field"/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--instance fields--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;And&gt;&#xD;
+          &lt;Kind Is="field"/&gt;&#xD;
+          &lt;Not&gt;&#xD;
+            &lt;Static/&gt;&#xD;
+          &lt;/Not&gt;&#xD;
+        &lt;/And&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Readonly/&gt;&#xD;
+        &lt;Name/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+&#xD;
+    &lt;!--Constructors. Place static one first--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;Kind Is="constructor"/&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Static/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--properties, indexers--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;Or&gt;&#xD;
+          &lt;Kind Is="property"/&gt;&#xD;
+          &lt;Kind Is="indexer"/&gt;&#xD;
+        &lt;/Or&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+           &lt;Access /&gt;&#xD;
+           &lt;Name /&gt;&#xD;
+       &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--interface implementations--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;And Weight="100"&gt;&#xD;
+          &lt;Kind Is="member"/&gt;&#xD;
+          &lt;ImplementsInterface/&gt;&#xD;
+        &lt;/And&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--all other members--&gt;&#xD;
+    &lt;Entry &gt;&#xD;
+        &lt;Sort&gt;&#xD;
+           &lt;Access /&gt;&#xD;
+           &lt;Name /&gt;&#xD;
+        &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+    &#xD;
+    &lt;!--nested types--&gt;&#xD;
+    &lt;Entry&gt;&#xD;
+      &lt;Match&gt;&#xD;
+        &lt;Kind Is="type"/&gt;&#xD;
+      &lt;/Match&gt;&#xD;
+      &lt;Sort&gt;&#xD;
+        &lt;Name/&gt;&#xD;
+      &lt;/Sort&gt;&#xD;
+    &lt;/Entry&gt;&#xD;
+  &lt;/Pattern&gt;&#xD;
+&#xD;
 &lt;/Patterns&gt;</s:String>
-    <s:String x:Key="/Default/CodeStyle/CSharpMemberOrderPattern/LayoutType/@EntryValue">CustomLayout</s:String>
+	<s:String x:Key="/Default/CodeStyle/CSharpMemberOrderPattern/LayoutType/@EntryValue">CustomLayout</s:String>
+	
+    
 	<s:Boolean x:Key="/Default/CodeStyle/CSharpUsing/AddImportsToDeepestScope/@EntryValue">False</s:Boolean>
 	<s:Boolean x:Key="/Default/CodeStyle/CSharpUsing/QualifiedUsingAtNestedScope/@EntryValue">True</s:Boolean>
-	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">&lt;copyright file="$FILENAME$" company="MapWindow OSS Team - www.mapwindow.org"&gt;&#xD;
+	<s:String x:Key="/Default/CodeStyle/FileHeader/FileHeaderText/@EntryValue">-------------------------------------------------------------------------------------------&#xD;
+&lt;copyright file="$FILENAME$" company="MapWindow OSS Team - www.mapwindow.org"&gt;&#xD;
  MapWindow OSS Team - $CURRENT_YEAR$&#xD;
-&lt;/copyright&gt;</s:String>
+&lt;/copyright&gt;&#xD;
+-------------------------------------------------------------------------------------------</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/EventHandlerPatternLong/@EntryValue">$object$_On$event$</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=Constants/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=EnumMember/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
@@ -455,4 +415,5 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=StaticReadonly/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=TypeParameters/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="T" Suffix="" Style="AaBb" /&gt;</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CSharpNaming/PredefinedNamingRules/=TypesAndNamespaces/@EntryIndexedValue">&lt;Policy Inspect="True" Prefix="" Suffix="" Style="AaBb" /&gt;</s:String>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>
 	<s:Int64 x:Key="/Default/StyleCopOptions/ParsingPerformance/@EntryValue">2</s:Int64></wpf:ResourceDictionary>
