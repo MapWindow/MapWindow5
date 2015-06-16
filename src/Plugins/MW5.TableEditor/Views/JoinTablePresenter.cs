@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="JoinTablePresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Concrete;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Views.Abstract;
@@ -14,11 +15,15 @@ namespace MW5.Plugins.TableEditor.Views
 {
     public class JoinTablePresenter : BasePresenter<IJoinTableView, JoinViewModel>
     {
-        private const string OpenDialogFilter = "Dbf tables (*.dbf)|*.dbf|Excel workbooks (*.xls, *.xlsx)|*.xls;*.xlsx|CSV files (*.csv)|*.csv|All|*.csv;*.dbf;*.xls;*.xlsx";
+        private const string OpenDialogFilter =
+            "Dbf tables (*.dbf)|*.dbf|Excel workbooks (*.xls, *.xlsx)|*.xls;*.xlsx|CSV files (*.csv)|*.csv|All|*.csv;*.dbf;*.xls;*.xlsx";
+
         private readonly IFileDialogService _dialogService;
+
         private bool _hasMatches;
 
-        public JoinTablePresenter(IJoinTableView view, IFileDialogService dialogService) : base(view)
+        public JoinTablePresenter(IJoinTableView view, IFileDialogService dialogService)
+            : base(view)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dialogService = dialogService;
@@ -26,38 +31,39 @@ namespace MW5.Plugins.TableEditor.Views
             view.OpenClicked += view_OpenClicked;
         }
 
-        private void view_OpenClicked()
+        public override bool ViewOkClicked()
         {
-            string filename;
-            if (!_dialogService.Open(OpenDialogFilter, out filename, 4))
-            {
-                return;
-            }
-
-            if (Model.OpenDatasource(filename))
-            {
-                View.SetDatasource();
-            }
+            return PerformJoin();
         }
 
-        private void view_TryJoin()
+        private bool PerformJoin()
         {
-            if (View.FieldTo == null || View.FieldFrom == null)
+            if (!Validate()) return false;
+
+            var fields = View.SelectedFields.Select(f => f.Name);
+
+            if (Model.Join != null)
             {
-                return;
+                if (!Model.Table.StopJoin(Model.Join.JoinIndex))
+                {
+                    Logger.Current.Warn("Failed to stop join: " + Model.Join.Filename);
+                    return false;
+                }
             }
 
-            int rowCount, joinRowCount;
-
-            if (Model.Table.TryJoin(Model.External, View.FieldTo.Name, View.FieldFrom.Name, out rowCount, out joinRowCount))
+            var result = Model.Table.Join(
+                Model.External,
+                View.FieldTo.Name,
+                View.FieldFrom.Name,
+                Model.Filename,
+                Model.GetOptionsString(),
+                fields);
+            if (!result)
             {
-                View.SetRowCount(rowCount, joinRowCount);
-                _hasMatches = rowCount > 0;
-                return;
+                MessageService.Current.Warn("Failed to join tables.");
             }
 
-            View.SetRowCount(0, 0);
-            _hasMatches = false;
+            return result;
         }
 
         private bool Validate()
@@ -83,33 +89,43 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        private bool PerformJoin()
+        private void view_OpenClicked()
         {
-            if (!Validate()) return false;
-
-            var fields = View.SelectedFields.Select(f => f.Name);
-
-            if (Model.Join != null)
+            string filename;
+            if (!_dialogService.Open(OpenDialogFilter, out filename, 4))
             {
-                if (!Model.Table.StopJoin(Model.Join.JoinIndex))
-                {
-                    Logger.Current.Warn("Failed to stop join: " + Model.Join.Filename);
-                    return false;
-                }
+                return;
             }
 
-            bool result = Model.Table.Join(Model.External, View.FieldTo.Name, View.FieldFrom.Name, Model.Filename, Model.GetOptionsString(), fields);
-            if (!result)
+            if (Model.OpenDatasource(filename))
             {
-                MessageService.Current.Warn("Failed to join tables.");
+                View.SetDatasource();
             }
-
-            return result;
         }
 
-        public override bool ViewOkClicked()
+        private void view_TryJoin()
         {
-            return PerformJoin();
+            if (View.FieldTo == null || View.FieldFrom == null)
+            {
+                return;
+            }
+
+            int rowCount, joinRowCount;
+
+            if (Model.Table.TryJoin(
+                Model.External,
+                View.FieldTo.Name,
+                View.FieldFrom.Name,
+                out rowCount,
+                out joinRowCount))
+            {
+                View.SetRowCount(rowCount, joinRowCount);
+                _hasMatches = rowCount > 0;
+                return;
+            }
+
+            View.SetRowCount(0, 0);
+            _hasMatches = false;
         }
     }
 }

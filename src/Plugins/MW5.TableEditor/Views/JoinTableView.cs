@@ -1,15 +1,13 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="JoinTableView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
-using MW5.Api.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
@@ -17,11 +15,10 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
+    [HasRegions]
     public partial class JoinTableView : JoinDbfViewBase, IJoinTableView
     {
-        public event Action OpenClicked;
-        public event Action TryJoin;
-        private bool _ignoreEvents = false;
+        private bool _ignoreEvents;
 
         public JoinTableView()
         {
@@ -32,17 +29,39 @@ namespace MW5.Plugins.TableEditor.Views
             Shown += JoinTableView_Shown;
         }
 
-        private void JoinTableView_Shown(object sender, EventArgs e)
+        #region Events
+
+        public event Action OpenClicked;
+
+        public event Action TryJoin;
+
+        #endregion
+
+        #region Properties
+
+        public FieldWrapper FieldFrom
         {
-            if (Model.Editing)
-            {
-                fieldsGrid1.Focus();
-            }
-            else
-            {
-                btnOpen.Focus();
-            }
+            get { return cboExternal.SelectedItem as FieldWrapper; }
         }
+
+        public FieldWrapper FieldTo
+        {
+            get { return cboCurrent.SelectedItem as FieldWrapper; }
+        }
+
+        public ButtonBase OkButton
+        {
+            get { return btnOk; }
+        }
+
+        public IEnumerable<FieldWrapper> SelectedFields
+        {
+            get { return fieldsGrid1.Adapter.Items.Where(f => f.Selected); }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         public void Initialize()
         {
@@ -88,27 +107,29 @@ namespace MW5.Plugins.TableEditor.Views
             LoadExternalTable();
         }
 
-        /// <summary>
-        /// Loads table from datasource based on selected option.
-        /// </summary>
-        private void LoadExternalTable()
+        public void SetRowCount(int rowCount, int joinRowCount)
         {
-            if (_ignoreEvents) return;
+            lblMatch.Text = "Matching rows: " + rowCount;
+            lblMatchJoin.Text = "Matching rows: " + joinRowCount;
+        }
 
-            Model.SelectedOption = cboOptions.Text;
+        #endregion
 
-            Model.ReloadExternal();
+        #region Methods
 
-            BindExternalFieldList();
+        private static string GetOptionName(JoinSourceType type)
+        {
+            switch (type)
+            {
+                case JoinSourceType.Dbf:
+                    return "Table";
+                case JoinSourceType.Xls:
+                    return "Worksheet";
+                case JoinSourceType.Csv:
+                    return "Separator";
+            }
 
-            BindExternalCombo();
-
-            Invoke(TryJoin);
-
-            bool hasDatasource = Model.External != null;
-
-            panel1.Enabled = hasDatasource;
-            groupKeys.Enabled = hasDatasource;
+            return "Table";
         }
 
         /// <summary>
@@ -121,8 +142,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             if (Model.Join != null)
             {
-                cboCurrent.SelectedItem =
-                    list2.FirstOrDefault(f => f.Name.EqualsIgnoreCase(Model.Join.ToField));
+                cboCurrent.SelectedItem = list2.FirstOrDefault(f => f.Name.EqualsIgnoreCase(Model.Join.ToField));
             }
         }
 
@@ -184,9 +204,39 @@ namespace MW5.Plugins.TableEditor.Views
             fieldsGrid1.DataSource = list;
         }
 
-        public ButtonBase OkButton
+        private void JoinTableView_Shown(object sender, EventArgs e)
         {
-            get { return btnOk; }
+            if (Model.Editing)
+            {
+                fieldsGrid1.Focus();
+            }
+            else
+            {
+                btnOpen.Focus();
+            }
+        }
+
+        /// <summary>
+        /// Loads table from datasource based on selected option.
+        /// </summary>
+        private void LoadExternalTable()
+        {
+            if (_ignoreEvents) return;
+
+            Model.SelectedOption = cboOptions.Text;
+
+            Model.ReloadExternal();
+
+            BindExternalFieldList();
+
+            BindExternalCombo();
+
+            Invoke(TryJoin);
+
+            var hasDatasource = Model.External != null;
+
+            panel1.Enabled = hasDatasource;
+            groupKeys.Enabled = hasDatasource;
         }
 
         private void chkAll_CheckedChanged(object sender, EventArgs e)
@@ -194,42 +244,8 @@ namespace MW5.Plugins.TableEditor.Views
             fieldsGrid1.Adapter.SetPropertyForEach(item => item.Selected, chkAll.Checked);
         }
 
-        public FieldWrapper FieldFrom
-        {
-            get { return cboExternal.SelectedItem as FieldWrapper; }
-        }
-
-        public FieldWrapper FieldTo
-        {
-            get { return cboCurrent.SelectedItem as FieldWrapper; }
-        }
-
-        public IEnumerable<FieldWrapper> SelectedFields
-        {
-            get { return fieldsGrid1.Adapter.Items.Where(f => f.Selected); }
-        }
-
-        public void SetRowCount(int rowCount, int joinRowCount)
-        {
-            lblMatch.Text = "Matching rows: " + rowCount;
-            lblMatchJoin.Text = "Matching rows: " + joinRowCount;
-        }
-
-        private static string GetOptionName(JoinSourceType type)
-        {
-            switch (type)
-            {
-                case JoinSourceType.Dbf:
-                    return "Table";
-                case JoinSourceType.Xls:
-                    return "Worksheet";
-                case JoinSourceType.Csv:
-                    return "Separator";
-            }
-
-            return "Table";
-        }
+        #endregion
     }
 
-    public class JoinDbfViewBase : MapWindowView<JoinViewModel> { }
+    public class JoinDbfViewBase : MapWindowView<JoinViewModel> {}
 }

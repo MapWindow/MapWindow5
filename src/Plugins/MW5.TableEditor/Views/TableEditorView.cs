@@ -1,6 +1,10 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TableEditorView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,19 +18,23 @@ using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Properties;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
-using MW5.UI;
 using MW5.UI.Controls;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
+    /// <summary>
+    /// Table editor view representing menu and docking manager to host attribute tables for particular layers.
+    /// </summary>
+    [HasRegions]
     internal partial class TableEditorView : DockPanelControlBase, ITableEditorView
     {
         private readonly TablePanelCollection _panels;
+
         private IAppContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TableEditorView"/> class.
+        /// Initializes a new instance of the <see cref="TableEditorView" /> class.
         /// </summary>
         public TableEditorView()
         {
@@ -37,62 +45,137 @@ namespace MW5.Plugins.TableEditor.Views
             InitMenu();
         }
 
-        public void Initialize(IAppContext context)
-        {
-            _context = context;
+        #region Properties
 
-            UpdateView();
+        /// <summary>
+        /// Gets the index of the active column, i.e. the one for which context menu was displayed.
+        /// </summary>
+        public int ActiveColumnIndex { get; private set; }
+
+        /// <summary>
+        /// Gets currently active featureset.
+        /// </summary>
+        public IFeatureSet ActiveFeatureSet
+        {
+            get
+            {
+                var panel = Panels.ActivePanel;
+
+                if (panel == null || panel.LayerHandle == -1)
+                {
+                    return null;
+                }
+
+                return _context.Legend.Layers.GetFeatureSet(panel.LayerHandle);
+            }
         }
 
-        private void InitMenu()
+        /// <summary>
+        /// Gets currently active grid.
+        /// </summary>
+        public TableEditorGrid ActiveGrid
         {
-            // handlers aren't attached to the items with not null tag
-            toolEdit.Tag = 0;
-            toolSelection.Tag = 0;
-            toolFields.Tag = 0;
-            toolTools.Tag = 0;
-            toolLayout.Tag = 0;
+            get
+            {
+                var panel = Panels.ActivePanel;
+                if (panel == null || panel.LayerHandle == -1)
+                {
+                    return null;
+                }
 
-            toolEdit.DropDownOpening += (s, e) => OnMenuOpening();
-            toolSelection.DropDownOpening += (s, e) => OnMenuOpening();
-            toolLayout.DropDownOpening += (s, e) => OnMenuOpening();
-            toolFields.DropDownOpening += (s, e) => OnMenuOpening();
-            toolTools.DropDownOpening += (s, e) => OnMenuOpening();
+                return panel.Control as TableEditorGrid;
+            }
         }
 
-        private Size DockingClientSize
+        /// <summary>
+        /// Gets the handle of the active layer.
+        /// </summary>
+        public int ActiveLayerHandle
         {
-            get { return new Size(ClientSize.Width, ClientSize.Height - toolStripEx1.Height); }
+            get
+            {
+                var panel = Panels.ActivePanel;
+                return panel != null ? panel.LayerHandle : -1;
+            }
         }
 
+        /// <summary>
+        /// Gets buttons to wire up menu commands for.
+        /// </summary>
+        public IEnumerable<Control> Buttons
+        {
+            get { yield break; }
+        }
+
+        /// <summary>
+        /// Gets the ok button.
+        /// </summary>
+        public ButtonBase OkButton
+        {
+            get { return null; }
+        }
+
+        /// <summary>
+        /// Gets list of docking panels.
+        /// </summary>
         public TablePanelCollection Panels
         {
             get { return _panels; }
         }
 
-        public TableEditorGrid CreateGrid()
+        /// <summary>
+        /// Gets toolstrips to wire up menu commands for.
+        /// </summary>
+        public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            var grid = new TableEditorGrid {RowManager = new RowManager()};
-            grid.DoubleBuffered(true);
-            grid.CurrentCellBorderColor = Color.LightGreen;
-            Controls.Add(grid);
-            return grid;
+            get
+            {
+                yield return toolStripEx1.Items;
+                yield return contextMenuStripEx1.Items;
+            }
         }
 
-        public TablePanelInfo CreateNewTable(ILegendLayer layer)
+        /// <summary>
+        /// Gets the size client area for docking panels.
+        /// </summary>
+        private Size DockingClientSize
+        {
+            get { return new Size(ClientSize.Width, ClientSize.Height - toolStripEx1.Height); }
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Clears the current cell.
+        /// </summary>
+        public void ClearCurrentCell()
+        {
+            var grid = ActiveGrid;
+            if (grid != null)
+            {
+                grid.CurrentCell = null;
+            }
+        }
+
+        /// <summary>
+        /// Creates new table panel for the layer.
+        /// </summary>
+        public TablePanelInfo CreateTablePanel(ILegendLayer layer)
         {
             var grid = CreateGrid();
 
             grid.TableSource = layer.FeatureSet;
-            
+
             grid.ColumnContextNeeded += (s, e) =>
-            {
-                var ctrl = s as Control;
-                if (ctrl != null)
                 {
-                    contextMenuStripEx1.Show(Cursor.Position);
-                }
-            };
+                    var ctrl = s as Control;
+                    if (ctrl != null)
+                    {
+                        contextMenuStripEx1.Show(Cursor.Position);
+                    }
+                };
 
             var first = Panels.FirstOrDefault();
 
@@ -112,6 +195,9 @@ namespace MW5.Plugins.TableEditor.Views
             return new TablePanelInfo(grid, layer, panel);
         }
 
+        /// <summary>
+        /// Gets the size and docking state for a new docking panel.
+        /// </summary>
         public void GetLayoutSpecs(TableEditorLayout layout, out int size, out DockPanelState state)
         {
             size = 0;
@@ -133,15 +219,27 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        public void ClearCurrentCell()
+        /// <summary>
+        /// Initializes the view.
+        /// </summary>
+        public void Initialize(IAppContext context)
         {
-            var grid = ActiveGrid;
-            if (grid != null)
-            {
-                grid.CurrentCell = null;
-            }
+            _context = context;
+
+            UpdateView();
         }
 
+        /// <summary>
+        /// Performs necessary updates after a differnt dock panel was activated.
+        /// </summary>
+        public void OnActivateDockingPanel()
+        {
+            UpdateEditingIcon();
+        }
+
+        /// <summary>
+        ///     Completely reloads the datasource applying all pending changes.
+        /// </summary>
         public void UpdateDatasource()
         {
             var grid = ActiveGrid;
@@ -153,14 +251,46 @@ namespace MW5.Plugins.TableEditor.Views
             UpdateView();
         }
 
-        public void OnActivateDockingPanel()
+        /// <summary>
+        /// Updates a caption text of the specified panel.
+        /// </summary>
+        public void UpdatePanelCaption(int layerHandle)
         {
-            UpdateEditingIcon();
+            var layer = _context.Legend.Layers.ItemByHandle(layerHandle);
+            if (layer == null)
+            {
+                return;
+            }
+
+            var msg = layer.Name;
+
+            var fs = layer.FeatureSet;
+            if (fs != null)
+            {
+                if (fs.EditingTable)
+                {
+                    msg += "*";
+                }
+
+                if (fs.NumSelected > 0)
+                {
+                    msg += string.Format(" - selected {0} from {1}", fs.NumSelected, fs.NumFeatures);
+                }
+            }
+
+            var panel = Panels.FirstOrDefault(p => p.LayerHandle == layerHandle);
+            if (panel != null)
+            {
+                panel.Caption = msg;
+            }
         }
 
+        /// <summary>
+        /// Updates the menus and invalidates the currently active grid.
+        /// </summary>
         public void UpdateView()
         {
-            bool hasPanels = Panels.Any();
+            var hasPanels = Panels.Any();
 
             lblNoLayers.Visible = !hasPanels;
 
@@ -181,6 +311,76 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Creates a new instance of TableEditorGrid.
+        /// </summary>
+        private TableEditorGrid CreateGrid()
+        {
+            var grid = new TableEditorGrid { RowManager = new RowManager() };
+            grid.DoubleBuffered(true);
+            grid.CurrentCellBorderColor = Color.LightGreen;
+            Controls.Add(grid);
+            return grid;
+        }
+
+        /// <summary>
+        /// Disables all menu items.
+        /// </summary>
+        private void DisableMenus()
+        {
+            foreach (ToolStripItem item in toolStripEx1.Items)
+            {
+                var dropDown = item as ToolStripDropDownItem;
+                if (dropDown != null)
+                {
+                    foreach (ToolStripItem subItem in dropDown.DropDownItems)
+                    {
+                        subItem.Enabled = false;
+                    }
+                }
+                else
+                {
+                    item.Enabled = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initializes the root menu items.
+        /// </summary>
+        private void InitMenu()
+        {
+            // handlers aren't attached to the items with not null tag
+            toolEdit.Tag = 0;
+            toolSelection.Tag = 0;
+            toolFields.Tag = 0;
+            toolTools.Tag = 0;
+            toolLayout.Tag = 0;
+
+            toolEdit.DropDownOpening += (s, e) => OnMenuOpening();
+            toolSelection.DropDownOpening += (s, e) => OnMenuOpening();
+            toolLayout.DropDownOpening += (s, e) => OnMenuOpening();
+            toolFields.DropDownOpening += (s, e) => OnMenuOpening();
+            toolTools.DropDownOpening += (s, e) => OnMenuOpening();
+        }
+
+        /// <summary>
+        /// Runs necessary update of menu items before certain menu is opened.
+        /// </summary>
+        private void OnMenuOpening()
+        {
+            DisableMenus();
+
+            UpdateMenus();
+        }
+
+        /// <summary>
+        /// Updates the icons of editing menu depending on layer state.
+        /// </summary>
         private void UpdateEditingIcon()
         {
             var fs = ActiveFeatureSet;
@@ -189,44 +389,16 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
-            bool editing = fs.Table.EditMode;
+            var editing = fs.Table.EditMode;
 
             var img = editing ? Resources.icon_save1 : Resources.icon_layer_edit;
-            
+
             toolEdit.Image = img;
         }
 
-        public void UpdatePanelCaption(int layerHandle)
-        {
-            var layer = _context.Legend.Layers.ItemByHandle(layerHandle);
-            if (layer == null)
-            {
-                return;
-            }
-
-            string msg = layer.Name;
-
-            var fs = layer.FeatureSet;
-            if (fs != null)
-            {
-                if (fs.EditingTable)
-                {
-                    msg += "*";
-                }
-
-                if (fs.NumSelected > 0)
-                {
-                    msg += string.Format(" - selected {0} from {1}", fs.NumSelected, fs.NumFeatures);
-                }
-            }
-
-            var panel = Panels.FirstOrDefault(p => p.LayerHandle == layerHandle);
-            if (panel != null)
-            {
-                panel.Caption = msg;    
-            }
-        }
-
+        /// <summary>
+        /// Updates the state of all menu items.
+        /// </summary>
         private void UpdateMenus()
         {
             var fs = ActiveFeatureSet;
@@ -235,7 +407,7 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
-            bool editing = fs.Table.EditMode;
+            var editing = fs.Table.EditMode;
 
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
@@ -252,7 +424,7 @@ namespace MW5.Plugins.TableEditor.Views
             mnuZoomToEdited.Enabled = editing;
             mnuReplace.Enabled = editing;
 
-            bool hasSelection = fs.NumSelected > 0;
+            var hasSelection = fs.NumSelected > 0;
             mnuClearSelection.Enabled = hasSelection;
             mnuZoomToSelected.Enabled = hasSelection;
             mnuShowSelected.Enabled = hasSelection;
@@ -279,82 +451,8 @@ namespace MW5.Plugins.TableEditor.Views
             mnuLayoutTabbed.Checked = layout == TableEditorLayout.Tabbed;
         }
 
-        private void OnMenuOpening()
-        {
-            DisableMenus();
-
-            UpdateMenus();
-        }
-
-        private void DisableMenus()
-        {
-            foreach (ToolStripItem item in toolStripEx1.Items)
-            {
-                var dropDown = item as ToolStripDropDownItem;
-                if (dropDown != null)
-                {
-                    foreach (ToolStripItem subItem in dropDown.DropDownItems)
-                    {
-                        subItem.Enabled = false;
-                    }
-                }
-                else
-                {
-                    item.Enabled = false;
-                }
-            }
-        }
-
-        public int ActiveLayerHandle
-        {
-            get
-            {
-                var panel = Panels.ActivePanel;
-                return panel != null ? panel.LayerHandle : -1;
-            }
-        }
-
-        public TableEditorGrid ActiveGrid
-        {
-            get
-            {
-                var panel = Panels.ActivePanel;
-                if (panel == null || panel.LayerHandle == -1) return null;
-
-                return panel.Control as TableEditorGrid;
-            }
-        }
-
-        public IFeatureSet ActiveFeatureSet
-        {
-            get
-            {
-                var panel = Panels.ActivePanel;
-                if (panel == null || panel.LayerHandle == -1) return null;
-
-                return _context.Legend.Layers.GetFeatureSet(panel.LayerHandle);
-            }
-        }
-
-        public IEnumerable<ToolStripItemCollection> ToolStrips
-        {
-            get
-            {
-                yield return toolStripEx1.Items;
-                yield return contextMenuStripEx1.Items;
-            }
-        }
-
-        public IEnumerable<Control> Buttons
-        {
-            get { yield break; }
-        }
-
-        public ButtonBase OkButton
-        {
-            get { return null; }
-        }
+        #endregion
     }
 
-    public class TableEditorViewBase : MapWindowView<ILayer> { }
+    public class TableEditorViewBase : MapWindowView<ILayer> {}
 }

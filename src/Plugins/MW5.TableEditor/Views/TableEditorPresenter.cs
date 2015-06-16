@@ -1,9 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TableEditorPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -12,19 +15,20 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Plugins.TableEditor.Editor;
-using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
+using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Views
 {
+    [HasRegions]
     internal class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
     {
-        private readonly Dictionary<int, TablePanelInfo> _tables;
         private readonly IAppContext _context;
 
-        public TableEditorPresenter(IAppContext context, ITableEditorView view) 
+        private readonly Dictionary<int, TablePanelInfo> _tables;
+
+        public TableEditorPresenter(IAppContext context, ITableEditorView view)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -33,24 +37,19 @@ namespace MW5.Plugins.TableEditor.Views
             _tables = new Dictionary<int, TablePanelInfo>();
 
             View.Initialize(context);
-            
+
             View.Panels.BeforePanelClosed += (s, e) => CloseTable(e.LayerHandle);
             View.Panels.PanelActivated += (s, e) => View.OnActivateDockingPanel();
         }
 
         #region Properties
 
-        public IFeatureSet FeatureSet
-        {
-            get { return View.ActiveFeatureSet; }
-        }
-
         public IAttributeTable ActiveTable
         {
             get
             {
                 var fs = FeatureSet;
-                
+
                 if (fs == null)
                 {
                     return null;
@@ -60,46 +59,14 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
+        public IFeatureSet FeatureSet
+        {
+            get { return View.ActiveFeatureSet; }
+        }
+
         #endregion
 
-        #region Public methods
-
-        public void OpenTable(ILegendLayer layer)
-        {
-            if (layer == null) throw new ArgumentNullException("layer");
-
-            if (_tables.ContainsKey(layer.Handle))
-            {
-                View.Panels.ActivatePanel(layer.Handle);
-                return;
-            }
-
-            CreateNewTable(layer);
-
-            View.UpdateView();
-        }
-
-        private void CreateNewTable(ILegendLayer layer)
-        {
-            var info = View.CreateNewTable(layer);
-            _tables.Add(layer.Handle, info);
-            info.Grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
-        }
-
-        public bool HasLayer(int layerHandle)
-        {
-            return _tables.ContainsKey(layerHandle);
-        }
-
-        public void UpdateSelection(int layerHandle)
-        {
-            var info = GetTableInfo(layerHandle);
-            if (info == null) return;
-
-            info.Grid.Invalidate();
-
-            View.UpdatePanelCaption(layerHandle);
-        }
+        #region Public Methods
 
         public bool CheckAndSaveChanges(int layerHandle, bool withCancel)
         {
@@ -111,10 +78,10 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             var fs = layer.FeatureSet;
-            
+
             if (fs == null || !fs.EditingTable)
             {
-                return true;    // nothing to save
+                return true; // nothing to save
             }
 
             var result = PromptSaveChanges(withCancel, layer.Name);
@@ -131,14 +98,56 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        public void CloseTable(int layerHandle)
+        {
+            if (_tables.ContainsKey(layerHandle))
+            {
+                var info = _tables[layerHandle];
+
+                View.Panels.Remove(info.Panel);
+                _tables.Remove(layerHandle);
+
+                if (info.FindReplace != null)
+                {
+                    info.FindReplace.View.ForceClose();
+                }
+            }
+
+            View.UpdateView();
+        }
+
         public Control GetInternalObject()
         {
             return View as Control;
         }
 
-        #endregion
+        public bool HasLayer(int layerHandle)
+        {
+            return _tables.ContainsKey(layerHandle);
+        }
 
-        #region Handling commands
+        public void OnViewSelectionChanged(int layerHandle)
+        {
+            UpdateSelection(layerHandle);
+
+            _context.Map.Redraw();
+            _context.View.Update();
+        }
+
+        public void OpenTable(ILegendLayer layer)
+        {
+            if (layer == null) throw new ArgumentNullException("layer");
+
+            if (_tables.ContainsKey(layer.Handle))
+            {
+                View.Panels.ActivatePanel(layer.Handle);
+                return;
+            }
+
+            CreateNewTable(layer);
+
+            View.UpdateView();
+        }
 
         public override void RunCommand(TableEditorCommand command)
         {
@@ -195,7 +204,8 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.SaveChanges:
                     if (table.EditMode)
                     {
-                        var result = MessageService.Current.AskWithCancel("Do you want to save attribute table changes?");
+                        var result = MessageService.Current.AskWithCancel(
+                            "Do you want to save attribute table changes?");
                         if (result == DialogResult.Cancel)
                         {
                             return;
@@ -269,6 +279,27 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
+        public void UpdateSelection(int layerHandle)
+        {
+            var info = GetTableInfo(layerHandle);
+            if (info == null) return;
+
+            info.Grid.Invalidate();
+
+            View.UpdatePanelCaption(layerHandle);
+        }
+
+        #endregion
+
+        #region Methods
+
+        private void CreateNewTable(ILegendLayer layer)
+        {
+            var info = View.CreateTablePanel(layer);
+            _tables.Add(layer.Handle, info);
+            info.Grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
+        }
+
         private void Find(bool replace)
         {
             var info = GetTableInfo(View.ActiveLayerHandle);
@@ -288,6 +319,78 @@ namespace MW5.Plugins.TableEditor.Views
             var model = new FindReplaceModel(info.Grid, info.Layer, replace);
 
             info.FindReplace.Run(model);
+        }
+
+        private string GetLayerKey(int layerHandle)
+        {
+            return layerHandle.ToString();
+        }
+
+        private TablePanelInfo GetTableInfo(int layerHandle)
+        {
+            TablePanelInfo info;
+            _tables.TryGetValue(layerHandle, out info);
+
+            return info;
+        }
+
+        private bool HandleLayout(TableEditorCommand command)
+        {
+            if (command != TableEditorCommand.LayoutHorizontal && command != TableEditorCommand.LayoutVertical
+                && command != TableEditorCommand.LayoutTabbed)
+            {
+                return false;
+            }
+
+            SaveLayoutOption(command);
+
+            int size;
+            DockPanelState state;
+
+            View.GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size, out state);
+
+            var list = View.Panels.ToList().OrderBy(p => p.Caption);
+            if (list.Count() < 2)
+            {
+                return true;
+            }
+
+            var panel = list.FirstOrDefault();
+
+            foreach (var p in list.Where(p => p != panel))
+            {
+                p.DockTo(panel, state, size);
+            }
+
+            return true;
+        }
+
+        private DialogResult PromptSaveChanges(bool withCancel, string layerName)
+        {
+            var msg = "Save changes of the attribute table for the layer: " + layerName + "?";
+
+            if (withCancel)
+            {
+                return MessageService.Current.AskWithCancel(msg);
+            }
+
+            return MessageService.Current.Ask(msg) ? DialogResult.Yes : DialogResult.No;
+        }
+
+        private void SaveLayoutOption(TableEditorCommand command)
+        {
+            switch (command)
+            {
+                case TableEditorCommand.LayoutTabbed:
+                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Tabbed;
+                    break;
+                case TableEditorCommand.LayoutHorizontal:
+                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Horizontal;
+                    break;
+                case TableEditorCommand.LayoutVertical:
+                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Vertical;
+                    break;
+            }
         }
 
         private void ShowSelected()
@@ -316,111 +419,6 @@ namespace MW5.Plugins.TableEditor.Views
 
             View.UpdateView();
         }
-
-        private bool HandleLayout(TableEditorCommand command)
-        {
-            if (command != TableEditorCommand.LayoutHorizontal &&
-                command != TableEditorCommand.LayoutVertical &&
-                command != TableEditorCommand.LayoutTabbed)
-            {
-                return false;
-            }
-
-            SaveLayoutOption(command);
-
-            int size;
-            DockPanelState state;
-
-            View.GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size, out state);
-
-            var list = View.Panels.ToList().OrderBy(p => p.Caption);
-            if (list.Count() < 2)
-            {
-                return true;
-            }
-
-            var panel = list.FirstOrDefault();
-
-            foreach (var p in list.Where(p => p != panel))
-            {
-                p.DockTo(panel, state, size);
-            }
-
-            return true;
-        }
-
-        private void SaveLayoutOption(TableEditorCommand command)
-        {
-            switch (command)
-            {
-                case TableEditorCommand.LayoutTabbed:
-                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Tabbed;
-                    break;
-                case TableEditorCommand.LayoutHorizontal:
-                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Horizontal;
-                    break;
-                case TableEditorCommand.LayoutVertical:
-                    AppConfig.Instance.TableEditorLayout = TableEditorLayout.Vertical;
-                    break;
-            }
-        }
-
-        #endregion
-
-        #region Private methods
-
-        private string GetLayerKey(int layerHandle)
-        {
-            return layerHandle.ToString();
-        }
-
-        public void CloseTable(int layerHandle)
-        {
-            if (_tables.ContainsKey(layerHandle))
-            {
-                var info = _tables[layerHandle];
-                
-                View.Panels.Remove(info.Panel);
-                _tables.Remove(layerHandle);
-
-                if (info.FindReplace != null)
-                {
-                    info.FindReplace.View.ForceClose();
-                }
-            }
-
-            View.UpdateView();
-        }
-
-        public void OnViewSelectionChanged(int layerHandle)
-        {
-            UpdateSelection(layerHandle);
-
-            _context.Map.Redraw();
-            _context.View.Update();
-        }
-
-        private DialogResult PromptSaveChanges(bool withCancel, string layerName)
-        {
-            string msg = "Save changes of the attribute table for the layer: " + layerName + "?";
-
-            if (withCancel)
-            {
-                return MessageService.Current.AskWithCancel(msg);
-            }
-
-            return MessageService.Current.Ask(msg) ? DialogResult.Yes : DialogResult.No;
-        }
-
-        private TablePanelInfo GetTableInfo(int layerHandle)
-        {
-            TablePanelInfo info;
-            _tables.TryGetValue(layerHandle, out info);
-
-            return info;
-        }
-
-
 
         #endregion
     }
