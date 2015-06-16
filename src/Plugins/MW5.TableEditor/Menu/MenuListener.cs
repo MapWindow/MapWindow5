@@ -12,7 +12,7 @@ using MW5.UI.Menu;
 
 namespace MW5.Plugins.TableEditor.Menu
 {
-    public class MenuListener: MenuServiceBase
+    internal class MenuListener: MenuServiceBase
     {
         private readonly TableEditorPresenter _presenter;
 

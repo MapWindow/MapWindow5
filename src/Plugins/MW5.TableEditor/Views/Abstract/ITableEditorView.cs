@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.TableEditor.Editor;
@@ -8,10 +11,9 @@ using MW5.Plugins.TableEditor.Model;
 
 namespace MW5.Plugins.TableEditor.Views.Abstract
 {
-    public interface ITableEditorView : IMenuProvider
+    internal interface ITableEditorView : IMenuProvider
     {
         TablePanelCollection Panels { get; }
-        Size DockingClientSize { get; }
         IFeatureSet ActiveFeatureSet { get; }
         int ActiveLayerHandle { get; }
         TableEditorGrid ActiveGrid { get; }
@@ -22,5 +24,7 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
         void ClearCurrentCell();
         void UpdatePanelCaption(int layerHandle);
         void OnActivateDockingPanel();
+        TablePanelInfo CreateNewTable(ILegendLayer layer);
+        void GetLayoutSpecs(TableEditorLayout layout, out int size, out DockPanelState state);
     }
 }

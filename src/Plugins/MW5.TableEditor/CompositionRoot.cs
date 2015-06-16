@@ -28,6 +28,7 @@ namespace MW5.Plugins.TableEditor
                 .RegisterView<IJoinsView, JoinsView>()
                 .RegisterView<IFindReplaceView, FindReplaceView>();
 
+            EnumHelper.RegisterConverter(new FunctionGroupConverter());
             EnumHelper.RegisterConverter(new MatchTypeConverter());
             EnumHelper.RegisterConverter(new SearchDirectionConverter());
             EnumHelper.RegisterConverter(new AttributeTypeConverter());

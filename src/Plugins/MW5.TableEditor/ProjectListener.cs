@@ -18,7 +18,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor
 {
-    public class ProjectListener
+    internal class ProjectListener
     {
         private readonly IAppContext _context;
         private readonly TableEditorPresenter _presenter;

@@ -91,4 +91,26 @@ namespace MW5.Plugins.TableEditor.Helpers
             return string.Empty;
         }
     }
+
+    public class FunctionGroupConverter: IEnumConverter<FunctionGroup>
+    {
+        public string GetString(FunctionGroup value)
+        {
+            switch (value)
+            {
+                case FunctionGroup.Math:
+                    return "Math";
+                case FunctionGroup.Strings:
+                    return "Strings";
+                case FunctionGroup.Geometry:
+                    return "Geometry";
+                case FunctionGroup.Branching:
+                    return "Branching";
+                case FunctionGroup.Conversion:
+                    return "Conversion";
+            }
+
+            return string.Empty;
+        }
+    }
 }

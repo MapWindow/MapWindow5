@@ -22,6 +22,11 @@
         Find = 17,
         FindNext = 18,
         Replace = 19,
+        FieldSortAsc = 20,
+        FieldSortDesc = 21,
+        FieldHide = 22,
+        FieldStats = 23,
+        FieldProperties = 24,
     }
 
     /// <summary>

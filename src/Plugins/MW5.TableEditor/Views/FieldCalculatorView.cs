@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Forms;
@@ -20,6 +21,21 @@ namespace MW5.Plugins.TableEditor.Views
         public FieldCalculatorView()
         {
             InitializeComponent();
+
+            InitOperators();
+        }
+
+        private void InitOperators()
+        {
+            btnMultiply.Tag = "*";
+            btnDivide.Tag = "/";
+            btnPlus.Tag = "+";
+            btnMinus.Tag = "-";
+
+            btnMultiply.Click += OperatorClicked;
+            btnDivide.Click += OperatorClicked;
+            btnPlus.Click += OperatorClicked;
+            btnMinus.Click += OperatorClicked;
         }
 
         public void Initialize()
@@ -33,12 +49,9 @@ namespace MW5.Plugins.TableEditor.Views
 
         private void InitFieldsList()
         {
-            listBox1.Items.Clear();
-
-            foreach (var fld in Model.Table.Fields)
-            {
-                listBox1.Items.Add(fld.Name);
-            }
+            fieldTypeGrid1.DataSource = Model.Table.Fields.Select(f => new FieldTypeWrapper(f)).ToList();
+            fieldTypeGrid1.TableControlCellDoubleClick += FieldGridDoubleClick;
+            fieldTypeGrid1.ShowColumnHeaders = false;
         }
 
         public ButtonBase OkButton
@@ -48,17 +61,19 @@ namespace MW5.Plugins.TableEditor.Views
 
         #region Handlers
 
+        void FieldGridDoubleClick(object sender, Syncfusion.Windows.Forms.Grid.Grouping.GridTableControlCellClickEventArgs e)
+        {
+            var f = fieldTypeGrid1.Adapter.SelectedItem;
+            if (f != null)
+            {
+                string value = string.Format("[{0}]", f.Name);
+                AddTextToExpression(value);
+            }
+        }
+
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
             functionTreeView1.Filter(txtSearch.Text);
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (listBox1.SelectedItems.Count <= 0) return;
-
-            string value = string.Format("[{0}]", listBox1.SelectedItems[0]);
-            AddTextToExpression(value);
         }
 
         private void FunctionTreeView1DoubleClick(object sender, TreeViewAdvMouseClickEventArgs e)
@@ -79,6 +94,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         private void txtExpression_TextChanged(object sender, EventArgs e)
         {
+            // TODO: move validation to the presenter
             if (string.IsNullOrWhiteSpace(txtExpression.Text))
             {
                 lblValidation.Text = "Expression is empty";
@@ -100,6 +116,20 @@ namespace MW5.Plugins.TableEditor.Views
                 lblValidation.ForeColor = Color.Red;
                 lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
             }
+        }
+
+        private void OperatorClicked(object sender, EventArgs e)
+        {
+            var btn = sender as Control;
+            if (btn != null)
+            {
+                AddTextToExpression(btn.Tag.ToString());
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtExpression.Text = string.Empty;
         }
 
         #endregion

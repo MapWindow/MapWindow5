@@ -97,6 +97,9 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="Controls\FieldTypeGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\FieldsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -115,9 +118,11 @@
     <Compile Include="Controls\JoinsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Editor\ColumnEventArgs.cs" />
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Model\FieldTypeWrapper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\FindReplaceFieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />

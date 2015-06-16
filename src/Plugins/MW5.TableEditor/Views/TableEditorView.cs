@@ -5,7 +5,9 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Model;
@@ -18,7 +20,7 @@ using MW5.UI.Forms;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public partial class TableEditorView : DockPanelControlBase, ITableEditorView
+    internal partial class TableEditorView : DockPanelControlBase, ITableEditorView
     {
         private readonly TablePanelCollection _panels;
         private IAppContext _context;
@@ -58,7 +60,7 @@ namespace MW5.Plugins.TableEditor.Views
             toolTools.DropDownOpening += (s, e) => OnMenuOpening();
         }
 
-        public Size DockingClientSize
+        private Size DockingClientSize
         {
             get { return new Size(ClientSize.Width, ClientSize.Height - toolStripEx1.Height); }
         }
@@ -75,6 +77,60 @@ namespace MW5.Plugins.TableEditor.Views
             grid.CurrentCellBorderColor = Color.LightGreen;
             Controls.Add(grid);
             return grid;
+        }
+
+        public TablePanelInfo CreateNewTable(ILegendLayer layer)
+        {
+            var grid = CreateGrid();
+
+            grid.TableSource = layer.FeatureSet;
+            
+            grid.ColumnContextNeeded += (s, e) =>
+            {
+                var ctrl = s as Control;
+                if (ctrl != null)
+                {
+                    contextMenuStripEx1.Show(Cursor.Position);
+                }
+            };
+
+            var first = Panels.FirstOrDefault();
+
+            var panel = Panels.Add(grid, layer.Handle);
+            panel.Caption = layer.Name;
+
+            int size;
+            DockPanelState state;
+            GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size, out state);
+
+            if (first != null)
+            {
+                panel.DockTo(first, state, size);
+                panel.TabPosition = 0;
+            }
+
+            return new TablePanelInfo(grid, layer, panel);
+        }
+
+        public void GetLayoutSpecs(TableEditorLayout layout, out int size, out DockPanelState state)
+        {
+            size = 0;
+            state = DockPanelState.None;
+
+            switch (layout)
+            {
+                case TableEditorLayout.Tabbed:
+                    state = DockPanelState.Tabbed;
+                    break;
+                case TableEditorLayout.Horizontal:
+                    state = DockPanelState.Right;
+                    size = DockingClientSize.Width / _panels.Count();
+                    break;
+                case TableEditorLayout.Vertical:
+                    state = DockPanelState.Bottom;
+                    size = DockingClientSize.Height / _panels.Count();
+                    break;
+            }
         }
 
         public void ClearCurrentCell()
@@ -185,9 +241,9 @@ namespace MW5.Plugins.TableEditor.Views
             mnuSaveChanges.Enabled = editing;
 
             mnuAddField.Enabled = editing;
-            mnuRemoveField.Enabled = editing;
+            toolRemoveField.Enabled = editing;
             mnuRenameField.Enabled = editing;
-            mnuCalculateField.Enabled = editing;
+            toolCalculateField.Enabled = editing;
             mnuUpdateMeasurements.Enabled = editing;
             mnuCopyShapeIDs.Enabled = editing;
             mnuGenerateOrUpdateShapeID.Enabled = editing;
@@ -218,9 +274,9 @@ namespace MW5.Plugins.TableEditor.Views
             mnuLayoutTabbed.Enabled = true;
 
             var layout = AppConfig.Instance.TableEditorLayout;
-            mnuLayoutHorizontal.Checked = layout == Enums.TableEditorLayout.Horizontal;
-            mnuLayoutVertical.Checked = layout == Enums.TableEditorLayout.Vertical;
-            mnuLayoutTabbed.Checked = layout == Enums.TableEditorLayout.Tabbed;
+            mnuLayoutHorizontal.Checked = layout == TableEditorLayout.Horizontal;
+            mnuLayoutVertical.Checked = layout == TableEditorLayout.Vertical;
+            mnuLayoutTabbed.Checked = layout == TableEditorLayout.Tabbed;
         }
 
         private void OnMenuOpening()
@@ -282,7 +338,11 @@ namespace MW5.Plugins.TableEditor.Views
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield return toolStripEx1.Items; }
+            get
+            {
+                yield return toolStripEx1.Items;
+                yield return contextMenuStripEx1.Items;
+            }
         }
 
         public IEnumerable<Control> Buttons

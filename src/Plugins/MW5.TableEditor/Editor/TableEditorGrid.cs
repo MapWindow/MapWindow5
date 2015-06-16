@@ -20,6 +20,7 @@ namespace MW5.Plugins.TableEditor.Editor
     public class TableEditorGrid: VirtualGrid
     {
         private readonly Color _joinColumnBackColor = Color.OldLace;
+        public event EventHandler<ColumnEventArgs> ColumnContextNeeded;
 
         private IFeatureSet _shapefile;
         private IAttributeTable _table;
@@ -30,11 +31,9 @@ namespace MW5.Plugins.TableEditor.Editor
         {
             CellValueNeeded += GridCellValueNeeded;
             CellValuePushed += GridCellValuePushed;
-            ColumnHeaderMouseClick += GridColumnHeaderMouseClick;
             CurrentCellChanged += OnCurrentCellChanged;
+            ColumnHeaderMouseClick += OnColumnHeaderMouseClick;
         }
-
-        
 
         [Browsable(false)]
         public IFeatureSet TableSource
@@ -124,34 +123,50 @@ namespace MW5.Plugins.TableEditor.Editor
             }
         }
 
-        private void GridColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        private void OnColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left)
+            switch (e.Button)
             {
-                return;
+                case MouseButtons.Left:
+                    var grid = sender as TableEditorGrid;
+                    if (grid != null)
+                    {
+                        grid.ToggleColumnSorting(e.ColumnIndex);
+                    }
+                    break;
+                case MouseButtons.Right:
+                    var handler = ColumnContextNeeded;
+                    if (handler != null)
+                    {
+                        handler(sender, new ColumnEventArgs(e.ColumnIndex, e.Location));
+                    }
+                    break;
             }
+        }
 
+        private void ToggleColumnSorting(int columnIndex)
+        {
             bool ascending = true;
-            if (RowManager.SortColumnIndex == e.ColumnIndex)
+            if (RowManager.SortColumnIndex == columnIndex)
             {
                 ascending = !RowManager.SortAscending;
             }
 
-            var fld = _table.Fields[e.ColumnIndex];
+            var fld = _table.Fields[columnIndex];
             switch (fld.Type)
             {
                 case AttributeType.String:
-                    SortByColumn<string>(e.ColumnIndex, ascending);
+                    SortByColumn<string>(columnIndex, ascending);
                     break;
                 case AttributeType.Integer:
-                    SortByColumn<int>(e.ColumnIndex, ascending);
+                    SortByColumn<int>(columnIndex, ascending);
                     break;
                 case AttributeType.Double:
-                    SortByColumn<double>(e.ColumnIndex, ascending);
+                    SortByColumn<double>(columnIndex, ascending);
                     break;
             }
 
-            SetSortGlyph(e.ColumnIndex, ascending);
+            SetSortGlyph(columnIndex, ascending);
 
             Invalidate();
         }

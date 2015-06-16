@@ -84,13 +84,11 @@ namespace MW5.Plugins.TableEditor.Model
             _dockingManager.UnlockHostFormUpdate();
         }
 
-        public ITablePanel Add(Control control, string key)
+        public ITablePanel Add(Control control, int layerHandle)
         {
-            if (control == null)
-            {
-                throw new NullReferenceException();
-            }
+            if (control == null) throw new NullReferenceException();
 
+            string key = layerHandle.ToString();
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ApplicationException("Dock panel must have a unique key.");

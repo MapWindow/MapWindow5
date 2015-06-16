@@ -19,7 +19,7 @@ using MW5.Plugins.TableEditor.Views.Abstract;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    public class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
+    internal class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
     {
         private readonly Dictionary<int, TablePanelInfo> _tables;
         private readonly IAppContext _context;
@@ -77,6 +77,13 @@ namespace MW5.Plugins.TableEditor.Views
             CreateNewTable(layer);
 
             View.UpdateView();
+        }
+
+        private void CreateNewTable(ILegendLayer layer)
+        {
+            var info = View.CreateNewTable(layer);
+            _tables.Add(layer.Handle, info);
+            info.Grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
         }
 
         public bool HasLayer(int layerHandle)
@@ -148,6 +155,21 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.FieldSortAsc:
+                    MessageService.Current.Info("Not implemented");
+                    break;
+                case TableEditorCommand.FieldSortDesc:
+                    MessageService.Current.Info("Not implemented");
+                    break;
+                case TableEditorCommand.FieldStats:
+                    MessageService.Current.Info("Not implemented");
+                    break;
+                case TableEditorCommand.FieldHide:
+                    MessageService.Current.Info("Not implemented");
+                    break;
+                case TableEditorCommand.FieldProperties:
+                    MessageService.Current.Info("Not implemented");
+                    break;
                 case TableEditorCommand.UpdateMeasurements:
                     _context.Container.Run<UpdateMeasurementsPresenter, IAttributeTable>(table);
                     View.UpdateDatasource();
@@ -309,7 +331,7 @@ namespace MW5.Plugins.TableEditor.Views
             int size;
             DockPanelState state;
 
-            GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size, out state);
+            View.GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size, out state);
 
             var list = View.Panels.ToList().OrderBy(p => p.Caption);
             if (list.Count() < 2)
@@ -352,32 +374,6 @@ namespace MW5.Plugins.TableEditor.Views
             return layerHandle.ToString();
         }
 
-        private void CreateNewTable(ILegendLayer layer)
-        {
-            var grid = View.CreateGrid();
-
-            grid.TableSource = layer.FeatureSet;
-            grid.SelectionChanged += (s, e) => OnViewSelectionChanged(layer.Handle);
-
-            var first = View.Panels.FirstOrDefault();
-
-            var panel = View.Panels.Add(grid, GetLayerKey(layer.Handle));
-            panel.Caption = layer.Name;
-
-            int size;
-            DockPanelState state;
-            GetLayoutSpecs(AppConfig.Instance.TableEditorLayout, out size,  out state);
-
-            if (first != null)
-            {
-                panel.DockTo(first, state, size);
-                panel.TabPosition = 0;
-            }
-
-            var info = new TablePanelInfo(grid, layer, panel);
-            _tables.Add(layer.Handle, info);
-        }
-
         public void CloseTable(int layerHandle)
         {
             if (_tables.ContainsKey(layerHandle))
@@ -396,7 +392,7 @@ namespace MW5.Plugins.TableEditor.Views
             View.UpdateView();
         }
 
-        private void OnViewSelectionChanged(int layerHandle)
+        public void OnViewSelectionChanged(int layerHandle)
         {
             UpdateSelection(layerHandle);
 
@@ -424,26 +420,7 @@ namespace MW5.Plugins.TableEditor.Views
             return info;
         }
 
-        private void GetLayoutSpecs(TableEditorLayout layout, out int size, out DockPanelState state)
-        {
-            size = 0;
-            state = DockPanelState.None;
 
-            switch (layout)
-            {
-                case TableEditorLayout.Tabbed:
-                    state = DockPanelState.Tabbed;
-                    break;
-                case TableEditorLayout.Horizontal:
-                    state = DockPanelState.Right;
-                    size = View.DockingClientSize.Width / View.Panels.Count();
-                    break;
-                case TableEditorLayout.Vertical:
-                    state = DockPanelState.Bottom;
-                    size = View.DockingClientSize.Height / View.Panels.Count();
-                    break;
-            }
-        }
 
         #endregion
     }

@@ -5,7 +5,7 @@ using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor
 {
-    public class MapListener
+    internal class MapListener
     {
         private readonly TableEditorPresenter _presenter;
 

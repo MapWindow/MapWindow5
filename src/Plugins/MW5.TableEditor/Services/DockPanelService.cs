@@ -11,7 +11,7 @@ using MW5.Plugins.TableEditor.Views;
 
 namespace MW5.Plugins.TableEditor.Services
 {
-    public class DockPanelService
+    internal class DockPanelService
     {
         public const string TableEditorDockPanelKey = "TableEditorDockPanel";
 

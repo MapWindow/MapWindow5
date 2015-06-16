@@ -34,7 +34,6 @@ namespace MW5.Plugins.TableEditor.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TableEditorView));
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.toolStripEx1 = new System.Windows.Forms.ToolStrip();
             this.toolEdit = new System.Windows.Forms.ToolStripDropDownButton();
@@ -58,10 +57,10 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuAddField = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuRenameField = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuCalculateField = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCalculateField = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUpdateMeasurements = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnuRemoveField = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRemoveField = new System.Windows.Forms.ToolStripMenuItem();
             this.toolTools = new System.Windows.Forms.ToolStripDropDownButton();
             this.mnuFind = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuReplace = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,8 +76,21 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuLayoutHorizontal = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuLayoutTabbed = new System.Windows.Forms.ToolStripMenuItem();
             this.lblNoLayers = new System.Windows.Forms.Label();
+            this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
+            this.mnuFieldSortAsc = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFieldSortDesc = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFieldHide = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuCalculateField = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuRemoveField = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuFieldStats = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuFieldProperties = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
+            this.contextMenuStripEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dockingManager1
@@ -139,18 +151,18 @@ namespace MW5.Plugins.TableEditor.Views
             // mnuStartEdit
             // 
             this.mnuStartEdit.Name = "mnuStartEdit";
-            this.mnuStartEdit.Size = new System.Drawing.Size(152, 22);
+            this.mnuStartEdit.Size = new System.Drawing.Size(138, 22);
             this.mnuStartEdit.Text = "Start editing";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(135, 6);
             // 
             // mnuSaveChanges
             // 
             this.mnuSaveChanges.Name = "mnuSaveChanges";
-            this.mnuSaveChanges.Size = new System.Drawing.Size(152, 22);
+            this.mnuSaveChanges.Size = new System.Drawing.Size(138, 22);
             this.mnuSaveChanges.Text = "Stop editing";
             // 
             // toolStripSeparator1
@@ -247,10 +259,10 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuAddField,
             this.toolStripSeparator4,
             this.mnuRenameField,
-            this.mnuCalculateField,
+            this.toolCalculateField,
             this.mnuUpdateMeasurements,
             this.toolStripMenuItem1,
-            this.mnuRemoveField});
+            this.toolRemoveField});
             this.toolFields.ForeColor = System.Drawing.Color.Black;
             this.toolFields.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolFields.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -275,11 +287,11 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuRenameField.Size = new System.Drawing.Size(193, 22);
             this.mnuRenameField.Text = "Rename Field";
             // 
-            // mnuCalculateField
+            // toolCalculateField
             // 
-            this.mnuCalculateField.Name = "mnuCalculateField";
-            this.mnuCalculateField.Size = new System.Drawing.Size(193, 22);
-            this.mnuCalculateField.Text = "Calculate Field";
+            this.toolCalculateField.Name = "toolCalculateField";
+            this.toolCalculateField.Size = new System.Drawing.Size(193, 22);
+            this.toolCalculateField.Text = "Calculate Field";
             // 
             // mnuUpdateMeasurements
             // 
@@ -292,11 +304,11 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(190, 6);
             // 
-            // mnuRemoveField
+            // toolRemoveField
             // 
-            this.mnuRemoveField.Name = "mnuRemoveField";
-            this.mnuRemoveField.Size = new System.Drawing.Size(193, 22);
-            this.mnuRemoveField.Text = "Remove Field";
+            this.toolRemoveField.Name = "toolRemoveField";
+            this.toolRemoveField.Size = new System.Drawing.Size(193, 22);
+            this.toolRemoveField.Text = "Remove Field";
             // 
             // toolTools
             // 
@@ -412,6 +424,87 @@ namespace MW5.Plugins.TableEditor.Views
             this.lblNoLayers.Text = "No layers are opened in the table editor.";
             this.lblNoLayers.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // contextMenuStripEx1
+            // 
+            this.contextMenuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuFieldSortAsc,
+            this.mnuFieldSortDesc,
+            this.toolStripSeparator8,
+            this.mnuFieldHide,
+            this.toolStripSeparator10,
+            this.mnuCalculateField,
+            this.toolStripSeparator11,
+            this.mnuRemoveField,
+            this.toolStripSeparator9,
+            this.mnuFieldStats,
+            this.mnuFieldProperties});
+            this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
+            this.contextMenuStripEx1.Name = "contextMenuStripEx1";
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 182);
+            this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            // 
+            // mnuFieldSortAsc
+            // 
+            this.mnuFieldSortAsc.Name = "mnuFieldSortAsc";
+            this.mnuFieldSortAsc.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldSortAsc.Text = "Sort ascending";
+            // 
+            // mnuFieldSortDesc
+            // 
+            this.mnuFieldSortDesc.Name = "mnuFieldSortDesc";
+            this.mnuFieldSortDesc.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldSortDesc.Text = "Sort descending";
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(156, 6);
+            // 
+            // mnuFieldHide
+            // 
+            this.mnuFieldHide.Name = "mnuFieldHide";
+            this.mnuFieldHide.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldHide.Text = "Hide field";
+            // 
+            // toolStripSeparator10
+            // 
+            this.toolStripSeparator10.Name = "toolStripSeparator10";
+            this.toolStripSeparator10.Size = new System.Drawing.Size(156, 6);
+            // 
+            // mnuCalculateField
+            // 
+            this.mnuCalculateField.Name = "mnuCalculateField";
+            this.mnuCalculateField.Size = new System.Drawing.Size(159, 22);
+            this.mnuCalculateField.Text = "Calculate field";
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(156, 6);
+            // 
+            // mnuRemoveField
+            // 
+            this.mnuRemoveField.Name = "mnuRemoveField";
+            this.mnuRemoveField.Size = new System.Drawing.Size(159, 22);
+            this.mnuRemoveField.Text = "Remove field";
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(156, 6);
+            // 
+            // mnuFieldStats
+            // 
+            this.mnuFieldStats.Name = "mnuFieldStats";
+            this.mnuFieldStats.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldStats.Text = "Statistics";
+            // 
+            // mnuFieldProperties
+            // 
+            this.mnuFieldProperties.Name = "mnuFieldProperties";
+            this.mnuFieldProperties.Size = new System.Drawing.Size(159, 22);
+            this.mnuFieldProperties.Text = "Properties";
+            // 
             // TableEditorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -423,13 +516,13 @@ namespace MW5.Plugins.TableEditor.Views
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).EndInit();
             this.toolStripEx1.ResumeLayout(false);
             this.toolStripEx1.PerformLayout();
+            this.contextMenuStripEx1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ToolTip toolTip1;
         private Syncfusion.Windows.Forms.Tools.DockingManager dockingManager1;
         private ToolStrip toolStripEx1;
         private System.Windows.Forms.ToolStripDropDownButton toolFields;
@@ -437,8 +530,8 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolStripMenuItem mnuAddField;
         private ToolStripMenuItem mnuRenameField;
         private ToolStripSeparator toolStripMenuItem1;
-        private ToolStripMenuItem mnuRemoveField;
-        private ToolStripMenuItem mnuCalculateField;
+        private ToolStripMenuItem toolRemoveField;
+        private ToolStripMenuItem toolCalculateField;
         private ToolStripDropDownButton toolSelection;
         private ToolStripMenuItem mnuQuery;
         private ToolStripSeparator toolStripSeparator2;
@@ -472,6 +565,18 @@ namespace MW5.Plugins.TableEditor.Views
         private ToolStripMenuItem mnuSaveChanges;
         private ToolStripMenuItem mnuUpdateMeasurements;
         private ToolStripSeparator toolStripSeparator7;
+        private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuStripEx1;
+        private ToolStripMenuItem mnuFieldSortAsc;
+        private ToolStripMenuItem mnuFieldSortDesc;
+        private ToolStripSeparator toolStripSeparator8;
+        private ToolStripMenuItem mnuFieldHide;
+        private ToolStripSeparator toolStripSeparator10;
+        private ToolStripMenuItem mnuCalculateField;
+        private ToolStripSeparator toolStripSeparator11;
+        private ToolStripMenuItem mnuRemoveField;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripMenuItem mnuFieldStats;
+        private ToolStripMenuItem mnuFieldProperties;
 
     }
 }
