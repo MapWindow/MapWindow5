@@ -6,42 +6,33 @@
 //   The random points.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using MW5.Api.Concrete;
+using MW5.Api.Enums;
+using MW5.Api.Interfaces;
+using MW5.Api.Static;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Shared;
+using MW5.Tools.Model;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Properties;
+
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    #region
-
-    using System;
-    using System.IO;
-    using System.Threading;
-
-    using MW5.Api.Concrete;
-    using MW5.Api.Enums;
-    using MW5.Api.Interfaces;
-    using MW5.Api.Static;
-    using MW5.Plugins.Interfaces;
-    using MW5.Plugins.Services;
-    using MW5.Shared;
-    using MW5.Tools.Model;
-    using MW5.Tools.Model.Parameters;
-    using MW5.Tools.Properties;
-
-    #endregion
-
     /// <summary>
     /// The random points.
     /// </summary>
     [GisTool("Random points", typeof(Resources))]
     public class RandomPoints : GisToolBase
     {
-        #region Fields
-
         private readonly ILayerService _layerService;
 
         private IAppContext _context;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RandomPoints"/> class.
@@ -51,10 +42,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             _layerService = layerService;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the add to map.</summary>
         [OptionalParameter("Add to map", 1)]
@@ -76,10 +63,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [RequiredParameter("Overwrite output file", 2)]
         public BooleanParameter Overwrite { get; set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>
         /// Initializes lists of options.
         /// </summary>
@@ -100,25 +83,32 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public override bool Run()
         {
             Logger.Current.Info("Run create random points tool");
-            var fs = this.InputLayer.Value.FeatureSet;
+            var fs = InputLayer.Value.FeatureSet;
 
             Logger.Current.Debug("Input feature set: " + fs.Filename);
-            Logger.Current.Debug("New layer name: " + this.NewLayerName.Value);
-            Logger.Current.Debug("Overwrite: ", this.Overwrite.Value);
-            Logger.Current.Debug("Number of points: " + this.NumPoints.Value);
+            Logger.Current.Debug("New layer name: " + NewLayerName.Value);
+            Logger.Current.Debug("Overwrite: ", Overwrite.Value);
+            Logger.Current.Debug("Number of points: " + NumPoints.Value);
 
             ulong numPoints;
-            if (ulong.TryParse(this.NumPoints.Value, out numPoints))
+            if (ulong.TryParse(NumPoints.Value, out numPoints))
             {
-                if (!RunCore(fs, this.NewLayerName.Value, numPoints, this.Overwrite.Value))
+                //if (!RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value))
+                //{
+                //    return false;
+                //}
+
+                var result =
+                    Task.Factory.StartNew(() => RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
+                if (!result)
                 {
                     return false;
                 }
 
                 // Add to map:
-                if (this.AddToMap.Value)
+                if (AddToMap.Value)
                 {
-                    return _layerService.AddLayersFromFilename(this.NewLayerName.Value);
+                    return _layerService.AddLayersFromFilename(NewLayerName.Value);
                 }
 
                 return true;
@@ -128,10 +118,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             return false;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Core processing.
@@ -202,7 +188,5 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             return true;
         }
-
-        #endregion
     }
 }
