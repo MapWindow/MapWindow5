@@ -90,7 +90,7 @@ namespace MW5.Api.Legend.Renderer
                 return;
             }
 
-            int count = 0;
+            var count = 0;
             foreach (var item in scheme)
             {
                 Brush brush;
@@ -106,7 +106,7 @@ namespace MW5.Api.Legend.Renderer
                 g.FillRectangle(brush, r);
                 g.DrawRectangle(Pens.Gray, r);
 
-                layer.Elements.Add(new LayerElement(LayerElementType.RasterColorInterval, count, r));
+                layer.Elements.Add(LayerElementType.RasterColorBox, r);
 
                 DrawText(g, item.ToString(), textRect, Font, Color.Black);
 

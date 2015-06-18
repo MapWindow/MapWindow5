@@ -77,21 +77,21 @@
     /// <summary>
     /// Elements of the layer representation in the legend
     /// </summary>
-    internal enum LayerElementType
+    public enum LayerElementType
     {
         None = 0,
-        Name = 1,
-        Symbol = 2,
-        Label = 3,
+        Label = 1,
+        ColorBox = 2,    // both layer symbology and categories
+        RasterColorBox = 3,
         CategoriesCaption = 4,
-        CategoryName = 5,
+        CategoryCheckbox = 6,
         ChartsCaption = 7,
         Charts = 8,
         ChartField = 9,
         ChartFieldName = 10,
-        CheckBox = 11,
+        CheckBox = 11,     // both layer and categories
         ExpansionBox = 12,
-        RasterColorInterval = 13,
+        Name = 13,         
     }
 
     public enum LegendRedraw

@@ -24,7 +24,7 @@ namespace MW5.Api.Legend
     public class LegendLayer : Layer, ILegendLayer
     {
         private readonly LegendControlBase _legend;
-        private readonly List<LayerElement> _elements; // size and positions of elements
+        private readonly LayerElementsCollection _elements; // size and positions of elements
         private readonly Dictionary<Guid, ILayerMetadataBase> _customObjects;
         private readonly Dictionary<Guid, XmlElement> _rawObjects;
 
@@ -43,7 +43,7 @@ namespace MW5.Api.Legend
         {
             _legend = legend;   // must be the first line in constructor
             _icon = null;
-            _elements = new List<LayerElement>();
+            _elements = new LayerElementsCollection();
             _customObjects = new Dictionary<Guid, ILayerMetadataBase>();
             _rawObjects = new Dictionary<System.Guid, XmlElement>();
             _recalcHeight = true;
@@ -583,7 +583,7 @@ namespace MW5.Api.Legend
             return CalcHeight(Expanded);
         }
 
-        internal List<LayerElement> Elements
+        internal LayerElementsCollection Elements
         {
             get { return _elements; }
         }

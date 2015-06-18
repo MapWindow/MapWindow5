@@ -8,6 +8,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Api.Map;
+using MW5.Plugins.Services;
 using MW5.Shared;
 
 namespace MW5.Api.Legend
@@ -22,7 +23,7 @@ namespace MW5.Api.Legend
         private LayerCollection<ILegendLayer> _layers;
         private Image _dragBuffer;
         private TextBox _textBox;
-        private LayerElement _activeElement;
+        private LegendElement _activeElement;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LegendControl"/> class.
@@ -44,15 +45,9 @@ namespace MW5.Api.Legend
             MouseMove += LegendMouseMove;
             MouseUp += LegendMouseUp;
 
-            _clickInfo.LayerShowProperties += (s, e) =>
-            {
-                FireEvent(this, LayerDoubleClick, new LayerEventArgs(e.LayerHandle));
-            };
+            _clickInfo.LayerShowProperties += (s, e) => FireEvent(this, LayerDoubleClick, new LayerEventArgs(e.LayerHandle));
 
-            _clickInfo.LayerEditName += (s, e) =>
-            {
-                ShowTextBox(e.LayerHandle);
-            };
+            _clickInfo.LayerEditName += (s, e) => ShowTextBox(e.LayerHandle);
         }
 
         #region Events
@@ -150,7 +145,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Fires when one of chart fields is clicked
         /// </summary>
-        public event EventHandler<ChartFieldClickedEventArgs> LayerChartFieldClicked;
+        public event EventHandler<ChartFieldClickedEventArgs> LayerDiagramFieldClicked;
 
         /// <summary>
         /// Fired when labels icon for the layer is clicked
@@ -334,7 +329,7 @@ namespace MW5.Api.Legend
                 return;
             }
 
-            var el = layer.Elements.FirstOrDefault(item => item.ElementType == LayerElementType.Name &&
+            var el = layer.Elements.FirstOrDefault(item => item.Type == LayerElementType.Name &&
                                                                item.LayerHandle == layer.Handle);
 
             if (el == null)
@@ -397,7 +392,7 @@ namespace MW5.Api.Legend
         {
             if (_activeElement == null) return;
 
-            switch (_activeElement.ElementType)
+            switch (_activeElement.Type)
             {
                 case LayerElementType.Name:
                     var layer = Layers.ItemByHandle(_activeElement.LayerHandle);
@@ -436,7 +431,6 @@ namespace MW5.Api.Legend
         private void HandleLeftMouseDown(object sender, MouseEventArgs e)
         {
             _clickInfo.ClickId++;
-            //Debug.Print("MOUSE CLICK: " + DateTime.Now.ToString("hh:mm:ss.fff"));
 
             if (_dragInfo.Dragging || _dragInfo.MouseDown)
             {
@@ -448,193 +442,230 @@ namespace MW5.Api.Legend
                 }
             }
 
-            var pnt = new Point(e.X, e.Y);
-
             _dragInfo.Reset();
 
-            bool inCheckBox, inExpandBox;
+            var pnt = new Point(e.X, e.Y);
 
-            var grp = FindClickedGroup(pnt, out inCheckBox, out inExpandBox);
-            if (grp != null)
+            // group
+            if (TryHandleOnGroupClicked(pnt))
             {
-                if (inCheckBox)
-                {
-                    if (!grp.StateLocked)
-                    {
-                        grp.Visible = grp.Visible == Visibility.AllVisible
-                            ? Visibility.AllHidden
-                            : Visibility.AllVisible;
-
-                        try
-                        {
-                            FireEvent(this, GroupCheckboxClicked, new GroupEventArgs(grp.Handle));
-                        }
-                        catch
-                        {
-                            // We don't care about plug-in exceptions here
-                        }
-
-                        Redraw();
-
-                        return;
-                    }
-                }
-                else if (inExpandBox)
-                {
-                    grp.Expanded = !grp.Expanded;
-                    FireEvent(this, GroupExpandedChanged, new GroupEventArgs(grp.Handle));
-                    Redraw();
-                    return;
-                }
-                else
-                {
-                    // set up group dragging
-                    if (Groups.Count > 1)
-                    {
-                        _dragInfo.StartGroupDrag(pnt.Y, Groups.PositionOf(grp.Handle));
-                    }
-                }
-
-                FireEvent(this, GroupMouseDown, new GroupMouseEventArgs(grp.Handle, MouseButtons.Left));
                 return;
             }
 
-            // -------------------------------------------------------
-            // Selecting a layer
-            // -------------------------------------------------------
-            var element = new ClickedElement();
+            // layer
+            LegendElement element;
 
-            var lyr = FindClickedLayer(pnt, ref element);
+            var lyr = FindClickedLayer(pnt, out element);
+
             if (lyr != null)
             {
-                grp = GetGroup(element.GroupIndex);
-                if (element.CheckBox)
+                // first try to find handler for particular element
+                if (!OnLayerElementClicked(lyr, element))
                 {
-                    var newState = !AxMap.get_LayerVisible(lyr.Handle);
-
-                    var args = new LayerCancelEventArgs(lyr.Handle, newState);
-                    FireEvent(this, LayerVisibleChanged, args);
-
-                    if (args.Cancel)
-                    {
-                        return;
-                    }
-
-                    AxMap.set_LayerVisible(lyr.Handle, newState);
-
-                    grp = GetGroup(element.GroupIndex);
-                    grp.UpdateGroupVisibility();
-
-                    FireEvent(this, LayerCheckboxClicked, new LayerEventArgs(lyr.Handle));
-                    Redraw();
-                    return;
+                    // call general handler if it failed
+                    OnLayerCaptionClicked(pnt, lyr, GetGroup(element.GroupIndex));
                 }
-
-                if (element.ExpansionBox)
-                {
-                    Lock();
-                    lyr.Expanded = !lyr.Expanded;
-                    FireEvent(this, LayerPropertiesChanged, new LayerEventArgs(lyr.Handle));
-                    Unlock();
-                    return;
-                }
-
-                if (element.ColorBox && element.CategoryIndex == -1)
-                {
-                    // default symbology
-                    FireEvent(this, LayerStyleClicked, new LayerEventArgs(lyr.Handle));
-                    Redraw();
-                    return;
-                }
-
-                if (element.LabelsIcon)
-                {
-                    FireEvent(this, LayerLabelsClicked, new LayerEventArgs(lyr.Handle));
-                    Redraw();
-                    return;
-                }
-
-                if (element.ColorBox && element.CategoryIndex != -1)
-                {
-                    // category symbology
-                    FireEvent(
-                        this,
-                        LayerCategoryClicked,
-                        new LayerCategoryEventArgs(lyr.Handle, MouseButtons.Left, element.CategoryIndex));
-                    Redraw();
-                    return;
-                }
-
-                if (element.Charts && element.ChartFieldIndex == -1)
-                {
-                    FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
-                    Redraw();
-                    return;
-                }
-
-                if (element.Charts && element.ChartFieldIndex != -1)
-                {
-                    FireEvent(
-                        this,
-                        LayerChartFieldClicked,
-                        new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.ChartFieldIndex));
-                    Redraw();
-                    return;
-                }
-
-                if (SelectedLayerHandle != lyr.Handle)
-                {
-                    // a click on another layer; if there will be a second one in time
-                    // we shall display propeties, but editing must not start unless there is 
-                    // one more click
-                    //Debug.WriteLine("First click on unselected layer.");
-                    _clickInfo.IsFirstClick = false;
-                    _clickInfo.StartTimer(lyr.Handle, true);
-                }
-                else
-                {
-                    if (_clickInfo.IsFirstClick)
-                    {
-                        // layer already selected, either editing or properties can be invoked
-                        // depending on the presence of the second click in time
-                        //Debug.WriteLine("A click on selected layer.");
-                        _clickInfo.StartTimer(lyr.Handle, false);
-                    }
-                    else
-                    {
-                        _clickInfo.IsDoubleClick = _clickInfo.Milliseconds < SystemInformation.DoubleClickTime;
-                        //Debug.WriteLine("Second click on the selected layer. Is double click: " + _clickInfo.IsDoubleClick);
-                        return;
-                    }
-                }
-
-                // Start dragging operation only if the clicked layer is selected.
-                // Otherwise LayerSelected event will be fired which might results in a dialog box 
-                // from plugin code (TableEditor) and no Legend.MouseUp event (the dragging operation won't be finished).
-                if (SelectedLayerHandle == lyr.Handle)
-                {
-                    if (Groups.Count > 1 || grp.Layers.Count > 1)
-                    {
-                        _dragInfo.StartLayerDrag(
-                            pnt.Y,
-                            Groups.PositionOf(grp.Handle),
-                            grp.LayerPositionInGroup(lyr.Handle));
-                    }
-                }
-
-                SelectedLayerHandle = lyr.Handle;
-
-                FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
 
                 return;
             }
 
+            // outside any element
             FireEvent(this, LegendClick, new LegendClickEventArgs(MouseButtons.Left, pnt));
 
             Redraw();
         }
 
+        /// <summary>
+        /// Checks if the group element that was clicked has a handler.
+        /// </summary>
+        /// <remarks>True if a handler was found for group element that was clicked.</remarks>
+        private bool TryHandleOnGroupClicked(Point pnt)
+        {
+            bool inCheckBox, inExpandBox;
 
+            var grp = FindClickedGroup(pnt, out inCheckBox, out inExpandBox);
+            if (grp == null)
+            {
+                return false;
+            }
+            
+            if (inCheckBox)
+            {
+                if (!grp.StateLocked)
+                {
+                    grp.Visible = grp.Visible == Visibility.AllVisible
+                        ? Visibility.AllHidden
+                        : Visibility.AllVisible;
+
+                    try
+                    {
+                        FireEvent(this, GroupCheckboxClicked, new GroupEventArgs(grp.Handle));
+                    }
+                    catch (Exception ex)
+                    {
+                        // We don't care about plug-in exceptions here
+                        Logger.Current.Error("Error in GroupCheckboxClicked.", ex);
+                    }
+
+                    Redraw();
+
+                    return true;
+                }
+            }
+            else if (inExpandBox)
+            {
+                grp.Expanded = !grp.Expanded;
+                FireEvent(this, GroupExpandedChanged, new GroupEventArgs(grp.Handle));
+                Redraw();
+                return true;
+            }
+            else
+            {
+                // set up group dragging
+                if (Groups.Count > 1)
+                {
+                    _dragInfo.StartGroupDrag(pnt.Y, Groups.PositionOf(grp.Handle));
+                }
+            }
+
+            FireEvent(this, GroupMouseDown, new GroupMouseEventArgs(grp.Handle, MouseButtons.Left));
+            return false;
+        }
+
+        /// <summary>
+        /// Runs appropriate handler for the element that was clicked. If no handler is found false is returned.
+        /// </summary>
+        private bool OnLayerElementClicked(LegendLayer lyr, LegendElement element)
+        {
+            switch (element.Type)
+            {
+                case LayerElementType.ColorBox:
+                    if (element.Index == -1)
+                    {
+                        FireEvent(this, LayerStyleClicked, new LayerEventArgs(lyr.Handle));
+                    }
+                    else
+                    {
+                        FireEvent(this, LayerCategoryClicked, new LayerCategoryEventArgs(lyr.Handle, MouseButtons.Left, element.Index));
+                    }
+                    break;
+                case LayerElementType.Label:
+                    FireEvent(this, LayerLabelsClicked, new LayerEventArgs(lyr.Handle));
+                    break;
+                case LayerElementType.Charts:
+                    FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+                    break;
+                case LayerElementType.ChartField:
+                case LayerElementType.ChartFieldName:
+                    FireEvent(this, LayerDiagramFieldClicked, new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.Index));
+                    break;
+                case LayerElementType.CategoryCheckbox:
+                    var sf = AxMap.get_Shapefile(lyr.Handle);
+                    if (sf != null)
+                    {
+                        var ct = sf.Categories.Item[element.Index];
+                        if (ct != null)
+                        {
+                            bool state = ct.DrawingOptions.Visible;
+                            ct.DrawingOptions.Visible = !state;
+                            AxMap.Redraw();
+                        }
+                    }
+                    break;
+                case LayerElementType.CheckBox:
+                    {
+                        var newState = !AxMap.get_LayerVisible(lyr.Handle);
+
+                        var args = new LayerCancelEventArgs(lyr.Handle, newState);
+                        FireEvent(this, LayerVisibleChanged, args);
+
+                        if (args.Cancel)
+                        {
+                            return true;
+                        }
+
+                        AxMap.set_LayerVisible(lyr.Handle, newState);
+
+                        var group = GetGroup(element.GroupIndex);
+                        group.UpdateGroupVisibility();
+
+                        FireEvent(this, LayerCheckboxClicked, new LayerEventArgs(lyr.Handle));
+                    }
+                    break;
+                case LayerElementType.ExpansionBox:
+                    {
+                        Lock();
+                        lyr.Expanded = !lyr.Expanded;
+                        FireEvent(this, LayerPropertiesChanged, new LayerEventArgs(lyr.Handle));
+                        Unlock();
+                        return true;
+                    }
+
+                case LayerElementType.CategoriesCaption:
+                case LayerElementType.ChartsCaption:
+                case LayerElementType.RasterColorBox:
+                    Logger.Current.Info("Legend element clicked: " + element.Type + ". No handler is attached");
+                    return true;
+                case LayerElementType.Name:
+                case LayerElementType.None:
+                default:
+                    return false;
+            }
+
+            Redraw();
+
+            return true;
+        }
+
+        /// <summary>
+        /// Layer was clicked outside any of its active elements
+        /// </summary>
+        private void OnLayerCaptionClicked(Point pnt, LegendLayer lyr, LegendGroup grp)
+        {
+            if (SelectedLayerHandle != lyr.Handle)
+            {
+                // a click on another layer; if there will be a second one in time
+                // we shall display propeties, but editing must not start unless there is 
+                // one more click
+                //Debug.WriteLine("First click on unselected layer.");
+                _clickInfo.IsFirstClick = false;
+                _clickInfo.StartTimer(lyr.Handle, true);
+            }
+            else
+            {
+                if (_clickInfo.IsFirstClick)
+                {
+                    // layer already selected, either editing or properties can be invoked
+                    // depending on the presence of the second click in time
+                    //Debug.WriteLine("A click on selected layer.");
+                    _clickInfo.StartTimer(lyr.Handle, false);
+                }
+                else
+                {
+                    _clickInfo.IsDoubleClick = _clickInfo.Milliseconds < SystemInformation.DoubleClickTime;
+                    //Debug.WriteLine("Second click on the selected layer. Is double click: " + _clickInfo.IsDoubleClick);
+                    return;
+                }
+            }
+
+            // Start dragging operation only if the clicked layer is selected.
+            // Otherwise LayerSelected event will be fired which might results in a dialog box 
+            // from plugin code (TableEditor) and no Legend.MouseUp event (the dragging operation won't be finished).
+            if (SelectedLayerHandle == lyr.Handle)
+            {
+                if (Groups.Count > 1 || grp.Layers.Count > 1)
+                {
+                    _dragInfo.StartLayerDrag(
+                        pnt.Y,
+                        Groups.PositionOf(grp.Handle),
+                        grp.LayerPositionInGroup(lyr.Handle));
+                }
+            }
+
+            SelectedLayerHandle = lyr.Handle;
+
+            FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+        }
 
         /// <summary>
         /// The handle right mouse down.
@@ -654,20 +685,23 @@ namespace MW5.Api.Legend
                 return;
             }
 
-            var element = new ClickedElement();
-            Layer lyr = FindClickedLayer(pnt, ref element);
+            LegendElement element;
+            Layer lyr = FindClickedLayer(pnt, out element);
+
             if (lyr != null)
             {
-                if (element.CheckBox == false && element.ExpansionBox == false)
-                {
-                    FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Right));
-                }
-                else if (element.LabelsIcon)
+                if (element.Type == LayerElementType.Label)
                 {
                     FireEvent(this, LayerLabelsClicked, new LayerEventArgs(lyr.Handle));
                     Redraw();
                     return;
                 }
+
+                if (element.OutsideControls)
+                {
+                    FireEvent(this, LayerMouseDown, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Right));
+                }
+                
                 return;
             }
 
@@ -809,12 +843,13 @@ namespace MW5.Api.Legend
                 return;
             }
 
-            var element = new ClickedElement();
+            LegendElement element;
 
-            Layer lyr = FindClickedLayer(pnt, ref element);
+            Layer lyr = FindClickedLayer(pnt, out element);
+
             if (lyr != null)
             {
-                if (element.CheckBox == false && element.ExpansionBox == false)
+                if (element.OutsideControls)
                 {
                     FireEvent(this, LayerMouseUp, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Right));
                 }

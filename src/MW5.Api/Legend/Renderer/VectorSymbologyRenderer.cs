@@ -1,4 +1,10 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="VectorSymbologyRenderer.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Drawing;
 using MapWinGIS;
 
@@ -7,10 +13,14 @@ namespace MW5.Api.Legend.Renderer
     /// <summary>
     /// Renders symbology preview in the expansion section below the layer.
     /// </summary>
-    internal class VectorSymbologyRenderer: SymbologyRendererBase
+    internal class VectorSymbologyRenderer : SymbologyRendererBase
     {
         private const string ChartsCaption = "Charts";
-        private const string CategoriesCaption = "Categories";
+        private Rectangle _bounds;
+        private Graphics _graphics;
+        private bool _isSnapshot;
+        private LegendLayer _layer;
+        private Shapefile _sf;
 
         public VectorSymbologyRenderer(LegendControlBase legend)
             : base(legend)
@@ -22,6 +32,9 @@ namespace MW5.Api.Legend.Renderer
         /// </summary>
         public void Render(Graphics g, LegendLayer layer, Rectangle bounds, bool isSnapshot)
         {
+            if (g == null) throw new ArgumentNullException("g");
+            if (layer == null) throw new ArgumentNullException("layer");
+
             if (!layer.IsVector)
             {
                 return;
@@ -33,62 +46,139 @@ namespace MW5.Api.Legend.Renderer
                 return;
             }
 
-            var maxWidth = Constants.IconWidth;
-            if (layer.Type == LegendLayerType.PointShapefile)
-            {
-                maxWidth = layer.get_MaxIconWidth(sf);
-            }
+            _bounds = bounds;
+            _graphics = g;
+            _layer = layer;
+            _sf = sf;
+            _isSnapshot = isSnapshot;
 
-            var top = GetSymbologyTop(bounds);
-            var height = layer.GetCategoryHeight(sf.DefaultDrawingOptions) + Constants.VerticalPad;
-
-            if (top + height > Legend.ClientRectangle.Top)
-            {
-                DrawShapefileCategory(
-                    g,
-                    sf.DefaultDrawingOptions,
-                    layer,
-                    bounds,
-                    top,
-                    string.Empty,
-                    maxWidth);
-            }
-
-            top += height;
-
-            DrawShapefileCategories(g, layer, sf, bounds, top, isSnapshot, maxWidth);
-
-            DrawCharts(g, layer, sf, bounds, top);
+            RenderCore();
         }
 
-        /// <summary>
-        /// Draws the shapefile categories.
-        /// </summary>
-        private void DrawShapefileCategories(Graphics g, LegendLayer layer, Shapefile sf, Rectangle bounds, int top, bool isSnapshot, int maxWidth)
+        private void AdjustCategoryTextTop(ShapeDrawingOptions options, ref int top)
         {
-            if (sf.Categories.Count == 0)
+            const int targetHeight = Constants.CsItemHeight + 2;
+            var categoryHeight = _layer.GetCategoryHeight(options);
+            if (categoryHeight > targetHeight)
             {
-                return;
+                top += (categoryHeight - targetHeight) / 2;
             }
+        }
 
-            var caption = layer.SymbologyCaption;
+        private void DrawCategoriesCaption(ref int top)
+        {
+            var caption = _layer.SymbologyCaption;
             if (string.IsNullOrWhiteSpace(caption))
             {
                 caption = "Categories";
             }
 
-            DrawCategoriesCaption(g, bounds, ref top, caption, Font);
+            DrawCategoriesCaption(_graphics, _bounds, ref top, caption, Font);
+        }
+
+        /// <summary>
+        /// Draws the charts.
+        /// </summary>
+        private void DrawCharts(int top)
+        {
+            if (_sf.Charts.Count == 0 || _sf.Charts.NumFields == 0 || !_sf.Charts.Visible)
+            {
+                return;
+            }
+
+            var left = _bounds.Left + Constants.TextLeftPad;
+
+            RenderChartCaption(left, ref top);
+
+            RenderChartPreview(ref top);
+
+            RenderChartFields(left, top);
+        }
+
+        private void RenderChartCaption(int left, ref int top)
+        {
+            var caption = _sf.Charts.Caption;
+            if (caption == string.Empty)
+            {
+                caption = ChartsCaption;
+            }
+
+            var rect = new Rectangle(
+                left,
+                top,
+                _bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
+                Constants.TextHeight);
+
+            DrawText(_graphics, caption, rect, Font, Legend.ForeColor);
+            top += Constants.CsItemHeight + Constants.VerticalPad;
+            _layer.Elements.Add(LayerElementType.Charts, rect);
+        }
+
+        private void RenderChartPreview(ref int top)
+        {
+            var hdc = _graphics.GetHdc();
+            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
+
+            var left = _bounds.Left + Constants.TextLeftPad;
+            _sf.Charts.DrawChart(hdc, left, top, true, backColor);
+            top += _sf.Charts.IconHeight + Constants.VerticalPad;
+            _graphics.ReleaseHdc(hdc);
+        }
+
+        private void RenderChartFields(int left, int top)
+        {
+            var color = ColorTranslator.FromOle(Convert.ToInt32(_sf.Charts.LineColor));
+            var pen = new Pen(color);
+
+            for (var i = 0; i < _sf.Charts.NumFields; i++)
+            {
+                var rect = new Rectangle(left, top, Constants.IconWidth, Constants.IconHeight);
+                color = ColorTranslator.FromOle(Convert.ToInt32(_sf.Charts.Field[i].Color));
+                var brush = new SolidBrush(color);
+                _graphics.FillRectangle(brush, rect);
+                _graphics.DrawRectangle(pen, rect);
+
+                // storing bounds
+                _layer.Elements.Add(LayerElementType.ChartField, rect, i);
+
+                rect = new Rectangle(
+                    left + Constants.IconWidth + 5,
+                    top,
+                    _bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
+                    Constants.TextHeight);
+                var name = _sf.Charts.Field[i].Name;
+                DrawText(_graphics, name, rect, Font, Color.Black);
+
+                // storing bounds
+                _layer.Elements.Add(LayerElementType.ChartFieldName, rect);
+
+                top += Constants.CsItemHeight + Constants.VerticalPad;
+            }
+        }
+
+        /// <summary>
+        /// Draws the shapefile categories.
+        /// </summary>
+        private void DrawShapefileCategories(int top, bool isSnapshot, int maxWidth)
+        {
+            if (_sf.Categories.Count == 0)
+            {
+                return;
+            }
+
+            DrawCategoriesCaption(ref top);
 
             // figure out if we can clip any of the categories at the top
             var i = 0;
-            var categories = sf.Categories;
-            var numCategories = sf.Categories.Count;
+            var categories = _sf.Categories;
+            var numCategories = _sf.Categories.Count;
+
             if (top < ClientRectangle.Top && isSnapshot == false)
             {
                 while (i < numCategories)
                 {
                     // for point categories height can be different
-                    top += layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
+                    top += _layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
 
                     if (top < ClientRectangle.Top)
                     {
@@ -96,7 +186,7 @@ namespace MW5.Api.Legend.Renderer
                     }
                     else
                     {
-                        top -= layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
+                        top -= _layer.GetCategoryHeight(categories.Item[i].DrawingOptions);
 
                         // this category should be drawn
                         break;
@@ -107,36 +197,48 @@ namespace MW5.Api.Legend.Renderer
             // we shall draw symbology first and text second
             // symbology is drawn from ocx, so it's better to draw all categories at once
             // avoiding additional GetHDC calls
-            var hdc = g.GetHdc();
             var topTemp = top;
             var startIndex = i;
+
+            var hdc = _graphics.GetHdc();
+
             for (; i < categories.Count; i++)
             {
-                var cat = categories.Item[i];
-                var options = cat.DrawingOptions;
+                var options = categories.Item[i].DrawingOptions;
 
-                DrawShapefileCategorySymbology(g, options, layer, bounds, topTemp, maxWidth, i, hdc);
+                DrawShapefileCategorySymbology(hdc, topTemp, options, i, true);
 
-                topTemp += layer.GetCategoryHeight(options);
-                if (topTemp >= ClientRectangle.Bottom && isSnapshot == false)
+                topTemp += _layer.GetCategoryHeight(options);
+                if (topTemp >= ClientRectangle.Bottom && !isSnapshot)
                 {
                     // stop drawing in case there are not visible
                     break;
                 }
             }
 
-            g.ReleaseHdc(hdc);
+            _graphics.ReleaseHdc(hdc);
 
             // now when hdc is released, GDI+ can be used for the text
             i = startIndex;
             for (; i < categories.Count; i++)
             {
-                var cat = categories.Item[i];
-                var options = cat.DrawingOptions;
+                var ct = categories.Item[i];
+                var options = ct.DrawingOptions;
 
-                DrawShapefileCategoryText(g, options, layer, bounds, top, cat.Name, maxWidth);
+                var tempTop = top;
+                AdjustCategoryTextTop(options, ref tempTop);
 
-                top += layer.GetCategoryHeight(options);
+                int checkBoxLeft = _bounds.Left + Constants.TextLeftPad;
+                int checkboxTop = tempTop + Constants.CheckboxTopOffset();
+
+                DrawCheckBox(_graphics, checkboxTop, checkBoxLeft, ct.DrawingOptions.Visible, false);
+
+                var checkBoxBounds = GetCheckBoxBounds(checkBoxLeft, checkboxTop);
+                _layer.Elements.Add(LayerElementType.CategoryCheckbox, checkBoxBounds, i);
+
+                DrawShapefileCategoryText(tempTop, ct.Name, maxWidth, true);
+
+                top += _layer.GetCategoryHeight(options);
                 if (top >= ClientRectangle.Bottom && isSnapshot == false)
                 {
                     // stop drawing in case there are not visible
@@ -146,244 +248,108 @@ namespace MW5.Api.Legend.Renderer
         }
 
         /// <summary>
-        /// Draws the charts.
+        /// Draws shapefile category. It's assumed here that GetHDC and ReleaseHDC calls are made by caller.
         /// </summary>
-        private void DrawCharts(Graphics g, LegendLayer layer, Shapefile sf, Rectangle bounds, int top)
+        private void DrawShapefileCategorySymbology(IntPtr hdc, int top, ShapeDrawingOptions options, int categoryIndex, bool hasCheckbox)
         {
-            if (sf.Charts.Count == 0 || sf.Charts.NumFields == 0 || !sf.Charts.Visible)
-            {
-                return;
-            }
+            var categoryHeight = _layer.GetCategoryHeight(options);
+            var categoryWidth = _layer.GetCategoryWidth(options);
 
-            // charts caption
-            var caption = sf.Charts.Caption;
-            if (caption == string.Empty)
-            {
-                caption = ChartsCaption;
-            }
-
-            var left = bounds.Left + Constants.TextLeftPad;
-            var rect = new Rectangle(
-                left,
-                top,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                Constants.TextHeight);
-            DrawText(g, caption, rect, Font, Legend.ForeColor);
-            top += Constants.CsItemHeight + Constants.VerticalPad;
-
-            // storing bounds
-            var el = new LayerElement(LayerElementType.Charts, layer.Handle, rect);
-            layer.Elements.Add(el);
-
-            // preview
-            var hdc = g.GetHdc();
             var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
 
-            left = bounds.Left + Constants.TextLeftPad;
-            sf.Charts.DrawChart(hdc, left, top, true, backColor);
-            top += sf.Charts.IconHeight + Constants.VerticalPad;
-            g.ReleaseHdc(hdc);
+            var left = _bounds.Left + Constants.TextLeftPad;
 
-            // storing bounds
-            el = new LayerElement(LayerElementType.ChartField, layer.Handle, rect);
-            layer.Elements.Add(el);
-
-            // fields
-            var color = ColorTranslator.FromOle(Convert.ToInt32(sf.Charts.LineColor));
-            var pen = new Pen(color);
-
-            for (var i = 0; i < sf.Charts.NumFields; i++)
+            if (hasCheckbox)
             {
-                rect = new Rectangle(left, top, Constants.IconWidth, Constants.IconHeight);
-                color = ColorTranslator.FromOle(Convert.ToInt32(sf.Charts.Field[i].Color));
-                var brush = new SolidBrush(color);
-                g.FillRectangle(brush, rect);
-                g.DrawRectangle(pen, rect);
-
-                // storing bounds
-                el = new LayerElement(LayerElementType.ChartField, i, rect);
-                layer.Elements.Add(el);
-
-                rect = new Rectangle(
-                    left + Constants.IconWidth + 5,
-                    top,
-                    bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                    Constants.TextHeight);
-                var name = sf.Charts.Field[i].Name;
-                DrawText(g, name, rect, Font, Color.Black);
-
-                // storing bounds
-                el = new LayerElement(LayerElementType.ChartFieldName, layer.Handle, rect, i);
-                layer.Elements.Add(el);
-
-                top += Constants.CsItemHeight + Constants.VerticalPad;
+                left += Constants.CategoryCheckboxWidthWithPadding();
             }
-        }
 
-        /// <summary>
-        /// Draws shapefile category in specified location
-        /// </summary>
-        private void DrawShapefileCategory(
-            Graphics g,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            string name,
-            int maxWidth)
-        {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            var categoryWidth = layer.GetCategoryWidth(options);
-
-            // drawing category symbol
-            var hdc = g.GetHdc();
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
-
-            var left = bounds.Left + Constants.TextLeftPad;
             if (categoryWidth != Constants.IconWidth)
             {
                 left -= (categoryWidth - Constants.IconWidth) / 2;
             }
 
-            if (layer.Type == LegendLayerType.PointShapefile)
+            switch (_layer.Type)
             {
-                options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
-            }
-            else if (layer.Type == LegendLayerType.LineShapefile)
-            {
-                options.DrawLine(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-            else if (layer.Type == LegendLayerType.PolygonShapefile)
-            {
-                options.DrawRectangle(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-
-            g.ReleaseHdc(hdc);
-
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight) / 2;
+                case LegendLayerType.PointShapefile:
+                    options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
+                    break;
+                case LegendLayerType.LineShapefile:
+                    options.DrawLine(
+                        hdc,
+                        left,
+                        top,
+                        categoryWidth - 1,
+                        Constants.IconHeight - 1,
+                        false,
+                        categoryWidth,
+                        categoryHeight,
+                        backColor);
+                    break;
+                case LegendLayerType.PolygonShapefile:
+                    options.DrawRectangle(
+                        hdc,
+                        left,
+                        top,
+                        categoryWidth - 1,
+                        Constants.IconHeight - 1,
+                        false,
+                        categoryWidth,
+                        categoryHeight,
+                        backColor);
+                    break;
             }
 
-            // drawing category name
-            left = bounds.Left + Constants.TextLeftPad + (Constants.IconWidth / 2) + (maxWidth / 2) + 5;
-
-            var rect = new Rectangle(
-                left,
-                top,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
-                Constants.TextHeight);
-
-            DrawText(g, name, rect, Font, Color.Black);
-        }
-
-        /// <summary>
-        /// Draws shapefile category. It's assumed here that GetHDC and ReleaseHDC calls are made by caller
-        /// </summary>
-        private void DrawShapefileCategorySymbology(
-            Graphics g,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            int maxWidth,
-            int index,
-            IntPtr hdc)
-        {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            var categoryWidth = layer.GetCategoryWidth(options);
-
-            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(Legend.BackColor));
-
-            var left = bounds.Left + Constants.TextLeftPad;
-            if (categoryWidth != Constants.IconWidth)
-            {
-                left -= (categoryWidth - Constants.IconWidth) / 2;
-            }
-
-            if (layer.Type == LegendLayerType.PointShapefile)
-            {
-                options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
-            }
-            else if (layer.Type == LegendLayerType.LineShapefile)
-            {
-                options.DrawLine(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-            else if (layer.Type == LegendLayerType.PolygonShapefile)
-            {
-                options.DrawRectangle(
-                    hdc,
-                    left,
-                    top,
-                    categoryWidth - 1,
-                    Constants.IconHeight - 1,
-                    false,
-                    categoryWidth,
-                    categoryHeight,
-                    backColor);
-            }
-
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight) / 2;
-            }
+            _layer.Elements.Add(LayerElementType.ColorBox, new Rectangle(left, top, categoryWidth, categoryHeight), categoryIndex);
         }
 
         /// <summary>
         /// Draw the text for the shapefile category
         /// </summary>
-        private void DrawShapefileCategoryText(
-            Graphics g,
-            ShapeDrawingOptions options,
-            LegendLayer layer,
-            Rectangle bounds,
-            int top,
-            string name,
-            int maxWidth)
+        private void DrawShapefileCategoryText(int top, string name, int maxWidth, bool hasCheckbox)
         {
-            var categoryHeight = layer.GetCategoryHeight(options);
-            if (categoryHeight > Constants.CsItemHeight)
-            {
-                top += (categoryHeight - Constants.CsItemHeight) / 2;
-            }
+            const int padding = 5;
 
-            // drawing category name
-            var left = bounds.Left + Constants.TextLeftPad + (Constants.IconWidth / 2) + (maxWidth / 2) + 5;
+            var left = _bounds.Left + Constants.TextLeftPad;
+            left += (Constants.IconWidth / 2) + (maxWidth / 2) + padding;
+
+            if (hasCheckbox)
+            {
+                left += Constants.CategoryCheckboxWidthWithPadding();
+            }
 
             var rect = new Rectangle(
                 left,
                 top,
-                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
+                _bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent,
                 Constants.TextHeight);
 
-            DrawText(g, name, rect, Font, Legend.ForeColor);
+            DrawText(_graphics, name, rect, Font, Legend.ForeColor);
+        }
+
+        private void RenderCore()
+        {
+            var maxWidth = Constants.IconWidth;
+            if (_layer.Type == LegendLayerType.PointShapefile)
+            {
+                maxWidth = _layer.get_MaxIconWidth(_sf);
+            }
+
+            var top = GetSymbologyTop(_bounds);
+            var height = _layer.GetCategoryHeight(_sf.DefaultDrawingOptions) + Constants.VerticalPad;
+
+            if (top + height > Legend.ClientRectangle.Top)
+            {
+                var hdc = _graphics.GetHdc();
+                DrawShapefileCategorySymbology(hdc, top, _sf.DefaultDrawingOptions, -1, false);
+                _graphics.ReleaseHdc(hdc);
+            }
+
+            top += height;
+
+            DrawShapefileCategories(top, _isSnapshot, maxWidth);
+
+            DrawCharts(top);
         }
     }
 }

@@ -54,6 +54,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="MW5.Plugins">
+      <HintPath>..\MW5.Projections\bin\x86\Debug\MW5.Plugins.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -90,6 +93,7 @@
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\ClickInfo.cs" />
     <Compile Include="Legend\Events\DatasourceCancelEventArgs.cs" />
+    <Compile Include="Legend\LayerElementsCollection.cs" />
     <Compile Include="Legend\LegendControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -149,7 +153,6 @@
     <Compile Include="Legend\Abstract\ILegendGroups.cs" />
     <Compile Include="Legend\Abstract\ILegendLayer.cs" />
     <Compile Include="Legend\Abstract\ILegend.cs" />
-    <Compile Include="Legend\ClickedElement.cs" />
     <Compile Include="Legend\ColorInfo.cs" />
     <Compile Include="Legend\Constants.cs" />
     <Compile Include="Legend\DragInfo.cs" />
@@ -169,7 +172,7 @@
     <Compile Include="Legend\LegendGroup.cs" />
     <Compile Include="Legend\LegendGroups.cs" />
     <Compile Include="Legend\Abstract\IMuteLegend.cs" />
-    <Compile Include="Legend\LayerElement.cs" />
+    <Compile Include="Legend\LegendElement.cs" />
     <Compile Include="Legend\LegendControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>

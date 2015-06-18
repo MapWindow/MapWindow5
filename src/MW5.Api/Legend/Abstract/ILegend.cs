@@ -122,7 +122,7 @@ namespace MW5.Api.Legend.Abstract
         /// <summary>
         /// Fires when one of chart fields is clicked
         /// </summary>
-        event EventHandler<ChartFieldClickedEventArgs> LayerChartFieldClicked;
+        event EventHandler<ChartFieldClickedEventArgs> LayerDiagramFieldClicked;
 
         /// <summary>
         /// Fired when labels icon for the layer is clicked

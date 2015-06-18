@@ -1,6 +1,11 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LayerRenderer.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Drawing;
-using AxMapWinGIS;
 using MapWinGIS;
 using MW5.Api.Legend.Events;
 using Image = System.Drawing.Image;
@@ -11,12 +16,11 @@ namespace MW5.Api.Legend.Renderer
     /// <summary>
     /// Draws a single layer in the legend.
     /// </summary>
-    public class LayerRenderer: SymbologyRendererBase
+    public class LayerRenderer : SymbologyRendererBase
     {
-        public LayerRenderer(LegendControlBase legend) 
+        public LayerRenderer(LegendControlBase legend)
             : base(legend)
         {
-            
         }
 
         public Font BoldFont
@@ -75,112 +79,33 @@ namespace MW5.Api.Legend.Renderer
         }
 
         /// <summary>
-        /// Dras plus minus/sign for the layer and optionally call custom rendering function to display symbology.
-        /// </summary>
-        /// <param name="g">The g.</param>
-        /// <param name="lyr">The lyr.</param>
-        /// <param name="bounds">The bounds.</param>
-        /// <param name="isSnapshot">if set to <c>true</c> [is snapshot].</param>
-        private void DrawLayerExpansionBox(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
-        {
-            var customRect = new Rectangle(
-             bounds.Left + Constants.CheckLeftPad,
-             lyr.Top + Constants.ItemHeight + Constants.ExpandBoxTopPad,
-             bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent -
-             Constants.ExpandBoxLeftPad,
-             bounds.Height - lyr.Top);
-
-            if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
-            {
-                var args = new LayerPaintEventArgs(lyr.Handle, customRect, g);
-                Legend.FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
-            }
-
-            if (bounds.Width > 17 && isSnapshot == false)
-            {
-                var rect = new Rectangle(
-                    bounds.Left,
-                    bounds.Top,
-                    bounds.Width - Constants.ItemRightPad,
-                    bounds.Height);
-
-                DrawExpansionBox(
-                    g,
-                    rect.Top + Constants.ExpandBoxTopPad,
-                    rect.Left + Constants.ExpandBoxLeftPad,
-                    lyr.Expanded);
-            }
-        }
-
-        /// <summary>
-        /// Gets position of text relative to the layer bounds.
-        /// </summary>
-        private Point GetTextLocation(Rectangle bounds, bool isSnapshot)
-        {
-            int curLeft = isSnapshot ? bounds.Left + Constants.CheckLeftPad : bounds.Left + Constants.TextLeftPad;
-            int curTop = bounds.Top + Constants.TextTopPad;
-            return new Point(curLeft, curTop);
-        }
-
-        /// <summary>
         /// Draws background of the layer caption when layer is selected.
         /// </summary>
         private void DrawLayerCaptionBackground(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
         {
-            int curLeft = bounds.Left;
-            int curTop = bounds.Top;
+            var curLeft = bounds.Left;
+            var curTop = bounds.Top;
 
             if (!isSnapshot)
             {
-                int curWidth = bounds.Width - Constants.ItemRightPad;
+                var curWidth = bounds.Width - Constants.ItemRightPad;
                 const int curHeight = Constants.ItemHeight;
                 var rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
-                if (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25 &&
-                    (curTop + rect.Height > 0 || curTop < Legend.ClientRectangle.Height))
+                if (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25
+                    && (curTop + rect.Height > 0 || curTop < Legend.ClientRectangle.Height))
                 {
                     DrawRectangle(g, rect, BoxLineColor, Legend.SelectionColor);
-                    var el = new LayerElement(LayerElementType.ExpansionBox, lyr.Handle, rect);
-                    lyr.Elements.Add(el);
                 }
             }
             else
             {
-                int curWidth = bounds.Width - 1;
-                int curHeight = lyr.ExpandedHeight - 1;
+                var curWidth = bounds.Width - 1;
+                var curHeight = lyr.ExpandedHeight - 1;
                 var rect = new Rectangle(curLeft, curTop, curWidth, curHeight);
 
                 DrawRectangle(g, rect, BoxLineColor, Color.White);
             }
-        }
-
-        /// <summary>
-        /// Draws the layer caption.
-        /// </summary>
-        private SizeF DrawLayerName(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
-        {
-            var textSize = new SizeF(0.0f, 0.0f);
-
-            if (bounds.Width <= 60)
-            {
-                return textSize;
-            }
-
-            // draw text
-            var text = Legend.AxMap.get_LayerName(lyr.Handle);
-            textSize = g.MeasureString(text, Legend.Font);
-
-            var point = GetTextLocation(bounds, isSnapshot);
-
-            int curWidth = bounds.Width - Constants.TextLeftPad - Constants.TextRightPad;
-
-            var rect = new Rectangle(point.X, point.Y, curWidth, Constants.TextHeight);
-            DrawText(g, text, rect, Legend.Font, Legend.ForeColor);
-
-            var el = new LayerElement(LayerElementType.Name, lyr.Handle, rect);
-            lyr.Elements.Add(el);
-
-            return textSize;
         }
 
         /// <summary>
@@ -193,18 +118,53 @@ namespace MW5.Api.Legend.Renderer
                 return;
             }
 
-            int curTop = bounds.Top + Constants.CheckTopPad;
-            int curLeft = bounds.Left + Constants.CheckLeftPad;
+            var curTop = bounds.Top + Constants.CheckTopPad;
+            var curLeft = bounds.Left + Constants.CheckLeftPad;
 
-           var visible = lyr.LayerVisibleAtCurrentScale && lyr.Visible;
+            var visible = lyr.LayerVisibleAtCurrentScale && lyr.Visible;
 
             // draw a grey background if the layer is in dynamic visibility mode.
             DrawCheckBox(g, curTop, curLeft, visible, lyr.DynamicVisibility);
 
             var rect = new Rectangle(curLeft, curTop, Constants.CheckBoxSize, Constants.CheckBoxSize);
-            var el = new LayerElement(LayerElementType.CheckBox, lyr.Handle, rect);
 
-            lyr.Elements.Add(el);
+            lyr.Elements.Add(LayerElementType.CheckBox, rect);
+        }
+
+        /// <summary>
+        /// Dras plus minus/sign for the layer and optionally call custom rendering function to display symbology.
+        /// </summary>
+        /// <param name="g">The g.</param>
+        /// <param name="lyr">The lyr.</param>
+        /// <param name="bounds">The bounds.</param>
+        /// <param name="isSnapshot">if set to <c>true</c> [is snapshot].</param>
+        private void DrawLayerExpansionBox(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        {
+            var customRect = new Rectangle(
+                bounds.Left + Constants.CheckLeftPad,
+                lyr.Top + Constants.ItemHeight + Constants.ExpandBoxTopPad,
+                bounds.Width - Constants.TextRightPadNoIcon - Constants.CsTextLeftIndent - Constants.ExpandBoxLeftPad,
+                bounds.Height - lyr.Top);
+
+            if (lyr.Expanded && lyr.ExpansionBoxCustomRenderFunction != null)
+            {
+                var args = new LayerPaintEventArgs(lyr.Handle, customRect, g);
+                Legend.FireEvent(this, lyr.ExpansionBoxCustomRenderFunction, args);
+            }
+
+            if (bounds.Width > 17 && isSnapshot == false)
+            {
+                var rect = new Rectangle(bounds.Left, bounds.Top, bounds.Width - Constants.ItemRightPad, bounds.Height);
+
+                DrawExpansionBox(
+                    g,
+                    rect.Top + Constants.ExpandBoxTopPad,
+                    rect.Left + Constants.ExpandBoxLeftPad,
+                    lyr.Expanded);
+
+                var box = GetExpansionBoxBounds(rect.Top + Constants.ExpandBoxTopPad, rect.Left + Constants.ExpandBoxLeftPad);
+                lyr.Elements.Add(LayerElementType.ExpansionBox, box);
+            }
         }
 
         /// <summary>
@@ -246,62 +206,7 @@ namespace MW5.Api.Legend.Renderer
             }
             else
             {
-                // drawing shapefile symbology preview, but only in case the layer is collapsed
-                if (!lyr.Expanded)
-                {
-                    lyr.SmallIconWasDrawn = true;
-
-                    // drawing category symbol
-                    var hdc = g.GetHdc();
-                    var clr = (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25)
-                        ? Legend.SelectionColor
-                        : Legend.BackColor;
-                    var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
-
-                    var sf = Legend.AxMap.get_GetObject(lyr.Handle) as Shapefile;
-
-                    if (sf != null)
-                    {
-                        if (lyr.Type == LegendLayerType.PointShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawPoint(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                        else if (lyr.Type == LegendLayerType.LineShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawLine(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize - 1,
-                                Constants.IconSize - 1,
-                                false,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                        else if (lyr.Type == LegendLayerType.PolygonShapefile)
-                        {
-                            sf.DefaultDrawingOptions.DrawRectangle(
-                                hdc,
-                                left,
-                                top,
-                                Constants.IconSize - 1,
-                                Constants.IconSize - 1,
-                                false,
-                                Constants.IconSize,
-                                Constants.IconSize,
-                                backColor);
-                        }
-                    }
-
-                    g.ReleaseHdc(hdc);
-                }
+                DrawSmallColorBox(g, lyr, bounds, top, left);
             }
 
             var map = Legend.AxMap;
@@ -316,12 +221,16 @@ namespace MW5.Api.Legend.Renderer
                     var left2 = bounds.Right - 56;
 
                     var scale = map.CurrentScale;
-                    var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible &&
-                                        sf.Labels.Expression.Trim() != string.Empty;
+                    var labelsVisible = sf.Labels.Count > 0 && sf.Labels.Visible
+                                        && sf.Labels.Expression.Trim() != string.Empty;
                     labelsVisible &= scale >= sf.Labels.MinVisibleScale && scale <= sf.Labels.MaxVisibleScale;
 
                     var icon2 = GetIcon(labelsVisible ? LegendIcon.ActiveLabel : LegendIcon.DimmedLabel);
                     DrawPicture(g, left2, top2, Constants.IconSize, Constants.IconSize, icon2);
+
+                    lyr.Elements.Add(
+                        LayerElementType.Label,
+                        new Rectangle(left2, top2, Constants.IconSize, Constants.IconSize));
                 }
             }
 
@@ -333,34 +242,113 @@ namespace MW5.Api.Legend.Renderer
                 {
                     var top2 = bounds.Top + Constants.IconTopPad;
                     var left2 = bounds.Right - 76;
-                    DrawPicture(
-                        g,
-                        left2,
-                        top2,
-                        Constants.IconSize,
-                        Constants.IconSize,
-                        GetIcon(LegendIcon.Editing));
+                    DrawPicture(g, left2, top2, Constants.IconSize, Constants.IconSize, GetIcon(LegendIcon.Editing));
                 }
             }
         }
 
         /// <summary>
-        /// The draw check box.
+        /// Color box to the right of the layer name when the layer is collapsed.
         /// </summary>
-        protected void DrawCheckBox(Graphics g, int itemTop, int itemLeft, bool drawCheck, bool drawGrayBackground)
+        private void DrawSmallColorBox(Graphics g, LegendLayer lyr, Rectangle bounds, int top, int left)
         {
-            LegendIcon icon;
-            if (drawCheck)
+            if (lyr.Expanded) return;
+
+            lyr.SmallIconWasDrawn = true;
+
+            // drawing category symbol
+            var hdc = g.GetHdc();
+            var clr = (lyr.Handle == Legend.SelectedLayerHandle && bounds.Width > 25)
+                          ? Legend.SelectionColor
+                          : Legend.BackColor;
+
+            var backColor = Convert.ToUInt32(ColorTranslator.ToOle(clr));
+
+            var sf = Legend.AxMap.get_GetObject(lyr.Handle) as Shapefile;
+
+            if (sf != null)
             {
-                icon = drawGrayBackground ? LegendIcon.CheckedBoxGray : LegendIcon.CheckedBox;
-            }
-            else
-            {
-                icon = drawGrayBackground ? LegendIcon.UnCheckedBoxGray : LegendIcon.UnCheckedBox;
+                if (lyr.Type == LegendLayerType.PointShapefile)
+                {
+                    sf.DefaultDrawingOptions.DrawPoint(
+                        hdc,
+                        left,
+                        top,
+                        Constants.IconSize,
+                        Constants.IconSize,
+                        backColor);
+                }
+                else if (lyr.Type == LegendLayerType.LineShapefile)
+                {
+                    sf.DefaultDrawingOptions.DrawLine(
+                        hdc,
+                        left,
+                        top,
+                        Constants.IconSize - 1,
+                        Constants.IconSize - 1,
+                        false,
+                        Constants.IconSize,
+                        Constants.IconSize,
+                        backColor);
+                }
+                else if (lyr.Type == LegendLayerType.PolygonShapefile)
+                {
+                    sf.DefaultDrawingOptions.DrawRectangle(
+                        hdc,
+                        left,
+                        top,
+                        Constants.IconSize - 1,
+                        Constants.IconSize - 1,
+                        false,
+                        Constants.IconSize,
+                        Constants.IconSize,
+                        backColor);
+                }
             }
 
-            var image = GetIcon(icon);
-            DrawPicture(g, itemLeft, itemTop, Constants.CheckBoxSize, Constants.CheckBoxSize, image);
+            g.ReleaseHdc(hdc);
+
+            lyr.Elements.Add(
+                LayerElementType.ColorBox,
+                new Rectangle(left, top, Constants.IconSize, Constants.IconSize));
+        }
+
+        /// <summary>
+        /// Draws the layer caption.
+        /// </summary>
+        private SizeF DrawLayerName(Graphics g, LegendLayer lyr, Rectangle bounds, bool isSnapshot)
+        {
+            var textSize = new SizeF(0.0f, 0.0f);
+
+            if (bounds.Width <= 60)
+            {
+                return textSize;
+            }
+
+            // draw text
+            var text = Legend.AxMap.get_LayerName(lyr.Handle);
+            textSize = g.MeasureString(text, Legend.Font);
+
+            var point = GetTextLocation(bounds, isSnapshot);
+
+            var curWidth = bounds.Width - Constants.TextLeftPad - Constants.TextRightPad;
+
+            var rect = new Rectangle(point.X, point.Y, curWidth, Constants.TextHeight);
+            DrawText(g, text, rect, Legend.Font, Legend.ForeColor);
+
+            lyr.Elements.Add(LayerElementType.Name, rect);
+
+            return textSize;
+        }
+
+        /// <summary>
+        /// Gets position of text relative to the layer bounds.
+        /// </summary>
+        private Point GetTextLocation(Rectangle bounds, bool isSnapshot)
+        {
+            var curLeft = isSnapshot ? bounds.Left + Constants.CheckLeftPad : bounds.Left + Constants.TextLeftPad;
+            var curTop = bounds.Top + Constants.TextTopPad;
+            return new Point(curLeft, curTop);
         }
     }
 }

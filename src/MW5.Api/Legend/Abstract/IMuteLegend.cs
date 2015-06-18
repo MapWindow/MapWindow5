@@ -70,7 +70,7 @@ namespace MW5.Api.Legend.Abstract
         /// <param name="point"> The point. </param>
         /// <param name="element"> The Element. </param>
         /// <returns> The group that was clicked on or null/nothing. </returns>
-        LegendLayer FindClickedLayer(Point point, ref ClickedElement element);
+        LegendLayer FindClickedLayer(Point point, out LegendElement element);
 
         /// <summary>
         /// Runs redraw of the legend if it's not locked and optionally redraw of the map.

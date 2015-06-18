@@ -61,5 +61,15 @@
         {
             return CsItemHeight + VerticalPad;
         }
+
+        public static int CategoryCheckboxWidthWithPadding()
+        {
+            return CheckBoxSize + 5;
+        }
+
+        public static int CheckboxTopOffset()
+        {
+            return (TextHeight - CheckBoxSize) / 2;
+        }
     }
 }

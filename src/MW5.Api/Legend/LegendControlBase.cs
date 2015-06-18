@@ -321,9 +321,9 @@ namespace MW5.Api.Legend
             return HitTest.FindClickedGroup(point, out inCheckbox, out inExpandbox);
         }
 
-        public LegendLayer FindClickedLayer(Point point, ref ClickedElement element)
+        public LegendLayer FindClickedLayer(Point point, out LegendElement element)
         {
-            return HitTest.FindClickedLayer(point, ref element);
+            return HitTest.FindClickedLayer(point, out element);
         }
 
         #endregion

@@ -77,7 +77,6 @@ namespace MW5.Api.Legend.Renderer
             DrawText(g, text, rect, font, Color.Black);
         }
 
-
         /// <summary>
         /// Drawing a rectangle with fil.
         /// </summary>
@@ -155,6 +154,11 @@ namespace MW5.Api.Legend.Renderer
             g.SmoothingMode = oldSm;
         }
 
+        protected Rectangle GetExpansionBoxBounds(int top, int left)
+        {
+            return new Rectangle(left, top, Constants.ExpandBoxSize, Constants.ExpandBoxSize);
+        }
+
         /// <summary>
         /// Expansion box with plus or minus sign
         /// </summary>
@@ -162,7 +166,7 @@ namespace MW5.Api.Legend.Renderer
         {
             var pen = new Pen(_boxLineColor, 1);
 
-            var rect = new Rectangle(itemLeft, itemTop, Constants.ExpandBoxSize, Constants.ExpandBoxSize);
+            var rect = GetExpansionBoxBounds(itemTop, itemLeft);
 
             // draw the border
             DrawRectangle(g, rect, _boxLineColor, Color.White);
@@ -184,6 +188,30 @@ namespace MW5.Api.Legend.Renderer
                 // draw a - sign
                 g.DrawLine(pen, itemLeft + 2, midY, itemLeft + Constants.ExpandBoxSize - 2, midY);
             }
+        }
+
+        protected Rectangle GetCheckBoxBounds(int top, int left)
+        {
+            return new Rectangle(top, left, Constants.CheckBoxSize, Constants.CheckBoxSize);
+        }
+
+        /// <summary>
+        /// The draw check box.
+        /// </summary>
+        protected void DrawCheckBox(Graphics g, int itemTop, int itemLeft, bool drawCheck, bool drawGrayBackground)
+        {
+            LegendIcon icon;
+            if (drawCheck)
+            {
+                icon = drawGrayBackground ? LegendIcon.CheckedBoxGray : LegendIcon.CheckedBox;
+            }
+            else
+            {
+                icon = drawGrayBackground ? LegendIcon.UnCheckedBoxGray : LegendIcon.UnCheckedBox;
+            }
+
+            var image = GetIcon(icon);
+            DrawPicture(g, itemLeft, itemTop, Constants.CheckBoxSize, Constants.CheckBoxSize, image);
         }
     }
 }
