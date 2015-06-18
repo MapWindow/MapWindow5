@@ -114,7 +114,7 @@
             // txtSearch
             // 
             this.txtSearch.BeforeTouchSize = new System.Drawing.Size(206, 20);
-            this.txtSearch.Cue = "Type to find function";
+            this.txtSearch.Cue = "Type to find function (Ctrl + F)";
             this.txtSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtSearch.FarImage = ((System.Drawing.Image)(resources.GetObject("txtSearch.FarImage")));
             this.txtSearch.Location = new System.Drawing.Point(361, 25);
@@ -185,7 +185,7 @@
             // 
             this.btnClear.BeforeTouchSize = new System.Drawing.Size(70, 23);
             this.btnClear.IsBackStageButton = false;
-            this.btnClear.Location = new System.Drawing.Point(280, 175);
+            this.btnClear.Location = new System.Drawing.Point(280, 178);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(70, 23);
             this.btnClear.TabIndex = 64;
@@ -261,6 +261,7 @@
             this.Controls.Add(this.btnOk);
             this.Name = "FieldCalculatorView";
             this.Text = "Field Calculator";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FieldCalculatorView_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.functionTreeView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).EndInit();

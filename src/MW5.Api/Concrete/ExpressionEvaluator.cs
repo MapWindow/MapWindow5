@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MapWinGIS;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
@@ -35,9 +36,24 @@ namespace MW5.Api.Concrete
             return _expression.Parse(expr);
         }
 
-        public bool Evaluate(out object result)
+        public bool ParseForTable(string expr, IAttributeTable table)
         {
-            return _expression.Evaluate(out result);
+            return _expression.ParseForTable(expr, table.GetInternal());
+        }
+
+        public bool CalculateForTableRow(int RowIndex, int targetFieldIndex)
+        {
+            return _expression.CalculateForTableRow(RowIndex, targetFieldIndex);
+        }
+
+        public bool CalculateForTableRow2(int RowIndex, out object result)
+        {
+            return _expression.CalculateForTableRow2(RowIndex, out result);
+        }
+
+        public bool Calculate(out object result)
+        {
+            return _expression.Calculate(out result);
         }
 
         public string LastErrorMessage
@@ -55,19 +71,28 @@ namespace MW5.Api.Concrete
             get { return _expression.NumSupportedFunctions; }
         }
 
-        public Function get_SupportedFunction(int functionIndex)
+        public ExpressionFunction get_SupportedFunction(int functionIndex)
         {
-            return _expression.SupportedFunction[functionIndex];
+            return new ExpressionFunction(_expression.SupportedFunction[functionIndex]);
+        }
+
+        public IAttributeTable Table
+        {
+            get
+            {
+                var table = _expression.Table;
+                return table != null ? new AttributeTable(table) : null;
+            }
         }
 
         public IEnumerator<ExpressionFunction> GetEnumerator()
         {
-            for (int i = 0; i < NumSupportedFunctions; i++)
+            for (var i = 0; i < NumSupportedFunctions; i++)
             {
                 var fn = get_SupportedFunction(i);
                 if (fn != null)
                 {
-                    yield return new ExpressionFunction(fn);
+                    yield return fn;
                 }
             }
         }

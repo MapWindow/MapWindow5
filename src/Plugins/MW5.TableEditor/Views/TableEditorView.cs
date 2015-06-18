@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -30,8 +31,9 @@ namespace MW5.Plugins.TableEditor.Views
     internal partial class TableEditorView : DockPanelControlBase, ITableEditorView
     {
         private readonly TablePanelCollection _panels;
-
         private IAppContext _context;
+
+        #region Constructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TableEditorView" /> class.
@@ -40,10 +42,14 @@ namespace MW5.Plugins.TableEditor.Views
         {
             InitializeComponent();
 
+            ActiveColumnIndex = -1;
+
             _panels = new TablePanelCollection(dockingManager1, this);
 
             InitMenu();
         }
+
+        #endregion
 
         #region Properties
 
@@ -173,6 +179,7 @@ namespace MW5.Plugins.TableEditor.Views
                     var ctrl = s as Control;
                     if (ctrl != null)
                     {
+                        ActiveColumnIndex = e.ColumnIndex;
                         contextMenuStripEx1.Show(Cursor.Position);
                     }
                 };
@@ -315,9 +322,6 @@ namespace MW5.Plugins.TableEditor.Views
 
         #region Methods
 
-        /// <summary>
-        /// Creates a new instance of TableEditorGrid.
-        /// </summary>
         private TableEditorGrid CreateGrid()
         {
             var grid = new TableEditorGrid { RowManager = new RowManager() };
@@ -327,9 +331,6 @@ namespace MW5.Plugins.TableEditor.Views
             return grid;
         }
 
-        /// <summary>
-        /// Disables all menu items.
-        /// </summary>
         private void DisableMenus()
         {
             foreach (ToolStripItem item in toolStripEx1.Items)
@@ -349,9 +350,6 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
-        /// <summary>
-        /// Initializes the root menu items.
-        /// </summary>
         private void InitMenu()
         {
             // handlers aren't attached to the items with not null tag
@@ -368,9 +366,6 @@ namespace MW5.Plugins.TableEditor.Views
             toolTools.DropDownOpening += (s, e) => OnMenuOpening();
         }
 
-        /// <summary>
-        /// Runs necessary update of menu items before certain menu is opened.
-        /// </summary>
         private void OnMenuOpening()
         {
             DisableMenus();
@@ -378,9 +373,6 @@ namespace MW5.Plugins.TableEditor.Views
             UpdateMenus();
         }
 
-        /// <summary>
-        /// Updates the icons of editing menu depending on layer state.
-        /// </summary>
         private void UpdateEditingIcon()
         {
             var fs = ActiveFeatureSet;
@@ -396,9 +388,6 @@ namespace MW5.Plugins.TableEditor.Views
             toolEdit.Image = img;
         }
 
-        /// <summary>
-        /// Updates the state of all menu items.
-        /// </summary>
         private void UpdateMenus()
         {
             var fs = ActiveFeatureSet;
@@ -451,8 +440,23 @@ namespace MW5.Plugins.TableEditor.Views
             mnuLayoutTabbed.Checked = layout == TableEditorLayout.Tabbed;
         }
 
+        private void contextMenuStripEx1_Opening(object sender, CancelEventArgs e)
+        {
+            var fs = ActiveFeatureSet;
+            if (fs == null)
+            {
+                return;
+            }
+
+            var editing = fs.Table.EditMode;
+            mnuRemoveField.Enabled = editing;
+            mnuCalculateField.Enabled = editing;
+        }
+
         #endregion
     }
 
-    public class TableEditorViewBase : MapWindowView<ILayer> {}
+    public class TableEditorViewBase : MapWindowView<ILayer>
+    {
+    }
 }

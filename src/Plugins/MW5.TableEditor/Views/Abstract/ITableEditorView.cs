@@ -16,6 +16,8 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
 {
     internal interface ITableEditorView : IMenuProvider
     {
+        int ActiveColumnIndex { get; }
+
         IFeatureSet ActiveFeatureSet { get; }
 
         TableEditorGrid ActiveGrid { get; }

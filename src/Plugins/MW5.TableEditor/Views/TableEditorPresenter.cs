@@ -25,8 +25,9 @@ namespace MW5.Plugins.TableEditor.Views
     internal class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
-
         private readonly Dictionary<int, TablePanelInfo> _tables;
+
+        #region Constructors
 
         public TableEditorPresenter(IAppContext context, ITableEditorView view)
             : base(view)
@@ -41,6 +42,8 @@ namespace MW5.Plugins.TableEditor.Views
             View.Panels.BeforePanelClosed += (s, e) => CloseTable(e.LayerHandle);
             View.Panels.PanelActivated += (s, e) => View.OnActivateDockingPanel();
         }
+
+        #endregion
 
         #region Properties
 
@@ -223,8 +226,12 @@ namespace MW5.Plugins.TableEditor.Views
                     View.UpdateView();
                     break;
                 case TableEditorCommand.CalculateField:
-                    // TODO: choose current selected field
-                    var model = new FieldCalculatorModel(table, table.Fields[0]);
+                    if (View.ActiveColumnIndex == -1)
+                    {
+                        throw new ApplicationException("No column is selected to calculate. Use context menu of column header.");
+                    }
+
+                    var model = new FieldCalculatorModel(table, table.Fields[View.ActiveColumnIndex]);
                     if (_context.Container.Run<FieldCalculatorPresenter, FieldCalculatorModel>(model))
                     {
                         View.UpdateDatasource();
@@ -319,11 +326,6 @@ namespace MW5.Plugins.TableEditor.Views
             var model = new FindReplaceModel(info.Grid, info.Layer, replace);
 
             info.FindReplace.Run(model);
-        }
-
-        private string GetLayerKey(int layerHandle)
-        {
-            return layerHandle.ToString();
         }
 
         private TablePanelInfo GetTableInfo(int layerHandle)

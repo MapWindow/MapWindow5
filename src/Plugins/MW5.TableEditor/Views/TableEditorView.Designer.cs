@@ -440,8 +440,9 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 182);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 204);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            this.contextMenuStripEx1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripEx1_Opening);
             // 
             // mnuFieldSortAsc
             // 
