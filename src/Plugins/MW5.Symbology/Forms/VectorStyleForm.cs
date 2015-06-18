@@ -82,7 +82,7 @@ namespace MW5.Plugins.Symbology.Forms
 
             _initState = SaveState();
            
-            ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _featureSet);
+            
 
             LockUpdate = true;
 
@@ -119,6 +119,8 @@ namespace MW5.Plugins.Symbology.Forms
             AddTooltips();
 
             tabControl1.SelectedIndex = _tabIndex;
+
+            ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _featureSet);
 
             Shown += frmSymbologyMain_Shown;
         }
@@ -1304,10 +1306,7 @@ namespace MW5.Plugins.Symbology.Forms
             txtComments.Text = _layer.Description;
 
             dynamicVisibilityControl1.Initialize(_layer, _context.Map.CurrentZoom, _context.Map.CurrentScale);
-            dynamicVisibilityControl1.ValueChanged += (s, e) =>
-            {
-                MarkStateChanged();
-            };
+            dynamicVisibilityControl1.ValueChanged += (s, e) => MarkStateChanged();
 
             PopulateBriefInfo();
 

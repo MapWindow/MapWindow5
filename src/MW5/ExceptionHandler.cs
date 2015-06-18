@@ -12,7 +12,7 @@ namespace MW5
     {
         public static void Attach()
         {
-            //if (!Debugger.IsAttached)
+            if (!Debugger.IsAttached)
             {
                 // main UI thread only
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
