@@ -401,10 +401,13 @@ namespace MW5.Plugins.TableEditor.Views
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
 
+            mnuShowAliases.Enabled = true;
+            mnuShowAllFields.Enabled = true;
+            mnuShowAliases.Checked = AppConfig.Instance.TableEditorShowAliases;
+
             mnuAddField.Enabled = editing;
-            toolRemoveField.Enabled = editing;
-            mnuRenameField.Enabled = editing;
-            toolCalculateField.Enabled = editing;
+            mnuRemoveFields.Enabled = editing;
+            mnuRemoveField.Enabled = editing;
             mnuUpdateMeasurements.Enabled = editing;
             mnuCopyShapeIDs.Enabled = editing;
             mnuGenerateOrUpdateShapeID.Enabled = editing;

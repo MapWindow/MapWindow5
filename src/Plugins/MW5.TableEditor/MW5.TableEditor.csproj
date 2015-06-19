@@ -137,6 +137,7 @@
     <Compile Include="Services\DockPanelService.cs" />
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
     <Compile Include="Views\Abstract\IFieldCalculatorView.cs" />
+    <Compile Include="Views\Abstract\IFieldPropertiesView.cs" />
     <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
@@ -172,6 +173,14 @@
     <Compile Include="Views\FieldCalculatorView.Designer.cs">
       <DependentUpon>FieldCalculatorView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\FieldPropertiesModel.cs" />
+    <Compile Include="Views\FieldPropertiesPresenter.cs" />
+    <Compile Include="Views\FieldPropertiesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FieldPropertiesView.Designer.cs">
+      <DependentUpon>FieldPropertiesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\FindReplaceModel.cs" />
     <Compile Include="Views\FindReplacePresenter.cs" />
     <Compile Include="Views\JoinsPresenter.cs">
@@ -190,13 +199,6 @@
     </Compile>
     <Compile Include="Views\JoinsView.Designer.cs">
       <DependentUpon>JoinsView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\RenameFieldPresenter.cs" />
-    <Compile Include="Views\RenameFieldView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\RenameFieldView.Designer.cs">
-      <DependentUpon>RenameFieldView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FindReplaceView.cs">
       <SubType>Form</SubType>
@@ -234,13 +236,6 @@
     <Compile Include="Helpers\FormHelper.cs" />
     <Compile Include="Helpers\NumericHelper.cs" />
     <Compile Include="Helpers\XlsImportHelper.cs" />
-    <Compile Include="Views\AddFieldPresenter.cs" />
-    <Compile Include="Views\AddFieldView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\AddFieldView.Designer.cs">
-      <DependentUpon>AddFieldView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
     <Compile Include="Views\UpdateMeasurementsPresenter.cs" />
     <Compile Include="Views\UpdateMeasurementsView.cs">
@@ -260,6 +255,9 @@
     <EmbeddedResource Include="Views\FieldCalculatorView.resx">
       <DependentUpon>FieldCalculatorView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FieldPropertiesView.resx">
+      <DependentUpon>FieldPropertiesView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FindReplaceView.resx">
       <DependentUpon>FindReplaceView.cs</DependentUpon>
     </EmbeddedResource>
@@ -269,9 +267,6 @@
     <EmbeddedResource Include="Views\JoinsView.resx">
       <DependentUpon>JoinsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\RenameFieldView.resx">
-      <DependentUpon>RenameFieldView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\TableEditorView.resx">
       <DependentUpon>TableEditorView.cs</DependentUpon>
     </EmbeddedResource>
@@ -279,9 +274,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\AddFieldView.resx">
-      <DependentUpon>AddFieldView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UpdateMeasurementsView.resx">
       <DependentUpon>UpdateMeasurementsView.cs</DependentUpon>
@@ -359,6 +351,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_sort_asc16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_sort_desc16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_calculate16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_remove16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

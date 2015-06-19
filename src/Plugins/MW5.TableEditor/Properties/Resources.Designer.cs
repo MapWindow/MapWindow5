@@ -103,6 +103,16 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_calculate16 {
+            get {
+                object obj = ResourceManager.GetObject("img_calculate16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_open {
             get {
                 object obj = ResourceManager.GetObject("img_folder_open", resourceCulture);
@@ -136,6 +146,36 @@ namespace MW5.Plugins.TableEditor.Properties {
         internal static System.Drawing.Bitmap img_measure_length {
             get {
                 object obj = ResourceManager.GetObject("img_measure_length", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove16 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_sort_asc16 {
+            get {
+                object obj = ResourceManager.GetObject("img_sort_asc16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_sort_desc16 {
+            get {
+                object obj = ResourceManager.GetObject("img_sort_desc16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

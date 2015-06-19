@@ -9,25 +9,25 @@ namespace MW5.Plugins.TableEditor.Helpers
 {
     public static class AttributeTableHelper
     {
-        public static bool ValidateField(this IAttributeTable table, string newName, out string errorMessage)
+        public static bool ValidateFieldName(this IAttributeTable table, string newName, out string errorMessage)
         {
             errorMessage = string.Empty;
 
             if (string.IsNullOrWhiteSpace(newName))
             {
-                errorMessage = "Please enter a name.";
+                errorMessage = "Field name is empty.";
                 return false;
             }
 
             if (newName.Length > 10)
             {
-                errorMessage = "Max fieldlength is 10.";
+                errorMessage = "Max field length is 10.";
                 return false;
             }
 
             if (table.Fields.Any(f => f.Name.ToLower() == newName))
             {
-                errorMessage = "Fieldname already exists or has been previously added/removed in this session. Apply or cancel your changes and try again.";
+                errorMessage = "Field name already exists.";
                 return false;
             }
 

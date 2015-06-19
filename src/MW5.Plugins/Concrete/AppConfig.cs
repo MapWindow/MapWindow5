@@ -84,6 +84,7 @@ namespace MW5.Plugins.Concrete
             SpatialIndexFeatureCount = 10000;
             SymbolobyStorage = SymbologyStorage.Project;
             TableEditorLayout = TableEditorLayout.Tabbed;
+            TableEditorShowAliases = true;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
@@ -308,6 +309,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public TableEditorLayout TableEditorLayout { get; set; }
+
+        [DataMember]
+        public bool TableEditorShowAliases { get; set;}
 
         [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }

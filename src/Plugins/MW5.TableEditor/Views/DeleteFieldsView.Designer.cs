@@ -52,9 +52,9 @@
             this.Label1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Label1.Location = new System.Drawing.Point(12, 16);
             this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(100, 16);
+            this.Label1.Size = new System.Drawing.Size(137, 16);
             this.Label1.TabIndex = 9;
-            this.Label1.Text = "Fields to Remove:";
+            this.Label1.Text = "Select fields to remove:";
             // 
             // btnCancel
             // 
@@ -94,7 +94,7 @@
             this.Controls.Add(this.clb);
             this.Controls.Add(this.Label1);
             this.Name = "DeleteFieldsView";
-            this.Text = "Delete fields:";
+            this.Text = "Remove fields:";
             this.ResumeLayout(false);
 
         }

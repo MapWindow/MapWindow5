@@ -9,7 +9,6 @@
         StartEdit = 4,
         AddField = 5,
         RemoveField = 6,
-        RenameField = 7,
         SelectAll = 8,
         ClearSelection = 9,
         InvertSelection = 10,
@@ -27,6 +26,9 @@
         FieldHide = 22,
         FieldStats = 23,
         FieldProperties = 24,
+        RemoveFields = 25,
+        ShowAliases = 26,
+        ShowAllFields = 27,
     }
 
     /// <summary>

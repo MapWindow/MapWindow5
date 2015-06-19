@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Shared;
@@ -75,11 +76,13 @@ namespace MW5.Plugins.TableEditor.Editor
         {
             Columns.Clear();
 
+            bool showAliases = AppConfig.Instance.TableEditorShowAliases;
+
             foreach(var fld in table.Fields)
             {
                 var cmn = new DataGridViewTextBoxColumn
                 {
-                    HeaderText = fld.DisplayName,
+                    HeaderText = showAliases ? fld.DisplayName : fld.Name,
                     SortMode = DataGridViewColumnSortMode.Programmatic,
                     Visible = fld.Visible,
                     Tag = fld,
@@ -152,6 +155,11 @@ namespace MW5.Plugins.TableEditor.Editor
                 ascending = !RowManager.SortAscending;
             }
 
+            SortByColumn(columnIndex, ascending);
+        }
+
+        public void SortByColumn(int columnIndex, bool ascending)
+        {
             var fld = _table.Fields[columnIndex];
             switch (fld.Type)
             {
@@ -311,9 +319,14 @@ namespace MW5.Plugins.TableEditor.Editor
             }
         }
 
-        private IAttributeField GetField(int columnIndex)
+        public IAttributeField GetField(int columnIndex)
         {
-            return Columns[columnIndex].Tag as IAttributeField;
+            if (columnIndex >= 0 && columnIndex < Columns.Count)
+            {
+                return Columns[columnIndex].Tag as IAttributeField;
+            }
+
+            return null;
         }
 
         public bool Replace(SearchInfo info)
@@ -376,8 +389,9 @@ namespace MW5.Plugins.TableEditor.Editor
 
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
+                Logger.Current.Error("Failed to replace value in table editor.", ex);
             }
 
             return false;

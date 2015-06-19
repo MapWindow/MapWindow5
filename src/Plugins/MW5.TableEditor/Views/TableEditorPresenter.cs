@@ -152,6 +152,27 @@ namespace MW5.Plugins.TableEditor.Views
             View.UpdateView();
         }
 
+        private bool ValidateColumnIndex(TableEditorCommand command)
+        {
+            switch (command)
+            {
+                case TableEditorCommand.FieldSortAsc:
+                case TableEditorCommand.FieldSortDesc:
+                case TableEditorCommand.FieldStats:
+                case TableEditorCommand.FieldProperties:
+                case TableEditorCommand.CalculateField:
+                case TableEditorCommand.RemoveField:
+                    if (View.ActiveColumnIndex == -1)
+                    {
+                        throw new ApplicationException("Active column is expected for this command");
+                        return false;
+                    }
+                    break;
+            }
+
+            return true;
+        }
+
         public override void RunCommand(TableEditorCommand command)
         {
             if (HandleLayout(command))
@@ -165,21 +186,98 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
+            if (!ValidateColumnIndex(command))
+            {
+                return;
+            }
+
             switch (command)
             {
+                case TableEditorCommand.ShowAliases:
+                    AppConfig.Instance.TableEditorShowAliases = !AppConfig.Instance.TableEditorShowAliases;
+                    View.UpdateDatasource();
+                    break;
+                case TableEditorCommand.ShowAllFields:
+                    if (table.Fields.Any(f => !f.Visible))
+                    {
+                        if (MessageService.Current.Ask("Do you want to show hidden fields?"))
+                        {
+                            foreach (var fld in table.Fields)
+                            {
+                                fld.Visible = true;
+                            }
+
+                            View.UpdateDatasource();
+                        }
+                    }
+                    else
+                    {
+                        MessageService.Current.Info("All fields are already visible.");
+                    }
+                    break;
                 case TableEditorCommand.FieldSortAsc:
-                    MessageService.Current.Info("Not implemented");
-                    break;
                 case TableEditorCommand.FieldSortDesc:
-                    MessageService.Current.Info("Not implemented");
-                    break;
-                case TableEditorCommand.FieldStats:
-                    MessageService.Current.Info("Not implemented");
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            grid.SortByColumn(View.ActiveColumnIndex, command == TableEditorCommand.FieldSortAsc);
+                        }
+                    }
                     break;
                 case TableEditorCommand.FieldHide:
-                    MessageService.Current.Info("Not implemented");
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            var fld = grid.GetField(View.ActiveColumnIndex);
+                            var cmn = grid.Columns[View.ActiveColumnIndex];
+                            if (fld != null && cmn != null)
+                            {
+                                cmn.Visible = false;
+                                fld.Visible = false;
+                            }
+                        }
+                    }
+                    break;
+                case TableEditorCommand.RemoveField:
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            var fld = grid.GetField(View.ActiveColumnIndex);
+
+                            if (MessageService.Current.Ask("Do you want to remove field: " + fld.Name + "?"))
+                            {
+                                var fields = table.Fields;
+                                int index = fields.IndexOf(fld);
+
+                                if (fields.Remove(index))
+                                {
+                                    View.UpdateDatasource();
+                                }    
+                            }
+                        }
+                    }
                     break;
                 case TableEditorCommand.FieldProperties:
+                case TableEditorCommand.AddField:
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            bool newField = command == TableEditorCommand.AddField;
+                            var fld = newField ? null : grid.GetField(View.ActiveColumnIndex);
+                            var model = new FieldPropertiesModel(table, fld, newField);
+
+                            if (_context.Container.Run<FieldPropertiesPresenter, FieldPropertiesModel>(model))
+                            {
+                                View.UpdateDatasource();
+                            }
+                        }
+                    }
+                    break;
+                case TableEditorCommand.FieldStats:
                     MessageService.Current.Info("Not implemented");
                     break;
                 case TableEditorCommand.UpdateMeasurements:
@@ -209,6 +307,7 @@ namespace MW5.Plugins.TableEditor.Views
                     {
                         var result = MessageService.Current.AskWithCancel(
                             "Do you want to save attribute table changes?");
+
                         if (result == DialogResult.Cancel)
                         {
                             return;
@@ -220,37 +319,24 @@ namespace MW5.Plugins.TableEditor.Views
                         if (grid != null)
                         {
                             grid.ReadOnly = !table.EditMode;
+                            View.UpdateDatasource();
                         }
                     }
 
                     View.UpdateView();
                     break;
                 case TableEditorCommand.CalculateField:
-                    if (View.ActiveColumnIndex == -1)
                     {
-                        throw new ApplicationException("No column is selected to calculate. Use context menu of column header.");
-                    }
-
-                    var model = new FieldCalculatorModel(table, table.Fields[View.ActiveColumnIndex]);
-                    if (_context.Container.Run<FieldCalculatorPresenter, FieldCalculatorModel>(model))
-                    {
-                        View.UpdateDatasource();
+                        var model = new FieldCalculatorModel(table, table.Fields[View.ActiveColumnIndex]);
+                        if (_context.Container.Run<FieldCalculatorPresenter, FieldCalculatorModel>(model))
+                        {
+                            View.UpdateDatasource();
+                        }
                     }
                     break;
-                case TableEditorCommand.AddField:
-                    if (_context.Container.Run<AddFieldPresenter, IAttributeTable>(table))
-                    {
-                        View.UpdateDatasource();
-                    }
-                    break;
-                case TableEditorCommand.RemoveField:
+                
+                case TableEditorCommand.RemoveFields:
                     if (_context.Container.Run<DeleteFieldsPresenter, IAttributeTable>(table))
-                    {
-                        View.UpdateDatasource();
-                    }
-                    break;
-                case TableEditorCommand.RenameField:
-                    if (_context.Container.Run<RenameFieldPresenter, IAttributeTable>(table))
                     {
                         View.UpdateDatasource();
                     }

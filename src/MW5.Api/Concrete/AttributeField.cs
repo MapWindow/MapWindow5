@@ -9,7 +9,7 @@ namespace MW5.Api.Concrete
     public class AttributeField: IAttributeField
     {
         private readonly Field _field;
-        private int _index = -1;
+        private readonly int _index = -1;
 
         public AttributeField()
         {
