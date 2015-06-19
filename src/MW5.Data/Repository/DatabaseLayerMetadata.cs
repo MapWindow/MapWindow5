@@ -16,7 +16,7 @@ namespace MW5.Data.Repository
 
             // we don't want to keep the connection open all the time, so simply grab the necessary data
             Name = layer.Name;
-            GeometryType = layer.GeometryType;
+            GeometryType = layer.ActiveGeometryType;
             NumFeatures = layer.get_FeatureCount();
             Projection = layer.Projection;
             Connection = layer.ConnectionString;

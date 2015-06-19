@@ -16,6 +16,7 @@ namespace MW5.Api.Concrete
         {
             Filename = filename;
             IdentityType = LayerIdentityType.File;
+            GeometryType = GeometryType.None;
         }
 
         public LayerIdentity(string connection, string query)
@@ -23,7 +24,19 @@ namespace MW5.Api.Concrete
             Connection = connection;
             Query = query;
             IdentityType = LayerIdentityType.OgrDatasource;
+            GeometryType = GeometryType.None;
         }
+
+        public LayerIdentity(string connection, string query, GeometryType geometryType)
+        {
+            Connection = connection;
+            Query = query;
+            IdentityType = LayerIdentityType.OgrDatasource;
+            GeometryType = geometryType;
+        }
+
+        [DataMember]
+        public GeometryType GeometryType { get; set; }
 
         [DataMember]
         public string Filename { get; set; }
@@ -49,7 +62,8 @@ namespace MW5.Api.Concrete
                 case LayerIdentityType.File:
                     return Filename.EqualsIgnoreCase(other.Filename);
                 case LayerIdentityType.OgrDatasource:
-                    return Connection.EqualsIgnoreCase(other.Connection) && Query.EqualsIgnoreCase(other.Query);
+                    return Connection.EqualsIgnoreCase(other.Connection) && Query.EqualsIgnoreCase(other.Query) && 
+                            GeometryType == other.GeometryType;
             }
 
             return false;

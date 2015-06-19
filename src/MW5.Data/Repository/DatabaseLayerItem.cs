@@ -44,7 +44,7 @@ namespace MW5.Data.Repository
 
         public LayerIdentity Identity
         {
-            get { return new LayerIdentity(Metadata.Connection, Metadata.Name); }
+            get { return new LayerIdentity(Metadata.Connection, Metadata.Name, Metadata.GeometryType); }
         }
 
         public bool AddedToMap

@@ -120,7 +120,7 @@ namespace MW5.Api.Concrete
                 if (LayerType == LayerType.VectorLayer)
                 {
                     var ogr = VectorSource;
-                    return new LayerIdentity(ogr.ConnectionString, ogr.SourceQuery);
+                    return new LayerIdentity(ogr.ConnectionString, ogr.SourceQuery, ogr.ActiveGeometryType);
                 }
                 
                 return new LayerIdentity(Filename);

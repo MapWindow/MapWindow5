@@ -8,7 +8,6 @@ using MW5.Api.Concrete;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
 using MW5.Api.Map;
-using MW5.Plugins.Services;
 using MW5.Shared;
 
 namespace MW5.Api.Legend

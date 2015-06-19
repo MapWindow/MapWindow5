@@ -213,6 +213,29 @@ namespace MW5.Api.Concrete
             get { return _layer.DriverName; }
         }
 
+        public IEnumerable<GeometryType> AvailableGeometryTypes
+        {
+            get
+            {
+                var list = _layer.AvailableShapeTypes as int[];
+                if (list == null)
+                {
+                    yield break;
+                }
+
+                foreach (var item in list)
+                {
+                    yield return GeometryHelper.ShapeType2GeometryType((ShpfileType)item);
+                }
+            }
+        }
+
+        public GeometryType ActiveGeometryType
+        {
+            get { return GeometryHelper.ShapeType2GeometryType(_layer.ActiveShapeType); }
+            set { _layer.ActiveShapeType = GeometryHelper.GeometryType2ShpType(value); }
+        }
+
         public IEnvelope Envelope
         {
             get

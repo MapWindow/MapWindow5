@@ -157,18 +157,23 @@ namespace MW5.Services.Concrete
                 case LayerIdentityType.File:
                     return AddLayersFromFilenameCore(identity.Filename);
                 case LayerIdentityType.OgrDatasource:
-                    return AddDatabaseLayer(identity.Connection, identity.Query);
+                    return AddDatabaseLayer(identity.Connection, identity.Query, identity.GeometryType);
                 default:
                     Logger.Current.Warn("Unexpected layer identity");
                     return false;
             }
         }
 
-        public bool AddDatabaseLayer(string connection, string layerName)
+        public bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None)
         {
             var layer = new VectorLayer();
             if (layer.Open(connection, layerName))
             {
+                if (multiGeometryType != GeometryType.None)
+                {
+                    layer.ActiveGeometryType = multiGeometryType;
+                }
+
                 int layerHandle = _context.Map.Layers.Add(layer);
                 if (layerHandle != -1)
                 {

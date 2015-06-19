@@ -1,11 +1,12 @@
 ﻿using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Services
 {
     public interface ILayerService
     {
-        bool AddDatabaseLayer(string connection, string layerName);
+        bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None);
         bool AddLayer(DataSourceType layerType);
         bool RemoveSelectedLayer();
         bool RemoveLayer(LayerIdentity identity);

@@ -81,13 +81,19 @@ namespace MW5.Data.Repository
             return AddNode(node) as IDatabaseItem;
         }
 
-        public IDatabaseLayerItem AddDatabaseLayer(IVectorLayer layer)
+        public IDatabaseLayerItem AddDatabaseLayer(IVectorLayer layer, bool multipleGeometries= false)
         {
             if (layer == null) throw new ArgumentNullException("layer");
 
             var node = CreateNode(RepositoryItemType.DatabaseLayer);
-            node.LeftImageIndices = new[] { GetVectorIcon(layer.GeometryType) };
+            node.LeftImageIndices = new[] { GetVectorIcon(layer.ActiveGeometryType) };
+
             node.Text = layer.Name;
+            if (multipleGeometries)
+            {
+                node.Text += " [" + layer.ActiveGeometryType + "]";
+            }
+
             node.TagObject = new DatabaseLayerMetadata(layer);
             node.ExpandedOnce = true;
             return AddNode(node) as IDatabaseLayerItem;

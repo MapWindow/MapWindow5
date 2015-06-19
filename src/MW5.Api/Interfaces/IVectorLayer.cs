@@ -1,4 +1,5 @@
-﻿using MW5.Api.Enums;
+﻿using System.Collections.Generic;
+using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
@@ -33,5 +34,7 @@ namespace MW5.Api.Interfaces
         bool Open(string connectionString, string layerName, bool forUpdate = false);
         bool OpenFromQuery(string connectionString, string sql);
         void ReloadFromSource();
+        IEnumerable<GeometryType> AvailableGeometryTypes {get;}
+        GeometryType ActiveGeometryType { get; set;}
     }
 }
