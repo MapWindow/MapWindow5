@@ -278,7 +278,21 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     break;
                 case TableEditorCommand.FieldStats:
-                    MessageService.Current.Info("Not implemented");
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            var fld = grid.GetField(View.ActiveColumnIndex);
+                            if (fld.Type == Api.Enums.AttributeType.String)
+                            {
+                                MessageService.Current.Info("Statistics aren't available for text fields.");
+                                return;
+                            }
+
+                            var model = new FieldStatsModel(table, fld.Index);
+                            _context.Container.Run<FieldStatsPresenter, FieldStatsModel>(model);
+                        }
+                    }
                     break;
                 case TableEditorCommand.UpdateMeasurements:
                     _context.Container.Run<UpdateMeasurementsPresenter, IAttributeTable>(table);

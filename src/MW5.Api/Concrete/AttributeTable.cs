@@ -261,5 +261,25 @@ namespace MW5.Api.Concrete
         {
             get { return _table.Filename; }
         }
+
+        public object get_MaxValue(int fieldIndex)
+        {
+            return _table.MaxValue[fieldIndex];
+        }
+
+        public object get_MinValue(int fieldIndex)
+        {
+            return _table.MinValue[fieldIndex];
+        }
+
+        public double get_MeanValue(int fieldIndex)
+        {
+            return _table.MeanValue[fieldIndex];
+        }
+
+        public double get_StandardDeviation(int fieldIndex)
+        {
+            return _table.StandardDeviation[fieldIndex];
+        }
     }
 }

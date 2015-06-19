@@ -50,13 +50,9 @@ namespace MW5.Api.Interfaces
 
         string Filename { get; }
 
-        #region Not implemented
-
-        //object get_MaxValue(int FieldIndex);
-        //double get_MeanValue(int FieldIndex);
-        //object get_MinValue(int FieldIndex);
-        //double get_StandardDeviation(int FieldIndex);
-
-        #endregion
+        object get_MaxValue(int fieldIndex);
+        object get_MinValue(int fieldIndex);
+        double get_MeanValue(int fieldIndex);
+        double get_StandardDeviation(int fieldIndex);
     }
 }

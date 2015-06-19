@@ -25,6 +25,7 @@ namespace MW5.Plugins.TableEditor
                 .RegisterView<IJoinTableView, JoinTableView>()
                 .RegisterView<IJoinsView, JoinsView>()
                 .RegisterView<IFieldPropertiesView, FieldPropertiesView>()
+                .RegisterView<IFieldStatsView, FieldStatsView>()
                 .RegisterView<IFindReplaceView, FindReplaceView>();
 
             EnumHelper.RegisterConverter(new FunctionGroupConverter());

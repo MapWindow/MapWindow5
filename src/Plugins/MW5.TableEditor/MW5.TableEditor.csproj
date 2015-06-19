@@ -97,6 +97,12 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
+    <Compile Include="Controls\FieldStatsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FieldStatsGrid.Designer.cs">
+      <DependentUpon>FieldStatsGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\FieldTypeGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -122,6 +128,7 @@
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Model\FieldStat.cs" />
     <Compile Include="Model\FieldTypeWrapper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\FindReplaceFieldWrapper.cs" />
@@ -138,6 +145,7 @@
     <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
     <Compile Include="Views\Abstract\IFieldCalculatorView.cs" />
     <Compile Include="Views\Abstract\IFieldPropertiesView.cs" />
+    <Compile Include="Views\Abstract\IFieldStatsView.cs" />
     <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IJoinTableView.cs" />
@@ -180,6 +188,14 @@
     </Compile>
     <Compile Include="Views\FieldPropertiesView.Designer.cs">
       <DependentUpon>FieldPropertiesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FieldStatsModel.cs" />
+    <Compile Include="Views\FieldStatsPresenter.cs" />
+    <Compile Include="Views\FieldStatsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FieldStatsView.Designer.cs">
+      <DependentUpon>FieldStatsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FindReplaceModel.cs" />
     <Compile Include="Views\FindReplacePresenter.cs" />
@@ -257,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FieldPropertiesView.resx">
       <DependentUpon>FieldPropertiesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FieldStatsView.resx">
+      <DependentUpon>FieldStatsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FindReplaceView.resx">
       <DependentUpon>FindReplaceView.cs</DependentUpon>
