@@ -54,9 +54,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
-    <Reference Include="MW5.Plugins">
-      <HintPath>..\MW5.Projections\bin\x86\Debug\MW5.Plugins.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
