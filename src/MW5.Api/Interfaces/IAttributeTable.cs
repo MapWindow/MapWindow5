@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IAttributeTable: ISerializableComWrapper
+    public interface IAttributeTable: ISerializableComWrapper, IDisposable
     {
         AttributeFieldList Fields { get; }
 

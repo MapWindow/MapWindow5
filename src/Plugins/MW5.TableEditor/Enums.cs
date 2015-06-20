@@ -30,6 +30,10 @@
         ShowAliases = 26,
         ShowAllFields = 27,
         ReloadTable = 28,
+        ImportFieldDefinitions = 29,
+        StopJoins = 30,
+        ZoomToCurrentCell = 31,
+        ExportSelected = 32,
     }
 
     /// <summary>

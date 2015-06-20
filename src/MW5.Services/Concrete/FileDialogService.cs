@@ -22,11 +22,17 @@ namespace MW5.Services.Concrete
         {
             var dialog = new SaveFileDialog {Filter = filter, FileName = filename};
 
+            if (!string.IsNullOrWhiteSpace(Title))
+            {
+                dialog.Title = Title;
+            }
+
             if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
             {
                 filename = dialog.FileName;
                 return true;
             }
+
             return false;
         }
 
@@ -66,6 +72,7 @@ namespace MW5.Services.Concrete
             {
                 dialog.RootFolder = Environment.SpecialFolder.MyComputer;
                 dialog.SelectedPath = initialPath;
+
                 if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
                 {
                     chosenPath = dialog.SelectedPath;
@@ -75,6 +82,8 @@ namespace MW5.Services.Concrete
             return false;
         }
 
+        public string Title { get; set; }
+        
         private bool OpenFileCore(string filter, bool multiSelect, int filterIndex, out string[] filenames)
         {
             filenames = null;
@@ -84,6 +93,11 @@ namespace MW5.Services.Concrete
                 dialog.Multiselect = multiSelect;
                 dialog.Filter = filter;
                 dialog.FilterIndex = filterIndex;
+
+                if (!string.IsNullOrWhiteSpace(Title))
+                {
+                    dialog.Title = Title;
+                }
 
                 if (dialog.ShowDialog(_parent as IWin32Window) == DialogResult.OK)
                 {

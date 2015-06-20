@@ -9,5 +9,6 @@ namespace MW5.Plugins.Services
         bool OpenFile(DataSourceType layerType, out string filename);
         bool OpenFiles(DataSourceType layerType, out string[] filenames);
         bool ChooseFolder(string initialPath, out string chosenPath);
+        string Title { get; set; }
     }
 }

@@ -281,5 +281,13 @@ namespace MW5.Api.Concrete
         {
             return _table.StandardDeviation[fieldIndex];
         }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _table.Close();
+        }
     }
 }

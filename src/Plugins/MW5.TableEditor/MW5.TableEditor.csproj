@@ -128,6 +128,7 @@
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\CalculatorHelper.cs" />
+    <Compile Include="Helpers\ShapefileExportHelper.cs" />
     <Compile Include="Helpers\UnitConversionHelper.cs" />
     <Compile Include="Model\FieldStat.cs" />
     <Compile Include="Model\FieldTypeWrapper.cs" />

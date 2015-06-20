@@ -15,6 +15,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
@@ -25,15 +26,22 @@ namespace MW5.Plugins.TableEditor.Views
     internal class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
+        private readonly IFileDialogService _dialogService;
+        private readonly ILayerService _layerService;
         private readonly Dictionary<int, TablePanelInfo> _tables;
 
         #region Constructors
 
-        public TableEditorPresenter(IAppContext context, ITableEditorView view)
+        public TableEditorPresenter(IAppContext context, ITableEditorView view, IFileDialogService dialogService, ILayerService layerService)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (dialogService == null) throw new ArgumentNullException("dialogService");
+            if (layerService == null) throw new ArgumentNullException("layerService");
+
             _context = context;
+            _dialogService = dialogService;
+            _layerService = layerService;
 
             _tables = new Dictionary<int, TablePanelInfo>();
 
@@ -163,7 +171,7 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.RemoveField:
                     if (View.ActiveColumnIndex == -1)
                     {
-                        throw new ApplicationException("Active column is expected for this command");
+                        MessageService.Current.Info("Active column is expected for this command");
                         return false;
                     }
                     break;
@@ -192,6 +200,32 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.ExportSelected:
+                    var fs = View.ActiveFeatureSet;
+                    if (fs != null)
+                    {
+                        fs.ExportSelected(_dialogService, _layerService);
+                    }
+                    break;
+                case TableEditorCommand.StopJoins:
+                    if (!table.Joins.Any())
+                    {
+                        MessageService.Current.Info("There are no joins to stop.");
+                        return;
+                    }
+                    
+                    if (MessageService.Current.Ask("Do you want to stop all joins for this table?"))
+                    {
+                        table.StopAllJoins();
+                        View.UpdateDatasource();
+                    }
+                    break;
+                case TableEditorCommand.ImportFieldDefinitions:
+                    if (DbfImportHelper.ImportFieldsFromDbf(_dialogService, table))
+                    {
+                        View.UpdateDatasource();
+                    }
+                    break;
                 case TableEditorCommand.ReloadTable:
                     View.UpdateDatasource();
                     break;
@@ -362,11 +396,35 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.ShowSelected:
                     ShowSelected();
                     break;
-
-                case TableEditorCommand.ZoomToSelected:
-                    _context.Map.ZoomToSelected(View.ActiveLayerHandle);
+                case TableEditorCommand.ZoomToCurrentCell:
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null && grid.CurrentCell != null)
+                        {
+                            int rowIndex = grid.CurrentCell.RowIndex;
+                            if (rowIndex != -1)
+                            {
+                                int shapeIndex = grid.RowManager.RealIndex(rowIndex);
+                                _context.Map.ZoomToShape(View.ActiveLayerHandle, shapeIndex);
+                                grid.Focus();
+                            }
+                        }
+                        else
+                        {
+                            MessageService.Current.Info("No shape is currently being edited.");
+                        }
+                    }
                     break;
-
+                case TableEditorCommand.ZoomToSelected:
+                    {
+                        _context.Map.ZoomToSelected(View.ActiveLayerHandle);
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            grid.Focus();
+                        }
+                    }
+                    break;
                 case TableEditorCommand.SelectAll:
                     FeatureSet.SelectAll();
                     OnViewSelectionChanged(View.ActiveLayerHandle);

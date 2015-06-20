@@ -415,6 +415,7 @@ namespace MW5.Plugins.TableEditor.Views
             mnuReloadTable.Enabled = true;
             mnuShowAliases.Enabled = true;
             mnuShowAllFields.Enabled = true;
+            mnuZoomToCurrentCell.Enabled = true;
             mnuShowAliases.Checked = AppConfig.Instance.TableEditorShowAliases;
 
             mnuAddField.Enabled = editing;
@@ -422,7 +423,6 @@ namespace MW5.Plugins.TableEditor.Views
             mnuRemoveField.Enabled = editing;
             mnuUpdateMeasurements.Enabled = editing;
             mnuImportFieldDefinitions.Enabled = editing;
-            mnuZoomToEdited.Enabled = editing;
             mnuReplace.Enabled = editing;
 
             var hasSelection = fs.NumSelected > 0;
@@ -438,7 +438,7 @@ namespace MW5.Plugins.TableEditor.Views
                 mnuShowSelected.Text = grid.RowManager.Filtered ? "Show All Shapes" : "Show Selected Shapes";
             }
 
-            mnuExportFeatures.Enabled = true;
+            mnuExportSelected.Enabled = true;
             mnuFind.Enabled = true;
             mnuQuery.Enabled = true;
 
