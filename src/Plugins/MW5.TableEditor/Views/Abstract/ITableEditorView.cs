@@ -41,5 +41,7 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
         void UpdatePanelCaption(int layerHandle);
 
         void UpdateView();
+
+        void OnSelectionChanged();
     }
 }

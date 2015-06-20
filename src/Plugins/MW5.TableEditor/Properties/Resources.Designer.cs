@@ -61,16 +61,6 @@ namespace MW5.Plugins.TableEditor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap filter {
-            get {
-                object obj = ResourceManager.GetObject("filter", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon ico_table24 {
@@ -113,6 +103,36 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_clear_selection24 {
+            get {
+                object obj = ResourceManager.GetObject("img_clear_selection24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_download3 {
+            get {
+                object obj = ResourceManager.GetObject("img_download3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_field_add16 {
+            get {
+                object obj = ResourceManager.GetObject("img_field_add16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_open {
             get {
                 object obj = ResourceManager.GetObject("img_folder_open", resourceCulture);
@@ -133,6 +153,26 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_horizontal_16 {
+            get {
+                object obj = ResourceManager.GetObject("img_horizontal_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_join16 {
+            get {
+                object obj = ResourceManager.GetObject("img_join16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_line {
             get {
                 object obj = ResourceManager.GetObject("img_line", resourceCulture);
@@ -143,9 +183,19 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap img_measure_length {
+        internal static System.Drawing.Bitmap img_measure16 {
             get {
-                object obj = ResourceManager.GetObject("img_measure_length", resourceCulture);
+                object obj = ResourceManager.GetObject("img_measure16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_refresh16 {
+            get {
+                object obj = ResourceManager.GetObject("img_refresh16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +206,36 @@ namespace MW5.Plugins.TableEditor.Properties {
         internal static System.Drawing.Bitmap img_remove16 {
             get {
                 object obj = ResourceManager.GetObject("img_remove16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_search16 {
+            get {
+                object obj = ResourceManager.GetObject("img_search16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_select_none16 {
+            get {
+                object obj = ResourceManager.GetObject("img_select_none16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_select_yellow_16 {
+            get {
+                object obj = ResourceManager.GetObject("img_select_yellow_16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +256,56 @@ namespace MW5.Plugins.TableEditor.Properties {
         internal static System.Drawing.Bitmap img_sort_desc16 {
             get {
                 object obj = ResourceManager.GetObject("img_sort_desc16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_tabbed16 {
+            get {
+                object obj = ResourceManager.GetObject("img_tabbed16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_vertical16 {
+            get {
+                object obj = ResourceManager.GetObject("img_vertical16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_wand16 {
+            get {
+                object obj = ResourceManager.GetObject("img_wand16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_selection24 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_selection24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_to_cursor16 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_to_cursor16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

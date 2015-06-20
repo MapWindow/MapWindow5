@@ -134,7 +134,6 @@ namespace MW5.Plugins.TableEditor.Views
             UpdateSelection(layerHandle);
 
             _context.Map.Redraw();
-            _context.View.Update();
         }
 
         public void OpenTable(ILegendLayer layer)
@@ -399,6 +398,8 @@ namespace MW5.Plugins.TableEditor.Views
             info.Grid.Invalidate();
 
             View.UpdatePanelCaption(layerHandle);
+
+            View.OnSelectionChanged();
         }
 
         #endregion

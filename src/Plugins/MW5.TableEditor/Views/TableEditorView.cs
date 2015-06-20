@@ -318,6 +318,15 @@ namespace MW5.Plugins.TableEditor.Views
             }
         }
 
+        public void OnSelectionChanged()
+        {
+            var fs = ActiveFeatureSet;
+            if (fs != null)
+            {
+                mnuZoomToSelected.Enabled = fs.NumSelected > 0;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -401,6 +410,8 @@ namespace MW5.Plugins.TableEditor.Views
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
 
+            toolJoin.Enabled = true;
+            toolStopJoins.Enabled = fs.Table.Joins.Any();
             mnuReloadTable.Enabled = true;
             mnuShowAliases.Enabled = true;
             mnuShowAllFields.Enabled = true;
@@ -410,9 +421,6 @@ namespace MW5.Plugins.TableEditor.Views
             mnuRemoveFields.Enabled = editing;
             mnuRemoveField.Enabled = editing;
             mnuUpdateMeasurements.Enabled = editing;
-            mnuCopyShapeIDs.Enabled = editing;
-            mnuGenerateOrUpdateShapeID.Enabled = editing;
-            mnuImportExtData.Enabled = editing;
             mnuImportFieldDefinitions.Enabled = editing;
             mnuZoomToEdited.Enabled = editing;
             mnuReplace.Enabled = editing;
