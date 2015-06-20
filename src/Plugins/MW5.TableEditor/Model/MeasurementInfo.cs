@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 
 namespace MW5.Plugins.TableEditor.Model
 {
@@ -17,10 +18,16 @@ namespace MW5.Plugins.TableEditor.Model
             FieldIndex = fieldIndex;
         }
 
+        public bool Active
+        {
+            get { return Type != UpdateMeasurementType.Ignore; }
+        }
+
         public UpdateMeasurementType Type { get; private set; }
         public string Name { get; private set; }
         public int Width { get; private set; }
         public int Precision { get; private set; }
-        public int FieldIndex { get; private set; }
+        public int FieldIndex { get; set; }
+        
     }
 }

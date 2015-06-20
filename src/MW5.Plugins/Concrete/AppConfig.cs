@@ -85,6 +85,15 @@ namespace MW5.Plugins.Concrete
             SymbolobyStorage = SymbologyStorage.Project;
             TableEditorLayout = TableEditorLayout.Tabbed;
             TableEditorShowAliases = true;
+            MeasurementsAreaFieldName = "Area";
+            MeasurementsAreaPrecision = 3;
+            MeasurementsAreaUnits = AreaUnits.SquareMeters;
+            MeasurementsAreaWidth = 14;
+            MeasurementsLengthFieldName = "Length";
+            MeasurementsLengthPrecision = 3;
+            MeasurementsLengthUnits = LengthUnits.Meters;
+            MeasurementsLengthWidth = 14;
+            MeasurementsPerimeterFieldName = "Perimeter";
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
@@ -176,6 +185,33 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public Color MapBackgroundColor { get; set; }
+        
+        [DataMember]
+        public string MeasurementsAreaFieldName { get; set;}
+
+        [DataMember]
+        public int MeasurementsAreaPrecision { get; set; }
+
+        [DataMember]
+        public AreaUnits MeasurementsAreaUnits { get; set; }
+
+        [DataMember]
+        public int MeasurementsAreaWidth { get; set; }
+
+        [DataMember]
+        public string MeasurementsLengthFieldName { get; set;}
+
+        [DataMember]
+        public int MeasurementsLengthPrecision { get; set; }
+
+        [DataMember]
+        public LengthUnits MeasurementsLengthUnits { get; set; }
+
+        [DataMember]
+        public int MeasurementsLengthWidth { get; set; }
+
+        [DataMember]
+        public string MeasurementsPerimeterFieldName { get; set; }
 
         [DataMember]
         public AngleFormat MeasuringAngleFormat { get; set; }

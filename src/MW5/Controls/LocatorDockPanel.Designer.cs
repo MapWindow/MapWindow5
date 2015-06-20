@@ -63,7 +63,7 @@ namespace MW5.Controls
             this.mapControl1.Longitude = 0F;
             this.mapControl1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
             this.mapControl1.MapProjection = MW5.Api.Enums.MapProjection.None;
-            this.mapControl1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
+            this.mapControl1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.mapControl1.MouseWheelSpeed = 0.5D;
             this.mapControl1.Name = "mapControl1";
             spatialReference1.Tag = "";

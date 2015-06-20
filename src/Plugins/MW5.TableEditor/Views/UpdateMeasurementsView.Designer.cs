@@ -55,6 +55,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.optLengthExisting = new System.Windows.Forms.RadioButton();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnSetDefault = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupArea.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAreaUnits)).BeginInit();
@@ -132,11 +133,21 @@ namespace MW5.Plugins.TableEditor.Views
             // udAreaWidth
             // 
             this.udAreaWidth.Location = new System.Drawing.Point(253, 100);
+            this.udAreaWidth.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.udAreaWidth.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             this.udAreaWidth.Name = "udAreaWidth";
             this.udAreaWidth.Size = new System.Drawing.Size(44, 20);
             this.udAreaWidth.TabIndex = 6;
             this.udAreaWidth.Value = new decimal(new int[] {
-            10,
+            14,
             0,
             0,
             0});
@@ -230,7 +241,7 @@ namespace MW5.Plugins.TableEditor.Views
             // pictureBox2
             // 
             this.pictureBox2.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_line;
-            this.pictureBox2.Location = new System.Drawing.Point(86, 132);
+            this.pictureBox2.Location = new System.Drawing.Point(86, 136);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(24, 24);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
@@ -259,11 +270,21 @@ namespace MW5.Plugins.TableEditor.Views
             // udLengthWidth
             // 
             this.udLengthWidth.Location = new System.Drawing.Point(254, 97);
+            this.udLengthWidth.Maximum = new decimal(new int[] {
+            25,
+            0,
+            0,
+            0});
+            this.udLengthWidth.Minimum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
             this.udLengthWidth.Name = "udLengthWidth";
             this.udLengthWidth.Size = new System.Drawing.Size(44, 20);
             this.udLengthWidth.TabIndex = 6;
             this.udLengthWidth.Value = new decimal(new int[] {
-            10,
+            14,
             0,
             0,
             0});
@@ -331,7 +352,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(283, 372);
+            this.btnCancel.Location = new System.Drawing.Point(287, 372);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 36;
@@ -344,11 +365,25 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(193, 372);
+            this.btnOk.Location = new System.Drawing.Point(197, 372);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 35;
             this.btnOk.Text = "Ok";
+            // 
+            // btnSetDefault
+            // 
+            this.btnSetDefault.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnSetDefault.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnSetDefault.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnSetDefault.ForeColor = System.Drawing.Color.White;
+            this.btnSetDefault.IsBackStageButton = false;
+            this.btnSetDefault.Location = new System.Drawing.Point(12, 372);
+            this.btnSetDefault.Name = "btnSetDefault";
+            this.btnSetDefault.Size = new System.Drawing.Size(85, 26);
+            this.btnSetDefault.TabIndex = 37;
+            this.btnSetDefault.Text = "Set default";
+            this.btnSetDefault.Click += new System.EventHandler(this.btnSetDefault_Click);
             // 
             // UpdateMeasurementsView
             // 
@@ -356,12 +391,13 @@ namespace MW5.Plugins.TableEditor.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(380, 402);
+            this.Controls.Add(this.btnSetDefault);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.groupLength);
             this.Controls.Add(this.groupArea);
             this.Name = "UpdateMeasurementsView";
-            this.Text = "Update measurements";
+            this.Text = "Update Measurements";
             this.groupArea.ResumeLayout(false);
             this.groupArea.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -406,6 +442,7 @@ namespace MW5.Plugins.TableEditor.Views
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.RadioButton optAreaIgnore;
         private System.Windows.Forms.RadioButton optLengthIgnore;
+        private Syncfusion.Windows.Forms.ButtonAdv btnSetDefault;
 
     }
 }

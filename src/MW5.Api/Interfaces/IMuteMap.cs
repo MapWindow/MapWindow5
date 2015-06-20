@@ -77,7 +77,7 @@ namespace MW5.Api.Interfaces
         AutoToggle InertiaOnPanning { get; set; }
         bool IsLocked { get; }
         ResizeBehavior ResizeBehavior { get; set; }
-        UnitsOfMeasure MapUnits { get; set; }
+        LengthUnits MapUnits { get; set; }
         IEnvelope MaxExtents { get; }
         double MouseWheelSpeed { get; set; }
         bool ReuseTileBuffer { get; set; }

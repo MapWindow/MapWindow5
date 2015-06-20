@@ -766,7 +766,7 @@
         KeepScale = 4,
     }
 
-    public enum UnitsOfMeasure
+    public enum LengthUnits
     {
         DecimalDegrees = 0,
         Milimeters = 1,
@@ -781,14 +781,13 @@
 
     public enum AreaUnits
     {
-        SquareInches,
-        SquareFeet,
-        SquareYards,
-        SquareMeters,
-        SquareMiles,
-        SquareKilometers,
-        Hectares,
-        Acres,
+        SquareMeters = 0,
+        Hectares = 1,
+        SquareKilometers = 2,
+        SquareFeet = 3,
+        SquareYards = 4,
+        Acres = 5,
+        SquareMiles = 6,
     }
 
     public enum ZoomBarVerbosity

@@ -442,7 +442,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.Longitude = 0F;
             this.axMap1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
             this.axMap1.MapProjection = MW5.Api.Enums.MapProjection.None;
-            this.axMap1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
+            this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
             spatialReference1.Tag = "";

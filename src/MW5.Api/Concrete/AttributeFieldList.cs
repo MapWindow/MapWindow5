@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class FeatureFieldList: IEnumerable<IAttributeField>
+    public class AttributeFieldList: IEnumerable<IAttributeField>
     {
         private readonly Table _table;
 
-        internal FeatureFieldList(Table table)
+        internal AttributeFieldList(Table table)
         {
             _table = table;
             if (table == null)
@@ -64,6 +65,11 @@ namespace MW5.Api.Concrete
         public void Add(IAttributeField item)
         {
             _table.EditInsertField(item.GetInternal(), _table.NumFields);
+        }
+
+        public int Add(string name, AttributeType type, int precision, int width)
+        {
+            return _table.EditAddField(name, (FieldType)type, precision, width);
         }
 
         public void Clear()

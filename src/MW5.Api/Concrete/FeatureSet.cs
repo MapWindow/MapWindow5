@@ -217,7 +217,7 @@ namespace MW5.Api.Concrete
             get { return new DiagramsLayer(_shapefile.Charts); }
         }
 
-        public FeatureFieldList Fields
+        public AttributeFieldList Fields
         {
             get { return Table.Fields; }
         }

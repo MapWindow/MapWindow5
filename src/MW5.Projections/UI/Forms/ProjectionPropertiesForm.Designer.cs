@@ -377,7 +377,7 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.Longitude = 0F;
             this._projectionMap1.MapCursor = MW5.Api.Enums.MapCursor.ZoomIn;
             this._projectionMap1.MapProjection = MW5.Api.Enums.MapProjection.None;
-            this._projectionMap1.MapUnits = MW5.Api.Enums.UnitsOfMeasure.Meters;
+            this._projectionMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this._projectionMap1.MouseWheelSpeed = 0.5D;
             this._projectionMap1.Name = "_projectionMap1";
             spatialReference1.Tag = "";

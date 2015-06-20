@@ -175,8 +175,6 @@ namespace MW5.Services.Helpers
         {
             switch (value)
             {
-                case AreaUnits.SquareInches:
-                    return "Square inches";
                 case AreaUnits.SquareFeet:
                     return "Square feet";
                 case AreaUnits.SquareYards:

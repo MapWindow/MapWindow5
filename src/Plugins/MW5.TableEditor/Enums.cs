@@ -29,6 +29,7 @@
         RemoveFields = 25,
         ShowAliases = 26,
         ShowAllFields = 27,
+        ReloadTable = 28,
     }
 
     /// <summary>
@@ -81,7 +82,7 @@
     public enum UpdateMeasurementType
     {
         Ignore = 0,
-        ExitingField = 1,
+        ExistingField = 1,
         NewField = 2,
     }
 

@@ -128,7 +128,7 @@
     <Compile Include="Concrete\AttributeField.cs" />
     <Compile Include="Concrete\Feature.cs" />
     <Compile Include="Concrete\FeatureCollection.cs" />
-    <Compile Include="Concrete\FeatureFieldList.cs" />
+    <Compile Include="Concrete\AttributeFieldList.cs" />
     <Compile Include="Concrete\FeatureSet.cs" />
     <Compile Include="Concrete\FieldJoin.cs" />
     <Compile Include="Concrete\FieldJoinCollection.cs" />

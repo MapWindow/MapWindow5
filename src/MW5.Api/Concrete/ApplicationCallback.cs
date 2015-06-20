@@ -6,9 +6,17 @@ using MW5.Shared.Log;
 namespace MW5.Api.Concrete
 {
     // TODO: add thread safety code
-    public class ApplicationCallback
+    public static class ApplicationCallback
     {
-        private static List<IApplicationCallback> _list = new List<IApplicationCallback>();
+        private static readonly List<IApplicationCallback> _list = new List<IApplicationCallback>();
+
+        public static void ClearProgress()
+        {
+            foreach (var cb in _list)
+            {
+                cb.ClearProgress();
+            }
+        }
 
         public static void Progress(string tagOfSender, int percent, string message)
         {

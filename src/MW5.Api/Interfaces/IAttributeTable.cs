@@ -7,7 +7,7 @@ namespace MW5.Api.Interfaces
 {
     public interface IAttributeTable: ISerializableComWrapper
     {
-        FeatureFieldList Fields { get; }
+        AttributeFieldList Fields { get; }
 
         void CreateNew();
         bool CreateNew(string filename);

@@ -17,7 +17,7 @@ namespace MW5.Api.Interfaces
         AttributeTable Table { get; }
         ILabelsLayer Labels { get; }
         DiagramsLayer Diagrams { get; }
-        FeatureFieldList Fields { get; }
+        AttributeFieldList Fields { get; }
 
         IFeatureSet Clone();
         bool Dump(string shapefileName);

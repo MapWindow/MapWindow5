@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
@@ -93,10 +94,11 @@ namespace MW5.Plugins.TableEditor.Views
 
             var table = Model.Table;
 
+            _list.Add(new FieldStat("Count", table.NumRows.ToString(CultureInfo.InvariantCulture)));
             _list.Add(new FieldStat("Minimum", table.get_MinValue(fld.Index).ToString()));
             _list.Add(new FieldStat("Maximum", table.get_MaxValue(fld.Index).ToString()));
             _list.Add(new FieldStat("Mean", table.get_MeanValue(fld.Index).ToString()));
-            _list.Add(new FieldStat("Standard deviation", table.get_StandardDeviation(fld.Index).ToString()));
+            _list.Add(new FieldStat("Standard deviation", table.get_StandardDeviation(fld.Index).ToString(CultureInfo.InvariantCulture)));
         }
 
         private void UpdateStats()

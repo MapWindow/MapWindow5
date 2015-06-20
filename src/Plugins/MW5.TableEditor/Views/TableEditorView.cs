@@ -401,6 +401,7 @@ namespace MW5.Plugins.TableEditor.Views
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
 
+            mnuReloadTable.Enabled = true;
             mnuShowAliases.Enabled = true;
             mnuShowAllFields.Enabled = true;
             mnuShowAliases.Checked = AppConfig.Instance.TableEditorShowAliases;

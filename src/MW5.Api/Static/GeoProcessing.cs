@@ -9,7 +9,7 @@ namespace MW5.Api.Static
 {
     public static class GeoProcessing
     {
-        private static Utils _utils = new Utils();
+        private static readonly Utils _utils = new Utils();
 
         public static bool PointInPolygon(IGeometry geometry, ICoordinate testPoint)
         {
@@ -125,7 +125,7 @@ namespace MW5.Api.Static
             return _utils.Polygonize(pszSrcFilename, pszDstFilename, iSrcBand, noMask, pszMaskFilename, pszOgrFormat, pszDstLayerName, pszPixValFieldName);
         }
 
-        public static bool ConvertDistance(UnitsOfMeasure sourceUnit, UnitsOfMeasure targetUnit, ref double value)
+        public static bool ConvertDistance(LengthUnits sourceUnit, LengthUnits targetUnit, ref double value)
         {
             return _utils.ConvertDistance((tkUnitsOfMeasure)sourceUnit, (tkUnitsOfMeasure)targetUnit, ref value);
         }

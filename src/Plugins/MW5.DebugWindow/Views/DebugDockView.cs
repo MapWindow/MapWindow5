@@ -91,7 +91,25 @@ namespace MW5.Plugins.DebugWindow.Views
         void Current_EntryAdded(object sender, LogEventArgs e)
         {
             // TODO: do it for the last row only
-            _listControl.AdjustRowHeights();
+            if (!_listControl.IsHandleCreated)
+            {
+                return;
+            }
+
+            // TODO: this isn't enough since entries are added to SortableBindingList outside this lock
+            lock (_listControl)
+            {
+                Action action = () => _listControl.AdjustRowHeights();
+
+                if (_listControl.InvokeRequired)
+                {
+                    _listControl.BeginInvoke(action, null);
+                }
+                else
+                {
+                    _listControl.Invoke(action);
+                }
+            }
         }
 
         private int GetIcon(ILogEntry entry)

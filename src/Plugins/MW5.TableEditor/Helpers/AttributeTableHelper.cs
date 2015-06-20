@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Helpers
 {
     public static class AttributeTableHelper
     {
-        public static bool ValidateFieldName(this IAttributeTable table, string newName, out string errorMessage)
+        public static bool ValidateFieldNameSlack(this IAttributeTable table, string newName, out string errorMessage)
         {
             errorMessage = string.Empty;
 
@@ -21,11 +23,21 @@ namespace MW5.Plugins.TableEditor.Helpers
 
             if (newName.Length > 10)
             {
-                errorMessage = "Max field length is 10.";
+                errorMessage = "Maximum field length is 10.";
                 return false;
             }
 
-            if (table.Fields.Any(f => f.Name.ToLower() == newName))
+            return true;
+        }
+
+        public static bool ValidateFieldName(this IAttributeTable table, string newName, out string errorMessage)
+        {
+            if (!ValidateFieldNameSlack(table, newName, out errorMessage))
+            {
+                return false;
+            }
+
+            if (table.Fields.Any(f => f.Name.ContainsIgnoreCase(newName)))
             {
                 errorMessage = "Field name already exists.";
                 return false;

@@ -84,9 +84,9 @@ namespace MW5.Api.Concrete
 
         #endregion
 
-        public FeatureFieldList Fields
+        public AttributeFieldList Fields
         {
-            get { return new FeatureFieldList(_table); }
+            get { return new AttributeFieldList(_table); }
         }
 
         public bool Calculate(string expression, int rowIndex, out object result, out string errorString)

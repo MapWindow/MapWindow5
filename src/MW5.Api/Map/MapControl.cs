@@ -187,9 +187,9 @@ namespace MW5.Api.Map
             set { _map.MapResizeBehavior = (tkResizeBehavior) value; }
         }
 
-        public UnitsOfMeasure MapUnits
+        public LengthUnits MapUnits
         {
-            get { return (UnitsOfMeasure) _map.MapUnits; }
+            get { return (LengthUnits) _map.MapUnits; }
             set { _map.MapUnits = (tkUnitsOfMeasure) value; }
         }
 

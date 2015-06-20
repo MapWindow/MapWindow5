@@ -193,6 +193,9 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.ReloadTable:
+                    View.UpdateDatasource();
+                    break;
                 case TableEditorCommand.ShowAliases:
                     AppConfig.Instance.TableEditorShowAliases = !AppConfig.Instance.TableEditorShowAliases;
                     View.UpdateDatasource();
@@ -295,8 +298,10 @@ namespace MW5.Plugins.TableEditor.Views
                     }
                     break;
                 case TableEditorCommand.UpdateMeasurements:
-                    _context.Container.Run<UpdateMeasurementsPresenter, IAttributeTable>(table);
-                    View.UpdateDatasource();
+                    if (_context.Container.Run<UpdateMeasurementsPresenter, IFeatureSet>(View.ActiveFeatureSet))
+                    {
+                        View.UpdateDatasource();
+                    }
                     break;
                 case TableEditorCommand.Join:
                     _context.Container.Run<JoinsPresenter, IAttributeTable>(table);

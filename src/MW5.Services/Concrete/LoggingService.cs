@@ -36,10 +36,7 @@ namespace MW5.Services.Concrete
             _context = context;
 
             var broadcaster = _context.Container.Resolve<IBroadcasterService>();
-            EntryAdded += (s, e) =>
-            {
-                broadcaster.BroadcastEvent(p => p.LogEntryAdded_, this, new LogEventArgs(e.Entry));
-            };
+            EntryAdded += (s, e) => broadcaster.BroadcastEvent(p => p.LogEntryAdded_, this, new LogEventArgs(e.Entry));
         }
 
         private bool AppContextReady()

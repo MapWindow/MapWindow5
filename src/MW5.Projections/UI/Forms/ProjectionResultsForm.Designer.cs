@@ -93,7 +93,7 @@ namespace MW5.Projections.UI.Forms
             this.projectionMap1.Location = new System.Drawing.Point(0, 0);
             this.projectionMap1.Longitude = 0F;
             this.projectionMap1.MapCursor = MapCursor.ZoomIn;
-            this.projectionMap1.MapUnits = UnitsOfMeasure.Meters;
+            this.projectionMap1.MapUnits = LengthUnits.Meters;
             this.projectionMap1.MouseWheelSpeed = 0.5D;
             this.projectionMap1.Name = "projectionMap1";
             this.projectionMap1.ResizeBehavior = ResizeBehavior.Classic;
