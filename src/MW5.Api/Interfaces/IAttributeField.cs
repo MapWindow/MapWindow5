@@ -12,6 +12,7 @@ namespace MW5.Api.Interfaces
         bool Visible { get; set; }
         string Alias { get; set; }
         int Index { get; }
+        string Abbreviation { get; }
 
         [Browsable(false)]
         string DisplayName { get; }

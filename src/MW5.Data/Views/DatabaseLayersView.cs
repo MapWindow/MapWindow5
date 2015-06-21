@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Data.Model;
 using MW5.Data.Properties;
 using MW5.Data.Views.Abstract;
-using MW5.Data.Views.Controls;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 

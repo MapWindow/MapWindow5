@@ -1,4 +1,4 @@
-﻿using MW5.Data.Views.Controls;
+﻿using MW5.Data.Controls;
 
 namespace MW5.Data.Views
 {
@@ -34,7 +34,7 @@ namespace MW5.Data.Views
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatabaseLayersView));
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.databaseLayersGrid1 = new MW5.Data.Views.Controls.DatabaseLayersGrid();
+            this.databaseLayersGrid1 = new DatabaseLayersGrid();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.SuspendLayout();
             // 

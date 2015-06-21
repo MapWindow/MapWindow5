@@ -1,4 +1,4 @@
-﻿using MW5.Data.Views.Controls;
+﻿using MW5.Data.Controls;
 
 namespace MW5.Data.Views
 {
@@ -33,18 +33,18 @@ namespace MW5.Data.Views
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DriversView));
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.driversTreeView1 = new MW5.Data.Views.Controls.DriversTreeView();
+            this.driversTreeView1 = new DriversTreeView();
             this.txtSearch = new MW5.UI.Controls.WatermarkTextbox();
-            this._driverMetadataGrid1 = new MW5.Data.Views.Controls.DriverMetadataGrid();
+            this._driverMetadataGrid1 = new DriverMetadataGrid();
             this.lblCount = new System.Windows.Forms.Label();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.tabCreationOptions = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.gridCreationOptions = new MW5.Data.Views.Controls.DriverOptionsGrid();
+            this.gridCreationOptions = new DriverOptionsGrid();
             this.tabOpenOptions = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.gridOpenOptions = new MW5.Data.Views.Controls.DriverOptionsGrid();
+            this.gridOpenOptions = new DriverOptionsGrid();
             this.tabLayerOptions = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.gridLayerOptions = new MW5.Data.Views.Controls.DriverOptionsGrid();
+            this.gridLayerOptions = new DriverOptionsGrid();
             this.cboFilter = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             ((System.ComponentModel.ISupportInitialize)(this.driversTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
@@ -382,16 +382,16 @@ namespace MW5.Data.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnClose;
         private DriversTreeView driversTreeView1;
         private UI.Controls.WatermarkTextbox txtSearch;
-        private Controls.DriverMetadataGrid _driverMetadataGrid1;
+        private DriverMetadataGrid _driverMetadataGrid1;
         private System.Windows.Forms.Label lblCount;
         private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabGeneral;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabCreationOptions;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabOpenOptions;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabLayerOptions;
-        private Controls.DriverOptionsGrid gridCreationOptions;
-        private Controls.DriverOptionsGrid gridOpenOptions;
-        private Controls.DriverOptionsGrid gridLayerOptions;
+        private DriverOptionsGrid gridCreationOptions;
+        private DriverOptionsGrid gridOpenOptions;
+        private DriverOptionsGrid gridLayerOptions;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboFilter;
     }
 }

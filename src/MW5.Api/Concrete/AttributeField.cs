@@ -6,7 +6,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class AttributeField: IAttributeField
+    public class AttributeField : IAttributeField
     {
         private readonly Field _field;
         private readonly int _index = -1;
@@ -34,8 +34,8 @@ namespace MW5.Api.Concrete
 
         public AttributeType Type
         {
-            get { return (AttributeType) _field.Type; }
-            set { _field.Type = (FieldType) value; }
+            get { return (AttributeType)_field.Type; }
+            set { _field.Type = (FieldType)value; }
         }
 
         public string Name
@@ -87,15 +87,31 @@ namespace MW5.Api.Concrete
         [Browsable(false)]
         public string DisplayName
         {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(Alias) ? Alias : Name;
-            }
+            get { return !string.IsNullOrWhiteSpace(Alias) ? Alias : Name; }
         }
 
         public override string ToString()
         {
             return DisplayName;
         }
-    }
+
+        [Browsable(false)]
+        public string Abbreviation 
+        {
+            get
+            {
+                switch (Type)
+                {
+                    case AttributeType.String:
+                        return "az";
+                    case AttributeType.Integer:
+                        return "09";
+                    case AttributeType.Double:
+                        return ".0";
+                    default:
+                        throw new ArgumentOutOfRangeException("Unexpected field type");
+                }
+            }
+        }
+}
 }

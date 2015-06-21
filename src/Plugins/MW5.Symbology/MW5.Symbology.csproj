@@ -349,12 +349,6 @@
     <Compile Include="Forms\OptionsManagerForm.Designer.cs">
       <DependentUpon>OptionsManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\QueryBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\QueryBuilderForm.Designer.cs">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Menu\LegendListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
@@ -405,6 +399,11 @@
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Attributes\MW5.Attributes.csproj">
+      <Project>{6AF734F1-2CD0-4636-88E2-EF2DAFA241F8}</Project>
+      <Name>MW5.Attributes</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Data\MW5.Data.csproj">
@@ -537,9 +536,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OptionsManagerForm.resx">
       <DependentUpon>OptionsManagerForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\QueryBuilderForm.resx">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
-using MW5.Api.Concrete;
+using MW5.Data.Model;
 using MW5.UI.Controls;
 
-namespace MW5.Data.Views.Controls
+namespace MW5.Data.Controls
 {
     public class DatabaseLayersGrid: StronglyTypedGrid<VectorLayerInfo>
     {

@@ -48,6 +48,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MW5.TableEditor">
+      <HintPath>..\Plugins\MW5.TableEditor\obj\x86\Debug\MW5.TableEditor.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -153,19 +156,19 @@
       <DependentUpon>AddConnectionView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\AddConnectionPresenter.cs" />
-    <Compile Include="Views\Controls\DatabaseLayersGrid.cs">
+    <Compile Include="Controls\DatabaseLayersGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\Controls\DriverMetadataGrid.cs">
+    <Compile Include="Controls\DriverMetadataGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\Controls\DriverOptionsGrid.cs">
+    <Compile Include="Controls\DriverOptionsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\Controls\DriversTreeView.cs">
+    <Compile Include="Controls\DriversTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\Controls\VectorLayerInfo.cs" />
+    <Compile Include="Model\VectorLayerInfo.cs" />
     <Compile Include="Views\DatabaseLayersPresenter.cs" />
     <Compile Include="Views\DatabaseLayersView.cs">
       <SubType>Form</SubType>
@@ -300,6 +303,7 @@
   <ItemGroup>
     <None Include="Resources\img_mysql24.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

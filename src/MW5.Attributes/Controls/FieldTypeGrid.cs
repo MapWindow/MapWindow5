@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FieldTypeGrid.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Concrete;
-using MW5.Plugins.TableEditor.Model;
-using MW5.Shared;
+using MW5.Attributes.Model;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Grid;
-using Syncfusion.Windows.Forms.Grid.Grouping;
 
-namespace MW5.Plugins.TableEditor.Controls
+namespace MW5.Attributes.Controls
 {
-    public class FieldTypeGrid: StronglyTypedGrid<FieldTypeWrapper>
+    public class FieldTypeGrid : StronglyTypedGrid<FieldTypeWrapper>
     {
         public FieldTypeGrid()
         {

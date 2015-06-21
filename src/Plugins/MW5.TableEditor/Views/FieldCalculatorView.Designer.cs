@@ -1,4 +1,7 @@
-﻿namespace MW5.Plugins.TableEditor.Views
+﻿using MW5.Attributes.Controls;
+using MW5.Data.Controls;
+
+namespace MW5.Plugins.TableEditor.Views
 {
     partial class FieldCalculatorView
     {
@@ -43,7 +46,7 @@
             this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnPlus = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnDivide = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.fieldTypeGrid1 = new MW5.Plugins.TableEditor.Controls.FieldTypeGrid();
+            this.fieldTypeGrid1 = new FieldTypeGrid();
             ((System.ComponentModel.ISupportInitialize)(this.functionTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
@@ -285,6 +288,6 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnClear;
         private Syncfusion.Windows.Forms.ButtonAdv btnPlus;
         private Syncfusion.Windows.Forms.ButtonAdv btnDivide;
-        private Controls.FieldTypeGrid fieldTypeGrid1;
+        private FieldTypeGrid fieldTypeGrid1;
     }
 }

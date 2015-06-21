@@ -103,9 +103,6 @@
     <Compile Include="Controls\FieldStatsGrid.Designer.cs">
       <DependentUpon>FieldStatsGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\FieldTypeGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Controls\FieldsGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -131,7 +128,6 @@
     <Compile Include="Helpers\ShapefileExportHelper.cs" />
     <Compile Include="Helpers\UnitConversionHelper.cs" />
     <Compile Include="Model\FieldStat.cs" />
-    <Compile Include="Model\FieldTypeWrapper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\FindReplaceFieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />
@@ -320,6 +316,15 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Attributes\MW5.Attributes.csproj">
+      <Project>{6AF734F1-2CD0-4636-88E2-EF2DAFA241F8}</Project>
+      <Name>MW5.Attributes</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Data\MW5.Data.csproj">
+      <Project>{12476697-03B6-4944-92C1-AE7214A13F0B}</Project>
+      <Name>MW5.Data</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

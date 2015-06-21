@@ -24,6 +24,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;

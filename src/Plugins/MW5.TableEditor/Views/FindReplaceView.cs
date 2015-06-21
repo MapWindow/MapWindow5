@@ -104,7 +104,7 @@ namespace MW5.Plugins.TableEditor.Views
             if (!Model.Replace)
             {
                 // hiding replace section
-                const int offset = 36;
+                const int offset = 32;
                 panel1.Top -= offset;
                 Height -= offset;
             }

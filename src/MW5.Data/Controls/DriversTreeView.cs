@@ -3,12 +3,11 @@ using System.Drawing;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Data.Enums;
 using MW5.Data.Properties;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Data.Views.Controls
+namespace MW5.Data.Controls
 {
     public class DriversTreeView: TreeViewBase
     {

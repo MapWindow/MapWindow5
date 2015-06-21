@@ -59,12 +59,6 @@ namespace MW5.Plugins.Symbology.Services
         [DefaultValue(true)]
         public bool UpdateMapAtOnce = true;
 
-        [DefaultValue(true)]
-        public bool ShowQueryValues = true;
-
-        [DefaultValue(false)]
-        public bool ShowQueryOnMap = false;
-
         [DefaultValue(-1)]
         public int IconIndex = -1;
         

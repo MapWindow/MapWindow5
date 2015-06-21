@@ -9,6 +9,8 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Attributes.Model;
+using MW5.Data.Model;
 using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;

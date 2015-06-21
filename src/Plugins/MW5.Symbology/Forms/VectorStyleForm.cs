@@ -27,6 +27,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
+using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;

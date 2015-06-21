@@ -402,6 +402,10 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.Attributes\MW5.Attributes.csproj">
+      <Project>{6af734f1-2cd0-4636-88e2-ef2dafa241f8}</Project>
+      <Name>MW5.Attributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MW5.Data\MW5.Data.csproj">
       <Project>{12476697-03B6-4944-92C1-AE7214A13F0B}</Project>
       <Name>MW5.Data</Name>

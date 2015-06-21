@@ -1,19 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Shared;
 
-namespace MW5.Data.Views.Controls
+namespace MW5.Data.Model
 {
     public class VectorLayerInfo
     {
         private readonly VectorLayer _layer;
-        private bool _selected;
 
         public VectorLayerInfo(VectorLayer layer)
         {
@@ -21,11 +15,7 @@ namespace MW5.Data.Views.Controls
             _layer = layer;
         }
 
-        public bool Selected
-        {
-            get { return _selected; }
-            set { _selected = value; }
-        }
+        public bool Selected { get; set; }
 
         public string Name
         {

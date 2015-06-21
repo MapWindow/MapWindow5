@@ -1,11 +1,9 @@
-﻿using System.Diagnostics;
-using System.Drawing;
+﻿using System.Drawing;
 using MW5.Api.Concrete;
 using MW5.UI.Controls;
 using MW5.UI.Helpers;
-using Syncfusion.GridHelperClasses;
 
-namespace MW5.Data.Views.Controls
+namespace MW5.Data.Controls
 {
     public class DriverMetadataGrid: StronglyTypedGrid<DriverMetadata>
     {
