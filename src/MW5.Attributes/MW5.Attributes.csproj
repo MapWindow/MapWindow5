@@ -85,12 +85,6 @@
     <Compile Include="Controls\ValueCountGrid.Designer.cs">
       <DependentUpon>ValueCountGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\QueryBuilderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\QueryBuilderForm.Designer.cs">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\FieldTypeWrapper.cs" />
     <Compile Include="Model\ValueCountItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -105,9 +99,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Forms\QueryBuilderForm.resx">
-      <DependentUpon>QueryBuilderForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\QueryBuilderView.resx">
       <DependentUpon>QueryBuilderView.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +120,9 @@
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
       <Name>MW5.UI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Forms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

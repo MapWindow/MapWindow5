@@ -26,7 +26,6 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
-using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
@@ -319,14 +318,12 @@ namespace MW5.Plugins.Symbology.Forms
                 int index = dgvCategories.CurrentCell.RowIndex;
                 var category = _shapefile.Categories[index];
 
-                using (var form = new QueryBuilderForm(_layer, category.Expression, false))
+                string expression = category.Expression;
+                if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref expression, false))
                 {
-                    if (_context.View.ShowChildView(form ,this))
-                    {
-                        category.Expression = form.Tag.ToString();
-                        txtExpression.Text = category.Expression;
-                        RefreshCategoriesCount();
-                    }
+                    category.Expression = expression;
+                    txtExpression.Text = category.Expression;
+                    RefreshCategoriesCount();
                 }
             }
         }

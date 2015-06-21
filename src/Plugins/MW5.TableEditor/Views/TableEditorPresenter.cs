@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Attributes.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -200,6 +201,14 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.Query:
+                    var layer = _context.Layers.ItemByHandle(View.ActiveLayerHandle);
+                    if (layer != null)
+                    {
+                        var model = new QueryBuilderModel(layer, string.Empty);
+                        _context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model);
+                    }
+                    break;
                 case TableEditorCommand.ExportSelected:
                     var fs = View.ActiveFeatureSet;
                     if (fs != null)

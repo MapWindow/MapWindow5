@@ -324,6 +324,7 @@
     <ProjectReference Include="..\..\MW5.Data\MW5.Data.csproj">
       <Project>{12476697-03B6-4944-92C1-AE7214A13F0B}</Project>
       <Name>MW5.Data</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

@@ -34,6 +34,7 @@
         StopJoins = 30,
         ZoomToCurrentCell = 31,
         ExportSelected = 32,
+        Query = 33,
     }
 
     /// <summary>

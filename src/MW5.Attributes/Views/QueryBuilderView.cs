@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Attributes.Helpers;
 using MW5.Attributes.Model;
@@ -21,8 +22,6 @@ namespace MW5.Attributes.Views
     public partial class QueryBuilderView : QueryBuilderViewBase, IQueryBuilderView
     {
         private IAttributeTable _table;
-        public event Action TestClicked;
-        public event Action RunClicked;
 
         public QueryBuilderView()
         {
@@ -36,20 +35,24 @@ namespace MW5.Attributes.Views
             btnRun.Click += (s, e) => Invoke(RunClicked);
         }
 
+        private int FieldIndex
+        {
+            get { return fieldTypeGrid1.Adapter.GetSelectedRecordIndex(); }
+        }
+
+        public event Action TestClicked;
+
+        public event Action RunClicked;
+
         public string Expression
         {
-            get { return richTextBox1.Text; }   
+            get { return richTextBox1.Text; }
         }
 
         public string ValidationResults
         {
             get { return lblValidation.Text; }
             set { lblValidation.Text = value; }
-        }
-
-        private int FieldIndex
-        {
-            get { return fieldTypeGrid1.Adapter.GetSelectedRecordIndex(); }
         }
 
         /// <summary>
@@ -59,14 +62,52 @@ namespace MW5.Attributes.Views
         {
             _table = Model.Layer.FeatureSet.Table;
 
+            lblSelect.Text = string.Format("SELECT * FROM [{0}] WHERE ", Model.Layer.Name);
+
             InitFieldGrid();
 
             InitTextBox();
+
+            //ShowValues();   // too slow
+
+            ValidateOnTheFly(true);
         }
 
         public ButtonBase OkButton
         {
-            get { return null; }
+            get { return btnOk; }
+        }
+
+        public bool ValidateOnTheFly(bool silent)
+        {
+            if (string.IsNullOrWhiteSpace(Expression))
+            {
+                lblValidation.Text = "Expression is empty";
+                lblValidation.ForeColor = Color.Black;
+                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
+            }
+            else
+            {
+                string errorMsg;
+                if (_table.TestExpression(Expression, TableValueType.Boolean, out errorMsg))
+                {
+                    lblValidation.Text = "Expression is valid";
+                    lblValidation.ForeColor = Color.Green;
+                    lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
+                    return true;
+                }
+
+                lblValidation.Text = "Error: " + errorMsg;
+                lblValidation.ForeColor = Color.Red;
+                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
+            }
+
+            if (!silent)
+            {
+                MessageService.Current.Info(lblValidation.Text);
+            }
+
+            return false;
         }
 
         private void InitFieldGrid()
@@ -74,10 +115,11 @@ namespace MW5.Attributes.Views
             fieldTypeGrid1.ShowColumnHeaders = false;
             var fields = Model.Layer.FeatureSet.Fields;
             var list = fields.Select(f => new FieldTypeWrapper(f)).ToList();
+
             fieldTypeGrid1.DataSource = list;
+            fieldTypeGrid1.Adapter.SelectFirstRecord();
 
             fieldTypeGrid1.SelectedRecordsChanged += (s, e) => ShowValues();
-
             fieldTypeGrid1.TableControlCellDoubleClick += OnFieldGridDoubleClick;
         }
 
@@ -87,6 +129,11 @@ namespace MW5.Attributes.Views
             richTextBox1.HideSelection = false;
             richTextBox1.SelectAll();
             richTextBox1.Focus();
+        }
+
+        private void OnClearClicked(object sender, EventArgs e)
+        {
+            richTextBox1.Text = string.Empty;
         }
 
         private void OnFieldGridDoubleClick(object sender, GridTableControlCellClickEventArgs e)
@@ -109,6 +156,11 @@ namespace MW5.Attributes.Views
             }
         }
 
+        private void OnShowValuesClicked(object sender, EventArgs e)
+        {
+            ShowValues();
+        }
+
         private void OnValueDoubleClick(object sender, GridTableControlCellClickEventArgs e)
         {
             if (FieldIndex == -1) return;
@@ -128,43 +180,6 @@ namespace MW5.Attributes.Views
             }
 
             valueCountGrid1.DataSource = _table.GetUniqueValues(FieldIndex).ToList();
-        }
-
-        public bool ValidateOnTheFly(bool silent)
-        {
-            if (string.IsNullOrWhiteSpace(Expression))
-            {
-                lblValidation.Text = "Expression is empty";
-                lblValidation.ForeColor = Color.Black;
-                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
-            }
-            else
-            {
-                string errorMsg;
-                if (_table.TestExpression(Expression, Api.Enums.TableValueType.Boolean, out errorMsg))
-                {
-                    lblValidation.Text = "Expression is valid";
-                    lblValidation.ForeColor = Color.Green;
-                    lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
-                    return true;
-                }
-                
-                lblValidation.Text = "Error: " + errorMsg;
-                lblValidation.ForeColor = Color.Red;
-                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
-            }
-
-            if (!silent)
-            {
-                MessageService.Current.Info(lblValidation.Text);
-            }
-
-            return false;
-        }
-
-        private void OnClearClicked(object sender, EventArgs e)
-        {
-            richTextBox1.Text = string.Empty;
         }
     }
 

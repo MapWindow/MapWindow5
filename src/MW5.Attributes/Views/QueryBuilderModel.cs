@@ -1,11 +1,17 @@
-﻿using System;
-using MW5.Api.Legend.Abstract;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="QueryBuilderModel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using MW5.Api.Interfaces;
 
 namespace MW5.Attributes.Views
 {
     public class QueryBuilderModel
     {
-        public QueryBuilderModel(ILegendLayer layer, string expression)
+        public QueryBuilderModel(ILayer layer, string expression)
         {
             if (layer == null) throw new ArgumentNullException("layer");
 
@@ -13,7 +19,8 @@ namespace MW5.Attributes.Views
             Expression = expression;
         }
 
-        public ILegendLayer Layer { get; private set; }
-        public string Expression { get; private set;}
+        public string Expression { get; set; }
+
+        public ILayer Layer { get; private set; }
     }
 }

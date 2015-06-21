@@ -148,6 +148,18 @@ namespace MW5.UI.Controls
 
         public int ToolTipMaxWidth { get; set; }
 
+        public bool SelectFirstRecord()
+        {
+            var record = _grid.Table.Records[0];
+            if (record != null)
+            {
+                _grid.Table.SelectedRecords.Add(record);
+                return true;
+            }
+
+            return false;
+        }
+
         [Browsable(false)]
         public T SelectedItem
         {

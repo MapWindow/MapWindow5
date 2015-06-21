@@ -1,19 +1,22 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="QueryBuilderPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Attributes.Views.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Shared;
-using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
 namespace MW5.Attributes.Views
 {
-    public class QueryBuilderPresenter: BasePresenter<IQueryBuilderView, QueryBuilderModel>
+    public class QueryBuilderPresenter : BasePresenter<IQueryBuilderView, QueryBuilderModel>
     {
         private readonly IAppContext _context;
 
@@ -27,6 +30,12 @@ namespace MW5.Attributes.Views
             view.RunClicked += OnRunClicked;
         }
 
+        public override bool ViewOkClicked()
+        {
+            Model.Expression = View.Expression;
+            return true;
+        }
+
         private void OnRunClicked()
         {
             if (!View.ValidateOnTheFly(false))
@@ -37,7 +46,7 @@ namespace MW5.Attributes.Views
             var results = new List<int>();
             if (Query(results))
             {
-                var list = new List<SelectionOperation>()
+                var list = new List<SelectionOperation>
                                {
                                    SelectionOperation.New,
                                    SelectionOperation.Add,
@@ -75,7 +84,7 @@ namespace MW5.Attributes.Views
             results.Clear();
 
             var table = Model.Layer.FeatureSet.Table;
-            
+
             string err;
 
             if (!table.ParseExpression(View.Expression, out err))
@@ -96,11 +105,6 @@ namespace MW5.Attributes.Views
                 }
             }
 
-            return true;
-        }
-
-        public override bool ViewOkClicked()
-        {
             return true;
         }
     }

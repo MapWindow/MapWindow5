@@ -24,7 +24,6 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
-using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
@@ -782,16 +781,14 @@ namespace MW5.Plugins.Symbology.Forms
         private void btnLabelExpression_Click(object sender, EventArgs e)
         {
             string s = txtLabelExpression.Text;
-            using (var form = new QueryBuilderForm(_layer, s, false))
+
+            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
             {
-                if (_context.View.ShowChildView(form))
+                if (txtLabelExpression.Text != s)
                 {
-                    if (txtLabelExpression.Text != form.Tag.ToString())
-                    {
-                        txtLabelExpression.Text = form.Tag.ToString();
-                        _shapefile.Labels.VisibilityExpression = txtLabelExpression.Text;
-                        btnApply.Enabled = true;
-                    }
+                    txtLabelExpression.Text = s;
+                    _shapefile.Labels.VisibilityExpression = txtLabelExpression.Text;
+                    btnApply.Enabled = true;
                 }
             }
         }

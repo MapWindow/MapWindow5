@@ -3,7 +3,6 @@ using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
-using MW5.Attributes.Forms;
 using MW5.Attributes.Views;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Forms;
@@ -66,17 +65,19 @@ namespace MW5.Plugins.Symbology.Helpers
                 var model = new QueryBuilderModel(layer, "");
                 context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model);
             }
-            
-            //var fs = context.Map.SelectedFeatureSet;
-            //if (fs == null)
-            //{
-            //    return;
-            //}
+        }
 
-            //using (var form = new QueryBuilderForm(context.Map.Layers.Current, string.Empty, false))
-            //{
-            //    context.View.ShowChildView(form);
-            //}
+        internal static bool ShowQueryBuilder(IAppContext context, ILayer layer, IWin32Window parent, ref string expression, bool selectionMode)
+        {
+            var model = new QueryBuilderModel(layer, expression);
+            bool result = context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model, parent);
+            
+            if (result)
+            {
+                expression = model.Expression;
+            }
+
+            return result;
         }
 
         internal static void ShowLabels(IAppContext context)

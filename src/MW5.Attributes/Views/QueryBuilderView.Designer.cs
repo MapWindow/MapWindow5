@@ -58,7 +58,7 @@ namespace MW5.Attributes.Views
             this.button2 = new System.Windows.Forms.Button();
             this.button0 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblSelect = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -188,9 +188,9 @@ namespace MW5.Attributes.Views
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(410, 355);
+            this.btnClear.Location = new System.Drawing.Point(409, 355);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(66, 24);
+            this.btnClear.Size = new System.Drawing.Size(67, 25);
             this.btnClear.TabIndex = 56;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -204,6 +204,7 @@ namespace MW5.Attributes.Views
             this.btnShowValues.TabIndex = 55;
             this.btnShowValues.Text = "Get values";
             this.btnShowValues.UseVisualStyleBackColor = true;
+            this.btnShowValues.Click += new System.EventHandler(this.OnShowValuesClicked);
             // 
             // button10
             // 
@@ -383,21 +384,21 @@ namespace MW5.Attributes.Views
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.OnOperatorClick);
             // 
-            // label3
+            // lblSelect
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 267);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(199, 13);
-            this.label3.TabIndex = 65;
-            this.label3.Text = "SELECT * FROM [LayerName] WHERE ";
+            this.lblSelect.AutoSize = true;
+            this.lblSelect.Location = new System.Drawing.Point(14, 267);
+            this.lblSelect.Name = "lblSelect";
+            this.lblSelect.Size = new System.Drawing.Size(199, 13);
+            this.lblSelect.TabIndex = 65;
+            this.lblSelect.Text = "SELECT * FROM [LayerName] WHERE ";
             // 
             // QueryBuilderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(483, 456);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.lblSelect);
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.valueCountGrid1);
@@ -465,6 +466,6 @@ namespace MW5.Attributes.Views
         private Controls.ValueCountGrid valueCountGrid1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnRun;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblSelect;
     }
 }

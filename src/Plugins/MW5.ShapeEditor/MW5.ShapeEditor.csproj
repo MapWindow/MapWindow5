@@ -118,6 +118,7 @@
     <ProjectReference Include="..\..\MW5.Attributes\MW5.Attributes.csproj">
       <Project>{6AF734F1-2CD0-4636-88E2-EF2DAFA241F8}</Project>
       <Name>MW5.Attributes</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

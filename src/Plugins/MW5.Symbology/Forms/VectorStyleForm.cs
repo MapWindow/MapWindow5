@@ -27,7 +27,6 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
-using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
@@ -1268,15 +1267,12 @@ namespace MW5.Plugins.Symbology.Forms
         private void btnLayerExpression_Click(object sender, EventArgs e)
         {
             string s = txtLayerExpression.Text;
-            var layer = _context.Layers.ItemByHandle(_layer.Handle);
-            using (var form = new QueryBuilderForm(layer, s, false))
+
+            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
             {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    txtLayerExpression.Text = form.Tag.ToString();
-                    _featureSet.VisibilityExpression = txtLayerExpression.Text;
-                    RedrawMap();
-                }
+                txtLayerExpression.Text = s;
+                _featureSet.VisibilityExpression = txtLayerExpression.Text;
+                RedrawMap();
             }
         }
 

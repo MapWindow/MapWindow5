@@ -24,7 +24,6 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
-using MW5.Attributes.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
@@ -764,14 +763,11 @@ namespace MW5.Plugins.Symbology.Forms
         {
             string s = txtChartExpression.Text;
 
-            using (var form = new QueryBuilderForm(_layer, s, false))
+            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
             {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    txtChartExpression.Text = form.Tag.ToString();
-                    _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
-                    btnApply.Enabled = true;
-                }
+                txtChartExpression.Text = s;
+                _shapefile.Diagrams.VisibilityExpression = txtChartExpression.Text;
+                btnApply.Enabled = true;
             }
         }
 
