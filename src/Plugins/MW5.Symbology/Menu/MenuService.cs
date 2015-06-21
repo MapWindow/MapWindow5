@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api;
+using MW5.Attributes.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;

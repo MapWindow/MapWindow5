@@ -325,18 +325,6 @@
     <Compile Include="Controls\ImageCombo\ColorSchemesForm.Designer.cs">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\OptionsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\OptionsForm.Designer.cs">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\Options2Form.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\Options2Form.Designer.cs">
-      <DependentUpon>Options2Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\OptionsChooserForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -524,12 +512,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ImageCombo\ColorSchemesForm.resx">
       <DependentUpon>ColorSchemesForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\OptionsForm.resx">
-      <DependentUpon>OptionsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Options2Form.resx">
-      <DependentUpon>Options2Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\OptionsChooserForm.resx">
       <DependentUpon>OptionsChooserForm.cs</DependentUpon>

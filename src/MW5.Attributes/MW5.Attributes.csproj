@@ -74,6 +74,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Controls\FieldTypeGrid.cs">
       <SubType>Component</SubType>
@@ -119,6 +120,10 @@
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
+      <Name>MW5.Shared</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.UI\MW5.UI.csproj">
       <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Attributes.Helpers;
 using MW5.Attributes.Model;
 using MW5.Plugins.Services;
 using MW5.UI.Forms;
@@ -56,11 +57,6 @@ namespace MW5.Attributes.Forms
             dgvValues.BorderStyle = BorderStyle.None;
 
             InitTextBox();
-
-            if (chkShowValues.Checked)
-            {
-                ShowValues(0);
-            }
         }
 
         private void InitTextBox()
@@ -76,62 +72,6 @@ namespace MW5.Attributes.Forms
             fieldTypeGrid1.ShowColumnHeaders = false;
             var list = _shapefile.Fields.Select(f => new FieldTypeWrapper(f)).ToList();
             fieldTypeGrid1.DataSource = list;
-        }
-
-        /// <summary>
-        /// Showing values
-        /// </summary>
-        private void ShowValues(int fieldIndex)
-        {
-            _noEvents = true;
-            dgvValues.Rows.Clear();
-
-            if (_shapefile.Fields.Count - 1 < fieldIndex)
-            {
-                _noEvents = false;
-                return;
-            }
-
-            var tbl = _shapefile.Table;
-            var hashTable = new SortedDictionary<object, int>();
-
-            bool isString = (_shapefile.Fields[fieldIndex].Type == AttributeType.String);
-
-            Cursor = Cursors.WaitCursor;
-
-            for (int i = 0; i < tbl.NumRows; i++)
-            {
-                var obj = tbl.CellValue(fieldIndex, i);
-                if (hashTable.ContainsKey(obj))
-                {
-                    hashTable[obj] += 1;
-                }
-                else
-                {
-                    hashTable.Add(obj, 1);
-                }
-            }
-            var values = hashTable.Values.ToArray();
-            var keys = hashTable.Keys.ToArray();
-
-            dgvValues.Rows.Add(values.Length);
-            for (int i = 0; i < values.Length; i++)
-            {
-                if (isString)
-                {
-                    dgvValues[1, i].Value = "\"" + keys[i] + "\"";
-                }
-                else
-                {
-                    dgvValues[1, i].Value = keys[i].ToString();
-                }
-                dgvValues[0, i].Value = values[i];
-            }
-
-            Cursor = Cursors.Default;
-
-            dgvValues.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
-            _noEvents = false;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -269,10 +209,6 @@ namespace MW5.Attributes.Forms
             if (e.RowIndex < 0)
             {
                 return;
-            }
-            if (chkShowValues.Checked)
-            {
-                ShowValues(e.RowIndex);
             }
         }
 

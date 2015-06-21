@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace MW5.Shared
 {
@@ -28,6 +29,14 @@ namespace MW5.Shared
                 }
             }
             return null;
+        }
+
+        public static IEnumerable<string> GetStrings<T>() where T : struct, IConvertible
+        {
+            var t = new T();
+            var type = t.GetType();
+            var values = Enum.GetValues(type);
+            return from T value in values select EnumToString(value);
         }
 
         public static string EnumToString<T>(this T value) where T : struct, IConvertible

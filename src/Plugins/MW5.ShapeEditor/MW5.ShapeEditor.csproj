@@ -78,7 +78,6 @@
     <Compile Include="Services\ILayerEditingService.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Enums.cs" />
-    <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />
     <Compile Include="Services\GeoprocessingService.cs" />
     <Compile Include="Services\LayerEditingService.cs" />
@@ -115,6 +114,10 @@
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Attributes\MW5.Attributes.csproj">
+      <Project>{6AF734F1-2CD0-4636-88E2-EF2DAFA241F8}</Project>
+      <Name>MW5.Attributes</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>

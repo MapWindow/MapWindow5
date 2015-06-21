@@ -169,9 +169,25 @@
     <Compile Include="Forms\CustomDialog.Designer.cs">
       <DependentUpon>CustomDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\OptionsForm.Designer.cs">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CheckBoxForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CheckBoxForm.Designer.cs">
+      <DependentUpon>CheckBoxForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TypedOptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\GroupingGridHelper.cs" />
+    <Compile Include="Helpers\OptionListHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
     <Compile Include="Legacy\LayersDialog.cs">
       <SubType>Form</SubType>
@@ -274,6 +290,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CustomDialog.resx">
       <DependentUpon>CustomDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CheckBoxForm.resx">
+      <DependentUpon>CheckBoxForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Legacy\LayersDialog.resx">
       <DependentUpon>LayersDialog.cs</DependentUpon>

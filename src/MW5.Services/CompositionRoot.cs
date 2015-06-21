@@ -27,6 +27,7 @@ namespace MW5.Services
                 .RegisterSingleton<IProjectLoader, ProjectLoader>()
                 .RegisterView<IMissingLayersView, MissingLayersView>();
 
+            EnumHelper.RegisterConverter(new SelectionOperationConverter());
             EnumHelper.RegisterConverter(new AreaUnitsConverter());
             EnumHelper.RegisterConverter(new LogLevelConverter());
             EnumHelper.RegisterConverter(new GeometryTypeConverter());

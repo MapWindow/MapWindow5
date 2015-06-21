@@ -194,4 +194,24 @@ namespace MW5.Services.Helpers
             return string.Empty;
         }
     }
+
+    public class SelectionOperationConverter : IEnumConverter<SelectionOperation>
+    {
+        public string GetString(SelectionOperation value)
+        {
+            switch (value)
+            {
+                case SelectionOperation.New:
+                    return "New selection";
+                case SelectionOperation.Add:
+                    return "Add to selection";
+                case SelectionOperation.Exclude:
+                    return "Exclude from selection";
+                case SelectionOperation.Invert:
+                    return "Invert in selection";
+            }
+
+            return string.Empty;
+        }
+    }
 }

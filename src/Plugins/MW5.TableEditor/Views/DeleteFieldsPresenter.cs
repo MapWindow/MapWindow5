@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
+using MW5.Attributes.Helpers;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Helpers;

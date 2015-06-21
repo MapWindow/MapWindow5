@@ -30,16 +30,21 @@ namespace MW5.Attributes.Views
         /// </summary>
         private void InitializeComponent()
         {
+            this.btnRun = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.valueCountGrid1 = new MW5.Attributes.Controls.ValueCountGrid();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.fieldTypeGrid1 = new FieldTypeGrid();
+            this.fieldTypeGrid1 = new MW5.Attributes.Controls.FieldTypeGrid();
             this.chkShowValues = new System.Windows.Forms.CheckBox();
             this.btnClear = new System.Windows.Forms.Button();
             this.btnShowValues = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
-            this.chkShowDynamically = new System.Windows.Forms.CheckBox();
             this.btnTest = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
-            this.lblResult = new System.Windows.Forms.Label();
+            this.lblValidation = new System.Windows.Forms.Label();
             this.button7 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -53,15 +58,87 @@ namespace MW5.Attributes.Views
             this.button2 = new System.Windows.Forms.Button();
             this.button0 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button13 = new System.Windows.Forms.Button();
-            this.valueCountGrid1 = new ValueCountGrid();
-            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(409, 324);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(67, 25);
+            this.btnRun.TabIndex = 64;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(208, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 13);
+            this.label2.TabIndex = 63;
+            this.label2.Text = "Values";
+            // 
+            // valueCountGrid1
+            // 
+            this.valueCountGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.valueCountGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.valueCountGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.valueCountGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.valueCountGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
+            this.valueCountGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this.valueCountGrid1.FreezeCaption = false;
+            this.valueCountGrid1.Location = new System.Drawing.Point(185, 27);
+            this.valueCountGrid1.Name = "valueCountGrid1";
+            this.valueCountGrid1.Size = new System.Drawing.Size(291, 158);
+            this.valueCountGrid1.TabIndex = 62;
+            this.valueCountGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
+            this.valueCountGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
+            this.valueCountGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
+            this.valueCountGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.valueCountGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
+            this.valueCountGrid1.Text = "valueCountGrid1";
+            this.valueCountGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            this.valueCountGrid1.TopLevelGroupOptions.ShowCaption = false;
+            this.valueCountGrid1.TopLevelGroupOptions.ShowColumnHeaders = false;
+            this.valueCountGrid1.VersionInfo = "5.0.1.0";
+            this.valueCountGrid1.WrapWithPanel = true;
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(222, 228);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(20, 25);
+            this.button13.TabIndex = 61;
+            this.button13.Tag = "";
+            this.button13.Text = "_";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.OnOperatorClick);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(196, 228);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(20, 25);
+            this.button12.TabIndex = 60;
+            this.button12.Tag = "";
+            this.button12.Text = "%";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.OnOperatorClick);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(145, 228);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(45, 25);
+            this.button11.TabIndex = 59;
+            this.button11.Tag = "";
+            this.button11.Text = "LIKE";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // label1
             // 
@@ -83,7 +160,7 @@ namespace MW5.Attributes.Views
             this.fieldTypeGrid1.FreezeCaption = false;
             this.fieldTypeGrid1.Location = new System.Drawing.Point(12, 27);
             this.fieldTypeGrid1.Name = "fieldTypeGrid1";
-            this.fieldTypeGrid1.Size = new System.Drawing.Size(189, 158);
+            this.fieldTypeGrid1.Size = new System.Drawing.Size(167, 158);
             this.fieldTypeGrid1.TabIndex = 36;
             this.fieldTypeGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
             this.fieldTypeGrid1.TableOptions.AllowDropDownCell = true;
@@ -102,7 +179,7 @@ namespace MW5.Attributes.Views
             // chkShowValues
             // 
             this.chkShowValues.AutoSize = true;
-            this.chkShowValues.Location = new System.Drawing.Point(129, 426);
+            this.chkShowValues.Location = new System.Drawing.Point(16, 426);
             this.chkShowValues.Name = "chkShowValues";
             this.chkShowValues.Size = new System.Drawing.Size(87, 17);
             this.chkShowValues.TabIndex = 57;
@@ -111,12 +188,13 @@ namespace MW5.Attributes.Views
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(414, 230);
+            this.btnClear.Location = new System.Drawing.Point(410, 355);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(64, 26);
+            this.btnClear.Size = new System.Drawing.Size(66, 24);
             this.btnClear.TabIndex = 56;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.OnClearClicked);
             // 
             // btnShowValues
             // 
@@ -136,20 +214,11 @@ namespace MW5.Attributes.Views
             this.button10.Tag = "";
             this.button10.Text = ")";
             this.button10.UseVisualStyleBackColor = true;
-            // 
-            // chkShowDynamically
-            // 
-            this.chkShowDynamically.AutoSize = true;
-            this.chkShowDynamically.Location = new System.Drawing.Point(17, 426);
-            this.chkShowDynamically.Name = "chkShowDynamically";
-            this.chkShowDynamically.Size = new System.Drawing.Size(106, 17);
-            this.chkShowDynamically.TabIndex = 52;
-            this.chkShowDynamically.Text = "Update selection";
-            this.chkShowDynamically.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // btnTest
             // 
-            this.btnTest.Location = new System.Drawing.Point(341, 231);
+            this.btnTest.Location = new System.Drawing.Point(409, 293);
             this.btnTest.Name = "btnTest";
             this.btnTest.Size = new System.Drawing.Size(67, 25);
             this.btnTest.TabIndex = 48;
@@ -165,15 +234,16 @@ namespace MW5.Attributes.Views
             this.button8.Tag = "";
             this.button8.Text = "NOT";
             this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.OnOperatorClick);
             // 
-            // lblResult
+            // lblValidation
             // 
-            this.lblResult.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblResult.Location = new System.Drawing.Point(13, 398);
-            this.lblResult.Name = "lblResult";
-            this.lblResult.Size = new System.Drawing.Size(461, 19);
-            this.lblResult.TabIndex = 51;
-            this.lblResult.Text = "Results";
+            this.lblValidation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblValidation.Location = new System.Drawing.Point(13, 398);
+            this.lblValidation.Name = "lblValidation";
+            this.lblValidation.Size = new System.Drawing.Size(461, 19);
+            this.lblValidation.TabIndex = 51;
+            this.lblValidation.Text = "Results";
             // 
             // button7
             // 
@@ -184,16 +254,16 @@ namespace MW5.Attributes.Views
             this.button7.Tag = "";
             this.button7.Text = "OR";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.richTextBox1);
-            this.groupBox3.Location = new System.Drawing.Point(14, 266);
+            this.groupBox3.Location = new System.Drawing.Point(14, 283);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(464, 129);
+            this.groupBox3.Size = new System.Drawing.Size(389, 112);
             this.groupBox3.TabIndex = 54;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "SELECT * FROM [LayerName] WHERE ";
             // 
             // richTextBox1
             // 
@@ -201,7 +271,7 @@ namespace MW5.Attributes.Views
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(3, 16);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(458, 110);
+            this.richTextBox1.Size = new System.Drawing.Size(383, 93);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
             // 
@@ -214,6 +284,7 @@ namespace MW5.Attributes.Views
             this.button9.Tag = "";
             this.button9.Text = "(";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // button6
             // 
@@ -224,6 +295,7 @@ namespace MW5.Attributes.Views
             this.button6.Tag = "";
             this.button6.Text = "AND";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // button5
             // 
@@ -234,6 +306,7 @@ namespace MW5.Attributes.Views
             this.button5.Tag = "";
             this.button5.Text = "<>";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // btnOk
             // 
@@ -254,6 +327,7 @@ namespace MW5.Attributes.Views
             this.button3.Tag = "";
             this.button3.Text = "<";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // button4
             // 
@@ -264,6 +338,7 @@ namespace MW5.Attributes.Views
             this.button4.Tag = "";
             this.button4.Text = "=";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // btnCancel
             // 
@@ -284,6 +359,7 @@ namespace MW5.Attributes.Views
             this.button2.Tag = "";
             this.button2.Text = "<=";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // button0
             // 
@@ -294,6 +370,7 @@ namespace MW5.Attributes.Views
             this.button0.Tag = "";
             this.button0.Text = ">";
             this.button0.UseVisualStyleBackColor = true;
+            this.button0.Click += new System.EventHandler(this.OnOperatorClick);
             // 
             // button1
             // 
@@ -304,76 +381,24 @@ namespace MW5.Attributes.Views
             this.button1.Tag = "";
             this.button1.Text = ">=";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.OnOperatorClick);
             // 
-            // button11
+            // label3
             // 
-            this.button11.Location = new System.Drawing.Point(145, 228);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(45, 25);
-            this.button11.TabIndex = 59;
-            this.button11.Tag = "";
-            this.button11.Text = "LIKE";
-            this.button11.UseVisualStyleBackColor = true;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(196, 228);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(20, 25);
-            this.button12.TabIndex = 60;
-            this.button12.Tag = "";
-            this.button12.Text = "%";
-            this.button12.UseVisualStyleBackColor = true;
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(222, 228);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(20, 25);
-            this.button13.TabIndex = 61;
-            this.button13.Tag = "";
-            this.button13.Text = "_";
-            this.button13.UseVisualStyleBackColor = true;
-            // 
-            // valueCountGrid1
-            // 
-            this.valueCountGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
-            this.valueCountGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
-            this.valueCountGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
-            this.valueCountGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
-            this.valueCountGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
-            this.valueCountGrid1.BackColor = System.Drawing.SystemColors.Window;
-            this.valueCountGrid1.FreezeCaption = false;
-            this.valueCountGrid1.Location = new System.Drawing.Point(207, 27);
-            this.valueCountGrid1.Name = "valueCountGrid1";
-            this.valueCountGrid1.Size = new System.Drawing.Size(268, 158);
-            this.valueCountGrid1.TabIndex = 62;
-            this.valueCountGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
-            this.valueCountGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
-            this.valueCountGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
-            this.valueCountGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.valueCountGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
-            this.valueCountGrid1.Text = "valueCountGrid1";
-            this.valueCountGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
-            this.valueCountGrid1.TopLevelGroupOptions.ShowCaption = false;
-            this.valueCountGrid1.TopLevelGroupOptions.ShowColumnHeaders = true;
-            this.valueCountGrid1.VersionInfo = "5.0.1.0";
-            this.valueCountGrid1.WrapWithPanel = true;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(208, 11);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(39, 13);
-            this.label2.TabIndex = 63;
-            this.label2.Text = "Values";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(14, 267);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(199, 13);
+            this.label3.TabIndex = 65;
+            this.label3.Text = "SELECT * FROM [LayerName] WHERE ";
             // 
             // QueryBuilderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(483, 456);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btnRun);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.valueCountGrid1);
             this.Controls.Add(this.button13);
@@ -385,10 +410,9 @@ namespace MW5.Attributes.Views
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnShowValues);
             this.Controls.Add(this.button10);
-            this.Controls.Add(this.chkShowDynamically);
             this.Controls.Add(this.btnTest);
             this.Controls.Add(this.button8);
-            this.Controls.Add(this.lblResult);
+            this.Controls.Add(this.lblValidation);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.button9);
@@ -402,10 +426,10 @@ namespace MW5.Attributes.Views
             this.Controls.Add(this.button0);
             this.Controls.Add(this.button1);
             this.Name = "QueryBuilderView";
-            this.Text = "QueryBuilderView";
+            this.Text = "Build Query";
+            ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).EndInit();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.valueCountGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -419,10 +443,9 @@ namespace MW5.Attributes.Views
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.Button btnShowValues;
         private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.CheckBox chkShowDynamically;
         private System.Windows.Forms.Button btnTest;
         private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Label lblResult;
+        private System.Windows.Forms.Label lblValidation;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RichTextBox richTextBox1;
@@ -441,5 +464,7 @@ namespace MW5.Attributes.Views
         private System.Windows.Forms.Button button13;
         private Controls.ValueCountGrid valueCountGrid1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnRun;
+        private System.Windows.Forms.Label label3;
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace MW5.Plugins.Symbology.Forms
+﻿namespace MW5.UI.Forms
 {
-    partial class OptionsForm
+    partial class CheckBoxForm
     {
         /// <summary>
         /// Required designer variable.
@@ -133,7 +133,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "OptionsForm";
+            this.Name = "CheckBoxForm";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Options";

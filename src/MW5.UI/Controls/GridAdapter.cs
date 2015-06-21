@@ -276,7 +276,7 @@ namespace MW5.UI.Controls
             }
         }
 
-        private int GetSelectedRecordIndex()
+        public int GetSelectedRecordIndex()
         {
             if (_grid.Table.SelectedRecords.Count == 0)
             {
