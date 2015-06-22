@@ -34,32 +34,34 @@ namespace MW5.Plugins.ShapeEditor.Services
             var fs = _context.Layers.GetFeatureSet(handle);
             var ogrLayer = _context.Layers.GetVectorLayer(handle);
 
-            if (fs != null)
+            if (fs == null)
             {
-                if (fs.InteractiveEditing)
-                {
-                    SaveLayerChanges(handle);
-                }
-                else
-                {
-                    if (ogrLayer != null)
-                    {
-                        if (ogrLayer.DynamicLoading)
-                        {
-                            MessageService.Current.Info("Editing of dynamically loaded OGR layers isn't allowed.");
-                            return;
-                        }
-                        if (!ogrLayer.get_SupportsEditing(SaveType.SaveAll))
-                        {
-                            MessageService.Current.Info("OGR layer doesn't support editing: " + ogrLayer.LastError);
-                            return;
-                        }
-                    }
-                    fs.InteractiveEditing = true;
-                }
-
-                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                return;
             }
+
+            if (fs.InteractiveEditing)
+            {
+                SaveLayerChanges(handle);
+            }
+            else
+            {
+                if (ogrLayer != null)
+                {
+                    if (ogrLayer.DynamicLoading)
+                    {
+                        MessageService.Current.Info("Editing of dynamically loaded OGR layers isn't allowed.");
+                        return;
+                    }
+                    if (!ogrLayer.get_SupportsEditing(SaveType.SaveAll))
+                    {
+                        MessageService.Current.Info("OGR layer doesn't support editing: " + ogrLayer.LastError);
+                        return;
+                    }
+                }
+                fs.InteractiveEditing = true;
+            }
+
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
         }
 
         /// <summary>
@@ -127,18 +129,31 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// </summary>
         private void DiscardChangesCore(int layerHandle)
         {
+            var fs = _context.Layers.GetFeatureSet(layerHandle);
+            if (fs == null)
+            {
+                throw new ApplicationException("Invalid layer handle on trying to close editing mode.");
+            }
+
+            string xmlCategories = fs.Categories.Serialize();
+
             var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
             
             if (ogrLayer != null)
             {
                 ogrLayer.ReloadFromSource();
+                fs = ogrLayer.Data;
             }
             else
             {
-                var sf = _context.Layers.GetFeatureSet(layerHandle);
-                sf.StopEditingShapes(false, true);
+                fs.StopEditingShapes(false, true);
             }
-            
+
+            if (fs != null)
+            {
+                fs.Categories.Deserialize(xmlCategories);
+            }
+
             CloseEditing(layerHandle);
         }
 
