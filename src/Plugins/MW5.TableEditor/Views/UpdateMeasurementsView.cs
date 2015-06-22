@@ -157,13 +157,16 @@ namespace MW5.Plugins.TableEditor.Views
                 optLengthNew.Checked = true;
             }
 
-            if (TryGuessField(new[] { txtAreaField.Text, "Area" }, cboAreaField))
+            if (Model.GeometryType == GeometryType.Polygon)
             {
-                optAreaExisting.Checked = true;
-            }
-            else
-            {
-                optAreaNew.Checked = true;
+                if (TryGuessField(new[] { txtAreaField.Text, "Area" }, cboAreaField))
+                {
+                    optAreaExisting.Checked = true;
+                }
+                else
+                {
+                    optAreaNew.Checked = true;
+                }
             }
         }
 
@@ -242,11 +245,11 @@ namespace MW5.Plugins.TableEditor.Views
 
             if (Model.GeometryType == GeometryType.Polygon)
             {
-                config.MeasurementsLengthFieldName = txtLengthField.Text;
+                config.MeasurementsPerimeterFieldName = txtLengthField.Text;
             }
             else
             {
-                config.MeasurementsPerimeterFieldName = txtLengthField.Text;
+                config.MeasurementsLengthFieldName = txtLengthField.Text;
             }
         }
 
