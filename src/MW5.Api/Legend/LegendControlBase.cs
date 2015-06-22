@@ -832,7 +832,7 @@ namespace MW5.Api.Legend
 
             if (layerHandle == _selectedLayerHandle && !batch)
             {
-                _selectedLayerHandle = _map.get_LayerHandle(_map.NumLayers - 1);
+                _selectedLayerHandle = _map.NumLayers > 0 ? _map.get_LayerHandle(_map.NumLayers - 1) : -1;
 
                 FireEvent(this, LayerSelected, new LayerEventArgs(_selectedLayerHandle));
             }
