@@ -78,7 +78,7 @@ namespace MW5.Plugins.TableEditor.Views
                     txtAreaField.Text,
                     Convert.ToInt32(udAreaWidth.Value),
                     Convert.ToInt32(udAreaPrecision.Value),
-                    fieldIndex);
+                    fieldIndex) { DefaultName = "Area" };
             }
         }
 
@@ -115,7 +115,7 @@ namespace MW5.Plugins.TableEditor.Views
                     txtLengthField.Text,
                     Convert.ToInt32(udLengthWidth.Value),
                     Convert.ToInt32(udLengthPrecision.Value),
-                    fieldIndex);
+                    fieldIndex) { DefaultName = GetLengthFieldDefaultName() };
             }
         }
 

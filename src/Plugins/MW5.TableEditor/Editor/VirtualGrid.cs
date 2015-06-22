@@ -21,17 +21,31 @@ namespace MW5.Plugins.TableEditor.Editor
             AllowUserToResizeRows = false;
             BackgroundColor = Color.LightGray;
             BorderStyle = BorderStyle.None;
-            
-            SelectionMode = DataGridViewSelectionMode.CellSelect;
-            DefaultCellStyle.SelectionBackColor = Color.White;
-            DefaultCellStyle.SelectionForeColor = Color.Black;
+
+            SetSelectionMode(DataGridViewSelectionMode.CellSelect);
             
             RowPrePaint += GridRowPrePaint;
             RowPostPaint += GridRowPostPaint;
             RowHeaderMouseClick += GridRowHeaderMouseClick;
             CellPainting += VirtualGrid_CellPainting;
         }
-        
+
+        public void SetSelectionMode(DataGridViewSelectionMode mode)
+        {
+            switch (mode)
+            {
+                case DataGridViewSelectionMode.FullColumnSelect:
+                    DefaultCellStyle.SelectionBackColor = _selectionColor;
+                    SelectionMode = mode;
+                    break;
+                default:
+                    SelectionMode = DataGridViewSelectionMode.CellSelect;
+                    DefaultCellStyle.SelectionBackColor = Color.White;
+                    DefaultCellStyle.SelectionForeColor = Color.Black;
+                    break;
+            }
+        }
+
         protected abstract IFeatureSet FeatureSet { get; }
 
         public Color SelectionColor

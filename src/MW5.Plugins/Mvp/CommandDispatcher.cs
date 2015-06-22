@@ -58,6 +58,11 @@ namespace MW5.Plugins.Mvp
 
             foreach (ToolStripItem item in items)
             {
+                if (item is ToolStripSeparator)
+                {
+                    continue;
+                }
+
                 if (item.Tag == null)
                 {
                     item.Click += ItemClick;

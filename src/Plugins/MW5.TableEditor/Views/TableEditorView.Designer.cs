@@ -48,6 +48,8 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuShowSelected = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuQuery = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuAttributeExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuSelectAll = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuClearSelection = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,8 +93,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuFieldStats = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuFieldProperties = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuAttributeExplorer = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
@@ -238,6 +238,17 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuQuery.Name = "mnuQuery";
             this.mnuQuery.Size = new System.Drawing.Size(224, 22);
             this.mnuQuery.Text = "Build Query...";
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(221, 6);
+            // 
+            // mnuAttributeExplorer
+            // 
+            this.mnuAttributeExplorer.Name = "mnuAttributeExplorer";
+            this.mnuAttributeExplorer.Size = new System.Drawing.Size(224, 22);
+            this.mnuAttributeExplorer.Text = "Attribute Explorer...";
             // 
             // toolStripSeparator2
             // 
@@ -437,21 +448,21 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             this.mnuLayoutVertical.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_vertical16;
             this.mnuLayoutVertical.Name = "mnuLayoutVertical";
-            this.mnuLayoutVertical.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutVertical.Size = new System.Drawing.Size(129, 22);
             this.mnuLayoutVertical.Text = "Vertical";
             // 
             // mnuLayoutHorizontal
             // 
             this.mnuLayoutHorizontal.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_horizontal_16;
             this.mnuLayoutHorizontal.Name = "mnuLayoutHorizontal";
-            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutHorizontal.Size = new System.Drawing.Size(129, 22);
             this.mnuLayoutHorizontal.Text = "Horizontal";
             // 
             // mnuLayoutTabbed
             // 
             this.mnuLayoutTabbed.Image = global::MW5.Plugins.TableEditor.Properties.Resources.img_tabbed16;
             this.mnuLayoutTabbed.Name = "mnuLayoutTabbed";
-            this.mnuLayoutTabbed.Size = new System.Drawing.Size(152, 22);
+            this.mnuLayoutTabbed.Size = new System.Drawing.Size(129, 22);
             this.mnuLayoutTabbed.Text = "Tabbed";
             // 
             // lblNoLayers
@@ -481,9 +492,9 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 182);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(160, 204);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
-            this.contextMenuStripEx1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStripEx1_Opening);
+            this.contextMenuStripEx1.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.OnContextMenuClosed);
             // 
             // mnuFieldSortAsc
             // 
@@ -550,17 +561,6 @@ namespace MW5.Plugins.TableEditor.Views
             this.mnuFieldProperties.Name = "mnuFieldProperties";
             this.mnuFieldProperties.Size = new System.Drawing.Size(159, 22);
             this.mnuFieldProperties.Text = "Properties";
-            // 
-            // mnuAttributeExplorer
-            // 
-            this.mnuAttributeExplorer.Name = "mnuAttributeExplorer";
-            this.mnuAttributeExplorer.Size = new System.Drawing.Size(224, 22);
-            this.mnuAttributeExplorer.Text = "Attribute Explorer...";
-            // 
-            // toolStripSeparator17
-            // 
-            this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(221, 6);
             // 
             // TableEditorView
             // 

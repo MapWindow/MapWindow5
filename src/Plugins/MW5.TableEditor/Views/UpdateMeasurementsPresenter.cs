@@ -146,21 +146,34 @@ namespace MW5.Plugins.TableEditor.Views
 
             foreach (var item in list)
             {
-                if (item.Type != UpdateMeasurementType.NewField)
+                switch (item.Type)
                 {
-                    continue;
-                }
+                    case UpdateMeasurementType.Ignore:
+                        continue;
+                    case UpdateMeasurementType.ExistingField:
+                        if (item.FieldIndex == -1)
+                        {
+                            MessageService.Current.Info(
+                                "There is no suitable field in the table to write " + item.DefaultName + "." +
+                                 Environment.NewLine + "Please choose to create a new field.");
+                            return false;
+                        }
+                        break;
+                    case UpdateMeasurementType.NewField:
+                        {
+                            string err;
+                            if (!Model.Table.ValidateFieldNameSlack(item.Name, out err))
+                            {
+                                MessageService.Current.Info(err);
+                                return false;
+                            }
 
-                string err;
-                if (!Model.Table.ValidateFieldNameSlack(item.Name, out err))
-                {
-                    MessageService.Current.Info(err);
-                    return false;
-                }
-
-                if (!TryOverwriteField(item))
-                {
-                    return false;
+                            if (!TryOverwriteField(item))
+                            {
+                                return false;
+                            }
+                        }
+                        break;
                 }
             }
 

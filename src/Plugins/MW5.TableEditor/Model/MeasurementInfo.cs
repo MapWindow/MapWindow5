@@ -28,6 +28,7 @@ namespace MW5.Plugins.TableEditor.Model
         public int Width { get; private set; }
         public int Precision { get; private set; }
         public int FieldIndex { get; set; }
+        public string DefaultName { get; set; }
         
     }
 }

@@ -174,15 +174,8 @@ namespace MW5.Plugins.TableEditor.Views
 
             grid.TableSource = layer.FeatureSet;
 
-            grid.ColumnContextNeeded += (s, e) =>
-                {
-                    var ctrl = s as Control;
-                    if (ctrl != null)
-                    {
-                        ActiveColumnIndex = e.ColumnIndex;
-                        contextMenuStripEx1.Show(Cursor.Position);
-                    }
-                };
+            grid.ColumnContextNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
+            grid.CellContextMenuStripNeeded += (s, e) => ShowContextMenu(s, e.ColumnIndex);
 
             var first = Panels.FirstOrDefault();
 
@@ -200,6 +193,23 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             return new TablePanelInfo(grid, layer, panel);
+        }
+
+        private void ShowContextMenu(object sender, int columnIndex)
+        {
+            var grid = sender as TableEditorGrid;
+            if (grid != null)
+            {
+                if (columnIndex >= 0 && columnIndex < grid.Columns.Count)
+                {
+                    grid.SetSelectionMode(DataGridViewSelectionMode.FullColumnSelect);
+                    grid.Columns[columnIndex].Selected = true;
+                    grid.Refresh();
+                }
+            }
+
+            ActiveColumnIndex = columnIndex;
+            contextMenuStripEx1.Show(Cursor.Position);
         }
 
         /// <summary>
@@ -303,8 +313,6 @@ namespace MW5.Plugins.TableEditor.Views
 
             toolStripEx1.Enabled = hasPanels;
 
-            DisableMenus();
-
             UpdateMenus();
 
             UpdateEditingIcon();
@@ -340,11 +348,6 @@ namespace MW5.Plugins.TableEditor.Views
             return grid;
         }
 
-        private void DisableMenus()
-        {
-
-        }
-
         private void InitMenu()
         {
             // handlers aren't attached to the items with not null tag
@@ -354,18 +357,11 @@ namespace MW5.Plugins.TableEditor.Views
             toolTools.Tag = 0;
             toolLayout.Tag = 0;
 
-            toolEdit.DropDownOpening += (s, e) => OnMenuOpening();
-            toolSelection.DropDownOpening += (s, e) => OnMenuOpening();
-            toolLayout.DropDownOpening += (s, e) => OnMenuOpening();
-            toolFields.DropDownOpening += (s, e) => OnMenuOpening();
-            toolTools.DropDownOpening += (s, e) => OnMenuOpening();
-        }
-
-        private void OnMenuOpening()
-        {
-            DisableMenus();
-
-            UpdateMenus();
+            toolEdit.DropDownOpening += (s, e) => UpdateMenus();
+            toolSelection.DropDownOpening += (s, e) => UpdateMenus();
+            toolLayout.DropDownOpening += (s, e) => UpdateMenus();
+            toolFields.DropDownOpening += (s, e) => UpdateMenus();
+            toolTools.DropDownOpening += (s, e) => UpdateMenus();
         }
 
         private void UpdateEditingIcon()
@@ -415,20 +411,16 @@ namespace MW5.Plugins.TableEditor.Views
             mnuLayoutTabbed.Checked = layout == TableEditorLayout.Tabbed;
         }
 
-        private void contextMenuStripEx1_Opening(object sender, CancelEventArgs e)
-        {
-            var fs = ActiveFeatureSet;
-            if (fs == null)
-            {
-                return;
-            }
-
-            var editing = fs.Table.EditMode;
-            mnuRemoveField.Enabled = editing;
-            mnuCalculateField.Enabled = editing;
-        }
-
         #endregion
+
+        private void OnContextMenuClosed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            var grid = ActiveGrid;
+            if (grid != null)
+            {
+                grid.SetSelectionMode(DataGridViewSelectionMode.CellSelect);
+            }
+        }
     }
 
     public class TableEditorViewBase : MapWindowView<ILayer>
