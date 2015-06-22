@@ -342,21 +342,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         private void DisableMenus()
         {
-            foreach (ToolStripItem item in toolStripEx1.Items)
-            {
-                var dropDown = item as ToolStripDropDownItem;
-                if (dropDown != null)
-                {
-                    foreach (ToolStripItem subItem in dropDown.DropDownItems)
-                    {
-                        subItem.Enabled = false;
-                    }
-                }
-                else
-                {
-                    item.Enabled = false;
-                }
-            }
+
         }
 
         private void InitMenu()
@@ -406,45 +392,22 @@ namespace MW5.Plugins.TableEditor.Views
             }
 
             var editing = fs.Table.EditMode;
-
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
 
-            toolJoin.Enabled = true;
             toolStopJoins.Enabled = fs.Table.Joins.Any();
-            mnuReloadTable.Enabled = true;
-            mnuShowAliases.Enabled = true;
-            mnuShowAllFields.Enabled = true;
-            mnuZoomToCurrentCell.Enabled = true;
             mnuShowAliases.Checked = AppConfig.Instance.TableEditorShowAliases;
-
-            mnuAddField.Enabled = editing;
-            mnuRemoveFields.Enabled = editing;
-            mnuRemoveField.Enabled = editing;
-            mnuUpdateMeasurements.Enabled = editing;
-            mnuImportFieldDefinitions.Enabled = editing;
-            mnuReplace.Enabled = editing;
-
+            
             var hasSelection = fs.NumSelected > 0;
             mnuClearSelection.Enabled = hasSelection;
             mnuZoomToSelected.Enabled = hasSelection;
             mnuShowSelected.Enabled = hasSelection;
-            mnuInvertSelection.Enabled = true;
-            mnuSelectAll.Enabled = true;
 
             var grid = ActiveGrid;
             if (grid != null)
             {
                 mnuShowSelected.Text = grid.RowManager.Filtered ? "Show All Shapes" : "Show Selected Shapes";
             }
-
-            mnuExportSelected.Enabled = true;
-            mnuFind.Enabled = true;
-            mnuQuery.Enabled = true;
-
-            mnuLayoutHorizontal.Enabled = true;
-            mnuLayoutVertical.Enabled = true;
-            mnuLayoutTabbed.Enabled = true;
 
             var layout = AppConfig.Instance.TableEditorLayout;
             mnuLayoutHorizontal.Checked = layout == TableEditorLayout.Horizontal;

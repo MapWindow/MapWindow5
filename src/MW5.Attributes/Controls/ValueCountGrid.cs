@@ -26,7 +26,8 @@ namespace MW5.Attributes.Controls
                 
                 UpdateColumns();
 
-                this.AdjustRowHeights();
+                // it's too slow for large number of rows
+                //this.AdjustRowHeights();
             }
         }
 

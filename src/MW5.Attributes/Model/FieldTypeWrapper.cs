@@ -31,6 +31,12 @@ namespace MW5.Attributes.Model
             get { return _field.Abbreviation; }
         }
 
+        [Browsable(false)]
+        public int Index
+        {
+            get { return _field.Index; }
+        }
+
         public override string ToString()
         {
             return Name;

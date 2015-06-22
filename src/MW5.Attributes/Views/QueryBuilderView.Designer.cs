@@ -76,7 +76,7 @@ namespace MW5.Attributes.Views
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(208, 11);
+            this.label2.Location = new System.Drawing.Point(193, 11);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 63;
@@ -91,9 +91,9 @@ namespace MW5.Attributes.Views
             this.valueCountGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
             this.valueCountGrid1.BackColor = System.Drawing.SystemColors.Window;
             this.valueCountGrid1.FreezeCaption = false;
-            this.valueCountGrid1.Location = new System.Drawing.Point(185, 27);
+            this.valueCountGrid1.Location = new System.Drawing.Point(196, 27);
             this.valueCountGrid1.Name = "valueCountGrid1";
-            this.valueCountGrid1.Size = new System.Drawing.Size(291, 158);
+            this.valueCountGrid1.Size = new System.Drawing.Size(280, 158);
             this.valueCountGrid1.TabIndex = 62;
             this.valueCountGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
             this.valueCountGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
@@ -160,7 +160,7 @@ namespace MW5.Attributes.Views
             this.fieldTypeGrid1.FreezeCaption = false;
             this.fieldTypeGrid1.Location = new System.Drawing.Point(12, 27);
             this.fieldTypeGrid1.Name = "fieldTypeGrid1";
-            this.fieldTypeGrid1.Size = new System.Drawing.Size(167, 158);
+            this.fieldTypeGrid1.Size = new System.Drawing.Size(178, 158);
             this.fieldTypeGrid1.TabIndex = 36;
             this.fieldTypeGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
             this.fieldTypeGrid1.TableOptions.AllowDropDownCell = true;

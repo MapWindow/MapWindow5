@@ -93,16 +93,12 @@ namespace MW5.Attributes.Views
                 return false;
             }
 
-            object result = null;
+            int[] arr;
 
-            if (table.Query(View.Expression, ref result, ref err))
+            if (table.Query(View.Expression, out arr, out err))
             {
-                var arr = result as int[];
-                if (arr != null)
-                {
-                    results.AddRange(arr);
-                    return true;
-                }
+                results.AddRange(arr);
+                return true;
             }
 
             return true;
