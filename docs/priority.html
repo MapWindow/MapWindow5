@@ -1,0 +1,396 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <title>MapWindow v5: Priority list</title>
+
+    <link href="css/doxygen.css" rel="stylesheet" type="text/css" />
+    <link href="css/mw5.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="header">
+        <div class="headertitle">
+            <img src="https://download-codeplex.sec.s-msft.com/Download?ProjectName=mapwindow5&amp;DownloadId=826103&amp;Build=20959" width="300" />
+            <br />
+            <div class="title">Priority list <br /></div>
+        </div>
+    </div>
+    <!--header-->
+    <div class="contents" style="margin-top: 0px;">
+        <div class="textblock" style="max-width: 960px; float: left;">
+            <p>
+                In the last newsletter we asked to fill in a short survey about the development of
+                MapWindow v5.
+                <br />82 people filled it in. From <a href="survey-results.html" target="_blank">the results</a> the priority list below is compiled.
+            </p>
+            <p>
+                We will use this priority list as a guideline during the development. It helps us prioritize the many tasks we need to do.<br />
+            </p>
+
+            <p>
+                If you want to keep informed about the progress of the development of MapWindow v5 you
+                can read the posts at Codeplex:
+                <a href="https://mapwindow5.codeplex.com/documentation" target="_blank">
+                    https://mapwindow5.codeplex.com/documentation
+                </a>. On a regular bases (we'll try every
+                week) we will post our progress. This will include questions we have or issues we bump in
+                to. Feel free to help with particular parts.
+            </p>
+            <p>
+                We've moved MapWinGIS from SVN to GIT:
+                <a href="https://mapwingis.codeplex.com/SourceControl/latest" target="_blank">
+                    https://mapwingis.codeplex.com/SourceControl/latest
+                </a>. This makes it much easier for you
+                to contribute to the project. Just fork the repository, make your changes and send us a
+                pull request. More about the forking workflow can be read in this great tutorial:
+                <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow/" target="_blank">
+                    https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow/
+                </a>
+            </p>
+            <hr class="footer" />
+            <div class="footer-ad" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">
+            </div>
+            <hr class="footer" />
+            <div class="donations">
+                <p>
+                    To make new MapWindow 5 GIS possible we need to raise
+                    $6,000. We already raised $4,500 (status end Februari 2015) so we've started with the developement.
+                    <br />It would be great to get the remaining funding. If you haven't donated yet, please do
+                    so. Every dollar helps.
+                    <br />
+                    <strong>Donating is simple using PayPal:</strong>
+                </p>
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <input name="cmd" value="_s-xclick" type="hidden" />
+                    <input name="hosted_button_id" value="MVKZBU3TK72DC" type="hidden" />
+                    <input src="https://www.paypalobjects.com/en_US/GB/i/btn/btn_donateCC_LG.gif" name="submit" alt="PayPal – The safer, easier way to pay online." type="image" />
+                    <img alt="" src="https://www.paypalobjects.com/nl_NL/i/scr/pixel.gif" border="0" height="1" width="1" />
+                </form>
+                <p>
+                    <i>
+                        If you can't use PayPal you can send me
+                        <a href="mailto:infoATmapwindowDOTnl" onclick="this.href=this.href.replace(/AT/,'@').replace(/DOT/,'.')">a message</a> and I'll
+                        send you a bank account number you can use instead.
+                    </i>
+                </p>
+            </div>
+            <hr class="footer" />
+            <h2>
+                First release<br />
+
+            </h2>
+            <table class="googlesheet" border="1">
+                <colgroup>
+                    <col width="292" />
+                    <col width="101" />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>Easy convert between formats</td>
+                        <td>57</td>
+                    </tr>
+                    <tr>
+                        <td>Table editor</td>
+                        <td>55</td>
+                    </tr>
+                    <tr>
+                        <td>Shapefile editor</td>
+                        <td>53</td>
+                    </tr>
+                    <tr>
+                        <td>Projection GUI</td>
+                        <td>51</td>
+                    </tr>
+                    <tr>
+                        <td>Measurement</td>
+                        <td>47</td>
+                    </tr>
+                    <tr>
+                        <td>Support GeoDatabases</td>
+                        <td>44</td>
+                    </tr>
+                    <tr>
+                        <td>Symbololgy editor</td>
+                        <td>44</td>
+                    </tr>
+                    <tr>
+                        <td>Legend control</td>
+                        <td>42</td>
+                    </tr>
+                    <tr>
+                        <td>Label mover and rotation</td>
+                        <td>36</td>
+                    </tr>
+                    <tr>
+                        <td>Printing / Layout</td>
+                        <td>35</td>
+                    </tr>
+                    <tr>
+                        <td>Add Google Maps back</td>
+                        <td>34</td>
+                    </tr>
+                    <tr>
+                        <td>More documentation, samples and tutorials</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>WMS support</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>GIS Toolbox</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>Further integration with OGR</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>Easy development of tools and plug-ins</td>
+                        <td>31</td>
+                    </tr>
+                    <tr>
+                        <td>.NET wrapper around MapWinGIS</td>
+                        <td>31</td>
+                    </tr>
+                    <tr>
+                        <td>More tile providers</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>WMTS support</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>Identifier</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Grid analysis</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>WFS support</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Tiles support</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Implement the GeoAPI interface</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Communicate with Office software</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>Make installer registry free</td>
+                        <td>18</td>
+                    </tr>
+                    <tr>
+                        <td>Use .NET Framework v4.5</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td>Use the Managed Extensibility Framework</td>
+                        <td>16</td>
+                    </tr>
+                    <tr>
+                        <td>ClickOnce deployment</td>
+                        <td>14</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="footer" />
+            <h2>Second release</h2>
+            <table class="googlesheet" border="1">
+                <colgroup>
+                    <col width="292" />
+                    <col width="101" />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>New add layer GUI</td>
+                        <td>34</td>
+                    </tr>
+                    <tr>
+                        <td>Path analyzer</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>End-user plug-in documentation</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Open external documents</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>Easy labeling</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>Raster visualization GUI</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Grid color analyzer</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Python script editor</td>
+                        <td>27</td>
+                    </tr>
+                    <tr>
+                        <td>Photo viewer</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>C# script editor</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Image registration / georeferencer</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Geocoder</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Asynchronous rendering for large datasources</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Support GeoPackage format</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>GPS</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>Kriging</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>WCF support</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>Implement missing GDAL/OGR tools</td>
+                        <td>23</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="footer" />
+            <h2>Later releases</h2>
+            <table class="googlesheet" border="1">
+                <colgroup>
+                    <col width="292" />
+                    <col width="101" />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>WaterML support</td>
+                        <td>33</td>
+                    </tr>
+                    <tr>
+                        <td>Voronai</td>
+                        <td>31</td>
+                    </tr>
+                    <tr>
+                        <td>Use Log4Net or NLog</td>
+                        <td>30</td>
+                    </tr>
+                    <tr>
+                        <td>SWAT support</td>
+                        <td>29</td>
+                    </tr>
+                    <tr>
+                        <td>AWD</td>
+                        <td>28</td>
+                    </tr>
+                    <tr>
+                        <td>Data repository</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Extending Unicode support</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>Unit tests</td>
+                        <td>26</td>
+                    </tr>
+                    <tr>
+                        <td>CSW support</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>StyleCop &amp; ReSharper</td>
+                        <td>24</td>
+                    </tr>
+                    <tr>
+                        <td>Azure build machine</td>
+                        <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>Easy translations</td>
+                        <td>12</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div id="ads">
+            <!-- 300x250 ad tag -->
+            <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>
+
+            <!-- 160x600 ad tag -->
+            <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="160x600" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>
+
+            <!-- 160x600 ad tag -->
+            <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="160x600" data-tags="GIS%2csoftware%2ccloud%2cC%23%2cdevelopment%2cWMS%2carchitecture">&nbsp;</div>
+
+            <!-- 160x600 ad tag -->
+            <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="160x600" data-tags="logging%2csoftware%2cazure%2cC%23%2cunit%2cWMS%2ctesting">&nbsp;</div>
+        </div>
+        <br clear="all" />
+    </div><!-- contents -->
+
+    <hr class="footer" />
+    <div class="footer-ad" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>
+    <hr class="footer" />
+
+    <script type="text/javascript">
+function _dmBootstrap(file) {
+var _dma =
+    document.createElement('script'); _dma.type = 'text/javascript'; _dma.async = true;
+    _dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+    (document.getElementsByTagName('head')[0] ||
+    document.getElementsByTagName('body')[0]).appendChild(_dma);
+} function _dmFollowup(file)
+{ if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js'); }
+        (function () {
+            _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js'); setTimeout(_dmFollowup,
+            2000);
+        })();</script>
+
+    <script>
+(function (i, s, o, g, r, a, m) {
+i['GoogleAnalyticsObject'] = r; i[r] = i[r] ||
+    function () { (i[r].q = i[r].q || []).push(arguments) }, i[r].l = 1 * new Date(); a =
+    s.createElement(o), m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g;
+    m.parentNode.insertBefore(a, m)
+})(window, document, 'script',
+    '//www.google-analytics.com/analytics.js', 'ga'); ga('create', 'UA-5161528-17', 'auto');
+        ga('require', 'displayfeatures'); ga('send', 'pageview');</script>
+
+</body>
+</html>
