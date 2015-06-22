@@ -1,10 +1,14 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Attributes.Views;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Forms;
 using MW5.Plugins.Symbology.Views;
 
@@ -41,6 +45,44 @@ namespace MW5.Plugins.Symbology.Helpers
                 form = new PolygonForm(context.Legend, layer, options, applyDisabled);
             }
             return form;
+        }
+
+        /// <summary>
+        /// Shows dialog to edit default style for vector layer. If visualization categories exists
+        /// the new values will be applied to them as well.
+        /// </summary>
+        public static bool ShowDefaultStyleDialog(this IAppContext context, int layerHandle, bool applyDisabled, IWin32Window parent)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+
+            var layer = context.Layers.ItemByHandle(layerHandle);
+
+            if (layer == null || layer.FeatureSet == null)
+            {
+                MessageService.Current.Warn("Invalid layer handler of the vector layer.");
+                return false;
+            }
+
+            var style = layer.FeatureSet.Style;
+
+            using (var form = context.GetSymbologyForm(layer.Handle, style, applyDisabled))
+            {
+                form.Text = "Default Layer Style";
+
+                if (context.View.ShowChildView(form, parent))
+                {
+                    layer.FeatureSet.ApplyDefaultStyleToCategories();
+
+                    if (layer.FeatureSet.Categories.Any())
+                    {
+                        context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         internal static void ShowCategories(IAppContext context)

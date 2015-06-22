@@ -84,8 +84,6 @@ namespace MW5.Api.Concrete
             return _style.Serialize();
         }
 
-
-
         public bool DrawLine(IntPtr hdc, float x, float y, int width, int height, bool drawVertices, int clipWidth, int clipHeight,
             Color? backColor = null)
         {

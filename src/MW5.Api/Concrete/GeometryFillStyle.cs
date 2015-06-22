@@ -91,7 +91,7 @@ namespace MW5.Api.Concrete
         public IImageSource Texture
         {
             get { return BitmapSource.Wrap(_style.Picture); }
-            set { _style.Picture = value.GetInternal(); }
+            set { _style.Picture = value != null ? value.GetInternal() : null; }
         }
 
         public void SetGradient(Color color, byte range)

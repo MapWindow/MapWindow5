@@ -143,6 +143,7 @@
     <Compile Include="Controls\PointIconControl.Designer.cs">
       <DependentUpon>PointIconControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FeatureSetStyleHelper.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

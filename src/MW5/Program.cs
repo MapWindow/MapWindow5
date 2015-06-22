@@ -41,7 +41,7 @@ namespace MW5
             //DumpFormats();
 
             var logger = new LoggingService();
-            logger.Info("APPLICATION STARUP");
+            logger.Info("APPLICATION STARTUP");
 
             ShowSplashScreen();
 

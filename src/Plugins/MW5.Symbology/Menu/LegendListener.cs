@@ -95,10 +95,10 @@ namespace MW5.Plugins.Symbology.Menu
             var fs = legend.Map.GetFeatureSet(e.LayerHandle);
             if (fs != null)
             {
-                using (var form = _context.GetSymbologyForm(e.LayerHandle, fs.Style, false))
-                {
-                    _context.View.ShowChildView(form);  
-                }
+                _context.ShowDefaultStyleDialog(e.LayerHandle, false, null);
+                
+                
+
                 e.Handled = true;
             }
         }

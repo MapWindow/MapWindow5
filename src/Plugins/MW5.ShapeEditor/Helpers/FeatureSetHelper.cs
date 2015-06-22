@@ -38,6 +38,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
                     sb.Append(val ?? "NULL");
                     sb.Append("\t");
                 }
+
                 sb.RemoveFromEnd("\t");
                 sb.Append(Environment.NewLine);
             }
@@ -51,14 +52,7 @@ namespace MW5.Plugins.ShapeEditor.Helpers
         /// </summary>
         public static bool HasMultiPart(this IFeatureSet fs, bool selectedOnly = true)
         {
-            foreach(var ft in fs.Features)
-            {
-                if ((!selectedOnly || ft.Selected) && ft.Geometry.Parts.Count > 1)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return fs.Features.Any(ft => (!selectedOnly || ft.Selected) && ft.Geometry.Parts.Count > 1);
         }
     }
 }

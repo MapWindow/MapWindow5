@@ -256,7 +256,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.OnButtonOkClicked);
             // 
             // btnCancel
             // 
@@ -370,7 +370,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnProjectionDetails.Size = new System.Drawing.Size(63, 23);
             this.btnProjectionDetails.TabIndex = 168;
             this.btnProjectionDetails.Text = "Details";
-            this.btnProjectionDetails.Click += new System.EventHandler(this.btnProjectionDetails_Click);
+            this.btnProjectionDetails.Click += new System.EventHandler(this.OnProjectionDetailsClick);
             // 
             // txtProjection
             // 
@@ -429,7 +429,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 1871.9031385883193D;
+            this.axMap1.CurrentScale = 3299.2014591825669D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -476,7 +476,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkLayerPreview.TabIndex = 162;
             this.chkLayerPreview.Text = "Show preview";
             this.chkLayerPreview.UseVisualStyleBackColor = true;
-            this.chkLayerPreview.CheckedChanged += new System.EventHandler(this.chkLayerPreview_CheckedChanged);
+            this.chkLayerPreview.CheckedChanged += new System.EventHandler(this.OnLayerPreviewChecked);
             // 
             // chkLayerVisible
             // 
@@ -488,7 +488,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkLayerVisible.Text = "Visible";
             this.toolTip1.SetToolTip(this.chkLayerVisible, "Toggles the visibility of the layer");
             this.chkLayerVisible.UseVisualStyleBackColor = true;
-            this.chkLayerVisible.CheckedChanged += new System.EventHandler(this.chkLayerVisible_CheckedChanged);
+            this.chkLayerVisible.CheckedChanged += new System.EventHandler(this.OnLayerVisibleChecked);
             // 
             // txtLayerName
             // 
@@ -497,8 +497,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.txtLayerName.Name = "txtLayerName";
             this.txtLayerName.Size = new System.Drawing.Size(291, 20);
             this.txtLayerName.TabIndex = 39;
-            this.txtLayerName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtLayerName_KeyPress);
-            this.txtLayerName.Validated += new System.EventHandler(this.txtLayerName_Validated);
+            this.txtLayerName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnLayerNameKeyPress);
+            this.txtLayerName.Validated += new System.EventHandler(this.OnLayerNameValidated);
             // 
             // label18
             // 
@@ -616,7 +616,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.transpMain.Size = new System.Drawing.Size(195, 32);
             this.transpMain.TabIndex = 177;
             this.transpMain.Value = ((byte)(255));
-            this.transpMain.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpMain_ValueChanged);
+            this.transpMain.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.OnTransparencyMainChanged);
             // 
             // groupPoint
             // 
@@ -624,7 +624,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupPoint.Controls.Add(this.label9);
             this.groupPoint.Controls.Add(this.label4);
             this.groupPoint.Controls.Add(this.clpPointFill);
-            this.groupPoint.Location = new System.Drawing.Point(19, 321);
+            this.groupPoint.Location = new System.Drawing.Point(18, 343);
             this.groupPoint.Name = "groupPoint";
             this.groupPoint.Size = new System.Drawing.Size(240, 104);
             this.groupPoint.TabIndex = 179;
@@ -700,7 +700,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.icbFillStyle.OutlineColor = System.Drawing.Color.Black;
             this.icbFillStyle.Size = new System.Drawing.Size(86, 21);
             this.icbFillStyle.TabIndex = 110;
-            this.icbFillStyle.SelectedIndexChanged += new System.EventHandler(this.icbFillStyle_SelectedIndexChanged);
+            this.icbFillStyle.SelectedIndexChanged += new System.EventHandler(this.OnFillStyleChanged);
             // 
             // clpPolygonFill
             // 
@@ -758,7 +758,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.transpSelection.Size = new System.Drawing.Size(195, 32);
             this.transpSelection.TabIndex = 176;
             this.transpSelection.Value = ((byte)(255));
-            this.transpSelection.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.transpSelection_ValueChanged);
+            this.transpSelection.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.OnTransparencySelectionChanged);
             // 
             // label1
             // 
@@ -783,7 +783,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpSelection.Name = "clpSelection";
             this.clpSelection.Size = new System.Drawing.Size(63, 21);
             this.clpSelection.TabIndex = 167;
-            this.clpSelection.SelectedColorChanged += new System.EventHandler(this.clpSelection_SelectedColorChanged);
+            this.clpSelection.SelectedColorChanged += new System.EventHandler(this.OnSelectedColorChanged);
             // 
             // groupBox5
             // 
@@ -804,7 +804,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.pictureBox1.Size = new System.Drawing.Size(232, 280);
             this.pictureBox1.TabIndex = 34;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.btnDrawingOptions_Click);
+            this.pictureBox1.Click += new System.EventHandler(this.OnDefaultDrawingOptionsClick);
             // 
             // btnDefaultChange
             // 
@@ -818,7 +818,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnDefaultChange.TabIndex = 0;
             this.btnDefaultChange.Text = "More options...";
             this.btnDefaultChange.UseVisualStyleBackColor = true;
-            this.btnDefaultChange.Click += new System.EventHandler(this.btnDrawingOptions_Click);
+            this.btnDefaultChange.Click += new System.EventHandler(this.OnDefaultDrawingOptionsClick);
             // 
             // groupLine
             // 
@@ -1070,7 +1070,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkRandomColors.TabIndex = 108;
             this.chkRandomColors.Text = "Random colors";
             this.chkRandomColors.UseVisualStyleBackColor = true;
-            this.chkRandomColors.Click += new System.EventHandler(this.chkRandomColors_CheckedChanged);
+            this.chkRandomColors.Click += new System.EventHandler(this.OnRandomColorsChecked);
             // 
             // chkSetGradient
             // 
@@ -1120,7 +1120,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryClear.TabIndex = 93;
             this.btnCategoryClear.Text = "Clear";
             this.btnCategoryClear.UseVisualStyleBackColor = true;
-            this.btnCategoryClear.Click += new System.EventHandler(this.btnCategoryClear_Click);
+            this.btnCategoryClear.Click += new System.EventHandler(this.OnCategoryClearClick);
             // 
             // groupVariableSize
             // 
@@ -1198,7 +1198,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkUniqueValues.TabIndex = 123;
             this.chkUniqueValues.Text = "Unique values";
             this.chkUniqueValues.UseVisualStyleBackColor = true;
-            this.chkUniqueValues.CheckedChanged += new System.EventHandler(this.chkUniqueValues_CheckedChanged);
+            this.chkUniqueValues.CheckedChanged += new System.EventHandler(this.OnUniqueValuesChecked);
             // 
             // label19
             // 
@@ -1219,7 +1219,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryRemove.TabIndex = 95;
             this.btnCategoryRemove.Text = "Remove";
             this.btnCategoryRemove.UseVisualStyleBackColor = true;
-            this.btnCategoryRemove.Click += new System.EventHandler(this.btnCategoryRemove_Click);
+            this.btnCategoryRemove.Click += new System.EventHandler(this.OnCategoryRemoveClick);
             // 
             // btnCategoryAppearance
             // 
@@ -1231,7 +1231,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryAppearance.TabIndex = 91;
             this.btnCategoryAppearance.Text = "Appearance...";
             this.btnCategoryAppearance.UseVisualStyleBackColor = true;
-            this.btnCategoryAppearance.Click += new System.EventHandler(this.btnCategoryAppearance_Click);
+            this.btnCategoryAppearance.Click += new System.EventHandler(this.OnDefaultDrawingOptionsClick);
             // 
             // btnCategoryGenerate
             // 
@@ -1243,7 +1243,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryGenerate.TabIndex = 90;
             this.btnCategoryGenerate.Text = "Generate";
             this.btnCategoryGenerate.UseVisualStyleBackColor = true;
-            this.btnCategoryGenerate.Click += new System.EventHandler(this.btnCategoryGenerate_Click);
+            this.btnCategoryGenerate.Click += new System.EventHandler(this.OnGenerateCategoriesClick);
             // 
             // tabFields
             // 
@@ -1291,7 +1291,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnLabelsClear.TabIndex = 170;
             this.btnLabelsClear.Text = "Clear";
             this.btnLabelsClear.UseVisualStyleBackColor = true;
-            this.btnLabelsClear.Click += new System.EventHandler(this.btnLabelsClear_Click);
+            this.btnLabelsClear.Click += new System.EventHandler(this.OnLabelsClearClick);
             // 
             // groupLabelAppearance
             // 
@@ -1332,7 +1332,7 @@ namespace MW5.Plugins.Symbology.Forms
             0,
             0,
             0});
-            this.udLabelFontSize.ValueChanged += new System.EventHandler(this.udLabelFontSize_ValueChanged);
+            this.udLabelFontSize.ValueChanged += new System.EventHandler(this.OnLabelFontSizeValueChanged);
             // 
             // clpLabelFrame
             // 
@@ -1348,7 +1348,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.clpLabelFrame.Name = "clpLabelFrame";
             this.clpLabelFrame.Size = new System.Drawing.Size(53, 21);
             this.clpLabelFrame.TabIndex = 157;
-            this.clpLabelFrame.SelectedColorChanged += new System.EventHandler(this.clpLabelFrame_SelectedColorChanged);
+            this.clpLabelFrame.SelectedColorChanged += new System.EventHandler(this.OnLabelFrameColorChanged);
             // 
             // label15
             // 
@@ -1380,7 +1380,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkLabelFrame.TabIndex = 155;
             this.chkLabelFrame.Text = "Frame visible";
             this.chkLabelFrame.UseVisualStyleBackColor = true;
-            this.chkLabelFrame.CheckedChanged += new System.EventHandler(this.chkLabelFrame_CheckedChanged);
+            this.chkLabelFrame.CheckedChanged += new System.EventHandler(this.OnLabelFrameChecked);
             // 
             // groupLabelStyle
             // 
@@ -1400,7 +1400,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.pctLabelPreview.Size = new System.Drawing.Size(229, 109);
             this.pctLabelPreview.TabIndex = 0;
             this.pctLabelPreview.TabStop = false;
-            this.pctLabelPreview.Click += new System.EventHandler(this.btnLabelsAppearance_Click);
+            this.pctLabelPreview.Click += new System.EventHandler(this.OnLabelsAppearanceClick);
             // 
             // btnLabelsAppearance
             // 
@@ -1412,7 +1412,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnLabelsAppearance.TabIndex = 125;
             this.btnLabelsAppearance.Text = "Setup...";
             this.btnLabelsAppearance.UseVisualStyleBackColor = true;
-            this.btnLabelsAppearance.Click += new System.EventHandler(this.btnLabelsAppearance_Click);
+            this.btnLabelsAppearance.Click += new System.EventHandler(this.OnLabelsAppearanceClick);
             // 
             // tabCharts
             // 
@@ -1440,7 +1440,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnChartAppearance.TabIndex = 173;
             this.btnChartAppearance.Text = "Setup...";
             this.btnChartAppearance.UseVisualStyleBackColor = true;
-            this.btnChartAppearance.Click += new System.EventHandler(this.btnChartAppearance_Click);
+            this.btnChartAppearance.Click += new System.EventHandler(this.OnChartAppearanceClick);
             // 
             // btnClearCharts
             // 
@@ -1452,7 +1452,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnClearCharts.TabIndex = 172;
             this.btnClearCharts.Text = "Clear";
             this.btnClearCharts.UseVisualStyleBackColor = true;
-            this.btnClearCharts.Click += new System.EventHandler(this.btnClearCharts_Click);
+            this.btnClearCharts.Click += new System.EventHandler(this.OnClearChartsClick);
             // 
             // groupChartAppearance
             // 
@@ -1479,7 +1479,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnChartsEditColorScheme.TabIndex = 164;
             this.btnChartsEditColorScheme.Text = "...";
             this.btnChartsEditColorScheme.UseVisualStyleBackColor = true;
-            this.btnChartsEditColorScheme.Click += new System.EventHandler(this.btnChartsEditColorScheme_Click);
+            this.btnChartsEditColorScheme.Click += new System.EventHandler(this.OnChartsEditColorSchemeClick);
             // 
             // chkChartsVisible
             // 
@@ -1523,7 +1523,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
             this.icbChartColorScheme.TabIndex = 22;
-            this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.icbChartColorScheme_SelectedIndexChanged);
+            this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.OnChartColorSchemeSelectedIndexChanged);
             // 
             // optChartBars
             // 
@@ -1556,7 +1556,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.pctCharts.Size = new System.Drawing.Size(229, 109);
             this.pctCharts.TabIndex = 0;
             this.pctCharts.TabStop = false;
-            this.pctCharts.Click += new System.EventHandler(this.btnChartAppearance_Click);
+            this.pctCharts.Click += new System.EventHandler(this.OnChartAppearanceClick);
             // 
             // tabVisibility
             // 
@@ -1600,7 +1600,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.scaleLayer.Size = new System.Drawing.Size(209, 276);
             this.scaleLayer.TabIndex = 162;
             this.scaleLayer.UseDynamicVisibility = false;
-            this.scaleLayer.StateChanged += new MW5.Plugins.Symbology.Controls.StateChanged(this.scaleLayer_StateChanged);
+            this.scaleLayer.StateChanged += new MW5.Plugins.Symbology.Controls.StateChanged(this.OnScaleLayerStateChanged);
             // 
             // groupBox13
             // 
@@ -1636,7 +1636,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnLayerExpression.TabIndex = 163;
             this.btnLayerExpression.Text = "Change...";
             this.btnLayerExpression.UseVisualStyleBackColor = true;
-            this.btnLayerExpression.Click += new System.EventHandler(this.btnLayerExpression_Click);
+            this.btnLayerExpression.Click += new System.EventHandler(this.OnLayerExpressionClick);
             // 
             // txtLayerExpression
             // 
@@ -1647,7 +1647,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.txtLayerExpression.Size = new System.Drawing.Size(221, 232);
             this.txtLayerExpression.TabIndex = 162;
             this.toolTip1.SetToolTip(this.txtLayerExpression, "Only shapes which agree with the following expression will be visible");
-            this.txtLayerExpression.TextChanged += new System.EventHandler(this.txtLayerExpression_TextChanged);
+            this.txtLayerExpression.TextChanged += new System.EventHandler(this.OnLayerExpressionTextChanged);
             // 
             // tabMode
             // 
@@ -1686,7 +1686,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.cboCollisionMode.Size = new System.Drawing.Size(185, 21);
             this.cboCollisionMode.TabIndex = 184;
             this.cboCollisionMode.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
-            this.cboCollisionMode.MouseEnter += new System.EventHandler(this.chkFastMode_Enter);
+            this.cboCollisionMode.MouseEnter += new System.EventHandler(this.OnModeEnter);
             // 
             // progressBar1
             // 
@@ -1729,8 +1729,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.udMinDrawingSize.Name = "udMinDrawingSize";
             this.udMinDrawingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinDrawingSize.TabIndex = 176;
-            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.udMinDrawingSize_ValueChanged);
-            this.udMinDrawingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
+            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.udMinDrawingSizeChanged);
+            this.udMinDrawingSize.Enter += new System.EventHandler(this.OnModeEnter);
             // 
             // udMinLabelingSize
             // 
@@ -1743,8 +1743,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.udMinLabelingSize.Name = "udMinLabelingSize";
             this.udMinLabelingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinLabelingSize.TabIndex = 178;
-            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.udMinLabelingSize_ValueChanged);
-            this.udMinLabelingSize.Enter += new System.EventHandler(this.chkFastMode_Enter);
+            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.OnMinLabelingSizeChanged);
+            this.udMinLabelingSize.Enter += new System.EventHandler(this.OnModeEnter);
             // 
             // label6
             // 
@@ -1797,8 +1797,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkEditMode.TabIndex = 44;
             this.chkEditMode.Text = "Editing mode";
             this.chkEditMode.UseVisualStyleBackColor = true;
-            this.chkEditMode.CheckedChanged += new System.EventHandler(this.chkEditMode_CheckedChanged);
-            this.chkEditMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chkFastMode_MouseMove);
+            this.chkEditMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
             // 
             // chkInMemory
             // 
@@ -1810,7 +1809,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkInMemory.TabIndex = 43;
             this.chkInMemory.Text = "Stored in memory";
             this.chkInMemory.UseVisualStyleBackColor = true;
-            this.chkInMemory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chkFastMode_MouseMove);
+            this.chkInMemory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
             // 
             // chkSpatialIndex
             // 
@@ -1821,8 +1820,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkSpatialIndex.TabIndex = 42;
             this.chkSpatialIndex.Text = "Spatial index";
             this.chkSpatialIndex.UseVisualStyleBackColor = true;
-            this.chkSpatialIndex.CheckedChanged += new System.EventHandler(this.chkSpatialIndex_CheckedChanged);
-            this.chkSpatialIndex.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chkFastMode_MouseMove);
+            this.chkSpatialIndex.CheckedChanged += new System.EventHandler(this.OnSpatialIndexChecked);
+            this.chkSpatialIndex.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
             // 
             // chkFastMode
             // 
@@ -1834,9 +1833,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkFastMode.TabIndex = 39;
             this.chkFastMode.Text = "Fast drawing mode";
             this.chkFastMode.UseVisualStyleBackColor = true;
-            this.chkFastMode.CheckedChanged += new System.EventHandler(this.chkFastEditingMode_CheckedChanged);
-            this.chkFastMode.Enter += new System.EventHandler(this.chkFastMode_Enter);
-            this.chkFastMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.chkFastMode_MouseMove);
+            this.chkFastMode.Enter += new System.EventHandler(this.OnModeEnter);
+            this.chkFastMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
             // 
             // imageList1
             // 
@@ -1910,8 +1908,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.txtComments.Size = new System.Drawing.Size(283, 62);
             this.txtComments.TabIndex = 1;
             this.txtComments.Text = "";
-            this.txtComments.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtComments_KeyPress);
-            this.txtComments.Validated += new System.EventHandler(this.txtComments_Validated);
+            this.txtComments.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.OnCommentsKeyPress);
+            this.txtComments.Validated += new System.EventHandler(this.OnCommentsValidated);
             // 
             // chkRedrawMap
             // 
@@ -1923,7 +1921,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkRedrawMap.Text = "Update map at once";
             this.chkRedrawMap.UseVisualStyleBackColor = true;
             this.chkRedrawMap.Visible = false;
-            this.chkRedrawMap.CheckedChanged += new System.EventHandler(this.chkRedrawMap_CheckedChanged);
+            this.chkRedrawMap.CheckedChanged += new System.EventHandler(this.OnRedrawMapChecked);
             // 
             // btnSaveChanges
             // 
@@ -1937,7 +1935,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnSaveChanges.TabIndex = 134;
             this.btnSaveChanges.Text = "Apply";
             this.btnSaveChanges.UseVisualStyleBackColor = true;
-            this.btnSaveChanges.Click += new System.EventHandler(this.btnSaveChanges_Click);
+            this.btnSaveChanges.Click += new System.EventHandler(this.OnSaveChangesClick);
             // 
             // toolStripEx1
             // 
@@ -1951,7 +1949,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.Office12Mode = false;
             this.toolStripEx1.ShowCaption = false;
-            this.toolStripEx1.Size = new System.Drawing.Size(95, 25);
+            this.toolStripEx1.Size = new System.Drawing.Size(64, 25);
             this.toolStripEx1.TabIndex = 167;
             this.toolStripEx1.Text = "Style";
             this.toolStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.ToolStripExStyle.Metro;
@@ -1974,28 +1972,28 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.toolSaveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.icon_save1;
             this.toolSaveStyle.Name = "toolSaveStyle";
-            this.toolSaveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolSaveStyle.Size = new System.Drawing.Size(144, 22);
             this.toolSaveStyle.Text = "Save style";
-            this.toolSaveStyle.Click += new System.EventHandler(this.toolSaveStyle_Click);
+            this.toolSaveStyle.Click += new System.EventHandler(this.OnSaveStyleClick);
             // 
             // toolRemoveStyle
             // 
             this.toolRemoveStyle.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_remove16;
             this.toolRemoveStyle.Name = "toolRemoveStyle";
-            this.toolRemoveStyle.Size = new System.Drawing.Size(152, 22);
+            this.toolRemoveStyle.Size = new System.Drawing.Size(144, 22);
             this.toolRemoveStyle.Text = "Remove style";
-            this.toolRemoveStyle.Click += new System.EventHandler(this.toolRemoveStyle_Click);
+            this.toolRemoveStyle.Click += new System.EventHandler(this.OnRemoveStyleClick);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(141, 6);
             // 
             // toolOpenLocation
             // 
             this.toolOpenLocation.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_hard_disk;
             this.toolOpenLocation.Name = "toolOpenLocation";
-            this.toolOpenLocation.Size = new System.Drawing.Size(152, 22);
+            this.toolOpenLocation.Size = new System.Drawing.Size(144, 22);
             this.toolOpenLocation.Text = "Open folder";
             this.toolOpenLocation.Click += new System.EventHandler(this.btnOpenLocation_Click);
             // 

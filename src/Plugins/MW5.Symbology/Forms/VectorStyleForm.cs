@@ -42,18 +42,14 @@ using PathHelper = MW5.Shared.PathHelper;
 namespace MW5.Plugins.Symbology.Forms
 {
     /// <summary>
-    /// A class representing GUI for managing Shapefile symbology
+    /// UI for managing vector layer symbology and settings.
     /// </summary>
     public partial class VectorStyleForm : MapWindowForm
     {
-        private const bool RedrawModeIsChanging = false;
-
         private static int _tabIndex = 0;
-
         private readonly ILegendLayer _layer;
         private readonly IFeatureSet _featureSet;
         private readonly SymbologyMetadata _metadata;
-
         private string _initState;
         private bool _stateChanged;
         private bool _lockUpdate;
@@ -61,28 +57,31 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Creates new instance of the SymbologyMainForm class
         /// </summary>
-        public VectorStyleForm(IAppContext context, ILegendLayer layer):
-            base(context)
+        public VectorStyleForm(IAppContext context, ILegendLayer layer)
+            : base(context)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layer == null) throw new ArgumentNullException("layer");
             
             InitializeComponent();
 
-            MapConfig.ForceHideLabels = true;
-
             _layer = layer;
 
             _metadata = SymbologyPlugin.GetMetadata(_layer.Handle);
             _featureSet = _layer.FeatureSet;
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            MapConfig.ForceHideLabels = true;
 
             Text = "Layer properties: " + _layer.Name;
 
             LockLegendAndMap(true);
 
             _initState = SaveState();
-           
-            
 
             LockUpdate = true;
 
@@ -110,12 +109,12 @@ namespace MW5.Plugins.Symbology.Forms
             chkRedrawMap.Checked = _metadata.UpdateMapAtOnce;
 
             LockUpdate = false;
-            
+
             // sets the enabled state of the controls
-            RefreshControlsState(null, null);
+            RefreshControls();
 
             DrawAllPreviews();
-            
+
             AddTooltips();
 
             tabControl1.SelectedIndex = _tabIndex;
@@ -180,34 +179,31 @@ namespace MW5.Plugins.Symbology.Forms
             _stateChanged = true;
             btnSaveChanges.Enabled = true;
 
-            if (tabControl1.SelectedTab.Name.ToLower() == "tabmode")
+            switch (tabControl1.SelectedTab.Name.ToLower())
             {
-                _featureSet.CollisionMode = (CollisionMode)cboCollisionMode.SelectedIndex;
-            }
-            if (tabControl1.SelectedTab.Name.ToLower() == "tabgeneral")
-            {
-                _layer.Visible = chkLayerVisible.Checked;
-                _layer.Name = txtLayerName.Text;
-            }
-            else if (tabControl1.SelectedTab.Name.ToLower() == "tabdefault")
-            {
-                Controls2Appearance();
-            }
-            else if (tabControl1.SelectedTab.Name.ToLower() == "tablabels")
-            {
-                UpdateLabels();
-                
-            }
-            else if (tabControl1.SelectedTab.Name.ToLower() == "tabcharts")
-            {
-                UpdateCharts();
+                case "tabmode":
+                    _featureSet.CollisionMode = (CollisionMode)cboCollisionMode.SelectedIndex;
+                    break;
+                case "tabgeneral":
+                    _layer.Visible = chkLayerVisible.Checked;
+                    _layer.Name = txtLayerName.Text;
+                    break;
+                case "tabdefault":
+                    Controls2Appearance();
+                    break;
+                case "tablabels":
+                    UpdateLabels();
+                    break;
+                case "tabcharts":
+                    UpdateCharts();
+                    break;
             }
 
             dynamicVisibilityControl1.ApplyChanges();
 
             _featureSet.VisibilityExpression = txtLayerExpression.Text;
 
-            RefreshControlsState(null, null);
+            RefreshControls();
             RedrawMap();
         }
 
@@ -216,9 +212,14 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void RefreshControlsState(object sender, EventArgs e)
         {
+            RefreshControls();
+        }
+
+        private void RefreshControls()
+        {
             if (LockUpdate)
                 return;
-            
+
             // appearance
             udDefaultSize.Enabled = _featureSet.PointOrMultiPoint;
             clpPointFill.Enabled = _featureSet.GeometryType == GeometryType.Polyline;
@@ -253,7 +254,6 @@ namespace MW5.Plugins.Symbology.Forms
             udMinSize.Enabled = chkUseVariableSize.Checked;
             udMaxSize.Enabled = chkUseVariableSize.Checked;
             udNumCategories.Enabled = !chkUniqueValues.Checked;
-            btnCategoryAppearance.Enabled = (dgvCategories.SelectedCells.Count > 0);
             btnCategoryRemove.Enabled = (dgvCategories.SelectedCells.Count > 0);
             btnCategoryClear.Enabled = (dgvCategories.Rows.Count > 0);
 
@@ -279,6 +279,7 @@ namespace MW5.Plugins.Symbology.Forms
             chkChartsVisible.Enabled = enabled;
             btnChartsEditColorScheme.Enabled = enabled;
         }
+
         #endregion
 
         #region Utility
@@ -290,7 +291,7 @@ namespace MW5.Plugins.Symbology.Forms
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
             
             // it's assumed that we call redraw when state changed only
-            if (!LockUpdate && !RedrawModeIsChanging)
+            if (!LockUpdate)
             {
                 MarkStateChanged();
             }
@@ -317,14 +318,7 @@ namespace MW5.Plugins.Symbology.Forms
             DrawChartsPreview();
         }
 
-        /// <summary>
-        /// Updates color schemes list on the charts tab
-        /// </summary>
-        public void UpdateColorSchemes()
-        {
-            //icbChartColorScheme.ColorSchemes = Globals.ChartColors;
-            //icbCategories.ColorSchemes = Globals.LayerColors;
-        }
+
 
         /// <summary>
         /// Saves all the data before the closing
@@ -401,7 +395,6 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void CancelChanges()
         {
-            
             string state = _layer.Serialize();
 
             if (state != _initState)
@@ -425,39 +418,9 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Saves the current changes treating them as the new initial state
-        /// </summary>
-        private void btnSaveChanges_Click(object sender, EventArgs e)
-        {
-            if (_stateChanged)
-            {
-                Ui2Settings(null, null);
-
-                // triggering redraw
-                //if (!chkRedrawMap.Checked)
-                {
-                    LockLegendAndMap(false);
-
-                    _context.Legend.Redraw(LegendRedraw.LegendAndMap);
-                    Application.DoEvents();
-
-                    LockLegendAndMap(true);
-                }
-
-                // saving new state
-                _initState = SaveState();
-
-                _stateChanged = false;
-                btnSaveChanges.Enabled = false;
-
-                _context.Project.SetModified();
-            }
-        }
-
-        /// <summary>
         /// Applies the changes and closes the form
         /// </summary>
-        private void btnOk_Click(object sender, EventArgs e)
+        private void OnButtonOkClicked(object sender, EventArgs e)
         {
             if (_initState != SaveState())
             {
@@ -472,8 +435,6 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private string SaveState()
         {
-            string state = "";
-            
             // serializing for undo (label and chart data must not be serialized)
             var mode1 = _featureSet.Labels.SavingMode;
             var mode2 = _featureSet.Diagrams.SavingMode;
@@ -481,7 +442,7 @@ namespace MW5.Plugins.Symbology.Forms
             _featureSet.Labels.SavingMode = PersistenceType.None;
             _featureSet.Diagrams.SavingMode = PersistenceType.None;
 
-            state = _layer.Serialize();
+            string state = _layer.Serialize();
 
             _featureSet.Labels.SavingMode = mode1;
             _featureSet.Diagrams.SavingMode = mode2;
@@ -492,7 +453,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Sets visiblity of the layer
         /// </summary>
-        private void chkLayerVisible_CheckedChanged(object sender, EventArgs e)
+        private void OnLayerVisibleChecked(object sender, EventArgs e)
         {
             Ui2Settings(null, null);
         }
@@ -500,12 +461,12 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Sets visiblity expression
         /// </summary>
-        private void txtLayerExpression_TextChanged(object sender, EventArgs e)
+        private void OnLayerExpressionTextChanged(object sender, EventArgs e)
         {
             Ui2Settings(null, null);
         }
 
-        private void btnProjectionDetails_Click(object sender, EventArgs e)
+        private void OnProjectionDetailsClick(object sender, EventArgs e)
         {
             using (var form = new ProjectionPropertiesForm(_layer.Projection))
             {
@@ -560,46 +521,42 @@ namespace MW5.Plugins.Symbology.Forms
             transpSelection.Value = _featureSet.SelectionTransparency;
 
             var type = _featureSet.GeometryType;
-            if (type == GeometryType.Point || type == GeometryType.MultiPoint)
+            switch (type)
             {
-                transpMain.Value = (byte)_featureSet.Style.Fill.Transparency;
-                clpPointFill.Color = options.Fill.Color;
-                udDefaultSize.SetValue(options.Marker.Size);
-
-            }
-            else if (type == GeometryType.Polyline)
-            {
-                transpMain.Value = (byte)_featureSet.Style.Line.Transparency;
-                icbLineWidth.SelectedIndex = (int)options.Line.Width - 1;
-                clpDefaultOutline.Color = options.Line.Color;
-            }
-            else if (type == GeometryType.Polygon)
-            {
-                clpPolygonFill.Color = _featureSet.Style.Fill.Color;
-                icbFillStyle.SelectedIndex = options.Fill.Type == FillType.Hatch ? (int)options.Fill.HatchStyle : 0;
+                case GeometryType.MultiPoint:
+                case GeometryType.Point:
+                    transpMain.Value = _featureSet.Style.Fill.Transparency;
+                    clpPointFill.Color = options.Fill.Color;
+                    udDefaultSize.SetValue(options.Marker.Size);
+                    break;
+                case GeometryType.Polyline:
+                    transpMain.Value = _featureSet.Style.Line.Transparency;
+                    icbLineWidth.SelectedIndex = (int)options.Line.Width - 1;
+                    clpDefaultOutline.Color = options.Line.Color;
+                    break;
+                case GeometryType.Polygon:
+                    clpPolygonFill.Color = _featureSet.Style.Fill.Color;
+                    icbFillStyle.SelectedIndex = options.Fill.Type == FillType.Hatch ? (int)options.Fill.HatchStyle : 0;
+                    break;
             }
         }
 
         /// <summary>
         /// Opens default drawing options
         /// </summary>
-        private void btnDrawingOptions_Click(object sender, EventArgs e)
+        private void OnDefaultDrawingOptionsClick(object sender, EventArgs e)
         {
-            using (var form = FormHelper.GetSymbologyForm(_context, _layer.Handle, _featureSet.Style, true))
+            if (_context.ShowDefaultStyleDialog(_layer.Handle, true, this))
             {
-                form.Text = "Default drawing options";
-                if (_context.View.ShowChildView(form, this))
-                {
-                    Appearance2Controls();
-                    DrawAppearancePreview();
-                    Application.DoEvents();
-                    RedrawMap();
-                    RefreshControlsState(null, null);
-                }
-                else
-                {
-                    Application.DoEvents();
-                }
+                Appearance2Controls();
+
+                DrawAllPreviews();
+
+                Application.DoEvents();
+
+                RedrawMap();
+
+                RefreshControls();
             }
         }
 
@@ -608,9 +565,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void DrawAppearancePreview()
         {
-            var pct = new PictureBox();
-
-            pct = pictureBox1;
+            PictureBox pct = pictureBox1;
             var sdo = _featureSet.Style;
 
             if (pct.Image != null)
@@ -619,7 +574,7 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             Rectangle rect = pct.ClientRectangle;
-            Bitmap bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var bmp = new Bitmap(rect.Width, rect.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             Graphics g = Graphics.FromImage(bmp);
 
             if (_featureSet.PointOrMultiPoint)
@@ -636,7 +591,9 @@ namespace MW5.Plugins.Symbology.Forms
                 {
                     int w = rect.Width - 40;
                     int h = rect.Height - 40;
-                    sdo.DrawLine(g, (rect.Width - w) / 2, (rect.Height - h) / 2, w, h, true, rect.Width, rect.Height, Color.White);
+                    int x = Convert.ToInt32((rect.Width - w) / 2.0);
+                    int y = Convert.ToInt32((rect.Height - h) / 2);
+                    sdo.DrawLine(g, x, y, w, h, true, rect.Width, rect.Height, Color.White);
                 }
             }
             else if (_featureSet.GeometryType == GeometryType.Polygon)
@@ -693,7 +650,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Handles the change of transparency by user
         /// </summary>
-        private void transpMain_ValueChanged(object sender, byte value)
+        private void OnTransparencyMainChanged(object sender, byte value)
         {
             if (_featureSet.PointOrMultiPoint)
             {
@@ -716,7 +673,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Handles the changes of the selection transparency by user
         /// </summary>
-        private void transpSelection_ValueChanged(object sender, byte value)
+        private void OnTransparencySelectionChanged(object sender, byte value)
         {
             _featureSet.SelectionTransparency = value;
             DrawAppearancePreview();
@@ -726,7 +683,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Handles the changes of the fill type by user
         /// </summary>
-        private void icbFillStyle_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnFillStyleChanged(object sender, EventArgs e)
         {
             if (LockUpdate)
             {
@@ -750,7 +707,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Handles the change of selection color
         /// </summary>
-        private void clpSelection_SelectedColorChanged(object sender, EventArgs e)
+        private void OnSelectedColorChanged(object sender, EventArgs e)
         {
             _featureSet.SelectionColor = clpSelection.Color;
             transpSelection.BandColor = clpSelection.Color;
@@ -763,7 +720,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void InitCategoriesTab()
         {
-            dgvCategories.StyleClicked += (s, e) => btnCategoryAppearance_Click(null, null);
+            dgvCategories.StyleClicked += (s, e) => OnCategoryAppearanceClick(null, null);
             dgvCategories.CategoryNameChanged += (s, e) => RedrawLegend();
             dgvCategories.Initialize(_featureSet);
 
@@ -811,7 +768,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Generates shapefile categories
         /// </summary>
-        private void btnCategoryGenerate_Click(object sender, EventArgs e)
+        private void OnGenerateCategoriesClick(object sender, EventArgs e)
         {
             int count = Convert.ToInt32(udNumCategories.Value);
             var categories = _featureSet.Categories;
@@ -819,15 +776,7 @@ namespace MW5.Plugins.Symbology.Forms
             if (lstFields1.SelectedItem == null) return;
             string name = lstFields1.SelectedItem.ToString().ToLower().Trim();
 
-            int index = -1;
-            for (int i = 0; i < _featureSet.Fields.Count; i++)
-            {
-                if (_featureSet.Fields[i].Name.ToLower() == name)
-                {
-                    index = i;
-                    break;
-                }
-            }
+            int index = _featureSet.Fields.IndexByName(name);
 
             if (index == -1)
             {
@@ -840,7 +789,7 @@ namespace MW5.Plugins.Symbology.Forms
             bool showWaiting = false;
             if (classification == Classification.UniqueValues)
             {
-                HashSet<object> set = new HashSet<object>();
+                var set = new HashSet<object>();
                 for (int i = 0; i < _featureSet.Features.Count; i++)
                 {
                     object val = _featureSet.Table.CellValue(index, i);
@@ -863,8 +812,8 @@ namespace MW5.Plugins.Symbology.Forms
 
             if (showWaiting)
             {
-                this.Enabled = false;
-                this.Cursor = Cursors.WaitCursor;
+                Enabled = false;
+                Cursor = Cursors.WaitCursor;
             }
             else
             {
@@ -906,14 +855,14 @@ namespace MW5.Plugins.Symbology.Forms
                 btnCategoryGenerate.Enabled = true;
             }
 
-            RefreshControlsState(null, null);
+            RefreshControls();
             MarkStateChanged();
         }
 
         private void RefreshCategoriesList()
         {
             dgvCategories.RefreshList();
-            RefreshControlsState(null, null);
+            RefreshControls();
         }
 
         /// <summary>
@@ -928,7 +877,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Toggles between unique values and natural breaks. Natural break are available for numeric fields only.
         /// </summary>
-        private void chkUniqueValues_CheckedChanged(object sender, EventArgs e)
+        private void OnUniqueValuesChecked(object sender, EventArgs e)
         {
             FillFieldList(string.Empty);
         }
@@ -963,7 +912,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Toggles between random and graduated colors schemes
         /// </summary>
-        private void chkRandomColors_CheckedChanged(object sender, EventArgs e)
+        private void OnRandomColorsChecked(object sender, EventArgs e)
         {
             int index = icbCategories.SelectedIndex;
             icbCategories.ComboStyle = chkRandomColors.Checked ? SchemeType.Random : SchemeType.Graduated;
@@ -992,19 +941,19 @@ namespace MW5.Plugins.Symbology.Forms
             var categories = _featureSet.Categories;
             if (chkSetGradient.Checked)
             {
-                for (int i = 0; i < categories.Count; i++)
+                foreach (var options in categories.Select(t => t.Style))
                 {
-                    var options = categories[i].Style;
                     options.Fill.SetGradient(options.Fill.Color, 75);
                     options.Fill.Type = FillType.Gradient;
                 }
             }
             else
             {
-                for (int i = 0; i < categories.Count; i++)
+                var color = _featureSet.Style.Fill.Color2;
+
+                foreach (IGeometryStyle options in categories.Select(t => t.Style))
                 {
-                    IGeometryStyle options = categories[i].Style;
-                    options.Fill.Color2 = options.Fill.Color;
+                    options.Fill.Color2 = color;
                     options.Fill.Type = FillType.Solid;
                 }
             }
@@ -1013,7 +962,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Removes selected category
         /// </summary>
-        private void btnCategoryRemove_Click(object sender, EventArgs e)
+        private void OnCategoryRemoveClick(object sender, EventArgs e)
         {
             dgvCategories.RemoveSelectedCategory();
 
@@ -1023,7 +972,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Shows form to chnage visualization of the given category
         /// </summary>
-        private void btnCategoryAppearance_Click(object sender, EventArgs e)
+        private void OnCategoryAppearanceClick(object sender, EventArgs e)
         {
             if (dgvCategories.CurrentRow != null)
             {
@@ -1034,7 +983,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Removes all the categories in the list
         /// </summary>
-        private void btnCategoryClear_Click(object sender, EventArgs e)
+        private void OnCategoryClearClick(object sender, EventArgs e)
         {
             _featureSet.Categories.Clear();
             RefreshCategoriesList();
@@ -1044,14 +993,13 @@ namespace MW5.Plugins.Symbology.Forms
             RedrawMap();
         }
 
-
-
         /// <summary>
         /// Changes the style of the selected category
         /// </summary>
         private void ChangeCategoryStyle(int row)
         {
             var cat = _featureSet.Categories[row];
+
             if (cat == null) return;
 
             using (Form form = _context.GetSymbologyForm(_layer.Handle, cat.Style, true))
@@ -1066,8 +1014,6 @@ namespace MW5.Plugins.Symbology.Forms
             }
         }
 
-
-
         /// <summary>
         /// Fills the list of fields
         /// </summary>
@@ -1076,14 +1022,7 @@ namespace MW5.Plugins.Symbology.Forms
             if (name == string.Empty)
             {
                 // we need to preserve currently selected field
-                if (lstFields1.SelectedItem != null)
-                {
-                    name = lstFields1.SelectedItem.ToString().Trim();
-                }
-                else
-                {
-                    name = string.Empty;
-                }
+                name = lstFields1.SelectedItem != null ? lstFields1.SelectedItem.ToString().Trim() : string.Empty;
             }
             // else  = we need some particular field as selected
 
@@ -1118,7 +1057,7 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 lstFields1.SelectedIndex = 0;
             }
-            RefreshControlsState(null, null);
+            RefreshControls();
         }
 
         /// <summary>
@@ -1163,15 +1102,19 @@ namespace MW5.Plugins.Symbology.Forms
             if (charts.Count > 0 && charts.Fields.Any())
             {
                 var g = Graphics.FromImage(bmp);
-                _featureSet.Diagrams.DrawChart(g, (rect.Width - charts.IconWidth) / 2, (rect.Height - charts.IconHeight) / 2, false, Color.White);
+
+                int x = Convert.ToInt32((rect.Width - charts.IconWidth) / 2.0);
+                int y = Convert.ToInt32((rect.Height - charts.IconHeight) / 2.0);
+                _featureSet.Diagrams.DrawChart(g, x, y, false, Color.White);
             }
+
             pctCharts.Image = bmp;
         }
 
         /// <summary>
         /// Opens form to change chart appearance
         /// </summary>
-        private void btnChartAppearance_Click(object sender, EventArgs e)
+        private void OnChartAppearanceClick(object sender, EventArgs e)
         {
             using (var form = new ChartStyleForm(_context, _layer))
             {
@@ -1186,20 +1129,20 @@ namespace MW5.Plugins.Symbology.Forms
             LockUpdate = state;
 
             DrawChartsPreview();
-            RefreshControlsState(null, null);
+            RefreshControls();
             RedrawMap();
         }
 
         /// <summary>
         /// Removes all chart fields and redraws the map
         /// </summary>
-        private void btnClearCharts_Click(object sender, EventArgs e)
+        private void OnClearChartsClick(object sender, EventArgs e)
         {
             if (MessageService.Current.Ask("Do you want to delete charts?"))
             {
                 _featureSet.Diagrams.Fields.Clear();
                 _featureSet.Diagrams.Clear();
-                RefreshControlsState(null, null);
+                RefreshControls();
                 DrawChartsPreview();
                 RedrawMap();
             }
@@ -1208,7 +1151,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Updating colors of the charts
         /// </summary>
-        private void icbChartColorScheme_SelectedIndexChanged(object sender, EventArgs e)
+        private void OnChartColorSchemeSelectedIndexChanged(object sender, EventArgs e)
         {
             if (icbChartColorScheme.ColorSchemes != null && icbChartColorScheme.SelectedIndex >= 0)
             {
@@ -1226,7 +1169,7 @@ namespace MW5.Plugins.Symbology.Forms
             var charts = _featureSet.Diagrams;
             charts.Visible = chkChartsVisible.Checked;
             charts.DiagramType = optChartBars.Checked ? DiagramType.Bar : DiagramType.Pie;
-            this.UpdateFieldColors();
+            UpdateFieldColors();
             DrawChartsPreview();
         }
 
@@ -1253,7 +1196,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Opens editor of color schemes
         /// </summary>
-        private void btnChartsEditColorScheme_Click(object sender, EventArgs e)
+        private void OnChartsEditColorSchemeClick(object sender, EventArgs e)
         {
             using (var form = new ColorSchemesForm(_context, icbChartColorScheme.ColorSchemes))
             {
@@ -1264,7 +1207,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Building layer visibility expression
         /// </summary>
-        private void btnLayerExpression_Click(object sender, EventArgs e)
+        private void OnLayerExpressionClick(object sender, EventArgs e)
         {
             string s = txtLayerExpression.Text;
 
@@ -1320,7 +1263,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Saves layer name from user input
         /// </summary>
-        private void txtLayerName_Validated(object sender, EventArgs e)
+        private void OnLayerNameValidated(object sender, EventArgs e)
         {
             _layer.Name = txtLayerName.Text;
             MarkStateChanged();
@@ -1330,7 +1273,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Saves layer name from user input
         /// </summary>
-        private void txtLayerName_KeyPress(object sender, KeyPressEventArgs e)
+        private void OnLayerNameKeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -1343,7 +1286,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Saves layer name from user input
         /// </summary>
-        private void txtComments_Validated(object sender, EventArgs e)
+        private void OnCommentsValidated(object sender, EventArgs e)
         {
             _layer.Description = txtComments.Text;
             MarkStateChanged();
@@ -1352,7 +1295,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Saves layer name from user input
         /// </summary>
-        private void txtComments_KeyPress(object sender, KeyPressEventArgs e)
+        private void OnCommentsKeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Enter)
             {
@@ -1364,7 +1307,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Updates the state of the layer preview
         /// </summary>
-        private void chkLayerPreview_CheckedChanged(object sender, EventArgs e)
+        private void OnLayerPreviewChecked(object sender, EventArgs e)
         {
             if (axMap1.Layers.Count == 0 && chkLayerPreview.Checked)
             {
@@ -1420,7 +1363,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Changing the default style of labels
         /// </summary>
-        private void btnLabelsAppearance_Click(object sender, EventArgs e)
+        private void OnLabelsAppearanceClick(object sender, EventArgs e)
         {
             using (var form = new LabelStyleForm(_context, _layer))
             {
@@ -1434,7 +1377,7 @@ namespace MW5.Plugins.Symbology.Forms
             chkLabelFrame.Checked = options.FrameVisible;
             chkShowLabels.Checked = options.Visible;
 
-            RefreshControlsState(null, null);
+            RefreshControls();
 
             RedrawMap();
 
@@ -1445,14 +1388,14 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Deletes all the labels
         /// </summary>
-        private void btnLabelsClear_Click(object sender, EventArgs e)
+        private void OnLabelsClearClick(object sender, EventArgs e)
         {
             if (MessageService.Current.Ask("Do you want to delete labels?"))
             {
                 _featureSet.Labels.Items.Clear();
                 _featureSet.Labels.Expression = "";
                 DrawLabelsPreview();
-                RefreshControlsState(null, null);
+                RefreshControls();
                 RedrawMap();
             }
         }
@@ -1460,7 +1403,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// /// <summary>
         /// Changes label font size. We shall make changes for the categories as well in case a user wants to
         /// </summary>
-        private void udLabelFontSize_ValueChanged(object sender, EventArgs e)
+        private void OnLabelFontSizeValueChanged(object sender, EventArgs e)
         {
             if (LockUpdate)
             {
@@ -1475,7 +1418,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Changes label frame color. We shall make changes for the categories as well in case a user wants to
         /// </summary>
-        private void clpLabelFrame_SelectedColorChanged(object sender, EventArgs e)
+        private void OnLabelFrameColorChanged(object sender, EventArgs e)
         {
             if (LockUpdate)
                 return;
@@ -1488,7 +1431,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Changes label frame visiblity. We shall make changes for the categories as well in case a user wants to
         /// </summary>
-        private void chkLabelFrame_CheckedChanged(object sender, EventArgs e)
+        private void OnLabelFrameChecked(object sender, EventArgs e)
         {
             if (LockUpdate)
                 return;
@@ -1506,99 +1449,13 @@ namespace MW5.Plugins.Symbology.Forms
             var lb = _featureSet.Labels;
             lb.Visible = chkShowLabels.Checked;
 
-            // categories will have the same alignment
-            //for (int i = 0; i < _shapefile.Labels.NumCategories; i++)
-            //{
-            //    MapWinGIS.LabelCategory cat = _shapefile.Labels.get_Category(i);
-            //    cat.Alignment = lb.Alignment;
-            //    cat.OffsetX = lb.OffsetX;
-            //    cat.OffsetY = lb.OffsetY;
-            //}
-
             DrawLabelsPreview();
-        }
-
-        /// <summary>
-        /// Sets the state of controls on the general tab on loading
-        /// </summary>
-        private void InitModeTab()
-        {
-            if (_featureSet.GeometryType == GeometryType.Point)
-            {
-                cboCollisionMode.Enabled = true;
-                cboCollisionMode.Items.Clear();
-                cboCollisionMode.Items.Add("Allow collisions");
-                cboCollisionMode.Items.Add("Avoid point vs point collisions");
-                cboCollisionMode.Items.Add("Avoid point vs label collisions");
-                cboCollisionMode.SelectedIndex = (int)_featureSet.CollisionMode;
-            }
-            else
-            {
-                cboCollisionMode.Enabled = false;
-            }
-
-            chkSpatialIndex.Checked = _featureSet.SpatialIndex.UseDiskIndex && _featureSet.SpatialIndex.DiskIndexValid;
-            chkInMemory.Checked = _featureSet.EditingShapes;
-            chkEditMode.Checked = _featureSet.InteractiveEditing;
-            
-            // TODO: restore
-            //chkFastMode.Checked = _shapefile.FastMode;
-            //udMinDrawingSize.SetValue((double)_shapefile.MinDrawingSize);
-            //udMinLabelingSize.SetValue((double)_shapefile.Labels.MinDrawingSize);
-
-            // displaying help string default help
-            chkFastMode_Enter(chkFastMode, null);
-        }
-
-        /// <summary>
-        /// Toggles fast edit mode for the shapefile
-        /// </summary>
-        private void chkFastEditingMode_CheckedChanged(object sender, EventArgs e)
-        {
-            if (LockUpdate)
-            {
-                return;
-            }
-
-            //MapWinGIS.ICallback oldCallback = null;
-
-            //if (chkFastMode.Checked)
-            //{
-            //    Enabled = false;
-            //    Cursor = Cursors.WaitCursor;
-            //    oldCallback = _shapefile.GlobalCallback;
-            //    CallbackLocal callback = new CallbackLocal(progressBar1);
-            //    _shapefile.GlobalCallback = callback;
-            //    progressBar1.Visible = true;
-            //    //groupModeDescription.Height = 267;
-            //}
-
-            //_shapefile.FastMode = chkFastMode.Checked;
-
-            //if (chkFastMode.Checked)
-            //{
-            //    Cursor = Cursors.Default;
-            //    Enabled = true;
-            //    _shapefile.GlobalCallback = oldCallback;
-            //    progressBar1.Visible = false;
-            //    //groupModeDescription.Height = 293;
-            //}
-
-            RedrawMap();
-        }
-
-        /// <summary>
-        /// Start and stops the edit mode for the shapefile
-        /// </summary>
-        private void chkEditMode_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>
         /// Creates spatial index for the shapefile. Toggles it's usage.
         /// </summary>
-        private void chkSpatialIndex_CheckedChanged(object sender, EventArgs e)
+        private void OnSpatialIndexChecked(object sender, EventArgs e)
         {
             if (LockUpdate)
             {
@@ -1631,101 +1488,58 @@ namespace MW5.Plugins.Symbology.Forms
             RedrawMap();
         }
 
-        /// <summary>
-        /// Changes the minimum size of object in pixels to be drawn
-        /// </summary>
-        private void udMinDrawingSize_ValueChanged(object sender, EventArgs e)
+        private void OnModeMouseMove(object sender, MouseEventArgs e)
         {
-            //_shapefile.MinDrawingSize = (int)udMinDrawingSize.Value;
-            RedrawMap();
+            OnModeEnter(sender, null);
         }
 
-        /// <summary>
-        /// Changes the minimum size of the object to label
-        /// </summary>
-        private void udMinLabelingSize_ValueChanged(object sender, EventArgs e)
-        {
-            //_shapefile.Labels.MinDrawingSize = (int)udMinLabelingSize.Value;
-            RedrawMap();
-        }
-
-        private void chkRedrawMap_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (_noEvents) return;
-
-            if (!chkRedrawMap.Checked)
-            {
-                //m_mapWin.View.LockMap();
-                //Globals.Legend.Lock();
-            }
-            else
-            {
-                //m_mapWin.View.UnlockMap();
-                //Globals.Legend.Unlock();
-            }
-
-            //_redrawModeIsChanging = true;
-            //Ui2Settings(null, null);
-            //RedrawMap();
-            //_redrawModeIsChanging = false;
-        }
-
-        private void chkFastMode_MouseMove(object sender, MouseEventArgs e)
-        {
-            chkFastMode_Enter(sender, null);
-        }
-
-        private void chkFastMode_Enter(object sender, EventArgs e)
+        private void OnModeEnter(object sender, EventArgs e)
         {
             string s = string.Empty;
-            if ((Control)sender == (Control)chkInMemory)
+            if (sender == chkInMemory)
             {
                 s += "In memory: shapefile data is current loaded into RAM.";
             }
-            else if ((Control)sender == (Control)chkEditMode)
+            else if (sender == chkEditMode)
             {
                 s += "Editing mode: starts or stops the editing session for the shapefile. The changes can be saved or discarded while closing.";
             }
-            else if ((Control)sender == (Control)chkFastMode)
+            else if (sender == chkFastMode)
             {
                 s += "Fast mode: loads shape data in the memory for faster drawing. There are certain limitations when using it coupled with editing mode.";
             }
-            else if ((Control)sender == (Control)chkSpatialIndex)
+            else if (sender == chkSpatialIndex)
             {
                 s += "Spatial index: creates R-tree for faster search. Affects drawing and selection at close scales. Creates 2 files with .mwd and .mwx extentions in the shapefile folder. Isn't used for editing mode.";
             }
-            else if ((Control)sender == (Control)udMinDrawingSize)
+            else if (sender == udMinDrawingSize)
             {
                 s += "Minimal drawing size: if the size polyline or polygon at current scale in pixels is less than this value, it will be drawn as a single dot.";
             }
-            else if ((Control)sender == (Control)udMinLabelingSize)
+            else if (sender == udMinLabelingSize)
             {
                 s += "Minimal labeling size: a polygon or polyline will be labeled only if it's size in pixels greater than this value.";
             }
-            else if ((Control)sender == (Control)cboCollisionMode)
+            else if (sender == cboCollisionMode)
             {
                 s += "Collision mode: detemines whether point symbols can be drawn one above the another. Also if the collisions of points with labels are allowed.";
-            }
-            else
-            {
-                // nothing
             }
 
             txtModeDescription.Text = s;
 
-            Font font = new Font("Arial", 10.0f);
+            var font = new Font("Arial", 10.0f);
             txtModeDescription.SelectAll();
             txtModeDescription.SelectionFont = font;
 
             string[] str = { "Fast mode:", "Editing mode:", "In memory:", "Spatial index:", "Minimal drawing size: ", "Minimal labeling size:", "GDI mode for labels:", "Collision mode" };
             font = new Font("Arial", 10.0f, FontStyle.Bold);
 
-            for (int i = 0; i < str.Length; i++)
+            foreach (string t in str)
             {
-                int position = txtModeDescription.Text.IndexOf(str[i]);
+                int position = txtModeDescription.Text.IndexOf(t, StringComparison.Ordinal);
                 if (position >= 0)
                 {
-                    txtModeDescription.Select(position, str[i].Length);
+                    txtModeDescription.Select(position, t.Length);
                     txtModeDescription.SelectionFont = font;
                 }
             }
@@ -1753,7 +1567,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Handles the changes in the dynamic visibility state of the layer
         /// </summary>
-        private void scaleLayer_StateChanged()
+        private void OnScaleLayerStateChanged()
         {
             if (LockUpdate)
                 return;
@@ -1761,11 +1575,13 @@ namespace MW5.Plugins.Symbology.Forms
             _layer.MaxVisibleScale = scaleLayer.MaximumScale;
             _layer.MinVisibleScale = scaleLayer.MinimimScale;
             _layer.DynamicVisibility = scaleLayer.UseDynamicVisibility;
+
             RedrawMap();
+
             Application.DoEvents();
         }
 
-        private void toolSaveStyle_Click(object sender, EventArgs e)
+        private void OnSaveStyleClick(object sender, EventArgs e)
         {
             LayerSerializationHelper.SaveSettings(_layer);
         }
@@ -1783,9 +1599,122 @@ namespace MW5.Plugins.Symbology.Forms
             }
         }
 
-        private void toolRemoveStyle_Click(object sender, EventArgs e)
+        private void OnRemoveStyleClick(object sender, EventArgs e)
         {
             LayerSerializationHelper.RemoveSettings(_layer, false);
         }
+
+        #region TODO
+
+        /// <summary>
+        /// Changes the minimum size of object in pixels to be drawn
+        /// </summary>
+        private void udMinDrawingSizeChanged(object sender, EventArgs e)
+        {
+            //_shapefile.MinDrawingSize = (int)udMinDrawingSize.Value;
+            RedrawMap();
+        }
+
+        /// <summary>
+        /// Changes the minimum size of the object to label
+        /// </summary>
+        private void OnMinLabelingSizeChanged(object sender, EventArgs e)
+        {
+            //_shapefile.Labels.MinDrawingSize = (int)udMinLabelingSize.Value;
+            RedrawMap();
+        }
+
+        private void OnRedrawMapChecked(object sender, EventArgs e)
+        {
+            //if (_noEvents) return;
+
+            if (!chkRedrawMap.Checked)
+            {
+                //m_mapWin.View.LockMap();
+                //Globals.Legend.Lock();
+            }
+            else
+            {
+                //m_mapWin.View.UnlockMap();
+                //Globals.Legend.Unlock();
+            }
+
+            //_redrawModeIsChanging = true;
+            //Ui2Settings(null, null);
+            //RedrawMap();
+            //_redrawModeIsChanging = false;
+        }
+
+        /// <summary>
+        /// Sets the state of controls on the general tab on loading
+        /// </summary>
+        private void InitModeTab()
+        {
+            if (_featureSet.GeometryType == GeometryType.Point)
+            {
+                cboCollisionMode.Enabled = true;
+                cboCollisionMode.Items.Clear();
+                cboCollisionMode.Items.Add("Allow collisions");
+                cboCollisionMode.Items.Add("Avoid point vs point collisions");
+                cboCollisionMode.Items.Add("Avoid point vs label collisions");
+                cboCollisionMode.SelectedIndex = (int)_featureSet.CollisionMode;
+            }
+            else
+            {
+                cboCollisionMode.Enabled = false;
+            }
+
+            chkSpatialIndex.Checked = _featureSet.SpatialIndex.UseDiskIndex && _featureSet.SpatialIndex.DiskIndexValid;
+            chkInMemory.Checked = _featureSet.EditingShapes;
+            chkEditMode.Checked = _featureSet.InteractiveEditing;
+
+            // TODO: restore
+            //chkFastMode.Checked = _shapefile.FastMode;
+            //udMinDrawingSize.SetValue((double)_shapefile.MinDrawingSize);
+            //udMinLabelingSize.SetValue((double)_shapefile.Labels.MinDrawingSize);
+
+            // displaying help string default help
+            OnModeEnter(chkFastMode, null);
+        }
+
+        /// <summary>
+        /// Saves the current changes treating them as the new initial state
+        /// </summary>
+        private void OnSaveChangesClick(object sender, EventArgs e)
+        {
+            if (_stateChanged)
+            {
+                Ui2Settings(null, null);
+
+                // triggering redraw
+                //if (!chkRedrawMap.Checked)
+                {
+                    LockLegendAndMap(false);
+
+                    _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+                    Application.DoEvents();
+
+                    LockLegendAndMap(true);
+                }
+
+                // saving new state
+                _initState = SaveState();
+
+                _stateChanged = false;
+                btnSaveChanges.Enabled = false;
+
+                _context.Project.SetModified();
+            }
+        }
+
+        /// <summary>
+        /// Updates color schemes list on the charts tab
+        /// </summary>
+        public void UpdateColorSchemes()
+        {
+            //icbChartColorScheme.ColorSchemes = Globals.ChartColors;
+            //icbCategories.ColorSchemes = Globals.LayerColors;
+        }
+        #endregion
     }
 }
