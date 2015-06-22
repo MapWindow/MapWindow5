@@ -94,6 +94,8 @@ namespace MW5.Plugins.ShapeEditor.Services
             var sf = _context.Layers.GetFeatureSet(layerHandle);
             var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
 
+            //string xmlState = sf.Serialize();
+
             bool success;
 
             if (ogrLayer != null)
@@ -116,6 +118,9 @@ namespace MW5.Plugins.ShapeEditor.Services
                 success = sf.StopEditingShapes();
             }
 
+            // TODO: do we need it?
+            //sf.Deserialize(xmlState);
+
             if (success)
             {
                 CloseEditing(layerHandle);
@@ -135,7 +140,7 @@ namespace MW5.Plugins.ShapeEditor.Services
                 throw new ApplicationException("Invalid layer handle on trying to close editing mode.");
             }
 
-            string xmlCategories = fs.Categories.Serialize();
+            string xmlState = fs.Serialize();
 
             var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
             
@@ -151,7 +156,7 @@ namespace MW5.Plugins.ShapeEditor.Services
 
             if (fs != null)
             {
-                fs.Categories.Deserialize(xmlCategories);
+                fs.Deserialize(xmlState);
             }
 
             CloseEditing(layerHandle);
