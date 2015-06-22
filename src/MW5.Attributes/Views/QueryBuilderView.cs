@@ -37,7 +37,11 @@ namespace MW5.Attributes.Views
 
         private int FieldIndex
         {
-            get { return fieldTypeGrid1.Adapter.GetSelectedRecordIndex(); }
+            get
+            {
+                var fld = fieldTypeGrid1.Adapter.SelectedItem;
+                return fld != null ? fld.Index : -1;
+            }
         }
 
         public event Action TestClicked;

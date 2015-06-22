@@ -181,6 +181,40 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        private bool RequestEditSession(TableEditorCommand command)
+        {
+            switch (command)
+            {
+                case TableEditorCommand.CalculateField:
+                case TableEditorCommand.AddField:
+                case TableEditorCommand.RemoveField:
+                case TableEditorCommand.ImportFieldDefinitions:
+                case TableEditorCommand.UpdateMeasurements:
+                case TableEditorCommand.Replace:
+                case TableEditorCommand.RemoveFields:
+                    {
+                        var table = ActiveTable;
+
+                        if (table.EditMode)
+                        {
+                            return true;
+                        }
+
+                        string msg = "The requested operation needs to change data." + Environment.NewLine;
+                        msg += "Do you want to start edit session?";
+
+                        if (MessageService.Current.Ask(msg))
+                        {
+                            return StartEditing();
+                        }
+
+                        return false;
+                    }
+            }
+
+            return true;
+        }
+
         public override void RunCommand(TableEditorCommand command)
         {
             if (HandleLayout(command))
@@ -199,14 +233,30 @@ namespace MW5.Plugins.TableEditor.Views
                 return;
             }
 
+            if (!RequestEditSession(command))
+            {
+                return;
+            }
+
             switch (command)
             {
-                case TableEditorCommand.Query:
-                    var layer = _context.Layers.ItemByHandle(View.ActiveLayerHandle);
-                    if (layer != null)
+                case TableEditorCommand.AttributeExplorer:
                     {
-                        var model = new QueryBuilderModel(layer, string.Empty);
-                        _context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model);
+                        var layer = _context.Layers.ItemByHandle(View.ActiveLayerHandle);
+                        if (layer != null)
+                        {
+                            _context.Container.Run<AttributeExplorerPresenter, ILayer>(layer);
+                        }
+                    }
+                    break;
+                case TableEditorCommand.Query:
+                    {
+                        var layer = _context.Layers.ItemByHandle(View.ActiveLayerHandle);
+                        if (layer != null)
+                        {
+                            var model = new QueryBuilderModel(layer, string.Empty);
+                            _context.Container.Run<QueryBuilderPresenter, QueryBuilderModel>(model);
+                        }
                     }
                     break;
                 case TableEditorCommand.ExportSelected:
@@ -350,18 +400,7 @@ namespace MW5.Plugins.TableEditor.Views
                     View.UpdateDatasource();
                     break;
                 case TableEditorCommand.StartEdit:
-                    if (!table.EditMode)
-                    {
-                        table.StartEditing();
-
-                        var grid = View.ActiveGrid;
-                        if (grid != null)
-                        {
-                            grid.ReadOnly = !table.EditMode;
-                        }
-                    }
-
-                    View.UpdateView();
+                    StartEditing();
                     break;
                 case TableEditorCommand.SaveChanges:
                     if (table.EditMode)
@@ -455,6 +494,30 @@ namespace MW5.Plugins.TableEditor.Views
                     Find(true);
                     break;
             }
+        }
+
+        private bool StartEditing()
+        {
+            var table = ActiveTable;
+
+            if (table != null && !table.EditMode)
+            {
+                if (!table.StartEditing())
+                {
+                    MessageService.Current.Warn("Failed to start editing session for the table.");
+                    return false;
+                }
+
+                var grid = View.ActiveGrid;
+                if (grid != null)
+                {
+                    grid.ReadOnly = !table.EditMode;
+                }
+
+                View.UpdateView();
+            }
+
+            return true;
         }
 
         public void UpdateSelection(int layerHandle)

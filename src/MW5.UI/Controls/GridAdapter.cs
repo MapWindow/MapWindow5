@@ -167,7 +167,6 @@ namespace MW5.UI.Controls
             {
                 if (_grid.Table.SelectedRecords.Count == 0)
                 {
-                    Logger.Current.Warn("GridListControl: Invalid invalid index");
                     return null;
                 }
 

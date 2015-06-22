@@ -35,6 +35,7 @@
         ZoomToCurrentCell = 31,
         ExportSelected = 32,
         Query = 33,
+        AttributeExplorer = 34,
     }
 
     /// <summary>

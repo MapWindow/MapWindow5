@@ -106,9 +106,13 @@ namespace MW5.Api.Concrete
             return _table.ParseExpression(expression, ref errorString);
         }
 
-        public bool Query(string expression, ref object result, ref string errorString)
+        public bool Query(string expression, out int[] result, out string errorString)
         {
-            return _table.Query(expression, ref result, ref errorString);
+            object arr = null;
+            errorString = string.Empty;
+            bool success = _table.Query(expression, ref arr, ref errorString);
+            result = arr as int[];
+            return success;
         }
 
         public FieldJoinCollection Joins
