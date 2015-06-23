@@ -1,4 +1,6 @@
-﻿namespace MW5.Plugins.TableEditor.Views
+﻿using MW5.Attributes.Controls;
+
+namespace MW5.Plugins.TableEditor.Views
 {
     partial class JoinsView
     {
@@ -33,7 +35,7 @@
             this.btnStopAll = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnJoin = new System.Windows.Forms.Button();
-            this.joinsGrid1 = new MW5.Plugins.TableEditor.Controls.JoinsGrid();
+            this.joinsGrid1 = new JoinsGrid();
             ((System.ComponentModel.ISupportInitialize)(this.joinsGrid1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -139,6 +141,6 @@
         private System.Windows.Forms.Button btnStopAll;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnJoin;
-        private Controls.JoinsGrid joinsGrid1;
+        private JoinsGrid joinsGrid1;
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Attributes.Helpers;
 using MW5.Attributes.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;

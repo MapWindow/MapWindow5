@@ -78,13 +78,6 @@
         StopAll = 3,
     }
 
-    public enum JoinSourceType
-    {
-        Dbf = 0,
-        Xls = 1,
-        Csv = 2,
-    }
-
     public enum UpdateMeasurementType
     {
         Ignore = 0,

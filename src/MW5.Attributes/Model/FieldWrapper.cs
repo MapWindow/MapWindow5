@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FieldWrapper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 
-namespace MW5.Plugins.TableEditor.Model
+namespace MW5.Attributes.Model
 {
     public class FieldWrapper
     {

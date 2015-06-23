@@ -1,8 +1,8 @@
-﻿using MW5.Plugins.TableEditor.Controls;
+﻿using MW5.Attributes.Controls;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Plugins.TableEditor.Views
+namespace MW5.Attributes.Views
 {
     partial class JoinTableView
     {
@@ -44,7 +44,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.cboCurrent = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboExternal = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label3 = new System.Windows.Forms.Label();
-            this.fieldsGrid1 = new MW5.Plugins.TableEditor.Controls.FieldsGrid();
+            this.fieldsGrid1 = new FieldsGrid();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.txtDatasource = new MW5.UI.Controls.WatermarkTextbox();
             this.btnOpen = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -333,7 +333,7 @@ namespace MW5.Plugins.TableEditor.Views
         private ComboBoxAdv cboCurrent;
         private ComboBoxAdv cboExternal;
         private System.Windows.Forms.Label label3;
-        private Controls.FieldsGrid fieldsGrid1;
+        private FieldsGrid fieldsGrid1;
         private System.Windows.Forms.GroupBox groupBox2;
         private ButtonAdv btnOpen;
         private System.Windows.Forms.Label label6;

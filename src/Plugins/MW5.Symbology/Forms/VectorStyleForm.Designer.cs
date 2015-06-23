@@ -64,7 +64,15 @@ namespace MW5.Plugins.Symbology.Forms
             this.label18 = new System.Windows.Forms.Label();
             this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtModeDescription = new System.Windows.Forms.RichTextBox();
+            this.chkEditMode = new System.Windows.Forms.CheckBox();
+            this.chkInMemory = new System.Windows.Forms.CheckBox();
+            this.chkSpatialIndex = new System.Windows.Forms.CheckBox();
+            this.chkFastMode = new System.Windows.Forms.CheckBox();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.transpMain = new MW5.UI.Controls.TransparencyControl();
@@ -148,28 +156,21 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupCharts = new System.Windows.Forms.GroupBox();
             this.pctCharts = new System.Windows.Forms.PictureBox();
             this.tabVisibility = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.scaleLayer = new MW5.Plugins.Symbology.Controls.ScaleControl();
-            this.groupBox13 = new System.Windows.Forms.GroupBox();
-            this.btnClearLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.btnLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.txtLayerExpression = new System.Windows.Forms.TextBox();
-            this.tabMode = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.cboCollisionMode = new System.Windows.Forms.ComboBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.groupBox19 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
             this.udMinDrawingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.udMinLabelingSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.label6 = new System.Windows.Forms.Label();
-            this.groupModeDescription = new System.Windows.Forms.GroupBox();
-            this.txtModeDescription = new System.Windows.Forms.RichTextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkEditMode = new System.Windows.Forms.CheckBox();
-            this.chkInMemory = new System.Windows.Forms.CheckBox();
-            this.chkSpatialIndex = new System.Windows.Forms.CheckBox();
-            this.chkFastMode = new System.Windows.Forms.CheckBox();
+            this.groupBox13 = new System.Windows.Forms.GroupBox();
+            this.btnClearLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.txtLayerExpression = new System.Windows.Forms.TextBox();
+            this.tabJoins = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboMaxScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -195,7 +196,9 @@ namespace MW5.Plugins.Symbology.Forms
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.tabInfo.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.tabDefault.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupPoint.SuspendLayout();
@@ -228,15 +231,11 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupCharts.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pctCharts)).BeginInit();
             this.tabVisibility.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox13.SuspendLayout();
-            this.tabMode.SuspendLayout();
             this.groupBox21.SuspendLayout();
             this.groupBox19.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).BeginInit();
-            this.groupModeDescription.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).BeginInit();
@@ -283,10 +282,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabControl1.Controls.Add(this.tabDefault);
             this.tabControl1.Controls.Add(this.tabCategories);
             this.tabControl1.Controls.Add(this.tabFields);
+            this.tabControl1.Controls.Add(this.tabJoins);
             this.tabControl1.Controls.Add(this.tabLabels);
             this.tabControl1.Controls.Add(this.tabCharts);
             this.tabControl1.Controls.Add(this.tabVisibility);
-            this.tabControl1.Controls.Add(this.tabMode);
             this.tabControl1.FocusOnTabClick = false;
             this.tabControl1.ImageList = this.imageList1;
             this.tabControl1.InactiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
@@ -429,7 +428,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 3299.2014591825669D;
+            this.axMap1.CurrentScale = 7719.6396929199409D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -526,7 +525,9 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // tabInfo
             // 
-            this.tabInfo.Controls.Add(this.vectorInfoTreeView1);
+            this.tabInfo.Controls.Add(this.groupBox1);
+            this.tabInfo.Controls.Add(this.progressBar1);
+            this.tabInfo.Controls.Add(this.groupBox2);
             this.tabInfo.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
             this.tabInfo.ImageSize = new System.Drawing.Size(24, 24);
             this.tabInfo.Location = new System.Drawing.Point(119, 0);
@@ -537,6 +538,16 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.vectorInfoTreeView1);
+            this.groupBox1.Location = new System.Drawing.Point(19, 14);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(482, 252);
+            this.groupBox1.TabIndex = 185;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Description";
+            // 
             // vectorInfoTreeView1
             // 
             this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
@@ -544,7 +555,7 @@ namespace MW5.Plugins.Symbology.Forms
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
-            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(476, 233);
             this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
             this.vectorInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -559,10 +570,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.vectorInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
             this.vectorInfoTreeView1.HelpTextControl.TabIndex = 0;
             this.vectorInfoTreeView1.HelpTextControl.Text = "help text";
-            this.vectorInfoTreeView1.Location = new System.Drawing.Point(0, 0);
+            this.vectorInfoTreeView1.Location = new System.Drawing.Point(3, 16);
             this.vectorInfoTreeView1.Name = "vectorInfoTreeView1";
             this.vectorInfoTreeView1.ShowColumnsHeader = false;
-            this.vectorInfoTreeView1.Size = new System.Drawing.Size(520, 425);
+            this.vectorInfoTreeView1.Size = new System.Drawing.Size(476, 233);
             this.vectorInfoTreeView1.TabIndex = 0;
             this.vectorInfoTreeView1.Text = "vectorInfoTreeView1";
             // 
@@ -575,6 +586,81 @@ namespace MW5.Plugins.Symbology.Forms
             this.vectorInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this.vectorInfoTreeView1.ToolTipControl.TabIndex = 1;
             this.vectorInfoTreeView1.ToolTipControl.Text = "toolTip";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(19, 393);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(482, 20);
+            this.progressBar1.TabIndex = 184;
+            this.progressBar1.Visible = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.txtModeDescription);
+            this.groupBox2.Controls.Add(this.chkEditMode);
+            this.groupBox2.Controls.Add(this.chkInMemory);
+            this.groupBox2.Controls.Add(this.chkSpatialIndex);
+            this.groupBox2.Controls.Add(this.chkFastMode);
+            this.groupBox2.Location = new System.Drawing.Point(19, 272);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(482, 115);
+            this.groupBox2.TabIndex = 182;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Options";
+            // 
+            // txtModeDescription
+            // 
+            this.txtModeDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtModeDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.txtModeDescription.Location = new System.Drawing.Point(20, 44);
+            this.txtModeDescription.Name = "txtModeDescription";
+            this.txtModeDescription.Size = new System.Drawing.Size(444, 58);
+            this.txtModeDescription.TabIndex = 0;
+            this.txtModeDescription.Text = "";
+            // 
+            // chkEditMode
+            // 
+            this.chkEditMode.AutoSize = true;
+            this.chkEditMode.Enabled = false;
+            this.chkEditMode.Location = new System.Drawing.Point(152, 21);
+            this.chkEditMode.Name = "chkEditMode";
+            this.chkEditMode.Size = new System.Drawing.Size(87, 17);
+            this.chkEditMode.TabIndex = 44;
+            this.chkEditMode.Text = "Editing mode";
+            this.chkEditMode.UseVisualStyleBackColor = true;
+            // 
+            // chkInMemory
+            // 
+            this.chkInMemory.AutoSize = true;
+            this.chkInMemory.Enabled = false;
+            this.chkInMemory.Location = new System.Drawing.Point(359, 21);
+            this.chkInMemory.Name = "chkInMemory";
+            this.chkInMemory.Size = new System.Drawing.Size(107, 17);
+            this.chkInMemory.TabIndex = 43;
+            this.chkInMemory.Text = "Stored in memory";
+            this.chkInMemory.UseVisualStyleBackColor = true;
+            // 
+            // chkSpatialIndex
+            // 
+            this.chkSpatialIndex.AutoSize = true;
+            this.chkSpatialIndex.Location = new System.Drawing.Point(256, 21);
+            this.chkSpatialIndex.Name = "chkSpatialIndex";
+            this.chkSpatialIndex.Size = new System.Drawing.Size(86, 17);
+            this.chkSpatialIndex.TabIndex = 42;
+            this.chkSpatialIndex.Text = "Spatial index";
+            this.chkSpatialIndex.UseVisualStyleBackColor = true;
+            // 
+            // chkFastMode
+            // 
+            this.chkFastMode.AutoSize = true;
+            this.chkFastMode.Enabled = false;
+            this.chkFastMode.Location = new System.Drawing.Point(20, 21);
+            this.chkFastMode.Name = "chkFastMode";
+            this.chkFastMode.Size = new System.Drawing.Size(115, 17);
+            this.chkFastMode.TabIndex = 39;
+            this.chkFastMode.Text = "Fast drawing mode";
+            this.chkFastMode.UseVisualStyleBackColor = true;
             // 
             // tabDefault
             // 
@@ -1560,7 +1646,8 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // tabVisibility
             // 
-            this.tabVisibility.Controls.Add(this.groupBox1);
+            this.tabVisibility.Controls.Add(this.groupBox21);
+            this.tabVisibility.Controls.Add(this.groupBox19);
             this.tabVisibility.Controls.Add(this.groupBox13);
             this.tabVisibility.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_eye24;
             this.tabVisibility.ImageSize = new System.Drawing.Size(24, 24);
@@ -1573,128 +1660,54 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabVisibility.Text = "Visibility";
             this.tabVisibility.ThemesEnabled = false;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.scaleLayer);
-            this.groupBox1.Location = new System.Drawing.Point(17, 10);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(225, 301);
-            this.groupBox1.TabIndex = 169;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Dynamic visibility";
-            // 
-            // scaleLayer
-            // 
-            this.scaleLayer.BackColor = System.Drawing.Color.Transparent;
-            this.scaleLayer.CurrentScale = -1D;
-            this.scaleLayer.FillColor = System.Drawing.Color.LightGreen;
-            this.scaleLayer.FillColor2 = System.Drawing.Color.LightGreen;
-            this.scaleLayer.Location = new System.Drawing.Point(8, 19);
-            this.scaleLayer.MaximumScale = 1000000000D;
-            this.scaleLayer.MaximumSize = new System.Drawing.Size(300, 1000);
-            this.scaleLayer.MinimimScale = 1.0000004910124416D;
-            this.scaleLayer.MinimumSize = new System.Drawing.Size(80, 200);
-            this.scaleLayer.Name = "scaleLayer";
-            this.scaleLayer.OutlineColor = System.Drawing.Color.DarkGray;
-            this.scaleLayer.SelectionColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.scaleLayer.Size = new System.Drawing.Size(209, 276);
-            this.scaleLayer.TabIndex = 162;
-            this.scaleLayer.UseDynamicVisibility = false;
-            this.scaleLayer.StateChanged += new MW5.Plugins.Symbology.Controls.StateChanged(this.OnScaleLayerStateChanged);
-            // 
-            // groupBox13
-            // 
-            this.groupBox13.Controls.Add(this.btnClearLayerExpression);
-            this.groupBox13.Controls.Add(this.btnLayerExpression);
-            this.groupBox13.Controls.Add(this.txtLayerExpression);
-            this.groupBox13.Location = new System.Drawing.Point(255, 10);
-            this.groupBox13.Name = "groupBox13";
-            this.groupBox13.Size = new System.Drawing.Size(252, 301);
-            this.groupBox13.TabIndex = 168;
-            this.groupBox13.TabStop = false;
-            this.groupBox13.Text = "Visibility expression";
-            // 
-            // btnClearLayerExpression
-            // 
-            this.btnClearLayerExpression.BeforeTouchSize = new System.Drawing.Size(74, 26);
-            this.btnClearLayerExpression.IsBackStageButton = false;
-            this.btnClearLayerExpression.Location = new System.Drawing.Point(157, 257);
-            this.btnClearLayerExpression.Name = "btnClearLayerExpression";
-            this.btnClearLayerExpression.Size = new System.Drawing.Size(74, 26);
-            this.btnClearLayerExpression.TabIndex = 168;
-            this.btnClearLayerExpression.Text = "Clear";
-            this.btnClearLayerExpression.UseVisualStyleBackColor = true;
-            this.btnClearLayerExpression.Click += new System.EventHandler(this.btnClearLayerExpression_Click);
-            // 
-            // btnLayerExpression
-            // 
-            this.btnLayerExpression.BeforeTouchSize = new System.Drawing.Size(75, 26);
-            this.btnLayerExpression.IsBackStageButton = false;
-            this.btnLayerExpression.Location = new System.Drawing.Point(76, 257);
-            this.btnLayerExpression.Name = "btnLayerExpression";
-            this.btnLayerExpression.Size = new System.Drawing.Size(75, 26);
-            this.btnLayerExpression.TabIndex = 163;
-            this.btnLayerExpression.Text = "Change...";
-            this.btnLayerExpression.UseVisualStyleBackColor = true;
-            this.btnLayerExpression.Click += new System.EventHandler(this.OnLayerExpressionClick);
-            // 
-            // txtLayerExpression
-            // 
-            this.txtLayerExpression.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtLayerExpression.Location = new System.Drawing.Point(10, 19);
-            this.txtLayerExpression.Multiline = true;
-            this.txtLayerExpression.Name = "txtLayerExpression";
-            this.txtLayerExpression.Size = new System.Drawing.Size(221, 232);
-            this.txtLayerExpression.TabIndex = 162;
-            this.toolTip1.SetToolTip(this.txtLayerExpression, "Only shapes which agree with the following expression will be visible");
-            this.txtLayerExpression.TextChanged += new System.EventHandler(this.OnLayerExpressionTextChanged);
-            // 
-            // tabMode
-            // 
-            this.tabMode.Controls.Add(this.groupBox21);
-            this.tabMode.Controls.Add(this.progressBar1);
-            this.tabMode.Controls.Add(this.groupBox19);
-            this.tabMode.Controls.Add(this.groupModeDescription);
-            this.tabMode.Controls.Add(this.groupBox2);
-            this.tabMode.Image = null;
-            this.tabMode.ImageIndex = 7;
-            this.tabMode.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabMode.Location = new System.Drawing.Point(119, 0);
-            this.tabMode.Name = "tabMode";
-            this.tabMode.ShowCloseButton = true;
-            this.tabMode.Size = new System.Drawing.Size(520, 425);
-            this.tabMode.TabIndex = 13;
-            this.tabMode.Text = "Mode";
-            this.tabMode.ThemesEnabled = false;
-            // 
             // groupBox21
             // 
+            this.groupBox21.Controls.Add(this.label11);
+            this.groupBox21.Controls.Add(this.label10);
+            this.groupBox21.Controls.Add(this.comboBox1);
             this.groupBox21.Controls.Add(this.cboCollisionMode);
-            this.groupBox21.Location = new System.Drawing.Point(270, 115);
+            this.groupBox21.Location = new System.Drawing.Point(219, 18);
             this.groupBox21.Name = "groupBox21";
-            this.groupBox21.Size = new System.Drawing.Size(227, 72);
-            this.groupBox21.TabIndex = 182;
+            this.groupBox21.Size = new System.Drawing.Size(279, 95);
+            this.groupBox21.TabIndex = 184;
             this.groupBox21.TabStop = false;
-            this.groupBox21.Text = "Collision mode";
+            this.groupBox21.Text = "Prevent overlaps";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 65);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.TabIndex = 186;
+            this.label11.Text = "Labels:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(15, 31);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(51, 13);
+            this.label10.TabIndex = 185;
+            this.label10.Text = "Features:";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(84, 62);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(174, 21);
+            this.comboBox1.TabIndex = 185;
             // 
             // cboCollisionMode
             // 
             this.cboCollisionMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboCollisionMode.FormattingEnabled = true;
-            this.cboCollisionMode.Location = new System.Drawing.Point(23, 28);
+            this.cboCollisionMode.Location = new System.Drawing.Point(84, 28);
             this.cboCollisionMode.Name = "cboCollisionMode";
-            this.cboCollisionMode.Size = new System.Drawing.Size(185, 21);
+            this.cboCollisionMode.Size = new System.Drawing.Size(174, 21);
             this.cboCollisionMode.TabIndex = 184;
-            this.cboCollisionMode.SelectedIndexChanged += new System.EventHandler(this.Ui2Settings);
-            this.cboCollisionMode.MouseEnter += new System.EventHandler(this.OnModeEnter);
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(15, 290);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(482, 20);
-            this.progressBar1.TabIndex = 181;
-            this.progressBar1.Visible = false;
             // 
             // groupBox19
             // 
@@ -1702,12 +1715,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox19.Controls.Add(this.udMinDrawingSize);
             this.groupBox19.Controls.Add(this.udMinLabelingSize);
             this.groupBox19.Controls.Add(this.label6);
-            this.groupBox19.Location = new System.Drawing.Point(270, 14);
+            this.groupBox19.Location = new System.Drawing.Point(24, 18);
             this.groupBox19.Name = "groupBox19";
-            this.groupBox19.Size = new System.Drawing.Size(227, 95);
-            this.groupBox19.TabIndex = 180;
+            this.groupBox19.Size = new System.Drawing.Size(179, 95);
+            this.groupBox19.TabIndex = 183;
             this.groupBox19.TabStop = false;
-            this.groupBox19.Text = "Minimal shape size, pixels";
+            this.groupBox19.Text = "Minimal geometry size, pixels";
             // 
             // label12
             // 
@@ -1720,7 +1733,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // udMinDrawingSize
             // 
-            this.udMinDrawingSize.Location = new System.Drawing.Point(109, 29);
+            this.udMinDrawingSize.Location = new System.Drawing.Point(95, 29);
             this.udMinDrawingSize.Maximum = new decimal(new int[] {
             5,
             0,
@@ -1729,12 +1742,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.udMinDrawingSize.Name = "udMinDrawingSize";
             this.udMinDrawingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinDrawingSize.TabIndex = 176;
-            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.udMinDrawingSizeChanged);
-            this.udMinDrawingSize.Enter += new System.EventHandler(this.OnModeEnter);
             // 
             // udMinLabelingSize
             // 
-            this.udMinLabelingSize.Location = new System.Drawing.Point(109, 63);
+            this.udMinLabelingSize.Location = new System.Drawing.Point(95, 63);
             this.udMinLabelingSize.Maximum = new decimal(new int[] {
             50,
             0,
@@ -1743,8 +1754,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.udMinLabelingSize.Name = "udMinLabelingSize";
             this.udMinLabelingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinLabelingSize.TabIndex = 178;
-            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.OnMinLabelingSizeChanged);
-            this.udMinLabelingSize.Enter += new System.EventHandler(this.OnModeEnter);
             // 
             // label6
             // 
@@ -1755,86 +1764,69 @@ namespace MW5.Plugins.Symbology.Forms
             this.label6.TabIndex = 175;
             this.label6.Text = "To draw:";
             // 
-            // groupModeDescription
+            // groupBox13
             // 
-            this.groupModeDescription.Controls.Add(this.txtModeDescription);
-            this.groupModeDescription.Location = new System.Drawing.Point(15, 193);
-            this.groupModeDescription.Name = "groupModeDescription";
-            this.groupModeDescription.Size = new System.Drawing.Size(482, 91);
-            this.groupModeDescription.TabIndex = 169;
-            this.groupModeDescription.TabStop = false;
+            this.groupBox13.Controls.Add(this.btnClearLayerExpression);
+            this.groupBox13.Controls.Add(this.btnLayerExpression);
+            this.groupBox13.Controls.Add(this.txtLayerExpression);
+            this.groupBox13.Location = new System.Drawing.Point(24, 126);
+            this.groupBox13.Name = "groupBox13";
+            this.groupBox13.Size = new System.Drawing.Size(474, 179);
+            this.groupBox13.TabIndex = 168;
+            this.groupBox13.TabStop = false;
+            this.groupBox13.Text = "Visibility expression";
             // 
-            // txtModeDescription
+            // btnClearLayerExpression
             // 
-            this.txtModeDescription.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtModeDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtModeDescription.Location = new System.Drawing.Point(6, 14);
-            this.txtModeDescription.Name = "txtModeDescription";
-            this.txtModeDescription.Size = new System.Drawing.Size(444, 71);
-            this.txtModeDescription.TabIndex = 0;
-            this.txtModeDescription.Text = "";
+            this.btnClearLayerExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearLayerExpression.BeforeTouchSize = new System.Drawing.Size(74, 26);
+            this.btnClearLayerExpression.IsBackStageButton = false;
+            this.btnClearLayerExpression.Location = new System.Drawing.Point(383, 135);
+            this.btnClearLayerExpression.Name = "btnClearLayerExpression";
+            this.btnClearLayerExpression.Size = new System.Drawing.Size(74, 26);
+            this.btnClearLayerExpression.TabIndex = 168;
+            this.btnClearLayerExpression.Text = "Clear";
+            this.btnClearLayerExpression.UseVisualStyleBackColor = true;
+            this.btnClearLayerExpression.Click += new System.EventHandler(this.btnClearLayerExpression_Click);
             // 
-            // groupBox2
+            // btnLayerExpression
             // 
-            this.groupBox2.Controls.Add(this.chkEditMode);
-            this.groupBox2.Controls.Add(this.chkInMemory);
-            this.groupBox2.Controls.Add(this.chkSpatialIndex);
-            this.groupBox2.Controls.Add(this.chkFastMode);
-            this.groupBox2.Location = new System.Drawing.Point(15, 14);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(249, 173);
-            this.groupBox2.TabIndex = 167;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Options";
+            this.btnLayerExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnLayerExpression.BeforeTouchSize = new System.Drawing.Size(75, 26);
+            this.btnLayerExpression.IsBackStageButton = false;
+            this.btnLayerExpression.Location = new System.Drawing.Point(302, 135);
+            this.btnLayerExpression.Name = "btnLayerExpression";
+            this.btnLayerExpression.Size = new System.Drawing.Size(75, 26);
+            this.btnLayerExpression.TabIndex = 163;
+            this.btnLayerExpression.Text = "Change...";
+            this.btnLayerExpression.UseVisualStyleBackColor = true;
+            this.btnLayerExpression.Click += new System.EventHandler(this.OnLayerExpressionClick);
             // 
-            // chkEditMode
+            // txtLayerExpression
             // 
-            this.chkEditMode.AutoSize = true;
-            this.chkEditMode.Enabled = false;
-            this.chkEditMode.Location = new System.Drawing.Point(25, 98);
-            this.chkEditMode.Name = "chkEditMode";
-            this.chkEditMode.Size = new System.Drawing.Size(87, 17);
-            this.chkEditMode.TabIndex = 44;
-            this.chkEditMode.Text = "Editing mode";
-            this.chkEditMode.UseVisualStyleBackColor = true;
-            this.chkEditMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
+            this.txtLayerExpression.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtLayerExpression.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtLayerExpression.Location = new System.Drawing.Point(10, 19);
+            this.txtLayerExpression.Multiline = true;
+            this.txtLayerExpression.Name = "txtLayerExpression";
+            this.txtLayerExpression.Size = new System.Drawing.Size(447, 110);
+            this.txtLayerExpression.TabIndex = 162;
+            this.toolTip1.SetToolTip(this.txtLayerExpression, "Only shapes which agree with the following expression will be visible");
+            this.txtLayerExpression.TextChanged += new System.EventHandler(this.OnLayerExpressionTextChanged);
             // 
-            // chkInMemory
+            // tabJoins
             // 
-            this.chkInMemory.AutoSize = true;
-            this.chkInMemory.Enabled = false;
-            this.chkInMemory.Location = new System.Drawing.Point(25, 65);
-            this.chkInMemory.Name = "chkInMemory";
-            this.chkInMemory.Size = new System.Drawing.Size(107, 17);
-            this.chkInMemory.TabIndex = 43;
-            this.chkInMemory.Text = "Stored in memory";
-            this.chkInMemory.UseVisualStyleBackColor = true;
-            this.chkInMemory.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
-            // 
-            // chkSpatialIndex
-            // 
-            this.chkSpatialIndex.AutoSize = true;
-            this.chkSpatialIndex.Location = new System.Drawing.Point(25, 131);
-            this.chkSpatialIndex.Name = "chkSpatialIndex";
-            this.chkSpatialIndex.Size = new System.Drawing.Size(86, 17);
-            this.chkSpatialIndex.TabIndex = 42;
-            this.chkSpatialIndex.Text = "Spatial index";
-            this.chkSpatialIndex.UseVisualStyleBackColor = true;
-            this.chkSpatialIndex.CheckedChanged += new System.EventHandler(this.OnSpatialIndexChecked);
-            this.chkSpatialIndex.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
-            // 
-            // chkFastMode
-            // 
-            this.chkFastMode.AutoSize = true;
-            this.chkFastMode.Enabled = false;
-            this.chkFastMode.Location = new System.Drawing.Point(25, 32);
-            this.chkFastMode.Name = "chkFastMode";
-            this.chkFastMode.Size = new System.Drawing.Size(115, 17);
-            this.chkFastMode.TabIndex = 39;
-            this.chkFastMode.Text = "Fast drawing mode";
-            this.chkFastMode.UseVisualStyleBackColor = true;
-            this.chkFastMode.Enter += new System.EventHandler(this.OnModeEnter);
-            this.chkFastMode.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnModeMouseMove);
+            this.tabJoins.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_database241;
+            this.tabJoins.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabJoins.Location = new System.Drawing.Point(119, 0);
+            this.tabJoins.Name = "tabJoins";
+            this.tabJoins.ShowCloseButton = true;
+            this.tabJoins.Size = new System.Drawing.Size(520, 425);
+            this.tabJoins.TabIndex = 13;
+            this.tabJoins.Text = "Joins";
+            this.tabJoins.ThemesEnabled = false;
             // 
             // imageList1
             // 
@@ -2064,7 +2056,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.tabInfo.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.tabDefault.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupPoint.ResumeLayout(false);
@@ -2107,18 +2102,14 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupCharts.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pctCharts)).EndInit();
             this.tabVisibility.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox13.ResumeLayout(false);
-            this.groupBox13.PerformLayout();
-            this.tabMode.ResumeLayout(false);
             this.groupBox21.ResumeLayout(false);
+            this.groupBox21.PerformLayout();
             this.groupBox19.ResumeLayout(false);
             this.groupBox19.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udMinDrawingSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udMinLabelingSize)).EndInit();
-            this.groupModeDescription.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.groupBox13.ResumeLayout(false);
+            this.groupBox13.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinScale)).EndInit();
@@ -2193,26 +2184,12 @@ namespace MW5.Plugins.Symbology.Forms
         private ScaleControl scaleControl1;
         private ButtonAdv btnClearLayerExpression;
         private Office2007ColorPicker clpPointFill;
-        private TabPageAdv tabMode;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox chkInMemory;
-        private System.Windows.Forms.CheckBox chkSpatialIndex;
-        private System.Windows.Forms.CheckBox chkFastMode;
+        private TabPageAdv tabJoins;
         private Office2007ColorPicker clpDefaultOutline;
-        private System.Windows.Forms.GroupBox groupModeDescription;
         private Office2007ColorPicker clpSelection;
-        private System.Windows.Forms.GroupBox groupBox19;
-        private System.Windows.Forms.Label label12;
-        private NumericUpDownEx udMinDrawingSize;
-        private NumericUpDownEx udMinLabelingSize;
-        private System.Windows.Forms.Label label6;
         private NumericUpDownEx udDefaultSize;
-        private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.CheckBox chkRedrawMap;
-        private System.Windows.Forms.RichTextBox txtModeDescription;
         private System.Windows.Forms.GroupBox groupLabelAppearance;
-        private System.Windows.Forms.ComboBox cboCollisionMode;
-        private System.Windows.Forms.GroupBox groupBox21;
         private System.Windows.Forms.GroupBox groupBox16;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupPoint;
@@ -2233,8 +2210,6 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.Label lblMultilinePattern;
         private System.Windows.Forms.Panel panelLineOptions;
         private ButtonAdv btnSaveChanges;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private ScaleControl scaleLayer;
         private ButtonAdv btnLabelsClear;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.RichTextBox txtComments;
@@ -2251,7 +2226,6 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.GroupBox groupCharts;
         private System.Windows.Forms.PictureBox pctCharts;
         private System.Windows.Forms.GroupBox groupBox13;
-        private System.Windows.Forms.CheckBox chkEditMode;
         private TabPageAdv tabInfo;
         private System.Windows.Forms.ImageList imageList1;
         private TextBoxExt txtBriefInfo;
@@ -2275,5 +2249,23 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.ToolStripMenuItem toolRemoveStyle;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolOpenLocation;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RichTextBox txtModeDescription;
+        private System.Windows.Forms.CheckBox chkEditMode;
+        private System.Windows.Forms.CheckBox chkInMemory;
+        private System.Windows.Forms.CheckBox chkSpatialIndex;
+        private System.Windows.Forms.CheckBox chkFastMode;
+        private System.Windows.Forms.GroupBox groupBox21;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cboCollisionMode;
+        private System.Windows.Forms.GroupBox groupBox19;
+        private System.Windows.Forms.Label label12;
+        private NumericUpDownEx udMinDrawingSize;
+        private NumericUpDownEx udMinLabelingSize;
+        private System.Windows.Forms.Label label6;
     }
 }

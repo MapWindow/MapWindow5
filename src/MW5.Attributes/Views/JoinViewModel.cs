@@ -1,18 +1,21 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="JoinViewModel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Attributes.Enums;
+using MW5.Attributes.Helpers;
 using MW5.Plugins.Services;
-using MW5.Plugins.TableEditor.Helpers;
 using MW5.Shared;
 
-namespace MW5.Plugins.TableEditor.Views
+namespace MW5.Attributes.Views
 {
     public class JoinViewModel
     {
@@ -36,25 +39,18 @@ namespace MW5.Plugins.TableEditor.Views
 
             string filename = PathHelper.GetAbsolutePath(editJoin.Filename, table.Filename);
             OpenDatasource(filename);
-
         }
-
-        #region Properties
-
-        public FieldJoin Join { get; set; }
-
-        public string Filename { get; private set; }
-
-        public IAttributeTable Table { get; set; }
-
-        public IAttributeTable External { get; private set; }
-
-        public JoinSourceType SourceType { get; private set; }
 
         public bool Editing
         {
             get { return Join != null; }
         }
+
+        public IAttributeTable External { get; private set; }
+
+        public string Filename { get; private set; }
+
+        public FieldJoin Join { get; set; }
 
         public IEnumerable<string> Options
         {
@@ -63,7 +59,24 @@ namespace MW5.Plugins.TableEditor.Views
 
         public string SelectedOption { get; set; }
 
-        #endregion
+        public JoinSourceType SourceType { get; private set; }
+
+        public IAttributeTable Table { get; set; }
+
+        public string GetOptionsString()
+        {
+            switch (SourceType)
+            {
+                case JoinSourceType.Dbf:
+                    return "";
+                case JoinSourceType.Xls:
+                    return "worksheet=" + SelectedOption;
+                case JoinSourceType.Csv:
+                    return "separator=" + SelectedOption;
+            }
+
+            return string.Empty;
+        }
 
         /// <summary>
         /// Opens datasource with specified name (checks extension and loads list of options).
@@ -81,56 +94,6 @@ namespace MW5.Plugins.TableEditor.Views
 
             MessageService.Current.Info("Failed to open datasource:" + Filename);
             return false;
-        }
-
-        private bool LoadOptions()
-        {
-            _options.Clear();
-
-            switch (SourceType)
-            {
-                case JoinSourceType.Dbf:
-                    _options = new List<string>() { Path.GetFileNameWithoutExtension(Filename) };
-                    break;
-                case JoinSourceType.Xls:
-                    _options = XlsImportHelper.GetWorkbooks(Filename);
-                    break;
-                case JoinSourceType.Csv:
-                    //string options = ", (comma)", "| (vertical bar)", "; (semicolon)", ": (colon)", "- (hyphen)", "= (equals)", "\' (apostrophe)", "Tab"
-                    _options = new List<string> { ",", "|", ";", ":", "-", "=", "\'", "Tab" };
-                    break;
-                default:
-                    return false;
-            }
-
-            if (Join != null)
-            {
-                RestoreSelectedOption(Join.Options);
-            }
-
-            return _options.Any();
-        }
-
-        private void RestoreSelectedOption(string options)
-        {
-            if (string.IsNullOrWhiteSpace(options))
-            {
-                return;
-            }
-            
-            var values = options.Split('=');
-            if (values.Count() == 2)
-            {
-                var value = values[1].ToLower();
-                foreach (var option in Options)
-                {
-                    if (option.ToLower().StartsWith(value))
-                    {
-                        SelectedOption = option;
-                        break;
-                    }
-                }
-            }
         }
 
         public bool ReloadExternal()
@@ -152,6 +115,60 @@ namespace MW5.Plugins.TableEditor.Views
             RestoreSelectedOption(joinOptions);
 
             return ReloadExternal(table);
+        }
+
+        private bool IdentifyDatasource(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return false;
+            }
+
+            string ext = Path.GetExtension(filename.ToLower());
+
+            switch (ext)
+            {
+                case ".xls":
+                case ".xlsx":
+                    SourceType = JoinSourceType.Xls;
+                    return true;
+                case ".csv":
+                    SourceType = JoinSourceType.Csv;
+                    return true;
+                case ".dbf":
+                    SourceType = JoinSourceType.Dbf;
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool LoadOptions()
+        {
+            _options.Clear();
+
+            switch (SourceType)
+            {
+                case JoinSourceType.Dbf:
+                    _options = new List<string> { Path.GetFileNameWithoutExtension(Filename) };
+                    break;
+                case JoinSourceType.Xls:
+                    _options = XlsImportHelper.GetWorkbooks(Filename);
+                    break;
+                case JoinSourceType.Csv:
+                    //string options = ", (comma)", "| (vertical bar)", "; (semicolon)", ": (colon)", "- (hyphen)", "= (equals)", "\' (apostrophe)", "Tab"
+                    _options = new List<string> { ",", "|", ";", ":", "-", "=", "\'", "Tab" };
+                    break;
+                default:
+                    return false;
+            }
+
+            if (Join != null)
+            {
+                RestoreSelectedOption(Join.Options);
+            }
+
+            return _options.Any();
         }
 
         private bool ReloadExternal(IAttributeTable table)
@@ -185,45 +202,26 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
-        private bool IdentifyDatasource(string filename)
+        private void RestoreSelectedOption(string options)
         {
-            if (string.IsNullOrWhiteSpace(filename))
+            if (string.IsNullOrWhiteSpace(options))
             {
-                return false;
+                return;
             }
 
-            string ext = Path.GetExtension(filename.ToLower());
-
-            switch (ext)
+            var values = options.Split('=');
+            if (values.Count() == 2)
             {
-                case ".xls":
-                case ".xlsx":
-                    SourceType = JoinSourceType.Xls;
-                    return true;
-                case ".csv":
-                    SourceType = JoinSourceType.Csv;
-                    return true;
-                case ".dbf":
-                    SourceType = JoinSourceType.Dbf;
-                    return true;
+                var value = values[1].ToLower();
+                foreach (var option in Options)
+                {
+                    if (option.ToLower().StartsWith(value))
+                    {
+                        SelectedOption = option;
+                        break;
+                    }
+                }
             }
-
-            return false;
-        }
-
-        public string GetOptionsString()
-        {
-            switch (SourceType)
-            {
-                case JoinSourceType.Dbf:
-                    return "";
-                case JoinSourceType.Xls:
-                    return "worksheet=" + SelectedOption;
-                case JoinSourceType.Csv:
-                    return "separator=" + SelectedOption;
-            }
-
-            return string.Empty;
         }
     }
 }

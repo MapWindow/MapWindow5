@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 
-namespace MW5.Plugins.TableEditor.Controls
+namespace MW5.Attributes.Controls
 {
     public class JoinsGrid: StronglyTypedGrid<FieldJoin>
     {

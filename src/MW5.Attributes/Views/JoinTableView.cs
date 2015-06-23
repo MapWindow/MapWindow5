@@ -8,12 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Plugins.TableEditor.Model;
-using MW5.Plugins.TableEditor.Views.Abstract;
+using MW5.Attributes.Enums;
+using MW5.Attributes.Model;
+using MW5.Attributes.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Forms;
 
-namespace MW5.Plugins.TableEditor.Views
+namespace MW5.Attributes.Views
 {
     [HasRegions]
     public partial class JoinTableView : JoinDbfViewBase, IJoinTableView

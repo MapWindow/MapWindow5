@@ -1,16 +1,20 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="DbfImportHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
-using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Plugins.TableEditor.Helpers
+namespace MW5.Attributes.Helpers
 {
     /// <summary>
     /// The dbf import.
@@ -29,56 +33,6 @@ namespace MW5.Plugins.TableEditor.Helpers
             CopyFields(dt, tableToFill);
 
             CopyValues(dt, tableToFill);
-        }
-
-        private static void CopyValues(DataTable dt, IAttributeTable tableToFill)
-        {
-            for (var j = 0; j < dt.Rows.Count; j++)
-            {
-                var index = tableToFill.NumRows;
-                if (tableToFill.EditInsertRow(ref index))
-                {
-                    for (var i = 0; i < dt.Columns.Count; i++)
-                    {
-                        tableToFill.EditCellValue(i, index, dt.Rows[j][i]);
-                    }
-                }
-            }
-        }
-
-        private static void CopyFields(DataTable dt, IAttributeTable tableToFill)
-        {
-            for (var i = 0; i < dt.Columns.Count; i++)
-            {
-                var type = AttributeType.String;
-
-                switch (dt.Columns[i].DataType.ToString())
-                {
-                    case "System.String":
-                        type = AttributeType.String;
-                        break;
-                    case "System.Double":
-                        type = AttributeType.Double;
-                        break;
-                    case "System.Int32":
-                        type = AttributeType.Integer;
-                        break;
-                }
-
-                var fld = new AttributeField
-                {
-                    Name = dt.Columns[i].ColumnName,
-                    Type = type,
-                    Precision = 6,
-                };
-
-                if (dt.Columns[i].MaxLength != -1)
-                {
-                    fld.Width = dt.Columns[i].MaxLength;
-                }
-
-                tableToFill.Fields.Add(fld);
-            }
         }
 
         /// <summary>
@@ -151,6 +105,51 @@ namespace MW5.Plugins.TableEditor.Helpers
             }
 
             return true;
+        }
+
+        private static void CopyFields(DataTable dt, IAttributeTable tableToFill)
+        {
+            for (var i = 0; i < dt.Columns.Count; i++)
+            {
+                var type = AttributeType.String;
+
+                switch (dt.Columns[i].DataType.ToString())
+                {
+                    case "System.String":
+                        type = AttributeType.String;
+                        break;
+                    case "System.Double":
+                        type = AttributeType.Double;
+                        break;
+                    case "System.Int32":
+                        type = AttributeType.Integer;
+                        break;
+                }
+
+                var fld = new AttributeField { Name = dt.Columns[i].ColumnName, Type = type, Precision = 6, };
+
+                if (dt.Columns[i].MaxLength != -1)
+                {
+                    fld.Width = dt.Columns[i].MaxLength;
+                }
+
+                tableToFill.Fields.Add(fld);
+            }
+        }
+
+        private static void CopyValues(DataTable dt, IAttributeTable tableToFill)
+        {
+            for (var j = 0; j < dt.Rows.Count; j++)
+            {
+                var index = tableToFill.NumRows;
+                if (tableToFill.EditInsertRow(ref index))
+                {
+                    for (var i = 0; i < dt.Columns.Count; i++)
+                    {
+                        tableToFill.EditCellValue(i, index, dt.Rows[j][i]);
+                    }
+                }
+            }
         }
     }
 }

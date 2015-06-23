@@ -22,7 +22,7 @@ namespace MW5.Plugins.TableEditor
                 .RegisterView<IUpdateMeasurementsView, UpdateMeasurementsView>()
                 .RegisterView<ICalculateFieldView, CalculateFieldView>()
                 .RegisterView<IDeleteFieldsView, DeleteFieldsView>()
-                .RegisterView<IJoinTableView, JoinTableView>()
+                
                 .RegisterView<IJoinsView, JoinsView>()
                 .RegisterView<IFieldPropertiesView, FieldPropertiesView>()
                 .RegisterView<IFieldStatsView, FieldStatsView>()

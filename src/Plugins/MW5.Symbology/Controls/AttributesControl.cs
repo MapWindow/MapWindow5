@@ -19,12 +19,15 @@ namespace MW5.Plugins.Symbology.Controls
         public AttributesControl()
         {
             InitializeComponent();
+            attributeGrid1.WrapWithPanel = false;
         }
 
         public void Initialize(IFeatureSet featureSet)
         {
             if (featureSet == null) throw new ArgumentNullException("featureSet");
             _featureSet = featureSet;
+
+            chkVisibility.Checked = featureSet.Table.Fields.All(f => f.Visible);
 
             UpdateGrid();
         }
@@ -34,18 +37,6 @@ namespace MW5.Plugins.Symbology.Controls
             attributeGrid1.DataSource = _featureSet.Table.Fields.ToList();
         }
 
-        private void toolCheckAll_Click(object sender, EventArgs e)
-        {
-            ChangeVisibility(true);
-            UpdateGrid();
-        }
-
-        private void toolUncheckAll_Click(object sender, EventArgs e)
-        {
-            ChangeVisibility(false);
-            UpdateGrid();
-        }
-
         private void ChangeVisibility(bool visible)
         {
             var fields = _featureSet.Table.Fields;
@@ -53,6 +44,12 @@ namespace MW5.Plugins.Symbology.Controls
             {
                 field.Visible = visible;
             }
+        }
+
+        private void OnVisibilityCheckedChanged(object sender, EventArgs e)
+        {
+            ChangeVisibility(chkVisibility.Checked);
+            UpdateGrid();
         }
     }
 }

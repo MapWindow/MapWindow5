@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 
-namespace MW5.Plugins.TableEditor.Helpers
+namespace MW5.Attributes.Helpers
 {
     /// <summary>
     ///   Takes care of importing data from excel

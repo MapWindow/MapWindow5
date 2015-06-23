@@ -48,6 +48,12 @@ namespace MW5.UI.Controls
                 return;
             }
 
+            if (model.ReadOnly)
+            {
+                e.Inner.Cancel = true;
+                return;
+            }
+
             var cellType = model.CellType;
             if (!string.IsNullOrWhiteSpace(cellType) && cellType.EqualsIgnoreCase("CheckBox"))
             {
@@ -62,30 +68,28 @@ namespace MW5.UI.Controls
         private void TableControl_CurrentCellValidating(object sender, System.ComponentModel.CancelEventArgs e)
         {
             var type = GetCurrentColumnFieldType();
-            if (type != null )
+            if (type == null) return;
+
+            string text = TableControl.CurrentCell.Renderer.ControlText;
+                
+            if (type == typeof (double))
             {
-                string text = TableControl.CurrentCell.Renderer.ControlText;
-                
-                
-                if (type == typeof (double))
+                double val;
+                if (!Double.TryParse(text, out val))
                 {
-                    double val;
-                    if (!Double.TryParse(text, out val))
-                    {
-                        e.Cancel = true;
-                        TableControl.CurrentCell.CancelEdit();
-                        MessageService.Current.Warn("Invalid double value.");
-                    }
+                    e.Cancel = true;
+                    TableControl.CurrentCell.CancelEdit();
+                    MessageService.Current.Warn("Invalid double value.");
                 }
-                else if (type == typeof (int))
+            }
+            else if (type == typeof (int))
+            {
+                int val;
+                if (!Int32.TryParse(text, out val))
                 {
-                    int val;
-                    if (!Int32.TryParse(text, out val))
-                    {
-                        e.Cancel = true;
-                        TableControl.CurrentCell.CancelEdit();
-                        MessageService.Current.Warn("Invalid integer value.");
-                    }
+                    e.Cancel = true;
+                    TableControl.CurrentCell.CancelEdit();
+                    MessageService.Current.Warn("Invalid integer value.");
                 }
             }
         }

@@ -6,12 +6,12 @@
 
 using System;
 using System.Linq;
+using MW5.Attributes.Views.Abstract;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Plugins.TableEditor.Views.Abstract;
 using MW5.Shared;
 
-namespace MW5.Plugins.TableEditor.Views
+namespace MW5.Attributes.Views
 {
     public class JoinTablePresenter : BasePresenter<IJoinTableView, JoinViewModel>
     {

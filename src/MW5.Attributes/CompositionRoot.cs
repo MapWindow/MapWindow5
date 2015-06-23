@@ -14,7 +14,8 @@ namespace MW5.Attributes
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterView<IQueryBuilderView, QueryBuilderView>()
-                .RegisterView<IAttributeExplorer, AttributeExplorerView>();
+                .RegisterView<IAttributeExplorer, AttributeExplorerView>()
+                .RegisterView<IJoinTableView, JoinTableView>();
         }
     }
 }

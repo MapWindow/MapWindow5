@@ -27,6 +27,7 @@ namespace MW5.Api.Concrete
             _index = index;
         }
 
+        [Browsable(false)]
         public int Index
         {
             get { return _index; }

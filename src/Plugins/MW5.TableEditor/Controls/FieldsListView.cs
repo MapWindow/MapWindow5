@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Attributes.Model;
 using MW5.Plugins.TableEditor.Model;
 
 namespace MW5.Plugins.TableEditor.Controls

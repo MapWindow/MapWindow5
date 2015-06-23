@@ -1,20 +1,35 @@
-﻿using System.ComponentModel;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IAttributeField.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System.ComponentModel;
 using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IAttributeField: IComWrapper
+    public interface IAttributeField : IComWrapper
     {
-        AttributeType Type { get; }
-        string Name { get; set; }
-        int Precision { get; }
-        int Width { get; }
-        bool Visible { get; set; }
-        string Alias { get; set; }
-        int Index { get; }
+        [Browsable(false)]
         string Abbreviation { get; }
+
+        string Alias { get; set; }
 
         [Browsable(false)]
         string DisplayName { get; }
+
+        [Browsable(false)]
+        int Index { get; }
+
+        string Name { get; set; }
+
+        int Precision { get; }
+
+        AttributeType Type { get; }
+
+        bool Visible { get; set; }
+
+        int Width { get; }
     }
 }

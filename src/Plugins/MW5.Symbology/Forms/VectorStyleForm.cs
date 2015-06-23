@@ -99,8 +99,6 @@ namespace MW5.Plugins.Symbology.Forms
 
             InitExpressionTab();
 
-            InitVisibilityTab();
-
             UpdateColorSchemes();
 
             attributesControl1.Initialize(_featureSet);
@@ -317,8 +315,6 @@ namespace MW5.Plugins.Symbology.Forms
             DrawLabelsPreview();
             DrawChartsPreview();
         }
-
-
 
         /// <summary>
         /// Saves all the data before the closing
@@ -1543,42 +1539,6 @@ namespace MW5.Plugins.Symbology.Forms
                     txtModeDescription.SelectionFont = font;
                 }
             }
-        }
-
-        /// <summary>
-        /// Initializes the state of dynamic visibility controls
-        /// </summary>
-        private void InitVisibilityTab()
-        {
-            scaleLayer.Locked = true;
-
-            scaleLayer.MaximumScale = _layer.MaxVisibleScale;
-            scaleLayer.MinimimScale = _layer.MinVisibleScale;
-            scaleLayer.UseDynamicVisibility = _layer.DynamicVisibility;
-
-            scaleLayer.CurrentScale = _context.Map.CurrentScale;
-
-            Color color = _featureSet.GeometryType == GeometryType.Polyline ? _featureSet.Style.Line.Color : _featureSet.Style.Fill.Color;
-            scaleLayer.FillColor = color;
-
-            scaleLayer.Locked = false;
-        }
-
-        /// <summary>
-        /// Handles the changes in the dynamic visibility state of the layer
-        /// </summary>
-        private void OnScaleLayerStateChanged()
-        {
-            if (LockUpdate)
-                return;
-
-            _layer.MaxVisibleScale = scaleLayer.MaximumScale;
-            _layer.MinVisibleScale = scaleLayer.MinimimScale;
-            _layer.DynamicVisibility = scaleLayer.UseDynamicVisibility;
-
-            RedrawMap();
-
-            Application.DoEvents();
         }
 
         private void OnSaveStyleClick(object sender, EventArgs e)
