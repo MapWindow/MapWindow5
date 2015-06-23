@@ -126,6 +126,12 @@
     <Compile Include="Controls\ImageCombo\ColorSchemeCombo.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\JoinControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\JoinControl.Designer.cs">
+      <DependentUpon>JoinControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ListControls\IconInfo.cs" />
     <Compile Include="Controls\OverviewScale.cs" />
     <Compile Include="Controls\OverviewGrid.cs">
@@ -439,6 +445,9 @@
     <EmbeddedResource Include="Controls\HistogramControl.resx">
       <DependentUpon>HistogramControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\JoinControl.resx">
+      <DependentUpon>JoinControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\ListControls\CharacterControl.resx">
       <DependentUpon>CharacterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -710,6 +719,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_database241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_field_add16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon_layer_edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_remove161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_clear24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

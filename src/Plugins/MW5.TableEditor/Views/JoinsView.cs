@@ -73,12 +73,7 @@ namespace MW5.Plugins.TableEditor.Views
             var list = Model.Joins.ToList();
             joinsGrid1.DataSource = list;
 
-            var t = joinsGrid1.Table;
-            if (t.Records.Count > 0)
-            {
-                var r = t.Records[t.Records.Count - 1];
-                joinsGrid1.Table.SelectedRecords.Add(r);
-            }
+            joinsGrid1.Adapter.SelectLastRow();
 
             var item = joinsGrid1.Adapter.SelectedItem;
             btnStop.Enabled =  item != null;

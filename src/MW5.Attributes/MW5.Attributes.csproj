@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Helpers\CsvImportHelper.cs" />
     <Compile Include="Helpers\DbfImportHelper.cs" />
+    <Compile Include="Helpers\JoinHelper.cs" />
     <Compile Include="Helpers\XlsImportHelper.cs" />
     <Compile Include="Model\FieldTypeWrapper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />

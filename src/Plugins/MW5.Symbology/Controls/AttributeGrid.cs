@@ -47,6 +47,7 @@ namespace MW5.Plugins.Symbology.Controls
             Adapter.ShowColumn(f => f.Type);
             Adapter.ShowColumn(f => f.Width);
             Adapter.ShowColumn(f => f.Precision);
+            Adapter.ShowColumn(f => f.Joined);
 
             Adapter.GetColumn(f => f.Name).Width = 100;
             Adapter.GetColumn(f => f.Alias).Width = 80;
@@ -55,6 +56,7 @@ namespace MW5.Plugins.Symbology.Controls
             Adapter.GetColumnStyle(item => item.Type).Enabled = false;
             Adapter.GetColumnStyle(item => item.Precision).Enabled = false;
             Adapter.GetColumnStyle(item => item.Width).Enabled = false;
+            Adapter.GetColumnStyle(item => item.Joined).Enabled = false;
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="XmlSerializationHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,37 +18,6 @@ namespace MW5.Shared
     /// </summary>
     public static class XmlSerializationHelper
     {
-        public static string SerializeToXml<T>(this T target)
-        {
-            return SerializeToXml<T>(target, null);
-        }
-
-        public static string SerializeToXml<T>(this T target, IEnumerable<Type> knownTypes)
-        {
-            using (var stream = new MemoryStream())
-            {
-                Encoding encoding = Encoding.UTF8;
-                using (XmlTextWriter xmlWriter = new XmlTextWriter(stream, encoding))
-                {
-                    xmlWriter.Formatting = Formatting.Indented;
-
-                    // create an empty namespace for output
-                    XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
-                    ns.Add(String.Empty, String.Empty);
-
-                    var ser = new XmlSerializer(typeof(T));
-
-                    ser.Serialize(xmlWriter, target, ns);
-
-                    stream.Flush();
-                    stream.Position = 0;
-                    StreamReader sr = new StreamReader(stream);
-                    string result = sr.ReadToEnd();
-                    return result;
-                }
-            }
-        }
-
         public static T DeserializeFromXml<T>(this string targetString)
         {
             return DeserializeFromXml<T>(targetString, null);
@@ -51,11 +25,11 @@ namespace MW5.Shared
 
         public static T DeserializeFromXml<T>(this string targetString, IEnumerable<Type> knownTypes)
         {
-            Encoding encoding = GetXmlDocEncoding(targetString);
+            var encoding = GetXmlDocEncoding(targetString);
 
             using (var stream = new MemoryStream(encoding.GetBytes(targetString)))
             {
-                XmlDictionaryReaderQuotas xmlDict = new XmlDictionaryReaderQuotas {MaxStringContentLength = 285192};
+                var xmlDict = new XmlDictionaryReaderQuotas { MaxStringContentLength = 285192 };
 
                 using (var reader = XmlDictionaryReader.CreateTextReader(stream, xmlDict))
                 {
@@ -64,51 +38,6 @@ namespace MW5.Shared
                     return (T)ser.Deserialize(reader);
                 }
             }
-        }
-
-        public static string SerializeToXml(XmlDocument doc)
-        {
-            var sb = new StringBuilder();
-            var settings =
-                new XmlWriterSettings
-                {
-                    Indent = true,
-                    IndentChars = @"    ",
-                    NewLineChars = Environment.NewLine,
-                    NewLineHandling = NewLineHandling.Replace,
-                };
-
-            using (var writer = XmlWriter.Create(sb, settings))
-            {
-                if (doc.ChildNodes[0] is XmlProcessingInstruction)
-                {
-                    doc.RemoveChild(doc.ChildNodes[0]);
-                }
-
-                doc.Save(writer);
-                return sb.ToString();
-            }
-        }
-
-        internal static Encoding GetXmlDocEncoding(string targetString)
-        {
-            Encoding encoding = Encoding.UTF8;
-
-            using (XmlTextReader reader = new XmlTextReader(new StringReader(targetString)))
-            {
-                reader.Read();
-                if (reader.LocalName.Equals("xml", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    while (reader.MoveToNextAttribute())
-                    {
-                        if (reader.Name.Equals("encoding", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            encoding = Encoding.GetEncoding(reader.Value);
-                        }
-                    }
-                }
-            }
-            return encoding;
         }
 
         public static T DeserializeXmlElement<T>(XmlElement el)
@@ -125,8 +54,8 @@ namespace MW5.Shared
             using (var stream = new MemoryStream())
             {
                 var ser = new XmlSerializer(target.GetType());
-                
-                XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+
+                var ns = new XmlSerializerNamespaces();
                 ns.Add(String.Empty, String.Empty);
 
                 ser.Serialize(stream, target, ns);
@@ -138,6 +67,81 @@ namespace MW5.Shared
                 doc.Load(stream);
                 return doc.DocumentElement;
             }
+        }
+
+        public static string SerializeToXml<T>(this T target)
+        {
+            return SerializeToXml(target, null);
+        }
+
+        public static string SerializeToXml<T>(this T target, IEnumerable<Type> knownTypes)
+        {
+            using (var stream = new MemoryStream())
+            {
+                var encoding = Encoding.UTF8;
+                using (var xmlWriter = new XmlTextWriter(stream, encoding))
+                {
+                    xmlWriter.Formatting = Formatting.Indented;
+
+                    // create an empty namespace for output
+                    var ns = new XmlSerializerNamespaces();
+                    ns.Add(String.Empty, String.Empty);
+
+                    var ser = new XmlSerializer(typeof(T));
+
+                    ser.Serialize(xmlWriter, target, ns);
+
+                    stream.Flush();
+                    stream.Position = 0;
+                    var sr = new StreamReader(stream);
+                    string result = sr.ReadToEnd();
+                    return result;
+                }
+            }
+        }
+
+        public static string SerializeToXml(XmlDocument doc)
+        {
+            var sb = new StringBuilder();
+            var settings = new XmlWriterSettings
+                               {
+                                   Indent = true,
+                                   IndentChars = @"    ",
+                                   NewLineChars = Environment.NewLine,
+                                   NewLineHandling = NewLineHandling.Replace,
+                               };
+
+            using (var writer = XmlWriter.Create(sb, settings))
+            {
+                if (doc.ChildNodes[0] is XmlProcessingInstruction)
+                {
+                    doc.RemoveChild(doc.ChildNodes[0]);
+                }
+
+                doc.Save(writer);
+                return sb.ToString();
+            }
+        }
+
+        internal static Encoding GetXmlDocEncoding(string targetString)
+        {
+            var encoding = Encoding.UTF8;
+
+            using (var reader = new XmlTextReader(new StringReader(targetString)))
+            {
+                reader.Read();
+                if (reader.LocalName.Equals("xml", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    while (reader.MoveToNextAttribute())
+                    {
+                        if (reader.Name.Equals("encoding", StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            encoding = Encoding.GetEncoding(reader.Value);
+                        }
+                    }
+                }
+            }
+            return encoding;
         }
     }
 }

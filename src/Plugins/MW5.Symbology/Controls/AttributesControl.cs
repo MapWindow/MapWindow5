@@ -29,10 +29,10 @@ namespace MW5.Plugins.Symbology.Controls
 
             chkVisibility.Checked = featureSet.Table.Fields.All(f => f.Visible);
 
-            UpdateGrid();
+            UpdateView();
         }
 
-        private void UpdateGrid()
+        public void UpdateView()
         {
             attributeGrid1.DataSource = _featureSet.Table.Fields.ToList();
         }
@@ -49,7 +49,7 @@ namespace MW5.Plugins.Symbology.Controls
         private void OnVisibilityCheckedChanged(object sender, EventArgs e)
         {
             ChangeVisibility(chkVisibility.Checked);
-            UpdateGrid();
+            UpdateView();
         }
     }
 }

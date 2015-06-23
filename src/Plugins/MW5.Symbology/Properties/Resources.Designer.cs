@@ -223,6 +223,16 @@ namespace MW5.Plugins.Symbology.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon_layer_edit {
+            get {
+                object obj = ResourceManager.GetObject("icon_layer_edit", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap icon_save1 {
             get {
                 object obj = ResourceManager.GetObject("icon_save1", resourceCulture);
@@ -246,6 +256,16 @@ namespace MW5.Plugins.Symbology.Properties {
         internal static System.Drawing.Bitmap img_chart24 {
             get {
                 object obj = ResourceManager.GetObject("img_chart24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_clear24 {
+            get {
+                object obj = ResourceManager.GetObject("img_clear24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -296,6 +316,16 @@ namespace MW5.Plugins.Symbology.Properties {
         internal static System.Drawing.Bitmap img_eye24 {
             get {
                 object obj = ResourceManager.GetObject("img_eye24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_field_add16 {
+            get {
+                object obj = ResourceManager.GetObject("img_field_add16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -426,6 +456,16 @@ namespace MW5.Plugins.Symbology.Properties {
         internal static System.Drawing.Bitmap img_remove16 {
             get {
                 object obj = ResourceManager.GetObject("img_remove16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove161 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove161", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -160,6 +160,20 @@ namespace MW5.UI.Controls
             return false;
         }
 
+        public bool SelectLastRow()
+        {
+            var table = Grid.Table;
+
+            if (table.Records.Count > 0)
+            {
+                var r = table.Records[table.Records.Count - 1];
+                table.SelectedRecords.Add(r);
+                return true;
+            }
+
+            return false;
+        }
+
         [Browsable(false)]
         public T SelectedItem
         {

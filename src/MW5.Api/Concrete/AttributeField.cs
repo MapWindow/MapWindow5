@@ -96,6 +96,11 @@ namespace MW5.Api.Concrete
             return DisplayName;
         }
 
+        public bool Joined
+        {
+            get { return _field.Joined; }
+        }
+
         [Browsable(false)]
         public string Abbreviation 
         {

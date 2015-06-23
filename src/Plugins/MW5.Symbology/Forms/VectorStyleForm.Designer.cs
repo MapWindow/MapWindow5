@@ -131,6 +131,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnCategoryGenerate = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabFields = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.attributesControl1 = new MW5.Plugins.Symbology.Controls.AttributesControl();
+            this.tabJoins = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.tabLabels = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnLabelsClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupLabelAppearance = new System.Windows.Forms.GroupBox();
@@ -170,7 +171,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnClearLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnLayerExpression = new Syncfusion.Windows.Forms.ButtonAdv();
             this.txtLayerExpression = new System.Windows.Forms.TextBox();
-            this.tabJoins = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboMaxScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -188,6 +188,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
+            this.joinControl1 = new MW5.Plugins.Symbology.Controls.JoinControl();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -220,6 +221,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).BeginInit();
             this.tabFields.SuspendLayout();
+            this.tabJoins.SuspendLayout();
             this.tabLabels.SuspendLayout();
             this.groupLabelAppearance.SuspendLayout();
             this.panelLabels.SuspendLayout();
@@ -428,7 +430,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 7719.6396929199409D;
+            this.axMap1.CurrentScale = 18062.806326252732D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -1351,6 +1353,19 @@ namespace MW5.Plugins.Symbology.Forms
             this.attributesControl1.Size = new System.Drawing.Size(514, 419);
             this.attributesControl1.TabIndex = 0;
             // 
+            // tabJoins
+            // 
+            this.tabJoins.Controls.Add(this.joinControl1);
+            this.tabJoins.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_database241;
+            this.tabJoins.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabJoins.Location = new System.Drawing.Point(119, 0);
+            this.tabJoins.Name = "tabJoins";
+            this.tabJoins.ShowCloseButton = true;
+            this.tabJoins.Size = new System.Drawing.Size(520, 425);
+            this.tabJoins.TabIndex = 13;
+            this.tabJoins.Text = "Joins";
+            this.tabJoins.ThemesEnabled = false;
+            // 
             // tabLabels
             // 
             this.tabLabels.Controls.Add(this.btnLabelsClear);
@@ -1816,18 +1831,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.toolTip1.SetToolTip(this.txtLayerExpression, "Only shapes which agree with the following expression will be visible");
             this.txtLayerExpression.TextChanged += new System.EventHandler(this.OnLayerExpressionTextChanged);
             // 
-            // tabJoins
-            // 
-            this.tabJoins.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_database241;
-            this.tabJoins.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabJoins.Location = new System.Drawing.Point(119, 0);
-            this.tabJoins.Name = "tabJoins";
-            this.tabJoins.ShowCloseButton = true;
-            this.tabJoins.Size = new System.Drawing.Size(520, 425);
-            this.tabJoins.TabIndex = 13;
-            this.tabJoins.Text = "Joins";
-            this.tabJoins.ThemesEnabled = false;
-            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -2025,6 +2028,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
+            // joinControl1
+            // 
+            this.joinControl1.Location = new System.Drawing.Point(3, 3);
+            this.joinControl1.Name = "joinControl1";
+            this.joinControl1.Size = new System.Drawing.Size(514, 419);
+            this.joinControl1.TabIndex = 0;
+            // 
             // VectorStyleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2089,6 +2099,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox9.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udNumCategories)).EndInit();
             this.tabFields.ResumeLayout(false);
+            this.tabJoins.ResumeLayout(false);
             this.tabLabels.ResumeLayout(false);
             this.groupLabelAppearance.ResumeLayout(false);
             this.panelLabels.ResumeLayout(false);
@@ -2267,5 +2278,6 @@ namespace MW5.Plugins.Symbology.Forms
         private NumericUpDownEx udMinDrawingSize;
         private NumericUpDownEx udMinLabelingSize;
         private System.Windows.Forms.Label label6;
+        private JoinControl joinControl1;
     }
 }

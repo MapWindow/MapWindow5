@@ -103,6 +103,10 @@ namespace MW5.Plugins.Symbology.Forms
 
             attributesControl1.Initialize(_featureSet);
 
+            joinControl1.Initialize(_context, _featureSet.Table);
+
+            joinControl1.JoinsChanged += () => attributesControl1.UpdateView();
+
             // the state should be set after the loading as otherwise we can trigger unnecessary redraws
             chkRedrawMap.Checked = _metadata.UpdateMapAtOnce;
 
