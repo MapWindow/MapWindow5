@@ -1,20 +1,8 @@
-﻿// ********************************************************************************************************
-// <copyright file="MWLite.Symbology.cs" company="MapWindow.org">
-// Copyright (c) MapWindow.org. All rights reserved.
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="PointsForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
 // </copyright>
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// Www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version of the Original Code is Sergei Leschinski
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date            Changed By      Notes
-// ********************************************************************************************************
+// -------------------------------------------------------------------------------------------
 
 using System;
 using System.Drawing;
@@ -39,13 +27,11 @@ namespace MW5.Plugins.Symbology.Forms
     {
         private static int _tabIndex;
 
-        private readonly IMuteLegend _legend;
         private readonly ILegendLayer _layer;
+        private readonly IMuteLegend _legend;
         private readonly IGeometryStyle _style;
-        private bool _noEvents;
         private string _initState;
-
-        #region Initialization
+        private bool _noEvents;
 
         /// <summary>
         /// Creates a new instance of PointsForm class
@@ -57,7 +43,7 @@ namespace MW5.Plugins.Symbology.Forms
             if (legend == null) throw new ArgumentNullException("legend");
 
             InitializeComponent();
-            
+
             _legend = legend;
             _layer = layer;
             _style = options;
@@ -86,39 +72,9 @@ namespace MW5.Plugins.Symbology.Forms
             tabControl1.SelectedIndex = _tabIndex;
         }
 
-        private void InitControls()
+        private SymbologyMetadata Metadata
         {
-            icbPointShape.ComboStyle = ImageComboStyle.PointShape;
-            icbLineType.ComboStyle = ImageComboStyle.LineStyle;
-            icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
-            icbHatchStyle.ComboStyle = ImageComboStyle.HatchStyle;
-
-            pnlFillPicture.Parent = groupBox3;    // options
-            pnlFillPicture.Top = pnlFillHatch.Top;
-            pnlFillPicture.Left = pnlFillHatch.Left;
-
-            pnlFillGradient.Parent = groupBox3;    // options
-            pnlFillGradient.Top = pnlFillHatch.Top;
-            pnlFillGradient.Left = pnlFillHatch.Left;
-
-            cboFillType.Items.Clear();
-            cboFillType.Items.Add("Solid");
-            cboFillType.Items.Add("Hatch");
-            cboFillType.Items.Add("Gradient");
-
-            cboGradientType.Items.Clear();
-            cboGradientType.Items.Add("Linear");
-            cboGradientType.Items.Add("Retangular");
-            cboGradientType.Items.Add("Circle");
-        }
-
-        private void InitFonts()
-        {
-            var marker = _style.Marker;
-
-            cboFontName.SelectedIndexChanged += cboFontName_SelectedIndexChanged;
-            RefreshFontList(null, null);
-            characterControl1.SelectedCharacterCode = (byte)marker.FontCharacter;
+            get { return SymbologyPlugin.GetMetadata(_layer.Handle); }
         }
 
         private void AttachListeners()
@@ -158,109 +114,6 @@ namespace MW5.Plugins.Symbology.Forms
             cboGradientType.SelectedIndexChanged += Gui2Options;
         }
 
-        #endregion
-
-        #region Properties
-
-        private SymbologyMetadata Metadata
-        {
-            get { return SymbologyPlugin.GetMetadata(_layer.Handle); }
-        }
-
-        #endregion
-
-        #region Font characters
-        /// <summary>
-        /// Refreshes the list of fonts
-        /// </summary>
-        private void RefreshFontList(object sender, EventArgs e)
-        {
-            cboFontName.Items.Clear();
-
-            if (!chkShowAllFonts.Checked)
-            {
-                foreach (FontFamily family in FontFamily.Families)
-                {
-                    string name = family.Name.ToLower();
-
-                    if (name == "webdings" ||
-                        name == "wingdings" ||
-                        name == "wingdings 2" ||
-                        name == "wingdings 3" ||
-                        name == "times new roman")
-                    {
-                        cboFontName.Items.Add(family.Name);
-                    }
-                }
-            }
-            else
-            {
-                foreach (FontFamily family in FontFamily.Families)
-                {
-                    cboFontName.Items.Add(family.Name);
-                }
-            }
-
-            RestoreSelectedFont();
-        }
-
-        private void RestoreSelectedFont()
-        {
-            var fontName = _style.Marker.FontName;
-
-            foreach (var item in cboFontName.Items)
-            {
-                if (item.ToString().EqualsIgnoreCase(fontName))
-                {
-                    cboFontName.SelectedItem = item;
-                    break;
-                }
-            }
-
-            if (cboFontName.SelectedIndex == -1)
-            {
-                cboFontName.SelectedItem = "Arial";
-            }
-        }
-
-        /// <summary>
-        /// Changing the font in the font control
-        /// </summary>
-        private void cboFontName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-
-            characterControl1.SetFontName(cboFontName.Text);
-            _style.Marker.FontName = cboFontName.Text;
-
-            DrawPreview();
-        }
-
-        /// <summary>
-        /// Updates the preview with the newly selected character
-        /// </summary>
-        private void characterControl1_SelectionChanged()
-        {
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-
-            var marker = _style.Marker;
-            marker.Type = MarkerType.FontCharacter;
-            marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
-            marker.Icon = null;
-
-            DrawPreview();
-        }
-
-        #endregion
-
-        #region Preview
-
         /// <summary>
         /// Draws preview based on the chosen options
         /// </summary>
@@ -279,15 +132,11 @@ namespace MW5.Plugins.Symbology.Forms
             var rect = pctPreview.ClientRectangle;
             var bmp = new Bitmap(rect.Width, rect.Height, PixelFormat.Format32bppArgb);
             var g = Graphics.FromImage(bmp);
-            
-            _style.DrawPoint(g, 0.0f, 0.0f, rect.Width, rect.Height,  BackColor);
-            
+
+            _style.DrawPoint(g, 0.0f, 0.0f, rect.Width, rect.Height, BackColor);
+
             pctPreview.Image = bmp;
         }
-
-        #endregion
-
-        #region Options -> UI
 
         /// <summary>
         /// Sets the values entered by user to the class
@@ -327,98 +176,14 @@ namespace MW5.Plugins.Symbology.Forms
             // hatch
             fill.HatchStyle = (HatchStyle)icbHatchStyle.SelectedIndex;
             fill.BgTransparent = chkFillBgTransparent.Checked;
-            fill.BgColor =  clpHatchBack.Color;
+            fill.BgColor = clpHatchBack.Color;
 
             // gradient
             fill.GradientType = (GradientType)cboGradientType.SelectedIndex;
-            fill.Color2 =  clpGradient2.Color;
+            fill.Color2 = clpGradient2.Color;
             fill.Rotation = (double)udGradientRotation.Value;
 
             fill.Transparency = transparencyControl1.Value;
-
-            if (!_noEvents)
-            {
-                btnApply.Enabled = true;
-            }
-
-            DrawPreview();
-        }
-
-        /// <summary>
-        /// Loads the values of the class instance to the controls
-        /// </summary>
-        private void Options2Gui()
-        {
-            _noEvents = true;
-
-            var marker = _style.Marker;
-            udSize.SetValue(marker.Size);
-            udRotation.SetValue(marker.Rotation);
-            clpFillColor.Color =  _style.Fill.Color;
-
-            // point
-            icbPointShape.SelectedIndex = (int)marker.VectorMarker;
-            udPointNumSides.SetValue(marker.VectorSideCount);
-            udSideRatio.SetValue(marker.VectorMarkerSideRatio * 10.0);
-            
-            // options
-            icbLineType.SelectedIndex = (int)_style.Line.DashStyle;
-            icbLineWidth.SelectedIndex = (int)_style.Line.Width - 1;
-            cboFillType.SelectedIndex = (int)_style.Fill.Type;
-            chkOutlineVisible.Checked = _style.Line.Visible;
-            clpOutline.Color =  _style.Line.Color;
-            chkFillVisible.Checked = _style.Fill.Visible;
-            
-            // hatch
-            icbHatchStyle.SelectedIndex = (int)_style.Fill.HatchStyle;
-            chkFillBgTransparent.Checked = _style.Fill.BgTransparent;
-            clpHatchBack.Color = _style.Fill.BgColor;
-
-            // gradient
-            cboGradientType.SelectedIndex = (int)_style.Fill.GradientType;
-            clpGradient2.Color =  _style.Fill.Color2;
-            udGradientRotation.Value = (decimal)_style.Fill.Rotation;
-
-            transparencyControl1.Value = _style.Fill.Transparency;
-
-            _noEvents = false;
-        }
-
-        #endregion
-
-        #region Event handlers
-
-        /// <summary>
-        /// Toggles fill type oprions
-        /// </summary>
-        private void cboFillType_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            pnlFillGradient.Visible = false;
-            pnlFillHatch.Visible = false;
-            pnlFillPicture.Visible = false;
-            lblNoOptions.Visible = false;
-
-            var fill = _style.Fill;
-            if (cboFillType.SelectedIndex == (int)FillType.Hatch)
-            {
-                pnlFillHatch.Visible = true;
-                fill.Type = FillType.Hatch;
-            }
-            else if (cboFillType.SelectedIndex == (int)FillType.Gradient)
-            {
-                pnlFillGradient.Visible = true;
-                fill.Type = FillType.Gradient;
-            }
-            else if (cboFillType.SelectedIndex == (int)FillType.Picture)
-            {
-                pnlFillPicture.Visible = true;
-                fill.Type = FillType.Picture;
-            }
-            else
-            {
-                lblNoOptions.Visible = true;
-                fill.Type = FillType.Solid;
-            }
 
             if (!_noEvents)
             {
@@ -461,47 +226,161 @@ namespace MW5.Plugins.Symbology.Forms
             }
         }
 
-        /// <summary>
-        /// Updates all the controls with the selected fill color
-        /// </summary>
-        private void clpFillColor_SelectedColorChanged(object sender, EventArgs e)
+        private void InitControls()
         {
-            _style.Fill.Color =  clpFillColor.Color;
+            icbPointShape.ComboStyle = ImageComboStyle.PointShape;
+            icbLineType.ComboStyle = ImageComboStyle.LineStyle;
+            icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
+            icbHatchStyle.ComboStyle = ImageComboStyle.HatchStyle;
 
-            UpdateDefaultColor();
+            pnlFillPicture.Parent = groupBox3; // options
+            pnlFillPicture.Top = pnlFillHatch.Top;
+            pnlFillPicture.Left = pnlFillHatch.Left;
 
-            if (!_noEvents) btnApply.Enabled = true;
+            pnlFillGradient.Parent = groupBox3; // options
+            pnlFillGradient.Top = pnlFillHatch.Top;
+            pnlFillGradient.Left = pnlFillHatch.Left;
 
-            DrawPreview();
+            cboFillType.Items.Clear();
+            cboFillType.Items.Add("Solid");
+            cboFillType.Items.Add("Hatch");
+            cboFillType.Items.Add("Gradient");
+
+            cboGradientType.Items.Clear();
+            cboGradientType.Items.Add("Linear");
+            cboGradientType.Items.Add("Retangular");
+            cboGradientType.Items.Add("Circle");
+        }
+
+        private void InitFonts()
+        {
+            var marker = _style.Marker;
+
+            cboFontName.SelectedIndexChanged += cboFontName_SelectedIndexChanged;
+            RefreshFontList(null, null);
+            characterControl1.SelectedCharacterCode = (byte)marker.FontCharacter;
         }
 
         /// <summary>
-        ///  Updates all the control with the selected outline color
+        /// Saves options and redraws map without closing the form
         /// </summary>
-        private void clpOutline_SelectedColorChanged(object sender, EventArgs e)
+        private void OnApplyClick(object sender, EventArgs e)
         {
-            _style.Line.Color =  clpOutline.Color;
-            
-            UpdateDefaultColor();
+            RefreshCategories();
 
-            if (!_noEvents) btnApply.Enabled = true;
+            _legend.Redraw(LegendRedraw.LegendAndMap);
 
-            DrawPreview();
-        }
-
-        private void UpdateDefaultColor()
-        {
-            symbolControl1.ForeColor = clpFillColor.Color;
-            characterControl1.ForeColor = clpFillColor.Color;
-            icbPointShape.Color1 = clpFillColor.Color;
+            btnApply.Enabled = false;
+            _initState = _style.Serialize();
         }
 
         /// <summary>
-        /// Changes the transparency
+        /// Reverts changes and closes the form
         /// </summary>
-        private void transparencyControl1_ValueChanged(object sender, byte value)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            Gui2Options(null, null);
+            if (DialogResult == DialogResult.Cancel)
+            {
+                _tabIndex = tabControl1.SelectedIndex;
+                _style.Deserialize(_initState);
+            }
+        }
+
+        /// <summary>
+        /// Loads the values of the class instance to the controls
+        /// </summary>
+        private void Options2Gui()
+        {
+            _noEvents = true;
+
+            var marker = _style.Marker;
+            udSize.SetValue(marker.Size);
+            udRotation.SetValue(marker.Rotation);
+            clpFillColor.Color = _style.Fill.Color;
+
+            // point
+            icbPointShape.SelectedIndex = (int)marker.VectorMarker;
+            udPointNumSides.SetValue(marker.VectorSideCount);
+            udSideRatio.SetValue(marker.VectorMarkerSideRatio * 10.0);
+
+            // options
+            icbLineType.SelectedIndex = (int)_style.Line.DashStyle;
+            icbLineWidth.SelectedIndex = (int)_style.Line.Width - 1;
+            cboFillType.SelectedIndex = (int)_style.Fill.Type;
+            chkOutlineVisible.Checked = _style.Line.Visible;
+            clpOutline.Color = _style.Line.Color;
+            chkFillVisible.Checked = _style.Fill.Visible;
+
+            // hatch
+            icbHatchStyle.SelectedIndex = (int)_style.Fill.HatchStyle;
+            chkFillBgTransparent.Checked = _style.Fill.BgTransparent;
+            clpHatchBack.Color = _style.Fill.BgColor;
+
+            // gradient
+            cboGradientType.SelectedIndex = (int)_style.Fill.GradientType;
+            clpGradient2.Color = _style.Fill.Color2;
+            udGradientRotation.Value = (decimal)_style.Fill.Rotation;
+
+            transparencyControl1.Value = _style.Fill.Transparency;
+
+            _noEvents = false;
+        }
+
+        private void RefreshCategories()
+        {
+            if (_layer.FeatureSet.Style.InternalObject == _style.InternalObject)
+            {
+                _layer.FeatureSet.ApplyDefaultStyleToCategories();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the list of fonts
+        /// </summary>
+        private void RefreshFontList(object sender, EventArgs e)
+        {
+            cboFontName.Items.Clear();
+
+            if (!chkShowAllFonts.Checked)
+            {
+                foreach (var family in FontFamily.Families)
+                {
+                    string name = family.Name.ToLower();
+
+                    if (name == "webdings" || name == "wingdings" || name == "wingdings 2" || name == "wingdings 3" || name == "times new roman")
+                    {
+                        cboFontName.Items.Add(family.Name);
+                    }
+                }
+            }
+            else
+            {
+                foreach (var family in FontFamily.Families)
+                {
+                    cboFontName.Items.Add(family.Name);
+                }
+            }
+
+            RestoreSelectedFont();
+        }
+
+        private void RestoreSelectedFont()
+        {
+            var fontName = _style.Marker.FontName;
+
+            foreach (var item in cboFontName.Items)
+            {
+                if (item.ToString().EqualsIgnoreCase(fontName))
+                {
+                    cboFontName.SelectedItem = item;
+                    break;
+                }
+            }
+
+            if (cboFontName.SelectedIndex == -1)
+            {
+                cboFontName.SelectedItem = "Arial";
+            }
         }
 
         /// <summary>
@@ -522,6 +401,13 @@ namespace MW5.Plugins.Symbology.Forms
             DrawPreview();
         }
 
+        private void UpdateDefaultColor()
+        {
+            symbolControl1.ForeColor = clpFillColor.Color;
+            characterControl1.ForeColor = clpFillColor.Color;
+            icbPointShape.Color1 = clpFillColor.Color;
+        }
+
         /// <summary>
         /// Saves the selected page
         /// </summary>
@@ -535,42 +421,116 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 _legend.Redraw(LegendRedraw.LegendAndMap);
             }
-
         }
 
         /// <summary>
-        /// Saves options and redraws map without closing the form
+        /// Toggles fill type oprions
         /// </summary>
-        private void OnApplyClick(object sender, EventArgs e)
+        private void cboFillType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            RefreshCategories();
+            pnlFillGradient.Visible = false;
+            pnlFillHatch.Visible = false;
+            pnlFillPicture.Visible = false;
+            lblNoOptions.Visible = false;
 
-            _legend.Redraw(LegendRedraw.LegendAndMap);
-
-            btnApply.Enabled = false;
-            _initState = _style.Serialize();
-        }
-
-        private void RefreshCategories()
-        {
-            if (_layer.FeatureSet.Style.InternalObject == _style.InternalObject)
+            var fill = _style.Fill;
+            if (cboFillType.SelectedIndex == (int)FillType.Hatch)
             {
-                _layer.FeatureSet.ApplyDefaultStyleToCategories();
+                pnlFillHatch.Visible = true;
+                fill.Type = FillType.Hatch;
             }
+            else if (cboFillType.SelectedIndex == (int)FillType.Gradient)
+            {
+                pnlFillGradient.Visible = true;
+                fill.Type = FillType.Gradient;
+            }
+            else if (cboFillType.SelectedIndex == (int)FillType.Picture)
+            {
+                pnlFillPicture.Visible = true;
+                fill.Type = FillType.Picture;
+            }
+            else
+            {
+                lblNoOptions.Visible = true;
+                fill.Type = FillType.Solid;
+            }
+
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            DrawPreview();
         }
 
         /// <summary>
-        /// Reverts changes and closes the form
+        /// Changing the font in the font control
         /// </summary>
-        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        private void cboFontName_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DialogResult == DialogResult.Cancel)
+            if (!_noEvents)
             {
-                _tabIndex = tabControl1.SelectedIndex;
-                _style.Deserialize(_initState);
+                btnApply.Enabled = true;
             }
+
+            characterControl1.SetFontName(cboFontName.Text);
+            _style.Marker.FontName = cboFontName.Text;
+
+            DrawPreview();
         }
 
-        #endregion
+        /// <summary>
+        /// Updates the preview with the newly selected character
+        /// </summary>
+        private void characterControl1_SelectionChanged()
+        {
+            if (!_noEvents)
+            {
+                btnApply.Enabled = true;
+            }
+
+            var marker = _style.Marker;
+            marker.Type = MarkerType.FontCharacter;
+            marker.FontCharacter = Convert.ToChar(characterControl1.SelectedCharacterCode);
+            marker.Icon = null;
+
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Updates all the controls with the selected fill color
+        /// </summary>
+        private void clpFillColor_SelectedColorChanged(object sender, EventArgs e)
+        {
+            _style.Fill.Color = clpFillColor.Color;
+
+            UpdateDefaultColor();
+
+            if (!_noEvents) btnApply.Enabled = true;
+
+            DrawPreview();
+        }
+
+        /// <summary>
+        ///  Updates all the control with the selected outline color
+        /// </summary>
+        private void clpOutline_SelectedColorChanged(object sender, EventArgs e)
+        {
+            _style.Line.Color = clpOutline.Color;
+
+            UpdateDefaultColor();
+
+            if (!_noEvents) btnApply.Enabled = true;
+
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Changes the transparency
+        /// </summary>
+        private void transparencyControl1_ValueChanged(object sender, byte value)
+        {
+            Gui2Options(null, null);
+        }
     }
 }
