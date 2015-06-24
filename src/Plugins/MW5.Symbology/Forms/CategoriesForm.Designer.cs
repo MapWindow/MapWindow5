@@ -45,8 +45,8 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupExpression = new System.Windows.Forms.GroupBox();
             this.txtExpression = new System.Windows.Forms.TextBox();
             this.groupFill = new System.Windows.Forms.GroupBox();
-            this.icbFillStyle = new ImageCombo();
-            this.clpPolygonFill = new Office2007ColorPicker(this.components);
+            this.icbFillStyle = new MW5.UI.Controls.ImageCombo();
+            this.clpPolygonFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.btnCategoryStyle = new System.Windows.Forms.Button();
@@ -56,14 +56,14 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnGenerate = new System.Windows.Forms.Button();
             this.btnCategoryMoveUp = new System.Windows.Forms.Button();
             this.groupLine = new System.Windows.Forms.GroupBox();
-            this.clpLine = new Office2007ColorPicker(this.components);
+            this.clpLine = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
-            this.icbLineWidth = new ImageCombo();
+            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.groupPoint = new System.Windows.Forms.GroupBox();
-            this.clpPointFill = new Office2007ColorPicker(this.components);
+            this.clpPointFill = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.udPointSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.btnApply = new System.Windows.Forms.Button();
@@ -125,7 +125,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.dgvCategories.CurrentCellChanged += new System.EventHandler(this.dgvCategories_CurrentCellChanged);
             this.dgvCategories.CurrentCellDirtyStateChanged += new System.EventHandler(this.dgvCategories_CurrentCellDirtyStateChanged);
             // 
-            // Visible
+            // cmnVisible
             // 
             this.cmnVisible.HeaderText = "";
             this.cmnVisible.Name = "cmnVisible";
@@ -228,7 +228,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbFillStyle.Color1 = System.Drawing.Color.Gray;
             this.icbFillStyle.Color2 = System.Drawing.Color.Gray;
-            this.icbFillStyle.ComboStyle = ImageComboStyle.Common;
+            this.icbFillStyle.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbFillStyle.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFillStyle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFillStyle.FormattingEnabled = true;
@@ -273,7 +273,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // btnCategoryStyle
             // 
-            this.btnCategoryStyle.Location = new System.Drawing.Point(413, 92);
+            this.btnCategoryStyle.Location = new System.Drawing.Point(502, 92);
             this.btnCategoryStyle.Name = "btnCategoryStyle";
             this.btnCategoryStyle.Size = new System.Drawing.Size(106, 23);
             this.btnCategoryStyle.TabIndex = 8;
@@ -374,7 +374,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Gray;
             this.icbLineWidth.Color2 = System.Drawing.Color.Gray;
-            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -520,12 +520,13 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(524, 92);
+            this.button1.Location = new System.Drawing.Point(300, 92);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(87, 23);
             this.button1.TabIndex = 114;
             this.button1.Text = "Labels...";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CategoriesForm

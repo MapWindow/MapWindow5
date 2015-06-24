@@ -69,7 +69,7 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case VectorStyleCommand.ClearLabels:
-                    if (MessageService.Current.Ask("Do you want to delete labels?"))
+                    if (MessageService.Current.Ask("Do you want to remove labels?"))
                     {
                         FeatureSet.Labels.Items.Clear();
                         FeatureSet.Labels.Expression = "";
@@ -84,7 +84,7 @@ namespace MW5.Plugins.Symbology.Views
                     View.RefreshLabels();
                     break;
                 case VectorStyleCommand.ClearCharts:
-                    if (MessageService.Current.Ask("Do you want to delete charts?"))
+                    if (MessageService.Current.Ask("Do you want to remove charts?"))
                     {
                         FeatureSet.Diagrams.Fields.Clear();
                         FeatureSet.Diagrams.Clear();

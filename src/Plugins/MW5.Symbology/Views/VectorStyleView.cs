@@ -21,6 +21,7 @@ using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;
+using MW5.UI.Controls;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
@@ -349,7 +350,8 @@ namespace MW5.Plugins.Symbology.Views
 
             txtLayerName.Text = Model.Name;
 
-            txtDatasourceName.Text = Model.Filename;
+            string filename = string.IsNullOrWhiteSpace(Model.Filename) ? "<not defined>" : Model.Filename;
+            txtDatasourceName.Text = filename;
 
             txtProjection.Text = Model.Projection.IsEmpty ? "<not defined>" : Model.Projection.Name;
 
@@ -362,7 +364,7 @@ namespace MW5.Plugins.Symbology.Views
             var type = _featureSet.GeometryType.EnumToString().ToLower();
             txtBriefInfo.Text = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
 
-            vectorInfoTreeView1.Initialize(Model);
+            
         }
 
         /// <summary>
@@ -391,6 +393,8 @@ namespace MW5.Plugins.Symbology.Views
             InitLabelsTab();
 
             InitChartsTab();
+            
+            InitInfoTextBox();
 
             txtLayerExpression.Text = _featureSet.VisibilityExpression;
 
@@ -410,6 +414,30 @@ namespace MW5.Plugins.Symbology.Views
             AddTooltips();
 
             tabControl1.SelectedIndex = _tabIndex;
+        }
+
+        private void InitInfoTextBox()
+        {
+            var data = VectorInfoHelper.GetFeatureSetInfo(_featureSet);
+
+            foreach (var item in data.SubItems)
+            {
+                item.Category = data.Name;
+            }
+
+            var data2 = VectorInfoHelper.GetVectorLayerInfo(Model.VectorSource);
+            if (data2.SubItems.Any())
+            {
+                foreach (var item in data2.SubItems)
+                {
+                    item.Category = data2.Name;
+                }
+            }
+
+            var list = data.SubItems.ToList();
+            list.AddRange(data2.SubItems);
+
+            infoGrid1.DataSource = list;
         }
 
         private void LockLegendAndMap(bool state)
@@ -769,6 +797,17 @@ namespace MW5.Plugins.Symbology.Views
             axMap1.ZoomToLayer(handle);
 
             MapConfig.LoadSymbologyOnAddLayer = val;
+        }
+
+        private void btnCopyInfo_Click(object sender, EventArgs e)
+        {
+            var temp = new NodeData("Layer info");
+            var data = VectorInfoHelper.GetFeatureSetInfo(_featureSet);
+            var data2 = VectorInfoHelper.GetVectorLayerInfo(Model.VectorSource);
+            temp.AddSubItem(data);
+            temp.AddSubItem(data2);
+            string s = temp.Serialize();
+            Clipboard.SetText(s);
         }
     }
 

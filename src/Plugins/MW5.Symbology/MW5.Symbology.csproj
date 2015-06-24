@@ -2,7 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-	<GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
     <SGenUseProxyTypes>false</SGenUseProxyTypes>
   </PropertyGroup>
   <PropertyGroup>
@@ -41,7 +41,6 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\..\bin\Release\Plugins\</OutputPath>
@@ -102,7 +101,14 @@
     <Compile Include="Controls\AttributeGrid.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\InfoGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\InfoGrid.Designer.cs">
+      <DependentUpon>InfoGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ChartHelper.cs" />
+    <Compile Include="Helpers\VectorInfoHelper.cs" />
     <Compile Include="Views\Abstract\IVectorStyleView.cs" />
     <Compile Include="Views\CategoriesPresenter.cs" />
     <Compile Include="Views\CategoriesSubView.cs">
@@ -454,6 +460,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\AttributesControl.resx">
       <DependentUpon>AttributesControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\InfoGrid.resx">
+      <DependentUpon>InfoGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CategoriesSubView.resx">
       <DependentUpon>CategoriesSubView.cs</DependentUpon>

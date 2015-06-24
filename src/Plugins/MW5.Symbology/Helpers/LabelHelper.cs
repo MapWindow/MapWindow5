@@ -25,26 +25,52 @@ using MW5.Plugins.Symbology.Services;
 
 namespace MW5.Plugins.Symbology.Helpers
 {
-    internal class LabelHelper
+    internal static class LabelHelper
     {
+        private const string NoExpression = "<no expression>";
+
         /// <summary>
-        /// Retunrns label string formed by the first record of attribute table
+        /// Gets sample label text to display in the preview.
         /// </summary>
-        internal static string get_LabelText(IFeatureSet sf, string expression, bool byClassificationField = false)
+        private static string GetLabelText(IFeatureSet sf, string expression, bool byClassificationField = false)
         {
-            if (expression.ToLower() == "<no expression>")
+            string text = get_LabelTextCore(sf, expression, byClassificationField);
+
+            if (!string.IsNullOrWhiteSpace(text))
+            {
+                return text;
+            }
+
+            if (!string.IsNullOrWhiteSpace(expression))
+            {
+                return "Lorem ipsum";
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Returns label string formed by the first record of attribute table.
+        /// </summary>
+        private static string get_LabelTextCore(IFeatureSet sf, string expression, bool byClassificationField = false)
+        {
+            const int rowIndex = 0;
+
+            if (expression.ToLower() == NoExpression)
             {
                 if (sf.Labels.Items.Count > 0)
                 {
-                    return sf.Labels.Items[0].Text;
+                    return sf.Labels.Items[rowIndex].Text;
                 }
-                return "";
+
+                return string.Empty;
             }
 
             if (byClassificationField)
             {
                 int index = sf.Labels.ClassificationField;
-                var val = sf.Table.CellValue(index, 0);
+                var val = sf.Table.CellValue(index, rowIndex);
+
                 if (val != null)
                 {
                     return val.ToString();
@@ -54,11 +80,12 @@ namespace MW5.Plugins.Symbology.Helpers
             {
                 object obj; string err;
                 expression = FixExpression(expression);
-                if (sf.Table.Calculate(expression, 0, out obj, out err))
+                if (sf.Table.Calculate(expression, rowIndex, out obj, out err))
                 {
                     return obj.ToString();
                 }
             }
+            
             return "";
         }
 
@@ -67,7 +94,7 @@ namespace MW5.Plugins.Symbology.Helpers
         /// </summary>
         internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, PictureBox canvas, bool forceDrawing)
         {
-            string expression = (sf.Labels.Expression == "" && sf.Labels.Items.Count != 0) ? "<no expression>" : sf.Labels.Expression;
+            string expression = (sf.Labels.Expression == "" && sf.Labels.Items.Count != 0) ? NoExpression : sf.Labels.Expression;
             DrawPreview(category, sf, canvas, expression, forceDrawing);
         }
 
@@ -98,13 +125,13 @@ namespace MW5.Plugins.Symbology.Helpers
         internal static void DrawPreview(ILabelStyle category, IFeatureSet sf, PictureBox canvas, 
             string expression, bool forceDrawing, bool renderGrid = false, bool basePoint = false)
         {
-            string s = get_LabelText(sf, expression);
+            string s = GetLabelText(sf, expression);
             if (s.Trim() == string.Empty)
             {
                 s = "";
             }
 
-            Bitmap img = new Bitmap(canvas.ClientRectangle.Width, canvas.ClientRectangle.Height);
+            var img = new Bitmap(canvas.ClientRectangle.Width, canvas.ClientRectangle.Height);
             Graphics g = Graphics.FromImage(img);
 
             if (renderGrid)
@@ -112,7 +139,7 @@ namespace MW5.Plugins.Symbology.Helpers
                 RenderGrid(img, g);
             }
 
-            Point pntOrigin = new Point((canvas.ClientRectangle.Right + canvas.ClientRectangle.Left) / 2,
+            var pntOrigin = new Point((canvas.ClientRectangle.Right + canvas.ClientRectangle.Left) / 2,
                                                                       (canvas.ClientRectangle.Bottom + canvas.ClientRectangle.Top) / 2);
 
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -193,56 +220,6 @@ namespace MW5.Plugins.Symbology.Helpers
                     res += s[i];
             }
             return res;
-        }
-
-        /// <summary>
-        /// Generate label categories for the given set of shapefile categories
-        /// </summary>
-        internal static void GenerateCategories(IMuteLegend legend, int layerHandle)
-        {
-            //var lyr = legend.Layers.ItemByHandle(layerHandle);
-            //var sf = lyr.FeatureSet;
-            //var lb = sf.Labels;
-
-            //sf.Labels.ClearCategories();
-            //for (int i = 0; i < sf.Categories.Count; i++)
-            //{
-            //    ShapefileCategory cat = sf.Categories.get_Item(i);
-            //    LabelCategory labelCat = lb.AddCategory(cat.Name);
-            //    labelCat.Expression = cat.Expression;
-            //}
-
-            //SymbologySettings settings = Globals.get_LayerSettings(layerHandle);
-            //ColorBlend blend = (ColorBlend)settings.LabelsScheme;
-
-            //if (blend != null)
-            //{
-            //    ColorScheme scheme = ColorSchemes.ColorBlend2ColorScheme(blend);
-            //    if (settings.LabelsRandomColors)
-            //    {
-            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeRandom, scheme);
-            //    }
-            //    else
-            //    {
-            //        lb.ApplyColorScheme(tkColorSchemeType.ctSchemeGraduated, scheme);
-            //    }
-            //}
-
-            //if (settings.LabelsVariableSize)
-            //{
-            //    for (int i = 0; i < lb.NumCategories; i++)
-            //    {
-            //        lb.get_Category(i).FontSize = (int)((double)sf.Labels.FontSize +
-            //        (double)settings.LabelsSizeRange / ((double)lb.NumCategories - 1) * (double)i);
-            //    }
-            //}
-
-            //// Expressions aren't supported by labels yet, therefore we need to copy indices from the symbology
-            //for (int i = 0; i < lb.Count; i++)
-            //{
-            //    MapWinGIS.Label label = lb.get_Label(i, 0);
-            //    label.Category = sf.get_ShapeCategory(i);
-            //}
         }
     }
 }

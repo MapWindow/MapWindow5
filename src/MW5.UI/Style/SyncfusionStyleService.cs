@@ -247,11 +247,10 @@ namespace MW5.UI.Style
 
         private void ApplyGridStyle(Control control)
         {
-            var grid = control as GridGroupingControl;
+            var grid = control as CustomGridControl;
             if (grid != null)
             {
-                var customGrid = grid as CustomGridControl;
-                if (customGrid == null || customGrid.WrapWithPanel)
+                if (grid.WrapWithPanel)
                 {
                     WrapByGradientPanel(grid);
                 }

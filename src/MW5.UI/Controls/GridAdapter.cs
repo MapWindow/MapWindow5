@@ -577,5 +577,16 @@ namespace MW5.UI.Controls
 
             return -1;
         }
+
+        public void GroupBy(Expression<Func<T, object>> propertySelector)
+        {
+            string propertyName = GetPropertyName(propertySelector);
+            _grid.TableDescriptor.GroupedColumns.Add(propertyName);
+        }
+
+        public void ClearGrouping()
+        {
+            _grid.TableDescriptor.GroupedColumns.Clear();
+        }
     }
 }

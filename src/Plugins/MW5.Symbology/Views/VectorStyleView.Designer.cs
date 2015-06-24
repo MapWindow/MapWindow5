@@ -36,10 +36,7 @@ namespace MW5.Plugins.Symbology.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo treeNodeAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo treeNodeAdvSubItemStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeNodeAdvSubItemStyleInfo();
-            Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo treeColumnAdvStyleInfo1 = new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdvStyleInfo();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleView));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -63,7 +60,7 @@ namespace MW5.Plugins.Symbology.Views
             this.label18 = new System.Windows.Forms.Label();
             this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.vectorInfoTreeView1 = new MW5.Plugins.Symbology.Controls.VectorInfoTreeView();
+            this.infoGrid1 = new MW5.Plugins.Symbology.Controls.InfoGrid();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox21 = new System.Windows.Forms.GroupBox();
@@ -127,6 +124,7 @@ namespace MW5.Plugins.Symbology.Views
             this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
+            this.btnCopyInfo = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -135,7 +133,7 @@ namespace MW5.Plugins.Symbology.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.tabInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).BeginInit();
             this.tabDefault.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).BeginInit();
@@ -371,7 +369,7 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 18450785.904022846D;
+            this.axMap1.CurrentScale = 76090165.294384554D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -387,8 +385,8 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            spatialReference1.Tag = "";
-            this.axMap1.Projection = spatialReference1;
+            spatialReference2.Tag = "";
+            this.axMap1.Projection = spatialReference2;
             this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
             this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -468,7 +466,8 @@ namespace MW5.Plugins.Symbology.Views
             // 
             // tabInfo
             // 
-            this.tabInfo.Controls.Add(this.vectorInfoTreeView1);
+            this.tabInfo.Controls.Add(this.btnCopyInfo);
+            this.tabInfo.Controls.Add(this.infoGrid1);
             this.tabInfo.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_info24;
             this.tabInfo.ImageSize = new System.Drawing.Size(24, 24);
             this.tabInfo.Location = new System.Drawing.Point(119, 0);
@@ -479,44 +478,33 @@ namespace MW5.Plugins.Symbology.Views
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
             // 
-            // vectorInfoTreeView1
+            // infoGrid1
             // 
-            this.vectorInfoTreeView1.AutoAdjustMultiLineHeight = true;
-            this.vectorInfoTreeView1.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
-            new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - Column", treeColumnAdvStyleInfo1)});
-            this.vectorInfoTreeView1.BeforeTouchSize = new System.Drawing.Size(520, 435);
-            this.vectorInfoTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.vectorInfoTreeView1.ColumnsHeaderBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
-            this.vectorInfoTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vectorInfoTreeView1.FullRowSelect = true;
-            this.vectorInfoTreeView1.GutterSpace = 12;
-            // 
-            // 
-            // 
-            this.vectorInfoTreeView1.HelpTextControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.vectorInfoTreeView1.HelpTextControl.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.HelpTextControl.Name = "m_helpText";
-            this.vectorInfoTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
-            this.vectorInfoTreeView1.HelpTextControl.TabIndex = 0;
-            this.vectorInfoTreeView1.HelpTextControl.Text = "help text";
-            this.vectorInfoTreeView1.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.Name = "vectorInfoTreeView1";
-            this.vectorInfoTreeView1.ShowColumnsHeader = false;
-            this.vectorInfoTreeView1.Size = new System.Drawing.Size(520, 435);
-            this.vectorInfoTreeView1.TabIndex = 1;
-            this.vectorInfoTreeView1.Text = "vectorInfoTreeView1";
-            // 
-            // 
-            // 
-            this.vectorInfoTreeView1.ToolTipControl.BackColor = System.Drawing.SystemColors.Info;
-            this.vectorInfoTreeView1.ToolTipControl.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.vectorInfoTreeView1.ToolTipControl.Location = new System.Drawing.Point(0, 0);
-            this.vectorInfoTreeView1.ToolTipControl.Name = "m_toolTip";
-            this.vectorInfoTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
-            this.vectorInfoTreeView1.ToolTipControl.TabIndex = 1;
-            this.vectorInfoTreeView1.ToolTipControl.Text = "toolTip";
+            this.infoGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.infoGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.infoGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.infoGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.infoGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
+            this.infoGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this.infoGrid1.FreezeCaption = false;
+            this.infoGrid1.Location = new System.Drawing.Point(15, 15);
+            this.infoGrid1.Name = "infoGrid1";
+            this.infoGrid1.Size = new System.Drawing.Size(490, 380);
+            this.infoGrid1.TabIndex = 4;
+            this.infoGrid1.TableDescriptor.AllowEdit = false;
+            this.infoGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
+            this.infoGrid1.TableOptions.AllowDropDownCell = false;
+            this.infoGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
+            this.infoGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
+            this.infoGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
+            this.infoGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.infoGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
+            this.infoGrid1.Text = "infoGrid1";
+            this.infoGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            this.infoGrid1.TopLevelGroupOptions.ShowCaption = false;
+            this.infoGrid1.TopLevelGroupOptions.ShowColumnHeaders = false;
+            this.infoGrid1.VersionInfo = "0.0.1.0";
+            this.infoGrid1.WrapWithPanel = false;
             // 
             // tabDefault
             // 
@@ -1243,6 +1231,17 @@ namespace MW5.Plugins.Symbology.Views
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
             // 
+            // btnCopyInfo
+            // 
+            this.btnCopyInfo.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnCopyInfo.IsBackStageButton = false;
+            this.btnCopyInfo.Location = new System.Drawing.Point(15, 401);
+            this.btnCopyInfo.Name = "btnCopyInfo";
+            this.btnCopyInfo.Size = new System.Drawing.Size(75, 23);
+            this.btnCopyInfo.TabIndex = 5;
+            this.btnCopyInfo.Text = "Copy";
+            this.btnCopyInfo.Click += new System.EventHandler(this.btnCopyInfo_Click);
+            // 
             // VectorStyleView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1273,7 +1272,7 @@ namespace MW5.Plugins.Symbology.Views
             this.groupBox10.ResumeLayout(false);
             this.groupBox10.PerformLayout();
             this.tabInfo.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.vectorInfoTreeView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).EndInit();
             this.tabDefault.ResumeLayout(false);
             this.groupBox21.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).EndInit();
@@ -1384,7 +1383,6 @@ namespace MW5.Plugins.Symbology.Views
         private JoinControl joinControl1;
         private System.Windows.Forms.CheckBox chkEditMode;
         private System.Windows.Forms.CheckBox chkSpatialIndex;
-        private VectorInfoTreeView vectorInfoTreeView1;
         private System.Windows.Forms.GroupBox groupBox21;
         private ComboBoxAdv cboCollisionMode;
         private System.Windows.Forms.GroupBox groupBox19;
@@ -1400,5 +1398,7 @@ namespace MW5.Plugins.Symbology.Views
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label9;
+        private InfoGrid infoGrid1;
+        private ButtonAdv btnCopyInfo;
     }
 }
