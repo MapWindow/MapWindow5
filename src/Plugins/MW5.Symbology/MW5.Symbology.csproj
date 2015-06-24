@@ -2,6 +2,8 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+  </PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1BD04FE1-16AD-41F9-8F80-485925E407DD}</ProjectGuid>
@@ -37,6 +39,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\..\bin\Release\Plugins\</OutputPath>
@@ -96,6 +99,15 @@
     </Compile>
     <Compile Include="Controls\AttributeGrid.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Helpers\ChartHelper.cs" />
+    <Compile Include="Views\Abstract\IVectorStyleView.cs" />
+    <Compile Include="Views\CategoriesPresenter.cs" />
+    <Compile Include="Views\CategoriesSubView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\CategoriesSubView.Designer.cs">
+      <DependentUpon>CategoriesSubView.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\CategoriesGrid.cs">
       <SubType>Component</SubType>
@@ -157,6 +169,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\XmlColorBlend.cs" />
+    <Compile Include="Views\CategoriesSubViewModel.cs" />
     <Compile Include="Views\RasterRenderingCommand.cs" />
     <Compile Include="Views\RasterRenderingSubView.cs">
       <SubType>UserControl</SubType>
@@ -186,7 +199,7 @@
     <Compile Include="Controls\VectorInfoTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Enums.cs" />
+    <Compile Include="Enums\Enums.cs" />
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Helpers\RasterComboBoxHelper.cs" />
@@ -272,11 +285,12 @@
     <Compile Include="Forms\ChartStyleForm.Designer.cs">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\VectorStyleForm.cs">
+    <Compile Include="Views\VectorStylePresenter.cs" />
+    <Compile Include="Views\VectorStyleView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\VectorStyleForm.Designer.cs">
-      <DependentUpon>VectorStyleForm.cs</DependentUpon>
+    <Compile Include="Views\VectorStyleView.Designer.cs">
+      <DependentUpon>VectorStyleView.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\AddLabelsForm.cs">
       <SubType>Form</SubType>
@@ -439,6 +453,9 @@
     <EmbeddedResource Include="Controls\AttributesControl.resx">
       <DependentUpon>AttributesControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\CategoriesSubView.resx">
+      <DependentUpon>CategoriesSubView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\DynamicVisibilityControl.resx">
       <DependentUpon>DynamicVisibilityControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -493,8 +510,8 @@
     <EmbeddedResource Include="Forms\ChartStyleForm.resx">
       <DependentUpon>ChartStyleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\VectorStyleForm.resx">
-      <DependentUpon>VectorStyleForm.cs</DependentUpon>
+    <EmbeddedResource Include="Views\VectorStyleView.resx">
+      <DependentUpon>VectorStyleView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\AddLabelsForm.resx">
       <DependentUpon>AddLabelsForm.cs</DependentUpon>

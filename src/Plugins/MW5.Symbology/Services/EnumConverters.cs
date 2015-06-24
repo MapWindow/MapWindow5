@@ -64,4 +64,22 @@ namespace MW5.Plugins.Symbology.Services
             return string.Empty;
         }
     }
+
+    internal class CollisionModeConverter : IEnumConverter<CollisionMode>
+    {
+        public string GetString(CollisionMode value)
+        {
+            switch (value)
+            {
+                case CollisionMode.AllowCollisions:
+                    return "Allow overlaps";
+                case CollisionMode.LocalList:
+                    return "Avoid point vs point overlaps";
+                case CollisionMode.GlobalList:
+                    return "Avoid point vs label overlaps";
+            }
+
+            return string.Empty;
+        }
+    }
 }

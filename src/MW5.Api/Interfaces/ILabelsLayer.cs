@@ -61,6 +61,8 @@ namespace MW5.Api.Interfaces
 
         IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, MapSelectionMode selectMode = MapSelectionMode.Intersection);
 
+        int MinDrawingSize { get; set; }
+
         //void ForceRecalculateExpression();
 
         //bool LoadFromDbf(bool loadText = false, bool loadCategory = false);

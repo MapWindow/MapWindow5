@@ -174,7 +174,7 @@ namespace MW5.Services.Concrete
 
             TryFindLayers(project, missingLayers);
 
-            // if it didn't help, let's ask offer the user to find them
+            // if it didn't help, let's offer the user to find them
             if (missingLayers.Any())
             {
                 var p = _context.Container.GetInstance<MissingLayersPresenter>();

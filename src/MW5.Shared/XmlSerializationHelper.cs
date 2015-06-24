@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 namespace MW5.Shared
 {
     /// <summary>
-    /// Serializesand deserializes objects with XmlSerializer.
+    /// Serializes and deserializes objects with XmlSerializer.
     /// </summary>
     public static class XmlSerializationHelper
     {

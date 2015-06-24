@@ -192,6 +192,12 @@ namespace MW5.Api.Concrete
             return new List<LabelInfo>();
         }
 
+        public int MinDrawingSize
+        {
+            get { return _labels.MinDrawingSize; }
+            set { _labels.MinDrawingSize = value; }
+        }
+
         public object InternalObject
         {
             get { return _labels; }

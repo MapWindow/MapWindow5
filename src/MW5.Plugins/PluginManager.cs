@@ -98,6 +98,11 @@ namespace MW5.Plugins
 
             var dict = new Dictionary<Guid, BasePlugin>();
 
+            if (_mefPlugins == null)
+            {
+                return;
+            }
+
             foreach (var item in _mefPlugins)
             {
                 var p = item.Value as BasePlugin;

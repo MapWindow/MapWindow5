@@ -153,11 +153,8 @@ namespace MW5.Plugins.Symbology.Helpers
             {
                 case LayerType.Shapefile:
                 case LayerType.VectorLayer:
-                    using (var form = new VectorStyleForm(context, layer))
-                    {
-                        context.View.ShowChildView(form);
-                        return true;
-                    }
+                    context.Container.Run<VectorStylePresenter, ILegendLayer>(layer);
+                    return true;
                 case LayerType.Image:
                 case LayerType.Grid:
                     context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);

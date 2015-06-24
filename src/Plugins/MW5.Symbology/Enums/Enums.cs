@@ -41,5 +41,29 @@
         Pyramids = 4,
         Info = 5,
     }
+
+    public enum CategoriesCommand
+    {
+        ChangeColorScheme = 0,
+        CategoryRemove = 1,
+        CategoryClear = 2,
+        CategoryAppearance = 3,
+        CategoryGenerate = 4,
+    }
+
+    public enum VectorStyleCommand
+    {
+        OpenLocation = 0,
+        SaveStyle = 1,
+        RemoveStyle = 2,
+        ProjectionDetails = 3,
+        ChartAppearance = 4,
+        ClearCharts = 5,
+        ChartsEditColorScheme = 6,
+        LabelAppearance = 7,
+        ClearLabels = 8,
+        ChangeVisibilityExpression = 9,
+        ClearVisibilityExpression = 10,
+    }
 }
 

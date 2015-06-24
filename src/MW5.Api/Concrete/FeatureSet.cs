@@ -641,6 +641,12 @@ namespace MW5.Api.Concrete
             get { return _shapefile.NumShapes; }
         }
 
+        public int MinDrawingSize
+        {
+            get { return _shapefile.MinDrawingSize; }
+            set { _shapefile.MinDrawingSize = value; }
+        }
+
         public bool FixUpShapes(out IFeatureSet result)
         {
             Shapefile sf = null;

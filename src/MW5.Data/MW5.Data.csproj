@@ -48,9 +48,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MW5.TableEditor">
-      <HintPath>..\Plugins\MW5.TableEditor\obj\x86\Debug\MW5.TableEditor.dll</HintPath>
-    </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4">
       <SpecificVersion>False</SpecificVersion>
     </Reference>

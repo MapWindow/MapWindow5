@@ -20,10 +20,13 @@ namespace MW5.Plugins.Symbology
                 RegisterView<IRasterMinMaxView, RasterMinMaxView>().
                 RegisterView<IRasterColorSchemeView, RasterColorSchemeView>().
                 RegisterView<IHistogramOptionsView, HistogramOptionsView>().
-                
+                RegisterView<IVectorStyleView, VectorStyleView>().
                 RegisterService<RasterRenderingSubView>().
-                RegisterService<RasterRenderingPresenter>();
+                RegisterService<RasterRenderingPresenter>().
+                RegisterService<CategoriesPresenter>().
+                RegisterService<CategoriesSubView>();
 
+            EnumHelper.RegisterConverter(new CollisionModeConverter());
             EnumHelper.RegisterConverter(new SymbologyTypeCoverter());
             EnumHelper.RegisterConverter(new RasterRenderingConverter());
             EnumHelper.RegisterConverter(new RasterClassificationConverter());

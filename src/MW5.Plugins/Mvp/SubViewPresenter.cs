@@ -9,6 +9,7 @@ namespace MW5.Plugins.Mvp
     public abstract class SubViewPresenter<TView, TCommand, TModel> : CommandDispatcher<TCommand>
         where TCommand : struct, IConvertible
         where TView: SubViewBase<TModel>
+        where TModel: class
     {
         protected TModel Model;
         public TView View { get; private set; }

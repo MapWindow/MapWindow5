@@ -93,11 +93,12 @@ namespace MW5.Api.Interfaces
 
         int NumFeatures { get; }
 
+        int MinDrawingSize { get; set; }
+
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);
         //int GenerateLabels(int FieldIndex, tkLabelPositioning Method, bool LargestPartOnly = false);
-        //int MinDrawingSize { get; set; }
         //tkGeometryEngine GeometryEngine { get; set; }
         //tkSelectionAppearance SelectionAppearance { get; set; }
         //ShapeDrawingOptions SelectionDrawingOptions { get; set; }
