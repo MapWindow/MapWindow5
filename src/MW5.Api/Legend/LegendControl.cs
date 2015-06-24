@@ -436,8 +436,7 @@ namespace MW5.Api.Legend
                 if (_dragInfo.LegendLocked)
                 {
                     Unlock();
-                    Logger.Current.Warn(
-                    "Legend.HandleLeftMouseDown: something went wrong and the legend got locked but never got unlocked.");
+                    Logger.Current.Warn("Legend.HandleLeftMouseDown: something went wrong and the legend got locked but never got unlocked.");
                 }
             }
 
@@ -552,11 +551,12 @@ namespace MW5.Api.Legend
                     FireEvent(this, LayerLabelsClicked, new LayerEventArgs(lyr.Handle));
                     break;
                 case LayerElementType.Charts:
-                    FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
-                    break;
                 case LayerElementType.ChartField:
                 case LayerElementType.ChartFieldName:
-                    FireEvent(this, LayerDiagramFieldClicked, new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.Index));
+                    FireEvent(this, LayerDiagramsClicked, new LayerMouseEventArgs(lyr.Handle, MouseButtons.Left));
+                    
+                    // event for individual fields can be fired if necessary
+                    // FireEvent(this, LayerDiagramFieldClicked, new ChartFieldClickedEventArgs(lyr.Handle, MouseButtons.Left, element.Index));
                     break;
                 case LayerElementType.CategoryCheckbox:
                     var sf = AxMap.get_Shapefile(lyr.Handle);

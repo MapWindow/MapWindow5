@@ -34,8 +34,7 @@ namespace MW5.Projections.UI.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.Envelope envelope1 = new MW5.Api.Concrete.Envelope();
-            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label3 = new System.Windows.Forms.Label();
@@ -56,14 +55,14 @@ namespace MW5.Projections.UI.Forms
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.tabControl1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
-            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabDescription = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabMap = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this._projectionMap1 = new MW5.Projections.UI.Controls.ProjectionMap();
-            this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabWkt = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.buttonAdv1 = new Syncfusion.Windows.Forms.ButtonAdv();
             this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.projectionTextBox1 = new MW5.Projections.UI.Controls.ProjectionTextBox();
-            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabDialects = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.buttonAdv2 = new Syncfusion.Windows.Forms.ButtonAdv();
             this.gradientPanel2 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.txtDialect = new MW5.Projections.UI.Controls.ProjectionTextBox();
@@ -79,12 +78,12 @@ namespace MW5.Projections.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.txtAreaName)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
-            this.tabPageAdv1.SuspendLayout();
-            this.tabPageAdv2.SuspendLayout();
-            this.tabPageAdv3.SuspendLayout();
+            this.tabDescription.SuspendLayout();
+            this.tabMap.SuspendLayout();
+            this.tabWkt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
-            this.tabPageAdv4.SuspendLayout();
+            this.tabDialects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).BeginInit();
             this.gradientPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -307,10 +306,10 @@ namespace MW5.Projections.UI.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.BeforeTouchSize = new System.Drawing.Size(461, 492);
             this.tabControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabControl1.Controls.Add(this.tabPageAdv1);
-            this.tabControl1.Controls.Add(this.tabPageAdv2);
-            this.tabControl1.Controls.Add(this.tabPageAdv3);
-            this.tabControl1.Controls.Add(this.tabPageAdv4);
+            this.tabControl1.Controls.Add(this.tabDescription);
+            this.tabControl1.Controls.Add(this.tabMap);
+            this.tabControl1.Controls.Add(this.tabWkt);
+            this.tabControl1.Controls.Add(this.tabDialects);
             this.tabControl1.FixedSingleBorderColor = System.Drawing.Color.LightGray;
             this.tabControl1.FocusOnTabClick = false;
             this.tabControl1.Location = new System.Drawing.Point(5, 12);
@@ -318,44 +317,45 @@ namespace MW5.Projections.UI.Forms
             this.tabControl1.Size = new System.Drawing.Size(461, 492);
             this.tabControl1.TabIndex = 24;
             this.tabControl1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererMetro);
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
-            // tabPageAdv1
+            // tabDescription
             // 
-            this.tabPageAdv1.Controls.Add(this.label8);
-            this.tabPageAdv1.Controls.Add(this.txtName);
-            this.tabPageAdv1.Controls.Add(this.txtProj4);
-            this.tabPageAdv1.Controls.Add(this.label1);
-            this.tabPageAdv1.Controls.Add(this.txtRemarks);
-            this.tabPageAdv1.Controls.Add(this.label3);
-            this.tabPageAdv1.Controls.Add(this.label4);
-            this.tabPageAdv1.Controls.Add(this.txtCode);
-            this.tabPageAdv1.Controls.Add(this.label2);
-            this.tabPageAdv1.Controls.Add(this.linkLabel1);
-            this.tabPageAdv1.Controls.Add(this.txtScope);
-            this.tabPageAdv1.Image = null;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv1.Location = new System.Drawing.Point(1, 22);
-            this.tabPageAdv1.Name = "tabPageAdv1";
-            this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(459, 469);
-            this.tabPageAdv1.TabIndex = 1;
-            this.tabPageAdv1.Text = "Description";
-            this.tabPageAdv1.ThemesEnabled = false;
+            this.tabDescription.Controls.Add(this.label8);
+            this.tabDescription.Controls.Add(this.txtName);
+            this.tabDescription.Controls.Add(this.txtProj4);
+            this.tabDescription.Controls.Add(this.label1);
+            this.tabDescription.Controls.Add(this.txtRemarks);
+            this.tabDescription.Controls.Add(this.label3);
+            this.tabDescription.Controls.Add(this.label4);
+            this.tabDescription.Controls.Add(this.txtCode);
+            this.tabDescription.Controls.Add(this.label2);
+            this.tabDescription.Controls.Add(this.linkLabel1);
+            this.tabDescription.Controls.Add(this.txtScope);
+            this.tabDescription.Image = null;
+            this.tabDescription.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabDescription.Location = new System.Drawing.Point(1, 22);
+            this.tabDescription.Name = "tabDescription";
+            this.tabDescription.ShowCloseButton = true;
+            this.tabDescription.Size = new System.Drawing.Size(459, 469);
+            this.tabDescription.TabIndex = 1;
+            this.tabDescription.Text = "Description";
+            this.tabDescription.ThemesEnabled = false;
             // 
-            // tabPageAdv2
+            // tabMap
             // 
-            this.tabPageAdv2.Controls.Add(this._projectionMap1);
-            this.tabPageAdv2.Controls.Add(this.label5);
-            this.tabPageAdv2.Controls.Add(this.txtAreaName);
-            this.tabPageAdv2.Image = null;
-            this.tabPageAdv2.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv2.Location = new System.Drawing.Point(1, 22);
-            this.tabPageAdv2.Name = "tabPageAdv2";
-            this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(459, 469);
-            this.tabPageAdv2.TabIndex = 2;
-            this.tabPageAdv2.Text = "Area of use";
-            this.tabPageAdv2.ThemesEnabled = false;
+            this.tabMap.Controls.Add(this._projectionMap1);
+            this.tabMap.Controls.Add(this.label5);
+            this.tabMap.Controls.Add(this.txtAreaName);
+            this.tabMap.Image = null;
+            this.tabMap.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabMap.Location = new System.Drawing.Point(1, 22);
+            this.tabMap.Name = "tabMap";
+            this.tabMap.ShowCloseButton = true;
+            this.tabMap.Size = new System.Drawing.Size(459, 469);
+            this.tabMap.TabIndex = 2;
+            this.tabMap.Text = "Area of use";
+            this.tabMap.ThemesEnabled = false;
             // 
             // _projectionMap1
             // 
@@ -364,11 +364,11 @@ namespace MW5.Projections.UI.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
-            this._projectionMap1.CurrentScale = 18.992600779899494D;
+            this._projectionMap1.BackgroundColor = System.Drawing.Color.White;
+            this._projectionMap1.CurrentScale = 17.5892066336015D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
-            envelope1.Tag = "";
             this._projectionMap1.GrabProjectionFromData = true;
             this._projectionMap1.InertiaOnPanning = MW5.Api.Enums.AutoToggle.Auto;
             this._projectionMap1.KnownExtents = MW5.Api.Enums.KnownExtents.None;
@@ -380,13 +380,14 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this._projectionMap1.MouseWheelSpeed = 0.5D;
             this._projectionMap1.Name = "_projectionMap1";
-            spatialReference1.Tag = "";
-            this._projectionMap1.Projection = spatialReference1;
+            spatialReference2.Tag = "";
+            this._projectionMap1.Projection = spatialReference2;
             this._projectionMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this._projectionMap1.ReuseTileBuffer = true;
             this._projectionMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
             this._projectionMap1.ScalebarVisible = true;
             this._projectionMap1.ShowCoordinates = MW5.Api.Enums.CoordinatesDisplay.Auto;
+            this._projectionMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
             this._projectionMap1.ShowRedrawTime = false;
             this._projectionMap1.ShowVersionNumber = false;
             this._projectionMap1.Size = new System.Drawing.Size(420, 203);
@@ -397,21 +398,22 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.UdCursorHandle = 0;
             this._projectionMap1.UseSeamlessPan = false;
             this._projectionMap1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
+            this._projectionMap1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
             this._projectionMap1.ZoomPercent = 0.3D;
             // 
-            // tabPageAdv3
+            // tabWkt
             // 
-            this.tabPageAdv3.Controls.Add(this.buttonAdv1);
-            this.tabPageAdv3.Controls.Add(this.gradientPanel1);
-            this.tabPageAdv3.Image = null;
-            this.tabPageAdv3.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv3.Location = new System.Drawing.Point(1, 22);
-            this.tabPageAdv3.Name = "tabPageAdv3";
-            this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(459, 469);
-            this.tabPageAdv3.TabIndex = 3;
-            this.tabPageAdv3.Text = "ESRI WKT";
-            this.tabPageAdv3.ThemesEnabled = false;
+            this.tabWkt.Controls.Add(this.buttonAdv1);
+            this.tabWkt.Controls.Add(this.gradientPanel1);
+            this.tabWkt.Image = null;
+            this.tabWkt.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabWkt.Location = new System.Drawing.Point(1, 22);
+            this.tabWkt.Name = "tabWkt";
+            this.tabWkt.ShowCloseButton = true;
+            this.tabWkt.Size = new System.Drawing.Size(459, 469);
+            this.tabWkt.TabIndex = 3;
+            this.tabWkt.Text = "ESRI WKT";
+            this.tabWkt.ThemesEnabled = false;
             // 
             // buttonAdv1
             // 
@@ -451,24 +453,24 @@ namespace MW5.Projections.UI.Forms
             this.projectionTextBox1.TabIndex = 0;
             this.projectionTextBox1.Text = "";
             // 
-            // tabPageAdv4
+            // tabDialects
             // 
-            this.tabPageAdv4.Controls.Add(this.buttonAdv2);
-            this.tabPageAdv4.Controls.Add(this.gradientPanel2);
-            this.tabPageAdv4.Controls.Add(this.btnRemove);
-            this.tabPageAdv4.Controls.Add(this.btnAdd);
-            this.tabPageAdv4.Controls.Add(this.listView1);
-            this.tabPageAdv4.Controls.Add(this.label6);
-            this.tabPageAdv4.Controls.Add(this.label7);
-            this.tabPageAdv4.Image = null;
-            this.tabPageAdv4.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv4.Location = new System.Drawing.Point(1, 22);
-            this.tabPageAdv4.Name = "tabPageAdv4";
-            this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(459, 469);
-            this.tabPageAdv4.TabIndex = 4;
-            this.tabPageAdv4.Text = "Dialects";
-            this.tabPageAdv4.ThemesEnabled = false;
+            this.tabDialects.Controls.Add(this.buttonAdv2);
+            this.tabDialects.Controls.Add(this.gradientPanel2);
+            this.tabDialects.Controls.Add(this.btnRemove);
+            this.tabDialects.Controls.Add(this.btnAdd);
+            this.tabDialects.Controls.Add(this.listView1);
+            this.tabDialects.Controls.Add(this.label6);
+            this.tabDialects.Controls.Add(this.label7);
+            this.tabDialects.Image = null;
+            this.tabDialects.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabDialects.Location = new System.Drawing.Point(1, 22);
+            this.tabDialects.Name = "tabDialects";
+            this.tabDialects.ShowCloseButton = true;
+            this.tabDialects.Size = new System.Drawing.Size(459, 469);
+            this.tabDialects.TabIndex = 4;
+            this.tabDialects.Text = "Dialects";
+            this.tabDialects.ThemesEnabled = false;
             // 
             // buttonAdv2
             // 
@@ -598,15 +600,15 @@ namespace MW5.Projections.UI.Forms
             ((System.ComponentModel.ISupportInitialize)(this.txtAreaName)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).EndInit();
             this.tabControl1.ResumeLayout(false);
-            this.tabPageAdv1.ResumeLayout(false);
-            this.tabPageAdv1.PerformLayout();
-            this.tabPageAdv2.ResumeLayout(false);
-            this.tabPageAdv2.PerformLayout();
-            this.tabPageAdv3.ResumeLayout(false);
+            this.tabDescription.ResumeLayout(false);
+            this.tabDescription.PerformLayout();
+            this.tabMap.ResumeLayout(false);
+            this.tabMap.PerformLayout();
+            this.tabWkt.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
             this.gradientPanel1.ResumeLayout(false);
-            this.tabPageAdv4.ResumeLayout(false);
-            this.tabPageAdv4.PerformLayout();
+            this.tabDialects.ResumeLayout(false);
+            this.tabDialects.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).EndInit();
             this.gradientPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -637,10 +639,10 @@ namespace MW5.Projections.UI.Forms
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControl1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv2;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv3;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv4;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabDescription;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabMap;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabWkt;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabDialects;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;

@@ -121,6 +121,9 @@ namespace MW5.Api.Legend.Renderer
 
             var left = _bounds.Left + Constants.TextLeftPad;
             _sf.Charts.DrawChart(hdc, left, top, true, backColor);
+
+            _layer.Elements.Add(LayerElementType.Charts, new Rectangle(left, top, _sf.Charts.IconWidth, _sf.Charts.IconHeight));
+
             top += _sf.Charts.IconHeight + Constants.VerticalPad;
             _graphics.ReleaseHdc(hdc);
         }
@@ -138,7 +141,6 @@ namespace MW5.Api.Legend.Renderer
                 _graphics.FillRectangle(brush, rect);
                 _graphics.DrawRectangle(pen, rect);
 
-                // storing bounds
                 _layer.Elements.Add(LayerElementType.ChartField, rect, i);
 
                 rect = new Rectangle(
@@ -149,7 +151,6 @@ namespace MW5.Api.Legend.Renderer
                 var name = _sf.Charts.Field[i].Name;
                 DrawText(_graphics, name, rect, Font, Color.Black);
 
-                // storing bounds
                 _layer.Elements.Add(LayerElementType.ChartFieldName, rect);
 
                 top += Constants.CsItemHeight + Constants.VerticalPad;
