@@ -59,8 +59,7 @@ namespace MW5.Plugins.Symbology.Helpers
 
             if (layer == null || layer.FeatureSet == null)
             {
-                MessageService.Current.Warn("Invalid layer handler of the vector layer.");
-                return false;
+                throw new ApplicationException("Invalid layer handle.");
             }
 
             var style = layer.FeatureSet.Style;
@@ -71,13 +70,6 @@ namespace MW5.Plugins.Symbology.Helpers
 
                 if (context.View.ShowChildView(form, parent))
                 {
-                    layer.FeatureSet.ApplyDefaultStyleToCategories();
-
-                    if (layer.FeatureSet.Categories.Any())
-                    {
-                        context.Legend.Redraw(LegendRedraw.LegendAndMap);
-                    }
-
                     return true;
                 }
             }

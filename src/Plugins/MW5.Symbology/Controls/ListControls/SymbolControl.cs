@@ -60,11 +60,15 @@ namespace MW5.Plugins.Symbology.Controls.ListControls
             }
             set
             {
+                if (value == ForeColor) return;
+
                 base.ForeColor = value;
+
                 foreach (IGeometryStyle t in _icons)
                 {
                     t.Fill.Color = value;
                 }
+
                 Redraw();
             }
         }

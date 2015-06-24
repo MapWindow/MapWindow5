@@ -27,6 +27,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 using MW5.UI.Enums;
@@ -528,11 +529,13 @@ namespace MW5.Plugins.Symbology.Forms
         {
             _tabIndex = tabControl1.SelectedIndex;
 
+            RefreshCategories();
+
             if (_style.Serialize() != _initState)
             {
-                //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
                 _legend.Redraw(LegendRedraw.LegendAndMap);
             }
+
         }
 
         /// <summary>
@@ -540,10 +543,20 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void OnApplyClick(object sender, EventArgs e)
         {
-            //m_legend.FireLayerPropertiesChanged(m_layer.Handle);
+            RefreshCategories();
+
             _legend.Redraw(LegendRedraw.LegendAndMap);
+
             btnApply.Enabled = false;
             _initState = _style.Serialize();
+        }
+
+        private void RefreshCategories()
+        {
+            if (_layer.FeatureSet.Style.InternalObject == _style.InternalObject)
+            {
+                _layer.FeatureSet.ApplyDefaultStyleToCategories();
+            }
         }
 
         /// <summary>
