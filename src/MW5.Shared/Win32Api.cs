@@ -7,6 +7,9 @@ namespace MW5.Shared
 {
     public static class Win32Api
     {
+        public static int GWL_EXSTYLE = (-20);
+        public static int GWL_STYLE = (-16);
+
         private struct POINTAPI
         {
             public int x;
@@ -37,5 +40,8 @@ namespace MW5.Shared
 
         [DllImport("user32.dll")]
         public static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
     }
 }

@@ -94,6 +94,16 @@ namespace MW5.Views
             return true;
         }
 
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= 0x00040000;  // Turn on WS_EX_APPWINDOW
+                return cp;
+            }
+        } 
+
         #region IView implementation
 
         public override void ShowView(IWin32Window parent = null)
@@ -114,8 +124,7 @@ namespace MW5.Views
             Logger.Current.Info("Loading time: " + Program.Timer.Elapsed);
 
             SplashView.Instance.Close();
-
-            ShowInTaskbar = true;
+            
             _context.DockPanels.Unlock();
 
             // don't set it initially or it will cause a lot of resizing
@@ -124,12 +133,14 @@ namespace MW5.Views
 
             Invoke(BeforeShow);
 
+            int value = Win32Api.GetWindowLong(Handle, Win32Api.GWL_EXSTYLE);       // temp
+
             Application.Run(this);
         }
 
         public override void UpdateView()
         {
-            Text = WindowTitle;
+
             if (!_context.Project.IsEmpty)
             {
                 Text += @" - " + _context.Project.Filename;

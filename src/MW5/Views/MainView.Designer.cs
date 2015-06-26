@@ -42,13 +42,13 @@ namespace MW5.Views
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.Map.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
+            this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
-            this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.dockingClientPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._mainFrameBarManager1)).BeginInit();
@@ -110,7 +110,8 @@ namespace MW5.Views
             this._mapControl1.AllowDrop = true;
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._mapControl1.BackColor = System.Drawing.Color.White;
-            this._mapControl1.CurrentScale = 1.7722502649008838D;
+            this._mapControl1.BackgroundColor = System.Drawing.Color.White;
+            this._mapControl1.CurrentScale = 0.63344368502784842D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.ExtentHistory = 20;
@@ -147,7 +148,6 @@ namespace MW5.Views
             this._mapControl1.ZoomBehavior = MW5.Api.Enums.ZoomBehavior.UseTileLevels;
             this._mapControl1.ZoomBoxStyle = MW5.Api.Enums.ZoomBoxStyle.Blue;
             this._mapControl1.ZoomPercent = 0.3D;
-            this._mapControl1.Dock = System.Windows.Forms.DockStyle.None;
             // 
             // _mainFrameBarManager1
             // 
@@ -162,6 +162,19 @@ namespace MW5.Views
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
+            // 
+            // statusStripEx1
+            // 
+            this.statusStripEx1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(255)))));
+            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(796, 22);
+            this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
+            this.statusStripEx1.Location = new System.Drawing.Point(0, 509);
+            this.statusStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(255)))));
+            this.statusStripEx1.Name = "statusStripEx1";
+            this.statusStripEx1.Size = new System.Drawing.Size(796, 22);
+            this.statusStripEx1.TabIndex = 1;
+            this.statusStripEx1.Text = "statusStripEx1";
+            this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
             // 
             // statusStripLabel5
             // 
@@ -200,19 +213,6 @@ namespace MW5.Views
             this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
             this.superToolTip1.UseFading = Syncfusion.Windows.Forms.Tools.SuperToolTip.FadingType.System;
             this.superToolTip1.VisualStyle = Syncfusion.Windows.Forms.Tools.SuperToolTip.Appearance.Metro;
-            // 
-            // statusStripEx1
-            // 
-            this.statusStripEx1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(255)))));
-            this.statusStripEx1.BeforeTouchSize = new System.Drawing.Size(796, 22);
-            this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
-            this.statusStripEx1.Location = new System.Drawing.Point(0, 509);
-            this.statusStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(135)))), ((int)(((byte)(206)))), ((int)(((byte)(255)))));
-            this.statusStripEx1.Name = "statusStripEx1";
-            this.statusStripEx1.Size = new System.Drawing.Size(796, 22);
-            this.statusStripEx1.TabIndex = 1;
-            this.statusStripEx1.Text = "statusStripEx1";
-            this.statusStripEx1.VisualStyle = Syncfusion.Windows.Forms.Tools.StatusStripExStyle.Metro;
             // 
             // MainView
             // 
