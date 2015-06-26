@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Threading;
 using MW5.Shared;
 using MW5.Shared.Log;
 
@@ -7,8 +9,12 @@ namespace MW5.Services.Concrete
 {
     public class LogEntry: ILogEntry
     {
+        private static int _newIndex = 0;
+
         public LogEntry(string msg, LogLevel level)
         {
+            Index = Interlocked.Increment(ref _newIndex);
+            msg = msg.TrimEnd(Environment.NewLine.ToCharArray());
             Message = msg;
             Level = level;
         }
@@ -19,6 +25,15 @@ namespace MW5.Services.Concrete
             Exception = ex;
             TimeStamp = DateTime.Now;
         }
+
+        [DisplayName(" ")]
+        public Bitmap Image { get; set; }
+
+        [DisplayName(" ")]
+        public int Index { get; set; }
+
+        [Browsable(false)]
+        public bool Displayed { get; set; }
 
         public LogLevel Level { get; set; }
 
@@ -31,6 +46,7 @@ namespace MW5.Services.Concrete
         [DisplayName("Time")]
         public DateTime TimeStamp { get; private set; }
 
+        [DisplayName("Message")]
         public string DetailedMessage
         {
             get

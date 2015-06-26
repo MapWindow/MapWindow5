@@ -83,6 +83,7 @@
     <Compile Include="Controls\CustomGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\DataGridViewAdapter.cs" />
     <Compile Include="Controls\LinkLabelCellModelEx.cs" />
     <Compile Include="Controls\LinkLabelCellRendererEx.cs" />
     <Compile Include="Controls\LinkLabelEx.cs">
@@ -97,6 +98,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ImageComboItem.cs" />
+    <Compile Include="Controls\StronglyTypedDataGridView.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\TwoColumnTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -186,6 +190,7 @@
     </Compile>
     <Compile Include="Helpers\ComboBoxEnumItem.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Helpers\GenericHelper.cs" />
     <Compile Include="Helpers\GroupingGridHelper.cs" />
     <Compile Include="Helpers\OptionListHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
@@ -267,6 +272,10 @@
     <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
       <Name>MW5.Shared</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utility\BindingListView.csproj">
+      <Project>{75AF36A8-7797-4023-B183-5B63D448420A}</Project>
+      <Name>BindingListView</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

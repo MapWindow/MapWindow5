@@ -1,119 +1,54 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="DebugWindow.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="DebugWindowPlugin.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Show a debug window that listens to all events
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
+using MW5.Plugins.Concrete;
+using MW5.Plugins.DebugWindow.Menu;
 using MW5.Plugins.DebugWindow.Services;
 using MW5.Plugins.DebugWindow.Views;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
 
 namespace MW5.Plugins.DebugWindow
 {
-    #region
-
-    using System.Diagnostics;
-    using System.Linq;
-
-    using MW5.Plugins.Concrete;
-    using MW5.Plugins.DebugWindow.Menu;
-    using MW5.Plugins.Interfaces;
-    using MW5.Plugins.Mef;
-
-    #endregion
-
     /// <summary>
-    ///     The debug window plugin.
+    /// The debug window plugin.
     /// </summary>
     [MapWindowPlugin]
     public class DebugWindowPlugin : BasePlugin
     {
-        #region Fields
-
-        /// <summary>
-        ///     The context of the application, holding the menu, layers, project, etc.
-        /// </summary>
         private IAppContext _context;
-
-        /// <summary>
-        ///     The reference to the map listener class, is used in the constructor
-        /// </summary>
-        private MapListener _mapListener;
-
-        /// <summary>
-        ///     The reference to the menu generator class, is used in the constructor
-        /// </summary>
-        private MenuGenerator _menuGenerator;
-
-        /// <summary>
-        ///     The reference to the menu listener class, is used in the constructor
-        /// </summary>
-        private MenuListener _menuListener;
-
-        /// <summary>
-        ///     The reference to the sample dock user control, is used in the constructor
-        /// </summary>
-        private DebugWindow _debugWindow;
-
-        private DebugPresenter _presenter;
-
         private DockPanelService _dockPanelService;
-
+        private DebugPresenter _presenter;
         private StatusBarListener _statusBarListener;
 
-        #endregion
+        /// <summary>
+        /// The initialize method, called when the plug-in is loaded
+        /// </summary>
+        public override void Initialize(IAppContext context)
+        {
+            _context = context;
 
-        #region Public Methods and Operators
+            _presenter = context.Container.GetInstance<DebugPresenter>();
+            _dockPanelService = context.Container.GetInstance<DockPanelService>();
+            _statusBarListener = context.Container.GetInstance<StatusBarListener>();
+        }
 
         /// <summary>
         /// Set up container for dependency injection:
         /// </summary>
-        /// <param name="container">The container.</param>
         public override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
 
-        /// <summary>
-        /// The initialize method, called when the plug-in is loaded
-        /// </summary>
-        /// <param name="context">
-        /// The application context.
-        /// </param>
-        public override void Initialize(IAppContext context)
-        {
-            // Save to local properties:
-            _context = context;
-
-            // Will better to preserve state if plugin is unloaded, therefore singleton
-            // Because SampleDockWindow is injected in MenuListener and MapListener it should be call before them:
-            _debugWindow = context.Container.GetSingleton<DebugWindow>();   
-
-            _menuGenerator = context.Container.GetInstance<MenuGenerator>();
-            _menuListener = context.Container.GetInstance<MenuListener>();
-            _mapListener = context.Container.GetInstance<MapListener>();
-            
-            _presenter = context.Container.GetInstance<DebugPresenter>();
-            _dockPanelService = context.Container.GetInstance<DockPanelService>();
-            _statusBarListener = context.Container.GetInstance<StatusBarListener>();
-
-            // Event handlers are in the MapListener class:
-
-            // Just to show case:
-            Debug.WriteLine("Number of layers loaded" + _context.Layers.Count());
-        }
-
-        /// <summary>
-        ///     For cleaning activity necessary during unloading of the plug-in
-        /// </summary>
+        
         public override void Terminate()
         {
-            // menus & toolbars will be cleared automatically
+            
         }
-
-        #endregion
     }
 }

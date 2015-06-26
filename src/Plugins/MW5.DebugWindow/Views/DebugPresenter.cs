@@ -33,7 +33,7 @@ namespace MW5.Plugins.DebugWindow.Views
             switch (command)
             {
                 case DebugCommand.ClearLog:
-                    Logger.Current.Clear();
+                    View.Clear();
                     break;
                 case DebugCommand.ClearFilter:
                     MessageService.Current.Info("Not implemented");

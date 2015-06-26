@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MW5.Plugins.Identifier</RootNamespace>
-    <AssemblyName>MW5.IdentifierTestPlugin</AssemblyName>
+    <AssemblyName>MW5.Identifier</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

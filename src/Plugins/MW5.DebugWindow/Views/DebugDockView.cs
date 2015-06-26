@@ -1,133 +1,50 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SampleDockWindow.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="DebugDockView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The sample dock window.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Reflection;
+using System.Linq;
 using System.Windows.Forms;
+using Equin.ApplicationFramework;
 using MW5.Plugins.DebugWindow.Views.Abstract;
 using MW5.Plugins.Interfaces;
 using MW5.Services.Concrete;
 using MW5.Shared;
-using MW5.UI.Controls;
-using Syncfusion.Windows.Forms.Grid;
-using Syncfusion.Windows.Forms.Grid.Grouping;
 using MW5.Shared.Log;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
-using Syncfusion.Grouping;
 
 namespace MW5.Plugins.DebugWindow.Views
 {
     public partial class DebugDockView : DockPanelControlBase, IDebugView
     {
+        private readonly IAppContext _context;
+        private readonly BindingListView<ILogEntry> _entries;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DebugDockView"/> class.
         /// </summary>
-        public DebugDockView()
+        public DebugDockView(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
+
             InitializeComponent();
+
+            _entries = new BindingListView<ILogEntry>(new SortableBindingList<ILogEntry>());
 
             InitGrid();
 
             InitCombo();
 
-            watermarkTextbox1.TextChanged += (s, e) => UpdateFilter();
-        }
+            txtFilter.TextChanged += UpdateFilter;
 
-        private void InitCombo()
-        {
-            comboBoxAdv1.Items.Clear();
-            comboBoxAdv1.AddItemsFromEnum<LogLevel>();
-            comboBoxAdv1.SetValue(LogLevel.All);
-            comboBoxAdv1.SelectedIndexChanged += (s, e) => UpdateFilter();
-        }
-
-        private void UpdateFilter()
-        {
-            _listControl.Adapter.ClearFilter();
-            
-            var level = comboBoxAdv1.GetValue<LogLevel>();
-            if (level != LogLevel.All)
-            {
-                _listControl.Adapter.AddFilterMatch(entry => entry.Level, level);
-            }
-
-            _listControl.Adapter.AddFilterLike(entry => entry.DetailedMessage, watermarkTextbox1.Text);
-        }
-
-        private void InitGrid()
-        {
-            _listControl.BorderStyle = BorderStyle.None;
-
-            var adapter = _listControl.Adapter;
-            adapter.ReadOnly = true;
-            adapter.WrapText = true;
-            adapter.HotTracking = true;
-
-            _listControl.DataSource = Logger.Current.Entries;
-            Logger.Current.EntryAdded += Current_EntryAdded;
-
-            adapter.GetColumnStyle(r => r.TimeStamp).Format = "hh:mm:ss.fff";
-
-            var style = adapter.GetColumnStyle(r => r.Level);
-            style.ImageList = imageList1;
-            style.ImageIndex = 0;
-
-            _listControl.AdjustColumnWidths();
-            _listControl.AdjustRowHeights();
-            adapter.AutoAdjustRowHeights = true;
-
-            adapter.SetColumnIcon(r => r.Level, GetIcon);
-        }
-
-        void Current_EntryAdded(object sender, LogEventArgs e)
-        {
-            // TODO: do it for the last row only
-            if (!_listControl.IsHandleCreated)
-            {
-                return;
-            }
-
-            // TODO: this isn't enough since entries are added to SortableBindingList outside this lock
-            lock (_listControl)
-            {
-                Action action = () => _listControl.AdjustRowHeights();
-
-                if (_listControl.InvokeRequired)
-                {
-                    _listControl.BeginInvoke(action, null);
-                }
-                else
-                {
-                    _listControl.Invoke(action);
-                }
-            }
-        }
-
-        private int GetIcon(ILogEntry entry)
-        {
-            switch (entry.Level)
-            {
-                case LogLevel.Info:
-                    return 0;
-                case LogLevel.Debug:
-                    return 1;
-                case LogLevel.Warn:
-                    return 2;
-                case LogLevel.Error:
-                    return 3;
-                case LogLevel.Fatal:
-                    return 3;
-            }
-            return -1;
+            VisibleChanged += OnVisibleChanged;
         }
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
@@ -138,6 +55,77 @@ namespace MW5.Plugins.DebugWindow.Views
         public IEnumerable<Control> Buttons
         {
             get { yield break; }
+        }
+
+        public void Clear()
+        {
+            _entries.DataSource.Clear();
+        }
+
+        private void InitCombo()
+        {
+            comboBoxAdv1.Items.Clear();
+            comboBoxAdv1.AddItemsFromEnum<LogLevel>();
+            comboBoxAdv1.SetValue(LogLevel.All);
+            comboBoxAdv1.SelectedIndexChanged += UpdateFilter;
+        }
+
+        private void InitGrid()
+        {
+            grid.SetDatasource(_entries);
+            Logger.Current.EntryAdded += OnEntryAdded;
+        }
+
+        private void OnEntryAdded(object sender, LogEventArgs e)
+        {
+            if (!IsDockVisible || !grid.IsHandleCreated)
+            {
+                // do nothing records will be added on the next display of the panel
+                return;
+            }
+
+            lock (grid)
+            {
+                Action action = () =>
+                    {
+                        _entries.DataSource.Add(e.Entry as LogEntry);
+                        e.Entry.Displayed = true;
+                    };
+
+                grid.SafeInvoke(action);
+            }
+        }
+
+        /// <summary>
+        /// Adds all undisplayed records to the grid.
+        /// </summary>
+        private void OnVisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible && Logger.Current.Entries.Any(item => !item.Displayed))
+            {
+                var list = Logger.Current.Entries.Where(item => !item.Displayed).ToList();
+
+                var target = _entries.DataSource as BindingList<ILogEntry>;
+                if (target != null)
+                {
+                    target.RaiseListChangedEvents = false;
+
+                    foreach (var item in list)
+                    {
+                        target.Add(item);
+                        item.Displayed = true;
+                    }
+
+                    target.RaiseListChangedEvents = true;
+
+                    target.ResetBindings();
+                }
+            }
+        }
+
+        private void UpdateFilter(object sender, EventArgs e)
+        {
+            grid.UpdateFilter(comboBoxAdv1.GetValue<LogLevel>(), txtFilter.Text);
         }
     }
 }

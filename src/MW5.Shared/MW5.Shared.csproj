@@ -67,6 +67,7 @@
     <Compile Include="ArrayHelper.cs" />
     <Compile Include="AssemblyHelper.cs" />
     <Compile Include="BooleanHelper.cs" />
+    <Compile Include="DelegateHelper.cs" />
     <Compile Include="HasRegionsAttribute.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="ControlHelper.cs" />

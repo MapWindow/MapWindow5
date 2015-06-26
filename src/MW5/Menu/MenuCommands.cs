@@ -50,6 +50,9 @@ namespace MW5.Menu
 
                 new MenuCommand("Quit", MenuKeys.Quit, Resources.icon_quit, 
                 "Quits the application"),
+
+                new MenuCommand("Test", MenuKeys.Test, Resources.img_test24, 
+                "A fast way to run some testing code."),
                 
                 // file toolbar
                 new MenuCommand("Remove Layer", MenuKeys.RemoveLayer, Resources.icon_layer_remove,

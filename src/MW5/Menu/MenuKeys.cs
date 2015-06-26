@@ -8,6 +8,7 @@
         public const string SaveProject = "FileSaveProject";
         public const string SaveProjectAs = "FileSaveProjectAs";
         public const string Settings = "FileSettings";
+        public const string Test = "FileTest";
 
         public const string AddLayer = "LayerAddLayer";
         public const string AddVectorLayer = "LayerAddVectorLayer";

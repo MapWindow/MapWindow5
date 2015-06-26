@@ -10,5 +10,25 @@ namespace MW5.UI.Controls
 {
     public class DockPanelControlBase: UserControl, IDockPanelView
     {
+        private bool _shown = false;
+
+        public DockPanelControlBase()
+        {
+            Load += (s, e) => _shown = true;
+        }
+
+        public bool IsDockVisible
+        {
+            get
+            {
+                // Visible property returns true before it was shown for the first time
+                if (!_shown)
+                {
+                    return false;
+                }
+
+                return Visible;
+            }
+        }
     }
 }

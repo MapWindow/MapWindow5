@@ -9,6 +9,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Legend;
 using MW5.Data.Views;
+using MW5.Helpers;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -180,6 +181,9 @@ namespace MW5.Menu
         {
             switch (itemKey)
             {
+                case MenuKeys.Test:
+                    Sandbox.TestLogger();
+                    return true;
                 case MenuKeys.NewMap:
                     _projectService.TryClose();
                     return true;

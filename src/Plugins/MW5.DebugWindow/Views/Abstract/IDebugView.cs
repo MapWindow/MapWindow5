@@ -9,5 +9,6 @@ namespace MW5.Plugins.DebugWindow.Views.Abstract
 {
     public interface IDebugView: IMenuProvider
     {
+        void Clear();
     }
 }

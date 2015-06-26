@@ -33,7 +33,7 @@ namespace MW5.Shared
                 }
             }
             
-            return TextRenderer.MeasureText(text, font, new Size(width, Int32.MaxValue));
+            return TextRenderer.MeasureText(text, font, new Size(width, 0));
         }
     }
 }

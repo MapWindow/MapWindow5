@@ -112,9 +112,63 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CannotAddItem" xml:space="preserve">
+    <value>Cannot add an external item to the view. Use AddNew() or add to source list instead.</value>
+  </data>
+  <data name="CannotAddNewItem" xml:space="preserve">
+    <value>Cannot add a new item due to no object being provided in the AddingNew event and a lack of default public constructor.</value>
+  </data>
+  <data name="CannotAddWhenNewItemsListNull" xml:space="preserve">
+    <value>Cannot add a new item when NewItemsList is null.</value>
+  </data>
+  <data name="CannotClearView" xml:space="preserve">
+    <value>Cannot clear this view.</value>
+  </data>
+  <data name="CannotInsertItem" xml:space="preserve">
+    <value>Cannot insert an external item into this collection.</value>
+  </data>
+  <data name="CannotSetItem" xml:space="preserve">
+    <value>Cannot set an item in the view.</value>
+  </data>
+  <data name="IncludeDelegateCannotBeNull" xml:space="preserve">
+    <value>includeDelegate cannot be null.</value>
+  </data>
+  <data name="InvalidListItemType" xml:space="preserve">
+    <value>Item in list is not of type {0}.</value>
+  </data>
+  <data name="InvalidSourceList" xml:space="preserve">
+    <value>Source list does not implement IList.</value>
+  </data>
+  <data name="ItemTypeIncorrect" xml:space="preserve">
+    <value>Item was not of type {0}.</value>
+  </data>
+  <data name="NoFilter" xml:space="preserve">
+    <value>(no filter)</value>
+  </data>
+  <data name="ObjectCannotBeNull" xml:space="preserve">
+    <value>Object cannot be null.</value>
+  </data>
+  <data name="PredicateFilter" xml:space="preserve">
+    <value>(predicate filter)</value>
+  </data>
+  <data name="PropertyNotFound" xml:space="preserve">
+    <value>Property {0} does not exist in type {1}.</value>
+  </data>
+  <data name="SourceListAlreadyAdded" xml:space="preserve">
+    <value>Source list already added to the view.</value>
+  </data>
+  <data name="SourceListNotFound" xml:space="preserve">
+    <value>Source list is not in the view.</value>
+  </data>
+  <data name="SourceListsNull" xml:space="preserve">
+    <value>SourceLists cannot be null.</value>
+  </data>
+  <data name="SyncAccessNotSupported" xml:space="preserve">
+    <value>Synchronized access to the view is not supported.</value>
+  </data>
 </root>

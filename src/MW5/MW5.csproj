@@ -172,6 +172,7 @@
     <Compile Include="Controls\LocatorPresenter.cs" />
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExceptionHandler.cs" />
+    <Compile Include="Helpers\Sandbox.cs" />
     <Compile Include="Helpers\SyncfusionSerializationHelper.cs" />
     <Compile Include="Helpers\ToolbarHelper.cs" />
     <Compile Include="Listeners\MainPluginListener.cs" />
@@ -575,6 +576,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_test24.png" />
     <None Include="Resources\img_zoom_next24.png" />
     <None Include="Resources\img_zoom_prev24.png" />
     <None Include="Resources\img_default24.png" />

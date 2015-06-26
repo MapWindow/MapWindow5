@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using log4net;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -13,7 +14,7 @@ namespace MW5.Services.Concrete
     {
         private readonly ILog _log4NetLogger;
 
-        private readonly SortableBindingList<ILogEntry> _entries = new SortableBindingList<ILogEntry>();
+        private readonly List<ILogEntry> _entries = new List<ILogEntry>();
 
         private IAppContext _context;
 
@@ -39,6 +40,7 @@ namespace MW5.Services.Concrete
             EntryAdded += (s, e) => broadcaster.BroadcastEvent(p => p.LogEntryAdded_, this, new LogEventArgs(e.Entry));
         }
 
+       
         private bool AppContextReady()
         {
             return _context != null && _context.Initialized;
@@ -123,18 +125,29 @@ namespace MW5.Services.Concrete
             _entries.Clear();
         }
 
+        public int MessageCount(LogLevel level, bool notDisplayed)
+        {
+            lock (_entries)
+            {
+                var list = notDisplayed ? Entries.Where(e => !e.Displayed) : Entries;
+                return level == LogLevel.All ? list.Count() : list.Count(e => e.Level == level);
+            }
+        }
+
         private void Log(string msg, LogLevel level, Exception ex = null)
         {
             var entry = new LogEntry(msg, level, ex);
-            _entries.Add(entry);
+            lock (_entries)
+            {
+                _entries.Add(entry);
+            }
 
-            WriteToDebug(entry.ToString());
+            // it's too slow compared to others
+            //WriteToDebug(entry.ToString());
 
             FireEntryAdded(entry);
 
             AddToFile(entry);
-
-            // TODO: display info about exception
         }
 
         private void AddToFile(LogEntry entry)

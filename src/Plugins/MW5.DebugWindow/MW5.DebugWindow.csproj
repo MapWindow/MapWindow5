@@ -99,14 +99,13 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
-    <Compile Include="Controls\LogEntryGrid.cs">
+    <Compile Include="Controls\LogEntryDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MapListener.cs" />
-    <Compile Include="Menu\MenuCommands.cs" />
-    <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Controls\LogEntryDataGridView.Designer.cs">
+      <DependentUpon>LogEntryDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu\MenuKeys.cs" />
-    <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -115,12 +114,6 @@
     </Compile>
     <Compile Include="DebugWindowPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DebugWindow.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="DebugWindow.Designer.cs">
-      <DependentUpon>DebugWindow.cs</DependentUpon>
-    </Compile>
     <Compile Include="Services\DockPanelService.cs" />
     <Compile Include="Views\Abstract\IDebugView.cs" />
     <Compile Include="Views\DebugCommand.cs" />
@@ -163,14 +156,15 @@
       <Name>MW5.UI</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Utility\BindingListView.csproj">
+      <Project>{75af36a8-7797-4023-b183-5b63d448420a}</Project>
+      <Name>BindingListView</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DebugWindow.resx">
-      <DependentUpon>DebugWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DebugDockView.resx">
       <DependentUpon>DebugDockView.cs</DependentUpon>
@@ -184,6 +178,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ico_bug24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_warning16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_error16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_note16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_critical16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_debug16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

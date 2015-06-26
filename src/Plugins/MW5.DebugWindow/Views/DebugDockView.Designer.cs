@@ -32,26 +32,28 @@ namespace MW5.Plugins.DebugWindow.Views
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DebugDockView));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolClearLog = new System.Windows.Forms.ToolStripButton();
-            this.watermarkTextbox1 = new WatermarkTextbox();
+            this.txtFilter = new MW5.UI.Controls.WatermarkTextbox();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.barItem1 = new Syncfusion.Windows.Forms.Tools.XPMenus.BarItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this._listControl = new MW5.Plugins.DebugWindow.Controls.LogEntryGrid();
+            this.grid = new MW5.Plugins.DebugWindow.Controls.LogEntryDataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
             this.toolStripEx1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.watermarkTextbox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
             // gradientPanel1
             // 
             this.gradientPanel1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.gradientPanel1.Controls.Add(this.toolStripEx1);
-            this.gradientPanel1.Controls.Add(this.watermarkTextbox1);
+            this.gradientPanel1.Controls.Add(this.txtFilter);
             this.gradientPanel1.Controls.Add(this.comboBoxAdv1);
             this.gradientPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.gradientPanel1.Location = new System.Drawing.Point(0, 0);
@@ -86,17 +88,19 @@ namespace MW5.Plugins.DebugWindow.Views
             this.toolClearLog.Size = new System.Drawing.Size(23, 22);
             this.toolClearLog.Text = "Clear log";
             // 
-            // watermarkTextbox1
+            // txtFilter
             // 
-            this.watermarkTextbox1.BeforeTouchSize = new System.Drawing.Size(100, 20);
-            this.watermarkTextbox1.Cue = "Search for messages";
-            this.watermarkTextbox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.watermarkTextbox1.Location = new System.Drawing.Point(3, 5);
-            this.watermarkTextbox1.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.watermarkTextbox1.Name = "watermarkTextbox1";
-            this.watermarkTextbox1.Size = new System.Drawing.Size(293, 20);
-            this.watermarkTextbox1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.watermarkTextbox1.TabIndex = 43;
+            this.txtFilter.BeforeTouchSize = new System.Drawing.Size(293, 20);
+            this.txtFilter.Cue = "Search for messages";
+            this.txtFilter.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtFilter.FarImage = ((System.Drawing.Image)(resources.GetObject("txtFilter.FarImage")));
+            this.txtFilter.Location = new System.Drawing.Point(3, 5);
+            this.txtFilter.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.ShowClearButton = true;
+            this.txtFilter.Size = new System.Drawing.Size(293, 20);
+            this.txtFilter.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtFilter.TabIndex = 43;
             // 
             // comboBoxAdv1
             // 
@@ -138,20 +142,34 @@ namespace MW5.Plugins.DebugWindow.Views
             this.imageList1.Images.SetKeyName(3, "img_error.png");
             this.imageList1.Images.SetKeyName(4, "img_clear.png");
             // 
-            // _listControl
+            // grid
             // 
-            this._listControl.DataSource = null;
-            this._listControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._listControl.Location = new System.Drawing.Point(0, 30);
-            this._listControl.Name = "_listControl";
-            this._listControl.Size = new System.Drawing.Size(575, 65);
-            this._listControl.TabIndex = 44;
+            this.grid.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.DisplayedCells;
+            this.grid.BackgroundColor = System.Drawing.Color.White;
+            this.grid.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.grid.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grid.DefaultCellStyle = dataGridViewCellStyle1;
+            this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grid.Location = new System.Drawing.Point(0, 30);
+            this.grid.Name = "grid";
+            this.grid.RowHeadersVisible = false;
+            this.grid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.grid.Size = new System.Drawing.Size(575, 65);
+            this.grid.TabIndex = 45;
             // 
             // DebugDockView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this._listControl);
+            this.Controls.Add(this.grid);
             this.Controls.Add(this.gradientPanel1);
             this.Name = "DebugDockView";
             this.Size = new System.Drawing.Size(575, 95);
@@ -160,8 +178,9 @@ namespace MW5.Plugins.DebugWindow.Views
             this.gradientPanel1.PerformLayout();
             this.toolStripEx1.ResumeLayout(false);
             this.toolStripEx1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.watermarkTextbox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtFilter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -171,11 +190,11 @@ namespace MW5.Plugins.DebugWindow.Views
         private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
         private Syncfusion.Windows.Forms.Tools.XPMenus.BarItem barItem1;
-        private WatermarkTextbox watermarkTextbox1;
-        private System.Windows.Forms.ImageList imageList1;
-        private Controls.LogEntryGrid _listControl;
+        private WatermarkTextbox txtFilter;
         private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
         private System.Windows.Forms.ToolStripButton toolClearLog;
+        private System.Windows.Forms.ImageList imageList1;
+        private Controls.LogEntryDataGridView grid;
 
 
 

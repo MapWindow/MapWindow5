@@ -344,7 +344,7 @@ namespace MW5.UI.Controls
 
         public GridTableCellStyleInfo GetColumnStyle(Expression<Func<T, object>> propertySelector)
         {
-            var name = GetPropertyName(propertySelector);
+            var name = GenericHelper.GetPropertyName(propertySelector);
             if (name != string.Empty)
             {
                 return GetColumnStyle(name);
@@ -355,7 +355,7 @@ namespace MW5.UI.Controls
 
         public GridColumnDescriptor GetColumn(Expression<Func<T, object>> propertySelector)
         {
-            var name = GetPropertyName(propertySelector);
+            var name = GenericHelper.GetPropertyName(propertySelector);
             if (name != string.Empty)
             {
                 return _grid.TableDescriptor.Columns[name];
@@ -380,8 +380,6 @@ namespace MW5.UI.Controls
             return -1;
         }
 
-       
-
         public void ToggleProperty(Expression<Func<T, bool>> propertySelector)
         {
             var record = GetSelectedRecord();
@@ -401,7 +399,7 @@ namespace MW5.UI.Controls
 
         public void SetPropertyForEach<TT>(Expression<Func<T, object>> propertySelector, TT value)
         {
-            string name = GetPropertyName(propertySelector);
+            string name = GenericHelper.GetPropertyName(propertySelector);
 
             foreach (var r in _grid.Table.Records)
             {
@@ -415,41 +413,9 @@ namespace MW5.UI.Controls
 
             if (record != null)
             {
-                string name = GetPropertyName(propertySelector);
+                string name = GenericHelper.GetPropertyName(propertySelector);
                 record.SetValue(name, value);
             }
-        }
-
-        private string GetTypedPropertyName<TT>(Expression<Func<T, TT>> propertySelector)
-        {
-            var expr = propertySelector.Body as MemberExpression;
-            if (expr == null)
-            {
-                return string.Empty;
-            }
-
-            return expr.Member.Name;
-        }
-
-        private string GetPropertyName(Expression<Func<T, object>> propertySelector)
-        {
-            var me = propertySelector.Body as MemberExpression;
-            if (me != null)
-            {
-                return me.Member.Name;
-            }
-
-            var ubody = propertySelector.Body as UnaryExpression;
-            if (ubody != null)
-            {
-                var expr = ubody.Operand as MemberExpression;
-                if (expr != null)
-                {
-                    return expr.Member.Name;
-                }
-            }
-
-            return string.Empty;
         }
 
         private void GridSelectedRecordsChanged(object sender, SelectedRecordsChangedEventArgs e)
@@ -463,10 +429,9 @@ namespace MW5.UI.Controls
             }
         }
 
-        public void SetColumnIcon(Expression<Func<T, object>> propertySelector,
-            Func<T, int> imageSelector)
+        public void SetColumnIcon(Expression<Func<T, object>> propertySelector, Func<T, int> imageSelector)
         {
-            string name = GetPropertyName(propertySelector);
+            string name = GenericHelper.GetPropertyName(propertySelector);
             if (name != string.Empty)
             {
                 _iconSelectors.Add(name, imageSelector);
@@ -508,7 +473,7 @@ namespace MW5.UI.Controls
         {
             if (string.IsNullOrWhiteSpace(token)) return;
 
-            string propertyName = GetTypedPropertyName(propertySelector);
+            string propertyName = GenericHelper.GetTypedPropertyName(propertySelector);
 
             var condition = new FilterCondition(FilterCompareOperator.Like, "*" + token + "*");
             
@@ -519,7 +484,7 @@ namespace MW5.UI.Controls
         public void AddFilterMatch<TT>(Expression<Func<T, TT>> propertySelector, TT value,
             FilterLogicalOperator op = FilterLogicalOperator.And)
         {
-            string propertyName = GetTypedPropertyName(propertySelector);
+            string propertyName = GenericHelper.GetTypedPropertyName(propertySelector);
 
             var condition = new FilterCondition(FilterCompareOperator.Match, value);
 
@@ -549,7 +514,7 @@ namespace MW5.UI.Controls
 
         public void ShowColumn(Expression<Func<T, object>> propertySelector)
         {
-            string propertyName = GetPropertyName(propertySelector);
+            string propertyName = GenericHelper.GetPropertyName(propertySelector);
             _grid.TableDescriptor.VisibleColumns.Add(propertyName);
         }
 
@@ -580,7 +545,7 @@ namespace MW5.UI.Controls
 
         public void GroupBy(Expression<Func<T, object>> propertySelector)
         {
-            string propertyName = GetPropertyName(propertySelector);
+            string propertyName = GenericHelper.GetPropertyName(propertySelector);
             _grid.TableDescriptor.GroupedColumns.Add(propertyName);
         }
 
