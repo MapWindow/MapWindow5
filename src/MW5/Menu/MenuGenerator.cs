@@ -142,7 +142,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.Settings], true);
             items.AddButton(_commands[MenuKeys.Test], true);
             
-            items.InsertBefore = items[items.Count - 1];    // before settings
+            items.InsertBefore = items[items.Count - 2];    // before settings
 
             bar.Update();
         }
