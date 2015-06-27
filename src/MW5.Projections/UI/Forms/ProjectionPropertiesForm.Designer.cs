@@ -34,7 +34,7 @@ namespace MW5.Projections.UI.Forms
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label3 = new System.Windows.Forms.Label();
@@ -365,7 +365,7 @@ namespace MW5.Projections.UI.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._projectionMap1.BackgroundColor = System.Drawing.Color.White;
-            this._projectionMap1.CurrentScale = 17.5892066336015D;
+            this._projectionMap1.CurrentScale = 16.289511562153113D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
@@ -380,8 +380,8 @@ namespace MW5.Projections.UI.Forms
             this._projectionMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this._projectionMap1.MouseWheelSpeed = 0.5D;
             this._projectionMap1.Name = "_projectionMap1";
-            spatialReference2.Tag = "";
-            this._projectionMap1.Projection = spatialReference2;
+            spatialReference1.Tag = "";
+            this._projectionMap1.Projection = spatialReference1;
             this._projectionMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this._projectionMap1.ReuseTileBuffer = true;
             this._projectionMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -567,6 +567,7 @@ namespace MW5.Projections.UI.Forms
             this.btnOk.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnOk.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
             this.btnOk.Location = new System.Drawing.Point(287, 510);

@@ -218,6 +218,11 @@ namespace MW5.Services.Concrete
                 bool abort;
                 var newLayer = TestProjectionMismatch(layer, out abort);
 
+                if (newLayer == null)
+                {
+                    continue;
+                }
+
                 if (abort)
                 {
                     return false;

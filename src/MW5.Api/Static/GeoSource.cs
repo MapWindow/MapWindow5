@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using MapWinGIS;
@@ -172,6 +173,39 @@ namespace MW5.Api.Static
             get { return _manager.SupportedGdalFormats; }
         }
 
+        private static IEnumerable<string> GetExtensionList(string filename)
+        {
+            if (filename.ToLower().EndsWith(".shp"))
+            {
+                var arr = new[] { ".shp", ".shx", ".dbf", ".prj", ".lbl", ".chart", ".mwd", ".mwx", ".shp.mwsymb", ".mwsr" };
+                return arr.ToList();
+            }
+            
+            // TODO: add specific provisions for multifile formats apart from ESRI shapefile
+
+            var list = new List<string>() { ".prj", ".xml", ".wld" };
+
+            string ext = Path.GetExtension(filename);
+
+            if (!string.IsNullOrWhiteSpace(ext))
+            {
+                list.Add(ext);
+                list.Add(ext + ".ovr");
+                list.Add(ext + ".aux.xml");
+
+                if (ext.Length > 0)
+                {
+                    // for projection format like: tif => tfw
+                    ext = ext.Substring(0, 1) + ext.Substring(ext.Length - 1, 1) + "w";
+                    list.Add(ext);
+                }
+
+                return list;
+            }
+          
+            return new List<string>();
+        }
+
         /// <summary>
         /// Removes the specified shapefile, including all linked files like .dbf, .prj
         /// </summary>
@@ -189,14 +223,17 @@ namespace MW5.Api.Static
                 return true;
             }
 
-            if (!filename.ToLower().EndsWith(".shp"))
+            var list = GetExtensionList(filename).ToList();
+            if (!list.Any())
             {
-                throw new InvalidOperationException("Unsupported file type.");
+                Logger.Current.Warn("Failed to read file extension: " + filename);
+                return false;
             }
 
-            string[] exts = { ".shp", ".shx", ".dbf", ".prj", ".lbl", ".chart", ".mwd", ".mwx", ".shp.mwsymb", ".mwsr" };
             filename = PathHelper.GetFullPathWithoutExtension(filename);
-            foreach (var path in exts.Select(ext => filename + ext))
+            
+            bool result = true;
+            foreach (var path in list.Select(ext => filename + ext))
             {
                 try
                 {
@@ -204,11 +241,12 @@ namespace MW5.Api.Static
                 }
                 catch (Exception ex)
                 {
-                    Logger.Current.Info("Failed to remove file: {}", ex, path);
+                    Logger.Current.Info("Failed to remove file: {0}", ex, path);
+                    result = false;
                 }
             }
 
-            return true;
+            return result;
         }
 
         private static IDatasource TryOpenAsDatabaseLayer(string filename)

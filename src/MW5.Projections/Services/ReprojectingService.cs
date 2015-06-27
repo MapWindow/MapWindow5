@@ -11,6 +11,7 @@ using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Projections.Services.Abstract;
 using MW5.Projections.UI.Forms;
+using MW5.Shared;
 
 namespace MW5.Projections.Services
 {
@@ -81,14 +82,14 @@ namespace MW5.Projections.Services
         /// </summary>
         public GridSource Reproject(GridSource grid, ISpatialReference newProjection, string saveAsFilename)
         {
-            // TODO: implement
-            //bool result = MapWinGeoProc.SpatialReference.ProjectGrid(ref sourcePrj, ref targetPrj, ref origFilename, ref newFilename, true, report);
-            //var gridNew = new GridSource(saveAsFilename);
-            //gridNew.AssignNewProjection(newProjection.ExportToProj4());
-            
-            MessageService.Current.Info("Reprojection of grids isn't implemented");
+            if (GdalUtils.GdalWarp(grid.Filename, saveAsFilename, newProjection))
+            {
+                //gridNew.AssignNewProjection(newProjection.ExportToProj4());
+                return new GridSource(saveAsFilename);
+            }
 
-            return grid;
+            Logger.Current.Warn("Failed to warp raster datasource: " + grid.Filename);
+            return null;
         }
         
         /// <summary>
@@ -96,13 +97,13 @@ namespace MW5.Projections.Services
         /// </summary>
         public IImageSource Reproject(IImageSource image, ISpatialReference projection, string saveAsFilename)
         {
-            // TODO: implement
-            //MapWinGeoProc.SpatialReference.ProjectImage(sourcePrj, targetPrj, origFilename, newFilename, report);
-            //return BitmapSource.Open(saveAsFilename, false);
+            if (GdalUtils.GdalWarp(image.Filename, saveAsFilename, projection))
+            {
+                return BitmapSource.Open(saveAsFilename, false);
+            }
 
-            MessageService.Current.Info("Reprojection of images isn't implemented");
-
-            return image;
+            Logger.Current.Warn("Failed to warp raster datasource: " + image.Filename);
+            return null;
         }
 
         /// <summary>

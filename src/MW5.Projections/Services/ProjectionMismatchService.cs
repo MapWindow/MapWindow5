@@ -122,7 +122,7 @@ namespace MW5.Projections.Services
             newLayer = null;
 
             // user should be prompted
-            if (!_usePreviousAnswerMismatch && !_context.Config.ShowProjectionDialog)
+            if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionDialog)
             {
                 bool dontShow, useForOthers;
 

@@ -30,6 +30,8 @@ namespace MW5.Plugins.Repository.Views
             contextMenuStripEx1.Opening += contextMenuStripEx1_Opening;
 
             toolRemoveFolder.Enabled = false;
+
+            treeViewAdv1.ShowToolTip = false;
         }
 
         private void FireItemDoubleClicked()

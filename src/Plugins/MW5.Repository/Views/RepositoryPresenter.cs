@@ -85,6 +85,8 @@ namespace MW5.Plugins.Repository.Views
                     RemoveDatabaseLayer();
                     break;
             }
+
+            _context.View.Update();
         }
 
         private void RemoveDatabaseLayer()

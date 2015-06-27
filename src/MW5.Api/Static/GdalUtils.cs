@@ -1,14 +1,21 @@
 ﻿using MapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Static
 {
     public static class GdalUtils
     {
-        private static Utils _utils = new Utils();
+        private static readonly Utils _utils = new Utils();
 
         public static string GdalInfo(string srcFilename, string bstrOptions)
         {
             return _utils.GDALInfo(srcFilename, bstrOptions);
+        }
+
+        public static bool GdalWarp(string bstrSrcFilename, string bstrDstFilename, ISpatialReference newProjection)
+        {
+            string options = string.Format("-t_srs \"{0}\"", newProjection.ExportToProj4());
+            return _utils.GDALWarp(bstrSrcFilename, bstrDstFilename, options);
         }
 
         public static bool GdalWarp(string bstrSrcFilename, string bstrDstFilename, string bstrOptions)
