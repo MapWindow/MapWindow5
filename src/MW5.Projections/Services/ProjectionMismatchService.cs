@@ -10,6 +10,7 @@ using MW5.Plugins.Interfaces.Projections;
 using MW5.Projections.Helpers;
 using MW5.Projections.Services.Abstract;
 using MW5.Projections.UI.Forms;
+using MW5.Projections.Views;
 
 namespace MW5.Projections.Services
 {
@@ -122,27 +123,17 @@ namespace MW5.Projections.Services
             newLayer = null;
 
             // user should be prompted
-            if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionDialog)
+            if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionMismatchDialog)
             {
-                bool dontShow, useForOthers;
-
-                var list = new ArrayList { "Ignore mismatch", "Reproject file", "Don't load the layer" };
-
-                int choice;
-                using (var form = new ProjectionMismatchForm(_context))
-                {
-                    choice = form.ShowProjectionMismatch(list, (int)_context.Config.ProjectionMismatch, mapProj, 
-                    layer.Projection, out useForOthers, out dontShow);
-                }
-
-                if (choice == -1)
+                var model = new ProjectionMismatchModel(layer, true, mapProj);
+                if (!_context.Container.Run<ProjectionMismatchPresenter, ProjectionMismatchModel>(model))
                 {
                     return TestingResult.CancelOperation;
                 }
 
-                _usePreviousAnswerMismatch = useForOthers;
-                _context.Config.ProjectionMismatch = (ProjectionMismatch)choice;
-                _context.Config.ShowProjectionDialog = !dontShow;
+                _usePreviousAnswerMismatch = model.UseAnswerLater;
+                _context.Config.ProjectionMismatch = model.MismatchBehavior;
+                _context.Config.ShowProjectionMismatchDialog = !model.DontShow;
             }
 
             var behavior = _context.Config.ProjectionMismatch;
@@ -151,6 +142,7 @@ namespace MW5.Projections.Services
             {
                 case ProjectionMismatch.Reproject:
                     var result = _reprojectingService.Reproject(layer, out newLayer, mapProj, _report);
+
                     if (result == TestingResult.Ok || result == TestingResult.Substituted)
                     {
                         var oper = result == TestingResult.Ok ? ProjectionOperaion.Reprojected : ProjectionOperaion.Substituted;
@@ -182,40 +174,17 @@ namespace MW5.Projections.Services
             bool projectProjectionExists = !mapProj.IsEmpty;
 
             // user should be prompted
-            if (!_usePreviousAnswerAbsence && !_context.Config.ShowProjectionDialog)
+            if (!_usePreviousAnswerAbsence && _context.Config.ShowProjectionAbsenceDialog)
             {
-                bool dontShow, useForOthers;
-
-                var list = new ArrayList();
-
-                // when there in projection the first variant should be excluded
-                int val = projectProjectionExists ? 0 : 1;
-
-                if (projectProjectionExists)
+                var model = new ProjectionMismatchModel(layer, false, mapProj);
+                if (!_context.Container.Run<ProjectionMismatchPresenter, ProjectionMismatchModel>(model))
                 {
-                    list.Add("Use the project's projection");
+                    return TestingResult.CancelOperation;    
                 }
 
-                list.Add("Ignore the missing of projection file");
-                list.Add("Don't load the layer");
-
-                int choice;
-                using (var form = new ProjectionMismatchForm(_context))
-                {
-                    choice = form.ShowProjectionAbsence(list,
-                        (int)_context.Config.ProjectionAbsence - val, mapProj, out useForOthers, out dontShow);
-                }
-
-                if (choice == -1)
-                {
-                    return TestingResult.CancelOperation;
-                }
-
-                choice += val;
-
-                _usePreviousAnswerAbsence = useForOthers;
-                _context.Config.ProjectionAbsence = (ProjectionAbsence)choice;
-                _context.Config.ShowProjectionDialog = !dontShow;
+                _usePreviousAnswerAbsence = model.UseAnswerLater;
+                _context.Config.ProjectionAbsence = model.AbsenceBehavior;
+                _context.Config.ShowProjectionAbsenceDialog = !model.DontShow;
             }
 
             // when there is no projection in project, it can't be assign for layer

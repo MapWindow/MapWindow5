@@ -17,11 +17,11 @@ using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
-    public partial class LayerConfigPage : UserControl, IConfigPage
+    public partial class ProjectionsConfigPage : UserControl, IConfigPage
     {
         private readonly IConfigService _configService;
 
-        public LayerConfigPage(IConfigService configService)
+        public ProjectionsConfigPage(IConfigService configService)
         {
             if (configService == null) throw new ArgumentNullException("configService");
             _configService = configService;
@@ -37,54 +37,36 @@ namespace MW5.Configuration
         {
             cboProjectionAbsence.AddItemsFromEnum<ProjectionAbsence>();
             cboProjectionMismatch.AddItemsFromEnum<ProjectionMismatch>();
-            cboPyramidCompression.AddItemsFromEnum<TiffCompression>();
-            cboPyramidsSampling.AddItemsFromEnum<RasterOverviewSampling>();
         }
 
         public void Initialize()
         {
             var config = _configService.Config;
-
-            chkCreatePyramids.Checked = config.CreatePyramidsOnOpening;
-            chkCreateSpatialIndex.Checked = config.CreateSpatialIndexOnOpening;
-            chkProjectionDialog.Checked = config.ShowProjectionDialog;
-            chkPyramidsDialog.Checked = config.ShowPyramidDialog;
-            chkSpatialIndexDialog.Checked = config.ShowSpatialIndexDialog;
+            
+            chkProjectionDialog.Checked = config.ShowProjectionMismatchDialog;
 
             cboProjectionAbsence.SetValue(config.ProjectionAbsence);
             cboProjectionMismatch.SetValue(config.ProjectionMismatch);
-            cboPyramidCompression.SetValue(config.PyramidCompression);
-            cboPyramidsSampling.SetValue(config.PyramidSampling);
-
-            udSpatialIndexCount.SetValue(config.SpatialIndexFeatureCount);
         }
 
         public string PageName
         {
-            get { return "Layer opening"; }
+            get { return "Projections"; }
         }
 
         public void Save()
         {
             var config = _configService.Config;
 
-            config.CreatePyramidsOnOpening = chkCreatePyramids.Checked;
-            config.CreateSpatialIndexOnOpening = chkCreateSpatialIndex.Checked;
-            config.ShowProjectionDialog = chkProjectionDialog.Checked;
-            config.ShowPyramidDialog = chkPyramidsDialog.Checked;
-            config.ShowSpatialIndexDialog = chkSpatialIndexDialog.Checked;
+            config.ShowProjectionMismatchDialog = chkProjectionDialog.Checked;
 
             config.ProjectionAbsence = cboProjectionAbsence.GetValue<ProjectionAbsence>();
             config.ProjectionMismatch = cboProjectionMismatch.GetValue<ProjectionMismatch>();
-            config.PyramidCompression = cboPyramidCompression.GetValue<TiffCompression>();
-            config.PyramidSampling = cboPyramidsSampling.GetValue<RasterOverviewSampling>();
-
-            config.SpatialIndexFeatureCount = (int)udSpatialIndexCount.Value;
         }
 
         public Bitmap Icon
         {
-            get { return Resources.img_folder_open32; }
+            get { return Resources.img_world_grid32; }
         }
 
         public bool PluginPage
@@ -94,12 +76,12 @@ namespace MW5.Configuration
 
         public ConfigPageType PageType
         {
-            get { return ConfigPageType.LayerOpening; }
+            get { return ConfigPageType.Projections; }
         }
 
         public string Description
         {
-            get { return "Defines which actions are to be taken on opening a new layer. "; }
+            get { return "Settings related to the coordinate system and projection of the map and datasources."; }
         }
 
         public bool VariableHeight

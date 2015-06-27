@@ -99,9 +99,10 @@ namespace MW5.Plugins.DebugWindow.Menu
             var bar = _context.StatusBar;
             bar.AlignNewItemsRight = true;
 
-            bar.Items.AddButton("Log", MenuKeys.StatusShowDebug, Resources.img_note16, _plugin.Identity);
-            bar.Items.AddButton(string.Empty, MenuKeys.StatusWarningCount, Resources.img_warning16, _plugin.Identity);
-            bar.Items.AddButton(string.Empty, MenuKeys.StatusErrorCount, Resources.img_error16, _plugin.Identity);
+            const string msg = "Open event log";
+            bar.Items.AddButton(string.Empty, MenuKeys.StatusShowDebug, Resources.img_bug_24, _plugin.Identity).Description = msg;
+            bar.Items.AddButton(string.Empty, MenuKeys.StatusWarningCount, Resources.img_warning16, _plugin.Identity).Description = msg;
+            bar.Items.AddButton(string.Empty, MenuKeys.StatusErrorCount, Resources.img_error16, _plugin.Identity).Description = msg;
         }
     }
 }

@@ -163,12 +163,6 @@
     <Compile Include="UI\Forms\ProjectionManagerForm.Designer.cs">
       <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ProjectionMismatchForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ProjectionMismatchForm.Designer.cs">
-      <DependentUpon>ProjectionMismatchForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Forms\ProjectionPropertiesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +188,15 @@
       <DependentUpon>TesterReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Abstract\IProjectionMismatchView.cs" />
+    <Compile Include="Views\ProjectionMismatchModel.cs" />
+    <Compile Include="Views\ProjectionMismatchPresenter.cs" />
+    <Compile Include="Views\ProjectionMismatchView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ProjectionMismatchView.Designer.cs">
+      <DependentUpon>ProjectionMismatchView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\ProjectionTreeView.resx">
@@ -219,9 +222,6 @@
       <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ProjectionMismatchForm.resx">
-      <DependentUpon>ProjectionMismatchForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\ProjectionPropertiesForm.resx">
       <DependentUpon>ProjectionPropertiesForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -239,6 +239,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProjectionMismatchView.resx">
+      <DependentUpon>ProjectionMismatchView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

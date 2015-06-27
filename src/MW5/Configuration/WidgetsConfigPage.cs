@@ -68,7 +68,7 @@ namespace MW5.Configuration
 
         public string PageName
         {
-            get { return "Widgets"; }
+            get { return "Tools"; }
         }
 
         public void Save()
@@ -89,7 +89,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_tune32; }
+            get { return Resources.img_widgets32; }
         }
 
         public bool PluginPage

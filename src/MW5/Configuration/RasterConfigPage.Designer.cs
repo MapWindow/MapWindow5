@@ -31,6 +31,7 @@ namespace MW5.Configuration
         private void InitializeComponent()
         {
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkUseHistogram = new System.Windows.Forms.CheckBox();
             this.chkCreateColorScheme = new System.Windows.Forms.CheckBox();
             this.chkRandomColorScheme = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +41,13 @@ namespace MW5.Configuration
             this.cboUpsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboDownsampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label12 = new System.Windows.Forms.Label();
-            this.chkUseHistogram = new System.Windows.Forms.CheckBox();
+            this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
+            this.cboPyramidsSampling = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.cboPyramidCompression = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.chkCreatePyramids = new System.Windows.Forms.CheckBox();
+            this.chkPyramidsDialog = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
             this.configPanelControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboDefaultColorScheme)).BeginInit();
@@ -48,6 +55,10 @@ namespace MW5.Configuration
             this.configPanelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboUpsampling)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
+            this.configPanelControl3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboPyramidsSampling)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboPyramidCompression)).BeginInit();
             this.SuspendLayout();
             // 
             // configPanelControl1
@@ -60,10 +71,20 @@ namespace MW5.Configuration
             this.configPanelControl1.Controls.Add(this.cboDefaultColorScheme);
             this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl1.HeaderText = "Grid rendering";
-            this.configPanelControl1.Location = new System.Drawing.Point(0, 143);
+            this.configPanelControl1.Location = new System.Drawing.Point(0, 187);
             this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(394, 166);
+            this.configPanelControl1.Size = new System.Drawing.Size(394, 171);
             this.configPanelControl1.TabIndex = 12;
+            // 
+            // chkUseHistogram
+            // 
+            this.chkUseHistogram.AutoSize = true;
+            this.chkUseHistogram.Location = new System.Drawing.Point(24, 44);
+            this.chkUseHistogram.Name = "chkUseHistogram";
+            this.chkUseHistogram.Size = new System.Drawing.Size(262, 17);
+            this.chkUseHistogram.TabIndex = 18;
+            this.chkUseHistogram.Text = "Use histogram equalization for greyscale rendering";
+            this.chkUseHistogram.UseVisualStyleBackColor = true;
             // 
             // chkCreateColorScheme
             // 
@@ -113,7 +134,7 @@ namespace MW5.Configuration
             this.configPanelControl2.Controls.Add(this.label12);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "Default settings";
-            this.configPanelControl2.Location = new System.Drawing.Point(0, 0);
+            this.configPanelControl2.Location = new System.Drawing.Point(0, 358);
             this.configPanelControl2.Name = "configPanelControl2";
             this.configPanelControl2.Size = new System.Drawing.Size(394, 143);
             this.configPanelControl2.TabIndex = 14;
@@ -160,25 +181,86 @@ namespace MW5.Configuration
             this.label12.TabIndex = 49;
             this.label12.Text = "Downsampling mode";
             // 
-            // chkUseHistogram
+            // configPanelControl3
             // 
-            this.chkUseHistogram.AutoSize = true;
-            this.chkUseHistogram.Location = new System.Drawing.Point(24, 44);
-            this.chkUseHistogram.Name = "chkUseHistogram";
-            this.chkUseHistogram.Size = new System.Drawing.Size(262, 17);
-            this.chkUseHistogram.TabIndex = 18;
-            this.chkUseHistogram.Text = "Use histogram equalization for greyscale rendering";
-            this.chkUseHistogram.UseVisualStyleBackColor = true;
+            this.configPanelControl3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl3.Controls.Add(this.cboPyramidsSampling);
+            this.configPanelControl3.Controls.Add(this.label4);
+            this.configPanelControl3.Controls.Add(this.label2);
+            this.configPanelControl3.Controls.Add(this.cboPyramidCompression);
+            this.configPanelControl3.Controls.Add(this.chkCreatePyramids);
+            this.configPanelControl3.Controls.Add(this.chkPyramidsDialog);
+            this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
+            this.configPanelControl3.HeaderText = "Raster pyramids";
+            this.configPanelControl3.Location = new System.Drawing.Point(0, 0);
+            this.configPanelControl3.Name = "configPanelControl3";
+            this.configPanelControl3.Size = new System.Drawing.Size(394, 187);
+            this.configPanelControl3.TabIndex = 15;
+            // 
+            // cboPyramidsSampling
+            // 
+            this.cboPyramidsSampling.BeforeTouchSize = new System.Drawing.Size(166, 21);
+            this.cboPyramidsSampling.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPyramidsSampling.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboPyramidsSampling.Location = new System.Drawing.Point(147, 139);
+            this.cboPyramidsSampling.Name = "cboPyramidsSampling";
+            this.cboPyramidsSampling.Size = new System.Drawing.Size(166, 21);
+            this.cboPyramidsSampling.TabIndex = 14;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(18, 147);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(93, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Pyramids sampling";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(18, 113);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(111, 13);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "Pyramids compression";
+            // 
+            // cboPyramidCompression
+            // 
+            this.cboPyramidCompression.BeforeTouchSize = new System.Drawing.Size(166, 21);
+            this.cboPyramidCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboPyramidCompression.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboPyramidCompression.Location = new System.Drawing.Point(147, 105);
+            this.cboPyramidCompression.Name = "cboPyramidCompression";
+            this.cboPyramidCompression.Size = new System.Drawing.Size(166, 21);
+            this.cboPyramidCompression.TabIndex = 11;
+            // 
+            // chkCreatePyramids
+            // 
+            this.chkCreatePyramids.Location = new System.Drawing.Point(21, 72);
+            this.chkCreatePyramids.Name = "chkCreatePyramids";
+            this.chkCreatePyramids.Size = new System.Drawing.Size(277, 21);
+            this.chkCreatePyramids.TabIndex = 10;
+            this.chkCreatePyramids.Text = "Create pyramids on opening (if they are missing)";
+            // 
+            // chkPyramidsDialog
+            // 
+            this.chkPyramidsDialog.Location = new System.Drawing.Point(21, 45);
+            this.chkPyramidsDialog.Name = "chkPyramidsDialog";
+            this.chkPyramidsDialog.Size = new System.Drawing.Size(188, 21);
+            this.chkPyramidsDialog.TabIndex = 9;
+            this.chkPyramidsDialog.Text = "Show pyramid creation dialog";
             // 
             // RasterConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
+            this.Controls.Add(this.configPanelControl1);
+            this.Controls.Add(this.configPanelControl3);
             this.Name = "RasterConfigPage";
-            this.Size = new System.Drawing.Size(394, 319);
+            this.Size = new System.Drawing.Size(394, 495);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
             this.configPanelControl1.ResumeLayout(false);
             this.configPanelControl1.PerformLayout();
@@ -188,6 +270,11 @@ namespace MW5.Configuration
             this.configPanelControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboUpsampling)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboDownsampling)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
+            this.configPanelControl3.ResumeLayout(false);
+            this.configPanelControl3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboPyramidsSampling)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboPyramidCompression)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -205,5 +292,12 @@ namespace MW5.Configuration
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboDefaultColorScheme;
         private CheckBox chkCreateColorScheme;
         private CheckBox chkUseHistogram;
+        private UI.Controls.ConfigPanelControl configPanelControl3;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboPyramidsSampling;
+        private Label label4;
+        private Label label2;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboPyramidCompression;
+        private CheckBox chkCreatePyramids;
+        private CheckBox chkPyramidsDialog;
     }
 }

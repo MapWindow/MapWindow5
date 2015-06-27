@@ -64,12 +64,7 @@ namespace MW5.Api.Concrete
 
         public string Filename
         {
-            get
-            {
-                // TODO: implement in ocx
-                //return _datasource.ConnectionString;
-                throw new NotImplementedException();
-            }
+            get { return "<OGR datasource>"; }
         }
 
         public void Close()

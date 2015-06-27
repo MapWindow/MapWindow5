@@ -47,8 +47,8 @@
     /// </summary>
     public enum ProjectionMismatch
     {
-        IgnoreMismatch = 0,
-        Reproject = 1,
+        Reproject = 0,
+        IgnoreMismatch = 1,
         SkipFile = 2,
     }
 
@@ -155,7 +155,7 @@
         General = 0,
         Map = 1,
         Plugins = 2,
-        LayerOpening = 3,
+        Projections = 3,
         Widgets = 4,
         Custom = 5,
         Raster = 6,

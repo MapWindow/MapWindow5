@@ -15,6 +15,11 @@ namespace MW5.Plugins.Mvp
 
         public bool Success { get; protected set; }
 
+        public Form ViewAsForm
+        {
+            get { return View as Form;  }
+        }
+
         protected BasePresenter(TView view)
         {
             View = view;
@@ -57,6 +62,7 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TModel">The type of the argument.</typeparam>
     public abstract class BasePresenter<TView, TModel> : BasePresenter<TView>, IPresenter<TModel>
         where TView : IView<TModel>
+        where TModel: class
     {
         protected TModel _model;
 
@@ -88,8 +94,10 @@ namespace MW5.Plugins.Mvp
             if (model == null) return;
 
             _model = model;
+
             View.InitInternal(model);
             (View as IView<TModel>).Initialize();
+
             Initialize();
         }
     }

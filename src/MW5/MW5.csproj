@@ -109,11 +109,17 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
-    <Compile Include="Configuration\LayerConfigPage.cs">
+    <Compile Include="Configuration\VectorConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Configuration\LayerConfigPage.Designer.cs">
-      <DependentUpon>LayerConfigPage.cs</DependentUpon>
+    <Compile Include="Configuration\VectorConfigPage.Designer.cs">
+      <DependentUpon>VectorConfigPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\ProjectionsConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\ProjectionsConfigPage.Designer.cs">
+      <DependentUpon>ProjectionsConfigPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Configuration\MapConfigPage.cs">
       <SubType>UserControl</SubType>
@@ -307,8 +313,11 @@
       <DependentUpon>WelcomeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomeViewModel.cs" />
-    <EmbeddedResource Include="Configuration\LayerConfigPage.resx">
-      <DependentUpon>LayerConfigPage.cs</DependentUpon>
+    <EmbeddedResource Include="Configuration\VectorConfigPage.resx">
+      <DependentUpon>VectorConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\ProjectionsConfigPage.resx">
+      <DependentUpon>ProjectionsConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\MapConfigPage.resx">
       <DependentUpon>MapConfigPage.cs</DependentUpon>
@@ -576,6 +585,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_widgets32.png" />
+    <None Include="Resources\img_measure32.png" />
+    <None Include="Resources\img_vector32.png" />
+    <None Include="Resources\img_picture32.png" />
+    <None Include="Resources\img_world_grid32.png" />
     <None Include="Resources\img_test24.png" />
     <None Include="Resources\img_zoom_next24.png" />
     <None Include="Resources\img_zoom_prev24.png" />

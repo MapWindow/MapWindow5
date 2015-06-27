@@ -38,7 +38,8 @@ namespace MW5.Configuration
             cboDownsampling.AddItemsFromEnum<InterpolationType>();
             cboUpsampling.AddItemsFromEnum<InterpolationType>();
             cboDefaultColorScheme.AddItemsFromEnum<PredefinedColors>();
-
+            cboPyramidCompression.AddItemsFromEnum<TiffCompression>();
+            cboPyramidsSampling.AddItemsFromEnum<RasterOverviewSampling>();
             
             chkCreateColorScheme.CheckedChanged += (s, e) => RefreshControls();
             chkRandomColorScheme.CheckedChanged += (s, e) => RefreshControls();
@@ -56,7 +57,11 @@ namespace MW5.Configuration
             cboUpsampling.SetValue(config.RasterUpsamplingMode);
             cboDownsampling.SetValue(config.RasterDownsamplingMode);
             cboDefaultColorScheme.SetValue(config.GridDefaultColorScheme);
-
+            cboPyramidCompression.SetValue(config.PyramidCompression);
+            cboPyramidsSampling.SetValue(config.PyramidSampling);
+            
+            chkCreatePyramids.Checked = config.CreatePyramidsOnOpening;
+            chkPyramidsDialog.Checked = config.ShowPyramidDialog;
             chkUseHistogram.Checked = config.GridUseHistogram;
             chkRandomColorScheme.Checked = config.GridRandomColorScheme;
             chkCreateColorScheme.Checked = !config.GridFavorGreyscale;
@@ -71,7 +76,11 @@ namespace MW5.Configuration
             config.RasterUpsamplingMode = cboUpsampling.GetValue<InterpolationType>();
             config.RasterDownsamplingMode = cboDownsampling.GetValue<InterpolationType>();
             config.GridDefaultColorScheme = cboDefaultColorScheme.GetValue<PredefinedColors>();
-
+            config.PyramidCompression = cboPyramidCompression.GetValue<TiffCompression>();
+            config.PyramidSampling = cboPyramidsSampling.GetValue<RasterOverviewSampling>();
+            
+            config.CreatePyramidsOnOpening = chkCreatePyramids.Checked;
+            config.ShowPyramidDialog = chkPyramidsDialog.Checked;
             config.GridUseHistogram = chkUseHistogram.Checked;
             config.GridRandomColorScheme = chkRandomColorScheme.Checked;
             config.GridFavorGreyscale = !chkCreateColorScheme.Checked;
@@ -84,7 +93,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_raster; }
+            get { return Resources.img_picture32; }
         }
 
         public bool PluginPage
@@ -94,7 +103,7 @@ namespace MW5.Configuration
 
         public ConfigPageType PageType
         {
-            get { return ConfigPageType.LayerOpening; }
+            get { return ConfigPageType.Projections; }
         }
 
         public string Description

@@ -120,7 +120,7 @@ namespace MW5.Menu
                 case StatusBarKeys.ProjectionConfig:
                     var model = _context.Container.GetInstance<ConfigViewModel>();
                     model.UseSelectedPage = true;
-                    model.SelectedPage = ConfigPageType.LayerOpening;
+                    model.SelectedPage = ConfigPageType.Projections;
                     _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
                     break;
                 default:

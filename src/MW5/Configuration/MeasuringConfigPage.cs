@@ -105,7 +105,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.icon_measure_area; }
+            get { return Resources.img_measure32; }
         }
 
         public bool PluginPage

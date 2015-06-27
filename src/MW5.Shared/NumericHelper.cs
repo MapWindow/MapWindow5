@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.IO;
 
 namespace MW5.Shared
 {
@@ -35,7 +36,23 @@ namespace MW5.Shared
         public static double Parse(string value, double defaultValue)
         {
             double result;
-            return  double.TryParse(value, out result) ? result : defaultValue;
+            return double.TryParse(value, out result) ? result : defaultValue;
+        }
+
+        public static string FormatFileSize(double size)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB" };
+            
+            int order = 0;
+            while (size >= 1024 && order + 1 < sizes.Length)
+            {
+                order++;
+                size = size / 1024;
+            }
+
+            // Adjust the format string to your preferences. For example "{0:0.#}{1}" would
+            // show a single decimal place, and no space.
+            return String.Format("{0:0.##} {1}", size, sizes[order]);
         }
     }
 }

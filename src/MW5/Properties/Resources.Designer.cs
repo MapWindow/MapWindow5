@@ -623,6 +623,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_measure32 {
+            get {
+                object obj = ResourceManager.GetObject("img_measure32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_open_layer32 {
             get {
                 object obj = ResourceManager.GetObject("img_open_layer32", resourceCulture);
@@ -663,6 +673,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_picture32 {
+            get {
+                object obj = ResourceManager.GetObject("img_picture32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_plugin32 {
             get {
                 object obj = ResourceManager.GetObject("img_plugin32", resourceCulture);
@@ -696,6 +716,36 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap img_tune32 {
             get {
                 object obj = ResourceManager.GetObject("img_tune32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_vector32 {
+            get {
+                object obj = ResourceManager.GetObject("img_vector32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_widgets32 {
+            get {
+                object obj = ResourceManager.GetObject("img_widgets32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_world_grid32 {
+            get {
+                object obj = ResourceManager.GetObject("img_world_grid32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

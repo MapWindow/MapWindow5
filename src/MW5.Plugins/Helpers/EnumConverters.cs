@@ -224,7 +224,7 @@ namespace MW5.Plugins.Helpers
                 case ProjectionAbsence.IgnoreAbsence:
                     return "Ignore absence";
                 case ProjectionAbsence.SkipFile:
-                    return "SKip file";
+                    return "Skip file";
             }
 
             return string.Empty;

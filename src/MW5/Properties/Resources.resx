@@ -319,4 +319,19 @@
   <data name="img_test24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_test24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_world_grid32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_world_grid32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_picture32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_picture32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_vector32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_vector32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_measure32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_measure32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_widgets32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_widgets32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

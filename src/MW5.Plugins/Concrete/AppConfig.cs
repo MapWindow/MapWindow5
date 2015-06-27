@@ -73,7 +73,8 @@ namespace MW5.Plugins.Concrete
             ShowCoordinates = true;
             ShowMenuToolTips = false;
             ShowPluginInToolTip = false;        // perhaps some kind of debug mode will be enough
-            ShowProjectionDialog = true;
+            ShowProjectionAbsenceDialog = true;
+            ShowProjectionMismatchDialog = true;
             ShowPyramidDialog = true;
             ShowRedrawTime = false;
             ShowScalebar = true;
@@ -314,7 +315,10 @@ namespace MW5.Plugins.Concrete
         public bool ShowPluginInToolTip { get; set; }
 
         [DataMember]
-        public bool ShowProjectionDialog { get; set; }
+        public bool ShowProjectionAbsenceDialog { get; set; }
+
+        [DataMember]
+        public bool ShowProjectionMismatchDialog { get; set; }
 
         [DataMember]
         public bool ShowPyramidDialog { get; set; }
