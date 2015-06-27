@@ -50,6 +50,11 @@ namespace MW5.Api.Concrete
         [DataMember]
         public LayerIdentityType IdentityType { get; private set; }
 
+        /// <summary>
+        /// Forces to refresh layer in the repository.
+        /// </summary>
+        public bool ForceRefresh { get; set; }
+
         public bool Equals(LayerIdentity other)
         {
             if (IdentityType != other.IdentityType)

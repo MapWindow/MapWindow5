@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Data.Enums;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -119,6 +121,16 @@ namespace MW5.Data.Repository
         public bool ExpandedOnce
         {
             get { return _node.ExpandedOnce; }
+        }
+
+        public bool IsParentOf(LayerIdentity identity)
+        {
+            if (identity.IdentityType != LayerIdentityType.File)
+            {
+                return false;
+            }
+
+            return Shared.PathHelper.IsParentOf(GetPath(), identity.Filename);
         }
     }
 }

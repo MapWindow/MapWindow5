@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -212,7 +213,33 @@ namespace MW5.Data.Repository
                 var folder = item as IExpandableItem;
                 if (folder != null)
                 {
+                    RefreshFolder(folder, filenames);
+
                     item.SubItems.UpdateState(filenames);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Forcing refresh for folders containing layer which triggered the update if
+        /// this layer isn't yet present.
+        /// </summary>
+        private void RefreshFolder(IExpandableItem folder, IEnumerable<LayerIdentity> filenames)
+        {
+            // perhaps this can be done for all layers without checking ForceRefresh flag
+            // but let's see its affect on performace first
+            var layers = filenames.Where(layer => layer.ForceRefresh);
+            
+            foreach (var layer in layers)
+            {
+                if (folder.IsParentOf(layer))
+                {
+                    var subs = folder.SubItems.OfType<ILayerItem>();
+                    if (!subs.Select(s => s.Identity).Contains(layer))
+                    {
+                        folder.Refresh();
+                        break;
+                    }
                 }
             }
         }

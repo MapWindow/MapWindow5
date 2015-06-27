@@ -139,7 +139,6 @@
     <Compile Include="Concrete\GeometryEditor.cs" />
     <Compile Include="Concrete\GeometryValidationInfo.cs" />
     <Compile Include="Concrete\CustomCursor.cs" />
-    <Compile Include="Helpers\MapHelper.cs" />
     <Compile Include="Interfaces\ILayerMetadataBase.cs" />
     <Compile Include="Concrete\SelectionItem.cs" />
     <Compile Include="Concrete\ShapesList.cs" />

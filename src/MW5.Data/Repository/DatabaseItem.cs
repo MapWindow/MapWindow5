@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository
@@ -64,6 +65,18 @@ namespace MW5.Data.Repository
         public bool ExpandedOnce
         {
             get { return _node.ExpandedOnce; }
+        }
+
+        public bool IsParentOf(LayerIdentity identity)
+        {
+            if (identity.IdentityType != LayerIdentityType.OgrDatasource)
+            {
+                return false;
+            }
+
+            // it may be trickier than that since items in connection string
+            // aren't necessarily in the same order
+            return Connection.ConnectionString.EqualsIgnoreCase(identity.Connection);
         }
     }
 }

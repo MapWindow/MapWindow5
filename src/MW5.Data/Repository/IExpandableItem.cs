@@ -10,5 +10,7 @@ namespace MW5.Data.Repository
     public interface IExpandableItem: IRepositoryItem
     {
         bool ExpandedOnce { get; }
+
+        bool IsParentOf(LayerIdentity identity);
     }
 }

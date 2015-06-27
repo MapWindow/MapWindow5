@@ -68,13 +68,11 @@ namespace MW5.Projections.UI.Forms
             // chkUseAnswerLater
             // 
             this.chkUseAnswerLater.AutoSize = true;
-            this.chkUseAnswerLater.Checked = true;
-            this.chkUseAnswerLater.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkUseAnswerLater.Location = new System.Drawing.Point(15, 150);
             this.chkUseAnswerLater.Name = "chkUseAnswerLater";
-            this.chkUseAnswerLater.Size = new System.Drawing.Size(219, 17);
+            this.chkUseAnswerLater.Size = new System.Drawing.Size(238, 17);
             this.chkUseAnswerLater.TabIndex = 4;
-            this.chkUseAnswerLater.Text = "Do the same for other missing projections";
+            this.chkUseAnswerLater.Text = "Do the same for other files during this session";
             this.chkUseAnswerLater.UseVisualStyleBackColor = true;
             // 
             // chkShowMismatchWarning

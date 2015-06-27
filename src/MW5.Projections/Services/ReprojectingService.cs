@@ -59,6 +59,7 @@ namespace MW5.Projections.Services
 
             if (fs == null)
             {
+                Logger.Current.Warn("Failed to reproject vector datasource: " + fsSource.LastError);
                 return null;
             }
 
@@ -67,11 +68,16 @@ namespace MW5.Projections.Services
                 bool result = fs.SaveAs(saveAsFilename);
                 if (!result)
                 {
-                    throw new ApplicationException("Error while saving reprojected shapefile: " + fs.LastError);
+                    Logger.Current.Warn("Failed to save reprojected shapefile: " + fs.LastError);
+                    fs.Close();
+                    return null;
                 }
 
+                Logger.Current.Info("Vector datasource is reprojected: " + saveAsFilename);
                 return fs;
             }
+
+            Logger.Current.Warn("Not all features of the datasource were reprojected. The results are discarded.");
 
             fs.Close();
             return null;

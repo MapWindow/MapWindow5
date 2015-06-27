@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Legend.Abstract;
+using MW5.Api.Legend.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Repository.Views;
 
@@ -27,19 +28,37 @@ namespace MW5.Plugins.Repository
             _plugin = plugin;
             _presenter = presenter;
 
-            plugin.LayerAdded += (s, e) => UpdateRepositoryTree();
+            plugin.LayerAdded += OnLayerAdded;
             plugin.LayerRemoved += (s, e) => UpdateRepositoryTree();
             plugin.ProjectClosed += (s, e) => UpdateRepositoryTree();
             plugin.MapLocked += (s, e) => UpdateRepositoryTree();
-
         }
 
-        private void UpdateRepositoryTree()
+        private void OnLayerAdded(IMuteLegend legend, LayerEventArgs e)
+        {
+            var layer = _context.Layers.ItemByHandle(e.LayerHandle);
+            UpdateRepositoryTree(layer != null ? layer.Handle : -1);
+        }
+
+        private void UpdateRepositoryTree(int newLayerHandle = -1)
         {
             if (!_context.Map.IsLocked)
             {
-                var list = new HashSet<LayerIdentity>(_context.Map.GetFilenames().Distinct());
-                _presenter.View.Tree.UpdateState(list);
+                var list = new List<LayerIdentity>();
+                foreach (var layer in _context.Layers)
+                {
+                    var identity = layer.Identity;
+
+                    if (newLayerHandle == layer.Handle)
+                    {
+                        identity.ForceRefresh = true;
+                    }
+
+                    list.Add(identity);
+                }
+
+                var hash = new HashSet<LayerIdentity>(list.Distinct());
+                _presenter.View.Tree.UpdateState(hash);
             }
         }
     }

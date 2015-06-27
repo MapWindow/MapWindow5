@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.Linq;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -163,13 +163,25 @@ namespace MW5.Plugins.Repository.Views
         {
             var item = GetSelectedItem<IFileItem>();
 
-            if (MessageService.Current.Ask("Do you want to remove the datasource: "
-                + Environment.NewLine + item.Filename + "?"))
+            if (item == null)
+            {
+                MessageService.Current.Info("No filename is selected.");
+                return;
+            }
+
+            if (_context.Layers.Select(l => l.Identity).Contains(item.Identity))
+            {
+                MessageService.Current.Info("Can't remove datasource currently opened by the program.");
+                return;
+            }
+
+            if (MessageService.Current.Ask("Do you want to remove the datasource: " + Environment.NewLine + item.Filename + "?"))
             {
                 try
                 {
                     var folder = item.Folder;
                     GeoSource.Remove(item.Filename);
+
                     folder.Refresh();
                 }
                 catch (Exception ex)

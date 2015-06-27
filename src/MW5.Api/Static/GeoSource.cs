@@ -209,8 +209,6 @@ namespace MW5.Api.Static
         /// <summary>
         /// Removes the specified shapefile, including all linked files like .dbf, .prj
         /// </summary>
-        /// <param name="filename">The shapefile filename.</param>
-        /// <returns>True in success</returns>
         public static bool Remove(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename))

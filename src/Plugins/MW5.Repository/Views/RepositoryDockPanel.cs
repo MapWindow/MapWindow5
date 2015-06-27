@@ -49,7 +49,7 @@ namespace MW5.Plugins.Repository.Views
 
         public IRepositoryView Tree
         {
-            get { return treeViewAdv1 as IRepositoryView; }
+            get { return treeViewAdv1; }
         }
 
 

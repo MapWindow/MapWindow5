@@ -75,7 +75,7 @@ namespace MW5.Shared
 
             basePath += Path.DirectorySeparatorChar;
 
-            Uri folderUri = new Uri(basePath);
+            var folderUri = new Uri(basePath);
             return Uri.UnescapeDataString(folderUri.MakeRelativeUri(pathUri).ToString().Replace('/', Path.DirectorySeparatorChar));
         }
 
@@ -93,6 +93,19 @@ namespace MW5.Shared
             }
 
             return name;
+        }
+
+        /// <summary>
+        /// Checks if folder is immediate parent of filename.
+        /// </summary>
+        public static bool IsParentOf(string folder, string filename)
+        {
+            if (folder.Length >= filename.Length)
+            {
+                return false;
+            }
+
+            return Path.GetDirectoryName(filename).EqualsIgnoreCase(folder.ToLower());
         }
     }
 }
