@@ -80,6 +80,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\ConfigPageControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigPageControl.Designer.cs">
+      <DependentUpon>ConfigPageControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CustomGridControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -279,6 +285,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\ConfigPageControl.resx">
+      <DependentUpon>ConfigPageControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\NetColorPicker.resx">
       <DependentUpon>NetColorPicker.cs</DependentUpon>
     </EmbeddedResource>

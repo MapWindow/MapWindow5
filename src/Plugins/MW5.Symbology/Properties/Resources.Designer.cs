@@ -423,9 +423,9 @@ namespace MW5.Plugins.Symbology.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap img_palette241 {
+        internal static System.Drawing.Bitmap img_palette32 {
             get {
-                object obj = ResourceManager.GetObject("img_palette241", resourceCulture);
+                object obj = ResourceManager.GetObject("img_palette32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

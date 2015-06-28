@@ -18,6 +18,7 @@ using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
 using MW5.Shared;

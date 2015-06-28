@@ -160,6 +160,7 @@
         Custom = 5,
         Raster = 6,
         Measuring = 7,
+        Symbology = 8,
     }
 
     public enum SymbologyStorage

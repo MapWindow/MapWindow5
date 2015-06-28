@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -8,7 +9,9 @@ using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Menu;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
+using MW5.Services.Config;
 using MW5.Shared;
 using MW5.UI.Helpers;
 
@@ -33,6 +36,11 @@ namespace MW5.Plugins.Symbology
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
             service.Save(layerHandle, new SymbologyMetadata());
+        }
+
+        public override IEnumerable<IConfigPage> ConfigPages
+        {
+            get { yield return _context.Container.GetSingleton<SymbologyConfigPage>(); }
         }
 
         public override void RegisterServices(IApplicationContainer container)

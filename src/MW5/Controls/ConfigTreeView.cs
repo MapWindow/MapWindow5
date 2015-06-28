@@ -26,27 +26,27 @@ namespace MW5.Controls
             ApplyStyle = false;
 
             // usual call from constructor won't work here since list of icons is generated dynamically
-            CreateImageList();      
+            CreateImageList();
 
-            AddPages(Nodes, false);
+            int iconCount = 0;
+
+            AddPages(Nodes, ref iconCount, false);
 
             var node = NodeForPage(_model.GetPage(ConfigPageType.Plugins));
             if (node != null)
             {
-                AddPages(node.Nodes, true);
+                AddPages(node.Nodes, ref iconCount, true);
                 node.Expanded = true;
             }
         }
 
-        private void AddPages(TreeNodeAdvCollection nodes, bool plugin)
+        private void AddPages(TreeNodeAdvCollection nodes, ref int iconCount, bool plugin)
         {
-            int count = 0;
-
             foreach(var page in _model.Pages)
             {
                 if (page.PluginPage != plugin) continue;
 
-                var node = CreateNodeForPage(page, count++);
+                var node = CreateNodeForPage(page, iconCount++);
                 page.Tag = node;
                 nodes.Add(node);
             }

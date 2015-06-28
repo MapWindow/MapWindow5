@@ -12,6 +12,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 

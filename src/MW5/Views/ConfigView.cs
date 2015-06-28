@@ -35,7 +35,7 @@ namespace MW5.Views
         {
             if (m.Msg == 0x20a)
             {
-                Point pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
+                var pos = new Point(m.LParam.ToInt32() & 0xffff, m.LParam.ToInt32() >> 16);
 
                 var panel = configPageControl1.Panel;
                 Point p1 = panel.PointToScreen(Point.Empty);
@@ -116,10 +116,7 @@ namespace MW5.Views
 
         public IEnumerable<Control> Buttons
         {
-            get
-            {
-                yield return btnSave;
-            }
+            get { yield return btnSave; }
         }
     }
 

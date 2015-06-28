@@ -97,7 +97,6 @@
     <Compile Include="Concrete\LoggingService.cs" />
     <Compile Include="Concrete\TempFileService.cs" />
     <Compile Include="Config\LayerMetadataServiceBase.cs" />
-    <Compile Include="Config\IConfigPage.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Concrete\ProjectLoader.cs" />

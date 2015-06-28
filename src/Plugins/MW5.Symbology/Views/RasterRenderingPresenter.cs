@@ -6,6 +6,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
+using MW5.Plugins.Symbology.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Plugins.Symbology.Views
@@ -60,10 +61,7 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case RasterRenderingCommand.EditColorSchemeList:
-                    using (var form = new ColorSchemesForm(_context, View.ColorSchemes))
-                    {
-                        _context.View.ShowChildView(form, View);
-                    }
+                    FormHelper.EditColorSchemes(_context, SchemeTarget.Raster, View);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");

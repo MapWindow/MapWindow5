@@ -11,6 +11,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 using MW5.UI.Helpers;

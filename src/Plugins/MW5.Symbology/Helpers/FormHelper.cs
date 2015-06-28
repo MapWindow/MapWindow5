@@ -9,6 +9,7 @@ using MW5.Api.Legend.Abstract;
 using MW5.Attributes.Views;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms;
 using MW5.Plugins.Symbology.Views;
 
@@ -154,6 +155,14 @@ namespace MW5.Plugins.Symbology.Helpers
             }
 
             return false;
+        }
+
+        internal static void EditColorSchemes(IAppContext context, SchemeTarget target, IWin32Window parent)
+        {
+            using (var form = new ColorSchemesForm(context, ColorSchemeProvider.GetList(target)))
+            {
+                context.View.ShowChildView(form, parent);
+            }
         }
     }
 }

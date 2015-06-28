@@ -27,7 +27,6 @@ namespace MW5.Plugins.Symbology.Forms
         internal AddCategoriesForm()
         {
             InitializeComponent();
-
             
             icbColors.SchemeTarget = SchemeTarget.Vector;
 

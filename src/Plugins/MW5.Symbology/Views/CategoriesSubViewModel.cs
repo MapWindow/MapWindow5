@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 
 namespace MW5.Plugins.Symbology.Views

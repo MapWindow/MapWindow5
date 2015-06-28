@@ -822,12 +822,9 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void btnChangeScheme_Click(object sender, EventArgs e)
         {
-            using (var form = new ColorSchemesForm(_context, icbColors.ColorSchemes))
-            {
-                _noEvents = true;
-                _context.View.ShowChildView(form, this);
-                _noEvents = false;
-            }
+            _noEvents = true;
+            FormHelper.EditColorSchemes(_context, SchemeTarget.Charts, this);
+            _noEvents = false;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using MW5.Controls;
+using MW5.UI.Controls;
 
 namespace MW5.Views
 {
@@ -36,7 +37,7 @@ namespace MW5.Views
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnSave = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.configPageControl1 = new MW5.Controls.ConfigPageControl();
+            this.configPageControl1 = new ConfigPageControl();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolOpenFolder = new System.Windows.Forms.ToolStripMenuItem();

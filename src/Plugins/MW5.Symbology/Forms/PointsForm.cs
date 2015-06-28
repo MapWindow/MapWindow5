@@ -16,6 +16,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
 using MW5.Shared;
 using MW5.UI.Enums;

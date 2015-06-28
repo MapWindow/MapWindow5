@@ -72,10 +72,7 @@ namespace MW5.Plugins.Symbology.Views
             switch (command)
             {
                 case CategoriesCommand.ChangeColorScheme:
-                    using (var form = new ColorSchemesForm(_context, ColorSchemeProvider.GetList(SchemeTarget.Vector)))
-                    {
-                        _context.View.ShowChildView(form, ViewAsParent);
-                    }
+                    FormHelper.EditColorSchemes(_context, SchemeTarget.Vector, ViewAsParent);
                     return;
                 case CategoriesCommand.CategoryRemove:
                     View.RemoveSelectedCategory();

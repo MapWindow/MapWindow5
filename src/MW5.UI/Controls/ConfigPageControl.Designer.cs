@@ -1,4 +1,4 @@
-﻿namespace MW5.Controls
+﻿namespace MW5.UI.Controls
 {
     partial class ConfigPageControl
     {
@@ -77,7 +77,7 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::MW5.Properties.Resources.img_options;
+            //this.pictureBox1.Image = global::MW5.Properties.Resources.img_options;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(32, 32);

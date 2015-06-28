@@ -152,12 +152,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\AssemblyInfo.cs" />
-    <Compile Include="Controls\ConfigPageControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Controls\ConfigPageControl.Designer.cs">
-      <DependentUpon>ConfigPageControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\ConfigTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -336,9 +330,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\WidgetsConfigPage.resx">
       <DependentUpon>WidgetsConfigPage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ConfigPageControl.resx">
-      <DependentUpon>ConfigPageControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LegendDockPanel.resx">
       <DependentUpon>LegendDockPanel.cs</DependentUpon>

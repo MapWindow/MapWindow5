@@ -109,6 +109,17 @@
     </Compile>
     <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\VectorInfoHelper.cs" />
+    <Compile Include="Model\SymbologyConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Model\SymbologyConfigPage.Designer.cs">
+      <DependentUpon>SymbologyConfigPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Abstract\IVectorStyleView.cs" />
     <Compile Include="Views\CategoriesPresenter.cs" />
     <Compile Include="Views\CategoriesSubView.cs">
@@ -171,11 +182,6 @@
     </Compile>
     <Compile Include="Helpers\FeatureSetStyleHelper.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\XmlColorBlend.cs" />
     <Compile Include="Views\CategoriesSubViewModel.cs" />
     <Compile Include="Views\RasterRenderingCommand.cs" />
@@ -463,6 +469,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\InfoGrid.resx">
       <DependentUpon>InfoGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\SymbologyConfigPage.resx">
+      <DependentUpon>SymbologyConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CategoriesSubView.resx">
       <DependentUpon>CategoriesSubView.cs</DependentUpon>
@@ -759,6 +768,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_clear24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\palette32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_palette32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

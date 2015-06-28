@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
@@ -9,6 +10,7 @@ using MW5.Api.Legend.Events;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Services.Config;
 using MW5.Shared.Log;
 
 namespace MW5.Plugins.Concrete
@@ -31,6 +33,11 @@ namespace MW5.Plugins.Concrete
             {
                 return ReferenceFile.Comments;
             }
+        }
+
+        public virtual IEnumerable<IConfigPage> ConfigPages
+        {
+            get { yield break; }
         }
 
         public PluginIdentity Identity

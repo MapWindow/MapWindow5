@@ -32,6 +32,7 @@ namespace MW5.Views
         private void Initialize()
         {
             _pages.Clear();
+
             _pages.Add(new GeneralConfigPage(_configeService));
             _pages.Add(new MapConfigPage(_configeService));
             _pages.Add(new ProjectionsConfigPage(_configeService));
@@ -40,6 +41,14 @@ namespace MW5.Views
             _pages.Add(new RasterConfigPage(_configeService));
             _pages.Add(new VectorConfigPage(_configeService));
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
+
+            foreach (var p in _pluginManager.ActivePlugins)
+            {
+                foreach (var page in p.ConfigPages)
+                {
+                    _pages.Add(page);
+                }
+            }
         }
 
         public void ReloadPage(ConfigPageType type)

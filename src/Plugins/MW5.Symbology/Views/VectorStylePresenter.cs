@@ -115,11 +115,7 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case VectorStyleCommand.ChartsEditColorScheme:
-                    var list = ColorSchemeProvider.GetList(SchemeTarget.Charts);
-                    using (var form = new ColorSchemesForm(_context, list))
-                    {
-                        _context.View.ShowChildView(form, ViewAsParent);
-                    }
+                    FormHelper.EditColorSchemes(_context, SchemeTarget.Charts, ViewAsParent);
                     break;
                 case VectorStyleCommand.ChartAppearance:
                     using (var form = new ChartStyleForm(_context, Model))
