@@ -28,7 +28,7 @@ namespace MW5.Plugins.Symbology.Forms
         {
             InitializeComponent();
             
-            icbColors.Scheme = SchemeTarget.Vector;
+            icbColors.Target = SchemeTarget.Vector;
 
             icbColors.ComboStyle = SchemeType.Graduated;
             if (icbColors.Items.Count >= 0)
