@@ -48,5 +48,25 @@ namespace MW5.Api.Concrete
         {
             get { return (FunctionGroup)_function.Group; }
         }
+
+        public string Description
+        {
+            get { return _function.Description; }
+        }
+
+        public string Signature
+        {
+            get { return _function.Signature;  }
+        }
+
+        public string GetParameterName(int paramIndex)
+        {
+            return _function.ParameterName[paramIndex];
+        }
+
+        public string GetParameterDescription(int paramIndex)
+        {
+            return _function.ParameterDescription[paramIndex];
+        }
     }
 }

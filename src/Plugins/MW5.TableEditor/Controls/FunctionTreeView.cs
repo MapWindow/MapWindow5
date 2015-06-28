@@ -24,7 +24,42 @@ namespace MW5.Plugins.TableEditor.Controls
         {
             InitializeComponent();
 
-            ShowSuperTooltip = false;
+            ShowSuperTooltip = true;
+
+            ToolTipDuration = 5000;
+
+            PrepareToolTip += OnPrepareToolTip;
+        }
+
+        private void OnPrepareToolTip(object sender, ToolTipEventArgs e)
+        {
+            var fn = SelectedFunction;
+            if (fn == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            e.ToolTip.Header.Text = fn.Signature;
+
+            string s = fn.Description + Environment.NewLine;
+            
+            if (fn.NumParameters > 0)
+            {
+                s += Environment.NewLine + "Parameters: ";
+
+                for (int i = 0; i < fn.NumParameters; i++)
+                {
+                    s += Environment.NewLine;
+                    s += "   " + fn.GetParameterName(i) + ": " + fn.GetParameterDescription(i).Replace(".", ";").ToLower();
+                }
+            }
+            else
+            {
+                s += Environment.NewLine + "<no parameters>";
+            }
+            
+            e.ToolTip.Body.Text = s;
         }
 
         public void Initialize()

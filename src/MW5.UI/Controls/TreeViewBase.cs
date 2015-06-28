@@ -80,7 +80,18 @@ namespace MW5.UI.Controls
                     return;
                 }
 
-                _lastTooltip = new SuperToolTip(this);
+                if (SelectedNode == null)
+                {
+                    return;
+                }
+
+                _lastTooltip = new SuperToolTip(this)
+                {
+                    Style = SuperToolTip.SuperToolTipStyle.Office2013Style, 
+                    VisualStyle = SuperToolTip.Appearance.Metro, 
+                    MetroColor = Color.White, 
+                    UseFading = SuperToolTip.FadingType.System
+                };
 
                 var rect = SelectedNode.TextBounds;
                 var pnt = new Point(rect.X + rect.Width + 20, rect.Y + rect.Height);
@@ -88,7 +99,9 @@ namespace MW5.UI.Controls
 
                 var info = new ToolTipInfo();
                 var args = new ToolTipEventArgs(info);
+
                 FirePrepareTooltip(args);
+
                 if (args.Cancel)
                 {
                     _lastTooltip.Hide();
@@ -96,6 +109,7 @@ namespace MW5.UI.Controls
                 }
 
                 info.Header.Font = new Font(info.Header.Font, FontStyle.Bold);
+
                 _lastTooltip.MaxWidth = 450;
                 _lastTooltip.Show(info, pnt, ToolTipDuration);
             }

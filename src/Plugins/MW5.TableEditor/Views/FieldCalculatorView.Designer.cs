@@ -46,7 +46,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnPlus = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnDivide = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.fieldTypeGrid1 = new FieldTypeGrid();
+            this.fieldTypeGrid1 = new MW5.Attributes.Controls.FieldTypeGrid();
             ((System.ComponentModel.ISupportInitialize)(this.functionTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
@@ -97,7 +97,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.functionTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.functionTreeView1.Name = "functionTreeView1";
             this.functionTreeView1.ShowFocusRect = true;
-            this.functionTreeView1.ShowSuperTooltip = false;
+            this.functionTreeView1.ShowSuperTooltip = true;
             this.functionTreeView1.Size = new System.Drawing.Size(206, 326);
             this.functionTreeView1.TabIndex = 35;
             this.functionTreeView1.Text = "functionsTreeView1";
@@ -111,7 +111,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.functionTreeView1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this.functionTreeView1.ToolTipControl.TabIndex = 1;
             this.functionTreeView1.ToolTipControl.Text = "toolTip";
-            this.functionTreeView1.ToolTipDuration = 0;
+            this.functionTreeView1.ToolTipDuration = 5000;
             this.functionTreeView1.NodeMouseDoubleClick += new Syncfusion.Windows.Forms.Tools.TreeNodeAdvMouseClickArgs(this.FunctionTreeView1DoubleClick);
             // 
             // txtSearch

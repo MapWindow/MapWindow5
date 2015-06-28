@@ -761,9 +761,6 @@
     <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\img_remove161.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\img_clear24.png" />
   </ItemGroup>
   <ItemGroup>

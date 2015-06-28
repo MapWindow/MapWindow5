@@ -92,13 +92,7 @@ namespace MW5.Plugins.TableEditor.Views
             var fn = functionTreeView1.SelectedFunction;
             if (fn == null) return;
 
-            var name = fn.Name;
-
-            if (!name.StartsWith("$"))
-            {
-                var args = fn.NumParameters > 1 ? "( " + StringHelper.Fill("; ", fn.NumParameters - 1) + ")" : "()";
-                name += args;
-            }
+            var name = fn.Signature;
 
             AddTextToExpression(name);
         }
@@ -139,6 +133,7 @@ namespace MW5.Plugins.TableEditor.Views
                 lblValidation.Text = "Expression is empty";
                 lblValidation.ForeColor = Color.Black;
                 lblValidation.Font = new Font(lblValidation.Font, FontStyle.Regular);
+                return;
             }
 
             string errorMsg;
