@@ -22,6 +22,7 @@ namespace MW5.Views
     /// </summary>
     public partial class MainView : MapWindowView, IMainView
     {
+        private const string WindowTitle = "MapWindow 5";
         private readonly IAppContext _context;
         private bool _rendered = false;
 
@@ -155,13 +156,21 @@ namespace MW5.Views
             Application.Run(this);
         }
 
-        public override void UpdateView()
+        private string GetCaption()
         {
+            string caption = WindowTitle;
 
             if (!_context.Project.IsEmpty)
             {
-                Text += @" - " + _context.Project.Filename;
+                caption += @" - " + _context.Project.Filename;
             }
+
+            return caption;
+        }
+
+        public override void UpdateView()
+        {
+            Text = GetCaption();
             
             // broadcast to plugins
             if (_rendered)
