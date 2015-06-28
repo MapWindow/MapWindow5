@@ -169,7 +169,7 @@ namespace MW5.Plugins.Symbology.Views
             dgvCategories.Initialize(FeatureSet);
 
             icbCategories.ComboStyle = SchemeType.Graduated;
-            icbCategories.SchemeTarget = SchemeTarget.Vector;
+            icbCategories.Target = SchemeTarget.Vector;
             if (icbCategories.Items.Count > 0)
             {
                 icbCategories.SelectedIndex = 0;

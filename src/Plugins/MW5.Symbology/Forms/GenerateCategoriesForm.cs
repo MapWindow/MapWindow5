@@ -78,7 +78,7 @@ namespace MW5.Plugins.Symbology.Forms
             ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, _shapefile);
 
             // initializing for list of color schemes
-            icbColorScheme.SchemeTarget = SchemeTarget.Vector;
+            icbColorScheme.Target = SchemeTarget.Vector;
 
             // settings active color scheme
             icbColorScheme.SetSelectedItem(settings.CategoriesColorScheme);

@@ -719,9 +719,6 @@
     <None Include="Resources\img_palette24.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\img_palette241.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\img_palette.png" />
   </ItemGroup>
   <ItemGroup>
@@ -768,9 +765,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_clear24.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\palette32.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_palette32.png" />

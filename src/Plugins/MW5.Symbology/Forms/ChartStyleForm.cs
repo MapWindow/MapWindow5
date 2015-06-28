@@ -85,7 +85,7 @@ namespace MW5.Plugins.Symbology.Forms
             optPieCharts.Checked = !_charts.Bars;
 
             // initializing for list of color schemes
-            icbColors.SchemeTarget = SchemeTarget.Charts;
+            icbColors.Target = SchemeTarget.Charts;
 
             if (icbColors.Items.Count > 0)
             {

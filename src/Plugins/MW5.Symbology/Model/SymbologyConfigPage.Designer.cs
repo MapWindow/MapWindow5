@@ -244,7 +244,7 @@ namespace MW5.Plugins.Symbology.Model
             this.icbCharts.OutlineColor = System.Drawing.Color.Black;
             this.icbCharts.Size = new System.Drawing.Size(171, 21);
             this.icbCharts.TabIndex = 6;
-            this.icbCharts.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Charts;
+            this.icbCharts.Scheme = MW5.Plugins.Symbology.SchemeTarget.Charts;
             // 
             // icbRaster
             // 
@@ -257,7 +257,7 @@ namespace MW5.Plugins.Symbology.Model
             this.icbRaster.OutlineColor = System.Drawing.Color.Black;
             this.icbRaster.Size = new System.Drawing.Size(171, 21);
             this.icbRaster.TabIndex = 4;
-            this.icbRaster.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
+            this.icbRaster.Scheme = MW5.Plugins.Symbology.SchemeTarget.Raster;
             // 
             // icbVector
             // 
@@ -270,7 +270,7 @@ namespace MW5.Plugins.Symbology.Model
             this.icbVector.OutlineColor = System.Drawing.Color.Black;
             this.icbVector.Size = new System.Drawing.Size(171, 21);
             this.icbVector.TabIndex = 2;
-            this.icbVector.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbVector.Scheme = MW5.Plugins.Symbology.SchemeTarget.Vector;
             // 
             // SymbologyConfigPage
             // 

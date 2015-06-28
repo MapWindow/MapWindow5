@@ -243,7 +243,7 @@
             this.icbCategories.Location = new System.Drawing.Point(19, 25);
             this.icbCategories.Name = "icbCategories";
             this.icbCategories.OutlineColor = System.Drawing.Color.Black;
-            this.icbCategories.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbCategories.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbCategories.Size = new System.Drawing.Size(137, 21);
             this.icbCategories.TabIndex = 106;
             // 

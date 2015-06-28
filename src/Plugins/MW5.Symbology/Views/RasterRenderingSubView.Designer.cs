@@ -302,7 +302,7 @@ namespace MW5.Plugins.Symbology.Views
             this.colorSchemeCombo1.Location = new System.Drawing.Point(15, 57);
             this.colorSchemeCombo1.Name = "colorSchemeCombo1";
             this.colorSchemeCombo1.OutlineColor = System.Drawing.Color.Black;
-            this.colorSchemeCombo1.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Raster;
+            this.colorSchemeCombo1.Target = MW5.Plugins.Symbology.SchemeTarget.Raster;
             this.colorSchemeCombo1.Size = new System.Drawing.Size(144, 21);
             this.colorSchemeCombo1.TabIndex = 0;
             // 

@@ -1011,7 +1011,7 @@ namespace MW5.Plugins.Symbology.Views
             this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
             this.icbChartColorScheme.Name = "icbChartColorScheme";
             this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
-            this.icbChartColorScheme.SchemeTarget = MW5.Plugins.Symbology.SchemeTarget.Vector;
+            this.icbChartColorScheme.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
             this.icbChartColorScheme.TabIndex = 22;
             this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.OnChartColorSchemeSelectedIndexChanged);

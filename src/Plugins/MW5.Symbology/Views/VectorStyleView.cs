@@ -327,7 +327,7 @@ namespace MW5.Plugins.Symbology.Views
         private void InitChartsTab()
         {
             icbChartColorScheme.ComboStyle = SchemeType.Graduated;
-            icbChartColorScheme.SchemeTarget = SchemeTarget.Charts;
+            icbChartColorScheme.Target = SchemeTarget.Charts;
 
             if (icbChartColorScheme.Items.Count > 0)
             {
