@@ -98,22 +98,13 @@ namespace MW5.Attributes.Helpers
                 return false;
             }
 
-            if (table.Fields.Any(f => f.Name.ContainsIgnoreCase(newName)))
+            if (table.Fields.Any(f => f.Name.EqualsIgnoreCase(newName)))
             {
                 errorMessage = "Field name already exists.";
                 return false;
             }
 
             return true;
-        }
-
-        // TODO: remove
-        public static void CheckEditMode(this IAttributeTable table, bool expected)
-        {
-            if (expected && !table.EditMode)
-            {
-                throw new InvalidOperationException("Table in edit mode is expected.");
-            }
         }
 
         public static IEnumerable<ValueCountItem> GetUniqueValues(this IAttributeTable table, int fieldIndex)

@@ -25,7 +25,7 @@ namespace MW5.Plugins.TableEditor.Views
         {
             string errorMessage;
 
-            bool nameChanged = Model.AddField || Model.AllowEditing && field.Name.ContainsIgnoreCase(Model.Field.Name);
+            bool nameChanged = Model.AddField || (Model.AllowEditing && !field.Name.EqualsIgnoreCase(Model.Field.Name));
 
             if (nameChanged && !Model.Table.ValidateFieldName(field.Name, out errorMessage))
             {

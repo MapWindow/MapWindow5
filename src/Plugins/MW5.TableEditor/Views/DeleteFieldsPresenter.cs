@@ -43,7 +43,7 @@ namespace MW5.Plugins.TableEditor.Views
 
         public override void Initialize()
         {
-            Model.CheckEditMode(true);
+            
         }
     }
 }
