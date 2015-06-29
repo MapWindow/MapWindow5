@@ -20,7 +20,6 @@ namespace MW5.Plugins.TableEditor
                 .RegisterService<ITableEditorView, TableEditorView>()
                 .RegisterView<IFieldCalculatorView, FieldCalculatorView>()
                 .RegisterView<IUpdateMeasurementsView, UpdateMeasurementsView>()
-                .RegisterView<ICalculateFieldView, CalculateFieldView>()
                 .RegisterView<IDeleteFieldsView, DeleteFieldsView>()
                 
                 .RegisterView<IJoinsView, JoinsView>()

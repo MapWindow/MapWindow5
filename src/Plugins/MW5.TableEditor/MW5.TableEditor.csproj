@@ -117,7 +117,6 @@
     </Compile>
     <Compile Include="Editor\ColumnEventArgs.cs" />
     <Compile Include="Editor\SortItem.cs" />
-    <Compile Include="Helpers\CalculatorHelper.cs" />
     <Compile Include="Helpers\ShapefileExportHelper.cs" />
     <Compile Include="Helpers\UnitConversionHelper.cs" />
     <Compile Include="Model\FieldStat.cs" />
@@ -137,20 +136,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\DockPanelService.cs" />
-    <Compile Include="Views\Abstract\ICalculateFieldView.cs" />
     <Compile Include="Views\Abstract\IFieldCalculatorView.cs" />
     <Compile Include="Views\Abstract\IFieldPropertiesView.cs" />
     <Compile Include="Views\Abstract\IFieldStatsView.cs" />
     <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
     <Compile Include="Views\Abstract\IUpdateMeasurements.cs" />
-    <Compile Include="Views\CalculateFieldPresenter.cs" />
-    <Compile Include="Views\CalculateFieldView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\CalculateFieldView.Designer.cs">
-      <DependentUpon>CalculateFieldView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\DeleteFieldsPresenter.cs" />
     <Compile Include="Views\DeleteFieldsView.cs">
       <SubType>Form</SubType>
@@ -240,9 +231,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\CalculateFieldView.resx">
-      <DependentUpon>CalculateFieldView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Views\DeleteFieldsView.resx">
       <DependentUpon>DeleteFieldsView.cs</DependentUpon>
     </EmbeddedResource>
@@ -319,16 +307,11 @@
       <Name>MW5.UI</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="MathParser\MathParser.vbproj">
-      <Project>{fdb4f032-795d-4ab0-b771-35fd61eee0ac}</Project>
-      <Name>MathParser</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icon_layer_edit.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Forms\" />
     <Folder Include="Legacy\" />
   </ItemGroup>
   <ItemGroup>
