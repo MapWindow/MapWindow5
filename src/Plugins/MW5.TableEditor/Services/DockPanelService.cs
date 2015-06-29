@@ -8,13 +8,12 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.TableEditor.Properties;
 using MW5.Plugins.TableEditor.Views;
+using MW5.UI.Docking;
 
 namespace MW5.Plugins.TableEditor.Services
 {
     internal class DockPanelService
     {
-        public const string TableEditorDockPanelKey = "TableEditorDockPanel";
-
         public DockPanelService(IAppContext context, TableEditorPresenter presenter, TableEditorPlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -24,7 +23,7 @@ namespace MW5.Plugins.TableEditor.Services
             var panels = context.DockPanels;
 
             panels.Lock();
-            var panel = panels.Add(presenter.GetInternalObject(), TableEditorDockPanelKey, plugin.Identity);
+            var panel = panels.Add(presenter.GetInternalObject(), DockPanelKeys.TableEditor, plugin.Identity);
             panel.Caption = "Table editor";
             panel.SetIcon(Resources.ico_table24);
 

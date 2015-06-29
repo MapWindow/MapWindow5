@@ -117,6 +117,15 @@ namespace MW5.Helpers
             return new AppStateSerializer(SerializeMode.XMLFile, path);
         }
 
+        public static void CloseTableEditor(IAppContext context)
+        {
+            var panel = context.DockPanels.Find(DockPanelKeys.TableEditor);
+            if (panel != null)
+            {
+                panel.Visible = false;
+            }
+        }
+
         public static void SerializeDockState(IAppContext context)
         {
             var panels = context.DockPanels;

@@ -89,12 +89,20 @@ namespace MW5.Plugins.TableEditor.Views
                 {
                     case AttributeType.String:
                         udWidth.Value = 50;
+                        udWidth.Maximum = 255;
+                        udPrecision.Value = 0;
                         break;
                     case AttributeType.Integer:
-                        udWidth.Value = 10;
+                        // 10 is will be reopened as double (dbfopen.c)
+                        // integer must have width < 10 and precision = 0
+                        udWidth.Maximum = 9;
+                        udWidth.Value = 9;        
+                        udPrecision.Value = 0;
                         break;
                     case AttributeType.Double:
                         udWidth.Value = 20;
+                        udWidth.Maximum = 40;
+                        udPrecision.Value = 10;
                         break;
                 }
             }

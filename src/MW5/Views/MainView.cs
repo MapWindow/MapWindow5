@@ -12,6 +12,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
 using MW5.UI;
+using MW5.UI.Docking;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
@@ -139,6 +140,8 @@ namespace MW5.Views
                 _dockingManager1.RestoreLayout(false);
                 _mainFrameBarManager1.RestoreLayout(false);
             }
+
+            DockPanelHelper.CloseTableEditor(_context);
 
             Program.Timer.Stop();
             Logger.Current.Info("Loading time: " + Program.Timer.Elapsed);

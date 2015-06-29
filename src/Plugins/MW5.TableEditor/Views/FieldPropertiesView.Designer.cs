@@ -62,7 +62,7 @@
             this.btnCancel.Location = new System.Drawing.Point(228, 319);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
-            this.btnCancel.TabIndex = 36;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             // 
             // btnOk
@@ -75,7 +75,7 @@
             this.btnOk.Location = new System.Drawing.Point(138, 319);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
-            this.btnOk.TabIndex = 35;
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "Ok";
             // 
             // label1
@@ -93,7 +93,7 @@
             this.txtName.MaxLength = 10;
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(192, 20);
-            this.txtName.TabIndex = 38;
+            this.txtName.TabIndex = 1;
             // 
             // label2
             // 
@@ -109,7 +109,7 @@
             this.txtAlias.Location = new System.Drawing.Point(91, 67);
             this.txtAlias.Name = "txtAlias";
             this.txtAlias.Size = new System.Drawing.Size(192, 20);
-            this.txtAlias.TabIndex = 40;
+            this.txtAlias.TabIndex = 2;
             // 
             // chkVisible
             // 
@@ -117,7 +117,7 @@
             this.chkVisible.Location = new System.Drawing.Point(91, 105);
             this.chkVisible.Name = "chkVisible";
             this.chkVisible.Size = new System.Drawing.Size(56, 17);
-            this.chkVisible.TabIndex = 41;
+            this.chkVisible.TabIndex = 3;
             this.chkVisible.Text = "Visible";
             this.chkVisible.UseVisualStyleBackColor = true;
             // 
@@ -133,7 +133,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(22, 182);
+            this.label4.Location = new System.Drawing.Point(22, 220);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 13);
             this.label4.TabIndex = 44;
@@ -141,15 +141,20 @@
             // 
             // udPrecision
             // 
-            this.udPrecision.Location = new System.Drawing.Point(91, 179);
+            this.udPrecision.Location = new System.Drawing.Point(91, 217);
+            this.udPrecision.Maximum = new decimal(new int[] {
+            18,
+            0,
+            0,
+            0});
             this.udPrecision.Name = "udPrecision";
             this.udPrecision.Size = new System.Drawing.Size(192, 20);
-            this.udPrecision.TabIndex = 45;
+            this.udPrecision.TabIndex = 6;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(22, 220);
+            this.label5.Location = new System.Drawing.Point(22, 182);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(35, 13);
             this.label5.TabIndex = 46;
@@ -157,10 +162,25 @@
             // 
             // udWidth
             // 
-            this.udWidth.Location = new System.Drawing.Point(91, 217);
+            this.udWidth.Location = new System.Drawing.Point(91, 179);
+            this.udWidth.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.udWidth.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.udWidth.Name = "udWidth";
             this.udWidth.Size = new System.Drawing.Size(192, 20);
-            this.udWidth.TabIndex = 47;
+            this.udWidth.TabIndex = 5;
+            this.udWidth.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // cboDataType
             // 
@@ -170,7 +190,7 @@
             this.cboDataType.Location = new System.Drawing.Point(91, 140);
             this.cboDataType.Name = "cboDataType";
             this.cboDataType.Size = new System.Drawing.Size(192, 21);
-            this.cboDataType.TabIndex = 48;
+            this.cboDataType.TabIndex = 4;
             this.cboDataType.SelectedIndexChanged += new System.EventHandler(this.cboDataType_SelectedIndexChanged);
             // 
             // groupBox1
@@ -191,16 +211,16 @@
             this.groupBox1.Location = new System.Drawing.Point(9, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(304, 301);
-            this.groupBox1.TabIndex = 49;
+            this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
             // txtExpression
             // 
-            this.txtExpression.Location = new System.Drawing.Point(91, 256);
+            this.txtExpression.Location = new System.Drawing.Point(91, 255);
             this.txtExpression.Name = "txtExpression";
             this.txtExpression.ReadOnly = true;
             this.txtExpression.Size = new System.Drawing.Size(192, 20);
-            this.txtExpression.TabIndex = 50;
+            this.txtExpression.TabIndex = 7;
             // 
             // label6
             // 

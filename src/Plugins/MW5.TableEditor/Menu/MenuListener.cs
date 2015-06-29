@@ -8,6 +8,7 @@ using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Helpers;
 using MW5.Plugins.TableEditor.Services;
 using MW5.Plugins.TableEditor.Views;
+using MW5.UI.Docking;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.TableEditor.Menu
@@ -46,7 +47,7 @@ namespace MW5.Plugins.TableEditor.Menu
                         _presenter.OpenTable(layer);
                     }
 
-                    var panel = _context.DockPanels.Find(DockPanelService.TableEditorDockPanelKey);
+                    var panel = _context.DockPanels.Find(DockPanelKeys.TableEditor);
                     if (panel != null && !panel.Visible)
                     {
                         panel.Visible = true;

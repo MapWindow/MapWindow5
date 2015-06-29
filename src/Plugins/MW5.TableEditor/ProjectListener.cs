@@ -16,6 +16,7 @@ using MW5.Plugins.Services;
 using MW5.Plugins.TableEditor.Editor;
 using MW5.Plugins.TableEditor.Views;
 using MW5.Shared;
+using MW5.UI.Docking;
 
 namespace MW5.Plugins.TableEditor
 {
@@ -36,6 +37,16 @@ namespace MW5.Plugins.TableEditor
             plugin.BeforeRemoveLayer += BeforeRemoveLayer;
             plugin.UpdateTableJoin += OnUpdateTableJoin;
             plugin.LayerRemoved += plugin_LayerRemoved;
+            plugin.ProjectClosed += OnProjectClosed;
+        }
+
+        private void OnProjectClosed(object sender, EventArgs e)
+        {
+            var panel = _context.DockPanels.Find(DockPanelKeys.TableEditor);
+            if (panel.Visible)
+            {
+                panel.Visible = false;
+            }
         }
 
         private void OnUpdateTableJoin(object sender, Api.Events.UpdateJoinEventArgs e)
