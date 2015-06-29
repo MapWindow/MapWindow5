@@ -38,6 +38,7 @@
         AttributeExplorer = 34,
         ClearSorting = 35,
         RecalculateFields = 36,
+        DiscardChanges = 37,
     }
 
     /// <summary>

@@ -242,6 +242,7 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+            
                 case TableEditorCommand.RecalculateFields:
                     if (!table.Fields.Any(f => string.IsNullOrWhiteSpace(f.Expression)))
                     {
@@ -425,28 +426,11 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.StartEdit:
                     StartEditing();
                     break;
+                case TableEditorCommand.DiscardChanges:
+                    StopEditing(table, false);
+                    break;
                 case TableEditorCommand.SaveChanges:
-                    if (table.EditMode)
-                    {
-                        var result = MessageService.Current.AskWithCancel(
-                            "Do you want to save attribute table changes?");
-
-                        if (result == DialogResult.Cancel)
-                        {
-                            return;
-                        }
-
-                        table.StopEditing(result == DialogResult.Yes);
-
-                        var grid = View.ActiveGrid;
-                        if (grid != null)
-                        {
-                            grid.ReadOnly = !table.EditMode;
-                            View.UpdateDatasource();
-                        }
-                    }
-
-                    View.UpdateView();
+                    StopEditing(table, true);
                     break;
                 case TableEditorCommand.CalculateField:
                     {
@@ -517,6 +501,33 @@ namespace MW5.Plugins.TableEditor.Views
                     Find(true);
                     break;
             }
+        }
+
+        private void StopEditing(IAttributeTable table, bool saveChanges)
+        {
+            if (!table.EditMode)
+            {
+                return;
+            }
+
+            string msg = "Stop editing and ";
+            msg += saveChanges ? "SAVE changes?" : "DISCARD changes?";
+
+            if (!MessageService.Current.Ask(msg))
+            {
+                return;
+            }
+
+            table.StopEditing(saveChanges);
+
+            var grid = View.ActiveGrid;
+            if (grid != null)
+            {
+                grid.ReadOnly = !table.EditMode;
+                View.UpdateDatasource();
+            }
+
+            View.UpdateView();
         }
 
         private bool StartEditing()

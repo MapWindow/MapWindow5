@@ -62,8 +62,6 @@ namespace MW5.Plugins.TableEditor.Editor
 
                 bool editing = TableSource.EditingTable;
                 ReadOnly = !editing;
-
-                Invalidate();
             }
         }
 
@@ -72,8 +70,24 @@ namespace MW5.Plugins.TableEditor.Editor
             get { return _shapefile; }
         }
 
+        /// <summary>
+        /// Gets width of columns with MapWinGIS field as key.
+        /// </summary>
+        private Dictionary<object, int> SaveColumnWidth()
+        {
+            var dict = new Dictionary<object, int>();
+            for (int i = 0; i < Columns.Count; i++)
+            {
+                dict.Add(GetField(i).InternalObject, Columns[i].Width);
+            }
+
+            return dict;
+        }
+
         private void InitColumns(IAttributeTable table)
         {
+            var widths = SaveColumnWidth();
+
             Columns.Clear();
 
             bool showAliases = AppConfig.Instance.TableEditorShowAliases;
@@ -87,6 +101,11 @@ namespace MW5.Plugins.TableEditor.Editor
                     Visible = fld.Visible,
                     Tag = fld,
                 };
+
+                if (widths.ContainsKey(fld.InternalObject))
+                {
+                    cmn.Width = widths[fld.InternalObject];
+                }
 
                 if (table.FieldIsJoined(fld.Index))
                 {

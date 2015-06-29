@@ -59,7 +59,6 @@ namespace MW5.Plugins.TableEditor.Views
                 count++;
             }
 
-            // TODO: normalize it
             Model.Field.Expression = View.Expression;   
 
             if (count != rowCount)

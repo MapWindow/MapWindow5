@@ -376,7 +376,9 @@ namespace MW5.Plugins.TableEditor.Views
 
             var img = editing ? Resources.icon_save1 : Resources.icon_layer_edit;
 
+            toolStripEx1.SuspendLayout();
             toolEdit.Image = img;
+            toolStripEx1.ResumeLayout();
         }
 
         private void UpdateMenus()
@@ -390,6 +392,7 @@ namespace MW5.Plugins.TableEditor.Views
             var editing = fs.Table.EditMode;
             mnuStartEdit.Enabled = !editing;
             mnuSaveChanges.Enabled = editing;
+            mnuDiscardChanges.Enabled = editing;
 
             toolStopJoins.Enabled = fs.Table.Joins.Any();
             mnuShowAliases.Checked = AppConfig.Instance.TableEditorShowAliases;
