@@ -57,7 +57,7 @@ namespace MW5.Plugins.TableEditor.Editor
             ClearFilter();
         }
 
-        private void ClearSorting(IFeatureSet sf)
+        public void ClearSorting(IFeatureSet sf)
         {
             int numRows = sf.Table.NumRows;
             _sortingMap = new int[sf.Table.NumRows];

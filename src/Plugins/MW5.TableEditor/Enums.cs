@@ -36,6 +36,8 @@
         ExportSelected = 32,
         Query = 33,
         AttributeExplorer = 34,
+        ClearSorting = 35,
+        RecalculateFields = 36,
     }
 
     /// <summary>
@@ -102,5 +104,13 @@
     {
         Regular = 0,
         All = 1,
+    }
+
+    public enum RecalculateFieldResult
+    {
+        None = 0,
+        Failure = 1,
+        SomeRows = 2,
+        Success = 3,
     }
 }

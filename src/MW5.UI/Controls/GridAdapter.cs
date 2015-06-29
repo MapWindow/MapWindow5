@@ -429,6 +429,20 @@ namespace MW5.UI.Controls
             }
         }
 
+        public bool ReReadRecord(T item)
+        {
+            foreach(var r in _grid.Table.Records)
+            {
+                if (r.GetData() == item)
+                {
+                    r.ResetValues();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public void SetColumnIcon(Expression<Func<T, object>> propertySelector, Func<T, int> imageSelector)
         {
             string name = GenericHelper.GetPropertyName(propertySelector);

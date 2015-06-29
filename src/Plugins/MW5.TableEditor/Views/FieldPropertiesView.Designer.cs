@@ -43,8 +43,8 @@
             this.udWidth = new System.Windows.Forms.NumericUpDown();
             this.cboDataType = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.txtExpression = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.udPrecision)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udWidth)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboDataType)).BeginInit();
@@ -59,7 +59,7 @@
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(217, 319);
+            this.btnCancel.Location = new System.Drawing.Point(228, 319);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 36;
@@ -72,7 +72,7 @@
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(127, 319);
+            this.btnOk.Location = new System.Drawing.Point(138, 319);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 35;
@@ -90,8 +90,9 @@
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(91, 29);
+            this.txtName.MaxLength = 10;
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(177, 20);
+            this.txtName.Size = new System.Drawing.Size(192, 20);
             this.txtName.TabIndex = 38;
             // 
             // label2
@@ -107,7 +108,7 @@
             // 
             this.txtAlias.Location = new System.Drawing.Point(91, 67);
             this.txtAlias.Name = "txtAlias";
-            this.txtAlias.Size = new System.Drawing.Size(177, 20);
+            this.txtAlias.Size = new System.Drawing.Size(192, 20);
             this.txtAlias.TabIndex = 40;
             // 
             // chkVisible
@@ -142,7 +143,7 @@
             // 
             this.udPrecision.Location = new System.Drawing.Point(91, 179);
             this.udPrecision.Name = "udPrecision";
-            this.udPrecision.Size = new System.Drawing.Size(177, 20);
+            this.udPrecision.Size = new System.Drawing.Size(192, 20);
             this.udPrecision.TabIndex = 45;
             // 
             // label5
@@ -158,17 +159,17 @@
             // 
             this.udWidth.Location = new System.Drawing.Point(91, 217);
             this.udWidth.Name = "udWidth";
-            this.udWidth.Size = new System.Drawing.Size(177, 20);
+            this.udWidth.Size = new System.Drawing.Size(192, 20);
             this.udWidth.TabIndex = 47;
             // 
             // cboDataType
             // 
-            this.cboDataType.BeforeTouchSize = new System.Drawing.Size(177, 21);
+            this.cboDataType.BeforeTouchSize = new System.Drawing.Size(192, 21);
             this.cboDataType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDataType.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboDataType.Location = new System.Drawing.Point(91, 140);
             this.cboDataType.Name = "cboDataType";
-            this.cboDataType.Size = new System.Drawing.Size(177, 21);
+            this.cboDataType.Size = new System.Drawing.Size(192, 21);
             this.cboDataType.TabIndex = 48;
             this.cboDataType.SelectedIndexChanged += new System.EventHandler(this.cboDataType_SelectedIndexChanged);
             // 
@@ -189,9 +190,17 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Location = new System.Drawing.Point(9, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(293, 301);
+            this.groupBox1.Size = new System.Drawing.Size(304, 301);
             this.groupBox1.TabIndex = 49;
             this.groupBox1.TabStop = false;
+            // 
+            // txtExpression
+            // 
+            this.txtExpression.Location = new System.Drawing.Point(91, 256);
+            this.txtExpression.Name = "txtExpression";
+            this.txtExpression.ReadOnly = true;
+            this.txtExpression.Size = new System.Drawing.Size(192, 20);
+            this.txtExpression.TabIndex = 50;
             // 
             // label6
             // 
@@ -202,20 +211,12 @@
             this.label6.TabIndex = 49;
             this.label6.Text = "Expression";
             // 
-            // txtExpression
-            // 
-            this.txtExpression.Location = new System.Drawing.Point(91, 256);
-            this.txtExpression.Name = "txtExpression";
-            this.txtExpression.ReadOnly = true;
-            this.txtExpression.Size = new System.Drawing.Size(177, 20);
-            this.txtExpression.TabIndex = 50;
-            // 
             // FieldPropertiesView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(308, 351);
+            this.ClientSize = new System.Drawing.Size(322, 351);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);

@@ -193,6 +193,7 @@ namespace MW5.Plugins.TableEditor.Views
                 case TableEditorCommand.UpdateMeasurements:
                 case TableEditorCommand.Replace:
                 case TableEditorCommand.RemoveFields:
+                case TableEditorCommand.RecalculateFields:
                     {
                         var table = ActiveTable;
 
@@ -241,6 +242,27 @@ namespace MW5.Plugins.TableEditor.Views
 
             switch (command)
             {
+                case TableEditorCommand.RecalculateFields:
+                    if (!table.Fields.Any(f => string.IsNullOrWhiteSpace(f.Expression)))
+                    {
+                        MessageService.Current.Info("There are no fields with previously calculate expressions.");
+                        return;
+                    }
+
+                    if (_context.Container.Run<RecalculateFieldsPresenter, IAttributeTable>(table))
+                    {
+                        View.UpdateView();
+                    }
+                    break;
+                case TableEditorCommand.ClearSorting:
+                    {
+                        var grid = View.ActiveGrid;
+                        if (grid != null)
+                        {
+                            grid.ClearSorting();
+                        }
+                    }
+                    break;
                 case TableEditorCommand.AttributeExplorer:
                     {
                         var layer = _context.Layers.ItemByHandle(View.ActiveLayerHandle);

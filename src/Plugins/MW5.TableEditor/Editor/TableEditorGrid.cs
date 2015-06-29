@@ -179,6 +179,18 @@ namespace MW5.Plugins.TableEditor.Editor
             Invalidate();
         }
 
+        public void ClearSorting()
+        {
+            RowManager.ClearSorting(TableSource);
+
+            foreach (DataGridViewColumn cmn in Columns)
+            {
+                cmn.HeaderCell.SortGlyphDirection = SortOrder.None;
+            }
+
+            Invalidate();
+        }
+
         private void SortByColumn<T>(int cmnIndex, bool ascending) where T: IComparable
         {
             var list = new List<SortItem<T>> {Capacity = _table.NumRows};

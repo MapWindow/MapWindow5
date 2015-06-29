@@ -40,14 +40,19 @@ namespace MW5.Plugins.TableEditor.Views
 
             var count = 0;
             var rowCount = Model.Table.NumRows;
+            bool errorReported = false;
 
             for (var i = 0; i < rowCount; i++)
             {
                 if (!eval.CalculateForTableRow(i, Model.Field.Index))
                 {
-                    // TODO: perhaps stop calculation after certain number of failures
-                    // TODO: dedicated dialog with the per row errors may be added
-                    Logger.Current.Info("Failed to calculate expression for a row: " + i + ". " + eval.LastErrorMessage);
+                    if (!errorReported)
+                    {
+                        // report only the very first error
+                        string s = "Failed to calculate expression for a row: " + i + ". " + eval.LastErrorMessage;
+                        Logger.Current.Info(s);
+                        errorReported = true;
+                    }
                     continue;
                 }
                 

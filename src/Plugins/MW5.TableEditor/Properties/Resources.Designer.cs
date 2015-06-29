@@ -123,6 +123,16 @@ namespace MW5.Plugins.TableEditor.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_error16 {
+            get {
+                object obj = ResourceManager.GetObject("img_error16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_field_add16 {
             get {
                 object obj = ResourceManager.GetObject("img_field_add16", resourceCulture);
@@ -186,6 +196,16 @@ namespace MW5.Plugins.TableEditor.Properties {
         internal static System.Drawing.Bitmap img_measure16 {
             get {
                 object obj = ResourceManager.GetObject("img_measure16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_ok16 {
+            get {
+                object obj = ResourceManager.GetObject("img_ok16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -286,6 +306,16 @@ namespace MW5.Plugins.TableEditor.Properties {
         internal static System.Drawing.Bitmap img_wand16 {
             get {
                 object obj = ResourceManager.GetObject("img_wand16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_warning16 {
+            get {
+                object obj = ResourceManager.GetObject("img_warning16", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -38,6 +38,7 @@ namespace MW5.Plugins.TableEditor.Views
         public void Initialize()
         {
             clb.Items.Clear();
+
             foreach (var fld in Model.Fields)
             {
                 clb.Items.Add(fld.Name);

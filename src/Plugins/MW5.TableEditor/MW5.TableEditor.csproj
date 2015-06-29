@@ -115,6 +115,12 @@
     <Compile Include="Controls\FunctionTreeView.Designer.cs">
       <DependentUpon>FunctionTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RecalculateFieldsGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\RecalculateFieldsGrid.Designer.cs">
+      <DependentUpon>RecalculateFieldsGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\ColumnEventArgs.cs" />
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\ShapefileExportHelper.cs" />
@@ -123,6 +129,7 @@
     <Compile Include="Model\FindReplaceFieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />
     <Compile Include="Model\MeasurementInfo.cs" />
+    <Compile Include="Model\RecalculateFieldWrapper.cs" />
     <Compile Include="Model\SearchInfo.cs" />
     <Compile Include="Model\TablePanel.cs" />
     <Compile Include="Model\TablePanelCancelEventArgs.cs" />
@@ -141,6 +148,7 @@
     <Compile Include="Views\Abstract\IFieldStatsView.cs" />
     <Compile Include="Views\Abstract\IFindReplaceView.cs" />
     <Compile Include="Views\Abstract\IJoinsView.cs" />
+    <Compile Include="Views\Abstract\IRecalculateFieldsView.cs" />
     <Compile Include="Views\Abstract\IUpdateMeasurements.cs" />
     <Compile Include="Views\DeleteFieldsPresenter.cs" />
     <Compile Include="Views\DeleteFieldsView.cs">
@@ -199,6 +207,13 @@
     <Compile Include="Views\FindReplaceView.Designer.cs">
       <DependentUpon>FindReplaceView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\RecalculateFieldsPresenter.cs" />
+    <Compile Include="Views\RecalculateFieldsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\RecalculateFieldsView.Designer.cs">
+      <DependentUpon>RecalculateFieldsView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\TableEditorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -248,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\JoinsView.resx">
       <DependentUpon>JoinsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\RecalculateFieldsView.resx">
+      <DependentUpon>RecalculateFieldsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TableEditorView.resx">
       <DependentUpon>TableEditorView.cs</DependentUpon>
@@ -388,6 +406,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_tabbed16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_error16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_ok16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_warning16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
