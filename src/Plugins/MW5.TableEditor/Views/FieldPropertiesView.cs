@@ -40,6 +40,7 @@ namespace MW5.Plugins.TableEditor.Views
             cboDataType.SetValue(fld.Type);
             udPrecision.SetValue(fld.Precision);
             udWidth.SetValue(fld.Width);
+            txtExpression.Text = fld.Expression;
 
             RefreshControls();
         }

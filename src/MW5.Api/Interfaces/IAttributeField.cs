@@ -22,6 +22,8 @@ namespace MW5.Api.Interfaces
         [Browsable(false)]
         int Index { get; }
 
+        string Expression { get; set; }
+
         bool Joined { get; }
 
         string Name { get; set; }

@@ -38,6 +38,8 @@ namespace MW5.Plugins.TableEditor.Views
             InitFieldsList();
 
             lblField.Text = "[" + Model.Field.Name + "] = ";
+
+            txtExpression.Text = Model.Field.Expression;
         }
 
         public event Action TestClicked;

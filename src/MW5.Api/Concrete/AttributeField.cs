@@ -85,6 +85,12 @@ namespace MW5.Api.Concrete
             set { _field.Key = value; }
         }
 
+        public string Expression
+        {
+            get { return _field.Expression; }
+            set { _field.Expression = value; }
+        }
+
         [Browsable(false)]
         public string DisplayName
         {
@@ -119,5 +125,5 @@ namespace MW5.Api.Concrete
                 }
             }
         }
-}
+    }
 }

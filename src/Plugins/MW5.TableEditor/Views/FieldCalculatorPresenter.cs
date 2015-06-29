@@ -54,13 +54,15 @@ namespace MW5.Plugins.TableEditor.Views
                 count++;
             }
 
+            // TODO: normalize it
+            Model.Field.Expression = View.Expression;   
+
             if (count != rowCount)
             {
                 MessageService.Current.Info(string.Format("Rows calculated: {0} from {1}", count, rowCount));
                 return false;
             }
 
-            MessageService.Current.Info("Expression is calculated successfully.");
             return true;
         }
 
