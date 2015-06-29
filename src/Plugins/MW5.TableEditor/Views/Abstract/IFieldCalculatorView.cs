@@ -11,5 +11,7 @@ namespace MW5.Plugins.TableEditor.Views.Abstract
     public interface IFieldCalculatorView: IView<FieldCalculatorModel>
     {
         string Expression { get; }
+
+        event Action TestClicked;
     }
 }

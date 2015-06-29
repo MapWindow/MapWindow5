@@ -47,6 +47,7 @@ namespace MW5.Plugins.TableEditor.Views
             this.btnPlus = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnDivide = new Syncfusion.Windows.Forms.ButtonAdv();
             this.fieldTypeGrid1 = new MW5.Attributes.Controls.FieldTypeGrid();
+            this.btnTest = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.functionTreeView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtSearch)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldTypeGrid1)).BeginInit();
@@ -131,6 +132,7 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // lblValidation
             // 
+            this.lblValidation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblValidation.Location = new System.Drawing.Point(12, 384);
             this.lblValidation.Name = "lblValidation";
             this.lblValidation.Size = new System.Drawing.Size(338, 24);
@@ -139,12 +141,13 @@ namespace MW5.Plugins.TableEditor.Views
             // 
             // txtExpression
             // 
+            this.txtExpression.HideSelection = false;
             this.txtExpression.Location = new System.Drawing.Point(12, 233);
             this.txtExpression.Multiline = true;
             this.txtExpression.Name = "txtExpression";
             this.txtExpression.Size = new System.Drawing.Size(338, 145);
             this.txtExpression.TabIndex = 42;
-            this.txtExpression.TextChanged += new System.EventHandler(this.txtExpression_TextChanged);
+            this.txtExpression.TextChanged += new System.EventHandler(this.OnExpressionTextChanged);
             // 
             // label1
             // 
@@ -242,12 +245,23 @@ namespace MW5.Plugins.TableEditor.Views
             this.fieldTypeGrid1.VersionInfo = "0.0.1.0";
             this.fieldTypeGrid1.WrapWithPanel = true;
             // 
+            // btnTest
+            // 
+            this.btnTest.BeforeTouchSize = new System.Drawing.Size(70, 23);
+            this.btnTest.IsBackStageButton = false;
+            this.btnTest.Location = new System.Drawing.Point(280, 149);
+            this.btnTest.Name = "btnTest";
+            this.btnTest.Size = new System.Drawing.Size(70, 23);
+            this.btnTest.TabIndex = 66;
+            this.btnTest.Text = "Test";
+            // 
             // FieldCalculatorView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(575, 417);
+            this.Controls.Add(this.btnTest);
             this.Controls.Add(this.fieldTypeGrid1);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnMultiply);
@@ -289,5 +303,6 @@ namespace MW5.Plugins.TableEditor.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnPlus;
         private Syncfusion.Windows.Forms.ButtonAdv btnDivide;
         private FieldTypeGrid fieldTypeGrid1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnTest;
     }
 }

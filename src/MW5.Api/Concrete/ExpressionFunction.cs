@@ -68,5 +68,37 @@ namespace MW5.Api.Concrete
         {
             return _function.ParameterDescription[paramIndex];
         }
+
+        /// <summary>
+        /// Gets the position of the first argument within signature.
+        /// </summary>
+        public static bool GetFirstArgumentWithinSignature(string signature, out int start, out int end)
+        {
+            start = signature.IndexOf('(');
+            end = signature.IndexOfAny(new[] { ')', ';' });
+
+            if (start == -1 || end == -1)
+            {
+                return false;
+            }
+
+            // we assume there is a a single space around each argument (see PadSignature)
+            // therefore it's 2 and not 1
+            start += 2;     
+            end -= 2;
+
+            return start <= end;
+        }
+
+        /// <summary>
+        /// Adds spaces around arguments so they can be selected by double click.
+        /// </summary>
+        public static string PadSignature(string signature)
+        {
+            signature = signature.Replace(" ", "");
+            signature = signature.Replace("(", "( ");
+            signature = signature.Replace(")", " )");
+            return signature.Replace(";", " ; ");
+        }
     }
 }

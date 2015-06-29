@@ -4,6 +4,8 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using MW5.Api.Concrete;
 using MW5.Plugins.Mvp;
@@ -13,25 +15,28 @@ using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Views
 {
+    /// <summary>
+    /// Validates and calculates expression for a given field.
+    /// </summary>
     public class FieldCalculatorPresenter : BasePresenter<IFieldCalculatorView, FieldCalculatorModel>
     {
         public FieldCalculatorPresenter(IFieldCalculatorView view)
-            : base(view) {}
+            : base(view)
+        {
+            view.TestClicked += OnTestClicked;
+        }
 
         public override bool ViewOkClicked()
         {
-            if (!Validate())
-            {
-                return false;
-            }
-
-            return CalculateField();
+            return Validate() && CalculateField();
         }
 
+        /// <summary>
+        /// Calculates expression and saves results in to the table.
+        /// </summary>
         private bool CalculateField()
         {
-            var eval = new ExpressionEvaluator();
-            eval.ParseForTable(View.Expression, Model.Table);
+            var eval = ParseExpression();
 
             var count = 0;
             var rowCount = Model.Table.NumRows;
@@ -59,13 +64,71 @@ namespace MW5.Plugins.TableEditor.Views
             return true;
         }
 
+        /// <summary>
+        /// Parses expression and calculates if for the first row.
+        /// </summary>
         private bool Validate()
+        {
+            var eval = ParseExpression();
+            if (eval == null)
+            {
+                return false;
+            }
+
+            object result;
+            if (!eval.CalculateForTableRow2(0, out result))
+            {
+                return MessageService.Current.Ask(
+                        "Failed to calculate expression for the first row: " + eval.LastErrorMessage
+                        + "Try to calculate for other rows all the same?");
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Calculates expression for first 5 rows of the table and displays results in message box.
+        /// </summary>
+        private void OnTestClicked()
+        {
+            var eval = ParseExpression();
+            if (eval == null)
+            {
+                return;
+            }
+
+            var results = new List<string>();
+
+            for (int i = 0; i < 5; i++)
+            {
+                object result;
+                if (!eval.CalculateForTableRow2(i, out result))
+                {
+                    results.Add("<failed to calculate>");
+                }
+                else
+                {
+                    string s= string.Format("record {0}: ", i) + result;
+                    results.Add( s);
+                }
+            }
+
+            string msg = "Calculation results: " + Environment.NewLine + Environment.NewLine;
+            msg += StringHelper.Join(results, Environment.NewLine + Environment.NewLine);
+
+            MessageService.Current.Info(msg);
+        }
+
+        /// <summary>
+        /// Parses the expression and returns evaluator instances if it succeeds.
+        /// </summary>
+        private ExpressionEvaluator ParseExpression()
         {
             var expr = View.Expression;
             if (string.IsNullOrWhiteSpace(expr))
             {
                 MessageService.Current.Info("Expression is empty.");
-                return false;
+                return null;
             }
 
             var eval = new ExpressionEvaluator();
@@ -73,19 +136,10 @@ namespace MW5.Plugins.TableEditor.Views
             if (!eval.ParseForTable(expr, Model.Table))
             {
                 MessageService.Current.Info("Failed to parse expression: " + eval.LastErrorMessage);
-                return false;
+                return null;
             }
 
-            object result;
-            if (!eval.CalculateForTableRow2(0, out result))
-            {
-                return
-                    MessageService.Current.Ask(
-                        "Failed to calculate expression for the first row: " + eval.LastErrorMessage
-                        + "Try to calculate for other rows all the same?");
-            }
-
-            return true;
+            return eval;
         }
     }
 }

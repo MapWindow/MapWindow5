@@ -10,13 +10,11 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Attributes.Model;
-using MW5.Data.Model;
-using MW5.Plugins.TableEditor.Model;
 using MW5.Plugins.TableEditor.Views.Abstract;
-using MW5.Shared;
 using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 using Syncfusion.Windows.Forms.Tools;
+using Action = System.Action;
 
 namespace MW5.Plugins.TableEditor.Views
 {
@@ -29,6 +27,8 @@ namespace MW5.Plugins.TableEditor.Views
             InitOperators();
 
             KeyPreview = true;
+
+            btnTest.Click += (s, e) => Invoke(TestClicked);
         }
 
         public void Initialize()
@@ -40,6 +40,8 @@ namespace MW5.Plugins.TableEditor.Views
             lblField.Text = "[" + Model.Field.Name + "] = ";
         }
 
+        public event Action TestClicked;
+
         public string Expression
         {
             get { return txtExpression.Text; }
@@ -50,23 +52,29 @@ namespace MW5.Plugins.TableEditor.Views
             get { return btnOk; }
         }
 
-        private void AddTextToExpression(string value)
+        private void AddFunctionToExpression(string signature)
         {
-            var formulaTxt = txtExpression.Text;
+            signature = ExpressionFunction.PadSignature(signature);
 
-            if (txtExpression.Text.Length > 0)
+            int start, end;
+            if (ExpressionFunction.GetFirstArgumentWithinSignature(signature, out start, out end))
             {
-                var beforeS = formulaTxt.Substring(0, txtExpression.SelectionStart);
-                var afterS = formulaTxt.Substring(txtExpression.SelectionStart + txtExpression.SelectionLength);
-
-                formulaTxt = beforeS + value + afterS;
+                int pos = txtExpression.SelectionStart;
+                txtExpression.SelectedText = signature + " ";
+                pos += start;
+                int length = end - start + 1;
+                txtExpression.Select(pos, length);
             }
             else
             {
-                formulaTxt = formulaTxt != string.Empty ? formulaTxt + " " + value : formulaTxt + value;
+                AddTextToExpression(signature);
             }
+        }
 
-            txtExpression.Text = formulaTxt;
+        private void AddTextToExpression(string value)
+        {
+            txtExpression.SelectedText = value + " ";
+            txtExpression.Focus();
         }
 
         private void FieldCalculatorView_KeyDown(object sender, KeyEventArgs e)
@@ -92,9 +100,9 @@ namespace MW5.Plugins.TableEditor.Views
             var fn = functionTreeView1.SelectedFunction;
             if (fn == null) return;
 
-            var name = fn.Signature;
+            var signature = fn.Signature;
 
-            AddTextToExpression(name);
+            AddFunctionToExpression(signature);
         }
 
         private void InitFieldsList()
@@ -117,6 +125,11 @@ namespace MW5.Plugins.TableEditor.Views
             btnMinus.Click += OperatorClicked;
         }
 
+        private void OnExpressionTextChanged(object sender, EventArgs e)
+        {
+            ValidateOnTheFly();
+        }
+
         private void OperatorClicked(object sender, EventArgs e)
         {
             var btn = sender as Control;
@@ -132,7 +145,6 @@ namespace MW5.Plugins.TableEditor.Views
             {
                 lblValidation.Text = "Expression is empty";
                 lblValidation.ForeColor = Color.Black;
-                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Regular);
                 return;
             }
 
@@ -141,23 +153,16 @@ namespace MW5.Plugins.TableEditor.Views
             {
                 lblValidation.Text = "Expression is valid";
                 lblValidation.ForeColor = Color.Green;
-                lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
                 return;
             }
 
             lblValidation.Text = "Error: " + errorMsg;
             lblValidation.ForeColor = Color.Red;
-            lblValidation.Font = new Font(lblValidation.Font, FontStyle.Bold);
         }
 
         private void btnClear_Click(object sender, EventArgs e)
         {
             txtExpression.Text = string.Empty;
-        }
-
-        private void txtExpression_TextChanged(object sender, EventArgs e)
-        {
-            ValidateOnTheFly();
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
@@ -166,5 +171,7 @@ namespace MW5.Plugins.TableEditor.Views
         }
     }
 
-    public class FieldCalculatorViewBase : MapWindowView<FieldCalculatorModel> {}
+    public class FieldCalculatorViewBase : MapWindowView<FieldCalculatorModel>
+    {
+    }
 }
