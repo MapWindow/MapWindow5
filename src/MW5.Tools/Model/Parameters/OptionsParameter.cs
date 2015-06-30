@@ -1,36 +1,20 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="OptionsParameter.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The options parameter.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System.Collections.Generic;
+using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools.Model.Parameters
 {
-    #region
-
-    using System.Collections.Generic;
-
-    using MW5.Tools.Views.Controls;
-
-    #endregion
-
     /// <summary>
     /// The options parameter.
     /// </summary>
-    /// <typeparam name="T">
-    /// </typeparam>
     public class OptionsParameter<T> : BaseParameter
     {
-        #region Fields
-
         private IEnumerable<T> _options;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets or sets the options.
@@ -38,10 +22,7 @@ namespace MW5.Tools.Model.Parameters
         /// <value>The options.</value>
         public IEnumerable<T> Options
         {
-            get
-            {
-                return _options;
-            }
+            get { return _options; }
 
             set
             {
@@ -77,11 +58,6 @@ namespace MW5.Tools.Model.Parameters
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
-
         /// <summary>
         /// Create the control.
         /// </summary>
@@ -99,7 +75,5 @@ namespace MW5.Tools.Model.Parameters
 
             return Control;
         }
-
-        #endregion
     }
 }

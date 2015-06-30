@@ -74,7 +74,8 @@
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPoints.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs" />
+    <Compile Include="Tools\Projections\IdentifyProjectionTool.cs" />
     <Compile Include="Views\Controls\BooleanParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -147,6 +148,10 @@
     <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Projections\MW5.Projections.csproj">
+      <Project>{DD259453-611A-4AD5-878E-385CB2C89DF5}</Project>
+      <Name>MW5.Projections</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>

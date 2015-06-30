@@ -1,27 +1,18 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="StringParameter.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The string parameter.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools.Model.Parameters
 {
-    #region
-
-    using MW5.Tools.Views.Controls;
-
-    #endregion
-
     /// <summary>
     /// The string parameter.
     /// </summary>
     public class StringParameter : BaseParameter
     {
-        #region Public Properties
-
         /// <summary>
         /// Gets the default value.
         /// </summary>
@@ -32,27 +23,15 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public string Value
         {
-            get
-            {
-                return Control.AsBase.GetValue() as string;
-            }
+            get { return Control.AsBase.GetValue() as string; }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// The create control.
         /// </summary>
-        /// <returns>
-        /// The <see cref="ParameterControlBase"/>.
-        /// </returns>
         public override ParameterControlBase CreateControl()
         {
             return Control ?? (Control = new StringParameterControl());
         }
-
-        #endregion
     }
 }

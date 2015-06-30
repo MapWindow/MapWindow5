@@ -23,4 +23,6 @@ namespace MW5.Tools.Enums
         /// <summary>The boolean.</summary>
         Boolean = 2
     }
+
+
 }

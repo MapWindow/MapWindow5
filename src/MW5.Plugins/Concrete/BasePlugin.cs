@@ -17,7 +17,7 @@ namespace MW5.Plugins.Concrete
 {
     public abstract class BasePlugin: IPlugin
     {
-        private PluginIdentity _identity = null;
+        private PluginIdentity _identity;
         private FileVersionInfo _fileVersionInfo;
         private bool _applicationPlugin = false;
         private bool _registered = false;

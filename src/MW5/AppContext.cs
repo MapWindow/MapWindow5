@@ -115,14 +115,8 @@ namespace MW5
 
         private void InitToolbox()
         {
-            var toolbox = new ToolboxControl();
-            toolbox.ToolClicked += toolbox_ToolClicked;
+            var toolbox = new ToolboxControl(this);
             _toolbox = toolbox;
-        }
-
-        private void toolbox_ToolClicked(object sender, ToolboxToolEventArgs e)
-        {
-            _broadcaster.BroadcastEvent(p => p.ToolboxToolClicked_, _toolbox, e);
         }
 
         internal void InitPlugins(IConfigService configService)

@@ -1,10 +1,17 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ToolboxControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
-using MW5.Tools.Properties;
+using MW5.Tools.Model;
+using MW5.Tools.Views;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -13,114 +20,53 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Toolbox control
     /// </summary>
-    public class ToolboxControl : SplitContainerAdv, IToolbox 
+    public class ToolboxControl : SplitContainerAdv, IToolbox
     {
-        // icon indices
+        private readonly IAppContext _context;
+
         internal const int IconFolder = 0;
         internal const int IconTool = 1;
 
-        private ToolboxTreeView _tree;
         private RichTextBox _textbox;
-
-        public event EventHandler<ToolboxToolEventArgs> ToolClicked;
-        public event EventHandler<ToolboxToolEventArgs> ToolSelected;
-        public event EventHandler<ToolboxGroupEventArgs> GroupSelected;
-
-        #region Initialization
+        private ToolboxTreeView _tree;
 
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public ToolboxControl()
+        public ToolboxControl(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
+
             Init();
 
             AddEventHandlers();
+
+            _tree.ToolClicked += OnToolClicked;
         }
 
-        private void Init()
+        private void OnToolClicked(object sender, ToolboxToolEventArgs e)
         {
-            Orientation = Orientation.Vertical;
-            BorderStyle = BorderStyle.None;
+            if (e.Tool == null) return;
 
-            InitTreeView();
-
-            InitTextBox();
-
-            SplitterDistance = Convert.ToInt32(Height * 0.9);
-        }
-
-        private void InitTreeView()
-        {
-            _tree = new ToolboxTreeView
+            var tool = e.Tool as GisToolBase;
+            if (tool != null)
             {
-                BorderStyle = BorderStyle.None,
-                Dock = DockStyle.Fill
-            };
-
-
-            _tree.PrepareToolTip += PrepareToolTip;
-
-            Panel1.Controls.Add(_tree);
-            Panel1MinSize = 0;
-        }
-
-        private void PrepareToolTip(object sender, ToolTipEventArgs e)
-        {
-            e.Cancel = true;        // don't show them
-            return;
-
-            //if (_tree.SelectedTool == null)
-            //{
-            //    e.Cancel = true;
-            //}
-
-            //var tool = _tree.SelectedTool;
-            //if (tool != null)
-            //{
-            //    e.ToolTip.Header.Text = tool.Name;
-            //    e.ToolTip.Body.Text = tool.Description;
-            //}
-        }
-
-        private void InitTextBox()
-        {
-            _textbox = new RichTextBox
+                _context.Container.Run<GisToolPresenter, GisToolBase>(tool);
+            }
+            else
             {
-                BorderStyle = BorderStyle.None,
-                Dock = DockStyle.Fill,
-                ScrollBars = RichTextBoxScrollBars.None,
-                BackColor = Color.FromKnownColor(KnownColor.Control),
-                ReadOnly = true,
-                Text = "No tool is selected."
-            };
-
-            Panel2.Controls.Add(_textbox);
-            Panel2MinSize = 0;
+                e.Tool.Initialize(_context);
+                e.Tool.Run();    // tool doesn't have UI or have an embedded  UI
+            }
         }
-
-        private void AddEventHandlers()
-        {
-            _tree.AfterSelect += TreeAfterSelect;
-            _tree.MouseDoubleClick += TreeMouseDoubleClick;
-            ToolSelected += GisToolbox_ToolSelected;
-            GroupSelected += GisToolbox_GroupSelected;
-        }
-
-
-        #endregion
-
-        #region IGisToolBox Members
 
         /// <summary>
         /// Returns list of groups located at the top level of toolbox.
         /// </summary>
         public IToolboxGroups Groups
         {
-            get 
-            {
-                return new GroupCollection(_tree.Nodes);
-            }
+            get { return new GroupCollection(_tree.Nodes); }
         }
 
         /// <summary>
@@ -130,26 +76,9 @@ namespace MW5.Tools.Toolbox
         {
             get { return new ToolCollection(_tree.Nodes); }
         }
-        
-        /// <summary>
-        /// Creates a new tool.
-        /// </summary>
-        public IGisTool CreateTool(string name, string key, PluginIdentity identity)
-        {
-            var tool = new ToolNode(name, key, identity);
-            return tool;
-        }
 
         /// <summary>
-        /// Creates a new group.
-        /// </summary>
-        public IToolboxGroup CreateGroup(string name, string description, PluginIdentity identity)
-        {
-            return new GroupNode(name, description, identity);
-        }
-
-        /// <summary>
-        /// Expands all the groups up to the specified level
+        /// Expands all the groups up to the specified level.
         /// </summary>
         public void ExpandGroups(int level)
         {
@@ -157,7 +86,7 @@ namespace MW5.Tools.Toolbox
         }
 
         /// <summary>
-        /// Removes groups and tools added by specified plugin
+        /// Removes groups and tools added by specified plugin.
         /// </summary>
         public void RemoveItemsForPlugin(PluginIdentity identity)
         {
@@ -165,8 +94,14 @@ namespace MW5.Tools.Toolbox
             Groups.RemoveItemsForPlugin(identity);
         }
 
+        private void AddEventHandlers()
+        {
+            _tree.ToolSelected += OnToolSelected;
+            _tree.GroupSelected += OnGroupSelected;
+        }
+
         /// <summary>
-        /// Recursively expans all the child groups up to the specified level
+        /// Recursively expands all the child groups up to the specified level.
         /// </summary>
         private void ExpandGroups(IToolboxGroups groups, int level)
         {
@@ -182,52 +117,42 @@ namespace MW5.Tools.Toolbox
             }
         }
 
-        #endregion
-        
-        #region Events
-
-        /// <summary>
-        /// Fires events, sets the same icons for selected mode as for regular mode
-        /// </summary>
-        void TreeAfterSelect(object sender, EventArgs e)
+        private void Init()
         {
-            if (_tree.SelectedNode == null)
-            {
-                return;
-            }
+            Orientation = Orientation.Vertical;
+            BorderStyle = BorderStyle.None;
 
-            var tool = _tree.SelectedNode.Tag as IGisTool;
-            if (tool != null)
-            {
-                FireToolSelected(tool);
-            }
+            InitTreeView();
 
-            var group = _tree.SelectedNode.Tag as IToolboxGroup;
-            if (group != null)
-            {
-                FireGroupSelected(group);
-            }
+            InitTextBox();
+
+            SplitterDistance = Convert.ToInt32(Height * 0.9);
         }
 
-        /// <summary>
-        /// Generates tool clicked event for plug-ins
-        /// </summary>
-        private void TreeMouseDoubleClick(object sender, MouseEventArgs e)
+        private void InitTextBox()
         {
-            var node = _tree.SelectedNode;
-            if (node == null || node.Tag is IToolboxGroup)
-            {
-                return;
-            }
+            _textbox = new RichTextBox
+                           {
+                               BorderStyle = BorderStyle.None,
+                               Dock = DockStyle.Fill,
+                               ScrollBars = RichTextBoxScrollBars.None,
+                               BackColor = Color.FromKnownColor(KnownColor.Control),
+                               ReadOnly = true,
+                               Text = "No tool is selected."
+                           };
 
-            var tool = node.Tag as IGisTool;
-            if (tool != null)
-            {
-                FireToolClicked(tool);
-            }
+            Panel2.Controls.Add(_textbox);
+            Panel2MinSize = 0;
         }
 
-        private void GisToolbox_GroupSelected(object sender, ToolboxGroupEventArgs e)
+        private void InitTreeView()
+        {
+            _tree = new ToolboxTreeView();
+            Panel1.Controls.Add(_tree);
+            Panel1MinSize = 0;
+        }
+
+        private void OnGroupSelected(object sender, ToolboxGroupEventArgs e)
         {
             var group = e.Group;
 
@@ -237,7 +162,7 @@ namespace MW5.Tools.Toolbox
             _textbox.SelectionFont = new Font(Font, FontStyle.Bold);
         }
 
-        private void GisToolbox_ToolSelected(object sender, ToolboxToolEventArgs e)
+        private void OnToolSelected(object sender, ToolboxToolEventArgs e)
         {
             var tool = e.Tool;
             _textbox.Clear();
@@ -249,30 +174,5 @@ namespace MW5.Tools.Toolbox
                 _textbox.SelectionFont = new Font(Font, FontStyle.Bold);
             }
         }
-
-        private void FireToolClicked(IGisTool tool)
-        {
-            FireEvent(ToolClicked, new ToolboxToolEventArgs(tool));
-        }
-
-        private void FireToolSelected(IGisTool tool)
-        {
-            FireEvent(ToolSelected, new ToolboxToolEventArgs(tool));
-        }
-
-        private void FireGroupSelected(IToolboxGroup group)
-        {
-            FireEvent(GroupSelected, new ToolboxGroupEventArgs(group));
-        }
-
-        private void FireEvent<T>(EventHandler<T> handler, T args)
-        {
-            if (handler != null)
-            {
-                handler(this, args);
-            }
-        }
-
-        #endregion
     }
 }

@@ -10,6 +10,6 @@ namespace MW5.Plugins.Toolbox
     {
         public const string IdentitfyProjection = "IdentifyProjection";
         public const string ImportLayerInGeodatabase = "ImportLayerInGeodatabase";
-        public const string RandomPoints = "RandomPoints";
+        public const string RandomPoints = "RandomPointsTool";
     }
 }

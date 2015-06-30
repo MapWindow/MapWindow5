@@ -23,16 +23,6 @@ namespace MW5.Plugins.Interfaces
         IToolCollection Tools { get; }
 
         /// <summary>
-        /// Creates a new instance of GisTool class
-        /// </summary>
-        IGisTool CreateTool(string name, string key, PluginIdentity identity);
-
-        /// <summary>
-        /// Creates a new instance of GisToolboxGroup class
-        /// </summary>
-        IToolboxGroup CreateGroup(string name, string key, PluginIdentity identity);
-
-        /// <summary>
         /// Expands all the groups up to the target level
         /// </summary>
         void ExpandGroups(int level);

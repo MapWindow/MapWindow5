@@ -1,63 +1,49 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GroupNode.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Group of tools in the toolbox.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 using System;
-
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
     /// <summary>
-    ///     Group of tools in the toolbox.
+    /// Group of tools in the toolbox.
     /// </summary>
     public class GroupNode : IToolboxGroup
     {
-        #region Fields
-
         private readonly PluginIdentity _identity;
         private readonly TreeNodeAdv _node;
         private string _name;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupNode"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
-        /// <param name="description">The description.</param>
-        /// <param name="identity">The identity.</param>
-        /// <exception cref="System.ArgumentNullException">identity</exception>
         internal GroupNode(string name, string description, PluginIdentity identity)
         {
-            if (identity == null)
-            {
-                throw new ArgumentNullException("identity");
-            }
+            if (identity == null) throw new ArgumentNullException("identity");
 
             _identity = identity;
             _name = name;
 
-            this.Description = description;
+            Description = description;
 
             _node = new TreeNodeAdv { Text = name, LeftImageIndices = new[] { ToolboxControl.IconFolder } };
             _node.Expand();
             _node.Tag = this;
         }
 
-        #endregion
-
-        #region Public Properties
+        /// <summary>
+        ///     Source tree node for the group
+        /// </summary>
+        internal TreeNodeAdv Node
+        {
+            get { return _node; }
+        }
 
         /// <summary>
         ///     Description of the tool
@@ -69,15 +55,9 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public bool Expanded
         {
-            get
-            {
-                return _node.Expanded;
-            }
+            get { return _node.Expanded; }
 
-            set
-            {
-                _node.Expanded = value;
-            }
+            set { _node.Expanded = value; }
         }
 
         /// <summary>
@@ -85,10 +65,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public string Name
         {
-            get
-            {
-                return _name;
-            }
+            get { return _name; }
 
             set
             {
@@ -105,12 +82,8 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public PluginIdentity PluginIdentity
         {
-            get
-            {
-                return _identity;
-            }
+            get { return _identity; }
         }
-
 
         /// <summary>
         /// List of sub groups inside the group
@@ -138,27 +111,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolCollection Tools
         {
-            get
-            {
-                return new ToolCollection(_node.Nodes);
-            }
+            get { return new ToolCollection(_node.Nodes); }
         }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        ///     Source tree node for the group
-        /// </summary>
-        internal TreeNodeAdv Node
-        {
-            get
-            {
-                return _node;
-            }
-        }
-
-        #endregion
     }
 }

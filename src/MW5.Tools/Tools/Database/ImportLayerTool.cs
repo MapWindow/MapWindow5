@@ -5,15 +5,17 @@ using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Database
 {
-    [GisTool("Import layer", typeof(Resources))]
+    [GisTool(ToolboxGroupType.Database, typeof(Resources))]
     public class ImportLayerTool : GisToolBase
     {
         [RequiredParameter("Input layer", 0)]
@@ -32,10 +34,28 @@ namespace MW5.Tools.Tools.Database
         public BooleanParameter Overwrite { get; set; }
 
         /// <summary>
+        /// Gets name of the tool.
+        /// </summary>
+        public override string Name
+        {
+            get { return "Image layer"; }
+        }
+
+        /// <summary>
+        /// Gets description of the tool.
+        /// </summary>
+        public override string Description
+        {
+            get { return "Imports layer in the geodatabase."; }
+        }
+
+        /// <summary>
         /// Initializes lists of options.
         /// </summary>
         public override void Initialize(IAppContext context)
         {
+            InitializeBase(context);
+
             Database.Options = context.Repository.Connections;
 
             Database.ValueChanged += Database_ValueChanged;

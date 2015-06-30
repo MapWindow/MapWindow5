@@ -15,26 +15,26 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        string Description { get; set; }
+        string Description { get; }
 
         /// <summary>
-        /// A key of the tool.
+        /// Runs the tool.
         /// </summary>
-        string Key { get; set; }
-
-        /// <summary>
-        /// A property to store additional data associated with tool.
-        /// </summary>
-        object Tag { get; set; }
+        bool Run();
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
         PluginIdentity PluginIdentity { get; }
+
+        /// <summary>
+        /// Initializes the tool.
+        /// </summary>
+        void Initialize(IAppContext context);
     }
 }

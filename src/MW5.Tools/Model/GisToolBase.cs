@@ -1,62 +1,91 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GisToolBase.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The gis tool base.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Views;
 
 namespace MW5.Tools.Model
 {
-    #region
-
-    using System.Collections.Generic;
-
-    using MW5.Plugins.Interfaces;
-    using MW5.Tools.Model.Parameters;
-
-    #endregion
-
     /// <summary>
-    /// The gis tool base.
+    /// Base class for GIS tool.
     /// </summary>
-    public abstract class GisToolBase
+    public abstract class GisToolBase: IGisTool
     {
-        #region Fields
+        private List<BaseParameter> _parameters;
 
         /// <summary>
-        /// The parameters.
+        /// Gets name of the tool.
         /// </summary>
-        protected List<BaseParameter> Parameters = new List<BaseParameter>();
-
-        #endregion
-
-        #region Public Properties
+        public abstract string Name { get; }
 
         /// <summary>
-        /// Gets the name.
+        /// Gets description of the tool.
         /// </summary>
-        public string Name { get; private set; }
-
-        #endregion
-
-        #region Public Methods and Operators
+        public abstract string Description { get; }
 
         /// <summary>
-        /// The initialize.
+        /// Gets the identity of plugin that created this tool.
         /// </summary>
-        /// <param name="context">The context.</param>
+        public PluginIdentity PluginIdentity { get; private set; }
+
         public abstract void Initialize(IAppContext context);
 
         /// <summary>
-        /// The run.
+        /// Initializes the tool.
         /// </summary>
-        /// <returns>
-        /// The <see cref="bool"/>.
-        /// </returns>
+        protected void InitializeBase(IAppContext context)
+        {
+            foreach (var layerParameter in Parameters.OfType<LayerParameter>())
+            {
+                layerParameter.SetLayers(context.Layers);
+            }
+        }
+
+        /// <summary>
+        /// Runs the tool.
+        /// </summary>
         public abstract bool Run();
 
-        #endregion
+        /// <summary>
+        /// Gets combined list of required and optional parameters.
+        /// </summary>
+        public IEnumerable<BaseParameter> Parameters
+        {
+            get { return _parameters ?? (_parameters = GetParameters().ToList()); }
+        }
+
+        private IEnumerable<BaseParameter> GetParameters()
+        {
+            var properties = GetType().GetProperties();
+            foreach (var prop in properties)
+            {
+                if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
+                {
+                    continue;
+                }
+
+                var attr = Attribute.GetCustomAttribute(prop, typeof(ParameterAttribute)) as ParameterAttribute;
+
+                if (attr == null) continue;
+
+                var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
+                if (param != null)
+                {
+                    prop.SetValue(this, param);
+                    param.Index = attr.Index;
+                    param.DisplayName = attr.DisplayName;
+                    param.Required = attr is RequiredParameterAttribute;
+                    yield return param;
+                }
+            }
+        }
     }
 }

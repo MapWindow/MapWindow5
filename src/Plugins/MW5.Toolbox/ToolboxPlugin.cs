@@ -24,7 +24,6 @@ namespace MW5.Plugins.Toolbox
     {
         private IAppContext _context;
         private ToolboxGenerator _generator;
-        private ToolboxListener _listener;
 
         public override void RegisterServices(IApplicationContainer container)
         {
@@ -36,7 +35,6 @@ namespace MW5.Plugins.Toolbox
             _context = context;
 
             _generator = context.Container.GetInstance<ToolboxGenerator>();
-            _listener = context.Container.GetInstance<ToolboxListener>();
         }
 
         public override void Terminate()

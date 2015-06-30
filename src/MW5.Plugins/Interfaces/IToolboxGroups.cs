@@ -16,7 +16,7 @@ namespace MW5.Plugins.Interfaces
         bool Remove(IToolboxGroup item);
         bool Contains(IToolboxGroup item);
         void Clear();
-        void Add(IToolboxGroup item);
+        IToolboxGroup Add(string name, string description, PluginIdentity identity);
         void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

@@ -1,36 +1,22 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="LayerParameter.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The layer parameter.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using MW5.Api.Interfaces;
+using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools.Model.Parameters
 {
-    #region
-
-    using System;
-    using System.Collections.Generic;
-
-    using MW5.Api.Interfaces;
-    using MW5.Tools.Views.Controls;
-
-    #endregion
-
     /// <summary>
     /// The layer parameter.
     /// </summary>
     public class LayerParameter : BaseParameter
     {
-        #region Fields
-
         private IEnumerable<ILayer> _layers;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets the layer control.
@@ -38,10 +24,7 @@ namespace MW5.Tools.Model.Parameters
         /// <value>The layer control.</value>
         public LayerParameterControl LayerControl
         {
-            get
-            {
-                return Control as LayerParameterControl;
-            }
+            get { return Control as LayerParameterControl; }
         }
 
         /// <summary>
@@ -49,16 +32,9 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public ILayer Value
         {
-            get
-            {
-                return LayerControl.GetValue() as ILayer;
-            }
+            get { return LayerControl.GetValue() as ILayer; }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-        
         /// <summary>
         /// Create the layer control.
         /// </summary>
@@ -81,7 +57,5 @@ namespace MW5.Tools.Model.Parameters
 
             _layers = layers;
         }
-
-        #endregion
     }
 }

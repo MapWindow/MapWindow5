@@ -1,5 +1,5 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="RandomPoints.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="RandomPointsTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //   MapWindow OSS Team - 2015
 // </copyright>
 // <summary>
@@ -15,9 +15,11 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Properties;
@@ -27,18 +29,18 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// <summary>
     /// The random points.
     /// </summary>
-    [GisTool("Random points", typeof(Resources))]
-    public class RandomPoints : GisToolBase
+    [GisTool(ToolboxGroupType.VectorTools, typeof(Resources))]
+    public class RandomPointsTool : GisToolBase
     {
         private readonly ILayerService _layerService;
 
         private IAppContext _context;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="RandomPoints"/> class.
+        /// Initializes a new instance of the <see cref="RandomPointsTool"/> class.
         /// </summary>
         /// <param name="layerService">The layer service.</param>
-        public RandomPoints(ILayerService layerService)
+        public RandomPointsTool(ILayerService layerService)
         {
             _layerService = layerService;
         }
@@ -64,11 +66,29 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public BooleanParameter Overwrite { get; set; }
 
         /// <summary>
+        /// Gets name of the tool.
+        /// </summary>
+        public override string Name
+        {
+            get { return "Random points"; }
+        }
+
+        /// <summary>
+        /// Gets description of the tool.
+        /// </summary>
+        public override string Description
+        {
+            get { return "Create a new shapefile with random points."; }
+        }
+
+        /// <summary>
         /// Initializes lists of options.
         /// </summary>
         /// <param name="context">The context.</param>
         public override void Initialize(IAppContext context)
         {
+            InitializeBase(context);
+
             // TODO: Set default value for NumPoints
             // TODO: Set title of View
             // TODO: Make new parameter to select a new file location for NewLayerName
@@ -93,13 +113,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             ulong numPoints;
             if (ulong.TryParse(NumPoints.Value, out numPoints))
             {
-                //if (!RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value))
-                //{
-                //    return false;
-                //}
+                var result = Task.Factory.StartNew(() => RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
 
-                var result =
-                    Task.Factory.StartNew(() => RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
                 if (!result)
                 {
                     return false;

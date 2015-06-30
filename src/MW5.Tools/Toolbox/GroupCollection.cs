@@ -1,111 +1,55 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GroupCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Provides access to the list of groups of group toolbox.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Forms;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Interfaces;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
-    #region
-
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Forms;
-
-    using MW5.Plugins.Concrete;
-    using MW5.Plugins.Interfaces;
-
-    using Syncfusion.Windows.Forms.Tools;
-
-    #endregion
-
     /// <summary>
-    ///     Provides access to the list of groups of group toolbox.
+    /// Provides access to the list of groups of group toolbox.
     /// </summary>
     public class GroupCollection : IToolboxGroups
     {
-        #region Fields
-
         private readonly TreeNodeAdvCollection _nodes;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GroupCollection"/> class.
         /// </summary>
-        /// <param name="nodes">The nodes.</param>
         internal GroupCollection(TreeNodeAdvCollection nodes)
         {
-            if (nodes == null)
-            {
-                throw new NullReferenceException();
-            }
+            if (nodes == null) throw new NullReferenceException();
 
             _nodes = nodes;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///     Returns the number of groups in the list.
         /// </summary>
         public int Count
         {
-            get
-            {
-                return _nodes.Cast<TreeNode>().Count(node => (node.Tag is IToolboxGroup));
-            }
+            get { return _nodes.Cast<TreeNode>().Count(node => (node.Tag is IToolboxGroup)); }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Adds the specified item.
         /// </summary>
-        /// <param name="item">The item.</param>
-        public void Add(IToolboxGroup item)
+        public IToolboxGroup Add(string name, string description, PluginIdentity identity)
         {
-            if (Equals(item))
-            {
-                throw new InvalidOperationException();
-            }
+            var group = new GroupNode(name, description, identity);
 
-            var group = item as GroupNode;
-            if (group == null)
-            {
-                throw new InvalidCastException();
-            }
+            _nodes.Add(group.Node);
 
-            var i = 0;
-            for (; i < _nodes.Count; i++)
-            {
-                if (!(_nodes[i].Tag is IToolboxGroup))
-                {
-                    break;
-                }
-            }
-
-            var node = ((GroupNode)item).Node;
-
-            if (i < _nodes.Count)
-            {
-                _nodes.Insert(i, node);
-            }
-            else
-            {
-                _nodes.Add(node);
-            }
+            return group;
         }
 
         /// <summary>
@@ -207,10 +151,6 @@ namespace MW5.Tools.Toolbox
             }
         }
 
-        #endregion
-
-        #region Explicit Interface Methods
-
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
@@ -221,7 +161,5 @@ namespace MW5.Tools.Toolbox
         {
             return this.GetEnumerator();
         }
-
-        #endregion
     }
 }

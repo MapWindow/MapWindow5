@@ -1,100 +1,53 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ToolboxGenerator.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Defines the ToolboxGenerator type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System;
+using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
+using MW5.Tools.Enums;
+using MW5.Tools.Tools.Database;
+using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+using MW5.Tools.Tools.Projections;
 
 namespace MW5.Plugins.Toolbox
 {
-    using System;
-
-    using MW5.Plugins.Interfaces;
-
     public class ToolboxGenerator
     {
-        #region Fields
-
         private readonly IAppContext _context;
 
         private readonly ToolboxPlugin _plugin;
+        private readonly ILayerService _layerService;
 
-        #endregion
-
-        #region Constructors and Destructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ToolboxGenerator"/> class.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="plugin">The plugin.</param>
-        public ToolboxGenerator(IAppContext context, ToolboxPlugin plugin)
+        public ToolboxGenerator(IAppContext context, ToolboxPlugin plugin, ILayerService layerService)
         {
-            if (context == null)
-            {
-                throw new ArgumentNullException("context");
-            }
-
-            if (plugin == null)
-            {
-                throw new ArgumentNullException("plugin");
-            }
+            if (context == null) throw new ArgumentNullException("context");
+            if (plugin == null) throw new ArgumentNullException("plugin");
+            if (layerService == null) throw new ArgumentNullException("layerService");
 
             _context = context;
             _plugin = plugin;
+            _layerService = layerService;
 
             Init();
         }
 
-        #endregion
-
-        #region Methods
-
-        private IGisTool CreateTool(string name, string key)
-        {
-            return _context.Toolbox.CreateTool(name, key, _plugin.Identity);
-        }
-
         private void Init()
         {
-            var toolbox = _context.Toolbox;
+            var groups = _context.Toolbox.Groups;
 
-            // TODO: create groups and tools in one step (i.e. Add without Create)
-            var group = toolbox.CreateGroup("Projections", GroupKeys.Projections, _plugin.Identity);
-            toolbox.Groups.Add(group);
+            var group = groups.Add("Projections", GroupKeys.Projections, _plugin.Identity);
+            group.Tools.Add(new IdentifyProjectionTool());
 
-            var tool = CreateTool("Identify projection", ToolKeys.IdentitfyProjection);
-            tool.Description = "Tries to identify projection string provided by user as on of the known ones";
-            group.Tools.Add(tool);
+            group = groups.Add("GeoDatabases", GroupKeys.GeoDatabases, _plugin.Identity);
+            group.Tools.Add(new ImportLayerTool());
 
-            group = toolbox.CreateGroup("GeoDatabases", GroupKeys.GeoDatabases, _plugin.Identity);
-            toolbox.Groups.Add(group);
+            group = groups.Add("Geoprocessing", GroupKeys.Geoprocessing, _plugin.Identity);                
+            var subGroup = group.SubGroups.Add("VectorGeometryTools", GroupKeys.VectorGeometryTools, _plugin.Identity);
 
-            tool = CreateTool("Import layer", ToolKeys.ImportLayerInGeodatabase);
-            tool.Description = "Imports layer in the geodatabase";
-            group.Tools.Add(tool);
-
-            // TODO: Make this easier. Perhaps using reflection. Namespace of tool is MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
-            // 1) New tool in new group
-            group = toolbox.CreateGroup("Geoprocesssing", GroupKeys.Geoprocessing, _plugin.Identity);
-            toolbox.Groups.Add(group);
-
-            // 2) Create subgroup
-            var subgroup = toolbox.CreateGroup("VectorGeometryTools", GroupKeys.VectorGeometryTools, _plugin.Identity);
-            group.SubGroups.Add(subgroup);
-
-            // 3) Create tool:
-            tool = CreateTool("Random points", ToolKeys.RandomPoints);
-            tool.Description = "Create a new shapefile with random points";
-
-            // 4) Add tool to subgroup:
-            subgroup.Tools.Add(tool);
-
-            // TODO: Let the icons be changed, preferable in the tools class itself.
+            subGroup.Tools.Add(new RandomPointsTool(_layerService));
         }
-
-        #endregion
     }
 }
