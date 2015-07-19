@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="GroupCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="ToolboxGroupCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -18,14 +18,14 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Provides access to the list of groups of group toolbox.
     /// </summary>
-    public class GroupCollection : IToolboxGroups
+    public class ToolboxGroupCollection : IToolboxGroups
     {
         private readonly TreeNodeAdvCollection _nodes;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroupCollection"/> class.
+        /// Initializes a new instance of the <see cref="ToolboxGroupCollection"/> class.
         /// </summary>
-        internal GroupCollection(TreeNodeAdvCollection nodes)
+        internal ToolboxGroupCollection(TreeNodeAdvCollection nodes)
         {
             if (nodes == null) throw new NullReferenceException();
 
@@ -43,11 +43,11 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Adds the specified item.
         /// </summary>
-        public IToolboxGroup Add(string name, string description, PluginIdentity identity)
+        public IToolboxGroup Add(string name, string key, PluginIdentity identity)
         {
-            var group = new GroupNode(name, description, identity);
+            var group = new ToolboxGroup(name, key, identity);
 
-            _nodes.Add(group.Node);
+            _nodes.Add(group.InnerObject);
 
             return group;
         }
@@ -67,28 +67,30 @@ namespace MW5.Tools.Toolbox
             }
         }
 
-        /// <summary>
-        /// Returns a value indicating whether list of groups contain particular group.
-        /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns>True on found</returns>
-        public bool Contains(IToolboxGroup item)
-        {
-            if (item == null)
-            {
-                return false;
-            }
 
-            for (var i = 0; i < _nodes.Count; i++)
+        /// <summary>
+        /// Runs recursive search of the group by its key at the current and nested levels.
+        /// </summary>
+        public IToolboxGroup FindGroup(string groupKey)
+        {
+            foreach (var g in this)
             {
-                var group = _nodes[i].Tag as IToolboxGroup;
-                if (group == item)
+                if (g.Key == groupKey)
                 {
-                    return true;
+                    return g;
                 }
             }
 
-            return false;
+            foreach (var g in this)
+            {
+                var subGroup = g.SubGroups.FindGroup(groupKey);
+                if (subGroup != null)
+                {
+                    return subGroup;
+                }
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -99,11 +101,13 @@ namespace MW5.Tools.Toolbox
         /// </returns>
         public IEnumerator<IToolboxGroup> GetEnumerator()
         {
+            // group may have tools apart from nested groups,
+            // therefore we don't use usual this[index] property
             for (var i = 0; i < _nodes.Count; i++)
             {
-                if (_nodes[i].Tag is IToolboxGroup)
+                if (_nodes[i].Tag is ToolboxGroupMetadata)
                 {
-                    yield return _nodes[i].Tag as IToolboxGroup;
+                    yield return new ToolboxGroup(_nodes[i]);
                 }
             }
         }
@@ -111,16 +115,15 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Removes the specified item.
         /// </summary>
-        /// <param name="item">The item.</param>
-        /// <returns>True on successfully removed</returns>
-        public bool Remove(IToolboxGroup item)
+        public bool Remove(string key)
         {
-            foreach (var node in _nodes.Cast<TreeNode>().Where(node => node.Tag as IToolboxGroup == item))
+            var group = this.FirstOrDefault(g => g.Key == key);
+            if (group != null)
             {
-                _nodes.Remove(node);
+                _nodes.Remove(group.InnerObject);
                 return true;
             }
-
+            
             return false;
         }
 
@@ -130,24 +133,23 @@ namespace MW5.Tools.Toolbox
         /// <param name="identity">The identity.</param>
         public void RemoveItemsForPlugin(PluginIdentity identity)
         {
-            for (var i = _nodes.Count - 1; i >= 0; i--)
-            {
-                var group = _nodes[i].Tag as IToolboxGroup;
+            var removeList = new List<IToolboxGroup>();
 
-                if (group == null)
+            foreach (var g in this)
+            {
+                if (g.PluginIdentity == identity)
                 {
+                    removeList.Add(g);
                     continue;
                 }
 
-                if (group.PluginIdentity == identity)
-                {
-                    _nodes.RemoveAt(i);
-                }
-                else
-                {
-                    group.SubGroups.RemoveItemsForPlugin(identity);
-                    group.Tools.RemoveItemsForPlugin(identity);
-                }
+                g.SubGroups.RemoveItemsForPlugin(identity);
+                g.Tools.RemoveItemsForPlugin(identity);
+            }
+
+            foreach (var g in removeList)
+            {
+                Remove(g.Key);
             }
         }
 

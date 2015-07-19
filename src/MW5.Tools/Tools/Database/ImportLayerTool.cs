@@ -15,7 +15,7 @@ using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Database
 {
-    [GisTool(ToolboxGroupType.Database, typeof(Resources))]
+    [GisTool(GroupKeys.GeoDatabases)]
     public class ImportLayerTool : GisToolBase
     {
         [RequiredParameter("Input layer", 0)]
@@ -38,7 +38,7 @@ namespace MW5.Tools.Tools.Database
         /// </summary>
         public override string Name
         {
-            get { return "Image layer"; }
+            get { return "Import layer"; }
         }
 
         /// <summary>

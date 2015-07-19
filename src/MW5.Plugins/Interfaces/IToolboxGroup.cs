@@ -13,6 +13,11 @@ namespace MW5.Plugins.Interfaces
     public interface IToolboxGroup
     {
         /// <summary>
+        /// Gets or sets the unique key for the group. 
+        /// </summary>
+        string Key { get; }
+
+        /// <summary>
         /// The name of the tool
         /// </summary>
         string Name { get; set; }
@@ -46,5 +51,7 @@ namespace MW5.Plugins.Interfaces
         /// Gets identity of the plugin that created this group.
         /// </summary>
         PluginIdentity PluginIdentity { get; }
+
+        object InnerObject { get; }
     }
 }

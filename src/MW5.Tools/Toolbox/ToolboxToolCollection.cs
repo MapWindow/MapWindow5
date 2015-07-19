@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="ToolCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="ToolboxToolCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -18,14 +18,14 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Represents collection of tree nodes with tools.
     /// </summary>
-    internal class ToolCollection : IToolCollection
+    internal class ToolboxToolCollection : IToolCollection
     {
         private readonly TreeNodeAdvCollection _nodes;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ToolCollection"/> class.
+        /// Initializes a new instance of the <see cref="ToolboxToolCollection"/> class.
         /// </summary>
-        internal ToolCollection(TreeNodeAdvCollection nodes)
+        internal ToolboxToolCollection(TreeNodeAdvCollection nodes)
         {
             if (nodes == null) throw new NullReferenceException();
 
@@ -47,7 +47,12 @@ namespace MW5.Tools.Toolbox
         {
             if (item == null) throw new ArgumentNullException("item");
 
-            var node = new TreeNodeAdv { Tag = item, Text = item.Name };
+            var node = new TreeNodeAdv
+            {
+                Tag = item,
+                Text = item.Name,
+                LeftImageIndices = new[] { ToolboxControl.IconTool }
+            };
 
             _nodes.Add(node);
         }
@@ -59,34 +64,12 @@ namespace MW5.Tools.Toolbox
         {
             for (var i = _nodes.Count - 1; i >= 0; i++)
             {
-                var tool = _nodes[i].Tag as IGisTool;
+                var tool = GetTool(_nodes[i]);
                 if (tool != null)
                 {
                     _nodes.RemoveAt(i);
                 }
             }
-        }
-
-        /// <summary>
-        /// Determines whether the list contains specified tool.
-        /// </summary>
-        public bool Contains(IGisTool item)
-        {
-            if (item == null)
-            {
-                return false;
-            }
-
-            for (var i = 0; i < _nodes.Count; i++)
-            {
-                var tool = _nodes[i].Tag as IGisTool;
-                if (tool == item)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -108,7 +91,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public bool Remove(IGisTool item)
         {
-            foreach (var node in _nodes.Cast<TreeNode>().Where(node => node.Tag as IGisTool == item))
+            foreach (var node in _nodes.Cast<TreeNodeAdv>().Where(node => GetTool(node) == item))
             {
                 _nodes.Remove(node);
                 return true;
@@ -124,7 +107,7 @@ namespace MW5.Tools.Toolbox
         {
             for (var i = _nodes.Count - 1; i >= 0; i--)
             {
-                var tool = _nodes[i].Tag as IGisTool;
+                var tool = GetTool(_nodes[i]);
                 if (tool != null && tool.PluginIdentity == identity)
                 {
                     _nodes.RemoveAt(i);
@@ -138,6 +121,11 @@ namespace MW5.Tools.Toolbox
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private IGisTool GetTool(TreeNodeAdv node)
+        {
+            return node.Tag as IGisTool;
         }
     }
 }

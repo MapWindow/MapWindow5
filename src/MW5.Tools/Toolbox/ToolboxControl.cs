@@ -66,7 +66,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolboxGroups Groups
         {
-            get { return new GroupCollection(_tree.Nodes); }
+            get { return new ToolboxGroupCollection(_tree.Nodes); }
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolCollection Tools
         {
-            get { return new ToolCollection(_tree.Nodes); }
+            get { return new ToolboxToolCollection(_tree.Nodes); }
         }
 
         /// <summary>

@@ -18,8 +18,16 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GisToolAttribute"/> class.
         /// </summary>
-        public GisToolAttribute(ToolboxGroupType group, Type type)
+        public GisToolAttribute(string groupKey)
         {
+            if (string.IsNullOrWhiteSpace(groupKey))
+            {
+                throw new ArgumentNullException("groupKey");
+            }
+
+            GroupKey = groupKey;
         }
+
+        public string GroupKey { get; private set; }
     }
 }

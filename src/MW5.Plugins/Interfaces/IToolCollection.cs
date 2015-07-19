@@ -13,7 +13,6 @@ namespace MW5.Plugins.Interfaces
     public interface IToolCollection : IEnumerable<IGisTool>
     {
         void Clear();
-        bool Contains(IGisTool item);
         int Count { get; }
         bool Remove(IGisTool item);
         void Add(IGisTool item);

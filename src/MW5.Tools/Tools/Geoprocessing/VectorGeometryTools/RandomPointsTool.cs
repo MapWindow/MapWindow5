@@ -29,7 +29,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// <summary>
     /// The random points.
     /// </summary>
-    [GisTool(ToolboxGroupType.VectorTools, typeof(Resources))]
+    [GisTool(GroupKeys.VectorGeometryTools)]
     public class RandomPointsTool : GisToolBase
     {
         private readonly ILayerService _layerService;

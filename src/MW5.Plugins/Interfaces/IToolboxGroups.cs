@@ -1,8 +1,10 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IToolboxGroups.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 
 namespace MW5.Plugins.Interfaces
@@ -13,10 +15,15 @@ namespace MW5.Plugins.Interfaces
     public interface IToolboxGroups : IEnumerable<IToolboxGroup>
     {
         int Count { get; }
-        bool Remove(IToolboxGroup item);
-        bool Contains(IToolboxGroup item);
+
+        IToolboxGroup Add(string name, string key, PluginIdentity identity);
+
         void Clear();
-        IToolboxGroup Add(string name, string description, PluginIdentity identity);
+
+        IToolboxGroup FindGroup(string groupKey);
+
+        bool Remove(string groupKey);
+
         void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

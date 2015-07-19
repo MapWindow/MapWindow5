@@ -1,21 +1,16 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="GroupKeys.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Defines the GroupKeys type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
-namespace MW5.Plugins.Toolbox
+namespace MW5.Plugins.Enums
 {
     /// <summary>
     /// This class holds the keys to identify the groups in the toolbox.
     /// </summary>
     public static class GroupKeys
     {
-        #region Constants
-
         /// <summary>
         /// The geo databases
         /// </summary>
@@ -35,7 +30,5 @@ namespace MW5.Plugins.Toolbox
         /// The vector geometry tools
         /// </summary>
         public const string VectorGeometryTools = "VectorGeometryTools";
-
-        #endregion
     }
 }

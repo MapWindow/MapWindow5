@@ -13,7 +13,7 @@ using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Projections
 {
-    [GisTool(ToolboxGroupType.Projections, typeof(Resources))]
+    [GisTool(GroupKeys.Projections)]
     public class IdentifyProjectionTool: IGisTool
     {
         private IAppContext _context;

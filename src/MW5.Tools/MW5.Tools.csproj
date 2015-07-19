@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Model\ParameterAttribute.cs" />
+    <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -136,9 +137,9 @@
     <Compile Include="Toolbox\ToolboxControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Toolbox\GroupNode.cs" />
-    <Compile Include="Toolbox\GroupCollection.cs" />
-    <Compile Include="Toolbox\ToolCollection.cs" />
+    <Compile Include="Toolbox\ToolboxGroup.cs" />
+    <Compile Include="Toolbox\ToolboxGroupCollection.cs" />
+    <Compile Include="Toolbox\ToolboxToolCollection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
