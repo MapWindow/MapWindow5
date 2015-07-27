@@ -1,37 +1,29 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="CompositionRoot.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The composition root.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using MW5.Plugins.Mvp;
+using MW5.Tools.Views;
+using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools
 {
-    #region
-
-    using MW5.Plugins.Mvp;
-    using MW5.Tools.Views;
-
-    #endregion
-
     /// <summary>
     /// The composition root.
     /// </summary>
     internal static class CompositionRoot
     {
-        #region Public Methods and Operators
-
         /// <summary>
         /// Composes the specified container.
         /// </summary>
         /// <param name="container">The container.</param>
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterView<IGisToolView, GisToolView>();
-        }
+            container.RegisterView<IGisToolView, GisToolView>()
+            .RegisterService<ParameterControlFactory>();
 
-        #endregion
+        }
     }
 }

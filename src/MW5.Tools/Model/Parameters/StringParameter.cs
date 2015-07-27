@@ -25,13 +25,5 @@ namespace MW5.Tools.Model.Parameters
         {
             get { return Control.AsBase.GetValue() as string; }
         }
-
-        /// <summary>
-        /// The create control.
-        /// </summary>
-        public override ParameterControlBase CreateControl()
-        {
-            return Control ?? (Control = new StringParameterControl());
-        }
     }
 }

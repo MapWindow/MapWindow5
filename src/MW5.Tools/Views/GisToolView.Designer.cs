@@ -36,7 +36,7 @@ namespace MW5.Tools.Views
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
-            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabRequired = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelRequired = new System.Windows.Forms.Panel();
             this.stringParameterControl6 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.stringParameterControl5 = new MW5.Tools.Views.Controls.StringParameterControl();
@@ -44,16 +44,16 @@ namespace MW5.Tools.Views
             this.stringParameterControl3 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.stringParameterControl2 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.stringParameterControl1 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.tabPageAdv2 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
-            this.tabPageAdv3 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.tabPageAdv4 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabLog = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
-            this.tabPageAdv1.SuspendLayout();
+            this.tabRequired.SuspendLayout();
             this.panelRequired.SuspendLayout();
-            this.tabPageAdv2.SuspendLayout();
+            this.tabOptional.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAdv2
@@ -97,10 +97,10 @@ namespace MW5.Tools.Views
             // 
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(550, 373);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv2);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv3);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv4);
+            this.tabControlAdv1.Controls.Add(this.tabRequired);
+            this.tabControlAdv1.Controls.Add(this.tabOptional);
+            this.tabControlAdv1.Controls.Add(this.tabLog);
+            this.tabControlAdv1.Controls.Add(this.tabHelp);
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 40);
             this.tabControlAdv1.Location = new System.Drawing.Point(6, 12);
             this.tabControlAdv1.Name = "tabControlAdv1";
@@ -109,18 +109,18 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.TabIndex = 35;
             this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
             // 
-            // tabPageAdv1
+            // tabRequired
             // 
-            this.tabPageAdv1.Controls.Add(this.panelRequired);
-            this.tabPageAdv1.Image = global::MW5.Tools.Properties.Resources.img_tools24;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv1.Location = new System.Drawing.Point(123, 1);
-            this.tabPageAdv1.Name = "tabPageAdv1";
-            this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(425, 370);
-            this.tabPageAdv1.TabIndex = 1;
-            this.tabPageAdv1.Text = "Required";
-            this.tabPageAdv1.ThemesEnabled = false;
+            this.tabRequired.Controls.Add(this.panelRequired);
+            this.tabRequired.Image = global::MW5.Tools.Properties.Resources.img_tools24;
+            this.tabRequired.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabRequired.Location = new System.Drawing.Point(123, 1);
+            this.tabRequired.Name = "tabRequired";
+            this.tabRequired.ShowCloseButton = true;
+            this.tabRequired.Size = new System.Drawing.Size(425, 370);
+            this.tabRequired.TabIndex = 1;
+            this.tabRequired.Text = "Required";
+            this.tabRequired.ThemesEnabled = false;
             // 
             // panelRequired
             // 
@@ -192,18 +192,18 @@ namespace MW5.Tools.Views
             this.stringParameterControl1.Size = new System.Drawing.Size(385, 50);
             this.stringParameterControl1.TabIndex = 0;
             // 
-            // tabPageAdv2
+            // tabOptional
             // 
-            this.tabPageAdv2.Controls.Add(this.panelOptional);
-            this.tabPageAdv2.Image = global::MW5.Tools.Properties.Resources.img_options24;
-            this.tabPageAdv2.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv2.Location = new System.Drawing.Point(123, 1);
-            this.tabPageAdv2.Name = "tabPageAdv2";
-            this.tabPageAdv2.ShowCloseButton = true;
-            this.tabPageAdv2.Size = new System.Drawing.Size(425, 370);
-            this.tabPageAdv2.TabIndex = 2;
-            this.tabPageAdv2.Text = "Optional";
-            this.tabPageAdv2.ThemesEnabled = false;
+            this.tabOptional.Controls.Add(this.panelOptional);
+            this.tabOptional.Image = global::MW5.Tools.Properties.Resources.img_options24;
+            this.tabOptional.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabOptional.Location = new System.Drawing.Point(123, 1);
+            this.tabOptional.Name = "tabOptional";
+            this.tabOptional.ShowCloseButton = true;
+            this.tabOptional.Size = new System.Drawing.Size(425, 370);
+            this.tabOptional.TabIndex = 2;
+            this.tabOptional.Text = "Optional";
+            this.tabOptional.ThemesEnabled = false;
             // 
             // panelOptional
             // 
@@ -214,29 +214,29 @@ namespace MW5.Tools.Views
             this.panelOptional.Size = new System.Drawing.Size(425, 370);
             this.panelOptional.TabIndex = 0;
             // 
-            // tabPageAdv3
+            // tabLog
             // 
-            this.tabPageAdv3.Image = global::MW5.Tools.Properties.Resources.img_log24;
-            this.tabPageAdv3.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv3.Location = new System.Drawing.Point(123, 1);
-            this.tabPageAdv3.Name = "tabPageAdv3";
-            this.tabPageAdv3.ShowCloseButton = true;
-            this.tabPageAdv3.Size = new System.Drawing.Size(425, 370);
-            this.tabPageAdv3.TabIndex = 3;
-            this.tabPageAdv3.Text = "Log";
-            this.tabPageAdv3.ThemesEnabled = false;
+            this.tabLog.Image = global::MW5.Tools.Properties.Resources.img_log24;
+            this.tabLog.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabLog.Location = new System.Drawing.Point(123, 1);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.ShowCloseButton = true;
+            this.tabLog.Size = new System.Drawing.Size(425, 370);
+            this.tabLog.TabIndex = 3;
+            this.tabLog.Text = "Log";
+            this.tabLog.ThemesEnabled = false;
             // 
-            // tabPageAdv4
+            // tabHelp
             // 
-            this.tabPageAdv4.Image = global::MW5.Tools.Properties.Resources.img_help24;
-            this.tabPageAdv4.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabPageAdv4.Location = new System.Drawing.Point(123, 1);
-            this.tabPageAdv4.Name = "tabPageAdv4";
-            this.tabPageAdv4.ShowCloseButton = true;
-            this.tabPageAdv4.Size = new System.Drawing.Size(425, 370);
-            this.tabPageAdv4.TabIndex = 4;
-            this.tabPageAdv4.Text = "Help";
-            this.tabPageAdv4.ThemesEnabled = false;
+            this.tabHelp.Image = global::MW5.Tools.Properties.Resources.img_help24;
+            this.tabHelp.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabHelp.Location = new System.Drawing.Point(123, 1);
+            this.tabHelp.Name = "tabHelp";
+            this.tabHelp.ShowCloseButton = true;
+            this.tabHelp.Size = new System.Drawing.Size(425, 370);
+            this.tabHelp.TabIndex = 4;
+            this.tabHelp.Text = "Help";
+            this.tabHelp.ThemesEnabled = false;
             // 
             // GisToolView
             // 
@@ -252,9 +252,9 @@ namespace MW5.Tools.Views
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
-            this.tabPageAdv1.ResumeLayout(false);
+            this.tabRequired.ResumeLayout(false);
             this.panelRequired.ResumeLayout(false);
-            this.tabPageAdv2.ResumeLayout(false);
+            this.tabOptional.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -265,10 +265,10 @@ namespace MW5.Tools.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnOk;
         private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv2;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv3;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv4;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabRequired;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabOptional;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabLog;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabHelp;
         private System.Windows.Forms.Panel panelRequired;
         private Controls.StringParameterControl stringParameterControl6;
         private Controls.StringParameterControl stringParameterControl5;

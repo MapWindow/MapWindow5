@@ -90,8 +90,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             InitializeBase(context);
 
             // TODO: Set default value for NumPoints
-            // TODO: Set title of View
-            // TODO: Make new parameter to select a new file location for NewLayerName
             // TODO: Set manual, local html file or remote local html file.
             _context = context;
         }
@@ -103,9 +101,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public override bool Run()
         {
             Logger.Current.Info("Run create random points tool");
-            var fs = InputLayer.Value.FeatureSet;
+            var layerSource = InputLayer.Value;
 
-            Logger.Current.Debug("Input feature set: " + fs.Filename);
             Logger.Current.Debug("New layer name: " + NewLayerName.Value);
             Logger.Current.Debug("Overwrite: ", Overwrite.Value);
             Logger.Current.Debug("Number of points: " + NumPoints.Value);
@@ -113,9 +110,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             ulong numPoints;
             if (ulong.TryParse(NumPoints.Value, out numPoints))
             {
-                var result = Task.Factory.StartNew(() => RunCore(fs, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
+                // let it be synchronous until progress reporting is implemented in a thread safe way
+                //var result = Task.Factory.StartNew(() => RunCore(layerSource, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
 
-                if (!result)
+                if (!RunCore(layerSource, NewLayerName.Value, numPoints, Overwrite.Value))
                 {
                     return false;
                 }

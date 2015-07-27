@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -11,8 +12,6 @@ using MW5.Shared;
 
 namespace MW5.Api.Static
 {
-    using System.Linq;
-
     public static class GeoSource
     {
         private static readonly FileManager _manager;
@@ -20,6 +19,19 @@ namespace MW5.Api.Static
         static GeoSource()
         {
             _manager = new FileManager();
+        }
+
+        public static IDatasource OpenFromIdentity(LayerIdentity identity)
+        {
+            switch (identity.IdentityType)
+            {
+                case LayerIdentityType.File:
+                    return Open(identity.Filename);
+                case LayerIdentityType.OgrDatasource:
+                    return OpenFromDatabase(identity.Connection, identity.Query);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public static IDatasource Open(string filename, OpenStrategy openStrategy = OpenStrategy.AutoDetect)

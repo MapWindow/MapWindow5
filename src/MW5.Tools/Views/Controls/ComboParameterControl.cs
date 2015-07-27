@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -17,7 +18,7 @@ namespace MW5.Tools.Views.Controls
             FireValueChanged();
         }
 
-        public void SetOptions<T>(IEnumerable<T> options)
+        public void SetOptions(object options)
         {
             comboBoxAdv1.DataSource = options;
         }

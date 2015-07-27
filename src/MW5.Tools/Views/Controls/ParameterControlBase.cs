@@ -1,18 +1,17 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="ParameterControlBase.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   The parameter control base.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.Windows.Forms;
 
 namespace MW5.Tools.Views.Controls
 {
     #region
 
-    using System;
-    using System.Windows.Forms;
+    
 
     #endregion
 
@@ -21,8 +20,6 @@ namespace MW5.Tools.Views.Controls
     /// </summary>
     public partial class ParameterControlBase : UserControl
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterControlBase"/> class.
         /// </summary>
@@ -31,33 +28,18 @@ namespace MW5.Tools.Views.Controls
             InitializeComponent();
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>
         /// The value changed.
         /// </summary>
         public event EventHandler<EventArgs> ValueChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets the as base.
         /// </summary>
         public IParameterControl AsBase
         {
-            get
-            {
-                return this as IParameterControl;
-            }
+            get { return this as IParameterControl; }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// The fire value changed.
@@ -70,7 +52,5 @@ namespace MW5.Tools.Views.Controls
                 handler(this, new EventArgs());
             }
         }
-
-        #endregion
     }
 }

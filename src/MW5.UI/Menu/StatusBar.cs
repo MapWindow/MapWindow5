@@ -173,13 +173,18 @@ namespace MW5.UI.Menu
                 return;
             }
 
-            _progressBar.Value = percent;
-            if (!_progressMessage.Visible)
+            System.Action action = () =>
             {
-                _progressMessage.Visible = true;
-                _progressBar.Visible = true;
-                _bar.Refresh();
-            }
+                _progressBar.Value = percent;
+                if (!_progressMessage.Visible)
+                {
+                    _progressMessage.Visible = true;
+                    _progressBar.Visible = true;
+                    _bar.Refresh();
+                }
+            };
+
+            _bar.SafeInvoke(action);
         }
 
         public void HideProgress()
@@ -189,8 +194,13 @@ namespace MW5.UI.Menu
                 return;
             }
 
-            _progressMessage.Visible = false;
-            _progressBar.Visible = false;
+            System.Action action = () =>
+            {
+                _progressMessage.Visible = false;
+                _progressBar.Visible = false;
+            };
+
+            _bar.Invoke(action);
         }
 
         public IMenuItem FindItem(string key, PluginIdentity identity)

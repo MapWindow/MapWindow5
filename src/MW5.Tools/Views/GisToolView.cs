@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Views.Controls;
@@ -25,15 +26,18 @@ namespace MW5.Tools.Views
         private const int VerticalPadding = 3;
 
         private readonly IAppContext _context;
+        private readonly ParameterControlFactory _controlFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GisToolView"/> class.
         /// </summary>
-        public GisToolView(IAppContext context)
+        public GisToolView(IAppContext context, ParameterControlFactory controlFactory)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (controlFactory == null) throw new ArgumentNullException("controlFactory");
 
             _context = context;
+            _controlFactory = controlFactory;
 
             InitializeComponent();
         }
@@ -47,19 +51,27 @@ namespace MW5.Tools.Views
         }
 
         /// <summary>
-        /// The generate controls.
+        /// Generates controls for parameters.
         /// </summary>
-        /// <param name="parameters"></param>
         public void GenerateControls(IEnumerable<BaseParameter> parameters)
         {
             parameters = parameters.ToList();
 
-            GenerateControlsOnPanel(panelRequired, parameters.Where(p => p.Required));
-            GenerateControlsOnPanel(panelOptional, parameters.Where(p => !p.Required));
+            GenerateControlsWithinPanel(panelRequired, parameters.Where(p => p.Required));
+
+            if (parameters.All(p => p.Required))
+            {
+                tabOptional.TabVisible = false;
+            }
+            else
+            {
+                GenerateControlsWithinPanel(panelOptional, parameters.Where(p => !p.Required));
+            }
         }
 
         public void Initialize()
         {
+            Text = Model.Name;
         }
 
         private static void AdjustVerticalPadding(Control panel)
@@ -73,23 +85,26 @@ namespace MW5.Tools.Views
             }
         }
 
-        private static void GenerateControlsOnPanel(Control panel, IEnumerable<BaseParameter> parameters)
+        private void GenerateControlsWithinPanel(Control panel, IEnumerable<BaseParameter> parameters)
         {
             panel.Controls.Clear();
-            foreach (var parameter in parameters.OrderByDescending(p => p.Index))
-            {
-                var ctrl = parameter.CreateControl() as Control;
 
-                if (ctrl == null || parameter.DisplayName == null)
+            foreach (var p in parameters.OrderByDescending(p => p.Index))
+            {
+                var ctrl = _controlFactory.CreateControl(p);
+                if (ctrl == null) continue;
+
+                ctrl.Caption = p.DisplayName;
+                p.Control = ctrl as ParameterControlBase;
+
+                var userControl = ctrl as UserControl;
+                if (userControl == null)
                 {
-                    continue;
+                    throw new InvalidCastException("IParameterControl must be implemented by class derived from UserControl.");
                 }
 
-                ctrl.Dock = DockStyle.Top;
-                var paramControl = (IParameterControl)ctrl;
-                paramControl.Caption = parameter.DisplayName;
-
-                panel.Controls.Add(ctrl);
+                userControl.Dock = DockStyle.Top;
+                panel.Controls.Add(userControl);
             }
 
             AdjustVerticalPadding(panel);

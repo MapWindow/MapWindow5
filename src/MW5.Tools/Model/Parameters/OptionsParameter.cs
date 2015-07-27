@@ -9,10 +9,15 @@ using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools.Model.Parameters
 {
+    public abstract class OptionsParameter: BaseParameter
+    {
+        public abstract object OptionsSource { get; }
+    }
+
     /// <summary>
     /// The options parameter.
     /// </summary>
-    public class OptionsParameter<T> : BaseParameter
+    public class OptionsParameter<T> : OptionsParameter
     {
         private IEnumerable<T> _options;
 
@@ -58,22 +63,9 @@ namespace MW5.Tools.Model.Parameters
             }
         }
 
-        /// <summary>
-        /// Create the control.
-        /// </summary>
-        /// <returns>The <see cref="ParameterControlBase" />.</returns>
-        public override ParameterControlBase CreateControl()
+        public override object OptionsSource
         {
-            if (Control != null)
-            {
-                return Control;
-            }
-
-            var control = new ComboParameterControl { ButtonVisible = false };
-            control.SetOptions(_options); // ensure that previously specified options are applied
-            Control = control;
-
-            return Control;
+            get { return _options; }
         }
     }
 }

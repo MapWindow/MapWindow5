@@ -94,7 +94,7 @@ namespace MW5.Plugins.Toolbox
             }
         }
 
-        public void GenerateGroups()
+        private void GenerateGroups()
         {
             var groups = _context.Toolbox.Groups;
 

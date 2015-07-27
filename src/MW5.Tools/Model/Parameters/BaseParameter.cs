@@ -51,12 +51,7 @@ namespace MW5.Tools.Model.Parameters
         public bool Required { get; set; }
 
         /// <summary>
-        /// The create control.
-        /// </summary>
-        public abstract ParameterControlBase CreateControl();
-
-        /// <summary>
-        /// The _control_ value changed.
+        /// The control value changed.
         /// </summary>
         private void OnValueChanged(object sender, EventArgs e)
         {

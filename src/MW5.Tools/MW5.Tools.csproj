@@ -70,7 +70,11 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\ParameterAttribute.cs" />
+    <Compile Include="Model\Parameters\LayerParameter.cs" />
+    <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
+    <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
@@ -102,6 +106,7 @@
     <Compile Include="Views\Controls\ParameterControlBase.Designer.cs">
       <DependentUpon>ParameterControlBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\ParameterControlFactory.cs" />
     <Compile Include="Views\Controls\StringParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -113,7 +118,7 @@
     <Compile Include="Model\Parameters\BooleanParameter.cs" />
     <Compile Include="Model\GisToolAttribute.cs" />
     <Compile Include="Model\GisToolBase.cs" />
-    <Compile Include="Model\Parameters\LayerParameter.cs" />
+    <Compile Include="Model\Parameters\LayerParameterBase.cs" />
     <Compile Include="Model\OptionalParameterAttribute.cs" />
     <Compile Include="Model\Parameters\OptionsParameter.cs" />
     <Compile Include="Model\RequiredParameterAttribute.cs" />

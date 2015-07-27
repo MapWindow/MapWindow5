@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
-            this.buttonAdv1 = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnOpen = new Syncfusion.Windows.Forms.ButtonAdv();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
@@ -43,7 +43,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.buttonAdv1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnOpen, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.comboBoxAdv1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -64,16 +64,16 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
             // 
-            // buttonAdv1
+            // btnOpen
             // 
-            this.buttonAdv1.BeforeTouchSize = new System.Drawing.Size(27, 20);
-            this.buttonAdv1.IsBackStageButton = false;
-            this.buttonAdv1.Location = new System.Drawing.Point(301, 19);
-            this.buttonAdv1.Name = "buttonAdv1";
-            this.buttonAdv1.Size = new System.Drawing.Size(27, 20);
-            this.buttonAdv1.TabIndex = 3;
-            this.buttonAdv1.Text = "...";
-            this.buttonAdv1.Click += new System.EventHandler(this.buttonAdv1_Click);
+            this.btnOpen.BeforeTouchSize = new System.Drawing.Size(27, 20);
+            this.btnOpen.IsBackStageButton = false;
+            this.btnOpen.Location = new System.Drawing.Point(301, 19);
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(27, 20);
+            this.btnOpen.TabIndex = 3;
+            this.btnOpen.Text = "...";
+            this.btnOpen.Click += new System.EventHandler(this.OpenClick);
             // 
             // comboBoxAdv1
             // 
@@ -105,7 +105,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnOpen;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
     }
 }

@@ -43,9 +43,9 @@ namespace MW5.Tools.Model
         /// </summary>
         protected void InitializeBase(IAppContext context)
         {
-            foreach (var layerParameter in Parameters.OfType<LayerParameter>())
+            foreach (var layerParameter in Parameters.OfType<LayerParameterBase>())
             {
-                layerParameter.SetLayers(context.Layers);
+                layerParameter.Initialize(context.Layers);
             }
         }
 

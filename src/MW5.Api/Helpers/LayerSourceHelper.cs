@@ -58,7 +58,7 @@ namespace MW5.Api.Helpers
             return null;
         }
 
-        public static IEnumerable<ILayerSource> GetLayers(IDatasource ds)
+        public static IEnumerable<ILayerSource> GetLayers(this IDatasource ds)
         {
             var vs = ds as VectorDatasource;
             if (vs != null)
