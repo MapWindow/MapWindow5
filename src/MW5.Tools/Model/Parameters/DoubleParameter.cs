@@ -9,13 +9,13 @@ using MW5.Tools.Views.Controls;
 namespace MW5.Tools.Model.Parameters
 {
     /// <summary>
-    /// The boolean parameter.
+    /// The double parameter.
     /// </summary>
-    public class BooleanParameter : ValueParameter<bool>
+    public class DoubleParameter : NumericParameter<double>
     {
         public override bool Numeric
         {
-            get { return false; }
+            get { return true; }
         }
     }
 }

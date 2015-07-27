@@ -61,7 +61,7 @@ namespace MW5.Plugins.Toolbox
                 {
                     new IdentifyProjectionTool(),
                     new ImportLayerTool(),
-                    new RandomPointsTool(_layerService)
+                    new RandomPointsTool()
                 };
 
                 return tools;

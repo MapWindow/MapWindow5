@@ -41,10 +41,13 @@ namespace MW5.Tools.Views
         /// <summary>
         /// The view ok clicked.
         /// </summary>
-        /// <returns>The <see cref="bool"/>.</returns>
         public override bool ViewOkClicked()
         {
-            // TODO: validate
+            if (!Model.Validate())
+            {
+                return false;
+            }
+
             return Model.Run();
         }
     }

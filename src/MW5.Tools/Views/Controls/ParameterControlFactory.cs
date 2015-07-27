@@ -35,6 +35,21 @@ namespace MW5.Tools.Views.Controls
                 return new BooleanParameterControl();
             }
 
+            if (parameter is IntegerParameter)
+            {
+                return new IntegerParameterControl();
+            }
+
+            if (parameter is DoubleParameter)
+            {
+                return new DoubleParameterControl();
+            }
+
+            if (parameter is OutputLayerParameter)
+            {
+                return new OutputParameterControl(_dialogService);
+            }
+
             if (parameter is OptionsParameter)
             {
                 var control = new ComboParameterControl { ButtonVisible = false };

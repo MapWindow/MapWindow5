@@ -172,15 +172,6 @@ namespace MW5.Api.Concrete
             return fs;
         }
 
-        /// <summary>
-        /// Saves FeatureSet as a new disk based Shapefile.
-        /// </summary>
-        /// <param name="filename">New filename (.shp extension).</param>
-        /// <returns>True on success.</returns>
-        public bool SaveAsShapefile(string filename)
-        {
-            return _shapefile.SaveAs(filename);
-        }
 
         public GeometryType GeometryType
         {

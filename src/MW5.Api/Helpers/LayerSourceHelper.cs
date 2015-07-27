@@ -27,7 +27,24 @@ namespace MW5.Api.Helpers
                     throw new ArgumentOutOfRangeException("layerType");
             }
         }
-        
+
+        public static bool Save(IDatasource ds, string filename)
+        {
+            var fs = ds as IFeatureSet;
+            if (fs != null)
+            {
+                return fs.SaveAs(filename);
+            }
+
+            var raster = ds as IRasterSource;
+            if (raster != null)
+            {
+                return raster.Save(filename);
+            }
+
+            throw new ApplicationException("Failed to save. Unsupported format.");
+        }
+
         public static IDatasource Convert(object source)
         {
             if (source is OgrDatasource)

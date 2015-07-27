@@ -11,19 +11,11 @@ namespace MW5.Tools.Model.Parameters
     /// <summary>
     /// The string parameter.
     /// </summary>
-    public class StringParameter : BaseParameter
+    public class StringParameter : ValueParameter<string>
     {
-        /// <summary>
-        /// Gets the default value.
-        /// </summary>
-        public string DefaultValue { get; private set; }
-
-        /// <summary>
-        /// Gets the value.
-        /// </summary>
-        public string Value
+        public override bool Numeric
         {
-            get { return Control.AsBase.GetValue() as string; }
+            get { return false; }
         }
     }
 }

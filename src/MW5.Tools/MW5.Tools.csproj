@@ -71,9 +71,15 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
+    <Compile Include="Model\OutputLayerInfo.cs" />
     <Compile Include="Model\ParameterAttribute.cs" />
+    <Compile Include="Model\Parameters\DoubleParameter.cs" />
+    <Compile Include="Model\Parameters\IntegerParameter.cs" />
     <Compile Include="Model\Parameters\LayerParameter.cs" />
+    <Compile Include="Model\Parameters\NumericParameter.cs" />
+    <Compile Include="Model\Parameters\OutputLayerParameter.cs" />
     <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
+    <Compile Include="Model\Parameters\ValueParameter.cs" />
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
@@ -93,6 +99,12 @@
     <Compile Include="Views\Controls\ComboParameterControl.Designer.cs">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\IntegerParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\IntegerParameterControl.Designer.cs">
+      <DependentUpon>IntegerParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\LayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,6 +112,12 @@
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\IParameterControl.cs" />
+    <Compile Include="Views\Controls\OutputParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\OutputParameterControl.Designer.cs">
+      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\ParameterControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,6 +125,12 @@
       <DependentUpon>ParameterControlBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\ParameterControlFactory.cs" />
+    <Compile Include="Views\Controls\DoubleParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\DoubleParameterControl.Designer.cs">
+      <DependentUpon>DoubleParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\StringParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -175,8 +199,17 @@
     <EmbeddedResource Include="Views\Controls\ComboParameterControl.resx">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\IntegerParameterControl.resx">
+      <DependentUpon>IntegerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Controls\LayerParameterControl.resx">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\OutputParameterControl.resx">
+      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\DoubleParameterControl.resx">
+      <DependentUpon>DoubleParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Controls\StringParameterControl.resx">
       <DependentUpon>StringParameterControl.cs</DependentUpon>

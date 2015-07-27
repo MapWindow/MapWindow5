@@ -207,12 +207,12 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private bool AddDatasource(IDatasource ds)
+        public bool AddDatasource(IDatasource ds)
         {
             int addedCount = 0;
 
             var layers = _context.Map.Layers;
-            foreach (var layer in LayerSourceHelper.GetLayers(ds))
+            foreach (var layer in ds.GetLayers())
             {
                 // projection mistmatch testing
                 bool abort;

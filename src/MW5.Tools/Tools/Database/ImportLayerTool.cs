@@ -54,7 +54,7 @@ namespace MW5.Tools.Tools.Database
         /// </summary>
         public override void Initialize(IAppContext context)
         {
-            InitializeBase(context);
+            base.Initialize(context);
 
             Database.Options = context.Repository.Connections;
 
@@ -123,11 +123,11 @@ namespace MW5.Tools.Tools.Database
             {
                 if (!ds.ImportLayer(inputLayer, newLayerName, options))
                 {
-                    MessageService.Current.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg);
+                    MessageService.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg);
                     return false;
                 }
                 
-                MessageService.Current.Info("Layer was imported: " + newLayerName);
+                MessageService.Info("Layer was imported: " + newLayerName);
                 return true;
             }
 
