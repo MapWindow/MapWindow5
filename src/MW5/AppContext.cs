@@ -120,7 +120,7 @@ namespace MW5
 
         private void InitToolbox()
         {
-            _toolbox = new ToolboxControl(this);
+            _toolbox = new ToolboxDockPanel(this);
         }
 
         internal void InitPlugins(IConfigService configService)

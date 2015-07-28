@@ -33,7 +33,7 @@ namespace MW5.Tools.Toolbox
 
     //        _identity = identity;
     //        _name = name;
-    //        _node = new TreeNodeAdv { Text = _name, LeftImageIndices = new[] { ToolboxControl.IconTool }, Tag = this };
+    //        _node = new TreeNodeAdv { Text = _name, LeftImageIndices = new[] { ToolboxDockPanel.IconTool }, Tag = this };
 
     //        Key = key;
     //    }
