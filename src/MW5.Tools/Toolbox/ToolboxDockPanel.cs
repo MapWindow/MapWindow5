@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="ToolboxControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="ToolboxDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Toolbox control
     /// </summary>
-    public class ToolboxControl : SplitContainerAdv, IToolbox
+    public class ToolboxDockPanel : SplitContainerAdv, IToolbox
     {
         private readonly IAppContext _context;
 
@@ -33,7 +33,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public ToolboxControl(IAppContext context)
+        public ToolboxDockPanel(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;

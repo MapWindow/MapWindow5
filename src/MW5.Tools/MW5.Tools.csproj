@@ -166,7 +166,7 @@
     </Compile>
     <Compile Include="Views\IGisToolView.cs" />
     <Compile Include="Toolbox\ToolNode.cs" />
-    <Compile Include="Toolbox\ToolboxControl.cs">
+    <Compile Include="Toolbox\ToolboxDockPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Toolbox\ToolboxGroup.cs" />

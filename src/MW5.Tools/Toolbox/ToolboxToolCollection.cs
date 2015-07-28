@@ -51,7 +51,7 @@ namespace MW5.Tools.Toolbox
             {
                 Tag = item,
                 Text = item.Name,
-                LeftImageIndices = new[] { ToolboxControl.IconTool }
+                LeftImageIndices = new[] { ToolboxDockPanel.IconTool }
             };
 
             _nodes.Add(node);

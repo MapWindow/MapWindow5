@@ -40,7 +40,7 @@ namespace MW5.Tools.Toolbox
             _node = new TreeNodeAdv
                         {
                             Text = name,
-                            LeftImageIndices = new[] { ToolboxControl.IconFolder },
+                            LeftImageIndices = new[] { ToolboxDockPanel.IconFolder },
                             Tag = new ToolboxGroupMetadata(key, name, identity)
                         };
 
