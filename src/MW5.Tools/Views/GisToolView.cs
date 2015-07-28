@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Views.Controls;
@@ -72,6 +73,8 @@ namespace MW5.Tools.Views
         public void Initialize()
         {
             Text = Model.Name;
+
+            webBrowser1.DocumentText = Model.LoadManual();
         }
 
         private static void AdjustVerticalPadding(Control panel)

@@ -70,6 +70,7 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
     <Compile Include="Model\ParameterAttribute.cs" />
@@ -249,7 +250,11 @@
   <ItemGroup>
     <None Include="Resources\img_toolbox16.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Manuals\RandomPointsTool.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

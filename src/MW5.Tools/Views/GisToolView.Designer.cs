@@ -46,14 +46,16 @@ namespace MW5.Tools.Views
             this.stringParameterControl1 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
-            this.tabLog = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.tabLog = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabRequired.SuspendLayout();
             this.panelRequired.SuspendLayout();
             this.tabOptional.SuspendLayout();
+            this.tabHelp.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAdv2
@@ -214,6 +216,29 @@ namespace MW5.Tools.Views
             this.panelOptional.Size = new System.Drawing.Size(425, 370);
             this.panelOptional.TabIndex = 0;
             // 
+            // tabHelp
+            // 
+            this.tabHelp.Controls.Add(this.webBrowser1);
+            this.tabHelp.Image = global::MW5.Tools.Properties.Resources.img_help24;
+            this.tabHelp.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabHelp.Location = new System.Drawing.Point(123, 1);
+            this.tabHelp.Name = "tabHelp";
+            this.tabHelp.ShowCloseButton = true;
+            this.tabHelp.Size = new System.Drawing.Size(425, 370);
+            this.tabHelp.TabIndex = 4;
+            this.tabHelp.Text = "Help";
+            this.tabHelp.ThemesEnabled = false;
+            // 
+            // webBrowser1
+            // 
+            this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.webBrowser1.Location = new System.Drawing.Point(0, 0);
+            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowser1.Name = "webBrowser1";
+            this.webBrowser1.ScriptErrorsSuppressed = true;
+            this.webBrowser1.Size = new System.Drawing.Size(425, 370);
+            this.webBrowser1.TabIndex = 0;
+            // 
             // tabLog
             // 
             this.tabLog.Image = global::MW5.Tools.Properties.Resources.img_log24;
@@ -225,18 +250,6 @@ namespace MW5.Tools.Views
             this.tabLog.TabIndex = 3;
             this.tabLog.Text = "Log";
             this.tabLog.ThemesEnabled = false;
-            // 
-            // tabHelp
-            // 
-            this.tabHelp.Image = global::MW5.Tools.Properties.Resources.img_help24;
-            this.tabHelp.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabHelp.Location = new System.Drawing.Point(123, 1);
-            this.tabHelp.Name = "tabHelp";
-            this.tabHelp.ShowCloseButton = true;
-            this.tabHelp.Size = new System.Drawing.Size(425, 370);
-            this.tabHelp.TabIndex = 4;
-            this.tabHelp.Text = "Help";
-            this.tabHelp.ThemesEnabled = false;
             // 
             // GisToolView
             // 
@@ -255,6 +268,7 @@ namespace MW5.Tools.Views
             this.tabRequired.ResumeLayout(false);
             this.panelRequired.ResumeLayout(false);
             this.tabOptional.ResumeLayout(false);
+            this.tabHelp.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -277,5 +291,6 @@ namespace MW5.Tools.Views
         private Controls.StringParameterControl stringParameterControl2;
         private Controls.StringParameterControl stringParameterControl1;
         private System.Windows.Forms.Panel panelOptional;
+        private System.Windows.Forms.WebBrowser webBrowser1;
     }
 }
