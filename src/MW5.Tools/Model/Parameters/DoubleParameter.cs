@@ -17,5 +17,10 @@ namespace MW5.Tools.Model.Parameters
         {
             get { return true; }
         }
+
+        public override string ToString()
+        {
+            return string.Format("{0}: {1:g3}", DisplayName, Value);
+        }
     }
 }

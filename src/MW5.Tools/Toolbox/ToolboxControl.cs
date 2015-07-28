@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="ToolboxControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="ToolboxDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -20,7 +20,7 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Toolbox control
     /// </summary>
-    public class ToolboxControl : SplitContainerAdv, IToolbox
+    public class ToolboxDockPanel : SplitContainerAdv, IToolbox
     {
         private readonly IAppContext _context;
 
@@ -33,7 +33,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public ToolboxControl(IAppContext context)
+        public ToolboxDockPanel(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
@@ -49,15 +49,22 @@ namespace MW5.Tools.Toolbox
         {
             if (e.Tool == null) return;
 
-            var tool = e.Tool as GisToolBase;
+            // we don't want the same instance of tool to be used by diffent tasks
+            // therefore a new instance is created; it's expected that it must have default empty constructor
+            var newTool = Activator.CreateInstance(e.Tool.GetType()) as IGisTool;
+
+            var tool = newTool as GisToolBase;
             if (tool != null)
             {
                 _context.Container.Run<GisToolPresenter, GisToolBase>(tool);
             }
             else
             {
-                e.Tool.Initialize(_context);
-                e.Tool.Run();    // tool doesn't have UI or have an embedded  UI
+                if (newTool != null)
+                {
+                    newTool.Initialize(_context);
+                    newTool.Run(); // tool doesn't have UI or have an embedded  UI
+                }
             }
         }
 

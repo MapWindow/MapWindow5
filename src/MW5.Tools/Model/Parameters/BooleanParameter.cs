@@ -13,9 +13,9 @@ namespace MW5.Tools.Model.Parameters
     /// </summary>
     public class BooleanParameter : ValueParameter<bool>
     {
-        public override bool Numeric
+        public override string ToString()
         {
-            get { return false; }
+            return string.Format("{0}: {1}", DisplayName, Value);
         }
     }
 }

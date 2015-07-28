@@ -71,6 +71,8 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
+    <Compile Include="Model\GisTask.cs" />
+    <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
     <Compile Include="Model\ParameterAttribute.cs" />
@@ -164,12 +166,25 @@
     </Compile>
     <Compile Include="Views\IGisToolView.cs" />
     <Compile Include="Toolbox\ToolNode.cs" />
-    <Compile Include="Toolbox\ToolboxControl.cs">
+    <Compile Include="Toolbox\ToolboxDockPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Toolbox\ToolboxGroup.cs" />
     <Compile Include="Toolbox\ToolboxGroupCollection.cs" />
     <Compile Include="Toolbox\ToolboxToolCollection.cs" />
+    <Compile Include="Views\TasksDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TasksDockPanel.Designer.cs">
+      <DependentUpon>TasksDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TasksPresenter.cs" />
+    <Compile Include="Views\TasksTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\TasksTreeView.Designer.cs">
+      <DependentUpon>TasksTreeView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -222,6 +237,9 @@
     <EmbeddedResource Include="Views\GisToolView.resx">
       <DependentUpon>GisToolView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\TasksDockPanel.resx">
+      <DependentUpon>TasksDockPanel.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_folder_closed.png" />
@@ -254,6 +272,8 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_clear24.png" />
+    <None Include="Resources\img_group24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

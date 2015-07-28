@@ -141,6 +141,7 @@ namespace MW5.Tools.Model
                 if (param != null)
                 {
                     prop.SetValue(this, param);
+                    param.Name = prop.Name;
                     param.Index = attr.Index;
                     param.DisplayName = attr.DisplayName;
                     param.Required = attr is RequiredParameterAttribute;

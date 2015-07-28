@@ -4,7 +4,9 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Tools.Model;
 using MW5.Tools.Views;
 using MW5.Tools.Views.Controls;
 
@@ -22,8 +24,10 @@ namespace MW5.Tools
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterView<IGisToolView, GisToolView>()
-            .RegisterService<ParameterControlFactory>();
-
+                .RegisterSingleton<ITaskCollection, TaskCollection>()
+                .RegisterService<ParameterControlFactory>()
+                .RegisterSingleton<TasksDockPanel>()
+                .RegisterSingleton<TasksPresenter>();
         }
     }
 }

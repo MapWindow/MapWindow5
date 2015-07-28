@@ -182,4 +182,12 @@
         Vertical = 1,
         Horizontal = 2,
     }
+
+    public enum GisTaskStatus
+    {
+        NotStarted = 0,
+        Running = 1,
+        Success = 2,
+        Failure = 3
+    }
 }

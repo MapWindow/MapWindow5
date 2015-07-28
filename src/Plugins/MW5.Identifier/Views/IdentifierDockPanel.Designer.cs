@@ -107,7 +107,7 @@ namespace MW5.Plugins.Identifier.Views
             this.toolZoomToShape.Name = "toolZoomToShape";
             this.toolZoomToShape.Padding = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.toolZoomToShape.Size = new System.Drawing.Size(38, 32);
-            this.toolZoomToShape.Text = "toolStripButton1";
+            this.toolZoomToShape.Text = "Zoom to Shape";
             // 
             // toolClear
             // 

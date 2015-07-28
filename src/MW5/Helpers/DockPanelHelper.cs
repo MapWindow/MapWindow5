@@ -14,6 +14,7 @@ using MW5.Properties;
 using MW5.Services.Helpers;
 using MW5.Services.Serialization;
 using MW5.Shared;
+using MW5.Tools.Views;
 using MW5.UI.Docking;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
@@ -34,8 +35,19 @@ namespace MW5.Helpers
             InitLocator(context);
 
             InitToolbox(context);
+
+            InitToolboxResults(context);
             
             context.DockPanels.Legend.TabPosition = 0;
+        }
+
+        private static void InitToolboxResults(ISerializableContext context)
+        {
+            var presenter = context.Container.Resolve<TasksPresenter>();
+            var legend = context.DockPanels.Add(presenter.View, DockPanelKeys.ToolboxResults, PluginIdentity.Default);
+            legend.Caption = "Tasks";
+            legend.DockTo(context.DockPanels.Toolbox, DockPanelState.Tabbed, PanelSize);
+            legend.SetIcon(Resources.ico_tasks);
         }
 
         private static void InitLegend(ISerializableContext context)

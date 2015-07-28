@@ -49,8 +49,8 @@ namespace MW5.Plugins.Repository.Views
             this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuAddConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveConnection = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
             this.mnuRemoveLayer = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -67,6 +67,7 @@ namespace MW5.Plugins.Repository.Views
             this.toolStripEx1.Location = new System.Drawing.Point(0, 0);
             this.toolStripEx1.Name = "toolStripEx1";
             this.toolStripEx1.ShowCaption = false;
+            this.toolStripEx1.ShowItemToolTips = true;
             this.toolStripEx1.Size = new System.Drawing.Size(330, 37);
             this.toolStripEx1.TabIndex = 1;
             this.toolStripEx1.Text = "toolStripEx1";
@@ -110,7 +111,7 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveLayer});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 268);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 246);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
@@ -173,8 +174,15 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveConnection.Size = new System.Drawing.Size(181, 22);
             this.mnuRemoveConnection.Text = "Remove connection";
             // 
+            // mnuRemoveLayer
+            // 
+            this.mnuRemoveLayer.Name = "mnuRemoveLayer";
+            this.mnuRemoveLayer.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveLayer.Text = "Remove layer";
+            // 
             // treeViewAdv1
             // 
+            this.treeViewAdv1.ApplyStyle = true;
             this.treeViewAdv1.BackColor = System.Drawing.Color.White;
             this.treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(330, 635);
             this.treeViewAdv1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
@@ -198,6 +206,7 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1.Name = "treeViewAdv1";
             this.treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this.treeViewAdv1.ShowFocusRect = false;
+            this.treeViewAdv1.ShowSuperTooltip = true;
             this.treeViewAdv1.Size = new System.Drawing.Size(330, 635);
             this.treeViewAdv1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this.treeViewAdv1.TabIndex = 0;
@@ -212,12 +221,6 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1.ToolTipControl.TabIndex = 1;
             this.treeViewAdv1.ToolTipControl.Text = "toolTip";
             this.treeViewAdv1.ToolTipDuration = 3000;
-            // 
-            // mnuRemoveLayer
-            // 
-            this.mnuRemoveLayer.Name = "mnuRemoveLayer";
-            this.mnuRemoveLayer.Size = new System.Drawing.Size(181, 22);
-            this.mnuRemoveLayer.Text = "Remove layer";
             // 
             // RepositoryDockPanel
             // 

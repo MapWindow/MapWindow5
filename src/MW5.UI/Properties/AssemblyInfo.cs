@@ -23,6 +23,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("MW5.UI")]
 
 [assembly: InternalsVisibleTo("MapWindow")]
+[assembly: InternalsVisibleTo("MW5.Tools")]
 [assembly: InternalsVisibleTo("MW5.TableEditor")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM

@@ -18,6 +18,7 @@ using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Services.Serialization;
 using MW5.Tools.Toolbox;
+using MW5.Tools.Views;
 using MW5.UI;
 using MW5.UI.Docking;
 using MW5.UI.Forms;
@@ -35,6 +36,7 @@ namespace MW5
         private readonly IApplicationContainer _container;
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
+        private readonly ITaskCollection _tasks;
 
         private IMap _map;
         private IMenu _menu;
@@ -54,14 +56,17 @@ namespace MW5
 
         private bool _initialized;
 
-        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, IStyleService styleService)
+        public AppContext(IApplicationContainer container, IProjectionDatabase projectionDatabase, 
+            IStyleService styleService, ITaskCollection tasks)
         {
             if (container == null) throw new ArgumentNullException("container");
             if (styleService == null) throw new ArgumentNullException("styleService");
+            if (tasks == null) throw new ArgumentNullException("tasks");
 
             _container = container;
             _projectionDatabase = projectionDatabase;
             _styleService = styleService;
+            _tasks = tasks;
         }
 
         /// <summary>
@@ -115,8 +120,7 @@ namespace MW5
 
         private void InitToolbox()
         {
-            var toolbox = new ToolboxControl(this);
-            _toolbox = toolbox;
+            _toolbox = new ToolboxControl(this);
         }
 
         internal void InitPlugins(IConfigService configService)
@@ -199,6 +203,11 @@ namespace MW5
         public AppConfig Config
         {
             get { return _configService.Config; }
+        }
+
+        public ITaskCollection Tasks
+        {
+            get { return _tasks; }
         }
 
         public IRepository Repository

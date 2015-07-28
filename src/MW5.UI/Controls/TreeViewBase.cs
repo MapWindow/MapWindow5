@@ -126,7 +126,10 @@ namespace MW5.UI.Controls
             if (handler != null)
             {
                 handler(this, args);
+                return;
             }
+
+            args.Cancel = true;
         }
     }
 }

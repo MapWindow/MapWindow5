@@ -35,6 +35,8 @@ namespace MW5.Tools.Model.Parameters
             }
         }
 
+        public string Name { get; set; }
+
         /// <summary>
         /// Gets or sets the display name.
         /// </summary>

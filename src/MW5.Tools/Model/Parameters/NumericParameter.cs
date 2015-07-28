@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace MW5.Tools.Model.Parameters
 {
-
     public abstract class NumericParameter<T> : ValueParameter<T>
-        where T : IComparable<T>
+        where T : IComparable<T>, IFormattable
     {
         public T MinValue { get; set; }
 

@@ -8,7 +8,10 @@ namespace MW5.Tools.Model.Parameters
 {
     public abstract class ValueParameter : BaseParameter
     {
-        public abstract bool Numeric { get; }
+        public virtual bool Numeric
+        {
+            get { return false; }
+        }
 
         public abstract bool Validate(out string errorMessage);
     }
@@ -27,8 +30,5 @@ namespace MW5.Tools.Model.Parameters
             errorMessage = string.Empty;
             return false;
         }
-
-        public override bool Numeric { get { return false; } }
     }
-
 }

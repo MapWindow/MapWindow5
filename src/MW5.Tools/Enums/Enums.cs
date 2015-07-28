@@ -24,5 +24,9 @@ namespace MW5.Tools.Enums
         Boolean = 2
     }
 
-
+    public enum ToolboxResultsCommand
+    {
+        Clear = 0,
+        ToggleGroup = 1,
+    }
 }

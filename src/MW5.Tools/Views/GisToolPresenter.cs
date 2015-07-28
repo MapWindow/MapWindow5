@@ -48,7 +48,13 @@ namespace MW5.Tools.Views
                 return false;
             }
 
-            return Model.Run();
+            var task = new GisTask(Model);
+
+            bool result = task.Run();
+
+            _context.Tasks.AddTask(task);
+
+            return result;
         }
     }
 }
