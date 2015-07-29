@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Tools.Enums;
 using MW5.UI.Docking;
 
@@ -45,6 +46,11 @@ namespace MW5.Tools.Views
             switch (command)
             {
                 case ToolboxResultsCommand.Clear:
+                    if (MessageService.Current.Ask("Remove all the tasks from the list?"))
+                    {
+                        _tasks.Clear();
+                        View.UpdateView();
+                    }
                     break;
                 case ToolboxResultsCommand.ToggleGroup:
                     break;

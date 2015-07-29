@@ -15,6 +15,7 @@ namespace MW5.Tools.Model.Parameters
     public abstract class BaseParameter
     {
         private ParameterControlBase _control;
+        protected object _defaultValue;
 
         /// <summary>
         /// The value changed.
@@ -62,6 +63,16 @@ namespace MW5.Tools.Model.Parameters
             {
                 handler();
             }
+        }
+
+        public void SetDefaultValue(object value)
+        {
+            _defaultValue = value;
+        }
+
+        public object GetDefaultValue()
+        {
+            return _defaultValue;
         }
     }
 }

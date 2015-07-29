@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnOpen = new Syncfusion.Windows.Forms.ButtonAdv();
             this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             this.SuspendLayout();
@@ -81,10 +82,20 @@
             this.comboBoxAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBoxAdv1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxAdv1.ForceImageIndent = true;
+            this.comboBoxAdv1.ImageList = this.imageList1;
             this.comboBoxAdv1.Location = new System.Drawing.Point(8, 19);
             this.comboBoxAdv1.Name = "comboBoxAdv1";
+            this.comboBoxAdv1.ShowImageInTextBox = true;
+            this.comboBoxAdv1.ShowImagesInComboListBox = true;
             this.comboBoxAdv1.Size = new System.Drawing.Size(287, 21);
             this.comboBoxAdv1.TabIndex = 4;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(24, 24);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // LayerParameterControl
             // 
@@ -107,5 +118,6 @@
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.ButtonAdv btnOpen;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }

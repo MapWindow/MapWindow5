@@ -35,10 +35,10 @@ namespace MW5.Tools.Views
         {
             if (tasks == null) throw new ArgumentNullException("tasks");
             _tasks = tasks;
-            _tasks.CollectionChanged += TasksCollectionChanged;
+            _tasks.CollectionChanged += (s, e) => PopulateTree();
         }
 
-        private void TasksCollectionChanged(object sender, EventArgs e)
+        private void PopulateTree()
         {
             Nodes.Clear();
 
@@ -103,6 +103,11 @@ namespace MW5.Tools.Views
             }
 
             nodeTask.Nodes.Add(nodeParameters);
+        }
+
+        public void UpdateView()
+        {
+            PopulateTree();
         }
     }
 }

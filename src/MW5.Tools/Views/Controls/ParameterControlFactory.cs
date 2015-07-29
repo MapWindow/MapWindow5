@@ -25,47 +25,58 @@ namespace MW5.Tools.Views.Controls
         {
             if (parameter == null) throw new ArgumentNullException("parameter");
 
+            IParameterControl control = null;
             if (parameter is StringParameter)
             {
-                return new StringParameterControl();
+                control = new StringParameterControl();
             }
 
             if (parameter is BooleanParameter)
             {
-                return new BooleanParameterControl();
+                control = new BooleanParameterControl();
             }
 
             if (parameter is IntegerParameter)
             {
-                return new IntegerParameterControl();
+                control = new IntegerParameterControl();
             }
 
             if (parameter is DoubleParameter)
             {
-                return new DoubleParameterControl();
+                control = new DoubleParameterControl();
             }
 
             if (parameter is OutputLayerParameter)
             {
-                return new OutputParameterControl(_dialogService);
+                control = new OutputParameterControl(_dialogService);
             }
 
             if (parameter is OptionsParameter)
             {
-                var control = new ComboParameterControl { ButtonVisible = false };
+                control = new ComboParameterControl { ButtonVisible = false };
 
                 // ensure that previously specified options are applied
-                control.SetOptions((parameter as OptionsParameter).OptionsSource);     
-                return control;
+                (control as ComboParameterControl).SetOptions((parameter as OptionsParameter).OptionsSource);     
             }
 
             if (parameter is LayerParameterBase)
             {
                 var lp = parameter as LayerParameterBase;
-                return new LayerParameterControl(lp.Layers, lp.DataSourceType, _dialogService);
+                control = new LayerParameterControl(lp.Layers, lp.DataSourceType, _dialogService);
             }
 
-            throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
+            if (control == null)
+            {
+                throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
+            }
+
+            var value = parameter.GetDefaultValue();
+            if (value != null)
+            {
+                control.SetValue(value);
+            }
+
+            return control;
         }
     }
 }

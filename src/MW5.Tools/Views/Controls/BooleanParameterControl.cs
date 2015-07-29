@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Windows.Forms;
 
 namespace MW5.Tools.Views.Controls
@@ -11,7 +12,7 @@ namespace MW5.Tools.Views.Controls
     /// <summary>
     /// The boolean parameter control.
     /// </summary>
-    public partial class BooleanParameterControl : ParameterControlBase, IParameterControl
+    public partial class BooleanParameterControl : ParameterControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="BooleanParameterControl"/> class.
@@ -35,7 +36,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
-        public string Caption
+        public override string Caption
         {
             get { return checkBox1.Text; }
 
@@ -45,7 +46,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get table.
         /// </summary>
-        public TableLayoutPanel GetTable()
+        public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
         }
@@ -53,9 +54,17 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get value.
         /// </summary>
-        public object GetValue()
+        public override object GetValue()
         {
             return checkBox1.Checked;
+        }
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public override void SetValue(object value)
+        {
+            checkBox1.Checked = Convert.ToBoolean(value);
         }
     }
 }

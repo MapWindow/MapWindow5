@@ -1,20 +1,15 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="StringParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Defines the StringParameterControl type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
+
+using System.Windows.Forms;
 
 namespace MW5.Tools.Views.Controls
 {
-    using System.Windows.Forms;
-
     public partial class StringParameterControl : ParameterControlBase, IParameterControl
     {
-        #region Constructors and Destructors
-
         /// <summary>
         /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
         /// </summary>
@@ -24,37 +19,20 @@ namespace MW5.Tools.Views.Controls
             buttonAdv1.Visible = false;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
-        public string Caption
+        public override string Caption
         {
-            get
-            {
-                return label1.Text;
-            }
+            get { return label1.Text; }
 
-            set
-            {
-                label1.Text = value;
-            }
+            set { label1.Text = value; }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// The get table.
         /// </summary>
-        /// <returns>
-        /// The <see cref="TableLayoutPanel" />.
-        /// </returns>
-        public TableLayoutPanel GetTable()
+        public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
         }
@@ -62,14 +40,17 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get value.
         /// </summary>
-        /// <returns>
-        /// The <see cref="object" />.
-        /// </returns>
-        public object GetValue()
+        public override object GetValue()
         {
             return textBoxExt1.Text;
         }
 
-        #endregion
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public override void SetValue(object value)
+        {
+            textBoxExt1.Text = (string)value;
+        }
     }
 }

@@ -4,11 +4,12 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Windows.Forms;
 
 namespace MW5.Tools.Views.Controls
 {
-    public partial class DoubleParameterControl : ParameterControlBase, IParameterControl
+    public partial class DoubleParameterControl : ParameterControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
@@ -21,7 +22,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
-        public string Caption
+        public override string Caption
         {
             get { return label1.Text; }
 
@@ -31,7 +32,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get table.
         /// </summary>
-        public TableLayoutPanel GetTable()
+        public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
         }
@@ -39,9 +40,17 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get value.
         /// </summary>
-        public object GetValue()
+        public override object GetValue()
         {
             return doubleTextBox1.DoubleValue;
+        }
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public override void SetValue(object value)
+        {
+            doubleTextBox1.DoubleValue = Convert.ToDouble(value);
         }
     }
 }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace MW5.Tools.Views.Controls
 {
-    public partial class ComboParameterControl : ParameterControlBase, IParameterControl
+    public partial class ComboParameterControl : ParameterControlBase
     {
         public ComboParameterControl()
         {
@@ -23,17 +23,25 @@ namespace MW5.Tools.Views.Controls
             comboBoxAdv1.DataSource = options;
         }
 
-        public object GetValue()
+        public override object GetValue()
         {
             return comboBoxAdv1.SelectedItem;
         }
 
-        public TableLayoutPanel GetTable()
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public override void SetValue(object value)
+        {
+            // TODO: implement
+        }
+
+        public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
         }
 
-        public string Caption
+        public override string Caption
         {
             get { return label1.Text; }
             set { label1.Text = value; }

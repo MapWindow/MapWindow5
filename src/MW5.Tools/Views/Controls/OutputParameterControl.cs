@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using MW5.Tools.Model;
 
 namespace MW5.Tools.Views.Controls
 {
-    public partial class OutputParameterControl : ParameterControlBase, IParameterControl
+    public partial class OutputParameterControl : ParameterControlBase
     {
         private readonly IFileDialogService _dialogService;
 
@@ -23,12 +24,14 @@ namespace MW5.Tools.Views.Controls
             _dialogService = dialogService;
 
             InitializeComponent();
+
+            RefreshControls();
         }
 
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
-        public string Caption
+        public override string Caption
         {
             get { return label1.Text; }
             set { label1.Text = value; }
@@ -37,7 +40,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get table.
         /// </summary>
-        public TableLayoutPanel GetTable()
+        public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
         }
@@ -45,7 +48,7 @@ namespace MW5.Tools.Views.Controls
         /// <summary>
         /// The get value.
         /// </summary>
-        public object GetValue()
+        public override object GetValue()
         {
             return new OutputLayerInfo()
             {
@@ -56,6 +59,15 @@ namespace MW5.Tools.Views.Controls
             };
         }
 
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public override void SetValue(object value)
+        {
+            var s = Convert.ToString(value);
+            textBoxExt1.Text = s;
+        }
+
         private void OnSaveClick(object sender, EventArgs e)
         {
             string filename = string.Empty;
@@ -63,6 +75,21 @@ namespace MW5.Tools.Views.Controls
             {
                 textBoxExt1.Text = filename;
             }
+        }
+
+        private void RefreshControls()
+        {
+            if (chkMemoryLayer.Checked)
+            {
+                chkAddToMap.Checked = true;
+            }
+
+            chkAddToMap.Enabled = !chkMemoryLayer.Checked;
+        }
+
+        private void MemoryLayerChecked(object sender, EventArgs e)
+        {
+            RefreshControls();
         }
     }
 }

@@ -5,6 +5,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -25,11 +26,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [RequiredParameter("Layer for bounding box", 0)]
         public LayerParameter InputLayer { get; set; }
 
-        [RequiredParameter("Number of points", 1)]
-        [Range(1, 1000000)]
+        [RequiredParameter("Number of points", 1), DefaultValue(500), Range(1, 1000000)]
         public IntegerParameter NumPoints { get; set; }
 
-        [RequiredParameter("New layer name", 2)]
+        [RequiredParameter("New layer name", 2), DefaultValue("random points")]
         public OutputLayerParameter OutputLayer { get; set; }
 
         /// <summary>
@@ -54,11 +54,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <returns>True on success, which closes the view</returns>
         public override bool Run()
         {
-            // TODO: Set default value for NumPoints
-            // TODO: Set manual, local html file or remote local html file.
             // TODO: log the name of the tool and start time
-            
-            // TODO: add separate numeric paramter
+
             // let it be synchronous until progress reporting is implemented in a thread safe way
             //var result = Task.Factory.StartNew(() => RunCore(layerSource, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
             var fs = RunCore(InputLayer.Value, NumPoints.Value);

@@ -5,20 +5,17 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
+using MW5.Shared;
 
 namespace MW5.Tools.Views.Controls
 {
-    #region
-
-    
-
-    #endregion
-
     /// <summary>
     /// The parameter control base.
     /// </summary>
-    public partial class ParameterControlBase : UserControl
+    [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<ParameterControlBase, UserControl>))]
+    public abstract partial class ParameterControlBase : UserControl, IParameterControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterControlBase"/> class.
@@ -34,12 +31,24 @@ namespace MW5.Tools.Views.Controls
         public event EventHandler<EventArgs> ValueChanged;
 
         /// <summary>
-        /// Gets the as base.
+        /// Gets or sets the caption.
         /// </summary>
-        public IParameterControl AsBase
-        {
-            get { return this as IParameterControl; }
-        }
+        public abstract string Caption { get; set; }
+
+        /// <summary>
+        /// The get table.
+        /// </summary>
+        public abstract TableLayoutPanel GetTable();
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        public abstract object GetValue();
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        public abstract void SetValue(object value);
 
         /// <summary>
         /// The fire value changed.

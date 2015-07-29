@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
@@ -148,8 +149,19 @@ namespace MW5.Tools.Model
 
                     HandleRangeAttribute(param, prop);
 
+                    HandleDefaultValueAttribute(param, prop);
+
                     yield return param;
                 }
+            }
+        }
+
+        private void HandleDefaultValueAttribute(BaseParameter param, PropertyInfo prop)
+        {
+            var attr = prop.GetAttribute<DefaultValueAttribute>();
+            if (attr != null)
+            {
+                param.SetDefaultValue(attr.Value);
             }
         }
 

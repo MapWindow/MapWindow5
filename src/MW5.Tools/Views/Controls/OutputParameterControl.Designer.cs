@@ -118,12 +118,15 @@
             // chkMemoryLayer
             // 
             this.chkMemoryLayer.AutoSize = true;
+            this.chkMemoryLayer.Checked = true;
+            this.chkMemoryLayer.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMemoryLayer.Location = new System.Drawing.Point(80, 3);
             this.chkMemoryLayer.Name = "chkMemoryLayer";
             this.chkMemoryLayer.Size = new System.Drawing.Size(88, 17);
             this.chkMemoryLayer.TabIndex = 1;
             this.chkMemoryLayer.Text = "Memory layer";
             this.chkMemoryLayer.UseVisualStyleBackColor = true;
+            this.chkMemoryLayer.CheckedChanged += new System.EventHandler(this.MemoryLayerChecked);
             // 
             // chkOverwrite
             // 

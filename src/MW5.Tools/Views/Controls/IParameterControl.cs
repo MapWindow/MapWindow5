@@ -25,13 +25,13 @@ namespace MW5.Tools.Views.Controls
         string Caption { get; set; }
 
         /// <summary>
-        /// The get table.
-        /// </summary>
-        TableLayoutPanel GetTable();
-
-        /// <summary>
-        /// The get value.
+        /// Gets the value.
         /// </summary>
         object GetValue();
+
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        void SetValue(object value);
     }
 }

@@ -13,7 +13,7 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public OutputLayerInfo Value
         {
-            get {  return Control.AsBase.GetValue() as OutputLayerInfo; }
+            get {  return Control.GetValue() as OutputLayerInfo; }
         }
 
         public override string ToString()

@@ -25,6 +25,11 @@ namespace MW5.Tools.Views
             tasksTreeView1.Initialize(tasks);
         }
 
+        public void UpdateView()
+        {
+            tasksTreeView1.UpdateView();
+        }
+
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
             get { yield return toolStripEx1.Items; }

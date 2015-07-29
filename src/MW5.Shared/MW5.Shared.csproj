@@ -64,6 +64,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="ReplaceControlDescripterProvider.cs" />
     <Compile Include="ArrayHelper.cs" />
     <Compile Include="AssemblyHelper.cs" />
     <Compile Include="AttributeHelper.cs" />
