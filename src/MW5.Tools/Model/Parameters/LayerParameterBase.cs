@@ -59,5 +59,19 @@ namespace MW5.Tools.Model.Parameters
                 return layer != null ? layer.Source as TLayerSource : null;
             }
         }
+
+        public bool SelectedOnly
+        {
+            get
+            {
+                var layer = LayerControl.GetValue() as LayerWrapper;
+                if (layer != null)
+                {
+                    return layer.SelectedOnly;
+                }
+
+                return false;
+            }
+        }
     }
 }

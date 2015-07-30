@@ -104,6 +104,12 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ImageComboItem.cs" />
+    <Compile Include="Controls\SectionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SectionControl.Designer.cs">
+      <DependentUpon>SectionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StronglyTypedDataGridView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -299,6 +305,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Office2007MenuHelper.resx">
       <DependentUpon>Office2007MenuHelper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SectionControl.resx">
+      <DependentUpon>SectionControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TabPropertiesControl.resx">
       <DependentUpon>TabPropertiesControl.cs</DependentUpon>

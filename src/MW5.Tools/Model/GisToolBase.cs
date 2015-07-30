@@ -90,6 +90,16 @@ namespace MW5.Tools.Model
         {
             foreach (var p in Parameters)
             {
+                var layerParameter = p as LayerParameter;
+                if (layerParameter != null)
+                {
+                    if (layerParameter.Value == null)
+                    {
+                        MessageService.Info("Input datasource isn't selected.");
+                        return false;
+                    }
+                }
+
                 var outputParameter = p as OutputLayerParameter;
                 if (outputParameter != null)
                 {
@@ -145,6 +155,15 @@ namespace MW5.Tools.Model
                     param.Name = prop.Name;
                     param.Index = attr.Index;
                     param.DisplayName = attr.DisplayName;
+
+                    if (!(param is BooleanParameter))
+                    {
+                        if (!param.DisplayName.Trim().EndsWith(":"))
+                        {
+                            param.DisplayName += ":";
+                        }
+                    }
+
                     param.Required = attr is InputAttribute;
 
                     HandleRangeAttribute(param, prop);

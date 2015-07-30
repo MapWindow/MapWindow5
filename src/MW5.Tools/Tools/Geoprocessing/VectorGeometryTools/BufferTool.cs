@@ -14,7 +14,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class BufferTool : GisToolBase
     {
-        [Input("Layer to build buffer for", 0)]
+        [Input("Input layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
 
         [Input("Buffer distance", 1)]
@@ -50,7 +50,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run()
         {
-            var fs = InputLayer.Value.BufferByDistance(BufferDistance.Value, NumSegments.Value, false, MergeResults.Value);
+            var fs = InputLayer.Value.BufferByDistance(BufferDistance.Value, NumSegments.Value, InputLayer.SelectedOnly, MergeResults.Value);
             if (fs != null)
             {
                 HandleOutput(fs, Output.Value);

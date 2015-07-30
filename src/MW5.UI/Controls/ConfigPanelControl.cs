@@ -47,5 +47,10 @@ namespace MW5.UI.Controls
             get { return _gradientLabel1.Text; }
             set { _gradientLabel1.Text = value; }
         }
+
+        public void ShowCaptionOnly()
+        {
+            Height = _gradientLabel1.Height;
+        }
     }
 }

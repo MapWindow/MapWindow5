@@ -14,6 +14,7 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Views.Controls;
+using MW5.UI.Controls;
 using MW5.UI.Forms;
 
 namespace MW5.Tools.Views
@@ -41,7 +42,11 @@ namespace MW5.Tools.Views
             _controlFactory = controlFactory;
 
             InitializeComponent();
+
+            ShowSections = true;
         }
+
+        private bool ShowSections { get; set; }
 
         /// <summary>
         /// Gets the ok button.
@@ -58,7 +63,7 @@ namespace MW5.Tools.Views
         {
             parameters = parameters.ToList();
 
-            GenerateControlsWithinPanel(panelRequired, parameters.Where(p => p.Required));
+            GenerateControlsWithinPanel(panelRequired, parameters.Where(p => p.Required), false);
 
             if (parameters.All(p => p.Required))
             {
@@ -66,7 +71,7 @@ namespace MW5.Tools.Views
             }
             else
             {
-                GenerateControlsWithinPanel(panelOptional, parameters.Where(p => !p.Required));
+                GenerateControlsWithinPanel(panelOptional, parameters.Where(p => !p.Required), true);
             }
         }
 
@@ -89,16 +94,48 @@ namespace MW5.Tools.Views
             }
         }
 
-        private void GenerateControlsWithinPanel(Control panel, IEnumerable<BaseParameter> parameters)
+        private void GenerateControlsWithinPanel(Control panel, IEnumerable<BaseParameter> parameters, bool optional)
         {
             panel.Controls.Clear();
 
-            foreach (var p in parameters.OrderByDescending(p => p.Index))
+            var list = parameters.OrderByDescending(p => p.Index).ToList();
+
+            GenerateSection(panel, list.Where(p => p is OutputLayerParameter));
+
+            if (!optional)
+            {
+                AddSection("Output", panel);
+            }
+
+            GenerateSection(panel, list.Where(p => !(p is OutputLayerParameter)));
+
+            if (!optional)
+            {
+                AddSection("Input", panel);
+            }
+
+            AdjustVerticalPadding(panel);
+        }
+
+        private void AddSection(string sectionName, Control panel)
+        {
+            if (ShowSections)
+            {
+                var section = new ConfigPanelControl() { HeaderText = sectionName, Dock = DockStyle.Top };
+                section.ShowCaptionOnly();
+                panel.Controls.Add(section);
+            }
+        }
+
+        private void GenerateSection(Control panel, IEnumerable<BaseParameter> parameters)
+        {
+            foreach (var p in parameters)
             {
                 var ctrl = _controlFactory.CreateControl(p);
                 if (ctrl == null) continue;
 
                 ctrl.Caption = p.DisplayName;
+
                 p.Control = ctrl as ParameterControlBase;
 
                 var userControl = ctrl as UserControl;
@@ -110,8 +147,6 @@ namespace MW5.Tools.Views
                 userControl.Dock = DockStyle.Top;
                 panel.Controls.Add(userControl);
             }
-
-            AdjustVerticalPadding(panel);
         }
     }
 

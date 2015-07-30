@@ -19,9 +19,10 @@ namespace MW5.Tools.Helpers
         {
             string html;
 
+            string url = GetUrl(tool);
+
             if (!UseLocalHelpOnly)
             {
-                string url = GetUrl(tool);
                 if (LoadFromUrl(url, out html))
                 {
                     return html;
@@ -35,7 +36,7 @@ namespace MW5.Tools.Helpers
             }
 
             return "Documentation for this tool is missing. <br />" +
-                   "<p style='font-size: 0.7em'>Searched locations: " + path + "</p>";
+                   "<p style='font-size: 0.7em'>Searched locations: <br />" + url + "</br>" + path + "</p>";
         }
 
         private static bool LoadFromFile(string path, out string html)

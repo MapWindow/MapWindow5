@@ -33,6 +33,8 @@ namespace MW5.Tools.Views.Controls
 
             InitializeComponent();
 
+            SetNumSelected(0);
+
             PopulateImageList();
 
             _layers = layers.ToList();
@@ -46,7 +48,13 @@ namespace MW5.Tools.Views.Controls
 
         public override object GetValue()
         {
-            return comboBoxAdv1.SelectedItem as LayerWrapper;
+            var layer = SelectedLayer;
+            if (layer != null)
+            {
+                layer.SelectedOnly = chkSelectedOnly.Checked;
+            }
+
+            return layer;
         }
 
         /// <summary>
@@ -156,6 +164,29 @@ namespace MW5.Tools.Views.Controls
             }
 
             RefreshImages();
+        }
+
+        private LayerWrapper SelectedLayer
+        {
+            get { return comboBoxAdv1.SelectedItem as LayerWrapper; }
+        }
+
+        private void SelectedLayerChanged(object sender, EventArgs e)
+        {
+            var layer = SelectedLayer;
+            if (layer != null && layer.FeatureSet != null)
+            {
+                SetNumSelected(layer.FeatureSet.NumSelected);
+                return;
+            }
+
+            SetNumSelected(0);
+        }
+
+        private void SetNumSelected(int count)
+        {
+            lblNumSelected.Text = "Number of selected: " + count;
+            chkSelectedOnly.Enabled = count > 0;
         }
     }
 }

@@ -73,6 +73,8 @@ namespace MW5.Tools.Model
             }
         }
 
+        public bool SelectedOnly { get; set; }
+    
         public bool Opened
         {
             get { return _layer != null; }

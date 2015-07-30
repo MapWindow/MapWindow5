@@ -47,7 +47,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             var fs2 = InputLayer2.Value;
 
-            var result = fs.Intersection(false, fs2, false, Api.Enums.GeometryType.None);
+            var result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, Api.Enums.GeometryType.None);
 
             if (result != null)
             {
