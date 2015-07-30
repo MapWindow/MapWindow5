@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace MW5.Tools.Model.Parameters
     {
         public override string ToString()
         {
-            return string.Format("{0}: {1}", DisplayName, Value.Filename);
+            return string.Format("{0}: {1}", DisplayName, Path.GetFileName(Value.Filename));
         }
     }
 }

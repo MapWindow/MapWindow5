@@ -36,12 +36,12 @@ namespace MW5.Helpers
 
             InitToolbox(context);
 
-            InitToolboxResults(context);
+            InitTasks(context);
             
             context.DockPanels.Legend.TabPosition = 0;
         }
 
-        private static void InitToolboxResults(ISerializableContext context)
+        private static void InitTasks(ISerializableContext context)
         {
             var presenter = context.Container.Resolve<TasksPresenter>();
             var legend = context.DockPanels.Add(presenter.View, DockPanelKeys.ToolboxResults, PluginIdentity.Default);

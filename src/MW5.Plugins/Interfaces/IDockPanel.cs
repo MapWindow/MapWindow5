@@ -11,6 +11,7 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IDockPanel
     {
+        void Activate();
         Control Control { get; }
         DockPanelState DockState { get; }
         bool Visible { get; set; }

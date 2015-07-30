@@ -29,4 +29,15 @@ namespace MW5.Tools.Enums
         Clear = 0,
         ToggleGroup = 1,
     }
+
+    internal enum TaskIcons
+    {
+        InProgress = 0,
+        Success = 1,
+        Error = 2,
+        Input = 3,
+        Result = 4,
+        Execution = 5,
+        Log = 6,
+    }
 }

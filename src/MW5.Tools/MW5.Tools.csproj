@@ -272,6 +272,12 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_error16.png" />
+    <None Include="Resources\img_warning16.png" />
+    <None Include="Resources\img_wait16.png" />
+    <None Include="Resources\img_result16.png" />
+    <None Include="Resources\img_ok16.png" />
+    <None Include="Resources\img_database16.png" />
     <None Include="Resources\img_raster.png" />
     <None Include="Resources\img_polygon.png" />
     <None Include="Resources\img_point.png" />

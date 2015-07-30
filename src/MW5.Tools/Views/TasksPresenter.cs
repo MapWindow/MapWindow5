@@ -37,7 +37,7 @@ namespace MW5.Tools.Views
             if (panel != null)
             {
                 panel.Visible = true;
-                panel.TabPosition = 0;
+                panel.Activate();
             }
         }
 

@@ -117,7 +117,15 @@ namespace MW5.UI.Docking
         public int TabPosition
         {
             get { return _dockingManager.GetTabPosition(_control); }
-            set { _dockingManager.SetTabPosition(_control, value); }
+            set
+            {
+                _dockingManager.SetTabPosition(_control, value);
+            }
+        }
+
+        public void Activate()
+        {
+            _dockingManager.ActivateControl(_control);
         }
 
         public bool IsFloating

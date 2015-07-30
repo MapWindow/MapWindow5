@@ -169,4 +169,22 @@
   <data name="img_raster" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_raster.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_database16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_database16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_error16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_error16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_ok16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_ok16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_result16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_result16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_wait16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_wait16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_warning16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_warning16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

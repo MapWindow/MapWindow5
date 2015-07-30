@@ -8,8 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Properties;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -28,7 +30,13 @@ namespace MW5.Tools.Views
 
         protected override IEnumerable<Bitmap> OnCreateImageList()
         {
-            return new List<Bitmap>() { };
+            yield return Resources.img_wait16;
+            yield return Resources.img_ok16;
+            yield return Resources.img_error16;
+            yield return Resources.img_database16;
+            yield return Resources.img_result16;
+            yield return Resources.img_options24;
+            yield return Resources.img_warning16;
         }
 
         public void Initialize(ITaskCollection tasks)
@@ -44,7 +52,11 @@ namespace MW5.Tools.Views
 
             foreach (var task in _tasks)
             {
-                var nodeTask = new TreeNodeAdv(task.Tool.Name) { Tag = task };
+                var nodeTask = new TreeNodeAdv(task.Tool.Name)
+                                   {
+                                       Tag = task, 
+                                       LeftImageIndices = new[] { (int)TaskIcons.Success }
+                                   };
 
                 var tool = task.Tool as GisToolBase;
                 if (tool != null)
@@ -56,8 +68,12 @@ namespace MW5.Tools.Views
 
                 AddTaskExecutionStats(nodeTask, task);
 
-                var nodeErrors = new TreeNodeAdv("Errors");
-                nodeTask.Nodes.Add(nodeErrors);
+                bool hasErrors = false;
+                if (hasErrors)
+                {
+                    var nodeErrors = new TreeNodeAdv("Errors") { LeftImageIndices = new[] { (int)TaskIcons.Log } };
+                    nodeTask.Nodes.Add(nodeErrors);
+                }
 
                 Nodes.Add(nodeTask);
 
@@ -67,7 +83,7 @@ namespace MW5.Tools.Views
 
         private void AddTaskExecutionStats(TreeNodeAdv nodeTask, IGisTask task)
         {
-            var nodeExecution = new TreeNodeAdv("Execution");
+            var nodeExecution = new TreeNodeAdv("Execution") { LeftImageIndices = new[] { (int)TaskIcons.Execution } };
 
             var list = new List<string>()
             {
@@ -87,7 +103,8 @@ namespace MW5.Tools.Views
 
         private void AddToolParameters(TreeNodeAdv nodeTask, GisToolBase tool, bool output)
         {
-            var nodeParameters = new TreeNodeAdv(output ? "Output" : "Parameters");
+            var nodeParameters = new TreeNodeAdv(output ? "Output" : "Input");
+            nodeParameters.LeftImageIndices = new[] { (int) (output ? TaskIcons.Result : TaskIcons.Input) };
 
             foreach (var p in tool.Parameters)
             {
@@ -111,3 +128,4 @@ namespace MW5.Tools.Views
         }
     }
 }
+
