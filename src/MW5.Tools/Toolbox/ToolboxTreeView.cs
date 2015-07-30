@@ -9,6 +9,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Properties;
 using MW5.UI.Controls;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
 {
@@ -72,9 +73,9 @@ namespace MW5.Tools.Toolbox
                 FireToolSelected(tool);
             }
 
-            var group = SelectedNode.Tag as IToolboxGroup;
-            if (group != null)
+            if (IsGroup(SelectedNode))
             {
+                var group = new ToolboxGroup(SelectedNode);
                 FireGroupSelected(group);
             }
         }
@@ -85,7 +86,7 @@ namespace MW5.Tools.Toolbox
         private void TreeMouseDoubleClick(object sender, MouseEventArgs e)
         {
             var node = SelectedNode;
-            if (node == null || node.Tag is IToolboxGroup)
+            if (node == null || IsGroup(node))
             {
                 return;
             }
@@ -95,6 +96,11 @@ namespace MW5.Tools.Toolbox
             {
                 FireToolClicked(tool);
             }
+        }
+
+        private bool IsGroup(TreeNodeAdv node)
+        {
+            return node.Tag is ToolboxGroupMetadata;
         }
 
         private void FireToolClicked(IGisTool tool)

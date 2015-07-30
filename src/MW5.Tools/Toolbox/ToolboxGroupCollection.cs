@@ -33,11 +33,11 @@ namespace MW5.Tools.Toolbox
         }
 
         /// <summary>
-        ///     Returns the number of groups in the list.
+        /// Returns the number of groups in the list.
         /// </summary>
         public int Count
         {
-            get { return _nodes.Cast<TreeNode>().Count(node => (node.Tag is IToolboxGroup)); }
+            get { return _nodes.Cast<TreeNodeAdv>().Count(node => (node.Tag is IToolboxGroup)); }
         }
 
         /// <summary>
@@ -45,28 +45,39 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolboxGroup Add(string name, string key, PluginIdentity identity)
         {
-            var group = new ToolboxGroup(name, key, identity);
+            var metadata = new ToolboxGroupMetadata(key, name, identity);
 
-            _nodes.Add(group.InnerObject);
+            var node = new TreeNodeAdv
+            {
+                Tag = metadata,
+                Text = metadata.Name,
+                LeftImageIndices = new[] { ToolboxDockPanel.IconFolder }
+            };
 
-            return group;
+            _nodes.Add(node);
+            node.Expanded = true;
+
+            return new ToolboxGroup(node);
         }
 
         /// <summary>
-        ///     Clears all the groups.
+        /// Clears all the groups.
         /// </summary>
         public void Clear()
         {
             for (var i = _nodes.Count - 1; i >= 0; i--)
             {
-                var group = _nodes[i].Tag as IToolboxGroup;
-                if (group != null)
+                if (IsGroup(_nodes[i]))
                 {
                     _nodes.RemoveAt(i);
                 }
             }
         }
 
+        private bool IsGroup(TreeNodeAdv node)
+        {
+            return node.Tag is ToolboxGroupMetadata;
+        }
 
         /// <summary>
         /// Runs recursive search of the group by its key at the current and nested levels.
@@ -96,20 +107,23 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
-        /// <returns>
-        /// A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.
-        /// </returns>
         public IEnumerator<IToolboxGroup> GetEnumerator()
         {
             // group may have tools apart from nested groups,
             // therefore we don't use usual this[index] property
             for (var i = 0; i < _nodes.Count; i++)
             {
-                if (_nodes[i].Tag is ToolboxGroupMetadata)
+                var g = GetGroup(i);
+                if (g != null)
                 {
-                    yield return new ToolboxGroup(_nodes[i]);
+                    yield return g;
                 }
             }
+        }
+
+        private ToolboxGroup GetGroup(int index)
+        {
+            return IsGroup(_nodes[index]) ? new ToolboxGroup(_nodes[index]) : null;
         }
 
         /// <summary>
@@ -123,7 +137,7 @@ namespace MW5.Tools.Toolbox
                 _nodes.Remove(group.InnerObject);
                 return true;
             }
-            
+
             return false;
         }
 
@@ -156,12 +170,9 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Returns an enumerator that iterates through a collection.
         /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
-        /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

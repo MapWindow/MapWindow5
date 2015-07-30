@@ -21,30 +21,13 @@ namespace MW5.Tools.Toolbox
         public ToolboxGroup(TreeNodeAdv node)
         {
             if (node == null) throw new ArgumentNullException("node");
-
+            
             if (!(node.Tag is ToolboxGroupMetadata))
             {
                 throw new ApplicationException("No metadata is found for toolbox group node.");
             }
 
             _node = node;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ToolboxGroup"/> class.
-        /// </summary>
-        internal ToolboxGroup(string name, string key, PluginIdentity identity)
-        {
-            if (identity == null) throw new ArgumentNullException("identity");
-
-            _node = new TreeNodeAdv
-                        {
-                            Text = name,
-                            LeftImageIndices = new[] { ToolboxDockPanel.IconFolder },
-                            Tag = new ToolboxGroupMetadata(key, name, identity)
-                        };
-
-            _node.Expand();
         }
 
         private ToolboxGroupMetadata Metadata
@@ -120,10 +103,7 @@ namespace MW5.Tools.Toolbox
         {
             get
             {
-                if (_node == null)
-                {
-                    throw new NullReferenceException();
-                }
+                if (_node == null) throw new NullReferenceException();
 
                 return new ToolboxGroupCollection(_node.Nodes);
             }
