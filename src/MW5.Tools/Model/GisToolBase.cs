@@ -53,7 +53,7 @@ namespace MW5.Tools.Model
             get { return _messageService; }
         }
 
-        protected ILayerService LayerService
+        private ILayerService LayerService
         {
             get { return _layerService; }
         }
@@ -155,14 +155,6 @@ namespace MW5.Tools.Model
                     param.Name = prop.Name;
                     param.Index = attr.Index;
                     param.DisplayName = attr.DisplayName;
-
-                    if (!(param is BooleanParameter))
-                    {
-                        if (!param.DisplayName.Trim().EndsWith(":"))
-                        {
-                            param.DisplayName += ":";
-                        }
-                    }
 
                     param.Required = attr is InputAttribute;
 

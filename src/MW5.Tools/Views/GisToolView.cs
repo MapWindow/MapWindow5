@@ -136,6 +136,14 @@ namespace MW5.Tools.Views
 
                 ctrl.Caption = p.DisplayName;
 
+                if (!(p is BooleanParameter))
+                {
+                    if (!ctrl.Caption.Trim().EndsWith(":"))
+                    {
+                        ctrl.Caption += ":";
+                    }
+                }
+
                 p.Control = ctrl as ParameterControlBase;
 
                 var userControl = ctrl as UserControl;

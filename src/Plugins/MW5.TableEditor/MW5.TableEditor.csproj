@@ -124,7 +124,6 @@
     <Compile Include="Editor\ColumnEventArgs.cs" />
     <Compile Include="Editor\SortItem.cs" />
     <Compile Include="Helpers\ShapefileExportHelper.cs" />
-    <Compile Include="Helpers\UnitConversionHelper.cs" />
     <Compile Include="Model\FieldStat.cs" />
     <Compile Include="Model\FindReplaceFieldWrapper.cs" />
     <Compile Include="Model\ITablePanel.cs" />

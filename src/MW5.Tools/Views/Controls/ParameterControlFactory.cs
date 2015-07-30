@@ -26,40 +26,39 @@ namespace MW5.Tools.Views.Controls
             if (parameter == null) throw new ArgumentNullException("parameter");
 
             IParameterControl control = null;
-            if (parameter is StringParameter)
-            {
-                control = new StringParameterControl();
-            }
 
-            if (parameter is BooleanParameter)
+            if (parameter is DistanceParameter)
             {
-                control = new BooleanParameterControl();
+                control = new DistanceParameterControl();
             }
-
-            if (parameter is IntegerParameter)
-            {
-                control = new IntegerParameterControl();
-            }
-
-            if (parameter is DoubleParameter)
+            else if (parameter is DoubleParameter)
             {
                 control = new DoubleParameterControl();
             }
-
-            if (parameter is OutputLayerParameter)
+            else if (parameter is StringParameter)
+            {
+                control = new StringParameterControl();
+            }
+            else if (parameter is BooleanParameter)
+            {
+                control = new BooleanParameterControl();
+            }
+            else if (parameter is IntegerParameter)
+            {
+                control = new IntegerParameterControl();
+            }
+            else if (parameter is OutputLayerParameter)
             {
                 control = new OutputParameterControl(_dialogService);
             }
-
-            if (parameter is OptionsParameter)
+            else if (parameter is OptionsParameter)
             {
                 control = new ComboParameterControl { ButtonVisible = false };
 
                 // ensure that previously specified options are applied
                 (control as ComboParameterControl).SetOptions((parameter as OptionsParameter).OptionsSource);     
             }
-
-            if (parameter is LayerParameterBase)
+            else if (parameter is LayerParameterBase)
             {
                 var lp = parameter as LayerParameterBase;
                 control = new LayerParameterControl(lp.Layers, lp.DataSourceType, _dialogService);

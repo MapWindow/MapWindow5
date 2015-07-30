@@ -72,6 +72,7 @@
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Model\GisTask.cs" />
+    <Compile Include="Model\Parameters\DistanceParameter.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
@@ -103,6 +104,12 @@
     </Compile>
     <Compile Include="Views\Controls\ComboParameterControl.Designer.cs">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DistanceParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Controls\DistanceParameterControl.Designer.cs">
+      <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\IntegerParameterControl.cs">
       <SubType>UserControl</SubType>
@@ -216,6 +223,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Controls\ComboParameterControl.resx">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Controls\DistanceParameterControl.resx">
+      <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Controls\IntegerParameterControl.resx">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>

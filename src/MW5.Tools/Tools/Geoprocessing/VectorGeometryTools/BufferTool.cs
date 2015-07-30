@@ -4,8 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 
@@ -18,7 +20,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public VectorLayerParameter InputLayer { get; set; }
 
         [Input("Buffer distance", 1)]
-        public DoubleParameter BufferDistance { get; set; }
+        public DistanceParameter BufferDistance { get; set; }
 
         [OptionalInput("Number of segments", 2), DefaultValue(30)]
         public IntegerParameter NumSegments { get; set; }
@@ -50,7 +52,9 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run()
         {
-            var fs = InputLayer.Value.BufferByDistance(BufferDistance.Value, NumSegments.Value, InputLayer.SelectedOnly, MergeResults.Value);
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, AppContext.Map.MapUnits, BufferDistance.Value);
+
+            var fs = InputLayer.Value.BufferByDistance(bufferDistance, NumSegments.Value, InputLayer.SelectedOnly, MergeResults.Value);
             if (fs != null)
             {
                 HandleOutput(fs, Output.Value);

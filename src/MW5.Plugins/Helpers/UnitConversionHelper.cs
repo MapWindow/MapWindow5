@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Static;
 
-namespace MW5.Plugins.TableEditor.Helpers
+namespace MW5.Plugins.Helpers
 {
-    internal static class UnitConversionHelper
+    public static class UnitConversionHelper
     {
         private static double GetAreaConversionFactor(AreaUnits units)
         {

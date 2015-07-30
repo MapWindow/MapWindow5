@@ -43,7 +43,7 @@ namespace MW5.Tools.Model
                 }
 
                 var ds = GeoSource.OpenFromIdentity(_identity);
-                return LayerSourceHelper.GetLayers(ds).FirstOrDefault();
+                return ds.GetLayers().FirstOrDefault();
             }
         }
 

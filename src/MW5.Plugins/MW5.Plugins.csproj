@@ -108,6 +108,7 @@
     <Compile Include="Helpers\ConfigPathHelper.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Helpers\LoadedAssemblyChecker.cs" />
+    <Compile Include="Helpers\UnitConversionHelper.cs" />
     <Compile Include="Interfaces\IConfigPage.cs" />
     <Compile Include="Interfaces\IDockPanelView.cs" />
     <Compile Include="Interfaces\IAppView.cs" />
