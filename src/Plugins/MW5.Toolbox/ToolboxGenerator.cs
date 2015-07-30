@@ -6,6 +6,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -47,7 +49,7 @@ namespace MW5.Plugins.Toolbox
         
         private void CreateTools()
         {
-            var tools = Tools;
+            var tools = ReflectedTools;
 
             AddTools(tools);
         }
@@ -56,7 +58,6 @@ namespace MW5.Plugins.Toolbox
         {
             get
             {
-                // TODO: use reflection to return this list
                 var tools = new List<IGisTool>
                 {
                     new IdentifyProjectionTool(),
@@ -65,6 +66,42 @@ namespace MW5.Plugins.Toolbox
                 };
 
                 return tools;
+            }
+        }
+
+        /// <summary>
+        /// Gets the reflected tools.
+        /// </summary>
+        /// <value>stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface</value>
+        private IEnumerable<IGisTool> ReflectedTools
+        {
+            get
+            {
+                var type = typeof(IGisTool);
+                
+                // we shall search MW5.Tools
+                var list = typeof(GisToolBase).Assembly
+                           .GetTypes()
+                           .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
+
+                foreach (var item in list)
+                {
+                    IGisTool tool = null;
+
+                    try
+                    {
+                         tool = Activator.CreateInstance(item) as IGisTool;
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.Current.Error("Failed to create GIS tool: {0}.", ex, item.Name);
+                    }
+
+                    if (tool != null)
+                    {
+                        yield return tool;
+                    }
+                }
             }
         }
 

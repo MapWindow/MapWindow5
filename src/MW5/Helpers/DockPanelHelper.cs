@@ -44,10 +44,12 @@ namespace MW5.Helpers
         private static void InitTasks(ISerializableContext context)
         {
             var presenter = context.Container.Resolve<TasksPresenter>();
-            var legend = context.DockPanels.Add(presenter.View, DockPanelKeys.ToolboxResults, PluginIdentity.Default);
-            legend.Caption = "Tasks";
-            legend.DockTo(context.DockPanels.Toolbox, DockPanelState.Tabbed, PanelSize);
-            legend.SetIcon(Resources.ico_tasks);
+            var tasks = context.DockPanels.Add(presenter.View, DockPanelKeys.ToolboxResults, PluginIdentity.Default);
+            tasks.Caption = "Tasks";
+            var toolbox = context.DockPanels.Toolbox;
+            tasks.DockTo(toolbox, DockPanelState.Tabbed, PanelSize);
+            tasks.SetIcon(Resources.ico_tasks);
+            tasks.TabPosition = toolbox.TabPosition;
         }
 
         private static void InitLegend(ISerializableContext context)
