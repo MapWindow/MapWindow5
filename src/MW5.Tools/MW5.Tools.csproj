@@ -88,6 +88,8 @@
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs" />
     <Compile Include="Views\Controls\BooleanParameterControl.cs">
@@ -146,9 +148,9 @@
     <Compile Include="Model\GisToolAttribute.cs" />
     <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\LayerParameterBase.cs" />
-    <Compile Include="Model\OptionalParameterAttribute.cs" />
+    <Compile Include="Model\OptionalInputAttribute.cs" />
     <Compile Include="Model\Parameters\OptionsParameter.cs" />
-    <Compile Include="Model\RequiredParameterAttribute.cs" />
+    <Compile Include="Model\InputAttribute.cs" />
     <Compile Include="Model\Parameters\StringParameter.cs" />
     <Compile Include="Model\Parameters\BaseParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

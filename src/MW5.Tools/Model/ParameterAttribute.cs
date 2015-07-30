@@ -1,17 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ParameterAttribute.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 
 namespace MW5.Tools.Model
 {
     public abstract class ParameterAttribute : Attribute
     {
-        #region Constructors and Destructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="RequiredParameterAttribute"/> class.
+        /// Initializes a new instance of the <see cref="InputAttribute"/> class.
         /// </summary>
         /// <param name="displayName">The display name.</param>
         /// <param name="index">The index.</param>
@@ -20,10 +20,6 @@ namespace MW5.Tools.Model
             DisplayName = displayName;
             Index = index;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets the display name.
@@ -34,7 +30,5 @@ namespace MW5.Tools.Model
         /// Gets or sets the index.
         /// </summary>
         public int Index { get; set; }
-
-        #endregion
     }
 }

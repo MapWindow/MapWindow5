@@ -15,10 +15,18 @@ namespace MW5.Tools.Model.Parameters
 
         public override bool Numeric { get { return true; } }
 
+        public bool HasRange { get; set; }
+
         public override bool Validate(out string errorMessage)
         {
-            errorMessage = DisplayName + string.Format(": value of the parameter outside range [{0}; {1}]", MinValue, MaxValue);
-            return Value.CompareTo(MinValue) != -1 && Value.CompareTo(MaxValue) != 1;
+            if (HasRange)
+            {
+                errorMessage = DisplayName + string.Format(": value of the parameter outside range [{0}; {1}]", MinValue, MaxValue);
+                return Value.CompareTo(MinValue) != -1 && Value.CompareTo(MaxValue) != 1;
+            }
+
+            errorMessage = string.Empty;
+            return true;
         }
     }
 }

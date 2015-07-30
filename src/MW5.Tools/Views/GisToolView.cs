@@ -84,6 +84,7 @@ namespace MW5.Tools.Views
                 if (!(ctrl is BooleanParameterControl))
                 {
                     ctrl.Height += 10;
+                    ctrl.Padding = new Padding(0, 10, 0, 0);
                 }
             }
         }

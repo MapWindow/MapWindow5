@@ -23,13 +23,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class RandomPointsTool : GisToolBase
     {
-        [RequiredParameter("Layer for bounding box", 0)]
+        [Input("Layer for bounding box", 0)]
         public LayerParameter InputLayer { get; set; }
 
-        [RequiredParameter("Number of points", 1), DefaultValue(500), Range(1, 1000000)]
+        [Input("Number of points", 1), DefaultValue(500), Range(1, 1000000)]
         public IntegerParameter NumPoints { get; set; }
 
-        [RequiredParameter("New layer name", 2), DefaultValue("random points")]
+        [Input("New layer name", 2), DefaultValue("random points")]
         public OutputLayerParameter OutputLayer { get; set; }
 
         /// <summary>

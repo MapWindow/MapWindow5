@@ -46,7 +46,7 @@ namespace MW5.Tools.Model.Parameters
         public override bool Validate(out string errorMessage)
         {
             errorMessage = string.Empty;
-            return false;
+            return true;
         }
     }
 }

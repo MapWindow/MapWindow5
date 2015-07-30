@@ -1,23 +1,24 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OptionalParameterAttribute.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="InputAttribute.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //   MapWindow OSS Team - 2015
 // </copyright>
 // <summary>
-//   The optional parameter attribute.
+//   The required parameter attribute.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
 namespace MW5.Tools.Model
 {
     /// <summary>
-    /// The optional parameter attribute.
+    /// The required parameter attribute.
     /// </summary>
-    public class OptionalParameterAttribute : ParameterAttribute
+    public class InputAttribute : ParameterAttribute
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="OptionalParameterAttribute"/> class.
+        /// Initializes a new instance of the <see cref="InputAttribute"/> class.
         /// </summary>
-        public OptionalParameterAttribute(string displayName, int index) : base(displayName, index)
+        public InputAttribute(string displayName, int index) 
+            : base(displayName, index)
         {
             DisplayName = displayName;
             Index = index;

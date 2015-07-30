@@ -17,6 +17,7 @@ namespace MW5.Tools.Views.Controls
         public DoubleParameterControl()
         {
             InitializeComponent();
+            buttonAdv1.Visible = false;
         }
 
         /// <summary>

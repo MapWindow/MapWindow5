@@ -82,7 +82,7 @@ namespace MW5.Tools.Model
         }
 
         /// <summary>
-        /// Must be overriden in derived classes to provide execution logic for the tool.
+        /// Provides execution logic for the tool.
         /// </summary>
         public abstract bool Run();
 
@@ -145,7 +145,7 @@ namespace MW5.Tools.Model
                     param.Name = prop.Name;
                     param.Index = attr.Index;
                     param.DisplayName = attr.DisplayName;
-                    param.Required = attr is RequiredParameterAttribute;
+                    param.Required = attr is InputAttribute;
 
                     HandleRangeAttribute(param, prop);
 
@@ -171,15 +171,20 @@ namespace MW5.Tools.Model
             if (vp != null && vp.Numeric)
             {
                 var range = prop.GetAttribute<RangeAttribute>();
-                if (param is IntegerParameter)
+                if (range != null)
                 {
-                    (param as IntegerParameter).MinValue = (int)range.Minimum;
-                    (param as IntegerParameter).MaxValue = (int)range.Maximum;
-                }
-                else if (param is DoubleParameter)
-                {
-                    (param as DoubleParameter).MinValue = (double)range.Minimum;
-                    (param as DoubleParameter).MaxValue = (double)range.Maximum;
+                    if (param is IntegerParameter)
+                    {
+                        (param as IntegerParameter).MinValue = (int)range.Minimum;
+                        (param as IntegerParameter).MaxValue = (int)range.Maximum;
+                        (param as IntegerParameter).HasRange = true;
+                    }
+                    else if (param is DoubleParameter)
+                    {
+                        (param as DoubleParameter).MinValue = (double)range.Minimum;
+                        (param as DoubleParameter).MaxValue = (double)range.Maximum;
+                        (param as DoubleParameter).HasRange = true;
+                    }
                 }
             }
         }

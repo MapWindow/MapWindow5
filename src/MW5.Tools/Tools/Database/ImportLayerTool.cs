@@ -18,19 +18,19 @@ namespace MW5.Tools.Tools.Database
     [GisTool(GroupKeys.GeoDatabases)]
     public class ImportLayerTool : GisToolBase
     {
-        [RequiredParameter("Input layer", 0)]
+        [Input("Input layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
 
-        [RequiredParameter("Database", 1)]
+        [Input("Database", 1)]
         public OptionsParameter<DatabaseConnection> Database { get; set; }
 
-        [RequiredParameter("Schema", 2)]
+        [Input("Schema", 2)]
         public StringParameter Schema { get; set; }
 
-        [RequiredParameter("New layer name", 3)]
+        [Input("New layer name", 3)]
         public StringParameter NewLayerName { get; set; }
 
-        [RequiredParameter("Overwrite", 4)]
+        [Input("Overwrite", 4)]
         public BooleanParameter Overwrite { get; set; }
 
         /// <summary>
