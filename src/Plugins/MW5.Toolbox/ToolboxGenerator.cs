@@ -146,6 +146,9 @@ namespace MW5.Plugins.Toolbox
 
             var subGroup = group.SubGroups.Add("Vector Geometry Tools", GroupKeys.VectorGeometryTools, _plugin.Identity);
             subGroup.Description = "Geoprocessing tools for vector datasources.";
+
+            group = groups.Add("Fake", GroupKeys.Fake, _plugin.Identity);
+            group.Description = "Fake tools to test the framework itself.";
         }
     }
 }

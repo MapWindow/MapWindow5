@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Model
@@ -14,6 +15,7 @@ namespace MW5.Tools.Model
 
         public void AddTask(IGisTask task)
         {
+            task.StatusChanged += (s, e) => FireTaskStatusChanged(s as IGisTask);
             _tasks.Add(task);
             FireCollectionChanged();
         }
@@ -24,6 +26,8 @@ namespace MW5.Tools.Model
         }
 
         public event EventHandler CollectionChanged;
+
+        public event EventHandler<TaskEventArgs> TaskStatusChanged;
 
         public void Clear()
         {
@@ -39,6 +43,15 @@ namespace MW5.Tools.Model
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private void FireTaskStatusChanged(IGisTask task)
+        {
+            var handler = TaskStatusChanged;
+            if (handler != null)
+            {
+                handler(this, new TaskEventArgs(task));
+            }
         }
 
         private void FireCollectionChanged()

@@ -50,11 +50,11 @@ namespace MW5.Tools.Views
 
             var task = new GisTask(Model);
 
-            bool result = task.Run();
-
             _context.Tasks.AddTask(task);
 
-            return result;
+            task.RunAsync();
+
+            return true;       // TODO: close only if run in background is checked
         }
     }
 }

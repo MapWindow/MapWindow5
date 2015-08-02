@@ -21,6 +21,10 @@ namespace MW5.Plugins.Interfaces
 
         bool Run();
 
+        void RunAsync();
+
         void Cancel();
+
+        event EventHandler StatusChanged;
     }
 }

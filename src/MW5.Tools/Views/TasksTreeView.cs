@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -44,6 +47,13 @@ namespace MW5.Tools.Views
             if (tasks == null) throw new ArgumentNullException("tasks");
             _tasks = tasks;
             _tasks.CollectionChanged += (s, e) => PopulateTree();
+            _tasks.TaskStatusChanged += UpdateTask;
+        }
+
+        private void UpdateTask(object sender, TaskEventArgs e)
+        {
+            // TODO: update a single node
+            this.SafeInvoke(PopulateTree);
         }
 
         private void PopulateTree()

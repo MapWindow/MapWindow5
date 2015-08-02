@@ -85,11 +85,13 @@
     <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
     <Compile Include="Model\Parameters\ValueParameter.cs" />
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
+    <Compile Include="Services\GisToolLogger.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
+    <Compile Include="Tools\Fake\LongExecutionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs" />

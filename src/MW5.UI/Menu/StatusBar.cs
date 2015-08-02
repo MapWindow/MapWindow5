@@ -200,7 +200,7 @@ namespace MW5.UI.Menu
                 _progressBar.Visible = false;
             };
 
-            _bar.Invoke(action);
+            _bar.SafeInvoke(action);
         }
 
         public IMenuItem FindItem(string key, PluginIdentity identity)

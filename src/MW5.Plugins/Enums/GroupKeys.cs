@@ -26,6 +26,8 @@ namespace MW5.Plugins.Enums
         /// </summary>
         public const string Projections = "Projections";
 
+        public const string Fake = "Testing";
+
         /// <summary>
         /// The vector geometry tools
         /// </summary>

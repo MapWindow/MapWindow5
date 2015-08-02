@@ -101,6 +101,7 @@
     <Compile Include="Events\PluginEventArgs.cs" />
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Events\RenderedEventArgs.cs" />
+    <Compile Include="Events\TaskEventArgs.cs" />
     <Compile Include="Events\ToolboxGroupEventArgs.cs" />
     <Compile Include="Events\ToolboxToolEventArgs.cs" />
     <Compile Include="Enums\Enums.cs" />

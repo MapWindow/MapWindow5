@@ -100,16 +100,18 @@ namespace MW5.Tools.Views
 
             var list = parameters.OrderByDescending(p => p.Index).ToList();
 
-            GenerateSection(panel, list.Where(p => p is OutputLayerParameter));
+            var arr = list.Where(p => p is OutputLayerParameter).ToList();
+            GenerateSection(panel, arr);
 
-            if (!optional)
+            if (!optional && arr.Any())
             {
                 AddSection("Output", panel);
             }
 
-            GenerateSection(panel, list.Where(p => !(p is OutputLayerParameter)));
+            arr = list.Where(p => !(p is OutputLayerParameter)).ToList();
+            GenerateSection(panel, arr);
 
-            if (!optional)
+            if (!optional && arr.Any())
             {
                 AddSection("Input", panel);
             }
