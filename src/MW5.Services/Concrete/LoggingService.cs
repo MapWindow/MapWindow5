@@ -10,7 +10,7 @@ using MW5.Shared.Log;
 
 namespace MW5.Services.Concrete
 {
-    public class LoggingService: ILoggingService
+    public class LoggingService: LoggingServiceBase, ILoggingService
     {
         private readonly ILog _log4NetLogger;
 
@@ -67,54 +67,6 @@ namespace MW5.Services.Concrete
             }
         }
 
-        public void Info(string msg, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Info);
-        }
-
-        public void Debug(string msg, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Debug);
-        }
-
-        public void Warn(string msg, Exception ex, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Warn, ex);
-        }
-
-        public void Error(string msg, Exception ex, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Error, ex);
-        }
-
-        public void Fatal(string msg, Exception ex, params object[] param)
-        {
-            Log(string.Format(msg, param), LogLevel.Fatal, ex);
-        }
-
-        public void Write(string msg, LogLevel level, params object[] param)
-        {
-            switch (level)
-            {
-                case LogLevel.Info:
-                case LogLevel.All:
-                    Info(msg, param);
-                    break;
-                case LogLevel.Debug:
-                    Debug(msg, param);
-                    break;
-                case LogLevel.Warn:
-                    Warn(msg, null, param);
-                    break;
-                case LogLevel.Error:
-                    Error(msg, null, param);
-                    break;
-                case LogLevel.Fatal:
-                    Fatal(msg, null, param);
-                    break;
-            }
-        }
-
         public IReadOnlyList<ILogEntry> Entries
         {
             get { return _entries; }
@@ -134,7 +86,7 @@ namespace MW5.Services.Concrete
             }
         }
 
-        private void Log(string msg, LogLevel level, Exception ex = null)
+        protected override void Log(string msg, LogLevel level, Exception ex = null)
         {
             var entry = new LogEntry(msg, level, ex);
             lock (_entries)
@@ -170,7 +122,6 @@ namespace MW5.Services.Concrete
                     _log4NetLogger.Fatal(entry.Message, entry.Exception);
                     break;
             }
-            
         }
 
         private void WriteToDebug(string msg, params object[] param)

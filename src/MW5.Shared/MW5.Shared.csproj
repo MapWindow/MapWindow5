@@ -97,6 +97,7 @@
     <Compile Include="StringBuilderHelper.cs" />
     <Compile Include="StringHelper.cs" />
     <Compile Include="TextMeasurer.cs" />
+    <Compile Include="CurrentThreadHelper.cs" />
     <Compile Include="Win32Api.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>

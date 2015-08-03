@@ -86,6 +86,7 @@
     <Compile Include="Concrete\ConfigService.cs" />
     <Compile Include="Concrete\FlexibleMessageBox.cs" />
     <Compile Include="Concrete\FlexibleMessageService.cs" />
+    <Compile Include="Concrete\LoggingServiceBase.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Concrete\ProjectLoaderLegacy.cs" />
     <Compile Include="Controls\MissingLayer.cs" />

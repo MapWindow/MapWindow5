@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -37,7 +38,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public bool Run()
+        public bool Run(CancellationToken token)
         {
             using (var form = new IdentifyProjectionForm(_context))
             {

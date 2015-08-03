@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 
@@ -19,7 +20,7 @@ namespace MW5.Plugins.Interfaces
 
         GisTaskStatus Status { get; }
 
-        bool Run();
+        bool Run(CancellationToken token);
 
         void RunAsync();
 

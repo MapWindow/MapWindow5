@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
@@ -16,7 +17,7 @@ using MW5.Tools.Properties;
 namespace MW5.Tools.Tools.Database
 {
     [GisTool(GroupKeys.GeoDatabases)]
-    public class ImportLayerTool : GisToolBase
+    public class ImportLayerTool : GisTool
     {
         [Input("Input layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
@@ -69,7 +70,7 @@ namespace MW5.Tools.Tools.Database
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public override bool Run()
+        public override bool Run(CancellationToken token)
         {
             var cs = Database.Value.ConnectionString;
 
@@ -119,15 +120,16 @@ namespace MW5.Tools.Tools.Database
         private bool RunCore(string connectionString, IFeatureSet inputLayer, string newLayerName, string options )
         {
             var ds = new VectorDatasource();
+
             if (ds.Open(connectionString))
             {
                 if (!ds.ImportLayer(inputLayer, newLayerName, options))
                 {
-                    MessageService.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg);
+                    MessageService.Current.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg);
                     return false;
                 }
                 
-                MessageService.Info("Layer was imported: " + newLayerName);
+                MessageService.Current.Info("Layer was imported: " + newLayerName);
                 return true;
             }
 

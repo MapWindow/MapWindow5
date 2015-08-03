@@ -3,7 +3,7 @@ using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools.Views
 {
-    partial class GisToolView
+    partial class ToolView
     {
         /// <summary>
         /// Required designer variable.
@@ -49,6 +49,8 @@ namespace MW5.Tools.Views
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabLog = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.chkBackground = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
@@ -56,6 +58,7 @@ namespace MW5.Tools.Views
             this.panelRequired.SuspendLayout();
             this.tabOptional.SuspendLayout();
             this.tabHelp.SuspendLayout();
+            this.tabLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAdv2
@@ -73,7 +76,6 @@ namespace MW5.Tools.Views
             this.btnCancel.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
             this.btnCancel.Location = new System.Drawing.Point(469, 389);
@@ -81,6 +83,7 @@ namespace MW5.Tools.Views
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 34;
             this.btnCancel.Text = "Cancel";
+            this.btnCancel.Click += new System.EventHandler(this.OnCancelClick);
             // 
             // btnOk
             // 
@@ -242,6 +245,7 @@ namespace MW5.Tools.Views
             // 
             // tabLog
             // 
+            this.tabLog.Controls.Add(this.progressBar1);
             this.tabLog.Image = global::MW5.Tools.Properties.Resources.img_log24;
             this.tabLog.ImageSize = new System.Drawing.Size(24, 24);
             this.tabLog.Location = new System.Drawing.Point(123, 1);
@@ -252,17 +256,34 @@ namespace MW5.Tools.Views
             this.tabLog.Text = "Log";
             this.tabLog.ThemesEnabled = false;
             // 
-            // GisToolView
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 347);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(400, 10);
+            this.progressBar1.TabIndex = 36;
+            // 
+            // chkBackground
+            // 
+            this.chkBackground.AutoSize = true;
+            this.chkBackground.Location = new System.Drawing.Point(12, 394);
+            this.chkBackground.Name = "chkBackground";
+            this.chkBackground.Size = new System.Drawing.Size(117, 17);
+            this.chkBackground.TabIndex = 36;
+            this.chkBackground.Text = "Run in background";
+            this.chkBackground.UseVisualStyleBackColor = true;
+            // 
+            // ToolView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(565, 418);
+            this.Controls.Add(this.chkBackground);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
-            this.Name = "GisToolView";
-            this.Text = "GisToolView";
+            this.Name = "ToolView";
+            this.Text = "ToolView";
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
@@ -270,7 +291,9 @@ namespace MW5.Tools.Views
             this.panelRequired.ResumeLayout(false);
             this.tabOptional.ResumeLayout(false);
             this.tabHelp.ResumeLayout(false);
+            this.tabLog.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -293,5 +316,7 @@ namespace MW5.Tools.Views
         private Controls.StringParameterControl stringParameterControl1;
         private System.Windows.Forms.Panel panelOptional;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.CheckBox chkBackground;
     }
 }

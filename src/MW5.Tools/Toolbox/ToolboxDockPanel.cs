@@ -6,6 +6,7 @@
 
 using System;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
@@ -53,17 +54,17 @@ namespace MW5.Tools.Toolbox
             // therefore a new instance is created; it's expected that it must have default empty constructor
             var newTool = Activator.CreateInstance(e.Tool.GetType()) as IGisTool;
 
-            var tool = newTool as GisToolBase;
+            var tool = newTool as GisTool;
             if (tool != null)
             {
-                _context.Container.Run<GisToolPresenter, GisToolBase>(tool);
+                _context.Container.Run<ToolPresenter, GisTool>(tool);
             }
             else
             {
                 if (newTool != null)
                 {
                     newTool.Initialize(_context);
-                    newTool.Run(); // tool doesn't have UI or have an embedded  UI
+                    newTool.Run(CancellationToken.None); // tool doesn't have UI or have an embedded  UI
                 }
             }
         }

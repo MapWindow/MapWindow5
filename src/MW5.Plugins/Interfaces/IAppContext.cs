@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Threading;
+using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
@@ -26,6 +27,7 @@ namespace MW5.Plugins.Interfaces
         IToolbox Toolbox { get; }
         ITaskCollection Tasks { get; }
         IRepository Repository { get; }
+        SynchronizationContext SynchronizationContext { get; }
         void SetMapProjection(ISpatialReference projection);
         bool Initialized { get; }
     }

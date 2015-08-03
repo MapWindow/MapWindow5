@@ -59,21 +59,33 @@ namespace MW5.Tools.Views
         private void PopulateTree()
         {
             Nodes.Clear();
+            Controls.Clear();
 
             foreach (var task in _tasks)
             {
                 var nodeTask = new TreeNodeAdv(task.Tool.Name)
                                    {
                                        Tag = task, 
-                                       LeftImageIndices = new[] { (int)TaskIcons.Success }
+                                       LeftImageIndices = new[] { (int)TaskIcons.Success },
                                    };
 
-                var tool = task.Tool as GisToolBase;
+                var progress = new ProgressBar();
+                Controls.Add(progress);
+                nodeTask.CustomControl = progress;
+                progress.Value = 0;
+
+                var tool = task.Tool as GisTool;
                 if (tool != null)
                 {
                     AddToolParameters(nodeTask, tool, false);
 
                     AddToolParameters(nodeTask, tool, true);
+
+                    tool.Progress.ProgressChanged += (s, e) =>
+                        {
+                            System.Action action = () => { progress.Value = e.Percent; };
+                            progress.SafeInvoke(action);
+                        };
                 }
 
                 AddTaskExecutionStats(nodeTask, task);
@@ -111,7 +123,7 @@ namespace MW5.Tools.Views
             nodeTask.Nodes.Add(nodeExecution);
         }
 
-        private void AddToolParameters(TreeNodeAdv nodeTask, GisToolBase tool, bool output)
+        private void AddToolParameters(TreeNodeAdv nodeTask, GisTool tool, bool output)
         {
             var nodeParameters = new TreeNodeAdv(output ? "Output" : "Input");
             nodeParameters.LeftImageIndices = new[] { (int) (output ? TaskIcons.Result : TaskIcons.Input) };

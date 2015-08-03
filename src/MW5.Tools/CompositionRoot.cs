@@ -23,7 +23,7 @@ namespace MW5.Tools
         /// <param name="container">The container.</param>
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterView<IGisToolView, GisToolView>()
+            container.RegisterView<IToolView, ToolView>()
                 .RegisterSingleton<ITaskCollection, TaskCollection>()
                 .RegisterService<ParameterControlFactory>()
                 .RegisterSingleton<TasksDockPanel>()

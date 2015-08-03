@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 
@@ -25,7 +26,7 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        bool Run();
+        bool Run(CancellationToken token);
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.

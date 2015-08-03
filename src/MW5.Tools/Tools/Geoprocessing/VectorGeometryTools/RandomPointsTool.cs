@@ -7,6 +7,7 @@
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Threading;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -21,7 +22,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// Generates random points within extents of selected datasource.
     /// </summary>
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class RandomPointsTool : GisToolBase
+    public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
         public LayerParameter InputLayer { get; set; }
@@ -52,7 +53,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// Runs the tool.
         /// </summary>
         /// <returns>True on success, which closes the view</returns>
-        public override bool Run()
+        public override bool Run(CancellationToken token)
         {
             // TODO: log the name of the tool and start time
 
@@ -64,13 +65,15 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 return false;
             }
 
-            return HandleOutput(fs, OutputLayer.Value);
+            UiThread.Post(p => HandleOutput(fs, OutputLayer.Value), null);
+
+            return true;
         }
 
         /// <summary>
         /// Core processing.
         /// </summary>
-        private static IFeatureSet RunCore(ILayerSource inputLayer, int numPoints)
+        private IFeatureSet RunCore(ILayerSource inputLayer, int numPoints)
         {
             // TODO: Open log tab of view; log to the log tab
             Logger.Current.Debug("Creating {0} random points", numPoints);

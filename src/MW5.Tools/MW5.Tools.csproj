@@ -71,7 +71,10 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
+    <Compile Include="Helpers\ParameterControlHelper.cs" />
+    <Compile Include="Helpers\ParameterControlGenerator.cs" />
     <Compile Include="Model\GisTask.cs" />
+    <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
@@ -85,7 +88,12 @@
     <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
     <Compile Include="Model\Parameters\ValueParameter.cs" />
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
-    <Compile Include="Services\GisToolLogger.cs" />
+    <Compile Include="Services\EmptyProgress.cs" />
+    <Compile Include="Services\EventProgress.cs" />
+    <Compile Include="Services\ProgressEventArgs.cs" />
+    <Compile Include="Services\ToolLogger.cs" />
+    <Compile Include="Services\CallbackProgress.cs" />
+    <Compile Include="Services\IToolProgress.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
@@ -155,7 +163,7 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Model\Parameters\BooleanParameter.cs" />
     <Compile Include="Model\GisToolAttribute.cs" />
-    <Compile Include="Model\GisToolBase.cs" />
+    <Compile Include="Model\GisTool.cs" />
     <Compile Include="Model\Parameters\LayerParameterBase.cs" />
     <Compile Include="Model\OptionalInputAttribute.cs" />
     <Compile Include="Model\Parameters\OptionsParameter.cs" />
@@ -168,14 +176,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\GisToolPresenter.cs" />
-    <Compile Include="Views\GisToolView.cs">
+    <Compile Include="Views\ToolPresenter.cs" />
+    <Compile Include="Views\ToolView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\GisToolView.Designer.cs">
-      <DependentUpon>GisToolView.cs</DependentUpon>
+    <Compile Include="Views\ToolView.Designer.cs">
+      <DependentUpon>ToolView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IGisToolView.cs" />
+    <Compile Include="Views\IToolView.cs" />
     <Compile Include="Toolbox\ToolNode.cs" />
     <Compile Include="Toolbox\ToolboxDockPanel.cs">
       <SubType>Component</SubType>
@@ -209,6 +217,10 @@
     <ProjectReference Include="..\MW5.Projections\MW5.Projections.csproj">
       <Project>{DD259453-611A-4AD5-878E-385CB2C89DF5}</Project>
       <Name>MW5.Projections</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MW5.Services\MW5.Services.csproj">
+      <Project>{54BB55DA-DBDC-47E5-8DEC-DE325F35F074}</Project>
+      <Name>MW5.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
@@ -248,8 +260,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\GisToolView.resx">
-      <DependentUpon>GisToolView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\ToolView.resx">
+      <DependentUpon>ToolView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TasksDockPanel.resx">
       <DependentUpon>TasksDockPanel.cs</DependentUpon>

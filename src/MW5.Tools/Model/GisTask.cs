@@ -1,7 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="GisTask.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
@@ -10,25 +13,22 @@ using MW5.Shared;
 
 namespace MW5.Tools.Model
 {
-    internal class GisTask: IGisTask
+    internal class GisTask : IGisTask
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         private GisTaskStatus _status;
-        
-        public GisTask(IGisTool tool)
+
+        public GisTask(GisToolBase tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
+            tool.Cancelled = false;
             Tool = tool;
 
             Status = GisTaskStatus.NotStarted;
         }
 
-        public IGisTool Tool { get; private set; }
-
-        public DateTime StartTime { get; private set; }
-
-        public DateTime FinishTime { get; private set; }
+        public event EventHandler StatusChanged;
 
         public TimeSpan ExecutionTime
         {
@@ -39,10 +39,14 @@ namespace MW5.Tools.Model
                     return TimeSpan.Zero;
                 }
 
-                TimeSpan span = DateTime.Now - StartTime;
+                var span = DateTime.Now - StartTime;
                 return span;
             }
         }
+
+        public DateTime FinishTime { get; private set; }
+
+        public DateTime StartTime { get; private set; }
 
         public GisTaskStatus Status
         {
@@ -54,34 +58,7 @@ namespace MW5.Tools.Model
             }
         }
 
-        public bool Run()
-        {
-            StartTime = DateTime.Now;
-            Status = GisTaskStatus.Running;
-
-            bool result = Tool.Run();
-
-            FinishTime = DateTime.Now;
-            Status = result ? GisTaskStatus.Success : GisTaskStatus.Failure;
-
-            return result;
-        }
-
-        public async void RunAsync()
-        {
-            // actually there is no much need for async / await here
-            // Task.ContinueWith would do the job just as well
-            var t = Task<bool>.Factory.StartNew(Run);
-            await t;
-
-            if (t.IsFaulted && t.Exception != null)
-            {
-                foreach (var ex in t.Exception.InnerExceptions)
-                {
-                    Logger.Current.Error("Error during tool execution: " + Tool.Name, ex);
-                }
-            }
-        }
+        public IGisTool Tool { get; private set; }
 
         public void Cancel()
         {
@@ -89,7 +66,52 @@ namespace MW5.Tools.Model
             _cancellationTokenSource.Cancel();
         }
 
-        public event EventHandler StatusChanged;
+        public bool Run(CancellationToken cancellationToken)
+        {
+            StartTime = DateTime.Now;
+            Status = GisTaskStatus.Running;
+
+            bool result = Tool.Run(cancellationToken);
+
+            FinishTime = DateTime.Now;
+            Status = result ? GisTaskStatus.Success : GisTaskStatus.Failed;
+
+            return result;
+        }
+
+        public async void RunAsync()
+        {
+            var token = _cancellationTokenSource.Token;
+
+            // actually there is not much need for async / await here
+            // Task.ContinueWith would do the job fine as well
+            try
+            {
+                var t = Task<bool>.Factory.StartNew(() => Run(token), token);
+                await t;
+            }
+            catch (OperationCanceledException ex)
+            {
+                FinishTime = DateTime.Now;
+                Status = GisTaskStatus.Cancelled;
+            }
+            catch(Exception ex)
+            {
+                Logger.Current.Error("Error during tool execution: " + Tool.Name, ex);
+                Status = GisTaskStatus.Failed;
+                FinishTime = DateTime.Now;
+
+                // await rethrows only the first exception;
+                // with Task.ContinueWith AggregateException will be rethrown
+                //if (t.IsFaulted && t.Exception != null)
+                //{
+                //    foreach (var ex in t.Exception.InnerExceptions)
+                //    {
+
+                //    }
+                //}
+            }
+        }
 
         private void FireStatusChanged()
         {

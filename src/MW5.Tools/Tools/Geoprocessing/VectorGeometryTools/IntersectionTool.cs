@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 using MW5.Tools.Model;
@@ -11,7 +12,7 @@ using MW5.Tools.Model.Parameters;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class IntersectionTool: GisToolBase
+    public class IntersectionTool: GisTool
     {
         [Input("First layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
@@ -41,7 +42,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
-        public override bool Run()
+        public override bool Run(CancellationToken token)
         {
             var fs = InputLayer.Value;
 

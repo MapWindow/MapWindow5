@@ -21,11 +21,11 @@ namespace MW5.Tools.Views.Controls
             _dialogService = dialogService;
         }
 
-        public IParameterControl CreateControl(BaseParameter parameter)
+        public ParameterControlBase CreateControl(BaseParameter parameter)
         {
             if (parameter == null) throw new ArgumentNullException("parameter");
 
-            IParameterControl control = null;
+            ParameterControlBase control = null;
 
             if (parameter is DistanceParameter)
             {

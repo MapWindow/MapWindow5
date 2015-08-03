@@ -80,7 +80,7 @@ namespace MW5.Plugins.Toolbox
                 var type = typeof(IGisTool);
                 
                 // we shall search MW5.Tools
-                var list = typeof(GisToolBase).Assembly
+                var list = typeof(GisTool).Assembly
                            .GetTypes()
                            .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
 

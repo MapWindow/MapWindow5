@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
@@ -17,6 +18,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
 using MW5.Services.Serialization;
+using MW5.Shared;
 using MW5.Tools.Toolbox;
 using MW5.Tools.Views;
 using MW5.UI;
@@ -37,6 +39,7 @@ namespace MW5
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
         private readonly ITaskCollection _tasks;
+        
 
         private IMap _map;
         private IMenu _menu;
@@ -48,6 +51,7 @@ namespace MW5
         private IBroadcasterService _broadcaster;
         private IStatusBar _statusBar;
         private IDockPanelCollection _dockPanelCollection;
+        private SynchronizationContext _synchronizationContext;
         private IConfigService _configService;
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
@@ -85,6 +89,9 @@ namespace MW5
             var legend = _legendPresenter.Legend;
             mainView.Map.Legend = legend;
             legend.Map = mainView.Map;
+
+            // it's expected here that we are on the UI thread
+            _synchronizationContext = SynchronizationContext.Current;
 
             _pluginManager = _container.GetSingleton<IPluginManager>();
             _broadcaster = _container.GetSingleton<IBroadcasterService>();
@@ -213,6 +220,11 @@ namespace MW5
         public IRepository Repository
         {
             get { return _repository; }
+        }
+
+        public SynchronizationContext SynchronizationContext
+        {
+            get { return _synchronizationContext; }
         }
 
         public void SetMapProjection(ISpatialReference projection)

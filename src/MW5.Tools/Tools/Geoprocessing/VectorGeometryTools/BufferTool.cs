@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -14,7 +15,7 @@ using MW5.Tools.Model.Parameters;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class BufferTool : GisToolBase
+    public class BufferTool : GisTool
     {
         [Input("Input layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
@@ -50,7 +51,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
-        public override bool Run()
+        public override bool Run(CancellationToken token)
         {
             double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, AppContext.Map.MapUnits, BufferDistance.Value);
 

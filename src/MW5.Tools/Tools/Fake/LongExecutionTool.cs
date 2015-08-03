@@ -12,7 +12,7 @@ using MW5.Tools.Model.Parameters;
 namespace MW5.Tools.Tools.Fake
 {
     [GisTool(GroupKeys.Fake)]
-    public class LongExecutionTool: GisToolBase
+    public class LongExecutionTool: GisTool
     {
         [Input("Seconds per step (100 steps)", 0), DefaultValue(0.1), Range(0.1, 5.0)]
         public DoubleParameter SecondPerStep { get; set; }
@@ -33,20 +33,25 @@ namespace MW5.Tools.Tools.Fake
             get { return "Fakes the execution of the long task"; }
         }
 
-        public override bool Run()
+        public override bool Run(CancellationToken token)
         {
             var span = TimeSpan.FromSeconds(SecondPerStep.Value);
 
-            var logger = Logger.Current;
+            //Logger.Info(Name + ": start");
+
             for (int i = 0; i < 100; i++)
             {
                 Thread.Sleep(span);
 
                 int val = i;
-                logger.Progress(string.Empty, val, "Running...");
+                Progress.Update("Running...", val);
+
+                token.ThrowIfCancellationRequested();
             }
 
-            logger.ClearProgress();
+            Progress.Clear();
+
+            //Logger.Info(Name + ": end");
 
             return true;   // depends on the run in background check
         }
