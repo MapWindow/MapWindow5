@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
-using MW5.Tools.Views.Controls;
+using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Model.Parameters
 {

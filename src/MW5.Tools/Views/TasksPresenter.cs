@@ -52,10 +52,12 @@ namespace MW5.Tools.Views
                 case ToolboxResultsCommand.Clear:
                     if (MessageService.Current.Ask("Remove all the tasks from the list?"))
                     {
+                        // TODO: make some provisions for tasks still running
                         _tasks.Clear();
                     }
                     break;
                 case ToolboxResultsCommand.ToggleGroup:
+                    MessageService.Current.Info("Pause task: not implemented");
                     break;
                 case ToolboxResultsCommand.OpenLog:
                     {
@@ -76,14 +78,17 @@ namespace MW5.Tools.Views
                         break;
                     }
                 case ToolboxResultsCommand.Pause:
-                    MessageService.Current.Info("Pause task");
+                    MessageService.Current.Info("Pause task: not implemented");
                     break;
                 case ToolboxResultsCommand.RemoveTask:
                     {
-                        var task = View.SelectedTask;
-                        if (task != null)
+                        if (MessageService.Current.Ask("Remove the selected task?"))
                         {
-                            _tasks.RemoveTask(task);
+                            var task = View.SelectedTask;
+                            if (task != null)
+                            {
+                                _tasks.RemoveTask(task);
+                            }
                         }
                         break;
                     }

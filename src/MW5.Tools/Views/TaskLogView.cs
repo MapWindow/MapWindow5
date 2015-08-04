@@ -30,6 +30,13 @@ namespace MW5.Tools.Views
             FormClosed += OnFormClosed;
 
             btnCancel.Click += (s,e) => Invoke(Cancel);
+
+            Shown += OnViewShown;
+        }
+
+        private void OnViewShown(object sender, EventArgs e)
+        {
+            textBoxExt1.BorderStyle = BorderStyle.None;
         }
 
         public event Action Cancel;
@@ -46,6 +53,8 @@ namespace MW5.Tools.Views
         /// </summary>
         public void Initialize()
         {
+            UpdateView();
+
             AttachProgressHandlers();
 
             Model.StatusChanged += OnTaskStatusChanged;
@@ -53,21 +62,30 @@ namespace MW5.Tools.Views
 
         private void OnTaskStatusChanged(object sender, EventArgs e)
         {
+            this.SafeInvoke(UpdateView);
+        }
+
+        public override void UpdateView()
+        {
+            UpdateDialogCaption();
+
             if (Model.Status != GisTaskStatus.Running)
             {
-                Action action = () =>
-                {
-                    panelProgress.Visible = false;
-                    panelResults.Visible = true;
-                    UpdateStatus();
-                };
-
-                this.SafeInvoke(action);
+                btnClose.Text = "Close";
+                panelProgress.Visible = false;
+                panelResults.Visible = true;
+                UpdateFinishedTaskStatus();
+            }
+            else
+            {
+                btnClose.Text = "Background";
             }
         }
 
-        private void UpdateStatus()
+        private void UpdateFinishedTaskStatus()
         {
+            lblExecutionTime.Text = "Execution time: " + Model.ExecutionTime;
+
             switch (Model.Status)
             {
                 case GisTaskStatus.Success:
@@ -83,6 +101,12 @@ namespace MW5.Tools.Views
                     pictureBox1.Image = Resources.img_cancel32;
                     break;
             }
+        }
+
+        private void UpdateDialogCaption()
+        {
+            string msg = Model.IsFinished ? "Finished" : "Running";
+            Text = msg + ": " + Model.Tool.Name;
         }
 
         private void DetachProgressHandlers()

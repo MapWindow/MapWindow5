@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
+using MW5.Tools.Controls;
 using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
@@ -65,6 +66,8 @@ namespace MW5.Tools.Views
 
         public void UpdateStatus()
         {
+            _node.Text = _task.Tool.Name + " [" + _task.Status + "]";
+            
             UpdateExecutionNode();
 
             UpdateStatusIcon();
@@ -112,8 +115,14 @@ namespace MW5.Tools.Views
         private void GenerateNodes()
         {
             _node = new TreeNodeAdv(_task.Tool.Name) { Tag = this };
+            _node.Height += 5;
 
-            _progress = new ProgressBar();
+            if (!_task.IsFinished)
+            {
+                var ctrl = new ProgressBarWrapper();
+                _node.CustomControl = ctrl;
+                _progress = ctrl.ProgressBar;
+            }
 
             AddToolParameters();
 
@@ -123,7 +132,7 @@ namespace MW5.Tools.Views
 
             AddErrors();
 
-            UpdateStatusIcon();
+            UpdateStatus();
         }
 
         private void AddToolParameters()
@@ -181,11 +190,7 @@ namespace MW5.Tools.Views
         {
             _nodeExecution.Nodes.Clear();
 
-            var list = new List<string>
-            {
-                "Status: " + _task.Status,
-                "Started at: " + _task.StartTime.ToLongTimeString(),
-            };
+            var list = new List<string> { "Started at: " + _task.StartTime.ToLongTimeString() };
 
             if (_task.IsFinished)
             {

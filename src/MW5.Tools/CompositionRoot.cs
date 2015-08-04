@@ -6,9 +6,9 @@
 
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model;
 using MW5.Tools.Views;
-using MW5.Tools.Views.Controls;
 
 namespace MW5.Tools
 {

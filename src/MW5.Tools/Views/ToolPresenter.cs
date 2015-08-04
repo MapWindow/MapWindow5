@@ -45,12 +45,21 @@ namespace MW5.Tools.Views
             }
 
             var task = Model.CreateTask();
-            
-            _context.Tasks.AddTask(task);
+
+            if (View.RunInBackground)
+            {
+                // no progress / log dialog will be shown, so start tracking at once
+                _context.Tasks.AddTask(task);
+            }
 
             task.RunAsync();
 
-            return true;
+            // on success a log window will be opened immediately
+            Success = !View.RunInBackground;
+
+            View.Close();
+
+            return false;
         }
     }
 }

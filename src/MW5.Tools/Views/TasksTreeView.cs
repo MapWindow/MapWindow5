@@ -56,8 +56,8 @@ namespace MW5.Tools.Views
                         var wrapper = new TaskNodeWrapper(e.Task);
                         var node = wrapper.Node;
                         Nodes.Add(node);
-                        Controls.Add(wrapper.Progress);
-                        node.CustomControl = wrapper.Progress;
+                        //Controls.Add(wrapper.Progress);
+                        
                         node.ExpandAll();
                     }
                     break;

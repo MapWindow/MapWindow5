@@ -1,23 +1,32 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="IntegerParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="DoubleParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
 using System;
 using System.Windows.Forms;
+using MW5.Api.Enums;
+using MW5.UI.Helpers;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
-    public partial class IntegerParameterControl : ParameterControlBase
+    public partial class DistanceParameterControl : ParameterControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
         /// </summary>
-        public IntegerParameterControl()
+        public DistanceParameterControl()
         {
             InitializeComponent();
-            buttonAdv1.Visible = false;
+
+            comboBoxAdv1.AddItemsFromEnum<LengthUnits>();
+            comboBoxAdv1.SetValue(LengthUnits.Kilometers);
+        }
+
+        public LengthUnits Units
+        {
+            get { return comboBoxAdv1.GetValue<LengthUnits>();  }
         }
 
         /// <summary>
@@ -26,7 +35,6 @@ namespace MW5.Tools.Views.Controls
         public override string Caption
         {
             get { return label1.Text; }
-
             set { label1.Text = value; }
         }
 
@@ -43,7 +51,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override object GetValue()
         {
-            return Convert.ToInt32(integerTextBox1.IntegerValue);
+            return doubleTextBox1.DoubleValue;
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override void SetValue(object value)
         {
-            integerTextBox1.IntegerValue = Convert.ToInt32(value);
+            doubleTextBox1.DoubleValue = Convert.ToDouble(value);
         }
     }
 }

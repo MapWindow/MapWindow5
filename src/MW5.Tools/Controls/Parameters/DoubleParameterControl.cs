@@ -6,28 +6,18 @@
 
 using System;
 using System.Windows.Forms;
-using MW5.Api.Enums;
-using MW5.Shared;
-using MW5.UI.Helpers;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
-    public partial class DistanceParameterControl : ParameterControlBase
+    public partial class DoubleParameterControl : ParameterControlBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
         /// </summary>
-        public DistanceParameterControl()
+        public DoubleParameterControl()
         {
             InitializeComponent();
-
-            comboBoxAdv1.AddItemsFromEnum<LengthUnits>();
-            comboBoxAdv1.SetValue(LengthUnits.Kilometers);
-        }
-
-        public LengthUnits Units
-        {
-            get { return comboBoxAdv1.GetValue<LengthUnits>();  }
+            buttonAdv1.Visible = false;
         }
 
         /// <summary>
@@ -36,6 +26,7 @@ namespace MW5.Tools.Views.Controls
         public override string Caption
         {
             get { return label1.Text; }
+
             set { label1.Text = value; }
         }
 

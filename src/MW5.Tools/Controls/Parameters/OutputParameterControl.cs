@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
     public partial class OutputParameterControl : ParameterControlBase
     {

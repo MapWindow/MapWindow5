@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="BooleanParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="IntegerParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -7,30 +7,17 @@
 using System;
 using System.Windows.Forms;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
-    /// <summary>
-    /// The boolean parameter control.
-    /// </summary>
-    public partial class BooleanParameterControl : ParameterControlBase
+    public partial class IntegerParameterControl : ParameterControlBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="BooleanParameterControl"/> class.
+        /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
         /// </summary>
-        public BooleanParameterControl()
+        public IntegerParameterControl()
         {
             InitializeComponent();
-            ButtonVisible = false;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether button visible.
-        /// </summary>
-        public bool ButtonVisible
-        {
-            get { return false; }
-
-            set { }
+            buttonAdv1.Visible = false;
         }
 
         /// <summary>
@@ -38,9 +25,9 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override string Caption
         {
-            get { return checkBox1.Text; }
+            get { return label1.Text; }
 
-            set { checkBox1.Text = value; }
+            set { label1.Text = value; }
         }
 
         /// <summary>
@@ -56,7 +43,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override object GetValue()
         {
-            return checkBox1.Checked;
+            return Convert.ToInt32(integerTextBox1.IntegerValue);
         }
 
         /// <summary>
@@ -64,7 +51,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override void SetValue(object value)
         {
-            checkBox1.Checked = Convert.ToBoolean(value);
+            integerTextBox1.IntegerValue = Convert.ToInt32(value);
         }
     }
 }

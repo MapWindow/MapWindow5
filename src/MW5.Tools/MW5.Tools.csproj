@@ -70,6 +70,12 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\ProgressBarWrapper.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ProgressBarWrapper.Designer.cs">
+      <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\ParameterControlGenerator.cs" />
@@ -102,60 +108,60 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs" />
-    <Compile Include="Views\Controls\BooleanParameterControl.cs">
+    <Compile Include="Controls\Parameters\BooleanParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\BooleanParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\BooleanParameterControl.Designer.cs">
       <DependentUpon>BooleanParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ComboParameterControl.cs">
+    <Compile Include="Controls\Parameters\ComboParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\ComboParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\ComboParameterControl.Designer.cs">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\DistanceParameterControl.cs">
+    <Compile Include="Controls\Parameters\DistanceParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\DistanceParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\DistanceParameterControl.Designer.cs">
       <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\IntegerParameterControl.cs">
+    <Compile Include="Controls\Parameters\IntegerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\IntegerParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\IntegerParameterControl.Designer.cs">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\LayerParameterControl.cs">
+    <Compile Include="Controls\Parameters\LayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\LayerParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\LayerParameterControl.Designer.cs">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\IParameterControl.cs" />
-    <Compile Include="Views\Controls\OutputParameterControl.cs">
+    <Compile Include="Controls\Parameters\IParameterControl.cs" />
+    <Compile Include="Controls\Parameters\OutputParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\OutputParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\OutputParameterControl.Designer.cs">
       <DependentUpon>OutputParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ParameterControlBase.cs">
+    <Compile Include="Controls\Parameters\ParameterControlBase.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\ParameterControlBase.Designer.cs">
+    <Compile Include="Controls\Parameters\ParameterControlBase.Designer.cs">
       <DependentUpon>ParameterControlBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\ParameterControlFactory.cs" />
-    <Compile Include="Views\Controls\DoubleParameterControl.cs">
+    <Compile Include="Controls\Parameters\ParameterControlFactory.cs" />
+    <Compile Include="Controls\Parameters\DoubleParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\DoubleParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\DoubleParameterControl.Designer.cs">
       <DependentUpon>DoubleParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Controls\StringParameterControl.cs">
+    <Compile Include="Controls\Parameters\StringParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Views\Controls\StringParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\StringParameterControl.Designer.cs">
       <DependentUpon>StringParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\Database\ImportLayerTool.cs" />
@@ -241,29 +247,32 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\Controls\BooleanParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\BooleanParameterControl.resx">
       <DependentUpon>BooleanParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\ComboParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\ComboParameterControl.resx">
       <DependentUpon>ComboParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\DistanceParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\DistanceParameterControl.resx">
       <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\IntegerParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\IntegerParameterControl.resx">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\LayerParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\LayerParameterControl.resx">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\OutputParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\OutputParameterControl.resx">
       <DependentUpon>OutputParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\DoubleParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\DoubleParameterControl.resx">
       <DependentUpon>DoubleParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Controls\StringParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\StringParameterControl.resx">
       <DependentUpon>StringParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ProgressBarWrapper.resx">
+      <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

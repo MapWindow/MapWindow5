@@ -4,15 +4,12 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Api.Helpers;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
 using MW5.Tools.Properties;
-using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
     /// <summary>
     /// Represents combobox with a list of layers and a button to open datasource from disk.

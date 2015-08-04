@@ -9,7 +9,7 @@ using System.ComponentModel;
 using System.Windows.Forms;
 using MW5.Shared;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
     /// <summary>
     /// The parameter control base.

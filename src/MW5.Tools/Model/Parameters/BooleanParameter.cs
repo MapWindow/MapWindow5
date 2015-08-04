@@ -4,8 +4,6 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
-using MW5.Tools.Views.Controls;
-
 namespace MW5.Tools.Model.Parameters
 {
     /// <summary>

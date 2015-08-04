@@ -8,15 +8,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Plugins.Events;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
-using MW5.Shared;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Helpers;
-using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
-using MW5.Tools.Views.Controls;
-using MW5.UI.Controls;
 using MW5.UI.Forms;
 
 namespace MW5.Tools.Views
@@ -41,17 +38,6 @@ namespace MW5.Tools.Views
             _controlFactory = controlFactory;
 
             InitializeComponent();
-
-            FormClosing += OnFormClosing;
-        }
-
-        private void OnFormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (Model.TaskIsRunning)
-            {
-                e.Cancel = true;
-                Visible = false; // must be disposed only when the task is removed from the list
-            }
         }
 
         /// <summary>
@@ -60,6 +46,11 @@ namespace MW5.Tools.Views
         public ButtonBase OkButton
         {
             get { return btnRun; }
+        }
+
+        public bool RunInBackground
+        {
+            get { return chkBackground.Checked; }
         }
 
         /// <summary>
@@ -83,12 +74,19 @@ namespace MW5.Tools.Views
 
         public void Initialize()
         {
+            chkBackground.Checked = AppConfig.Instance.TaskRunInBackground;
+            
             var tool = Model.Tool;
             tool.Progress = new EventProgress();
 
             Text = tool.Name;
 
             webBrowser1.DocumentText = tool.LoadManual();
+        }
+
+        public override void BeforeClose()
+        {
+            AppConfig.Instance.TaskRunInBackground = chkBackground.Checked;
         }
 
         private void OnCloseClick(object sender, EventArgs e)

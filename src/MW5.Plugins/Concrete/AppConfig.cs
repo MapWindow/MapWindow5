@@ -42,6 +42,15 @@ namespace MW5.Plugins.Concrete
             LoadLastProject = true;
             LoadSymbology = true;
             MapBackgroundColor = Color.White;
+            MeasurementsAreaFieldName = "Area";
+            MeasurementsAreaPrecision = 3;
+            MeasurementsAreaUnits = AreaUnits.SquareMeters;
+            MeasurementsAreaWidth = 14;
+            MeasurementsLengthFieldName = "Length";
+            MeasurementsLengthPrecision = 3;
+            MeasurementsLengthUnits = LengthUnits.Meters;
+            MeasurementsLengthWidth = 14;
+            MeasurementsPerimeterFieldName = "Perimeter";
             MeasuringAngleFormat = AngleFormat.Degrees;
             MeasuringAnglePrecision = 1;
             MeasuringAreaPrecision = 1;
@@ -86,15 +95,7 @@ namespace MW5.Plugins.Concrete
             SymbolobyStorage = SymbologyStorage.Project;
             TableEditorLayout = TableEditorLayout.Tabbed;
             TableEditorShowAliases = true;
-            MeasurementsAreaFieldName = "Area";
-            MeasurementsAreaPrecision = 3;
-            MeasurementsAreaUnits = AreaUnits.SquareMeters;
-            MeasurementsAreaWidth = 14;
-            MeasurementsLengthFieldName = "Length";
-            MeasurementsLengthPrecision = 3;
-            MeasurementsLengthUnits = LengthUnits.Meters;
-            MeasurementsLengthWidth = 14;
-            MeasurementsPerimeterFieldName = "Perimeter";
+            TaskRunInBackground = false;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
@@ -346,6 +347,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public SymbologyStorage SymbolobyStorage { get; set; }
+
+        [DataMember]
+        public bool TaskRunInBackground { get; set; }
 
         [DataMember]
         public TableEditorLayout TableEditorLayout { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace MW5.Tools.Views.Controls
+﻿namespace MW5.Tools.Controls.Parameters
 {
-    partial class IntegerParameterControl
+    partial class ComboParameterControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -32,9 +32,9 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonAdv1 = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.integerTextBox1 = new Syncfusion.Windows.Forms.Tools.IntegerTextBox();
+            this.comboBoxAdv1 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerTextBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -44,7 +44,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.buttonAdv1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.integerTextBox1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.comboBoxAdv1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -52,8 +52,8 @@
             this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(332, 45);
-            this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(336, 46);
+            this.tableLayoutPanel1.TabIndex = 1;
             // 
             // label1
             // 
@@ -68,38 +68,34 @@
             // 
             this.buttonAdv1.BeforeTouchSize = new System.Drawing.Size(27, 20);
             this.buttonAdv1.IsBackStageButton = false;
-            this.buttonAdv1.Location = new System.Drawing.Point(297, 19);
+            this.buttonAdv1.Location = new System.Drawing.Point(301, 19);
             this.buttonAdv1.Name = "buttonAdv1";
             this.buttonAdv1.Size = new System.Drawing.Size(27, 20);
             this.buttonAdv1.TabIndex = 3;
             this.buttonAdv1.Text = "...";
             // 
-            // integerTextBox1
+            // comboBoxAdv1
             // 
-            this.integerTextBox1.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.integerTextBox1.BeforeTouchSize = new System.Drawing.Size(283, 20);
-            this.integerTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.integerTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.integerTextBox1.IntegerValue = ((long)(1));
-            this.integerTextBox1.Location = new System.Drawing.Point(8, 19);
-            this.integerTextBox1.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.integerTextBox1.Name = "integerTextBox1";
-            this.integerTextBox1.NullString = "";
-            this.integerTextBox1.Size = new System.Drawing.Size(283, 20);
-            this.integerTextBox1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.integerTextBox1.TabIndex = 4;
-            this.integerTextBox1.Text = "1";
+            this.comboBoxAdv1.BeforeTouchSize = new System.Drawing.Size(287, 21);
+            this.comboBoxAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.comboBoxAdv1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.comboBoxAdv1.Location = new System.Drawing.Point(8, 19);
+            this.comboBoxAdv1.Name = "comboBoxAdv1";
+            this.comboBoxAdv1.Size = new System.Drawing.Size(287, 21);
+            this.comboBoxAdv1.TabIndex = 4;
             // 
-            // IntegerParameterControl
+            // ComboParameterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "IntegerParameterControl";
-            this.Size = new System.Drawing.Size(332, 45);
+            this.Name = "ComboParameterControl";
+            this.Size = new System.Drawing.Size(336, 46);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.integerTextBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -109,7 +105,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
-        private Syncfusion.Windows.Forms.Tools.IntegerTextBox integerTextBox1;
-
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv1;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace MW5.Tools.Views.Controls
+﻿namespace MW5.Tools.Controls.Parameters
 {
     partial class ParameterControlBase
     {

@@ -1,5 +1,5 @@
-﻿using MW5.Tools.Properties;
-using MW5.Tools.Views.Controls;
+﻿using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Properties;
 
 namespace MW5.Tools.Views
 {
@@ -38,16 +38,17 @@ namespace MW5.Tools.Views
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabRequired = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelRequired = new System.Windows.Forms.Panel();
-            this.stringParameterControl6 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.stringParameterControl5 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.stringParameterControl4 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.stringParameterControl3 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.stringParameterControl2 = new MW5.Tools.Views.Controls.StringParameterControl();
-            this.stringParameterControl1 = new MW5.Tools.Views.Controls.StringParameterControl();
+            this.stringParameterControl6 = new MW5.Tools.Controls.Parameters.StringParameterControl();
+            this.stringParameterControl5 = new MW5.Tools.Controls.Parameters.StringParameterControl();
+            this.stringParameterControl4 = new MW5.Tools.Controls.Parameters.StringParameterControl();
+            this.stringParameterControl3 = new MW5.Tools.Controls.Parameters.StringParameterControl();
+            this.stringParameterControl2 = new MW5.Tools.Controls.Parameters.StringParameterControl();
+            this.stringParameterControl1 = new MW5.Tools.Controls.Parameters.StringParameterControl();
             this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.chkBackground = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
@@ -238,11 +239,22 @@ namespace MW5.Tools.Views
             this.webBrowser1.Size = new System.Drawing.Size(425, 370);
             this.webBrowser1.TabIndex = 0;
             // 
+            // chkBackground
+            // 
+            this.chkBackground.AutoSize = true;
+            this.chkBackground.Location = new System.Drawing.Point(12, 395);
+            this.chkBackground.Name = "chkBackground";
+            this.chkBackground.Size = new System.Drawing.Size(135, 17);
+            this.chkBackground.TabIndex = 36;
+            this.chkBackground.Text = "Run in the background";
+            this.chkBackground.UseVisualStyleBackColor = true;
+            // 
             // ToolView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(565, 418);
+            this.Controls.Add(this.chkBackground);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnRun);
@@ -256,6 +268,7 @@ namespace MW5.Tools.Views
             this.tabOptional.ResumeLayout(false);
             this.tabHelp.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -269,13 +282,14 @@ namespace MW5.Tools.Views
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabOptional;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabHelp;
         private System.Windows.Forms.Panel panelRequired;
-        private Controls.StringParameterControl stringParameterControl6;
-        private Controls.StringParameterControl stringParameterControl5;
-        private Controls.StringParameterControl stringParameterControl4;
-        private Controls.StringParameterControl stringParameterControl3;
-        private Controls.StringParameterControl stringParameterControl2;
-        private Controls.StringParameterControl stringParameterControl1;
+        private StringParameterControl stringParameterControl6;
+        private StringParameterControl stringParameterControl5;
+        private StringParameterControl stringParameterControl4;
+        private StringParameterControl stringParameterControl3;
+        private StringParameterControl stringParameterControl2;
+        private StringParameterControl stringParameterControl1;
         private System.Windows.Forms.Panel panelOptional;
         private System.Windows.Forms.WebBrowser webBrowser1;
+        private System.Windows.Forms.CheckBox chkBackground;
     }
 }

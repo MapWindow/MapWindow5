@@ -6,7 +6,7 @@
 
 using System.Windows.Forms;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
     public partial class StringParameterControl : ParameterControlBase, IParameterControl
     {

@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="DoubleParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="BooleanParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -7,17 +7,30 @@
 using System;
 using System.Windows.Forms;
 
-namespace MW5.Tools.Views.Controls
+namespace MW5.Tools.Controls.Parameters
 {
-    public partial class DoubleParameterControl : ParameterControlBase
+    /// <summary>
+    /// The boolean parameter control.
+    /// </summary>
+    public partial class BooleanParameterControl : ParameterControlBase
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
+        /// Initializes a new instance of the <see cref="BooleanParameterControl"/> class.
         /// </summary>
-        public DoubleParameterControl()
+        public BooleanParameterControl()
         {
             InitializeComponent();
-            buttonAdv1.Visible = false;
+            ButtonVisible = false;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether button visible.
+        /// </summary>
+        public bool ButtonVisible
+        {
+            get { return false; }
+
+            set { }
         }
 
         /// <summary>
@@ -25,9 +38,9 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override string Caption
         {
-            get { return label1.Text; }
+            get { return checkBox1.Text; }
 
-            set { label1.Text = value; }
+            set { checkBox1.Text = value; }
         }
 
         /// <summary>
@@ -43,7 +56,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override object GetValue()
         {
-            return doubleTextBox1.DoubleValue;
+            return checkBox1.Checked;
         }
 
         /// <summary>
@@ -51,7 +64,7 @@ namespace MW5.Tools.Views.Controls
         /// </summary>
         public override void SetValue(object value)
         {
-            doubleTextBox1.DoubleValue = Convert.ToDouble(value);
+            checkBox1.Checked = Convert.ToBoolean(value);
         }
     }
 }
