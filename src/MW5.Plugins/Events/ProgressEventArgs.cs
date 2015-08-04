@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MW5.Tools.Services
+namespace MW5.Plugins.Events
 {
     public class ProgressEventArgs: EventArgs
     {

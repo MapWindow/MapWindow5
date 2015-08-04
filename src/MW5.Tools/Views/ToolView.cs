@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Tools.Helpers;
@@ -40,14 +41,17 @@ namespace MW5.Tools.Views
             _controlFactory = controlFactory;
 
             InitializeComponent();
+
+            FormClosing += OnFormClosing;
         }
 
-        public event Action CancelClicked;
-
-        public void OnRun()
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            progressBar1.Visible = true;
-            tabControlAdv1.SelectedTab = tabLog;
+            if (Model.TaskIsRunning)
+            {
+                e.Cancel = true;
+                Visible = false; // must be disposed only when the task is removed from the list
+            }
         }
 
         /// <summary>
@@ -55,7 +59,7 @@ namespace MW5.Tools.Views
         /// </summary>
         public ButtonBase OkButton
         {
-            get { return btnOk; }
+            get { return btnRun; }
         }
 
         /// <summary>
@@ -79,55 +83,21 @@ namespace MW5.Tools.Views
 
         public void Initialize()
         {
-            Model.Progress = new EventProgress();
-            Model.Progress.ProgressChanged += ProgressChanged;
-            Model.Progress.Hide += OnProgressHide;
+            var tool = Model.Tool;
+            tool.Progress = new EventProgress();
 
-            Text = Model.Name;
+            Text = tool.Name;
 
-            webBrowser1.DocumentText = Model.LoadManual();
+            webBrowser1.DocumentText = tool.LoadManual();
         }
 
-        private void OnProgressHide(object sender, EventArgs e)
+        private void OnCloseClick(object sender, EventArgs e)
         {
-            if (!Visible)
-            {
-                return;
-            }
-
-            Action action = () =>
-                {
-                    progressBar1.Visible = false;
-                };
-
-            progressBar1.SafeInvoke(action);
-        }
-
-        private void ProgressChanged(object sender, ProgressEventArgs e)
-        {
-            if (!Visible)
-            {
-                return;
-            }
-
-            Action action = () =>
-                {
-                    if (e.Percent >= 0 && e.Percent <= 100)
-                    {
-                        progressBar1.Value = e.Percent;
-                    }
-                };
-
-            progressBar1.SafeInvoke(action);
-        }
-
-        private void OnCancelClick(object sender, EventArgs e)
-        {
-            Invoke(CancelClicked);
+            Close();
         }
     }
 
-    public class GisToolViewBase : MapWindowView<GisTool>
+    public class GisToolViewBase : MapWindowView<ToolViewModel>
     {
     }
 }

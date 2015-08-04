@@ -37,5 +37,10 @@ namespace MW5.Plugins.Interfaces
         /// Initializes the tool.
         /// </summary>
         void Initialize(IAppContext context);
+
+        /// <summary>
+        /// Reports progress of the tool's execution.
+        /// </summary>
+        IToolProgress Progress { get;  }
     }
 }

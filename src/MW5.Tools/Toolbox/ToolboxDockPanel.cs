@@ -57,7 +57,11 @@ namespace MW5.Tools.Toolbox
             var tool = newTool as GisTool;
             if (tool != null)
             {
-                _context.Container.Run<ToolPresenter, GisTool>(tool);
+                var model = new ToolViewModel(tool);
+                if (_context.Container.Run<ToolPresenter, ToolViewModel>(model))
+                {
+                    _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
+                }
             }
             else
             {

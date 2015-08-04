@@ -15,15 +15,11 @@ namespace MW5.Tools.Views
     /// <summary>
     /// The ToolView interface.
     /// </summary>
-    public interface IToolView : IView<GisTool>
+    public interface IToolView : IView<ToolViewModel>
     {
         /// <summary>
         /// Generates the controls.
         /// </summary>
         void GenerateControls(IEnumerable<BaseParameter> parameters);
-
-        event Action CancelClicked;
-
-        void OnRun();
     }
 }

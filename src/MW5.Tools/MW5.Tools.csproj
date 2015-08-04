@@ -91,10 +91,8 @@
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
-    <Compile Include="Services\ProgressEventArgs.cs" />
     <Compile Include="Services\ToolLogger.cs" />
     <Compile Include="Services\CallbackProgress.cs" />
-    <Compile Include="Services\IToolProgress.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
@@ -177,7 +175,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\ITaskLogView.cs" />
     <Compile Include="Views\TaskNodeWrapper.cs" />
+    <Compile Include="Views\TaskLogPresenter.cs" />
+    <Compile Include="Views\TaskLogView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TaskLogView.Designer.cs">
+      <DependentUpon>TaskLogView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ToolPresenter.cs" />
     <Compile Include="Views\ToolView.cs">
       <SubType>Form</SubType>
@@ -206,6 +212,7 @@
     <Compile Include="Views\TasksTreeView.Designer.cs">
       <DependentUpon>TasksTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ToolViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -262,6 +269,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\TaskLogView.resx">
+      <DependentUpon>TaskLogView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\ToolView.resx">
       <DependentUpon>ToolView.cs</DependentUpon>
     </EmbeddedResource>
@@ -300,6 +310,9 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_success32.png" />
+    <None Include="Resources\img_error32.png" />
+    <None Include="Resources\img_cancel32.png" />
     <None Include="Resources\img_cancel16.png" />
     <None Include="Resources\img_error16.png" />
     <None Include="Resources\img_warning16.png" />

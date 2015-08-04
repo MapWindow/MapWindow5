@@ -58,7 +58,13 @@ namespace MW5.Tools.Views
                 case ToolboxResultsCommand.ToggleGroup:
                     break;
                 case ToolboxResultsCommand.OpenLog:
-                    MessageService.Current.Info("About to open log");
+                    {
+                        var task = View.SelectedTask;
+                        if (task != null)
+                        {
+                            _context.Container.Run<TaskLogPresenter, IGisTask>(task);
+                        }
+                    }
                     break;
                 case ToolboxResultsCommand.CancelTask:
                     {

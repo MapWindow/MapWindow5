@@ -24,6 +24,7 @@ namespace MW5.Tools
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterView<IToolView, ToolView>()
+                .RegisterView<ITaskLogView, TaskLogView>()
                 .RegisterSingleton<ITaskCollection, TaskCollection>()
                 .RegisterService<ParameterControlFactory>()
                 .RegisterSingleton<TasksDockPanel>()

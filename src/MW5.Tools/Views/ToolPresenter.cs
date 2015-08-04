@@ -5,24 +5,17 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Tools.Model;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Services;
 
 namespace MW5.Tools.Views
 {
     /// <summary>
     /// The gis tool presenter.
     /// </summary>
-    public class ToolPresenter : BasePresenter<IToolView, GisTool>
+    public class ToolPresenter : BasePresenter<IToolView, ToolViewModel>
     {
         private readonly IAppContext _context;
-        private IGisTask _task;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolPresenter"/> class.
@@ -36,23 +29,9 @@ namespace MW5.Tools.Views
 
         public override void Initialize()
         {
-            Model.Initialize(_context);
+            Model.Tool.Initialize(_context);
 
-            View.GenerateControls(Model.Parameters);
-
-            View.CancelClicked += ViewCancelClicked;
-        }
-
-        private void ViewCancelClicked()
-        {
-            if (_task != null && _task.Status == GisTaskStatus.Running)
-            {
-                _task.Cancel();
-            }
-            else
-            {
-                View.Close();
-            }
+            View.GenerateControls(Model.Tool.Parameters);
         }
 
         /// <summary>
@@ -60,20 +39,18 @@ namespace MW5.Tools.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            if (!Model.Validate())
+            if (!Model.Tool.Validate())
             {
                 return false;
             }
 
-            _task = new GisTask(Model);
+            var task = Model.CreateTask();
+            
+            _context.Tasks.AddTask(task);
 
-            _context.Tasks.AddTask(_task);
+            task.RunAsync();
 
-            _task.RunAsync();
-
-            View.OnRun();
-
-            return false;       // TODO: close only if run in background is checked
+            return true;
         }
     }
 }
