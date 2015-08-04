@@ -73,6 +73,7 @@
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\ParameterControlGenerator.cs" />
+    <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Model\GisTask.cs" />
     <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
@@ -176,6 +177,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Views\TaskNodeWrapper.cs" />
     <Compile Include="Views\ToolPresenter.cs" />
     <Compile Include="Views\ToolView.cs">
       <SubType>Form</SubType>
@@ -298,6 +300,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_cancel16.png" />
     <None Include="Resources\img_error16.png" />
     <None Include="Resources\img_warning16.png" />
     <None Include="Resources\img_wait16.png" />

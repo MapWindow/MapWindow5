@@ -1,38 +1,49 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TaskCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Model
 {
-    internal class TaskCollection: ITaskCollection
+    internal class TaskCollection : ITaskCollection
     {
         private readonly List<IGisTask> _tasks = new List<IGisTask>();
 
-        public void AddTask(IGisTask task)
-        {
-            task.StatusChanged += (s, e) => FireTaskStatusChanged(s as IGisTask);
-            _tasks.Add(task);
-            FireCollectionChanged();
-        }
+        public event EventHandler Cleared;
+
+        public event EventHandler<TaskEventArgs> TaskChanged;
 
         public int Count
         {
             get { return _tasks.Count; }
         }
 
-        public event EventHandler CollectionChanged;
+        public void AddTask(IGisTask task)
+        {
+            task.StatusChanged += (s, e) => FireTaskChanged(s as IGisTask, TaskEvent.StatusChanged);
+            _tasks.Add(task);
+            FireTaskChanged(task, TaskEvent.Added);
+        }
 
-        public event EventHandler<TaskEventArgs> TaskStatusChanged;
+        public void RemoveTask(IGisTask task)
+        {
+            _tasks.Remove(task);
+            FireTaskChanged(task, TaskEvent.Removed);
+        }
 
         public void Clear()
         {
             _tasks.Clear();
-            FireCollectionChanged();
+            FireCollectionCleared();
         }
 
         public IEnumerator<IGisTask> GetEnumerator()
@@ -45,21 +56,21 @@ namespace MW5.Tools.Model
             return GetEnumerator();
         }
 
-        private void FireTaskStatusChanged(IGisTask task)
+        private void FireCollectionCleared()
         {
-            var handler = TaskStatusChanged;
-            if (handler != null)
-            {
-                handler(this, new TaskEventArgs(task));
-            }
-        }
-
-        private void FireCollectionChanged()
-        {
-            var handler = CollectionChanged;
+            var handler = Cleared;
             if (handler != null)
             {
                 handler(this, new EventArgs());
+            }
+        }
+
+        private void FireTaskChanged(IGisTask task, TaskEvent taskEvent)
+        {
+            var handler = TaskChanged;
+            if (handler != null)
+            {
+                handler(this, new TaskEventArgs(task, taskEvent));
             }
         }
     }

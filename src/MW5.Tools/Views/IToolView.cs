@@ -23,5 +23,7 @@ namespace MW5.Tools.Views
         void GenerateControls(IEnumerable<BaseParameter> parameters);
 
         event Action CancelClicked;
+
+        void OnRun();
     }
 }

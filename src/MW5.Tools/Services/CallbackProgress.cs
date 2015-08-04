@@ -27,5 +27,7 @@ namespace MW5.Tools.Services
         }
 
         public event EventHandler<ProgressEventArgs> ProgressChanged;
+
+        public event EventHandler Hide;
     }
 }

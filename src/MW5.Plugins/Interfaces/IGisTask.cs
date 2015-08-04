@@ -26,6 +26,12 @@ namespace MW5.Plugins.Interfaces
 
         void Cancel();
 
+        bool IsFinished { get; }
+
+        void Pause();
+
+        void Resume();
+
         event EventHandler StatusChanged;
     }
 }

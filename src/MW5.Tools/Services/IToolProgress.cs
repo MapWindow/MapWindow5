@@ -13,5 +13,7 @@ namespace MW5.Tools.Services
         void Clear();
 
         event EventHandler<ProgressEventArgs> ProgressChanged;
+
+        event EventHandler Hide;
     }
 }

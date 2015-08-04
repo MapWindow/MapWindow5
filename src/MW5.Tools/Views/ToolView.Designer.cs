@@ -46,10 +46,10 @@ namespace MW5.Tools.Views
             this.stringParameterControl1 = new MW5.Tools.Views.Controls.StringParameterControl();
             this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
-            this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.tabLog = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.chkBackground = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
@@ -57,8 +57,8 @@ namespace MW5.Tools.Views
             this.tabRequired.SuspendLayout();
             this.panelRequired.SuspendLayout();
             this.tabOptional.SuspendLayout();
-            this.tabHelp.SuspendLayout();
             this.tabLog.SuspendLayout();
+            this.tabHelp.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBoxAdv2
@@ -104,8 +104,8 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(550, 373);
             this.tabControlAdv1.Controls.Add(this.tabRequired);
             this.tabControlAdv1.Controls.Add(this.tabOptional);
-            this.tabControlAdv1.Controls.Add(this.tabHelp);
             this.tabControlAdv1.Controls.Add(this.tabLog);
+            this.tabControlAdv1.Controls.Add(this.tabHelp);
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 40);
             this.tabControlAdv1.Location = new System.Drawing.Point(6, 12);
             this.tabControlAdv1.Name = "tabControlAdv1";
@@ -220,6 +220,27 @@ namespace MW5.Tools.Views
             this.panelOptional.Size = new System.Drawing.Size(425, 370);
             this.panelOptional.TabIndex = 0;
             // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.progressBar1);
+            this.tabLog.Image = global::MW5.Tools.Properties.Resources.img_log24;
+            this.tabLog.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabLog.Location = new System.Drawing.Point(123, 1);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.ShowCloseButton = true;
+            this.tabLog.Size = new System.Drawing.Size(425, 370);
+            this.tabLog.TabIndex = 3;
+            this.tabLog.Text = "Log";
+            this.tabLog.ThemesEnabled = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 347);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(400, 10);
+            this.progressBar1.TabIndex = 36;
+            this.progressBar1.Visible = false;
+            // 
             // tabHelp
             // 
             this.tabHelp.Controls.Add(this.webBrowser1);
@@ -242,26 +263,6 @@ namespace MW5.Tools.Views
             this.webBrowser1.ScriptErrorsSuppressed = true;
             this.webBrowser1.Size = new System.Drawing.Size(425, 370);
             this.webBrowser1.TabIndex = 0;
-            // 
-            // tabLog
-            // 
-            this.tabLog.Controls.Add(this.progressBar1);
-            this.tabLog.Image = global::MW5.Tools.Properties.Resources.img_log24;
-            this.tabLog.ImageSize = new System.Drawing.Size(24, 24);
-            this.tabLog.Location = new System.Drawing.Point(123, 1);
-            this.tabLog.Name = "tabLog";
-            this.tabLog.ShowCloseButton = true;
-            this.tabLog.Size = new System.Drawing.Size(425, 370);
-            this.tabLog.TabIndex = 3;
-            this.tabLog.Text = "Log";
-            this.tabLog.ThemesEnabled = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 347);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(400, 10);
-            this.progressBar1.TabIndex = 36;
             // 
             // chkBackground
             // 
@@ -290,8 +291,8 @@ namespace MW5.Tools.Views
             this.tabRequired.ResumeLayout(false);
             this.panelRequired.ResumeLayout(false);
             this.tabOptional.ResumeLayout(false);
-            this.tabHelp.ResumeLayout(false);
             this.tabLog.ResumeLayout(false);
+            this.tabHelp.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

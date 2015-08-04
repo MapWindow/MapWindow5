@@ -8,11 +8,13 @@ namespace MW5.Plugins.Interfaces
     {
         void AddTask(IGisTask task);
 
+        void RemoveTask(IGisTask task);
+
         int Count { get; }
 
-        event EventHandler CollectionChanged;
-
-        event EventHandler<TaskEventArgs> TaskStatusChanged;
+        event EventHandler<TaskEventArgs> TaskChanged;
+        
+        event EventHandler Cleared;
 
         void Clear();
     }

@@ -28,6 +28,10 @@ namespace MW5.Tools.Enums
     {
         Clear = 0,
         ToggleGroup = 1,
+        OpenLog = 2,
+        CancelTask = 3,
+        Pause = 4,
+        RemoveTask = 5,
     }
 
     internal enum TaskIcons
@@ -39,5 +43,6 @@ namespace MW5.Tools.Enums
         Result = 4,
         Execution = 5,
         Log = 6,
+        Cancel = 7
     }
 }

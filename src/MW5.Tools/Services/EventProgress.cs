@@ -15,7 +15,7 @@ namespace MW5.Tools.Services
 
         public void Clear()
         {
-            FireProgressChanged(string.Empty, 100);
+            FireHideProgress();
         }
 
         private void FireProgressChanged(string msg, int percent)
@@ -26,7 +26,18 @@ namespace MW5.Tools.Services
                 handler(this, new ProgressEventArgs(msg, percent));
             }
         }
+        
+        private void FireHideProgress()
+        {
+            var handler = Hide;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
+        }
 
         public event EventHandler<ProgressEventArgs> ProgressChanged;
+
+        public event EventHandler Hide;
     }
 }

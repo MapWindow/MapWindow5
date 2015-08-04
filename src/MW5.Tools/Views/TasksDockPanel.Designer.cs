@@ -33,8 +33,15 @@
             this.toolGroup = new System.Windows.Forms.ToolStripButton();
             this.toolClear = new System.Windows.Forms.ToolStripButton();
             this.tasksTreeView1 = new MW5.Tools.Views.TasksTreeView();
+            this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
+            this.toolOpenLog = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolCancelTask = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolPauseTask = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolRemoveTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksTreeView1)).BeginInit();
+            this.contextMenuStripEx1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripEx1
@@ -84,6 +91,7 @@
             this.tasksTreeView1.BeforeTouchSize = new System.Drawing.Size(238, 218);
             this.tasksTreeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tasksTreeView1.CanSelectDisabledNode = false;
+            this.tasksTreeView1.ContextMenuStrip = this.contextMenuStripEx1;
             this.tasksTreeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             // 
             // 
@@ -114,6 +122,48 @@
             this.tasksTreeView1.ToolTipControl.Text = "toolTip";
             this.tasksTreeView1.ToolTipDuration = 0;
             // 
+            // contextMenuStripEx1
+            // 
+            this.contextMenuStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolOpenLog,
+            this.toolCancelTask,
+            this.toolPauseTask,
+            this.toolStripSeparator1,
+            this.toolRemoveTask});
+            this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
+            this.contextMenuStripEx1.Name = "contextMenuStripEx1";
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(127, 98);
+            this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
+            // 
+            // toolOpenLog
+            // 
+            this.toolOpenLog.Name = "toolOpenLog";
+            this.toolOpenLog.Size = new System.Drawing.Size(126, 22);
+            this.toolOpenLog.Text = "Open Log";
+            // 
+            // toolCancelTask
+            // 
+            this.toolCancelTask.Name = "toolCancelTask";
+            this.toolCancelTask.Size = new System.Drawing.Size(126, 22);
+            this.toolCancelTask.Text = "Cancel";
+            // 
+            // toolPauseTask
+            // 
+            this.toolPauseTask.Name = "toolPauseTask";
+            this.toolPauseTask.Size = new System.Drawing.Size(126, 22);
+            this.toolPauseTask.Text = "Pause";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(123, 6);
+            // 
+            // toolRemoveTask
+            // 
+            this.toolRemoveTask.Name = "toolRemoveTask";
+            this.toolRemoveTask.Size = new System.Drawing.Size(126, 22);
+            this.toolRemoveTask.Text = "Remove";
+            // 
             // TasksDockPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -125,6 +175,7 @@
             this.toolStripEx1.ResumeLayout(false);
             this.toolStripEx1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tasksTreeView1)).EndInit();
+            this.contextMenuStripEx1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -136,5 +187,11 @@
         private System.Windows.Forms.ToolStripButton toolGroup;
         private System.Windows.Forms.ToolStripButton toolClear;
         private TasksTreeView tasksTreeView1;
+        private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuStripEx1;
+        private System.Windows.Forms.ToolStripMenuItem toolOpenLog;
+        private System.Windows.Forms.ToolStripMenuItem toolCancelTask;
+        private System.Windows.Forms.ToolStripMenuItem toolPauseTask;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolRemoveTask;
     }
 }

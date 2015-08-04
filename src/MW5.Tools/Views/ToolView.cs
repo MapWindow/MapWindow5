@@ -44,6 +44,12 @@ namespace MW5.Tools.Views
 
         public event Action CancelClicked;
 
+        public void OnRun()
+        {
+            progressBar1.Visible = true;
+            tabControlAdv1.SelectedTab = tabLog;
+        }
+
         /// <summary>
         /// Gets the ok button.
         /// </summary>
@@ -75,10 +81,26 @@ namespace MW5.Tools.Views
         {
             Model.Progress = new EventProgress();
             Model.Progress.ProgressChanged += ProgressChanged;
+            Model.Progress.Hide += OnProgressHide;
 
             Text = Model.Name;
 
             webBrowser1.DocumentText = Model.LoadManual();
+        }
+
+        private void OnProgressHide(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                return;
+            }
+
+            Action action = () =>
+                {
+                    progressBar1.Visible = false;
+                };
+
+            progressBar1.SafeInvoke(action);
         }
 
         private void ProgressChanged(object sender, ProgressEventArgs e)

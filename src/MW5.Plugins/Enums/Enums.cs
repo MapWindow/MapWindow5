@@ -191,4 +191,11 @@
         Failed = 3,
         Cancelled = 4,
     }
+
+    public enum TaskEvent
+    {
+        Added = 0,
+        StatusChanged = 1,
+        Removed = 2
+    }
 }

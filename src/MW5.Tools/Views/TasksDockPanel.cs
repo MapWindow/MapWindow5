@@ -18,6 +18,22 @@ namespace MW5.Tools.Views
         public TasksDockPanel()
         {
             InitializeComponent();
+
+            contextMenuStripEx1.Opening += ContextMenuOpening;
+        }
+
+        private void ContextMenuOpening(object sender, CancelEventArgs e)
+        {
+            var task = tasksTreeView1.SelectedTask;
+            if (task == null)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            toolCancelTask.Enabled = !task.IsFinished;
+            toolPauseTask.Enabled = !task.IsFinished;
+            toolRemoveTask.Enabled = task.IsFinished;
         }
 
         internal void Initialize(ITaskCollection tasks)
@@ -25,14 +41,18 @@ namespace MW5.Tools.Views
             tasksTreeView1.Initialize(tasks);
         }
 
-        public void UpdateView()
+        public IGisTask SelectedTask
         {
-            tasksTreeView1.UpdateView();
+            get { return tasksTreeView1.SelectedTask; }
         }
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get { yield return toolStripEx1.Items; }
+            get
+            {
+                yield return toolStripEx1.Items;
+                yield return contextMenuStripEx1.Items;
+            }
         }
 
         public IEnumerable<Control> Buttons

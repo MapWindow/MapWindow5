@@ -71,6 +71,8 @@ namespace MW5.Tools.Views
 
             _task.RunAsync();
 
+            View.OnRun();
+
             return false;       // TODO: close only if run in background is checked
         }
     }

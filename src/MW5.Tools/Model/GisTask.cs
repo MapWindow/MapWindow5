@@ -30,6 +30,32 @@ namespace MW5.Tools.Model
 
         public event EventHandler StatusChanged;
 
+        public bool IsFinished
+        {
+            get
+            {
+                switch (Status)
+                {
+                    case GisTaskStatus.Success:
+                    case GisTaskStatus.Failed:
+                    case GisTaskStatus.Cancelled:
+                        return true;
+                }
+
+                return false;
+            }
+        }
+
+        public void Pause()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Resume()
+        {
+            throw new NotImplementedException();
+        }
+
         public TimeSpan ExecutionTime
         {
             get

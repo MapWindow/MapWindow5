@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -28,16 +29,19 @@ namespace MW5.Tools.Views
             _tasks = tasks;
 
             View.Initialize(tasks);
-            tasks.CollectionChanged += TasksCollectionChanged;
+            tasks.TaskChanged += TaskChanged;
         }
 
-        private void TasksCollectionChanged(object sender, EventArgs e)
+        private void TaskChanged(object sender, TaskEventArgs e)
         {
-            var panel = _context.DockPanels.Find(DockPanelKeys.ToolboxResults);
-            if (panel != null)
+            if (e.Event == Plugins.Enums.TaskEvent.Added)
             {
-                panel.Visible = true;
-                panel.Activate();
+                var panel = _context.DockPanels.Find(DockPanelKeys.ToolboxResults);
+                if (panel != null)
+                {
+                    panel.Visible = true;
+                    panel.Activate();
+                }
             }
         }
 
@@ -49,11 +53,34 @@ namespace MW5.Tools.Views
                     if (MessageService.Current.Ask("Remove all the tasks from the list?"))
                     {
                         _tasks.Clear();
-                        View.UpdateView();
                     }
                     break;
                 case ToolboxResultsCommand.ToggleGroup:
                     break;
+                case ToolboxResultsCommand.OpenLog:
+                    MessageService.Current.Info("About to open log");
+                    break;
+                case ToolboxResultsCommand.CancelTask:
+                    {
+                        var task = View.SelectedTask;
+                        if (task != null)
+                        {
+                            task.Cancel();
+                        }
+                        break;
+                    }
+                case ToolboxResultsCommand.Pause:
+                    MessageService.Current.Info("Pause task");
+                    break;
+                case ToolboxResultsCommand.RemoveTask:
+                    {
+                        var task = View.SelectedTask;
+                        if (task != null)
+                        {
+                            _tasks.RemoveTask(task);
+                        }
+                        break;
+                    }
                 default:
                     throw new ArgumentOutOfRangeException("command");
             }
