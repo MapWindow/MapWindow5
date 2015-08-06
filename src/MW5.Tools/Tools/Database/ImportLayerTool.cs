@@ -70,7 +70,7 @@ namespace MW5.Tools.Tools.Database
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public override bool Run(CancellationToken token)
+        public override bool Run(ITaskHandle task)
         {
             var cs = Database.Value.ConnectionString;
 

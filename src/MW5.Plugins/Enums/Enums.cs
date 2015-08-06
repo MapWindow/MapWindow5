@@ -190,6 +190,7 @@
         Success = 2,
         Failed = 3,
         Cancelled = 4,
+        Paused = 5,
     }
 
     public enum TaskEvent

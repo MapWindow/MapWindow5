@@ -44,6 +44,7 @@ namespace MW5.Tools.Views
             this.lblStatus = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnPause = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panelLog.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).BeginInit();
@@ -82,6 +83,7 @@ namespace MW5.Tools.Views
             this.textBoxExt1.BackColor = System.Drawing.Color.White;
             this.textBoxExt1.BeforeTouchSize = new System.Drawing.Size(489, 82);
             this.textBoxExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.textBoxExt1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.textBoxExt1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxExt1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxExt1.Location = new System.Drawing.Point(3, 16);
@@ -93,7 +95,6 @@ namespace MW5.Tools.Views
             this.textBoxExt1.Size = new System.Drawing.Size(489, 82);
             this.textBoxExt1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Metro;
             this.textBoxExt1.TabIndex = 1;
-            this.textBoxExt1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             // 
             // panelSeparator
             // 
@@ -105,6 +106,7 @@ namespace MW5.Tools.Views
             // 
             // panelProgress
             // 
+            this.panelProgress.Controls.Add(this.btnPause);
             this.panelProgress.Controls.Add(this.btnCancel);
             this.panelProgress.Controls.Add(this.progressBar1);
             this.panelProgress.Dock = System.Windows.Forms.DockStyle.Top;
@@ -192,6 +194,20 @@ namespace MW5.Tools.Views
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             // 
+            // btnPause
+            // 
+            this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPause.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnPause.BeforeTouchSize = new System.Drawing.Size(82, 26);
+            this.btnPause.ForeColor = System.Drawing.Color.White;
+            this.btnPause.IsBackStageButton = false;
+            this.btnPause.Location = new System.Drawing.Point(306, 48);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(82, 26);
+            this.btnPause.TabIndex = 3;
+            this.btnPause.Text = "Pause";
+            // 
             // TaskLogView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -228,5 +244,6 @@ namespace MW5.Tools.Views
         private System.Windows.Forms.GroupBox panelProgress;
         private GroupBox groupBox1;
         private TextBoxExt textBoxExt1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnPause;
     }
 }

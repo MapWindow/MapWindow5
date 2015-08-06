@@ -30,7 +30,7 @@ namespace MW5.Tools.Enums
         ToggleGroup = 1,
         OpenLog = 2,
         CancelTask = 3,
-        Pause = 4,
+        PauseTask = 4,
         RemoveTask = 5,
     }
 
@@ -43,6 +43,7 @@ namespace MW5.Tools.Enums
         Result = 4,
         Execution = 5,
         Log = 6,
-        Cancel = 7
+        Cancel = 7,
+        Pause = 8,
     }
 }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -33,7 +34,7 @@ namespace MW5.Tools.Tools.Fake
             get { return "Fakes the execution of the long task"; }
         }
 
-        public override bool Run(CancellationToken token)
+        public override bool Run(ITaskHandle task)
         {
             var span = TimeSpan.FromSeconds(SecondPerStep.Value);
 
@@ -44,12 +45,13 @@ namespace MW5.Tools.Tools.Fake
                 Thread.Sleep(span);
 
                 int val = i;
-                Progress.Update("Running...", val);
 
-                token.ThrowIfCancellationRequested();
+                task.CheckPauseAndCancel();
+
+                task.Progress.Update("Running...", val);
             }
 
-            Progress.Clear();
+            task.Progress.Clear();
 
             //Logger.Info(Name + ": end");
 

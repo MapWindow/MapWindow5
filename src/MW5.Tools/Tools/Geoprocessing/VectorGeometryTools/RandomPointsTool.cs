@@ -12,6 +12,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -53,7 +54,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// Runs the tool.
         /// </summary>
         /// <returns>True on success, which closes the view</returns>
-        public override bool Run(CancellationToken token)
+        public override bool Run(ITaskHandle task)
         {
             // TODO: log the name of the tool and start time
 

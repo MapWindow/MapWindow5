@@ -12,7 +12,6 @@ namespace MW5.Tools.Model
 {
     public abstract class GisToolBase: IGisTool
     {
-        private IToolProgress _progress;
         private PluginIdentity _identity;
 
         /// <summary>
@@ -21,16 +20,6 @@ namespace MW5.Tools.Model
         public PluginIdentity PluginIdentity
         {
             get { return _identity; }
-        }
-
-        public IToolProgress Progress
-        {
-            get { return _progress ?? (_progress = new EmptyProgress()); }
-            set
-            {
-                if (value == null) value = new EmptyProgress();
-                _progress = value;
-            }
         }
 
         public bool Cancelled { get; set; }
@@ -48,7 +37,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public abstract bool Run(CancellationToken token);
+        public abstract bool Run(ITaskHandle task);
 
         /// <summary>
         /// Initializes the tool.

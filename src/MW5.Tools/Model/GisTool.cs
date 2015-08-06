@@ -34,7 +34,7 @@ namespace MW5.Tools.Model
         private List<BaseParameter> _parameters;
         private ILayerService _layerService;
         private IAppContext _context;
-        
+
         protected IAppContext AppContext
         {
             get { return _context; }

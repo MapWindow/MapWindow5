@@ -8,7 +8,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Services
 {
-    public class CallbackProgress : IToolProgress
+    public class CallbackProgress : ITaskProgress
     {
         private readonly Action<string, int> _progress;
 

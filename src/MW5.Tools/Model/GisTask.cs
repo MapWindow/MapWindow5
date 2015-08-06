@@ -10,14 +10,16 @@ using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
 {
     internal class GisTask : IGisTask
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
-
+        private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
         private GisTaskStatus _status;
+        private ITaskProgress _progress;
 
         public GisTask(GisToolBase tool)
         {
@@ -46,14 +48,42 @@ namespace MW5.Tools.Model
             }
         }
 
+        public bool IsPaused
+        {
+            get { return Status == GisTaskStatus.Paused; }
+        }
+
         public void Pause()
         {
-            throw new NotImplementedException();
+            if (Status == GisTaskStatus.Running)
+            {
+                Status = GisTaskStatus.Paused;
+                _pauseEvent.Reset();
+            }
         }
 
         public void Resume()
         {
-            throw new NotImplementedException();
+            if (IsPaused)
+            {
+                Status = GisTaskStatus.Running;
+            }
+            _pauseEvent.Set();
+        }
+
+        public void TogglePause()
+        {
+            if (IsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                if (!IsFinished)
+                {
+                    Pause();
+                }
+            }
         }
 
         public TimeSpan ExecutionTime
@@ -97,7 +127,9 @@ namespace MW5.Tools.Model
             StartTime = DateTime.Now;
             Status = GisTaskStatus.Running;
 
-            bool result = Tool.Run(cancellationToken);
+            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent);
+
+            bool result = Tool.Run(handle);
 
             FinishTime = DateTime.Now;
             Status = result ? GisTaskStatus.Success : GisTaskStatus.Failed;
@@ -145,6 +177,16 @@ namespace MW5.Tools.Model
             if (handler != null)
             {
                 handler(this, new EventArgs());
+            }
+        }
+
+        public ITaskProgress Progress
+        {
+            get { return _progress ?? (_progress = new EventProgress()); }
+            set
+            {
+                if (value == null) value = new EmptyProgress();
+                _progress = value;
             }
         }
     }

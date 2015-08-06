@@ -12,5 +12,7 @@ namespace MW5.Tools.Views
     internal interface ITaskLogView: IView<IGisTask>
     {
         event Action Cancel;
+
+        event Action Pause;
     }
 }

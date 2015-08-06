@@ -3,7 +3,7 @@ using MW5.Plugins.Events;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface IToolProgress
+    public interface ITaskProgress
     {
         void Update(string msg, int value);
 

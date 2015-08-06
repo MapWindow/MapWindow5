@@ -95,6 +95,7 @@
     <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
     <Compile Include="Model\Parameters\ValueParameter.cs" />
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
+    <Compile Include="Model\TaskHandle.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
     <Compile Include="Services\ToolLogger.cs" />
@@ -319,6 +320,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_pause16.png" />
     <None Include="Resources\img_success32.png" />
     <None Include="Resources\img_error32.png" />
     <None Include="Resources\img_cancel32.png" />

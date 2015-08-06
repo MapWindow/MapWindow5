@@ -8,7 +8,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Services
 {
-    public class EventProgress: IToolProgress
+    public class EventProgress: ITaskProgress
     {
         public void Update(string msg, int value)
         {

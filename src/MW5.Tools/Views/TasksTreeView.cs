@@ -31,6 +31,7 @@ namespace MW5.Tools.Views
             yield return Resources.img_options24;
             yield return Resources.img_warning16;
             yield return Resources.img_cancel16;
+            yield return Resources.img_pause16;
         }
 
         public void Initialize(ITaskCollection tasks)

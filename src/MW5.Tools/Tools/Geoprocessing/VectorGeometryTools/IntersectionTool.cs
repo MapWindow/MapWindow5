@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 
@@ -42,7 +43,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
-        public override bool Run(CancellationToken token)
+        public override bool Run(ITaskHandle task)
         {
             var fs = InputLayer.Value;
 

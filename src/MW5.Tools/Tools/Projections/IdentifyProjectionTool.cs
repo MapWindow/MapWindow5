@@ -38,7 +38,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public override bool Run(CancellationToken token)
+        public override bool Run(ITaskHandle task)
         {
             using (var form = new IdentifyProjectionForm(_context))
             {

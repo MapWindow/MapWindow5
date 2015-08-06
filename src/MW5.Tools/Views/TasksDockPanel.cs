@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.UI.Controls;
@@ -34,6 +35,7 @@ namespace MW5.Tools.Views
             toolCancelTask.Enabled = !task.IsFinished;
             toolPauseTask.Enabled = !task.IsFinished;
             toolRemoveTask.Enabled = task.IsFinished;
+            toolPauseTask.Text = task.IsPaused ? "Resume" : "Pause";
         }
 
         internal void Initialize(ITaskCollection tasks)

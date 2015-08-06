@@ -68,7 +68,7 @@ namespace MW5.Tools.Toolbox
                 if (newTool != null)
                 {
                     newTool.Initialize(_context);
-                    newTool.Run(CancellationToken.None); // tool doesn't have UI or have an embedded  UI
+                    newTool.Run(null); // tool doesn't have UI or have an embedded  UI
                 }
             }
         }

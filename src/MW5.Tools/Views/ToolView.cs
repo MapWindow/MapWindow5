@@ -77,7 +77,6 @@ namespace MW5.Tools.Views
             chkBackground.Checked = AppConfig.Instance.TaskRunInBackground;
             
             var tool = Model.Tool;
-            tool.Progress = new EventProgress();
 
             Text = tool.Name;
 

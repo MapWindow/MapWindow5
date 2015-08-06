@@ -31,6 +31,8 @@ namespace MW5.Tools.Views
 
             btnCancel.Click += (s,e) => Invoke(Cancel);
 
+            btnPause.Click += (s, e) => Invoke(Pause);
+
             Shown += OnViewShown;
         }
 
@@ -40,6 +42,8 @@ namespace MW5.Tools.Views
         }
 
         public event Action Cancel;
+
+        public event Action Pause;
 
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
@@ -69,7 +73,7 @@ namespace MW5.Tools.Views
         {
             UpdateDialogCaption();
 
-            if (Model.Status != GisTaskStatus.Running)
+            if (Model.IsFinished)
             {
                 btnClose.Text = "Close";
                 panelProgress.Visible = false;
@@ -79,6 +83,24 @@ namespace MW5.Tools.Views
             else
             {
                 btnClose.Text = "Background";
+                panelProgress.Visible = true;
+                panelResults.Visible = false;
+                UpdateRunningTask();
+            }
+        }
+
+        private void UpdateRunningTask()
+        {
+            switch (Model.Status)
+            {
+                case GisTaskStatus.Running:
+                    btnPause.Text = "Pause";
+                    panelProgress.Text = "Task is running";
+                    break;
+                case GisTaskStatus.Paused:
+                    btnPause.Text = "Resume";
+                    panelProgress.Text = "Task is paused";
+                    break;
             }
         }
 
@@ -111,14 +133,14 @@ namespace MW5.Tools.Views
 
         private void DetachProgressHandlers()
         {
-            var progress = Model.Tool.Progress;
+            var progress = Model.Progress;
             progress.ProgressChanged -= OnProgressChanged;
             progress.Hide -= OnProgressHide;
         }
 
         private void AttachProgressHandlers()
         {
-            var progress = Model.Tool.Progress;
+            var progress = Model.Progress;
             progress.ProgressChanged += OnProgressChanged;
             progress.Hide += OnProgressHide;
         }

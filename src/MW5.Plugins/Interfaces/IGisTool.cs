@@ -26,7 +26,7 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        bool Run(CancellationToken token);
+        bool Run(ITaskHandle task);
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -37,10 +37,5 @@ namespace MW5.Plugins.Interfaces
         /// Initializes the tool.
         /// </summary>
         void Initialize(IAppContext context);
-
-        /// <summary>
-        /// Reports progress of the tool's execution.
-        /// </summary>
-        IToolProgress Progress { get;  }
     }
 }

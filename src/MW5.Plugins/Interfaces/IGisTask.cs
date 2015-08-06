@@ -28,10 +28,19 @@ namespace MW5.Plugins.Interfaces
 
         bool IsFinished { get; }
 
+        bool IsPaused { get; }
+
         void Pause();
 
         void Resume();
 
+        void TogglePause();
+
         event EventHandler StatusChanged;
+
+        /// <summary>
+        /// Reports progress of task.
+        /// </summary>
+        ITaskProgress Progress { get; }
     }
 }

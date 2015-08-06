@@ -148,19 +148,13 @@ namespace MW5.Tools.Views
 
         private void AddProgressHandlers()
         {
-            var tool = _task.Tool as GisTool;
-            if (tool == null)
-            {
-                return;
-            }
-
-            tool.Progress.ProgressChanged += (s, e) =>
+            _task.Progress.ProgressChanged += (s, e) =>
                 {
                     Action action = () => { _progress.Value = e.Percent; };
                     _progress.SafeInvoke(action);
                 };
 
-            tool.Progress.Hide += (s, e) => _progress.SafeInvoke(HideProgress);
+            _task.Progress.Hide += (s, e) => _progress.SafeInvoke(HideProgress);
         }
 
         private void HideProgress()

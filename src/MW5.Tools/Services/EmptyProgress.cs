@@ -8,7 +8,7 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Services
 {
-    internal class EmptyProgress: IToolProgress
+    internal class EmptyProgress: ITaskProgress
     {
         public void Update(string msg, int value)
         {

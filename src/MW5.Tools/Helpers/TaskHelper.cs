@@ -25,6 +25,8 @@ namespace MW5.Tools.Helpers
                     return TaskIcons.Error;
                 case GisTaskStatus.Cancelled:
                     return TaskIcons.Cancel;
+                case GisTaskStatus.Paused:
+                    return TaskIcons.Pause;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

@@ -77,8 +77,14 @@ namespace MW5.Tools.Views
                         }
                         break;
                     }
-                case ToolboxResultsCommand.Pause:
-                    MessageService.Current.Info("Pause task: not implemented");
+                case ToolboxResultsCommand.PauseTask:
+                    {
+                        var task = View.SelectedTask;
+                        if (task != null)
+                        {
+                            task.TogglePause();
+                        }
+                    }
                     break;
                 case ToolboxResultsCommand.RemoveTask:
                     {

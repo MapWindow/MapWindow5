@@ -119,6 +119,7 @@
     <Compile Include="Interfaces\IDockPanelPresenter.cs" />
     <Compile Include="Interfaces\IGisTask.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\ITaskHandle.cs" />
     <Compile Include="Interfaces\IToolBox.cs" />
     <Compile Include="Interfaces\IMainView.cs" />
     <Compile Include="Interfaces\ILocator.cs" />
@@ -129,7 +130,7 @@
     <Compile Include="Interfaces\IGisTool.cs" />
     <Compile Include="Interfaces\ITaskCollection.cs" />
     <Compile Include="Interfaces\IToolCollection.cs" />
-    <Compile Include="Interfaces\IToolProgress.cs" />
+    <Compile Include="Interfaces\ITaskProgress.cs" />
     <Compile Include="Interfaces\Projections\IProjectionDatabase.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Interfaces\Projections\ICoordinateSystem.cs" />
