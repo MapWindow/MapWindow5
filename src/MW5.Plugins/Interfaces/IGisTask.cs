@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
+using MW5.Shared.Log;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface IGisTask
+    public interface IGisTask: IApplicationCallback
     {
         IGisTool Tool { get; }
 

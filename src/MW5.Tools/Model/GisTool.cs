@@ -13,28 +13,42 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
-using MW5.Tools.Views;
 
 namespace MW5.Tools.Model
 {
     /// <summary>
     /// Base class for GIS tool.
     /// </summary>
-    public abstract class GisTool: GisToolBase
+    [HasRegions]
+    public abstract class GisTool : GisToolBase
     {
         private readonly IToolLogger _logger = new ToolLogger();
-        private List<BaseParameter> _parameters;
-        private ILayerService _layerService;
         private IAppContext _context;
+        private List<BaseParameter> _parameters;
+
+        #region Properties
+
+        public override IToolLogger Log
+        {
+            get { return _logger; }
+        }
+
+        /// <summary>
+        /// Gets combined list of required and optional parameters.
+        /// </summary>
+        public IEnumerable<BaseParameter> Parameters
+        {
+            get { return _parameters ?? (_parameters = GetParameters().ToList()); }
+        }
 
         protected IAppContext AppContext
         {
@@ -46,6 +60,20 @@ namespace MW5.Tools.Model
         {
             get { return _context.SynchronizationContext; }
         }
+
+        private ITempFileService TempFile
+        {
+            get { return _context.Container.Resolve<ITempFileService>(); }
+        }
+
+        private ILayerService LayerService
+        {
+            get { return _context.Container.Resolve<ILayerService>();  }
+        }
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Initializes the tool with application context.
@@ -60,8 +88,6 @@ namespace MW5.Tools.Model
             {
                 layerParameter.Initialize(context.Layers);
             }
-
-            _layerService = context.Container.Resolve<ILayerService>();
         }
 
         public bool Validate()
@@ -104,12 +130,20 @@ namespace MW5.Tools.Model
             return true;
         }
 
-        /// <summary>
-        /// Gets combined list of required and optional parameters.
-        /// </summary>
-        public IEnumerable<BaseParameter> Parameters
+        #endregion
+
+        #region Methods
+
+        protected bool HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
-            get { return _parameters ?? (_parameters = GetParameters().ToList()); }
+            // CurrentThreadHelper.DumpThreadInfo();
+
+            if (outputInfo.MemoryLayer)
+            {
+                return HandleMemoryOutput(ds, outputInfo);
+            }
+
+            return HandleDiskOutput(ds, outputInfo);
         }
 
         private IEnumerable<BaseParameter> GetParameters()
@@ -154,6 +188,102 @@ namespace MW5.Tools.Model
             }
         }
 
+        private bool HandleDiskOutput(IDatasource ds, OutputLayerInfo outputInfo)
+        {
+            string filename = outputInfo.Name;
+
+            if (File.Exists(filename) && !outputInfo.Overwrite)
+            {
+                return HandleOverwriteFailure();
+            }
+
+            SaveDatasource(ds, filename);
+
+            ds.Dispose();
+
+            if (outputInfo.AddToMap)
+            {
+                return LayerService.AddLayersFromFilename(filename);
+            }
+
+            return true;
+        }
+
+        private bool SaveDatasource(IDatasource ds, string filename)
+        {
+            if (!GeoSource.Remove(filename))
+            {
+                return HandleOverwriteFailure();
+            }
+
+            if (LayerSourceHelper.Save(ds, filename))
+            {
+                Logger.Current.Info("Layer ({0}) is created.", filename);
+                return true;
+            }
+
+            Logger.Current.Error("Failed to save datasource: " + ds.LastError, null);
+            return false;
+        }
+
+        private bool HandleMemoryOutput(IDatasource ds, OutputLayerInfo outputInfo)
+        {
+            if (!ds.IsVector)
+            {
+                throw new ApplicationException("Memory layers can only be used for vector datasources.");
+            }
+
+            if (!outputInfo.AddToMap)
+            {
+                throw new ApplicationException("Memory layer option can only be used with add to map option.");
+            }
+
+            // We can't the resulting shapefile directly, because it was created by background thread
+            // therefore is located in another apartment. This will cause creation of proxies and marshalling
+            // for COM, which in turn no always supported by implementation of particular classes in MapWinGIS.
+            // Therefore the best option we have is to save into temp file, open it, read into memory, delete the source.
+            string filename = TempFile.GetTempFilename(".shp");
+            bool saved = SaveDatasource(ds, filename);
+            ds.Dispose();
+
+            if (!saved)
+            {
+                Logger.Current.Warn("Failed to save datasource to temp file.");
+                return false;
+            }
+
+            return AddTempDataSource(filename, outputInfo);
+        }
+
+        private bool AddTempDataSource(string filename, OutputLayerInfo outputInfo)
+        {
+            var layerService = LayerService;
+
+            Debug.Print("Temp datasource to be removed: " + filename);
+
+            var fs= FeatureSet.OpenAsInMemoryDatasource(filename);
+            if (fs != null)
+            {
+                // output info name
+                if (layerService.AddDatasource(fs))
+                {
+                    var layer = _context.Layers.ItemByHandle(layerService.LastLayerHandle);
+                    layer.Name = outputInfo.Name;
+
+                    GeoSource.Remove(filename);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private bool HandleOverwriteFailure()
+        {
+            // TODO: implement
+            return false;
+        }
+
         private void HandleRangeAttribute(BaseParameter param, PropertyInfo prop)
         {
             var vp = param as ValueParameter;
@@ -178,87 +308,6 @@ namespace MW5.Tools.Model
             }
         }
 
-        protected bool HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
-        {
-            CurrentThreadHelper.DumpThreadInfo();
-
-            if (outputInfo.MemoryLayer)
-            {
-                return HandleMemoryOutput(ds, outputInfo);
-            }
-
-            return HandleDiskOutput(ds, outputInfo);
-        }
-
-        private bool HandleDiskOutput(IDatasource ds, OutputLayerInfo outputInfo)
-        {
-            string filename = outputInfo.Name;
-
-            if (File.Exists(filename) && !outputInfo.Overwrite)
-            {
-                return HandleOverwriteFailure();
-            }
-
-            if (outputInfo.Overwrite)
-            {
-                if (!GeoSource.Remove(filename))
-                {
-                    return HandleOverwriteFailure();
-                }
-
-                if (LayerSourceHelper.Save(ds, filename))
-                {
-                    Logger.Current.Info("Layer ({0}) is created.", filename);
-                }
-                else
-                {
-                    Logger.Current.Error("Failed to save datasource: " + ds.LastError, null);
-                    return false;
-                }
-            }
-
-            ds.Dispose();
-
-            if (outputInfo.AddToMap)
-            {
-                return _layerService.AddLayersFromFilename(filename);
-            }
-
-            return true;
-        }
-
-        private bool HandleMemoryOutput(IDatasource ds, OutputLayerInfo outputInfo)
-        {
-            if (outputInfo.AddToMap)
-            {
-                bool result = _layerService.AddDatasource(ds);
-                if (result)
-                {
-                    int layerHandle = _layerService.LastLayerHandle;
-                    var layer = AppContext.Layers.ItemByHandle(layerHandle);
-                    if (layer != null)
-                    {
-                        layer.Name = outputInfo.Name;
-                    }
-                }
-
-                return true;
-            }
-
-            ds.Dispose();
-            Logger.Current.Warn("Memory layer created by the tool wasn't added to the map.", null);
-            return false;
-        }
-
-        private bool HandleOverwriteFailure()
-        {
-            // TODO: implement
-            return false;
-        }
-
-        public override IToolLogger Log
-        {
-            get { return _logger; }
-        }
+        #endregion
     }
 }

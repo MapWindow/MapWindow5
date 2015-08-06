@@ -16,5 +16,9 @@ namespace MW5.Api.Interfaces
         LayerType LayerType { get; }
 
         string ToolTipText { get; }
+
+        bool IsVector { get; }
+
+        bool IsRaster { get; }
     }
 }

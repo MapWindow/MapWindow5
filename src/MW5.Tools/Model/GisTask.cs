@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
+using MW5.Shared.Log;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
@@ -125,7 +126,7 @@ namespace MW5.Tools.Model
             StartTime = DateTime.Now;
             Status = GisTaskStatus.Running;
 
-            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent);
+            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent, this);
 
             bool result = Tool.Run(handle);
 
@@ -186,6 +187,21 @@ namespace MW5.Tools.Model
                 if (value == null) value = new EmptyProgress();
                 _progress = value;
             }
+        }
+
+        public void Error(string tagOfSender, string errorMsg)
+        {
+            Tool.Log.Error(errorMsg, null);
+        }
+
+        void IApplicationCallback.Progress(string tagOfSender, int percent, string message)
+        {
+            Progress.Update(message, percent);
+        }
+
+        public void ClearProgress()
+        {
+            Progress.Clear();
         }
     }
 }

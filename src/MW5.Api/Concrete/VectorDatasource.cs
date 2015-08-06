@@ -216,7 +216,15 @@ namespace MW5.Api.Concrete
             }
         }
 
-        
+        public bool IsVector
+        {
+            get { return true; }
+        }
+
+        public bool IsRaster
+        {
+            get { return false; }
+        }
 
         public void Dispose()
         {

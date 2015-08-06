@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
+using MW5.Shared.Log;
 
 namespace MW5.Tools.Model
 {
@@ -12,15 +13,20 @@ namespace MW5.Tools.Model
     {
         private CancellationToken _cancellationToken;
 
-        public TaskHandle(ITaskProgress progress, CancellationToken cancellationToken, WaitHandle pauseHandle)
+        public TaskHandle(ITaskProgress progress, CancellationToken cancellationToken, WaitHandle pauseHandle, 
+                          IApplicationCallback callback)
         {
             if (progress == null) throw new ArgumentNullException("progress");
             if (pauseHandle == null) throw new ArgumentNullException("pauseHandle");
+            if (callback == null) throw new ArgumentNullException("callback");
 
+            ErrorCallback = callback;
             PauseHandle = pauseHandle;
             Progress = progress;
             _cancellationToken = cancellationToken;
         }
+
+        public IApplicationCallback ErrorCallback { get; private set; }
 
         public ITaskProgress Progress { get; private set; }
 

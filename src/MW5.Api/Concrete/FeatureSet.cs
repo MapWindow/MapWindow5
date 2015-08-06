@@ -7,6 +7,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
@@ -137,6 +138,16 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool IsVector
+        {
+            get { return true; }
+        }
+
+        public bool IsRaster
+        {
+            get { return false; }
+        }
+
         public void Close()
         {
             Dispose();
@@ -147,6 +158,23 @@ namespace MW5.Api.Concrete
             get { return "ESRI Shapefiles (*.shp)|*.shp"; }
         }
 
+        /// <summary>
+        /// Opens ESRI shapefile datasource, reads it into memory breaks any connection with the source.
+        /// </summary>
+        public static FeatureSet OpenAsInMemoryDatasource(string filename)
+        {
+            var sf = new Shapefile();
+            sf.CreateNew(string.Empty, ShpfileType.SHP_POLYGON);
+
+            // reading projection
+            string prjFilename = PathHelper.GetFullPathWithoutExtension(filename) + ".prj";
+            if (File.Exists(prjFilename))
+            {
+                sf.GeoProjection.ReadFromFile(prjFilename);
+            }
+
+            return sf.LoadDataFrom(filename) ? new FeatureSet(sf) : null;
+        }
 
         /// <summary>
         /// Creates a new disk-based shapefile and open it as new feature set.
@@ -636,6 +664,35 @@ namespace MW5.Api.Concrete
         {
             get { return _shapefile.MinDrawingSize; }
             set { _shapefile.MinDrawingSize = value; }
+        }
+
+        public IApplicationCallback ErrorCallback
+        {
+            get
+            {
+                var cb = _shapefile.GlobalCallback;
+                if (cb != null)
+                {
+                    var wp = cb as CallbackWrapper;
+                    if (wp != null)
+                    {
+                        return wp.Callback;
+                    }
+                }
+
+                return null;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    var wp = new CallbackWrapper(value);
+                    _shapefile.GlobalCallback = wp;
+                    return;
+                }
+                
+                _shapefile.GlobalCallback = null;
+            }
         }
 
         public bool FixUpShapes(out IFeatureSet result)

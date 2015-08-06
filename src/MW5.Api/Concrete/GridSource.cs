@@ -276,6 +276,16 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public bool IsVector
+        {
+            get { return false; }
+        }
+
+        public bool IsRaster
+        {
+            get  { return true; }
+        }
+
         public void Dispose()
         {
             _grid.Close();

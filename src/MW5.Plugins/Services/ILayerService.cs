@@ -25,6 +25,8 @@ namespace MW5.Plugins.Services
 
         bool AddLayersFromFilename(string filename);
 
+        bool AddLayersFromFilename(string filename, string layerName);
+
         void BeginBatch();
 
         void ClearSelection();

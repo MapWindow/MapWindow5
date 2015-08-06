@@ -10,7 +10,7 @@ namespace MW5.Api.Static
 
         static MapConfig()
         {
-            _settings.ApplicationCallback = new Callback();
+            _settings.ApplicationCallback = new InternalCallback();
         }
 
         internal static void Init()

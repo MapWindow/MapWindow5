@@ -34,7 +34,7 @@ namespace MW5.Tools.Views
             this.components = new System.ComponentModel.Container();
             this.panelLog = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxExt1 = new TextBox();
+            this.textBoxExt1 = new System.Windows.Forms.TextBox();
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.panelProgress = new System.Windows.Forms.GroupBox();
             this.lblPercent = new System.Windows.Forms.Label();
@@ -121,9 +121,9 @@ namespace MW5.Tools.Views
             this.lblPercent.AutoSize = true;
             this.lblPercent.Location = new System.Drawing.Point(13, 56);
             this.lblPercent.Name = "lblPercent";
-            this.lblPercent.Size = new System.Drawing.Size(83, 13);
+            this.lblPercent.Size = new System.Drawing.Size(77, 13);
             this.lblPercent.TabIndex = 45;
-            this.lblPercent.Text = "Completed: 42%";
+            this.lblPercent.Text = "Completed: 0%";
             // 
             // lblElapsed
             // 

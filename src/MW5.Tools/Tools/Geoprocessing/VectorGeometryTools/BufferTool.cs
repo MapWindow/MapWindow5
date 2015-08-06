@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
@@ -30,7 +31,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Merge results", 3)]
         public BooleanParameter MergeResults { get; set; }
 
-        [Input("Save results as", 4), DefaultValue("Buffer")]
+        [Input("Save results as", 4), DefaultValue(@"d:\buffer.shp")]
         public OutputLayerParameter Output { get; set; }
 
         /// <summary>
@@ -54,16 +55,46 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, AppContext.Map.MapUnits, BufferDistance.Value);
+            LengthUnits units = LengthUnits.Kilometers;
+            LengthUnits mapUnits=  LengthUnits.Meters;
+            IFeatureSet input = null;
+            bool mergeResults = false;
+            double bufferDistance = 0.0;
+            int numSegments = 30;
+            OutputLayerInfo outputInfo = null;
 
-            var fs = InputLayer.Value.BufferByDistance(bufferDistance, NumSegments.Value, InputLayer.SelectedOnly, MergeResults.Value);
+            SendOrPostCallback action = p =>
+                {
+                    units = BufferDistance.Units;
+                    mapUnits = AppContext.Map.MapUnits;
+                    bufferDistance = BufferDistance.Value;
+                    mergeResults = MergeResults.Value;
+                    numSegments = NumSegments.Value;
+                    outputInfo = Output.Value;
+                    input = InputLayer.Value;
+                };
+
+            UiThread.Send(action, null);
+
+            bufferDistance = UnitConversionHelper.Convert(units, mapUnits, bufferDistance);
+
+            input.ErrorCallback = task.ErrorCallback;
+            
+            var fs = input.BufferByDistance(bufferDistance, numSegments, false, mergeResults);
+
+            input.ErrorCallback = null;
+
             if (fs != null)
             {
-                HandleOutput(fs, Output.Value);
+                SendOrPostCallback action2 = p => HandleOutput(fs, outputInfo);
+                UiThread.Send(action2, null);
+
                 return true;
             }
 
             return false;
         }
+
+
     }
 }

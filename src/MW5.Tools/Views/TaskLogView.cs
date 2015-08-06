@@ -37,7 +37,11 @@ namespace MW5.Tools.Views
 
             btnPause.Click += (s, e) => Invoke(Pause);
 
-            Shown += (s,e) => textBoxExt1.BorderStyle = BorderStyle.None;
+            Shown += (s, e) =>
+                {
+                    textBoxExt1.BorderStyle = BorderStyle.None;
+                    Refresh();
+                };
         }
         
         public event Action Cancel;
@@ -225,6 +229,7 @@ namespace MW5.Tools.Views
                     {
                         progressBar1.Value = e.Percent;
                         lblPercent.Text = "Completed: " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
+                        lblPercent.Invalidate();
                     }
                 };
 

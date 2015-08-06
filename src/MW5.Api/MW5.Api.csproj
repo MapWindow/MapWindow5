@@ -113,7 +113,7 @@
     <Compile Include="Concrete\AttributeTable.cs" />
     <Compile Include="Concrete\BaseLayerCollection.cs" />
     <Compile Include="Concrete\BitmapSource.cs" />
-    <Compile Include="Concrete\Callback.cs" />
+    <Compile Include="Concrete\InternalCallback.cs" />
     <Compile Include="Concrete\ColorInterval.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
     <Compile Include="Concrete\CompareByValueBase.cs" />

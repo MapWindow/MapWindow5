@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -145,6 +146,23 @@ namespace MW5.Services.Concrete
             return result;
         }
 
+        public bool AddLayersFromFilename(string filename, string layerName)
+        {
+            bool result = AddLayersFromFilename(filename);
+
+            if (result)
+            {
+                int layerHandle = LastLayerHandle;
+                var layer = _context.Layers.ItemByHandle(layerHandle);
+                if (layer != null)
+                {
+                    layer.Name = layerName;
+                }
+            }
+
+            return result;
+        }
+
         public bool AddLayerIdentity(LayerIdentity identity)
         {
             if (identity == null)
@@ -240,6 +258,9 @@ namespace MW5.Services.Concrete
                 int layerHandle = layers.Add(newLayer);
                 if (layerHandle != -1)
                 {
+                    var ll = layers.ItemByHandle(layerHandle);
+                    ll.Name = Path.GetFileNameWithoutExtension(ds.Filename);
+                    
                     addedCount++;
                     _lastLayerHandle = layerHandle;
                 }
@@ -247,7 +268,6 @@ namespace MW5.Services.Concrete
 
             return addedCount > 0;  // currently at least one should be success to return success
         }
-
 
         /// <summary>
         /// Tests if datasources projection matches map projection. Performs reprojection is needed or

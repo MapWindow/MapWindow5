@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MW5.Shared.Log;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -18,5 +19,7 @@ namespace MW5.Plugins.Interfaces
         void AbortIfCancelled();
 
         void CheckPauseAndCancel();
+
+        IApplicationCallback ErrorCallback { get; }
     }
 }
