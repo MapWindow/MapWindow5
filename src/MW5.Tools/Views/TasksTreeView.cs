@@ -4,9 +4,11 @@ using System.Drawing;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Properties;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
+using Action = System.Action;
 
 namespace MW5.Tools.Views
 {
@@ -50,40 +52,47 @@ namespace MW5.Tools.Views
 
         private void OnTaskChanged(object sender, TaskEventArgs e)
         {
-            switch (e.Event)
-            {
-                case TaskEvent.Added:
+            Action action = () =>
+                {
+
+                    switch (e.Event)
                     {
-                        var wrapper = new TaskNodeWrapper(e.Task);
-                        var node = wrapper.Node;
-                        Nodes.Add(node);
-                        //Controls.Add(wrapper.Progress);
-                        
-                        node.ExpandAll();
+                        case TaskEvent.Added:
+                            {
+                                var wrapper = new TaskNodeWrapper(e.Task);
+                                var node = wrapper.Node;
+                                Nodes.Add(node);
+                                //Controls.Add(wrapper.Progress);
+
+                                node.ExpandAll();
+                            }
+                            break;
+                        case TaskEvent.StatusChanged:
+                            {
+                                var wrapper = FindTask(e.Task);
+                                if (wrapper != null)
+                                {
+                                    wrapper.UpdateStatus();
+                                }
+                            }
+                            break;
+                        case TaskEvent.Removed:
+                            {
+                                var wrapper = FindTask(e.Task);
+                                if (wrapper != null)
+                                {
+                                    Nodes.Remove(wrapper.Node);
+                                    Controls.Remove(wrapper.Progress);
+                                }
+                            }
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
-                    break;
-                case TaskEvent.StatusChanged:
-                    {
-                        var wrapper = FindTask(e.Task);
-                        if (wrapper != null)
-                        {
-                            wrapper.UpdateStatus();
-                        }
-                    }
-                    break;
-                case TaskEvent.Removed:
-                    {
-                        var wrapper = FindTask(e.Task);
-                        if (wrapper != null)
-                        {
-                            Nodes.Remove(wrapper.Node);
-                            Controls.Remove(wrapper.Progress);
-                        }
-                    }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                };
+
+            this.SafeInvoke(action);
+
         }
 
         private TaskNodeWrapper FindTask(IGisTask task)

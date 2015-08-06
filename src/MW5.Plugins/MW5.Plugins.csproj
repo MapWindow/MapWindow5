@@ -131,6 +131,7 @@
     <Compile Include="Interfaces\ITaskCollection.cs" />
     <Compile Include="Interfaces\IToolCollection.cs" />
     <Compile Include="Interfaces\ITaskProgress.cs" />
+    <Compile Include="Interfaces\IToolLogger.cs" />
     <Compile Include="Interfaces\Projections\IProjectionDatabase.cs" />
     <Compile Include="Interfaces\IStatusBar.cs" />
     <Compile Include="Interfaces\Projections\ICoordinateSystem.cs" />

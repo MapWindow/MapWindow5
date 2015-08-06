@@ -54,5 +54,13 @@ namespace MW5.Tools.Tools.Projections
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
         }
+
+        /// <summary>
+        /// Gets the logger associated with the tool.
+        /// </summary>
+        public override IToolLogger Log
+        {
+            get { return null; }
+        }
     }
 }

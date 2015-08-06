@@ -34,7 +34,7 @@ namespace MW5.Tools.Views
             this.components = new System.ComponentModel.Container();
             this.panelLog = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBoxExt1 = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.textBoxExt1 = new TextBox();
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.panelProgress = new System.Windows.Forms.GroupBox();
             this.lblPercent = new System.Windows.Forms.Label();
@@ -49,7 +49,6 @@ namespace MW5.Tools.Views
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panelLog.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).BeginInit();
             this.panelProgress.SuspendLayout();
             this.panelResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -83,19 +82,15 @@ namespace MW5.Tools.Views
             // textBoxExt1
             // 
             this.textBoxExt1.BackColor = System.Drawing.Color.White;
-            this.textBoxExt1.BeforeTouchSize = new System.Drawing.Size(489, 82);
-            this.textBoxExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.textBoxExt1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxExt1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxExt1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxExt1.Location = new System.Drawing.Point(3, 16);
-            this.textBoxExt1.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.textBoxExt1.Multiline = true;
             this.textBoxExt1.Name = "textBoxExt1";
             this.textBoxExt1.ReadOnly = true;
             this.textBoxExt1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxExt1.Size = new System.Drawing.Size(489, 82);
-            this.textBoxExt1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Metro;
             this.textBoxExt1.TabIndex = 1;
             // 
             // panelSeparator
@@ -243,7 +238,6 @@ namespace MW5.Tools.Views
             this.panelLog.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).EndInit();
             this.panelProgress.ResumeLayout(false);
             this.panelProgress.PerformLayout();
             this.panelResults.ResumeLayout(false);
@@ -266,7 +260,7 @@ namespace MW5.Tools.Views
         private System.Windows.Forms.Panel panelSeparator;
         private System.Windows.Forms.GroupBox panelProgress;
         private GroupBox groupBox1;
-        private TextBoxExt textBoxExt1;
+        private TextBox textBoxExt1;
         private Syncfusion.Windows.Forms.ButtonAdv btnPause;
         private Label lblPercent;
         private Label lblElapsed;

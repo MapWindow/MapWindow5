@@ -38,7 +38,7 @@ namespace MW5.Tools.Tools.Fake
         {
             var span = TimeSpan.FromSeconds(SecondPerStep.Value);
 
-            //Logger.Info(Name + ": start");
+            Log.Info(Name + ": start");
 
             for (int i = 0; i < 100; i++)
             {
@@ -49,11 +49,13 @@ namespace MW5.Tools.Tools.Fake
                 task.CheckPauseAndCancel();
 
                 task.Progress.Update("Running...", val);
+
+                Log.Info("Running: " + i);
             }
 
             task.Progress.Clear();
 
-            //Logger.Info(Name + ": end");
+            Log.Info(Name + ": end");
 
             return true;   // depends on the run in background check
         }

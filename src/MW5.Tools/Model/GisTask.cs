@@ -24,9 +24,7 @@ namespace MW5.Tools.Model
         public GisTask(GisToolBase tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
-            tool.Cancelled = false;
             Tool = tool;
-
             Status = GisTaskStatus.NotStarted;
         }
 

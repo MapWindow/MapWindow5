@@ -10,7 +10,7 @@ using MW5.Shared.Log;
 
 namespace MW5.Services.Concrete
 {
-    public class LoggingService: LoggingServiceBase, ILoggingService
+    public class LoggingService: BaseLogger, ILoggingService
     {
         private readonly ILog _log4NetLogger;
 

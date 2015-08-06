@@ -22,8 +22,6 @@ namespace MW5.Tools.Model
             get { return _identity; }
         }
 
-        public bool Cancelled { get; set; }
-
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -43,5 +41,10 @@ namespace MW5.Tools.Model
         /// Initializes the tool.
         /// </summary>
         public abstract void Initialize(IAppContext context);
+
+        /// <summary>
+        /// Gets the logger associated with the tool.
+        /// </summary>
+        public abstract IToolLogger Log { get; }
     }
 }

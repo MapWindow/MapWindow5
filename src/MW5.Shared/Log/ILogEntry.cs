@@ -34,5 +34,7 @@ namespace MW5.Shared.Log
 
         [DisplayName("Time")]
         DateTime TimeStamp { get; }
+
+        string ToLine();
     }
 }

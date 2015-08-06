@@ -37,5 +37,10 @@ namespace MW5.Plugins.Interfaces
         /// Initializes the tool.
         /// </summary>
         void Initialize(IAppContext context);
+
+        /// <summary>
+        /// Gets the logger associated with the tool.
+        /// </summary>
+        IToolLogger Log { get; }
     }
 }

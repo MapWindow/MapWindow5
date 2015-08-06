@@ -46,6 +46,11 @@ namespace MW5.Services.Concrete
         [DisplayName("Time")]
         public DateTime TimeStamp { get; private set; }
 
+        public string ToLine()
+        {
+            return string.Format("{0}: {1}" + Environment.NewLine, Level, Message);
+        }
+
         [DisplayName("Message")]
         public string DetailedMessage
         {

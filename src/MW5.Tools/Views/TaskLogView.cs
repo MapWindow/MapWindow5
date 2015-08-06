@@ -13,6 +13,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
+using MW5.Shared.Log;
 using MW5.Tools.Model;
 using MW5.Tools.Properties;
 using MW5.UI.Forms;
@@ -36,14 +37,9 @@ namespace MW5.Tools.Views
 
             btnPause.Click += (s, e) => Invoke(Pause);
 
-            Shown += OnViewShown;
+            Shown += (s,e) => textBoxExt1.BorderStyle = BorderStyle.None;
         }
         
-        private void OnViewShown(object sender, EventArgs e)
-        {
-            textBoxExt1.BorderStyle = BorderStyle.None;
-        }
-
         public event Action Cancel;
 
         public event Action Pause;
@@ -53,6 +49,8 @@ namespace MW5.Tools.Views
             DetachProgressHandlers();
 
             Model.StatusChanged -= OnTaskStatusChanged;
+
+            Model.Tool.Log.EntryAdded -= OnLogMessageAdded;
         }
 
         /// <summary>
@@ -66,10 +64,41 @@ namespace MW5.Tools.Views
 
             Model.StatusChanged += OnTaskStatusChanged;
 
+            DisplayExistingLogEntries();
+
             if (!Model.IsFinished)
             {
                 StartTimer();
             }
+        }
+
+        private void DisplayExistingLogEntries()
+        {
+            var log = Model.Tool.Log;
+            
+            log.Lock();
+            try
+            {
+                Model.Tool.Log.EntryAdded += OnLogMessageAdded;
+
+                var sb = new StringBuilder();
+                foreach (var item in log.Entries)
+                {
+                    sb.Append(item.ToLine());
+                }
+
+                textBoxExt1.Text = sb.ToString();
+            }
+            finally
+            {
+                log.UnLock();
+            }
+        }
+
+        private void OnLogMessageAdded(object sender, LogEventArgs e)
+        {
+            Action action = () => textBoxExt1.AppendText(e.Entry.ToLine());
+            textBoxExt1.SafeInvoke(action);
         }
 
         private void OnTaskStatusChanged(object sender, EventArgs e)
@@ -87,6 +116,7 @@ namespace MW5.Tools.Views
                 panelProgress.Visible = false;
                 panelResults.Visible = true;
                 UpdateFinishedTaskStatus();
+                ScrollToLogEnd();
             }
             else
             {
@@ -96,6 +126,13 @@ namespace MW5.Tools.Views
                 UpdateRunningTask();
             }
         }
+
+        private void ScrollToLogEnd()
+        {
+            textBoxExt1.SelectionStart = textBoxExt1.TextLength;
+            textBoxExt1.ScrollToCaret();
+        }
+
 
         private void UpdateRunningTask()
         {

@@ -31,6 +31,7 @@ namespace MW5.Tools.Model
     /// </summary>
     public abstract class GisTool: GisToolBase
     {
+        private readonly IToolLogger _logger = new ToolLogger();
         private List<BaseParameter> _parameters;
         private ILayerService _layerService;
         private IAppContext _context;
@@ -40,6 +41,7 @@ namespace MW5.Tools.Model
             get { return _context; }
         }
 
+        // TODO: revisit
         protected SynchronizationContext UiThread
         {
             get { return _context.SynchronizationContext; }
@@ -252,6 +254,11 @@ namespace MW5.Tools.Model
         {
             // TODO: implement
             return false;
+        }
+
+        public override IToolLogger Log
+        {
+            get { return _logger; }
         }
     }
 }
