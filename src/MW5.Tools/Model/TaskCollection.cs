@@ -46,6 +46,17 @@ namespace MW5.Tools.Model
             FireCollectionCleared();
         }
 
+        public void CancelAll()
+        {
+            foreach (var t in this)
+            {
+                if (!t.IsFinished)
+                {
+                    t.Cancel();
+                }
+            }
+        }
+
         public IEnumerator<IGisTask> GetEnumerator()
         {
             return _tasks.GetEnumerator();

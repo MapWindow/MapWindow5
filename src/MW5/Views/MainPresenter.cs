@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using MW5.Api.Concrete;
 using MW5.Controls;
 using MW5.Helpers;
@@ -139,6 +141,31 @@ namespace MW5.Views
             if (!_projectService.TryClose())
             {
                 e.Cancel = true;
+            }
+
+            if (_context.Tasks.Any(t => !t.IsFinished))
+            {
+                if (MessageService.Current.Ask("There are unfinished tasks still running. Close anyway?"))
+                {
+                    _context.Tasks.CancelAll();
+
+                    // TODO: think of the cleaner way to close it
+                    // All tasks are run by background threads so they won't obstruct the closing.
+                    // However if the task is within unmanaged code or rarely checks the cancellation token, 
+                    // it won't be cancelled, which may lead to undefined behavior.
+                    // Possible solution may include:
+                    // - waiting for cancelled notification (which may take long time);
+                    // - calling Thread.Abort (which is generally not recommended);
+                    // - probably the best choice is to make sure that all tasks check
+                    // cancellation often enough and wait for explicit notifications from them.
+
+                    // at least give them some time to finish, which will work for significant part of them
+                    Thread.Sleep(1000);
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

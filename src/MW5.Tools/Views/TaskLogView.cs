@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace MW5.Tools.Views
     /// </summary>
     internal partial class TaskLogView : ToolLogViewBase, ITaskLogView
     {
+        private readonly Timer _timer = new Timer();
+
         public TaskLogView()
         {
             InitializeComponent();
@@ -35,7 +38,7 @@ namespace MW5.Tools.Views
 
             Shown += OnViewShown;
         }
-
+        
         private void OnViewShown(object sender, EventArgs e)
         {
             textBoxExt1.BorderStyle = BorderStyle.None;
@@ -62,6 +65,11 @@ namespace MW5.Tools.Views
             AttachProgressHandlers();
 
             Model.StatusChanged += OnTaskStatusChanged;
+
+            if (!Model.IsFinished)
+            {
+                StartTimer();
+            }
         }
 
         private void OnTaskStatusChanged(object sender, EventArgs e)
@@ -179,10 +187,25 @@ namespace MW5.Tools.Views
                     if (e.Percent >= 0 && e.Percent <= 100)
                     {
                         progressBar1.Value = e.Percent;
+                        lblPercent.Text = "Completed: " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
                     }
                 };
 
             progressBar1.SafeInvoke(action);
+        }
+
+        private void StartTimer()
+        {
+            _timer.Tick += (s, e) =>
+            {
+                lblElapsed.Text = "Elapsed: " + Model.ExecutionTime.ToString(@"hh\:mm\:ss");
+                if (Model.IsFinished)
+                {
+                    _timer.Stop();
+                }
+            };
+            _timer.Interval = 1000;
+            _timer.Start();
         }
     }
 

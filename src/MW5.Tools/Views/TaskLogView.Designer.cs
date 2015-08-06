@@ -37,6 +37,9 @@ namespace MW5.Tools.Views
             this.textBoxExt1 = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.panelSeparator = new System.Windows.Forms.Panel();
             this.panelProgress = new System.Windows.Forms.GroupBox();
+            this.lblPercent = new System.Windows.Forms.Label();
+            this.lblElapsed = new System.Windows.Forms.Label();
+            this.btnPause = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.panelResults = new System.Windows.Forms.Panel();
@@ -44,7 +47,6 @@ namespace MW5.Tools.Views
             this.lblStatus = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.btnPause = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panelLog.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).BeginInit();
@@ -83,7 +85,7 @@ namespace MW5.Tools.Views
             this.textBoxExt1.BackColor = System.Drawing.Color.White;
             this.textBoxExt1.BeforeTouchSize = new System.Drawing.Size(489, 82);
             this.textBoxExt1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.textBoxExt1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxExt1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxExt1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.textBoxExt1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.textBoxExt1.Location = new System.Drawing.Point(3, 16);
@@ -106,6 +108,8 @@ namespace MW5.Tools.Views
             // 
             // panelProgress
             // 
+            this.panelProgress.Controls.Add(this.lblPercent);
+            this.panelProgress.Controls.Add(this.lblElapsed);
             this.panelProgress.Controls.Add(this.btnPause);
             this.panelProgress.Controls.Add(this.btnCancel);
             this.panelProgress.Controls.Add(this.progressBar1);
@@ -116,6 +120,38 @@ namespace MW5.Tools.Views
             this.panelProgress.TabIndex = 3;
             this.panelProgress.TabStop = false;
             this.panelProgress.Text = "Tool is running";
+            // 
+            // lblPercent
+            // 
+            this.lblPercent.AutoSize = true;
+            this.lblPercent.Location = new System.Drawing.Point(13, 56);
+            this.lblPercent.Name = "lblPercent";
+            this.lblPercent.Size = new System.Drawing.Size(83, 13);
+            this.lblPercent.TabIndex = 45;
+            this.lblPercent.Text = "Completed: 42%";
+            // 
+            // lblElapsed
+            // 
+            this.lblElapsed.AutoSize = true;
+            this.lblElapsed.Location = new System.Drawing.Point(115, 56);
+            this.lblElapsed.Name = "lblElapsed";
+            this.lblElapsed.Size = new System.Drawing.Size(87, 13);
+            this.lblElapsed.TabIndex = 44;
+            this.lblElapsed.Text = "Elapsed: 0:00:00";
+            // 
+            // btnPause
+            // 
+            this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPause.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
+            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
+            this.btnPause.BeforeTouchSize = new System.Drawing.Size(82, 26);
+            this.btnPause.ForeColor = System.Drawing.Color.White;
+            this.btnPause.IsBackStageButton = false;
+            this.btnPause.Location = new System.Drawing.Point(306, 48);
+            this.btnPause.Name = "btnPause";
+            this.btnPause.Size = new System.Drawing.Size(82, 26);
+            this.btnPause.TabIndex = 3;
+            this.btnPause.Text = "Pause";
             // 
             // btnCancel
             // 
@@ -194,20 +230,6 @@ namespace MW5.Tools.Views
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             // 
-            // btnPause
-            // 
-            this.btnPause.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnPause.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
-            this.btnPause.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
-            this.btnPause.BeforeTouchSize = new System.Drawing.Size(82, 26);
-            this.btnPause.ForeColor = System.Drawing.Color.White;
-            this.btnPause.IsBackStageButton = false;
-            this.btnPause.Location = new System.Drawing.Point(306, 48);
-            this.btnPause.Name = "btnPause";
-            this.btnPause.Size = new System.Drawing.Size(82, 26);
-            this.btnPause.TabIndex = 3;
-            this.btnPause.Text = "Pause";
-            // 
             // TaskLogView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +245,7 @@ namespace MW5.Tools.Views
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).EndInit();
             this.panelProgress.ResumeLayout(false);
+            this.panelProgress.PerformLayout();
             this.panelResults.ResumeLayout(false);
             this.panelResults.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -245,5 +268,7 @@ namespace MW5.Tools.Views
         private GroupBox groupBox1;
         private TextBoxExt textBoxExt1;
         private Syncfusion.Windows.Forms.ButtonAdv btnPause;
+        private Label lblPercent;
+        private Label lblElapsed;
     }
 }

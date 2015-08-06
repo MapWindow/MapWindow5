@@ -11,6 +11,7 @@ using MW5.Plugins.Services;
 
 namespace MW5.Services.Serialization
 {
+    // TODO: is it really necessary?
     public interface ISerializableContext: IAppContext
     {
         IPluginManager PluginManager { get; }
