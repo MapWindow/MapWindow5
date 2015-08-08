@@ -40,10 +40,27 @@ namespace MW5.Tools.Model
             FireTaskChanged(task, TaskEvent.Removed);
         }
 
-        public void Clear()
+        public void Clear(bool finishedOnly)
         {
-            _tasks.Clear();
-            FireCollectionCleared();
+            if (finishedOnly)
+            {
+                lock (_tasks)
+                {
+                    for (int i = _tasks.Count - 1; i >= 0; i++)
+                    {
+                        var task = _tasks[i];
+                        if (task.IsFinished)
+                        {
+                            RemoveTask(task);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                _tasks.Clear();
+                FireCollectionCleared();    
+            }
         }
 
         public void CancelAll()

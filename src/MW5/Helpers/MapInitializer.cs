@@ -34,6 +34,7 @@ namespace MW5.Helpers
         {
             MapConfig.ZoomToFirstLayer = true;
             MapConfig.AllowLayersWithoutProjections = true;
+            MapConfig.OverrideLocalCallback = false;
 
             // mismatch test logic is on the client side, so ocx must not interfere with it
             MapConfig.AllowProjectionMismatch = true;        

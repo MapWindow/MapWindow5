@@ -18,6 +18,12 @@ namespace MW5.Api.Static
             // intentionally blank; just need to call any member to execute static constructor
         }
 
+        public static bool OverrideLocalCallback
+        {
+            get { return _settings.OverrideLocalCallback; }
+            set { _settings.OverrideLocalCallback = value; }
+        }
+
         public static void ResetGdalError()
         {
             _settings.ResetGdalError();

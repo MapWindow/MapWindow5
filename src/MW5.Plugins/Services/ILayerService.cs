@@ -17,7 +17,7 @@ namespace MW5.Plugins.Services
 
         bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None);
 
-        bool AddDatasource(IDatasource ds);
+        bool AddDatasource(IDatasource ds, string layerName = "");
 
         bool AddLayer(DataSourceType layerType);
 

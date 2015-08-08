@@ -16,6 +16,7 @@ namespace MW5.Shared
 
             var state = t.GetApartmentState();
             Debug.Print("{0}; Apartment: {1}", t.ManagedThreadId, state);
+            Debug.Print("Is pooled thread: " + t.IsThreadPoolThread);
         }
     }
 }

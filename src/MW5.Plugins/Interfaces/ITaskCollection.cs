@@ -16,7 +16,7 @@ namespace MW5.Plugins.Interfaces
         
         event EventHandler Cleared;
 
-        void Clear();
+        void Clear(bool finishedOnly);
 
         void CancelAll();
     }

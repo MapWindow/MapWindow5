@@ -50,14 +50,10 @@ namespace MW5.Tools.Views
             switch (command)
             {
                 case ToolboxResultsCommand.Clear:
-                    if (MessageService.Current.Ask("Remove all the tasks from the list?"))
+                    if (MessageService.Current.Ask("Remove all the finished tasks from the list?"))
                     {
-                        // TODO: make some provisions for tasks still running
-                        _tasks.Clear();
+                        _tasks.Clear(true);
                     }
-                    break;
-                case ToolboxResultsCommand.ToggleGroup:
-                    MessageService.Current.Info("Pause task: not implemented");
                     break;
                 case ToolboxResultsCommand.OpenLog:
                     {

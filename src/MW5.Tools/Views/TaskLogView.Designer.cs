@@ -41,7 +41,7 @@ namespace MW5.Tools.Views
             this.lblElapsed = new System.Windows.Forms.Label();
             this.btnPause = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.progressBar1 = new Syncfusion.Windows.Forms.Tools.ProgressBarAdv();
             this.panelResults = new System.Windows.Forms.Panel();
             this.lblExecutionTime = new System.Windows.Forms.Label();
             this.lblStatus = new System.Windows.Forms.Label();
@@ -50,6 +50,7 @@ namespace MW5.Tools.Views
             this.panelLog.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panelProgress.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBar1)).BeginInit();
             this.panelResults.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -72,9 +73,9 @@ namespace MW5.Tools.Views
             // 
             this.groupBox1.Controls.Add(this.textBoxExt1);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 142);
+            this.groupBox1.Location = new System.Drawing.Point(0, 155);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(495, 101);
+            this.groupBox1.Size = new System.Drawing.Size(495, 88);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Log messages";
@@ -90,13 +91,13 @@ namespace MW5.Tools.Views
             this.textBoxExt1.Name = "textBoxExt1";
             this.textBoxExt1.ReadOnly = true;
             this.textBoxExt1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxExt1.Size = new System.Drawing.Size(489, 82);
+            this.textBoxExt1.Size = new System.Drawing.Size(489, 69);
             this.textBoxExt1.TabIndex = 1;
             // 
             // panelSeparator
             // 
             this.panelSeparator.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelSeparator.Location = new System.Drawing.Point(0, 131);
+            this.panelSeparator.Location = new System.Drawing.Point(0, 144);
             this.panelSeparator.Name = "panelSeparator";
             this.panelSeparator.Size = new System.Drawing.Size(495, 11);
             this.panelSeparator.TabIndex = 4;
@@ -111,24 +112,23 @@ namespace MW5.Tools.Views
             this.panelProgress.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelProgress.Location = new System.Drawing.Point(0, 47);
             this.panelProgress.Name = "panelProgress";
-            this.panelProgress.Size = new System.Drawing.Size(495, 84);
+            this.panelProgress.Size = new System.Drawing.Size(495, 97);
             this.panelProgress.TabIndex = 3;
             this.panelProgress.TabStop = false;
             this.panelProgress.Text = "Tool is running";
             // 
             // lblPercent
             // 
-            this.lblPercent.AutoSize = true;
-            this.lblPercent.Location = new System.Drawing.Point(13, 56);
+            this.lblPercent.Location = new System.Drawing.Point(13, 57);
             this.lblPercent.Name = "lblPercent";
-            this.lblPercent.Size = new System.Drawing.Size(77, 13);
+            this.lblPercent.Size = new System.Drawing.Size(287, 18);
             this.lblPercent.TabIndex = 45;
             this.lblPercent.Text = "Completed: 0%";
             // 
             // lblElapsed
             // 
             this.lblElapsed.AutoSize = true;
-            this.lblElapsed.Location = new System.Drawing.Point(115, 56);
+            this.lblElapsed.Location = new System.Drawing.Point(382, 18);
             this.lblElapsed.Name = "lblElapsed";
             this.lblElapsed.Size = new System.Drawing.Size(87, 13);
             this.lblElapsed.TabIndex = 44;
@@ -142,7 +142,7 @@ namespace MW5.Tools.Views
             this.btnPause.BeforeTouchSize = new System.Drawing.Size(82, 26);
             this.btnPause.ForeColor = System.Drawing.Color.White;
             this.btnPause.IsBackStageButton = false;
-            this.btnPause.Location = new System.Drawing.Point(306, 48);
+            this.btnPause.Location = new System.Drawing.Point(306, 60);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(82, 26);
             this.btnPause.TabIndex = 3;
@@ -156,7 +156,7 @@ namespace MW5.Tools.Views
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(82, 26);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(394, 48);
+            this.btnCancel.Location = new System.Drawing.Point(394, 60);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(82, 26);
             this.btnCancel.TabIndex = 1;
@@ -166,10 +166,32 @@ namespace MW5.Tools.Views
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(16, 28);
+            this.progressBar1.BackGradientEndColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.progressBar1.BackGradientStartColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.progressBar1.BackgroundStyle = Syncfusion.Windows.Forms.Tools.ProgressBarBackgroundStyles.Gradient;
+            this.progressBar1.BackMultipleColors = new System.Drawing.Color[0];
+            this.progressBar1.BackSegments = false;
+            this.progressBar1.BackTubeEndColor = System.Drawing.Color.White;
+            this.progressBar1.BackTubeStartColor = System.Drawing.Color.LightGray;
+            this.progressBar1.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(147)))), ((int)(((byte)(149)))), ((int)(((byte)(152)))));
+            this.progressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.progressBar1.CustomText = null;
+            this.progressBar1.CustomWaitingRender = false;
+            this.progressBar1.FontColor = System.Drawing.Color.White;
+            this.progressBar1.ForegroundImage = null;
+            this.progressBar1.ForeSegments = false;
+            this.progressBar1.GradientEndColor = System.Drawing.Color.Lime;
+            this.progressBar1.GradientStartColor = System.Drawing.Color.Red;
+            this.progressBar1.Location = new System.Drawing.Point(16, 34);
+            this.progressBar1.MultipleColors = new System.Drawing.Color[0];
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(460, 14);
+            this.progressBar1.SegmentWidth = 12;
+            this.progressBar1.Size = new System.Drawing.Size(460, 20);
             this.progressBar1.TabIndex = 2;
+            this.progressBar1.ThemesEnabled = false;
+            this.progressBar1.TubeEndColor = System.Drawing.Color.Black;
+            this.progressBar1.TubeStartColor = System.Drawing.Color.Red;
+            this.progressBar1.WaitingGradientWidth = 400;
             // 
             // panelResults
             // 
@@ -240,6 +262,7 @@ namespace MW5.Tools.Views
             this.groupBox1.PerformLayout();
             this.panelProgress.ResumeLayout(false);
             this.panelProgress.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBar1)).EndInit();
             this.panelResults.ResumeLayout(false);
             this.panelResults.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -250,7 +273,7 @@ namespace MW5.Tools.Views
         #endregion
 
         private System.Windows.Forms.Panel panelLog;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private ProgressBarAdv progressBar1;
         private Syncfusion.Windows.Forms.ButtonAdv btnCancel;
         private Syncfusion.Windows.Forms.ButtonAdv btnClose;
         private System.Windows.Forms.Panel panelResults;

@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
-            this.toolGroup = new System.Windows.Forms.ToolStripButton();
             this.toolClear = new System.Windows.Forms.ToolStripButton();
             this.tasksTreeView1 = new MW5.Tools.Views.TasksTreeView();
             this.contextMenuStripEx1 = new Syncfusion.Windows.Forms.Tools.ContextMenuStripEx();
@@ -50,7 +49,6 @@
             this.toolStripEx1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripEx1.Image = null;
             this.toolStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolGroup,
             this.toolClear});
             this.toolStripEx1.Location = new System.Drawing.Point(0, 0);
             this.toolStripEx1.Name = "toolStripEx1";
@@ -59,20 +57,6 @@
             this.toolStripEx1.Size = new System.Drawing.Size(238, 37);
             this.toolStripEx1.TabIndex = 2;
             this.toolStripEx1.Text = "toolStripEx1";
-            // 
-            // toolGroup
-            // 
-            this.toolGroup.Checked = true;
-            this.toolGroup.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.toolGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolGroup.Image = global::MW5.Tools.Properties.Resources.img_group24;
-            this.toolGroup.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolGroup.Name = "toolGroup";
-            this.toolGroup.Padding = new System.Windows.Forms.Padding(3);
-            this.toolGroup.Size = new System.Drawing.Size(34, 34);
-            this.toolGroup.Text = "Group by Tool";
-            this.toolGroup.ToolTipText = "Group by Tool";
             // 
             // toolClear
             // 
@@ -184,7 +168,6 @@
         #endregion
 
         private Syncfusion.Windows.Forms.Tools.ToolStripEx toolStripEx1;
-        private System.Windows.Forms.ToolStripButton toolGroup;
         private System.Windows.Forms.ToolStripButton toolClear;
         private TasksTreeView tasksTreeView1;
         private Syncfusion.Windows.Forms.Tools.ContextMenuStripEx contextMenuStripEx1;

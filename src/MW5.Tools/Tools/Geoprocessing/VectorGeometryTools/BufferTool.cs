@@ -11,6 +11,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 
@@ -22,7 +23,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Input layer", 0)]
         public VectorLayerParameter InputLayer { get; set; }
 
-        [Input("Buffer distance", 1)]
+        [Input("Buffer distance", 1), DefaultValue(50)]
         public DistanceParameter BufferDistance { get; set; }
 
         [OptionalInput("Number of segments", 2), DefaultValue(30)]
@@ -81,11 +82,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             input.ErrorCallback = task.ErrorCallback;
             
             var fs = input.BufferByDistance(bufferDistance, numSegments, false, mergeResults);
-
+            
             input.ErrorCallback = null;
 
             if (fs != null)
             {
+                fs.ErrorCallback = null;
                 SendOrPostCallback action2 = p => HandleOutput(fs, outputInfo);
                 UiThread.Send(action2, null);
 

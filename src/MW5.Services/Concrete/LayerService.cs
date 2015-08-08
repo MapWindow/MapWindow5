@@ -225,7 +225,7 @@ namespace MW5.Services.Concrete
             }
         }
 
-        public bool AddDatasource(IDatasource ds)
+        public bool AddDatasource(IDatasource ds, string layerName = "")
         {
             int addedCount = 0;
 
@@ -259,8 +259,8 @@ namespace MW5.Services.Concrete
                 if (layerHandle != -1)
                 {
                     var ll = layers.ItemByHandle(layerHandle);
-                    ll.Name = Path.GetFileNameWithoutExtension(ds.Filename);
-                    
+                    ll.Name = string.IsNullOrWhiteSpace(layerName) ? Path.GetFileNameWithoutExtension(ds.Filename) : layerName;
+
                     addedCount++;
                     _lastLayerHandle = layerHandle;
                 }

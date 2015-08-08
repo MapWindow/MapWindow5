@@ -197,9 +197,14 @@ namespace MW5.Tools.Model
                 return HandleOverwriteFailure();
             }
 
-            SaveDatasource(ds, filename);
+            bool result = SaveDatasource(ds, filename);
 
             ds.Dispose();
+
+            if (!result)
+            {
+                return false;
+            }
 
             if (outputInfo.AddToMap)
             {
@@ -222,7 +227,7 @@ namespace MW5.Tools.Model
                 return true;
             }
 
-            Logger.Current.Error("Failed to save datasource: " + ds.LastError, null);
+            Logger.Current.Error("Failed to save datasource: " + ds.LastError);
             return false;
         }
 
@@ -238,44 +243,7 @@ namespace MW5.Tools.Model
                 throw new ApplicationException("Memory layer option can only be used with add to map option.");
             }
 
-            // We can't the resulting shapefile directly, because it was created by background thread
-            // therefore is located in another apartment. This will cause creation of proxies and marshalling
-            // for COM, which in turn no always supported by implementation of particular classes in MapWinGIS.
-            // Therefore the best option we have is to save into temp file, open it, read into memory, delete the source.
-            string filename = TempFile.GetTempFilename(".shp");
-            bool saved = SaveDatasource(ds, filename);
-            ds.Dispose();
-
-            if (!saved)
-            {
-                Logger.Current.Warn("Failed to save datasource to temp file.");
-                return false;
-            }
-
-            return AddTempDataSource(filename, outputInfo);
-        }
-
-        private bool AddTempDataSource(string filename, OutputLayerInfo outputInfo)
-        {
-            var layerService = LayerService;
-
-            Debug.Print("Temp datasource to be removed: " + filename);
-
-            var fs= FeatureSet.OpenAsInMemoryDatasource(filename);
-            if (fs != null)
-            {
-                // output info name
-                if (layerService.AddDatasource(fs))
-                {
-                    var layer = _context.Layers.ItemByHandle(layerService.LastLayerHandle);
-                    layer.Name = outputInfo.Name;
-
-                    GeoSource.Remove(filename);
-                    return true;
-                }
-            }
-
-            return false;
+            return LayerService.AddDatasource(ds, outputInfo.Name);
         }
 
         private bool HandleOverwriteFailure()

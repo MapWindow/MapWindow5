@@ -80,6 +80,7 @@
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
+    <Compile Include="Helpers\TempDatasourceHelper.cs" />
     <Compile Include="Model\GisTask.cs" />
     <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />

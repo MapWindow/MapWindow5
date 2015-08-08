@@ -17,16 +17,24 @@ namespace MW5.Tools.Model
 {
     internal class GisTask : IGisTask
     {
+        private static readonly Lazy<StaTaskScheduler> _scheduler =
+            new Lazy<StaTaskScheduler>(() => new StaTaskScheduler(10));
+
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
-        private GisTaskStatus _status;
         private ITaskProgress _progress;
+        private GisTaskStatus _status;
 
         public GisTask(GisToolBase tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
             Tool = tool;
             Status = GisTaskStatus.NotStarted;
+        }
+
+        private static StaTaskScheduler Scheduler
+        {
+            get { return _scheduler.Value; }
         }
 
         public event EventHandler StatusChanged;
@@ -136,47 +144,26 @@ namespace MW5.Tools.Model
             return result;
         }
 
-        public async void RunAsync()
+        public void RunAsync()
         {
             var token = _cancellationTokenSource.Token;
 
-            // actually there is not much need for async / await here
-            // Task.ContinueWith would do the job fine as well
-            try
-            {
-                var t = Task<bool>.Factory.StartNew(() => Run(token), token);
-                await t;
-            }
-            catch (OperationCanceledException ex)
-            {
-                FinishTime = DateTime.Now;
-                Status = GisTaskStatus.Cancelled;
-            }
-            catch(Exception ex)
-            {
-                Logger.Current.Error("Error during tool execution: " + Tool.Name, ex);
-                Status = GisTaskStatus.Failed;
-                FinishTime = DateTime.Now;
+            var t = Task<bool>.Factory.StartNew(() => Run(token), token, TaskCreationOptions.LongRunning,
+                    TaskScheduler.Default).ContinueWith(task =>
+                        {
+                            if (task.IsCanceled)
+                            {
+                                FinishTime = DateTime.Now;
+                                Status = GisTaskStatus.Cancelled;
+                            }
 
-                // await rethrows only the first exception;
-                // with Task.ContinueWith AggregateException will be rethrown
-                //if (t.IsFaulted && t.Exception != null)
-                //{
-                //    foreach (var ex in t.Exception.InnerExceptions)
-                //    {
-
-                //    }
-                //}
-            }
-        }
-
-        private void FireStatusChanged()
-        {
-            var handler = StatusChanged;
-            if (handler != null)
-            {
-                handler(this, new EventArgs());
-            }
+                            if (task.IsFaulted && task.Exception != null)
+                            {
+                                Logger.Current.Error("Error during tool execution: " + Tool.Name, task.Exception);
+                                Status = GisTaskStatus.Failed;
+                                FinishTime = DateTime.Now;
+                            }
+                        });
         }
 
         public ITaskProgress Progress
@@ -189,7 +176,7 @@ namespace MW5.Tools.Model
             }
         }
 
-        public void Error(string tagOfSender, string errorMsg)
+        void IApplicationCallback.Error(string tagOfSender, string errorMsg)
         {
             Tool.Log.Error(errorMsg, null);
         }
@@ -202,6 +189,15 @@ namespace MW5.Tools.Model
         public void ClearProgress()
         {
             Progress.Clear();
+        }
+
+        private void FireStatusChanged()
+        {
+            var handler = StatusChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
     }
 }

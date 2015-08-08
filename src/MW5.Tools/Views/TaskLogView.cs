@@ -228,7 +228,7 @@ namespace MW5.Tools.Views
                     if (e.Percent >= 0 && e.Percent <= 100)
                     {
                         progressBar1.Value = e.Percent;
-                        lblPercent.Text = "Completed: " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
+                        lblPercent.Text = e.Message; // + " " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
                         lblPercent.Invalidate();
                     }
                 };

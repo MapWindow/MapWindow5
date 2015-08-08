@@ -27,7 +27,6 @@ namespace MW5.Tools.Enums
     public enum ToolboxResultsCommand
     {
         Clear = 0,
-        ToggleGroup = 1,
         OpenLog = 2,
         CancelTask = 3,
         PauseTask = 4,
