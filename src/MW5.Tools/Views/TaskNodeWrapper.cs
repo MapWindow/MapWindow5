@@ -148,13 +148,13 @@ namespace MW5.Tools.Views
 
         private void AddProgressHandlers()
         {
-            _task.Progress.ProgressChanged += (s, e) =>
+            _task.TaskProgress.ProgressChanged += (s, e) =>
                 {
                     Action action = () => { _progress.Value = e.Percent; };
                     _progress.SafeInvoke(action);
                 };
 
-            _task.Progress.Hide += (s, e) => _progress.SafeInvoke(HideProgress);
+            _task.TaskProgress.Hide += (s, e) => _progress.SafeInvoke(HideProgress);
         }
 
         private void HideProgress()

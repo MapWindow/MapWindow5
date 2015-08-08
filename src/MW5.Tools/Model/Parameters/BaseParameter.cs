@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Reflection;
 using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Model.Parameters
@@ -73,6 +74,13 @@ namespace MW5.Tools.Model.Parameters
         public object GetDefaultValue()
         {
             return _defaultValue;
+        }
+
+        public PropertyInfo ToolProperty { get; set; }
+
+        public virtual object Value
+        {
+            get { return Control.GetValue(); }
         }
     }
 }

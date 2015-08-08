@@ -81,9 +81,11 @@
     <Compile Include="Helpers\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
+    <Compile Include="Model\Distance.cs" />
     <Compile Include="Model\GisTask.cs" />
     <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
+    <Compile Include="Model\Parameters\ParameterFactory.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
@@ -97,6 +99,7 @@
     <Compile Include="Model\Parameters\ValueParameter.cs" />
     <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
     <Compile Include="Model\TaskHandle.cs" />
+    <Compile Include="Model\VectorLayerInfo.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
     <Compile Include="Services\ToolLogger.cs" />

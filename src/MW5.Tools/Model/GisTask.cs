@@ -131,17 +131,9 @@ namespace MW5.Tools.Model
 
         public bool Run(CancellationToken cancellationToken)
         {
-            StartTime = DateTime.Now;
-            Status = GisTaskStatus.Running;
+            var handle = new TaskHandle(TaskProgress, _cancellationTokenSource.Token, _pauseEvent, this);
 
-            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent, this);
-
-            bool result = Tool.Run(handle);
-
-            FinishTime = DateTime.Now;
-            Status = result ? GisTaskStatus.Success : GisTaskStatus.Failed;
-
-            return result;
+            return Tool.Run(handle);
         }
 
         public void RunAsync()
@@ -150,13 +142,18 @@ namespace MW5.Tools.Model
 
             var token = _cancellationTokenSource.Token;
 
+            StartTime = DateTime.Now;
+            Status = GisTaskStatus.Running;
+
             var t = Task<bool>.Factory.StartNew(() => Run(token), token, TaskCreationOptions.LongRunning,
                     TaskScheduler.Default).ContinueWith(task =>
                         {
                             // currently running on UI thread (TaskScheduler.FromCurrentSynchronizationContext())
-                            
+                            FinishTime = DateTime.Now;
+                            Status = task.Result ? GisTaskStatus.Success : GisTaskStatus.Failed;
+
                             // stop reporting progress from datasources
-                            Tool.SetCallback(null);   
+                            Tool.CleanUp();   
 
                             if (task.IsCanceled || _cancellationTokenSource.IsCancellationRequested)
                             {
@@ -174,7 +171,7 @@ namespace MW5.Tools.Model
                         }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public ITaskProgress Progress
+        public ITaskProgress TaskProgress
         {
             get { return _progress ?? (_progress = new EventProgress()); }
             set
@@ -195,12 +192,12 @@ namespace MW5.Tools.Model
             // to pause, for others additional check won't affect the performance much
             _pauseEvent.WaitOne();
 
-            Progress.Update(message, percent);
+            TaskProgress.Update(message, percent);
         }
 
         void IApplicationCallback.ClearProgress()
         {
-            Progress.Clear();
+            TaskProgress.Clear();
         }
 
         bool IApplicationCallback.CheckAborted()

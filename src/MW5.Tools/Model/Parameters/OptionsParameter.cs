@@ -43,7 +43,7 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Gets the value.
         /// </summary>
-        public T Value
+        public new T Value
         {
             get
             {

@@ -59,7 +59,7 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Gets the value.
         /// </summary>
-        public TLayerSource Value
+        public TLayerSource Datasource
         {
             get
             {

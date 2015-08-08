@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,12 @@ namespace MW5.Shared
             }
 
             return default(TValue);
+        }
+
+        public static T GetAttribute<T>(this PropertyInfo prop)
+            where T: Attribute
+        {
+            return Attribute.GetCustomAttribute(prop, typeof(T)) as T;
         }
     }
 }

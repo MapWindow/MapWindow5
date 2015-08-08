@@ -10,25 +10,14 @@ namespace MW5.Tools.Model.Parameters
 {
     public class DistanceParameter: DoubleParameter
     {
-        public DistanceParameter() { }
-
-        public LengthUnits Units
-        {
-            get
-            {
-                var ctrl = Control as DistanceParameterControl;
-                if (ctrl == null)
-                {
-                    throw new NullReferenceException("A control for distance parameter isn't specified");
-                }
-
-                return ctrl.Units;
-            }
-        }
-
         public override string ToString()
         {
-            return string.Format("{0}: {1:g3}", DisplayName, Value);
+            return string.Format("{0}: {1:g3}", DisplayName, Value.Value);
+        }
+
+        public new Distance Value
+        {
+            get { return Control.GetValue() as Distance; }
         }
     }
 }

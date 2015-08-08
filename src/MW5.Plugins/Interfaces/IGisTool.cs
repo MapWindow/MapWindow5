@@ -51,6 +51,11 @@ namespace MW5.Plugins.Interfaces
         void SetCallback(IApplicationCallback callback);
 
         /// <summary>
+        /// Removes callbacks assigned to the input layers.
+        /// </summary>
+        void CleanUp();
+
+        /// <summary>
         /// Gets a value indicating whether the tool suppports cancelling.
         /// </summary>
         /// <remarks>In case of long running MapWinGIS geoprocessing, the method must accept 

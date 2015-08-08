@@ -20,7 +20,7 @@ namespace MW5.Tools.Tools.Database
     public class ImportLayerTool : GisTool
     {
         [Input("Input layer", 0)]
-        public VectorLayerParameter InputLayer { get; set; }
+        public VectorLayerInfo InputLayer { get; set; }
 
         [Input("Database", 1)]
         public OptionsParameter<DatabaseConnection> Database { get; set; }
@@ -74,7 +74,7 @@ namespace MW5.Tools.Tools.Database
         {
             var cs = Database.Value.ConnectionString;
 
-            var fs = InputLayer.Value;
+            var fs = InputLayer.Datasource;
 
             string newLayerName = NewLayerName.Value;
 

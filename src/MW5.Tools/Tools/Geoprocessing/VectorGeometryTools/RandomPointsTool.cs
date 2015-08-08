@@ -26,13 +26,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
-        public LayerParameter InputLayer { get; set; }
+        public ILayerSource InputLayer { get; set; }
 
         [Input("Number of points", 1), DefaultValue(500), Range(1, 1000000)]
-        public IntegerParameter NumPoints { get; set; }
+        public int NumPoints { get; set; }
 
         [Input("New layer name", 2), DefaultValue("random points")]
-        public OutputLayerParameter OutputLayer { get; set; }
+        public OutputLayerInfo OutputLayer { get; set; }
 
         /// <summary>
         /// Gets name of the tool.
@@ -56,36 +56,15 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <returns>True on success, which closes the view</returns>
         public override bool Run(ITaskHandle task)
         {
-            // TODO: log the name of the tool and start time
-
-            // let it be synchronous until progress reporting is implemented in a thread safe way
-            //var result = Task.Factory.StartNew(() => RunCore(layerSource, NewLayerName.Value, numPoints, Overwrite.Value)).Result;
-            var fs = RunCore(InputLayer.Value, NumPoints.Value);
-            if (fs == null)
-            {
-                return false;
-            }
-
-            UiThread.Post(p => HandleOutput(fs, OutputLayer.Value), null);
-
-            return true;
-        }
-
-        /// <summary>
-        /// Core processing.
-        /// </summary>
-        private IFeatureSet RunCore(ILayerSource inputLayer, int numPoints)
-        {
-            // TODO: Open log tab of view; log to the log tab
-            Logger.Current.Debug("Creating {0} random points", numPoints);
+            Log.Debug("Creating {0} random points", NumPoints);
 
             var fs = new FeatureSet(GeometryType.Point);
-            fs.Projection.CopyFrom(inputLayer.Projection);
+            fs.Projection.CopyFrom(InputLayer.Projection);
 
-            var envelop = inputLayer.Envelope;
+            var envelop = InputLayer.Envelope;
             var random = new Random();
 
-            for (int i = 0; i < numPoints; i++)
+            for (int i = 0; i < NumPoints; i++)
             {
                 var x = envelop.MinX + envelop.Width * random.NextDouble();
                 var y = envelop.MinY + envelop.Height * random.NextDouble();
@@ -94,9 +73,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 fs.Features.EditAdd(feature);
             }
 
-            Logger.Current.Debug("New feature set has {0} features", fs.NumFeatures);
+            Log.Debug("New feature set has {0} features", fs.NumFeatures);
 
-            return fs;
+            HandleOutput(fs, OutputLayer);
+
+            return true;
         }
     }
 }

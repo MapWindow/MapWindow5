@@ -21,19 +21,19 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class BufferTool : GisTool
     {
         [Input("Input layer", 0)]
-        public VectorLayerParameter InputLayer { get; set; }
+        public VectorLayerInfo InputLayer { get; set; }
 
         [Input("Buffer distance", 1), DefaultValue(50)]
-        public DistanceParameter BufferDistance { get; set; }
+        public Distance BufferDistance { get; set; }
 
         [OptionalInput("Number of segments", 2), DefaultValue(30)]
-        public IntegerParameter NumSegments { get; set; }
+        public int NumSegments { get; set; }
 
         [Input("Merge results", 3)]
-        public BooleanParameter MergeResults { get; set; }
+        public bool MergeResults { get; set; }
 
         [Input("Save results as", 4), DefaultValue(@"d:\buffer.shp")]
-        public OutputLayerParameter Output { get; set; }
+        public OutputLayerInfo Output { get; set; }
 
         /// <summary>
         /// Gets name of the tool.
@@ -61,35 +61,17 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            LengthUnits units = LengthUnits.Kilometers;
-            LengthUnits mapUnits=  LengthUnits.Meters;
-            IFeatureSet input = null;
-            bool mergeResults = false;
-            double bufferDistance = 0.0;
-            int numSegments = 30;
-            OutputLayerInfo outputInfo = null;
+            // TODO: find more general way to read values from UI thread
+            var mapUnits = LengthUnits.Meters;
+            UiThread.Send(p => mapUnits = AppContext.Map.MapUnits, null);
 
-            SendOrPostCallback action = p =>
-                {
-                    units = BufferDistance.Units;
-                    mapUnits = AppContext.Map.MapUnits;
-                    bufferDistance = BufferDistance.Value;
-                    mergeResults = MergeResults.Value;
-                    numSegments = NumSegments.Value;
-                    outputInfo = Output.Value;
-                    input = InputLayer.Value;
-                };
-
-            UiThread.Send(action, null);
-
-            bufferDistance = UnitConversionHelper.Convert(units, mapUnits, bufferDistance);
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, mapUnits, BufferDistance.Value);
             
-            var fs = input.BufferByDistance(bufferDistance, numSegments, false, mergeResults);
+            var fs = InputLayer.Datasource.BufferByDistance(bufferDistance, NumSegments, false, MergeResults);
 
             if (fs != null)
             {
-                SendOrPostCallback action2 = p => HandleOutput(fs, outputInfo);
-                UiThread.Send(action2, null);
+                HandleOutput(fs, Output);
 
                 return true;
             }

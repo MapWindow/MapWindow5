@@ -11,7 +11,7 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Gets a value indicating whether value.
         /// </summary>
-        public OutputLayerInfo Value
+        public new OutputLayerInfo Value
         {
             get {  return Control.GetValue() as OutputLayerInfo; }
         }

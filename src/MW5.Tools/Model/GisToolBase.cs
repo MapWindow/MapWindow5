@@ -55,6 +55,11 @@ namespace MW5.Tools.Model
         public virtual void SetCallback(IApplicationCallback callback) { }
 
         /// <summary>
+        /// Removes callbacks assigned to the input layers.
+        /// </summary>
+        public virtual void CleanUp() { }
+
+        /// <summary>
         /// Gets a value indicating whether the tool suppports cancelling.
         /// </summary>
         public virtual bool SupportsCancel

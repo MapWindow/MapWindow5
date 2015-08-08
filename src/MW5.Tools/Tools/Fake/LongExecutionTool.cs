@@ -16,7 +16,7 @@ namespace MW5.Tools.Tools.Fake
     public class LongExecutionTool: GisTool
     {
         [Input("Seconds per step (100 steps)", 0), DefaultValue(0.1), Range(0.1, 5.0)]
-        public DoubleParameter SecondPerStep { get; set; }
+        public double SecondPerStep { get; set; }
 
         /// <summary>
         /// Gets name of the tool.
@@ -36,7 +36,7 @@ namespace MW5.Tools.Tools.Fake
 
         public override bool Run(ITaskHandle task)
         {
-            var span = TimeSpan.FromSeconds(SecondPerStep.Value);
+            var span = TimeSpan.FromSeconds(SecondPerStep);
 
             Log.Info(Name + ": start");
 

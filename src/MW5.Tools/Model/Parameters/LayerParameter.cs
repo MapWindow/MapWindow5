@@ -12,7 +12,21 @@ namespace MW5.Tools.Model.Parameters
     {
         public override string ToString()
         {
-            return string.Format("{0}: {1}", DisplayName, Path.GetFileName(Value.Filename));
+            return string.Format("{0}: {1}", DisplayName, Path.GetFileName(Datasource.Filename));
+        }
+
+        public override object Value
+        {
+            get
+            {
+                var wrapper = Control.GetValue() as LayerWrapper;
+                if (wrapper != null)
+                {
+                    return wrapper.Source;
+                }
+
+                return null;
+            }
         }
     }
 }

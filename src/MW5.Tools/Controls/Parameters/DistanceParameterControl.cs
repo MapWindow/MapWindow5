@@ -7,6 +7,7 @@
 using System;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Tools.Model;
 using MW5.UI.Helpers;
 
 namespace MW5.Tools.Controls.Parameters
@@ -51,7 +52,7 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override object GetValue()
         {
-            return doubleTextBox1.DoubleValue;
+            return new Distance(doubleTextBox1.DoubleValue, Units);
         }
 
         /// <summary>

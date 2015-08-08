@@ -38,7 +38,7 @@ namespace MW5.Tools.Model.Parameters
             }
         }
 
-        public T Value
+        public new T Value
         {
             get { return (T)Control.GetValue(); }
         }

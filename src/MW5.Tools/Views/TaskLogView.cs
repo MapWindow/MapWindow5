@@ -184,14 +184,14 @@ namespace MW5.Tools.Views
 
         private void DetachProgressHandlers()
         {
-            var progress = Model.Progress;
+            var progress = Model.TaskProgress;
             progress.ProgressChanged -= OnProgressChanged;
             progress.Hide -= OnProgressHide;
         }
 
         private void AttachProgressHandlers()
         {
-            var progress = Model.Progress;
+            var progress = Model.TaskProgress;
             progress.ProgressChanged += OnProgressChanged;
             progress.Hide += OnProgressHide;
         }

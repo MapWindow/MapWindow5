@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
@@ -65,11 +66,6 @@ namespace MW5.Tools.Model
             get { return _context.Container.Resolve<ILayerService>(); }
         }
 
-        private ITempFileService TempFile
-        {
-            get { return _context.Container.Resolve<ITempFileService>(); }
-        }
-
         #endregion
 
         #region Public Methods
@@ -101,14 +97,51 @@ namespace MW5.Tools.Model
             }
         }
 
-        public bool Validate()
+        public override void CleanUp()
+        {
+            ClearCallbacks();
+            CloseDatasources();
+        }
+
+        private void CloseDatasources()
+        {
+            foreach (var p in Parameters.OfType<LayerParameterBase>())
+            {
+                if (!p.SelectedLayer.Opened)
+                {
+                    var layer = p.ToolProperty.GetValue(this) as ILayerSource;
+                    if (layer != null)
+                    {
+                        layer.Dispose();
+                    }
+                }
+            }
+        }
+
+        private void ClearCallbacks()
+        {
+            var properties = GetType().GetProperties();
+            foreach (PropertyInfo p in properties)
+            {
+                if (p.GetType().IsAssignableFrom(typeof(ILayerSource)))
+                {
+                    var layerSource = p.GetValue(this) as ILayerSource;
+                    if (layerSource != null)
+                    {
+                        layerSource.Callback = null;
+                    }
+                }
+            }
+        }
+
+        public bool ValidateParameters()
         {
             foreach (var p in Parameters)
             {
                 var layerParameter = p as LayerParameter;
                 if (layerParameter != null)
                 {
-                    if (layerParameter.Value == null)
+                    if (layerParameter.Datasource == null)
                     {
                         MessageService.Current.Info("Input datasource isn't selected.");
                         return false;
@@ -141,20 +174,36 @@ namespace MW5.Tools.Model
             return true;
         }
 
+        public void ApplyParameters()
+        {
+            // validation must be called first
+
+            foreach (var p in Parameters)
+            {
+                p.ToolProperty.SetValue(this, p.Value);
+            }
+        }
+
         #endregion
 
         #region Methods
 
-        protected bool HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
+        protected void HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
-            ds.Callback = null;
+            SendOrPostCallback action = p =>
+                {
+                    ds.Callback = null;
 
-            if (outputInfo.MemoryLayer)
-            {
-                return HandleMemoryOutput(ds, outputInfo);
-            }
+                    if (outputInfo.MemoryLayer)
+                    {
+                        HandleMemoryOutput(ds, outputInfo);
+                        return;
+                    }
 
-            return HandleDiskOutput(ds, outputInfo);
+                    HandleDiskOutput(ds, outputInfo);
+                };
+
+            UiThread.Send(action, null);
         }
 
         private IEnumerable<BaseParameter> GetParameters()
@@ -162,23 +211,16 @@ namespace MW5.Tools.Model
             var properties = GetType().GetProperties();
             foreach (var prop in properties)
             {
-                if (!typeof(BaseParameter).IsAssignableFrom(prop.PropertyType))
-                {
-                    continue;
-                }
-
-                var attr = Attribute.GetCustomAttribute(prop, typeof(ParameterAttribute)) as ParameterAttribute;
-
+                var attr = prop.GetAttribute<ParameterAttribute>();
                 if (attr == null) continue;
 
-                var param = Activator.CreateInstance(prop.PropertyType) as BaseParameter;
+                var param = ParameterFactory.CreateParameter(prop.PropertyType);
                 if (param != null)
                 {
-                    prop.SetValue(this, param);
+                    param.ToolProperty = prop;
                     param.Name = prop.Name;
                     param.Index = attr.Index;
                     param.DisplayName = attr.DisplayName;
-
                     param.Required = attr is InputAttribute;
 
                     HandleRangeAttribute(param, prop);

@@ -16,9 +16,14 @@ namespace MW5.Tools.Model.Parameters
             get { return DataSourceType.Vector; }
         }
 
+        public override object Value
+        {
+            get { return new VectorLayerInfo(base.Datasource, SelectedOnly);  }
+        }
+
         public override string ToString()
         {
-            return string.Format("{0}: {1}", DisplayName, Path.GetFileName(Value.Filename));
+            return string.Format("{0}: {1}", DisplayName, Path.GetFileName(Datasource.Filename));
         }
     }
 }

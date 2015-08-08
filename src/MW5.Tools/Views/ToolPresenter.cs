@@ -39,10 +39,14 @@ namespace MW5.Tools.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            if (!Model.Tool.Validate())
+            var tool = Model.Tool;
+
+            if (!tool.ValidateParameters())
             {
                 return false;
             }
+
+            tool.ApplyParameters();
 
             var task = Model.CreateTask();
 

@@ -17,13 +17,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class IntersectionTool: GisTool
     {
         [Input("First layer", 0)]
-        public VectorLayerParameter InputLayer { get; set; }
+        public VectorLayerInfo InputLayer { get; set; }
 
         [Input("Second layer", 1)]
-        public VectorLayerParameter InputLayer2 { get; set; }
+        public VectorLayerInfo InputLayer2 { get; set; }
 
         [Input("Save results as", 2), DefaultValue("intersection")]
-        public OutputLayerParameter Output { get; set; }
+        public OutputLayerInfo Output { get; set; }
 
         /// <summary>
         /// Gets name of the tool.
@@ -46,24 +46,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            IFeatureSet fs = null, fs2 = null;
-            bool selected = false, selected2 = false;
+            var fs = InputLayer.Datasource;
+            var fs2 = InputLayer2.Datasource;
 
-            SendOrPostCallback action = p =>
-                {
-                    fs = InputLayer.Value;
-                    fs2 = InputLayer2.Value;
-                    selected = InputLayer.SelectedOnly;
-                    selected2 = InputLayer2.SelectedOnly;
-                };
-
-            UiThread.Send(action, null);
-
-            var result = fs.Intersection(selected, fs2, selected2, Api.Enums.GeometryType.None);
+            var result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, Api.Enums.GeometryType.None);
 
             if (result != null)
             {
-                UiThread.Send(p => HandleOutput(result, Output.Value), null);
+                HandleOutput(result, Output);
                 return true;
             }
 
