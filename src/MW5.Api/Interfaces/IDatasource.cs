@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using MW5.Api.Enums;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Interfaces
 {
@@ -20,5 +21,7 @@ namespace MW5.Api.Interfaces
         bool IsVector { get; }
 
         bool IsRaster { get; }
+
+        IApplicationCallback Callback { get; set; }
     }
 }

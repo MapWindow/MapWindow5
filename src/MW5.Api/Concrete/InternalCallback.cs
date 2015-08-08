@@ -16,25 +16,4 @@ namespace MW5.Api.Concrete
             ApplicationCallback.Error(keyOfSender, errorMsg);
         }
     }
-
-    internal class CallbackWrapper : ICallback
-    {
-        public CallbackWrapper(IApplicationCallback callback)
-        {
-            if (callback == null) throw new ArgumentNullException("callback");
-            Callback = callback;
-        }
-
-        public IApplicationCallback Callback { get; private set; }
-
-        public void Progress(string KeyOfSender, int Percent, string Message)
-        {
-            Callback.Progress(KeyOfSender, Percent, Message);
-        }
-
-        public void Error(string KeyOfSender, string ErrorMsg)
-        {
-            Callback.Error(KeyOfSender, ErrorMsg);
-        }
-    }
 }

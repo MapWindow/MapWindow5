@@ -7,6 +7,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
@@ -280,9 +281,21 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool IsVector { get { return true; } }
+        public bool IsVector
+        {
+            get { return true; }
+        }
 
-        public bool IsRaster { get { return false; } }
+        public bool IsRaster
+        {
+            get { return false; }
+        }
+
+        public IApplicationCallback Callback
+        {
+            get { return MapWinGISCallback.UnWrap(_layer.GlobalCallback); }
+            set { _layer.GlobalCallback = MapWinGISCallback.Wrap(value); }
+        }
 
         public void Close()
         {

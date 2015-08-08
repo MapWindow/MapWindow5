@@ -146,15 +146,23 @@ namespace MW5.Tools.Model
 
         public void RunAsync()
         {
+            Tool.SetCallback(this);
+
             var token = _cancellationTokenSource.Token;
 
             var t = Task<bool>.Factory.StartNew(() => Run(token), token, TaskCreationOptions.LongRunning,
                     TaskScheduler.Default).ContinueWith(task =>
                         {
-                            if (task.IsCanceled)
+                            // currently running on UI thread (TaskScheduler.FromCurrentSynchronizationContext())
+                            
+                            // stop reporting progress from datasources
+                            Tool.SetCallback(null);   
+
+                            if (task.IsCanceled || _cancellationTokenSource.IsCancellationRequested)
                             {
-                                FinishTime = DateTime.Now;
                                 Status = GisTaskStatus.Cancelled;
+                                FinishTime = DateTime.Now;
+                                return;
                             }
 
                             if (task.IsFaulted && task.Exception != null)
@@ -163,7 +171,7 @@ namespace MW5.Tools.Model
                                 Status = GisTaskStatus.Failed;
                                 FinishTime = DateTime.Now;
                             }
-                        });
+                        }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         public ITaskProgress Progress
@@ -183,12 +191,25 @@ namespace MW5.Tools.Model
 
         void IApplicationCallback.Progress(string tagOfSender, int percent, string message)
         {
+            // for tools that don't support cancellation it may be the only place
+            // to pause, for others additional check won't affect the performance much
+            _pauseEvent.WaitOne();
+
             Progress.Update(message, percent);
         }
 
-        public void ClearProgress()
+        void IApplicationCallback.ClearProgress()
         {
             Progress.Clear();
+        }
+
+        bool IApplicationCallback.CheckAborted()
+        {
+            // the calls to IStopExecution interface may be more frequent than progress reporting,
+            // so this is a good place to check for pause when long MapWinGIS method is running
+            _pauseEvent.WaitOne();
+
+            return _cancellationTokenSource.IsCancellationRequested;
         }
 
         private void FireStatusChanged()

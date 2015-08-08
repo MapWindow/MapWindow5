@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Shared.Log;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
@@ -46,5 +47,19 @@ namespace MW5.Tools.Model
         /// Gets the logger associated with the tool.
         /// </summary>
         public abstract IToolLogger Log { get; }
+
+        /// <summary>
+        /// Sets callback to all input datasource to report progress of operation. 
+        /// Must be set to null when execution is finished.
+        /// </summary>
+        public virtual void SetCallback(IApplicationCallback callback) { }
+
+        /// <summary>
+        /// Gets a value indicating whether the tool suppports cancelling.
+        /// </summary>
+        public virtual bool SupportsCancel
+        {
+            get { return false; }
+        }
     }
 }

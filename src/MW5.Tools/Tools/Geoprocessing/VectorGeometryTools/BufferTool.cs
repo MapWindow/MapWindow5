@@ -43,6 +43,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Buffer by distance"; }
         }
 
+        public override bool SupportsCancel
+        {
+            get { return false; }
+        }
+
         /// <summary>
         /// Gets description of the tool.
         /// </summary>
@@ -78,16 +83,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             UiThread.Send(action, null);
 
             bufferDistance = UnitConversionHelper.Convert(units, mapUnits, bufferDistance);
-
-            input.ErrorCallback = task.ErrorCallback;
             
             var fs = input.BufferByDistance(bufferDistance, numSegments, false, mergeResults);
-            
-            input.ErrorCallback = null;
 
             if (fs != null)
             {
-                fs.ErrorCallback = null;
                 SendOrPostCallback action2 = p => HandleOutput(fs, outputInfo);
                 UiThread.Send(action2, null);
 
@@ -96,7 +96,5 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             return false;
         }
-
-
     }
 }

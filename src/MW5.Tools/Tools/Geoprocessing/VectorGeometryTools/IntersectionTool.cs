@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
@@ -45,15 +46,25 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fs = InputLayer.Value;
+            IFeatureSet fs = null, fs2 = null;
+            bool selected = false, selected2 = false;
 
-            var fs2 = InputLayer2.Value;
+            SendOrPostCallback action = p =>
+                {
+                    fs = InputLayer.Value;
+                    fs2 = InputLayer2.Value;
+                    selected = InputLayer.SelectedOnly;
+                    selected2 = InputLayer2.SelectedOnly;
+                };
 
-            var result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, Api.Enums.GeometryType.None);
+            UiThread.Send(action, null);
+
+            var result = fs.Intersection(selected, fs2, selected2, Api.Enums.GeometryType.None);
 
             if (result != null)
             {
-                return HandleOutput(result, Output.Value);
+                UiThread.Send(p => HandleOutput(result, Output.Value), null);
+                return true;
             }
 
             return false;

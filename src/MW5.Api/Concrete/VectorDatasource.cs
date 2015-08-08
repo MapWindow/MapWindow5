@@ -9,6 +9,7 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
@@ -224,6 +225,12 @@ namespace MW5.Api.Concrete
         public bool IsRaster
         {
             get { return false; }
+        }
+
+        public IApplicationCallback Callback
+        {
+            get { return MapWinGISCallback.UnWrap(_datasource.GlobalCallback); }
+            set { _datasource.GlobalCallback = MapWinGISCallback.Wrap(value); }
         }
 
         public void Dispose()

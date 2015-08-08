@@ -43,6 +43,14 @@ namespace MW5.Tools.Model.Parameters
         {
             get { return DataSourceType.All;  }
         }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        public LayerWrapper SelectedLayer
+        {
+            get { return LayerControl.GetValue() as LayerWrapper; }
+        }
     }
 
     public class LayerParameterBase<TLayerSource> : LayerParameterBase

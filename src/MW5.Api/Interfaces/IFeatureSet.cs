@@ -97,8 +97,6 @@ namespace MW5.Api.Interfaces
 
         int MinDrawingSize { get; set; }
 
-        IApplicationCallback ErrorCallback { get; set; }
-
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);

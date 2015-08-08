@@ -666,32 +666,14 @@ namespace MW5.Api.Concrete
             set { _shapefile.MinDrawingSize = value; }
         }
 
-        public IApplicationCallback ErrorCallback
+        public IApplicationCallback Callback
         {
-            get
-            {
-                var cb = _shapefile.GlobalCallback;
-                if (cb != null)
-                {
-                    var wp = cb as CallbackWrapper;
-                    if (wp != null)
-                    {
-                        return wp.Callback;
-                    }
-                }
-
-                return null;
-            }
+            get { return MapWinGISCallback.UnWrap(_shapefile.GlobalCallback); }
             set
             {
-                if (value != null)
-                {
-                    var wp = new CallbackWrapper(value);
-                    _shapefile.GlobalCallback = wp;
-                    return;
-                }
-                
-                _shapefile.GlobalCallback = null;
+                var callback = MapWinGISCallback.Wrap(value);
+                _shapefile.GlobalCallback = callback;
+                _shapefile.StopExecution = callback;
             }
         }
 

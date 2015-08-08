@@ -20,5 +20,10 @@ namespace MW5.API.Test
         {
             Debug.Print("Clear callback");
         }
+
+        public bool CheckAborted()
+        {
+            return false;
+        }
     }
 }

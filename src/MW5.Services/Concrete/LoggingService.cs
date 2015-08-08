@@ -67,6 +67,11 @@ namespace MW5.Services.Concrete
             }
         }
 
+        public bool CheckAborted()
+        {
+            return false;
+        }
+
         public IReadOnlyList<ILogEntry> Entries
         {
             get { return _entries; }

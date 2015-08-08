@@ -8,18 +8,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
-using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Shared.Log;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
 
@@ -61,14 +60,14 @@ namespace MW5.Tools.Model
             get { return _context.SynchronizationContext; }
         }
 
+        private ILayerService LayerService
+        {
+            get { return _context.Container.Resolve<ILayerService>(); }
+        }
+
         private ITempFileService TempFile
         {
             get { return _context.Container.Resolve<ITempFileService>(); }
-        }
-
-        private ILayerService LayerService
-        {
-            get { return _context.Container.Resolve<ILayerService>();  }
         }
 
         #endregion
@@ -87,6 +86,18 @@ namespace MW5.Tools.Model
             foreach (var layerParameter in Parameters.OfType<LayerParameterBase>())
             {
                 layerParameter.Initialize(context.Layers);
+            }
+        }
+
+        public override void SetCallback(IApplicationCallback callback)
+        {
+            foreach (var p in Parameters.OfType<LayerParameterBase>())
+            {
+                var layer = p.SelectedLayer;
+                if (layer != null)
+                {
+                    layer.Source.Callback = callback;
+                }
             }
         }
 
@@ -136,7 +147,7 @@ namespace MW5.Tools.Model
 
         protected bool HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
-            // CurrentThreadHelper.DumpThreadInfo();
+            ds.Callback = null;
 
             if (outputInfo.MemoryLayer)
             {
@@ -214,23 +225,6 @@ namespace MW5.Tools.Model
             return true;
         }
 
-        private bool SaveDatasource(IDatasource ds, string filename)
-        {
-            if (!GeoSource.Remove(filename))
-            {
-                return HandleOverwriteFailure();
-            }
-
-            if (LayerSourceHelper.Save(ds, filename))
-            {
-                Logger.Current.Info("Layer ({0}) is created.", filename);
-                return true;
-            }
-
-            Logger.Current.Error("Failed to save datasource: " + ds.LastError);
-            return false;
-        }
-
         private bool HandleMemoryOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
             if (!ds.IsVector)
@@ -276,6 +270,28 @@ namespace MW5.Tools.Model
             }
         }
 
+        private bool SaveDatasource(IDatasource ds, string filename)
+        {
+            if (!GeoSource.Remove(filename))
+            {
+                return HandleOverwriteFailure();
+            }
+
+            if (LayerSourceHelper.Save(ds, filename))
+            {
+                Logger.Current.Info("Layer ({0}) is created.", filename);
+                return true;
+            }
+
+            Logger.Current.Error("Failed to save datasource: " + ds.LastError);
+            return false;
+        }
+
         #endregion
+
+        public override bool SupportsCancel
+        {
+            get { return true; }
+        }
     }
 }

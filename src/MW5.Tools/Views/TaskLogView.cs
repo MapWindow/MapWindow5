@@ -70,6 +70,8 @@ namespace MW5.Tools.Views
 
             DisplayExistingLogEntries();
 
+            btnCancel.Enabled = Model.Tool.SupportsCancel;
+
             if (!Model.IsFinished)
             {
                 StartTimer();

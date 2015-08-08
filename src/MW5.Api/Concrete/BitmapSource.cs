@@ -5,6 +5,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Shared;
+using MW5.Shared.Log;
 using stdole;
 using Image = MapWinGIS.Image;
 
@@ -285,9 +286,21 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool IsVector { get { return false; } }
+        public bool IsVector
+        {
+            get { return false; }
+        }
 
-        public bool IsRaster { get { return true; } }
+        public bool IsRaster
+        {
+            get { return true; }
+        }
+
+        public IApplicationCallback Callback
+        {
+            get { return MapWinGISCallback.UnWrap(_image.GlobalCallback); }
+            set { _image.GlobalCallback = MapWinGISCallback.Wrap(value); }
+        }
 
         #endregion
 
