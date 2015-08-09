@@ -46,7 +46,7 @@ namespace MW5.Tools.Model
             {
                 lock (_tasks)
                 {
-                    for (int i = _tasks.Count - 1; i >= 0; i++)
+                    for (int i = _tasks.Count - 1; i >= 0; i--)
                     {
                         var task = _tasks[i];
                         if (task.IsFinished)
