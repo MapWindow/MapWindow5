@@ -150,7 +150,6 @@ namespace MW5.Tools.Model
                         {
                             // currently running on UI thread (TaskScheduler.FromCurrentSynchronizationContext())
                             FinishTime = DateTime.Now;
-                            Status = task.Result ? GisTaskStatus.Success : GisTaskStatus.Failed;
 
                             // stop reporting progress from datasources
                             Tool.CleanUp();   
@@ -162,11 +161,15 @@ namespace MW5.Tools.Model
                                 return;
                             }
 
-                            if (task.IsFaulted && task.Exception != null)
+                            if (task.IsFaulted)
                             {
                                 Logger.Current.Error("Error during tool execution: " + Tool.Name, task.Exception);
                                 Status = GisTaskStatus.Failed;
                                 FinishTime = DateTime.Now;
+                            }
+                            else
+                            {
+                                Status = GisTaskStatus.Success;
                             }
                         }, TaskScheduler.FromCurrentSynchronizationContext());
         }
