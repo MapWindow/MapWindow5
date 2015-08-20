@@ -108,6 +108,7 @@
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
     <Compile Include="Tools\Fake\LongExecutionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs" />

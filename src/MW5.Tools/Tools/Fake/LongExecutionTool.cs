@@ -1,14 +1,10 @@
-﻿using System;
+﻿using MW5.Plugins.Enums;
+using MW5.Plugins.Interfaces;
+using MW5.Tools.Model;
+using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
-using MW5.Plugins.Enums;
-using MW5.Plugins.Interfaces;
-using MW5.Shared;
-using MW5.Tools.Model;
-using MW5.Tools.Model.Parameters;
 
 namespace MW5.Tools.Tools.Fake
 {
