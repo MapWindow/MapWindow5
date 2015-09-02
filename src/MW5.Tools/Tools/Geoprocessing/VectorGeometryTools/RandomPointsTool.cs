@@ -87,7 +87,18 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             task.Progress.Clear();
             Log.Debug("New feature set has {0} features", fs.NumFeatures);
-            HandleOutput(fs, OutputLayer);
+         
+            OutputLayer.Result = fs;   
+
+            return true;
+        }
+
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        public override bool AfterRun()
+        {
+            SaveOutput(OutputLayer.Result, OutputLayer);
 
             return true;
         }

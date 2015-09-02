@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
@@ -61,22 +62,37 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Builds a buffer around features of input vector layer."; }
         }
 
+        internal override bool BeforeRun()
+        {
+            var units = AppContext.Map.MapUnits;
+
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
+
+            BufferDistance.Value = bufferDistance;
+
+            return true;
+        }
+
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            // TODO: find more general way to read values from UI thread
-            var mapUnits = LengthUnits.Meters;
-            UiThread.Send(p => mapUnits = AppContext.Map.MapUnits, null);
+            var fs = InputLayer.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, InputLayer.SelectedOnly, MergeResults);
 
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, mapUnits, BufferDistance.Value);
+            Output.Result = fs;
 
-            var fs = InputLayer.Datasource.BufferByDistance(bufferDistance, NumSegments, InputLayer.SelectedOnly, MergeResults);
+            return fs != null;
+        }
 
-            if (fs != null)
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        public override bool AfterRun()
+        {
+            if (Output.Result != null)
             {
-                HandleOutput(fs, Output);
+                SaveOutput(Output.Result, Output);
 
                 return true;
             }

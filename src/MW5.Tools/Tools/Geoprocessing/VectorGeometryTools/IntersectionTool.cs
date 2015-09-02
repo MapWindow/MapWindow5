@@ -54,9 +54,19 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             var result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, GeometryType.None);
 
-            if (result != null)
+            Output.Result = result;
+
+            return result != null;
+        }
+
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        public override bool AfterRun()
+        {
+            if (Output.Result != null)
             {
-                HandleOutput(result, Output);
+                SaveOutput(Output.Result, Output);
                 return true;
             }
 

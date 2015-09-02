@@ -66,5 +66,13 @@ namespace MW5.Tools.Model
         {
             get { return false; }
         }
+
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        public virtual bool AfterRun()
+        {
+            return true;
+        }
     }
 }

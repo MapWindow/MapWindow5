@@ -65,5 +65,10 @@ namespace MW5.Plugins.Interfaces
         /// ITaskHandle.CheckPauseAndCancel.
         /// </remarks>
         bool SupportsCancel { get; }
+
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        bool AfterRun();
     }
 }

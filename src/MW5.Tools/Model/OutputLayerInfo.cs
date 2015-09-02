@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System.IO;
+using MW5.Api.Interfaces;
 
 namespace MW5.Tools.Model
 {
@@ -17,6 +18,8 @@ namespace MW5.Tools.Model
         public string Name { get; set; }
 
         public bool Overwrite { get; set; }
+
+        public IDatasource Result { get; set; }
 
         public bool Validate(out string message)
         {

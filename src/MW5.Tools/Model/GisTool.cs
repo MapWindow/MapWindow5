@@ -199,11 +199,16 @@ namespace MW5.Tools.Model
             }
         }
 
+        internal virtual bool BeforeRun()
+        {
+            return true;
+        }
+
         #endregion
 
         #region Methods
 
-        protected void HandleOutput(IDatasource ds, OutputLayerInfo outputInfo)
+        protected void SaveOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
             SendOrPostCallback action = p =>
                 {

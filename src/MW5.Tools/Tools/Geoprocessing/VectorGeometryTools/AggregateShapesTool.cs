@@ -65,11 +65,18 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fs = InputLayer.Datasource.AggregateShapes(InputLayer.SelectedOnly, FieldIndex);
+            Output.Result = InputLayer.Datasource.AggregateShapes(InputLayer.SelectedOnly, FieldIndex);
+            return true;
+        }
 
-            if (fs != null)
+        /// <summary>
+        /// Handles the result.
+        /// </summary>
+        public override bool AfterRun()
+        {
+            if (Output.Result != null)
             {
-                HandleOutput(fs, Output);
+                SaveOutput(Output.Result, Output);
 
                 return true;
             }

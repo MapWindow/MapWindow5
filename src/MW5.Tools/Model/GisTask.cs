@@ -148,6 +148,8 @@ namespace MW5.Tools.Model
             var t = Task<bool>.Factory.StartNew(() => Run(token), token, TaskCreationOptions.LongRunning,
                     TaskScheduler.Default).ContinueWith(task =>
                         {
+                            Tool.AfterRun();
+                            
                             // currently running on UI thread (TaskScheduler.FromCurrentSynchronizationContext())
                             FinishTime = DateTime.Now;
 

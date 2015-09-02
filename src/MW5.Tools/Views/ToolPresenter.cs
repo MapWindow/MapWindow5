@@ -50,6 +50,8 @@ namespace MW5.Tools.Views
 
             tool.ApplyParameters();
 
+            tool.BeforeRun();
+
             var task = Model.CreateTask();
 
             if (View.RunInBackground)

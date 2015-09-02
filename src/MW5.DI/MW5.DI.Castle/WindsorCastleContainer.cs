@@ -58,6 +58,15 @@ namespace MW5.DI.Castle
             return _container.Resolve<TService>();
         }
 
+        /// <summary>
+        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// </summary>
+        public object GetInstance(Type type)
+        {
+            _container.Register(Component.For(type).LifestyleTransient().OnlyNewServices());
+            return _container.Resolve(type);
+        }
+
         public IApplicationContainer RegisterSingleton<TService, TImplementation>() 
             where TService: class
             where TImplementation : class, TService

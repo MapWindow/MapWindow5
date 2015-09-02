@@ -56,6 +56,11 @@ namespace MW5.Plugins.Mvp
             where TService : class;
 
         /// <summary>
+        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// </summary>
+        object GetInstance(Type type);
+
+        /// <summary>
         /// A shortcut for RegisterSingleton and Resolve. Also won't try to register a single for the second type 
         /// if it's already registered.
         /// </summary>
