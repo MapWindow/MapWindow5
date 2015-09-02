@@ -8,7 +8,7 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class LayerParameter: LayerParameterBase<ILayerSource>
+    internal class LayerParameter: LayerParameterBase<ILayerSource>
     {
         public override string ToString()
         {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Tools.Enums;
 
 namespace MW5.Tools.Model.Parameters
 {
@@ -13,8 +14,18 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Creates tool parameter for a property of a given type.
         /// </summary>
-        public static BaseParameter CreateParameter(Type type)
+        public static BaseParameter CreateParameter(Type type, ParameterType customType)
         {
+            if (customType == ParameterType.Field)
+            {
+                return new FieldParameter();
+            }
+
+            if (customType != ParameterType.Auto)
+            {
+                throw new IndexOutOfRangeException("No handler for parameter type: " + customType);
+            }
+
             if (type == typeof(double))
             {
                 return new DoubleParameter();

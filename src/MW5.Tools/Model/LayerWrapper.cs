@@ -11,7 +11,7 @@ using MW5.Api.Static;
 
 namespace MW5.Tools.Model
 {
-    public class LayerWrapper
+    internal class LayerWrapper
     {
         private readonly ILayer _layer;
         private readonly LayerIdentity _identity;

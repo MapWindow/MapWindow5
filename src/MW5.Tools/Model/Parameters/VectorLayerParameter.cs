@@ -9,7 +9,7 @@ using MW5.Plugins.Enums;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class VectorLayerParameter: LayerParameterBase<IFeatureSet>
+    internal class VectorLayerParameter: LayerParameterBase<IFeatureSet>
     {
         public override DataSourceType DataSourceType
         {

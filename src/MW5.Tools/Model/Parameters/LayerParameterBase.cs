@@ -13,7 +13,7 @@ using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class LayerParameterBase: BaseParameter
+    internal class LayerParameterBase: BaseParameter
     {
         private List<LayerWrapper> _layers;
 
@@ -53,7 +53,7 @@ namespace MW5.Tools.Model.Parameters
         }
     }
 
-    public class LayerParameterBase<TLayerSource> : LayerParameterBase
+    internal class LayerParameterBase<TLayerSource> : LayerParameterBase
         where TLayerSource: class
     {
         /// <summary>

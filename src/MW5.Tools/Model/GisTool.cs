@@ -34,6 +34,7 @@ namespace MW5.Tools.Model
         private readonly IToolLogger _logger = new ToolLogger();
         private IAppContext _context;
         private List<BaseParameter> _parameters;
+        private ToolConfiguration _config;
 
         #region Properties
 
@@ -83,6 +84,20 @@ namespace MW5.Tools.Model
             {
                 layerParameter.Initialize(context.Layers);
             }
+
+            _config = new ToolConfiguration();
+            Configure(_config);
+        }
+
+        public void ApplyConfig()
+        {
+            var builder = new ToolBuilder();
+            builder.Build(_config, Parameters);
+        }
+
+        protected virtual void Configure(ToolConfiguration configuration)
+        {
+            // do nothing, should be overriden if necessary
         }
 
         public override void SetCallback(IApplicationCallback callback)
@@ -214,7 +229,7 @@ namespace MW5.Tools.Model
                 var attr = prop.GetAttribute<ParameterAttribute>();
                 if (attr == null) continue;
 
-                var param = ParameterFactory.CreateParameter(prop.PropertyType);
+                var param = ParameterFactory.CreateParameter(prop.PropertyType, attr.ParameterType);
                 if (param != null)
                 {
                     param.ToolProperty = prop;

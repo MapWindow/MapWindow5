@@ -9,7 +9,7 @@ using MW5.Plugins.Enums;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class RasterLayerParameter : LayerParameterBase<IRasterSource>
+    internal class RasterLayerParameter : LayerParameterBase<IRasterSource>
     {
         public override DataSourceType DataSourceType
         {

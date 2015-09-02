@@ -10,14 +10,16 @@
 using System.ComponentModel;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class AggregateShapesTool : GisTool
     {
-        [Input("Field index", 1)]
+        [Input("Field index", 1, ParameterType.Field)]
         [DefaultValue(1)]
         public int FieldIndex { get; set; }
 
@@ -27,6 +29,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Save results as", 4)]
         [DefaultValue(@"d:\aggregate.shp")]
         public OutputLayerInfo Output { get; set; }
+
+        protected override void Configure(ToolConfiguration configuration)
+        {
+            configuration.Get<AggregateShapesTool>()
+                .AddField(t => t.InputLayer, t => t.FieldIndex);
+        }
 
         /// <summary>
         /// Gets name of the tool.

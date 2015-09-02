@@ -70,6 +70,12 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\Parameters\FieldParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\FieldParameterControl.Designer.cs">
+      <DependentUpon>FieldParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressBarWrapper.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -85,6 +91,7 @@
     <Compile Include="Model\GisTask.cs" />
     <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
+    <Compile Include="Model\Parameters\FieldParameter.cs" />
     <Compile Include="Model\Parameters\ParameterFactory.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
@@ -102,6 +109,8 @@
     <Compile Include="Model\VectorLayerInfo.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
+    <Compile Include="Services\ToolBuilder.cs" />
+    <Compile Include="Services\ToolConfiguration.cs" />
     <Compile Include="Services\ToolLogger.cs" />
     <Compile Include="Services\CallbackProgress.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />
@@ -264,6 +273,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\IntegerParameterControl.resx">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\FieldParameterControl.resx">
+      <DependentUpon>FieldParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\LayerParameterControl.resx">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>

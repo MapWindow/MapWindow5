@@ -90,12 +90,12 @@
             this.comboBoxAdv1.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAdv1.TabIndex = 5;
             // 
-            // DoubleParameterControl
+            // DistanceParameterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "DoubleParameterControl";
+            this.Name = "DistanceParameterControl";
             this.Size = new System.Drawing.Size(332, 45);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

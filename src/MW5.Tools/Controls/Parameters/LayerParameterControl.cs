@@ -14,13 +14,13 @@ namespace MW5.Tools.Controls.Parameters
     /// <summary>
     /// Represents combobox with a list of layers and a button to open datasource from disk.
     /// </summary>
-    public partial class LayerParameterControl : ParameterControlBase
+    internal partial class LayerParameterControl : ParameterControlBase
     {
         private readonly List<LayerWrapper> _layers = new List<LayerWrapper>();
         private readonly IFileDialogService _dialogService;
         private readonly DataSourceType _dataSourceType;
 
-        public LayerParameterControl(IEnumerable<LayerWrapper> layers, DataSourceType dataSourceType, IFileDialogService dialogService)
+        internal LayerParameterControl(IEnumerable<LayerWrapper> layers, DataSourceType dataSourceType, IFileDialogService dialogService)
         {
             if (layers == null) throw new ArgumentNullException("layers");
             if (dialogService == null) throw new ArgumentNullException("dialogService");
@@ -42,6 +42,8 @@ namespace MW5.Tools.Controls.Parameters
                 comboBoxAdv1.SelectedIndex = 0;
             }
         }
+
+        public event EventHandler SelectedLayerChanged;
 
         public override object GetValue()
         {
@@ -163,21 +165,33 @@ namespace MW5.Tools.Controls.Parameters
             RefreshImages();
         }
 
-        private LayerWrapper SelectedLayer
+        public LayerWrapper SelectedLayer
         {
             get { return comboBoxAdv1.SelectedItem as LayerWrapper; }
         }
 
-        private void SelectedLayerChanged(object sender, EventArgs e)
+        private void OnSelectedLayerChanged(object sender, EventArgs e)
         {
             var layer = SelectedLayer;
             if (layer != null && layer.FeatureSet != null)
             {
                 SetNumSelected(layer.FeatureSet.NumSelected);
-                return;
+            }
+            else
+            {
+                SetNumSelected(0);
             }
 
-            SetNumSelected(0);
+            FireSelectedLayerChanged();
+        }
+
+        private void FireSelectedLayerChanged()
+        {
+            var handler = SelectedLayerChanged;
+            if (handler != null)
+            {
+                handler(this, new EventArgs());
+            }
         }
 
         private void SetNumSelected(int count)

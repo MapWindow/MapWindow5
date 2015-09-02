@@ -23,7 +23,11 @@ namespace MW5.Tools.Controls.Parameters
 
             ParameterControlBase control = null;
 
-            if (parameter is DistanceParameter)
+            if (parameter is FieldParameter)
+            {
+                control = new FieldParameterControl();
+            }
+            else if (parameter is DistanceParameter)
             {
                 control = new DistanceParameterControl();
             }

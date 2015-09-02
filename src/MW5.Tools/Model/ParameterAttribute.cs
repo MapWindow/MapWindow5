@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using MW5.Tools.Enums;
 
 namespace MW5.Tools.Model
 {
@@ -30,5 +31,10 @@ namespace MW5.Tools.Model
         /// Gets or sets the index.
         /// </summary>
         public int Index { get; set; }
+
+        /// <summary>
+        /// Gets or sets the type of the parameter.
+        /// </summary>
+        public ParameterType ParameterType { get; set; }
     }
 }

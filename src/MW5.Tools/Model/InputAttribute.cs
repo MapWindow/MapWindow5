@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using MW5.Tools.Enums;
+
 namespace MW5.Tools.Model
 {
     /// <summary>
@@ -17,11 +19,12 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="InputAttribute"/> class.
         /// </summary>
-        public InputAttribute(string displayName, int index) 
+        public InputAttribute(string displayName, int index, ParameterType type = ParameterType.Auto) 
             : base(displayName, index)
         {
             DisplayName = displayName;
             Index = index;
+            ParameterType = type;
         }
     }
 }

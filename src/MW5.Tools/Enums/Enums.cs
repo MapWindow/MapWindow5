@@ -14,14 +14,8 @@ namespace MW5.Tools.Enums
     /// </summary>
     public enum ParameterType
     {
-        /// <summary>The input layer.</summary>
-        InputLayer = 0, 
-
-        /// <summary>The options.</summary>
-        Options = 1, 
-
-        /// <summary>The boolean.</summary>
-        Boolean = 2
+        Auto = 0, 
+        Field = 1, 
     }
 
     public enum ToolboxResultsCommand
