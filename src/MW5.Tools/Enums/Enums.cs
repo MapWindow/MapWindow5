@@ -40,4 +40,13 @@ namespace MW5.Tools.Enums
         Cancel = 7,
         Pause = 8,
     }
+
+    public enum ToolIcon
+    {
+        Folder = 0,
+        ToolDefault = 1,
+        Vector = 2,
+        Database = 3,
+        Hammer = 4,
+    }
 }

@@ -341,6 +341,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_database16_2.png" />
     <None Include="Resources\img_pause16.png" />
     <None Include="Resources\img_success32.png" />
     <None Include="Resources\img_error32.png" />

@@ -165,6 +165,16 @@ namespace MW5.Tools.Helpers
                         return false;
                     }
                 }
+
+                var field = p as FieldParameter;
+                if (field != null)
+                {
+                    if ((int)field.Value == -1)
+                    {
+                        MessageService.Current.Info(p.Name + " parameter is empty.");
+                        return false;
+                    }
+                }
             }
 
             return true;

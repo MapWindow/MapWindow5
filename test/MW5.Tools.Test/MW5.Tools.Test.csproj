@@ -83,15 +83,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
+    <ProjectReference Include="..\..\src\MW5.Api\MW5.Api.csproj">
       <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
       <Name>MW5.Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MW5.Plugins\MW5.Plugins.csproj">
+    <ProjectReference Include="..\..\src\MW5.Plugins\MW5.Plugins.csproj">
       <Project>{76644CDF-5165-428D-8419-93C1E978DB1B}</Project>
       <Name>MW5.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\MW5.Tools\MW5.Tools.csproj">
+    <ProjectReference Include="..\..\src\MW5.Tools\MW5.Tools.csproj">
       <Project>{fb836bb0-2668-41e6-a4ad-7798b13c327f}</Project>
       <Name>MW5.Tools</Name>
     </ProjectReference>

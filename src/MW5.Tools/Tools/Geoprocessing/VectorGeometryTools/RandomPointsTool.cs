@@ -15,6 +15,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Services;
 
@@ -23,7 +24,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]

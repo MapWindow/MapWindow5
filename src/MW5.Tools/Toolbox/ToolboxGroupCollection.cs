@@ -11,6 +11,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
@@ -51,7 +52,7 @@ namespace MW5.Tools.Toolbox
             {
                 Tag = metadata,
                 Text = metadata.Name,
-                LeftImageIndices = new[] { ToolboxDockPanel.IconFolder }
+                LeftImageIndices = new[] { (int)ToolIcon.Folder }
             };
 
             _nodes.Add(node);

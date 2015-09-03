@@ -11,11 +11,12 @@ using System.ComponentModel;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class IntersectionTool : GisTool
     {
         [Input("First layer", 0)]

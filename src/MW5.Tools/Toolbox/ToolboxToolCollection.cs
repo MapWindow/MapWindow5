@@ -11,6 +11,9 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
+using MW5.Tools.Enums;
+using MW5.Tools.Model;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
@@ -51,10 +54,16 @@ namespace MW5.Tools.Toolbox
             {
                 Tag = item,
                 Text = item.Name,
-                LeftImageIndices = new[] { ToolboxDockPanel.IconTool }
+                LeftImageIndices = new[] { GetIconIndex(item) }
             };
             
             _nodes.Add(node);
+        }
+
+        private int GetIconIndex(IGisTool tool)
+        {
+            var attr = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());
+            return attr != null ? (int)attr.Icon : (int)ToolIcon.ToolDefault;
         }
 
         /// <summary>

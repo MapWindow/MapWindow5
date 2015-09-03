@@ -17,7 +17,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class AggregateShapesTool : GisTool
     {
         [Input("Input layer", 0)]

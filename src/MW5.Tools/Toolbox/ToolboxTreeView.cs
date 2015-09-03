@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Properties;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
@@ -31,8 +32,12 @@ namespace MW5.Tools.Toolbox
 
         protected override IEnumerable<Bitmap> OnCreateImageList()
         {
+            // must match indices in ToolIcon enumeration
             yield return Resources.img_toolbox16;
             yield return Resources.img_tool16;
+            yield return Resources.img_geometry;
+            yield return Resources.img_database16_2;
+            yield return Resources.img_tool;
         }
 
         public IGisTool SelectedTool

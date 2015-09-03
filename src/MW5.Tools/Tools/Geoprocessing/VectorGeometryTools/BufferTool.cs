@@ -14,10 +14,11 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.VectorGeometryTools, Enums.ToolIcon.Hammer)]
     public class BufferTool : GisTool
     {
         [Input("Input layer", 0)]

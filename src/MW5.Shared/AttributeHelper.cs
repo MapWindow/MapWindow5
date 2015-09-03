@@ -10,9 +10,6 @@ namespace MW5.Shared
     /// <summary>
     /// Extension methods for Attribute class.
     /// </summary>
-    /// <remarks>
-    /// 
-    /// </remarks>
     public static class AttributeHelper
     {        
         /// <summary>
@@ -36,6 +33,12 @@ namespace MW5.Shared
             where T: Attribute
         {
             return Attribute.GetCustomAttribute(prop, typeof(T)) as T;
+        }
+
+        public static T GetAttribute<T>(Type type)
+            where T: Attribute
+        {
+            return Attribute.GetCustomAttribute(type, typeof(T)) as T;
         }
     }
 }

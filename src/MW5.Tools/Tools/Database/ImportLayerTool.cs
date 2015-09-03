@@ -9,7 +9,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Database
 {
-    [GisTool(GroupKeys.GeoDatabases)]
+    [GisTool(GroupKeys.GeoDatabases, ToolIcon.Database)]
     public class ImportLayerTool : GisTool
     {
         [Input("Input layer", 0)]

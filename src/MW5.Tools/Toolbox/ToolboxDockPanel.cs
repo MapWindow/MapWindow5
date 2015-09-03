@@ -25,9 +25,6 @@ namespace MW5.Tools.Toolbox
     {
         private readonly IAppContext _context;
 
-        internal const int IconFolder = 0;
-        internal const int IconTool = 1;
-
         private RichTextBox _textbox;
         private ToolboxTreeView _tree;
 

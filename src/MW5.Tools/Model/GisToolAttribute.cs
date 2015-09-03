@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Drawing;
 using MW5.Plugins.Enums;
 using MW5.Tools.Enums;
 
@@ -18,7 +19,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GisToolAttribute"/> class.
         /// </summary>
-        public GisToolAttribute(string groupKey)
+        public GisToolAttribute(string groupKey, ToolIcon icon = ToolIcon.ToolDefault)
         {
             if (string.IsNullOrWhiteSpace(groupKey))
             {
@@ -26,8 +27,11 @@ namespace MW5.Tools.Model
             }
 
             GroupKey = groupKey;
+            Icon = icon;
         }
 
         public string GroupKey { get; private set; }
+
+        public ToolIcon Icon { get; private set; }
     }
 }
