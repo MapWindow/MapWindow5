@@ -55,9 +55,6 @@ namespace MW5.Tools.Controls.Parameters
             else if (parameter is OptionsParameter)
             {
                 control = new ComboParameterControl { ButtonVisible = false };
-
-                // ensure that previously specified options are applied
-                (control as ComboParameterControl).SetOptions((parameter as OptionsParameter).OptionsSource);     
             }
             else if (parameter is LayerParameterBase)
             {

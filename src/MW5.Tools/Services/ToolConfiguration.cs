@@ -12,6 +12,7 @@ namespace MW5.Tools.Services
     {
         private readonly List<FieldWrapper> _fields = new List<FieldWrapper>();
         private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _comboLists = new Dictionary<string, object>();
 
         public ToolConfiguration<T> Get<T>()
             where T: GisToolBase
@@ -30,6 +31,11 @@ namespace MW5.Tools.Services
         public Dictionary<string, object> DefaultValues
         {
             get { return _defaultValues; }
+        }
+
+        public Dictionary<string, object> ComboLists
+        {
+            get { return _comboLists; }
         }
     }
 
@@ -66,6 +72,13 @@ namespace MW5.Tools.Services
         {
             var name = (distance.Body as MemberExpression).Member.Name;
             _config.DefaultValues.Add(name, value);
+            return this;
+        }
+
+        public ToolConfiguration<T> AddComboList<TT>(Expression<Func<T, TT>> parameter, IEnumerable<TT> list)
+        {
+            var name = (parameter.Body as MemberExpression).Member.Name;
+            _config.ComboLists.Add(name, list);
             return this;
         }
     }

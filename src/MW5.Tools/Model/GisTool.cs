@@ -107,7 +107,7 @@ namespace MW5.Tools.Model
 
             Parameters.Initialize(context);
 
-            Configure(_config);
+            Configure(_config, context);
 
             var builder = new ToolBuilder();
             builder.Build(_config, Parameters);
@@ -126,7 +126,7 @@ namespace MW5.Tools.Model
             return true;
         }
 
-        protected virtual void Configure(ToolConfiguration configuration)
+        protected virtual void Configure(ToolConfiguration configuration, IAppContext context)
         {
             // do nothing, should be overriden if necessary
         }

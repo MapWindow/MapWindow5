@@ -35,7 +35,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("Save results as", @"buffer", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
-        protected override void Configure(Services.ToolConfiguration configuration)
+        protected override void Configure(Services.ToolConfiguration configuration, IAppContext context)
         {
             configuration.Get<BufferTool>()
                 .SetDefault(t => t.BufferDistance, 50)

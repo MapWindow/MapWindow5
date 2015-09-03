@@ -15,6 +15,7 @@ namespace MW5.Tools.Services
     public class EventManager
     {
         private readonly List<ParameterControlBase> _controls = new List<ParameterControlBase>();
+        private Dictionary<string, ParameterControlBase> _dict;
 
         public void AddControl(ParameterControlBase control)
         {
@@ -23,19 +24,36 @@ namespace MW5.Tools.Services
 
         public void Bind(ToolConfiguration config)
         {
+            _dict = _controls.ToDictionary(p => p.ParameterName);
+
             BindFields(config);
+
+            BindComboLists(config);
+        }
+
+        private ParameterControlBase GetControl(string key)
+        {
+            return _dict[key];
+        }
+
+        private void BindComboLists(ToolConfiguration config)
+        {
+            foreach (var item in config.ComboLists)
+            {
+                var combo = GetControl(item.Key) as ComboParameterControl;
+                if (combo != null)
+                {
+                    combo.SetOptions(item.Value);
+                }
+            }
         }
 
         private void BindFields(ToolConfiguration config)
         {
-            var dict = _controls.ToDictionary(p => p.ParameterName);
-
             foreach (var f in config.Fields)
             {
-                var item = f;
-
-                var layer = dict[item.LayerName] as LayerParameterControl;
-                var field = dict[item.FieldName] as FieldParameterControl;
+                var layer = GetControl(f.LayerName) as LayerParameterControl;
+                var field = GetControl(f.FieldName) as FieldParameterControl;
                 if (layer != null && field != null)
                 {
                     layer.SelectedLayerChanged += (s, e) => field.OnLayerChanged(e.Layer);

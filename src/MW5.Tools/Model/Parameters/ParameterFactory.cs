@@ -16,9 +16,12 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public static BaseParameter CreateParameter(Type type, ParameterType customType)
         {
-            if (customType == ParameterType.Field)
+            switch (customType)
             {
-                return new FieldParameter();
+                case ParameterType.Field:
+                    return new FieldParameter();
+                case ParameterType.Combo:
+                    return new OptionsParameter();
             }
 
             if (customType != ParameterType.Auto)

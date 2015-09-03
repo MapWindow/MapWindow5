@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
+﻿using System.Collections.Generic;
 using MW5.Api.Concrete;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Properties;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Database
 {
@@ -22,17 +15,17 @@ namespace MW5.Tools.Tools.Database
         [Input("Input layer", 0)]
         public VectorLayerInfo InputLayer { get; set; }
 
-        [Input("Database", 1)]
-        public OptionsParameter<DatabaseConnection> Database { get; set; }
+        [Input("Database", 1, false, ParameterType.Combo)]
+        public DatabaseConnection Database { get; set; }
 
         [Input("Schema", 2)]
-        public StringParameter Schema { get; set; }
+        public string Schema { get; set; }
 
         [Input("New layer name", 3)]
-        public StringParameter NewLayerName { get; set; }
+        public string NewLayerName { get; set; }
 
         [Input("Overwrite", 4)]
-        public BooleanParameter Overwrite { get; set; }
+        public bool Overwrite { get; set; }
 
         /// <summary>
         /// Gets name of the tool.
@@ -50,21 +43,10 @@ namespace MW5.Tools.Tools.Database
             get { return "Imports layer in the geodatabase."; }
         }
 
-        /// <summary>
-        /// Initializes lists of options.
-        /// </summary>
-        public override void Initialize(IAppContext context)
+        protected override void Configure(ToolConfiguration configuration, IAppContext context)
         {
-            base.Initialize(context);
-
-            Database.Options = context.Repository.Connections;
-
-            Database.ValueChanged += Database_ValueChanged;
-        }
-
-        private void Database_ValueChanged()
-        {
-            //Schema.Options = Database.Value.GetSchemas().ToList();
+            configuration.Get<ImportLayerTool>()
+                .AddComboList(t => t.Database, context.Repository.Connections);
         }
 
         /// <summary>
@@ -72,15 +54,23 @@ namespace MW5.Tools.Tools.Database
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var cs = Database.Value.ConnectionString;
-
-            var fs = InputLayer.Datasource;
-
-            string newLayerName = NewLayerName.Value;
-
             string options = PrepareOptions();
 
-            return RunCore(cs, fs, newLayerName, options);
+            var ds = new VectorDatasource();
+
+            if (ds.Open(Database.ConnectionString))
+            {
+                if (!ds.ImportLayer(InputLayer.Datasource, NewLayerName, options))
+                {
+                    Log.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg, null);
+                    return false;
+                }
+
+                Log.Info("Layer was imported: " + NewLayerName);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -90,17 +80,17 @@ namespace MW5.Tools.Tools.Database
         {
             var list = new List<string>();
 
-            if (!string.IsNullOrWhiteSpace(Schema.Value))
+            if (!string.IsNullOrWhiteSpace(Schema))
             {
-                list.Add("SCHEMA=" + Schema.Value);
+                list.Add("SCHEMA=" + Schema);
             }
 
-            if (Database.Value != null && Database.Value.DatabaseType == Plugins.Enums.GeoDatabaseType.MySql)
+            if (Database != null && Database.DatabaseType == GeoDatabaseType.MySql)
             {
                 list.Add("ENGINE=MyISAM ");    // Spatial indexes aren't supported otherwise http ://stackoverflow.com/questions/18379808/the-used-table-type-doesnt-support-spatial-indexes
             }
 
-            if (Overwrite.Value)
+            if (Overwrite)
             {
                 list.Add("OVERWRITE=TRUE");
             }
@@ -112,28 +102,6 @@ namespace MW5.Tools.Tools.Database
             }
 
             return s;
-        }
-
-        /// <summary>
-        /// Core processing.
-        /// </summary>
-        private bool RunCore(string connectionString, IFeatureSet inputLayer, string newLayerName, string options )
-        {
-            var ds = new VectorDatasource();
-
-            if (ds.Open(connectionString))
-            {
-                if (!ds.ImportLayer(inputLayer, newLayerName, options))
-                {
-                    MessageService.Current.Warn("Failed to import shapefile: " + ds.GdalLastErrorMsg);
-                    return false;
-                }
-                
-                MessageService.Current.Info("Layer was imported: " + newLayerName);
-                return true;
-            }
-
-            return false;
         }
     }
 }

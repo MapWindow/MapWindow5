@@ -16,6 +16,7 @@ namespace MW5.Tools.Enums
     {
         Auto = 0, 
         Field = 1, 
+        Combo = 2,
     }
 
     public enum ToolboxResultsCommand

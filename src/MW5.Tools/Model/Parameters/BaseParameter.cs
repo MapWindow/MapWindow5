@@ -83,5 +83,12 @@ namespace MW5.Tools.Model.Parameters
         {
             get { return Control.GetValue(); }
         }
+
+        public override string ToString()
+        {
+            var val = Value;
+            var s = val != null ? val.ToString() : string.Empty;
+            return string.Format("{0}: {1}", DisplayName, s);
+        }
     }
 }

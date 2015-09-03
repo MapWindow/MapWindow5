@@ -36,7 +36,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("New layer name", "random points", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
 
-        protected override void Configure(ToolConfiguration configuration)
+        protected override void Configure(ToolConfiguration configuration, IAppContext context)
         {
             configuration.Get<RandomPointsTool>()
                 .SetDefault(t => t.NumPoints, 500);

@@ -29,7 +29,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("Save results as", @"aggregate", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
-        protected override void Configure(ToolConfiguration configuration)
+        protected override void Configure(ToolConfiguration configuration, IAppContext context)
         {
             configuration.Get<AggregateShapesTool>()
                 .AddField(t => t.InputLayer, t => t.FieldIndex);
