@@ -90,13 +90,14 @@
     <Compile Include="Model\Distance.cs" />
     <Compile Include="Model\GisTask.cs" />
     <Compile Include="Model\GisToolBase.cs" />
+    <Compile Include="Model\OutputAttribute.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
     <Compile Include="Model\Parameters\FieldParameter.cs" />
     <Compile Include="Model\Parameters\ParameterFactory.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
-    <Compile Include="Model\ParameterAttribute.cs" />
+    <Compile Include="Model\InputAttribute.cs" />
     <Compile Include="Model\Parameters\DoubleParameter.cs" />
     <Compile Include="Model\Parameters\IntegerParameter.cs" />
     <Compile Include="Model\Parameters\LayerParameter.cs" />
@@ -109,6 +110,8 @@
     <Compile Include="Model\VectorLayerInfo.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
+    <Compile Include="Helpers\ParameterCollection.cs" />
+    <Compile Include="Services\OutputManager.cs" />
     <Compile Include="Services\ToolBuilder.cs" />
     <Compile Include="Services\ToolConfiguration.cs" />
     <Compile Include="Services\ToolLogger.cs" />
@@ -185,9 +188,7 @@
     <Compile Include="Model\GisToolAttribute.cs" />
     <Compile Include="Model\GisTool.cs" />
     <Compile Include="Model\Parameters\LayerParameterBase.cs" />
-    <Compile Include="Model\OptionalInputAttribute.cs" />
     <Compile Include="Model\Parameters\OptionsParameter.cs" />
-    <Compile Include="Model\InputAttribute.cs" />
     <Compile Include="Model\Parameters\StringParameter.cs" />
     <Compile Include="Model\Parameters\BaseParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

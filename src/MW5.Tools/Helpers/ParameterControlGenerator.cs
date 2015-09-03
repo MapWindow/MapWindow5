@@ -32,6 +32,7 @@ namespace MW5.Tools.Helpers
 
             var list = parameters.OrderByDescending(p => p.Index).ToList();
 
+            // output parameters
             var arr = list.Where(p => p is OutputLayerParameter).ToList();
             GenerateSection(panel, arr, factory);
 
@@ -40,6 +41,7 @@ namespace MW5.Tools.Helpers
                 AddSection("Output", panel);
             }
 
+            // input parameters
             arr = list.Where(p => !(p is OutputLayerParameter)).ToList();
             GenerateSection(panel, arr, factory);
 

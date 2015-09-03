@@ -8,6 +8,7 @@ namespace MW5.Tools.Controls.Parameters
     public partial class OutputParameterControl : ParameterControlBase
     {
         private readonly IFileDialogService _dialogService;
+        private readonly OutputLayerInfo _output = new OutputLayerInfo();
 
         public OutputParameterControl(IFileDialogService dialogService)
         {
@@ -41,13 +42,14 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override object GetValue()
         {
-            return new OutputLayerInfo()
-            {
-                AddToMap = chkAddToMap.Checked,
-                MemoryLayer = chkMemoryLayer.Checked,
-                Overwrite = chkOverwrite.Checked,
-                Name = textBoxExt1.Text
-            };
+            // OutputLayerInfo.Result property is set after tool execution, 
+            // so we very much want to use the same instance of it rather then generate 
+            // a new one on the fly
+            _output.AddToMap = chkAddToMap.Checked;
+            _output.MemoryLayer = chkMemoryLayer.Checked;
+            _output.Overwrite = chkOverwrite.Checked;
+            _output.Name = textBoxExt1.Text;
+            return _output;
         }
 
         /// <summary>

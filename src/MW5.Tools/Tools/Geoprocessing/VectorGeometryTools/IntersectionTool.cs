@@ -24,8 +24,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Second layer", 1)]
         public VectorLayerInfo InputLayer2 { get; set; }
 
-        [Input("Save results as", 2)]
-        [DefaultValue("intersection")]
+        [Output("Save results as", 0, "intersection")]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>
@@ -52,25 +51,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             var fs = InputLayer.Datasource;
             var fs2 = InputLayer2.Datasource;
 
-            var result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, GeometryType.None);
-
-            Output.Result = result;
-
-            return result != null;
-        }
-
-        /// <summary>
-        /// Handles the result.
-        /// </summary>
-        public override bool AfterRun()
-        {
-            if (Output.Result != null)
-            {
-                SaveOutput(Output.Result, Output);
-                return true;
-            }
-
-            return false;
+            Output.Result = fs.Intersection(InputLayer.SelectedOnly, fs2, InputLayer2.SelectedOnly, GeometryType.None);
+            return true;
         }
     }
 }

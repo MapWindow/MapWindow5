@@ -8,6 +8,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model;
+using MW5.Tools.Services;
 using MW5.Tools.Views;
 
 namespace MW5.Tools
@@ -28,7 +29,8 @@ namespace MW5.Tools
                 .RegisterSingleton<ITaskCollection, TaskCollection>()
                 .RegisterService<ParameterControlFactory>()
                 .RegisterSingleton<TasksDockPanel>()
-                .RegisterSingleton<TasksPresenter>();
+                .RegisterSingleton<TasksPresenter>()
+                .RegisterService<OutputManager>();
         }
     }
 }

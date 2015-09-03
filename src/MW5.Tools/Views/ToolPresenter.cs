@@ -33,7 +33,7 @@ namespace MW5.Tools.Views
 
             View.GenerateControls(Model.Tool.Parameters);
 
-            Model.Tool.ApplyConfig();
+            Model.Tool.BeforeDisplayed();
         }
 
         /// <summary>
@@ -43,14 +43,10 @@ namespace MW5.Tools.Views
         {
             var tool = Model.Tool;
 
-            if (!tool.ValidateParameters())
+            if (!tool.Validate())
             {
                 return false;
             }
-
-            tool.ApplyParameters();
-
-            tool.BeforeRun();
 
             var task = Model.CreateTask();
 

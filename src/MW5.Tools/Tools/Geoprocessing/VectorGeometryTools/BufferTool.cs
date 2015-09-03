@@ -30,14 +30,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Merge results", 3)]
         public bool MergeResults { get; set; }
 
-        [Input("Save results as", 4)]
-        [DefaultValue(@"d:\buffer.shp")]
-        public OutputLayerInfo Output { get; set; }
-        
-        [OptionalInput("Number of segments", 1)]
+        [Input("Number of segments", 1, true)]
         [DefaultValue(30)]
         public int NumSegments { get; set; }
-        
+
+        [Output("Save results as", 4, @"d:\buffer.shp")]
+        public OutputLayerInfo Output { get; set; }
+
         /// <summary>
         /// BufferDistance doesn't supports cancelling in the ocx
         /// </summary>
@@ -62,7 +61,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Builds a buffer around features of input vector layer."; }
         }
 
-        internal override bool BeforeRun()
+        protected override bool BeforeRun()
         {
             var units = AppContext.Map.MapUnits;
 
@@ -78,26 +77,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fs = InputLayer.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, InputLayer.SelectedOnly, MergeResults);
-
-            Output.Result = fs;
-
-            return fs != null;
-        }
-
-        /// <summary>
-        /// Handles the result.
-        /// </summary>
-        public override bool AfterRun()
-        {
-            if (Output.Result != null)
-            {
-                SaveOutput(Output.Result, Output);
-
-                return true;
-            }
-
-            return false;
+            Output.Result = InputLayer.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, InputLayer.SelectedOnly, MergeResults);
+            return true;
         }
     }
 }

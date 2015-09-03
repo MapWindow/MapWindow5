@@ -17,9 +17,6 @@ namespace MW5.Tools.Model
 {
     internal class GisTask : IGisTask
     {
-        private static readonly Lazy<StaTaskScheduler> _scheduler =
-            new Lazy<StaTaskScheduler>(() => new StaTaskScheduler(10));
-
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
         private ITaskProgress _progress;
@@ -30,11 +27,6 @@ namespace MW5.Tools.Model
             if (tool == null) throw new ArgumentNullException("tool");
             Tool = tool;
             Status = GisTaskStatus.NotStarted;
-        }
-
-        private static StaTaskScheduler Scheduler
-        {
-            get { return _scheduler.Value; }
         }
 
         public event EventHandler StatusChanged;
@@ -148,30 +140,46 @@ namespace MW5.Tools.Model
             var t = Task<bool>.Factory.StartNew(() => Run(token), token, TaskCreationOptions.LongRunning,
                     TaskScheduler.Default).ContinueWith(task =>
                         {
-                            Tool.AfterRun();
-                            
-                            // currently running on UI thread (TaskScheduler.FromCurrentSynchronizationContext())
-                            FinishTime = DateTime.Now;
-
-                            // stop reporting progress from datasources
-                            Tool.CleanUp();   
-
-                            if (task.IsCanceled || _cancellationTokenSource.IsCancellationRequested)
+                            try
                             {
-                                Status = GisTaskStatus.Cancelled;
                                 FinishTime = DateTime.Now;
-                                return;
-                            }
 
-                            if (task.IsFaulted)
-                            {
-                                Logger.Current.Error("Error during tool execution: " + Tool.Name, task.Exception);
-                                Status = GisTaskStatus.Failed;
-                                FinishTime = DateTime.Now;
+                                if (task.IsCanceled || _cancellationTokenSource.IsCancellationRequested)
+                                {
+                                    Status = GisTaskStatus.Cancelled;
+                                    return;
+                                }
+
+                                try
+                                {
+                                    // exception will be observed here, so don't check IsFaulted afterwards
+                                    if (!task.Result)
+                                    {
+                                        Status = GisTaskStatus.Failed;
+                                        return;
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.Current.Error("Error during tool execution: " + Tool.Name, ex);
+                                    Status = GisTaskStatus.Failed;
+                                    return;
+                                }
+
+                                try
+                                {
+                                    Status = Tool.AfterRun() ? GisTaskStatus.Success : GisTaskStatus.Failed;
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.Current.Error("Failed to save datasource: " + Tool.Name, ex);
+                                    Status = GisTaskStatus.Failed;
+                                }
                             }
-                            else
+                            finally
                             {
-                                Status = GisTaskStatus.Success;
+                                // stop reporting progress from datasources
+                                Tool.CleanUp();
                             }
                         }, TaskScheduler.FromCurrentSynchronizationContext());
         }

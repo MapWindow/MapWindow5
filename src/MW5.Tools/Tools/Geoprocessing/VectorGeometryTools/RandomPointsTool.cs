@@ -33,8 +33,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Range(1, 1000000)]
         public int NumPoints { get; set; }
 
-        [Input("New layer name", 2)]
-        [DefaultValue("random points")]
+        [Output("New layer name", 0, "random points")]
         public OutputLayerInfo OutputLayer { get; set; }
 
         /// <summary>
@@ -89,16 +88,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             Log.Debug("New feature set has {0} features", fs.NumFeatures);
          
             OutputLayer.Result = fs;   
-
-            return true;
-        }
-
-        /// <summary>
-        /// Handles the result.
-        /// </summary>
-        public override bool AfterRun()
-        {
-            SaveOutput(OutputLayer.Result, OutputLayer);
 
             return true;
         }

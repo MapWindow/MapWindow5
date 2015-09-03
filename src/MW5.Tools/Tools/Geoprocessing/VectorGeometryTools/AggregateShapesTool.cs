@@ -19,15 +19,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class AggregateShapesTool : GisTool
     {
-        [Input("Field index", 1, ParameterType.Field)]
+        [Input("Field index", 1, false, ParameterType.Field)]
         [DefaultValue(1)]
         public int FieldIndex { get; set; }
 
         [Input("Input layer", 0)]
         public VectorLayerInfo InputLayer { get; set; }
 
-        [Input("Save results as", 4)]
-        [DefaultValue(@"d:\aggregate.shp")]
+        [Output("Save results as", 4, @"d:\aggregate.shp")]
         public OutputLayerInfo Output { get; set; }
 
         protected override void Configure(ToolConfiguration configuration)
@@ -67,21 +66,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             Output.Result = InputLayer.Datasource.AggregateShapes(InputLayer.SelectedOnly, FieldIndex);
             return true;
-        }
-
-        /// <summary>
-        /// Handles the result.
-        /// </summary>
-        public override bool AfterRun()
-        {
-            if (Output.Result != null)
-            {
-                SaveOutput(Output.Result, Output);
-
-                return true;
-            }
-
-            return false;
         }
     }
 }
