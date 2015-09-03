@@ -42,32 +42,15 @@ namespace MW5.Tools.Controls.Parameters
             return tableLayoutPanel1;
         }
 
+        public void OnLayerChanged(LayerWrapper layer)
+        {
+            RebuildFieldList(layer.FeatureSet);
+        }
+
         public override string Caption
         {
             get { return label1.Text; }
             set { label1.Text = value; }
-        }
-
-        public void SetLayer(LayerParameterControl layer)
-        {
-            layer.SelectedLayerChanged += OnSelectedLayerChanged;
-
-            if (layer.SelectedLayer != null)
-            {
-                RebuildFieldList(layer.SelectedLayer.FeatureSet);
-            }
-        }
-
-        private void OnSelectedLayerChanged(object sender, EventArgs e)
-        {
-            var control = sender as LayerParameterControl;
-            if (control != null)
-            {
-                var layer = control.SelectedLayer;
-                var fs = layer.FeatureSet;
-
-                RebuildFieldList(fs);
-            }
         }
 
         private void RebuildFieldList(IFeatureSet fs)

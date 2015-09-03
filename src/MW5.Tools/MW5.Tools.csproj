@@ -84,7 +84,8 @@
     </Compile>
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
-    <Compile Include="Helpers\ParameterControlGenerator.cs" />
+    <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Services\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
     <Compile Include="Model\Distance.cs" />
@@ -111,9 +112,11 @@
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
     <Compile Include="Helpers\ParameterCollection.cs" />
+    <Compile Include="Services\LayerEventArgs.cs" />
     <Compile Include="Services\OutputManager.cs" />
     <Compile Include="Services\ToolBuilder.cs" />
     <Compile Include="Services\ToolConfiguration.cs" />
+    <Compile Include="Services\EventManager.cs" />
     <Compile Include="Services\ToolLogger.cs" />
     <Compile Include="Services\CallbackProgress.cs" />
     <Compile Include="Toolbox\ToolboxGroupMetadata.cs" />

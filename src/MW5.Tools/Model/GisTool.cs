@@ -55,6 +55,11 @@ namespace MW5.Tools.Model
             }
         }
 
+        internal ToolConfiguration Config
+        {
+            get { return _config; }
+        }
+
         /// <summary>
         /// Gets combined list of required and optional parameters.
         /// </summary>
@@ -86,12 +91,6 @@ namespace MW5.Tools.Model
             return success;
         }
 
-        public void BeforeDisplayed()
-        {
-            var builder = new ToolBuilder();
-            builder.Build(_config, Parameters);
-        }
-
         public override void CleanUp()
         {
             Parameters.CleanUp();
@@ -109,6 +108,9 @@ namespace MW5.Tools.Model
             Parameters.Initialize(context);
 
             Configure(_config);
+
+            var builder = new ToolBuilder();
+            builder.Build(_config, Parameters);
         }
 
         public override void SetCallback(IApplicationCallback callback)
@@ -117,7 +119,7 @@ namespace MW5.Tools.Model
         }
 
         /// <summary>
-        /// Befores the run.
+        /// Before the run.
         /// </summary>
         protected virtual bool BeforeRun()
         {

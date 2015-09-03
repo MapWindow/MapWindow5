@@ -43,7 +43,7 @@ namespace MW5.Tools.Test
             var tool = new BufferTool
                            {
                                BufferDistance = new Distance(100, LengthUnits.Kilometers),
-                               InputLayer = new VectorLayerInfo(fs),
+                               Input = new VectorLayerInfo(fs),
                                MergeResults = true,
                                Output = new OutputLayerInfo { MemoryLayer = true }
                            };

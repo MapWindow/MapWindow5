@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Plugins;
 using MW5.Plugins.Enums;
@@ -106,6 +107,24 @@ namespace MW5.Services.Concrete
             }
 
             return filenames != null;
+        }
+
+        public string GetLayerFilter(LayerType layerType)
+        {
+            switch (layerType)
+            {
+                case LayerType.Invalid:
+                    break;
+                case LayerType.Shapefile:
+                    return "ESRI Shapefile (*.shp)|*.shp";
+                case LayerType.Image:
+                case LayerType.Grid:
+                    return GeoSource.RasterFilter;
+                case LayerType.VectorLayer:
+                    return GeoSource.VectorFilter;
+            }
+
+            return "All formats|*.*";
         }
 
         private static string GetLayerFilter(DataSourceType layerType)

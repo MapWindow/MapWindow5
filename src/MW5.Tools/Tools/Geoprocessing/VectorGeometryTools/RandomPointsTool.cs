@@ -16,6 +16,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
@@ -29,12 +30,17 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public ILayerSource InputLayer { get; set; }
 
         [Input("Number of points", 1)]
-        [DefaultValue(500)]
         [Range(1, 1000000)]
         public int NumPoints { get; set; }
 
-        [Output("New layer name", 0, "random points")]
+        [Output("New layer name", "random points", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
+
+        protected override void Configure(ToolConfiguration configuration)
+        {
+            configuration.Get<RandomPointsTool>()
+                .SetDefault(t => t.NumPoints, 500);
+        }
 
         /// <summary>
         /// Gets description of the tool.

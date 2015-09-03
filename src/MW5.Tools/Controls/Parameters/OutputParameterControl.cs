@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using MW5.Api.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
 
@@ -8,12 +9,15 @@ namespace MW5.Tools.Controls.Parameters
     public partial class OutputParameterControl : ParameterControlBase
     {
         private readonly IFileDialogService _dialogService;
+        private readonly LayerType _layerType;
         private readonly OutputLayerInfo _output = new OutputLayerInfo();
+        private string _defaultValue;
 
-        public OutputParameterControl(IFileDialogService dialogService)
+        public OutputParameterControl(IFileDialogService dialogService, LayerType layerType)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dialogService = dialogService;
+            _layerType = layerType;
 
             InitializeComponent();
 
@@ -58,13 +62,17 @@ namespace MW5.Tools.Controls.Parameters
         public override void SetValue(object value)
         {
             var s = Convert.ToString(value);
-            textBoxExt1.Text = s;
+            _defaultValue = s;
+            RefreshControls();
         }
 
         private void OnSaveClick(object sender, EventArgs e)
         {
-            string filename = string.Empty;
-            if (_dialogService.SaveFile("All files|*.*", ref filename))
+            string filename = _defaultValue;
+
+            string filter = _dialogService.GetLayerFilter(_layerType);
+
+            if (_dialogService.SaveFile(filter, ref filename))
             {
                 textBoxExt1.Text = filename;
             }
@@ -78,6 +86,8 @@ namespace MW5.Tools.Controls.Parameters
             }
 
             chkAddToMap.Enabled = !chkMemoryLayer.Checked;
+
+            textBoxExt1.Text = chkMemoryLayer.Checked ? _defaultValue : string.Empty;
         }
 
         private void MemoryLayerChecked(object sender, EventArgs e)

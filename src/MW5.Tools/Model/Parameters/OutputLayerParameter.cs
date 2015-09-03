@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 
 namespace MW5.Tools.Model.Parameters
 {
     public class OutputLayerParameter: BaseParameter
     {
-
         /// <summary>
         /// Gets a value indicating whether value.
         /// </summary>
@@ -16,6 +16,8 @@ namespace MW5.Tools.Model.Parameters
         {
             return Control.GetValue() as OutputLayerInfo;
         }
+
+        public LayerType LayerType { get; set; }
 
         public override string ToString()
         {

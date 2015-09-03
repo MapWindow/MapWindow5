@@ -7,7 +7,9 @@ using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Parameters;
 using MW5.Tools.Properties;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -43,7 +45,7 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        public event EventHandler SelectedLayerChanged;
+        public event EventHandler<LayerEventArgs> SelectedLayerChanged;
 
         public override object GetValue()
         {
@@ -190,7 +192,7 @@ namespace MW5.Tools.Controls.Parameters
             var handler = SelectedLayerChanged;
             if (handler != null)
             {
-                handler(this, new EventArgs());
+                handler(this, new LayerEventArgs(SelectedLayer));
             }
         }
 

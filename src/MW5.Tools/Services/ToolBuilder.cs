@@ -20,34 +20,17 @@ namespace MW5.Tools.Services
             _config = config;
             _parameters = parameters;
 
-            ApplyFields();
-
-            AttachHandlers();
+            ApplyDefaults();
         }
 
-        private void AttachHandlers()
+        private void ApplyDefaults()
         {
-            foreach (var p in _parameters.OfType<FieldParameter>())
+            foreach (var p in _parameters)
             {
-                p.AttachHandler();
-            }
-        }
-
-        private void ApplyFields()
-        {
-            var dict = _parameters.ToDictionary(p => p.Name);
-
-            foreach (var f in _config.Fields)
-            {
-                var field = dict[f.Key] as FieldParameter;
-                var layer = dict[f.Value] as VectorLayerParameter;
-
-                if (layer == null)
+                if (_config.DefaultValues.ContainsKey(p.Name))
                 {
-                    throw new NullReferenceException("Couldn't find source vector layer for field parameter.");
+                    p.SetDefaultValue(_config.DefaultValues[p.Name]);
                 }
-
-                field.Layer = layer;
             }
         }
     }

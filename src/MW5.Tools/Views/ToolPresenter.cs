@@ -32,8 +32,6 @@ namespace MW5.Tools.Views
             Model.Tool.Initialize(_context);
 
             View.GenerateControls(Model.Tool.Parameters);
-
-            Model.Tool.BeforeDisplayed();
         }
 
         /// <summary>

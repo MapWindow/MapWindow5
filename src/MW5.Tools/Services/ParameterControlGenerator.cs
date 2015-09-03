@@ -4,56 +4,76 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model.Parameters;
 using MW5.UI.Controls;
 
-namespace MW5.Tools.Helpers
+namespace MW5.Tools.Services
 {
-    internal static class ParameterControlGenerator
+    public class ParameterControlGenerator
     {
-        static ParameterControlGenerator()
+        private readonly List<ParameterControlBase> _controls = new List<ParameterControlBase>();
+        private readonly ParameterControlFactory _factory;
+        private readonly EventManager _manager = new EventManager();
+
+        public ParameterControlGenerator(ParameterControlFactory factory)
         {
+            if (factory == null) throw new ArgumentNullException();
+
+            _factory = factory;
             ShowSections = true;
         }
 
-        private static bool ShowSections { get; set; }
+        public EventManager EventManager
+        {
+            get { return _manager; }
+        }
 
-        public static void Generate(
-            this Control panel,
-            IEnumerable<BaseParameter> parameters,
-            ParameterControlFactory factory,
-            bool optional)
+        private bool ShowSections { get; set; }
+
+        public void Generate(Control panel, IEnumerable<BaseParameter> parameters, bool optional)
         {
             panel.Controls.Clear();
 
             var list = parameters.OrderByDescending(p => p.Index).ToList();
 
+            GenerateOutput(panel, list, optional);
+
+            GenerateInput(panel, list, optional);
+
+            AddVerticalPadding(panel);
+        }
+
+        private void GenerateOutput(Control panel, List<BaseParameter> list, bool optional)
+        {
             // output parameters
             var arr = list.Where(p => p is OutputLayerParameter).ToList();
-            GenerateSection(panel, arr, factory);
+            GenerateSection(panel, arr);
 
-            if (!optional && arr.Any())
+            if (arr.Any())
             {
                 AddSection("Output", panel);
             }
+        }
 
+        private void GenerateInput(Control panel, List<BaseParameter> list, bool optional)
+        {
             // input parameters
-            arr = list.Where(p => !(p is OutputLayerParameter)).ToList();
-            GenerateSection(panel, arr, factory);
+            var arr = list.Where(p => !(p is OutputLayerParameter)).ToList();
+            GenerateSection(panel, arr);
 
             if (!optional && arr.Any())
             {
                 AddSection("Input", panel);
             }
-
-            AddVerticalPadding(panel);
         }
 
-        private static void AddSection(string sectionName, Control panel)
+        private void AddSection(string sectionName, Control panel)
         {
             if (ShowSections)
             {
@@ -63,7 +83,7 @@ namespace MW5.Tools.Helpers
             }
         }
 
-        private static void AddVerticalPadding(Control panel)
+        private void AddVerticalPadding(Control panel)
         {
             foreach (var ctrl in panel.Controls.Cast<Control>().Where(c => !(c is BooleanParameterControl)))
             {
@@ -72,14 +92,11 @@ namespace MW5.Tools.Helpers
             }
         }
 
-        private static void GenerateSection(
-            Control panel,
-            IEnumerable<BaseParameter> parameters,
-            ParameterControlFactory factory)
+        private void GenerateSection(Control panel, IEnumerable<BaseParameter> parameters)
         {
             foreach (var p in parameters)
             {
-                var ctrl = factory.CreateControl(p);
+                var ctrl = _factory.CreateControl(p);
                 if (ctrl != null)
                 {
                     ctrl.SetCaption(p.DisplayName);
@@ -87,6 +104,8 @@ namespace MW5.Tools.Helpers
                     p.Control = ctrl;
 
                     panel.Controls.Add(ctrl);
+
+                    _manager.AddControl(ctrl);
                 }
             }
         }

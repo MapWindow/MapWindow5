@@ -49,7 +49,8 @@ namespace MW5.Tools.Controls.Parameters
             }
             else if (parameter is OutputLayerParameter)
             {
-                control = new OutputParameterControl(_dialogService);
+                var layerType = (parameter as OutputLayerParameter).LayerType;
+                control = new OutputParameterControl(_dialogService, layerType);
             }
             else if (parameter is OptionsParameter)
             {
@@ -74,6 +75,8 @@ namespace MW5.Tools.Controls.Parameters
             {
                 control.SetValue(value);
             }
+
+            control.ParameterName = parameter.Name;
 
             return control;
         }

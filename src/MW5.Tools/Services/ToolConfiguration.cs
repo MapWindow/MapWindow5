@@ -10,7 +10,8 @@ namespace MW5.Tools.Services
 {
     public class ToolConfiguration
     {
-        private readonly List<KeyValuePair<string, string>> _fields = new List<KeyValuePair<string, string>>();
+        private readonly List<FieldWrapper> _fields = new List<FieldWrapper>();
+        private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
 
         public ToolConfiguration<T> Get<T>()
             where T: GisToolBase
@@ -18,9 +19,17 @@ namespace MW5.Tools.Services
             return new ToolConfiguration<T>(this);
         }
 
-        public List<KeyValuePair<string, string>> Fields
+        /// <summary>
+        /// Gets pairs of field name (key) as layer name (value).
+        /// </summary>
+        public List<FieldWrapper> Fields
         {
             get { return _fields; }
+        }
+
+        public Dictionary<string, object> DefaultValues
+        {
+            get { return _defaultValues; }
         }
     }
 
@@ -41,8 +50,22 @@ namespace MW5.Tools.Services
             var layerName = (layer.Body as MemberExpression).Member.Name;
             var fieldName = (field.Body as MemberExpression).Member.Name;
 
-            _config.Fields.Add(new KeyValuePair<string, string>(fieldName, layerName));
+            _config.Fields.Add(new FieldWrapper(layerName, fieldName));
 
+            return this;
+        }
+
+        public ToolConfiguration<T> SetDefault<TT>(Expression<Func<T, TT>> number, TT value)
+        {
+            var name = (number.Body as MemberExpression).Member.Name;
+            _config.DefaultValues.Add(name, value);
+            return this;
+        }
+
+        public ToolConfiguration<T> SetDefault(Expression<Func<T, Distance>> distance, double value)
+        {
+            var name = (distance.Body as MemberExpression).Member.Name;
+            _config.DefaultValues.Add(name, value);
             return this;
         }
     }

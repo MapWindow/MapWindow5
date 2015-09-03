@@ -1,4 +1,5 @@
-﻿using MW5.Plugins.Enums;
+﻿using MW5.Api.Enums;
+using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Services
 {
@@ -10,5 +11,6 @@ namespace MW5.Plugins.Services
         bool OpenFiles(DataSourceType layerType, out string[] filenames);
         bool ChooseFolder(string initialPath, out string chosenPath);
         string Title { get; set; }
+        string GetLayerFilter(LayerType layerType);
     }
 }

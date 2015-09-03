@@ -5,6 +5,8 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -32,5 +34,7 @@ namespace MW5.Tools.Controls.Parameters
         /// Sets the value.
         /// </summary>
         void SetValue(object value);
+
+        string ParameterName { get; }
     }
 }

@@ -24,18 +24,18 @@ namespace MW5.Tools.Views
     public partial class ToolView : GisToolViewBase, IToolView
     {
         private readonly IAppContext _context;
-        private readonly ParameterControlFactory _controlFactory;
+        private readonly ParameterControlGenerator _generator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolView"/> class.
         /// </summary>
-        public ToolView(IAppContext context, ParameterControlFactory controlFactory)
+        public ToolView(IAppContext context, ParameterControlGenerator controlGenerator)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (controlFactory == null) throw new ArgumentNullException("controlFactory");
+            if (controlGenerator == null) throw new ArgumentNullException("controlGenerator");
 
             _context = context;
-            _controlFactory = controlFactory;
+            _generator = controlGenerator;
 
             InitializeComponent();
         }
@@ -60,7 +60,7 @@ namespace MW5.Tools.Views
         {
             parameters = parameters.ToList();
 
-            panelRequired.Generate(parameters.Where(p => p.Required), _controlFactory, false);
+            _generator.Generate(panelRequired, parameters.Where(p => p.Required), false);
 
             if (parameters.All(p => p.Required))
             {
@@ -68,8 +68,10 @@ namespace MW5.Tools.Views
             }
             else
             {
-                panelOptional.Generate(parameters.Where(p => !p.Required), _controlFactory, true);
+                _generator.Generate(panelOptional, parameters.Where(p => !p.Required), true);
             }
+
+            _generator.EventManager.Bind(Model.Tool.Config);
         }
 
         public void Initialize()

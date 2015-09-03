@@ -12,6 +12,7 @@ using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Helpers
 {
@@ -20,8 +21,8 @@ namespace MW5.Tools.Helpers
     /// </summary>
     public class ParameterCollection: IEnumerable<BaseParameter>
     {
-        private readonly GisTool _tool;
         private readonly List<BaseParameter> _list;
+        private readonly GisTool _tool;
 
         public ParameterCollection(GisTool tool)
         {
@@ -59,14 +60,15 @@ namespace MW5.Tools.Helpers
 
         private BaseParameter CreateOutputParameter(PropertyInfo prop, OutputAttribute attr)
         {
-            var param = ParameterFactory.CreateParameter(prop.PropertyType, Enums.ParameterType.Auto);
-
+            var param = ParameterFactory.CreateParameter(prop.PropertyType, Enums.ParameterType.Auto) as OutputLayerParameter;
+            
             param.ToolProperty = prop;
             param.Name = prop.Name;
-            param.Index = attr.Index;
             param.DisplayName = attr.DisplayName;
             param.SetDefaultValue(attr.Filename);
             param.Required = true;
+            param.LayerType = attr.LayerType;
+
             return param;
         }
 

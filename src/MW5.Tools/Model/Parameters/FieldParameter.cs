@@ -15,14 +15,5 @@ namespace MW5.Tools.Model.Parameters
         {
             get { return (int)Control.GetValue(); }
         }
-
-        public void AttachHandler()
-        {
-            var fieldControl = Control as FieldParameterControl;
-            if (fieldControl != null)
-            {
-                fieldControl.SetLayer(Layer.Control as LayerParameterControl);
-            }
-        }
     }
 }

@@ -20,22 +20,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class BufferTool : GisTool
     {
+        [Input("Input layer", 0)]
+        public VectorLayerInfo Input { get; set; }
+
         [Input("Buffer distance", 1)]
-        [DefaultValue(50)]
         public Distance BufferDistance { get; set; }
 
-        [Input("Input layer", 0)]
-        public VectorLayerInfo InputLayer { get; set; }
-
-        [Input("Merge results", 3)]
+        [Input("Merge results", 2)]
         public bool MergeResults { get; set; }
 
-        [Input("Number of segments", 1, true)]
-        [DefaultValue(30)]
+        [Input("Number of segments", 0, true)]
         public int NumSegments { get; set; }
 
-        [Output("Save results as", 4, @"d:\buffer.shp")]
+        [Output("Save results as", @"buffer", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
+
+        protected override void Configure(Services.ToolConfiguration configuration)
+        {
+            configuration.Get<BufferTool>()
+                .SetDefault(t => t.BufferDistance, 50)
+                .SetDefault(t => t.NumSegments, 30);
+        }
 
         /// <summary>
         /// BufferDistance doesn't supports cancelling in the ocx
@@ -77,7 +82,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            Output.Result = InputLayer.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, InputLayer.SelectedOnly, MergeResults);
+            Output.Result = Input.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, Input.SelectedOnly, MergeResults);
             return true;
         }
     }

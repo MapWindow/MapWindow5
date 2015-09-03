@@ -8,6 +8,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using MW5.Shared;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -24,6 +26,8 @@ namespace MW5.Tools.Controls.Parameters
         {
             InitializeComponent();
         }
+
+        public string ParameterName { get; internal set; }
 
         /// <summary>
         /// The value changed.
