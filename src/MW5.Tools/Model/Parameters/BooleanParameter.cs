@@ -9,7 +9,7 @@ namespace MW5.Tools.Model.Parameters
     /// <summary>
     /// The boolean parameter.
     /// </summary>
-    public class BooleanParameter : ValueParameter<bool>
+    public class BooleanParameter : BaseParameter
     {
         public override string ToString()
         {

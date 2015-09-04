@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Tools.Enums;
+using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters.Layers;
 
 namespace MW5.Tools.Model.Parameters
 {
@@ -49,7 +51,12 @@ namespace MW5.Tools.Model.Parameters
                 return new BooleanParameter();
             }
 
-            if (type == typeof(VectorLayerInfo))
+            if (type == typeof(IRasterLayerInfo))
+            {
+                return new RasterLayerParameter();
+            }
+
+            if (type == typeof(IVectorLayerInfo))
             {
                 return new VectorLayerParameter();
             }
@@ -59,9 +66,9 @@ namespace MW5.Tools.Model.Parameters
                 return new RasterLayerParameter();
             }
 
-            if (type == typeof(ILayerSource))
+            if (type == typeof(ILayerInfo))
             {
-                return new LayerParameter();
+                return new GenericLayerParameter();
             }
 
             if (type == typeof(Distance))

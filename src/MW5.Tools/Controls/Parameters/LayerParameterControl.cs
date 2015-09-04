@@ -4,9 +4,11 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Properties;
 using MW5.Tools.Services;
@@ -18,13 +20,12 @@ namespace MW5.Tools.Controls.Parameters
     /// </summary>
     internal partial class LayerParameterControl : ParameterControlBase
     {
-        private readonly List<LayerWrapper> _layers = new List<LayerWrapper>();
         private readonly IFileDialogService _dialogService;
         private readonly DataSourceType _dataSourceType;
+        private List<LayerWrapper> _layers = new List<LayerWrapper>();
 
-        internal LayerParameterControl(IEnumerable<LayerWrapper> layers, DataSourceType dataSourceType, IFileDialogService dialogService)
+        internal LayerParameterControl(DataSourceType dataSourceType, IFileDialogService dialogService)
         {
-            if (layers == null) throw new ArgumentNullException("layers");
             if (dialogService == null) throw new ArgumentNullException("dialogService");
 
             _dialogService = dialogService;
@@ -35,8 +36,12 @@ namespace MW5.Tools.Controls.Parameters
             SetNumSelected(0);
 
             PopulateImageList();
+        }
 
-            _layers = layers.ToList();
+        public void SetLayers(IEnumerable<ILayer> layers)
+        {
+            _layers = layers.Select(l => new LayerWrapper(l)).ToList();
+            
             UpdateDatasource();
 
             if (comboBoxAdv1.Items.Count > 0)
@@ -95,7 +100,7 @@ namespace MW5.Tools.Controls.Parameters
 
         private int GetImageIndex(LayerWrapper layer)
         {
-            var type = layer.Source.LayerType;
+            var type = layer.Datasource.LayerType;
             switch (type)
             {
                 case LayerType.Shapefile:

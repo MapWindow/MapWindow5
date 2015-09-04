@@ -29,7 +29,7 @@ namespace MW5.Tools.Services
             {
                 if (_config.DefaultValues.ContainsKey(p.Name))
                 {
-                    p.SetDefaultValue(_config.DefaultValues[p.Name]);
+                    p.DefaultValue = _config.DefaultValues[p.Name];
                 }
             }
         }

@@ -9,11 +9,8 @@ namespace MW5.Tools.Model.Parameters
     /// <summary>
     /// The string parameter.
     /// </summary>
-    public class StringParameter : ValueParameter<string>
+    public class StringParameter : BaseParameter
     {
-        public override bool Numeric
-        {
-            get { return false; }
-        }
+        
     }
 }

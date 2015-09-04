@@ -20,23 +20,10 @@ namespace MW5.Tools.Views
 
         public IGisTask Task { get; private set; }
 
-        public bool TaskIsRunning
-        {
-            get { return Task != null && !Task.IsFinished; }
-        }
-
         public IGisTask CreateTask()
         {
             Task = new GisTask(Tool);
             return Task;
-        }
-
-        public void CancelTask()
-        {
-            if (TaskIsRunning)
-            {
-                Task.Cancel();
-            }
         }
     }
 }

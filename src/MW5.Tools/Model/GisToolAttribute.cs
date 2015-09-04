@@ -19,7 +19,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Initializes a new instance of the <see cref="GisToolAttribute"/> class.
         /// </summary>
-        public GisToolAttribute(string groupKey, ToolIcon icon = ToolIcon.ToolDefault)
+        public GisToolAttribute(string groupKey, ToolIcon icon = ToolIcon.ToolDefault, Type presenter = null)
         {
             if (string.IsNullOrWhiteSpace(groupKey))
             {
@@ -28,7 +28,10 @@ namespace MW5.Tools.Model
 
             GroupKey = groupKey;
             Icon = icon;
+            PresenterType = presenter;
         }
+
+        public Type PresenterType { get; private set; }
 
         public string GroupKey { get; private set; }
 

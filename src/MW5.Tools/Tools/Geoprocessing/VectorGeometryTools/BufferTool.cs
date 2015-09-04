@@ -14,6 +14,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
@@ -22,7 +23,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class BufferTool : GisTool
     {
         [Input("Input layer", 0)]
-        public VectorLayerInfo Input { get; set; }
+        public IVectorLayerInfo Input { get; set; }
 
         [Input("Buffer distance", 1)]
         public Distance BufferDistance { get; set; }
@@ -36,8 +37,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("Save results as", @"buffer", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
-        protected override void Configure(Services.ToolConfiguration configuration, IAppContext context)
+        protected override void Configure(IAppContext context, Services.ToolConfiguration configuration)
         {
+            base.Configure(context, configuration);
+
             configuration.Get<BufferTool>()
                 .SetDefault(t => t.BufferDistance, 50)
                 .SetDefault(t => t.NumSegments, 30);

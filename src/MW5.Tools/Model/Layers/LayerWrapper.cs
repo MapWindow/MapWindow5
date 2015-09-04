@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Concrete;
-using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 
-namespace MW5.Tools.Model
+namespace MW5.Tools.Model.Layers
 {
-    internal class LayerWrapper
+    internal class LayerWrapper: IRasterLayerInfo, IVectorLayerInfo
     {
         private readonly ILayer _layer;
         private readonly LayerIdentity _identity;
@@ -33,7 +29,7 @@ namespace MW5.Tools.Model
             get { return _identity ?? _layer.Identity; }
         }
 
-        public ILayerSource Source
+        public ILayerSource Datasource
         {
             get
             {
@@ -45,15 +41,28 @@ namespace MW5.Tools.Model
                 var ds = GeoSource.OpenFromIdentity(_identity);
                 return ds.GetLayers().FirstOrDefault();
             }
+            set { throw new NotSupportedException("Datasource.set isn't supported"); }
         }
 
-        public IImageSource Raster
+        IRasterSource IRasterLayerInfo.Datasource
+        {
+            get { return Raster; }
+            set { throw new NotSupportedException("Raster.set isn't supported"); }
+        }
+
+        IFeatureSet IVectorLayerInfo.Datasource
+        {
+            get { return FeatureSet; }
+            set  {  throw new NotSupportedException("FeatureSet.set isn't supported"); }
+        }
+
+        public IRasterSource Raster
         {
             get
             {
                 if (_layer != null && _layer.IsRaster)
                 {
-                    return _layer.ImageSource;
+                    return _layer.ImageSource as IRasterSource;
                 }
 
                 return null;
@@ -74,7 +83,13 @@ namespace MW5.Tools.Model
         }
 
         public bool SelectedOnly { get; set; }
-    
+
+        public bool CloseAfterRun
+        {
+            get { return !Opened; }
+            set { throw new NotSupportedException("CloseAfterRun.set isn't supported"); }
+        }
+
         public bool Opened
         {
             get { return _layer != null; }
@@ -91,7 +106,7 @@ namespace MW5.Tools.Model
             {
                 if (_layer.IsVector)
                 {
-                    var fs = FeatureSet;
+                    var fs = Datasource as IFeatureSet;
                     if (fs != null)
                     {
                         return Name + " [" + fs.NumFeatures + " features]";
@@ -99,7 +114,7 @@ namespace MW5.Tools.Model
                 }
                 else
                 {
-                    var img = Raster;
+                    var img = Datasource as IRasterSource;
                     if (img != null)
                     {
                         return Name + string.Format(" [{0}×{1} pixels]", img.Width, img.Height);

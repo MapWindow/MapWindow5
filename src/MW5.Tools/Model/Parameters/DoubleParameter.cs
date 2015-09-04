@@ -11,11 +11,6 @@ namespace MW5.Tools.Model.Parameters
     /// </summary>
     public class DoubleParameter : NumericParameter<double>
     {
-        public override bool Numeric
-        {
-            get { return true; }
-        }
-
         public override string ToString()
         {
             return string.Format("{0}: {1:g3}", DisplayName, Value);

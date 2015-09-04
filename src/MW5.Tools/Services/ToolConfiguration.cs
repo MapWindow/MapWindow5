@@ -4,7 +4,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Services
 {
@@ -13,6 +15,7 @@ namespace MW5.Tools.Services
         private readonly List<FieldWrapper> _fields = new List<FieldWrapper>();
         private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
         private readonly Dictionary<string, object> _comboLists = new Dictionary<string, object>();
+        private IEnumerable<ILayer> _layers;
 
         public ToolConfiguration<T> Get<T>()
             where T: GisToolBase
@@ -37,6 +40,16 @@ namespace MW5.Tools.Services
         {
             get { return _comboLists; }
         }
+
+        public IEnumerable<ILayer> Layers
+        {
+            get { return _layers;  }
+        }
+
+        public void AddLayers(IEnumerable<ILayer> layers)
+        {
+            _layers = layers;
+        }
     }
 
     public class ToolConfiguration<T>
@@ -50,7 +63,7 @@ namespace MW5.Tools.Services
             _config = config;
         }
 
-        public ToolConfiguration<T> AddField(Expression<Func<T, VectorLayerInfo>> layer, Expression<Func<T, int>> field)
+        public ToolConfiguration<T> AddField(Expression<Func<T, IVectorLayerInfo>> layer, Expression<Func<T, int>> field)
         {
             // let the exceptions be thrown, we want to catch bugs ASAP
             var layerName = (layer.Body as MemberExpression).Member.Name;
@@ -79,6 +92,12 @@ namespace MW5.Tools.Services
         {
             var name = (parameter.Body as MemberExpression).Member.Name;
             _config.ComboLists.Add(name, list);
+            return this;
+        }
+
+        public ToolConfiguration<T> AddLayers(IEnumerable<ILayer> layers)
+        {
+            _config.AddLayers(layers);
             return this;
         }
     }

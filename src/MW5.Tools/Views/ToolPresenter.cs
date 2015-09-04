@@ -29,8 +29,6 @@ namespace MW5.Tools.Views
 
         public override void Initialize()
         {
-            Model.Tool.Initialize(_context);
-
             View.GenerateControls(Model.Tool.Parameters);
         }
 

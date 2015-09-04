@@ -1,22 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 
-namespace MW5.Tools.Model
+namespace MW5.Tools.Model.Layers
 {
-    public class VectorLayerInfo
+    public class VectorLayerInfo: LayerInfo, IVectorLayerInfo
     {
         public VectorLayerInfo(IFeatureSet fs, bool selectedOnly = false)
+            : base(fs)
         {
             if (fs == null) throw new ArgumentNullException("fs");
             SelectedOnly = selectedOnly;
-            Datasource = fs;
         }
 
-        public IFeatureSet Datasource { get; set; }
+        public new IFeatureSet Datasource
+        {
+            get { return base.Datasource as IFeatureSet; }
+            set { base.Datasource = value; }
+        }
 
         public bool SelectedOnly { get; set; }
     }

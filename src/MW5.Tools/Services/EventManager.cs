@@ -26,6 +26,8 @@ namespace MW5.Tools.Services
         {
             _dict = _controls.ToDictionary(p => p.ParameterName);
 
+            AssignLayers(config);
+
             BindFields(config);
 
             BindComboLists(config);
@@ -34,6 +36,14 @@ namespace MW5.Tools.Services
         private ParameterControlBase GetControl(string key)
         {
             return _dict[key];
+        }
+
+        private void AssignLayers(ToolConfiguration config)
+        {
+            foreach (var control in _controls.OfType<LayerParameterControl>())
+            {
+                control.SetLayers(config.Layers);
+            }
         }
 
         private void BindComboLists(ToolConfiguration config)

@@ -11,7 +11,9 @@ using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Helpers
@@ -31,14 +33,6 @@ namespace MW5.Tools.Helpers
             _list = GetParameters(tool).ToList();
         }
 
-        public void Initialize(IAppContext context)
-        {
-            foreach (var layerParameter in _list.OfType<LayerParameterBase>())
-            {
-                layerParameter.Initialize(context.Layers);
-            }
-        }
-
         private IEnumerable<BaseParameter> GetParameters(GisTool tool)
         {
             var properties = tool.GetType().GetProperties();
@@ -47,35 +41,38 @@ namespace MW5.Tools.Helpers
                 var attrInput = prop.GetAttribute<InputAttribute>();
                 if (attrInput != null)
                 {
-                    yield return CreateInputParameter(prop, attrInput);
+                    yield return CreateInputParameter(tool, prop, attrInput);
                 }
 
                 var attrOutput = prop.GetAttribute<OutputAttribute>();
                 if (attrOutput != null)
                 {
-                    yield return CreateOutputParameter(prop, attrOutput);
+                    yield return CreateOutputParameter(tool, prop, attrOutput);
                 }
             }
         }
 
-        private BaseParameter CreateOutputParameter(PropertyInfo prop, OutputAttribute attr)
+        private BaseParameter CreateOutputParameter(GisTool tool, PropertyInfo prop, OutputAttribute attr)
         {
             var param = ParameterFactory.CreateParameter(prop.PropertyType, Enums.ParameterType.Auto) as OutputLayerParameter;
-            
+
+            param.Tool = tool;
             param.ToolProperty = prop;
+
             param.Name = prop.Name;
             param.DisplayName = attr.DisplayName;
-            param.SetDefaultValue(attr.Filename);
+            param.DefaultValue = attr.Filename;
             param.Required = true;
             param.LayerType = attr.LayerType;
 
             return param;
         }
 
-        private BaseParameter CreateInputParameter(PropertyInfo prop, InputAttribute attr)
+        private BaseParameter CreateInputParameter(GisTool tool, PropertyInfo prop, InputAttribute attr)
         {
             var param = ParameterFactory.CreateParameter(prop.PropertyType, attr.ParameterType);
 
+            param.Tool = tool;
             param.ToolProperty = prop;
             param.Name = prop.Name;
             param.Index = attr.Index;
@@ -91,24 +88,20 @@ namespace MW5.Tools.Helpers
 
         private void HandleRangeAttribute(BaseParameter param, PropertyInfo prop)
         {
-            var vp = param as ValueParameter;
-            if (vp != null && vp.Numeric)
+            var range = prop.GetAttribute<RangeAttribute>();
+            if (range != null)
             {
-                var range = prop.GetAttribute<RangeAttribute>();
-                if (range != null)
+                if (param is IntegerParameter)
                 {
-                    if (param is IntegerParameter)
-                    {
-                        (param as IntegerParameter).MinValue = (int)range.Minimum;
-                        (param as IntegerParameter).MaxValue = (int)range.Maximum;
-                        (param as IntegerParameter).HasRange = true;
-                    }
-                    else if (param is DoubleParameter)
-                    {
-                        (param as DoubleParameter).MinValue = (double)range.Minimum;
-                        (param as DoubleParameter).MaxValue = (double)range.Maximum;
-                        (param as DoubleParameter).HasRange = true;
-                    }
+                    (param as IntegerParameter).MinValue = (int)range.Minimum;
+                    (param as IntegerParameter).MaxValue = (int)range.Maximum;
+                    (param as IntegerParameter).HasRange = true;
+                }
+                else if (param is DoubleParameter)
+                {
+                    (param as DoubleParameter).MinValue = (double)range.Minimum;
+                    (param as DoubleParameter).MaxValue = (double)range.Maximum;
+                    (param as DoubleParameter).HasRange = true;
                 }
             }
         }
@@ -118,7 +111,7 @@ namespace MW5.Tools.Helpers
             var attr = prop.GetAttribute<DefaultValueAttribute>();
             if (attr != null)
             {
-                param.SetDefaultValue(attr.Value);
+                param.DefaultValue = attr.Value;
             }
         }
 
@@ -134,7 +127,7 @@ namespace MW5.Tools.Helpers
         {
             foreach (var p in _list)
             {
-                var layerParameter = p as LayerParameter;
+                var layerParameter = p as GenericLayerParameter;
                 if (layerParameter != null)
                 {
                     if (layerParameter.Datasource == null)
@@ -155,7 +148,7 @@ namespace MW5.Tools.Helpers
                     }
                 }
 
-                var value = p as ValueParameter;
+                var value = p as ISupportsValidation;
                 if (value != null)
                 {
                     string errorMessage;
@@ -184,10 +177,10 @@ namespace MW5.Tools.Helpers
         {
             foreach (var p in _list.OfType<LayerParameterBase>())
             {
-                var layer = p.SelectedLayer;
-                if (layer != null)
+                var ds = p.Datasource;
+                if (ds != null)
                 {
-                    layer.Source.Callback = callback;
+                    ds.Callback = callback;
                 }
             }
         }
@@ -230,7 +223,8 @@ namespace MW5.Tools.Helpers
         {
             foreach (var p in _list.OfType<LayerParameterBase>())
             {
-                if (!p.SelectedLayer.Opened)
+                var info = p.Value as ILayerInfo;
+                if ( info.CloseAfterRun)
                 {
                     var layer = p.ToolProperty.GetValue(_tool) as ILayerSource;
                     if (layer != null)

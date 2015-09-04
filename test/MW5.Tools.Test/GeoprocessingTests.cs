@@ -10,6 +10,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Test.Properties;
 using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
 using NUnit.Framework;
@@ -63,7 +64,7 @@ namespace MW5.Tools.Test
             var tool = new RandomPointsTool
                            {
                                NumPoints = numPoints,
-                               InputLayer = fs,
+                               InputLayer = new LayerInfo(fs),
                                OutputLayer = new OutputLayerInfo { MemoryLayer = true }
                            };
 

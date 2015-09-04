@@ -9,19 +9,17 @@ namespace MW5.Tools.Model.Parameters
 {
     public class OutputLayerParameter: BaseParameter
     {
-        /// <summary>
-        /// Gets a value indicating whether value.
-        /// </summary>
+        public LayerType LayerType { get; set; }
+
         public OutputLayerInfo GetValue()
         {
-            return Control.GetValue() as OutputLayerInfo;
+            return Value as OutputLayerInfo;
         }
-
-        public LayerType LayerType { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0}: {1}", DisplayName, GetValue().Name);
+            var info = GetValue();
+            return string.Format("{0}: {1}", DisplayName, info != null ? info.Name : string.Empty);
         }
     }
 }

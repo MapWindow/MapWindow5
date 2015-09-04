@@ -5,6 +5,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Database
@@ -13,7 +14,7 @@ namespace MW5.Tools.Tools.Database
     public class ImportLayerTool : GisTool
     {
         [Input("Input layer", 0)]
-        public VectorLayerInfo InputLayer { get; set; }
+        public IVectorLayerInfo InputLayer { get; set; }
 
         [Input("Database", 1, false, ParameterType.Combo)]
         public DatabaseConnection Database { get; set; }
@@ -43,8 +44,10 @@ namespace MW5.Tools.Tools.Database
             get { return "Imports layer in the geodatabase."; }
         }
 
-        protected override void Configure(ToolConfiguration configuration, IAppContext context)
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
+            base.Configure(context, configuration);
+
             configuration.Get<ImportLayerTool>()
                 .AddComboList(t => t.Database, context.Repository.Connections);
         }

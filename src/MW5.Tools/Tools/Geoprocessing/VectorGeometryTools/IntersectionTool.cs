@@ -13,6 +13,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
@@ -20,10 +21,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class IntersectionTool : GisTool
     {
         [Input("First layer", 0)]
-        public VectorLayerInfo InputLayer { get; set; }
+        public IVectorLayerInfo InputLayer { get; set; }
 
         [Input("Second layer", 1)]
-        public VectorLayerInfo InputLayer2 { get; set; }
+        public IVectorLayerInfo InputLayer2 { get; set; }
 
         [Output("Save results as", "intersection", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }

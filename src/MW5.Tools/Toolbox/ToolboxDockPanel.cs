@@ -11,6 +11,9 @@ using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
+using MW5.Shared;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Views;
 using MW5.UI.Controls;
@@ -43,6 +46,8 @@ namespace MW5.Tools.Toolbox
             _tree.ToolClicked += OnToolClicked;
         }
 
+
+
         private void OnToolClicked(object sender, ToolboxToolEventArgs e)
         {
             if (e.Tool == null) return;
@@ -51,22 +56,32 @@ namespace MW5.Tools.Toolbox
             // therefore a new instance is created; it's expected that it must have default empty constructor
             var newTool = Activator.CreateInstance(e.Tool.GetType()) as IGisTool;
 
+            if (newTool == null)
+            {
+                Logger.Current.Warn("Failed to instantiate tool: " + e.Tool.Name);
+                return;
+            }
+
+            newTool.Initialize(_context);   
+
             var tool = newTool as GisTool;
             if (tool != null)
             {
-                var model = new ToolViewModel(tool);
-                if (_context.Container.Run<ToolPresenter, ToolViewModel>(model))
+                var presenter = tool.GetPresenter(_context);
+
+                if (presenter != null)
                 {
-                    _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
+                    var model = new ToolViewModel(tool);
+                    if (presenter.Run(model))
+                    {
+                        _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
+                    }
                 }
             }
             else
             {
-                if (newTool != null)
-                {
-                    newTool.Initialize(_context);
-                    newTool.Run(null); // tool doesn't have UI or have an embedded  UI
-                }
+               // tool doesn't have UI or have an embedded  UI
+                newTool.Run(null); 
             }
         }
 

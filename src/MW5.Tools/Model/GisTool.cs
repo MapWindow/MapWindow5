@@ -105,9 +105,7 @@ namespace MW5.Tools.Model
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
 
-            Parameters.Initialize(context);
-
-            Configure(_config, context);
+            Configure(_context, _config);
 
             var builder = new ToolBuilder();
             builder.Build(_config, Parameters);
@@ -126,9 +124,9 @@ namespace MW5.Tools.Model
             return true;
         }
 
-        protected virtual void Configure(ToolConfiguration configuration, IAppContext context)
+        protected virtual void Configure(IAppContext context, ToolConfiguration configuration)
         {
-            // do nothing, should be overriden if necessary
+            configuration.AddLayers(context.Layers);
         }
 
         internal bool Validate()

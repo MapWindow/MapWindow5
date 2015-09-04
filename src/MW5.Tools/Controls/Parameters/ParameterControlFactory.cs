@@ -1,6 +1,7 @@
 ﻿using System;
 using MW5.Plugins.Services;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -59,7 +60,7 @@ namespace MW5.Tools.Controls.Parameters
             else if (parameter is LayerParameterBase)
             {
                 var lp = parameter as LayerParameterBase;
-                control = new LayerParameterControl(lp.Layers, lp.DataSourceType, _dialogService);
+                control = new LayerParameterControl(lp.DataSourceType, _dialogService);
             }
 
             if (control == null)
@@ -67,7 +68,7 @@ namespace MW5.Tools.Controls.Parameters
                 throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
             }
 
-            var value = parameter.GetDefaultValue();
+            var value = parameter.DefaultValue;
             if (value != null)
             {
                 control.SetValue(value);

@@ -13,6 +13,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
@@ -21,7 +22,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class AggregateShapesTool : GisTool
     {
         [Input("Input layer", 0)]
-        public VectorLayerInfo InputLayer { get; set; }
+        public IVectorLayerInfo InputLayer { get; set; }
 
         [Input("Field", 1, false, ParameterType.Field)]
         public int FieldIndex { get; set; }
@@ -29,8 +30,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("Save results as", @"aggregate", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
-        protected override void Configure(ToolConfiguration configuration, IAppContext context)
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
+            base.Configure(context, configuration);
+
             configuration.Get<AggregateShapesTool>()
                 .AddField(t => t.InputLayer, t => t.FieldIndex);
         }

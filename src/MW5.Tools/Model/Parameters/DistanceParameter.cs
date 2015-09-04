@@ -12,12 +12,8 @@ namespace MW5.Tools.Model.Parameters
     {
         public override string ToString()
         {
-            return string.Format("{0}: {1:g3}", DisplayName, Value.Value);
-        }
-
-        public new Distance Value
-        {
-            get { return Control.GetValue() as Distance; }
+            var distance = Value as Distance;
+            return string.Format("{0}: {1:g3}", DisplayName, (distance != null) ? distance.Value : 0.0);
         }
     }
 }

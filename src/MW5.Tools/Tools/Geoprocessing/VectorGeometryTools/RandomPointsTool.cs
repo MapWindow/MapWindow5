@@ -17,18 +17,20 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
+using MW5.Tools.Views.Custom;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer, typeof(RandomPointsPresenter))]  
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
-        public ILayerSource InputLayer { get; set; }
+        public ILayerInfo InputLayer { get; set; }
 
         [Input("Number of points", 1)]
         [Range(1, 1000000)]
@@ -37,8 +39,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("New layer name", "random points", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
 
-        protected override void Configure(ToolConfiguration configuration, IAppContext context)
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
+            base.Configure(context, configuration);
+
             configuration.Get<RandomPointsTool>()
                 .SetDefault(t => t.NumPoints, 500);
         }
@@ -67,10 +71,12 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             Log.Debug("Creating {0} random points", NumPoints);
 
-            var fs = new FeatureSet(GeometryType.Point);
-            fs.Projection.CopyFrom(InputLayer.Projection);
+            var ds = InputLayer.Datasource;
 
-            var envelop = InputLayer.Envelope;
+            var fs = new FeatureSet(GeometryType.Point);
+            fs.Projection.CopyFrom(ds.Projection);
+
+            var envelop = ds.Envelope;
             var random = new Random();
             var progressValue = 0;
             var progressStep = NumPoints / 100;

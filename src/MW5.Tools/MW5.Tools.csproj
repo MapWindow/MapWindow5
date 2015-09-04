@@ -84,7 +84,14 @@
     </Compile>
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
+    <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\Layers\ILayerInfo.cs" />
+    <Compile Include="Model\Layers\IRasterLayerInfo.cs" />
+    <Compile Include="Model\Layers\IVectorLayerInfo.cs" />
+    <Compile Include="Model\Layers\LayerInfo.cs" />
+    <Compile Include="Model\Parameters\ISupportsValidation.cs" />
+    <Compile Include="Model\Layers\RasterLayerInfo.cs" />
     <Compile Include="Services\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
@@ -96,19 +103,18 @@
     <Compile Include="Model\Parameters\FieldParameter.cs" />
     <Compile Include="Model\Parameters\ParameterFactory.cs" />
     <Compile Include="Model\TaskCollection.cs" />
-    <Compile Include="Model\LayerWrapper.cs" />
+    <Compile Include="Model\Layers\LayerWrapper.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
     <Compile Include="Model\InputAttribute.cs" />
     <Compile Include="Model\Parameters\DoubleParameter.cs" />
     <Compile Include="Model\Parameters\IntegerParameter.cs" />
-    <Compile Include="Model\Parameters\LayerParameter.cs" />
+    <Compile Include="Model\Parameters\Layers\GenericLayerParameter.cs" />
     <Compile Include="Model\Parameters\NumericParameter.cs" />
     <Compile Include="Model\Parameters\OutputLayerParameter.cs" />
-    <Compile Include="Model\Parameters\RasterLayerParameter.cs" />
-    <Compile Include="Model\Parameters\ValueParameter.cs" />
-    <Compile Include="Model\Parameters\VectorLayerParameter.cs" />
+    <Compile Include="Model\Parameters\Layers\RasterLayerParameter.cs" />
+    <Compile Include="Model\Parameters\Layers\VectorLayerParameter.cs" />
     <Compile Include="Model\TaskHandle.cs" />
-    <Compile Include="Model\VectorLayerInfo.cs" />
+    <Compile Include="Model\Layers\VectorLayerInfo.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
     <Compile Include="Helpers\ParameterCollection.cs" />
@@ -190,7 +196,7 @@
     <Compile Include="Model\Parameters\BooleanParameter.cs" />
     <Compile Include="Model\GisToolAttribute.cs" />
     <Compile Include="Model\GisTool.cs" />
-    <Compile Include="Model\Parameters\LayerParameterBase.cs" />
+    <Compile Include="Model\Parameters\Layers\LayerParameterBase.cs" />
     <Compile Include="Model\Parameters\OptionsParameter.cs" />
     <Compile Include="Model\Parameters\StringParameter.cs" />
     <Compile Include="Model\Parameters\BaseParameter.cs" />
@@ -199,6 +205,14 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Custom\IRandomPointsView.cs" />
+    <Compile Include="Views\Custom\RandomPointsPresenter.cs" />
+    <Compile Include="Views\Custom\RandomPointsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Custom\RandomPointsView.Designer.cs">
+      <DependentUpon>RandomPointsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\ITaskLogView.cs" />
     <Compile Include="Views\TaskNodeWrapper.cs" />
@@ -299,6 +313,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Custom\RandomPointsView.resx">
+      <DependentUpon>RandomPointsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TaskLogView.resx">
       <DependentUpon>TaskLogView.cs</DependentUpon>

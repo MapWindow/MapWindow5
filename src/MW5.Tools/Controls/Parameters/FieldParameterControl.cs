@@ -8,6 +8,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Properties;
 
@@ -44,7 +45,7 @@ namespace MW5.Tools.Controls.Parameters
 
         public void OnLayerChanged(LayerWrapper layer)
         {
-            RebuildFieldList(layer.FeatureSet);
+            RebuildFieldList(layer != null ? layer.FeatureSet : null);
         }
 
         public override string Caption
@@ -57,9 +58,12 @@ namespace MW5.Tools.Controls.Parameters
         {
             comboBoxAdv1.Items.Clear();
 
-            foreach (var fld in fs.Fields)
-            {
-                comboBoxAdv1.Items.Add(fld);
+            if (fs != null)
+            { 
+                foreach (var fld in fs.Fields)
+                {
+                    comboBoxAdv1.Items.Add(fld);
+                }
             }
 
             if (comboBoxAdv1.Items.Count > 0)
