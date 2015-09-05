@@ -27,14 +27,14 @@ namespace MW5.Tools.Model
             get { return _tasks.Count; }
         }
 
-        public void AddTask(IGisTask task)
+        public void Add(IGisTask task)
         {
-            task.StatusChanged += (s, e) => FireTaskChanged(s as IGisTask, TaskEvent.StatusChanged);
+            task.StatusChanged += (s, e) => FireTaskChanged(e.Task, TaskEvent.StatusChanged);
             _tasks.Add(task);
             FireTaskChanged(task, TaskEvent.Added);
         }
 
-        public void RemoveTask(IGisTask task)
+        public void Remove(IGisTask task)
         {
             _tasks.Remove(task);
             FireTaskChanged(task, TaskEvent.Removed);
@@ -51,7 +51,7 @@ namespace MW5.Tools.Model
                         var task = _tasks[i];
                         if (task.IsFinished)
                         {
-                            RemoveTask(task);
+                            Remove(task);
                         }
                     }
                 }

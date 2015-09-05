@@ -12,6 +12,7 @@ using MW5.Tools.Model;
 using MW5.Tools.Services;
 using MW5.Tools.Views;
 using MW5.Tools.Views.Custom;
+using MW5.Tools.Views.Custom.Abstract;
 
 namespace MW5.Tools
 {
@@ -29,6 +30,7 @@ namespace MW5.Tools
             container.RegisterView<IToolView, ToolView>()
                 .RegisterView<ITaskLogView, TaskLogView>()
                 .RegisterView<IRandomPointsView, RandomPointsView>()
+                .RegisterView<ILongExecutionView, LongExecutionView>()
                 .RegisterSingleton<ITaskCollection, TaskCollection>()
                 .RegisterService<ParameterControlFactory>()
                 .RegisterService<ParameterControlGenerator>()

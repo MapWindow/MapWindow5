@@ -117,7 +117,7 @@
     <Compile Include="Model\Layers\VectorLayerInfo.cs" />
     <Compile Include="Services\EmptyProgress.cs" />
     <Compile Include="Services\EventProgress.cs" />
-    <Compile Include="Helpers\ParameterCollection.cs" />
+    <Compile Include="Model\ParameterCollection.cs" />
     <Compile Include="Services\LayerEventArgs.cs" />
     <Compile Include="Services\OutputManager.cs" />
     <Compile Include="Services\ToolBuilder.cs" />
@@ -206,8 +206,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Custom\IRandomPointsView.cs" />
+    <Compile Include="Views\Custom\Abstract\ILongExecutionView.cs" />
+    <Compile Include="Views\Custom\Abstract\IRandomPointsView.cs" />
+    <Compile Include="Views\Custom\LongExecutionPresenter.cs" />
     <Compile Include="Views\Custom\RandomPointsPresenter.cs" />
+    <Compile Include="Views\Custom\LongExecutionView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Custom\LongExecutionView.Designer.cs">
+      <DependentUpon>LongExecutionView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Custom\RandomPointsView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -313,6 +321,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Custom\LongExecutionView.resx">
+      <DependentUpon>LongExecutionView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Custom\RandomPointsView.resx">
       <DependentUpon>RandomPointsView.cs</DependentUpon>

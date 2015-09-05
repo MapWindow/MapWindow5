@@ -102,6 +102,7 @@
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Events\ProgressEventArgs.cs" />
     <Compile Include="Events\RenderedEventArgs.cs" />
+    <Compile Include="Events\TaskStatusChangedEventArgs.cs" />
     <Compile Include="Events\TaskEventArgs.cs" />
     <Compile Include="Events\ToolboxGroupEventArgs.cs" />
     <Compile Include="Events\ToolboxToolEventArgs.cs" />

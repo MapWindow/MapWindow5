@@ -48,11 +48,6 @@ namespace MW5.Views
             view.PageShown += OnPageShown;
         }
 
-        public override void Initialize()
-        {
-            
-        }
-
         public override void RunCommand(ConfigCommand command)
         {
             switch (command)

@@ -35,7 +35,7 @@ namespace MW5.Views
                 Model.BuildDefaultOverviews(View.Sampling);
             }
             
-            Success = Result != DialogResult.Cancel;
+            ReturnValue = Result != DialogResult.Cancel;
             View.Close();
         }
 

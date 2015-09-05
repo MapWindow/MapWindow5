@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Interfaces;
+﻿using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 
-namespace MW5.Tools.Views.Custom
+namespace MW5.Tools.Views.Custom.Abstract
 {
     public interface IRandomPointsView: IView<ToolViewModel>
     {

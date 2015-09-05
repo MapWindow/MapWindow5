@@ -1,14 +1,16 @@
 ﻿using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Threading;
+using MW5.Tools.Views.Custom;
 
 namespace MW5.Tools.Tools.Fake
 {
-    [GisTool(GroupKeys.Fake)]
+    [GisTool(GroupKeys.Fake, ToolIcon.ToolDefault, typeof(LongExecutionPresenter))]
     public class LongExecutionTool: GisTool
     {
         [Input("Seconds per step (100 steps)", 0), DefaultValue(0.1), Range(0.1, 5.0)]

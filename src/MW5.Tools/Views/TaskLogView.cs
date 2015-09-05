@@ -107,7 +107,7 @@ namespace MW5.Tools.Views
             textBoxExt1.SafeInvoke(action);
         }
 
-        private void OnTaskStatusChanged(object sender, EventArgs e)
+        private void OnTaskStatusChanged(object sender, TaskStatusChangedEventArgs e)
         {
             this.SafeInvoke(UpdateView);
         }
@@ -184,14 +184,14 @@ namespace MW5.Tools.Views
 
         private void DetachProgressHandlers()
         {
-            var progress = Model.TaskProgress;
+            var progress = Model.Progress;
             progress.ProgressChanged -= OnProgressChanged;
             progress.Hide -= OnProgressHide;
         }
 
         private void AttachProgressHandlers()
         {
-            var progress = Model.TaskProgress;
+            var progress = Model.Progress;
             progress.ProgressChanged += OnProgressChanged;
             progress.Hide += OnProgressHide;
         }

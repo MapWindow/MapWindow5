@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
+using MW5.Tools.Views.Custom.Abstract;
 using MW5.UI.Forms;
 
 namespace MW5.Tools.Views.Custom

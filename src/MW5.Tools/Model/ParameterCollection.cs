@@ -6,17 +6,14 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
-using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
-using MW5.Tools.Services;
 
-namespace MW5.Tools.Helpers
+namespace MW5.Tools.Model
 {
     /// <summary>
     /// Builds list of parameters for the tool via reflection.
@@ -115,9 +112,12 @@ namespace MW5.Tools.Helpers
             }
         }
 
+        /// <summary>
+        /// Copies values from UI controls to the properties of the tool.
+        /// </summary>
         public void Apply()
         {
-            foreach (var p in _list)
+            foreach (var p in _list.Where(p => p.Control != null))
             {
                 p.ToolProperty.SetValue(_tool, p.Value);
             }

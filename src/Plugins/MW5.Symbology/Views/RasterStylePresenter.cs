@@ -153,7 +153,7 @@ namespace MW5.Plugins.Symbology.Views
             return Apply();
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             _raster = Model.ImageSource as IRasterSource;
         }

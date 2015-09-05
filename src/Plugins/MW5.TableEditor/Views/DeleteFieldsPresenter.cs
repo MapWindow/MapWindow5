@@ -40,10 +40,5 @@ namespace MW5.Plugins.TableEditor.Views
 
             return false;
         }
-
-        public override void Initialize()
-        {
-            
-        }
     }
 }

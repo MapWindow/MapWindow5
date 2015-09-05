@@ -21,10 +21,6 @@ namespace MW5.Plugins.Symbology.Views
             _view = view;
         }
 
-        public override void Initialize()
-        {
-        }
-
         public RasterColorScheme ColorScheme
         {
             get

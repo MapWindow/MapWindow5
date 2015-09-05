@@ -27,13 +27,13 @@ namespace MW5.Tools.Views
             _context = context;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             View.GenerateControls(Model.Tool.Parameters);
         }
 
         /// <summary>
-        /// The view ok clicked.
+        /// A handler for the IView.OkButton.Click event. View will be closed if the method returns true.
         /// </summary>
         public override bool ViewOkClicked()
         {
@@ -49,13 +49,13 @@ namespace MW5.Tools.Views
             if (View.RunInBackground)
             {
                 // no progress / log dialog will be shown, so start tracking at once
-                _context.Tasks.AddTask(task);
+                _context.Tasks.Add(task);
             }
 
             task.RunAsync();
 
             // on success a log window will be opened immediately
-            Success = !View.RunInBackground;
+            ReturnValue = !View.RunInBackground;
 
             View.Close();
 

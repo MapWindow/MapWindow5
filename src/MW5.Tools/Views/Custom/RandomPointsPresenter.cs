@@ -8,6 +8,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
+using MW5.Tools.Views.Custom.Abstract;
 
 namespace MW5.Tools.Views.Custom
 {
@@ -31,9 +32,12 @@ namespace MW5.Tools.Views.Custom
             tool.InputLayer = new LayerInfo(View.Input);
             tool.OutputLayer = new Model.OutputLayerInfo() { Name = View.OutputName, MemoryLayer = true, AddToMap = true };
 
-            var task = Model.CreateTask();
+            if (!tool.Validate())
+            {
+                return false;
+            }
 
-            _context.Tasks.AddTask(task);
+            var task = Model.CreateTask();
 
             task.RunAsync();
 

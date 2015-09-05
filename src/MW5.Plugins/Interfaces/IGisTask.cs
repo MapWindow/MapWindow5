@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Shared.Log;
 
 namespace MW5.Plugins.Interfaces
 {
-    public interface IGisTask: IApplicationCallback
+    public interface IGisTask
     {
         IGisTool Tool { get; }
 
@@ -37,11 +38,11 @@ namespace MW5.Plugins.Interfaces
 
         void TogglePause();
 
-        event EventHandler StatusChanged;
+        event EventHandler<TaskStatusChangedEventArgs> StatusChanged;
 
         /// <summary>
         /// Reports progress of task.
         /// </summary>
-        ITaskProgress TaskProgress { get; }
+        ITaskProgress Progress { get; }
     }
 }

@@ -89,7 +89,7 @@ namespace MW5.Tools.Views
                             var task = View.SelectedTask;
                             if (task != null)
                             {
-                                _tasks.RemoveTask(task);
+                                _tasks.Remove(task);
                             }
                         }
                         break;

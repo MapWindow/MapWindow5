@@ -1,5 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="BasePresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
@@ -11,23 +15,50 @@ namespace MW5.Plugins.Mvp
     public abstract class BasePresenter<TView> : IPresenter
         where TView : IView
     {
-        public TView View { get; private set; }
-
-        public bool Success { get; protected set; }
-
-        public Form ViewAsForm
-        {
-            get { return View as Form;  }
-        }
-
         protected BasePresenter(TView view)
         {
             View = view;
             View.OkClicked += OnViewOkClicked;
+
             if (View.OkButton != null)
             {
                 View.OkButton.Click += (s, e) => OnViewOkClicked();
             }
+        }
+
+        /// <summary>
+        /// Gets the view associated with presenter.
+        /// </summary>
+        public TView View { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the boolean value returned by Presenter.Run method.
+        /// </summary>
+        public bool ReturnValue { get; protected set; }
+
+        /// <summary>
+        /// Runs the presenter by displaying the view associated with it.
+        /// </summary>
+        public bool Run(IWin32Window parent = null)
+        {
+            View.ShowView(parent);
+            return ReturnValue;
+        }
+
+        /// <summary>
+        /// A handler for the IView.OkButton.Click event. 
+        /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
+        /// If the method return false, no actions are taken, so View.Close, presenter.ReturnValue
+        /// should be called / set manually.
+        /// </summary>
+        public abstract bool ViewOkClicked();
+
+        /// <summary>
+        /// Gets the handler of the underlying window for the view.
+        /// </summary>
+        public IWin32Window ViewHandle
+        {
+            get { return View as IWin32Window; }
         }
 
         private void OnViewOkClicked()
@@ -37,21 +68,8 @@ namespace MW5.Plugins.Mvp
             if (ViewOkClicked())
             {
                 View.Close();
-                Success = true;
+                ReturnValue = true;
             }
-        }
-
-        public bool Run(IWin32Window parent = null)
-        {
-            View.ShowView(parent);
-            return Success;
-        }
-
-        public abstract bool ViewOkClicked();
-
-        public IWin32Window ViewHandle
-        {
-            get { return View as IWin32Window; }
         }
     }
 
@@ -61,32 +79,42 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TView">The type of the view.</typeparam>
     /// <typeparam name="TModel">The type of the argument.</typeparam>
     public abstract class BasePresenter<TView, TModel> : BasePresenter<TView>, IPresenter<TModel>
-        where TView : IView<TModel>
-        where TModel: class
+        where TView : IView<TModel> 
+        where TModel : class
     {
-        protected TModel _model;
+        private TModel _model;
 
         protected BasePresenter(TView view)
             : base(view)
         {
-
         }
 
+        /// <summary>
+        /// Gets the view model object shared by presenter and view.
+        /// </summary>
         public TModel Model
         {
             get { return _model; }
         }
 
+        /// <summary>
+        /// Runs the presenter by displaying the view associated with it.
+        /// </summary>
         public bool Run(TModel argument, IWin32Window parent = null)
         {
             Init(argument);
+
             View.ShowView(parent);
-            return Success;
+
+            return ReturnValue;
         }
 
-        public virtual void Initialize()
+        /// <summary>
+        /// Is called after Presenter.Model is set. Should be overridden to provide any model specific initialization.
+        /// </summary>
+        protected virtual void Initialize()
         {
-
+            
         }
 
         private void Init(TModel model)
@@ -96,6 +124,7 @@ namespace MW5.Plugins.Mvp
             _model = model;
 
             View.InitInternal(model);
+
             (View as IView<TModel>).Initialize();
 
             Initialize();

@@ -8,6 +8,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Shared.Log;
@@ -15,7 +16,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
 {
-    internal class GisTask : IGisTask
+    internal class GisTask : IGisTask, IApplicationCallback
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
@@ -29,7 +30,7 @@ namespace MW5.Tools.Model
             Status = GisTaskStatus.NotStarted;
         }
 
-        public event EventHandler StatusChanged;
+        public event EventHandler<TaskStatusChangedEventArgs> StatusChanged;
 
         public bool IsFinished
         {
@@ -123,7 +124,7 @@ namespace MW5.Tools.Model
 
         public bool Run(CancellationToken cancellationToken)
         {
-            var handle = new TaskHandle(TaskProgress, _cancellationTokenSource.Token, _pauseEvent, this);
+            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent, this);
 
             return Tool.Run(handle);
         }
@@ -184,7 +185,7 @@ namespace MW5.Tools.Model
                         }, TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        public ITaskProgress TaskProgress
+        public ITaskProgress Progress
         {
             get { return _progress ?? (_progress = new EventProgress()); }
             set
@@ -205,12 +206,12 @@ namespace MW5.Tools.Model
             // to pause, for others additional check won't affect the performance much
             _pauseEvent.WaitOne();
 
-            TaskProgress.Update(message, percent);
+            Progress.Update(message, percent);
         }
 
         void IApplicationCallback.ClearProgress()
         {
-            TaskProgress.Clear();
+            Progress.Clear();
         }
 
         bool IApplicationCallback.CheckAborted()
@@ -227,7 +228,7 @@ namespace MW5.Tools.Model
             var handler = StatusChanged;
             if (handler != null)
             {
-                handler(this, new EventArgs());
+                handler(this, new TaskStatusChangedEventArgs(this));
             }
         }
     }

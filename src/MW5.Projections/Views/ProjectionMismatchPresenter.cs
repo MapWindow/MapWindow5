@@ -24,9 +24,14 @@ namespace MW5.Projections.Views
             ViewAsForm.FormClosed += OnFormClosed;
         }
 
+        private Form ViewAsForm
+        {
+            get { return View as Form; }
+        }
+
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
-            Success = ViewAsForm.DialogResult == DialogResult.OK;
+            ReturnValue = ViewAsForm.DialogResult == DialogResult.OK;
         }
 
         private void OnDetailsClicked()

@@ -27,11 +27,6 @@ namespace MW5.Plugins.TableEditor.Views
             View.JoinDoubleClicked += () => RunCommand(JoinsCommand.EditJoin);
         }
 
-        public override void Initialize()
-        {
-            
-        }
-
         public override void RunCommand(JoinsCommand command)
         {
             switch (command)

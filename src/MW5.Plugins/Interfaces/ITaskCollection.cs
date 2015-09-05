@@ -6,9 +6,9 @@ namespace MW5.Plugins.Interfaces
 {
     public interface ITaskCollection: IEnumerable<IGisTask>
     {
-        void AddTask(IGisTask task);
+        void Add(IGisTask task);
 
-        void RemoveTask(IGisTask task);
+        void Remove(IGisTask task);
 
         int Count { get; }
 

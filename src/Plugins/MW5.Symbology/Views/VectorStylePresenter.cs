@@ -47,11 +47,6 @@ namespace MW5.Plugins.Symbology.Views
             get { return View as IWin32Window; }
         }
 
-        public override void Initialize()
-        {
-            
-        }
-
         public override void RunCommand(VectorStyleCommand command)
         {
             switch (command)

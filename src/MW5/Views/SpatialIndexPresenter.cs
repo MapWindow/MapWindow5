@@ -32,7 +32,7 @@ namespace MW5.Views
 
         private void OnButtonClicked()
         {
-            Success = Result != DialogResult.Cancel;
+            ReturnValue = Result != DialogResult.Cancel;
             View.Close();
         }
 

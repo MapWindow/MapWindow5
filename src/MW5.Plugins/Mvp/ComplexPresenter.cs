@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ComplexPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
 
 namespace MW5.Plugins.Mvp
@@ -14,25 +15,47 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TView">The type of the view.</typeparam>
     /// <typeparam name="TCommand">The type of the command.</typeparam>
     public abstract class ComplexPresenter<TView, TCommand> : CommandDispatcher<TView, TCommand>, IPresenter
-        where TCommand : struct, IConvertible
-        where TView : IView, IMenuProvider
+        where TCommand : struct, IConvertible where TView : IView, IMenuProvider
     {
         protected ComplexPresenter(TView view)
             : base(view)
         {
             View.OkClicked += OnViewOkClickedCore;
+
             if (View.OkButton != null)
             {
                 View.OkButton.Click += (s, e) => OnViewOkClickedCore();
             }
         }
 
-        public bool Success { get; protected set; }
+        /// <summary>
+        /// Gets or sets the boolean value returned by Presenter.Run method.
+        /// </summary>
+        public bool ReturnValue { get; protected set; }
 
+        /// <summary>
+        /// Runs the presenter by displaying the view associated with it.
+        /// </summary>
         public bool Run(IWin32Window parent = null)
         {
             View.ShowView(parent);
-            return Success;
+            return ReturnValue;
+        }
+
+        /// <summary>
+        /// A handler for the IView.OkButton.Click event. 
+        /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
+        /// If the method return false, no actions are taken, so View.Close, presenter.ReturnValue
+        /// should be called / set manually.
+        /// </summary>
+        public abstract bool ViewOkClicked();
+
+        /// <summary>
+        /// Gets the handler of the underlying window for the view.
+        /// </summary>
+        public IWin32Window ViewHandle
+        {
+            get { return View as IWin32Window; }
         }
 
         private void OnViewOkClickedCore()
@@ -42,15 +65,8 @@ namespace MW5.Plugins.Mvp
             if (ViewOkClicked())
             {
                 View.Close();
-                Success = true;
+                ReturnValue = true;
             }
-        }
-
-        public abstract bool ViewOkClicked();
-
-        public IWin32Window ViewHandle
-        {
-            get { return View as IWin32Window; }
         }
     }
 
@@ -61,37 +77,55 @@ namespace MW5.Plugins.Mvp
     /// <typeparam name="TCommand">The type of the command.</typeparam>
     /// <typeparam name="TModel">The type of the argument.</typeparam>
     public abstract class ComplexPresenter<TView, TCommand, TModel> : ComplexPresenter<TView, TCommand>, IPresenter<TModel>
-        where TCommand : struct, IConvertible
+        where TCommand : struct, IConvertible 
         where TView : IView<TModel>, IMenuProvider
+        where TModel : class
     {
-        protected TModel _model;
+        private TModel _model;
 
         protected ComplexPresenter(TView view)
             : base(view)
         {
         }
 
-        public TModel Model
+        /// <summary>
+        /// Gets the view model object shared by presenter and view.
+        /// </summary>
+        protected TModel Model
         {
             get { return _model; }
         }
 
+        /// <summary>
+        /// Runs the presenter by displaying the view associated with it.
+        /// </summary>
         public bool Run(TModel argument, IWin32Window parent = null)
         {
             Init(argument);
+
             View.ShowView(parent);
-            return Success;
+
+            return ReturnValue;
         }
 
-        public abstract void Initialize();
+        /// <summary>
+        /// Is called after Presenter.Model is set. Should be overridden to provide any model specific initialization.
+        /// </summary>
+        protected virtual void Initialize()
+        {
+            
+        }
 
         private void Init(TModel model)
         {
             if (model == null) return;
-            
+
             _model = model;
+
             View.InitInternal(model);
+
             (View as IView<TModel>).Initialize();
+
             Initialize();
         }
     }

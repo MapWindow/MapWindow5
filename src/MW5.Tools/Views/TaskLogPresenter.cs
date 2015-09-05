@@ -41,7 +41,7 @@ namespace MW5.Tools.Views
             if (_context.Tasks.All(t => t != Model))
             {
                 // if task haven't been added to the list yet, correct it
-                _context.Tasks.AddTask(Model);
+                _context.Tasks.Add(Model);
             }
 
             return true;
