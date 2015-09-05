@@ -36,7 +36,7 @@ namespace MW5.Plugins.Interfaces
         /// Adds tools to the toolbox choosing their groups based on GisToolAttribute.
         /// </summary>
         /// <param name="tools">The tools.</param>
-        void AddTools(IEnumerable<IGisTool> tools);
+        void AddTools(IEnumerable<ITool> tools);
     }
 }
 

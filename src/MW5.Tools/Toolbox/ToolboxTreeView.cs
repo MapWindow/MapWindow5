@@ -40,9 +40,9 @@ namespace MW5.Tools.Toolbox
             yield return Resources.img_tool;
         }
 
-        public IGisTool SelectedTool
+        public ITool SelectedTool
         {
-            get { return SelectedNode.Tag as IGisTool; }
+            get { return SelectedNode.Tag as ITool; }
         }
 
         private void OnPrepareToolTip(object sender, ToolTipEventArgs e)
@@ -72,7 +72,7 @@ namespace MW5.Tools.Toolbox
                 return;
             }
 
-            var tool = SelectedNode.Tag as IGisTool;
+            var tool = SelectedNode.Tag as ITool;
             if (tool != null)
             {
                 FireToolSelected(tool);
@@ -96,7 +96,7 @@ namespace MW5.Tools.Toolbox
                 return;
             }
 
-            var tool = node.Tag as IGisTool;
+            var tool = node.Tag as ITool;
             if (tool != null)
             {
                 FireToolClicked(tool);
@@ -108,12 +108,12 @@ namespace MW5.Tools.Toolbox
             return node.Tag is ToolboxGroupMetadata;
         }
 
-        private void FireToolClicked(IGisTool tool)
+        private void FireToolClicked(ITool tool)
         {
             FireEvent(ToolClicked, new ToolboxToolEventArgs(tool));
         }
 
-        private void FireToolSelected(IGisTool tool)
+        private void FireToolSelected(ITool tool)
         {
             FireEvent(ToolSelected, new ToolboxToolEventArgs(tool));
         }

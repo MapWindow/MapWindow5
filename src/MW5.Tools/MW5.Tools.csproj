@@ -76,6 +76,7 @@
     <Compile Include="Controls\Parameters\FieldParameterControl.Designer.cs">
       <DependentUpon>FieldParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Parameters\IParameterControl.cs" />
     <Compile Include="Controls\ProgressBarWrapper.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -86,12 +87,15 @@
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\IParametrizedTool.cs" />
     <Compile Include="Model\Layers\ILayerInfo.cs" />
     <Compile Include="Model\Layers\IRasterLayerInfo.cs" />
     <Compile Include="Model\Layers\IVectorLayerInfo.cs" />
     <Compile Include="Model\Layers\LayerInfo.cs" />
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
     <Compile Include="Model\Layers\RasterLayerInfo.cs" />
+    <Compile Include="Model\ToolBase.cs" />
+    <Compile Include="Services\EmptyTaskHandle.cs" />
     <Compile Include="Services\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
@@ -164,7 +168,6 @@
     <Compile Include="Controls\Parameters\LayerParameterControl.Designer.cs">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\IParameterControl.cs" />
     <Compile Include="Controls\Parameters\OutputParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

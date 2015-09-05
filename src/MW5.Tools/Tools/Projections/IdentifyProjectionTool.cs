@@ -15,14 +15,14 @@ using MW5.Tools.Properties;
 namespace MW5.Tools.Tools.Projections
 {
     [GisTool(GroupKeys.Projections)]
-    public class IdentifyProjectionTool: IGisTool
+    public class IdentifyProjectionTool: ToolBase
     {
         private IAppContext _context;
 
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public string Name
+        public override string Name
         {
             get { return "Identify projection";  }
         }
@@ -30,7 +30,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public string Description
+        public override string Description
         {
             get { return "Identifies projection as one of the well known from the projection string provided by user."; }
         }
@@ -38,7 +38,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public bool Run(ITaskHandle task)
+        public override bool Run()
         {
             using (var form = new IdentifyProjectionForm(_context))
             {
@@ -49,16 +49,15 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public PluginIdentity PluginIdentity
+        public override PluginIdentity PluginIdentity
         {
-            // TODO: return correct identity
             get { return PluginIdentity.Default; }
         }
 
         /// <summary>
         /// Initializes the tool.
         /// </summary>
-        public void Initialize(IAppContext context)
+        public override void Initialize(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;

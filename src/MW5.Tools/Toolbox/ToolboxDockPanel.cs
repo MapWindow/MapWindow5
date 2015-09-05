@@ -53,34 +53,30 @@ namespace MW5.Tools.Toolbox
 
             // we don't want the same instance of tool to be used by diffent tasks
             // therefore a new instance is created; it's expected that it must have default empty constructor
-            var newTool = Activator.CreateInstance(e.Tool.GetType()) as IGisTool;
+            var tool = Activator.CreateInstance(e.Tool.GetType()) as ITool;
 
-            if (newTool == null)
+            if (tool == null)
             {
                 Logger.Current.Warn("Failed to instantiate tool: " + e.Tool.Name);
                 return;
             }
 
-            newTool.Initialize(_context);   
+            tool.Initialize(_context);
 
-            var tool = newTool as GisTool;
-            if (tool != null)
+            if (tool is IGisTool)
             {
                 var presenter = tool.GetPresenter(_context);
 
-                if (presenter != null)
+                var model = new ToolViewModel(tool as IGisTool);
+                if (presenter.Run(model))
                 {
-                    var model = new ToolViewModel(tool);
-                    if (presenter.Run(model))
-                    {
-                        _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
-                    }
+                    _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
                 }
             }
             else
             {
-               // tool doesn't have UI or have an embedded  UI
-                newTool.Run(null); 
+                // tool doesn't have UI or have an embedded  UI
+                tool.Run(); 
             }
         }
 
@@ -198,7 +194,7 @@ namespace MW5.Tools.Toolbox
             }
         }
 
-        public void AddTools(IEnumerable<IGisTool> tools)
+        public void AddTools(IEnumerable<ITool> tools)
         {
             var groups = Groups;
 

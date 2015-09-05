@@ -1,12 +1,8 @@
-﻿// -------------------------------------------------------------------------------------------
-// <copyright file="IParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
-// </copyright>
-// -------------------------------------------------------------------------------------------
-
-using System;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Services;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -26,6 +22,11 @@ namespace MW5.Tools.Controls.Parameters
         string Caption { get; set; }
 
         /// <summary>
+        /// Gets the name of the parameter.
+        /// </summary>
+        string ParameterName { get; }
+
+        /// <summary>
         /// Gets the value.
         /// </summary>
         object GetValue();
@@ -34,7 +35,5 @@ namespace MW5.Tools.Controls.Parameters
         /// Sets the value.
         /// </summary>
         void SetValue(object value);
-
-        string ParameterName { get; }
     }
 }

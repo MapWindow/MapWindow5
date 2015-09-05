@@ -20,11 +20,11 @@ namespace MW5.Tools.Model
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
-        private readonly GisTool _tool;
+        private readonly IGisTool _tool;
         private ITaskProgress _progress;
         private GisTaskStatus _status;
 
-        public GisTask(GisTool tool)
+        public GisTask(IGisTool tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
             _tool = tool;
@@ -135,7 +135,7 @@ namespace MW5.Tools.Model
 
         public void RunAsync()
         {
-            _tool.SetCallback(this);
+            _tool.Callback = this;
 
             var token = _cancellationTokenSource.Token;
 

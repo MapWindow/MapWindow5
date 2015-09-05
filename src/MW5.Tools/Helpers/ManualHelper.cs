@@ -15,7 +15,7 @@ namespace MW5.Tools.Helpers
     {
         private static bool UseLocalHelpOnly = true;
 
-        public static string LoadManual(this IGisTool tool)
+        public static string LoadManual(this ITool tool)
         {
             string html;
 
@@ -76,13 +76,13 @@ namespace MW5.Tools.Helpers
             return false;
         }
 
-        private static string GetUrl(IGisTool tool)
+        private static string GetUrl(ITool tool)
         {
             // TODO: use real path
             return "http://www.mapwindow.org/Manuals/" + tool.GetType().Name + ".html";
         }
 
-        private static string GetLocalPath(IGisTool tool)
+        private static string GetLocalPath(ITool tool)
         {
             return Application.StartupPath + @"\Manuals\" + tool.GetType().Name + ".html";
         }

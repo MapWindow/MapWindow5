@@ -7,6 +7,7 @@
 using System;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Tools.Model;
 
 namespace MW5.Tools.Views
 {
@@ -29,7 +30,7 @@ namespace MW5.Tools.Views
 
         protected override void Initialize()
         {
-            View.GenerateControls(Model.Tool.Parameters);
+            View.GenerateControls();
         }
 
         /// <summary>
@@ -37,9 +38,9 @@ namespace MW5.Tools.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            var tool = Model.Tool;
+            var tool = Model.Tool as IParametrizedTool;
 
-            if (!tool.Validate())
+            if (tool != null && !tool.Validate())
             {
                 return false;
             }

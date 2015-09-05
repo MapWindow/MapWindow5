@@ -14,7 +14,7 @@ namespace MW5.Tools.Helpers
 {
     public static class ToolHelper
     {
-        public static IPresenter<ToolViewModel> GetPresenter(this GisTool tool, IAppContext context)
+        public static IPresenter<ToolViewModel> GetPresenter(this ITool tool, IAppContext context)
         {
             var attr = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());
             if (attr.PresenterType != null)
@@ -29,20 +29,20 @@ namespace MW5.Tools.Helpers
         /// Gets the reflected tools.
         /// </summary>
         /// <value>stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface</value>
-        public static IEnumerable<IGisTool> GetTools(this Assembly assembly)
+        public static IEnumerable<ITool> GetTools(this Assembly assembly)
         {
-            var type = typeof(IGisTool);
+            var type = typeof(ITool);
 
             var list = assembly.GetTypes()
                         .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
 
             foreach (var item in list)
             {
-                IGisTool tool = null;
+                ITool tool = null;
 
                 try
                 {
-                    tool = Activator.CreateInstance(item) as IGisTool;
+                    tool = Activator.CreateInstance(item) as ITool;
                 }
                 catch (Exception ex)
                 {

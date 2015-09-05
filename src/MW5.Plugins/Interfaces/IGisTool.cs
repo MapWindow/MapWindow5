@@ -1,42 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MW5.Plugins.Concrete;
-using MW5.Shared.Log;
+﻿using MW5.Shared.Log;
 
 namespace MW5.Plugins.Interfaces
 {
     /// <summary>
-    /// A tool from geoprocessing toolbox.
+    /// A tool that can be added to GIS toolbox. 
+    /// Supports tasks / asyncronous execution and automatic UI generation.
     /// </summary>
-    public interface IGisTool
+    public interface IGisTool: ITool
     {
-        /// <summary>
-        /// The name of the tool.
-        /// </summary>
-        string Name { get; }
+        IToolLogger Log { get; }
 
-        /// <summary>
-        /// Description of the tool.
-        /// </summary>
-        string Description { get; }
+        bool SupportsCancel { get; }
 
-        /// <summary>
-        /// Runs the tool.
-        /// </summary>
+        bool AfterRun();
+
         bool Run(ITaskHandle task);
 
-        /// <summary>
-        /// Gets the identity of plugin that created this tool.
-        /// </summary>
-        PluginIdentity PluginIdentity { get; }
+        IApplicationCallback Callback { get; set; }
 
-        /// <summary>
-        /// Initializes the tool.
-        /// </summary>
-        void Initialize(IAppContext context);
+        void CleanUp();
     }
 }

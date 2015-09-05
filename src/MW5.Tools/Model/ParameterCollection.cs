@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
@@ -203,23 +204,12 @@ namespace MW5.Tools.Model
 
         public void CleanUp()
         {
-            ClearCallbacks();
+            SetCallback(null);
+
             CloseDatasources();
         }
 
-        public void ClearCallbacks()
-        {
-            foreach (var p in _list.OfType<LayerParameterBase>())
-            {
-                var layerSource = p.ToolProperty.GetValue(_tool) as ILayerSource;
-                if (layerSource != null)
-                {
-                    layerSource.Callback = null;
-                }
-            }
-        }
-
-        public void CloseDatasources()
+        private void CloseDatasources()
         {
             foreach (var p in _list.OfType<LayerParameterBase>())
             {

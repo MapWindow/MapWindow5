@@ -20,7 +20,7 @@ namespace MW5.Tools.Views
         /// <summary>
         /// Generates the controls.
         /// </summary>
-        void GenerateControls(IEnumerable<BaseParameter> parameters);
+        void GenerateControls();
 
         bool RunInBackground { get; }
     }

@@ -10,7 +10,6 @@ using MW5.Api.Legend.Events;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Services.Config;
 using MW5.Shared.Log;
 
 namespace MW5.Plugins.Concrete

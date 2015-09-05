@@ -106,6 +106,7 @@ namespace MW5.Tools.Test
 
         private void RunTool(IGisTool tool)
         {
+            // it can be called without ITaskHandle as well, as GisTool class provide a mock for it internally
             if (!tool.Run(_taskHandle.Object))
             {
                 Assert.Fail("GisTool.Run returned false.");

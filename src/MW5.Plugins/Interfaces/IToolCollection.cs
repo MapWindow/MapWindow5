@@ -10,12 +10,12 @@ namespace MW5.Plugins.Interfaces
     /// <summary>
     /// A wrapper for the list of tools
     /// </summary>
-    public interface IToolCollection : IEnumerable<IGisTool>
+    public interface IToolCollection : IEnumerable<ITool>
     {
         void Clear();
         int Count { get; }
-        bool Remove(IGisTool item);
-        void Add(IGisTool item);
+        bool Remove(ITool item);
+        void Add(ITool item);
         void RemoveItemsForPlugin(PluginIdentity identity);
     }
 }

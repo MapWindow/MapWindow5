@@ -10,7 +10,6 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared.Log;
-using MW5.Tools.Helpers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
 
@@ -19,23 +18,14 @@ namespace MW5.Tools.Model
     /// <summary>
     /// Base class for GIS tool.
     /// </summary>
-    public abstract class GisTool : IGisTool
+    public abstract class GisTool : IGisTool, IParametrizedTool
     {
         private readonly ToolConfiguration _config = new ToolConfiguration();
         private readonly IToolLogger _logger = new ToolLogger();
+        private IApplicationCallback _callback;
         private IAppContext _context;
         private OutputManager _outputManager;
         private ParameterCollection _parameters;
-
-        public IToolLogger Log
-        {
-            get { return _logger; }
-        }
-
-        public virtual bool SupportsCancel
-        {
-            get { return true; }
-        }
 
         protected IAppContext AppContext
         {
@@ -56,17 +46,14 @@ namespace MW5.Tools.Model
             }
         }
 
-        internal ToolConfiguration Config
+        public IToolLogger Log
         {
-            get { return _config; }
+            get { return _logger; }
         }
 
-        /// <summary>
-        /// Gets combined list of required and optional parameters.
-        /// </summary>
-        internal ParameterCollection Parameters
+        public virtual bool SupportsCancel
         {
-            get { return _parameters ?? (_parameters = new ParameterCollection(this)); }
+            get { return true; }
         }
 
         public virtual bool AfterRun()
@@ -92,11 +79,6 @@ namespace MW5.Tools.Model
             return success;
         }
 
-        public void CleanUp()
-        {
-            Parameters.CleanUp();
-        }
-
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -105,12 +87,20 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public abstract string Description { get;  }
+        public abstract string Description { get; }
 
         /// <summary>
         /// Runs the tool.
         /// </summary>
         public abstract bool Run(ITaskHandle task);
+
+        /// <summary>
+        /// Runs the tool.
+        /// </summary>
+        public bool Run()
+        {
+            return Run(new EmptyTaskHandle());
+        }
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -132,9 +122,52 @@ namespace MW5.Tools.Model
             builder.Build(_config, Parameters);
         }
 
-        public void SetCallback(IApplicationCallback callback)
+        /// <summary>
+        /// Returns true if a tool can be executed asynchronously using tasks.
+        /// </summary>
+        public bool SupportsTasks
         {
-            Parameters.SetCallback(callback);
+            get { return true; }
+        }
+
+        public IApplicationCallback Callback
+        {
+            get { return _callback; }
+            set
+            {
+                _callback = value;
+                Parameters.SetCallback(Callback);
+            }
+        }
+
+        public void CleanUp()
+        {
+            Parameters.CleanUp();
+        }
+
+        public bool Validate()
+        {
+            if (!Parameters.Validate())
+            {
+                return false;
+            }
+
+            Parameters.Apply();
+
+            return BeforeRun();
+        }
+
+        /// <summary>
+        /// Gets combined list of required and optional parameters.
+        /// </summary>
+        public ParameterCollection Parameters
+        {
+            get { return _parameters ?? (_parameters = new ParameterCollection(this)); }
+        }
+
+        public ToolConfiguration Configuration
+        {
+            get { return _config; }
         }
 
         /// <summary>
@@ -148,18 +181,6 @@ namespace MW5.Tools.Model
         protected virtual void Configure(IAppContext context, ToolConfiguration configuration)
         {
             configuration.AddLayers(context.Layers);
-        }
-
-        public bool Validate()
-        {
-            if (!Parameters.Validate())
-            {
-                return false;
-            }
-
-            Parameters.Apply();
-
-            return BeforeRun();
         }
     }
 }

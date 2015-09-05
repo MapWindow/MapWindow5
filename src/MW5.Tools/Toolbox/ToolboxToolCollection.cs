@@ -40,13 +40,13 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public int Count
         {
-            get { return _nodes.Cast<TreeNode>().Count(node => (node.Tag is IGisTool)); }
+            get { return _nodes.Cast<TreeNode>().Count(node => (node.Tag is ITool)); }
         }
 
         /// <summary>
         /// Adds new tool to the group
         /// </summary>
-        public void Add(IGisTool item)
+        public void Add(ITool item)
         {
             if (item == null) throw new ArgumentNullException("item");
 
@@ -60,7 +60,7 @@ namespace MW5.Tools.Toolbox
             _nodes.Add(node);
         }
 
-        private int GetIconIndex(IGisTool tool)
+        private int GetIconIndex(ITool tool)
         {
             var attr = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());
             return attr != null ? (int)attr.Icon : (int)ToolIcon.ToolDefault;
@@ -84,13 +84,13 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// The get enumerator.
         /// </summary>
-        public IEnumerator<IGisTool> GetEnumerator()
+        public IEnumerator<ITool> GetEnumerator()
         {
             for (var i = 0; i < _nodes.Count; i++)
             {
-                if (_nodes[i].Tag is IGisTool)
+                if (_nodes[i].Tag is ITool)
                 {
-                    yield return _nodes[i].Tag as IGisTool;
+                    yield return _nodes[i].Tag as ITool;
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace MW5.Tools.Toolbox
         /// <summary>
         /// Removes group at specified position
         /// </summary>
-        public bool Remove(IGisTool item)
+        public bool Remove(ITool item)
         {
             foreach (var node in _nodes.Cast<TreeNodeAdv>().Where(node => GetTool(node) == item))
             {
@@ -132,9 +132,9 @@ namespace MW5.Tools.Toolbox
             return GetEnumerator();
         }
 
-        private IGisTool GetTool(TreeNodeAdv node)
+        private ITool GetTool(TreeNodeAdv node)
         {
-            return node.Tag as IGisTool;
+            return node.Tag as ITool;
         }
     }
 }

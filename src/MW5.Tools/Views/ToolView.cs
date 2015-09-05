@@ -12,6 +12,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Helpers;
+using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
 using MW5.UI.Forms;
@@ -56,11 +57,19 @@ namespace MW5.Tools.Views
         /// <summary>
         /// Generates controls for parameters.
         /// </summary>
-        public void GenerateControls(IEnumerable<BaseParameter> parameters)
+        public void GenerateControls()
         {
-            parameters = parameters.ToList();
+            var tool = Model.Tool as IParametrizedTool;
+            if (tool == null)
+            {
+                throw new ApplicationException(
+                    "Tool must support IParameterized tool interface for automatic UI generation.");
+            }
 
-            _generator.Generate(panelRequired, parameters.Where(p => p.Required), false);
+            var parameters = tool.Parameters;
+            var list = parameters.ToList();
+
+            _generator.Generate(panelRequired, list.Where(p => p.Required), false);
 
             if (parameters.All(p => p.Required))
             {
@@ -68,10 +77,10 @@ namespace MW5.Tools.Views
             }
             else
             {
-                _generator.Generate(panelOptional, parameters.Where(p => !p.Required), true);
+                _generator.Generate(panelOptional, list.Where(p => !p.Required), true);
             }
 
-            _generator.EventManager.Bind(Model.Tool.Config);
+            _generator.EventManager.Bind(tool.Configuration);
         }
 
         public void Initialize()

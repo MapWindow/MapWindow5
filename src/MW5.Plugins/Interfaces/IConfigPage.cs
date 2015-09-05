@@ -7,7 +7,7 @@
 using System.Drawing;
 using MW5.Plugins.Enums;
 
-namespace MW5.Services.Config
+namespace MW5.Plugins.Interfaces
 {
     public interface IConfigPage
     {

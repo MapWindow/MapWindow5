@@ -10,13 +10,13 @@ namespace MW5.Tools.Views
 {
     public class ToolViewModel
     {
-        public ToolViewModel(GisTool tool)
+        public ToolViewModel(IGisTool tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
             Tool = tool;
         }
 
-        public GisTool Tool { get; private set; }
+        public IGisTool Tool { get; private set; }
 
         public IGisTask Task { get; private set; }
 
