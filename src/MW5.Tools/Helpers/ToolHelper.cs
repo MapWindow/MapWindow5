@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
@@ -22,6 +23,37 @@ namespace MW5.Tools.Helpers
             }
 
             return context.Container.GetInstance<ToolPresenter>();
+        }
+
+        /// <summary>
+        /// Gets the reflected tools.
+        /// </summary>
+        /// <value>stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface</value>
+        public static IEnumerable<IGisTool> GetTools(this Assembly assembly)
+        {
+            var type = typeof(IGisTool);
+
+            var list = assembly.GetTypes()
+                        .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
+
+            foreach (var item in list)
+            {
+                IGisTool tool = null;
+
+                try
+                {
+                    tool = Activator.CreateInstance(item) as IGisTool;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Error("Failed to create GIS tool: {0}.", ex, item.Name);
+                }
+
+                if (tool != null)
+                {
+                    yield return tool;
+                }
+            }
         }
     }
 }

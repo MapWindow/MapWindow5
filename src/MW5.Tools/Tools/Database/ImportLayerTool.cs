@@ -77,6 +77,14 @@ namespace MW5.Tools.Tools.Database
         }
 
         /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
+        }
+
+        /// <summary>
         /// Preparing format specific options.
         /// </summary>
         private string PrepareOptions()

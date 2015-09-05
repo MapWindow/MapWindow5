@@ -20,13 +20,13 @@ namespace MW5.Tools.Model
             if (pauseHandle == null) throw new ArgumentNullException("pauseHandle");
             if (callback == null) throw new ArgumentNullException("callback");
 
-            ErrorCallback = callback;
+            Callback = callback;
             PauseHandle = pauseHandle;
             Progress = progress;
             _cancellationToken = cancellationToken;
         }
 
-        public IApplicationCallback ErrorCallback { get; private set; }
+        public IApplicationCallback Callback { get; private set; }
 
         public ITaskProgress Progress { get; private set; }
 

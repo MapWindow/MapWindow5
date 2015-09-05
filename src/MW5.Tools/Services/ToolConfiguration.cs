@@ -18,7 +18,7 @@ namespace MW5.Tools.Services
         private IEnumerable<ILayer> _layers;
 
         public ToolConfiguration<T> Get<T>()
-            where T: GisToolBase
+            where T: GisTool
         {
             return new ToolConfiguration<T>(this);
         }
@@ -53,7 +53,7 @@ namespace MW5.Tools.Services
     }
 
     public class ToolConfiguration<T>
-        where T : GisToolBase
+        where T : GisTool
     {
         private readonly ToolConfiguration _config;
 

@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
@@ -45,6 +46,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             configuration.Get<RandomPointsTool>()
                 .SetDefault(t => t.NumPoints, 500);
+        }
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
         }
 
         /// <summary>

@@ -9,6 +9,7 @@
 
 using System.ComponentModel;
 using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
@@ -36,6 +37,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             configuration.Get<AggregateShapesTool>()
                 .AddField(t => t.InputLayer, t => t.FieldIndex);
+        }
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
         }
 
         /// <summary>

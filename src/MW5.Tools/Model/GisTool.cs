@@ -6,6 +6,7 @@
 
 using System;
 using System.Linq;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared.Log;
@@ -18,7 +19,7 @@ namespace MW5.Tools.Model
     /// <summary>
     /// Base class for GIS tool.
     /// </summary>
-    public abstract class GisTool : GisToolBase
+    public abstract class GisTool : IGisTool
     {
         private readonly ToolConfiguration _config = new ToolConfiguration();
         private readonly IToolLogger _logger = new ToolLogger();
@@ -26,12 +27,12 @@ namespace MW5.Tools.Model
         private OutputManager _outputManager;
         private ParameterCollection _parameters;
 
-        public override IToolLogger Log
+        public IToolLogger Log
         {
             get { return _logger; }
         }
 
-        public override bool SupportsCancel
+        public virtual bool SupportsCancel
         {
             get { return true; }
         }
@@ -68,7 +69,7 @@ namespace MW5.Tools.Model
             get { return _parameters ?? (_parameters = new ParameterCollection(this)); }
         }
 
-        public override bool AfterRun()
+        public virtual bool AfterRun()
         {
             bool success = true;
 
@@ -91,16 +92,36 @@ namespace MW5.Tools.Model
             return success;
         }
 
-        public override void CleanUp()
+        public void CleanUp()
         {
             Parameters.CleanUp();
         }
 
         /// <summary>
+        /// The name of the tool.
+        /// </summary>
+        public abstract string Name { get; }
+
+        /// <summary>
+        /// Description of the tool.
+        /// </summary>
+        public abstract string Description { get;  }
+
+        /// <summary>
+        /// Runs the tool.
+        /// </summary>
+        public abstract bool Run(ITaskHandle task);
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public abstract PluginIdentity PluginIdentity { get; }
+
+        /// <summary>
         /// Initializes the tool with application context.
         /// Can be overriden in derived classes to provide additional logic.
         /// </summary>
-        public override void Initialize(IAppContext context)
+        public void Initialize(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
@@ -111,7 +132,7 @@ namespace MW5.Tools.Model
             builder.Build(_config, Parameters);
         }
 
-        public override void SetCallback(IApplicationCallback callback)
+        public void SetCallback(IApplicationCallback callback)
         {
             Parameters.SetCallback(callback);
         }
@@ -129,7 +150,7 @@ namespace MW5.Tools.Model
             configuration.AddLayers(context.Layers);
         }
 
-        internal bool Validate()
+        public bool Validate()
         {
             if (!Parameters.Validate())
             {

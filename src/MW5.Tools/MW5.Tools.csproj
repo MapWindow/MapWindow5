@@ -97,7 +97,6 @@
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
     <Compile Include="Model\Distance.cs" />
     <Compile Include="Model\GisTask.cs" />
-    <Compile Include="Model\GisToolBase.cs" />
     <Compile Include="Model\OutputAttribute.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
     <Compile Include="Model\Parameters\FieldParameter.cs" />

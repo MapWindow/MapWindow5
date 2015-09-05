@@ -65,6 +65,7 @@
       <Link>Properties\SolutionInfoPlugins.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="CustomGisTool.cs" />
     <Compile Include="MapListener.cs" />
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
@@ -94,6 +95,10 @@
       <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
       <Name>MW5.Plugins</Name>
       <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Tools\MW5.Tools.csproj">
+      <Project>{FB836BB0-2668-41E6-A4AD-7798B13C327F}</Project>
+      <Name>MW5.Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Tools.Database;
 using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
@@ -49,86 +50,9 @@ namespace MW5.Plugins.Toolbox
         
         private void CreateTools()
         {
-            var tools = ReflectedTools;
+            var tools = typeof(GisTool).Assembly.GetTools();
 
-            AddTools(tools);
-        }
-
-        private IEnumerable<IGisTool> Tools
-        {
-            get
-            {
-                var tools = new List<IGisTool>
-                {
-                    new IdentifyProjectionTool(),
-                    new ImportLayerTool(),
-                    new RandomPointsTool()
-                };
-
-                return tools;
-            }
-        }
-
-        /// <summary>
-        /// Gets the reflected tools.
-        /// </summary>
-        /// <value>stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface</value>
-        private IEnumerable<IGisTool> ReflectedTools
-        {
-            get
-            {
-                var type = typeof(IGisTool);
-                
-                // we shall search MW5.Tools
-                var list = typeof(GisTool).Assembly
-                           .GetTypes()
-                           .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
-
-                foreach (var item in list)
-                {
-                    IGisTool tool = null;
-
-                    try
-                    {
-                         tool = Activator.CreateInstance(item) as IGisTool;
-                    }
-                    catch(Exception ex)
-                    {
-                        Logger.Current.Error("Failed to create GIS tool: {0}.", ex, item.Name);
-                    }
-
-                    if (tool != null)
-                    {
-                        yield return tool;
-                    }
-                }
-            }
-        }
-
-        private void AddTools(IEnumerable<IGisTool> tools)
-        {
-            var groups = _context.Toolbox.Groups;
-
-            foreach (var tool in tools)
-            {
-                string groupKey = tool.GetType().GetAttributeValue((GisToolAttribute att) => att.GroupKey);
-
-                if (string.IsNullOrWhiteSpace(groupKey))
-                {
-                    Logger.Current.Warn("No group is specified for the tool: " + tool.Name);
-                    continue;
-                }
-
-                var group = groups.FindGroup(groupKey);     // can be optimized with dictionary to speed it up
-
-                if (group == null)
-                {
-                    Logger.Current.Warn("Group with the key wasn't found: " + groupKey);
-                    continue;
-                }
-
-                group.Tools.Add(tool);
-            }
+            _context.Toolbox.AddTools(tools);
         }
 
         private void GenerateGroups()

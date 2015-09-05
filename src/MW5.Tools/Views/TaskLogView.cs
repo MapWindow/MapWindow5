@@ -48,13 +48,18 @@ namespace MW5.Tools.Views
 
         public event Action Pause;
 
+        private GisTool Tool
+        {
+            get { return Model.Tool as GisTool; }
+        }
+
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             DetachProgressHandlers();
 
             Model.StatusChanged -= OnTaskStatusChanged;
 
-            Model.Tool.Log.EntryAdded -= OnLogMessageAdded;
+            Tool.Log.EntryAdded -= OnLogMessageAdded;
         }
 
         /// <summary>
@@ -70,7 +75,7 @@ namespace MW5.Tools.Views
 
             DisplayExistingLogEntries();
 
-            btnCancel.Enabled = Model.Tool.SupportsCancel;
+            btnCancel.Enabled = Tool.SupportsCancel;
 
             if (!Model.IsFinished)
             {
@@ -80,12 +85,12 @@ namespace MW5.Tools.Views
 
         private void DisplayExistingLogEntries()
         {
-            var log = Model.Tool.Log;
+            var log = Tool.Log;
             
             log.Lock();
             try
             {
-                Model.Tool.Log.EntryAdded += OnLogMessageAdded;
+                Tool.Log.EntryAdded += OnLogMessageAdded;
 
                 var sb = new StringBuilder();
                 foreach (var item in log.Entries)

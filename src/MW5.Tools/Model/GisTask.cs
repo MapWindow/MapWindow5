@@ -20,13 +20,14 @@ namespace MW5.Tools.Model
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
+        private readonly GisTool _tool;
         private ITaskProgress _progress;
         private GisTaskStatus _status;
 
-        public GisTask(GisToolBase tool)
+        public GisTask(GisTool tool)
         {
             if (tool == null) throw new ArgumentNullException("tool");
-            Tool = tool;
+            _tool = tool;
             Status = GisTaskStatus.NotStarted;
         }
 
@@ -114,7 +115,10 @@ namespace MW5.Tools.Model
             }
         }
 
-        public IGisTool Tool { get; private set; }
+        public IGisTool Tool
+        {
+            get { return _tool; }
+        }
 
         public void Cancel()
         {
@@ -131,7 +135,7 @@ namespace MW5.Tools.Model
 
         public void RunAsync()
         {
-            Tool.SetCallback(this);
+            _tool.SetCallback(this);
 
             var token = _cancellationTokenSource.Token;
 
@@ -169,7 +173,7 @@ namespace MW5.Tools.Model
 
                                 try
                                 {
-                                    Status = Tool.AfterRun() ? GisTaskStatus.Success : GisTaskStatus.Failed;
+                                    Status = _tool.AfterRun() ? GisTaskStatus.Success : GisTaskStatus.Failed;
                                 }
                                 catch (Exception ex)
                                 {
@@ -180,7 +184,7 @@ namespace MW5.Tools.Model
                             finally
                             {
                                 // stop reporting progress from datasources
-                                Tool.CleanUp();
+                                _tool.CleanUp();
                             }
                         }, TaskScheduler.FromCurrentSynchronizationContext());
         }
@@ -197,7 +201,7 @@ namespace MW5.Tools.Model
 
         void IApplicationCallback.Error(string tagOfSender, string errorMsg)
         {
-            Tool.Log.Error(errorMsg, null);
+            _tool.Log.Error(errorMsg, null);
         }
 
         void IApplicationCallback.Progress(string tagOfSender, int percent, string message)

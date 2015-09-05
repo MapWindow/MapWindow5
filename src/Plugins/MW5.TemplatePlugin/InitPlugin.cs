@@ -8,6 +8,7 @@
 // --------------------------------------------------------------------------------------------------------------------
 
 using MW5.Plugins.Mvp;
+using MW5.Tools.Helpers;
 
 namespace MW5.Plugins.TemplatePlugin
 {
@@ -91,6 +92,9 @@ namespace MW5.Plugins.TemplatePlugin
 
             // Just to show case:
             Debug.WriteLine("Number of layers loaded" + _context.Layers.Count());
+
+            // adding all the available tools in the toolbox
+            _context.Toolbox.AddTools(GetType().Assembly.GetTools());
         }
 
         /// <summary>

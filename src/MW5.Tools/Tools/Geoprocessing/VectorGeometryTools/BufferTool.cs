@@ -10,6 +10,7 @@
 using System;
 using System.ComponentModel;
 using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
@@ -52,6 +53,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public override bool SupportsCancel
         {
             get { return false; }
+        }
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
         }
 
         /// <summary>

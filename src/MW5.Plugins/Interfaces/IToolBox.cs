@@ -31,6 +31,12 @@ namespace MW5.Plugins.Interfaces
         /// Removes groups and tools added by specified plugin
         /// </summary>
         void RemoveItemsForPlugin(PluginIdentity identity);
+
+        /// <summary>
+        /// Adds tools to the toolbox choosing their groups based on GisToolAttribute.
+        /// </summary>
+        /// <param name="tools">The tools.</param>
+        void AddTools(IEnumerable<IGisTool> tools);
     }
 }
 

@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -45,8 +46,6 @@ namespace MW5.Tools.Toolbox
 
             _tree.ToolClicked += OnToolClicked;
         }
-
-
 
         private void OnToolClicked(object sender, ToolboxToolEventArgs e)
         {
@@ -196,6 +195,32 @@ namespace MW5.Tools.Toolbox
             {
                 _textbox.Select(0, tool.Name.Length);
                 _textbox.SelectionFont = new Font(Font, FontStyle.Bold);
+            }
+        }
+
+        public void AddTools(IEnumerable<IGisTool> tools)
+        {
+            var groups = Groups;
+
+            foreach (var tool in tools)
+            {
+                string groupKey = tool.GetType().GetAttributeValue((GisToolAttribute att) => att.GroupKey);
+
+                if (string.IsNullOrWhiteSpace(groupKey))
+                {
+                    Logger.Current.Warn("No group is specified for the tool: " + tool.Name);
+                    continue;
+                }
+
+                var group = groups.FindGroup(groupKey);     // can be optimized with dictionary to speed it up
+
+                if (group == null)
+                {
+                    Logger.Current.Warn("Group with the key wasn't found: " + groupKey);
+                    continue;
+                }
+
+                group.Tools.Add(tool);
             }
         }
     }

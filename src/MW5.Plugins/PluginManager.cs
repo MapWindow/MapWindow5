@@ -112,23 +112,13 @@ namespace MW5.Plugins
                     continue;
                 }
 
-                if (item.Metadata.Empty)
+                try
                 {
-                    try
-                    {
-                        var info = p.GetType().GetAssemblyInfo();
-                        var attr = p.GetType().Assembly.GetAttribute<GuidAttribute>();
-                        Guid guid = new Guid(attr.Value);
-                        p.Identity = new PluginIdentity(info.ProductName, info.CompanyName, guid);
-                    }
-                    catch(Exception ex)
-                    {
-                        throw new ApplicationException("Failed to load plugin identity from assembly.", ex);
-                    }
+                    p.Identity = PluginIdentityHelper.GetIdentity(p.GetType(), item.Metadata);
                 }
-                else
+                catch(Exception ex)
                 {
-                    p.Identity = new PluginIdentity(item.Metadata.Name, item.Metadata.Author, new Guid(item.Metadata.Guid));
+                    throw new ApplicationException("Failed to load plugin identity from assembly.", ex);
                 }
 
                 // TODO: make sure that application plugins will have priority if duplicate GUIDs are found

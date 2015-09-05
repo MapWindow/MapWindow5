@@ -20,6 +20,6 @@ namespace MW5.Plugins.Interfaces
 
         void CheckPauseAndCancel();
 
-        IApplicationCallback ErrorCallback { get; }
+        IApplicationCallback Callback { get; }
     }
 }

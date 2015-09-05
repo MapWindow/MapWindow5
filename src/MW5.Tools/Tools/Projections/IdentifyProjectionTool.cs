@@ -15,14 +15,14 @@ using MW5.Tools.Properties;
 namespace MW5.Tools.Tools.Projections
 {
     [GisTool(GroupKeys.Projections)]
-    public class IdentifyProjectionTool: GisToolBase
+    public class IdentifyProjectionTool: IGisTool
     {
         private IAppContext _context;
 
         /// <summary>
         /// The name of the tool.
         /// </summary>
-        public override string Name
+        public string Name
         {
             get { return "Identify projection";  }
         }
@@ -30,7 +30,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Description of the tool.
         /// </summary>
-        public override string Description
+        public string Description
         {
             get { return "Identifies projection as one of the well known from the projection string provided by user."; }
         }
@@ -38,7 +38,7 @@ namespace MW5.Tools.Tools.Projections
         /// <summary>
         /// Runs the tool.
         /// </summary>
-        public override bool Run(ITaskHandle task)
+        public bool Run(ITaskHandle task)
         {
             using (var form = new IdentifyProjectionForm(_context))
             {
@@ -47,20 +47,21 @@ namespace MW5.Tools.Tools.Projections
         }
 
         /// <summary>
-        /// Initializes the tool.
+        /// Gets the identity of plugin that created this tool.
         /// </summary>
-        public override void Initialize(IAppContext context)
+        public PluginIdentity PluginIdentity
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            // TODO: return correct identity
+            get { return PluginIdentity.Default; }
         }
 
         /// <summary>
-        /// Gets the logger associated with the tool.
+        /// Initializes the tool.
         /// </summary>
-        public override IToolLogger Log
+        public void Initialize(IAppContext context)
         {
-            get { return null; }
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
         }
     }
 }

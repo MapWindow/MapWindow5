@@ -1,4 +1,5 @@
-﻿using MW5.Plugins.Enums;
+﻿using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
@@ -30,6 +31,14 @@ namespace MW5.Tools.Tools.Fake
         public override string Description
         {
             get { return "Fakes the execution of the long task"; }
+        }
+
+        /// <summary>
+        /// Gets the identity of plugin that created this tool.
+        /// </summary>
+        public override PluginIdentity PluginIdentity
+        {
+            get { return PluginIdentity.Default; }
         }
 
         public override bool Run(ITaskHandle task)
