@@ -19,5 +19,7 @@ namespace MW5.Plugins.Interfaces
         IApplicationCallback Callback { get; set; }
 
         void CleanUp();
+
+        bool Validate();
     }
 }

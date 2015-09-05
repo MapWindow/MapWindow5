@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using MW5.Services.Config;
+using MW5.Plugins.Interfaces;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.UI.Controls

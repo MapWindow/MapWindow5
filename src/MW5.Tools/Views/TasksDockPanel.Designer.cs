@@ -116,36 +116,36 @@
             this.toolRemoveTask});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(127, 98);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(153, 120);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // toolOpenLog
             // 
             this.toolOpenLog.Name = "toolOpenLog";
-            this.toolOpenLog.Size = new System.Drawing.Size(126, 22);
+            this.toolOpenLog.Size = new System.Drawing.Size(152, 22);
             this.toolOpenLog.Text = "Open Log";
             // 
             // toolCancelTask
             // 
             this.toolCancelTask.Name = "toolCancelTask";
-            this.toolCancelTask.Size = new System.Drawing.Size(126, 22);
+            this.toolCancelTask.Size = new System.Drawing.Size(152, 22);
             this.toolCancelTask.Text = "Cancel";
             // 
             // toolPauseTask
             // 
             this.toolPauseTask.Name = "toolPauseTask";
-            this.toolPauseTask.Size = new System.Drawing.Size(126, 22);
+            this.toolPauseTask.Size = new System.Drawing.Size(152, 22);
             this.toolPauseTask.Text = "Pause";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(123, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // toolRemoveTask
             // 
             this.toolRemoveTask.Name = "toolRemoveTask";
-            this.toolRemoveTask.Size = new System.Drawing.Size(126, 22);
+            this.toolRemoveTask.Size = new System.Drawing.Size(152, 22);
             this.toolRemoveTask.Text = "Remove";
             // 
             // TasksDockPanel

@@ -241,7 +241,6 @@
       <DependentUpon>ToolView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\IToolView.cs" />
-    <Compile Include="Toolbox\ToolNode.cs" />
     <Compile Include="Toolbox\ToolboxDockPanel.cs">
       <SubType>Component</SubType>
     </Compile>

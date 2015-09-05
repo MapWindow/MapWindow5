@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Interfaces;
 using MW5.Services.Config;
 using MW5.Shared;
 using MW5.UI.Forms;

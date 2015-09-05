@@ -38,9 +38,7 @@ namespace MW5.Tools.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            var tool = Model.Tool as IParametrizedTool;
-
-            if (tool != null && !tool.Validate())
+            if (!Model.Tool.Validate())
             {
                 return false;
             }
