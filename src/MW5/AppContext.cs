@@ -39,7 +39,6 @@ namespace MW5
         private readonly IProjectionDatabase _projectionDatabase;
         private readonly IStyleService _styleService;
         private readonly ITaskCollection _tasks;
-        
 
         private IMap _map;
         private IMenu _menu;
@@ -55,7 +54,7 @@ namespace MW5
         private IConfigService _configService;
         private LocatorPresenter _locator;
         private LegendPresenter _legendPresenter;
-        private IToolbox _toolbox;
+        private ToolboxPresenter _toolboxPresenter; 
         private IRepository _repository;
 
         private bool _initialized;
@@ -79,12 +78,14 @@ namespace MW5
         /// <remarks>We don't use contructor injection here since most of other services use this one as a parameter.
         /// Perhaps property injection can be used.</remarks>
         internal void Init(IMainView mainView, IProjectService project, IConfigService configService, 
-                        LegendPresenter legendPresenter, IRepository repository)
+                        LegendPresenter legendPresenter, ToolboxPresenter toolboxPresenter, IRepository repository)
         {
             if (mainView == null) throw new ArgumentNullException("mainView");
             if (project == null) throw new ArgumentNullException("project");
             if (legendPresenter == null) throw new ArgumentNullException("legendPresenter");
+            if (toolboxPresenter == null) throw new ArgumentNullException("toolboxPresenter");
 
+            _toolboxPresenter = toolboxPresenter;
             _legendPresenter = legendPresenter;
             var legend = _legendPresenter.Legend;
             mainView.Map.Legend = legend;
@@ -104,8 +105,6 @@ namespace MW5
             _configService = configService;
             _repository = repository;
 
-            InitToolbox();
-
             Legend.Lock();
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster, _styleService);
@@ -123,11 +122,6 @@ namespace MW5
             this.InitDocking();
 
             _initialized = true;
-        }
-
-        private void InitToolbox()
-        {
-            _toolbox = new ToolboxDockPanel(this);
         }
 
         internal void InitPlugins(IConfigService configService)
@@ -246,7 +240,7 @@ namespace MW5
 
         public IToolbox Toolbox
         {
-            get { return _toolbox; }
+            get { return _toolboxPresenter.View; }
         }
 
         public IPluginManager PluginManager
@@ -261,7 +255,7 @@ namespace MW5
                 case DefaultDockPanel.Legend:
                     return _legendPresenter.Legend as Control;
                 case DefaultDockPanel.Toolbox:
-                    return _toolbox as Control;
+                    return _toolboxPresenter.View as Control;
                 case DefaultDockPanel.Locator:
                     return _locator != null ? _locator.GetInternalObject() : null;
                 default:

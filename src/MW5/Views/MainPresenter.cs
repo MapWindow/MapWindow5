@@ -16,6 +16,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.Tools.Toolbox;
 using MW5.UI.Style;
 
 namespace MW5.Views
@@ -37,7 +38,8 @@ namespace MW5.Views
         private readonly MenuUpdater _menuUpdater;
 
         public MainPresenter(IAppContext context, IMainView view, IProjectService projectService,
-                             IConfigService configService, LegendPresenter legendPresenter, IRepository repository)
+                             IConfigService configService, LegendPresenter legendPresenter, 
+                             ToolboxPresenter toolboxPresenter, IRepository repository)
             : base(view)
         {
             if (view == null) throw new ArgumentNullException("view");
@@ -60,7 +62,7 @@ namespace MW5.Views
                     throw new InvalidCastException("Invalid type of IAppContext instance");
                 }
 
-                appContext.Init(view, projectService, configService, legendPresenter, repository);
+                appContext.Init(view, projectService, configService, legendPresenter, toolboxPresenter, repository);
                 
                 view.Map.Initialize();
                 view.Map.ApplyConfig(configService);

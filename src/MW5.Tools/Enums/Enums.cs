@@ -49,4 +49,10 @@ namespace MW5.Tools.Enums
         Database = 3,
         Hammer = 4,
     }
+
+    public enum ToolboxCommand
+    {
+        Run = 0,
+        BatchRun = 1,
+    }
 }

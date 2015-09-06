@@ -177,7 +177,7 @@ namespace MW5.Tools.Model
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.Current.Error("Failed to save datasource: " + Tool.Name, ex);
+                                    _tool.Log.Error("Failed to save datasource: " + Tool.Name, ex);
                                     Status = GisTaskStatus.Failed;
                                 }
                             }

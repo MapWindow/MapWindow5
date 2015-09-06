@@ -25,59 +25,35 @@ namespace MW5.Tools.Toolbox
     /// <summary>
     /// Toolbox control
     /// </summary>
-    public class ToolboxDockPanel : SplitContainerAdv, IToolbox
+    public partial class ToolboxDockPanel : DockPanelControlBase, IToolbox, IMenuProvider
     {
         private readonly IAppContext _context;
 
-        private RichTextBox _textbox;
-        private ToolboxTreeView _tree;
 
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
         public ToolboxDockPanel(IAppContext context)
         {
+            InitializeComponent();
+
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
 
             Init();
 
             AddEventHandlers();
-
-            _tree.ToolClicked += OnToolClicked;
         }
 
-        private void OnToolClicked(object sender, ToolboxToolEventArgs e)
+        public ITool SelectedTool
         {
-            if (e.Tool == null) return;
+            get { return _treeView.SelectedTool; }
+        }
 
-            // we don't want the same instance of tool to be used by diffent tasks
-            // therefore a new instance is created; it's expected that it must have default empty constructor
-            var tool = Activator.CreateInstance(e.Tool.GetType()) as ITool;
-
-            if (tool == null)
-            {
-                Logger.Current.Warn("Failed to instantiate tool: " + e.Tool.Name);
-                return;
-            }
-
-            tool.Initialize(_context);
-
-            if (tool is IGisTool)
-            {
-                var presenter = tool.GetPresenter(_context);
-
-                var model = new ToolViewModel(tool as IGisTool);
-                if (presenter.Run(model))
-                {
-                    _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);
-                }
-            }
-            else
-            {
-                // tool doesn't have UI or have an embedded  UI
-                tool.Run(); 
-            }
+        public event EventHandler<ToolboxToolEventArgs> ToolClicked
+        {
+            add { _treeView.ToolClicked += value; }
+            remove { _treeView.ToolClicked -= value; }
         }
 
         /// <summary>
@@ -85,7 +61,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolboxGroups Groups
         {
-            get { return new ToolboxGroupCollection(_tree.Nodes); }
+            get { return new ToolboxGroupCollection(_treeView.Nodes); }
         }
 
         /// <summary>
@@ -93,7 +69,7 @@ namespace MW5.Tools.Toolbox
         /// </summary>
         public IToolCollection Tools
         {
-            get { return new ToolboxToolCollection(_tree.Nodes); }
+            get { return new ToolboxToolCollection(_treeView.Nodes); }
         }
 
         /// <summary>
@@ -115,8 +91,8 @@ namespace MW5.Tools.Toolbox
 
         private void AddEventHandlers()
         {
-            _tree.ToolSelected += OnToolSelected;
-            _tree.GroupSelected += OnGroupSelected;
+            _treeView.ToolSelected += OnToolSelected;
+            _treeView.GroupSelected += OnGroupSelected;
         }
 
         /// <summary>
@@ -138,37 +114,26 @@ namespace MW5.Tools.Toolbox
 
         private void Init()
         {
-            Orientation = Orientation.Vertical;
-            BorderStyle = BorderStyle.None;
+            splitContainerAdv1.Orientation = Orientation.Vertical;
+            splitContainerAdv1.BorderStyle = BorderStyle.None;
 
-            InitTreeView();
+            splitContainerAdv1.Panel1MinSize = 0;
 
             InitTextBox();
 
-            SplitterDistance = Convert.ToInt32(Height * 0.9);
+            splitContainerAdv1.SplitterDistance = Convert.ToInt32(Height * 0.9);
         }
 
         private void InitTextBox()
         {
-            _textbox = new RichTextBox
-                           {
-                               BorderStyle = BorderStyle.None,
-                               Dock = DockStyle.Fill,
-                               ScrollBars = RichTextBoxScrollBars.None,
-                               BackColor = Color.FromKnownColor(KnownColor.Control),
-                               ReadOnly = true,
-                               Text = "No tool is selected."
-                           };
+            _textbox.BorderStyle = BorderStyle.None;
+            _textbox.Dock = DockStyle.Fill;
+            _textbox.ScrollBars = RichTextBoxScrollBars.None;
+            _textbox.BackColor = Color.FromKnownColor(KnownColor.Control);
+            _textbox.ReadOnly = true;
+            _textbox.Text = "No tool is selected.";
 
-            Panel2.Controls.Add(_textbox);
-            Panel2MinSize = 0;
-        }
-
-        private void InitTreeView()
-        {
-            _tree = new ToolboxTreeView();
-            Panel1.Controls.Add(_tree);
-            Panel1MinSize = 0;
+            splitContainerAdv1.Panel2MinSize = 0;
         }
 
         private void OnGroupSelected(object sender, ToolboxGroupEventArgs e)
@@ -218,6 +183,16 @@ namespace MW5.Tools.Toolbox
 
                 group.Tools.Add(tool);
             }
+        }
+
+        public IEnumerable<ToolStripItemCollection> ToolStrips
+        {
+            get { yield return contextMenuStripEx1.Items; }
+        }
+
+        public IEnumerable<Control> Buttons
+        {
+            get { yield break; }
         }
     }
 }
