@@ -99,6 +99,7 @@
     <ProjectReference Include="..\..\MW5.Tools\MW5.Tools.csproj">
       <Project>{FB836BB0-2668-41E6-A4AD-7798B13C327F}</Project>
       <Name>MW5.Tools</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
