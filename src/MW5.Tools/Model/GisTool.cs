@@ -10,6 +10,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared.Log;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
 
@@ -66,12 +67,12 @@ namespace MW5.Tools.Model
 
                 if (info.Result == null)
                 {
-                    Log.Error("There is no output for parameter: ", null, info.Name);
+                    Log.Error("There is no output for parameter: ", null, info.Filename);
                     success = false;
                 }
                 else if (!OutputManager.Save(info.Result, info))
                 {
-                    Log.Error("Failed to save output: {0}", null, info.Name);
+                    Log.Error("Failed to save output: {0}", null, info.Filename);
                     success = false;
                 }
             }
@@ -128,6 +129,14 @@ namespace MW5.Tools.Model
         public bool SupportsTasks
         {
             get { return true; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the tool supports batch execution.
+        /// </summary>
+        public virtual bool SupportsBatchExecution
+        {
+            get { return false; }
         }
 
         public IApplicationCallback Callback

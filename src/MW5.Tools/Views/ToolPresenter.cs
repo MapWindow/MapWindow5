@@ -5,9 +5,17 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
+using MW5.Tools.Views.Abstract;
 
 namespace MW5.Tools.Views
 {
@@ -34,16 +42,33 @@ namespace MW5.Tools.Views
         }
 
         /// <summary>
-        /// A handler for the IView.OkButton.Click event. View will be closed if the method returns true.
+        /// A handler for the IView.OkButton.Click event.
+        /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
+        /// If the method return false, no actions are taken, so View.Close, presenter.ReturnValue
+        /// should be called / set manually.
         /// </summary>
+        /// <returns></returns>
         public override bool ViewOkClicked()
         {
-            if (!Model.Tool.Validate())
+            if (Model.BatchMode)
+            {
+                return RunBatch();
+            }
+
+            return RunSingle();
+        }
+
+        /// <summary>
+        /// Creates and runs task for a single input datasource.
+        /// </summary>
+        private bool RunSingle()
+        {
+            if (!Validate(Model.Tool))
             {
                 return false;
             }
 
-            var task = Model.CreateTask();
+            IGisTask task = Model.CreateTask();
 
             if (View.RunInBackground)
             {
@@ -59,6 +84,112 @@ namespace MW5.Tools.Views
             View.Close();
 
             return false;
+        }
+
+        /// <summary>
+        /// Validates parameters and detaches controls from them on the success.
+        /// </summary>
+        private bool Validate(IGisTool tool)
+        {
+            if (!tool.Validate())
+            {
+                return false;
+            }
+
+            var pt = tool as IParametrizedTool;
+            if (pt != null)
+            {
+                pt.Parameters.DetachControls();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Checks that all output datasource will have unique name.
+        /// </summary>
+        private bool ValidateOutputNames(IEnumerable<IParametrizedTool> tools)
+        {
+            var outputs = tools.ToList().SelectMany(t => t.Parameters.OfType<OutputLayerParameter>());
+            var list = outputs.Select(o => o.GetValue().Filename).ToList();
+
+            if (list.Count() != list.Distinct().Count())
+            {
+                MessageService.Current.Info(
+                    "Duplicate names for output layers. Try to include {input} varaible in the name template, e.g. '{input}_result.shp'");
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Creates and runs separated tasks for a number of input datasources.
+        /// </summary>
+        private bool RunBatch()
+        {
+            var tool = Model.Tool as IParametrizedTool;
+            if (tool == null)
+            {
+                throw new InvalidCastException("GIS tool implementing IParametrizedTool interface is expected");
+            }
+
+            var tools = GenerateBatchTools(tool);
+            if (tools == null)
+            {
+                return false;
+            }
+
+            foreach (var newTool in tools)
+            {
+                RunBatchTask(newTool);
+            }
+
+            ReturnValue = false;
+
+            View.Close();
+
+            return false;
+        }
+
+        /// <summary>
+        /// Generates a new instance of tool for each input file. Word in batch mode only.
+        /// </summary>
+        private IEnumerable<IGisTool> GenerateBatchTools(IParametrizedTool tool)
+        {
+            var input = tool.GetBatchModeInputParameter();
+
+            var layers = input.BatchModeList.ToList();
+            if (!layers.Any())
+            {
+                MessageService.Current.Info("No input layers are selected.");
+            }
+
+            var tools = layers.Select(l => tool.CloneWithInput(l, _context) as IGisTool).ToList();
+
+            if (!ValidateOutputNames(tools.Select(t => t as IParametrizedTool)))
+            {
+                return null;
+            }
+
+            if (!tools.All(Validate))
+            {
+                return null;
+            }
+
+            return tools;
+        }
+
+        /// <summary>
+        /// Creates and starts task for one of the batch inputs.
+        /// </summary>
+        private void RunBatchTask(IGisTool tool)
+        {
+            var task = new GisTask(tool);
+
+            _context.Tasks.Add(task);
+            
+            task.RunAsync();
         }
     }
 }

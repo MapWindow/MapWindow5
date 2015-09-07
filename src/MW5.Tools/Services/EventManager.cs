@@ -31,6 +31,23 @@ namespace MW5.Tools.Services
             BindFields(config);
 
             BindComboLists(config);
+
+            BindOutput();
+        }
+
+        /// <summary>
+        /// Binds output filename to the input name.
+        /// </summary>
+        private void BindOutput()
+        {
+            var output = _controls.OfType<OutputParameterControl>().FirstOrDefault();
+            var input = _controls.OfType<LayerParameterControl>().FirstOrDefault();
+
+            if (input != null && output != null)
+            {
+                input.SelectedLayerChanged += (s, e) => output.OnLayerChanged(e.Layer);
+                output.OnLayerChanged(input.SelectedLayer);
+            }
         }
 
         private ParameterControlBase GetControl(string key)

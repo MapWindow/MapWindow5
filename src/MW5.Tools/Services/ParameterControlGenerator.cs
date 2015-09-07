@@ -17,7 +17,6 @@ namespace MW5.Tools.Services
 {
     public class ParameterControlGenerator
     {
-        private readonly List<ParameterControlBase> _controls = new List<ParameterControlBase>();
         private readonly ParameterControlFactory _factory;
         private readonly EventManager _manager = new EventManager();
 
@@ -36,50 +35,25 @@ namespace MW5.Tools.Services
 
         private bool ShowSections { get; set; }
 
-        public void Generate(Control panel, IEnumerable<BaseParameter> parameters, bool optional)
+        public void Generate(Control panel, string sectionName, IEnumerable<BaseParameter> parameters, bool batchMode = false)
         {
-            panel.Controls.Clear();
-
             var list = parameters.OrderByDescending(p => p.Index).ToList();
 
-            GenerateOutput(panel, list, optional);
-
-            GenerateInput(panel, list, optional);
-
-            AddVerticalPadding(panel);
-        }
-
-        private void GenerateOutput(Control panel, List<BaseParameter> list, bool optional)
-        {
-            // output parameters
-            var arr = list.Where(p => p is OutputLayerParameter).ToList();
-            GenerateSection(panel, arr);
-
-            if (arr.Any())
+            if (!list.Any())
             {
-                AddSection("Output", panel);
+                return ;
             }
+
+            GenerateControls(panel, list, batchMode);
+
+            GenerateHeader(sectionName, panel);
         }
 
-        private void GenerateInput(Control panel, List<BaseParameter> list, bool optional)
+        public void AddVerticalPadding(IEnumerable<Control> panels)
         {
-            // input parameters
-            var arr = list.Where(p => !(p is OutputLayerParameter)).ToList();
-            GenerateSection(panel, arr);
-
-            if (!optional && arr.Any())
+            foreach (var panel in panels)
             {
-                AddSection("Input", panel);
-            }
-        }
-
-        private void AddSection(string sectionName, Control panel)
-        {
-            if (ShowSections)
-            {
-                var section = new ConfigPanelControl { HeaderText = sectionName, Dock = DockStyle.Top };
-                section.ShowCaptionOnly();
-                panel.Controls.Add(section);
+                AddVerticalPadding(panel);
             }
         }
 
@@ -92,11 +66,11 @@ namespace MW5.Tools.Services
             }
         }
 
-        private void GenerateSection(Control panel, IEnumerable<BaseParameter> parameters)
+        private void GenerateControls(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
         {
             foreach (var p in parameters)
             {
-                var ctrl = _factory.CreateControl(p);
+                var ctrl = _factory.CreateControl(p, batchMode);
                 if (ctrl != null)
                 {
                     ctrl.SetCaption(p.DisplayName);
@@ -107,6 +81,16 @@ namespace MW5.Tools.Services
 
                     _manager.AddControl(ctrl);
                 }
+            }
+        }
+
+        private void GenerateHeader(string sectionName, Control panel)
+        {
+            if (ShowSections)
+            {
+                var section = new ConfigPanelControl { HeaderText = sectionName, Dock = DockStyle.Top };
+                section.ShowCaptionOnly();
+                panel.Controls.Add(section);
             }
         }
     }

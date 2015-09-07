@@ -40,8 +40,13 @@ namespace MW5.Plugins.Interfaces
         void Initialize(IAppContext context);
 
         /// <summary>
-        /// Returns true if a tool can be executed asynchronously using tasks.
+        /// Gets a value indicating whether the tool can be executed asynchronously using tasks.
         /// </summary>
         bool SupportsTasks { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the tool supports batch execution.
+        /// </summary>
+        bool SupportsBatchExecution { get; }
     }
 }

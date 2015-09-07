@@ -13,15 +13,15 @@ namespace MW5.Tools.Model
         /// Initializes a new instance of the <see cref="OutputAttribute"/> class.
         /// </summary>
         /// <param name="displayName">The display name.</param>
-        /// <param name="filename">Initial filename for the output.</param>
+        /// <param name="nameTemplate">Initial filename for the output.</param>
         /// <param name="layerType">Layer type of the output.</param>
-        public OutputAttribute(string displayName, string filename, LayerType layerType = LayerType.Invalid)
+        public OutputAttribute(string displayName, string nameTemplate, LayerType layerType = LayerType.Invalid)
         {
             DisplayName = displayName;
-            Filename = filename;
+            NameTemplate = nameTemplate;
         }
 
-        public string Filename { get; set; }
+        public string NameTemplate { get; set; }
 
         /// <summary>
         /// Gets the display name.

@@ -27,22 +27,24 @@ namespace MW5.Tools.Toolbox
     /// </summary>
     public partial class ToolboxDockPanel : DockPanelControlBase, IToolbox, IMenuProvider
     {
-        private readonly IAppContext _context;
-
-
         /// <summary>
         /// Creates a new instance of GIS toolbox class.
         /// </summary>
-        public ToolboxDockPanel(IAppContext context)
+        public ToolboxDockPanel()
         {
             InitializeComponent();
-
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
 
             Init();
 
             AddEventHandlers();
+
+            contextMenuStripEx1.Opening += OnContextMenuOpening;
+        }
+
+        private void OnContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var tool = _treeView.SelectedTool;
+            mnuBatchRun.Enabled = tool != null && tool.SupportsBatchExecution;
         }
 
         public ITool SelectedTool

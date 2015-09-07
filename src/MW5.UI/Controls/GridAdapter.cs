@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
@@ -566,6 +567,28 @@ namespace MW5.UI.Controls
         public void ClearGrouping()
         {
             _grid.TableDescriptor.GroupedColumns.Clear();
+        }
+
+        private void SetComboBox(GridColumnDescriptor cmn)
+        {
+            // TODO: create a generalized method
+            // http ://stackoverflow.com/questions/29750570/setting-row-specific-content-for-a-combobox-in-a-gridgroupingcontrol-cell
+
+            var style = cmn.Appearance.AnyRecordFieldCell;
+
+            //var list = new List<FieldWrapper>()
+            //               {
+            //                   new FieldWrapper("layer", "field"), 
+            //                   new FieldWrapper("more", "another")
+            //               };
+
+            style.CellType = GridCellTypeName.ComboBox;
+
+            style.DisplayMember = "LayerName";
+            style.ValueMember = "FieldName";
+            //style.DataSource = list;
+
+            style.ExclusiveChoiceList = true;
         }
     }
 }

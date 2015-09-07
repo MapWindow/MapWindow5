@@ -10,13 +10,13 @@ namespace MW5.Plugins.Mvp
     public interface IApplicationContainer
     {
         /// <summary>
-        /// Registeres particular concrete service with transient lifetime.
+        /// Registers particular concrete service with transient lifetime.
         /// </summary>
         IApplicationContainer RegisterService<TService>()
             where TService : class;
 
         /// <summary>
-        /// Registeres particular concrete service with singleton lifetime.
+        /// Registers particular concrete service with singleton lifetime.
         /// </summary>
         IApplicationContainer RegisterSingleton<TService>()
             where TService : class;
@@ -50,13 +50,13 @@ namespace MW5.Plugins.Mvp
             where TService : class;
 
         /// <summary>
-        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// Gets an instance of particular type. Registers this type with transient life time if needed.
         /// </summary>
         TService GetInstance<TService>()
             where TService : class;
 
         /// <summary>
-        /// Gets an instance of particular type. Registeres this type with transient life time if needed.
+        /// Gets an instance of particular type. Registers this type with transient life time if needed.
         /// </summary>
         object GetInstance(Type type);
 
@@ -79,12 +79,12 @@ namespace MW5.Plugins.Mvp
             where TView : class, IView;
 
         /// <summary>
-        /// Runs presenter (registeres presenter type, creates instance of presenter, injects instance of IView in constructor, calls IView.ShowView).
+        /// Runs presenter (registers presenter type, creates instance of presenter, injects instance of IView in constructor, calls IView.ShowView).
         /// </summary>
         bool Run<TPresenter>(IWin32Window parent = null) where TPresenter : class, IPresenter;
 
         /// <summary>
-        /// Runs presenter with an argument parameter. Registeres presenter type if it's not registered.
+        /// Runs presenter with an argument parameter. Registers presenter type if it's not registered.
         /// </summary>
         bool Run<TPresenter, TArgument>(TArgument arg, IWin32Window parent = null)
           where TPresenter : class, IPresenter<TArgument>;

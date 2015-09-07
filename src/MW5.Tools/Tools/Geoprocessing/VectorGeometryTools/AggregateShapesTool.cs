@@ -28,7 +28,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Field", 1, false, ParameterType.Field)]
         public int FieldIndex { get; set; }
 
-        [Output("Save results as", @"aggregate", LayerType.Shapefile)]
+        [Output("Save results as", @"{input}_aggregate.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         protected override void Configure(IAppContext context, ToolConfiguration configuration)

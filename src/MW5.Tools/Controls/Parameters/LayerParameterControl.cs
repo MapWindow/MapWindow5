@@ -21,21 +21,25 @@ namespace MW5.Tools.Controls.Parameters
     internal partial class LayerParameterControl : ParameterControlBase
     {
         private readonly IFileDialogService _dialogService;
-        private readonly DataSourceType _dataSourceType;
+        private DataSourceType _dataSourceType;
         private List<LayerWrapper> _layers = new List<LayerWrapper>();
 
-        internal LayerParameterControl(DataSourceType dataSourceType, IFileDialogService dialogService)
+        public LayerParameterControl(IFileDialogService dialogService)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
 
             _dialogService = dialogService;
-            _dataSourceType = dataSourceType;
 
             InitializeComponent();
 
             SetNumSelected(0);
 
             PopulateImageList();
+        }
+
+        public void Initialize(DataSourceType dataSourceType)
+        {
+            _dataSourceType = dataSourceType;
         }
 
         public void SetLayers(IEnumerable<ILayer> layers)
@@ -148,8 +152,7 @@ namespace MW5.Tools.Controls.Parameters
             string filename;
             if (_dialogService.OpenFile(_dataSourceType, out filename))
             {
-                var identity = new LayerIdentity(filename);
-                var wrapper = new LayerWrapper(identity);
+                var wrapper = new LayerWrapper(filename);
                 _layers.Add(wrapper);
 
                 UpdateDatasource();

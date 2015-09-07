@@ -87,11 +87,18 @@
     <Compile Include="Concrete\FlexibleMessageBox.cs" />
     <Compile Include="Concrete\FlexibleMessageService.cs" />
     <Compile Include="Concrete\BaseLogger.cs" />
+    <Compile Include="Concrete\SelectLayerService.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Concrete\ProjectLoaderLegacy.cs" />
     <Compile Include="Controls\MissingLayer.cs" />
     <Compile Include="Controls\MissingLayersGrid.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectLayerGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\SelectLayerGrid.Designer.cs">
+      <DependentUpon>SelectLayerGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExceptionHelper.cs" />
     <Compile Include="Concrete\LogEntry.cs" />
@@ -101,6 +108,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Concrete\ProjectLoader.cs" />
+    <Compile Include="Helpers\LayerIconHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +123,7 @@
     <Compile Include="Serialization\XmlProjectSettings.cs" />
     <Compile Include="Serialization\XmlRepository.cs" />
     <Compile Include="Views\Abstract\IMissingLayersView.cs" />
+    <Compile Include="Views\Abstract\ISelectLayerView.cs" />
     <Compile Include="Views\CreateLayerPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\ISerializableContext.cs" />
@@ -137,12 +146,21 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ICreateLayerView.cs" />
+    <Compile Include="Views\LayerItem.cs" />
     <Compile Include="Views\MissingLayersPresenter.cs" />
     <Compile Include="Views\MissingLayersView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\MissingLayersView.Designer.cs">
       <DependentUpon>MissingLayersView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectLayerModel.cs" />
+    <Compile Include="Views\SelectLayerPresenter.cs" />
+    <Compile Include="Views\SelectLayerView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SelectLayerView.Designer.cs">
+      <DependentUpon>SelectLayerView.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -172,11 +190,17 @@
     <Content Include="Data\MapWindow4Project.xml">
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Resources\img_polygon.png" />
+    <None Include="Resources\img_point.png" />
+    <None Include="Resources\img_line.png" />
     <None Include="Resources\img_raster.png" />
     <None Include="Resources\img_geometry.png" />
     <None Include="Resources\img_question32.png" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\SelectLayerGrid.resx">
+      <DependentUpon>SelectLayerGrid.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -186,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MissingLayersView.resx">
       <DependentUpon>MissingLayersView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SelectLayerView.resx">
+      <DependentUpon>SelectLayerView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

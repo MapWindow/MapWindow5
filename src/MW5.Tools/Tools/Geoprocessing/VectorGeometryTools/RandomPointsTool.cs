@@ -27,7 +27,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer, typeof(RandomPointsPresenter))]  
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]   //, typeof(RandomPointsPresenter)
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
@@ -37,7 +37,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Range(1, 1000000)]
         public int NumPoints { get; set; }
 
-        [Output("New layer name", "random points", LayerType.Shapefile)]
+        [Output("New layer name", "{input}_random points.shp", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
 
         protected override void Configure(IAppContext context, ToolConfiguration configuration)
@@ -70,6 +70,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public override string Name
         {
             get { return "Random points"; }
+        }
+
+        public override bool SupportsBatchExecution
+        {
+            get { return true; }
         }
 
         /// <summary>

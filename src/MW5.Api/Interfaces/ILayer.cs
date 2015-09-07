@@ -38,6 +38,8 @@ namespace MW5.Api.Interfaces
         ISpatialReference Projection { get; }
         IEnvelope Envelope { get; }
 
+        string SizeInfo { get; }
+
         #region Not implemented
 
         // bool SkipOnSaving { get; set; }

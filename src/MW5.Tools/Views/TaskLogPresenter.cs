@@ -7,6 +7,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Tools.Model;
+using MW5.Tools.Views.Abstract;
 
 namespace MW5.Tools.Views
 {

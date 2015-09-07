@@ -70,6 +70,7 @@ namespace MW5.Tools.Views
             // 
             // btnClose
             // 
+            this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClose.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
@@ -84,6 +85,7 @@ namespace MW5.Tools.Views
             // 
             // btnRun
             // 
+            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnRun.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnRun.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnRun.BeforeTouchSize = new System.Drawing.Size(85, 26);
@@ -98,6 +100,9 @@ namespace MW5.Tools.Views
             // tabControlAdv1
             // 
             this.tabControlAdv1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabControlAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(550, 373);
             this.tabControlAdv1.Controls.Add(this.tabRequired);
             this.tabControlAdv1.Controls.Add(this.tabOptional);
@@ -241,6 +246,7 @@ namespace MW5.Tools.Views
             // 
             // chkBackground
             // 
+            this.chkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBackground.AutoSize = true;
             this.chkBackground.Location = new System.Drawing.Point(12, 395);
             this.chkBackground.Name = "chkBackground";

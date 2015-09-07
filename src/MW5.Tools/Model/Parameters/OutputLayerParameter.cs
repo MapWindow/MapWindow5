@@ -16,10 +16,15 @@ namespace MW5.Tools.Model.Parameters
             return Value as OutputLayerInfo;
         }
 
+        public override bool HasDatasource
+        {
+            get { return true; }
+        }
+
         public override string ToString()
         {
             var info = GetValue();
-            return string.Format("{0}: {1}", DisplayName, info != null ? info.Name : string.Empty);
+            return string.Format("{0}: {1}", DisplayName, info != null ? info.Filename : string.Empty);
         }
     }
 }

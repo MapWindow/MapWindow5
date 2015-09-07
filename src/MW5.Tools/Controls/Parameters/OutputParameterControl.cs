@@ -1,27 +1,35 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Plugins.Services;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
     public partial class OutputParameterControl : ParameterControlBase
     {
         private readonly IFileDialogService _dialogService;
-        private readonly LayerType _layerType;
-        private readonly OutputLayerInfo _output = new OutputLayerInfo();
-        private string _defaultValue;
+        private LayerType _layerType;
+        private string _templateName;
+        private string _inputFilename;
+        private string _filename;
 
-        public OutputParameterControl(IFileDialogService dialogService, LayerType layerType)
+        public OutputParameterControl(IFileDialogService dialogService)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dialogService = dialogService;
-            _layerType = layerType;
-
+            
             InitializeComponent();
 
             RefreshControls();
+        }
+
+        public void Initialize(LayerType layerType)
+        {
+            _layerType = layerType;
         }
 
         /// <summary>
@@ -46,14 +54,10 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override object GetValue()
         {
-            // OutputLayerInfo.Result property is set after tool execution, 
-            // so we very much want to use the same instance of it rather then generate 
-            // a new one on the fly
-            _output.AddToMap = chkAddToMap.Checked;
-            _output.MemoryLayer = chkMemoryLayer.Checked;
-            _output.Overwrite = chkOverwrite.Checked;
-            _output.Name = textBoxExt1.Text;
-            return _output;
+            return new OutputLayerInfo() { AddToMap = chkAddToMap.Checked,
+                                           MemoryLayer = chkMemoryLayer.Checked,
+                                           Overwrite = chkOverwrite.Checked,
+                                           Filename = textBoxExt1.Text };
         }
 
         /// <summary>
@@ -62,19 +66,19 @@ namespace MW5.Tools.Controls.Parameters
         public override void SetValue(object value)
         {
             var s = Convert.ToString(value);
-            _defaultValue = s;
+            _templateName = s;
             RefreshControls();
         }
 
         private void OnSaveClick(object sender, EventArgs e)
         {
-            string filename = _defaultValue;
-
             string filter = _dialogService.GetLayerFilter(_layerType);
+            string filename = textBoxExt1.Text;
 
             if (_dialogService.SaveFile(filter, ref filename))
             {
-                textBoxExt1.Text = filename;
+                _filename = filename;
+                RefreshControls();
             }
         }
 
@@ -87,12 +91,47 @@ namespace MW5.Tools.Controls.Parameters
 
             chkAddToMap.Enabled = !chkMemoryLayer.Checked;
 
-            textBoxExt1.Text = chkMemoryLayer.Checked ? _defaultValue : string.Empty;
+            RefreshName();
+        }
+
+        private void RefreshName()
+        {
+            if (!string.IsNullOrWhiteSpace(_filename))
+            {
+                textBoxExt1.Text = chkMemoryLayer.Checked ? _filename : Path.GetFileNameWithoutExtension(_filename);
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(_inputFilename))
+                {
+                    return;
+                }
+
+                if (chkMemoryLayer.Checked)
+                {
+                    string input = Path.GetFileNameWithoutExtension(_inputFilename);
+                    string name = _templateName.Replace(TemplateVariables.Input, input);    
+                    textBoxExt1.Text = Path.GetFileNameWithoutExtension(name);
+                }
+                else
+                {
+                    string input = Shared.PathHelper.GetFullPathWithoutExtension(_inputFilename);
+                    string name = _templateName.Replace(TemplateVariables.Input, input);
+                    textBoxExt1.Text = name;
+                }
+            }
         }
 
         private void MemoryLayerChecked(object sender, EventArgs e)
         {
             RefreshControls();
+        }
+
+        public void OnLayerChanged(LayerWrapper layer)
+        {
+            _filename = string.Empty;
+            _inputFilename = layer.Filename;
+            RefreshName();
         }
     }
 }

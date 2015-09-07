@@ -48,6 +48,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -70,6 +79,24 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\Parameters\OutputParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\OutputParameterControl.Designer.cs">
+      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ToolParameterGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ToolParameterGrid.Designer.cs">
+      <DependentUpon>ToolParameterGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Parameters\BatchLayerParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\BatchLayerParameterControl.Designer.cs">
+      <DependentUpon>BatchLayerParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Parameters\FieldParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -85,6 +112,7 @@
     </Compile>
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
+    <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
@@ -172,11 +200,11 @@
     <Compile Include="Controls\Parameters\LayerParameterControl.Designer.cs">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\OutputParameterControl.cs">
+    <Compile Include="Controls\Parameters\BatchOutputParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\OutputParameterControl.Designer.cs">
-      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    <Compile Include="Controls\Parameters\BatchOutputParameterControl.Designer.cs">
+      <DependentUpon>BatchOutputParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\ParameterControlBase.cs">
       <SubType>UserControl</SubType>
@@ -228,7 +256,7 @@
     <Compile Include="Views\Custom\RandomPointsView.Designer.cs">
       <DependentUpon>RandomPointsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ITaskLogView.cs" />
+    <Compile Include="Views\Abstract\ITaskLogView.cs" />
     <Compile Include="Views\TaskNodeWrapper.cs" />
     <Compile Include="Views\TaskLogPresenter.cs" />
     <Compile Include="Views\TaskLogView.cs">
@@ -244,7 +272,7 @@
     <Compile Include="Views\ToolView.Designer.cs">
       <DependentUpon>ToolView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\IToolView.cs" />
+    <Compile Include="Views\Abstract\IToolView.cs" />
     <Compile Include="Toolbox\ToolboxDockPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -293,6 +321,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\Parameters\BatchLayerParameterControl.resx">
+      <DependentUpon>BatchLayerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\BooleanParameterControl.resx">
       <DependentUpon>BooleanParameterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -311,11 +342,14 @@
     <EmbeddedResource Include="Controls\Parameters\LayerParameterControl.resx">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Parameters\OutputParameterControl.resx">
-      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Parameters\BatchOutputParameterControl.resx">
+      <DependentUpon>BatchOutputParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\DoubleParameterControl.resx">
       <DependentUpon>DoubleParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\OutputParameterControl.resx">
+      <DependentUpon>OutputParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\StringParameterControl.resx">
       <DependentUpon>StringParameterControl.cs</DependentUpon>
@@ -377,6 +411,14 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_info20.png" />
+    <None Include="Resources\img_info16.png" />
+    <None Include="Resources\img_remove16_3.png" />
+    <None Include="Resources\img_clear16_2.png" />
+    <None Include="Resources\img_remove16_2.png" />
+    <None Include="Resources\img_clear16.png" />
+    <None Include="Resources\img_remove16.png" />
+    <None Include="Resources\img_add16.png" />
     <None Include="Resources\img_database16_2.png" />
     <None Include="Resources\img_pause16.png" />
     <None Include="Resources\img_success32.png" />

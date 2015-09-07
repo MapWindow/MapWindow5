@@ -63,6 +63,16 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_add16 {
+            get {
+                object obj = ResourceManager.GetObject("img_add16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_cancel16 {
             get {
                 object obj = ResourceManager.GetObject("img_cancel16", resourceCulture);
@@ -76,6 +86,26 @@ namespace MW5.Tools.Properties {
         internal static System.Drawing.Bitmap img_cancel32 {
             get {
                 object obj = ResourceManager.GetObject("img_cancel32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_clear16 {
+            get {
+                object obj = ResourceManager.GetObject("img_clear16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_clear16_2 {
+            get {
+                object obj = ResourceManager.GetObject("img_clear16_2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,6 +213,26 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_info16 {
+            get {
+                object obj = ResourceManager.GetObject("img_info16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_info20 {
+            get {
+                object obj = ResourceManager.GetObject("img_info20", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_line {
             get {
                 object obj = ResourceManager.GetObject("img_line", resourceCulture);
@@ -256,6 +306,36 @@ namespace MW5.Tools.Properties {
         internal static System.Drawing.Bitmap img_raster {
             get {
                 object obj = ResourceManager.GetObject("img_raster", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove16 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove16_2 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove16_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_remove16_3 {
+            get {
+                object obj = ResourceManager.GetObject("img_remove16_3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

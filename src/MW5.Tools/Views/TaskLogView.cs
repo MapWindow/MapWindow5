@@ -16,6 +16,7 @@ using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model;
 using MW5.Tools.Properties;
+using MW5.Tools.Views.Abstract;
 using MW5.UI.Forms;
 
 namespace MW5.Tools.Views

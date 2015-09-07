@@ -318,6 +318,34 @@ namespace MW5.Api.Concrete
             }
         }
 
+        /// <summary>
+        /// Gets information with number of features for vector datasources and number of pixels for raster ones. 
+        /// </summary>
+        public string SizeInfo
+        {
+            get
+            {
+                if (IsVector)
+                {
+                    var fs = LayerSource as IFeatureSet;
+                    if (fs != null)
+                    {
+                        return "[" + fs.NumFeatures + " features]";
+                    }
+                }
+                else
+                {
+                    var img = LayerSource as IRasterSource;
+                    if (img != null)
+                    {
+                        return string.Format("[{0}×{1} pixels]", img.Width, img.Height);
+                    }
+                }
+
+                return string.Empty;
+            }
+        }
+
         #region Deprecated
 
         // bool get_ShapeLayerDrawFill(int layerHandle);

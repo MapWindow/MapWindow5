@@ -42,5 +42,13 @@ namespace MW5.Tools.Model
         {
             get { return false; }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether the tool supports batch execution.
+        /// </summary>
+        public bool SupportsBatchExecution
+        {
+            get { return false; }
+        }
     }
 }

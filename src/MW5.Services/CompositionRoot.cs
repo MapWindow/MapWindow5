@@ -15,9 +15,10 @@ namespace MW5.Services
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterService<IFileDialogService, FileDialogService>()
-                .RegisterService<IMessageService, MessageService>()     // FlexibleMessageService
+                .RegisterService<IMessageService, MessageService>() // FlexibleMessageService
                 .RegisterSingleton<ILayerService, LayerService>()
                 .RegisterSingleton<ILoggingService, LoggingService>()
+                .RegisterSingleton<ISelectLayerService, SelectLayerService>()
                 .RegisterSingleton<IProjectService, ProjectService>()
                 .RegisterService<ICreateLayerView, CreateLayerView>()
                 .RegisterService<ImageSerializationService>()
@@ -25,7 +26,8 @@ namespace MW5.Services
                 .RegisterSingleton<ITempFileService, TempFileService>()
                 .RegisterSingleton<IConfigService, ConfigService>()
                 .RegisterSingleton<IProjectLoader, ProjectLoader>()
-                .RegisterView<IMissingLayersView, MissingLayersView>();
+                .RegisterView<IMissingLayersView, MissingLayersView>()
+                .RegisterView<ISelectLayerView, SelectLayerView>();
 
             EnumHelper.RegisterConverter(new SelectionOperationConverter());
             EnumHelper.RegisterConverter(new AreaUnitsConverter());

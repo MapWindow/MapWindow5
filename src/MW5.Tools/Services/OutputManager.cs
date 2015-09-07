@@ -39,7 +39,7 @@ namespace MW5.Tools.Services
 
         private bool HandleDiskOutput(IDatasource ds, OutputLayerInfo outputInfo)
         {
-            string filename = outputInfo.Name;
+            string filename = outputInfo.Filename;
 
             if (File.Exists(filename) && !outputInfo.Overwrite)
             {
@@ -75,7 +75,7 @@ namespace MW5.Tools.Services
                 throw new ApplicationException("Memory layer option can only be used with add to map option.");
             }
 
-            return _layerService.AddDatasource(ds, outputInfo.Name);
+            return _layerService.AddDatasource(ds,  outputInfo.Name);
         }
 
         private bool HandleOverwriteFailure()

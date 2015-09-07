@@ -30,7 +30,7 @@ namespace MW5.Tools.Views.Custom
 
             tool.NumPoints = View.NumPoints;
             tool.InputLayer = new LayerInfo(View.Input);
-            tool.OutputLayer = new Model.OutputLayerInfo() { Name = View.OutputName, MemoryLayer = true, AddToMap = true };
+            tool.OutputLayer = new Model.OutputLayerInfo() { Filename = View.OutputName, MemoryLayer = true, AddToMap = true };
 
             if (!tool.Validate())
             {

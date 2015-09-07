@@ -6,16 +6,64 @@
 
 using System.IO;
 using MW5.Api.Interfaces;
+using MW5.Tools.Helpers;
 
 namespace MW5.Tools.Model
 {
     public class OutputLayerInfo
     {
+        private string _path;
+        private string _nameTemplate;
+
         public bool AddToMap { get; set; }
 
         public bool MemoryLayer { get; set; }
 
-        public string Name { get; set; }
+        public void ResolveTemplateName(string inputFilename)
+        {
+            if (MemoryLayer)
+            {
+                string name = GetTemplatedLayerName(inputFilename);
+                Filename = Path.GetFileNameWithoutExtension(name);
+            }
+            else
+            {
+                Filename = GetTemplatedFilename(inputFilename);
+            }
+        }
+
+        private string GetTemplatedFilename(string inputFilename)
+        {
+            string path = _path;
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                path = Path.GetDirectoryName(inputFilename);
+            }
+
+            string inputName = Path.GetFileNameWithoutExtension(inputFilename);
+            path += GetTemplatedLayerName(inputName);
+            return path;
+        }
+
+        private string GetTemplatedLayerName(string inputLayerName)
+        {
+            string name = Path.GetFileNameWithoutExtension(inputLayerName);
+            return _nameTemplate.Replace(TemplateVariables.Input, name);
+        }
+
+        public void SetTemplate(string path, string nameTemplate)
+        {
+            _path = path;
+            _nameTemplate = nameTemplate;
+        }
+
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(Filename); }
+        }
+ 
+        public string Filename { get; set; }
 
         public bool Overwrite { get; set; }
 
@@ -23,7 +71,7 @@ namespace MW5.Tools.Model
 
         public bool Validate(out string message)
         {
-            if (string.IsNullOrWhiteSpace(Name))
+            if (string.IsNullOrWhiteSpace(Filename))
             {
                 message = "OutputLayer layer name is empty.";
                 return false;
@@ -35,7 +83,7 @@ namespace MW5.Tools.Model
                 return false;
             }
 
-            if (!MemoryLayer && !Overwrite && File.Exists(Name))
+            if (!MemoryLayer && !Overwrite && File.Exists(Filename))
             {
                 message = "The selected file name already exists but no overwrite flag is checked.";
                 return false;

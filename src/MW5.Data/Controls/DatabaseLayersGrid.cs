@@ -9,6 +9,8 @@ namespace MW5.Data.Controls
         public DatabaseLayersGrid()
         {
             KeyDown += DatabaseLayersGrid_KeyDown;
+
+            Adapter.AllowCurrentCell = false;
         }
 
         void DatabaseLayersGrid_KeyDown(object sender, KeyEventArgs e)

@@ -35,7 +35,7 @@ namespace MW5.Tools.Toolbox
                     RunTool(View.SelectedTool);
                     break;
                 case ToolboxCommand.BatchRun:
-                    MessageService.Current.Info("Batch run: not implemented.");
+                    RunTool(View.SelectedTool, true);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
@@ -47,11 +47,11 @@ namespace MW5.Tools.Toolbox
             return View;
         }
 
-        private void RunTool(ITool clickedTool)
+        private void RunTool(ITool clickedTool, bool batchMode = false)
         {
             if (clickedTool == null) return;
 
-            // we don't want the same instance of tool to be used by diffent tasks
+            // we don't want the same instance of tool to be used by different tasks
             // therefore a new instance is created; it's expected that it must have default empty constructor
             var tool = Activator.CreateInstance(clickedTool.GetType()) as ITool;
 
@@ -67,7 +67,7 @@ namespace MW5.Tools.Toolbox
             {
                 var presenter = tool.GetPresenter(_context);
 
-                var model = new ToolViewModel(tool as IGisTool);
+                var model = new ToolViewModel(tool as IGisTool, batchMode);
                 if (presenter.Run(model))
                 {
                     _context.Container.Run<TaskLogPresenter, IGisTask>(model.Task);

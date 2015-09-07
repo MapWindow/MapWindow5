@@ -59,7 +59,7 @@ namespace MW5.Tools.Model
 
             param.Name = prop.Name;
             param.DisplayName = attr.DisplayName;
-            param.DefaultValue = attr.Filename;
+            param.DefaultValue = attr.NameTemplate;
             param.Required = true;
             param.LayerType = attr.LayerType;
 
@@ -122,6 +122,29 @@ namespace MW5.Tools.Model
             {
                 p.ToolProperty.SetValue(_tool, p.Value);
             }
+        }
+
+        public void DetachControls()
+        {
+            foreach (var p in _list.Where(p => p.Control != null))
+            {
+                p.Control = null;
+            }
+        }
+
+        /// <summary>
+        /// Clones parameters to the new instance of the GisTool of the same type.
+        /// </summary>
+        public GisTool Clone()
+        {
+            var tool = Activator.CreateInstance(_tool.GetType()) as GisTool;
+
+            foreach (var p in _list)
+            {
+                p.ToolProperty.SetValue(tool, p.Value);
+            }
+
+            return tool;
         }
 
         public bool Validate()

@@ -8,12 +8,51 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Views;
 
 namespace MW5.Tools.Helpers
 {
     public static class ToolHelper
     {
+        internal static IParametrizedTool CloneWithInput(this IParametrizedTool tool, ILayerInfo input, IAppContext context)
+        {
+            var newTool = tool.Parameters.Clone();
+
+            newTool.Initialize(context);
+
+            // assigning input datasource
+            var p = newTool.GetBatchModeInputParameter();
+            p.ToolProperty.SetValue(newTool, input);
+
+            // resolving output filename based on template
+            foreach (var output in newTool.Parameters.OfType<OutputLayerParameter>())
+            {
+                var info = output.GetValue();
+                info.ResolveTemplateName(input.Name);
+            }
+
+            return newTool;
+        }
+
+        internal static LayerParameterBase GetBatchModeInputParameter(this IParametrizedTool tool)
+        {
+            var list = tool.Parameters.OfType<LayerParameterBase>().ToList();
+            if (!list.Any())
+            {
+                throw new ApplicationException("No input layer parameters are found.");
+            }
+
+            if (list.Count > 1)
+            {
+                throw new ApplicationException("More than one input layer parameters are found.");
+            }
+
+            return list.First();
+        }
+
         public static IPresenter<ToolViewModel> GetPresenter(this ITool tool, IAppContext context)
         {
             var attr = AttributeHelper.GetAttribute<GisToolAttribute>(tool.GetType());

@@ -10,11 +10,14 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
+using MW5.Tools.Views.Abstract;
 using MW5.UI.Forms;
 
 namespace MW5.Tools.Views
@@ -39,6 +42,19 @@ namespace MW5.Tools.Views
             _generator = controlGenerator;
 
             InitializeComponent();
+
+            panelOptional.Controls.Clear();
+
+            panelRequired.Controls.Clear();
+        }
+
+        public override ViewStyle Style
+        {
+            get { return new ViewStyle()
+                             {
+                                 Modal = true,
+                                 Sizable = true,
+                             }; }
         }
 
         /// <summary>
@@ -66,27 +82,43 @@ namespace MW5.Tools.Views
                     "Tool must support IParameterized tool interface for automatic UI generation.");
             }
 
-            var parameters = tool.Parameters;
-            var list = parameters.ToList();
+            var parameters = tool.Parameters.ToList();
 
-            _generator.Generate(panelRequired, list.Where(p => p.Required), false);
-
-            if (parameters.All(p => p.Required))
+            if (Model.BatchMode)
             {
-                tabOptional.TabVisible = false;
+                _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter), true);
+
+                _generator.Generate(panelRequired, "Input", parameters.Where(p => p is LayerParameterBase), true);
+
+                _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required && !p.HasDatasource), true);
+
+                _generator.Generate(panelOptional, "Required", parameters.Where(p => p.Required && !p.HasDatasource), true);
+
+                tabRequired.Text = "Input";
+
+                tabOptional.Text = "Parameters";
             }
             else
             {
-                _generator.Generate(panelOptional, list.Where(p => !p.Required), true);
+                _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter));
+
+                _generator.Generate(panelRequired, "Input", parameters.Where(p => p.Required && !(p is OutputLayerParameter)));
+
+                _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required));
             }
+
+            panelOptional.Visible = panelOptional.Controls.Count > 0;
+
+            _generator.AddVerticalPadding(new List<Control>() { panelRequired, panelOptional });
 
             _generator.EventManager.Bind(tool.Configuration);
         }
 
         public void Initialize()
         {
-            chkBackground.Checked = AppConfig.Instance.TaskRunInBackground;
-            
+            chkBackground.Visible = !Model.BatchMode;
+            chkBackground.Checked =  AppConfig.Instance.TaskRunInBackground;
+
             var tool = Model.Tool;
 
             Text = tool.Name;

@@ -17,6 +17,11 @@ namespace MW5.Tools.Model.Parameters
     /// </summary>
     public abstract class BaseParameter
     {
+        public BaseParameter()
+        {
+            HasDatasource = false;
+        }
+
         /// <summary>
         /// Gets or sets the control.
         /// </summary>
@@ -44,6 +49,8 @@ namespace MW5.Tools.Model.Parameters
         public PropertyInfo ToolProperty { get; set; }
 
         public IGisTool Tool { get; set; }
+
+        public virtual bool HasDatasource { get; private set; }
 
         public virtual object Value
         {

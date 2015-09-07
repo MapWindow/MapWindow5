@@ -1,4 +1,5 @@
 ﻿using System;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
@@ -10,15 +11,15 @@ namespace MW5.Tools.Controls.Parameters
     /// </summary>
     public class ParameterControlFactory
     {
-        private readonly IFileDialogService _dialogService;
+        private readonly IAppContext _context;
 
-        public ParameterControlFactory(IFileDialogService dialogService)
+        public ParameterControlFactory(IAppContext context)
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
-            _dialogService = dialogService;
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
         }
 
-        public ParameterControlBase CreateControl(BaseParameter parameter)
+        public ParameterControlBase CreateControl(BaseParameter parameter, bool batchMode = false)
         {
             if (parameter == null) throw new ArgumentNullException("parameter");
 
@@ -51,7 +52,19 @@ namespace MW5.Tools.Controls.Parameters
             else if (parameter is OutputLayerParameter)
             {
                 var layerType = (parameter as OutputLayerParameter).LayerType;
-                control = new OutputParameterControl(_dialogService, layerType);
+
+                if (batchMode)
+                {
+                    var opc = _context.Container.GetInstance<BatchOutputParameterControl>();
+                    opc.Initialize(layerType);
+                    control = opc;
+                }
+                else
+                {
+                    var opc = _context.Container.GetInstance<OutputParameterControl>();
+                    opc.Initialize(layerType);
+                    control = opc;
+                }
             }
             else if (parameter is OptionsParameter)
             {
@@ -60,7 +73,19 @@ namespace MW5.Tools.Controls.Parameters
             else if (parameter is LayerParameterBase)
             {
                 var lp = parameter as LayerParameterBase;
-                control = new LayerParameterControl(lp.DataSourceType, _dialogService);
+                
+                if (batchMode)
+                {
+                    var blpc = _context.Container.GetInstance<BatchLayerParameterControl>();
+                    blpc.Initialize(lp.DataSourceType);
+                    control = blpc;
+                }
+                else
+                {
+                    var lpc = _context.Container.GetInstance<LayerParameterControl>();
+                    lpc.Initialize(lp.DataSourceType);
+                    control = lpc;
+                }
             }
 
             if (control == null)

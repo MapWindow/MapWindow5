@@ -4,13 +4,9 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
 using MW5.Plugins.Mvp;
-using MW5.Tools.Model;
-using MW5.Tools.Model.Parameters;
 
-namespace MW5.Tools.Views
+namespace MW5.Tools.Views.Abstract
 {
     /// <summary>
     /// The ToolView interface.

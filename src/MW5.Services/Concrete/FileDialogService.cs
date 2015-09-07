@@ -54,16 +54,18 @@ namespace MW5.Services.Concrete
         {
             filename = string.Empty;
             string[] filenames;
+            
             if (OpenFileCore(GetLayerFilter(layerType), false, -1, out filenames))
             {
                 filename = filenames[0];
             }
+
             return filename != string.Empty;
         }
 
         public bool OpenFiles(DataSourceType layerType, out string[] filenames)
         {
-            return OpenFileCore(GetLayerFilter(layerType), true, -1, out filenames);
+            return OpenFileCore(GetLayerFilter(layerType), true, 0, out filenames);
         }
 
         public bool ChooseFolder(string initialPath, out string chosenPath)

@@ -121,6 +121,15 @@
   <data name="img_geometry" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_geometry.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_line" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_line.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_point" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_point.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_polygon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_polygon.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_question32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_question32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

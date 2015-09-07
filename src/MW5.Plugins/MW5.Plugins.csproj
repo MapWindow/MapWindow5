@@ -186,6 +186,7 @@
     <Compile Include="Services\IPluginManager.cs" />
     <Compile Include="Services\IProjectService.cs" />
     <Compile Include="Services\ITempFileService.cs" />
+    <Compile Include="Services\ISelectLayerService.cs" />
     <Compile Include="Services\MessageService.cs" />
   </ItemGroup>
   <ItemGroup>

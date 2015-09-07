@@ -10,11 +10,14 @@ namespace MW5.Tools.Views
 {
     public class ToolViewModel
     {
-        public ToolViewModel(IGisTool tool)
+        public ToolViewModel(IGisTool tool, bool batchMode = false)
         {
             if (tool == null) throw new ArgumentNullException("tool");
             Tool = tool;
+            BatchMode = batchMode;
         }
+
+        public bool BatchMode { get; private set; }
 
         public IGisTool Tool { get; private set; }
 
