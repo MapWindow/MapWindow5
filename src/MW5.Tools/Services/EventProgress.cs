@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Services
 {
-    public class EventProgress: ITaskProgress
+    public class EventProgress: TaskProgressBase
     {
-        public void Update(string msg, int value)
+        public override void Update(string msg, int value)
         {
             FireProgressChanged(msg, value);
         }
 
-        public void Clear()
+        public override void Clear()
         {
             FireHideProgress();
         }
@@ -38,8 +39,8 @@ namespace MW5.Tools.Services
             }
         }
 
-        public event EventHandler<ProgressEventArgs> ProgressChanged;
+        public override event EventHandler<ProgressEventArgs> ProgressChanged;
 
-        public event EventHandler Hide;
+        public override event EventHandler Hide;
     }
 }

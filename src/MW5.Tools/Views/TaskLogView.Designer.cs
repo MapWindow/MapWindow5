@@ -191,6 +191,7 @@ namespace MW5.Tools.Views
             this.progressBar1.ThemesEnabled = false;
             this.progressBar1.TubeEndColor = System.Drawing.Color.Black;
             this.progressBar1.TubeStartColor = System.Drawing.Color.Red;
+            this.progressBar1.Value = 0;
             this.progressBar1.WaitingGradientWidth = 400;
             // 
             // panelResults

@@ -15,6 +15,11 @@ namespace MW5.Tools.Services
             // do nothing
         }
 
+        public void TryUpdate(string msg, int step, int total, ref int lastPercent)
+        {
+            // do nothing
+        }
+
         public void Clear()
         {
             // do nothing

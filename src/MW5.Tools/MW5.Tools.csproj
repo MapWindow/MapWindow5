@@ -122,6 +122,7 @@
     <Compile Include="Model\Layers\LayerInfo.cs" />
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
     <Compile Include="Model\Layers\RasterLayerInfo.cs" />
+    <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ToolBase.cs" />
     <Compile Include="Services\EmptyTaskHandle.cs" />
     <Compile Include="Services\ParameterControlGenerator.cs" />
@@ -151,6 +152,7 @@
     <Compile Include="Model\ParameterCollection.cs" />
     <Compile Include="Services\LayerEventArgs.cs" />
     <Compile Include="Services\OutputManager.cs" />
+    <Compile Include="Services\TaskProgressBase.cs" />
     <Compile Include="Services\ToolBuilder.cs" />
     <Compile Include="Services\ToolConfiguration.cs" />
     <Compile Include="Services\EventManager.cs" />

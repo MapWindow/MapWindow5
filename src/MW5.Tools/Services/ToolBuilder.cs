@@ -21,6 +21,8 @@ namespace MW5.Tools.Services
             _parameters = parameters;
 
             ApplyDefaults();
+
+            ApplyRanges();
         }
 
         private void ApplyDefaults()
@@ -30,6 +32,18 @@ namespace MW5.Tools.Services
                 if (_config.DefaultValues.ContainsKey(p.Name))
                 {
                     p.DefaultValue = _config.DefaultValues[p.Name];
+                }
+            }
+        }
+
+        private void ApplyRanges()
+        {
+            foreach (var p in _parameters.OfType<NumericParameter>())
+            {
+                if (_config.Ranges.ContainsKey(p.Name))
+                {
+                    var range = _config.Ranges[p.Name];
+                    p.SetRange(range.Min, range.Max);
                 }
             }
         }

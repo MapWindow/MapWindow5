@@ -34,7 +34,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public ILayerInfo InputLayer { get; set; }
 
         [Input("Number of points", 1)]
-        [Range(1, 1000000)]
         public int NumPoints { get; set; }
 
         [Output("New layer name", "{input}_random points.shp", LayerType.Shapefile)]
@@ -45,7 +44,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             base.Configure(context, configuration);
 
             configuration.Get<RandomPointsTool>()
-                .SetDefault(t => t.NumPoints, 500);
+                .SetDefault(t => t.NumPoints, 500)
+                .SetRange(t => t.NumPoints, 1, 1000000);
         }
 
         /// <summary>
@@ -92,8 +92,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             var envelop = ds.Envelope;
             var random = new Random();
-            var progressValue = 0;
-            var progressStep = NumPoints / 100;
+            var lastPercent = 0;
 
             for (int i = 0; i < NumPoints; i++)
             {
@@ -104,11 +103,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 feature.Points.Add(new Coordinate(x, y));
                 fs.Features.EditAdd(feature);
 
-                if (i % progressStep == 0)
-                {
-                    progressValue++;
-                    task.Progress.Update("Running...", progressValue);
-                }
+                task.Progress.TryUpdate("Running...", i, NumPoints, ref lastPercent);
             }
 
             task.Progress.Clear();

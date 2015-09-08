@@ -89,17 +89,10 @@ namespace MW5.Tools.Model
             var range = prop.GetAttribute<RangeAttribute>();
             if (range != null)
             {
-                if (param is IntegerParameter)
+                var np = param as NumericParameter;
+                if (np != null)
                 {
-                    (param as IntegerParameter).MinValue = (int)range.Minimum;
-                    (param as IntegerParameter).MaxValue = (int)range.Maximum;
-                    (param as IntegerParameter).HasRange = true;
-                }
-                else if (param is DoubleParameter)
-                {
-                    (param as DoubleParameter).MinValue = (double)range.Minimum;
-                    (param as DoubleParameter).MaxValue = (double)range.Maximum;
-                    (param as DoubleParameter).HasRange = true;
+                    np.SetRange(range.Minimum, range.Maximum);
                 }
             }
         }
