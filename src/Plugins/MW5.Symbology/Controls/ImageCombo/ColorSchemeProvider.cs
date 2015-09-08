@@ -27,6 +27,7 @@ using System.Xml;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Shared;
@@ -71,7 +72,7 @@ namespace MW5.Plugins.Symbology.Controls.ImageCombo
         /// </summary>
         private static string GetFilename(SchemeTarget type)
         {
-            string path = ResourceHelper.GetStylesPath();
+            string path = ResourcePathHelper.GetStylesPath();
             switch (type)
             {
                 case SchemeTarget.Vector:

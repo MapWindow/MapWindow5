@@ -18,7 +18,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Tools.Controls
 {
-    public partial class ToolParameterGrid : StronglyTypedGrid<InputSourceWrapper>
+    public partial class ToolParameterGrid : StronglyTypedGrid<InputSourceGridAdapter>
     {
         public ToolParameterGrid()
         {

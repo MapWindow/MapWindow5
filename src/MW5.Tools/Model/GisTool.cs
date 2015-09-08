@@ -6,9 +6,13 @@
 
 using System;
 using System.Linq;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
@@ -19,7 +23,7 @@ namespace MW5.Tools.Model
     /// <summary>
     /// Base class for GIS tool.
     /// </summary>
-    public abstract class GisTool : IGisTool, IParametrizedTool
+    public abstract class GisTool : IGisTool, IParametrizedTool, IXmlSerializable
     {
         private readonly ToolConfiguration _config = new ToolConfiguration();
         private readonly IToolLogger _logger = new ToolLogger();
@@ -190,6 +194,48 @@ namespace MW5.Tools.Model
         protected virtual void Configure(IAppContext context, ToolConfiguration configuration)
         {
             configuration.AddLayers(context.Layers);
+        }
+
+        XmlSchema IXmlSerializable.GetSchema()
+        {
+            return null;
+        }
+
+        void IXmlSerializable.ReadXml(XmlReader reader)
+        {
+            while (reader.Read())
+            {
+                if (reader.NodeType != XmlNodeType.Element)
+                {
+                    continue;
+                }
+
+                string name = reader.LocalName;
+                
+                var item = Parameters.FirstOrDefault(p => p.Name.EqualsIgnoreCase(name));
+                if ( item != null && item.Serializable)
+                {
+                    var xml = item as IXmlSerializable;
+                    if (xml != null)
+                    {
+                        xml.ReadXml(reader);
+                    }
+                }
+            }
+        }
+
+        void IXmlSerializable.WriteXml(XmlWriter writer)
+        {
+            foreach (var p in Parameters.Where(p => p.Serializable))
+            {
+                var xml = p as IXmlSerializable;
+                if (xml != null)
+                {
+                    writer.WriteStartElement(p.Name);
+                    xml.WriteXml(writer);
+                    writer.WriteEndElement();
+                }
+            }
         }
     }
 }

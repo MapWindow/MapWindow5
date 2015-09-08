@@ -14,6 +14,11 @@ namespace MW5.Tools.Model.Parameters
 
         public bool HasRange { get; set; }
 
+        public override bool Serializable
+        {
+            get { return true; }
+        }
+
         public void SetRange(object min, object max)
         {
             MinValue = min;

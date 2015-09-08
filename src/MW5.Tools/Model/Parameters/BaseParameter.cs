@@ -68,6 +68,15 @@ namespace MW5.Tools.Model.Parameters
             }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether the parameter should be serialized into config file 
+        /// to preserve the last used value.
+        /// </summary>
+        public virtual bool Serializable
+        {
+            get { return false; }
+        }
+
         public override string ToString()
         {
             var val = Value;

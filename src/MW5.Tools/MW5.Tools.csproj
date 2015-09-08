@@ -117,7 +117,7 @@
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
     <Compile Include="Model\Layers\ILayerInfo.cs" />
-    <Compile Include="Model\Layers\InputSourceWrapper.cs" />
+    <Compile Include="Model\Layers\InputSourceGridAdapter.cs" />
     <Compile Include="Model\Layers\IRasterLayerInfo.cs" />
     <Compile Include="Model\Layers\IVectorLayerInfo.cs" />
     <Compile Include="Model\Layers\LayerInfo.cs" />

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Shared;
 
@@ -64,7 +65,7 @@ namespace MW5.Plugins.Symbology.Controls
             cboIconCollection.Enabled = false;
             chkScaleIcons.Enabled = false;
 
-            var path = ResourceHelper.GetIconsPath();
+            var path = ResourcePathHelper.GetIconsPath();
 
             var folders = GetIconFolders(path);
             if (folders == null || folders.Length == 0)
@@ -115,7 +116,7 @@ namespace MW5.Plugins.Symbology.Controls
             var icon = _marker.Icon;
             if (icon != null)
             {
-                string path = ResourceHelper.GetIconsPath();
+                string path = ResourcePathHelper.GetIconsPath();
                 
                 filename = icon.Filename;
                 if (File.Exists(filename))
@@ -150,7 +151,7 @@ namespace MW5.Plugins.Symbology.Controls
 
         private void UpdateIconsList()
         {
-            var path = ResourceHelper.GetIconsPath() + cboIconCollection.Text;
+            var path = ResourcePathHelper.GetIconsPath() + cboIconCollection.Text;
 
             iconControl1.ChooseIconCellSize(path);
 

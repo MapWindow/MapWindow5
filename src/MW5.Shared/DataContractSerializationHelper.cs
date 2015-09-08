@@ -19,18 +19,22 @@ namespace MW5.Shared
             return Deserialize<T>(targetString, null);
         }
 
-
-        public static T Deserialize<T>(this string targetString, IEnumerable<Type> knownTypes)
+        public static T Deserialize<T>(this string xml, IEnumerable<Type> knownTypes)
         {
-            Encoding encoding = XmlSerializationHelper.GetXmlDocEncoding(targetString);
+            return (T)Deserialize(xml, typeof(T), knownTypes);
+        }
 
-            using (var stream = new MemoryStream(encoding.GetBytes(targetString)))
+        public static object Deserialize(this string xml, Type type, IEnumerable<Type> knownTypes)
+        {
+            Encoding encoding = XmlSerializationHelper.GetXmlDocEncoding(xml);
+
+            using (var stream = new MemoryStream(encoding.GetBytes(xml)))
             {
                 var quota = new XmlDictionaryReaderQuotas() { MaxStringContentLength = MaxStringContentLength };
                 using (var reader = XmlDictionaryReader.CreateTextReader(stream, quota))
                 {
-                    var ser = new DataContractSerializer(typeof(T), knownTypes, Int32.MaxValue, false, false, null);
-                    return (T)ser.ReadObject(reader);
+                    var ser = new DataContractSerializer(type, knownTypes, Int32.MaxValue, false, false, null);
+                    return ser.ReadObject(reader);
                 }
             }
         }

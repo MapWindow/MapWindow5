@@ -221,7 +221,6 @@
     <Compile Include="Services\LabelMover.cs" />
     <Compile Include="Services\LabelMoverCursor.cs" />
     <Compile Include="Helpers\ListViewHelper.cs" />
-    <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Legacy\InputBoxHelper.cs" />
     <Compile Include="Controls\ImageCombo\ColorSchemeProvider.cs" />
     <Compile Include="Helpers\FormHelper.cs" />

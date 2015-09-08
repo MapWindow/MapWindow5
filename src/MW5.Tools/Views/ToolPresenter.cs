@@ -6,11 +6,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -35,10 +38,19 @@ namespace MW5.Tools.Views
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
+
+            //ViewAsForm.FormClosed += (s, e) => Model.Tool.SaveConfig();
+        }
+
+        private Form ViewAsForm
+        {
+            get { return View as Form; }
         }
 
         protected override void Initialize()
         {
+            //Model.Tool.RestoreConfig();
+
             View.GenerateControls();
         }
 

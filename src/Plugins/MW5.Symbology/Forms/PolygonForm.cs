@@ -15,6 +15,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Model;
 using MW5.Plugins.Symbology.Services;
@@ -216,7 +217,7 @@ namespace MW5.Plugins.Symbology.Forms
 
         private void InitTextures()
         {
-            string path = ResourceHelper.GetTexturesPath();
+            string path = ResourcePathHelper.GetTexturesPath();
             if (Directory.Exists(path))
             {
                 textureControl1.FilePath = path;

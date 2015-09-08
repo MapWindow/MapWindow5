@@ -8,6 +8,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Helpers;
@@ -82,8 +83,8 @@ namespace MW5.Plugins.Symbology.Model
                 icbVector.SelectedIndex = 1;
             }
 
-            txtIconPath.Text = ResourceHelper.GetIconsPath();
-            txtTexurePath.Text = ResourceHelper.GetTexturesPath();
+            txtIconPath.Text = ResourcePathHelper.GetIconsPath();
+            txtTexurePath.Text = ResourcePathHelper.GetTexturesPath();
 
             ColorSchemeProvider.SetFirstColorScheme(SchemeTarget.Vector, Color.Gray);
         }

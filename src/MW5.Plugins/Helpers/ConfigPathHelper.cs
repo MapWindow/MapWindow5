@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins.Helpers
 {
@@ -36,6 +37,11 @@ namespace MW5.Plugins.Helpers
         public static string GetToolbarConfigPath()
         {
             return GetConfigPath() + @"\toolbars";
+        }
+
+        public static string GetToolsConfigPath()
+        {
+            return AssemblyHelper.GetAppFolder() + @"\Tools\";
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -19,6 +20,12 @@ namespace MW5.Shared
         public static FileVersionInfo GetAssemblyInfo(this Type type)
         {
             return FileVersionInfo.GetVersionInfo(type.Assembly.Location);
+        }
+
+        public static string GetAppFolder()
+        {
+            return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            //return Directory.GetParent(filename).FullName;
         }
     }
 }
