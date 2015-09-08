@@ -25,9 +25,9 @@ namespace MW5.Tools.Model.Parameters
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
             int val;
-            if (Int32.TryParse(reader.GetAttribute("Value"), out val))
+            if (Int32.TryParse(reader.GetAttribute("Value"), NumberStyles.Any, CultureInfo.InvariantCulture, out val))
             {
-                DefaultValue = val;
+                PreviousValue = val;
             }
         }
 

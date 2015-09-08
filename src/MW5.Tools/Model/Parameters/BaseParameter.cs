@@ -52,6 +52,31 @@ namespace MW5.Tools.Model.Parameters
 
         public virtual bool HasDatasource { get; private set; }
 
+        /// <summary>
+        /// Gets or sets value restored from config from previous run of the tool.
+        /// </summary>
+        public object PreviousValue { get; set; }
+
+        /// <summary>
+        /// Gets the initial value of the control. It's either DefaultValue or PreviousValue.
+        /// </summary>
+        public object InitialValue
+        {
+            get
+            {
+                if (PreviousValue != null)
+                {
+                    return PreviousValue;
+                }
+
+                return DefaultValue;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value of the parameter. It's value set in the control if control is attached, or 
+        /// the value of the relevant property of the tool class otherwise.
+        /// </summary>
         public virtual object Value
         {
             get

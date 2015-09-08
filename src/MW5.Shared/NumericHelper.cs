@@ -11,6 +11,17 @@ namespace MW5.Shared
     {
         private const double Tolerance = 1e-10;
 
+        public static string ToInVariantString(this double value)
+        {
+            return value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static bool ParseDoubleInvariant(this string s, out double result)
+        {
+            double val;
+            return double.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
+        }
+
         /// <summary>Check if a value is nummeric</summary>
         /// <param name = "value">The value to check.</param>
         /// <param name = "style">The NumberStyle</param>

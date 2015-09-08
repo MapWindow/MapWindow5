@@ -240,7 +240,6 @@
     <Compile Include="TableEditorPlugin.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Helpers\FormHelper.cs" />
-    <Compile Include="Helpers\NumericHelper.cs" />
     <Compile Include="Views\Abstract\IAddFieldView.cs" />
     <Compile Include="Views\UpdateMeasurementsPresenter.cs" />
     <Compile Include="Views\UpdateMeasurementsView.cs">

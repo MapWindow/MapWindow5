@@ -93,10 +93,10 @@ namespace MW5.Tools.Controls.Parameters
                 throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
             }
 
-            var value = parameter.DefaultValue;
-            if (value != null)
+            var init = parameter.InitialValue;
+            if (init != null)
             {
-                control.SetValue(value);
+                control.SetValue(init);
             }
 
             control.ParameterName = parameter.Name;

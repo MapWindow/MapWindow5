@@ -38,18 +38,12 @@ namespace MW5.Tools.Views
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
-
-            //ViewAsForm.FormClosed += (s, e) => Model.Tool.SaveConfig();
-        }
-
-        private Form ViewAsForm
-        {
-            get { return View as Form; }
         }
 
         protected override void Initialize()
         {
-            //Model.Tool.RestoreConfig();
+            // old values will be set to BaseParameter.PreviousValue
+            Model.Tool.RestoreConfig();
 
             View.GenerateControls();
         }
@@ -63,6 +57,8 @@ namespace MW5.Tools.Views
         /// <returns></returns>
         public override bool ViewOkClicked()
         {
+            Model.Tool.SaveConfig();
+
             if (Model.BatchMode)
             {
                 return RunBatch();

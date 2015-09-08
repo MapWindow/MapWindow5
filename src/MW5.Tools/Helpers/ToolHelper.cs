@@ -23,7 +23,7 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Gets path of the file with configuration information for the tool.
         /// </summary>
-        public static string GetConfigPath(this IGisTool tool)
+        private static string GetConfigPath(this IGisTool tool)
         {
             return ConfigPathHelper.GetToolsConfigPath() + tool.Name + ".xml";
         }
@@ -45,7 +45,7 @@ namespace MW5.Tools.Helpers
                 string xml = File.ReadAllText(filename);
                 var toolNew = xml.Deserialize(tool.GetType(), null) as IParametrizedTool;
 
-                CopyConfigFrom(toolNew, tool);
+                CopyConfigFrom(toolNew, tool as IParametrizedTool);
             }
             catch (Exception ex)
             {
@@ -56,13 +56,17 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Copies values of serializable parameters from source tool instance to the target.
         /// </summary>
-        private static void CopyConfigFrom(IParametrizedTool source, IGisTool target)
+        private static void CopyConfigFrom(IParametrizedTool source, IParametrizedTool target)
         {
             foreach (var p in source.Parameters)
             {
                 if (p.Serializable)
                 {
-                    p.ToolProperty.SetValue(target, p.ToolProperty.GetValue(source));
+                    var targetParameter = target.Parameters.FirstOrDefault(pp => pp.Name == p.Name);
+                    if (targetParameter != null)
+                    {
+                        targetParameter.PreviousValue = p.PreviousValue;
+                    }
                 }
             }
         }

@@ -60,7 +60,15 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override void SetValue(object value)
         {
-            doubleTextBox1.DoubleValue = Convert.ToDouble(value);
+            if (value is Distance)
+            {
+                doubleTextBox1.DoubleValue = (value as Distance).Value;
+                comboBoxAdv1.SetValue((value as Distance).Units);
+            }
+            else
+            {
+                doubleTextBox1.DoubleValue = Convert.ToDouble(value);
+            }
         }
     }
 }

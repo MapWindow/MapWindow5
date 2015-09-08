@@ -123,6 +123,9 @@ namespace MW5.Tools.Model
 
             Configure(_context, _config);
 
+            // a) default values set in attributes will be stored in BaseParameter.DefaultValue
+            // on first call of Parameters property;
+            // b) default values set in configuration will be applied in ToolBuilder.Build method;
             var builder = new ToolBuilder();
             builder.Build(_config, Parameters);
         }

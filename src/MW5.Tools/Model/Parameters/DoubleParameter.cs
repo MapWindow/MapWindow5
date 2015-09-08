@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using MW5.Shared;
 
 namespace MW5.Tools.Model.Parameters
 {
@@ -22,23 +23,23 @@ namespace MW5.Tools.Model.Parameters
             return string.Format("{0}: {1:g3}", DisplayName, Value);
         }
 
-        XmlSchema IXmlSerializable.GetSchema()
+        public virtual XmlSchema GetSchema()
         {
             return null;
         }
 
-        void IXmlSerializable.ReadXml(XmlReader reader)
+        public virtual void ReadXml(XmlReader reader)
         {
             double val;
-            if (double.TryParse(reader.GetAttribute("Value"), NumberStyles.Any, CultureInfo.InvariantCulture.NumberFormat, out val))
+            if (reader.GetAttribute("Value").ParseDoubleInvariant(out val))
             {
-                DefaultValue = val;
+                PreviousValue = val;
             }
         }
 
-        void IXmlSerializable.WriteXml(XmlWriter writer)
+        public virtual void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("Value", ((double)Value).ToString(CultureInfo.InvariantCulture));
+            writer.WriteAttributeString("Value", ((double)Value).ToInVariantString());
         }
     }
 }
