@@ -1,2 +1,7 @@
-xcopy d:\mw\MapWinGis\src\bin\Win32\* d:\mw\mw5\src\bin\release\MapWinGIS\* /Y /R /s
+rem MapWinGISBin32 = D:\dev\MapwinGIS\GIT\src\bin\Win32\
+rem %1 = $(TargetDir) = D:\dev\MapWindow-v5\GIT\src\bin\Release\
+cd %MapWinGISBin32%
+xcopy *.* %1\MapWinGIS\* /Y /R /S
+cd %1
 MW5.PostBuild.exe
+
