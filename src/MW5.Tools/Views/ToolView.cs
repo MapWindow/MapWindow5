@@ -124,6 +124,11 @@ namespace MW5.Tools.Views
             Text = tool.Name;
 
             webBrowser1.DocumentText = tool.LoadManual();
+
+            if (Model.BatchMode)
+            {
+                superToolTip1.SetToolTip(btnRun, null);
+            }
         }
 
         public override void BeforeClose()

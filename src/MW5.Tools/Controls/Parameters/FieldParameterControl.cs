@@ -43,7 +43,7 @@ namespace MW5.Tools.Controls.Parameters
             return tableLayoutPanel1;
         }
 
-        public void OnLayerChanged(LayerWrapper layer)
+        public void OnLayerChanged(InputSource layer)
         {
             RebuildFieldList(layer != null ? layer.FeatureSet : null);
         }

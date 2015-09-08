@@ -18,7 +18,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Tools.Controls
 {
-    public partial class ToolParameterGrid : StronglyTypedGrid<LayerWrapper>
+    public partial class ToolParameterGrid : StronglyTypedGrid<InputSourceWrapper>
     {
         public ToolParameterGrid()
         {
@@ -29,8 +29,6 @@ namespace MW5.Tools.Controls
             Adapter.AllowCurrentCell = false;
 
             ShowColumnHeaders = false;
-
-            
         }
 
         public new object DataSource

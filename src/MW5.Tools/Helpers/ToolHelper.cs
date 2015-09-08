@@ -17,6 +17,15 @@ namespace MW5.Tools.Helpers
 {
     public static class ToolHelper
     {
+        internal static IParametrizedTool Clone(this IParametrizedTool tool, IAppContext context)
+        {
+            var newTool = tool.Parameters.Clone();
+
+            newTool.Initialize(context);
+
+            return newTool;
+        }
+        
         internal static IParametrizedTool CloneWithInput(this IParametrizedTool tool, ILayerInfo input, IAppContext context)
         {
             var newTool = tool.Parameters.Clone();

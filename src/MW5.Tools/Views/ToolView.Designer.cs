@@ -32,6 +32,7 @@ namespace MW5.Tools.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Syncfusion.Windows.Forms.Tools.ToolTipInfo toolTipInfo1 = new Syncfusion.Windows.Forms.Tools.ToolTipInfo();
             this.comboBoxAdv2 = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.btnClose = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnRun = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -49,6 +50,7 @@ namespace MW5.Tools.Views
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.webBrowser1 = new System.Windows.Forms.WebBrowser();
             this.chkBackground = new System.Windows.Forms.CheckBox();
+            this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             ((System.ComponentModel.ISupportInitialize)(this.comboBoxAdv2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
@@ -76,7 +78,7 @@ namespace MW5.Tools.Views
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.IsBackStageButton = false;
-            this.btnClose.Location = new System.Drawing.Point(469, 389);
+            this.btnClose.Location = new System.Drawing.Point(471, 389);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(85, 26);
             this.btnClose.TabIndex = 34;
@@ -91,11 +93,19 @@ namespace MW5.Tools.Views
             this.btnRun.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnRun.ForeColor = System.Drawing.Color.White;
             this.btnRun.IsBackStageButton = false;
-            this.btnRun.Location = new System.Drawing.Point(378, 389);
+            this.btnRun.Location = new System.Drawing.Point(380, 389);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(85, 26);
             this.btnRun.TabIndex = 33;
             this.btnRun.Text = "Run";
+            toolTipInfo1.BackColor = System.Drawing.Color.White;
+            toolTipInfo1.Body.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Body.Text = "Press Ctrl to run task without closing the dialog. This allows to run several tas" +
+    "ks with different inputs in a row.";
+            toolTipInfo1.Footer.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Header.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Header.Text = "Multiple tasks";
+            this.superToolTip1.SetToolTip(this.btnRun, toolTipInfo1);
             // 
             // tabControlAdv1
             // 
@@ -248,12 +258,19 @@ namespace MW5.Tools.Views
             // 
             this.chkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBackground.AutoSize = true;
-            this.chkBackground.Location = new System.Drawing.Point(12, 395);
+            this.chkBackground.Location = new System.Drawing.Point(12, 394);
             this.chkBackground.Name = "chkBackground";
             this.chkBackground.Size = new System.Drawing.Size(135, 17);
             this.chkBackground.TabIndex = 36;
             this.chkBackground.Text = "Run in the background";
             this.chkBackground.UseVisualStyleBackColor = true;
+            // 
+            // superToolTip1
+            // 
+            this.superToolTip1.MaxWidth = 280;
+            this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
+            this.superToolTip1.ToolTipDuration = 5;
+            this.superToolTip1.UseFading = Syncfusion.Windows.Forms.Tools.SuperToolTip.FadingType.System;
             // 
             // ToolView
             // 
@@ -297,5 +314,6 @@ namespace MW5.Tools.Views
         private System.Windows.Forms.Panel panelOptional;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.CheckBox chkBackground;
+        private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
     }
 }

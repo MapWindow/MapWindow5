@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -55,13 +56,43 @@ namespace MW5.Tools.Views
                 return RunBatch();
             }
 
-            return RunSingle();
+            if (Control.ModifierKeys == Keys.Control)
+            {
+                if (RunSingle())
+                {
+                    MessageService.Current.Info("Task execution has started. You can now run another task now.");
+                }
+
+                return false;
+            }
+            
+            return RunSingleAndClose();
         }
 
         /// <summary>
-        /// Creates and runs task for a single input datasource.
+        /// Creates and runs task for a single input datasource. Keeps the dialog open.
         /// </summary>
+        /// <returns></returns>
         private bool RunSingle()
+        {
+            // we need a copy of tool here, since we don't want to share the instance
+            // between different running tasks
+            var newTool = (Model.Tool as IParametrizedTool).Clone(_context) as IGisTool;
+
+            if (!Validate(newTool))
+            {
+                return false;
+            }
+
+            RunBatchTask(newTool);
+
+            return true;
+        }
+
+        /// <summary>
+        /// Creates and runs task for a single input datasource. Closes dialog after it.
+        /// </summary>
+        private bool RunSingleAndClose()
         {
             if (!Validate(Model.Tool))
             {

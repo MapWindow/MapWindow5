@@ -230,13 +230,9 @@ namespace MW5.Tools.Model
             foreach (var p in _list.OfType<LayerParameterBase>())
             {
                 var info = p.Value as ILayerInfo;
-                if ( info.CloseAfterRun)
+                if (info != null)
                 {
-                    var layer = p.ToolProperty.GetValue(_tool) as ILayerSource;
-                    if (layer != null)
-                    {
-                        layer.Dispose();
-                    }
+                    info.CloseIfNeeded();
                 }
             }
         }

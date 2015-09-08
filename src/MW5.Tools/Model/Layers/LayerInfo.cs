@@ -19,6 +19,15 @@ namespace MW5.Tools.Model.Layers
 
         public ILayerSource Datasource { get; set; }
 
+        public void CloseIfNeeded()
+        {
+            if (CloseAfterRun)
+            {
+                Datasource.Dispose();
+                Datasource = null;
+            }
+        }
+
         public string Name
         {
             get { return Datasource.Filename;  }

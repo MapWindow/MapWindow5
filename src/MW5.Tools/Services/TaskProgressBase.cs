@@ -21,7 +21,6 @@ namespace MW5.Tools.Services
             {
                 Update("Running...", percent);
                 lastPercent = percent;
-                Thread.Sleep(50);
             }
         }
 

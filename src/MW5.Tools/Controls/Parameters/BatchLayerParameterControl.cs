@@ -24,7 +24,7 @@ namespace MW5.Tools.Controls.Parameters
         private readonly IFileDialogService _dialogService;
         private readonly ISelectLayerService _layerService;
         private DataSourceType _layerType = DataSourceType.All;
-        private readonly BindingList<LayerWrapper> _layers = new BindingList<LayerWrapper>();
+        private readonly BindingList<InputSourceGridAdapter> _layers = new BindingList<InputSourceGridAdapter>();
 
         public BatchLayerParameterControl(IFileDialogService dialogService,
                                           ISelectLayerService layerService)
@@ -87,7 +87,7 @@ namespace MW5.Tools.Controls.Parameters
 
         private void OnAddClick(object sender, EventArgs e)
         {
-            AddLayers(_layerService.Select(_layerType).Select(l => new LayerWrapper(l)));
+            AddLayers(_layerService.Select(_layerType).Select(l => new InputSourceGridAdapter(l)));
         }
 
         private void OnOpenClick(object sender, EventArgs e)
@@ -96,11 +96,11 @@ namespace MW5.Tools.Controls.Parameters
 
             if (_dialogService.OpenFiles(_layerType, out filenames))
             {
-                AddLayers(filenames.Select(f => new LayerWrapper(f)));
+                AddLayers(filenames.Select(f => new InputSourceGridAdapter(f)));
             }
         }
 
-        private void AddLayers(IEnumerable<LayerWrapper> layers)
+        private void AddLayers(IEnumerable<InputSourceGridAdapter> layers)
         {
             foreach (var item in layers)
             {
@@ -120,7 +120,7 @@ namespace MW5.Tools.Controls.Parameters
 
         public IEnumerable<ILayerInfo> Layers
         {
-            get { return _layers.ToList(); }
+            get { return _layers.Select(w => w.Source).ToList(); }
         }
     }
 }

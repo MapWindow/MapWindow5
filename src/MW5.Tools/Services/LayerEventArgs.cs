@@ -10,12 +10,12 @@ namespace MW5.Tools.Services
 {
     internal class LayerEventArgs: EventArgs
     {
-        public LayerEventArgs(LayerWrapper layer)
+        public LayerEventArgs(InputSource layer)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             Layer = layer;
         }
 
-        public LayerWrapper Layer { get; private set; }
+        public InputSource Layer { get; private set; }
     }
 }

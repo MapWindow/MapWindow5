@@ -22,7 +22,7 @@ namespace MW5.Tools.Controls.Parameters
     {
         private readonly IFileDialogService _dialogService;
         private DataSourceType _dataSourceType;
-        private List<LayerWrapper> _layers = new List<LayerWrapper>();
+        private List<InputSource> _layers = new List<InputSource>();
 
         public LayerParameterControl(IFileDialogService dialogService)
         {
@@ -44,7 +44,7 @@ namespace MW5.Tools.Controls.Parameters
 
         public void SetLayers(IEnumerable<ILayer> layers)
         {
-            _layers = layers.Select(l => new LayerWrapper(l)).ToList();
+            _layers = layers.Select(l => new InputSource(l)).ToList();
             
             UpdateDatasource();
 
@@ -102,7 +102,7 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        private int GetImageIndex(LayerWrapper layer)
+        private int GetImageIndex(InputSource layer)
         {
             var type = layer.Datasource.LayerType;
             switch (type)
@@ -152,7 +152,7 @@ namespace MW5.Tools.Controls.Parameters
             string filename;
             if (_dialogService.OpenFile(_dataSourceType, out filename))
             {
-                var wrapper = new LayerWrapper(filename);
+                var wrapper = new InputSource(filename);
                 _layers.Add(wrapper);
 
                 UpdateDatasource();
@@ -175,9 +175,9 @@ namespace MW5.Tools.Controls.Parameters
             RefreshImages();
         }
 
-        public LayerWrapper SelectedLayer
+        public InputSource SelectedLayer
         {
-            get { return comboBoxAdv1.SelectedItem as LayerWrapper; }
+            get { return comboBoxAdv1.SelectedItem as InputSource; }
         }
 
         private void OnSelectedLayerChanged(object sender, EventArgs e)

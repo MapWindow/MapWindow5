@@ -127,7 +127,7 @@ namespace MW5.Tools.Controls.Parameters
             RefreshControls();
         }
 
-        public void OnLayerChanged(LayerWrapper layer)
+        public void OnLayerChanged(InputSource layer)
         {
             _filename = string.Empty;
             _inputFilename = layer.Filename;
