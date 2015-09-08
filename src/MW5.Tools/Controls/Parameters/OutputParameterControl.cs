@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
@@ -24,7 +25,23 @@ namespace MW5.Tools.Controls.Parameters
             
             InitializeComponent();
 
+            InitFlags();
+
             RefreshControls();
+        }
+
+        private void InitFlags()
+        {
+            chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
+            chkMemoryLayer.Checked = AppConfig.Instance.ToolOutputInMemory;
+            chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
+        }
+
+        private void SaveFlags()
+        {
+            AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
+            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
+            AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
         }
 
         public void Initialize(LayerType layerType)
@@ -54,6 +71,10 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override object GetValue()
         {
+            // it's probably the best place to do it without cluttering
+            // interface with dedicated calls when form is closed
+            SaveFlags();
+
             return new OutputLayerInfo() { AddToMap = chkAddToMap.Checked,
                                            MemoryLayer = chkMemoryLayer.Checked,
                                            Overwrite = chkOverwrite.Checked,
@@ -98,7 +119,7 @@ namespace MW5.Tools.Controls.Parameters
         {
             if (!string.IsNullOrWhiteSpace(_filename))
             {
-                textBoxExt1.Text = chkMemoryLayer.Checked ? _filename : Path.GetFileNameWithoutExtension(_filename);
+                textBoxExt1.Text = chkMemoryLayer.Checked ? Path.GetFileNameWithoutExtension(_filename) : _filename;
             }
             else
             {

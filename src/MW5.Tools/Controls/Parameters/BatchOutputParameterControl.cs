@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
 
@@ -19,6 +20,8 @@ namespace MW5.Tools.Controls.Parameters
 
             InitializeComponent();
 
+            InitFlags();
+
             RefreshControls();
 
             txtPath.Cue = "<same folder as input>";
@@ -27,6 +30,20 @@ namespace MW5.Tools.Controls.Parameters
         public void Initialize(LayerType layerType)
         {
             _layerType = layerType;
+        }
+
+        private void InitFlags()
+        {
+            chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
+            chkMemoryLayer.Checked = AppConfig.Instance.ToolOutputInMemory;
+            chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
+        }
+
+        private void SaveFlags()
+        {
+            AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
+            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
+            AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
         }
 
         /// <summary>
@@ -51,6 +68,8 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override object GetValue()
         {
+            SaveFlags();
+
             var info = new OutputLayerInfo()
                        {
                            AddToMap = chkAddToMap.Checked,

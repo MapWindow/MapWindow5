@@ -96,6 +96,9 @@ namespace MW5.Plugins.Concrete
             TableEditorLayout = TableEditorLayout.Tabbed;
             TableEditorShowAliases = true;
             TaskRunInBackground = false;
+            ToolOutputAddToMap = true;
+            ToolOutputInMemory = true;
+            ToolOutputOverwrite = false;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
@@ -356,6 +359,15 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool TableEditorShowAliases { get; set;}
+
+        [DataMember]
+        public bool ToolOutputAddToMap {get; set; }
+
+        [DataMember]
+        public bool ToolOutputInMemory {get; set; }
+
+        [DataMember]
+        public bool ToolOutputOverwrite {get; set; }
 
         [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }
