@@ -325,24 +325,8 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                if (IsVector)
-                {
-                    var fs = LayerSource as IFeatureSet;
-                    if (fs != null)
-                    {
-                        return "[" + fs.NumFeatures + " features]";
-                    }
-                }
-                else
-                {
-                    var img = LayerSource as IRasterSource;
-                    if (img != null)
-                    {
-                        return string.Format("[{0}×{1} pixels]", img.Width, img.Height);
-                    }
-                }
-
-                return string.Empty;
+                var source = LayerSource;
+                return source != null ? source.SizeInfo : string.Empty;
             }
         }
 

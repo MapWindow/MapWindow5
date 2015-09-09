@@ -19,7 +19,7 @@ namespace MW5.Tools.Services
 
             if (percent > lastPercent)
             {
-                Update("Running...", percent);
+                Update(msg, percent);
                 lastPercent = percent;
             }
         }

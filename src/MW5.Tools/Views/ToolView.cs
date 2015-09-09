@@ -86,32 +86,50 @@ namespace MW5.Tools.Views
 
             if (Model.BatchMode)
             {
-                _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter), true);
-
-                _generator.Generate(panelRequired, "Input", parameters.Where(p => p is LayerParameterBase), true);
-
-                _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required && !p.HasDatasource), true);
-
-                _generator.Generate(panelOptional, "Required", parameters.Where(p => p.Required && !p.HasDatasource), true);
-
-                tabRequired.Text = "Input";
-
-                tabOptional.Text = "Parameters";
+                GenerateBatchMode(parameters);
             }
             else
             {
-                _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter));
-
-                _generator.Generate(panelRequired, "Input", parameters.Where(p => p.Required && !(p is OutputLayerParameter)));
-
-                _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required));
+                GenerateSingleMode(parameters);
             }
-
-            panelOptional.Visible = panelOptional.Controls.Count > 0;
 
             _generator.AddVerticalPadding(new List<Control>() { panelRequired, panelOptional });
 
             _generator.EventManager.Bind(tool.Configuration);
+
+            HideOptionalTab();
+        }
+
+        private void GenerateSingleMode(List<BaseParameter> parameters)
+        {
+            _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter));
+
+            _generator.Generate(panelRequired, "Input", parameters.Where(p => p.Required && !(p is OutputLayerParameter)));
+
+            _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required));
+        }
+
+        private void GenerateBatchMode(List<BaseParameter> parameters)
+        {
+            _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter), true);
+
+            _generator.Generate(panelRequired, "Input", parameters.Where(p => p is LayerParameterBase), true);
+
+            _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required && !p.HasDatasource), true);
+
+            _generator.Generate(panelOptional, "Required", parameters.Where(p => p.Required && !p.HasDatasource), true);
+
+            tabRequired.Text = "Input";
+
+            tabOptional.Text = "Parameters";
+        }
+
+        private void HideOptionalTab()
+        {
+            if (panelOptional.Controls.Count == 0)
+            {
+                tabControlAdv1.TabPages.Remove(tabOptional);
+            }
         }
 
         public void Initialize()

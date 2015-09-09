@@ -39,6 +39,8 @@ namespace MW5.Tools.Toolbox
             AddEventHandlers();
 
             contextMenuStripEx1.Opening += OnContextMenuOpening;
+
+            _treeView.ToolClicked += (s, e) => FireToolClicked(e.Tool);
         }
 
         private void OnContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
@@ -52,11 +54,7 @@ namespace MW5.Tools.Toolbox
             get { return _treeView.SelectedTool; }
         }
 
-        public event EventHandler<ToolboxToolEventArgs> ToolClicked
-        {
-            add { _treeView.ToolClicked += value; }
-            remove { _treeView.ToolClicked -= value; }
-        }
+        public event EventHandler<ToolboxToolEventArgs> ToolClicked;
 
         /// <summary>
         /// Returns list of groups located at the top level of toolbox.
@@ -184,6 +182,23 @@ namespace MW5.Tools.Toolbox
                 }
 
                 group.Tools.Add(tool);
+            }
+        }
+
+        /// <summary>
+        /// Opens dialog to set parameters and run the specified tool.
+        /// </summary>
+        public void OpenToolDialog(ITool tool, bool batchMode)
+        {
+            FireToolClicked(tool);
+        }
+
+        private void FireToolClicked(ITool tool)
+        {
+            var handler = ToolClicked;
+            if (handler != null)
+            {
+                handler(tool, new ToolboxToolEventArgs(tool));
             }
         }
 

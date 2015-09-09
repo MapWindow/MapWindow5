@@ -267,6 +267,17 @@ namespace MW5.Api.Concrete
             get { return _image.IsEmpty; }
         }
 
+        /// <summary>
+        /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
+        /// </summary>
+        public string SizeInfo 
+        {
+            get
+            {
+                return string.Format("[{0}×{1} pixels]", _image.Width, _image.Height);
+            } 
+        }
+
         public LayerType LayerType
         {
             get { return LayerType.Image; }

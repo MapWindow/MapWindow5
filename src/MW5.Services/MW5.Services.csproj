@@ -146,7 +146,7 @@
       <DependentUpon>CreateLayerView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ICreateLayerView.cs" />
-    <Compile Include="Views\LayerItem.cs" />
+    <Compile Include="Views\SelectLayerGridAdapter.cs" />
     <Compile Include="Views\MissingLayersPresenter.cs" />
     <Compile Include="Views\MissingLayersView.cs">
       <SubType>Form</SubType>

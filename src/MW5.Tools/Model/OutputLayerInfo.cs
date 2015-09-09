@@ -7,6 +7,7 @@
 using System.IO;
 using MW5.Api.Interfaces;
 using MW5.Tools.Helpers;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Model
 {
@@ -92,5 +93,12 @@ namespace MW5.Tools.Model
             message = string.Empty;
             return true;
         }
+
+        /// <summary>
+        /// Gets or sets the datasource pointer to be used to delete the previous output on reruning the tool.
+        /// </summary>
+        /// <remarks>This property should be set manually when GisTool.AfterRun is overriden without the use
+        /// of OutputManager.</remarks>
+        public DatasourcePointer DatasourcePointer { get; set; }
     }
 }

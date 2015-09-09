@@ -24,7 +24,7 @@ namespace MW5.Tools.Controls.Parameters
         private readonly IFileDialogService _dialogService;
         private readonly ISelectLayerService _layerService;
         private DataSourceType _layerType = DataSourceType.All;
-        private readonly BindingList<InputSourceGridAdapter> _layers = new BindingList<InputSourceGridAdapter>();
+        private readonly BindingList<InputLayerGridAdapter> _layers = new BindingList<InputLayerGridAdapter>();
 
         public BatchLayerParameterControl(IFileDialogService dialogService,
                                           ISelectLayerService layerService)
@@ -36,7 +36,7 @@ namespace MW5.Tools.Controls.Parameters
 
             InitializeComponent();
 
-            toolParameterGrid1.DataSource = _layers;
+            _inputLayerGrid1.DataSource = _layers;
 
             HideSelectedOnly();
         }
@@ -87,7 +87,7 @@ namespace MW5.Tools.Controls.Parameters
 
         private void OnAddClick(object sender, EventArgs e)
         {
-            AddLayers(_layerService.Select(_layerType).Select(l => new InputSourceGridAdapter(l)));
+            AddLayers(_layerService.Select(_layerType).Select(l => new InputLayerGridAdapter(l)));
         }
 
         private void OnOpenClick(object sender, EventArgs e)
@@ -96,18 +96,18 @@ namespace MW5.Tools.Controls.Parameters
 
             if (_dialogService.OpenFiles(_layerType, out filenames))
             {
-                AddLayers(filenames.Select(f => new InputSourceGridAdapter(f)));
+                AddLayers(filenames.Select(f => new InputLayerGridAdapter(f)));
             }
         }
 
-        private void AddLayers(IEnumerable<InputSourceGridAdapter> layers)
+        private void AddLayers(IEnumerable<InputLayerGridAdapter> layers)
         {
             foreach (var item in layers)
             {
                 _layers.Add(item);
             }
 
-            toolParameterGrid1.AdjustColumnWidths();
+            _inputLayerGrid1.AdjustColumnWidths();
         }
 
         private void OnClearClick(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        public IEnumerable<ILayerInfo> Layers
+        public IEnumerable<IDatasourceInput> Layers
         {
             get { return _layers.Select(w => w.Source).ToList(); }
         }

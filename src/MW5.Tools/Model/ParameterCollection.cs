@@ -10,6 +10,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
@@ -229,11 +230,43 @@ namespace MW5.Tools.Model
         {
             foreach (var p in _list.OfType<LayerParameterBase>())
             {
-                var info = p.Value as ILayerInfo;
+                var info = p.Value as IDatasourceInput;
                 if (info != null)
                 {
-                    info.CloseIfNeeded();
+                    p.ClosedPointer = info.Pointer;
+                    info.Close();
                 }
+            }
+        }
+
+        public bool ReopenDatasources(IAppContext context)
+        {
+            foreach (var p in _list.OfType<LayerParameterBase>())
+            {
+                var info = p.Value as IDatasourceInput;
+                if (info == null)
+                {
+                    throw new ApplicationException("Invalid call to ParameterCollection.ReopenDatasources.");
+                }
+
+                var newInfo = p.ClosedPointer.ReopenDatasource(context, info);
+                if (newInfo == null)
+                {
+                    MessageService.Current.Warn("Failed to reopen datasource for parameter: " + p.Name);
+                    CloseDatasources();
+                    return false;
+                }
+
+                p.SetToolValue(newInfo);
+            }
+
+            return true;
+        }
+
+        public IEnumerable<OutputLayerInfo> Outputs
+        {
+            get { 
+                return _list.OfType<OutputLayerParameter>().Select(p => p.Value as OutputLayerInfo);
             }
         }
     }

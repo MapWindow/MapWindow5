@@ -122,6 +122,17 @@ namespace MW5.Api.Concrete
             get { return _shapefile.NumShapes == 0; }
         }
 
+        /// <summary>
+        /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
+        /// </summary>
+        public string SizeInfo 
+        {
+            get
+            {
+                return "[" + NumFeatures + " features]";
+            } 
+        }
+
         public LayerType LayerType
         {
             get { return LayerType.Shapefile; }

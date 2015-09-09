@@ -7,8 +7,11 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Tools.Model.Layers
 {
-    public interface IRasterLayerInfo: ILayerInfo
+    public interface IRasterInput: IDatasourceInput
     {
+        /// <summary>
+        /// Gets or sets the datasource serving as input for GIS task.
+        /// </summary>
         new IRasterSource Datasource { get; set; }
     }
 }

@@ -19,13 +19,16 @@ namespace MW5.Tools.Enums
         Combo = 2,
     }
 
-    public enum ToolboxResultsCommand
+    public enum TaskCommand
     {
         Clear = 0,
         OpenLog = 2,
         CancelTask = 3,
         PauseTask = 4,
         RemoveTask = 5,
+        Rerun = 6,
+        RunAnother = 7,
+        RemoveOutput = 8,
     }
 
     internal enum TaskIcons
@@ -54,5 +57,11 @@ namespace MW5.Tools.Enums
     {
         Run = 0,
         BatchRun = 1,
+    }
+
+    public enum InputType
+    {
+        Datasource = 0,
+        Layer = 1,
     }
 }

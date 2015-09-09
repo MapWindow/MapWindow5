@@ -7,7 +7,7 @@ using MW5.UI.Controls;
 
 namespace MW5.Services.Controls
 {
-    public partial class SelectLayerGrid : StronglyTypedGrid<LayerItem>
+    public partial class SelectLayerGrid : StronglyTypedGrid<SelectLayerGridAdapter>
     {
         public SelectLayerGrid()
         {

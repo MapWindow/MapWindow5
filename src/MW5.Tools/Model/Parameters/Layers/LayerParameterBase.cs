@@ -15,9 +15,14 @@ namespace MW5.Tools.Model.Parameters.Layers
 {
     internal abstract class LayerParameterBase: BaseParameter
     {
-        public abstract DataSourceType DataSourceType {get; }
+        public abstract DataSourceType DataSourceType { get; }
 
         public abstract ILayerSource Datasource { get; }
+
+        /// <summary>
+        /// Gets or sets the pointer of the datasource that was used during tool execution.
+        /// </summary>
+        public DatasourcePointer ClosedPointer { get; set; }
 
         public override bool HasDatasource
         {
@@ -26,12 +31,11 @@ namespace MW5.Tools.Model.Parameters.Layers
 
         public override string ToString()
         {
-            var ds = Datasource;
-            string filename = ds != null ? Path.GetFileName(Datasource.Filename) : string.Empty;
-            return string.Format("{0}: {1}", DisplayName, filename);
+            var info = Value as IDatasourceInput;
+            return string.Format("{0}: {1}", DisplayName, info != null ? info.Name : string.Empty);
         }
 
-        public IEnumerable<ILayerInfo> BatchModeList
+        public IEnumerable<IDatasourceInput> BatchModeList
         {
             get
             {
@@ -41,7 +45,7 @@ namespace MW5.Tools.Model.Parameters.Layers
                     return blpc.Layers;
                 }
 
-                return new List<ILayerInfo>();
+                return new List<IDatasourceInput>();
             }
         }
     }

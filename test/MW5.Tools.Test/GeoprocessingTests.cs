@@ -44,7 +44,7 @@ namespace MW5.Tools.Test
             var tool = new BufferTool
                            {
                                BufferDistance = new Distance(100, LengthUnits.Kilometers),
-                               Input = new VectorLayerInfo(fs),
+                               Input = new VectorInput(fs),
                                MergeResults = true,
                                Output = new OutputLayerInfo { MemoryLayer = true }
                            };
@@ -64,7 +64,7 @@ namespace MW5.Tools.Test
             var tool = new RandomPointsTool
                            {
                                NumPoints = numPoints,
-                               InputLayer = new LayerInfo(fs),
+                               InputLayer = new DatasourceInput(fs),
                                OutputLayer = new OutputLayerInfo { MemoryLayer = true }
                            };
 
@@ -85,8 +85,8 @@ namespace MW5.Tools.Test
 
             var tool = new IntersectionTool()
                            {
-                               InputLayer = new VectorLayerInfo(rivers),
-                               InputLayer2 = new VectorLayerInfo(roads),
+                               InputLayer = new VectorInput(rivers),
+                               InputLayer2 = new VectorInput(roads),
                                Output = new OutputLayerInfo() {  MemoryLayer = true }
                            };
 

@@ -4,11 +4,11 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Services.Views
 {
-    public class LayerItem
+    public class SelectLayerGridAdapter
     {
         private readonly ILayer _layer;
 
-        public LayerItem(ILayer layer)
+        public SelectLayerGridAdapter(ILayer layer)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             _layer = layer;

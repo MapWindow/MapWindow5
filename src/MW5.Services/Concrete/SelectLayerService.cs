@@ -23,7 +23,7 @@ namespace MW5.Services.Concrete
 
         public IEnumerable<ILayer> Select(DataSourceType layerType)
         {
-            var model = new SelectLayerModel(_context.Layers.Select(l => new LayerItem(l)), layerType);
+            var model = new SelectLayerModel(_context.Layers.Select(l => new SelectLayerGridAdapter(l)), layerType);
 
             if (_context.Container.Run<SelectLayerPresenter, SelectLayerModel>(model))
             {

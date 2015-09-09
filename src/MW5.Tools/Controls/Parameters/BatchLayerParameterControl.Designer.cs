@@ -39,12 +39,12 @@
             this.btnAdd = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOpen = new Syncfusion.Windows.Forms.ButtonAdv();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.toolParameterGrid1 = new MW5.Tools.Controls.ToolParameterGrid();
+            this._inputLayerGrid1 = new MW5.Tools.Controls.InputLayerGrid();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.toolParameterGrid1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._inputLayerGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -153,32 +153,32 @@
             // 
             // panel3
             // 
-            this.panel3.Controls.Add(this.toolParameterGrid1);
+            this.panel3.Controls.Add(this._inputLayerGrid1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(8, 19);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(282, 82);
             this.panel3.TabIndex = 9;
             // 
-            // toolParameterGrid1
+            // _inputLayerGrid1
             // 
-            this.toolParameterGrid1.BackColor = System.Drawing.SystemColors.Window;
-            this.toolParameterGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.toolParameterGrid1.FreezeCaption = false;
-            this.toolParameterGrid1.Location = new System.Drawing.Point(0, 0);
-            this.toolParameterGrid1.Name = "toolParameterGrid1";
-            this.toolParameterGrid1.Size = new System.Drawing.Size(282, 82);
-            this.toolParameterGrid1.TabIndex = 0;
-            this.toolParameterGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
-            this.toolParameterGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
-            this.toolParameterGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
-            this.toolParameterGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
-            this.toolParameterGrid1.Text = "toolParameterGrid1";
-            this.toolParameterGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
-            this.toolParameterGrid1.TopLevelGroupOptions.ShowCaption = false;
-            this.toolParameterGrid1.TopLevelGroupOptions.ShowColumnHeaders = false;
-            this.toolParameterGrid1.VersionInfo = "5.0.1.0";
-            this.toolParameterGrid1.WrapWithPanel = true;
+            this._inputLayerGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this._inputLayerGrid1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._inputLayerGrid1.FreezeCaption = false;
+            this._inputLayerGrid1.Location = new System.Drawing.Point(0, 0);
+            this._inputLayerGrid1.Name = "_inputLayerGrid1";
+            this._inputLayerGrid1.Size = new System.Drawing.Size(282, 82);
+            this._inputLayerGrid1.TabIndex = 0;
+            this._inputLayerGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
+            this._inputLayerGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
+            this._inputLayerGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this._inputLayerGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
+            this._inputLayerGrid1.Text = "_inputLayerGrid1";
+            this._inputLayerGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            this._inputLayerGrid1.TopLevelGroupOptions.ShowCaption = false;
+            this._inputLayerGrid1.TopLevelGroupOptions.ShowColumnHeaders = false;
+            this._inputLayerGrid1.VersionInfo = "5.0.1.0";
+            this._inputLayerGrid1.WrapWithPanel = true;
             // 
             // BatchLayerParameterControl
             // 
@@ -193,7 +193,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.toolParameterGrid1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._inputLayerGrid1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -208,7 +208,7 @@
         private System.Windows.Forms.Panel panel2;
         private Syncfusion.Windows.Forms.ButtonAdv btnOpen;
         private System.Windows.Forms.Panel panel3;
-        private ToolParameterGrid toolParameterGrid1;
+        private InputLayerGrid _inputLayerGrid1;
         private Syncfusion.Windows.Forms.ButtonAdv btnAdd;
         private Syncfusion.Windows.Forms.ButtonAdv btnClear;
     }

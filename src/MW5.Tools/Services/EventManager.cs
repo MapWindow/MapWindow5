@@ -45,7 +45,7 @@ namespace MW5.Tools.Services
 
             if (input != null && output != null)
             {
-                input.SelectedLayerChanged += (s, e) => output.OnLayerChanged(e.Layer);
+                input.SelectedLayerChanged += (s, e) => output.OnLayerChanged(e.Datasource);
                 output.OnLayerChanged(input.SelectedLayer);
             }
         }
@@ -81,9 +81,10 @@ namespace MW5.Tools.Services
             {
                 var layer = GetControl(f.LayerName) as LayerParameterControl;
                 var field = GetControl(f.FieldName) as FieldParameterControl;
+                
                 if (layer != null && field != null)
                 {
-                    layer.SelectedLayerChanged += (s, e) => field.OnLayerChanged(e.Layer);
+                    layer.SelectedLayerChanged += (s, e) => field.OnLayerChanged(e.Datasource);
                     field.OnLayerChanged(layer.SelectedLayer);
                 }
             }

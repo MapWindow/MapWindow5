@@ -78,6 +78,17 @@ namespace MW5.Services.Concrete
             return true;
         }
 
+        public bool RemoveLayer(int layerHandle)
+        {
+            BeginBatch();
+
+            bool result = RemoveLayerCore(layerHandle, true);
+
+            EndBatch();
+
+            return result;
+        }
+
         public bool RemoveLayer(LayerIdentity identity)
         {
             var layers = _context.Map.Layers.Where(l => l.Identity == identity);
@@ -315,9 +326,14 @@ namespace MW5.Services.Concrete
             }
         }
 
+
         public int LastLayerHandle
         {
-            get { return _lastLayerHandle; }
+            get
+            {
+                // TODO: it can be invalid when multithreading / tasks are used
+                return _lastLayerHandle;
+            }
         }
 
         public void BeginBatch()

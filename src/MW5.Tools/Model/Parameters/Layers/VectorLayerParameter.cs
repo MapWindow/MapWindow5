@@ -18,7 +18,7 @@ namespace MW5.Tools.Model.Parameters.Layers
             {
                 if (Control != null)
                 {
-                    return Control.GetValue() as IVectorLayerInfo;
+                    return Control.GetValue() as IVectorInput;
                 }
 
                 return base.Value;
@@ -29,7 +29,7 @@ namespace MW5.Tools.Model.Parameters.Layers
         {
             get
             {
-                var info = Value as IVectorLayerInfo;
+                var info = Value as IVectorInput;
                 return info != null ? info.Datasource : null;
             }
         }

@@ -31,7 +31,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
-        public ILayerInfo InputLayer { get; set; }
+        public IDatasourceInput InputLayer { get; set; }
 
         [Input("Number of points", 1)]
         public int NumPoints { get; set; }

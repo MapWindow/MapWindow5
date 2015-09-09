@@ -12,6 +12,7 @@ using MW5.Plugins.Services;
 using MW5.Services.Concrete;
 using MW5.Shared;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Services
 {
@@ -55,6 +56,8 @@ namespace MW5.Tools.Services
                 return false;
             }
 
+            outputInfo.DatasourcePointer = new DatasourcePointer(filename);
+
             if (outputInfo.AddToMap)
             {
                 return _layerService.AddLayersFromFilename(filename);
@@ -75,7 +78,13 @@ namespace MW5.Tools.Services
                 throw new ApplicationException("Memory layer option can only be used with add to map option.");
             }
 
-            return _layerService.AddDatasource(ds,  outputInfo.Name);
+            bool result = _layerService.AddDatasource(ds, outputInfo.Name);
+            if (result)
+            {
+                outputInfo.DatasourcePointer = new Model.Layers.DatasourcePointer(_layerService.LastLayerHandle);
+            }
+
+            return result;
         }
 
         private bool HandleOverwriteFailure()

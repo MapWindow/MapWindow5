@@ -51,12 +51,12 @@ namespace MW5.Tools.Model.Parameters
                 return new BooleanParameter();
             }
 
-            if (type == typeof(IRasterLayerInfo))
+            if (type == typeof(IRasterInput))
             {
                 return new RasterLayerParameter();
             }
 
-            if (type == typeof(IVectorLayerInfo))
+            if (type == typeof(IVectorInput))
             {
                 return new VectorLayerParameter();
             }
@@ -66,7 +66,7 @@ namespace MW5.Tools.Model.Parameters
                 return new RasterLayerParameter();
             }
 
-            if (type == typeof(ILayerInfo))
+            if (type == typeof(IDatasourceInput))
             {
                 return new GenericLayerParameter();
             }

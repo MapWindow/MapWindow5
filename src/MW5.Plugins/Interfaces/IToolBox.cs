@@ -37,6 +37,11 @@ namespace MW5.Plugins.Interfaces
         /// </summary>
         /// <param name="tools">The tools.</param>
         void AddTools(IEnumerable<ITool> tools);
+
+        /// <summary>
+        /// Opens dialog to set parameters and run the specified tool.
+        /// </summary>
+        void OpenToolDialog(ITool tool, bool batchMode);
     }
 }
 

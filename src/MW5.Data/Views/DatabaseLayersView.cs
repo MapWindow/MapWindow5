@@ -19,7 +19,7 @@ namespace MW5.Data.Views
 {
     public partial class DatabaseLayersView : DatabaseLayersViewBase, IDatabaseLayersView
     {
-        private List<VectorLayerInfo> _layers;
+        private List<VectorLayerGridAdapter> _layers;
 
         public DatabaseLayersView()
         {
@@ -42,7 +42,7 @@ namespace MW5.Data.Views
             databaseLayersGrid1.Adapter.HotTracking = true;
         }
 
-        private int GetIcon(VectorLayerInfo info)
+        private int GetIcon(VectorLayerGridAdapter info)
         {
             switch (info.GeometryType)
             {
@@ -58,11 +58,11 @@ namespace MW5.Data.Views
             return -1;
         }
 
-        private IEnumerable<VectorLayerInfo> GetLayers()
+        private IEnumerable<VectorLayerGridAdapter> GetLayers()
         {
             foreach (var layer in Model.Where(l => l.GeometryType != GeometryType.None))
             {
-                yield return new VectorLayerInfo(layer);
+                yield return new VectorLayerGridAdapter(layer);
             }
         }
 
@@ -71,7 +71,7 @@ namespace MW5.Data.Views
             get { return btnOk; }
         }
 
-        public IEnumerable<VectorLayerInfo> Layers
+        public IEnumerable<VectorLayerGridAdapter> Layers
         {
             get { return _layers; }
         }

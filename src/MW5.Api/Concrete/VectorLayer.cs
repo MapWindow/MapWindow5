@@ -265,6 +265,14 @@ namespace MW5.Api.Concrete
             get { return _layer.FeatureCount == 0; }
         }
 
+        /// <summary>
+        /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
+        /// </summary>
+        public string SizeInfo 
+        {
+            get { return "[" + _layer.FeatureCount + " features]"; } 
+        }
+
         public LayerType LayerType
         {
             get { return LayerType.VectorLayer; }

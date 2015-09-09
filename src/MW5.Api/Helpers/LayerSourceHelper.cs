@@ -90,5 +90,30 @@ namespace MW5.Api.Helpers
                 yield return ds as ILayerSource;
             }
         }
+
+        /// <summary>
+        /// Gets the geometry type for vector datasource. GeometryType.None will be returned for raster datasource.
+        /// </summary>
+        public static GeometryType GetGeometryType(ILayerSource source)
+        {
+            if (!source.IsVector)
+            {
+                return GeometryType.None;
+            }
+
+            var vector = source as IVectorLayer;
+            if (vector != null)
+            {
+                return vector.GeometryType;
+            }
+
+            var fs = source as IFeatureSet;
+            if (fs != null)
+            {
+                return fs.GeometryType;
+            }
+
+            return GeometryType.None;
+        }
     }
 }

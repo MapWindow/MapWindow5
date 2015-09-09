@@ -24,7 +24,8 @@ namespace MW5.Tools.Toolbox
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;
-            View.ToolClicked += (s, e) => RunTool(e.Tool);
+
+            View.ToolClicked += (s, e) => RunTool(e.Tool, e.BatchMode);
         }
 
         public override void RunCommand(ToolboxCommand command)

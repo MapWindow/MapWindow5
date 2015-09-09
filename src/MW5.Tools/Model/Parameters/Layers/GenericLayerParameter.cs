@@ -21,7 +21,7 @@ namespace MW5.Tools.Model.Parameters.Layers
             {
                 if (Control != null)
                 {
-                    return Control.GetValue() as ILayerInfo;
+                    return Control.GetValue() as IDatasourceInput;
                 }
 
                 return base.Value;
@@ -32,7 +32,7 @@ namespace MW5.Tools.Model.Parameters.Layers
         {
             get
             {
-                var info = Value as ILayerInfo;
+                var info = Value as IDatasourceInput;
                 return info != null ? info.Datasource : null;
             }
         }

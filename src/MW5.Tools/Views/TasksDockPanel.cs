@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.UI.Controls;
 
 namespace MW5.Tools.Views
@@ -21,6 +22,12 @@ namespace MW5.Tools.Views
             InitializeComponent();
 
             contextMenuStripEx1.Opening += ContextMenuOpening;
+        }
+
+        public event KeyEventHandler TreeViewKeyDown
+        {
+            add { tasksTreeView1.KeyDown += value; }
+            remove { tasksTreeView1.KeyDown -= value; }
         }
 
         private void ContextMenuOpening(object sender, CancelEventArgs e)

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Services.Properties;
 using MW5.Services.Views;
@@ -15,11 +16,35 @@ namespace MW5.Services.Helpers
     {
         public static int GetIcon(ILayer layer)
         {
-            if (layer != null)
+            if (layer == null)
             {
-                if (layer.IsVector)
-                {
-                    switch (layer.FeatureSet.GeometryType)
+                return GetIcon();
+            }
+
+            var geomType = layer.IsVector ? layer.FeatureSet.GeometryType : GeometryType.None;
+
+            return GetIcon(layer.LayerType, geomType);
+        }
+
+        public static int GetIcon(ILayerSource source)
+        {
+            if (source == null)
+            {
+                return GetIcon();
+            }
+
+            var gt = LayerSourceHelper.GetGeometryType(source);
+            
+            return GetIcon(source.LayerType, gt);
+        }
+
+        private static int GetIcon(LayerType layerType = LayerType.Invalid, GeometryType geometryType = GeometryType.None)
+        {
+            switch (layerType)
+            {
+                case LayerType.Shapefile:
+                case LayerType.VectorLayer:
+                    switch (geometryType)
                     {
                         case GeometryType.Point:
                         case GeometryType.MultiPoint:
@@ -29,11 +54,11 @@ namespace MW5.Services.Helpers
                         case GeometryType.Polygon:
                             return 2;
                     }
-                }
-                else
-                {
+                    return 3;
+                case LayerType.Image:
+                case LayerType.Grid:
                     return 4;
-                }
+                
             }
 
             return -1;

@@ -69,7 +69,7 @@ namespace MW5.Tools.Services
             _config = config;
         }
 
-        public ToolConfiguration<T> AddField(Expression<Func<T, IVectorLayerInfo>> layer, Expression<Func<T, int>> field)
+        public ToolConfiguration<T> AddField(Expression<Func<T, IVectorInput>> layer, Expression<Func<T, int>> field)
         {
             // let the exceptions be thrown, we want to catch bugs ASAP
             var layerName = (layer.Body as MemberExpression).Member.Name;

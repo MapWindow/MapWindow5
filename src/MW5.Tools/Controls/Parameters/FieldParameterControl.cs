@@ -43,9 +43,13 @@ namespace MW5.Tools.Controls.Parameters
             return tableLayoutPanel1;
         }
 
-        public void OnLayerChanged(InputSource layer)
+        public void OnLayerChanged(IDatasourceInput input)
         {
-            RebuildFieldList(layer != null ? layer.FeatureSet : null);
+            var vector = input as IVectorInput;
+            if (vector != null)
+            {
+                RebuildFieldList(vector.Datasource);
+            }
         }
 
         public override string Caption

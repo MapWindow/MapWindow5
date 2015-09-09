@@ -23,7 +23,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class AggregateShapesTool : GisTool
     {
         [Input("Input layer", 0)]
-        public IVectorLayerInfo InputLayer { get; set; }
+        public IVectorInput InputLayer { get; set; }
 
         [Input("Field", 1, false, ParameterType.Field)]
         public int FieldIndex { get; set; }

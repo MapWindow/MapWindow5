@@ -5,11 +5,11 @@ using MW5.Api.Enums;
 
 namespace MW5.Data.Model
 {
-    public class VectorLayerInfo
+    public class VectorLayerGridAdapter
     {
         private readonly VectorLayer _layer;
 
-        public VectorLayerInfo(VectorLayer layer)
+        public VectorLayerGridAdapter(VectorLayer layer)
         {
             if (layer == null) throw new ArgumentNullException("layer");
             _layer = layer;

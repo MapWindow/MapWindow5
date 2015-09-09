@@ -18,7 +18,7 @@ namespace MW5.Tools.Model.Parameters.Layers
             {
                 if (Control != null)
                 {
-                    return Control.GetValue() as IRasterLayerInfo;
+                    return Control.GetValue() as IRasterInput;
                 }
 
                 return base.Value;
@@ -29,7 +29,7 @@ namespace MW5.Tools.Model.Parameters.Layers
         {
             get
             {
-                var info = Value as IRasterLayerInfo;
+                var info = Value as IRasterInput;
                 return info != null ? info.Datasource : null;
             }
         }

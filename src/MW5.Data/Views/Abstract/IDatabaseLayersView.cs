@@ -11,6 +11,6 @@ namespace MW5.Data.Views.Abstract
 {
     public interface IDatabaseLayersView: IView<VectorDatasource>
     {
-        IEnumerable<VectorLayerInfo> Layers { get; }
+        IEnumerable<VectorLayerGridAdapter> Layers { get; }
     }
 }

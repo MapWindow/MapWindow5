@@ -29,7 +29,7 @@ namespace MW5.Tools.Views.Custom
             if (tool == null) throw new InvalidCastException("RandomPointsTool was expected");
 
             tool.NumPoints = View.NumPoints;
-            tool.InputLayer = new LayerInfo(View.Input);
+            tool.InputLayer = new DatasourceInput(View.Input);
             tool.OutputLayer = new Model.OutputLayerInfo() { Filename = View.OutputName, MemoryLayer = true, AddToMap = true };
 
             if (!tool.Validate())

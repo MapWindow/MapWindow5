@@ -7,6 +7,7 @@ using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
+using MW5.Services.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
@@ -22,7 +23,7 @@ namespace MW5.Tools.Controls.Parameters
     {
         private readonly IFileDialogService _dialogService;
         private DataSourceType _dataSourceType;
-        private List<InputSource> _layers = new List<InputSource>();
+        private List<InputLayerGridAdapter> _layers = new List<InputLayerGridAdapter>();
 
         public LayerParameterControl(IFileDialogService dialogService)
         {
@@ -44,7 +45,7 @@ namespace MW5.Tools.Controls.Parameters
 
         public void SetLayers(IEnumerable<ILayer> layers)
         {
-            _layers = layers.Select(l => new InputSource(l)).ToList();
+            _layers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
             
             UpdateDatasource();
 
@@ -54,14 +55,16 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        public event EventHandler<LayerEventArgs> SelectedLayerChanged;
+        public event EventHandler<InputLayerEventArgs> SelectedLayerChanged;
 
         public override object GetValue()
         {
             var layer = SelectedLayer;
-            if (layer != null)
+
+            var vector = layer as IVectorInput;
+            if (vector != null)
             {
-                layer.SelectedOnly = chkSelectedOnly.Checked;
+                vector.SelectedOnly = chkSelectedOnly.Checked;
             }
 
             return layer;
@@ -97,54 +100,21 @@ namespace MW5.Tools.Controls.Parameters
 
             for (int i = 0; i < _layers.Count(); i++)
             {
-                int imageIndex = GetImageIndex(_layers[i]);
+                int imageIndex = GetImageIndex(_layers[i].Source);
                 comboBoxAdv1.ImageIndexes[i] = imageIndex;
             }
         }
 
-        private int GetImageIndex(InputSource layer)
+        private int GetImageIndex(IDatasourceInput input)
         {
-            var type = layer.Datasource.LayerType;
-            switch (type)
-            {
-                case LayerType.Shapefile:
-                case LayerType.VectorLayer:
-                    var fs = layer.FeatureSet;
-                    if (fs != null)
-                    {
-                        switch (fs.GeometryType)
-                        {
-                            case GeometryType.Point:
-                            case GeometryType.MultiPoint:
-                                return 1;
-                            case GeometryType.Polyline:
-                                return 2;
-                            case GeometryType.Polygon:
-                                return 3;
-                        }
-                    }
-                    return 0;
-                case LayerType.Grid:
-                case LayerType.Image:
-                    return 4;
-            }
-
-            return -1;
+            return LayerIconHelper.GetIcon(input.Datasource);
         }
 
         private void PopulateImageList()
         {
-            imageList1.Images.Clear();
-
-            imageList1.Images.Add(Resources.img_geometry);
-            imageList1.Images.Add(Resources.img_point);
-            imageList1.Images.Add(Resources.img_line);
-            imageList1.Images.Add(Resources.img_polygon);
-            imageList1.Images.Add(Resources.img_raster);
-
             comboBoxAdv1.ShowImageInTextBox = true;
             comboBoxAdv1.ShowImagesInComboListBox = true;
-            comboBoxAdv1.ImageList = imageList1;
+            comboBoxAdv1.ImageList = LayerIconHelper.CreateImageList(); ;
         }
 
         private void OpenDatasource()
@@ -152,11 +122,11 @@ namespace MW5.Tools.Controls.Parameters
             string filename;
             if (_dialogService.OpenFile(_dataSourceType, out filename))
             {
-                var wrapper = new InputSource(filename);
-                _layers.Add(wrapper);
+                var item = new InputLayerGridAdapter(filename);
+                _layers.Add(item);
 
                 UpdateDatasource();
-                comboBoxAdv1.SelectedItem = wrapper;
+                comboBoxAdv1.SelectedItem = item;
             }
         }
 
@@ -175,22 +145,20 @@ namespace MW5.Tools.Controls.Parameters
             RefreshImages();
         }
 
-        public InputSource SelectedLayer
+        public IDatasourceInput SelectedLayer
         {
-            get { return comboBoxAdv1.SelectedItem as InputSource; }
+            get
+            {
+                var wrapper = comboBoxAdv1.SelectedItem as InputLayerGridAdapter;
+                return wrapper != null ? wrapper.Source : null;
+            }
         }
 
         private void OnSelectedLayerChanged(object sender, EventArgs e)
         {
-            var layer = SelectedLayer;
-            if (layer != null && layer.FeatureSet != null)
-            {
-                SetNumSelected(layer.FeatureSet.NumSelected);
-            }
-            else
-            {
-                SetNumSelected(0);
-            }
+            var layer = SelectedLayer as IVectorInput;
+            
+            SetNumSelected(layer != null ? layer.Datasource.NumSelected : 0);
 
             FireSelectedLayerChanged();
         }
@@ -200,7 +168,7 @@ namespace MW5.Tools.Controls.Parameters
             var handler = SelectedLayerChanged;
             if (handler != null)
             {
-                handler(this, new LayerEventArgs(SelectedLayer));
+                handler(this, new InputLayerEventArgs(SelectedLayer));
             }
         }
 

@@ -65,19 +65,20 @@ namespace MW5.Tools.Model
         {
             bool success = true;
 
-            foreach (var p in Parameters.OfType<OutputLayerParameter>())
+            foreach (var info in Parameters.Outputs)
             {
-                var info = p.GetValue();
-
                 if (info.Result == null)
                 {
                     Log.Error("There is no output for parameter: ", null, info.Filename);
                     success = false;
                 }
-                else if (!OutputManager.Save(info.Result, info))
+                else
                 {
-                    Log.Error("Failed to save output: {0}", null, info.Filename);
-                    success = false;
+                    if (!OutputManager.Save(info.Result, info))
+                    { 
+                        Log.Error("Failed to save output: {0}", null, info.Filename);
+                        success = false;
+                    }
                 }
             }
 
@@ -116,7 +117,7 @@ namespace MW5.Tools.Model
         /// Initializes the tool with application context.
         /// Can be overriden in derived classes to provide additional logic.
         /// </summary>
-        public void Initialize(IAppContext context)
+        public virtual void Initialize(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;

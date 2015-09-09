@@ -14,7 +14,7 @@ namespace MW5.Tools.Tools.Database
     public class ImportLayerTool : GisTool
     {
         [Input("Input layer", 0)]
-        public IVectorLayerInfo InputLayer { get; set; }
+        public IVectorInput InputLayer { get; set; }
 
         [Input("Database", 1, false, ParameterType.Combo)]
         public DatabaseConnection Database { get; set; }

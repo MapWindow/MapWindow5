@@ -3,9 +3,9 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Tools.Model.Layers
 {
-    public class RasterLayerInfo: LayerInfo, IRasterLayerInfo
+    public class RasterInput: DatasourceInput, IRasterInput
     {
-        public RasterLayerInfo(IRasterSource raster)
+        public RasterInput(IRasterSource raster)
             : base(raster)
         {
             if (raster == null) throw new ArgumentNullException("raster");

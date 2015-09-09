@@ -23,8 +23,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools, Enums.ToolIcon.Hammer)]
     public class BufferTool : GisTool
     {
+        private LengthUnits _mapUnits;
+
         [Input("Input layer", 0)]
-        public IVectorLayerInfo Input { get; set; }
+        public IVectorInput Input { get; set; }
 
         [Input("Buffer distance", 1)]
         public Distance BufferDistance { get; set; }
@@ -45,6 +47,13 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             configuration.Get<BufferTool>()
                 .SetDefault(t => t.BufferDistance, 50)
                 .SetDefault(t => t.NumSegments, 30);
+        }
+
+        public override void Initialize(IAppContext context)
+        {
+            base.Initialize(context);
+
+            _mapUnits = context.Map.MapUnits;
         }
 
         /// <summary>
@@ -84,23 +93,15 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return true; }
         }
 
-        protected override bool BeforeRun()
-        {
-            var units = AppContext.Map.MapUnits;
-
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
-
-            BufferDistance.Value = bufferDistance;
-
-            return true;
-        }
-
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            Output.Result = Input.Datasource.BufferByDistance(BufferDistance.Value, NumSegments, Input.SelectedOnly, MergeResults);
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, _mapUnits, BufferDistance.Value);
+
+            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
+
             return true;
         }
     }

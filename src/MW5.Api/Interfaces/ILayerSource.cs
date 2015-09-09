@@ -9,5 +9,10 @@ namespace MW5.Api.Interfaces
         ISpatialReference Projection { get; }
 
         bool IsEmpty { get; }
+
+        /// <summary>
+        /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
+        /// </summary>
+        string SizeInfo { get; }
     }
 }

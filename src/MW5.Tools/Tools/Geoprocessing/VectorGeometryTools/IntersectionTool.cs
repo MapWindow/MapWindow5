@@ -22,10 +22,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     public class IntersectionTool : GisTool
     {
         [Input("First layer", 0)]
-        public IVectorLayerInfo InputLayer { get; set; }
+        public IVectorInput InputLayer { get; set; }
 
         [Input("Second layer", 1)]
-        public IVectorLayerInfo InputLayer2 { get; set; }
+        public IVectorInput InputLayer2 { get; set; }
 
         [Output("Save results as", "{input}_intersection.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }

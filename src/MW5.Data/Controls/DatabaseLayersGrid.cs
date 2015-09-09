@@ -4,7 +4,7 @@ using MW5.UI.Controls;
 
 namespace MW5.Data.Controls
 {
-    public class DatabaseLayersGrid: StronglyTypedGrid<VectorLayerInfo>
+    public class DatabaseLayersGrid: StronglyTypedGrid<VectorLayerGridAdapter>
     {
         public DatabaseLayersGrid()
         {

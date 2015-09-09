@@ -165,7 +165,7 @@
     <Compile Include="Controls\DriversTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Model\VectorLayerInfo.cs" />
+    <Compile Include="Model\VectorLayerGridAdapter.cs" />
     <Compile Include="Views\DatabaseLayersPresenter.cs" />
     <Compile Include="Views\DatabaseLayersView.cs">
       <SubType>Form</SubType>

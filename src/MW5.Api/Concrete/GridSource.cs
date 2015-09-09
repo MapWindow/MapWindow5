@@ -261,6 +261,18 @@ namespace MW5.Api.Concrete
             get { return _grid.SourceType == tkGridSourceType.gstUninitialized; }
         }
 
+        /// <summary>
+        /// Gets string with the information on datasource size, i.e. number of features, pixels, etc.
+        /// </summary>
+        public string SizeInfo
+        {
+            get
+            {
+                var header = _grid.Header;
+                return string.Format("[{0}×{1} pixels]", header.NumberCols, header.NumberRows);
+            }
+        }
+
         public LayerType LayerType
         {
             get { return LayerType.Grid; }

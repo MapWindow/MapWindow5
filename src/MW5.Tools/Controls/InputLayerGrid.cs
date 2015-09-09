@@ -18,9 +18,9 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Tools.Controls
 {
-    public partial class ToolParameterGrid : StronglyTypedGrid<InputSourceGridAdapter>
+    public partial class InputLayerGrid : StronglyTypedGrid<InputLayerGridAdapter>
     {
-        public ToolParameterGrid()
+        public InputLayerGrid()
         {
             InitializeComponent();
 
@@ -58,7 +58,7 @@ namespace MW5.Tools.Controls
             var style = Adapter.GetColumnStyle(r => r.Description);
             style.ImageList = LayerIconHelper.CreateImageList();
             style.ImageIndex = 0;
-            Adapter.SetColumnIcon(r => r.Description, item => LayerIconHelper.GetIcon(item.Layer));
+            Adapter.SetColumnIcon(r => r.Description, item => LayerIconHelper.GetIcon(item.Source.Datasource));
         }
     }
 }

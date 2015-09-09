@@ -1,6 +1,6 @@
 ﻿namespace MW5.Tools.Controls
 {
-    partial class ToolParameterGrid
+    partial class InputLayerGrid
     {
         /// <summary> 
         /// Required designer variable.

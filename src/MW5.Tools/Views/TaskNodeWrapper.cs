@@ -67,7 +67,9 @@ namespace MW5.Tools.Views
         public void UpdateStatus()
         {
             _node.Text = _task.Tool.Name + " [" + _task.Status + "]";
-            
+
+            CreateBarProgress();
+
             UpdateExecutionNode();
 
             UpdateStatusIcon();
@@ -112,17 +114,22 @@ namespace MW5.Tools.Views
             nodeTask.Nodes.Add(nodeParameters);
         }
 
-        private void GenerateNodes()
+        private void CreateBarProgress()
         {
-            _node = new TreeNodeAdv(_task.Tool.Name) { Tag = this };
-            _node.Height += 5;
-
-            if (!_task.IsFinished)
+            if (!_task.IsFinished && _progress == null)
             {
                 var ctrl = new ProgressBarWrapper();
                 _node.CustomControl = ctrl;
                 _progress = ctrl.ProgressBar;
             }
+        }
+
+        private void GenerateNodes()
+        {
+            _node = new TreeNodeAdv(_task.Tool.Name) { Tag = this };
+            _node.Height += 5;
+
+            CreateBarProgress();
 
             AddToolParameters();
 

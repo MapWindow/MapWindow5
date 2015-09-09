@@ -35,6 +35,8 @@ namespace MW5.Plugins.Services
 
         void LoadStyle();
 
+        bool RemoveLayer(int layerHandle);
+
         bool RemoveLayer(LayerIdentity identity);
 
         bool RemoveSelectedLayer();
