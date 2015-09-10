@@ -57,6 +57,11 @@ namespace MW5.Tools.Model
             get { return true; }
         }
 
+        /// <summary>
+        /// Can be used to save results of the processing or display messages. 
+        /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.
+        /// </summary>
+        /// <returns>True on success.</returns>
         public virtual bool AfterRun()
         {
             bool success = true;

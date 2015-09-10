@@ -39,11 +39,6 @@ namespace MW5.Tools.Views
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabRequired = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelRequired = new System.Windows.Forms.Panel();
-            this.stringParameterControl6 = new MW5.Tools.Controls.Parameters.StringParameterControl();
-            this.stringParameterControl5 = new MW5.Tools.Controls.Parameters.StringParameterControl();
-            this.stringParameterControl4 = new MW5.Tools.Controls.Parameters.StringParameterControl();
-            this.stringParameterControl3 = new MW5.Tools.Controls.Parameters.StringParameterControl();
-            this.stringParameterControl2 = new MW5.Tools.Controls.Parameters.StringParameterControl();
             this.stringParameterControl1 = new MW5.Tools.Controls.Parameters.StringParameterControl();
             this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
@@ -141,11 +136,6 @@ namespace MW5.Tools.Views
             // panelRequired
             // 
             this.panelRequired.AutoScroll = true;
-            this.panelRequired.Controls.Add(this.stringParameterControl6);
-            this.panelRequired.Controls.Add(this.stringParameterControl5);
-            this.panelRequired.Controls.Add(this.stringParameterControl4);
-            this.panelRequired.Controls.Add(this.stringParameterControl3);
-            this.panelRequired.Controls.Add(this.stringParameterControl2);
             this.panelRequired.Controls.Add(this.stringParameterControl1);
             this.panelRequired.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRequired.Location = new System.Drawing.Point(0, 0);
@@ -153,51 +143,6 @@ namespace MW5.Tools.Views
             this.panelRequired.Padding = new System.Windows.Forms.Padding(20, 10, 20, 25);
             this.panelRequired.Size = new System.Drawing.Size(425, 370);
             this.panelRequired.TabIndex = 0;
-            // 
-            // stringParameterControl6
-            // 
-            this.stringParameterControl6.Caption = "label1";
-            this.stringParameterControl6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl6.Location = new System.Drawing.Point(20, 260);
-            this.stringParameterControl6.Name = "stringParameterControl6";
-            this.stringParameterControl6.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl6.TabIndex = 5;
-            // 
-            // stringParameterControl5
-            // 
-            this.stringParameterControl5.Caption = "label1";
-            this.stringParameterControl5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl5.Location = new System.Drawing.Point(20, 210);
-            this.stringParameterControl5.Name = "stringParameterControl5";
-            this.stringParameterControl5.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl5.TabIndex = 4;
-            // 
-            // stringParameterControl4
-            // 
-            this.stringParameterControl4.Caption = "label1";
-            this.stringParameterControl4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl4.Location = new System.Drawing.Point(20, 160);
-            this.stringParameterControl4.Name = "stringParameterControl4";
-            this.stringParameterControl4.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl4.TabIndex = 3;
-            // 
-            // stringParameterControl3
-            // 
-            this.stringParameterControl3.Caption = "label1";
-            this.stringParameterControl3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl3.Location = new System.Drawing.Point(20, 110);
-            this.stringParameterControl3.Name = "stringParameterControl3";
-            this.stringParameterControl3.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl3.TabIndex = 2;
-            // 
-            // stringParameterControl2
-            // 
-            this.stringParameterControl2.Caption = "label1";
-            this.stringParameterControl2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl2.Location = new System.Drawing.Point(20, 60);
-            this.stringParameterControl2.Name = "stringParameterControl2";
-            this.stringParameterControl2.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl2.TabIndex = 1;
             // 
             // stringParameterControl1
             // 
@@ -305,11 +250,6 @@ namespace MW5.Tools.Views
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabOptional;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabHelp;
         private System.Windows.Forms.Panel panelRequired;
-        private StringParameterControl stringParameterControl6;
-        private StringParameterControl stringParameterControl5;
-        private StringParameterControl stringParameterControl4;
-        private StringParameterControl stringParameterControl3;
-        private StringParameterControl stringParameterControl2;
         private StringParameterControl stringParameterControl1;
         private System.Windows.Forms.Panel panelOptional;
         private System.Windows.Forms.WebBrowser webBrowser1;

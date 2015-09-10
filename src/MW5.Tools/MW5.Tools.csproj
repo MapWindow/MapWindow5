@@ -110,11 +110,15 @@
     <Compile Include="Controls\ProgressBarWrapper.Designer.cs">
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\GdalFileFilter.cs" />
+    <Compile Include="Helpers\GdalFormatHelper.cs" />
+    <Compile Include="Helpers\GdalToolHelper.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\GdalInfoFormat.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
     <Compile Include="Model\Layers\CachedInput.cs" />
     <Compile Include="Model\Layers\IDatasourceInput.cs" />
@@ -167,6 +171,15 @@
     <Compile Include="Toolbox\ToolboxPresenter.cs" />
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Tools\Gdal\GdalTranslateTool.cs" />
+    <Compile Include="Views\Gdal\Abstract\IGdalTranslateView.cs" />
+    <Compile Include="Views\Gdal\GdalTranslatePresenter.cs" />
+    <Compile Include="Views\Gdal\GdalTranslateView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Gdal\GdalTranslateView.Designer.cs">
+      <DependentUpon>GdalTranslateView.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
@@ -368,6 +381,9 @@
     <EmbeddedResource Include="Toolbox\ToolboxDockPanel.resx">
       <DependentUpon>ToolboxDockPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Gdal\GdalTranslateView.resx">
+      <DependentUpon>GdalTranslateView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\Custom\LongExecutionView.resx">
       <DependentUpon>LongExecutionView.cs</DependentUpon>
     </EmbeddedResource>
@@ -415,6 +431,11 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_save_24.png" />
+    <None Include="Resources\img_Pensil24.png" />
+    <None Include="Resources\img_notepad_24.png" />
+    <None Include="Resources\img_file24.png" />
+    <None Include="Resources\img_file_explorer24.png" />
     <None Include="Resources\img_tasks16.png" />
     <None Include="Resources\img_info20.png" />
     <None Include="Resources\img_info16.png" />

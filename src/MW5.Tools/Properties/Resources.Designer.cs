@@ -163,6 +163,26 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_file_explorer24 {
+            get {
+                object obj = ResourceManager.GetObject("img_file_explorer24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_file24 {
+            get {
+                object obj = ResourceManager.GetObject("img_file24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_closed {
             get {
                 object obj = ResourceManager.GetObject("img_folder_closed", resourceCulture);
@@ -253,6 +273,16 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_notepad_24 {
+            get {
+                object obj = ResourceManager.GetObject("img_notepad_24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_ok16 {
             get {
                 object obj = ResourceManager.GetObject("img_ok16", resourceCulture);
@@ -276,6 +306,16 @@ namespace MW5.Tools.Properties {
         internal static System.Drawing.Bitmap img_pause16 {
             get {
                 object obj = ResourceManager.GetObject("img_pause16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_Pensil24 {
+            get {
+                object obj = ResourceManager.GetObject("img_Pensil24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -346,6 +386,16 @@ namespace MW5.Tools.Properties {
         internal static System.Drawing.Bitmap img_result16 {
             get {
                 object obj = ResourceManager.GetObject("img_result16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_save_24 {
+            get {
+                object obj = ResourceManager.GetObject("img_save_24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

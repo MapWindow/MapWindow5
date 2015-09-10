@@ -32,5 +32,7 @@ namespace MW5.Plugins.Enums
         /// The vector geometry tools
         /// </summary>
         public const string VectorGeometryTools = "VectorGeometryTools";
+
+        public const string GdalTools = "GdalTools";
     }
 }

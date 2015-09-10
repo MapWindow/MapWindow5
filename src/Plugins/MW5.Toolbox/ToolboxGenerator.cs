@@ -73,6 +73,9 @@ namespace MW5.Plugins.Toolbox
 
             group = groups.Add("Fake", GroupKeys.Fake, _plugin.Identity);
             group.Description = "Fake tools to test the framework itself.";
+
+            group = groups.Add("GDAL / OGR tools", GroupKeys.GdalTools, _plugin.Identity);
+            group.Description = "GDAL and OGR tools.";
         }
     }
 }

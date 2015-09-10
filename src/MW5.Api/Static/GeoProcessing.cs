@@ -4,12 +4,27 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Static
 {
     public static class GeoProcessing
     {
+        // TODO: don't use static instance here, as it will solve the problem with callback and tasks
         private static readonly Utils _utils = new Utils();
+
+        public static IApplicationCallback Callback
+        {
+            get { return MapWinGISCallback.UnWrap(_utils.GlobalCallback); }
+            set
+            {
+                var callback = MapWinGISCallback.Wrap(value);
+                _utils.GlobalCallback = callback;
+                
+                // TODO: implement
+                //_utils.StopExecution = callback;
+            }
+        }
 
         public static bool PointInPolygon(IGeometry geometry, ICoordinate testPoint)
         {
