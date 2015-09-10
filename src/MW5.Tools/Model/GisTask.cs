@@ -96,6 +96,11 @@ namespace MW5.Tools.Model
                     return TimeSpan.Zero;
                 }
 
+                if (IsFinished)
+                {
+                    return FinishTime - StartTime;
+                }
+
                 var span = DateTime.Now - StartTime;
                 return span;
             }
@@ -196,6 +201,21 @@ namespace MW5.Tools.Model
             {
                 if (value == null) value = new EmptyProgress();
                 _progress = value;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                string name = _tool.TaskName;
+                
+                if (IsFinished)
+                {
+                    name += " [" + ExecutionTime.ToString(@"hh\:mm\:ss") + "]";
+                }
+                
+                return name;
             }
         }
 

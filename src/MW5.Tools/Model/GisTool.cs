@@ -16,6 +16,7 @@ using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
@@ -31,11 +32,6 @@ namespace MW5.Tools.Model
         private IAppContext _context;
         private OutputManager _outputManager;
         private ParameterCollection _parameters;
-
-        protected IAppContext AppContext
-        {
-            get { return _context; }
-        }
 
         protected OutputManager OutputManager
         {
@@ -172,6 +168,34 @@ namespace MW5.Tools.Model
             Parameters.Apply();
 
             return BeforeRun();
+        }
+
+        /// <summary>
+        /// Gets the name to be displayed as a name of the task.
+        /// </summary>
+        public virtual string TaskName
+        {
+            get
+            {
+                string name = Name;
+
+                var input = Parameters.OfType<LayerParameterBase>().ToList();
+                
+                if (input.Count() == 1)
+                {
+                    name += ": " + input.FirstOrDefault().DatasourceName;
+                    return name;
+                }
+
+                var output = Parameters.OfType<OutputLayerInfo>().ToList();
+                if (output.Count() == 1)
+                {
+                    name += ": " + output.FirstOrDefault().Name;
+                    return name;
+                }
+
+                return name;
+            }
         }
 
         /// <summary>

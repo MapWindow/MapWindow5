@@ -85,6 +85,7 @@
     <Compile Include="Concrete\BasePlugin.cs" />
     <Compile Include="Concrete\LayerMetadataBase.cs" />
     <Compile Include="Concrete\MainPlugin.cs" />
+    <Compile Include="Enums\Converters.cs" />
     <Compile Include="Enums\GroupKeys.cs" />
     <Compile Include="Events\ConnectionEventArgs.cs" />
     <Compile Include="Concrete\DatabaseConnection.cs" />

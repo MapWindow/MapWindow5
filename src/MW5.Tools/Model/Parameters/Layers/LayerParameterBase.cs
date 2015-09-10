@@ -24,6 +24,28 @@ namespace MW5.Tools.Model.Parameters.Layers
         /// </summary>
         public DatasourcePointer ClosedPointer { get; set; }
 
+        /// <summary>
+        /// Gets the name of the datasource, stored either in Datasource or ClosedPointer properties.
+        /// </summary>
+        public string DatasourceName
+        {
+            get
+            {
+                var ds = Datasource;
+                if (ds != null)
+                {
+                    return Path.GetFileNameWithoutExtension(ds.Filename);
+                }
+
+                if (ClosedPointer != null)
+                {
+                    return ClosedPointer.Name;
+                }
+
+                return string.Empty;
+            }
+        }
+
         public override bool HasDatasource
         {
             get { return true; }

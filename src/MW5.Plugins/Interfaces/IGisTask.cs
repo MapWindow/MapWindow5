@@ -44,5 +44,7 @@ namespace MW5.Plugins.Interfaces
         /// Reports progress of task.
         /// </summary>
         ITaskProgress Progress { get; }
+
+        string Name { get; }
     }
 }

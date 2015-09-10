@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,22 +13,32 @@ namespace MW5.Tools.Model.Layers
     /// </summary>
     public class DatasourcePointer
     {
+        private string _name = string.Empty;
+
         public DatasourcePointer(LayerIdentity identity)
         {
             if (identity == null) throw new ArgumentNullException("identity");
             LayerIdentity = identity;
             LayerHandle = -1;
+            _name = Path.GetFileNameWithoutExtension(identity.Filename);
         }
 
         public DatasourcePointer(string filename)
         {
             LayerIdentity = new LayerIdentity(filename);
             LayerHandle = -1;
+            _name = Path.GetFileNameWithoutExtension(filename);
         }
 
-        public DatasourcePointer(int layerHandle)
+        public DatasourcePointer(int layerHandle, string name)
         {
             LayerHandle = layerHandle;
+            _name = name;
+        }
+
+        public string Name
+        {
+            get { return _name; }
         }
 
         /// <summary>

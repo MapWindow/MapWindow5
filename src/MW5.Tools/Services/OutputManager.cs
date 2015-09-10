@@ -81,7 +81,7 @@ namespace MW5.Tools.Services
             bool result = _layerService.AddDatasource(ds, outputInfo.Name);
             if (result)
             {
-                outputInfo.DatasourcePointer = new Model.Layers.DatasourcePointer(_layerService.LastLayerHandle);
+                outputInfo.DatasourcePointer = new DatasourcePointer(_layerService.LastLayerHandle, outputInfo.Name);
             }
 
             return result;

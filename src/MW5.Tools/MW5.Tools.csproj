@@ -415,6 +415,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_tasks16.png" />
     <None Include="Resources\img_info20.png" />
     <None Include="Resources\img_info16.png" />
     <None Include="Resources\img_remove16_3.png" />
@@ -443,9 +444,7 @@
     <None Include="Resources\img_clear24.png" />
     <None Include="Resources\img_group24.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Providers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -21,5 +21,7 @@ namespace MW5.Plugins.Interfaces
         void CleanUp();
 
         bool Validate();
+
+        string TaskName { get; }
     }
 }

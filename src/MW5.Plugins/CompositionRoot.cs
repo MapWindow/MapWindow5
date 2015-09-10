@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -33,6 +34,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new SymbologyStorageConverter());
             EnumHelper.RegisterConverter(new ColorInterpretationConverter());
             EnumHelper.RegisterConverter(new UnitsOfMeasureConverter());
+            EnumHelper.RegisterConverter(new GisTaskStatusConverter());
         }
     }
 }

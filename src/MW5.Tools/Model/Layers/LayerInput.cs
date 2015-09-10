@@ -41,7 +41,7 @@ namespace MW5.Tools.Model.Layers
 
         public ILayerSource Datasource
         {
-            get { return _layer.LayerSource; }
+            get { return _layer != null ? _layer.LayerSource : null; }
             set { throw new NotSupportedException(""); }
         }
 
@@ -81,13 +81,18 @@ namespace MW5.Tools.Model.Layers
         {
             get
             {
+                if (_layer == null)
+                {
+                    return null;
+                }
+                
                 if (_layer.LayerType == Api.Enums.LayerType.Shapefile)
                 {
                     var fs = _layer.FeatureSet;
                     if (fs.SourceType == Api.Enums.FeatureSourceType.InMemory)
                     {
                         // for in-memory layer we can only save the handle
-                        return new DatasourcePointer(_layer.Handle);
+                        return new DatasourcePointer(_layer.Handle, _layer.Name);
                     }
                 }
 

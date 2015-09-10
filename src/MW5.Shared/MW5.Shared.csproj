@@ -94,6 +94,7 @@
     <Compile Include="NumericHelper.cs" />
     <Compile Include="PathHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RichTextBoxHelper.cs" />
     <Compile Include="SortableBindingList.cs" />
     <Compile Include="StaTaskScheduler.cs" />
     <Compile Include="StringBuilderHelper.cs" />
