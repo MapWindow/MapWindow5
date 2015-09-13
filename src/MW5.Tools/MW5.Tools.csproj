@@ -143,7 +143,6 @@
     <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
-    <Compile Include="Model\DriverOptionCollection.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\GdalInfoFormat.cs" />
     <Compile Include="Model\GdalTool.cs" />

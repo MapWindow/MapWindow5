@@ -42,11 +42,7 @@ namespace MW5.Tools.Controls.Parameters
         {
             AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
             AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
-
-            if (chkMemoryLayer.Enabled)
-            {
-                AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
-            }
+            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
         }
 
         public void Initialize(LayerType layerType, bool supportsInMemory = true)

@@ -97,7 +97,7 @@ namespace MW5.Tools.Tools.Gdal
         /// </summary>
         public override string Name
         {
-            get { return "GDAL Translate"; }
+            get { return "Translate raster"; }
         }
 
         /// <summary>
@@ -167,11 +167,11 @@ namespace MW5.Tools.Tools.Gdal
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            GeoProcessing.Callback = task.Callback;
-
+            var utils = new GeoProcessing { Callback = task.Callback };
+            
             string options = GetOptions();
 
-            bool result = GeoProcessing.TranslateRaster(InputFilename, Output.Filename, options);
+            bool result = utils.TranslateRaster(InputFilename, Output.Filename, options);
 
             if (!result)
             {

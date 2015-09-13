@@ -30,7 +30,7 @@ namespace MW5.Tools.Tools.Gdal
         /// </summary>
         public override string Name
         {
-            get { return "GDAL Translate (MW4 UI)"; }
+            get { return "Translate raster (MW4 UI)"; }
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace MW5.Tools.Tools.Gdal
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            GeoProcessing.Callback = task.Callback;
+            var utils = new GeoProcessing { Callback = task.Callback };
 
-            bool result = GeoProcessing.TranslateRaster(InputFilename, Output.Filename, Options);
+            bool result = utils.TranslateRaster(InputFilename, Output.Filename, Options);
 
             if (!result)
             {

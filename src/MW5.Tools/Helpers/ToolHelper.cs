@@ -51,15 +51,19 @@ namespace MW5.Tools.Helpers
                 }
                 else if (cache.LayerIdentity != null)
                 {
-                    if (!layerService.RemoveLayer(cache.LayerIdentity))
-                    {
-                        MessageService.Current.Warn("Failed to remove output layer from the map.");
-                        return false;
+                    if (context.Layers.Any(l => l.Identity == cache.LayerIdentity))
+                    { 
+                        if (!layerService.RemoveLayer(cache.LayerIdentity))
+                        {
+                            MessageService.Current.Warn("Failed to remove output layer from the map.");
+                            return false;
+                        }
                     }
 
                     if (!GeoSource.Remove(cache.LayerIdentity.Filename))
                     {
                         MessageService.Current.Warn("Failed to remove output layer from disk.");
+                        return false;
                     }
                 }
             }

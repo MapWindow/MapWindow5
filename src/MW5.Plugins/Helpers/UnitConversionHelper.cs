@@ -50,7 +50,7 @@ namespace MW5.Plugins.Helpers
                 return value;
             }
 
-            GeoProcessing.ConvertDistance(from, to, ref value);
+            GeoProcessing.Instance.ConvertDistance(from, to, ref value);
 
             return value;
         }
