@@ -33,6 +33,11 @@ namespace MW5.Tools.Controls.Parameters
         {
             _layerType = layerType;
             chkMemoryLayer.Enabled = supportsInMemory;
+
+            if (!supportsInMemory)
+            {
+                chkMemoryLayer.Checked = false;
+            }
         }
 
         private void InitFlags()
