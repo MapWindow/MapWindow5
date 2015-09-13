@@ -49,23 +49,6 @@ namespace MW5.Tools.Services
             GenerateHeader(sectionName, panel);
         }
 
-        public void AddVerticalPadding(IEnumerable<Control> panels)
-        {
-            foreach (var panel in panels)
-            {
-                AddVerticalPadding(panel);
-            }
-        }
-
-        private void AddVerticalPadding(Control panel)
-        {
-            foreach (var ctrl in panel.Controls.Cast<Control>().Where(c => !(c is BooleanParameterControl)))
-            {
-                ctrl.Height += 10;
-                ctrl.Padding = new Padding(0, 10, 0, 0);
-            }
-        }
-
         private void GenerateControls(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
         {
             foreach (var p in parameters)
@@ -79,6 +62,7 @@ namespace MW5.Tools.Services
 
                     panel.Controls.Add(ctrl);
 
+                    // value changed handler will be assigned here
                     _manager.AddControl(ctrl);
                 }
             }

@@ -580,6 +580,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <None Include="Resources\img_warning64.png" />
     <None Include="Resources\ico_tasks.ico" />
     <None Include="Resources\ico_results.ico" />
     <None Include="Resources\img_widgets32.png" />

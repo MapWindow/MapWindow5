@@ -47,6 +47,11 @@ namespace MW5.Tools.Model
             }
         }
 
+        protected IAppContext Context
+        {
+            get { return _context;  }
+        }
+
         public IToolLogger Log
         {
             get { return _logger; }

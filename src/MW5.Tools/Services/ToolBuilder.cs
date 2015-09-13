@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model.Parameters;
 
 namespace MW5.Tools.Services
@@ -23,6 +24,19 @@ namespace MW5.Tools.Services
             ApplyDefaults();
 
             ApplyRanges();
+
+            BindComboLists();
+        }
+
+        private void BindComboLists()
+        {
+            foreach (var p in _parameters.OfType<OptionsParameter>())
+            {
+                if (_config.ComboLists.ContainsKey(p.Name))
+                {
+                    p.Options = _config.ComboLists[p.Name];
+                }
+            }
         }
 
         private void ApplyDefaults()

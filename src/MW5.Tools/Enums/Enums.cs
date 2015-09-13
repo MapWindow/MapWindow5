@@ -18,6 +18,9 @@ namespace MW5.Tools.Enums
         Field = 1, 
         Combo = 2,
         Filename = 3,
+        RasterFilename = 4,
+        VectorFilename = 5,
+        MultiLineString = 6,
     }
 
     public enum TaskCommand
@@ -65,5 +68,13 @@ namespace MW5.Tools.Enums
     {
         Datasource = 0,
         Layer = 1,
+    }
+
+    public enum ParameterGroup
+    {
+        Input = 0,
+        Output = 1,
+        Required = 2,
+        Optional = 3,
     }
 }

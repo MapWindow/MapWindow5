@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using MW5.Api.Interfaces;
@@ -10,6 +11,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
@@ -53,24 +55,34 @@ namespace MW5.Tools.Model
 
         private BaseParameter CreateOutputParameter(GisTool tool, PropertyInfo prop, OutputAttribute attr)
         {
-            var param = ParameterFactory.CreateParameter(prop.PropertyType, Enums.ParameterType.Auto) as OutputLayerParameter;
+            var param = ParameterFactory.CreateParameter(prop.PropertyType, GetParameterHint(prop));
 
             param.Tool = tool;
             param.ToolProperty = prop;
 
             param.Name = prop.Name;
             param.DisplayName = attr.DisplayName;
-            param.DefaultValue = attr.NameTemplate;
             param.Required = true;
-            param.LayerType = attr.LayerType;
+            param.IsInput = false;
+            param.Index = attr.Index;
+
+            var olp = param as OutputLayerParameter;
+            if (olp != null)
+            {
+                var layerAttr = prop.GetAttribute<OutputLayerAttribute>();
+                olp.DefaultValue = layerAttr.NameTemplate;
+                olp.SupportInMemory = layerAttr.SupportsInMemory;
+                olp.LayerType = layerAttr.LayerType;
+            }
 
             return param;
         }
 
         private BaseParameter CreateInputParameter(GisTool tool, PropertyInfo prop, InputAttribute attr)
         {
-            var param = ParameterFactory.CreateParameter(prop.PropertyType, attr.ParameterType);
+            var param = ParameterFactory.CreateParameter(prop.PropertyType, GetParameterHint(prop));
 
+            param.IsInput = true;
             param.Tool = tool;
             param.ToolProperty = prop;
             param.Name = prop.Name;
@@ -83,6 +95,12 @@ namespace MW5.Tools.Model
             HandleDefaultValueAttribute(param, prop);
 
             return param;
+        }
+
+        private ParameterType GetParameterHint(PropertyInfo prop)
+        {
+            var paramAttr = prop.GetAttribute<ParameterTypeAttribute>();
+            return paramAttr != null ? paramAttr.ParameterType : Enums.ParameterType.Auto;
         }
 
         private void HandleRangeAttribute(BaseParameter param, PropertyInfo prop)
@@ -186,6 +204,24 @@ namespace MW5.Tools.Model
                         return false;
                     }
                 }
+
+                var fileParameter = p as FilenameParameter;
+                if (fileParameter != null)
+                {
+                    string filename = fileParameter.Value as string;
+
+                    if (string.IsNullOrWhiteSpace(filename))
+                    {
+                        MessageService.Current.Info("Input filename isn't specified: " + p.Name);
+                        return false;
+                    }
+
+                    if (!File.Exists(filename))
+                    {
+                        MessageService.Current.Info("Input filename doesn't exist: " + filename);
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -267,6 +303,18 @@ namespace MW5.Tools.Model
         {
             get { 
                 return _list.OfType<OutputLayerParameter>().Select(p => p.Value as OutputLayerInfo);
+            }
+        }
+
+        public void SetDefaultsToControls()
+        {
+            foreach (var p in this)
+            {
+                var init = p.InitialValue;
+                if (init != null && p.Control != null)
+                {
+                    p.Control.SetValue(init);
+                }
             }
         }
     }

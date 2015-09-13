@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -192,19 +193,35 @@ namespace MW5.Tools.Views
         }
 
         /// <summary>
-        /// Generates a new instance of tool for each input file. Word in batch mode only.
+        /// Generates a new instance of tool for each input file. Works in batch mode only.
         /// </summary>
         private IEnumerable<IGisTool> GenerateBatchTools(IParametrizedTool tool)
         {
-            var input = tool.GetBatchModeInputParameter();
+            var inputParameter = tool.GetBatchInputParameter();
 
-            var layers = input.BatchModeList.ToList();
-            if (!layers.Any())
+            if (!inputParameter.HasBatchInputs)
             {
-                MessageService.Current.Info("No input layers are selected.");
+                MessageService.Current.Info("No inputs are selected.");
+                return null;
             }
 
-            var tools = layers.Select(l => tool.CloneWithInput(l, _context) as IGisTool).ToList();
+            IEnumerable<IGisTool> tools = null;
+
+            var layers = inputParameter.BatchInputs as IEnumerable<IDatasourceInput>;
+            if (layers != null)
+            {
+                // inputs may be represented by IDatasourceInput
+                tools = layers.Select(l => tool.CloneWithInput(l, l.Name, _context) as IGisTool).ToList();
+            }
+            else
+            {
+                // inputs may be represented or filename
+                var filenames = inputParameter.BatchInputs as IEnumerable<string>;
+                if (filenames != null)
+                {
+                    tools = filenames.Select(l => tool.CloneWithInput(l, l, _context) as IGisTool).ToList();
+                }
+            }
 
             if (!ValidateOutputNames(tools.Select(t => t as IParametrizedTool)))
             {

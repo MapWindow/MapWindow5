@@ -138,5 +138,10 @@ namespace MW5.Api.Concrete
                 LongName.ContainsIgnoreCase(token) ||
                 Extensions.ContainsIgnoreCase(token);
         }
+
+        public override string ToString()
+        {
+            return Name + " (" + LongName + ")";
+        }
     }
 }

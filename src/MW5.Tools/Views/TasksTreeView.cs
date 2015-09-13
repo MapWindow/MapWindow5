@@ -81,6 +81,9 @@ namespace MW5.Tools.Views
                                 var wrapper = new TaskNodeWrapper(e.Task);
                                 var node = wrapper.Node;
                                 _rootNode.Nodes.Add(node);
+                                
+                                // let's aumatically select it, which will display the stats
+                                SelectedNode = node;
                             }
                             break;
                         case TaskEvent.StatusChanged:

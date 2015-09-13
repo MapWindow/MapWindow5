@@ -39,6 +39,14 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return doubleTextBox1; }
+        }
+
+        /// <summary>
         /// The get value.
         /// </summary>
         public override object GetValue()

@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Tools.Controls.Parameters;
@@ -13,7 +14,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Model.Parameters.Layers
 {
-    internal abstract class LayerParameterBase: BaseParameter
+    internal abstract class LayerParameterBase : BaseParameter, IBatchInputParameter
     {
         public abstract DataSourceType DataSourceType { get; }
 
@@ -46,18 +47,13 @@ namespace MW5.Tools.Model.Parameters.Layers
             }
         }
 
-        public override bool HasDatasource
-        {
-            get { return true; }
-        }
-
         public override string ToString()
         {
             var info = Value as IDatasourceInput;
             return string.Format("{0}: {1}", DisplayName, info != null ? info.Name : string.Empty);
         }
 
-        public IEnumerable<IDatasourceInput> BatchModeList
+        private IEnumerable<IDatasourceInput> Inputs
         {
             get
             {
@@ -69,6 +65,16 @@ namespace MW5.Tools.Model.Parameters.Layers
 
                 return new List<IDatasourceInput>();
             }
+        }
+
+        public object BatchInputs
+        {
+            get { return Inputs; }
+        }
+
+        public bool HasBatchInputs
+        {
+            get { return Inputs.Any(); }
         }
     }
 }

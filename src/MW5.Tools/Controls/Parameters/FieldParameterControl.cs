@@ -43,6 +43,14 @@ namespace MW5.Tools.Controls.Parameters
             return tableLayoutPanel1;
         }
 
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return comboBoxAdv1; }
+        }
+
         public void OnLayerChanged(IDatasourceInput input)
         {
             var vector = input as IVectorInput;

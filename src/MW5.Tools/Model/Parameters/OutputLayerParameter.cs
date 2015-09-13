@@ -11,14 +11,11 @@ namespace MW5.Tools.Model.Parameters
     {
         public LayerType LayerType { get; set; }
 
+        public bool SupportInMemory { get; set; }
+
         public OutputLayerInfo GetValue()
         {
             return Value as OutputLayerInfo;
-        }
-
-        public override bool HasDatasource
-        {
-            get { return true; }
         }
 
         public override string ToString()

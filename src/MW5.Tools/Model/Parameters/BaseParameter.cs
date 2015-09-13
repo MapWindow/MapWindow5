@@ -13,21 +13,25 @@ using MW5.Tools.Services;
 namespace MW5.Tools.Model.Parameters
 {
     /// <summary>
-    /// The base parameter.
+    /// A parameter of a GIS tool. 
+    /// Usually is generated for each property of the tool marked with Input, Output attributes.
     /// </summary>
     public abstract class BaseParameter
     {
-        public BaseParameter()
-        {
-            HasDatasource = false;
-        }
-
         /// <summary>
         /// Gets or sets the control.
         /// </summary>
         public ParameterControlBase Control { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the parameter (equals to the name of property it was generated for).
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the control to be displayed as a tooltip.
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets the display name.
@@ -44,16 +48,25 @@ namespace MW5.Tools.Model.Parameters
         /// </summary>
         public bool Required { get; set; }
 
-        public object DefaultValue { get; set; }
-
-        public PropertyInfo ToolProperty { get; set; }
-
-        public IGisTool Tool { get; set; }
+        /// <summary>
+        /// Gets or sets a value indicating whether this parameter is input one.
+        /// </summary>
+        public bool IsInput { get; set; }
 
         /// <summary>
-        /// Gets a value indicating whether current parameter is associated with datasource, either input or output one.
+        /// Gets or sets the default value of the parameter.
         /// </summary>
-        public virtual bool HasDatasource { get; private set; }
+        public object DefaultValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets property of the GisTool class, current parameter is generated for.
+        /// </summary>
+        public PropertyInfo ToolProperty { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tool the parameter was generated for.
+        /// </summary>
+        public IGisTool Tool { get; set; }
 
         /// <summary>
         /// Gets or sets value restored from config from previous run of the tool.
@@ -97,6 +110,14 @@ namespace MW5.Tools.Model.Parameters
         }
 
         /// <summary>
+        /// Gets a value indicating whether parameter has a value.
+        /// </summary>
+        public virtual bool IsEmpty
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Sets new value to the property of the tool class associated with the current parameter.
         /// </summary>
         /// <param name="value">The value.</param>
@@ -114,6 +135,9 @@ namespace MW5.Tools.Model.Parameters
             get { return false; }
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
         public override string ToString()
         {
             var val = Value;

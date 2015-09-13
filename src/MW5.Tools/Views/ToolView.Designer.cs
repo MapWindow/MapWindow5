@@ -39,7 +39,6 @@ namespace MW5.Tools.Views
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabRequired = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelRequired = new System.Windows.Forms.Panel();
-            this.stringParameterControl1 = new MW5.Tools.Controls.Parameters.StringParameterControl();
             this.tabOptional = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.panelOptional = new System.Windows.Forms.Panel();
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
@@ -50,7 +49,6 @@ namespace MW5.Tools.Views
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabRequired.SuspendLayout();
-            this.panelRequired.SuspendLayout();
             this.tabOptional.SuspendLayout();
             this.tabHelp.SuspendLayout();
             this.SuspendLayout();
@@ -73,7 +71,7 @@ namespace MW5.Tools.Views
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.IsBackStageButton = false;
-            this.btnClose.Location = new System.Drawing.Point(471, 389);
+            this.btnClose.Location = new System.Drawing.Point(471, 408);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(85, 26);
             this.btnClose.TabIndex = 34;
@@ -88,7 +86,7 @@ namespace MW5.Tools.Views
             this.btnRun.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnRun.ForeColor = System.Drawing.Color.White;
             this.btnRun.IsBackStageButton = false;
-            this.btnRun.Location = new System.Drawing.Point(380, 389);
+            this.btnRun.Location = new System.Drawing.Point(380, 408);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(85, 26);
             this.btnRun.TabIndex = 33;
@@ -108,7 +106,7 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(550, 373);
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(550, 390);
             this.tabControlAdv1.Controls.Add(this.tabRequired);
             this.tabControlAdv1.Controls.Add(this.tabOptional);
             this.tabControlAdv1.Controls.Add(this.tabHelp);
@@ -116,7 +114,7 @@ namespace MW5.Tools.Views
             this.tabControlAdv1.Location = new System.Drawing.Point(6, 12);
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.RotateTextWhenVertical = true;
-            this.tabControlAdv1.Size = new System.Drawing.Size(550, 373);
+            this.tabControlAdv1.Size = new System.Drawing.Size(550, 390);
             this.tabControlAdv1.TabIndex = 35;
             this.tabControlAdv1.TextLineAlignment = System.Drawing.StringAlignment.Near;
             // 
@@ -128,7 +126,7 @@ namespace MW5.Tools.Views
             this.tabRequired.Location = new System.Drawing.Point(123, 1);
             this.tabRequired.Name = "tabRequired";
             this.tabRequired.ShowCloseButton = true;
-            this.tabRequired.Size = new System.Drawing.Size(425, 370);
+            this.tabRequired.Size = new System.Drawing.Size(425, 387);
             this.tabRequired.TabIndex = 1;
             this.tabRequired.Text = "Required";
             this.tabRequired.ThemesEnabled = false;
@@ -136,22 +134,12 @@ namespace MW5.Tools.Views
             // panelRequired
             // 
             this.panelRequired.AutoScroll = true;
-            this.panelRequired.Controls.Add(this.stringParameterControl1);
             this.panelRequired.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelRequired.Location = new System.Drawing.Point(0, 0);
             this.panelRequired.Name = "panelRequired";
             this.panelRequired.Padding = new System.Windows.Forms.Padding(20, 10, 20, 25);
-            this.panelRequired.Size = new System.Drawing.Size(425, 370);
+            this.panelRequired.Size = new System.Drawing.Size(425, 387);
             this.panelRequired.TabIndex = 0;
-            // 
-            // stringParameterControl1
-            // 
-            this.stringParameterControl1.Caption = "label1";
-            this.stringParameterControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.stringParameterControl1.Location = new System.Drawing.Point(20, 10);
-            this.stringParameterControl1.Name = "stringParameterControl1";
-            this.stringParameterControl1.Size = new System.Drawing.Size(385, 50);
-            this.stringParameterControl1.TabIndex = 0;
             // 
             // tabOptional
             // 
@@ -161,7 +149,7 @@ namespace MW5.Tools.Views
             this.tabOptional.Location = new System.Drawing.Point(123, 1);
             this.tabOptional.Name = "tabOptional";
             this.tabOptional.ShowCloseButton = true;
-            this.tabOptional.Size = new System.Drawing.Size(425, 370);
+            this.tabOptional.Size = new System.Drawing.Size(425, 387);
             this.tabOptional.TabIndex = 2;
             this.tabOptional.Text = "Optional";
             this.tabOptional.ThemesEnabled = false;
@@ -173,7 +161,7 @@ namespace MW5.Tools.Views
             this.panelOptional.Location = new System.Drawing.Point(0, 0);
             this.panelOptional.Name = "panelOptional";
             this.panelOptional.Padding = new System.Windows.Forms.Padding(20, 10, 20, 25);
-            this.panelOptional.Size = new System.Drawing.Size(425, 370);
+            this.panelOptional.Size = new System.Drawing.Size(425, 387);
             this.panelOptional.TabIndex = 0;
             // 
             // tabHelp
@@ -184,7 +172,7 @@ namespace MW5.Tools.Views
             this.tabHelp.Location = new System.Drawing.Point(123, 1);
             this.tabHelp.Name = "tabHelp";
             this.tabHelp.ShowCloseButton = true;
-            this.tabHelp.Size = new System.Drawing.Size(425, 370);
+            this.tabHelp.Size = new System.Drawing.Size(425, 387);
             this.tabHelp.TabIndex = 4;
             this.tabHelp.Text = "Help";
             this.tabHelp.ThemesEnabled = false;
@@ -196,14 +184,14 @@ namespace MW5.Tools.Views
             this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.ScriptErrorsSuppressed = true;
-            this.webBrowser1.Size = new System.Drawing.Size(425, 370);
+            this.webBrowser1.Size = new System.Drawing.Size(425, 387);
             this.webBrowser1.TabIndex = 0;
             // 
             // chkBackground
             // 
             this.chkBackground.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.chkBackground.AutoSize = true;
-            this.chkBackground.Location = new System.Drawing.Point(12, 394);
+            this.chkBackground.Location = new System.Drawing.Point(12, 413);
             this.chkBackground.Name = "chkBackground";
             this.chkBackground.Size = new System.Drawing.Size(135, 17);
             this.chkBackground.TabIndex = 36;
@@ -212,7 +200,7 @@ namespace MW5.Tools.Views
             // 
             // superToolTip1
             // 
-            this.superToolTip1.MaxWidth = 280;
+            this.superToolTip1.MaxWidth = 400;
             this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
             this.superToolTip1.ToolTipDuration = 5;
             this.superToolTip1.UseFading = Syncfusion.Windows.Forms.Tools.SuperToolTip.FadingType.System;
@@ -221,7 +209,7 @@ namespace MW5.Tools.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(565, 418);
+            this.ClientSize = new System.Drawing.Size(565, 437);
             this.Controls.Add(this.chkBackground);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnClose);
@@ -232,7 +220,6 @@ namespace MW5.Tools.Views
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
             this.tabRequired.ResumeLayout(false);
-            this.panelRequired.ResumeLayout(false);
             this.tabOptional.ResumeLayout(false);
             this.tabHelp.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -245,15 +232,14 @@ namespace MW5.Tools.Views
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv comboBoxAdv2;
         private Syncfusion.Windows.Forms.ButtonAdv btnClose;
         private Syncfusion.Windows.Forms.ButtonAdv btnRun;
-        private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
+        protected Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabRequired;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabOptional;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabHelp;
         private System.Windows.Forms.Panel panelRequired;
-        private StringParameterControl stringParameterControl1;
         private System.Windows.Forms.Panel panelOptional;
         private System.Windows.Forms.WebBrowser webBrowser1;
         private System.Windows.Forms.CheckBox chkBackground;
-        private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
+        protected Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
     }
 }

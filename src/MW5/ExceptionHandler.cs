@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using MW5.Forms;
 using MW5.Shared;
 using MW5.Views;
 
@@ -45,7 +46,10 @@ namespace MW5
 
             using (var form = new ErrorView(e.Exception, false))
             {
-                form.ShowDialog();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    Application.Exit();
+                }
             }
         }
 
@@ -53,14 +57,14 @@ namespace MW5
         {
             var ex = e.ExceptionObject as Exception;
 
-            Logger.Current.Error("CurrentDomain_UnhandledException", ex);
-
             using (var form = new ErrorView(ex, true))
             {
                 form.ShowDialog();
 
                 Application.Exit();
             }
+
+            Logger.Current.Error("CurrentDomain_UnhandledException", ex);
         }
     }
 }

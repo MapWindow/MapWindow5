@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Forms;
 using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Tools;
 
-namespace MW5.Views
+namespace MW5.Forms
 {
     public partial class ErrorView : MapWindowForm
     {
@@ -16,6 +15,15 @@ namespace MW5.Views
         public ErrorView(Exception ex, bool needClose)
         {
             InitializeComponent();
+
+            if (needClose)
+            {
+                Text = "Ooops, we are down";
+            }
+            else
+            {
+                Text = "Something went wrong";
+            }
 
             _exception = ex;
 
@@ -30,11 +38,11 @@ namespace MW5.Views
 
         private void ShowMessage(bool needClose)
         {
-            string s = "Unhandled exception has occured in your application. ";
+            string s = "An unhandled exception has occured in the application. ";
 
             if (needClose)
             {
-                s += "There is no way to recover from it. Application will be closed.";
+                s += "There is no way to recover from it. The application will be closed.";
             }
 
             s += " Please report the issue at " + ReportIssueUrl + ".";

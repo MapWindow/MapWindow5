@@ -41,6 +41,14 @@ namespace MW5.Tools.Controls.Parameters
         public void Initialize(DataSourceType dataSourceType)
         {
             _dataSourceType = dataSourceType;
+
+            if (_dataSourceType == DataSourceType.Raster)
+            {
+                int height = panel1.Height;
+                panel1.Height = 0;
+                panel1.Visible = false;
+                Height -= height;
+            }
         }
 
         public void SetLayers(IEnumerable<ILayer> layers)
@@ -81,6 +89,14 @@ namespace MW5.Tools.Controls.Parameters
         public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return comboBoxAdv1; }
         }
 
         public override string Caption

@@ -76,19 +76,20 @@
             // 
             // doubleTextBox1
             // 
+            this.doubleTextBox1.AllowNull = true;
             this.doubleTextBox1.BackGroundColor = System.Drawing.SystemColors.Window;
             this.doubleTextBox1.BeforeTouchSize = new System.Drawing.Size(283, 20);
             this.doubleTextBox1.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.doubleTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.doubleTextBox1.DoubleValue = 1D;
+            this.doubleTextBox1.DoubleValue = 0D;
             this.doubleTextBox1.Location = new System.Drawing.Point(8, 19);
             this.doubleTextBox1.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.doubleTextBox1.Name = "doubleTextBox1";
-            this.doubleTextBox1.NullString = "";
+            this.doubleTextBox1.NullString = "<not defined>";
             this.doubleTextBox1.Size = new System.Drawing.Size(283, 20);
             this.doubleTextBox1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.doubleTextBox1.TabIndex = 4;
-            this.doubleTextBox1.Text = "1.00";
+            this.doubleTextBox1.Text = "0.00";
             // 
             // DoubleParameterControl
             // 

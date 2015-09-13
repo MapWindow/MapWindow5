@@ -16,16 +16,17 @@ namespace MW5.Tools.Tools.Database
         [Input("Input layer", 0)]
         public IVectorInput InputLayer { get; set; }
 
-        [Input("Database", 1, false, ParameterType.Combo)]
+        [Output("Database", 0)]
+        [ParameterType(ParameterType.Combo)]
         public DatabaseConnection Database { get; set; }
 
-        [Input("Schema", 2)]
+        [Output("Schema", 1)]
         public string Schema { get; set; }
 
-        [Input("New layer name", 3)]
+        [Output("New layer name", 2)]
         public string NewLayerName { get; set; }
 
-        [Input("Overwrite", 4)]
+        [Output("Overwrite", 3)]
         public bool Overwrite { get; set; }
 
         /// <summary>

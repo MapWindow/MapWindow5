@@ -18,11 +18,10 @@ namespace MW5.Tools.Model
         /// <param name="index">The index.</param>
         /// <param name="optional">True if parameter must be displayed on the optional panel.</param>
         /// <param name="type">A hint to choose proper UI representation for parameter.</param>
-        public InputAttribute(string displayName, int index, bool optional = false, ParameterType type = ParameterType.Auto)
+        public InputAttribute(string displayName, int index, bool optional = false)
         {
             DisplayName = displayName;
             Index = index;
-            ParameterType = type;
             Optional = optional;
         }
 
@@ -37,10 +36,5 @@ namespace MW5.Tools.Model
         /// Gets or sets the index.
         /// </summary>
         public int Index { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the parameter.
-        /// </summary>
-        public ParameterType ParameterType { get; set; }
     }
 }

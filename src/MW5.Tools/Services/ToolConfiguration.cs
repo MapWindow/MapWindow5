@@ -16,6 +16,7 @@ namespace MW5.Tools.Services
         private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
         private readonly Dictionary<string, object> _comboLists = new Dictionary<string, object>();
         private readonly Dictionary<string, Range> _ranges = new Dictionary<string, Range>();
+        private readonly Dictionary<string, string> _keys = new Dictionary<string, string>();
         private IEnumerable<ILayer> _layers;
 
         public ToolConfiguration<T> Get<T>()
@@ -50,6 +51,11 @@ namespace MW5.Tools.Services
         public Dictionary<string, Range> Ranges
         {
             get { return _ranges; }
+        }
+
+        public Dictionary<string, string> Keys
+        {
+            get { return _keys; }
         }
 
         public void AddLayers(IEnumerable<ILayer> layers)
@@ -111,6 +117,13 @@ namespace MW5.Tools.Services
         {
             var name = (number.Body as MemberExpression).Member.Name;
             _config.Ranges.Add(name, new Range(min, max));
+            return this;
+        }
+
+        public ToolConfiguration<T> SetKey<TT>(Expression<Func<T, TT>> number, string key)
+        {
+            var name = (number.Body as MemberExpression).Member.Name;
+            _config.Keys.Add(name, key);
             return this;
         }
     }

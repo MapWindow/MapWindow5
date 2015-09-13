@@ -1,247 +1,220 @@
-﻿// -------------------------------------------------------------------------------------------
-// <copyright file="GdalTranslateView.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
-// </copyright>
-// -------------------------------------------------------------------------------------------
-
-using System;
-using System.Globalization;
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
+using MW5.Tools.Model;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Properties;
+using MW5.Tools.Services;
+using MW5.Tools.Tools.Gdal;
 using MW5.Tools.Views.Gdal.Abstract;
-using MW5.UI.Forms;
+using MW5.UI.Controls;
+using MW5.UI.Style;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public partial class GdalTranslateView : GdalTranslateViewBase, IGdalTranslateView
+    public class GdalTranslateView: ToolView, IGdalGenericView
     {
-        private readonly IAppContext _context;
+        private StringParameterControl _cmdOptions;
+        private readonly TabPageAdv _tabDriver;
+        private readonly TabPageAdv _tabCmdLine;
+        private readonly IStyleService _styleService;
+        private IEnumerable<BaseParameter> _driverOptions;
+        private bool _controlsGenerated = false;
 
-        public GdalTranslateView(IAppContext context)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ToolView"/> class.
+        /// </summary>
+        public GdalTranslateView(IAppContext context, ParameterControlGenerator controlGenerator, IStyleService styleService)
+            : base(context, controlGenerator)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            if (styleService == null) throw new ArgumentNullException("styleService");
+            _styleService = styleService;
+            _generator.EventManager.ControlValueChanged += OnControlValueChanged;
 
-            InitializeComponent();
+            _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_notepad_24);
+            _tabCmdLine = tabControlAdv1.AddTab("Cmd Line", Resources.img_console24);
         }
 
         /// <summary>
-        /// Called before view is shown. Allows to initialize UI from this.Model property.
+        /// Generates controls for parameters.
         /// </summary>
-        public void Initialize()
+        public override void GenerateControls()
         {
-            // Get possible gdal formats:
-            var gdalFormats = GdalFormatHelper.GetGdalFormats();
+            base.GenerateControls();
 
-            // Fill output format listbox:
-            var selectedIndex = 0;
-            foreach (
-                var gdalInfoFormat in gdalFormats.Where(gdalInfoFormat => gdalInfoFormat.ReadWrite.StartsWith("rw")))
+            PopulateCommandLinePage();
+
+            _controlsGenerated = true;
+
+            UpdateCmdOptions();
+        }
+
+        /// <summary>
+        /// Adds controls to command line page.
+        /// </summary>
+        private void PopulateCommandLinePage()
+        {
+            _cmdOptions = new StringParameterControl(true) { Caption = "Main options (read only)", Dock = DockStyle.Top, ReadOnly = true };
+            var section = new ConfigPanelControl { HeaderText = "Command line options",  Dock = DockStyle.Top };
+            section.ShowCaptionOnly();
+            
+            var panel = _tabCmdLine.GetPanel();
+
+            var tool = Model.Tool as IGdalTool;
+            if (tool != null)
             {
-                OutputFormatListbox.Items.Add(gdalInfoFormat.ShortName);
+                // move additional options control to its own page
+                var p = tool.AdditionalOptionsParameter;
+                panel.Controls.Add(p.Control);
+            }
 
-                // Make GTiff the selected item
-                if (gdalInfoFormat.ShortName == "GTiff")
+            panel.Controls.Add(_cmdOptions);
+            panel.Controls.Add(section);
+
+            panel.AddVerticalPadding();
+        }
+
+        /// <summary>
+        /// Handles changes of value of any of the contols.
+        /// </summary>
+        private void OnControlValueChanged(object sender, ParameterControlEventArgs e)
+        {
+            if (e.Value is DatasourceDriver)
+            {
+                OnDriverChanged(e.Value as DatasourceDriver);
+            }
+
+            UpdateCmdOptions();
+        }
+
+        /// <summary>
+        /// Updates list of cmd options. Should be call when value of any other control changes.
+        /// </summary>
+        private void UpdateCmdOptions()
+        {
+            if (!_controlsGenerated)
+            {
+                return;
+            }
+
+            var tool = Model.Tool as GdalTranslateTool;
+            if (tool == null)
+            {
+                return;
+            }
+
+            tool.DriverOptions = GetDriverOptions();
+
+            tool.Parameters.Apply();
+
+            _cmdOptions.SetValue(tool.GetOptions(true));
+        }
+
+        /// <summary>
+        /// Get options specified on the driver page.
+        /// </summary>
+        private string GetDriverOptions()
+        {
+            if (_driverOptions == null)
+            {
+                return string.Empty;
+            }
+
+            var sb = new StringBuilder();
+            foreach (var p in _driverOptions)
+            {
+                if (p.Value != null && !p.IsEmpty && !Equals(p.Value, p.DefaultValue))
                 {
-                    selectedIndex = OutputFormatListbox.Items.Count - 1;
+                    sb.AppendFormat(" -co {0}={1} ", p.Name, p.Value);
                 }
             }
 
-            OutputFormatListbox.SelectedIndex = selectedIndex;
-        }
-
-        public ButtonBase OkButton
-        {
-            get { return btnRun; }
+            return sb.ToString();
         }
 
         /// <summary>
-        /// The button click event
+        /// Updates other controls after driver is changed.
         /// </summary>
-        private void EditButtonClick(object sender, EventArgs e)
+        private void OnDriverChanged(DatasourceDriver driver)
         {
-            CommandTextbox.ReadOnly = false;
-        }
+            // display driver options
+            GenerateDriverOptions(driver, _tabDriver);
 
-        private string GetBaseDirectory()
-        {
-            string baseDir = string.Empty;
-
-            //if (!string.IsNullOrEmpty(_context.Project.Filename))
-            //{
-            //    baseDir = Path.GetDirectoryName(_context.Project.Filename);
-            //}
-
-            return baseDir;
-        }
-
-        /// <summary>
-        /// The button click event
-        /// </summary>
-        private void InputFileSelectButtonClick(object sender, EventArgs e)
-        {
-            var filter = GdalFileFilter.Input;
-            var newFilename = string.Empty;
-
-            // TODO: extract
-            using (var ofd = new OpenFileDialog
-                                 {
-                                     Filter = filter,
-                                     FilterIndex = 0,
-                                     CheckFileExists = true,
-                                     AutoUpgradeEnabled = true,
-                                     Title = @"Select input raster",
-                                     InitialDirectory = GetBaseDirectory(),
-                                     SupportMultiDottedExtensions = true
-                                 })
+            // update output name
+            var tool = Model.Tool as IParametrizedTool;
+            if (tool == null)
             {
-                if (newFilename != string.Empty)
+                return;
+            }
+
+            UpdateOutputFilename(tool, driver);
+
+            // TODO: update list of data types
+        }
+
+        /// <summary>
+        /// Updates output extension when active driver changes.
+        /// </summary>
+        private void UpdateOutputFilename(IParametrizedTool tool, DatasourceDriver driver)
+        {
+            var input = tool.GetBatchInputParameter() as FilenameParameter;
+            if (input == null)
+            {
+                return;
+            }
+
+            foreach (var p in tool.Parameters.OfType<OutputLayerParameter>())
+            {
+                var ctrl = p.Control as IOuputputParameterControl;
+                if (ctrl != null)
                 {
-                    ofd.FileName = newFilename;
-                }
+                    string ext = driver.Extension;
+                    if (string.IsNullOrWhiteSpace(ext))
+                    {
+                        // sometimes there is no extension in the driver metadata
+                        ext = "???";
+                    }
 
-                if (ofd.ShowDialog(this) == DialogResult.Cancel)
-                {
-                    return;
+                    ctrl.SetExtension(ext);
                 }
-
-                // Add filename:
-                InputfileTextbox.Text = ofd.FileName;
             }
         }
 
         /// <summary>
-        /// The track scroll event
+        /// Generates control for creation options exposed by selected GDAL driver.
         /// </summary>
-        private void JpegQualityScroll(object sender, EventArgs e)
+        private void GenerateDriverOptions(DatasourceDriver driver, TabPageAdv tab)
         {
-            JpegQualityLabel.Text = JpegQuality.Value.ToString();
-        }
+            var panel = tab.GetPanel();
 
-        /// <summary>
-        /// The button click event
-        /// </summary>
-        private void OutputfileSelectButtonClick(object sender, EventArgs e)
-        {
-            var filter = GdalFileFilter.Output;
-            var newFilename = string.Empty;
+            panel.Controls.Clear();
 
-            // TODO: extract
-            using (var sfd = new SaveFileDialog
-                                 {
-                                     Filter = filter,
-                                     FilterIndex = 0,
-                                     AutoUpgradeEnabled = true,
-                                     Title = @"The output raster",
-                                     CheckPathExists = true,
-                                     InitialDirectory = GetBaseDirectory(),
-                                     OverwritePrompt = true,
-                                     SupportMultiDottedExtensions = true
-                                 })
+            _driverOptions = driver.GenerateCreationOptions().ToList();
+
+            _generator.Generate(panel, driver.Name + " Creation Options", _driverOptions);
+
+            foreach (var p in _driverOptions.Where(p => p.DefaultValue != null))
             {
-                if (newFilename != string.Empty)
-                {
-                    sfd.FileName = newFilename;
-                }
-
-                if (sfd.ShowDialog(this) == DialogResult.Cancel)
-                {
-                    return;
-                }
-
-                // Add filename:
-                OutputfileTextbox.Text = sfd.FileName;
-
-                // Select correct item of ouput format listbox:
-                SelectOutputFormatListbox(sfd.FilterIndex);
+                p.Control.SetValue(p.DefaultValue);
             }
+
+            panel.AddVerticalPadding();
+
+            _styleService.ApplyStyle(panel);
+
+            tab.TabVisible = panel.Controls.Count > 0;
+
+            superToolTip1.AddTooltips(panel, _driverOptions);
         }
-
-        /// <summary>
-        /// Select an item in the output format listbox
-        /// </summary>
-        private void SelectOutputFormatListbox(int filterIndex)
-        {
-            var shortname = GdalFileFilter.GetShortNameFromOutputFilter(filterIndex);
-
-            foreach (var item in OutputFormatListbox.Items.Cast<object>().Where(item => item.ToString() == shortname))
-            {
-                OutputFormatListbox.SelectedItem = item;
-                break;
-            }
-        }
-
-        /// <summary>Select event of the tab control</summary>
-        private void TabControl1Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (e.TabPage == tabPage2)
-            {
-                webBrowser1.DocumentText = Model.Tool.LoadManual();
-            }
-        }
-
-        /// <summary>The event</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event args</param>     
-        private void UpdateCommandTextbox(object sender, EventArgs e)
-        {
-            GdalToolHelper.UpdateCommandTextbox(CommandTextbox, OptionsGroupbox.Controls);
-        }
-
-        /// <summary>The event</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event args</param>     
-        private void UpdateCommandTextbox(object sender, MouseEventArgs e)
-        {
-            GdalToolHelper.UpdateCommandTextbox(CommandTextbox, OptionsGroupbox.Controls);
-        }
-
-        /// <summary>
-        /// The track scroll event
-        /// </summary>
-        private void ZlevelScroll(object sender, EventArgs e)
-        {
-            ZlevelLabel.Text = Zlevel.Value.ToString(CultureInfo.InvariantCulture);
-        }
-
-        public string InputFilename
-        {
-            get { return InputfileTextbox.Text; }
-        }
-
-        public string OutputFilename
-        {
-            get { return OutputfileTextbox.Text; }
-        }
-
-        public string Options
-        {
-            get
-            {
-                GdalToolHelper.UpdateCommandTextbox(CommandTextbox, OptionsGroupbox.Controls);
-                return CommandTextbox.Text;
-            }
-        }
-
-        public string OutputFormat
-        {
-            get
-            {
-                var item = OutputFormatListbox.SelectedItem;
-                return item != null ? item.ToString() : string.Empty;
-            }
-        }
-
-        public bool AddToMap
-        {
-            get { return chkAddToMap.Checked; }
-        }
-    }
-
-    public class GdalTranslateViewBase : MapWindowView<ToolViewModel>
-    {
     }
 }

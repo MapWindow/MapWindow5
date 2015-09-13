@@ -8,10 +8,12 @@ using MW5.Tools.Model;
 
 namespace MW5.Tools.Controls.Parameters
 {
-    public partial class BatchOutputParameterControl : ParameterControlBase
+    public partial class BatchOutputParameterControl : ParameterControlBase, IOuputputParameterControl
     {
         private readonly IFileDialogService _dialogService;
         private LayerType _layerType = LayerType.Invalid;
+        private string _extension = string.Empty;
+        private string _template = string.Empty;
 
         public BatchOutputParameterControl(IFileDialogService dialogService)
         {
@@ -27,23 +29,28 @@ namespace MW5.Tools.Controls.Parameters
             txtPath.Cue = "<same folder as input>";
         }
 
-        public void Initialize(LayerType layerType)
+        public void Initialize(LayerType layerType, bool supportsInMemory = true)
         {
             _layerType = layerType;
+            chkMemoryLayer.Enabled = supportsInMemory;
         }
 
         private void InitFlags()
         {
             chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
-            chkMemoryLayer.Checked = AppConfig.Instance.ToolOutputInMemory;
+            chkMemoryLayer.Checked = chkMemoryLayer.Enabled && AppConfig.Instance.ToolOutputInMemory;
             chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
         }
 
         private void SaveFlags()
         {
             AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
-            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
             AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
+
+            if (chkMemoryLayer.Enabled)
+            {
+                AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
+            }
         }
 
         /// <summary>
@@ -61,6 +68,14 @@ namespace MW5.Tools.Controls.Parameters
         public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return txtTemplate; }
         }
 
         /// <summary>
@@ -87,10 +102,27 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override void SetValue(object value)
         {
-            var s = Convert.ToString(value);
-            txtTemplate.Text = s;
+           _template = Convert.ToString(value);
 
-            RefreshControls();
+           RefreshTemplate();
+        }
+
+        private void RefreshTemplate()
+        {
+            string s = _template;
+
+            if (!string.IsNullOrWhiteSpace(_extension))
+            {
+                s = Path.ChangeExtension(s, _extension);
+            }
+
+            txtTemplate.Text = s;
+        }
+
+        public void SetExtension(string extension)
+        {
+            _extension = extension;
+            RefreshTemplate();
         }
 
         private void OnSaveClick(object sender, EventArgs e)

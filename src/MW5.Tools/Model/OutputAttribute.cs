@@ -13,24 +13,23 @@ namespace MW5.Tools.Model
         /// Initializes a new instance of the <see cref="OutputAttribute"/> class.
         /// </summary>
         /// <param name="displayName">The display name.</param>
-        /// <param name="nameTemplate">Initial filename for the output.</param>
-        /// <param name="layerType">Layer type of the output.</param>
-        public OutputAttribute(string displayName, string nameTemplate, LayerType layerType = LayerType.Invalid)
+        /// <param name="index">The order in which the controls will be added to the panel.</param>
+        
+        public OutputAttribute(string displayName, int index = 0)
         {
             DisplayName = displayName;
-            NameTemplate = nameTemplate;
+            
+            Index = index;
         }
 
-        public string NameTemplate { get; set; }
+        /// <summary>
+        /// Gets or sets the order in which the controls will be added to the panel
+        /// </summary>
+        public int Index { get; set; }
 
         /// <summary>
         /// Gets the display name.
         /// </summary>
         public string DisplayName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the type of the layer.
-        /// </summary>
-        public LayerType LayerType { get; set; }
     }
 }

@@ -45,6 +45,11 @@ namespace MW5.Tools.Controls.Parameters
         public abstract TableLayoutPanel GetTable();
 
         /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public abstract Control ToolTipControl { get; }
+
+        /// <summary>
         /// Gets the value.
         /// </summary>
         public abstract object GetValue();

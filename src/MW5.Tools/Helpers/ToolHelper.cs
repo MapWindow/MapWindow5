@@ -66,7 +66,7 @@ namespace MW5.Tools.Helpers
 
             return true;
         }
-        
+
         /// <summary>
         /// Reopens datasource which served as input for GisTool. The datasource will be searched
         /// for among open layers, including in-memory layers and if not present, reoped from the disk.
@@ -216,21 +216,21 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Clones the tool, copies values of all parameters and assigns selected datasource to the input parameter.
         /// </summary>
-        internal static IParametrizedTool CloneWithInput(this IParametrizedTool tool, IDatasourceInput input, IAppContext context)
+        internal static IParametrizedTool CloneWithInput(this IParametrizedTool tool, object input, string filename, IAppContext context)
         {
             var newTool = tool.Parameters.Clone();
 
             newTool.Initialize(context);
 
             // assigning input datasource
-            var p = newTool.GetBatchModeInputParameter();
-            p.ToolProperty.SetValue(newTool, input);
+            var p = newTool.GetBatchInputParameter() as BaseParameter;
+            p.SetToolValue(input);
 
             // resolving output filename based on template
             foreach (var output in newTool.Parameters.OfType<OutputLayerParameter>())
             {
                 var info = output.GetValue();
-                info.ResolveTemplateName(input.Name);
+                info.ResolveTemplateName(filename);
             }
 
             return newTool;
@@ -239,9 +239,10 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Gets input parameter for batch mode. Checks that there is a single input parameter.
         /// </summary>
-        internal static LayerParameterBase GetBatchModeInputParameter(this IParametrizedTool tool)
+        internal static IBatchInputParameter GetBatchInputParameter(this IParametrizedTool tool)
         {
-            var list = tool.Parameters.OfType<LayerParameterBase>().ToList();
+            var list = tool.Parameters.OfType<IBatchInputParameter>().ToList();
+
             if (!list.Any())
             {
                 throw new ApplicationException("No input layer parameters are found.");

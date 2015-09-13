@@ -25,6 +25,23 @@ namespace MW5.Tools.Controls.Parameters
 
             ParameterControlBase control = null;
 
+            if (parameter is FilenameParameter)
+            {
+                var dataType = (parameter as FilenameParameter).DataType;
+
+                if (batchMode)
+                {
+                    var fpc = _context.Container.GetInstance<BatchFilenameParameterControl>();
+                    fpc.Initialize(dataType);
+                    control = fpc;
+                }
+                else
+                {
+                    var fpc = _context.Container.GetInstance<FilenameParameterControl>();
+                    fpc.Initialize(dataType);
+                    control = fpc;
+                }
+            }
             if (parameter is FieldParameter)
             {
                 control = new FieldParameterControl();
@@ -39,7 +56,8 @@ namespace MW5.Tools.Controls.Parameters
             }
             else if (parameter is StringParameter)
             {
-                control = new StringParameterControl();
+                bool multiLine = (parameter as StringParameter).MultiLine;
+                control = new StringParameterControl(multiLine);
             }
             else if (parameter is BooleanParameter)
             {
@@ -51,24 +69,34 @@ namespace MW5.Tools.Controls.Parameters
             }
             else if (parameter is OutputLayerParameter)
             {
-                var layerType = (parameter as OutputLayerParameter).LayerType;
+                var op = parameter as OutputLayerParameter;
 
                 if (batchMode)
                 {
                     var opc = _context.Container.GetInstance<BatchOutputParameterControl>();
-                    opc.Initialize(layerType);
+                    opc.Initialize(op.LayerType, op.SupportInMemory);
                     control = opc;
                 }
                 else
                 {
                     var opc = _context.Container.GetInstance<OutputParameterControl>();
-                    opc.Initialize(layerType);
+                    opc.Initialize(op.LayerType, op.SupportInMemory);
                     control = opc;
                 }
             }
             else if (parameter is OptionsParameter)
             {
-                control = new ComboParameterControl { ButtonVisible = false };
+                var cpc = new ComboParameterControl { ButtonVisible = false };
+
+                var op = parameter as OptionsParameter;
+                var options = op.Options;
+
+                if (options != null)
+                {
+                    cpc.SetOptions(options);
+                }
+
+                control = cpc;
             }
             else if (parameter is LayerParameterBase)
             {
@@ -91,12 +119,6 @@ namespace MW5.Tools.Controls.Parameters
             if (control == null)
             {
                 throw new ApplicationException("Failed to created control for parameter: " + parameter.DisplayName);
-            }
-
-            var init = parameter.InitialValue;
-            if (init != null)
-            {
-                control.SetValue(init);
             }
 
             control.ParameterName = parameter.Name;

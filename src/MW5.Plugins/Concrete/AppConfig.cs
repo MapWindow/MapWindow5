@@ -99,6 +99,7 @@ namespace MW5.Plugins.Concrete
             ToolOutputAddToMap = true;
             ToolOutputInMemory = true;
             ToolOutputOverwrite = false;
+            ToolShowGdalOptionsDialog = true;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;
@@ -368,6 +369,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool ToolOutputOverwrite {get; set; }
+
+        [DataMember]
+        public bool ToolShowGdalOptionsDialog { get; set; }
 
         [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }

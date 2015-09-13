@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Enums;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Enums;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters.Layers;
@@ -24,6 +26,14 @@ namespace MW5.Tools.Model.Parameters
                     return new FieldParameter();
                 case ParameterType.Combo:
                     return new OptionsParameter();
+                case ParameterType.Filename:
+                    return new FilenameParameter(DataSourceType.All);
+                case ParameterType.VectorFilename:
+                    return new FilenameParameter(DataSourceType.Vector);
+                case ParameterType.RasterFilename:
+                    return new FilenameParameter(DataSourceType.Raster);
+                case ParameterType.MultiLineString:
+                    return new StringParameter(true);
             }
 
             if (customType != ParameterType.Auto)

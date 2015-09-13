@@ -10,13 +10,14 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
-    public partial class OutputParameterControl : ParameterControlBase
+    public partial class OutputParameterControl : ParameterControlBase, IOuputputParameterControl
     {
         private readonly IFileDialogService _dialogService;
         private LayerType _layerType;
         private string _templateName;
         private string _inputFilename;
         private string _filename;
+        private string _extension;
 
         public OutputParameterControl(IFileDialogService dialogService)
         {
@@ -33,20 +34,25 @@ namespace MW5.Tools.Controls.Parameters
         private void InitFlags()
         {
             chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
-            chkMemoryLayer.Checked = AppConfig.Instance.ToolOutputInMemory;
+            chkMemoryLayer.Checked = chkMemoryLayer.Enabled && AppConfig.Instance.ToolOutputInMemory;
             chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
         }
 
         private void SaveFlags()
         {
             AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
-            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
             AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
+
+            if (chkMemoryLayer.Enabled)
+            {
+                AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
+            }
         }
 
-        public void Initialize(LayerType layerType)
+        public void Initialize(LayerType layerType, bool supportsInMemory = true)
         {
             _layerType = layerType;
+            chkMemoryLayer.Enabled = supportsInMemory;
         }
 
         /// <summary>
@@ -64,6 +70,14 @@ namespace MW5.Tools.Controls.Parameters
         public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return textBoxExt1; }
         }
 
         /// <summary>
@@ -123,7 +137,7 @@ namespace MW5.Tools.Controls.Parameters
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(_inputFilename))
+                if (string.IsNullOrWhiteSpace(_templateName) || string.IsNullOrWhiteSpace(_inputFilename))
                 {
                     return;
                 }
@@ -141,6 +155,11 @@ namespace MW5.Tools.Controls.Parameters
                     textBoxExt1.Text = name;
                 }
             }
+
+            if (!string.IsNullOrWhiteSpace(_extension))
+            {
+                textBoxExt1.Text = Path.ChangeExtension(textBoxExt1.Text, _extension);
+            }
         }
 
         private void MemoryLayerChecked(object sender, EventArgs e)
@@ -151,7 +170,20 @@ namespace MW5.Tools.Controls.Parameters
         public void OnLayerChanged(IDatasourceInput layer)
         {
             _filename = string.Empty;
-            _inputFilename = layer.Filename;
+            _inputFilename = layer != null ? layer.Filename : string.Empty;
+            RefreshName();
+        }
+
+        public void OnFilenameChanged(string filename)
+        {
+            _filename = string.Empty;
+            _inputFilename = filename;
+            RefreshName();
+        }
+
+        public void SetExtension(string extension)
+        {
+            _extension = extension;
             RefreshName();
         }
     }

@@ -13,8 +13,8 @@ namespace MW5.Tools.Model
 {
     public class OutputLayerInfo
     {
-        private string _path;
-        private string _nameTemplate;
+        private string _path = string.Empty;
+        private string _nameTemplate = string.Empty;
 
         public bool AddToMap { get; set; }
 
@@ -33,11 +33,16 @@ namespace MW5.Tools.Model
             }
         }
 
+        public string GetTemplateName(string extension)
+        {
+            return Path.ChangeExtension(_nameTemplate, extension);
+        }
+
         private string GetTemplatedFilename(string inputFilename)
         {
             string path = _path;
 
-            if (string.IsNullOrWhiteSpace(path))
+            if (string.IsNullOrWhiteSpace(path) && !string.IsNullOrWhiteSpace(inputFilename))
             {
                 path = Path.GetDirectoryName(inputFilename);
             }

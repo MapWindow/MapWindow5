@@ -36,7 +36,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Number of points", 1)]
         public int NumPoints { get; set; }
 
-        [Output("New layer name", "{input}_random points.shp", LayerType.Shapefile)]
+        [Output("New layer name")]
+        [OutputLayer("{input}_random points.shp", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
 
         protected override void Configure(IAppContext context, ToolConfiguration configuration)

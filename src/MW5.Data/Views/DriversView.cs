@@ -97,7 +97,7 @@ namespace MW5.Data.Views
 
             if (hasOptions)
             {
-                var list = DriverMetadata.ParseOptionList(options).ToList();
+                var list = DriverMetadata.ParseOptionList(options).OrderBy(o => o.Name).ToList();
                 hasOptions = list.Any();
                 grid.DataSource = list;
 
@@ -128,8 +128,6 @@ namespace MW5.Data.Views
 
             _driverMetadataGrid1.DataSource = items;
             _driverMetadataGrid1.AdjustRowHeights();
-
-            
         }
 
         private void txtSearch_TextChanged(object sender, EventArgs e)

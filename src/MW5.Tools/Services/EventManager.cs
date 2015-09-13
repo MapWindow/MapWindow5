@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -16,23 +17,32 @@ namespace MW5.Tools.Services
     {
         private readonly List<ParameterControlBase> _controls = new List<ParameterControlBase>();
         private Dictionary<string, ParameterControlBase> _dict;
+        public event EventHandler<ParameterControlEventArgs> ControlValueChanged;
 
         public void AddControl(ParameterControlBase control)
         {
             _controls.Add(control);
+            control.ValueChanged += (s, e) => FireControlValueChanged(s as ParameterControlBase);
+        }
+
+        private void FireControlValueChanged(ParameterControlBase control)
+        {
+            var handler = ControlValueChanged;
+            if (handler != null)
+            {
+                ControlValueChanged(control, new ParameterControlEventArgs(control));
+            }
         }
 
         public void Bind(ToolConfiguration config)
         {
             _dict = _controls.ToDictionary(p => p.ParameterName);
 
-            AssignLayers(config);
+            BindOutput();
 
             BindFields(config);
 
-            BindComboLists(config);
-
-            BindOutput();
+            AssignLayers(config);
         }
 
         /// <summary>
@@ -41,12 +51,28 @@ namespace MW5.Tools.Services
         private void BindOutput()
         {
             var output = _controls.OfType<OutputParameterControl>().FirstOrDefault();
-            var input = _controls.OfType<LayerParameterControl>().FirstOrDefault();
+            if (output == null)
+            {
+                return;
+            }
 
-            if (input != null && output != null)
+            var input = _controls.OfType<LayerParameterControl>().FirstOrDefault();
+            if (input != null)
             {
                 input.SelectedLayerChanged += (s, e) => output.OnLayerChanged(e.Datasource);
-                output.OnLayerChanged(input.SelectedLayer);
+            }
+
+            var fp = _controls.OfType<FilenameParameterControl>().FirstOrDefault();
+            if (fp != null)
+            {
+                fp.ValueChanged += (s, e) =>
+                {
+                    var ctrl = s as FilenameParameterControl;
+                    if (ctrl != null)
+                    {
+                        output.OnFilenameChanged(ctrl.GetValue() as string);
+                    }
+                };
             }
         }
 
@@ -63,18 +89,6 @@ namespace MW5.Tools.Services
             }
         }
 
-        private void BindComboLists(ToolConfiguration config)
-        {
-            foreach (var item in config.ComboLists)
-            {
-                var combo = GetControl(item.Key) as ComboParameterControl;
-                if (combo != null)
-                {
-                    combo.SetOptions(item.Value);
-                }
-            }
-        }
-
         private void BindFields(ToolConfiguration config)
         {
             foreach (var f in config.Fields)
@@ -85,7 +99,6 @@ namespace MW5.Tools.Services
                 if (layer != null && field != null)
                 {
                     layer.SelectedLayerChanged += (s, e) => field.OnLayerChanged(e.Datasource);
-                    field.OnLayerChanged(layer.SelectedLayer);
                 }
             }
         }

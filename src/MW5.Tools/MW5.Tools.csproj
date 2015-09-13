@@ -79,6 +79,26 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\InputFilenameGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\InputFilenameGrid.Designer.cs">
+      <DependentUpon>InputFilenameGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\InputFilenameGridAdapter.cs" />
+    <Compile Include="Controls\Parameters\BatchFilenameParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\BatchFilenameParameterControl.Designer.cs">
+      <DependentUpon>BatchFilenameParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Parameters\FilenameParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\FilenameParameterControl.Designer.cs">
+      <DependentUpon>FilenameParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Parameters\IOuputputParameterControl.cs" />
     <Compile Include="Controls\Parameters\OutputParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,26 +131,39 @@
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\GdalFileFilter.cs" />
-    <Compile Include="Helpers\GdalFormatHelper.cs" />
+    <Compile Include="Helpers\GdalFormatHelper.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helpers\GdalToolHelper.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
+    <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
+    <Compile Include="Helpers\TabControlHelper.cs" />
     <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
+    <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\GdalInfoFormat.cs" />
+    <Compile Include="Model\GdalTool.cs" />
+    <Compile Include="Model\IGdalTool.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
     <Compile Include="Model\Layers\CachedInput.cs" />
     <Compile Include="Model\Layers\IDatasourceInput.cs" />
-    <Compile Include="Model\Layers\InputLayerGridAdapter.cs" />
+    <Compile Include="Controls\InputLayerGridAdapter.cs" />
     <Compile Include="Model\Layers\IRasterInput.cs" />
     <Compile Include="Model\Layers\IVectorInput.cs" />
     <Compile Include="Model\Layers\DatasourceInput.cs" />
+    <Compile Include="Model\OutputLayerAttribute.cs" />
+    <Compile Include="Model\Parameters\FilenameParameter.cs" />
+    <Compile Include="Model\Parameters\IBatchInputParameter.cs" />
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
     <Compile Include="Model\Layers\RasterInput.cs" />
+    <Compile Include="Model\ParameterTypeAttribute.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ToolBase.cs" />
     <Compile Include="Services\EmptyTaskHandle.cs" />
+    <Compile Include="Services\GdalParameterGenerator.cs" />
+    <Compile Include="Services\ParameterControlEventArgs.cs" />
     <Compile Include="Services\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
     <Compile Include="Helpers\TempDatasourceHelper.cs" />
@@ -173,13 +206,25 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Tools\Gdal\GdalTranslateTool.cs" />
+    <Compile Include="Tools\Gdal\GdalTranslateCustomTool.cs" />
+    <Compile Include="Views\Gdal\Abstract\IGdalGenericView.cs" />
+    <Compile Include="Views\Gdal\Abstract\IGdalOptionsView.cs" />
     <Compile Include="Views\Gdal\Abstract\IGdalTranslateView.cs" />
-    <Compile Include="Views\Gdal\GdalTranslatePresenter.cs" />
-    <Compile Include="Views\Gdal\GdalTranslateView.cs">
+    <Compile Include="Views\Gdal\GdalOptionsModel.cs" />
+    <Compile Include="Views\Gdal\GdalOptionsPresenter.cs" />
+    <Compile Include="Views\Gdal\GdalOptionsView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Gdal\GdalTranslateView.Designer.cs">
-      <DependentUpon>GdalTranslateView.cs</DependentUpon>
+    <Compile Include="Views\Gdal\GdalOptionsView.Designer.cs">
+      <DependentUpon>GdalOptionsView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gdal\GdalTranslatePresenter.cs" />
+    <Compile Include="Views\Gdal\GdalTranslateCustomPresenter.cs" />
+    <Compile Include="Views\Gdal\GdalTranslateCustomView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Gdal\GdalTranslateCustomView.Designer.cs">
+      <DependentUpon>GdalTranslateCustomView.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
@@ -274,6 +319,9 @@
       <DependentUpon>RandomPointsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ITaskLogView.cs" />
+    <Compile Include="Views\Gdal\GdalTranslateView.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Views\TaskNodeWrapper.cs" />
     <Compile Include="Views\TaskLogPresenter.cs" />
     <Compile Include="Views\TaskLogView.cs">
@@ -350,6 +398,12 @@
     <EmbeddedResource Include="Controls\Parameters\DistanceParameterControl.resx">
       <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\BatchFilenameParameterControl.resx">
+      <DependentUpon>BatchFilenameParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\FilenameParameterControl.resx">
+      <DependentUpon>FilenameParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\IntegerParameterControl.resx">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
@@ -381,8 +435,11 @@
     <EmbeddedResource Include="Toolbox\ToolboxDockPanel.resx">
       <DependentUpon>ToolboxDockPanel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Gdal\GdalTranslateView.resx">
-      <DependentUpon>GdalTranslateView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Gdal\GdalOptionsView.resx">
+      <DependentUpon>GdalOptionsView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Gdal\GdalTranslateCustomView.resx">
+      <DependentUpon>GdalTranslateCustomView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Custom\LongExecutionView.resx">
       <DependentUpon>LongExecutionView.cs</DependentUpon>
@@ -431,6 +488,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_console24.png" />
     <None Include="Resources\img_save_24.png" />
     <None Include="Resources\img_Pensil24.png" />
     <None Include="Resources\img_notepad_24.png" />

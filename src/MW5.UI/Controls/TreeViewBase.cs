@@ -29,6 +29,8 @@ namespace MW5.UI.Controls
 
             ShowSuperTooltip = true;
 
+            HideSelection = false;
+
             ApplyStyle = true;
         }
 

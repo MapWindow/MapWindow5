@@ -27,7 +27,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Second layer", 1)]
         public IVectorInput InputLayer2 { get; set; }
 
-        [Output("Save results as", "{input}_intersection.shp", LayerType.Shapefile)]
+        [Output("Save results as")]
+        [OutputLayer("{input}_intersection.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>

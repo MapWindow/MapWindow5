@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace MW5.Tools.Controls.Parameters
@@ -8,17 +12,37 @@ namespace MW5.Tools.Controls.Parameters
         public ComboParameterControl()
         {
             InitializeComponent();
-            comboBoxAdv1.SelectedIndexChanged += comboBoxAdv1_SelectedIndexChanged;
+            comboBoxAdv1.SelectedValueChanged += comboBoxAdv1_SelectedValueChanged;
         }
 
-        private void comboBoxAdv1_SelectedIndexChanged(object sender, EventArgs e)
+        void comboBoxAdv1_SelectedValueChanged(object sender, EventArgs e)
         {
             FireValueChanged();
         }
 
         public void SetOptions(object options)
         {
-            comboBoxAdv1.DataSource = options;
+            // comboBoxAdv.DataSource raises SelectedIndex changed event twice on first assignment
+            // presumably because of a _bug, so let's put some extra lines here, rather than
+            // hunting for bugs afterwards
+            //comboBoxAdv1.DataSource = options;
+
+            var list = options as IList;
+
+            if (list == null)
+            {
+                return;
+            }
+
+            foreach (var item in list)
+            {
+                comboBoxAdv1.Items.Add(item);
+            }
+
+            if (comboBoxAdv1.Items.Count > 0)
+            {
+                comboBoxAdv1.SelectedIndex = 0;
+            }
         }
 
         public override object GetValue()
@@ -31,12 +55,27 @@ namespace MW5.Tools.Controls.Parameters
         /// </summary>
         public override void SetValue(object value)
         {
-            // TODO: implement
+            foreach (var item in comboBoxAdv1.Items)
+            {
+                if (item == value || item.ToString() == (string)value)
+                {
+                    comboBoxAdv1.SelectedItem = item;
+                    return;
+                }
+            }
         }
 
         public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return comboBoxAdv1; }
         }
 
         public override string Caption

@@ -37,7 +37,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Input("Number of segments", 0, true)]
         public int NumSegments { get; set; }
 
-        [Output("Save results as", "{input}_buffer.shp", LayerType.Shapefile)]
+        [Output("Save results as")]
+        [OutputLayer("{input}_buffer.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         protected override void Configure(IAppContext context, Services.ToolConfiguration configuration)

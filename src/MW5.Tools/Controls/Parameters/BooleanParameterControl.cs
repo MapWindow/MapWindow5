@@ -21,6 +21,7 @@ namespace MW5.Tools.Controls.Parameters
         {
             InitializeComponent();
             ButtonVisible = false;
+            checkBox1.CheckedChanged += (s, e) => FireValueChanged();
         }
 
         /// <summary>
@@ -49,6 +50,14 @@ namespace MW5.Tools.Controls.Parameters
         public override TableLayoutPanel GetTable()
         {
             return tableLayoutPanel1;
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return checkBox1; }
         }
 
         /// <summary>

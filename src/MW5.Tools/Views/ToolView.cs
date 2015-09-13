@@ -6,12 +6,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Shared;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -19,6 +23,8 @@ using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
 using MW5.Tools.Views.Abstract;
 using MW5.UI.Forms;
+using MW5.UI.Style;
+using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Views
 {
@@ -28,7 +34,7 @@ namespace MW5.Tools.Views
     public partial class ToolView : GisToolViewBase, IToolView
     {
         private readonly IAppContext _context;
-        private readonly ParameterControlGenerator _generator;
+        protected readonly ParameterControlGenerator _generator;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolView"/> class.
@@ -50,11 +56,14 @@ namespace MW5.Tools.Views
 
         public override ViewStyle Style
         {
-            get { return new ViewStyle()
-                             {
-                                 Modal = true,
-                                 Sizable = true,
-                             }; }
+            get 
+            { 
+                return new ViewStyle()
+                {
+                    Modal = true,
+                    Sizable = true,
+                }; 
+            }
         }
 
         /// <summary>
@@ -73,7 +82,7 @@ namespace MW5.Tools.Views
         /// <summary>
         /// Generates controls for parameters.
         /// </summary>
-        public void GenerateControls()
+        public virtual void GenerateControls()
         {
             var tool = Model.Tool as IParametrizedTool;
             if (tool == null)
@@ -93,35 +102,74 @@ namespace MW5.Tools.Views
                 GenerateSingleMode(parameters);
             }
 
-            _generator.AddVerticalPadding(new List<Control>() { panelRequired, panelOptional });
+            panelRequired.AddVerticalPadding();
+            panelOptional.AddVerticalPadding();
 
             _generator.EventManager.Bind(tool.Configuration);
 
+            tool.Parameters.SetDefaultsToControls();
+
             HideOptionalTab();
+
+            AddToolTips(tool.Parameters);
         }
 
         private void GenerateSingleMode(List<BaseParameter> parameters)
         {
-            _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter));
+            _generator.Generate(panelRequired, "Output", FilterSingle(parameters, ParameterGroup.Output));
 
-            _generator.Generate(panelRequired, "Input", parameters.Where(p => p.Required && !(p is OutputLayerParameter)));
+            _generator.Generate(panelRequired, "Input", FilterSingle(parameters, ParameterGroup.Input));
 
-            _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required));
+            _generator.Generate(panelOptional, "Optional", FilterSingle(parameters, ParameterGroup.Optional));
         }
 
         private void GenerateBatchMode(List<BaseParameter> parameters)
         {
-            _generator.Generate(panelRequired, "Output", parameters.Where(p => p is OutputLayerParameter), true);
+            _generator.Generate(panelRequired, "Output", FilterBatch(parameters, ParameterGroup.Output), true);
 
-            _generator.Generate(panelRequired, "Input", parameters.Where(p => p is LayerParameterBase), true);
+            _generator.Generate(panelRequired, "Input", FilterBatch(parameters, ParameterGroup.Input), true);
 
-            _generator.Generate(panelOptional, "Optional", parameters.Where(p => !p.Required && !p.HasDatasource), true);
+            _generator.Generate(panelOptional, "Optional", FilterBatch(parameters, ParameterGroup.Optional), true);
 
-            _generator.Generate(panelOptional, "Required", parameters.Where(p => p.Required && !p.HasDatasource), true);
+            _generator.Generate(panelOptional, "Required", FilterBatch(parameters, ParameterGroup.Required), true);
 
             tabRequired.Text = "Input";
 
             tabOptional.Text = "Parameters";
+        }
+
+        protected virtual IEnumerable<BaseParameter> FilterSingle(List<BaseParameter> parameters, ParameterGroup group)
+        {
+            switch (group)
+            {
+                case ParameterGroup.Input:
+                    return parameters.Where(p => p.IsInput && p.Required);
+                case ParameterGroup.Output:
+                    return parameters.Where(p => !p.IsInput);
+                case ParameterGroup.Required:
+                    break;
+                case ParameterGroup.Optional:
+                    return parameters.Where(p => p.IsInput && !p.Required);
+            }
+
+            return new List<BaseParameter>();
+        }
+
+        protected virtual IEnumerable<BaseParameter> FilterBatch(List<BaseParameter> parameters, ParameterGroup group)
+        {
+            switch (group)
+            {
+                case ParameterGroup.Input:
+                    return parameters.Where(p => p is IBatchInputParameter);
+                case ParameterGroup.Output:
+                    return parameters.Where(p => !p.IsInput);
+                case ParameterGroup.Required:
+                    return parameters.Where(p => p.IsInput && !(p is IBatchInputParameter) && p.Required);
+                case ParameterGroup.Optional:
+                    return parameters.Where(p => p.IsInput && !(p is IBatchInputParameter) && !p.Required);
+            }
+
+            return new List<BaseParameter>();
         }
 
         private void HideOptionalTab()
@@ -132,7 +180,7 @@ namespace MW5.Tools.Views
             }
         }
 
-        public void Initialize()
+        public virtual void Initialize()
         {
             chkBackground.Visible = !Model.BatchMode;
             chkBackground.Checked =  AppConfig.Instance.TaskRunInBackground;
@@ -146,6 +194,16 @@ namespace MW5.Tools.Views
             if (Model.BatchMode)
             {
                 superToolTip1.SetToolTip(btnRun, null);
+            }
+        }
+
+        private void AddToolTips(IEnumerable<BaseParameter> parameters)
+        {
+            var panels = new[] { panelOptional, panelRequired };
+
+            foreach (var panel in panels)
+            {
+                superToolTip1.AddTooltips(panel, parameters);
             }
         }
 
