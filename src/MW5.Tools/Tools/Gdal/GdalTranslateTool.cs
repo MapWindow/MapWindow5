@@ -16,6 +16,7 @@ using MW5.Plugins.Services;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
+using MW5.Tools.Services;
 using MW5.Tools.Views.Gdal;
 
 namespace MW5.Tools.Tools.Gdal
@@ -23,8 +24,6 @@ namespace MW5.Tools.Tools.Gdal
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalTranslatePresenter))]
     public class GdalTranslateTool: GdalTool
     {
-        private const string _sameAsInput = "<same as input>";
-
         [ParameterType(ParameterType.RasterFilename)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
@@ -76,12 +75,8 @@ namespace MW5.Tools.Tools.Gdal
             var drivers = GetWritableRasterDrivers().ToList();
             var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == "gtiff");
 
-            var dataTypes = GdalHelper.GetRasterDataTypes();
-            dataTypes.Insert(0, _sameAsInput);
-
             configuration.Get<GdalTranslateTool>()
                 .AddComboList(t => t.OutputFormat, drivers)
-                .AddComboList(t => t.OutputType, dataTypes)
                 .SetDefault(t => t.OutputFormat, gtiff);
             
             //.SetDefault(t => t.DisplayOptionsDialog, AppConfig.Instance.ToolShowGdalOptionsDialog);
@@ -141,7 +136,7 @@ namespace MW5.Tools.Tools.Gdal
              var sb = new StringBuilder();
              sb.AppendFormat("-of {0} ", OutputFormat.Name);
 
-            if (OutputType != _sameAsInput)
+            if (OutputType != GdalDriverHelper.SameAsInputDataType)
             {
                 sb.AppendFormat("-ot {0} ", OutputType);   
             }

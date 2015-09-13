@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Enums;
@@ -22,7 +23,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public class GdalTranslateView: ToolView, IGdalGenericView
+    public class GdalTranslateView: ToolView, IGdalTranslateView
     {
         private StringParameterControl _cmdOptions;
         private readonly TabPageAdv _tabDriver;
@@ -159,7 +160,30 @@ namespace MW5.Tools.Views.Gdal
 
             UpdateOutputFilename(tool, driver);
 
-            // TODO: update list of data types
+            // updating list of datatypes
+            UpdateDataTypes(driver);
+        }
+
+        private void UpdateDataTypes(DatasourceDriver driver)
+        {
+            var tool = Model.Tool as GisTool;
+            if (tool == null)
+            {
+                return;
+            }
+
+            var p = tool.FindParameter<GdalTranslateTool, string>(t => t.OutputType) as OptionsParameter;
+            if (p == null)
+            {
+                return;
+            }
+
+            var ctrl = p.Control as ComboParameterControl;
+            if (ctrl != null)
+            {
+                var types = driver.GetCreationDataTypes();
+                ctrl.SetOptions(types);
+            }
         }
 
         /// <summary>
@@ -201,7 +225,9 @@ namespace MW5.Tools.Views.Gdal
 
             _driverOptions = driver.GenerateCreationOptions().ToList();
 
-            _generator.Generate(panel, driver.Name + " Creation Options", _driverOptions);
+            driver.RestoreConfig(DriverParameters);
+
+            GenerateDriverControls(panel, driver);
 
             foreach (var p in _driverOptions.Where(p => p.DefaultValue != null))
             {
@@ -215,6 +241,34 @@ namespace MW5.Tools.Views.Gdal
             tab.TabVisible = panel.Controls.Count > 0;
 
             superToolTip1.AddTooltips(panel, _driverOptions);
+        }
+
+        /// <summary>
+        /// Generates controls for driver options.
+        /// </summary>
+        private void GenerateDriverControls(Panel panel, DatasourceDriver driver)
+        {
+            var options = driver.GetMainOptions().ToList();
+
+            if (options.Any())
+            {
+                // options in 2 different section for drivers like GTiff
+                var parameters = _driverOptions.Where(o => !options.Contains(o.Name));
+                _generator.Generate(panel, driver.Name + " Other Options", parameters);
+
+                parameters = _driverOptions.Where(o => options.Contains(o.Name));
+                _generator.Generate(panel, driver.Name + " Main Options", parameters);
+            }
+            else
+            {
+                // one section for all the others
+                _generator.Generate(panel, driver.Name + " Options", _driverOptions);
+            }
+        }
+
+        public IEnumerable<BaseParameter> DriverParameters
+        {
+            get { return _driverOptions; }
         }
     }
 }

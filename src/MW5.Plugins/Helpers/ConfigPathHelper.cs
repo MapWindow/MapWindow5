@@ -41,7 +41,14 @@ namespace MW5.Plugins.Helpers
 
         public static string GetToolsConfigPath()
         {
-            return AssemblyHelper.GetAppFolder() + @"\Tools\";
+            // TODO: change to app data folder after testing
+            return AssemblyHelper.GetAppFolder() + @"\Config\Tools\";
+        }
+
+        public static string GetDriversConfigPath()
+        {
+            // TODO: change to app data folder after testing
+            return AssemblyHelper.GetAppFolder() + @"\Config\Drivers\";
         }
     }
 }

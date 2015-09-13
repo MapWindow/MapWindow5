@@ -26,6 +26,9 @@ namespace MW5.Tools.Services
             _layerService = layerService;
         }
 
+        /// <summary>
+        /// Saves datasource or (and) adds it to the map depending on options specified in OutputLayerInfo instance.
+        /// </summary>
         public bool Save(IDatasource ds, OutputLayerInfo outputInfo)
         {
             ds.Callback = null;
@@ -47,7 +50,15 @@ namespace MW5.Tools.Services
             if (File.Exists(outputInfo.Filename))
             {
                 outputInfo.DatasourcePointer = new DatasourcePointer(outputInfo.Filename);
-                return _layerService.AddLayersFromFilename(outputInfo.Filename);
+
+                if (outputInfo.AddToMap)
+                {
+                    // don't report error if layer isn't added to the map
+                    // user might cancel it because of projection mismatch
+                    _layerService.AddLayersFromFilename(outputInfo.Filename);
+                }
+
+                return true;
             }
 
             return false;
@@ -75,7 +86,9 @@ namespace MW5.Tools.Services
 
             if (outputInfo.AddToMap)
             {
-                return _layerService.AddLayersFromFilename(filename);
+                // don't report error if layer isn't added to the map
+                // user might cancel it because of projection mismatch
+                _layerService.AddLayersFromFilename(filename);
             }
 
             return true;
@@ -99,6 +112,7 @@ namespace MW5.Tools.Services
                 outputInfo.DatasourcePointer = new DatasourcePointer(_layerService.LastLayerHandle, outputInfo.Name);
             }
 
+            // report failure if we haven't added datasource to the map
             return result;
         }
 

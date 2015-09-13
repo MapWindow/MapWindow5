@@ -5,13 +5,58 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Shared;
 using MW5.Tools.Model.Parameters;
 
 namespace MW5.Tools.Services
 {
-    internal static class GdalParameterGenerator
+    internal static class GdalDriverHelper
     {
+        public const string SameAsInputDataType = "<same as input>";
+
+        /// <summary>
+        /// Gets list of data types supported by driver according to metadata.
+        /// </summary>
+        public static IEnumerable<string> GetCreationDataTypes(this DatasourceDriver driver)
+        {
+            string s = driver.get_Metadata(GdalDriverMetadata.CreationDataTypes);
+
+            IList<string> result;
+
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                result = GdalHelper.GetRasterDataTypes();
+            }
+            else
+            {
+                result = s.Split(new[] { ' ' }).ToList();
+            }
+
+            result.Insert(0, SameAsInputDataType);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets list of options to be displayed in a separate main section.
+        /// </summary>
+        public static IEnumerable<string> GetMainOptions(this DatasourceDriver driver)
+        {
+            switch (driver.Name.ToLower())
+            {
+                case "gtiff":
+                    // can be specified in app config if needed
+                    return new[] { "COMPRESS", "JPEG_QUALITY", "ZLEVEL" };
+                default:
+                    return new List<string>();
+            }
+        }
+
+        /// <summary>
+        /// Generates the parameters for particular driver.
+        /// </summary>
         public static IEnumerable<BaseParameter> GenerateCreationOptions(this DatasourceDriver driver)
         {
             string options = driver.get_Metadata(Api.Enums.GdalDriverMetadata.CreationOptionList);

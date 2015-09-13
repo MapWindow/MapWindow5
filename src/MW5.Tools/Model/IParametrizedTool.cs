@@ -1,4 +1,7 @@
-﻿using MW5.Tools.Model.Layers;
+﻿using System;
+using System.Linq.Expressions;
+using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
@@ -8,5 +11,7 @@ namespace MW5.Tools.Model
         ParameterCollection Parameters { get; }
 
         ToolConfiguration Configuration { get; }
+
+        BaseParameter FindParameter<TTool, T>(Expression<Func<TTool, T>> layer);
     }
 }

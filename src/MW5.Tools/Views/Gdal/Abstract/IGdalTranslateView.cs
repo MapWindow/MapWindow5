@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.Plugins.Mvp;
+using MW5.Tools.Model.Parameters;
+using MW5.Tools.Views.Abstract;
 
 namespace MW5.Tools.Views.Gdal.Abstract
 {
-    public interface IGdalTranslateView : IView<ToolViewModel>
+    public interface IGdalTranslateView: IToolView
     {
-        string InputFilename { get; }
-        string OutputFilename { get; }
-        string Options { get; }
-        string OutputFormat { get; }
-        bool AddToMap { get; }
+        IEnumerable<BaseParameter> DriverParameters { get; }
     }
 }

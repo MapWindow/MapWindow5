@@ -16,7 +16,7 @@ using MW5.UI.Forms;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public partial class GdalTranslateCustomView : GdalTranslateViewBase, IGdalTranslateView
+    public partial class GdalTranslateCustomView : GdalTranslateViewBase, IGdalTranslateCustomView
     {
         private readonly IAppContext _context;
 

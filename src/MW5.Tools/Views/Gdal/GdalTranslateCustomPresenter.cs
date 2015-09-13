@@ -11,9 +11,9 @@ using MW5.Tools.Views.Gdal.Abstract;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public class GdalTranslateCustomPresenter: BasePresenter<IGdalTranslateView, ToolViewModel>
+    public class GdalTranslateCustomPresenter: BasePresenter<IGdalTranslateCustomView, ToolViewModel>
     {
-        public GdalTranslateCustomPresenter(IGdalTranslateView view)
+        public GdalTranslateCustomPresenter(IGdalTranslateCustomView view)
             : base(view)
         {
         }

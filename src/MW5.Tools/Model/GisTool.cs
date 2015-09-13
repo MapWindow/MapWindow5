@@ -6,6 +6,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
@@ -14,6 +15,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
@@ -221,6 +223,12 @@ namespace MW5.Tools.Model
             get { return _config; }
         }
 
+        public BaseParameter FindParameter<TTool, T>(Expression<Func<TTool, T>> layer)
+        {
+            var name = (layer.Body as MemberExpression).Member.Name;
+            return Parameters.FirstOrDefault(p => p.Name == name);
+        }
+
         /// <summary>
         /// Before the run.
         /// </summary>
@@ -241,39 +249,12 @@ namespace MW5.Tools.Model
 
         void IXmlSerializable.ReadXml(XmlReader reader)
         {
-            while (reader.Read())
-            {
-                if (reader.NodeType != XmlNodeType.Element)
-                {
-                    continue;
-                }
-
-                string name = reader.LocalName;
-                
-                var item = Parameters.FirstOrDefault(p => p.Name.EqualsIgnoreCase(name));
-                if ( item != null && item.Serializable)
-                {
-                    var xml = item as IXmlSerializable;
-                    if (xml != null)
-                    {
-                        xml.ReadXml(reader);
-                    }
-                }
-            }
+            reader.ReadParameters(Parameters);
         }
 
         void IXmlSerializable.WriteXml(XmlWriter writer)
         {
-            foreach (var p in Parameters.Where(p => p.Serializable))
-            {
-                var xml = p as IXmlSerializable;
-                if (xml != null)
-                {
-                    writer.WriteStartElement(p.Name);
-                    xml.WriteXml(writer);
-                    writer.WriteEndElement();
-                }
-            }
+            writer.WriteParameters(Parameters);
         }
     }
 }

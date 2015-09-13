@@ -26,6 +26,7 @@ namespace MW5.Tools.Controls.Parameters
             // presumably because of a _bug, so let's put some extra lines here, rather than
             // hunting for bugs afterwards
             //comboBoxAdv1.DataSource = options;
+            comboBoxAdv1.Items.Clear();
 
             var list = options as IList;
 
@@ -57,7 +58,7 @@ namespace MW5.Tools.Controls.Parameters
         {
             foreach (var item in comboBoxAdv1.Items)
             {
-                if (item == value || item.ToString() == (string)value)
+                if (item == value || Equals(item.ToString(), value))
                 {
                     comboBoxAdv1.SelectedItem = item;
                     return;

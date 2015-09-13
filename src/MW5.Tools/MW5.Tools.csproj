@@ -138,10 +138,12 @@
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
+    <Compile Include="Helpers\XmlParameterHelper.cs" />
     <Compile Include="Helpers\TabControlHelper.cs" />
     <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
+    <Compile Include="Model\DriverOptionCollection.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\GdalInfoFormat.cs" />
     <Compile Include="Model\GdalTool.cs" />
@@ -162,7 +164,7 @@
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ToolBase.cs" />
     <Compile Include="Services\EmptyTaskHandle.cs" />
-    <Compile Include="Services\GdalParameterGenerator.cs" />
+    <Compile Include="Services\GdalDriverHelper.cs" />
     <Compile Include="Services\ParameterControlEventArgs.cs" />
     <Compile Include="Services\ParameterControlGenerator.cs" />
     <Compile Include="Helpers\TaskHelper.cs" />
@@ -207,9 +209,9 @@
     </Compile>
     <Compile Include="Tools\Gdal\GdalTranslateTool.cs" />
     <Compile Include="Tools\Gdal\GdalTranslateCustomTool.cs" />
-    <Compile Include="Views\Gdal\Abstract\IGdalGenericView.cs" />
-    <Compile Include="Views\Gdal\Abstract\IGdalOptionsView.cs" />
     <Compile Include="Views\Gdal\Abstract\IGdalTranslateView.cs" />
+    <Compile Include="Views\Gdal\Abstract\IGdalOptionsView.cs" />
+    <Compile Include="Views\Gdal\Abstract\IGdalTranslateCustomView.cs" />
     <Compile Include="Views\Gdal\GdalOptionsModel.cs" />
     <Compile Include="Views\Gdal\GdalOptionsPresenter.cs" />
     <Compile Include="Views\Gdal\GdalOptionsView.cs">
