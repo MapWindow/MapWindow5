@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="MapWindow is an Open Source GIS desktop application">
+        <meta name="author" content="Paul Meems">
+        <link rel="icon" href="favicon.ico">
+
+        <title>Template for MapWindow5 GIS Tool Manual</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link href="css/bootstrap-3.3.5.css" rel="stylesheet" />
+        <link rel="stylesheet" href="css/mw5.css">
+    </head>
+    <body>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <section class="jumbotron">
+            <div class="container">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 pull-right ">
+                    <img class="img-responsive" src="img/LogoMapWindow_5.jpg" width="812" height="143" alt="MapWindow 5 - open source GIS Desktop Application" />
+                </div>
+            </div>
+        </section>
+        
+        <nav class="navbar navbar-default" style="display: none"></nav>
+
+        <section class="container">
+            <div class="row">
+                <article class="col-md-12 col-xs-12">
+                    <h1>Name of tool</h1>
+                    Put your text here.
+                </article>
+            </div>
+        </section>
+
+        <section class="container">
+            <div class="row" style="background-color: white">
+                <article class="col-md-4 col-xs-12">
+                    <!-- 300x250 ad tag -->
+                    <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial"></div>
+                </article>
+                <article class="col-md-4 hidden-xs">
+                    <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="open%2csource%2cdesktop%2cNET2cmicrosoft"></div>
+                </article>
+                <article class="col-md-4 hidden-xs">
+                    <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2csyncfusion%2cfree"></div>
+                </article>
+            </div>
+
+            <hr>
+
+            <footer class="hidden-xs">
+                <div class="footer-ad" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>
+                <p>&copy; MapWindow Developers Team 2015</p>
+            </footer>
+        </section> <!-- /container -->
+
+        <script src="js/mw5.js"></script>
+
+        <!-- Bootstrap core JavaScript
+            ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/jquery-1.11.3.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="js/bootstrap-3.3.5.min.js"></script>
+
+        <script type="text/javascript">
+            if (!local) {
+                function _dmBootstrap(file) {
+                    var _dma =
+                        document.createElement('script');
+                    _dma.type = 'text/javascript';
+                    _dma.async = true;
+                    _dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+                    (document.getElementsByTagName('head')[0] ||
+                        document.getElementsByTagName('body')[0]).appendChild(_dma);
+                }
+
+                function _dmFollowup(file) {
+                    if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');
+                }
+
+                (function() {
+                    _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js');
+                    setTimeout(_dmFollowup,
+                        2000);
+                })();
+            }
+        </script>
+
+        <script>
+            if (!local) {
+                (function(i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] ||
+                        function() { (i[r].q = i[r].q || []).push(arguments); }, i[r].l = 1 * new Date();
+                    a =
+                        s.createElement(o), m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m);
+                })(window, document, 'script',
+                    '//www.google-analytics.com/analytics.js', 'ga');
+                ga('create', 'UA-5161528-17', 'auto');
+                ga('require', 'displayfeatures');
+                ga('send', 'pageview');
+            }
+        </script>
+    </body>
+</html>

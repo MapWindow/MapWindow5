@@ -1,0 +1,76 @@
+body {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.domain::before {
+    content: "\0040"; /* Unicode character for @ symbol */
+}
+
+#dummy {
+    display: none;
+}
+
+.lastrow {
+    margin-bottom: 0;
+}
+
+.contents {
+    margin-top: 0;
+}
+
+.footer-ad {
+    text-align: center;
+}
+
+#ads {
+    float: left;
+    padding-left: 10px;
+    text-align: right;
+    margin-top: 2em;
+}
+
+    #ads div {
+        margin-bottom: 2em;
+    }
+
+table.googlesheet {
+    border: 1px solid black;
+}
+
+    table.googlesheet th {
+        border: 1px solid black;
+    }
+
+/* Bootstrap */
+.jumbotron {
+    background-color: white;
+    padding-bottom: 0;
+}
+
+    .jumbotron .container {
+        text-align: center;
+    }
+
+.jumbotronwidth {
+    max-width: 100%;
+}
+
+div.row {
+    border-radius: 20px;
+    background-color: gainsboro;
+    margin-bottom: 1em;
+}
+
+.donations {
+    background-color: darkseagreen !important;
+    padding: 5px;
+    text-align: center;
+}
+
+blockquote {
+    font-size: 14px;
+}
+article {
+    padding-bottom: 20px;
+}
