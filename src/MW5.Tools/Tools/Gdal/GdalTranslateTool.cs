@@ -88,7 +88,8 @@ namespace MW5.Tools.Tools.Gdal
         private IEnumerable<DatasourceDriver> GetWritableRasterDrivers()
         {
             var manager = new DriverManager();
-            var drivers = manager.Where(d => d.IsRaster && d.MatchesFilter(Api.Enums.DriverFilter.Create));
+            var drivers = manager.Where(d => d.IsRaster && (d.MatchesFilter(Api.Enums.DriverFilter.Create) || 
+                                                            d.MatchesFilter(Api.Enums.DriverFilter.CreateCopy)));
             return drivers.OrderBy(n => n.Name).ToList();
         }
 
