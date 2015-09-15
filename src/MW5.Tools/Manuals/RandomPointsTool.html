@@ -34,14 +34,40 @@
                 <h1>Random points tool</h1>
                 If you need randomly generated point within a certain bounding box you can use this tool. Those points can, for example, be used to survey.<br />
 
+                <img class="img-responsive" style="float: left;" src="img/randompoints_required.png" alt="Required tab of the Random Points tool" width="577" height="473" />
+                <img class="img-responsive hidden-xs" style="float: right; margin-left: 5px;" src="img/randompoints_task.png" alt="Task of the Random Points tool" width="304" height="430" />
+                <br style="clear: left;" />
+                <p style="clear: both;">
+                    First determine the bounding box by selecting a layer.<br />
+                    Next select the number of points that should be created.<br />
+                    The output layer name is generated based on the input layer, but can be modified.<br />
+                    Check 'Overwrite' if you want to overwrite existing files. You'll be prompted otherwise if the output file already exists.<br />
+                    Check 'Memory layer' if you don't wan't to save the file to disk, but keep it only in memory.<br />
+                    'Add to map' is checked by default and will add the result to the map.<br />
+                    In the 'Tasks' panel you can see the progress of this task.
+                </p>
             </article>
         </div>
     </section>
 
     <section class="container">
+        <div class="row" style="background-color: white">
+            <article class="col-md-4 hidden-xs">
+                <!-- 300x250 ad tag -->
+                <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial"></div>
+            </article>
+            <article class="col-md-4 hidden-xs">
+                <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="open%2csource%2cdesktop%2cNET2cmicrosoft"></div>
+            </article>
+            <article class="col-md-4 hidden-xs">
+                <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2csyncfusion%2cfree"></div>
+            </article>
+        </div>
+
         <hr>
 
-        <footer class="hidden-xs">
+        <footer>
+            <div class="footer-ad" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>            
             <p>&copy; MapWindow Developers Team 2015</p>
         </footer>
     </section> <!-- /container -->
@@ -54,5 +80,48 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="js/bootstrap-3.3.5.min.js"></script>
+    
+    <script type="text/javascript">
+    if (!local) {
+        function _dmBootstrap(file) {
+            var _dma =
+                document.createElement('script');
+            _dma.type = 'text/javascript';
+            _dma.async = true;
+            _dma.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + file;
+            (document.getElementsByTagName('head')[0] ||
+                document.getElementsByTagName('body')[0]).appendChild(_dma);
+        }
+
+        function _dmFollowup(file) {
+            if (typeof DMAds === 'undefined') _dmBootstrap('cdn2.DeveloperMedia.com/a.min.js');
+        }
+
+        (function () {
+            _dmBootstrap('cdn1.DeveloperMedia.com/a.min.js');
+            setTimeout(_dmFollowup,
+                2000);
+        })();
+    }
+    </script>
+
+    <script>
+        if (!local) {
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] ||
+                    function () { (i[r].q = i[r].q || []).push(arguments); }, i[r].l = 1 * new Date();
+                a =
+                    s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script',
+                '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-5161528-17', 'auto');
+            ga('require', 'displayfeatures');
+            ga('send', 'pageview');
+        }
+    </script>
 </body>
 </html>
