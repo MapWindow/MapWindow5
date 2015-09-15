@@ -28,7 +28,7 @@ namespace MW5.Tools.Tools.Gdal
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 
-        [Input("Output type", 2, true)]
+        [Input("Output type", 1, true)]
         [ParameterType(ParameterType.Combo)]
         public string OutputType { get; set; }
 
@@ -134,8 +134,9 @@ namespace MW5.Tools.Tools.Gdal
 
         public override string GetOptions(bool mainOnly = false)
         {
-             var sb = new StringBuilder();
-             sb.AppendFormat("-of {0} ", OutputFormat.Name);
+            var sb = new StringBuilder();
+             
+            sb.AppendFormat("-of {0} ", OutputFormat.Name);
 
             if (OutputType != GdalDriverHelper.SameAsInputDataType)
             {
@@ -147,7 +148,7 @@ namespace MW5.Tools.Tools.Gdal
                 sb.AppendFormat("-a_nodata {0} ", NoData);
             }
 
-            if (SubDatasets)  sb.Append("-sds " + SubDatasets);
+            if (SubDatasets)  sb.Append("-sds ");
             if (Stats)  sb.Append("-stats ");
             if (Strict)  sb.Append("-strict ");
             if (SpatialReference)  sb.Append("-a-srs ");

@@ -86,17 +86,7 @@ namespace MW5.Tools.Controls.Parameters
             }
             else if (parameter is OptionsParameter)
             {
-                var cpc = new ComboParameterControl { ButtonVisible = false };
-
-                var op = parameter as OptionsParameter;
-                var options = op.Options;
-
-                if (options != null)
-                {
-                    cpc.SetOptions(options);
-                }
-
-                control = cpc;
+                control = new ComboParameterControl { ButtonVisible = false };
             }
             else if (parameter is LayerParameterBase)
             {

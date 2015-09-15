@@ -11,6 +11,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
@@ -306,7 +307,30 @@ namespace MW5.Tools.Model
             }
         }
 
-        public void SetDefaultsToControls()
+        public void ApplyValuesToControls()
+        {
+            ApplyComboLists();
+
+            SetDefaultsToControls();
+        }
+
+        private void ApplyComboLists()
+        {
+            foreach (var p in this)
+            {
+                var op = p as OptionsParameter;
+                if (op != null && op.Options != null)
+                {
+                    var ctrl = op.Control as ComboParameterControl;
+                    if (ctrl != null)
+                    {
+                        ctrl.SetOptions(op.Options);
+                    }
+                }
+            }
+        }
+
+        private void SetDefaultsToControls()
         {
             foreach (var p in this)
             {

@@ -107,7 +107,7 @@ namespace MW5.Tools.Views
 
             _generator.EventManager.Bind(tool.Configuration);
 
-            tool.Parameters.SetDefaultsToControls();
+            tool.Parameters.ApplyValuesToControls();
 
             HideOptionalTab();
 
