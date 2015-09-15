@@ -217,12 +217,12 @@ namespace MW5.Plugins.Repository.Views
             {
                 if (item.Type == RepositoryItemType.Image)
                 {
-                    string info = GdalUtils.GdalInfo(item.Filename, "");
+                    string info = GdalUtils.Instance.GdalInfo(item.Filename, "");
                     MessageService.Current.Info("GDAL info: \n\n" + info);
                 }
                 else if (item.Type == RepositoryItemType.Vector)
                 {
-                    string info = GdalUtils.OgrInfo(item.Filename, "", "");
+                    string info = GdalUtils.Instance.OgrInfo(item.Filename, "", "");
                     MessageService.Current.Info("OGR info: \n\n" + info);
                 }
             }

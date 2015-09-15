@@ -111,11 +111,6 @@ namespace MW5.Api.Static
             return _utils.GenerateContour(pszSrcFilename, pszDstFilename, dfInterval, dfNoData, is3D, dblFlArray);
         }
 
-        public bool TranslateRaster(string srcFilename, string dstFilename, string bstrOptions)
-        {
-            return _utils.TranslateRaster(srcFilename, dstFilename, bstrOptions);
-        }
-
         public bool MergeImages(string[] inputNames, string outputName)
         {
             return _utils.MergeImages(inputNames, outputName);

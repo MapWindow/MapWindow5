@@ -1,26 +1,51 @@
 ﻿using System;
 using MapWinGIS;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Shared;
+using MW5.Shared.Log;
 
 namespace MW5.Api.Static
 {
-    public static class GdalUtils
+    public class GdalUtils
     {
-        private static readonly Utils _utils = new Utils();
+        private static readonly GdalUtils _staticUilts = new GdalUtils();
+        private readonly Utils _utils = new Utils();
 
-        public static string GdalInfo(string srcFilename, string bstrOptions)
+        /// <summary>
+        /// instance of MapWinGIS.Utils class. 
+        /// Use whenever there is no need to share callback in multithreading scenario.
+        /// </summary>
+        public static GdalUtils Instance
+        {
+            get { return _staticUilts; }
+        }
+
+        public IApplicationCallback Callback
+        {
+            get { return MapWinGISCallback.UnWrap(_utils.GlobalCallback); }
+            set
+            {
+                var callback = MapWinGISCallback.Wrap(value);
+                _utils.GlobalCallback = callback;
+
+                // TODO: implement
+                //_utils.StopExecution = callback;
+            }
+        }
+
+        public string GdalInfo(string srcFilename, string bstrOptions)
         {
             return _utils.GDALInfo(srcFilename, bstrOptions);
         }
 
-        public static bool GdalWarp(string srcFilename, string dstFilename, ISpatialReference newProjection)
+        public bool WarpRaster(string srcFilename, string dstFilename, ISpatialReference newProjection)
         {
             string options = string.Format("-t_srs \"{0}\"", newProjection.ExportToProj4());
             return _utils.GDALWarp(srcFilename, dstFilename, options);
         }
 
-        public static bool GdalWarp(string srcFilename, string dstFilename, string options)
+        public bool WarpRaster(string srcFilename, string dstFilename, string options)
         {
             bool result = _utils.GDALWarp(srcFilename, dstFilename, options);
 
@@ -38,29 +63,34 @@ namespace MW5.Api.Static
             return result;
         }
 
-        public static bool GdalBuildVrt(string bstrDstFilename, string bstrOptions)
+        public bool GdalBuildVrt(string bstrDstFilename, string bstrOptions)
         {
             return _utils.GDALBuildVrt(bstrDstFilename, bstrOptions);
         }
 
-        public static bool GdalAddOverviews(string bstrSrcFilename, string bstrOptions, string bstrLevels)
+        public bool GdalAddOverviews(string bstrSrcFilename, string bstrOptions, string bstrLevels)
         {
             return _utils.GDALAddOverviews(bstrSrcFilename, bstrOptions, bstrLevels);
         }
 
-        public static bool GdalRasterize(string bstrSrcFilename, string bstrDstFilename, string bstrOptions)
+        public bool GdalRasterize(string bstrSrcFilename, string bstrDstFilename, string bstrOptions)
         {
             return _utils.GDALRasterize(bstrSrcFilename, bstrDstFilename, bstrOptions);
         }
 
-        public static string OgrInfo(string bstrSrcFilename, string bstrOptions, string bstrLayers)
+        public string OgrInfo(string bstrSrcFilename, string bstrOptions, string bstrLayers)
         {
             return _utils.OGRInfo(bstrSrcFilename, bstrOptions, bstrLayers);
         }
 
-        public static bool Ogr2Ogr(string bstrSrcFilename, string bstrDstFilename, string bstrOptions)
+        public bool Ogr2Ogr(string bstrSrcFilename, string bstrDstFilename, string bstrOptions)
         {
             return _utils.OGR2OGR(bstrSrcFilename, bstrDstFilename, bstrOptions);
+        }
+
+        public bool TranslateRaster(string srcFilename, string dstFilename, string bstrOptions)
+        {
+            return _utils.TranslateRaster(srcFilename, dstFilename, bstrOptions);
         }
     }
 }

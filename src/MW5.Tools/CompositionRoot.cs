@@ -17,8 +17,6 @@ using MW5.Tools.Views;
 using MW5.Tools.Views.Abstract;
 using MW5.Tools.Views.Custom;
 using MW5.Tools.Views.Custom.Abstract;
-using MW5.Tools.Views.Gdal;
-using MW5.Tools.Views.Gdal.Abstract;
 
 namespace MW5.Tools
 {
@@ -37,9 +35,6 @@ namespace MW5.Tools
                 .RegisterView<ITaskLogView, TaskLogView>()
                 .RegisterView<IRandomPointsView, RandomPointsView>()
                 .RegisterView<ILongExecutionView, LongExecutionView>()
-                .RegisterView<ITranslateRasterCustomView, TranslateRasterCustomView>()
-                .RegisterView<IGdalOptionsView, GdalOptionsView>()
-                .RegisterView<ITranslateRasterView, TranslateRasterView>()
                 .RegisterSingleton<ITaskCollection, TaskCollection>()
                 .RegisterService<ParameterControlFactory>()
                 .RegisterService<ParameterControlGenerator>()

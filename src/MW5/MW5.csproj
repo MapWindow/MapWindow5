@@ -419,6 +419,10 @@
       <Project>{193010c4-9bde-42a3-a960-0b39700a9de1}</Project>
       <Name>MW5.DI.Castle</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MW5.Gdal\MW5.Gdal.csproj">
+      <Project>{adeef162-77eb-48ed-af35-cb6a00c55b42}</Project>
+      <Name>MW5.Gdal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MW5.Projections\MW5.Projections.csproj">
       <Project>{dd259453-611a-4ad5-878e-385cb2c89df5}</Project>
       <Name>MW5.Projections</Name>

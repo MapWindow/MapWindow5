@@ -8,3 +8,4 @@ using System.Runtime.InteropServices;
 [assembly: Guid("e6d8a47a-7476-4586-a087-cd4ed2e1e9eb")]
 
 [assembly: InternalsVisibleTo("MapWindow")]
+[assembly: InternalsVisibleTo("MW5.Gdal")]

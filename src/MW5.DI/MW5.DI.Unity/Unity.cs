@@ -57,6 +57,18 @@ namespace MW5.DI.Unity
             return _container.Resolve<TService>();
         }
 
+        /// <summary>
+        /// Gets an instance of particular type. Registers this type with transient life time if needed.
+        /// </summary>
+        public object GetInstance(Type type)
+        {
+            if (!_container.IsRegistered(type))
+            {
+                _container.RegisterType(type);
+            }
+            return _container.Resolve(type);
+        }
+
         public IApplicationContainer RegisterSingleton<TService>() where TService : class
         {
             _container.RegisterType<TService>(new ContainerControlledLifetimeManager());

@@ -27,6 +27,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("MW5.UI")]
 [assembly: InternalsVisibleTo("MW5.Services")]
 [assembly: InternalsVisibleTo("MW5.Tools")]
+[assembly: InternalsVisibleTo("MW5.Gdal")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("7d9b5eb9-d89e-4d56-a2a6-2317af6ba02e")]

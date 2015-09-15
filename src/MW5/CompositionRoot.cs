@@ -38,6 +38,7 @@ namespace MW5
             UI.CompositionRoot.Compose(container);
             Data.CompositionRoot.Compose(container);
             Tools.CompositionRoot.Compose(container);
+            Gdal.CompositionRoot.Compose(container);
             Attributes.CompositionRoot.Compose(container);
 
             CommandBarHelper.InitMenuColors();

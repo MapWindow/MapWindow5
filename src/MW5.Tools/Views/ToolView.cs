@@ -20,6 +20,7 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
+using MW5.Tools.Properties;
 using MW5.Tools.Services;
 using MW5.Tools.Views.Abstract;
 using MW5.UI.Forms;
@@ -91,47 +92,84 @@ namespace MW5.Tools.Views
                     "Tool must support IParameterized tool interface for automatic UI generation.");
             }
 
-            var parameters = tool.Parameters.ToList();
+            var parameters = tool.Parameters.Where(p => !p.SkipUIGeneration).ToList();
+            var subList = parameters.Where(p => string.IsNullOrWhiteSpace(p.SectionName)).ToList();
 
             if (Model.BatchMode)
             {
-                GenerateBatchMode(parameters);
+                GenerateBatchMode(subList);
             }
             else
             {
-                GenerateSingleMode(parameters);
+                GenerateSingleMode(subList);
             }
 
-            panelRequired.AddVerticalPadding();
-            panelOptional.AddVerticalPadding();
+            GenerateSections(parameters);
 
             _generator.EventManager.Bind(tool.Configuration);
 
             tool.Parameters.ApplyValuesToControls();
 
-            HideOptionalTab();
-
             AddToolTips(tool.Parameters);
+
+            RefreshView();
         }
 
+        private void RefreshView()
+        {
+            panelRequired.AddVerticalPadding();
+            panelOptional.AddVerticalPadding();
+
+            HideOptionalTab();
+        }
+
+        /// <summary>
+        /// Generates sections for parameters with section name attribute.
+        /// </summary>
+        private void GenerateSections(List<BaseParameter> parameters)
+        {
+            var list = parameters.Where(p => !string.IsNullOrWhiteSpace(p.SectionName)).ToList();
+
+            if (list.Count == 0)
+            {
+                return;
+            }
+
+            var names = list.Select(p => p.SectionName).Distinct().OrderBy(s => s);
+            foreach (var name in names)
+            {
+                var tab = tabControlAdv1.AddTab(name, Resources.img_Pensil24);
+                var sectionName = name;
+                var panel = tab.GetPanel();
+                _generator.GenerateIntoPanel(panel, name, list.Where(p => p.SectionName == sectionName));
+                panel.AddVerticalPadding();
+            }
+        }
+
+        /// <summary>
+        /// Generates sections for single input mode.
+        /// </summary>
         private void GenerateSingleMode(List<BaseParameter> parameters)
         {
-            _generator.Generate(panelRequired, "Output", FilterSingle(parameters, ParameterGroup.Output));
+            _generator.GenerateIntoPanel(panelRequired, "Output", FilterSingle(parameters, ParameterGroup.Output));
 
-            _generator.Generate(panelRequired, "Input", FilterSingle(parameters, ParameterGroup.Input));
+            _generator.GenerateIntoPanel(panelRequired, "Input", FilterSingle(parameters, ParameterGroup.Input));
 
-            _generator.Generate(panelOptional, "Optional", FilterSingle(parameters, ParameterGroup.Optional));
+            _generator.GenerateIntoPanel(panelOptional, "Optional", FilterSingle(parameters, ParameterGroup.Optional));
         }
 
+        /// <summary>
+        /// Generates sections for batch input mode.
+        /// </summary>
         private void GenerateBatchMode(List<BaseParameter> parameters)
         {
-            _generator.Generate(panelRequired, "Output", FilterBatch(parameters, ParameterGroup.Output), true);
+            _generator.GenerateIntoPanel(panelRequired, "Output", FilterBatch(parameters, ParameterGroup.Output), true);
 
-            _generator.Generate(panelRequired, "Input", FilterBatch(parameters, ParameterGroup.Input), true);
+            _generator.GenerateIntoPanel(panelRequired, "Input", FilterBatch(parameters, ParameterGroup.Input), true);
 
-            _generator.Generate(panelOptional, "Optional", FilterBatch(parameters, ParameterGroup.Optional), true);
+            _generator.GenerateIntoPanel(panelOptional, "Optional", FilterBatch(parameters, ParameterGroup.Optional), true);
 
-            _generator.Generate(panelOptional, "Required", FilterBatch(parameters, ParameterGroup.Required), true);
+            _generator.GenerateIntoPanel(panelOptional, "Required", FilterBatch(parameters, ParameterGroup.Required), true);
 
             tabRequired.Text = "Input";
 

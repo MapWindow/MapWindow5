@@ -49,6 +49,19 @@ namespace MW5.Tools.Model.Parameters
         public bool Required { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the section the parameter belongs to.
+        /// </summary>
+        public string SectionName { get; set;}
+
+        /// <summary>
+        /// Gets or sets a value indicating whether parameter should be skipped by UI generation.
+        /// </summary>
+        public bool SkipUIGeneration 
+        {
+            get { return Index == -1; } 
+        }
+
+        /// <summary>
         /// Gets or sets a value indicating whether this parameter is input one.
         /// </summary>
         public bool IsInput { get; set; }

@@ -90,6 +90,7 @@ namespace MW5.Tools.Model
             param.Index = attr.Index;
             param.DisplayName = attr.DisplayName;
             param.Required = !attr.Optional;
+            param.SectionName = attr.SectionName;
 
             HandleRangeAttribute(param, prop);
 

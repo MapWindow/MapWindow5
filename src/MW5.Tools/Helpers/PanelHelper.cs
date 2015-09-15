@@ -8,7 +8,7 @@ using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Helpers
 {
-    internal static class PanelHelper
+    static class PanelHelper
     {
         /// <summary>
         /// Adds the vertical padding for controls within tab page of a standard GIS tool UI.

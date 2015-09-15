@@ -59,6 +59,19 @@ namespace MW5.DI.LightInject
             return _container.GetInstance<TService>();
         }
 
+        /// <summary>
+        /// Gets an instance of particular type. Registers this type with transient life time if needed.
+        /// </summary>
+        public object GetInstance(Type type)
+        {
+            if (!_container.CanGetInstance(type, string.Empty))
+            {
+                _container.Register(type);
+            }
+
+            return _container.GetInstance(type);
+        }
+
         public IApplicationContainer RegisterSingleton<TService>() where TService : class
         {
             _container.Register<TService>(new PerContainerLifetime());

@@ -35,7 +35,10 @@ namespace MW5.Tools.Services
 
         private bool ShowSections { get; set; }
 
-        public void Generate(Control panel, string sectionName, IEnumerable<BaseParameter> parameters, bool batchMode = false)
+        /// <summary>
+        /// Generates controls for parameters and adds them to the specified panel.
+        /// </summary>
+        public void GenerateIntoPanel(Control panel, string sectionName, IEnumerable<BaseParameter> parameters, bool batchMode = false)
         {
             var list = parameters.OrderByDescending(p => p.Index).ToList();
 
@@ -44,28 +47,45 @@ namespace MW5.Tools.Services
                 return ;
             }
 
-            GenerateControls(panel, list, batchMode);
+            GenerateControlsCore(panel, list, batchMode);
 
             GenerateHeader(sectionName, panel);
         }
 
-        private void GenerateControls(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
+        /// <summary>
+        /// Generates controls for parameters without adding them to any form or panel
+        /// </summary>
+        public void GenerateControls(IEnumerable<BaseParameter> parameters, bool batchMode)
         {
             foreach (var p in parameters)
             {
-                var ctrl = _factory.CreateControl(p, batchMode);
+                GenerateControl(p, batchMode);
+            }
+        }
+
+        private void GenerateControlsCore(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
+        {
+            foreach (var p in parameters)
+            {
+                var ctrl = GenerateControl(p, batchMode);
+
                 if (ctrl != null)
                 {
-                    ctrl.SetCaption(p.DisplayName);
-                    ctrl.Dock = DockStyle.Top;
-                    p.Control = ctrl;
-
                     panel.Controls.Add(ctrl);
 
                     // value changed handler will be assigned here
                     _manager.AddControl(ctrl);
                 }
             }
+        }
+
+        private ParameterControlBase GenerateControl(BaseParameter parameter, bool batchMode)
+        {
+            var ctrl = _factory.CreateControl(parameter, batchMode);
+            ctrl.SetCaption(parameter.DisplayName);
+            ctrl.Dock = DockStyle.Top;
+            parameter.Control = ctrl;
+            return ctrl;
         }
 
         private void GenerateHeader(string sectionName, Control panel)

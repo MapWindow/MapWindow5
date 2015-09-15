@@ -14,7 +14,7 @@ namespace MW5.Mvp.Sample
             _view = view;
         }
 
-        public override void Initialize()
+        protected override void Initialize()
         {
             Debug.Print("Layer name passed as parameter: " + Model.Name);
         }

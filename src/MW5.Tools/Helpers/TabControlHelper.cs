@@ -12,7 +12,7 @@ namespace MW5.Tools.Helpers
     /// <summary>
     /// Helper class to deal the standard ToolView tab control.
     /// </summary>
-    internal static class TabControlHelper
+    static class TabControlHelper
     {
         /// <summary>
         /// Adds additional tab page.

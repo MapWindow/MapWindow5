@@ -88,7 +88,7 @@ namespace MW5.Plugins.Symbology.Views
 
                 richTextBox1.Visible = true;
 
-                richTextBox1.Text = GdalUtils.GdalInfo(Model.Filename, "");
+                richTextBox1.Text = GdalUtils.Instance.GdalInfo(Model.Filename, "");
                 
                 btnShowDriverInfo.Visible = false;
             }

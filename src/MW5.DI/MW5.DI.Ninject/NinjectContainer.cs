@@ -57,6 +57,20 @@ namespace MW5.DI.Ninject
             return _kernel.Get<TService>();
         }
 
+        /// <summary>
+        /// Gets an instance of particular type. Registers this type with transient life time if needed.
+        /// </summary>
+        public object GetInstance(Type type)
+        {
+            var o = _kernel.CanResolve(type);
+            if (o == null)
+            {
+                _kernel.Bind(new[] { type }).ToSelf();
+            }
+
+            return _kernel.Get(type);
+        }
+
         public IApplicationContainer RegisterSingleton<TService>() where TService : class
         {
             _kernel.Bind<TService>().ToSelf().InSingletonScope();

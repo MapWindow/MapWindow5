@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MW5.Gdal.Tools;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -50,9 +51,20 @@ namespace MW5.Plugins.Toolbox
         
         private void CreateTools()
         {
-            var tools = typeof(GisTool).Assembly.GetTools();
+            var types = new[] { typeof(GisTool), typeof(GdalTool) };
 
-            _context.Toolbox.AddTools(tools);
+            foreach (var type in types)
+            {
+                try
+                {
+                    var tools = type.Assembly.GetTools();
+                    _context.Toolbox.AddTools(tools);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Error("Failed to add tools from assembly.", ex);
+                }
+            } 
         }
 
         private void GenerateGroups()

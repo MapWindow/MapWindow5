@@ -88,7 +88,7 @@ namespace MW5.Projections.Services
         /// </summary>
         public GridSource Reproject(GridSource grid, ISpatialReference newProjection, string saveAsFilename)
         {
-            if (GdalUtils.GdalWarp(grid.Filename, saveAsFilename, newProjection))
+            if (GdalUtils.Instance.WarpRaster(grid.Filename, saveAsFilename, newProjection))
             {
                 //gridNew.AssignNewProjection(newProjection.ExportToProj4());
                 return new GridSource(saveAsFilename);
@@ -103,7 +103,7 @@ namespace MW5.Projections.Services
         /// </summary>
         public IImageSource Reproject(IImageSource image, ISpatialReference projection, string saveAsFilename)
         {
-            if (GdalUtils.GdalWarp(image.Filename, saveAsFilename, projection))
+            if (GdalUtils.Instance.WarpRaster(image.Filename, saveAsFilename, projection))
             {
                 return BitmapSource.Open(saveAsFilename, false);
             }
