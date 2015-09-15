@@ -1,6 +1,6 @@
 ﻿namespace MW5.Tools.Views.Gdal
 {
-  partial class GdalTranslateCustomView
+  partial class TranslateRasterCustomView
   {
     /// <summary>
     /// Required designer variable.
@@ -630,7 +630,7 @@
             this.btnRun.TabIndex = 35;
             this.btnRun.Text = "Run";
             // 
-            // GdalTranslateView
+            // TranslateRasterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -641,7 +641,7 @@
             this.Controls.Add(this.btnRun);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            this.Name = "GdalTranslateCustomView";
+            this.Name = "TranslateRasterCustomView";
             this.ShowInTaskbar = false;
             this.Text = "GDAL Translate Raster";
             this.tabControl1.ResumeLayout(false);

@@ -206,11 +206,11 @@
     <Compile Include="Toolbox\ToolboxTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Tools\Gdal\GdalTranslateTool.cs" />
-    <Compile Include="Tools\Gdal\GdalTranslateCustomTool.cs" />
-    <Compile Include="Views\Gdal\Abstract\IGdalTranslateView.cs" />
+    <Compile Include="Tools\Gdal\TranslateRasterTool.cs" />
+    <Compile Include="Tools\Gdal\TranslateRasterCustomTool.cs" />
+    <Compile Include="Views\Gdal\Abstract\ITranslateRasterView.cs" />
     <Compile Include="Views\Gdal\Abstract\IGdalOptionsView.cs" />
-    <Compile Include="Views\Gdal\Abstract\IGdalTranslateCustomView.cs" />
+    <Compile Include="Views\Gdal\Abstract\ITranslateRasterCustomView.cs" />
     <Compile Include="Views\Gdal\GdalOptionsModel.cs" />
     <Compile Include="Views\Gdal\GdalOptionsPresenter.cs" />
     <Compile Include="Views\Gdal\GdalOptionsView.cs">
@@ -219,13 +219,13 @@
     <Compile Include="Views\Gdal\GdalOptionsView.Designer.cs">
       <DependentUpon>GdalOptionsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Gdal\GdalTranslatePresenter.cs" />
-    <Compile Include="Views\Gdal\GdalTranslateCustomPresenter.cs" />
-    <Compile Include="Views\Gdal\GdalTranslateCustomView.cs">
+    <Compile Include="Views\Gdal\TranslateRasterPresenter.cs" />
+    <Compile Include="Views\Gdal\TranslateRasterCustomPresenter.cs" />
+    <Compile Include="Views\Gdal\TranslateRasterCustomView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\Gdal\GdalTranslateCustomView.Designer.cs">
-      <DependentUpon>GdalTranslateCustomView.cs</DependentUpon>
+    <Compile Include="Views\Gdal\TranslateRasterCustomView.Designer.cs">
+      <DependentUpon>TranslateRasterCustomView.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs" />
@@ -320,7 +320,7 @@
       <DependentUpon>RandomPointsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\ITaskLogView.cs" />
-    <Compile Include="Views\Gdal\GdalTranslateView.cs">
+    <Compile Include="Views\Gdal\TranslateRasterView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\TaskNodeWrapper.cs" />
@@ -439,8 +439,8 @@
     <EmbeddedResource Include="Views\Gdal\GdalOptionsView.resx">
       <DependentUpon>GdalOptionsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\Gdal\GdalTranslateCustomView.resx">
-      <DependentUpon>GdalTranslateCustomView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Gdal\TranslateRasterCustomView.resx">
+      <DependentUpon>TranslateRasterCustomView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\Custom\LongExecutionView.resx">
       <DependentUpon>LongExecutionView.cs</DependentUpon>

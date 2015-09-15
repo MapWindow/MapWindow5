@@ -13,8 +13,8 @@ using MW5.Tools.Views.Gdal;
 
 namespace MW5.Tools.Tools.Gdal
 {
-    [GisTool(GroupKeys.GdalTools, Enums.ToolIcon.Hammer, typeof(GdalTranslateCustomPresenter))]
-    public class GdalTranslateCustomTool: GisTool
+    [GisTool(GroupKeys.GdalTools, Enums.ToolIcon.Hammer, typeof(TranslateRasterCustomPresenter))]
+    public class TranslateRasterCustomTool: GisTool
     {
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }

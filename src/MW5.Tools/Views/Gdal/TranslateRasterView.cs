@@ -23,7 +23,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public class GdalTranslateView: ToolView, IGdalTranslateView
+    public class TranslateRasterView: ToolView, ITranslateRasterView
     {
         private StringParameterControl _cmdOptions;
         private readonly TabPageAdv _tabDriver;
@@ -35,7 +35,7 @@ namespace MW5.Tools.Views.Gdal
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolView"/> class.
         /// </summary>
-        public GdalTranslateView(IAppContext context, ParameterControlGenerator controlGenerator, IStyleService styleService)
+        public TranslateRasterView(IAppContext context, ParameterControlGenerator controlGenerator, IStyleService styleService)
             : base(context, controlGenerator)
         {
             if (styleService == null) throw new ArgumentNullException("styleService");
@@ -108,7 +108,7 @@ namespace MW5.Tools.Views.Gdal
                 return;
             }
 
-            var tool = Model.Tool as GdalTranslateTool;
+            var tool = Model.Tool as TranslateRasterTool;
             if (tool == null)
             {
                 return;
@@ -172,7 +172,7 @@ namespace MW5.Tools.Views.Gdal
                 return;
             }
 
-            var p = tool.FindParameter<GdalTranslateTool, string>(t => t.OutputType) as OptionsParameter;
+            var p = tool.FindParameter<TranslateRasterTool, string>(t => t.OutputType) as OptionsParameter;
             if (p == null)
             {
                 return;

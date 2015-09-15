@@ -7,7 +7,7 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Tools.Views.Gdal.Abstract
 {
-    public interface IGdalTranslateCustomView : IView<ToolViewModel>
+    public interface ITranslateRasterCustomView : IView<ToolViewModel>
     {
         string InputFilename { get; }
         string OutputFilename { get; }

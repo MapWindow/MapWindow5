@@ -11,12 +11,12 @@ using MW5.Tools.Views.Gdal.Abstract;
 
 namespace MW5.Tools.Views.Gdal
 {
-    internal class GdalTranslatePresenter: ToolPresenter
+    internal class TranslateRasterPresenter: ToolPresenter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolPresenter"/> class.
         /// </summary>
-        public GdalTranslatePresenter(IGdalTranslateView view, IAppContext context)
+        public TranslateRasterPresenter(ITranslateRasterView view, IAppContext context)
             : base(view, context)
         {
         }
@@ -30,13 +30,13 @@ namespace MW5.Tools.Views.Gdal
 
         private void SaveDriverConfig()
         {
-            var view = View as IGdalTranslateView;
+            var view = View as ITranslateRasterView;
             if (view == null)
             {
                 return;
             }
 
-            var tool = Model.Tool as GdalTranslateTool;
+            var tool = Model.Tool as TranslateRasterTool;
             if (tool != null)
             {
                 tool.OutputFormat.SaveConfig(view.DriverParameters);

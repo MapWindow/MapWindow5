@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="GdalTranslateView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="TranslateRasterView.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -16,11 +16,11 @@ using MW5.UI.Forms;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public partial class GdalTranslateCustomView : GdalTranslateViewBase, IGdalTranslateCustomView
+    public partial class TranslateRasterCustomView : GdalTranslateViewBase, ITranslateRasterCustomView
     {
         private readonly IAppContext _context;
 
-        public GdalTranslateCustomView(IAppContext context)
+        public TranslateRasterCustomView(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;

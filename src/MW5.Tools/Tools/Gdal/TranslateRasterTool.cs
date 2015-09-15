@@ -21,8 +21,8 @@ using MW5.Tools.Views.Gdal;
 
 namespace MW5.Tools.Tools.Gdal
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalTranslatePresenter))]
-    public class GdalTranslateTool: GdalTool
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(TranslateRasterPresenter))]
+    public class TranslateRasterTool: GdalTool
     {
         [ParameterType(ParameterType.RasterFilename)]
         [Input("Input filename", 0)]
@@ -75,7 +75,7 @@ namespace MW5.Tools.Tools.Gdal
             var drivers = GetWritableRasterDrivers().ToList();
             var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == "gtiff");
 
-            configuration.Get<GdalTranslateTool>()
+            configuration.Get<TranslateRasterTool>()
                 .AddComboList(t => t.OutputFormat, drivers)
                 .SetDefault(t => t.OutputFormat, gtiff);
             

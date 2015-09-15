@@ -11,9 +11,9 @@ using MW5.Tools.Views.Gdal.Abstract;
 
 namespace MW5.Tools.Views.Gdal
 {
-    public class GdalTranslateCustomPresenter: BasePresenter<IGdalTranslateCustomView, ToolViewModel>
+    public class TranslateRasterCustomPresenter: BasePresenter<ITranslateRasterCustomView, ToolViewModel>
     {
-        public GdalTranslateCustomPresenter(IGdalTranslateCustomView view)
+        public TranslateRasterCustomPresenter(ITranslateRasterCustomView view)
             : base(view)
         {
         }
@@ -73,8 +73,8 @@ namespace MW5.Tools.Views.Gdal
                 return false;
             }
 
-            var tool = Model.Tool as GdalTranslateCustomTool;
-            if (tool == null) throw new InvalidCastException("GdalTranslateTool was expected.");
+            var tool = Model.Tool as TranslateRasterCustomTool;
+            if (tool == null) throw new InvalidCastException("TranslateRasterTool was expected.");
 
             tool.Options = View.Options;
             tool.InputFilename = View.InputFilename;
