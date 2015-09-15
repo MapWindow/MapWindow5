@@ -70,41 +70,43 @@
     </Compile>
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="Helpers\GdalDriverHelper.cs" />
-    <Compile Include="Helpers\GdalFileFilter.cs" />
-    <Compile Include="Helpers\GdalFormatHelper.cs" />
-    <Compile Include="Helpers\GdalToolHelper.cs" />
+    <Compile Include="Legacy\Helpers\GdalFileFilter.cs" />
+    <Compile Include="Legacy\Helpers\GdalFormatHelper.cs" />
+    <Compile Include="Legacy\Helpers\GdalToolHelper.cs" />
+    <Compile Include="Model\CommandLineMapping.cs" />
     <Compile Include="Model\GdalInfoFormat.cs" />
+    <Compile Include="Model\GdalRasterTool.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tools\GdalTool.cs" />
-    <Compile Include="Tools\IGdalTool.cs" />
-    <Compile Include="Tools\TranslateRasterCustomTool.cs" />
+    <Compile Include="Model\GdalTool.cs" />
+    <Compile Include="Model\IGdalTool.cs" />
+    <Compile Include="Legacy\TranslateRasterCustomTool.cs" />
     <Compile Include="Tools\TranslateRasterTool.cs" />
     <Compile Include="Tools\WarpRasterTool.cs" />
     <Compile Include="Tools\WarpRasterToolParameters.cs" />
-    <Compile Include="Views\Abstract\IGdalOptionsView.cs" />
-    <Compile Include="Views\Abstract\ITranslateRasterCustomView.cs" />
-    <Compile Include="Views\Abstract\ITranslateRasterView.cs" />
-    <Compile Include="Views\GdalOptionsModel.cs" />
-    <Compile Include="Views\GdalOptionsPresenter.cs" />
-    <Compile Include="Views\GdalOptionsView.cs">
+    <Compile Include="Legacy\Views\IGdalOptionsView.cs" />
+    <Compile Include="Legacy\Views\ITranslateRasterCustomView.cs" />
+    <Compile Include="Views\Abstract\IGdalRasterView.cs" />
+    <Compile Include="Legacy\Views\GdalOptionsModel.cs" />
+    <Compile Include="Legacy\Views\GdalOptionsPresenter.cs" />
+    <Compile Include="Legacy\Views\GdalOptionsView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\GdalOptionsView.Designer.cs">
+    <Compile Include="Legacy\Views\GdalOptionsView.Designer.cs">
       <DependentUpon>GdalOptionsView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TranslateRasterCustomPresenter.cs" />
-    <Compile Include="Views\TranslateRasterCustomView.cs">
+    <Compile Include="Legacy\Views\TranslateRasterCustomPresenter.cs" />
+    <Compile Include="Legacy\Views\TranslateRasterCustomView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TranslateRasterCustomView.Designer.cs">
+    <Compile Include="Legacy\Views\TranslateRasterCustomView.Designer.cs">
       <DependentUpon>TranslateRasterCustomView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TranslateRasterPresenter.cs" />
-    <Compile Include="Views\TranslateRasterView.cs">
+    <Compile Include="Views\GdalRasterPresenter.cs" />
+    <Compile Include="Views\GdalRasterView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,10 +116,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\GdalOptionsView.resx">
+    <EmbeddedResource Include="Legacy\Views\GdalOptionsView.resx">
       <DependentUpon>GdalOptionsView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TranslateRasterCustomView.resx">
+    <EmbeddedResource Include="Legacy\Views\TranslateRasterCustomView.resx">
       <DependentUpon>TranslateRasterCustomView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -148,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_notepad24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_driver24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

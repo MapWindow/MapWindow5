@@ -1,4 +1,4 @@
-﻿namespace MW5.Gdal.Views
+﻿namespace MW5.Gdal.Legacy.Views
 {
     public class GdalOptionsModel
     {

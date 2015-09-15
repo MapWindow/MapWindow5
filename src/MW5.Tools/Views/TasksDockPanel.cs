@@ -102,7 +102,7 @@ namespace MW5.Tools.Views
         {
             richTextBox1.BorderStyle = BorderStyle.None;
             richTextBox1.Dock = DockStyle.Fill;
-            richTextBox1.ScrollBars = RichTextBoxScrollBars.None;
+            richTextBox1.ScrollBars = RichTextBoxScrollBars.Vertical;
             richTextBox1.BackColor = Color.FromKnownColor(KnownColor.Control);
             richTextBox1.ReadOnly = true;
             richTextBox1.Text = "No task is selected.";

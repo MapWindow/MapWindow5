@@ -1,7 +1,7 @@
 ﻿using MW5.Plugins.Mvp;
 using MW5.Tools.Views;
 
-namespace MW5.Gdal.Views.Abstract
+namespace MW5.Gdal.Legacy.Views
 {
     public interface ITranslateRasterCustomView : IView<ToolViewModel>
     {

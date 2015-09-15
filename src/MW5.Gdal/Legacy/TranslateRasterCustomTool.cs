@@ -6,17 +6,16 @@
 
 using System.IO;
 using MW5.Api.Static;
-using MW5.Gdal.Views;
+using MW5.Gdal.Legacy.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 
-
-namespace MW5.Gdal.Tools
+namespace MW5.Gdal.Legacy
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(TranslateRasterCustomPresenter))]
+    //[GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(TranslateRasterCustomPresenter))]
     public class TranslateRasterCustomTool : GisTool
     {
         /// <summary>

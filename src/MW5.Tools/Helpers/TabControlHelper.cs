@@ -14,10 +14,7 @@ namespace MW5.Tools.Helpers
     /// </summary>
     static class TabControlHelper
     {
-        /// <summary>
-        /// Adds additional tab page.
-        /// </summary>
-        public static TabPageAdv AddTab(this TabControlAdv tabControl, string caption, Bitmap icon)
+        public static TabPageAdv AddTab(this TabControlAdv tabControl, TabPageAdv page, string caption, Bitmap icon)
         {
             var tab = new TabPageAdv
             {
@@ -41,10 +38,21 @@ namespace MW5.Tools.Helpers
 
             tab.Controls.Add(panel);
 
+            int index = tabControl.TabPages.IndexOf(page);
+
             // insert before the help page
-            tabControl.TabPages.Insert(tabControl.TabPages.Count - 1, tab);
+            tabControl.TabPages.Insert(index, tab);
 
             return tab;
+        }
+
+        /// <summary>
+        /// Adds additional tab page.
+        /// </summary>
+        public static TabPageAdv AddTab(this TabControlAdv tabControl, string caption, Bitmap icon)
+        {
+            var page = tabControl.TabPages[tabControl.TabPages.Count - 1];
+            return AddTab(tabControl, page, caption, icon);
         }
 
         /// <summary>

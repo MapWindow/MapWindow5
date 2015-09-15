@@ -9,8 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MW5.Api.Concrete;
+using MW5.Api.Helpers;
 using MW5.Api.Static;
 using MW5.Gdal.Helpers;
+using MW5.Gdal.Model;
 using MW5.Gdal.Views;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -21,12 +23,51 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(TranslateRasterPresenter))]
-    public partial class WarpRasterTool : GdalTool
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalRasterPresenter))]
+    public partial class WarpRasterTool : GdalRasterTool
     {
-        [Input("Additional options", -1)]
-        [ParameterType(ParameterType.MultiLineString)]
-        public override string AdditionalOptions { get; set; }
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
+        {
+            base.Configure(context, configuration);
+
+            var resampling = new[] { "", "near", "bilinear", "cubic", "cubicspline", "lanczos", "average", "mode", "max", "min", "med", "q1", "q3" };
+
+            var dataTypes = GdalHelper.GetRasterDataTypes().ToList();
+            dataTypes.Insert(0, "<autodetect>");
+
+            configuration.Get<WarpRasterTool>()
+                .AddComboList(t => t.DstResampling, resampling)
+                .AddComboList(t => t.WorkingPixelsType, dataTypes);
+        }
+
+        protected override void InitCommandLine()
+        {
+            _commandLine.Get<WarpRasterTool>()
+                .SetKey(t => t.AlignPixelsToResolution, "-tap")
+                .SetKey(t => t.CopyColorIntepretation, "-setci")
+                .SetKey(t => t.DstAlpha, "-dstalpha")
+                .SetKey(t => t.DstNoDataValue, "-dstnodata")
+                .SetKey(t => t.DstNoMetadata, "-nomd")
+                .SetKey(t => t.DstResampling, "-r")
+                .SetKey(t => t.ErrorThreshhold, "-et")
+                .SetKey(t => t.GeolocationArrays, "-geoloc")
+                .SetKey(t => t.MemoryLimitMb, "-mw")
+                .SetKey(t => t.OutputType, "-ot")
+                .SetKey(t => t.Quiet, "-q")
+                .SetKey(t => t.RefineGcp, "-refine_gcps")
+                .SetKey(t => t.RpcCoefficients, "-rpc")
+                .SetKey(t => t.SourceNoDataValue, "-srcnodata")
+                .SetKey(t => t.SourceOverviewLevel, "-ovr")
+                .SetKey(t => t.SourceProjection, "-s_srs")
+                .SetKey(t => t.TargetExtents, "-te")
+                .SetKey(t => t.TargetExtentsProjection, "-te_srs")
+                .SetKey(t => t.TargetProjection, "-t_srs")
+                .SetKey(t => t.TargetResolution, "-tr")
+                .SetKey(t => t.TargetSize, "-ts")
+                .SetKey(t => t.TpsTransformer, "-tps")
+                .SetKey(t => t.UseMultithreading, "-multi")
+                .SetKey(t => t.WorkingPixelsType, "-wt");
+        }
 
         /// <summary>
         /// Description of the tool.
@@ -36,13 +77,6 @@ namespace MW5.Gdal.Tools
             get { return "Image reprojection and warping utility."; }
         }
 
-        // The UI for them will be generated dynamically depending on driver
-        public string DriverOptions { get; set; }
-
-        [ParameterType(ParameterType.RasterFilename)]
-        [Input("Input filename", 0)]
-        public string InputFilename { get; set; }
-
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -50,14 +84,6 @@ namespace MW5.Gdal.Tools
         {
             get { return "Warp raster"; }
         }
-
-        [Output("Output filename", 1)]
-        [OutputLayer("{input}_tr.tif", Api.Enums.LayerType.Image, false)]
-        public OutputLayerInfo Output { get; set; }
-
-        [Output("Output format", 0)]
-        [ParameterType(ParameterType.Combo)]
-        public DatasourceDriver OutputFormat { get; set; }
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -82,36 +108,25 @@ namespace MW5.Gdal.Tools
             get { return "Warp: " + Path.GetFileName(Output.Filename); }
         }
 
-        /// <summary>
-        /// Can be used to save results of the processing or display messages.
-        /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.
-        /// </summary>
-        public override bool AfterRun()
-        {
-            return OutputManager.HandleGdalOutput(Output);
-        }
-
         public override string GetOptions(bool mainOnly = false)
         {
             var sb = new StringBuilder();
 
             sb.AppendFormat("-of {0} ", OutputFormat.Name);
 
-            if (OutputType != GdalDriverHelper.SameAsInputDataType)
-            {
-                sb.AppendFormat("-ot {0} ", OutputType);
-            }
-
-            //if (!string.IsNullOrWhiteSpace(NoData))
-            //{
-            //    sb.AppendFormat("-a_nodata {0} ", NoData);
-            //}
+            string options = _commandLine.Complile(this);
+            sb.Append(options);
 
             sb.Append(DriverOptions + @" ");
 
             if (!mainOnly)
             {
                 sb.Append(@" " + AdditionalOptions);
+            }
+
+            if (Output.Overwrite)
+            {
+                sb.Append("-overwrite ");
             }
 
             return sb.ToString();
@@ -141,36 +156,6 @@ namespace MW5.Gdal.Tools
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Configures the specified context.
-        /// </summary>
-        protected override void Configure(IAppContext context, ToolConfiguration configuration)
-        {
-            base.Configure(context, configuration);
-
-            var drivers = GetWritableRasterDrivers().ToList();
-            var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == "gtiff");
-
-            configuration.Get<TranslateRasterTool>()
-                .AddComboList(t => t.OutputFormat, drivers)
-                .SetDefault(t => t.OutputFormat, gtiff);
-        }
-
-        /// <summary>
-        /// Gets the list of drivers that support the creation of new datasources.
-        /// </summary>
-        private IEnumerable<DatasourceDriver> GetWritableRasterDrivers()
-        {
-            var manager = new DriverManager();
-            var drivers =
-                manager.Where(
-                    d =>
-                    d.IsRaster &&
-                    (d.MatchesFilter(Api.Enums.DriverFilter.Create) ||
-                     d.MatchesFilter(Api.Enums.DriverFilter.CreateCopy)));
-            return drivers.OrderBy(n => n.Name).ToList();
         }
     }
 }

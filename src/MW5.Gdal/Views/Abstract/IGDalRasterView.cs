@@ -4,7 +4,7 @@ using MW5.Tools.Views.Abstract;
 
 namespace MW5.Gdal.Views.Abstract
 {
-    public interface ITranslateRasterView: IToolView
+    public interface IGdalRasterView: IToolView
     {
         IEnumerable<BaseParameter> DriverParameters { get; }
     }

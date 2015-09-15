@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Gdal.Helpers;
+using MW5.Gdal.Model;
 using MW5.Gdal.Properties;
 using MW5.Gdal.Tools;
 using MW5.Gdal.Views.Abstract;
@@ -21,7 +22,7 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Gdal.Views
 {
-    public class TranslateRasterView: ToolView, ITranslateRasterView
+    public class GdalRasterView: ToolView, IGdalRasterView
     {
         private StringParameterControl _cmdOptions;
         private readonly TabPageAdv _tabDriver;
@@ -33,14 +34,14 @@ namespace MW5.Gdal.Views
         /// <summary>
         /// Initializes a new instance of the <see cref="ToolView"/> class.
         /// </summary>
-        public TranslateRasterView(IAppContext context, ParameterControlGenerator controlGenerator, IStyleService styleService)
+        public GdalRasterView(IAppContext context, ParameterControlGenerator controlGenerator, IStyleService styleService)
             : base(context, controlGenerator)
         {
             if (styleService == null) throw new ArgumentNullException("styleService");
             _styleService = styleService;
             _generator.EventManager.ControlValueChanged += OnControlValueChanged;
 
-            _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_notepad24);
+            _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_driver24);
             _tabCmdLine = tabControlAdv1.AddTab("Cmd Line", Resources.img_console24);
         }
 
@@ -50,7 +51,7 @@ namespace MW5.Gdal.Views
         public override void GenerateControls()
         {
             base.GenerateControls();
-
+            
             PopulateCommandLinePage();
 
             _controlsGenerated = true;
@@ -113,7 +114,7 @@ namespace MW5.Gdal.Views
                 return;
             }
 
-            var tool = Model.Tool as TranslateRasterTool;
+            var tool = Model.Tool as GdalRasterTool;
             if (tool == null)
             {
                 return;
@@ -177,7 +178,7 @@ namespace MW5.Gdal.Views
                 return;
             }
 
-            var p = tool.FindParameter<TranslateRasterTool, string>(t => t.OutputType) as OptionsParameter;
+            var p = tool.FindParameter<GdalRasterTool, string>(t => t.OutputType) as OptionsParameter;
             if (p == null)
             {
                 return;

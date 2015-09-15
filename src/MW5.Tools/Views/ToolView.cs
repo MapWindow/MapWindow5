@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -136,14 +137,40 @@ namespace MW5.Tools.Views
             }
 
             var names = list.Select(p => p.SectionName).Distinct().OrderBy(s => s);
-            foreach (var name in names)
+
+            const string advanced = "advanced";
+            foreach (var name in names.Where(n => n.ToLower() != advanced))
             {
-                var tab = tabControlAdv1.AddTab(name, Resources.img_Pensil24);
-                var sectionName = name;
-                var panel = tab.GetPanel();
-                _generator.GenerateIntoPanel(panel, name, list.Where(p => p.SectionName == sectionName));
-                panel.AddVerticalPadding();
+                AddSection(name, list);
             }
+
+            if (names.Any(n => n.ToLower() == advanced))
+            {
+                AddSection("Advanced", list);
+            }
+        }
+
+        private void AddSection(string name, List<BaseParameter> parameters)
+        {
+            var icon = GetIcon(name);
+            var tab = tabControlAdv1.AddTab(tabOptional, name, icon);
+
+            var sectionName = name;
+            var panel = tab.GetPanel();
+
+            _generator.GenerateIntoPanel(panel, name, parameters.Where(p => p.SectionName == sectionName));
+            panel.AddVerticalPadding();
+        }
+
+        private Bitmap GetIcon(string sectionName)
+        {
+            sectionName = sectionName.ToLower();
+
+            if (sectionName == "advanced")
+            {
+                return Resources.img_driver24;
+            }
+            return Resources.img_notepad_24;
         }
 
         /// <summary>

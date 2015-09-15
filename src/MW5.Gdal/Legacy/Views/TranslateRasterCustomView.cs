@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="TranslateRasterView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="IGdalRasterView.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -8,14 +8,13 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Gdal.Helpers;
-using MW5.Gdal.Views.Abstract;
+using MW5.Gdal.Legacy.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Helpers;
 using MW5.Tools.Views;
 using MW5.UI.Forms;
 
-namespace MW5.Gdal.Views
+namespace MW5.Gdal.Legacy.Views
 {
     public partial class TranslateRasterCustomView : GdalTranslateViewBase, ITranslateRasterCustomView
     {

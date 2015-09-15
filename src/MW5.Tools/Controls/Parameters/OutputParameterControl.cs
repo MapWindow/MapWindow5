@@ -187,5 +187,10 @@ namespace MW5.Tools.Controls.Parameters
             _extension = extension;
             RefreshName();
         }
+
+        private void OnOverwriteCheckedChanged(object sender, EventArgs e)
+        {
+            FireValueChanged();
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using MW5.Gdal.Model;
 
-namespace MW5.Gdal.Helpers
+namespace MW5.Gdal.Legacy.Helpers
 {
     internal static class GdalFileFilter
     {

@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
 using MW5.Gdal.Tools;
-using MW5.Gdal.Views.Abstract;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
 using MW5.Tools.Views;
 
-namespace MW5.Gdal.Views
+namespace MW5.Gdal.Legacy.Views
 {
     public class TranslateRasterCustomPresenter: BasePresenter<ITranslateRasterCustomView, ToolViewModel>
     {

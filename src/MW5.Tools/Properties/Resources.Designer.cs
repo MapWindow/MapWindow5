@@ -73,6 +73,16 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_advanced24 {
+            get {
+                object obj = ResourceManager.GetObject("img_advanced24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_cancel16 {
             get {
                 object obj = ResourceManager.GetObject("img_cancel16", resourceCulture);
@@ -146,6 +156,16 @@ namespace MW5.Tools.Properties {
         internal static System.Drawing.Bitmap img_database16_2 {
             get {
                 object obj = ResourceManager.GetObject("img_database16_2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_driver24 {
+            get {
+                object obj = ResourceManager.GetObject("img_driver24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

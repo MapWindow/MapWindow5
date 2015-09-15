@@ -4,7 +4,7 @@ using System.IO;
 using MW5.Api.Static;
 using MW5.Gdal.Model;
 
-namespace MW5.Gdal.Helpers
+namespace MW5.Gdal.Legacy.Helpers
 {
     internal static class GdalFormatHelper
     {

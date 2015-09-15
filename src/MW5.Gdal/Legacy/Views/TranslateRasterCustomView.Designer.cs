@@ -1,4 +1,4 @@
-﻿namespace MW5.Gdal.Views
+﻿namespace MW5.Gdal.Legacy.Views
 {
   partial class TranslateRasterCustomView
   {
@@ -630,7 +630,7 @@
             this.btnRun.TabIndex = 35;
             this.btnRun.Text = "Run";
             // 
-            // TranslateRasterView
+            // IGdalRasterView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

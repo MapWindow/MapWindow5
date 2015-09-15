@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MW5.Gdal.Helpers
+namespace MW5.Gdal.Legacy.Helpers
 {
     /// <summary>
     /// Static method for GDAL tools.

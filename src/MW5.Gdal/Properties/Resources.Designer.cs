@@ -73,6 +73,16 @@ namespace MW5.Gdal.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_driver24 {
+            get {
+                object obj = ResourceManager.GetObject("img_driver24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_notepad24 {
             get {
                 object obj = ResourceManager.GetObject("img_notepad24", resourceCulture);

@@ -6,7 +6,7 @@
 
 using MW5.Tools.Model.Parameters;
 
-namespace MW5.Gdal.Tools
+namespace MW5.Gdal.Model
 {
     public interface IGdalTool
     {

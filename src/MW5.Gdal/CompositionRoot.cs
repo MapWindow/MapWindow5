@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using MW5.Gdal.Legacy.Views;
 using MW5.Gdal.Views;
 using MW5.Gdal.Views.Abstract;
 using MW5.Plugins.Mvp;
@@ -23,7 +24,7 @@ namespace MW5.Gdal
         {
             container.RegisterView<ITranslateRasterCustomView, TranslateRasterCustomView>()
                      .RegisterView<IGdalOptionsView, GdalOptionsView>()
-                     .RegisterView<ITranslateRasterView, TranslateRasterView>();
+                     .RegisterView<IGdalRasterView, GdalRasterView>();
 
         }
     }

@@ -119,12 +119,5 @@ namespace MW5.Tools.Services
             _config.Ranges.Add(name, new Range(min, max));
             return this;
         }
-
-        public ToolConfiguration<T> SetKey<TT>(Expression<Func<T, TT>> number, string key)
-        {
-            var name = (number.Body as MemberExpression).Member.Name;
-            _config.Keys.Add(name, key);
-            return this;
-        }
     }
 }

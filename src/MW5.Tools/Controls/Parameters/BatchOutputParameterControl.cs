@@ -153,5 +153,10 @@ namespace MW5.Tools.Controls.Parameters
         {
             RefreshControls();
         }
+
+        private void OnOverwriteCheckedChanged(object sender, EventArgs e)
+        {
+            FireValueChanged();
+        }
     }
 }

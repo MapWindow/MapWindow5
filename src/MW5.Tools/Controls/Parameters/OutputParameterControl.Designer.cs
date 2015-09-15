@@ -137,6 +137,7 @@
             this.chkOverwrite.TabIndex = 0;
             this.chkOverwrite.Text = "Overwrite";
             this.chkOverwrite.UseVisualStyleBackColor = true;
+            this.chkOverwrite.CheckedChanged += new System.EventHandler(this.OnOverwriteCheckedChanged);
             // 
             // OutputParameterControl
             // 

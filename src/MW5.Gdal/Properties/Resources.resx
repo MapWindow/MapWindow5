@@ -121,6 +121,9 @@
   <data name="img_console24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_console24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_driver24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_driver24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_notepad24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_notepad24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

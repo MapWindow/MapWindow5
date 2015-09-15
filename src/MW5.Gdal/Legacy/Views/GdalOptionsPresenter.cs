@@ -1,7 +1,7 @@
-﻿using MW5.Gdal.Views.Abstract;
+﻿using MW5.Gdal.Views;
 using MW5.Plugins.Mvp;
 
-namespace MW5.Gdal.Views
+namespace MW5.Gdal.Legacy.Views
 {
     public class GdalOptionsPresenter: BasePresenter<IGdalOptionsView, GdalOptionsModel>
     {

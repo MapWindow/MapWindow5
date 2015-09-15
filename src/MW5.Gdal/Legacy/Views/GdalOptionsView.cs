@@ -1,9 +1,9 @@
 ﻿using System.Windows.Forms;
-using MW5.Gdal.Views.Abstract;
+using MW5.Gdal.Views;
 using MW5.Plugins.Concrete;
 using MW5.UI.Forms;
 
-namespace MW5.Gdal.Views
+namespace MW5.Gdal.Legacy.Views
 {
     public partial class GdalOptionsView : GdalOptionsViewBase, IGdalOptionsView
     {

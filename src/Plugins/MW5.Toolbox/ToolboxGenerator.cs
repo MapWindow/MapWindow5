@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MW5.Gdal.Model;
 using MW5.Gdal.Tools;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
