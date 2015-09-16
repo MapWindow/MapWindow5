@@ -48,7 +48,7 @@ namespace MW5.Gdal.Tools
             return driver.IsRaster && driver.MatchesFilter(Api.Enums.DriverFilter.Create);
         }
 
-        protected override void InitCommandLine()
+        protected override void InitCommandLine(CommandLineMapping mapping)
         {
             _commandLine.Get<WarpRasterTool>()
                 .SetKey(t => t.AlignPixelsToResolution, "-tap")
@@ -122,19 +122,11 @@ namespace MW5.Gdal.Tools
 
         public override string GetOptions(bool mainOnly = false)
         {
-            var sb = new StringBuilder();
+            var s = base.GetOptions(mainOnly);
+
+            var sb = new StringBuilder(s);
 
             sb.AppendFormat("-of {0} ", OutputFormat.Name);
-
-            string options = _commandLine.Complile(this);
-            sb.Append(options);
-
-            sb.Append(DriverOptions + @" ");
-
-            if (!mainOnly)
-            {
-                sb.Append(@" " + AdditionalOptions);
-            }
 
             if (Output.Overwrite)
             {

@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System.Linq;
+using System.Text;
 using MW5.Api.Concrete;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
@@ -18,7 +19,7 @@ namespace MW5.Gdal.Model
 
         public GdalTool()
         {
-            InitCommandLine();
+            InitCommandLine(_commandLine);
         }
 
         public virtual OutputLayerInfo Output { get; set; }
@@ -33,12 +34,30 @@ namespace MW5.Gdal.Model
         /// <summary>
         /// Gets command line options.
         /// </summary>
-        public abstract string GetOptions(bool mainOnly = false);
+        public virtual string GetOptions(bool mainOnly = false)
+        {
+            var sb = new StringBuilder();
+
+            string options = _commandLine.Complile(this);
+            sb.Append(options);
+
+            if (!string.IsNullOrWhiteSpace(DriverOptions))
+            {
+                sb.Append(DriverOptions + @" ");
+            }
+
+            if (!mainOnly)
+            {
+                sb.Append(@" " + AdditionalOptions);
+            }
+
+            return sb.ToString();
+        }
 
         /// <summary>
-        /// Initializes the command line options. Use _commandLine variable to do it.
+        /// Initializes the command line options.
         /// </summary>
-        protected abstract void InitCommandLine();
+        protected abstract void InitCommandLine(CommandLineMapping mapping);
 
         /// <summary>
         /// Gets a value indicating whether current tool can specify driver creation options.

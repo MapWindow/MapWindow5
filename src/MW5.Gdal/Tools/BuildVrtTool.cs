@@ -34,7 +34,7 @@ namespace MW5.Gdal.Tools
         /// <summary>
         /// Initializes the command line options. Use _commandLine variable to do it.
         /// </summary>
-        protected override void InitCommandLine()
+        protected override void InitCommandLine(CommandLineMapping mapping)
         {
             _commandLine.Get<BuildVrtTool>()
                 .SetKey(p => p.TileIndex, "-tileindex")
@@ -113,16 +113,9 @@ namespace MW5.Gdal.Tools
         /// </summary>
         public override string GetOptions(bool mainOnly = false)
         {
-            var sb = new StringBuilder();
+            var s = base.GetOptions(mainOnly);
 
-            _commandLine.Complile(this);
-
-            sb.Append(DriverOptions + @" ");
-
-            if (!mainOnly)
-            {
-                sb.Append(@" " + AdditionalOptions);
-            }
+            var sb = new StringBuilder(s);
 
             if (Output.Overwrite)
             {

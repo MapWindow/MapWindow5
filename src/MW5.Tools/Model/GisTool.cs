@@ -237,6 +237,9 @@ namespace MW5.Tools.Model
             return true;
         }
 
+        /// <summary>
+        /// Adds tool configuration which can be used for generation of the UI for tool.
+        /// </summary>
         protected virtual void Configure(IAppContext context, ToolConfiguration configuration)
         {
             configuration.AddLayers(context.Layers);

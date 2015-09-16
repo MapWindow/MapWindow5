@@ -58,7 +58,7 @@ namespace MW5.Gdal.Tools
                                       driver.MatchesFilter(Api.Enums.DriverFilter.CreateCopy);
         }
 
-        protected override void InitCommandLine()
+        protected override void InitCommandLine(CommandLineMapping mapping)
         {
             _commandLine.Get<TranslateRasterTool>()
                 .SetKey(t => t.OutputType, "-ot")
@@ -110,25 +110,24 @@ namespace MW5.Gdal.Tools
             get { return "Translate: " + Path.GetFileName(Output.Filename); }
         }
 
+        /// <summary>
+        /// Gets a value indicating whether current tool can specify driver creation options.
+        /// </summary>
         public override bool SupportDriverCreationOptions
         {
             get { return true; }
         }
-        
+
+        /// <summary>
+        /// Gets command line options.
+        /// </summary>
         public override string GetOptions(bool mainOnly = false)
         {
-            var sb = new StringBuilder();
+            var s = base.GetOptions(mainOnly);
+
+            var sb = new StringBuilder(s);
 
             sb.AppendFormat("-of {0} ", OutputFormat.Name);
-
-            _commandLine.Complile(this);
-
-            sb.Append(DriverOptions + @" ");
-
-            if (!mainOnly)
-            {
-                sb.Append(@" " + AdditionalOptions);
-            }
 
             return sb.ToString();
         }
