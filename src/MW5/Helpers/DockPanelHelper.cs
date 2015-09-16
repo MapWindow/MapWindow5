@@ -44,7 +44,7 @@ namespace MW5.Helpers
         private static void InitTasks(ISerializableContext context)
         {
             var presenter = context.Container.Resolve<TasksPresenter>();
-            var tasks = context.DockPanels.Add(presenter.View, DockPanelKeys.ToolboxResults, PluginIdentity.Default);
+            var tasks = context.DockPanels.Add(presenter.View, DockPanelKeys.Tasks, PluginIdentity.Default);
             tasks.Caption = "Tasks";
             var toolbox = context.DockPanels.Toolbox;
             tasks.DockTo(toolbox, DockPanelState.Tabbed, PanelSize);

@@ -40,6 +40,8 @@
             this.toolCancelTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolPauseTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolRemoveTask = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveOutput = new System.Windows.Forms.ToolStripMenuItem();
             this.tasksTreeView1 = new MW5.Tools.Views.TasksTreeView();
@@ -90,11 +92,13 @@
             this.toolCancelTask,
             this.toolPauseTask,
             this.toolStripSeparator1,
+            this.mnuOpenLocation,
+            this.toolStripSeparator3,
             this.toolRemoveTask,
             this.mnuRemoveOutput});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(204, 170);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(204, 220);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Default;
             // 
             // toolOpenLog
@@ -137,6 +141,17 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
             // 
+            // mnuOpenLocation
+            // 
+            this.mnuOpenLocation.Name = "mnuOpenLocation";
+            this.mnuOpenLocation.Size = new System.Drawing.Size(203, 22);
+            this.mnuOpenLocation.Text = "Open output location";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(200, 6);
+            // 
             // toolRemoveTask
             // 
             this.toolRemoveTask.Name = "toolRemoveTask";
@@ -166,6 +181,7 @@
             this.tasksTreeView1.HelpTextControl.Size = new System.Drawing.Size(49, 15);
             this.tasksTreeView1.HelpTextControl.TabIndex = 0;
             this.tasksTreeView1.HelpTextControl.Text = "help text";
+            this.tasksTreeView1.HideSelection = false;
             this.tasksTreeView1.Location = new System.Drawing.Point(0, 0);
             this.tasksTreeView1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.tasksTreeView1.Name = "tasksTreeView1";
@@ -263,5 +279,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuRemoveOutput;
         private Syncfusion.Windows.Forms.Tools.SplitContainerAdv splitContainerAdv1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.ToolStripMenuItem mnuOpenLocation;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

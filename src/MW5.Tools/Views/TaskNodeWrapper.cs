@@ -52,8 +52,6 @@ namespace MW5.Tools.Views
         {
             _node.Text = _task.Name;
 
-            CreateBarProgress();
-
             UpdateStatusIcon();
 
             if (Task.IsFinished)
@@ -66,16 +64,30 @@ namespace MW5.Tools.Views
         {
             _task.Progress.ProgressChanged += (s, e) =>
                 {
-                    Action action = () => { _progress.Value = e.Percent; };
+                    Action action = () =>
+                        {
+                            if (_node.CustomControl == null)
+                            {
+                                CreateBarProgress();
+                            }
+
+                            _progress.Value = e.Percent;
+                        };
                     _progress.SafeInvoke(action);
                 };
 
-            _task.Progress.Hide += (s, e) => _progress.SafeInvoke(HideProgress);
+            _task.Progress.Hide += (s, e) =>
+                {
+                    if (_progress != null)
+                    {
+                        _progress.SafeInvoke(HideProgress);
+                    }
+                };
         }
 
         private void CreateBarProgress()
         {
-            if (!_task.IsFinished && _progress == null)
+            if (!_task.IsFinished && _node.CustomControl == null)
             {
                 var ctrl = new ProgressBarWrapper();
                 _node.CustomControl = ctrl;

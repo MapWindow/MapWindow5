@@ -33,6 +33,7 @@ namespace MW5.Tools.Enums
         Rerun = 6,
         RunAnother = 7,
         RemoveOutput = 8,
+        OpenLocation = 9,
     }
 
     internal enum TaskIcons

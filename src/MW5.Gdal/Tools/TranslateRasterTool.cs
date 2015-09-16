@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Gdal.Helpers;
 using MW5.Gdal.Model;
@@ -58,6 +59,15 @@ namespace MW5.Gdal.Tools
                 .SetKey(t => t.Strict, "-strict")
                 .SetKey(t => t.SpatialReference, "-a-srs")
                 .SetKey(t => t.Unscale, "-unscale");
+        }
+
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected override IEnumerable<DriverFilter> GetRasterFilters()
+        {
+            yield return DriverFilter.Create;
+            yield return DriverFilter.CreateCopy;
         }
 
         /// <summary>

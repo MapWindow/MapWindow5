@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Static;
 using MW5.Gdal.Helpers;
@@ -39,6 +40,14 @@ namespace MW5.Gdal.Tools
             configuration.Get<WarpRasterTool>()
                 .AddComboList(t => t.DstResampling, resampling)
                 .AddComboList(t => t.WorkingPixelsType, dataTypes);
+        }
+
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected override IEnumerable<DriverFilter> GetRasterFilters()
+        {
+            yield return DriverFilter.Create;
         }
 
         protected override void InitCommandLine()

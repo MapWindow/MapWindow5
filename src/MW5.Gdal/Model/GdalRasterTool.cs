@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Gdal.Tools;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
@@ -45,7 +46,7 @@ namespace MW5.Gdal.Model
         {
             base.Configure(context, configuration);
 
-            var drivers = GetWritableRasterDrivers().ToList();
+            var drivers = GetRasterDrivers().ToList();
             var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == "gtiff");
 
             configuration.Get<GdalRasterTool>()
@@ -56,13 +57,33 @@ namespace MW5.Gdal.Model
         /// <summary>
         /// Gets the list of drivers that support the creation of new datasources.
         /// </summary>
-        private IEnumerable<DatasourceDriver> GetWritableRasterDrivers()
+        private IEnumerable<DatasourceDriver> GetRasterDrivers()
         {
+            var result = new List<DatasourceDriver>();
+
             var manager = new DriverManager();
-            var drivers = manager.Where(d => d.IsRaster && (d.MatchesFilter(Api.Enums.DriverFilter.Create) ||
-                                                              d.MatchesFilter(Api.Enums.DriverFilter.CreateCopy)));
-            return drivers.OrderBy(n => n.Name).ToList();
+            var drivers = manager.Where(d => d.IsRaster).ToList();
+            var filters = GetRasterFilters().ToList();
+
+            foreach (var d in drivers)
+            {
+                foreach (var filter in filters)
+                {
+                    if (d.MatchesFilter(filter))
+                    {
+                        result.Add(d);
+                        break;
+                    }
+                }
+            }
+
+            return result.OrderBy(n => n.Name).ToList();
         }
+
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected abstract IEnumerable<DriverFilter> GetRasterFilters();
 
         /// <summary>
         /// Can be used to save results of the processing or display messages.

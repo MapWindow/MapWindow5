@@ -5,10 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
@@ -51,14 +54,9 @@ namespace MW5.Tools.Views
 
         private void TaskChanged(object sender, TaskEventArgs e)
         {
-            if (e.Event == Plugins.Enums.TaskEvent.Added)
+            if (e.Event == TaskEvent.Added)
             {
-                var panel = _context.DockPanels.Find(DockPanelKeys.ToolboxResults);
-                if (panel != null)
-                {
-                    panel.Visible = true;
-                    panel.Activate();
-                }
+                _context.ActivatePanel(DockPanelKeys.Tasks);
             }
         }
 
@@ -99,7 +97,7 @@ namespace MW5.Tools.Views
             }
             catch (Exception ex)
             {
-                Shared.Logger.Current.Error("Failed to rerun tool: " + task.Tool.Name, ex.Message);
+                Logger.Current.Error("Failed to rerun tool: " + task.Tool.Name, ex.Message);
                 return;
             }
 
@@ -115,6 +113,23 @@ namespace MW5.Tools.Views
         {
             switch (command)
             {
+                case TaskCommand.OpenLocation:
+                    {
+                        var task = View.SelectedTask;
+                        if (task != null)
+                        {
+                            string path = (task.Tool as IParametrizedTool).GetOutputLocation();
+                            if (string.IsNullOrWhiteSpace(path))
+                            {
+                                MessageService.Current.Info("Output path isn't defined.");
+                            }
+                            else
+                            {
+                                PathHelper.OpenFolderWithExplorer(path);
+                            }
+                        }
+                    }
+                    break;
                 case TaskCommand.RemoveOutput:
                     {
                         var task = View.SelectedTask;
@@ -131,6 +146,7 @@ namespace MW5.Tools.Views
                                 if (tool.RemoveOutputs(_context, _layerService))
                                 {
                                     _tasks.Remove(task);
+                                    ActivateToolbox();
                                 }
                             }
                         }
@@ -152,6 +168,7 @@ namespace MW5.Tools.Views
                     if (MessageService.Current.Ask("Remove all the finished tasks from the list?"))
                     {
                         _tasks.Clear(true);
+                        ActivateToolbox();
                     }
                     break;
                 case TaskCommand.OpenLog:
@@ -189,12 +206,21 @@ namespace MW5.Tools.Views
                             if (task != null)
                             {
                                 _tasks.Remove(task);
+                                ActivateToolbox();
                             }
                         }
                         break;
                     }
                 default:
                     throw new ArgumentOutOfRangeException("command");
+            }
+        }
+
+        public void ActivateToolbox()
+        {
+            if (!_tasks.Any())
+            {
+                _context.ActivatePanel(DockPanelKeys.Toolbox);
             }
         }
     }
