@@ -7,6 +7,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -29,6 +30,7 @@ namespace MW5.Tools.Model
             if (tool == null) throw new ArgumentNullException("tool");
             _tool = tool;
             Status = GisTaskStatus.NotStarted;
+            ThreadId = -1;
         }
 
         public event EventHandler<TaskStatusChangedEventArgs> StatusChanged;
@@ -133,9 +135,26 @@ namespace MW5.Tools.Model
 
         public bool Run(CancellationToken cancellationToken)
         {
-            var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent, this);
+            ThreadId = Thread.CurrentThread.ManagedThreadId;
 
-            return Tool.Run(handle);
+            ApplicationCallback.Attach(this);
+
+            bool result = false;
+
+            try
+            {
+                var handle = new TaskHandle(Progress, _cancellationTokenSource.Token, _pauseEvent, this);
+
+                result = Tool.Run(handle);
+            }
+            finally
+            {
+                ApplicationCallback.Detach(this);
+
+                ThreadId = -1;    
+            }
+
+            return result;
         }
 
         public void RunAsync()
@@ -246,6 +265,8 @@ namespace MW5.Tools.Model
 
             return _cancellationTokenSource.IsCancellationRequested;
         }
+
+        public int ThreadId { get; private set; }
 
         private void FireStatusChanged()
         {

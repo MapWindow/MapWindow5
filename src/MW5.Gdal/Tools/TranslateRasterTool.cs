@@ -122,11 +122,9 @@ namespace MW5.Gdal.Tools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var utils = new GdalUtils { Callback = task.Callback };
-
             string options = GetOptions();
 
-            bool result = utils.TranslateRaster(InputFilename, Output.Filename, options);
+            bool result = GdalUtils.Instance.TranslateRaster(InputFilename, Output.Filename, options);
 
             if (!result)
             {

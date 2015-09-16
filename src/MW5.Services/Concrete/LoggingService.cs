@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using log4net;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -22,6 +23,8 @@ namespace MW5.Services.Concrete
 
         public LoggingService()
         {
+            ThreadId = Thread.CurrentThread.ManagedThreadId;
+
             _log4NetLogger = LogManager.GetLogger(typeof(Logger));
 
             if (Logger.Current == null)
@@ -71,6 +74,8 @@ namespace MW5.Services.Concrete
         {
             return false;
         }
+
+        public int ThreadId { get; private set; }
 
         public IReadOnlyList<ILogEntry> Entries
         {

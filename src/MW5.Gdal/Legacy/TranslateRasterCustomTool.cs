@@ -18,6 +18,15 @@ namespace MW5.Gdal.Legacy
     //[GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(TranslateRasterCustomPresenter))]
     public class TranslateRasterCustomTool : GisTool
     {
+        [Input("Input filename", 0)]
+        public string InputFilename { get; set; }
+
+        [Input("Output filename", 1)]
+        public OutputLayerInfo Output { get; set; }
+
+        [Input("Options", 2)]
+        public string Options { get; set; }
+
         /// <summary>
         /// Description of the tool.
         /// </summary>
@@ -26,9 +35,6 @@ namespace MW5.Gdal.Legacy
             get { return "Converts raster data between different formats."; }
         }
 
-        [Input("Input filename", 0)]
-        public string InputFilename { get; set; }
-
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -36,12 +42,6 @@ namespace MW5.Gdal.Legacy
         {
             get { return "Translate raster (MW4 UI)"; }
         }
-
-        [Input("Options", 2)]
-        public string Options { get; set; }
-
-        [Input("Output filename", 1)]
-        public OutputLayerInfo Output { get; set; }
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -71,9 +71,7 @@ namespace MW5.Gdal.Legacy
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var utils = new GdalUtils { Callback = task.Callback };
-
-            bool result = utils.TranslateRaster(InputFilename, Output.Filename, Options);
+            bool result = GdalUtils.Instance.TranslateRaster(InputFilename, Output.Filename, Options);
 
             if (!result)
             {

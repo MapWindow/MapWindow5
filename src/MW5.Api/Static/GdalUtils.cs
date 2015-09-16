@@ -47,20 +47,7 @@ namespace MW5.Api.Static
 
         public bool WarpRaster(string srcFilename, string dstFilename, string options)
         {
-            bool result = _utils.GDALWarp(srcFilename, dstFilename, options);
-
-            if (result)
-            {
-                Logger.Current.Info("Raster datasource was reprojected: " + dstFilename);
-            }
-            else
-            {
-                string s = string.Format("Failed to reprojected raster datasource {0}\r\nOptions: {1}", srcFilename, options);
-                s += Environment.NewLine + "Details are likely reported in preceding GDAL messages.";
-                Logger.Current.Warn(s);
-            }
-
-            return result;
+            return _utils.GDALWarp(srcFilename, dstFilename, options);
         }
 
         public bool GdalBuildVrt(string bstrDstFilename, string bstrOptions)

@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -137,15 +138,14 @@ namespace MW5.Gdal.Tools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var utils = new GdalUtils { Callback = task.Callback };
-
             string options = GetOptions();
 
-            bool result = utils.WarpRaster(InputFilename, Output.Filename, options);
+            bool result = GdalUtils.Instance.WarpRaster(InputFilename, Output.Filename, options);
 
             if (!result)
             {
-                Log.Error(@"The process did not finish successfully.", null);
+                string s = string.Format("Failed to reprojected raster datasource {0}. Options: {1}", InputFilename, options);
+                Log.Error(s, null);
                 return false;
             }
 
@@ -154,6 +154,8 @@ namespace MW5.Gdal.Tools
                 Log.Info(@"The process did finish successfully. But the resulting file was not created.");
                 return false;
             }
+
+            Log.Info("Raster datasource was reprojected: " + Output.Filename);
 
             return true;
         }

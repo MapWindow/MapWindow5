@@ -9,5 +9,7 @@
         void ClearProgress();
 
         bool CheckAborted();
+
+        int ThreadId { get; }
     }
 }

@@ -235,6 +235,7 @@ namespace MW5.Tools.Views
                 {
                     if (e.Percent >= 0 && e.Percent <= 100)
                     {
+                        panelProgress.Visible = true;
                         progressBar1.Value = e.Percent;
                         lblPercent.Text = e.Message; // + " " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
                         lblPercent.Invalidate();

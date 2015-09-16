@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
-    // TODO: add thread safety code
     public static class ApplicationCallback
     {
         private static readonly List<IApplicationCallback> _list = new List<IApplicationCallback>();
 
         public static void ClearProgress()
         {
-            foreach (var cb in _list)
+            foreach (var cb in ThreadCallbacks)
             {
                 cb.ClearProgress();
             }
@@ -20,7 +21,7 @@ namespace MW5.Api.Concrete
 
         public static void Progress(string tagOfSender, int percent, string message)
         {
-            foreach (var cb in _list)
+            foreach (var cb in ThreadCallbacks)
             {
                 if (percent == 0 || percent == 100)
                 {
@@ -35,9 +36,18 @@ namespace MW5.Api.Concrete
 
         public static void Error(string tagOfSender, string errorMsg)
         {
-            foreach (var cb in _list)
+            foreach (var cb in ThreadCallbacks)
             {
                 cb.Error(tagOfSender, errorMsg);
+            }
+        }
+
+        private static IEnumerable<IApplicationCallback> ThreadCallbacks
+        {
+            get
+            {
+                int threadId = Thread.CurrentThread.ManagedThreadId;
+                return _list.Where(cb => cb.ThreadId == threadId);
             }
         }
 
