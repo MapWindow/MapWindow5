@@ -19,7 +19,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalRasterPresenter))]
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
     public partial class BuildVrtTool: GdalTool
     {
         // TODO: multiple names must be allowed

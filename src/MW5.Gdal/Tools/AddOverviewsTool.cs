@@ -17,7 +17,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalRasterPresenter))]
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
     public class AddOverviewsTool: GdalTool
     {
         [ParameterType(ParameterType.RasterFilename)]

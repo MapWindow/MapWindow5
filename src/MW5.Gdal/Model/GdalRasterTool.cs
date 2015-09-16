@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Gdal.Tools;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Enums;
@@ -40,20 +41,11 @@ namespace MW5.Gdal.Model
             base.Configure(context, configuration);
 
             var drivers = GetDrivers().ToList();
-            var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == "gtiff");
+            var gtiff = drivers.FirstOrDefault(f => f.Name.ToLower() == GdalFormats.GTiff);
 
             configuration.Get<GdalRasterTool>()
                 .AddComboList(t => t.OutputFormat, drivers)
                 .SetDefault(t => t.OutputFormat, gtiff);
-        }
-
-        /// <summary>
-        /// Gets the list of drivers that support the creation of new datasources.
-        /// </summary>
-        private IEnumerable<DatasourceDriver> GetDrivers()
-        {
-            var manager = new DriverManager();
-            return manager.Where(DriverFilter).OrderBy(d => d.Name).ToList();
         }
     }
 }

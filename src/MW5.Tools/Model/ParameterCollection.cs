@@ -134,7 +134,7 @@ namespace MW5.Tools.Model
         {
             foreach (var p in _list.Where(p => p.Control != null))
             {
-                p.ToolProperty.SetValue(_tool, p.Value);
+                p.SetToolValue(p.Value);
             }
         }
 

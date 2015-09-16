@@ -43,7 +43,7 @@ namespace MW5.Gdal.Helpers
         {
             switch (driver.Name.ToLower())
             {
-                case "gtiff":
+                case GdalFormats.GTiff:
                     // can be specified in app config if needed
                     return new[] { "COMPRESS", "JPEG_QUALITY", "ZLEVEL" };
                 default:
@@ -56,7 +56,7 @@ namespace MW5.Gdal.Helpers
         /// </summary>
         public static IEnumerable<BaseParameter> GenerateCreationOptions(this DatasourceDriver driver)
         {
-            string options = driver.get_Metadata(Api.Enums.GdalDriverMetadata.CreationOptionList);
+            string options = driver.get_Metadata(GdalDriverMetadata.CreationOptionList);
             if (string.IsNullOrWhiteSpace(options))
             {
                 return new List<BaseParameter>();

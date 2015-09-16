@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MW5.Api.Concrete;
@@ -71,6 +72,15 @@ namespace MW5.Gdal.Model
         /// Gets the list of drivers that support the creation of new datasources.
         /// </summary>
         protected abstract bool DriverFilter(DatasourceDriver driver);
+
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected IEnumerable<DatasourceDriver> GetDrivers()
+        {
+            var manager = new DriverManager();
+            return manager.Where(DriverFilter).OrderBy(d => d.Name).ToList();
+        }
 
         /// <summary>
         /// Can be used to save results of the processing or display messages.

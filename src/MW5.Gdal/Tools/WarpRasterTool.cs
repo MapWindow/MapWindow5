@@ -25,7 +25,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalRasterPresenter))]
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalConvertPresenter))]
     public partial class WarpRasterTool : GdalRasterTool
     {
         protected override void Configure(IAppContext context, ToolConfiguration configuration)

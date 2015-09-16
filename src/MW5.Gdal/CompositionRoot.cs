@@ -23,8 +23,10 @@ namespace MW5.Gdal
         public static void Compose(IApplicationContainer container)
         {
             container.RegisterView<ITranslateRasterCustomView, TranslateRasterCustomView>()
-                     .RegisterView<IGdalOptionsView, GdalOptionsView>()
-                     .RegisterView<IGdalRasterView, GdalRasterView>();
+                .RegisterView<IGdalOptionsView, GdalOptionsView>()
+                .RegisterView<IGdalView, GdalView>()
+                .RegisterView<IGdalConvertView, GdalConvertView>()
+                .RegisterView<IGdalDriverOptionsView, GdalDriverOptionsView>();
 
         }
     }

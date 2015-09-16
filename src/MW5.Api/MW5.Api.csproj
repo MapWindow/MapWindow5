@@ -87,6 +87,7 @@
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />
+    <Compile Include="Helpers\GdalFormats.cs" />
     <Compile Include="Helpers\GdalHelper.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />

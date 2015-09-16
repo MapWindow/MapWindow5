@@ -24,7 +24,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Gdal.Tools
 {
-    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalRasterPresenter))]
+    [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalConvertPresenter))]
     public class TranslateRasterTool : GdalRasterTool
     {
         [Input("Output type", 1, true)]

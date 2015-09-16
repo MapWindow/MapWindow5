@@ -87,12 +87,16 @@
     <Compile Include="Tools\AddOverviewsTool.cs" />
     <Compile Include="Tools\BuildVrtParameters.cs" />
     <Compile Include="Tools\BuildVrtTool.cs" />
+    <Compile Include="Tools\Ogr2OgrTool.cs" />
+    <Compile Include="Tools\Ogr2OgrToolParameters.cs" />
     <Compile Include="Tools\TranslateRasterTool.cs" />
     <Compile Include="Tools\WarpRasterTool.cs" />
     <Compile Include="Tools\WarpRasterToolParameters.cs" />
     <Compile Include="Legacy\Views\IGdalOptionsView.cs" />
     <Compile Include="Legacy\Views\ITranslateRasterCustomView.cs" />
-    <Compile Include="Views\Abstract\IGdalRasterView.cs" />
+    <Compile Include="Views\Abstract\IGdalConvertView.cs" />
+    <Compile Include="Views\Abstract\IGdalDriverOptionsView.cs" />
+    <Compile Include="Views\Abstract\IGdalView.cs" />
     <Compile Include="Legacy\Views\GdalOptionsModel.cs" />
     <Compile Include="Legacy\Views\GdalOptionsPresenter.cs" />
     <Compile Include="Legacy\Views\GdalOptionsView.cs">
@@ -108,11 +112,25 @@
     <Compile Include="Legacy\Views\TranslateRasterCustomView.Designer.cs">
       <DependentUpon>TranslateRasterCustomView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\GdalRasterPresenter.cs" />
-    <Compile Include="Views\GdalRasterView.cs">
+    <Compile Include="Views\GdalConvertPresenter.cs" />
+    <Compile Include="Views\GdalConvertView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GdalConvertView.Designer.cs">
+      <DependentUpon>GdalConvertView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GdalPresenter.cs" />
+    <Compile Include="Views\GdalDriverOptionsPresenter.cs" />
+    <Compile Include="Views\GdalView.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\GdalDriverOptionsView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GdalDriverOptionsView.Designer.cs">
+      <DependentUpon>GdalDriverOptionsView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
