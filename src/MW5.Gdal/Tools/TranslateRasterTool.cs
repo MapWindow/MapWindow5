@@ -29,7 +29,7 @@ namespace MW5.Gdal.Tools
     {
         [Input("Output type", 1, true)]
         [ParameterType(ParameterType.Combo)]
-        public override string OutputType { get; set; }
+        public string OutputType { get; set; }
 
         [Input("No data value", 3, true)]
         public string NoData { get; set; }
@@ -49,6 +49,15 @@ namespace MW5.Gdal.Tools
         [Input("Spatial reference", 8, true)]
         public bool SpatialReference { get; set; }
 
+        /// <summary>
+        /// Gets the list of drivers that support the creation of new datasources.
+        /// </summary>
+        protected override bool DriverFilter(DatasourceDriver driver)
+        {
+            return driver.IsRaster && driver.MatchesFilter(Api.Enums.DriverFilter.Create) ||
+                                      driver.MatchesFilter(Api.Enums.DriverFilter.CreateCopy);
+        }
+
         protected override void InitCommandLine()
         {
             _commandLine.Get<TranslateRasterTool>()
@@ -61,14 +70,6 @@ namespace MW5.Gdal.Tools
                 .SetKey(t => t.Unscale, "-unscale");
         }
 
-        /// <summary>
-        /// Gets the list of drivers that support the creation of new datasources.
-        /// </summary>
-        protected override IEnumerable<DriverFilter> GetRasterFilters()
-        {
-            yield return DriverFilter.Create;
-            yield return DriverFilter.CreateCopy;
-        }
 
         /// <summary>
         /// The name of the tool.
@@ -107,6 +108,11 @@ namespace MW5.Gdal.Tools
         public override string TaskName
         {
             get { return "Translate: " + Path.GetFileName(Output.Filename); }
+        }
+
+        public override bool SupportDriverCreationOptions
+        {
+            get { return true; }
         }
         
         public override string GetOptions(bool mainOnly = false)

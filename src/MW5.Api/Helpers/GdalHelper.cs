@@ -28,5 +28,25 @@ namespace MW5.Api.Helpers
                 "CFloat64"
             };
         }
+
+        public static IList<string> GetRasterResampling()
+        {
+            return new List<string>
+                       {
+                           "", 
+                           "near", 
+                           "bilinear", 
+                           "cubic", 
+                           "cubicspline", 
+                           "lanczos", 
+                           "average", 
+                           "mode", 
+                           "max", 
+                           "min", 
+                           "med", 
+                           "q1", 
+                           "q3"
+                       };
+        }
     }
 }

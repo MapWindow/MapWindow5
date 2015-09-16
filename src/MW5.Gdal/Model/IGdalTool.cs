@@ -12,8 +12,8 @@ namespace MW5.Gdal.Model
     {
         string AdditionalOptions { get; set; }
 
-        StringParameter AdditionalOptionsParameter { get; }
-
         string GetOptions(bool mainOnly = false);
+
+        bool SupportDriverCreationOptions { get; }
     }
 }

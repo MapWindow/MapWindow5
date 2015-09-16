@@ -25,8 +25,8 @@ namespace MW5.Gdal.Views
     public class GdalRasterView: ToolView, IGdalRasterView
     {
         private StringParameterControl _cmdOptions;
-        private readonly TabPageAdv _tabDriver;
-        private readonly TabPageAdv _tabCmdLine;
+        private TabPageAdv _tabDriver;
+        private TabPageAdv _tabCmdLine;
         private readonly IStyleService _styleService;
         private IEnumerable<BaseParameter> _driverOptions;
         private bool _controlsGenerated = false;
@@ -40,8 +40,22 @@ namespace MW5.Gdal.Views
             if (styleService == null) throw new ArgumentNullException("styleService");
             _styleService = styleService;
             _generator.EventManager.ControlValueChanged += OnControlValueChanged;
+        }
 
-            _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_driver24);
+        private IGdalTool GdalTool
+        {
+            get { return Model.Tool as IGdalTool; }
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            if (GdalTool.SupportDriverCreationOptions)
+            {
+                _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_driver24);
+            }
+
             _tabCmdLine = tabControlAdv1.AddTab("Cmd Line", Resources.img_console24);
         }
 
@@ -80,15 +94,17 @@ namespace MW5.Gdal.Views
 
         private void GenerateOptionsControl()
         {
-            var tool = Model.Tool as IGdalTool;
-            if (tool != null)
+            var tool = Model.Tool as IParametrizedTool;
+            if (tool == null)
             {
-                var p = tool.AdditionalOptionsParameter;
-
-                _generator.GenerateControls(new[] { tool.AdditionalOptionsParameter }, false);
-
-                _tabCmdLine.GetPanel().Controls.Add(p.Control);
+                return;
             }
+
+            var p = tool.FindParameter<IGdalTool, string>(t => t.AdditionalOptions) as StringParameter;
+
+            _generator.GenerateControls(new[] { p }, false);
+
+            _tabCmdLine.GetPanel().Controls.Add(p.Control);
         }
 
         /// <summary>
@@ -114,17 +130,13 @@ namespace MW5.Gdal.Views
                 return;
             }
 
-            var tool = Model.Tool as GdalRasterTool;
-            if (tool == null)
+            var tool = Model.Tool as GdalTool;
+            if (tool != null)
             {
-                return;
+                tool.DriverOptions = GetDriverOptions();
+                tool.Parameters.Apply();
+                _cmdOptions.SetValue(tool.GetOptions(true));
             }
-
-            tool.DriverOptions = GetDriverOptions();
-
-            tool.Parameters.Apply();
-
-            _cmdOptions.SetValue(tool.GetOptions(true));
         }
 
         /// <summary>
@@ -154,16 +166,18 @@ namespace MW5.Gdal.Views
         /// </summary>
         private void OnDriverChanged(DatasourceDriver driver)
         {
-            // display driver options
-            GenerateDriverOptions(driver, _tabDriver);
+            if (GdalTool.SupportDriverCreationOptions)
+            {
+                GenerateDriverOptions(driver, _tabDriver);
+            }
 
-            // update output name
             var tool = Model.Tool as IParametrizedTool;
             if (tool == null)
             {
                 return;
             }
 
+            // update output name
             UpdateOutputFilename(tool, driver);
 
             // updating list of datatypes

@@ -84,6 +84,8 @@
     <Compile Include="Model\GdalTool.cs" />
     <Compile Include="Model\IGdalTool.cs" />
     <Compile Include="Legacy\TranslateRasterCustomTool.cs" />
+    <Compile Include="Tools\BuildVrtParameters.cs" />
+    <Compile Include="Tools\BuildVrtTool.cs" />
     <Compile Include="Tools\TranslateRasterTool.cs" />
     <Compile Include="Tools\WarpRasterTool.cs" />
     <Compile Include="Tools\WarpRasterToolParameters.cs" />

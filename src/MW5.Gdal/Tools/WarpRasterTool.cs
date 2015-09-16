@@ -32,22 +32,20 @@ namespace MW5.Gdal.Tools
         {
             base.Configure(context, configuration);
 
-            var resampling = new[] { "", "near", "bilinear", "cubic", "cubicspline", "lanczos", "average", "mode", "max", "min", "med", "q1", "q3" };
-
             var dataTypes = GdalHelper.GetRasterDataTypes().ToList();
             dataTypes.Insert(0, "<autodetect>");
 
             configuration.Get<WarpRasterTool>()
-                .AddComboList(t => t.DstResampling, resampling)
+                .AddComboList(t => t.DstResampling, GdalHelper.GetRasterResampling())
                 .AddComboList(t => t.WorkingPixelsType, dataTypes);
         }
 
         /// <summary>
         /// Gets the list of drivers that support the creation of new datasources.
         /// </summary>
-        protected override IEnumerable<DriverFilter> GetRasterFilters()
+        protected override bool DriverFilter(DatasourceDriver driver)
         {
-            yield return DriverFilter.Create;
+            return driver.IsRaster && driver.MatchesFilter(Api.Enums.DriverFilter.Create);
         }
 
         protected override void InitCommandLine()
@@ -63,7 +61,6 @@ namespace MW5.Gdal.Tools
                 .SetKey(t => t.GeolocationArrays, "-geoloc")
                 .SetKey(t => t.MemoryLimitMb, "-mw")
                 .SetKey(t => t.OutputType, "-ot")
-                .SetKey(t => t.Quiet, "-q")
                 .SetKey(t => t.RefineGcp, "-refine_gcps")
                 .SetKey(t => t.RpcCoefficients, "-rpc")
                 .SetKey(t => t.SourceNoDataValue, "-srcnodata")
@@ -116,6 +113,11 @@ namespace MW5.Gdal.Tools
         public override string TaskName
         {
             get { return "Warp: " + Path.GetFileName(Output.Filename); }
+        }
+
+        public override bool SupportDriverCreationOptions
+        {
+            get { return true; }
         }
 
         public override string GetOptions(bool mainOnly = false)

@@ -37,7 +37,7 @@ namespace MW5.Gdal.Tools
 
         [Input("Output type", 0, GroupOutput)]
         [ParameterType(ParameterType.Combo)]
-        public override string OutputType { get; set; }
+        public string OutputType { get; set; }
 
         [Input("Resampling method", 1, GroupOutput)]
         [ParameterType(ParameterType.Combo)]
@@ -90,8 +90,5 @@ namespace MW5.Gdal.Tools
 
         [Input("Use multithreading", 7, GroupAdvanced)]
         public bool UseMultithreading { get; set; }
-
-        [Input("Quiet", 8, GroupAdvanced)]
-        public bool Quiet { get; set; }
     }
 }
