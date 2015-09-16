@@ -248,13 +248,22 @@ namespace MW5.Tools.Views
         public virtual void Initialize()
         {
             chkBackground.Visible = !Model.BatchMode;
-            chkBackground.Checked =  AppConfig.Instance.TaskRunInBackground;
+            chkBackground.Checked = AppConfig.Instance.TaskRunInBackground;
 
             var tool = Model.Tool;
 
             Text = tool.Name;
 
-            webBrowser1.DocumentText = tool.LoadManual();
+            // PM: Changes to load a HTML page and all its linked files like images, js-files and css-files.
+            var manualUrl = tool.GetManualUri();
+            if (manualUrl != null)
+            {
+                webBrowser1.Url = manualUrl;
+            }
+            else
+            {
+                webBrowser1.DocumentText = tool.GetDefaultText();
+            }
 
             if (Model.BatchMode)
             {

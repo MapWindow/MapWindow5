@@ -1,6 +1,7 @@
 body {
-    margin-top: 10px;
+    margin: 0;
     margin-left: 10px;
+    margin-right: 10px;
 }
 
 .domain::before {
@@ -74,3 +75,12 @@ blockquote {
 article {
     padding-bottom: 20px;
 }
+    article img {
+        margin: 5px 5px 10px 2px;
+        -webkit-box-shadow: 10px 10px 30px 0 #8688a3;
+        -webkit-box-shadow: 10px 10px 30px 0 #8688a3;
+        -moz-box-shadow: 10px 10px 30px 0 #8688a3;
+        -moz-box-shadow: 10px 10px 30px 0 #8688a3;
+        box-shadow: 10px 10px 30px 0 #8688a3;
+        box-shadow: 10px 10px 30px 0 rgba(134,136,163,1);
+    }
