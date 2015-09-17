@@ -7,12 +7,9 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Api.Interfaces;
+using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -20,14 +17,14 @@ using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
-using MW5.Tools.Views.Custom;
+using System;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]   //, typeof(RandomPointsPresenter)
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class RandomPointsTool : GisTool
     {
         [Input("Layer for bounding box", 0)]
@@ -39,15 +36,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [Output("New layer name")]
         [OutputLayer("{input}_random points.shp", LayerType.Shapefile)]
         public OutputLayerInfo OutputLayer { get; set; }
-
-        protected override void Configure(IAppContext context, ToolConfiguration configuration)
-        {
-            base.Configure(context, configuration);
-
-            configuration.Get<RandomPointsTool>()
-                .SetDefault(t => t.NumPoints, 500)
-                .SetRange(t => t.NumPoints, 1, 1000000);
-        }
 
         /// <summary>
         /// Gets the identity of plugin that created this tool.
@@ -86,12 +74,21 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             Log.Debug("Creating {0} random points", NumPoints);
 
-            var ds = InputLayer.Datasource;
+            var vector = InputLayer as IVectorInput;
+            if (vector == null)
+            {
+                throw new NullReferenceException(@"The input layer is empty or invalid.");
+            }
+
+            var selectedOnly = vector.SelectedOnly;
+            var ds = vector.Datasource;
 
             var fs = new FeatureSet(GeometryType.Point);
             fs.Projection.CopyFrom(ds.Projection);
 
-            var envelop = ds.Envelope;
+            // Get the extent, taking into account selected shapes:
+            var envelop = selectedOnly ? ds.GetSelectedExtents() : ds.Envelope;
+
             var random = new Random();
             var lastPercent = 0;
 
@@ -113,6 +110,20 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             OutputLayer.Result = fs;   
 
             return true;
+        }
+
+        /// <summary>
+        /// Adds tool configuration which can be used for generation of the UI for tool.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="configuration"></param>
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
+        {
+            base.Configure(context, configuration);
+
+            configuration.Get<RandomPointsTool>()
+                .SetDefault(t => t.NumPoints, 500)
+                .SetRange(t => t.NumPoints, 1, 1000000);
         }
     }
 }
