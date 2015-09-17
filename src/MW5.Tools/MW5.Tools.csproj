@@ -509,6 +509,7 @@
     <Content Include="Manuals\RandomPointsTool.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\img_clock16.png" />
     <None Include="Resources\img_advanced24.png" />
     <None Include="Resources\img_driver24.png" />
     <None Include="Resources\img_console24.png" />

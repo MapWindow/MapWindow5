@@ -46,5 +46,10 @@ namespace MW5.Plugins.Interfaces
         ITaskProgress Progress { get; }
 
         string Name { get; }
+
+        /// <summary>
+        /// Gets or sets the tasks that should be executed after the current one.
+        /// </summary>
+        IGisTask NextTask { get; set; }
     }
 }

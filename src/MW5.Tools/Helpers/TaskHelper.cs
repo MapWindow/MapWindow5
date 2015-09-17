@@ -19,7 +19,7 @@ namespace MW5.Tools.Helpers
             switch (task.Status)
             {
                 case GisTaskStatus.NotStarted:
-                    return TaskIcons.Execution;
+                    return TaskIcons.NotStarted;
                 case GisTaskStatus.Running:
                     return TaskIcons.InProgress;
                 case GisTaskStatus.Success:

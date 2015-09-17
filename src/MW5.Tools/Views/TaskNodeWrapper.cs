@@ -94,8 +94,6 @@ namespace MW5.Tools.Views
         {
             _node = new TreeNodeAdv(_task.Name) { Tag = this };
 
-            CreateBarProgress();
-
             AddProgressHandlers();
 
             UpdateStatus();

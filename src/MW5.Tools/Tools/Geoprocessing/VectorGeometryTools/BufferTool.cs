@@ -85,6 +85,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return true; }
         }
 
+        public override bool SequentialBatchExecution
+        {
+            get { return true; }
+        }
+
         private LengthUnits GetSourceUnits()
         {
             // TODO: this is a fast and dirty solution; units may also be stored in WKT string explicitly,

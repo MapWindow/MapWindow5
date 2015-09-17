@@ -22,6 +22,15 @@ namespace MW5.Plugins.Interfaces
 
         bool Validate();
 
+        /// <summary>
+        /// Gets the name of the task running the current tool.
+        /// </summary>
         string TaskName { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether tasks should be executed 
+        /// in sequence rather than in parallel when running in batch mode.
+        /// </summary>
+        bool SequentialBatchExecution { get; }
     }
 }

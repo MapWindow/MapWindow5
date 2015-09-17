@@ -133,6 +133,16 @@ namespace MW5.Tools.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_clock16 {
+            get {
+                object obj = ResourceManager.GetObject("img_clock16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_console24 {
             get {
                 object obj = ResourceManager.GetObject("img_console24", resourceCulture);

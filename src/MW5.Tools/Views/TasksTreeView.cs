@@ -38,6 +38,7 @@ namespace MW5.Tools.Views
             yield return Resources.img_cancel16;
             yield return Resources.img_pause16;
             yield return Resources.img_tasks16;
+            yield return Resources.img_clock16;
         }
 
         private void AddRootNode()

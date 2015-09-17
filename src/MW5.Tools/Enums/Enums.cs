@@ -48,6 +48,7 @@ namespace MW5.Tools.Enums
         Cancel = 7,
         Pause = 8,
         Tasks = 9,
+        NotStarted = 10,
     }
 
     public enum ToolIcon

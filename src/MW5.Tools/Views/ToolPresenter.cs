@@ -180,9 +180,25 @@ namespace MW5.Tools.Views
                 return false;
             }
 
-            foreach (var newTool in tools)
+            if (Model.Tool.SequentialBatchExecution)
             {
-                RunBatchTask(newTool);
+                var tasks = GetSequentialTasks(tools).Reverse().ToList();
+
+                foreach (var t in tasks)
+                {
+                    _context.Tasks.Add(t);
+                }
+
+                var task = tasks.FirstOrDefault();
+
+                task.RunAsync();
+            }
+            else
+            {
+                foreach (var newTool in tools)
+                {
+                    RunBatchTask(newTool);
+                }
             }
 
             ReturnValue = false;
@@ -190,6 +206,20 @@ namespace MW5.Tools.Views
             View.Close();
 
             return false;
+        }
+
+        private IEnumerable<IGisTask> GetSequentialTasks(IEnumerable<IGisTool> tools)
+        {
+            IGisTask lastTask = null;
+
+            foreach (var t in tools.Reverse())
+            {
+                var task = new GisTask(t) { NextTask = lastTask };
+
+                lastTask = task;
+
+                yield return task;
+            }
         }
 
         /// <summary>

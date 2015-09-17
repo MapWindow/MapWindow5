@@ -86,6 +86,20 @@ namespace MW5.Tools.Tools.Database
         }
 
         /// <summary>
+        /// Gets a value indicating whether tasks should be executed
+        /// in sequence rather than in parallel when running in batch mode.
+        /// </summary>
+        public override bool SequentialBatchExecution
+        {
+            get { return true; }
+        }
+
+        public override bool SupportsBatchExecution
+        {
+            get { return true; }
+        }
+
+        /// <summary>
         /// Preparing format specific options.
         /// </summary>
         private string PrepareOptions()

@@ -204,9 +204,17 @@ namespace MW5.Tools.Model
                                     _tool.Log.Error("Failed to save datasource: " + Tool.Name, ex);
                                     Status = GisTaskStatus.Failed;
                                 }
+
+                                
                             }
                             finally
                             {
+                                // running the next task
+                                if (NextTask != null)
+                                {
+                                    NextTask.RunAsync();
+                                }
+
                                 // stop reporting progress from datasources
                                 _tool.CleanUp();
                             }
@@ -228,7 +236,12 @@ namespace MW5.Tools.Model
             get
             {
                 string name = _tool.TaskName;
-                
+
+                if (Status == GisTaskStatus.NotStarted)
+                {
+                    name += " [Not started]";
+                }
+
                 if (IsFinished)
                 {
                     name += " [" + ExecutionTime.ToString(@"hh\:mm\:ss") + "]";
@@ -237,6 +250,11 @@ namespace MW5.Tools.Model
                 return name;
             }
         }
+
+        /// <summary>
+        /// Gets or sets the tasks that should be executed after the current one.
+        /// </summary>
+        public IGisTask NextTask { get; set; }
 
         void IApplicationCallback.Error(string tagOfSender, string errorMsg)
         {

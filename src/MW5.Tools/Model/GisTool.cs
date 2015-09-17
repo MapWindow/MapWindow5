@@ -211,6 +211,15 @@ namespace MW5.Tools.Model
         }
 
         /// <summary>
+        /// Gets a value indicating whether tasks should be executed
+        /// in sequence rather than in parallel when running in batch mode.
+        /// </summary>
+        public virtual bool SequentialBatchExecution
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Gets combined list of required and optional parameters.
         /// </summary>
         public ParameterCollection Parameters
