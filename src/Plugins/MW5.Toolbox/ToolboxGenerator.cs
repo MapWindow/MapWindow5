@@ -89,6 +89,9 @@ namespace MW5.Plugins.Toolbox
 
             group = groups.Add("GDAL / OGR tools", GroupKeys.GdalTools, _plugin.Identity);
             group.Description = "GDAL and OGR tools.";
+
+            group = groups.Add("Raster", GroupKeys.Raster, _plugin.Identity);
+            group.Description = "Raster tools.";
         }
     }
 }

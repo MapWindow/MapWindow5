@@ -26,6 +26,9 @@ namespace MW5.Plugins.Enums
         /// </summary>
         public const string Projections = "Projections";
 
+        /// <summary>
+        /// Fake tools
+        /// </summary>
         public const string Fake = "Testing";
 
         /// <summary>
@@ -33,6 +36,14 @@ namespace MW5.Plugins.Enums
         /// </summary>
         public const string VectorGeometryTools = "VectorGeometryTools";
 
+        /// <summary>
+        /// Gdal tools
+        /// </summary>
         public const string GdalTools = "GdalTools";
+
+        /// <summary>
+        /// Raster tools
+        /// </summary>
+        public const string Raster = "Raster";
     }
 }

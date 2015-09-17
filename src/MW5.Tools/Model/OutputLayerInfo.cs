@@ -20,6 +20,8 @@ namespace MW5.Tools.Model
 
         public bool MemoryLayer { get; set; }
 
+        public bool SkipValidation { get; set; }
+
         public void ResolveTemplateName(string inputFilename)
         {
             if (MemoryLayer)
@@ -77,6 +79,12 @@ namespace MW5.Tools.Model
 
         public bool Validate(out string message)
         {
+            if (SkipValidation)
+            {
+                message = string.Empty;
+                return true;
+            }
+
             if (string.IsNullOrWhiteSpace(Filename))
             {
                 message = "OutputLayer layer name is empty.";

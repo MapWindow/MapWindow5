@@ -21,13 +21,17 @@ namespace MW5.Tools.Views
     /// </summary>
     internal class TaskNodeWrapper
     {
+        private readonly TreeViewAdv _treeView;
         private readonly IGisTask _task;
         private TreeNodeAdv _node;
         private ProgressBar _progress;
 
-        public TaskNodeWrapper(IGisTask task)
+        public TaskNodeWrapper(TreeViewAdv treeView, IGisTask task)
         {
+            if (treeView == null) throw new ArgumentNullException("treeView");
             if (task == null) throw new ArgumentNullException("task");
+
+            _treeView = treeView;
             _task = task;
 
             GenerateNode();
@@ -65,24 +69,15 @@ namespace MW5.Tools.Views
             _task.Progress.ProgressChanged += (s, e) =>
                 {
                     Action action = () =>
-                        {
-                            if (_node.CustomControl == null)
-                            {
-                                CreateBarProgress();
-                            }
-
-                            _progress.Value = e.Percent;
-                        };
-                    _progress.SafeInvoke(action);
-                };
-
-            _task.Progress.Hide += (s, e) =>
-                {
-                    if (_progress != null)
                     {
-                        _progress.SafeInvoke(HideProgress);
-                    }
+                        CreateBarProgress();
+                        _progress.Value = e.Percent;
+                    };
+
+                    _treeView.SafeInvoke(action);
                 };
+
+            _task.Progress.Hide += (s, e) => _treeView.SafeInvoke(HideProgress);
         }
 
         private void CreateBarProgress()

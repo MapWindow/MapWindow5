@@ -71,9 +71,12 @@ namespace MW5.Tools.Model
             if (olp != null)
             {
                 var layerAttr = prop.GetAttribute<OutputLayerAttribute>();
-                olp.DefaultValue = layerAttr.NameTemplate;
-                olp.SupportInMemory = layerAttr.SupportsInMemory;
-                olp.LayerType = layerAttr.LayerType;
+                if (layerAttr != null)
+                {
+                    olp.DefaultValue = layerAttr.NameTemplate;
+                    olp.SupportInMemory = layerAttr.SupportsInMemory;
+                    olp.LayerType = layerAttr.LayerType;
+                }
             }
 
             return param;

@@ -288,6 +288,7 @@
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Raster\CreateGridProxyTool.cs" />
     <Compile Include="Views\Custom\Abstract\ILongExecutionView.cs" />
     <Compile Include="Views\Custom\Abstract\IRandomPointsView.cs" />
     <Compile Include="Views\Custom\LongExecutionPresenter.cs" />

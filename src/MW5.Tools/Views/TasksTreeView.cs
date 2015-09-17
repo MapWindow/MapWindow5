@@ -78,7 +78,7 @@ namespace MW5.Tools.Views
                     {
                         case TaskEvent.Added:
                             {
-                                var wrapper = new TaskNodeWrapper(e.Task);
+                                var wrapper = new TaskNodeWrapper(this, e.Task);
                                 var node = wrapper.Node;
                                 _rootNode.Nodes.Add(node);
                                 

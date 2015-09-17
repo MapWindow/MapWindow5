@@ -23,8 +23,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools, Enums.ToolIcon.Hammer)]
     public class BufferTool : GisTool
     {
-        private LengthUnits _mapUnits;
-
         [Input("Input layer", 0)]
         public IVectorInput Input { get; set; }
 
@@ -48,13 +46,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             configuration.Get<BufferTool>()
                 .SetDefault(t => t.BufferDistance, 50)
                 .SetDefault(t => t.NumSegments, 30);
-        }
-
-        public override void Initialize(IAppContext context)
-        {
-            base.Initialize(context);
-
-            _mapUnits = context.Map.MapUnits;
         }
 
         /// <summary>
@@ -94,12 +85,19 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return true; }
         }
 
+        private LengthUnits GetSourceUnits()
+        {
+            // TODO: this is a fast and dirty solution; units may also be stored in WKT string explicitly,
+            // while ultimatily it may be needed to choose source units explicitly in the UI
+            return Input.Datasource.Projection.IsGeographic ? LengthUnits.DecimalDegrees : LengthUnits.Meters;
+        }
+
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, _mapUnits, BufferDistance.Value);
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, GetSourceUnits(), BufferDistance.Value);
 
             Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
 
