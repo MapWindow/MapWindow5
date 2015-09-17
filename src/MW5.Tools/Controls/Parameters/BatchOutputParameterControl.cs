@@ -5,6 +5,7 @@ using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
@@ -128,6 +129,16 @@ namespace MW5.Tools.Controls.Parameters
         {
             _extension = extension;
             RefreshTemplate();
+        }
+
+        public void OnFilenameChanged(string filename)
+        {
+            // do nothing
+        }
+
+        public void OnDatasourceChanged(IDatasourceInput input)
+        {
+            // do nothing
         }
 
         private void OnSaveClick(object sender, EventArgs e)

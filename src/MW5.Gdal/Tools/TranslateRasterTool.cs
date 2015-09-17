@@ -28,7 +28,7 @@ namespace MW5.Gdal.Tools
     public class TranslateRasterTool : GdalRasterTool
     {
         [Input("Output type", 1, true)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string OutputType { get; set; }
 
         [Input("No data value", 3, true)]

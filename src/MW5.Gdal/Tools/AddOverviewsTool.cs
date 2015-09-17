@@ -20,7 +20,7 @@ namespace MW5.Gdal.Tools
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalPresenter))]
     public class AddOverviewsTool: GdalTool
     {
-        [ParameterType(ParameterType.RasterFilename)]
+        [ControlHint(ControlHint.RasterFilename)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 
@@ -34,7 +34,7 @@ namespace MW5.Gdal.Tools
         public bool Clean { get; set; }
 
         [Input("Resampling", 0, true)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string Resampling { get; set; }
 
         [Output("Overview levels", 1)]

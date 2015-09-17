@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using MW5.Api.Concrete;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -17,13 +18,14 @@ namespace MW5.Tools.Tools.Database
         public IVectorInput InputLayer { get; set; }
 
         [Output("Database", 0)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public DatabaseConnection Database { get; set; }
 
         [Output("Schema", 1)]
         public string Schema { get; set; }
 
         [Output("New layer name", 2)]
+        [ControlHint(ControlHint.OutputName)]
         public string NewLayerName { get; set; }
 
         [Output("Overwrite", 3)]
@@ -45,12 +47,16 @@ namespace MW5.Tools.Tools.Database
             get { return "Imports layer in the geodatabase."; }
         }
 
+        /// <summary>
+        /// Adds tool configuration which can be used for generation of the UI for tool.
+        /// </summary>
         protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
             base.Configure(context, configuration);
 
             configuration.Get<ImportLayerTool>()
-                .AddComboList(t => t.Database, context.Repository.Connections);
+                .AddComboList(t => t.Database, context.Repository.Connections)
+                .SetDefault(t => t.NewLayerName, "{input}_imported");
         }
 
         /// <summary>

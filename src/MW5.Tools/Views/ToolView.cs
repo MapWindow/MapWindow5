@@ -197,13 +197,13 @@ namespace MW5.Tools.Views
             switch (group)
             {
                 case ParameterGroup.Input:
-                    return parameters.Where(p => p is IBatchInputParameter);
+                    return parameters.Where(p => p is IInputParameter);
                 case ParameterGroup.Output:
                     return parameters.Where(p => !p.IsInput);
                 case ParameterGroup.Required:
-                    return parameters.Where(p => p.IsInput && !(p is IBatchInputParameter) && p.Required);
+                    return parameters.Where(p => p.IsInput && !(p is IInputParameter) && p.Required);
                 case ParameterGroup.Optional:
-                    return parameters.Where(p => p.IsInput && !(p is IBatchInputParameter) && !p.Required);
+                    return parameters.Where(p => p.IsInput && !(p is IInputParameter) && !p.Required);
             }
 
             return new List<BaseParameter>();

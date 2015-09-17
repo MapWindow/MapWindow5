@@ -1,6 +1,6 @@
 ﻿namespace MW5.Tools.Controls.Parameters
 {
-    partial class OutputParameterControl
+    partial class OutputLayerParameterControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -139,12 +139,12 @@
             this.chkOverwrite.UseVisualStyleBackColor = true;
             this.chkOverwrite.CheckedChanged += new System.EventHandler(this.OnOverwriteCheckedChanged);
             // 
-            // OutputParameterControl
+            // OutputLayerParameterControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "OutputParameterControl";
+            this.Name = "OutputLayerParameterControl";
             this.Size = new System.Drawing.Size(341, 72);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 
 namespace MW5.Tools.Services
@@ -50,29 +51,24 @@ namespace MW5.Tools.Services
         /// </summary>
         private void BindOutput()
         {
-            var output = _controls.OfType<OutputParameterControl>().FirstOrDefault();
+            var output = _controls.OfType<IOuputputParameterControl>().FirstOrDefault();
             if (output == null)
             {
                 return;
             }
 
-            var input = _controls.OfType<LayerParameterControl>().FirstOrDefault();
+            var input = _controls.OfType<IInputParameterControl>().FirstOrDefault();
             if (input != null)
             {
-                input.SelectedLayerChanged += (s, e) => output.OnLayerChanged(e.Datasource);
-            }
-
-            var fp = _controls.OfType<FilenameParameterControl>().FirstOrDefault();
-            if (fp != null)
-            {
-                fp.ValueChanged += (s, e) =>
+                if (input is FilenameParameterControl)
                 {
-                    var ctrl = s as FilenameParameterControl;
-                    if (ctrl != null)
-                    {
-                        output.OnFilenameChanged(ctrl.GetValue() as string);
-                    }
-                };
+                    input.ValueChanged += (s, e) => output.OnFilenameChanged(input.GetValue() as string);
+                }
+
+                if (input is LayerParameterControl)
+                {
+                    input.ValueChanged += (s, e) => output.OnDatasourceChanged(input.GetValue() as IDatasourceInput);
+                }
             }
         }
 

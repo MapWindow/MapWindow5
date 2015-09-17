@@ -23,7 +23,7 @@ namespace MW5.Gdal.Tools
     public partial class BuildVrtTool: GdalTool
     {
         // TODO: multiple names must be allowed
-        [ParameterType(ParameterType.RasterFilename)]
+        [ControlHint(ControlHint.RasterFilename)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 

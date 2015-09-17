@@ -25,7 +25,11 @@ namespace MW5.Tools.Controls.Parameters
 
             ParameterControlBase control = null;
 
-            if (parameter is FilenameParameter)
+            if (parameter is OutputNameParameter)
+            {
+                control = new OutputNameParameterControl(batchMode);
+            }
+            else if (parameter is FilenameParameter)
             {
                 var dataType = (parameter as FilenameParameter).DataType;
 
@@ -42,7 +46,7 @@ namespace MW5.Tools.Controls.Parameters
                     control = fpc;
                 }
             }
-            if (parameter is FieldParameter)
+            else if (parameter is FieldParameter)
             {
                 control = new FieldParameterControl();
             }
@@ -79,7 +83,7 @@ namespace MW5.Tools.Controls.Parameters
                 }
                 else
                 {
-                    var opc = _context.Container.GetInstance<OutputParameterControl>();
+                    var opc = _context.Container.GetInstance<OutputLayerParameterControl>();
                     opc.Initialize(op.LayerType, op.SupportInMemory);
                     control = opc;
                 }

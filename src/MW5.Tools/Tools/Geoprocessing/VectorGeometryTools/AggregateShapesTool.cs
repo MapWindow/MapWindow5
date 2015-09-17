@@ -26,7 +26,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public IVectorInput InputLayer { get; set; }
 
         [Input("Field", 1, false)]
-        [ParameterType(ParameterType.Field)]
+        [ControlHint(ControlHint.Field)]
         public int FieldIndex { get; set; }
 
         [Output("Save results as")]

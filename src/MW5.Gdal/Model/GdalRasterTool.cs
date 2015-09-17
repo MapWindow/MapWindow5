@@ -19,12 +19,12 @@ namespace MW5.Gdal.Model
     /// </summary>
     public abstract class GdalRasterTool: GdalTool
     {
-        [ParameterType(ParameterType.RasterFilename)]
+        [ControlHint(ControlHint.RasterFilename)]
         [Input("Input filename", 0)]
         public string InputFilename { get; set; }
 
         [Output("Output format", 0)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public virtual DatasourceDriver OutputFormat { get; set; }
 
         [Output("Output filename", 1)]

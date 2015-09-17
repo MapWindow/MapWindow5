@@ -102,10 +102,10 @@ namespace MW5.Tools.Model
             return param;
         }
 
-        private ParameterType GetParameterHint(PropertyInfo prop)
+        private ControlHint GetParameterHint(PropertyInfo prop)
         {
-            var paramAttr = prop.GetAttribute<ParameterTypeAttribute>();
-            return paramAttr != null ? paramAttr.ParameterType : Enums.ParameterType.Auto;
+            var paramAttr = prop.GetAttribute<ControlHintAttribute>();
+            return paramAttr != null ? paramAttr.ControlHint : Enums.ControlHint.Auto;
         }
 
         private void HandleRangeAttribute(BaseParameter param, PropertyInfo prop)
@@ -334,6 +334,12 @@ namespace MW5.Tools.Model
             }
         }
 
+        /// <summary>
+        /// Sets the defaults values to controls. Can be specified as: 
+        /// a) attributes, 
+        /// b) configuration, 
+        /// c) values of the previous run.
+        /// </summary>
         private void SetDefaultsToControls()
         {
             foreach (var p in this)

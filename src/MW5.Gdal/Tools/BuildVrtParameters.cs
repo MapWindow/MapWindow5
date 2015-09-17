@@ -14,7 +14,7 @@ namespace MW5.Gdal.Tools
         public string TileIndex { get; set; }
 
         [Input("Resolution", 1, true)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string Resolution { get; set; }
 
         [Input("Target resolution", 2, true)]
@@ -39,7 +39,7 @@ namespace MW5.Gdal.Tools
         public string TargetProjection { get; set; }
 
         [Input("Resampling", 9, true)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string Resampling { get; set; }
 
         [Input("Add alpha channel", 10, true)]

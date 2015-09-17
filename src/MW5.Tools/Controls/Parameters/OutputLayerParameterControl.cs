@@ -10,7 +10,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
-    public partial class OutputParameterControl : ParameterControlBase, IOuputputParameterControl
+    public partial class OutputLayerParameterControl : ParameterControlBase, IOuputputParameterControl
     {
         private readonly IFileDialogService _dialogService;
         private LayerType _layerType;
@@ -19,7 +19,7 @@ namespace MW5.Tools.Controls.Parameters
         private string _filename;
         private string _extension;
 
-        public OutputParameterControl(IFileDialogService dialogService)
+        public OutputLayerParameterControl(IFileDialogService dialogService)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dialogService = dialogService;
@@ -168,7 +168,7 @@ namespace MW5.Tools.Controls.Parameters
             RefreshControls();
         }
 
-        public void OnLayerChanged(IDatasourceInput layer)
+        public void OnDatasourceChanged(IDatasourceInput layer)
         {
             _filename = string.Empty;
             _inputFilename = layer != null ? layer.Filename : string.Empty;

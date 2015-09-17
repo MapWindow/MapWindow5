@@ -22,15 +22,15 @@ namespace MW5.Tools.Tools.Raster
     public class CreateGridProxyTool: GisTool
     {
         [Input("Input grid filename", 0)]
-        [ParameterType(ParameterType.RasterFilename)]
+        [ControlHint(ControlHint.RasterFilename)]
         public string Input { get; set; }               // probably grid filename will be more appropriate
 
         [Input("Proxy format", 1)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public GridProxyFormat ProxyFormat { get; set; }
 
         [Input("Color scheme", 2)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public PredefinedColors ColorScheme { get; set; }
 
         [Input("Use built in color scheme", 3)]

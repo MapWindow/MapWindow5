@@ -36,11 +36,11 @@ namespace MW5.Gdal.Tools
 
 
         [Input("Output type", 0, GroupOutput)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string OutputType { get; set; }
 
         [Input("Resampling method", 1, GroupOutput)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string DstResampling { get; set; }
 
         [Input("Destination no data value", 2, GroupOutput)]
@@ -70,7 +70,7 @@ namespace MW5.Gdal.Tools
         public string MemoryLimitMb { get; set; }
 
         [Input("Working pixels type", 1, GroupAdvanced)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public string WorkingPixelsType { get; set; }
 
         [Input("Thin plate spline transformer", 2, GroupAdvanced)]

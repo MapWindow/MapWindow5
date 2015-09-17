@@ -26,7 +26,7 @@ namespace MW5.Gdal.Model
         public virtual OutputLayerInfo Output { get; set; }
 
         [Input("Additional options", -1)]
-        [ParameterType(ParameterType.MultiLineString)]
+        [ControlHint(ControlHint.MultiLineString)]
         public string AdditionalOptions { get; set; }
 
         [Input("Override main options", -1)]

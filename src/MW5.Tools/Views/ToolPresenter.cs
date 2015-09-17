@@ -146,24 +146,6 @@ namespace MW5.Tools.Views
         }
 
         /// <summary>
-        /// Checks that all output datasource will have unique name.
-        /// </summary>
-        private bool ValidateOutputNames(IEnumerable<IParametrizedTool> tools)
-        {
-            var outputs = tools.ToList().SelectMany(t => t.Parameters.OfType<OutputLayerParameter>());
-            var list = outputs.Select(o => o.GetValue().Filename).ToList();
-
-            if (list.Count() != list.Distinct().Count())
-            {
-                MessageService.Current.Info(
-                    "Duplicate names for output layers. Try to include {input} varaible in the name template, e.g. '{input}_result.shp'");
-                return false;
-            }
-
-            return true;
-        }
-
-        /// <summary>
         /// Creates and runs separated tasks for a number of input datasources.
         /// </summary>
         private bool RunBatch()
@@ -182,7 +164,7 @@ namespace MW5.Tools.Views
 
             if (Model.Tool.SequentialBatchExecution)
             {
-                var tasks = GetSequentialTasks(tools).Reverse().ToList();
+                var tasks = BatchExecutionHelper.GetSequentialTasks(tools).Reverse().ToList();
 
                 foreach (var t in tasks)
                 {
@@ -208,55 +190,9 @@ namespace MW5.Tools.Views
             return false;
         }
 
-        private IEnumerable<IGisTask> GetSequentialTasks(IEnumerable<IGisTool> tools)
-        {
-            IGisTask lastTask = null;
-
-            foreach (var t in tools.Reverse())
-            {
-                var task = new GisTask(t) { NextTask = lastTask };
-
-                lastTask = task;
-
-                yield return task;
-            }
-        }
-
-        /// <summary>
-        /// Generates a new instance of tool for each input file. Works in batch mode only.
-        /// </summary>
         private IEnumerable<IGisTool> GenerateBatchTools(IParametrizedTool tool)
         {
-            var inputParameter = tool.GetBatchInputParameter();
-
-            if (!inputParameter.HasBatchInputs)
-            {
-                MessageService.Current.Info("No inputs are selected.");
-                return null;
-            }
-
-            IEnumerable<IGisTool> tools = null;
-
-            var layers = inputParameter.BatchInputs as IEnumerable<IDatasourceInput>;
-            if (layers != null)
-            {
-                // inputs may be represented by IDatasourceInput
-                tools = layers.Select(l => tool.CloneWithInput(l, l.Name, _context) as IGisTool).ToList();
-            }
-            else
-            {
-                // inputs may be represented or filename
-                var filenames = inputParameter.BatchInputs as IEnumerable<string>;
-                if (filenames != null)
-                {
-                    tools = filenames.Select(l => tool.CloneWithInput(l, l, _context) as IGisTool).ToList();
-                }
-            }
-
-            if (!ValidateOutputNames(tools.Select(t => t as IParametrizedTool)))
-            {
-                return null;
-            }
+            var tools = tool.GenerateBatchTools(_context);
 
             if (!tools.All(Validate))
             {

@@ -9,7 +9,7 @@ using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class FilenameParameter: BaseParameter, IBatchInputParameter
+    public class FilenameParameter: BaseParameter, IInputParameter
     {
         private readonly DataSourceType _dataType;
 

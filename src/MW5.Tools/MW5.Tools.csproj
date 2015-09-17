@@ -98,12 +98,13 @@
     <Compile Include="Controls\Parameters\FilenameParameterControl.Designer.cs">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Parameters\IInputParameterControl.cs" />
     <Compile Include="Controls\Parameters\IOuputputParameterControl.cs" />
-    <Compile Include="Controls\Parameters\OutputParameterControl.cs">
+    <Compile Include="Controls\Parameters\OutputLayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\OutputParameterControl.Designer.cs">
-      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    <Compile Include="Controls\Parameters\OutputLayerParameterControl.Designer.cs">
+      <DependentUpon>OutputLayerParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputLayerGrid.cs">
       <SubType>Component</SubType>
@@ -124,12 +125,19 @@
       <DependentUpon>FieldParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\IParameterControl.cs" />
+    <Compile Include="Controls\Parameters\OutputNameParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\OutputNameParameterControl.Designer.cs">
+      <DependentUpon>OutputNameParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressBarWrapper.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ProgressBarWrapper.Designer.cs">
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\BatchExecutionHelper.cs" />
     <Compile Include="Helpers\ManualHelper.cs" />
     <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
@@ -149,10 +157,12 @@
     <Compile Include="Model\Layers\DatasourceInput.cs" />
     <Compile Include="Model\OutputLayerAttribute.cs" />
     <Compile Include="Model\Parameters\FilenameParameter.cs" />
-    <Compile Include="Model\Parameters\IBatchInputParameter.cs" />
+    <Compile Include="Model\Parameters\IInputParameter.cs" />
+    <Compile Include="Model\Parameters\IOutputParameter.cs" />
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
     <Compile Include="Model\Layers\RasterInput.cs" />
-    <Compile Include="Model\ParameterTypeAttribute.cs" />
+    <Compile Include="Model\ControlHintAttribute.cs" />
+    <Compile Include="Model\Parameters\OutputNameParameter.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ToolBase.cs" />
     <Compile Include="Services\EmptyTaskHandle.cs" />
@@ -403,8 +413,11 @@
     <EmbeddedResource Include="Controls\Parameters\DoubleParameterControl.resx">
       <DependentUpon>DoubleParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Parameters\OutputParameterControl.resx">
-      <DependentUpon>OutputParameterControl.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\Parameters\OutputLayerParameterControl.resx">
+      <DependentUpon>OutputLayerParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\OutputNameParameterControl.resx">
+      <DependentUpon>OutputNameParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\StringParameterControl.resx">
       <DependentUpon>StringParameterControl.cs</DependentUpon>

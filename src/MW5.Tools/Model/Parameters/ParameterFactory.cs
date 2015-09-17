@@ -18,25 +18,27 @@ namespace MW5.Tools.Model.Parameters
         /// <summary>
         /// Creates tool parameter for a property of a given type.
         /// </summary>
-        public static BaseParameter CreateParameter(Type type, ParameterType customType)
+        public static BaseParameter CreateParameter(Type type, ControlHint customType)
         {
             switch (customType)
             {
-                case ParameterType.Field:
+                case ControlHint.Field:
                     return new FieldParameter();
-                case ParameterType.Combo:
+                case ControlHint.Combo:
                     return new OptionsParameter();
-                case ParameterType.Filename:
+                case ControlHint.Filename:
                     return new FilenameParameter(DataSourceType.All);
-                case ParameterType.VectorFilename:
+                case ControlHint.VectorFilename:
                     return new FilenameParameter(DataSourceType.Vector);
-                case ParameterType.RasterFilename:
+                case ControlHint.RasterFilename:
                     return new FilenameParameter(DataSourceType.Raster);
-                case ParameterType.MultiLineString:
+                case ControlHint.MultiLineString:
                     return new StringParameter(true);
+                case ControlHint.OutputName:
+                    return new OutputNameParameter();
             }
 
-            if (customType != ParameterType.Auto)
+            if (customType != ControlHint.Auto)
             {
                 throw new IndexOutOfRangeException("No handler for parameter type: " + customType);
             }

@@ -104,7 +104,7 @@
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label label1;
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt textBoxExt1;
+        protected Syncfusion.Windows.Forms.Tools.TextBoxExt textBoxExt1;
         private Syncfusion.Windows.Forms.ButtonAdv buttonAdv1;
 
     }

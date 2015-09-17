@@ -21,11 +21,11 @@ namespace MW5.Gdal.Tools
     public partial class Ogr2OgrTool: GdalTool
     {
         [Input("Input filename", 0)]
-        [ParameterType(ParameterType.VectorFilename)]
+        [ControlHint(ControlHint.VectorFilename)]
         public string InputFilename { get; set; }
 
         [Output("Output format", 0)]
-        [ParameterType(ParameterType.Combo)]
+        [ControlHint(ControlHint.Combo)]
         public DatasourceDriver OutputFormat { get; set; }
 
         [Output("Output", 1)]

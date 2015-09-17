@@ -7,7 +7,7 @@ using MW5.Api.Enums;
 
 namespace MW5.Tools.Model.Parameters
 {
-    public class OutputLayerParameter: BaseParameter
+    public class OutputLayerParameter: BaseParameter, IOutputParameter
     {
         public LayerType LayerType { get; set; }
 
@@ -22,6 +22,12 @@ namespace MW5.Tools.Model.Parameters
         {
             var info = GetValue();
             return string.Format("{0}: {1}", DisplayName, info != null ? info.Filename : string.Empty);
+        }
+
+        public void ResolveTemplateName(string inputFilename)
+        {
+            var info = GetValue();
+            info.ResolveTemplateName(inputFilename);
         }
     }
 }

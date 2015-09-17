@@ -12,7 +12,7 @@ namespace MW5.Tools.Enums
     /// <summary>
     /// The parameter type.
     /// </summary>
-    public enum ParameterType
+    public enum ControlHint
     {
         Auto = 0, 
         Field = 1, 
@@ -21,6 +21,7 @@ namespace MW5.Tools.Enums
         RasterFilename = 4,
         VectorFilename = 5,
         MultiLineString = 6,
+        OutputName = 7,
     }
 
     public enum TaskCommand

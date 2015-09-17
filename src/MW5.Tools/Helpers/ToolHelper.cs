@@ -234,49 +234,6 @@ namespace MW5.Tools.Helpers
         }
 
         /// <summary>
-        /// Clones the tool, copies values of all parameters and assigns selected datasource to the input parameter.
-        /// </summary>
-        internal static IParametrizedTool CloneWithInput(this IParametrizedTool tool, object input, string filename, IAppContext context)
-        {
-            var newTool = tool.Parameters.Clone();
-
-            newTool.Initialize(context);
-
-            // assigning input datasource
-            var p = newTool.GetBatchInputParameter() as BaseParameter;
-            p.SetToolValue(input);
-
-            // resolving output filename based on template
-            foreach (var output in newTool.Parameters.OfType<OutputLayerParameter>())
-            {
-                var info = output.GetValue();
-                info.ResolveTemplateName(filename);
-            }
-
-            return newTool;
-        }
-
-        /// <summary>
-        /// Gets input parameter for batch mode. Checks that there is a single input parameter.
-        /// </summary>
-        internal static IBatchInputParameter GetBatchInputParameter(this IParametrizedTool tool)
-        {
-            var list = tool.Parameters.OfType<IBatchInputParameter>().ToList();
-
-            if (!list.Any())
-            {
-                throw new ApplicationException("No input layer parameters are found.");
-            }
-
-            if (list.Count > 1)
-            {
-                throw new ApplicationException("More than one input layer parameters are found.");
-            }
-
-            return list.First();
-        }
-
-        /// <summary>
         /// Gets MVP presenter to display UI for the tool.
         /// </summary>
         public static IPresenter<ToolViewModel> GetPresenter(this ITool tool, IAppContext context)
@@ -291,7 +248,7 @@ namespace MW5.Tools.Helpers
         }
 
         /// <summary>
-        /// Gets the reflected tools.
+        /// Gets the reflected tools from the assembly.
         /// </summary>
         /// <value>stackoverflow.com/questions/26733/getting-all-types-that-implement-an-interface</value>
         public static IEnumerable<ITool> GetTools(this Assembly assembly)

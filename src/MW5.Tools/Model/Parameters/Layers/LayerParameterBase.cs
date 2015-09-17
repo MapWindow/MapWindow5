@@ -14,7 +14,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Model.Parameters.Layers
 {
-    internal abstract class LayerParameterBase : BaseParameter, IBatchInputParameter
+    internal abstract class LayerParameterBase : BaseParameter, IInputParameter
     {
         public abstract DataSourceType DataSourceType { get; }
 

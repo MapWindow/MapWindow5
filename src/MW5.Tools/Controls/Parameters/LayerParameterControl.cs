@@ -19,7 +19,7 @@ namespace MW5.Tools.Controls.Parameters
     /// <summary>
     /// Represents combobox with a list of layers and a button to open datasource from disk.
     /// </summary>
-    internal partial class LayerParameterControl : ParameterControlBase
+    internal partial class LayerParameterControl : ParameterControlBase, IInputParameterControl
     {
         private readonly IFileDialogService _dialogService;
         private DataSourceType _dataSourceType;
@@ -177,6 +177,8 @@ namespace MW5.Tools.Controls.Parameters
             SetNumSelected(layer != null ? layer.Datasource.NumSelected : 0);
 
             FireSelectedLayerChanged();
+
+            FireValueChanged();
         }
 
         private void FireSelectedLayerChanged()

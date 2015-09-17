@@ -77,7 +77,7 @@ namespace MW5.Gdal.Views
         /// </summary>
         private void UpdateOutputFilename(IParametrizedTool tool, DatasourceDriver driver)
         {
-            var input = tool.GetBatchInputParameter() as FilenameParameter;
+            var input = tool.GetInputParameter() as FilenameParameter;
             if (input == null)
             {
                 return;
