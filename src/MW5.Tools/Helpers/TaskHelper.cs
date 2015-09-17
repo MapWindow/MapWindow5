@@ -49,11 +49,25 @@ namespace MW5.Tools.Helpers
                 yield return "Execution time: " + task.ExecutionTime;
             }
 
+            var gdalTool = tool as IGdalTool;
+            if (gdalTool != null && gdalTool.OverrideOptions)
+            {
+                yield return string.Empty;
+                yield return "Options: " + gdalTool.EffectiveOptions;
+
+                foreach (var p in tool.Parameters.Where(p => p is FilenameParameter || p is OutputLayerParameter))
+                {
+                    yield return p.ToString();
+                }
+
+                yield break;
+            }
+
             if (tool.Parameters.Any())
             {
                 yield return string.Empty;
 
-                foreach (var p in tool.Parameters)
+                foreach (var p in tool.Parameters.Where(p => !p.IsEmpty && p.Value != p.DefaultValue))
                 {
                     yield return p.ToString();
                 }

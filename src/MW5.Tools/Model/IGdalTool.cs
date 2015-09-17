@@ -4,12 +4,14 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
-using MW5.Tools.Model.Parameters;
-
-namespace MW5.Gdal.Model
+namespace MW5.Tools.Model
 {
     public interface IGdalTool
     {
+        string EffectiveOptions { get; }
+
+        bool OverrideOptions { get; set; }
+
         string AdditionalOptions { get; set; }
 
         string GetOptions(bool mainOnly = false);

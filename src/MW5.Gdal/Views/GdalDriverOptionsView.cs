@@ -42,12 +42,12 @@ namespace MW5.Gdal.Views
 
         public override void Initialize()
         {
-            base.Initialize();
-
             if (GdalTool.SupportDriverCreationOptions)
             {
                 _tabDriver = tabControlAdv1.AddTab("Driver", Resources.img_driver24);
             }
+
+            base.Initialize();
         }
 
         protected override void OnDriverChanged(DatasourceDriver driver)
@@ -111,15 +111,15 @@ namespace MW5.Gdal.Views
 
             GenerateDriverControls(panel, driver);
 
-            foreach (var p in _driverOptions.Where(p => p.DefaultValue != null))
+            foreach (var p in _driverOptions.Where(p => p.InitialValue != null))
             {
-                p.Control.SetValue(p.DefaultValue);
+                p.Control.SetValue(p.InitialValue);
             }
 
             panel.AddVerticalPadding();
 
             _styleService.ApplyStyle(panel);
-
+ 
             tab.TabVisible = panel.Controls.Count > 0;
 
             superToolTip1.AddTooltips(panel, _driverOptions);

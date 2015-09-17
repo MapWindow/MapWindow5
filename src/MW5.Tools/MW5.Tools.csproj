@@ -139,6 +139,7 @@
     <Compile Include="Helpers\ToolHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
+    <Compile Include="Model\IGdalTool.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
     <Compile Include="Model\Layers\CachedInput.cs" />
     <Compile Include="Model\Layers\IDatasourceInput.cs" />

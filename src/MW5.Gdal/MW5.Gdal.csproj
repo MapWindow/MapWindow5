@@ -82,7 +82,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Model\GdalTool.cs" />
-    <Compile Include="Model\IGdalTool.cs" />
     <Compile Include="Legacy\TranslateRasterCustomTool.cs" />
     <Compile Include="Tools\AddOverviewsTool.cs" />
     <Compile Include="Tools\BuildVrtParameters.cs" />

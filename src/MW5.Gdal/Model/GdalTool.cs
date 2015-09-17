@@ -29,13 +29,22 @@ namespace MW5.Gdal.Model
         [ParameterType(ParameterType.MultiLineString)]
         public string AdditionalOptions { get; set; }
 
+        [Input("Override main options", -1)]
+        public bool OverrideOptions { get; set; }
+
+        [Input("Effective options", -1)]
+        public string EffectiveOptions 
+        {
+            get { return GetOptions(); } 
+        }
+
         // The UI for them will be generated dynamically depending on driver
         public string DriverOptions { get; set; }
 
         /// <summary>
         /// Gets command line options.
         /// </summary>
-        public virtual string GetOptions(bool mainOnly = false)
+        public virtual string CompileOptions(bool mainOnly = false)
         {
             var sb = new StringBuilder();
 
@@ -59,6 +68,16 @@ namespace MW5.Gdal.Model
         /// Initializes the command line options.
         /// </summary>
         protected abstract void InitCommandLine(CommandLineMapping mapping);
+
+        public string GetOptions(bool mainOnly = false)
+        {
+            if (OverrideOptions)
+            {
+                return AdditionalOptions;
+            }
+            
+            return CompileOptions();
+        }
 
         /// <summary>
         /// Gets a value indicating whether current tool can specify driver creation options.

@@ -20,25 +20,13 @@ namespace MW5.Gdal.Tools
     [GisTool(GroupKeys.GdalTools, ToolIcon.Hammer, typeof(GdalConvertPresenter))]
     public partial class Ogr2OgrTool: GdalTool
     {
-        private DatasourceDriver _outputFormat;
-
         [Input("Input filename", 0)]
         [ParameterType(ParameterType.VectorFilename)]
         public string InputFilename { get; set; }
 
         [Output("Output format", 0)]
         [ParameterType(ParameterType.Combo)]
-        public DatasourceDriver OutputFormat
-        {
-            get
-            {
-                return _outputFormat;
-            }
-            set
-            {
-                _outputFormat = value;
-            }
-        }
+        public DatasourceDriver OutputFormat { get; set; }
 
         [Output("Output", 1)]
         [OutputLayer("{input}_conv.shp", LayerType.Shapefile, false)]
@@ -104,11 +92,22 @@ namespace MW5.Gdal.Tools
         /// <summary>
         /// Gets command line options.
         /// </summary>
-        public override string GetOptions(bool mainOnly = false)
+        public override string CompileOptions(bool mainOnly = false)
         {
-            string s = base.GetOptions(mainOnly);
+            string s = base.CompileOptions(mainOnly);
 
-            return string.Format("-f {0} {1}", OutputFormat.Name, s);
+            var sb = new StringBuilder();
+            
+            sb.AppendFormat("-f '{0}' ", OutputFormat.Name);
+            sb.Append(s);
+            sb.Append("-progress ");
+
+            if (Output.Overwrite)
+            {
+                sb.Append("-overwrite ");
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>

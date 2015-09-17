@@ -113,11 +113,6 @@ namespace MW5.Tools.Helpers
                         xmlReader.ReadStartElement();
 
                         xmlReader.ReadParameters(parameters);
-
-                        foreach (var p in parameters)
-                        {
-                            p.DefaultValue = p.PreviousValue;
-                        }
                     }
                 }
             }

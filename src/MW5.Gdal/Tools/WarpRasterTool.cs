@@ -120,9 +120,9 @@ namespace MW5.Gdal.Tools
             get { return true; }
         }
 
-        public override string GetOptions(bool mainOnly = false)
+        public override string CompileOptions(bool mainOnly = false)
         {
-            var s = base.GetOptions(mainOnly);
+            var s = base.CompileOptions(mainOnly);
 
             var sb = new StringBuilder(s);
 

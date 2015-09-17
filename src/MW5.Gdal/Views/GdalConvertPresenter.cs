@@ -20,27 +20,5 @@ namespace MW5.Gdal.Views
             : base(view, context)
         {
         }
-
-        public override bool ViewOkClicked()
-        {
-            SaveDriverConfig();
-
-            return base.ViewOkClicked();
-        }
-
-        private void SaveDriverConfig()
-        {
-            var view = View as IGdalConvertView;
-            if (view == null)
-            {
-                return;
-            }
-
-            var tool = Model.Tool as GdalRasterTool;
-            if (tool != null)
-            {
-                tool.OutputFormat.SaveConfig(view.DriverParameters);
-            }
-        }
     }
 }

@@ -94,10 +94,28 @@ namespace MW5.Gdal.Views
             }
 
             var p = tool.FindParameter<IGdalTool, string>(t => t.AdditionalOptions) as StringParameter;
+            var p2 = tool.FindParameter<IGdalTool, bool>(t => t.OverrideOptions) as BooleanParameter;
 
-            _generator.GenerateControls(new[] { p }, false);
+            _generator.GenerateControls(new List<BaseParameter>() { p, p2 }, false);
 
-            _tabCmdLine.GetPanel().Controls.Add(p.Control);
+            var controls = _tabCmdLine.GetPanel().Controls;
+            controls.Add(p2.Control);
+            controls.Add(p.Control);
+
+            var ctrl = p2.Control as BooleanParameterControl;
+            if (ctrl != null)
+            {
+                ctrl.ValueChanged += OverrideValueChanged;
+            }
+        }
+
+        private void OverrideValueChanged(object sender, EventArgs e)
+        {
+            var bc = sender as BooleanParameterControl;
+            if (bc != null)
+            {
+                _cmdOptions.Enabled = !(bool)bc.GetValue();
+            }
         }
 
         /// <summary>
@@ -128,7 +146,7 @@ namespace MW5.Gdal.Views
             var tool = Model.Tool as GdalTool;
             if (tool != null)
             {
-                _cmdOptions.SetValue(tool.GetOptions(true));
+                _cmdOptions.SetValue(tool.CompileOptions(true));
             }
         }
 
