@@ -96,7 +96,7 @@ namespace MW5.Tools.Views
                 var sb = new StringBuilder();
                 foreach (var item in log.Entries)
                 {
-                    sb.Append(item.ToLine());
+                    sb.Append(item.DetailedMessage);
                 }
 
                 textBoxExt1.Text = sb.ToString();
@@ -109,7 +109,7 @@ namespace MW5.Tools.Views
 
         private void OnLogMessageAdded(object sender, LogEventArgs e)
         {
-            Action action = () => textBoxExt1.AppendText(e.Entry.ToLine());
+            Action action = () => textBoxExt1.AppendText(e.Entry.DetailedMessage);
             textBoxExt1.SafeInvoke(action);
         }
 

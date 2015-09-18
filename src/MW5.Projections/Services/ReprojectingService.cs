@@ -53,9 +53,9 @@ namespace MW5.Projections.Services
         /// </summary>
         private IFeatureSet Reproject(IFeatureSet fsSource, ISpatialReference newProjection, string saveAsFilename)
         {
-            int count = 0;
+            int count;
 
-            var fs = fsSource.Reproject(newProjection, ref count);
+            var fs = fsSource.Reproject(newProjection, out count);
 
             if (fs == null)
             {

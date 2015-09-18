@@ -131,6 +131,12 @@
     <Compile Include="Controls\Parameters\OutputNameParameterControl.Designer.cs">
       <DependentUpon>OutputNameParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Parameters\ProjectionParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\ProjectionParameterControl.Designer.cs">
+      <DependentUpon>ProjectionParameterControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ProgressBarWrapper.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -170,6 +176,7 @@
     <Compile Include="Model\Layers\RasterInput.cs" />
     <Compile Include="Model\ControlHintAttribute.cs" />
     <Compile Include="Model\Parameters\OutputNameParameter.cs" />
+    <Compile Include="Model\Parameters\GeoProjectionParameter.cs" />
     <Compile Include="Model\Range.cs" />
     <Compile Include="Model\ToolBase.cs" />
     <Compile Include="Services\EmptyTaskHandle.cs" />
@@ -182,7 +189,7 @@
     <Compile Include="Model\OutputAttribute.cs" />
     <Compile Include="Model\Parameters\DistanceParameter.cs" />
     <Compile Include="Model\Parameters\FieldParameter.cs" />
-    <Compile Include="Model\Parameters\ParameterFactory.cs" />
+    <Compile Include="Services\ParameterFactory.cs" />
     <Compile Include="Model\TaskCollection.cs" />
     <Compile Include="Model\Layers\LayerInput.cs" />
     <Compile Include="Model\OutputLayerInfo.cs" />
@@ -305,6 +312,7 @@
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Projections\ReprojectTool.cs" />
     <Compile Include="Tools\Raster\CreateGridProxyTool.cs" />
     <Compile Include="Views\Custom\Abstract\ILongExecutionView.cs" />
     <Compile Include="Views\Custom\Abstract\IRandomPointsView.cs" />
@@ -425,6 +433,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\OutputNameParameterControl.resx">
       <DependentUpon>OutputNameParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\ProjectionParameterControl.resx">
+      <DependentUpon>ProjectionParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\StringParameterControl.resx">
       <DependentUpon>StringParameterControl.cs</DependentUpon>

@@ -15,6 +15,7 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Model
 {
@@ -67,6 +68,16 @@ namespace MW5.Tools.Model
         {
             foreach (var p in _list)
             {
+                var projection = p as GeoProjectionParameter;
+                if (projection != null)
+                {
+                    if (projection.Value == null)
+                    {
+                        MessageService.Current.Info("Invalid or empty projection.");
+                        return false;
+                    }
+                }
+
                 var layerParameter = p as GenericLayerParameter;
                 if (layerParameter != null)
                 {

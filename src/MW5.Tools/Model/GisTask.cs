@@ -272,7 +272,7 @@ namespace MW5.Tools.Model
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.Current.Error("Error during tool execution: " + Tool.Name, ex);
+                                    _tool.Log.Error("Error during tool execution: " + Tool.Name, ex);
                                     Status = GisTaskStatus.Failed;
                                     return;
                                 }

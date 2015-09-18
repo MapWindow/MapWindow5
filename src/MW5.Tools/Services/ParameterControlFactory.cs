@@ -8,11 +8,12 @@ using System;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
 
-namespace MW5.Tools.Controls.Parameters
+namespace MW5.Tools.Services
 {
     /// <summary>
     /// Creates and assigns controls for parameters.
@@ -41,6 +42,10 @@ namespace MW5.Tools.Controls.Parameters
             if (parameter is OutputNameParameter)
             {
                 control = new OutputNameParameterControl(batchMode);
+            }
+            else if (parameter is GeoProjectionParameter)
+            {
+                control = _context.Container.GetInstance<ProjectionParameterControl>();
             }
             else if (parameter is FilenameParameter)
             {
@@ -84,7 +89,7 @@ namespace MW5.Tools.Controls.Parameters
             else if (parameter is LayerParameterBase)
             {
                 var lp = parameter as LayerParameterBase;
-                control = CreateInputControl(batchMode, lp.DataSourceType, true);
+                control = CreateInputControl(batchMode, lp.DataSourceType, false);
             }
 
             if (control == null)

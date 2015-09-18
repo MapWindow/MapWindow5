@@ -7,10 +7,12 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Shared;
 using MW5.Tools.Enums;
+using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
 
-namespace MW5.Tools.Model.Parameters
+namespace MW5.Tools.Services
 {
     /// <summary>
     /// Creates parameters for each property of the tool marked as Input or Output.
@@ -167,6 +169,11 @@ namespace MW5.Tools.Model.Parameters
             if (customType != ControlHint.Auto)
             {
                 throw new IndexOutOfRangeException("No handler for parameter type: " + customType);
+            }
+
+            if (type == typeof(ISpatialReference))
+            {
+                return new GeoProjectionParameter();
             }
 
             if (type == typeof(double))

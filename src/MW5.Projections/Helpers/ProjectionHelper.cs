@@ -14,8 +14,29 @@ using MW5.Projections.UI.Forms;
 
 namespace MW5.Projections.Helpers
 {
+    /// <summary>
+    /// Extension methods of IAppContext to work with current map projection and projection dialogs.
+    /// </summary>
     public static class ProjectionHelper
     {
+        /// <summary>
+        /// Opens UI to choose projection with known ESPG code.
+        /// </summary>
+        /// <returns>EPSG code of the projection or -1 on failure.</returns>
+        public static int ChooseEpsgProjection(this IAppContext context)
+        {
+            using (var form = new ChooseProjectionForm(context.Projections, context))
+            {
+                if (context.View.ShowChildView(form))
+                {
+                    var cs = form.SelectedCoordinateSystem;
+                    return cs != null ? cs.Code : -1;
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Displays UI allowing the user to change map projection.
         /// </summary>

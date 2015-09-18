@@ -17,8 +17,10 @@ namespace MW5.Tools.Model.Layers
     /// <summary>
     /// Darasource which serves as an input for a certain GIS tool.
     /// </summary>
-    public class DatasourceInput: IDatasourceInput
+    public class DatasourceInput: IDatasourceInput, IVectorInput, IRasterInput
     {
+        private string _filename = string.Empty;
+
         public DatasourceInput(ILayerSource source)
         {
             if (source == null) throw new ArgumentNullException("source");
@@ -41,11 +43,34 @@ namespace MW5.Tools.Model.Layers
         /// <summary>
         /// Gets or sets the datasource serving as input for GIS task.
         /// </summary>
+        IRasterSource IRasterInput.Datasource
+        {
+            get { return Datasource as IRasterSource; }
+            set { throw new NotSupportedException(""); }
+        }
+
+        /// <summary>
+        /// Gets or sets the datasource serving as input for GIS task.
+        /// </summary>
+        IFeatureSet IVectorInput.Datasource
+        {
+            get { return Datasource as IFeatureSet;  }
+            set { throw new NotSupportedException(""); }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether only selected features of the input layer should be processed.
+        /// </summary>
+        public virtual bool SelectedOnly { get; set; }
+
+        /// <summary>
+        /// Gets or sets the datasource serving as input for GIS task.
+        /// </summary>
         public ILayerSource Datasource { get; set; }
 
         public string Name
         {
-            get { return Path.GetFileNameWithoutExtension(Datasource.Filename);  }
+            get { return Path.GetFileNameWithoutExtension(Datasource != null ? Datasource.Filename: _filename);  }
         }
 
         /// <summary>
@@ -53,7 +78,7 @@ namespace MW5.Tools.Model.Layers
         /// </summary>
         public string Filename 
         {
-            get { return Datasource.Filename; } 
+            get { return Datasource != null ? Datasource.Filename: _filename; } 
         }
 
         /// <summary>
@@ -78,6 +103,8 @@ namespace MW5.Tools.Model.Layers
         /// </summary>
         public void Close()
         {
+            _filename = Datasource.Filename;
+
             if (CloseAfterRun)
             {
                 Datasource.Dispose();

@@ -561,9 +561,14 @@ namespace MW5.Api.Concrete
             return WrapShapefile(result);
         }
 
-        public IFeatureSet Reproject(ISpatialReference newProjection, ref int reprojectedCount)
+        public IFeatureSet Reproject(ISpatialReference newProjection, out int reprojectedCount)
         {
-            var sf = _shapefile.Reproject(newProjection.GetInternal(), ref reprojectedCount);
+            int count = 0;
+            
+            var sf = _shapefile.Reproject(newProjection.GetInternal(), ref count);
+
+            reprojectedCount = count;
+
             return WrapShapefile(sf);
         }
 

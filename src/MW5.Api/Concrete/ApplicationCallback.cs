@@ -47,7 +47,7 @@ namespace MW5.Api.Concrete
             get
             {
                 int threadId = Thread.CurrentThread.ManagedThreadId;
-                return _list.Where(cb => cb.ThreadId == threadId);
+                return _list.Where(cb => cb.ThreadId == threadId).ToList();
             }
         }
 
