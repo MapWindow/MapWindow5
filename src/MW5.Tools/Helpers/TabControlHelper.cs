@@ -10,19 +10,19 @@ using Syncfusion.Windows.Forms.Tools;
 namespace MW5.Tools.Helpers
 {
     /// <summary>
-    /// Helper class to deal the standard ToolView tab control.
+    /// Helper class to deal with the standard ToolView tab control.
     /// </summary>
-    static class TabControlHelper
+    internal static class TabControlHelper
     {
         public static TabPageAdv AddTab(this TabControlAdv tabControl, TabPageAdv page, string caption, Bitmap icon)
         {
-            var tab = new TabPageAdv
+            // Also can try to do initialization of properties within tab.SuspendLayout, tab.ResumeLayout calls
+            var tab = new TabPageAdv(caption)
             {
                 Image = icon,
                 ImageSize = new Size(24, 24),
                 Location = new Point(123, 1),
                 ShowCloseButton = true,
-                Text = caption,
                 ThemesEnabled = false
             };
 
