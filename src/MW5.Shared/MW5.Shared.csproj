@@ -64,6 +64,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="CustomMemberLayoutAttribute.cs" />
     <Compile Include="IMarshal.cs" />
     <Compile Include="ReplaceControlDescripterProvider.cs" />
     <Compile Include="ArrayHelper.cs" />
@@ -101,6 +102,9 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="TextMeasurer.cs" />
     <Compile Include="CurrentThreadHelper.cs" />
+    <Compile Include="WebClientEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Win32Api.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>

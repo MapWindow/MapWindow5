@@ -11,6 +11,7 @@ using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -18,6 +19,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Raster
 {
+    [CustomMemberLayout]
     [GisTool(GroupKeys.Raster)]
     public class CreateGridProxyTool: GisTool
     {

@@ -1,8 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="TaskHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
@@ -14,27 +18,6 @@ namespace MW5.Tools.Helpers
 {
     internal static class TaskHelper
     {
-        public static TaskIcons GetStatusIcon(this IGisTask task)
-        {
-            switch (task.Status)
-            {
-                case GisTaskStatus.NotStarted:
-                    return TaskIcons.NotStarted;
-                case GisTaskStatus.Running:
-                    return TaskIcons.InProgress;
-                case GisTaskStatus.Success:
-                    return TaskIcons.Success;
-                case GisTaskStatus.Failed:
-                    return TaskIcons.Error;
-                case GisTaskStatus.Cancelled:
-                    return TaskIcons.Cancel;
-                case GisTaskStatus.Paused:
-                    return TaskIcons.Pause;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
         public static IEnumerable<string> GetDescription(this IGisTask task)
         {
             var tool = task.Tool as IParametrizedTool;
@@ -71,6 +54,27 @@ namespace MW5.Tools.Helpers
                 {
                     yield return p.ToString();
                 }
+            }
+        }
+
+        public static TaskIcons GetStatusIcon(this IGisTask task)
+        {
+            switch (task.Status)
+            {
+                case GisTaskStatus.NotStarted:
+                    return TaskIcons.NotStarted;
+                case GisTaskStatus.Running:
+                    return TaskIcons.InProgress;
+                case GisTaskStatus.Success:
+                    return TaskIcons.Success;
+                case GisTaskStatus.Failed:
+                    return TaskIcons.Error;
+                case GisTaskStatus.Cancelled:
+                    return TaskIcons.Cancel;
+                case GisTaskStatus.Paused:
+                    return TaskIcons.Pause;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

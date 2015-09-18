@@ -111,6 +111,7 @@ namespace MW5.Gdal.Views
 
             GenerateDriverControls(panel, driver);
 
+            // TODO: extract
             foreach (var p in _driverOptions.Where(p => p.InitialValue != null))
             {
                 p.Control.SetValue(p.InitialValue);
@@ -122,7 +123,7 @@ namespace MW5.Gdal.Views
  
             tab.TabVisible = panel.Controls.Count > 0;
 
-            superToolTip1.AddTooltips(panel, _driverOptions);
+            superToolTip1.AddTooltips(_driverOptions);
         }
 
         /// <summary>

@@ -43,6 +43,7 @@ namespace MW5.Configuration
             chkShowPluginInToolTip.Checked = config.ShowPluginInToolTip;
             chkShowMenuToolTips.Checked = config.ShowMenuToolTips;
             chkDynamicVisibilityWarnings.Checked = config.DisplayDynamicVisibilityWarnings;
+            chkLocalDocumentation.Checked = config.LocalDocumentation;
         }
 
         public string PageName
@@ -60,6 +61,7 @@ namespace MW5.Configuration
             config.ShowMenuToolTips = chkShowMenuToolTips.Checked;
             config.DisplayDynamicVisibilityWarnings = chkDynamicVisibilityWarnings.Checked;
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
+            config.LocalDocumentation = chkLocalDocumentation.Checked;
         }
 
         public Bitmap Icon

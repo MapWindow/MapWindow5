@@ -26,6 +26,7 @@ namespace MW5.Tools.Model
     /// <summary>
     /// Base class for GIS tool.
     /// </summary>
+    [CustomMemberLayout]
     public abstract class GisTool : IGisTool, IParametrizedTool, IXmlSerializable
     {
         private readonly ToolConfiguration _config = new ToolConfiguration();
@@ -161,7 +162,7 @@ namespace MW5.Tools.Model
             set
             {
                 _callback = value;
-                Parameters.SetCallback(Callback);
+                Parameters.SetCallbackToInputs(Callback);
             }
         }
 
@@ -177,7 +178,7 @@ namespace MW5.Tools.Model
                 return false;
             }
 
-            Parameters.Apply();
+            Parameters.ApplyControlValues();
 
             return BeforeRun();
         }

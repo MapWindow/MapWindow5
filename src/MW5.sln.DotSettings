@@ -73,6 +73,15 @@
 &lt;!-- Last updated 15.05.2012 --&gt;&#xD;
 &lt;Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns"&gt;&#xD;
 &#xD;
+  &lt;Pattern RemoveAllRegions="true"&gt;&#xD;
+    &lt;Match&gt;&#xD;
+        &lt;HasAttribute CLRName="MW5.Shared.CustomMemberLayout" /&gt;&#xD;
+    &lt;/Match&gt;&#xD;
+&#xD;
+    &lt;!-- all other members --&gt;&#xD;
+    &lt;Entry/&gt;&#xD;
+  &lt;/Pattern&gt;&#xD;
+&#xD;
   &lt;!-- /////////////////////////////////////// --&gt;&#xD;
   &lt;!-- DEFAULT PATTERN WITH REGIONS --&gt;&#xD;
   &lt;!-- /////////////////////////////////////// --&gt;&#xD;

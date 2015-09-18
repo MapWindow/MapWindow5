@@ -13,6 +13,7 @@ using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -24,6 +25,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     /// <summary>
     /// Generates random points within extents of selected datasource.
     /// </summary>
+    [CustomMemberLayout]
     [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class RandomPointsTool : GisTool
     {

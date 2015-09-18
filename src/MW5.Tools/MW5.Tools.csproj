@@ -138,13 +138,18 @@
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BatchExecutionHelper.cs" />
-    <Compile Include="Helpers\ManualHelper.cs" />
+    <Compile Include="Helpers\DriverConfigHelper.cs" />
+    <Compile Include="Helpers\DocumentationHelper.cs" />
     <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
-    <Compile Include="Helpers\XmlParameterHelper.cs" />
+    <Compile Include="Helpers\ToolDialogHelper.cs" />
+    <Compile Include="Helpers\ToolHelper.cs" />
+    <Compile Include="Helpers\ToolIdentification.cs" />
+    <Compile Include="Helpers\ToolRerunHelper.cs" />
+    <Compile Include="Helpers\ParameterSerialization.cs" />
     <Compile Include="Helpers\TabControlHelper.cs" />
     <Compile Include="Helpers\TemplateVariables.cs" />
-    <Compile Include="Helpers\ToolHelper.cs" />
+    <Compile Include="Helpers\ToolConfigHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\IGdalTool.cs" />

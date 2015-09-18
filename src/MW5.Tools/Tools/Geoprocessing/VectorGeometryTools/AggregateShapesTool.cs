@@ -12,6 +12,7 @@ using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -19,6 +20,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
+    [CustomMemberLayout]
     [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class AggregateShapesTool : GisTool
     {

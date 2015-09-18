@@ -1,14 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="PanelHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Helpers
 {
-    static class PanelHelper
+    internal static class PanelHelper
     {
         /// <summary>
         /// Adds the vertical padding for controls within tab page of a standard GIS tool UI.

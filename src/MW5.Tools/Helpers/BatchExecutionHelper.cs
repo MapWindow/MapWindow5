@@ -1,8 +1,12 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="BatchExecutionHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Tools.Model;
@@ -18,28 +22,11 @@ namespace MW5.Tools.Helpers
     internal static class BatchExecutionHelper
     {
         /// <summary>
-        /// Creates sequentially linked tasks for a list of tools.
-        /// </summary>
-        public static IEnumerable<IGisTask> GetSequentialTasks(IEnumerable<IGisTool> tools)
-        {
-            IGisTask lastTask = null;
-
-            foreach (var t in tools.Reverse())
-            {
-                var task = new GisTask(t) { NextTask = lastTask };
-
-                lastTask = task;
-
-                yield return task;
-            }
-        }
-
-        /// <summary>
         /// Generates a new instance of tool for each input file. Works in batch mode only.
         /// </summary>
         public static IEnumerable<IGisTool> GenerateBatchTools(this IParametrizedTool tool, IAppContext context)
         {
-            var inputParameter = tool.GetInputParameter();
+            var inputParameter = tool.GetSingleInputParameter();
 
             if (!inputParameter.HasBatchInputs)
             {
@@ -70,10 +57,48 @@ namespace MW5.Tools.Helpers
                 return null;
             }
 
-
             return tools;
         }
-        
+
+        /// <summary>
+        /// Creates sequentially linked tasks for a list of tools.
+        /// </summary>
+        public static IEnumerable<IGisTask> CreateSequentialTasks(IEnumerable<IGisTool> tools)
+        {
+            IGisTask lastTask = null;
+
+            foreach (var t in tools.Reverse())
+            {
+                var task = new GisTask(t) { NextTask = lastTask };
+
+                lastTask = task;
+
+                yield return task;
+            }
+        }
+
+        /// <summary>
+        /// Clones the tool, copies values of all parameters and assigns selected datasource to the input parameter.
+        /// </summary>
+        private static IParametrizedTool CloneWithInput(this IParametrizedTool tool, object input, string filename, IAppContext context)
+        {
+            var newTool = tool.Parameters.Clone();
+
+            newTool.Initialize(context);
+
+            // assigning input datasource
+            var p = newTool.GetSingleInputParameter() as BaseParameter;
+            p.SetToolValue(input);
+
+            // resolving output filename based on template
+            foreach (var output in newTool.Parameters.OfType<IOutputParameter>())
+            {
+                output.ResolveTemplateName(filename);
+            }
+
+            return newTool;
+        }
+
         /// <summary>
         /// Checks that all output datasource will have unique name.
         /// </summary>
@@ -99,53 +124,12 @@ namespace MW5.Tools.Helpers
 
             if (duplicates)
             {
-                MessageService.Current.Info("Duplicate names for output layers. Try to include {input} varaible in the name template, e.g. '{input}_result.shp'");
+                MessageService.Current.Info(
+                    "Duplicate names for output layers. Try to include {input} varaible in the name template, e.g. '{input}_result.shp'");
                 return false;
             }
 
             return true;
-        }
-
-        /// <summary>
-        /// Clones the tool, copies values of all parameters and assigns selected datasource to the input parameter.
-        /// </summary>
-        private static IParametrizedTool CloneWithInput(this IParametrizedTool tool, object input, string filename, IAppContext context)
-        {
-            var newTool = tool.Parameters.Clone();
-
-            newTool.Initialize(context);
-
-            // assigning input datasource
-            var p = newTool.GetInputParameter() as BaseParameter;
-            p.SetToolValue(input);
-
-            // resolving output filename based on template
-            foreach (var output in newTool.Parameters.OfType<IOutputParameter>())
-            {
-                output.ResolveTemplateName(filename);
-            }
-
-            return newTool;
-        }
-
-        /// <summary>
-        /// Gets input parameter for batch mode. Checks that there is a single input parameter.
-        /// </summary>
-        internal static IInputParameter GetInputParameter(this IParametrizedTool tool)
-        {
-            var list = tool.Parameters.OfType<IInputParameter>().ToList();
-
-            if (!list.Any())
-            {
-                throw new ApplicationException("No input layer parameters are found.");
-            }
-
-            if (list.Count > 1)
-            {
-                throw new ApplicationException("More than one input layer parameters are found.");
-            }
-
-            return list.First();
         }
     }
 }

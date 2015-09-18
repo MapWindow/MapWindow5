@@ -185,11 +185,11 @@ namespace MW5.Projections.Helpers
             oldProjName = oldProjName.Replace(@"/", "-");
 
             string testName;
-            string extention = Path.GetExtension(filename);
-            if (filename.EndsWith("." + oldProjName + extention, StringComparison.OrdinalIgnoreCase))
+            string extension = Path.GetExtension(filename);
+            if (filename.EndsWith("." + oldProjName + extension, StringComparison.OrdinalIgnoreCase))
             {
                 // in case current projection included in file name already, it should be be removed
-                testName = filename.Substring(0, filename.Length - oldProjName.Length - extention.Length - 1);
+                testName = filename.Substring(0, filename.Length - oldProjName.Length - extension.Length - 1);
             }
             else
             {
@@ -198,7 +198,7 @@ namespace MW5.Projections.Helpers
             }
 
             string newProjName = newProjection.Name.Replace(@"/", @"-");
-            return testName + "." + newProjName + extention;
+            return testName + "." + newProjName + extension;
         }
     }
 }

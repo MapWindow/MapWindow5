@@ -164,7 +164,7 @@ namespace MW5.Tools.Views
 
             if (Model.Tool.SequentialBatchExecution)
             {
-                var tasks = BatchExecutionHelper.GetSequentialTasks(tools).Reverse().ToList();
+                var tasks = BatchExecutionHelper.CreateSequentialTasks(tools).Reverse().ToList();
 
                 foreach (var t in tasks)
                 {

@@ -1,26 +1,24 @@
-﻿// --------------------------------------------------------------------------------------------------------------------
+﻿// -------------------------------------------------------------------------------------------
 // <copyright file="BufferTool.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   Defines the BufferTool type.
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
-using System;
-using System.ComponentModel;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
+using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
-using MW5.Tools.Properties;
+using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [GisTool(GroupKeys.VectorGeometryTools, Enums.ToolIcon.Hammer)]
+    [CustomMemberLayout]
+    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class BufferTool : GisTool
     {
         [Input("Input layer", 0)]
@@ -39,13 +37,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [OutputLayer("{input}_buffer.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
-        protected override void Configure(IAppContext context, Services.ToolConfiguration configuration)
+        protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
             base.Configure(context, configuration);
 
-            configuration.Get<BufferTool>()
-                .SetDefault(t => t.BufferDistance, 50)
-                .SetDefault(t => t.NumSegments, 30);
+            configuration.Get<BufferTool>().SetDefault(t => t.BufferDistance, 50).SetDefault(t => t.NumSegments, 30);
         }
 
         /// <summary>
@@ -102,9 +98,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, GetSourceUnits(), BufferDistance.Value);
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, GetSourceUnits(),
+                BufferDistance.Value);
 
-            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
+            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly,
+                MergeResults);
 
             return true;
         }

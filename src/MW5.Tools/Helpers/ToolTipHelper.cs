@@ -1,53 +1,47 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ToolTipHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Model.Parameters;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Helpers
 {
+    /// <summary>
+    /// Extension methods to add tooltips for tool parameters controls.
+    /// </summary>
     internal static class ToolTipHelper
     {
-        public static void AddTooltips(this SuperToolTip tooltip, Panel panel, IEnumerable<BaseParameter> parameters)
+        /// <summary>
+        /// Adds tooltips to the parameter controls based on BaseParameter.Description property.
+        /// </summary>
+        public static void AddTooltips(this SuperToolTip tooltip, IEnumerable<BaseParameter> parameters)
         {
-            var dict = parameters.ToDictionary(p => p.Name);
-
-            foreach (var ctrl in panel.Controls)
+            foreach (var p in parameters)
             {
-                var pc = ctrl as ParameterControlBase;
-                if (pc == null)
+                if (string.IsNullOrWhiteSpace(p.Description) || p.Control == null)
                 {
                     continue;
                 }
 
-                var info = new ToolTipInfo();
+                var info = new ToolTipInfo { BackColor = Color.White };
 
-                var p = dict[pc.ParameterName];
-                if (p != null && !string.IsNullOrWhiteSpace(p.Description))
+                info.Header.Text = p.DisplayName;
+                info.Body.Text = p.Description;
+
+                // Syncfusion doesn't take into account header to determine the width of tooltip,
+                // so let's add some padding
+                const int minTextLength = 75;
+                if (p.Description.Length < minTextLength)
                 {
-                    info.BackColor = Color.White;
-                    info.Header.Text = p.DisplayName;
-                    info.Body.Text = p.Description;
-
-                    info.Body.Text = p.Description;
-
-                    // Syncfusion doesn't taking into account header to determine the width ot tooltip
-                    // so let's add some padding
-                    const int minTextLength = 75;
-                    if (p.Description.Length < minTextLength)
-                    {
-                        info.Body.Text += new string(' ', minTextLength - p.Description.Length);
-                    }
-
-                    tooltip.SetToolTip(pc.ToolTipControl, info);
+                    info.Body.Text += new string(' ', minTextLength - p.Description.Length);
                 }
+
+                tooltip.SetToolTip(p.Control.ToolTipControl, info);
             }
         }
     }

@@ -32,6 +32,8 @@ namespace MW5.Configuration
         {
             this.chkShowMenuToolTips = new System.Windows.Forms.CheckBox();
             this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkLocalDocumentation = new System.Windows.Forms.CheckBox();
+            this.chkDynamicVisibilityWarnings = new System.Windows.Forms.CheckBox();
             this.chkShowPluginInToolTip = new System.Windows.Forms.CheckBox();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.label1 = new System.Windows.Forms.Label();
@@ -40,7 +42,6 @@ namespace MW5.Configuration
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             this.chkShowWelcomeDialog = new System.Windows.Forms.CheckBox();
             this.chkLoadLastProject = new System.Windows.Forms.CheckBox();
-            this.chkDynamicVisibilityWarnings = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
             this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
@@ -52,7 +53,7 @@ namespace MW5.Configuration
             // 
             // chkShowMenuToolTips
             // 
-            this.chkShowMenuToolTips.Location = new System.Drawing.Point(15, 72);
+            this.chkShowMenuToolTips.Location = new System.Drawing.Point(15, 71);
             this.chkShowMenuToolTips.Name = "chkShowMenuToolTips";
             this.chkShowMenuToolTips.Size = new System.Drawing.Size(283, 21);
             this.chkShowMenuToolTips.TabIndex = 5;
@@ -61,6 +62,7 @@ namespace MW5.Configuration
             // configPanelControl3
             // 
             this.configPanelControl3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl3.Controls.Add(this.chkLocalDocumentation);
             this.configPanelControl3.Controls.Add(this.chkDynamicVisibilityWarnings);
             this.configPanelControl3.Controls.Add(this.chkShowMenuToolTips);
             this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
@@ -68,8 +70,24 @@ namespace MW5.Configuration
             this.configPanelControl3.HeaderText = "Various";
             this.configPanelControl3.Location = new System.Drawing.Point(10, 228);
             this.configPanelControl3.Name = "configPanelControl3";
-            this.configPanelControl3.Size = new System.Drawing.Size(370, 139);
+            this.configPanelControl3.Size = new System.Drawing.Size(370, 176);
             this.configPanelControl3.TabIndex = 10;
+            // 
+            // chkLocalDocumentation
+            // 
+            this.chkLocalDocumentation.Location = new System.Drawing.Point(15, 139);
+            this.chkLocalDocumentation.Name = "chkLocalDocumentation";
+            this.chkLocalDocumentation.Size = new System.Drawing.Size(283, 21);
+            this.chkLocalDocumentation.TabIndex = 11;
+            this.chkLocalDocumentation.Text = "Use only local documentation";
+            // 
+            // chkDynamicVisibilityWarnings
+            // 
+            this.chkDynamicVisibilityWarnings.Location = new System.Drawing.Point(15, 105);
+            this.chkDynamicVisibilityWarnings.Name = "chkDynamicVisibilityWarnings";
+            this.chkDynamicVisibilityWarnings.Size = new System.Drawing.Size(283, 21);
+            this.chkDynamicVisibilityWarnings.TabIndex = 6;
+            this.chkDynamicVisibilityWarnings.Text = "Display dynamic visibility warnings";
             // 
             // chkShowPluginInToolTip
             // 
@@ -147,14 +165,6 @@ namespace MW5.Configuration
             this.chkLoadLastProject.TabIndex = 3;
             this.chkLoadLastProject.Text = "Load last project on startup";
             // 
-            // chkDynamicVisibilityWarnings
-            // 
-            this.chkDynamicVisibilityWarnings.Location = new System.Drawing.Point(15, 105);
-            this.chkDynamicVisibilityWarnings.Name = "chkDynamicVisibilityWarnings";
-            this.chkDynamicVisibilityWarnings.Size = new System.Drawing.Size(283, 21);
-            this.chkDynamicVisibilityWarnings.TabIndex = 6;
-            this.chkDynamicVisibilityWarnings.Text = "Display dynamic visibility warnings";
-            // 
             // GeneralConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -165,7 +175,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
             this.Padding = new System.Windows.Forms.Padding(10);
-            this.Size = new System.Drawing.Size(390, 367);
+            this.Size = new System.Drawing.Size(390, 404);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -191,6 +201,7 @@ namespace MW5.Configuration
         private CheckBox chkShowPluginInToolTip;
         private CheckBox chkShowMenuToolTips;
         private CheckBox chkDynamicVisibilityWarnings;
+        private CheckBox chkLocalDocumentation;
 
     }
 }

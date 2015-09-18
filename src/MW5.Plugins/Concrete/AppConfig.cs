@@ -41,6 +41,7 @@ namespace MW5.Plugins.Concrete
             LastProjectPath = "";
             LoadLastProject = true;
             LoadSymbology = true;
+            LocalDocumentation = false;
             MapBackgroundColor = Color.White;
             MeasurementsAreaFieldName = "Area";
             MeasurementsAreaPrecision = 3;
@@ -188,6 +189,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool LoadSymbology { get; set; }
+
+        [DataMember]
+        public bool LocalDocumentation { get; set; }
 
         [DataMember]
         public Color MapBackgroundColor { get; set; }

@@ -158,7 +158,7 @@ namespace MW5.Gdal.Views
             var tool = Model.Tool as GdalTool;
             if (tool != null)
             {
-                tool.Parameters.Apply();
+                tool.Parameters.ApplyControlValues();
             }
         }
 

@@ -4,6 +4,7 @@ using MW5.Api.Concrete;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -11,6 +12,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Database
 {
+    [CustomMemberLayout]
     [GisTool(GroupKeys.GeoDatabases, ToolIcon.Database)]
     public class ImportLayerTool : GisTool
     {

@@ -394,15 +394,15 @@ namespace MW5.Projections.Services
                 return false;
             }
 
-            string extention = "";    
+            string extension = "";    
                     
             #if SQLITE_DATABASE
-                extention = "*.db3";
+                extension = "*.db3";
             #else
-                extention = "*.mdb";
+                extension = "*.mdb";
             #endif
 
-            string[] files = Directory.GetFiles(path, extention);
+            string[] files = Directory.GetFiles(path, extension);
             if (files.Length != 1)
             {
                 string msg = "A single database is expected. " + files.Length + " databases are found." +

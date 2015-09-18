@@ -109,9 +109,9 @@ namespace MW5.Tools.Views
 
             _generator.EventManager.Bind(tool.Configuration);
 
-            tool.Parameters.ApplyValuesToControls();
+            tool.Parameters.SetControlDefaults();
 
-            AddToolTips(tool.Parameters);
+            superToolTip1.AddTooltips(parameters);
 
             RefreshView();
         }
@@ -219,37 +219,39 @@ namespace MW5.Tools.Views
 
         public virtual void Initialize()
         {
+            Text = Model.Tool.Name;
+
             chkBackground.Visible = !Model.BatchMode;
             chkBackground.Checked = AppConfig.Instance.TaskRunInBackground;
-
-            var tool = Model.Tool;
-
-            Text = tool.Name;
-
-            // PM: Changes to load a HTML page and all its linked files like images, js-files and css-files.
-            var manualUrl = tool.GetManualUri();
-            if (manualUrl != null)
-            {
-                webBrowser1.Url = manualUrl;
-            }
-            else
-            {
-                webBrowser1.DocumentText = tool.GetDefaultText();
-            }
 
             if (Model.BatchMode)
             {
                 superToolTip1.SetToolTip(btnRun, null);
             }
+
+            LoadDocumentation();
         }
 
-        private void AddToolTips(IEnumerable<BaseParameter> parameters)
+        private async void LoadDocumentation()
         {
-            var panels = new[] { panelOptional, panelRequired };
+            var tool = Model.Tool;
 
-            foreach (var panel in panels)
+            // PM: Changes to load a HTML page and all its linked files like images, js-files and css-files.
+            var uri = await tool.GetDocumentationUri();
+
+            // user has closed the dialog when we were searching
+            if (IsDisposed)
             {
-                superToolTip1.AddTooltips(panel, parameters);
+                return;
+            }
+
+            if (uri != null)
+            {
+                webBrowser1.Url = uri;
+            }
+            else
+            {
+                webBrowser1.DocumentText = tool.GetMissingNotice();
             }
         }
 

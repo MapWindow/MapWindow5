@@ -8,12 +8,14 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Projections.UI.Forms;
+using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;
 using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Projections
 {
+    [CustomMemberLayout]
     [GisTool(GroupKeys.Projections)]
     public class IdentifyProjectionTool: ToolBase
     {

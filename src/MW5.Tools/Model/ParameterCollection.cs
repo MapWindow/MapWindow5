@@ -1,18 +1,18 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ParameterCollection.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Controls.Parameters;
-using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
@@ -21,9 +21,9 @@ using MW5.Tools.Model.Parameters.Layers;
 namespace MW5.Tools.Model
 {
     /// <summary>
-    /// Builds list of parameters for the tool via reflection.
+    /// Holds list of parameters for the tool.
     /// </summary>
-    public class ParameterCollection: IEnumerable<BaseParameter>
+    public class ParameterCollection : IEnumerable<BaseParameter>
     {
         private readonly List<BaseParameter> _list;
         private readonly GisTool _tool;
@@ -32,121 +32,35 @@ namespace MW5.Tools.Model
         {
             if (tool == null) throw new ArgumentNullException("tool");
             _tool = tool;
-            _list = GetParameters(tool).ToList();
+            _list = tool.CreateParameters().ToList();
         }
 
-        private IEnumerable<BaseParameter> GetParameters(GisTool tool)
+        public IEnumerable<OutputLayerInfo> Outputs
         {
-            var properties = tool.GetType().GetProperties();
-            foreach (var prop in properties)
-            {
-                var attrInput = prop.GetAttribute<InputAttribute>();
-                if (attrInput != null)
-                {
-                    yield return CreateInputParameter(tool, prop, attrInput);
-                }
-
-                var attrOutput = prop.GetAttribute<OutputAttribute>();
-                if (attrOutput != null)
-                {
-                    yield return CreateOutputParameter(tool, prop, attrOutput);
-                }
-            }
-        }
-
-        private BaseParameter CreateOutputParameter(GisTool tool, PropertyInfo prop, OutputAttribute attr)
-        {
-            var param = ParameterFactory.CreateParameter(prop.PropertyType, GetParameterHint(prop));
-
-            param.Tool = tool;
-            param.ToolProperty = prop;
-
-            param.Name = prop.Name;
-            param.DisplayName = attr.DisplayName;
-            param.Required = true;
-            param.IsInput = false;
-            param.Index = attr.Index;
-
-            var olp = param as OutputLayerParameter;
-            if (olp != null)
-            {
-                var layerAttr = prop.GetAttribute<OutputLayerAttribute>();
-                if (layerAttr != null)
-                {
-                    olp.DefaultValue = layerAttr.NameTemplate;
-                    olp.SupportInMemory = layerAttr.SupportsInMemory;
-                    olp.LayerType = layerAttr.LayerType;
-                }
-            }
-
-            return param;
-        }
-
-        private BaseParameter CreateInputParameter(GisTool tool, PropertyInfo prop, InputAttribute attr)
-        {
-            var param = ParameterFactory.CreateParameter(prop.PropertyType, GetParameterHint(prop));
-
-            param.IsInput = true;
-            param.Tool = tool;
-            param.ToolProperty = prop;
-            param.Name = prop.Name;
-            param.Index = attr.Index;
-            param.DisplayName = attr.DisplayName;
-            param.Required = !attr.Optional;
-            param.SectionName = attr.SectionName;
-
-            HandleRangeAttribute(param, prop);
-
-            HandleDefaultValueAttribute(param, prop);
-
-            return param;
-        }
-
-        private ControlHint GetParameterHint(PropertyInfo prop)
-        {
-            var paramAttr = prop.GetAttribute<ControlHintAttribute>();
-            return paramAttr != null ? paramAttr.ControlHint : Enums.ControlHint.Auto;
-        }
-
-        private void HandleRangeAttribute(BaseParameter param, PropertyInfo prop)
-        {
-            var range = prop.GetAttribute<RangeAttribute>();
-            if (range != null)
-            {
-                var np = param as NumericParameter;
-                if (np != null)
-                {
-                    np.SetRange(range.Minimum, range.Maximum);
-                }
-            }
-        }
-
-        private void HandleDefaultValueAttribute(BaseParameter param, PropertyInfo prop)
-        {
-            var attr = prop.GetAttribute<DefaultValueAttribute>();
-            if (attr != null)
-            {
-                param.DefaultValue = attr.Value;
-            }
+            get { return _list.OfType<OutputLayerParameter>().Select(p => p.Value as OutputLayerInfo); }
         }
 
         /// <summary>
-        /// Copies values from UI controls to the properties of the tool.
+        /// Returns an enumerator that iterates through the collection.
         /// </summary>
-        public void Apply()
+        public IEnumerator<BaseParameter> GetEnumerator()
         {
-            foreach (var p in _list.Where(p => p.Control != null))
-            {
-                p.SetToolValue(p.Value);
-            }
+            return _list.GetEnumerator();
         }
 
-        public void DetachControls()
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (var p in _list.Where(p => p.Control != null))
-            {
-                p.Control = null;
-            }
+            return GetEnumerator();
+        }
+
+        public void CleanUp()
+        {
+            SetCallbackToInputs(null);
+
+            CloseInputDatasources();
         }
 
         /// <summary>
@@ -164,6 +78,61 @@ namespace MW5.Tools.Model
             return tool;
         }
 
+        /// <summary>
+        /// Detaches controls from parameters.
+        /// </summary>
+        public void DetachControls()
+        {
+            foreach (var p in _list.Where(p => p.Control != null))
+            {
+                p.Control = null;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Sets callback to the input datasource to provide IStopExecution implementation
+        /// for MapWinGIS methods.
+        /// </summary>
+        public void SetCallbackToInputs(IApplicationCallback callback)
+        {
+            foreach (var p in _list.OfType<LayerParameterBase>())
+            {
+                var ds = p.Datasource;
+                if (ds != null)
+                {
+                    ds.Callback = callback;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets default values and list of options to the controls.
+        /// </summary>
+        public void SetControlDefaults()
+        {
+            SetOptionsToControls();
+
+            SetControlDefaultsCore();
+        }
+
+        /// <summary>
+        /// Copies values from controls to the properties of the tool.
+        /// </summary>
+        public void ApplyControlValues()
+        {
+            foreach (var p in _list.Where(p => p.Control != null))
+            {
+                p.SetToolValue(p.Value);
+            }
+        }
+
+        /// <summary>
+        /// Validates the values of parameters and reports errors via message box.
+        /// </summary>
+        /// <returns>True if no validation errors were found.</returns>
         public bool Validate()
         {
             foreach (var p in _list)
@@ -232,42 +201,10 @@ namespace MW5.Tools.Model
             return true;
         }
 
-        public void SetCallback(IApplicationCallback callback)
-        {
-            foreach (var p in _list.OfType<LayerParameterBase>())
-            {
-                var ds = p.Datasource;
-                if (ds != null)
-                {
-                    ds.Callback = callback;
-                }
-            }
-        }
-
         /// <summary>
-        /// Returns an enumerator that iterates through the collection.
+        /// Closes the input datasources.
         /// </summary>
-        public IEnumerator<BaseParameter> GetEnumerator()
-        {
-            return _list.GetEnumerator();
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public void CleanUp()
-        {
-            SetCallback(null);
-
-            CloseDatasources();
-        }
-
-        private void CloseDatasources()
+        internal void CloseInputDatasources()
         {
             foreach (var p in _list.OfType<LayerParameterBase>())
             {
@@ -280,67 +217,13 @@ namespace MW5.Tools.Model
             }
         }
 
-        public bool ReopenDatasources(IAppContext context)
-        {
-            foreach (var p in _list.OfType<LayerParameterBase>())
-            {
-                var info = p.Value as IDatasourceInput;
-                if (info == null)
-                {
-                    throw new ApplicationException("Invalid call to ParameterCollection.ReopenDatasources.");
-                }
-
-                var newInfo = p.ClosedPointer.ReopenDatasource(context, info);
-                if (newInfo == null)
-                {
-                    MessageService.Current.Warn("Failed to reopen datasource for parameter: " + p.Name);
-                    CloseDatasources();
-                    return false;
-                }
-
-                p.SetToolValue(newInfo);
-            }
-
-            return true;
-        }
-
-        public IEnumerable<OutputLayerInfo> Outputs
-        {
-            get { 
-                return _list.OfType<OutputLayerParameter>().Select(p => p.Value as OutputLayerInfo);
-            }
-        }
-
-        public void ApplyValuesToControls()
-        {
-            ApplyComboLists();
-
-            SetDefaultsToControls();
-        }
-
-        private void ApplyComboLists()
-        {
-            foreach (var p in this)
-            {
-                var op = p as OptionsParameter;
-                if (op != null && op.Options != null)
-                {
-                    var ctrl = op.Control as ComboParameterControl;
-                    if (ctrl != null)
-                    {
-                        ctrl.SetOptions(op.Options);
-                    }
-                }
-            }
-        }
-
         /// <summary>
         /// Sets the defaults values to controls. Can be specified as: 
         /// a) attributes, 
         /// b) configuration, 
         /// c) values of the previous run.
         /// </summary>
-        private void SetDefaultsToControls()
+        private void SetControlDefaultsCore()
         {
             foreach (var p in this)
             {
@@ -348,6 +231,27 @@ namespace MW5.Tools.Model
                 if (init != null && p.Control != null)
                 {
                     p.Control.SetValue(init);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets list of options for OptionsParameter controls.
+        /// </summary>
+        private void SetOptionsToControls()
+        {
+            foreach (var p in this)
+            {
+                var op = p as OptionsParameter;
+                if (op == null || op.Options == null)
+                {
+                    continue;
+                }
+
+                var ctrl = op.Control as ComboParameterControl;
+                if (ctrl != null)
+                {
+                    ctrl.SetOptions(op.Options);
                 }
             }
         }

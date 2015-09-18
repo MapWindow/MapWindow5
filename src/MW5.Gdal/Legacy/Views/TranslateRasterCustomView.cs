@@ -179,7 +179,7 @@ namespace MW5.Gdal.Legacy.Views
         {
             if (e.TabPage == tabPage2)
             {
-                webBrowser1.DocumentText = Model.Tool.LoadManual();
+                //webBrowser1.DocumentText = Model.Tool.LoadManual();
             }
         }
 
