@@ -1,46 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FieldParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Windows.Forms;
 using MW5.Api.Concrete;
-using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Plugins.Enums;
-using MW5.Plugins.Services;
-using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Properties;
 
 namespace MW5.Tools.Controls.Parameters
 {
     /// <summary>
-    /// Represents combobox with a list of layers and a button to open datasource from disk.
+    /// Represents control for the field name selection. Must be bound to particular LayerParameterControl.
     /// </summary>
     internal partial class FieldParameterControl : ParameterControlBase
     {
         public FieldParameterControl()
         {
             InitializeComponent();
-            
+
             btnOpen.Visible = false;
         }
 
-        public override object GetValue()
+        /// <summary>
+        /// Gets or sets control caption.
+        /// </summary>
+        public override string Caption
         {
-            var fld = comboBoxAdv1.SelectedItem as AttributeField;
-            int fieldIndex = fld != null ? fld.Index : -1;
-            return fieldIndex;
-        }
-
-        public override void SetValue(object value)
-        {
-            // do nothing
-        }
-
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
+            get { return label1.Text; }
+            set { label1.Text = value; }
         }
 
         /// <summary>
@@ -51,6 +40,22 @@ namespace MW5.Tools.Controls.Parameters
             get { return comboBoxAdv1; }
         }
 
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <returns>
+        /// Value type that must match the type of parameter the control was generated for.
+        /// </returns>
+        public override object GetValue()
+        {
+            var fld = comboBoxAdv1.SelectedItem as AttributeField;
+            int fieldIndex = fld != null ? fld.Index : -1;
+            return fieldIndex;
+        }
+
+        /// <summary>
+        /// Called when selected layer is changed.
+        /// </summary>
         public void OnLayerChanged(IDatasourceInput input)
         {
             var vector = input as IVectorInput;
@@ -60,18 +65,24 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        public override string Caption
+        /// <summary>
+        /// Sets the value.
+        /// </summary>
+        /// <param name="value">Value type must match the type of parameter the control was generated for.</param>
+        public override void SetValue(object value)
         {
-            get { return label1.Text; }
-            set { label1.Text = value; }
+            // do nothing
         }
 
+        /// <summary>
+        /// Rebuilds the field list.
+        /// </summary>
         private void RebuildFieldList(IFeatureSet fs)
         {
             comboBoxAdv1.Items.Clear();
 
             if (fs != null)
-            { 
+            {
                 foreach (var fld in fs.Fields)
                 {
                     comboBoxAdv1.Items.Add(fld);

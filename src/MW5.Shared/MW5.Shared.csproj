@@ -64,7 +64,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
-    <Compile Include="CustomMemberLayoutAttribute.cs" />
+    <Compile Include="CustomLayoutAttribute.cs" />
     <Compile Include="IMarshal.cs" />
     <Compile Include="ReplaceControlDescripterProvider.cs" />
     <Compile Include="ArrayHelper.cs" />
@@ -72,7 +72,7 @@
     <Compile Include="AttributeHelper.cs" />
     <Compile Include="BooleanHelper.cs" />
     <Compile Include="DelegateHelper.cs" />
-    <Compile Include="HasRegionsAttribute.cs" />
+    <Compile Include="LayoutWithRegionsAttribute.cs" />
     <Compile Include="ColorHelper.cs" />
     <Compile Include="ControlHelper.cs" />
     <Compile Include="DataContractSerializationHelper.cs" />

@@ -19,7 +19,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Raster
 {
-    [CustomMemberLayout]
+    [CustomLayout]
     [GisTool(GroupKeys.Raster)]
     public class CreateGridProxyTool: GisTool
     {

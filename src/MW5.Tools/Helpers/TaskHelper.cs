@@ -16,8 +16,14 @@ using MW5.Tools.Model.Parameters;
 
 namespace MW5.Tools.Helpers
 {
+    /// <summary>
+    /// Extension methods for tasks.
+    /// </summary>
     internal static class TaskHelper
     {
+        /// <summary>
+        /// Gets long description of the task including execution time and parameters.
+        /// </summary>
         public static IEnumerable<string> GetDescription(this IGisTask task)
         {
             var tool = task.Tool as IParametrizedTool;
@@ -57,6 +63,10 @@ namespace MW5.Tools.Helpers
             }
         }
 
+        /// <summary>
+        /// Gets icon to display current task status.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException"></exception>
         public static TaskIcons GetStatusIcon(this IGisTask task)
         {
             switch (task.Status)

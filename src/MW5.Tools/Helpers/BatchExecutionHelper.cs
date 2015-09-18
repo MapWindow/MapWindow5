@@ -82,9 +82,7 @@ namespace MW5.Tools.Helpers
         /// </summary>
         private static IParametrizedTool CloneWithInput(this IParametrizedTool tool, object input, string filename, IAppContext context)
         {
-            var newTool = tool.Parameters.Clone();
-
-            newTool.Initialize(context);
+            var newTool = tool.Clone(context);
 
             // assigning input datasource
             var p = newTool.GetSingleInputParameter() as BaseParameter;

@@ -13,7 +13,7 @@ using MW5.Tools.Views.Custom;
 namespace MW5.Tools.Tools.Fake
 {
     [GisTool(GroupKeys.Fake, ToolIcon.ToolDefault, typeof(LongExecutionPresenter))]
-    [CustomMemberLayout]
+    [CustomLayout]
     public class LongExecutionTool: GisTool
     {
         [Input("Seconds per step (100 steps)", 0), DefaultValue(0.1), Range(0.1, 5.0)]

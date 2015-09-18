@@ -1,5 +1,5 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="DoubleParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="DistanceParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
@@ -12,6 +12,9 @@ using MW5.UI.Helpers;
 
 namespace MW5.Tools.Controls.Parameters
 {
+    /// <summary>
+    /// Represents control for entering distance in specified length units.
+    /// </summary>
     public partial class DistanceParameterControl : ParameterControlBase
     {
         /// <summary>
@@ -25,11 +28,6 @@ namespace MW5.Tools.Controls.Parameters
             comboBoxAdv1.SetValue(LengthUnits.Kilometers);
         }
 
-        public LengthUnits Units
-        {
-            get { return comboBoxAdv1.GetValue<LengthUnits>();  }
-        }
-
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
@@ -37,14 +35,6 @@ namespace MW5.Tools.Controls.Parameters
         {
             get { return label1.Text; }
             set { label1.Text = value; }
-        }
-
-        /// <summary>
-        /// The get table.
-        /// </summary>
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
         }
 
         /// <summary>
@@ -56,8 +46,17 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// The get value.
+        /// Gets the selected length units.
         /// </summary>
+        public LengthUnits Units
+        {
+            get { return comboBoxAdv1.GetValue<LengthUnits>(); }
+        }
+
+        /// <summary>
+        /// Gets the value of control.
+        /// </summary>
+        /// <returns>Instance of Distance class.</returns>
         public override object GetValue()
         {
             return new Distance(doubleTextBox1.DoubleValue, Units);
@@ -66,6 +65,7 @@ namespace MW5.Tools.Controls.Parameters
         /// <summary>
         /// Sets the value.
         /// </summary>
+        /// <param name="value">Either double or Distance value is expected.</param>
         public override void SetValue(object value)
         {
             if (value is Distance)

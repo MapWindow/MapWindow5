@@ -24,7 +24,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.TableEditor.Views
 {
-    [HasRegions]
+    [LayoutWithRegions]
     internal class TableEditorPresenter : CommandDispatcher<ITableEditorView, TableEditorCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;

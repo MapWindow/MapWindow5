@@ -8,9 +8,12 @@ using System.Windows.Forms;
 
 namespace MW5.Tools.Controls.Parameters
 {
+    /// <summary>
+    /// Represents TextBox control for entering string parameter.
+    /// </summary>
     public partial class StringParameterControl : ParameterControlBase
     {
-        const int multiLineHeight = 80;
+        private const int multiLineHeight = 80;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StringParameterControl"/> class.
@@ -44,11 +47,12 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// The get table.
+        /// Gets or sets a value indicating whether the control's text is read only.
         /// </summary>
-        public override TableLayoutPanel GetTable()
+        public bool ReadOnly
         {
-            return tableLayoutPanel1;
+            get { return textBoxExt1.ReadOnly; }
+            set { textBoxExt1.ReadOnly = value; }
         }
 
         /// <summary>
@@ -73,15 +77,6 @@ namespace MW5.Tools.Controls.Parameters
         public override void SetValue(object value)
         {
             textBoxExt1.Text = (string)value;
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the control's text is read only.
-        /// </summary>
-        public bool ReadOnly
-        {
-            get { return textBoxExt1.ReadOnly; }
-            set { textBoxExt1.ReadOnly = value; }
         }
     }
 }

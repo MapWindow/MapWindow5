@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace MW5.Tools.Controls.Parameters
 {
+    /// <summary>
+    /// Represents control for entering value of integer parameter. Doesn't allow empty values.
+    /// </summary>
     public partial class IntegerParameterControl : ParameterControlBase
     {
         /// <summary>
@@ -28,14 +31,6 @@ namespace MW5.Tools.Controls.Parameters
             get { return label1.Text; }
 
             set { label1.Text = value; }
-        }
-
-        /// <summary>
-        /// The get table.
-        /// </summary>
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
         }
 
         /// <summary>

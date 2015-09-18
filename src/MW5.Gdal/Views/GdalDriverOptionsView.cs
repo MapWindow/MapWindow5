@@ -89,6 +89,7 @@ namespace MW5.Gdal.Views
             {
                 if (p.Value != null && !p.IsEmpty && !Equals(p.Value, p.DefaultValue))
                 {
+                    // TODO: for OGR2OGR there is another key
                     sb.AppendFormat(" -co {0}={1} ", p.Name, p.Value);
                 }
             }
@@ -111,16 +112,6 @@ namespace MW5.Gdal.Views
 
             GenerateDriverControls(panel, driver);
 
-            // TODO: extract
-            foreach (var p in _driverOptions.Where(p => p.InitialValue != null))
-            {
-                p.Control.SetValue(p.InitialValue);
-            }
-
-            panel.AddVerticalPadding();
-
-            _styleService.ApplyStyle(panel);
- 
             tab.TabVisible = panel.Controls.Count > 0;
 
             superToolTip1.AddTooltips(_driverOptions);
@@ -147,8 +138,17 @@ namespace MW5.Gdal.Views
                 // one section for all the others
                 _generator.GenerateIntoPanel(panel, driver.Name + " Options", _driverOptions);
             }
+
+            _driverOptions.SetControlDefaults();
+
+            panel.AddVerticalPadding();
+
+            _styleService.ApplyStyle(panel);
         }
 
+        /// <summary>
+        /// Gets list of parameters for driver creation options.
+        /// </summary>
         public IEnumerable<BaseParameter> DriverParameters
         {
             get { return _driverOptions; }

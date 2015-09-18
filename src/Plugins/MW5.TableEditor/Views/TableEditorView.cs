@@ -27,7 +27,7 @@ namespace MW5.Plugins.TableEditor.Views
     /// <summary>
     /// Table editor view representing menu and docking manager to host attribute tables for particular layers.
     /// </summary>
-    [HasRegions]
+    [LayoutWithRegions]
     internal partial class TableEditorView : DockPanelControlBase, ITableEditorView
     {
         private readonly TablePanelCollection _panels;

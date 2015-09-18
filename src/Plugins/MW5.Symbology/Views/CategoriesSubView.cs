@@ -21,7 +21,7 @@ namespace MW5.Plugins.Symbology.Views
     /// <summary>
     /// UI for displaying and generating list of categories for FeatureSet.
     /// </summary>
-    [HasRegions]
+    [LayoutWithRegions]
     public partial class CategoriesSubView : CategoriesSubViewBase, ISubView
     {
         private readonly IAppContext _context;

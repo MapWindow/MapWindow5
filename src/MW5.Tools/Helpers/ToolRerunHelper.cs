@@ -43,7 +43,7 @@ namespace MW5.Tools.Helpers
         /// </summary>
         public static bool RemoveOutputs(this IParametrizedTool tool, IAppContext context, ILayerService layerService)
         {
-            foreach (var output in tool.Parameters.Outputs)
+            foreach (var output in tool.GetOutputs())
             {
                 var cache = output.DatasourcePointer;
 

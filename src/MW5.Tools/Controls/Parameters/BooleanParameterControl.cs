@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace MW5.Tools.Controls.Parameters
 {
     /// <summary>
-    /// The boolean parameter control.
+    /// Represents checkbox control for entering value of boolean parameter. 
     /// </summary>
     public partial class BooleanParameterControl : ParameterControlBase
     {
@@ -20,18 +20,7 @@ namespace MW5.Tools.Controls.Parameters
         public BooleanParameterControl()
         {
             InitializeComponent();
-            ButtonVisible = false;
             checkBox1.CheckedChanged += (s, e) => FireValueChanged();
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether button visible.
-        /// </summary>
-        public bool ButtonVisible
-        {
-            get { return false; }
-
-            set { }
         }
 
         /// <summary>
@@ -42,14 +31,6 @@ namespace MW5.Tools.Controls.Parameters
             get { return checkBox1.Text; }
 
             set { checkBox1.Text = value; }
-        }
-
-        /// <summary>
-        /// The get table.
-        /// </summary>
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
         }
 
         /// <summary>

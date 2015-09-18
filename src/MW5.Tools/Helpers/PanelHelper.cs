@@ -10,12 +10,14 @@ using MW5.Tools.Controls.Parameters;
 
 namespace MW5.Tools.Helpers
 {
+    /// <summary>
+    /// Extension methods for Panel holding controls for task parameters.
+    /// </summary>
     internal static class PanelHelper
     {
         /// <summary>
         /// Adds the vertical padding for controls within tab page of a standard GIS tool UI.
         /// </summary>
-        /// <param name="panel">The panel.</param>
         public static void AddVerticalPadding(this Panel panel)
         {
             foreach (var ctrl in panel.Controls.Cast<Control>().Where(c => !(c is BooleanParameterControl)))

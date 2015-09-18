@@ -1,59 +1,48 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="OutputLayerParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
+using MW5.Shared;
+using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
 {
+    /// <summary>
+    /// Represents control for setting the name of output datasource and additional parameters (e.g. add to map, overwrite).
+    /// </summary>
     public partial class OutputLayerParameterControl : ParameterControlBase, IOuputputParameterControl
     {
         private readonly IFileDialogService _dialogService;
+        private string _extension;
+        private string _filename;
+        private string _inputFilename;
         private LayerType _layerType;
         private string _templateName;
-        private string _inputFilename;
-        private string _filename;
-        private string _extension;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OutputLayerParameterControl"/> class.
+        /// </summary>
         public OutputLayerParameterControl(IFileDialogService dialogService)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dialogService = dialogService;
-            
+
             InitializeComponent();
 
             InitFlags();
 
             RefreshControls();
-        }
-
-        private void InitFlags()
-        {
-            chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
-            chkMemoryLayer.Checked = chkMemoryLayer.Enabled && AppConfig.Instance.ToolOutputInMemory;
-            chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
-        }
-
-        private void SaveFlags()
-        {
-            AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
-            AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
-            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
-        }
-
-        public void Initialize(LayerType layerType, bool supportsInMemory = true)
-        {
-            _layerType = layerType;
-            chkMemoryLayer.Enabled = supportsInMemory;
-
-            if (!supportsInMemory)
-            {
-                chkMemoryLayer.Checked = false;
-            }
         }
 
         /// <summary>
@@ -66,14 +55,6 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// The get table.
-        /// </summary>
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
-        }
-
-        /// <summary>
         /// Gets control to display tooltip for.
         /// </summary>
         public override Control ToolTipControl
@@ -82,7 +63,39 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// The get value.
+        /// Called when datasource is changed.
+        /// </summary>
+        /// <param name="layer">The layer.</param>
+        public void OnDatasourceChanged(IDatasourceInput layer)
+        {
+            _filename = string.Empty;
+            _inputFilename = layer != null ? layer.Filename : string.Empty;
+            RefreshName();
+        }
+
+        /// <summary>
+        /// Called when input filename is changed.
+        /// </summary>
+        /// <param name="filename"></param>
+        public void OnFilenameChanged(string filename)
+        {
+            _filename = string.Empty;
+            _inputFilename = filename;
+            RefreshName();
+        }
+
+        /// <summary>
+        /// Changes output name after new format / extension is selected.
+        /// </summary>
+        /// <param name="extension"></param>
+        public void SetExtension(string extension)
+        {
+            _extension = extension;
+            RefreshName();
+        }
+
+        /// <summary>
+        /// Gets instance of OutputLayerInfo class with parameters set by user.
         /// </summary>
         public override object GetValue()
         {
@@ -90,20 +103,58 @@ namespace MW5.Tools.Controls.Parameters
             // interface with dedicated calls when form is closed
             SaveFlags();
 
-            return new OutputLayerInfo() { AddToMap = chkAddToMap.Checked,
-                                           MemoryLayer = chkMemoryLayer.Checked,
-                                           Overwrite = chkOverwrite.Checked,
-                                           Filename = textBoxExt1.Text };
+            return new OutputLayerInfo
+                       {
+                           AddToMap = chkAddToMap.Checked,
+                           MemoryLayer = chkMemoryLayer.Checked,
+                           Overwrite = chkOverwrite.Checked,
+                           Filename = textBoxExt1.Text
+                       };
+        }
+
+        /// <summary>
+        /// Initializes output control with specified layer type.
+        /// </summary>
+        public void Initialize(LayerType layerType, bool supportsInMemory = true)
+        {
+            _layerType = layerType;
+            chkMemoryLayer.Enabled = supportsInMemory;
+
+            if (!supportsInMemory)
+            {
+                chkMemoryLayer.Checked = false;
+            }
         }
 
         /// <summary>
         /// Sets the value.
         /// </summary>
+        /// <param name="value">String value holding template is expected.</param>
         public override void SetValue(object value)
         {
             var s = Convert.ToString(value);
             _templateName = s;
             RefreshControls();
+        }
+
+        /// <summary>
+        /// Initializes the values of output flags from application config.
+        /// </summary>
+        private void InitFlags()
+        {
+            chkAddToMap.Checked = AppConfig.Instance.ToolOutputAddToMap;
+            chkMemoryLayer.Checked = chkMemoryLayer.Enabled && AppConfig.Instance.ToolOutputInMemory;
+            chkOverwrite.Checked = AppConfig.Instance.ToolOutputOverwrite;
+        }
+
+        private void MemoryLayerChecked(object sender, EventArgs e)
+        {
+            RefreshControls();
+        }
+
+        private void OnOverwriteCheckedChanged(object sender, EventArgs e)
+        {
+            FireValueChanged();
         }
 
         private void OnSaveClick(object sender, EventArgs e)
@@ -130,6 +181,9 @@ namespace MW5.Tools.Controls.Parameters
             RefreshName();
         }
 
+        /// <summary>
+        /// Update the name of output datasource based on template.
+        /// </summary>
         private void RefreshName()
         {
             if (!string.IsNullOrWhiteSpace(_filename))
@@ -146,12 +200,12 @@ namespace MW5.Tools.Controls.Parameters
                 if (chkMemoryLayer.Checked)
                 {
                     string input = Path.GetFileNameWithoutExtension(_inputFilename);
-                    string name = _templateName.Replace(TemplateVariables.Input, input);    
+                    string name = _templateName.Replace(TemplateVariables.Input, input);
                     textBoxExt1.Text = Path.GetFileNameWithoutExtension(name);
                 }
                 else
                 {
-                    string input = Shared.PathHelper.GetFullPathWithoutExtension(_inputFilename);
+                    string input = PathHelper.GetFullPathWithoutExtension(_inputFilename);
                     string name = _templateName.Replace(TemplateVariables.Input, input);
                     textBoxExt1.Text = name;
                 }
@@ -163,34 +217,14 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        private void MemoryLayerChecked(object sender, EventArgs e)
+        /// <summary>
+        /// Saves the state of output flags to the application config.
+        /// </summary>
+        private void SaveFlags()
         {
-            RefreshControls();
-        }
-
-        public void OnDatasourceChanged(IDatasourceInput layer)
-        {
-            _filename = string.Empty;
-            _inputFilename = layer != null ? layer.Filename : string.Empty;
-            RefreshName();
-        }
-
-        public void OnFilenameChanged(string filename)
-        {
-            _filename = string.Empty;
-            _inputFilename = filename;
-            RefreshName();
-        }
-
-        public void SetExtension(string extension)
-        {
-            _extension = extension;
-            RefreshName();
-        }
-
-        private void OnOverwriteCheckedChanged(object sender, EventArgs e)
-        {
-            FireValueChanged();
+            AppConfig.Instance.ToolOutputAddToMap = chkAddToMap.Checked;
+            AppConfig.Instance.ToolOutputOverwrite = chkOverwrite.Checked;
+            AppConfig.Instance.ToolOutputInMemory = chkMemoryLayer.Checked;
         }
     }
 }

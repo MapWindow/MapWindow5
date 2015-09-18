@@ -15,7 +15,7 @@ using MW5.Tools.Properties;
 
 namespace MW5.Tools.Tools.Projections
 {
-    [CustomMemberLayout]
+    [CustomLayout]
     [GisTool(GroupKeys.Projections)]
     public class IdentifyProjectionTool: ToolBase
     {

@@ -1,28 +1,42 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ToolConfiguration.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Interfaces;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Services
 {
+    /// <summary>
+    /// Holds configuration options for the tool which affect the generation and behavior of UI.
+    /// </summary>
     public class ToolConfiguration
     {
-        private readonly List<FieldWrapper> _fields = new List<FieldWrapper>();
-        private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
         private readonly Dictionary<string, object> _comboLists = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _defaultValues = new Dictionary<string, object>();
+        private readonly List<FieldWrapper> _fields = new List<FieldWrapper>();
         private readonly Dictionary<string, Range> _ranges = new Dictionary<string, Range>();
-        private readonly Dictionary<string, string> _keys = new Dictionary<string, string>();
-        private IEnumerable<ILayer> _layers;
 
-        public ToolConfiguration<T> Get<T>()
-            where T: GisTool
+        /// <summary>
+        /// Gets list of values for parameters with parameter name as key.
+        /// </summary>
+        public Dictionary<string, object> ComboLists
         {
-            return new ToolConfiguration<T>(this);
+            get { return _comboLists; }
+        }
+
+        /// <summary>
+        /// Gets default values for parameters with parameter name as a key.
+        /// </summary>
+        public Dictionary<string, object> DefaultValues
+        {
+            get { return _defaultValues; }
         }
 
         /// <summary>
@@ -33,37 +47,32 @@ namespace MW5.Tools.Services
             get { return _fields; }
         }
 
-        public Dictionary<string, object> DefaultValues
-        {
-            get { return _defaultValues; }
-        }
+        /// <summary>
+        /// Gets or sets list of layers to be used for input selection.
+        /// </summary>
+        public IEnumerable<ILayer> Layers { get; set; }
 
-        public Dictionary<string, object> ComboLists
-        {
-            get { return _comboLists; }
-        }
-
-        public IEnumerable<ILayer> Layers
-        {
-            get { return _layers;  }
-        }
-
+        /// <summary>
+        /// Gets minimum and maximum values for parameters with parameter name as a key.
+        /// </summary>
         public Dictionary<string, Range> Ranges
         {
             get { return _ranges; }
         }
 
-        public Dictionary<string, string> Keys
+        /// <summary>
+        /// Gets strongly typed version of ToolConfiguration associated with particular tool.
+        /// </summary>
+        public ToolConfiguration<T> Get<T>() where T : GisTool
         {
-            get { return _keys; }
-        }
-
-        public void AddLayers(IEnumerable<ILayer> layers)
-        {
-            _layers = layers;
+            return new ToolConfiguration<T>(this);
         }
     }
 
+    /// <summary>
+    /// Provides strongly typed methods to set configuration options for the tool.
+    /// </summary>
+    /// <typeparam name="T">GisTool</typeparam>
     public class ToolConfiguration<T>
         where T : GisTool
     {
@@ -75,6 +84,19 @@ namespace MW5.Tools.Services
             _config = config;
         }
 
+        /// <summary>
+        /// Adds ComboBox values for the parameter.
+        /// </summary>
+        public ToolConfiguration<T> AddComboList<TT>(Expression<Func<T, TT>> parameter, IEnumerable<TT> list)
+        {
+            var name = (parameter.Body as MemberExpression).Member.Name;
+            _config.ComboLists.Add(name, list);
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies that field parameter belongs to a certain layer.
+        /// </summary>
         public ToolConfiguration<T> AddField(Expression<Func<T, IVectorInput>> layer, Expression<Func<T, int>> field)
         {
             // let the exceptions be thrown, we want to catch bugs ASAP
@@ -86,6 +108,18 @@ namespace MW5.Tools.Services
             return this;
         }
 
+        /// <summary>
+        /// Adds map layers to be displayed for input selection.
+        /// </summary>
+        public ToolConfiguration<T> AddLayers(IEnumerable<ILayer> layers)
+        {
+            _config.Layers = layers;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets default value for the parameter.
+        /// </summary>
         public ToolConfiguration<T> SetDefault<TT>(Expression<Func<T, TT>> number, TT value)
         {
             var name = (number.Body as MemberExpression).Member.Name;
@@ -93,6 +127,9 @@ namespace MW5.Tools.Services
             return this;
         }
 
+        /// <summary>
+        /// Sets default value for distance parameter.
+        /// </summary>
         public ToolConfiguration<T> SetDefault(Expression<Func<T, Distance>> distance, double value)
         {
             var name = (distance.Body as MemberExpression).Member.Name;
@@ -100,19 +137,9 @@ namespace MW5.Tools.Services
             return this;
         }
 
-        public ToolConfiguration<T> AddComboList<TT>(Expression<Func<T, TT>> parameter, IEnumerable<TT> list)
-        {
-            var name = (parameter.Body as MemberExpression).Member.Name;
-            _config.ComboLists.Add(name, list);
-            return this;
-        }
-
-        public ToolConfiguration<T> AddLayers(IEnumerable<ILayer> layers)
-        {
-            _config.AddLayers(layers);
-            return this;
-        }
-
+        /// <summary>
+        /// Sets the minimum and maximum values for the parameter.
+        /// </summary>
         public ToolConfiguration<T> SetRange<TT>(Expression<Func<T, TT>> number, TT min, TT max)
         {
             var name = (number.Body as MemberExpression).Member.Name;

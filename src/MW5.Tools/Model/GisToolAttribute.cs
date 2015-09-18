@@ -12,8 +12,9 @@ using MW5.Tools.Enums;
 namespace MW5.Tools.Model
 {
     /// <summary>
-    /// The gis tool attribute.
+    /// Represents attribute which sets the properties of the GIS tool, affecting its position in the toolbox and UI selection.
     /// </summary>
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     public class GisToolAttribute : Attribute
     {
         /// <summary>
@@ -31,10 +32,19 @@ namespace MW5.Tools.Model
             PresenterType = presenter;
         }
 
+        /// <summary>
+        /// Gets the type of the MVP presenter to instatiate UI.
+        /// </summary>
         public Type PresenterType { get; private set; }
 
+        /// <summary>
+        /// Gets the key of the toolbox group the tool should be added to.
+        /// </summary>
         public string GroupKey { get; private set; }
 
+        /// <summary>
+        /// Gets the icon to display the tool in the toolbox.
+        /// </summary>
         public ToolIcon Icon { get; private set; }
     }
 }

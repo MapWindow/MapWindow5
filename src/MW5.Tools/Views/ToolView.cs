@@ -107,7 +107,7 @@ namespace MW5.Tools.Views
 
             GenerateSections(parameters);
 
-            _generator.EventManager.Bind(tool.Configuration);
+            _generator.EventManager.ApplyConfig(tool.Configuration);
 
             tool.Parameters.SetControlDefaults();
 

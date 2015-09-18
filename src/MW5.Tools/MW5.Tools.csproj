@@ -98,8 +98,9 @@
     <Compile Include="Controls\Parameters\FilenameParameterControl.Designer.cs">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\IInputParameterControl.cs" />
-    <Compile Include="Controls\Parameters\IOuputputParameterControl.cs" />
+    <Compile Include="Controls\Parameters\Interfaces\IInputParameterControl.cs" />
+    <Compile Include="Controls\Parameters\Interfaces\IOptionsParameterControl.cs" />
+    <Compile Include="Controls\Parameters\Interfaces\IOuputputParameterControl.cs" />
     <Compile Include="Controls\Parameters\OutputLayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -124,7 +125,6 @@
     <Compile Include="Controls\Parameters\FieldParameterControl.Designer.cs">
       <DependentUpon>FieldParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\IParameterControl.cs" />
     <Compile Include="Controls\Parameters\OutputNameParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -138,8 +138,10 @@
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BatchExecutionHelper.cs" />
+    <Compile Include="Helpers\ControlsHelper.cs" />
     <Compile Include="Helpers\DriverConfigHelper.cs" />
     <Compile Include="Helpers\DocumentationHelper.cs" />
+    <Compile Include="Helpers\InputHelper.cs" />
     <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />
     <Compile Include="Helpers\ToolDialogHelper.cs" />
@@ -200,7 +202,7 @@
     <Compile Include="Services\InputLayerEventArgs.cs" />
     <Compile Include="Services\OutputManager.cs" />
     <Compile Include="Services\TaskProgressBase.cs" />
-    <Compile Include="Services\ToolBuilder.cs" />
+    <Compile Include="Services\ToolConfigurationManager.cs" />
     <Compile Include="Services\ToolConfiguration.cs" />
     <Compile Include="Services\EventManager.cs" />
     <Compile Include="Services\ToolLogger.cs" />
@@ -255,7 +257,7 @@
     <Compile Include="Controls\Parameters\ParameterControlBase.Designer.cs">
       <DependentUpon>ParameterControlBase.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\ParameterControlFactory.cs" />
+    <Compile Include="Services\ParameterControlFactory.cs" />
     <Compile Include="Controls\Parameters\DoubleParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

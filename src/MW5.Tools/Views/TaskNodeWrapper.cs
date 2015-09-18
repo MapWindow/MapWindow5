@@ -17,7 +17,7 @@ using Action = System.Action;
 namespace MW5.Tools.Views
 {
     /// <summary>
-    /// Wrapps treeview nodes associated with a single task, allows to update them without rebuilding the whole tree.
+    /// Wraps treeview nodes associated with a single task, allows to update them without rebuilding the whole tree.
     /// </summary>
     internal class TaskNodeWrapper
     {

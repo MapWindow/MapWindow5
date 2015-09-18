@@ -1,17 +1,19 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LayerParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Api.Concrete;
-using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
-using MW5.Tools.Model;
+using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Layers;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Properties;
 using MW5.Tools.Services;
 
 namespace MW5.Tools.Controls.Parameters
@@ -38,33 +40,46 @@ namespace MW5.Tools.Controls.Parameters
             PopulateImageList();
         }
 
-        public void Initialize(DataSourceType dataSourceType)
-        {
-            _dataSourceType = dataSourceType;
-
-            if (_dataSourceType == DataSourceType.Raster)
-            {
-                int height = panel1.Height;
-                panel1.Height = 0;
-                panel1.Visible = false;
-                Height -= height;
-            }
-        }
-
-        public void SetLayers(IEnumerable<ILayer> layers)
-        {
-            _layers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
-            
-            UpdateDatasource();
-
-            if (comboBoxAdv1.Items.Count > 0)
-            {
-                comboBoxAdv1.SelectedIndex = 0;
-            }
-        }
-
+        /// <summary>
+        /// Occurs when the layer is selected.
+        /// </summary>
         public event EventHandler<InputLayerEventArgs> SelectedLayerChanged;
 
+        /// <summary>
+        /// Gets or sets control caption.
+        /// </summary>
+        public override string Caption
+        {
+            get { return label1.Text; }
+            set { label1.Text = value; }
+        }
+
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return comboBoxAdv1; }
+        }
+
+        /// <summary>
+        /// Gets the selected layer.
+        /// </summary>
+        private IDatasourceInput SelectedLayer
+        {
+            get
+            {
+                var wrapper = comboBoxAdv1.SelectedItem as InputLayerGridAdapter;
+                return wrapper != null ? wrapper.Source : null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the value.
+        /// </summary>
+        /// <returns>
+        /// Value type that must match the type of parameter the control was generated for.
+        /// </returns>
         public override object GetValue()
         {
             var layer = SelectedLayer;
@@ -79,37 +94,118 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
+        /// Initializes control.
+        /// </summary>
+        /// <param name="dataSourceType">Type of the data source.</param>
+        public void Initialize(DataSourceType dataSourceType)
+        {
+            _dataSourceType = dataSourceType;
+
+            if (_dataSourceType == DataSourceType.Raster)
+            {
+                int height = panel1.Height;
+                panel1.Height = 0;
+                panel1.Visible = false;
+                Height -= height;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether control allows selection of multiple files (batch mode).
+        /// </summary>
+        public bool BatchMode
+        {
+            get { return false; }
+        }
+
+        /// <summary>
+        /// Sets the list of layers.
+        /// </summary>
+        public void SetLayers(IEnumerable<ILayer> layers)
+        {
+            _layers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
+
+            UpdateComboBox();
+
+            if (comboBoxAdv1.Items.Count > 0)
+            {
+                comboBoxAdv1.SelectedIndex = 0;
+            }
+        }
+
+        /// <summary>
         /// Sets the value.
         /// </summary>
+        /// <param name="value">Value type must match the type of parameter the control was generated for.</param>
+        /// <exception cref="System.NotSupportedException">SetValue method isn't supported.</exception>
         public override void SetValue(object value)
         {
             throw new NotSupportedException("SetValue method isn't supported.");
         }
 
-        public override TableLayoutPanel GetTable()
+        /// <summary>
+        /// Fires the selected layer changed event.
+        /// </summary>
+        private void FireSelectedLayerChanged()
         {
-            return tableLayoutPanel1;
+            var handler = SelectedLayerChanged;
+            if (handler != null)
+            {
+                handler(this, new InputLayerEventArgs(SelectedLayer));
+            }
         }
 
         /// <summary>
-        /// Gets control to display tooltip for.
+        /// Gets icon index for datasource.
         /// </summary>
-        public override Control ToolTipControl
+        private int GetImageIndex(IDatasourceInput input)
         {
-            get { return comboBoxAdv1; }
+            return LayerIconHelper.GetIcon(input.Datasource);
         }
 
-        public override string Caption
+        /// <summary>
+        /// Fires events after selected layer was changed.
+        /// </summary>
+        private void OnSelectedLayerChanged(object sender, EventArgs e)
         {
-            get { return label1.Text; }
-            set { label1.Text = value; }
+            var layer = SelectedLayer as IVectorInput;
+
+            SetNumSelected(layer != null ? layer.Datasource.NumSelected : 0);
+
+            FireSelectedLayerChanged();
+
+            FireValueChanged();
         }
 
+        /// <summary>
+        /// Opens the datasource from file dialog.
+        /// </summary>
         private void OpenClick(object sender, EventArgs e)
         {
-            OpenDatasource();
+            string filename;
+            if (_dialogService.OpenFile(_dataSourceType, out filename))
+            {
+                var item = new InputLayerGridAdapter(filename);
+                _layers.Add(item);
+
+                UpdateComboBox();
+                comboBoxAdv1.SelectedItem = item;
+            }
         }
 
+        /// <summary>
+        /// Populates the image list.
+        /// </summary>
+        private void PopulateImageList()
+        {
+            comboBoxAdv1.ShowImageInTextBox = true;
+            comboBoxAdv1.ShowImagesInComboListBox = true;
+            comboBoxAdv1.ImageList = LayerIconHelper.CreateImageList();
+        }
+
+        /// <summary>
+        /// Refreshes layer icons.
+        /// </summary>
         private void RefreshImages()
         {
             comboBoxAdv1.ItemsImageIndexes.Clear();
@@ -121,32 +217,19 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
-        private int GetImageIndex(IDatasourceInput input)
+        /// <summary>
+        /// Sets the number selected features.
+        /// </summary>
+        private void SetNumSelected(int count)
         {
-            return LayerIconHelper.GetIcon(input.Datasource);
+            lblNumSelected.Text = "Number of selected: " + count;
+            chkSelectedOnly.Enabled = count > 0;
         }
 
-        private void PopulateImageList()
-        {
-            comboBoxAdv1.ShowImageInTextBox = true;
-            comboBoxAdv1.ShowImagesInComboListBox = true;
-            comboBoxAdv1.ImageList = LayerIconHelper.CreateImageList(); ;
-        }
-
-        private void OpenDatasource()
-        {
-            string filename;
-            if (_dialogService.OpenFile(_dataSourceType, out filename))
-            {
-                var item = new InputLayerGridAdapter(filename);
-                _layers.Add(item);
-
-                UpdateDatasource();
-                comboBoxAdv1.SelectedItem = item;
-            }
-        }
-
-        private void UpdateDatasource()
+        /// <summary>
+        /// Updates combo box after the changes of layer list.
+        /// </summary>
+        private void UpdateComboBox()
         {
             // image list doesn't work when binding is on
             //comboBoxAdv1.DataSource = _layers;
@@ -159,41 +242,6 @@ namespace MW5.Tools.Controls.Parameters
             }
 
             RefreshImages();
-        }
-
-        public IDatasourceInput SelectedLayer
-        {
-            get
-            {
-                var wrapper = comboBoxAdv1.SelectedItem as InputLayerGridAdapter;
-                return wrapper != null ? wrapper.Source : null;
-            }
-        }
-
-        private void OnSelectedLayerChanged(object sender, EventArgs e)
-        {
-            var layer = SelectedLayer as IVectorInput;
-            
-            SetNumSelected(layer != null ? layer.Datasource.NumSelected : 0);
-
-            FireSelectedLayerChanged();
-
-            FireValueChanged();
-        }
-
-        private void FireSelectedLayerChanged()
-        {
-            var handler = SelectedLayerChanged;
-            if (handler != null)
-            {
-                handler(this, new InputLayerEventArgs(SelectedLayer));
-            }
-        }
-
-        private void SetNumSelected(int count)
-        {
-            lblNumSelected.Text = "Number of selected: " + count;
-            chkSelectedOnly.Enabled = count > 0;
         }
     }
 }

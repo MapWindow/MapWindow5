@@ -1,18 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="GdalConvertView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Gdal.Helpers;
 using MW5.Gdal.Model;
 using MW5.Gdal.Views.Abstract;
 using MW5.Plugins.Interfaces;
-using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Parameters;
@@ -43,13 +41,15 @@ namespace MW5.Gdal.Views
                 return;
             }
 
-            // update output name
             UpdateOutputFilename(tool, driver);
 
-            // updating list of datatypes
             UpdateDataTypes(driver);
         }
 
+        /// <summary>
+        /// Updates list of supported data type for the current driver.
+        /// </summary>
+        /// <param name="driver">The driver.</param>
         private void UpdateDataTypes(DatasourceDriver driver)
         {
             var tool = Model.Tool as GisTool;
@@ -64,7 +64,7 @@ namespace MW5.Gdal.Views
                 return;
             }
 
-            var ctrl = p.Control as ComboParameterControl;
+            var ctrl = p.Control as IOptionsParameterControl;
             if (ctrl != null)
             {
                 var types = driver.GetCreationDataTypes();

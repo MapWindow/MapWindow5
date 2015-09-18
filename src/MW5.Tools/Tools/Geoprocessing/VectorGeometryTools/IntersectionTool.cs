@@ -19,7 +19,7 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [CustomMemberLayout]
+    [CustomLayout]
     [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class IntersectionTool : GisTool
     {

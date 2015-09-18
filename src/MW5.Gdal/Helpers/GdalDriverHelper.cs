@@ -9,6 +9,9 @@ using MW5.Tools.Model.Parameters;
 
 namespace MW5.Gdal.Helpers
 {
+    /// <summary>
+    /// Extension methods for GDAL datasource driver.
+    /// </summary>
     internal static class GdalDriverHelper
     {
         public const string SameAsInputDataType = "<same as input>";
@@ -82,6 +85,9 @@ namespace MW5.Gdal.Helpers
             return result;
         }
 
+        /// <summary>
+        /// Generates the parameters for particular driver.
+        /// </summary>
         private static IEnumerable<BaseParameter> Generate(IEnumerable<DriverOption> list)
         {
             foreach (var option in list.OrderByDescending(o => o.Name))

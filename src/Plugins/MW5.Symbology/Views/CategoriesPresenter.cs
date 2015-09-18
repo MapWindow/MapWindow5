@@ -21,7 +21,7 @@ namespace MW5.Plugins.Symbology.Views
     /// <summary>
     /// Handles commands of categories sub view (generation of categories, etc).
     /// </summary>
-    [HasRegions]
+    [LayoutWithRegions]
     public class CategoriesPresenter : SubViewPresenter<CategoriesSubView, CategoriesCommand, CategoriesSubViewModel>
     {
         private readonly IAppContext _context;

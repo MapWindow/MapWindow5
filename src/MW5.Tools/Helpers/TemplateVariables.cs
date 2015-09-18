@@ -6,7 +6,10 @@
 
 namespace MW5.Tools.Helpers
 {
-    public static class TemplateVariables
+    /// <summary>
+    /// Variables that can be used in tempalted names for outputs of GIS tools.
+    /// </summary>
+    internal static class TemplateVariables
     {
         public const string Input = "{input}";
     }

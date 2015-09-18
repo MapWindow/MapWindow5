@@ -8,26 +8,22 @@ using System;
 using System.ComponentModel;
 using System.Windows.Forms;
 using MW5.Shared;
-using MW5.Tools.Model.Parameters;
-using MW5.Tools.Services;
 
 namespace MW5.Tools.Controls.Parameters
 {
     /// <summary>
-    /// The parameter control base.
+    /// Base class for parameter controls. Derived classes are used to provide UI for tool parameters.
     /// </summary>
     [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<ParameterControlBase, UserControl>))]
-    public abstract partial class ParameterControlBase : UserControl, IParameterControl
+    public abstract partial class ParameterControlBase : UserControl
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ParameterControlBase"/> class.
         /// </summary>
-        public ParameterControlBase()
+        protected ParameterControlBase()
         {
             InitializeComponent();
         }
-
-        public string ParameterName { get; internal set; }
 
         /// <summary>
         /// The value changed.
@@ -35,14 +31,14 @@ namespace MW5.Tools.Controls.Parameters
         public event EventHandler<EventArgs> ValueChanged;
 
         /// <summary>
-        /// Gets or sets the caption.
+        /// Gets or sets control caption.
         /// </summary>
         public abstract string Caption { get; set; }
 
         /// <summary>
-        /// The get table.
+        /// Gets the name of the parameter the control was generated for.
         /// </summary>
-        public abstract TableLayoutPanel GetTable();
+        public string ParameterName { get; internal set; }
 
         /// <summary>
         /// Gets control to display tooltip for.
@@ -52,11 +48,13 @@ namespace MW5.Tools.Controls.Parameters
         /// <summary>
         /// Gets the value.
         /// </summary>
+        /// <returns>Value type that must match the type of parameter the control was generated for.</returns>
         public abstract object GetValue();
 
         /// <summary>
-        /// Sets the value.
+        /// Sets the value. 
         /// </summary>
+        /// <param name="value">Value type must match the type of parameter the control was generated for.</param>
         public abstract void SetValue(object value);
 
         /// <summary>

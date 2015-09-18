@@ -1,24 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="FilenameParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Windows.Forms;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
-using MW5.Tools.Model.Layers;
+using MW5.Tools.Controls.Parameters.Interfaces;
 
 namespace MW5.Tools.Controls.Parameters
 {
+    /// <summary>
+    /// Represents parameter control for filename selection.
+    /// </summary>
     public partial class FilenameParameterControl : ParameterControlBase, IInputParameterControl
     {
         private readonly IFileDialogService _dialogService;
         private DataSourceType _dataType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FilenameParameterControl"/> class.
+        /// </summary>
         public FilenameParameterControl(IFileDialogService dialogService)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
@@ -26,26 +30,13 @@ namespace MW5.Tools.Controls.Parameters
             InitializeComponent();
         }
 
-        public void Initialize(DataSourceType dataType)
-        {
-            _dataType = dataType;
-        }
-
         /// <summary>
         /// Gets or sets the caption.
         /// </summary>
-        public override string Caption 
+        public override string Caption
         {
             get { return label1.Text; }
-            set { label1.Text = value; } 
-        }
-
-        /// <summary>
-        /// The get table.
-        /// </summary>
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
+            set { label1.Text = value; }
         }
 
         /// <summary>
@@ -65,6 +56,23 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
+        /// Initializes the control with specified datasource type.
+        /// </summary>
+        /// <param name="dataType">Type of the data.</param>
+        public void Initialize(DataSourceType dataType)
+        {
+            _dataType = dataType;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether control allows selection of multiple files (batch mode).
+        /// </summary>
+        public bool BatchMode 
+        {
+            get { return false;} 
+        }
+
+        /// <summary>
         /// Sets the value.
         /// </summary>
         public override void SetValue(object value)
@@ -73,7 +81,7 @@ namespace MW5.Tools.Controls.Parameters
             FireValueChanged();
         }
 
-        private void OpenDatasource()
+        private void OnOpenClick(object sender, EventArgs e)
         {
             string filename;
             if (_dialogService.OpenFile(_dataType, out filename))
@@ -81,11 +89,6 @@ namespace MW5.Tools.Controls.Parameters
                 textBoxExt1.Text = filename;
                 FireValueChanged();
             }
-        }
-
-        private void OnOpenClick(object sender, EventArgs e)
-        {
-            OpenDatasource();
         }
     }
 }

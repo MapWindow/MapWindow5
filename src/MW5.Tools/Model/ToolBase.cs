@@ -8,6 +8,9 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Model
 {
+    /// <summary>
+    /// A base class for custom tools which don't task support and automatic UI generation.
+    /// </summary>
     public abstract class ToolBase: ITool
     {
         /// <summary>

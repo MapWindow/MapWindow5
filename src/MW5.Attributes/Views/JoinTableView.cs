@@ -16,7 +16,7 @@ using MW5.UI.Forms;
 
 namespace MW5.Attributes.Views
 {
-    [HasRegions]
+    [LayoutWithRegions]
     public partial class JoinTableView : JoinDbfViewBase, IJoinTableView
     {
         private bool _ignoreEvents;

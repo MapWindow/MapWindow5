@@ -12,7 +12,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Database
 {
-    [CustomMemberLayout]
+    [CustomLayout]
     [GisTool(GroupKeys.GeoDatabases, ToolIcon.Database)]
     public class ImportLayerTool : GisTool
     {

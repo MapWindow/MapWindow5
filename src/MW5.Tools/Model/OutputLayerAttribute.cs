@@ -7,6 +7,11 @@ using MW5.Api.Enums;
 
 namespace MW5.Tools.Model
 {
+    /// <summary>
+    /// Represents attribute with the properties of OutputLayerParameter.
+    /// </summary>
+    /// <remarks>Is mandatory for OutputLayerInfo type parameters.</remarks>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class OutputLayerAttribute: Attribute
     {
         /// <summary>

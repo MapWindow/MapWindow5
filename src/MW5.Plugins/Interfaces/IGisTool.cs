@@ -8,19 +8,42 @@ namespace MW5.Plugins.Interfaces
     /// </summary>
     public interface IGisTool: ITool
     {
-        IToolLogger Log { get; }
-
-        bool SupportsCancel { get; }
-
+        /// <summary>
+        /// A method to be called after the main IGisTool.Run method is successfully finished.
+        /// Is executed on the UI thread. Typically used to save output datasources.
+        /// </summary>
         bool AfterRun();
 
-        bool Run(ITaskHandle task);
-
+        /// <summary>
+        /// Gets or sets callback object used to stop execution of MapWinGIS methods.
+        /// </summary>
         IApplicationCallback Callback { get; set; }
 
+        /// <summary>
+        /// Clears callbacks and closes inputs datasources.
+        /// </summary>
         void CleanUp();
+        
+        /// <summary>
+        /// Gets the logger associated with tool.
+        /// </summary>
+        IToolLogger Log { get; }
 
-        bool Validate();
+        /// <summary>
+        /// Executes the tool.
+        /// </summary>
+        bool Run(ITaskHandle task);
+
+        /// <summary>
+        /// Gets a value indicating whether tasks should be executed 
+        /// in sequence rather than in parallel when running in batch mode.
+        /// </summary>
+        bool SequentialBatchExecution { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the tool supports canceling.
+        /// </summary>
+        bool SupportsCancel { get; }
 
         /// <summary>
         /// Gets the name of the task running the current tool.
@@ -28,9 +51,9 @@ namespace MW5.Plugins.Interfaces
         string TaskName { get; }
 
         /// <summary>
-        /// Gets a value indicating whether tasks should be executed 
-        /// in sequence rather than in parallel when running in batch mode.
+        /// Validates the values of input and output parameters.
         /// </summary>
-        bool SequentialBatchExecution { get; }
+        /// <returns>True if the values are valid.</returns>
+        bool Validate();
     }
 }

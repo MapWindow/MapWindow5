@@ -15,6 +15,9 @@ using MW5.UI.Controls;
 
 namespace MW5.Tools.Services
 {
+    /// <summary>
+    /// Generates controls for tool parameters and optinally adds them to the specified UI container.
+    /// </summary>
     public class ParameterControlGenerator
     {
         private readonly ParameterControlFactory _factory;
@@ -25,15 +28,15 @@ namespace MW5.Tools.Services
             if (factory == null) throw new ArgumentNullException();
 
             _factory = factory;
-            ShowSections = true;
         }
 
+        /// <summary>
+        /// Gets the event manager holding all the generated controls.
+        /// </summary>
         public EventManager EventManager
         {
             get { return _manager; }
         }
-
-        private bool ShowSections { get; set; }
 
         /// <summary>
         /// Generates controls for parameters and adds them to the specified panel.
@@ -47,7 +50,7 @@ namespace MW5.Tools.Services
                 return ;
             }
 
-            GenerateControlsCore(panel, list, batchMode);
+            GenerateIntoPanel(panel, list, batchMode);
 
             GenerateHeader(sectionName, panel);
         }
@@ -63,7 +66,10 @@ namespace MW5.Tools.Services
             }
         }
 
-        private void GenerateControlsCore(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
+        /// <summary>
+        /// Generates the controls into panel.
+        /// </summary>
+        private void GenerateIntoPanel(Control panel, IEnumerable<BaseParameter> parameters, bool batchMode)
         {
             foreach (var p in parameters)
             {
@@ -79,6 +85,9 @@ namespace MW5.Tools.Services
             }
         }
 
+        /// <summary>
+        /// Generates the control.
+        /// </summary>
         private ParameterControlBase GenerateControl(BaseParameter parameter, bool batchMode)
         {
             var ctrl = _factory.CreateControl(parameter, batchMode);
@@ -88,14 +97,14 @@ namespace MW5.Tools.Services
             return ctrl;
         }
 
+        /// <summary>
+        /// Generates a header for a section of tool dialog.
+        /// </summary>
         private void GenerateHeader(string sectionName, Control panel)
         {
-            if (ShowSections)
-            {
-                var section = new ConfigPanelControl { HeaderText = sectionName, Dock = DockStyle.Top };
-                section.ShowCaptionOnly();
-                panel.Controls.Add(section);
-            }
+            var section = new ConfigPanelControl { HeaderText = sectionName, Dock = DockStyle.Top };
+            section.ShowCaptionOnly();
+            panel.Controls.Add(section);
         }
     }
 }

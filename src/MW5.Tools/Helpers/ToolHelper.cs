@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
@@ -20,13 +21,39 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Clones the tool, copies values of all parameters.
         /// </summary>
-        internal static IParametrizedTool Clone(this IParametrizedTool tool, IAppContext context)
+        public static IParametrizedTool Clone(this IParametrizedTool tool, IAppContext context)
         {
-            var newTool = tool.Parameters.Clone();
+            var newTool = Clone(tool) as IGisTool;
 
-            newTool.Initialize(context);
+            if (newTool != null)
+            {
+                newTool.Initialize(context);
+            }
+
+            return newTool as IParametrizedTool;
+        }
+
+        /// <summary>
+        /// Clones the tool and copies values of all parameters.
+        /// </summary>
+        private static IParametrizedTool Clone(this IParametrizedTool tool)
+        {
+            var newTool = Activator.CreateInstance(tool.GetType()) as IParametrizedTool;
+
+            foreach (var p in tool.Parameters)
+            {
+                p.ToolProperty.SetValue(newTool, p.Value);
+            }
 
             return newTool;
+        }
+
+        /// <summary>
+        /// Gets all outputs for the tool.
+        /// </summary>
+        public static IEnumerable<OutputLayerInfo> GetOutputs(this IParametrizedTool tool)
+        {
+            return tool.Parameters.OfType<OutputLayerParameter>().Select(p => p.Value as OutputLayerInfo);
         }
 
         /// <summary>
@@ -37,7 +64,7 @@ namespace MW5.Tools.Helpers
         /// or
         /// More than one input layer parameters are found.
         /// </exception>
-        internal static IInputParameter GetSingleInputParameter(this IParametrizedTool tool)
+        public static IInputParameter GetSingleInputParameter(this IParametrizedTool tool)
         {
             var list = tool.Parameters.OfType<IInputParameter>().ToList();
 

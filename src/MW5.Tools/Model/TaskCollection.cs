@@ -14,19 +14,35 @@ using MW5.Plugins.Interfaces;
 
 namespace MW5.Tools.Model
 {
+    /// <summary>
+    /// Represents a collection of GIS tasks.
+    /// </summary>
     internal class TaskCollection : ITaskCollection
     {
         private readonly List<IGisTask> _tasks = new List<IGisTask>();
 
+        /// <summary>
+        /// Occurs when all the tasks are cleared from the collection.
+        /// </summary>
         public event EventHandler Cleared;
 
+        /// <summary>
+        /// Occurs when task status changes.
+        /// </summary>
         public event EventHandler<TaskEventArgs> TaskChanged;
 
+        /// <summary>
+        /// Gets the number of tasks in the collection.
+        /// </summary>
         public int Count
         {
             get { return _tasks.Count; }
         }
 
+        /// <summary>
+        /// Adds the specified task.
+        /// </summary>
+        /// <param name="task"></param>
         public void Add(IGisTask task)
         {
             task.StatusChanged += (s, e) => FireTaskChanged(e.Task, TaskEvent.StatusChanged);
@@ -34,12 +50,20 @@ namespace MW5.Tools.Model
             FireTaskChanged(task, TaskEvent.Added);
         }
 
+        /// <summary>
+        /// Removes the specified task.
+        /// </summary>
+        /// <param name="task">The task.</param>
         public void Remove(IGisTask task)
         {
             _tasks.Remove(task);
             FireTaskChanged(task, TaskEvent.Removed);
         }
 
+        /// <summary>
+        /// Removed all the tasks from the collection.
+        /// </summary>
+        /// <param name="finishedOnly">If set to <c>true</c> only finished tasks will be removed.</param>
         public void Clear(bool finishedOnly)
         {
             if (finishedOnly)
@@ -63,6 +87,9 @@ namespace MW5.Tools.Model
             }
         }
 
+        /// <summary>
+        /// Cancels all the running tasks.
+        /// </summary>
         public void CancelAll()
         {
             foreach (var t in this)

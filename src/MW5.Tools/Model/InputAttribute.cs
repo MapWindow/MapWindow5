@@ -9,6 +9,10 @@ using MW5.Tools.Enums;
 
 namespace MW5.Tools.Model
 {
+    /// <summary>
+    /// Represents attribute to mark tool properties as input parameters.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class InputAttribute : Attribute
     {
         /// <summary>
@@ -29,7 +33,7 @@ namespace MW5.Tools.Model
         /// Initializes a new instance of the <see cref="InputAttribute"/> class.
         /// </summary>
         /// <param name="displayName">The display name.</param>
-        /// <param name="index">The index. -1 should be passed to exclude parameter for UI.</param>
+        /// <param name="index">The index. -1 should be passed to exclude parameter from UI.</param>
         /// <param name="sectionName">The name of the section which will be displayed as a separate section or panel in the UI.</param>
         public InputAttribute(string displayName, int index, string sectionName)
         {

@@ -16,7 +16,7 @@ namespace MW5.Tools.Helpers
         /// <summary>
         /// Sets caption to the control, also removing trailing colon.
         /// </summary>
-        public static void SetCaption(this IParameterControl ctrl, string caption)
+        public static void SetCaption(this ParameterControlBase ctrl, string caption)
         {
             ctrl.Caption = caption;
 

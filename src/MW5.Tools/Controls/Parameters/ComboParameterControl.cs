@@ -1,25 +1,52 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="ComboParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Windows.Forms;
+using MW5.Tools.Controls.Parameters.Interfaces;
 
 namespace MW5.Tools.Controls.Parameters
 {
-    public partial class ComboParameterControl : ParameterControlBase
+    /// <summary>
+    /// Represents as ComboBox control to display OptionsParameter.
+    /// </summary>
+    public partial class ComboParameterControl : ParameterControlBase, IOptionsParameterControl
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComboParameterControl"/> class.
+        /// </summary>
         public ComboParameterControl()
         {
             InitializeComponent();
-            comboBoxAdv1.SelectedValueChanged += comboBoxAdv1_SelectedValueChanged;
+
+            buttonAdv1.Visible = false;
+
+            comboBoxAdv1.SelectedValueChanged += (s, e) => FireValueChanged();
         }
 
-        void comboBoxAdv1_SelectedValueChanged(object sender, EventArgs e)
+        /// <summary>
+        /// Gets or sets control caption.
+        /// </summary>
+        public override string Caption
         {
-            FireValueChanged();
+            get { return label1.Text; }
+            set { label1.Text = value; }
         }
 
+        /// <summary>
+        /// Gets control to display tooltip for.
+        /// </summary>
+        public override Control ToolTipControl
+        {
+            get { return comboBoxAdv1; }
+        }
+
+        /// <summary>
+        /// Sets the options for ComboBox control.
+        /// </summary>
         public void SetOptions(object options)
         {
             // comboBoxAdv.DataSource raises SelectedIndex changed event twice on first assignment
@@ -46,14 +73,18 @@ namespace MW5.Tools.Controls.Parameters
             }
         }
 
+        /// <summary>
+        /// Gets the value. Value type must match the type of parameter the control was generated for.
+        /// </summary>
         public override object GetValue()
         {
             return comboBoxAdv1.SelectedItem;
         }
 
         /// <summary>
-        /// Sets the value.
+        /// Sets the value. Value type must match the type of parameter the control was generated for.
         /// </summary>
+        /// <param name="value"></param>
         public override void SetValue(object value)
         {
             foreach (var item in comboBoxAdv1.Items)
@@ -64,31 +95,6 @@ namespace MW5.Tools.Controls.Parameters
                     return;
                 }
             }
-        }
-
-        public override TableLayoutPanel GetTable()
-        {
-            return tableLayoutPanel1;
-        }
-
-        /// <summary>
-        /// Gets control to display tooltip for.
-        /// </summary>
-        public override Control ToolTipControl
-        {
-            get { return comboBoxAdv1; }
-        }
-
-        public override string Caption
-        {
-            get { return label1.Text; }
-            set { label1.Text = value; }
-        }
-
-        public bool ButtonVisible
-        {
-            get { return buttonAdv1.Visible; }
-            set { buttonAdv1.Visible = value; }
         }
     }
 }

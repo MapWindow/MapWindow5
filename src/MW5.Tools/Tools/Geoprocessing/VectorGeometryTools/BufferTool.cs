@@ -17,7 +17,7 @@ using MW5.Tools.Services;
 
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
-    [CustomMemberLayout]
+    [CustomLayout]
     [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
     public class BufferTool : GisTool
     {
@@ -77,11 +77,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         }
 
         public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
-        public override bool SequentialBatchExecution
         {
             get { return true; }
         }
