@@ -25,5 +25,11 @@ namespace MW5.API.Test
         {
             return false;
         }
+
+
+        public int ThreadId
+        {
+            get { return -1; }
+        }
     }
 }

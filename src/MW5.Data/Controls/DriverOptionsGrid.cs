@@ -18,5 +18,10 @@ namespace MW5.Data.Controls
         {
             UI.Helpers.GroupingGridHelper.AdjustRowHeights(this);
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

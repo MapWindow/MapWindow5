@@ -20,5 +20,10 @@ namespace MW5.Data.Controls
                 Adapter.ToggleProperty(info => info.Selected);
             }
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

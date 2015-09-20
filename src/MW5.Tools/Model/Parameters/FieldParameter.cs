@@ -8,13 +8,11 @@ using MW5.Tools.Model.Parameters.Layers;
 
 namespace MW5.Tools.Model.Parameters
 {
+    /// <summary>
+    /// Represents vector datasource's field index parameter.
+    /// </summary>
     internal class FieldParameter : BaseParameter
     {
-        public VectorLayerParameter Layer { get; set; }
 
-        public override object Value
-        {
-            get { return (int)Control.GetValue(); }
-        }
     }
 }

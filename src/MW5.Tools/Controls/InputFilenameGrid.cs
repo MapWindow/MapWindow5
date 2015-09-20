@@ -31,18 +31,7 @@ namespace MW5.Tools.Controls
             ShowColumnHeaders = false;
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = null;
-                base.DataSource = value;
-                UpdateColumns();
-            }
-        }
-
-        private void UpdateColumns()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 

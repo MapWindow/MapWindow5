@@ -64,17 +64,11 @@ namespace MW5.Services.Controls
             }
         }
 
-        public new object DataSource
+        protected override void UpdateColumns()
         {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                
-                UpdateColumnVisibility();
-                
-                UpdateColumnState();
-            }
+            UpdateColumnVisibility();
+
+            UpdateColumnState();
         }
 
         private void UpdateColumnVisibility()

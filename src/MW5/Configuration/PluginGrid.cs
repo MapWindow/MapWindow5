@@ -19,5 +19,10 @@ namespace MW5.Configuration
             Adapter.AllowCurrentCell = false;
             WrapWithPanel = false;
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

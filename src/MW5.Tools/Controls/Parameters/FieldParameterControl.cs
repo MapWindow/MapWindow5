@@ -7,6 +7,7 @@
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls.Parameters
@@ -14,7 +15,7 @@ namespace MW5.Tools.Controls.Parameters
     /// <summary>
     /// Represents control for the field name selection. Must be bound to particular LayerParameterControl.
     /// </summary>
-    internal partial class FieldParameterControl : ParameterControlBase
+    internal partial class FieldParameterControl : ParameterControlBase, IInputListener
     {
         public FieldParameterControl()
         {

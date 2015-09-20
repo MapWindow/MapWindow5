@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Shared;
@@ -169,6 +170,11 @@ namespace MW5.Tools.Services
             if (customType != ControlHint.Auto)
             {
                 throw new IndexOutOfRangeException("No handler for parameter type: " + customType);
+            }
+
+            if (type == typeof(FieldOperationList))
+            {
+                return new FieldOperationParameter();
             }
 
             if (type == typeof(ISpatialReference))

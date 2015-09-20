@@ -384,11 +384,8 @@
     <EmbeddedResource Include="Views\WelcomeView.resx">
       <DependentUpon>WelcomeView.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="..\postbuild.bat">
-      <Link>postbuild.bat</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
+    <None Include="postbuild.bat" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

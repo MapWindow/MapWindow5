@@ -64,6 +64,7 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="ConvertibleBase.cs" />
     <Compile Include="CustomLayoutAttribute.cs" />
     <Compile Include="IMarshal.cs" />
     <Compile Include="ReplaceControlDescripterProvider.cs" />

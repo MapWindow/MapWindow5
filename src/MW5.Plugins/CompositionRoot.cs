@@ -35,6 +35,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new ColorInterpretationConverter());
             EnumHelper.RegisterConverter(new UnitsOfMeasureConverter());
             EnumHelper.RegisterConverter(new GisTaskStatusConverter());
+            EnumHelper.RegisterConverter(new GroupOperationConverter());
         }
     }
 }

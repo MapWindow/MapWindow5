@@ -322,4 +322,28 @@ namespace MW5.Plugins.Helpers
             return string.Empty;
         }
     }
+
+    public class GroupOperationConverter: IEnumConverter<GroupOperation>
+    {
+        public string GetString(GroupOperation value)
+        {
+            switch (value)
+            {
+                case GroupOperation.Sum:
+                    return "Sum";
+                case GroupOperation.Min:
+                    return "Minimum";
+                case GroupOperation.Max:
+                    return "Maximum";
+                case GroupOperation.Avg:
+                    return "Average";
+                case GroupOperation.WeightedAvg:
+                    return "Weigted avg.";
+                case GroupOperation.Mode:
+                    return "Mode";
+            }
+
+            return string.Empty;
+        }
+    }
 }

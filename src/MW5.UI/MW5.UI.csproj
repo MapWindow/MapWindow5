@@ -90,6 +90,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\DataGridViewAdapter.cs" />
+    <Compile Include="Controls\GridComboBoxCellModelEx.cs" />
+    <Compile Include="Controls\GridComboBoxCellRendererEx.cs" />
+    <Compile Include="Controls\GridComboItem.cs" />
     <Compile Include="Controls\LinkLabelCellModelEx.cs" />
     <Compile Include="Controls\LinkLabelCellRendererEx.cs" />
     <Compile Include="Controls\LinkLabelEx.cs">

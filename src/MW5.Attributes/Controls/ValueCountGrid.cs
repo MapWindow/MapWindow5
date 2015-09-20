@@ -17,21 +17,7 @@ namespace MW5.Attributes.Controls
             Adapter.WrapText = true;
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                
-                UpdateColumns();
-
-                // it's too slow for large number of rows
-                //this.AdjustRowHeights();
-            }
-        }
-
-        private void UpdateColumns()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 

@@ -3,10 +3,11 @@ using System.ComponentModel;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
-    public class AttributeField : IAttributeField
+    public class AttributeField : ConvertibleBase, IAttributeField
     {
         private readonly Field _field;
         private readonly int _index = -1;
@@ -98,6 +99,11 @@ namespace MW5.Api.Concrete
         }
 
         public override string ToString()
+        {
+            return DisplayName;
+        }
+
+        public override string ToString(IFormatProvider provider)
         {
             return DisplayName;
         }

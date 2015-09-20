@@ -12,17 +12,7 @@ namespace MW5.Attributes.Controls
             Adapter.AllowCurrentCell = false;
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                UpdateColumns();
-            }
-        }
-
-        private void UpdateColumns()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 

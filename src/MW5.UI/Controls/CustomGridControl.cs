@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
 
@@ -30,8 +31,25 @@ namespace MW5.UI.Controls
             
             TableControlCellClick += OnTableControlCellClick;
 
+            TableControl.CurrentCellShowingDropDown += OnCurrentCellShowingDropDown;
             //TableControl.CurrentCell.ShowErrorIcon = false;
             //TableControl.CurrentCell.ShowErrorMessageBox = false;
+        }
+
+        /// <summary>
+        /// Displaying larger combobox list.
+        /// </summary>
+        private void OnCurrentCellShowingDropDown(object sender, GridCurrentCellShowingDropDownEventArgs e)
+        {
+            var renderer = TableControl.Model.CurrentCellRenderer as GridComboBoxCellRenderer;
+            if (renderer != null)
+            {
+                var listbox = renderer.ListBoxPart as GridComboBoxListBoxPart;
+                if (listbox != null)
+                {
+                    listbox.DropDownRows = 20;
+                }
+            }
         }
 
         [Browsable(false)]
@@ -137,6 +155,14 @@ namespace MW5.UI.Controls
             // any option other than None will disable SelectedRecordsChanged event
             // http ://www.syncfusion.com/forums/46745/grid-grouping-control-selection-color
             TableOptions.AllowSelection = GridSelectionFlags.None;
+        }
+
+        public void ForceImmediateSaveValue()
+        {
+            foreach (FieldDescriptor t in TableDescriptor.Fields)
+            {
+                t.ForceImmediateSaveValue = true;
+            }
         }
     }
 }

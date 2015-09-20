@@ -15,5 +15,10 @@ namespace MW5.Plugins.Symbology.Controls
             Adapter.AllowCurrentCell = false;
             Adapter.HotTracking = true;
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

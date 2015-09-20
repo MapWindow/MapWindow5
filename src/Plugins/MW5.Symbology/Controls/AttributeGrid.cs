@@ -23,21 +23,7 @@ namespace MW5.Plugins.Symbology.Controls
             TableOptions.AllowSortColumns = false;
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-
-                if (value != null)
-                {
-                    UpdateColumnState();
-                }
-            }
-        }
-
-        public void UpdateColumnState()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
@@ -98,6 +99,20 @@ namespace MW5.Tools.Services
         /// Specifies that field parameter belongs to a certain layer.
         /// </summary>
         public ToolConfiguration<T> AddField(Expression<Func<T, IVectorInput>> layer, Expression<Func<T, int>> field)
+        {
+            // let the exceptions be thrown, we want to catch bugs ASAP
+            var layerName = (layer.Body as MemberExpression).Member.Name;
+            var fieldName = (field.Body as MemberExpression).Member.Name;
+
+            _config.Fields.Add(new FieldWrapper(layerName, fieldName));
+
+            return this;
+        }
+
+        /// <summary>
+        /// Specifies that field parameter belongs to a certain layer.
+        /// </summary>
+        public ToolConfiguration<T> AddField(Expression<Func<T, IVectorInput>> layer, Expression<Func<T, FieldOperationList>> field)
         {
             // let the exceptions be thrown, we want to catch bugs ASAP
             var layerName = (layer.Body as MemberExpression).Member.Name;

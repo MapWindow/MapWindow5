@@ -39,7 +39,11 @@ namespace MW5.Tools.Services
 
             ParameterControlBase control = null;
 
-            if (parameter is OutputNameParameter)
+            if (parameter is FieldOperationParameter)
+            {
+                control = new FieldOperationParameterControl();
+            }
+            else if (parameter is OutputNameParameter)
             {
                 control = new OutputNameParameterControl(batchMode);
             }

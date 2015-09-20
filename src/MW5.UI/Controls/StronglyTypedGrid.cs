@@ -22,5 +22,19 @@ namespace MW5.UI.Controls
         {
             Adapter = new GridAdapter<T>(this);
         }
+
+        public new object DataSource
+        {
+            get { return base.DataSource; }
+            set
+            {
+                base.DataSource = null;
+                base.DataSource = value;
+
+                UpdateColumns();
+            }
+        }
+
+        protected abstract void UpdateColumns();
     }
 }

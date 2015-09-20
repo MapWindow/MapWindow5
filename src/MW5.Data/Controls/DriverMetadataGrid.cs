@@ -51,14 +51,9 @@ namespace MW5.Data.Controls
             }
         }
 
-        public new object DataSource
+        protected override void UpdateColumns()
         {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                this.AdjustRowHeights();
-            }
+            this.AdjustRowHeights();
         }
 
         void DriverMetadataGrid_TableControlResizingColumns(object sender, Syncfusion.Windows.Forms.Grid.Grouping.GridTableControlResizingColumnsEventArgs e)

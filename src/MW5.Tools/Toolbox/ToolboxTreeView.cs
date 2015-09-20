@@ -34,7 +34,7 @@ namespace MW5.Tools.Toolbox
         {
             // must match indices in ToolIcon enumeration
             yield return Resources.img_toolbox16;
-            yield return Resources.img_tool16;
+            yield return Resources.img_tool;
             yield return Resources.img_geometry;
             yield return Resources.img_database16_2;
             yield return Resources.img_tool;

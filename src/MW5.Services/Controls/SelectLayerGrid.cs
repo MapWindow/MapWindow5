@@ -36,17 +36,7 @@ namespace MW5.Services.Controls
             model.CellValue = !(bool)(model.CellValue);
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                UpdateColumns();
-            }
-        }
-
-        private void UpdateColumns()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 

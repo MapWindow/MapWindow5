@@ -21,6 +21,11 @@ namespace MW5.Api.Concrete
             }
         }
 
+        public FieldOperationList()
+        {
+            _operations = new FieldStatOperations();
+        }
+
         public object InternalObject
         {
             get { return _operations; }

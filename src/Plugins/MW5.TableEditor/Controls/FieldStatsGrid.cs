@@ -22,5 +22,10 @@ namespace MW5.Plugins.TableEditor.Controls
             Adapter.ReadOnly = true;
             Adapter.AllowCurrentCell = false;
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

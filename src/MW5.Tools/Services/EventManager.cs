@@ -66,9 +66,14 @@ namespace MW5.Tools.Services
             foreach (var f in config.Fields)
             {
                 var layer = GetControl(f.LayerName) as LayerParameterControl;
-                var field = GetControl(f.FieldName) as FieldParameterControl;
 
-                if (layer != null && field != null)
+                if (layer == null)
+                {
+                    continue;
+                }
+
+                var field = GetControl(f.FieldName) as IInputListener;
+                if (field != null)
                 {
                     layer.SelectedLayerChanged += (s, e) => field.OnLayerChanged(e.Datasource);
                 }

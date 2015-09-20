@@ -15,5 +15,10 @@ namespace MW5.Controls
             Adapter.HotTracking = true;
             WrapWithPanel = false;
         }
+
+        protected override void UpdateColumns()
+        {
+            // do nothing
+        }
     }
 }

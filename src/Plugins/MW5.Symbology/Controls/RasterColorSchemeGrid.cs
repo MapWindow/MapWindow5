@@ -38,19 +38,13 @@ namespace MW5.Plugins.Symbology.Controls
 
         public bool Extended { get; set; }
 
-        public new object DataSource
+        protected override void UpdateColumns()
         {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
+            AdjustColumnsWidth();
 
-                AdjustColumnsWidth();
+            UpdateColumnVisibility();
 
-                UpdateColumnVisibility();
-
-                UpdateColumnFormat();
-            }
+            UpdateColumnFormat();
         }
 
         public bool ShowGradient

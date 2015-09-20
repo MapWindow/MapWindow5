@@ -31,18 +31,7 @@ namespace MW5.Plugins.Symbology.Controls
             WrapWithPanel = false;
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource;  }
-            set
-            {
-                base.DataSource = value;
-                InitializeColumns();
-                
-            }
-        }
-
-        private void InitializeColumns()
+        protected override void UpdateColumns()
         {
             Adapter.ClearGrouping();
 

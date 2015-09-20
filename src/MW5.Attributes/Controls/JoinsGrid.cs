@@ -32,17 +32,7 @@ namespace MW5.Attributes.Controls
             }
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                UpdateColumns();
-            }
-        }
-
-        private void UpdateColumns()
+        protected override void UpdateColumns()
         {
             Adapter.GetColumn(j => j.DisplayName).Width = 150;
             Adapter.GetColumn(j => j.FieldsCsv).Width = 150;

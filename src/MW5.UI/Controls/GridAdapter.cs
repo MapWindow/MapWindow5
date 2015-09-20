@@ -569,26 +569,35 @@ namespace MW5.UI.Controls
             _grid.TableDescriptor.GroupedColumns.Clear();
         }
 
-        private void SetComboBox(GridColumnDescriptor cmn)
+        /// <summary>
+        /// Adds combobox to particular column of the grid.
+        /// </summary>
+        /// <remarks>http ://stackoverflow.com/questions/29750570/setting-row-specific-content-for-a-combobox-in-a-gridgroupingcontrol-cell</remarks>
+        public void AddComboBox(GridColumnDescriptor cmn, IEnumerable<GridComboItem> items)
         {
-            // TODO: create a generalized method
-            // http ://stackoverflow.com/questions/29750570/setting-row-specific-content-for-a-combobox-in-a-gridgroupingcontrol-cell
+           AddComboBox(cmn, (object)items);
+        }
 
+        public void AddComboBox(GridColumnDescriptor cmn, object items)
+        {
             var style = cmn.Appearance.AnyRecordFieldCell;
-
-            //var list = new List<FieldWrapper>()
-            //               {
-            //                   new FieldWrapper("layer", "field"), 
-            //                   new FieldWrapper("more", "another")
-            //               };
-
             style.CellType = GridCellTypeName.ComboBox;
+            style.DisplayMember = "Text";
+            style.ValueMember = "Value";
+            style.DataSource = items;
+            style.ExclusiveChoiceList = false;
+            style.DropDownStyle = GridDropDownStyle.Exclusive;
+        }
 
-            style.DisplayMember = "LayerName";
-            style.ValueMember = "FieldName";
-            //style.DataSource = list;
-
-            style.ExclusiveChoiceList = true;
+        /// <summary>
+        /// Adds the delete button to the specified column. TableControlPushButtonClick event should be handled to catch user click.
+        /// </summary>
+        public void AddDeleteButton(GridColumnDescriptor cmn)
+        {
+            cmn.Width = 20;
+            var style = cmn.Appearance.AnyRecordFieldCell;
+            style.CellType = GridCellTypeName.PushButton;
+            style.Description = " X ";
         }
     }
 }

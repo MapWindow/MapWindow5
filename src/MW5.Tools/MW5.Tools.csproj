@@ -79,6 +79,13 @@
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\FieldOperationGridAdapter.cs" />
+    <Compile Include="Controls\FieldOperationGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\FieldOperationGrid.Designer.cs">
+      <DependentUpon>FieldOperationGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\InputFilenameGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -98,6 +105,13 @@
     <Compile Include="Controls\Parameters\FilenameParameterControl.Designer.cs">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Parameters\FieldOperationParameterControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\FieldOperationParameterControl.Designer.cs">
+      <DependentUpon>FieldOperationParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Parameters\Interfaces\IInputListener.cs" />
     <Compile Include="Controls\Parameters\Interfaces\IInputParameterControl.cs" />
     <Compile Include="Controls\Parameters\Interfaces\IOptionsParameterControl.cs" />
     <Compile Include="Controls\Parameters\Interfaces\IOuputputParameterControl.cs" />
@@ -170,6 +184,7 @@
     <Compile Include="Model\Layers\DatasourceInput.cs" />
     <Compile Include="Model\OutputLayerAttribute.cs" />
     <Compile Include="Model\Parameters\FilenameParameter.cs" />
+    <Compile Include="Model\Parameters\FieldOperationParameter.cs" />
     <Compile Include="Model\Parameters\IInputParameter.cs" />
     <Compile Include="Model\Parameters\IOutputParameter.cs" />
     <Compile Include="Model\Parameters\ISupportsValidation.cs" />
@@ -303,6 +318,7 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\DissolveTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -412,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\FilenameParameterControl.resx">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Parameters\FieldOperationParameterControl.resx">
+      <DependentUpon>FieldOperationParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\IntegerParameterControl.resx">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>

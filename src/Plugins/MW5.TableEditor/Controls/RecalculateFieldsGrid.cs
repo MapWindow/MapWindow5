@@ -38,17 +38,7 @@ namespace MW5.Plugins.TableEditor.Controls
             _imageList.Images.Add(Resources.img_ok16);
         }
 
-        public new object DataSource
-        {
-            get { return base.DataSource; }
-            set
-            {
-                base.DataSource = value;
-                InitColumns();
-            }
-        }
-
-        private void InitColumns()
+        protected override void UpdateColumns()
         {
             Adapter.HideColumns();
 
