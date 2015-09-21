@@ -314,6 +314,7 @@
     <Compile Include="Tools\Fake\LongExecutionTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ConvertTo2DVectorTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs">
       <SubType>Code</SubType>
     </Compile>

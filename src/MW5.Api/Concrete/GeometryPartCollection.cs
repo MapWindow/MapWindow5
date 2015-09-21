@@ -6,6 +6,9 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
+    /// <summary>
+    /// Represents a list parts of the geometry.
+    /// </summary>
     public class GeometryPartCollection : IEnumerable<IGeometry>
     {
         private readonly Shape _shape;

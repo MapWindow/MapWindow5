@@ -23,8 +23,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
     [GisTool(GroupKeys.VectorGeometryTools)]
     public class CentroidTool: GisTool
     {
-        private bool _success = true;
-
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
 
@@ -104,28 +102,18 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            _success = true;
-
             var fs = Input.Datasource;
             var fsNew = fs.Clone(GeometryType.Point);
 
-            var features = Input.SelectedOnly ? fs.Features.Where(f => f.Selected).ToList() : fs.Features.ToList();
-
             int lastPercent = 0;
-            
+
+            var features = Input.Datasource.GetFeatures(Input.SelectedOnly);
             for (int i = 0; i < features.Count; i++)
             {
                 task.CheckPauseAndCancel();
                 task.Progress.TryUpdate("Calculating...", i, features.Count, ref lastPercent);
 
                 var gm = features[i].Geometry;
-
-                // TODO: why does it happen?
-                if (gm.InternalObject == null)
-                {
-                    Log.Warn("Geometry is null: " + i, null);
-                    continue;
-                }
 
                 if (AllParts)
                 {
@@ -141,8 +129,10 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 }
             }
 
+            task.Progress.Clear();
+
             Output.Result = fsNew; 
-            return _success;
+            return true;
         }
 
         /// <summary>
@@ -159,10 +149,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             if (index == -1)
             {
                 Log.Warn("Failed to insert geometry: {0}", null, sourceIndex);
-                _success = false;
             }
-
-            source.Table.CopyAttributes(sourceIndex, target.Table, index);
+            else
+            {
+                source.Table.CopyAttributes(sourceIndex, target.Table, index);
+            }
 
             return true;
         }
@@ -183,11 +174,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
                 default:
                     throw new ArgumentOutOfRangeException("method");
             }
-        }
-
-        public override bool AfterRun()
-        {
-            return base.AfterRun();
         }
     }
 }

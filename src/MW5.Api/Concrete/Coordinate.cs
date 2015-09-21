@@ -43,6 +43,11 @@ namespace MW5.Api.Concrete
             set { _point.M = value; }
         }
 
+        public ICoordinate Clone()
+        {
+            return new Coordinate(_point.Clone());
+        }
+
         public object InternalObject
         {
             get { return _point; }

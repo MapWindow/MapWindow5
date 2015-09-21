@@ -159,6 +159,31 @@ namespace MW5.Api.Concrete
             return new Geometry(_shape.Clone());
         }
 
+        /// <summary>
+        /// Clones points and parts but allows to set different geometry type.
+        /// The method doesn't check if the result geometry is valid.
+        /// </summary>
+        public IGeometry Clone(GeometryType type, ZValueType zValue = ZValueType.None)
+        {
+            var shapeType = GeometryHelper.GeometryType2ShpType(type, zValue);
+            var shp = new Shape();
+            shp.Create(shapeType);
+
+            for (int i = 0; i < _shape.NumParts; i++)
+            {
+                int pointIndex = _shape.Part[i];
+                shp.set_Part(i, pointIndex);
+            }
+
+            var g = new Geometry(shp);
+            foreach (var pnt in Points)
+            {
+                g.Points.Add(pnt.Clone());
+            }
+
+            return g;
+        }
+
         public IGeometry ClosestPoints(IGeometry g)
         {
             return new Geometry(_shape.ClosestPoints(g.GetInternal()));

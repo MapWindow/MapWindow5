@@ -109,6 +109,11 @@ namespace MW5.Tools.Views
 
         private void OnLogMessageAdded(object sender, LogEventArgs e)
         {
+            if (!Visible)
+            {
+                return;
+            }
+            
             Action action = () =>
                 {
                     // without locking Application.DoEvents produces race condition

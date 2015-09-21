@@ -29,6 +29,7 @@ namespace MW5.Api.Interfaces
 
         IGeometry Clip(IGeometry g, ClipOperation operation);
         IGeometry Clone();
+        IGeometry Clone(GeometryType type, ZValueType zValue = ZValueType.None);
         IGeometry ClosestPoints(IGeometry g);
         bool Contains(IGeometry g);
         IGeometry ConvexHull();

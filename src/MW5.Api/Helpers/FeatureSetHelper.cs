@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Interfaces;
 
@@ -32,6 +33,14 @@ namespace MW5.Api.Helpers
             }
 
             return box;
+        }
+
+        /// <summary>
+        /// Gets list of features of input dataset to be processed.
+        /// </summary>
+        public static List<IFeature> GetFeatures(this IFeatureSet fs, bool selectedOnly)
+        {
+            return selectedOnly ? fs.Features.Where(f => f.Selected).ToList() : fs.Features.ToList();
         }
     }
 }
