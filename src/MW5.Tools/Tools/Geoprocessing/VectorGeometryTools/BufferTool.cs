@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
@@ -76,28 +77,16 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Builds a buffer around features of input vector layer."; }
         }
 
-        public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
-        private LengthUnits GetSourceUnits()
-        {
-            // TODO: this is a fast and dirty solution; units may also be stored in WKT string explicitly,
-            // while ultimatily it may be needed to choose source units explicitly in the UI
-            return Input.Datasource.Projection.IsGeographic ? LengthUnits.DecimalDegrees : LengthUnits.Meters;
-        }
-
         /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, GetSourceUnits(),
-                BufferDistance.Value);
+            var units = Input.Datasource.GetLengthUnits();
+            
+            double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
 
-            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly,
-                MergeResults);
+            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
 
             return true;
         }

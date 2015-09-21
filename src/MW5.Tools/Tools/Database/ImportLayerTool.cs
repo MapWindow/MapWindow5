@@ -102,11 +102,6 @@ namespace MW5.Tools.Tools.Database
             get { return true; }
         }
 
-        public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
         /// <summary>
         /// Preparing format specific options.
         /// </summary>

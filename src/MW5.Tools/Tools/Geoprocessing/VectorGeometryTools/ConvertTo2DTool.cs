@@ -45,6 +45,9 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return PluginIdentity.Default; }
         }
 
+        /// <summary>
+        /// Is called on the UI thread before execution of the IGisTool.Run method.
+        /// </summary>
         protected override bool BeforeRun()
         {
             if (Input.Datasource.ZValueType == ZValueType.None)

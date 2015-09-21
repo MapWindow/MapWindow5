@@ -50,14 +50,6 @@ namespace MW5.Tools.Tools.Projections
         }
 
         /// <summary>
-        /// Gets a value indicating whether the tool supports batch execution.
-        /// </summary>
-        public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
-        /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)

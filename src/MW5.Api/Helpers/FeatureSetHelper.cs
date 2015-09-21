@@ -6,6 +6,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Helpers
@@ -41,6 +42,16 @@ namespace MW5.Api.Helpers
         public static List<IFeature> GetFeatures(this IFeatureSet fs, bool selectedOnly)
         {
             return selectedOnly ? fs.Features.Where(f => f.Selected).ToList() : fs.Features.ToList();
+        }
+
+        /// <summary>
+        /// Gets length units for datasource based on its projection.
+        /// </summary>
+        public static LengthUnits GetLengthUnits(this IFeatureSet fs)
+        {
+            // TODO: this is a fast and dirty solution; units may also be stored in WKT string explicitly,
+            // while ultimatily it may be needed to choose source units explicitly in the UI
+            return fs.Projection.IsGeographic ? LengthUnits.DecimalDegrees : LengthUnits.Meters;
         }
     }
 }

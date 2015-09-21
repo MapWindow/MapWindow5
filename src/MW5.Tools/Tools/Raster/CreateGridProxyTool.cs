@@ -81,11 +81,6 @@ namespace MW5.Tools.Tools.Raster
             get { return false; }
         }
 
-        public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
         public override string TaskName
         {
             get { return "Proxy: " + Path.GetFileName(Input); }

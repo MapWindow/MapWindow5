@@ -102,7 +102,7 @@ namespace MW5.Tools.Model
         /// </summary>
         public virtual bool SupportsBatchExecution
         {
-            get { return false; }
+            get { return true; }
         }
 
         /// <summary>

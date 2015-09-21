@@ -17,7 +17,12 @@ namespace MW5.Tools.Model.Parameters
         public override string ToString()
         {
             var distance = Value as Distance;
-            return string.Format("{0}: {1:g3}", DisplayName, (distance != null) ? distance.Value : 0.0);
+            if (distance != null)
+            {
+                return string.Format("{0}: {1:g3} {2}", DisplayName, distance.Value, distance.Units);
+            }
+
+            return string.Format("{0}: <empty>", DisplayName);
         }
 
         public override void ReadXml(XmlReader reader)

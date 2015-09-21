@@ -314,7 +314,7 @@
     <Compile Include="Tools\Fake\LongExecutionTool.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ConvertTo2DVectorTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ConvertTo2DTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -323,12 +323,15 @@
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\CentroidTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\DissolveTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExplodeShapesTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SimplifyLinesTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>

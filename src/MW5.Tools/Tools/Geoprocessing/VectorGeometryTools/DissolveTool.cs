@@ -69,6 +69,14 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         }
 
         /// <summary>
+        /// Gets a value indicating whether the tool supports batch execution.
+        /// </summary>
+        public override bool SupportsBatchExecution
+        {
+            get { return false; }
+        }
+
+        /// <summary>
         /// Is called on the UI thread before execution of the IGisTool.Run method.
         /// </summary>
         /// <returns></returns>

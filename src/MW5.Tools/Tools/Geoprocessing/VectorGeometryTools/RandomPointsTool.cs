@@ -63,11 +63,6 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             get { return "Random points"; }
         }
 
-        public override bool SupportsBatchExecution
-        {
-            get { return true; }
-        }
-
         /// <summary>
         /// Runs the tool.
         /// </summary>
