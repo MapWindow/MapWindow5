@@ -80,4 +80,11 @@ namespace MW5.Tools.Enums
         Required = 2,
         Optional = 3,
     }
+
+    public enum PolygonCenter
+    {
+        Center = 0,
+        Centroid = 1,
+        InteriorPoint = 2,
+    }
 }

@@ -22,6 +22,6 @@ namespace MW5.Api.Interfaces
 
         bool IsRaster { get; }
 
-        IApplicationCallback Callback { get; set; }
+        IGlobalListener Callback { get; set; }
     }
 }

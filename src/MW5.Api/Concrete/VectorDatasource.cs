@@ -227,10 +227,10 @@ namespace MW5.Api.Concrete
             get { return false; }
         }
 
-        public IApplicationCallback Callback
+        public IGlobalListener Callback
         {
-            get { return MapWinGISCallback.UnWrap(_datasource.GlobalCallback); }
-            set { _datasource.GlobalCallback = MapWinGISCallback.Wrap(value); }
+            get { return NativeCallback.UnWrap(_datasource.GlobalCallback); }
+            set { _datasource.GlobalCallback = NativeCallback.Wrap(value); }
         }
 
         public void Dispose()

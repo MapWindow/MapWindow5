@@ -69,7 +69,10 @@ namespace MW5.Api.Concrete
 
         public IGeometry Geometry
         {
-            get { return new Geometry(_shapefile.Shape[_shapeIndex]); }
+            get
+            {
+                return new Geometry(_shapefile.Shape[_shapeIndex]);
+            }
         }
 
         public int CategoryIndex

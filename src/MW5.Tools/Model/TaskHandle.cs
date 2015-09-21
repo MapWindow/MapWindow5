@@ -21,7 +21,7 @@ namespace MW5.Tools.Model
         /// Initializes a new instance of the <see cref="TaskHandle"/> class.
         /// </summary>
         public TaskHandle(ITaskProgress progress, CancellationToken cancellationToken, WaitHandle pauseHandle, 
-                          IApplicationCallback callback)
+                          IGlobalListener callback)
         {
             if (progress == null) throw new ArgumentNullException("progress");
             if (pauseHandle == null) throw new ArgumentNullException("pauseHandle");
@@ -36,7 +36,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Gets the callback.
         /// </summary>
-        public IApplicationCallback Callback { get; private set; }
+        public IGlobalListener Callback { get; private set; }
 
         /// <summary>
         /// Gets the progress.

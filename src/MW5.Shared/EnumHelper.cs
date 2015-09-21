@@ -5,9 +5,13 @@ using System.Linq;
 
 namespace MW5.Shared
 {
+    /// <summary>
+    /// Helper methods to work with enumrated values, including the support of converters
+    /// to provide string representation of these values in the UI.
+    /// </summary>
     public static class EnumHelper
     {
-        private static Dictionary<Type, object> _dict = new Dictionary<Type, object>();
+        private static readonly Dictionary<Type, object> _dict = new Dictionary<Type, object>();
 
         public static void RegisterConverter<T>(IEnumConverter<T> converter) where T : struct, IConvertible
         {
@@ -49,6 +53,11 @@ namespace MW5.Shared
             }
 
             return value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static T[] GetValues<T>()
+        {
+            return Enum.GetValues(typeof(T)) as T[];
         }
     }
 }

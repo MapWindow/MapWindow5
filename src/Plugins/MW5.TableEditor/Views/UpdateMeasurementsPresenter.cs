@@ -66,12 +66,12 @@ namespace MW5.Plugins.TableEditor.Views
             var table = Model.Table;
 
             const string msg = "Updating measurements";
-            ApplicationCallback.Progress(string.Empty, 0, msg);
+            GlobalListeners.ReportProgress(string.Empty, 0, msg);
             int featureCount = Model.Features.Count;
 
             foreach (var ft in Model.Features)
             {
-                ApplicationCallback.Progress(string.Empty,Convert.ToInt32((ft.Index + 1) * 100.0 / featureCount), msg);
+                GlobalListeners.ReportProgress(string.Empty, Convert.ToInt32((ft.Index + 1) * 100.0 / featureCount), msg);
 
                 var g = ft.Geometry;
 
@@ -94,7 +94,7 @@ namespace MW5.Plugins.TableEditor.Views
                 }
             }
 
-            ApplicationCallback.ClearProgress();
+            GlobalListeners.ClearProgress();
         }
 
         private bool CreateField(MeasurementInfo info)

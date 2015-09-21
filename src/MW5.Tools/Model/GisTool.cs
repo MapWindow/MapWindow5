@@ -29,7 +29,7 @@ namespace MW5.Tools.Model
     {
         private readonly ToolConfiguration _config = new ToolConfiguration();
         private readonly IToolLogger _logger = new ToolLogger();
-        private IApplicationCallback _callback;
+        private IGlobalListener _callback;
         private IAppContext _context;
         private OutputManager _outputManager;
         private ParameterCollection _parameters;
@@ -39,7 +39,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Gets or sets callback object used to stop execution of MapWinGIS methods.
         /// </summary>
-        public IApplicationCallback Callback
+        public IGlobalListener Callback
         {
             get { return _callback; }
             set

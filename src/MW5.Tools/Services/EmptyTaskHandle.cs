@@ -42,6 +42,6 @@ namespace MW5.Tools.Services
             
         }
 
-        public IApplicationCallback Callback { get; private set; }
+        public IGlobalListener Callback { get; private set; }
     }
 }

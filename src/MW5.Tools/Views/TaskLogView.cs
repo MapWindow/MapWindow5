@@ -96,7 +96,7 @@ namespace MW5.Tools.Views
                 var sb = new StringBuilder();
                 foreach (var item in log.Entries)
                 {
-                    sb.Append(item.DetailedMessage);
+                    sb.Append(item.DetailedMessage + Environment.NewLine);
                 }
 
                 textBoxExt1.Text = sb.ToString();
@@ -109,8 +109,26 @@ namespace MW5.Tools.Views
 
         private void OnLogMessageAdded(object sender, LogEventArgs e)
         {
-            Action action = () => textBoxExt1.AppendText(e.Entry.DetailedMessage);
-            textBoxExt1.SafeInvoke(action);
+            Action action = () =>
+                {
+                    // without locking Application.DoEvents produces race condition
+                    // resulting in recursive calls once in a while (StackOverflowException);
+                    // it appears that sometimes the message, isn't removed from the queue 
+                    // before we start processing messages with DoEvents
+                    lock (textBoxExt1)
+                    {
+                        textBoxExt1.AppendText(e.Entry.DetailedMessage + Environment.NewLine);
+
+                        // make sure that we can still react to the user clicks if messages
+                        // are reported too often (on each operation step)
+                        Application.DoEvents();
+                    }
+                };
+
+            lock (textBoxExt1)
+            {
+                textBoxExt1.SafeInvoke(action);
+            }
         }
 
         private void OnTaskStatusChanged(object sender, TaskStatusChangedEventArgs e)
@@ -238,11 +256,13 @@ namespace MW5.Tools.Views
                         panelProgress.Visible = true;
                         progressBar1.Value = e.Percent;
                         lblPercent.Text = e.Message; // + " " + e.Percent.ToString(CultureInfo.InvariantCulture) + "%";
-                        lblPercent.Invalidate();
+                        lblPercent.Refresh();
                     }
                 };
 
-            progressBar1.SafeInvoke(action);
+            // use the same control as the one to report log messages
+            // so all the messages are queued in the same order as they arrive
+            textBoxExt1.SafeInvoke(action);
         }
 
         private void StartTimer()

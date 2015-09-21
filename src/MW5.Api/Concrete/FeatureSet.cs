@@ -410,6 +410,27 @@ namespace MW5.Api.Concrete
             return WrapShapefile(sf);
         }
 
+        /// <summary>
+        /// Creates featureset with the same projection and set of fields, but differnt geometry type.
+        /// </summary>
+        public IFeatureSet Clone(GeometryType newType, ZValueType zValue = ZValueType.None)
+        {
+            var sf = new Shapefile();
+            var shapeType = GeometryHelper.GeometryType2ShpType(newType, zValue);
+            sf.CreateNew(string.Empty, shapeType);
+
+            sf.GeoProjection.CopyFrom(_shapefile.GeoProjection);
+
+            var fs = new FeatureSet(sf);
+
+            foreach (var fld in Fields)
+            {
+                fs.Fields.Add(fld.Clone());
+            }
+
+            return fs;
+        }
+
         public IFeatureSet Clone()
         {
             var sf = _shapefile.Clone();
@@ -682,12 +703,12 @@ namespace MW5.Api.Concrete
             set { _shapefile.MinDrawingSize = value; }
         }
 
-        public IApplicationCallback Callback
+        public IGlobalListener Callback
         {
-            get { return MapWinGISCallback.UnWrap(_shapefile.GlobalCallback); }
+            get { return NativeCallback.UnWrap(_shapefile.GlobalCallback); }
             set
             {
-                var callback = MapWinGISCallback.Wrap(value);
+                var callback = NativeCallback.Wrap(value);
                 _shapefile.GlobalCallback = callback;
                 _shapefile.StopExecution = callback;
             }

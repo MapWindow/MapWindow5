@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace MW5.Shared.Log
 {
-    public interface ILoggingService : IApplicationCallback
+    public interface ILoggingService : IGlobalListener
     {
         IReadOnlyList<ILogEntry> Entries { get; }
 

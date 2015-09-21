@@ -52,8 +52,8 @@ namespace MW5.Tools.Tools.Raster
         {
             Output = new OutputLayerInfo() { SkipValidation = true };
 
-            var formats = Enum.GetValues(typeof(GridProxyFormat)) as GridProxyFormat[];
-            var colors = Enum.GetValues(typeof(PredefinedColors)) as PredefinedColors[];
+            var formats = EnumHelper.GetValues<GridProxyFormat>();
+            var colors = EnumHelper.GetValues<PredefinedColors>();
 
             configuration.Get<CreateGridProxyTool>()
                 .AddComboList(t => t.ProxyFormat, formats)

@@ -320,6 +320,7 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\CentroidTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\DissolveTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs">
       <SubType>Code</SubType>

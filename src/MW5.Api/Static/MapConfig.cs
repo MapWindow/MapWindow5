@@ -4,13 +4,16 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Static
 {
+    /// <summary>
+    /// A wrapper class for MapWinGIS GlobalSettings object.
+    /// </summary>
     public static class MapConfig
     {
         private static readonly GlobalSettings _settings = new GlobalSettings();
 
         static MapConfig()
         {
-            _settings.ApplicationCallback = new InternalCallback();
+            _settings.ApplicationCallback = new GlobalNativeCallback();
         }
 
         internal static void Init()

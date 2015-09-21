@@ -20,7 +20,7 @@ namespace MW5.Tools.Model
     /// <summary>
     /// Represents a task object that can be used for asynchronous execution of GIS tool and its progress monitoring.
     /// </summary>
-    internal class GisTask : IGisTask, IApplicationCallback
+    internal class GisTask : IGisTask, IGlobalListener
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _pauseEvent = new ManualResetEvent(true);
@@ -39,12 +39,12 @@ namespace MW5.Tools.Model
             ThreadId = -1;
         }
 
-        void IApplicationCallback.Error(string tagOfSender, string errorMsg)
+        void IGlobalListener.Error(string tagOfSender, string errorMsg)
         {
             _tool.Log.Error(errorMsg, null);
         }
 
-        void IApplicationCallback.Progress(string tagOfSender, int percent, string message)
+        void IGlobalListener.Progress(string tagOfSender, int percent, string message)
         {
             // for tools that don't support cancellation it may be the only place
             // to pause, for others additional check won't affect the performance much
@@ -53,12 +53,12 @@ namespace MW5.Tools.Model
             Progress.Update(message, percent);
         }
 
-        void IApplicationCallback.ClearProgress()
+        void IGlobalListener.ClearProgress()
         {
             Progress.Clear();
         }
 
-        bool IApplicationCallback.CheckAborted()
+        bool IGlobalListener.CheckAborted()
         {
             // the calls to IStopExecution interface may be more frequent than progress reporting,
             // so this is a good place to check for pause when long MapWinGIS method is running
@@ -215,7 +215,7 @@ namespace MW5.Tools.Model
         {
             ThreadId = Thread.CurrentThread.ManagedThreadId;
 
-            ApplicationCallback.Attach(this);
+            GlobalListeners.Attach(this);
 
             bool result = false;
 
@@ -227,7 +227,7 @@ namespace MW5.Tools.Model
             }
             finally
             {
-                ApplicationCallback.Detach(this);
+                GlobalListeners.Detach(this);
 
                 ThreadId = -1;
             }

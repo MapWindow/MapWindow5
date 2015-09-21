@@ -307,10 +307,10 @@ namespace MW5.Api.Concrete
             get { return true; }
         }
 
-        public IApplicationCallback Callback
+        public IGlobalListener Callback
         {
-            get { return MapWinGISCallback.UnWrap(_image.GlobalCallback); }
-            set { _image.GlobalCallback = MapWinGISCallback.Wrap(value); }
+            get { return NativeCallback.UnWrap(_image.GlobalCallback); }
+            set { _image.GlobalCallback = NativeCallback.Wrap(value); }
         }
 
         #endregion

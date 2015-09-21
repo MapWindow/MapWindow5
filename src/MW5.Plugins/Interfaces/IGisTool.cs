@@ -17,7 +17,7 @@ namespace MW5.Plugins.Interfaces
         /// <summary>
         /// Gets or sets callback object used to stop execution of MapWinGIS methods.
         /// </summary>
-        IApplicationCallback Callback { get; set; }
+        IGlobalListener Callback { get; set; }
 
         /// <summary>
         /// Clears callbacks and closes inputs datasources.

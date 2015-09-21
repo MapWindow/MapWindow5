@@ -51,7 +51,7 @@ namespace MW5.Views
             _projectService = projectService;
             _configService = configService;
 
-            ApplicationCallback.Attach(Logger.Current);
+            GlobalListeners.Attach(Logger.Current);
 
             view.Map.Lock();
             try

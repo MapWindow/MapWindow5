@@ -22,12 +22,12 @@ namespace MW5.Api.Static
             get { return _staticUilts; }
         }
 
-        public IApplicationCallback Callback
+        public IGlobalListener Callback
         {
-            get { return MapWinGISCallback.UnWrap(_utils.GlobalCallback); }
+            get { return NativeCallback.UnWrap(_utils.GlobalCallback); }
             set
             {
-                var callback = MapWinGISCallback.Wrap(value);
+                var callback = NativeCallback.Wrap(value);
                 _utils.GlobalCallback = callback;
                 
                 // TODO: implement

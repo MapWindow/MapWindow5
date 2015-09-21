@@ -77,7 +77,7 @@
     <Compile Include="Concrete\GeoAngle.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />
     <Compile Include="Concrete\LayerIdentity.cs" />
-    <Compile Include="Concrete\MapWinGISCallback.cs" />
+    <Compile Include="Concrete\NativeCallback.cs" />
     <Compile Include="Concrete\MeasurerSettings.cs" />
     <Compile Include="Concrete\RasterBandStatistics.cs" />
     <Compile Include="Concrete\RasterOverviewCollection.cs" />
@@ -86,6 +86,7 @@
     <Compile Include="Concrete\RasterHistogram.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
+    <Compile Include="Helpers\AttributeTableHelper.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />
     <Compile Include="Helpers\GdalFormats.cs" />
     <Compile Include="Helpers\GdalHelper.cs" />
@@ -113,11 +114,11 @@
     <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Concrete\ApplicationCallback.cs" />
+    <Compile Include="Concrete\GlobalListeners.cs" />
     <Compile Include="Concrete\AttributeTable.cs" />
     <Compile Include="Concrete\BaseLayerCollection.cs" />
     <Compile Include="Concrete\BitmapSource.cs" />
-    <Compile Include="Concrete\InternalCallback.cs" />
+    <Compile Include="Concrete\GlobalNativeCallback.cs" />
     <Compile Include="Concrete\ColorInterval.cs" />
     <Compile Include="Concrete\ColorRamp.cs" />
     <Compile Include="Concrete\CompareByValueBase.cs" />

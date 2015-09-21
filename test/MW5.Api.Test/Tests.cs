@@ -18,7 +18,7 @@ namespace MW5.API.Test
         public void Callback()
         {
             var cb = new CustomCallback();
-            ApplicationCallback.Attach(cb);
+            GlobalListeners.Attach(cb);
 
             var fs = new FeatureSet(@"d:\data\sf\buildings.shp");
             fs.StartEditingShapes();

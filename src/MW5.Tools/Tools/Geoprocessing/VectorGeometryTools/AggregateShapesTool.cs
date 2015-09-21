@@ -94,12 +94,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// <returns></returns>
         protected override bool BeforeRun()
         {
-            if (!GroupOperations.ValidateWithMessage(InputLayer.Datasource))
-            {
-                return false;
-            }
-
-            return base.BeforeRun();
+            return GroupOperations.ValidateWithMessage(InputLayer.Datasource);
         }
 
         /// <summary>

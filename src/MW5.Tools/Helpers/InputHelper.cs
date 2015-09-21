@@ -19,7 +19,7 @@ namespace MW5.Tools.Helpers
         /// Sets callback to the input datasource to provide IStopExecution implementation
         /// for MapWinGIS methods.
         /// </summary>
-        public static void SetCallbackToInputs(this IEnumerable<BaseParameter> parameters, IApplicationCallback callback)
+        public static void SetCallbackToInputs(this IEnumerable<BaseParameter> parameters, IGlobalListener callback)
         {
             foreach (var p in parameters.OfType<LayerParameterBase>())
             {

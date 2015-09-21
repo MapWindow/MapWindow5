@@ -49,12 +49,12 @@ namespace MW5.Services.Concrete
             return _context != null && _context.Initialized;
         }
 
-        void IApplicationCallback.Error(string tagOfSender, string errorMsg)
+        void IGlobalListener.Error(string tagOfSender, string errorMsg)
         {
             Debug(errorMsg);
         }
 
-        void IApplicationCallback.Progress(string tagOfSender, int percent, string message)
+        void IGlobalListener.Progress(string tagOfSender, int percent, string message)
         {
             if (AppContextReady())
             {
@@ -62,7 +62,7 @@ namespace MW5.Services.Concrete
             }
         }
 
-        void IApplicationCallback.ClearProgress()
+        void IGlobalListener.ClearProgress()
         {
             if (AppContextReady())
             {

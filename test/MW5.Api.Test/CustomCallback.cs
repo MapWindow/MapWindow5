@@ -4,7 +4,7 @@ using MW5.Shared.Log;
 
 namespace MW5.API.Test
 {
-    internal class CustomCallback: IApplicationCallback
+    internal class CustomCallback: IGlobalListener
     {
         public void Error(string tagOfSender, string errorMsg)
         {

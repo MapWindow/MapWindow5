@@ -21,6 +21,7 @@ namespace MW5.Api.Interfaces
         DiagramsLayer Diagrams { get; }
         AttributeFieldList Fields { get; }
 
+        IFeatureSet Clone(GeometryType newType, ZValueType zValue = ZValueType.None);
         IFeatureSet Clone();
         bool Dump(string shapefileName);
         bool LoadDataFrom(string shapefileName);

@@ -19,6 +19,8 @@ namespace MW5.Api.Interfaces
         [Browsable(false)]
         string DisplayName { get; }
 
+        IAttributeField Clone();
+
         [Browsable(false)]
         int Index { get; }
 
