@@ -325,6 +325,7 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\DissolveTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExplodeShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -332,6 +333,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SimplifyLinesTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SortShapefileTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
