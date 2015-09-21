@@ -8,7 +8,9 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Services.Views;
 using MW5.Services.Views.Abstract;
+using MW5.Shared;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Services;
@@ -43,6 +45,8 @@ namespace MW5.Tools
                 .RegisterSingleton<TasksDockPanel>()
                 .RegisterSingleton<TasksPresenter>()
                 .RegisterService<OutputManager>();
+
+            EnumHelper.RegisterConverter(new FieldOperationValidityConverter());
         }
     }
 }

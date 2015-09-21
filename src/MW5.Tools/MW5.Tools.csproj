@@ -157,10 +157,12 @@
     <Compile Include="Controls\ProgressBarWrapper.Designer.cs">
       <DependentUpon>ProgressBarWrapper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Enums\Converters.cs" />
     <Compile Include="Helpers\BatchExecutionHelper.cs" />
     <Compile Include="Helpers\ControlsHelper.cs" />
     <Compile Include="Helpers\DriverConfigHelper.cs" />
     <Compile Include="Helpers\DocumentationHelper.cs" />
+    <Compile Include="Helpers\GroupOperationHelper.cs" />
     <Compile Include="Helpers\InputHelper.cs" />
     <Compile Include="Helpers\PanelHelper.cs" />
     <Compile Include="Helpers\ParameterControlHelper.cs" />

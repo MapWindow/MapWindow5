@@ -7,13 +7,19 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
@@ -31,16 +37,23 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [ControlHint(ControlHint.Field)]
         public int FieldIndex { get; set; }
 
+        [Input("Group operations", 0, true)]
+        public FieldOperationList GroupOperations { get; set; }
+
         [Output("Save results as")]
         [OutputLayer(@"{input}_aggregate.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
+        /// <summary>
+        /// Adds tool configuration which can be used for generation of the UI for tool.
+        /// </summary>
         protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
             base.Configure(context, configuration);
 
             configuration.Get<AggregateShapesTool>()
-                .AddField(t => t.InputLayer, t => t.FieldIndex);
+                .AddField(t => t.InputLayer, t => t.FieldIndex)
+                .AddField(t => t.InputLayer, t => t.GroupOperations);
         }
 
         /// <summary>
@@ -76,11 +89,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         }
 
         /// <summary>
+        /// Is called on the UI thread before execution of the IGisTool.Run method.
+        /// </summary>
+        /// <returns></returns>
+        protected override bool BeforeRun()
+        {
+            if (!GroupOperations.ValidateWithMessage(InputLayer.Datasource))
+            {
+                return false;
+            }
+
+            return base.BeforeRun();
+        }
+
+        /// <summary>
         /// Provide execution logic for the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            Output.Result = InputLayer.Datasource.AggregateShapes(InputLayer.SelectedOnly, FieldIndex);
+            Log.Info("Number of group operations specified: " + GroupOperations.Count);
+
+            Output.Result = InputLayer.Datasource.AggregateShapesWithStats(InputLayer.SelectedOnly, FieldIndex, GroupOperations);
             return true;
         }
     }

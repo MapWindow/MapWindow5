@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Tools.Controls.Parameters.Interfaces;
@@ -62,7 +63,7 @@ namespace MW5.Tools.Controls.Parameters
 
             foreach (var f in _fields)
             {
-                list.AddFieldIndex(f.Field.Index, f.GroupOperation);
+                list.AddFieldName(f.Field.Name, f.GroupOperation);
             }
 
             return list;
@@ -105,7 +106,7 @@ namespace MW5.Tools.Controls.Parameters
 
         private void OnClearClick(object sender, EventArgs e)
         {
-            if (MessageService.Current.Ask("Remove all fields?"))
+            if (MessageService.Current.Ask("Remove all group operations?"))
             {
                 _fields.Clear();
             }
@@ -117,7 +118,7 @@ namespace MW5.Tools.Controls.Parameters
             var field = fieldOperationGrid1.Adapter[index];
             if (field != null)
             {
-                if (MessageService.Current.Ask("Remove field?"))
+                if (MessageService.Current.Ask("Remove group operation?"))
                 {
                     _fields.Remove(field);
                 }
@@ -132,18 +133,23 @@ namespace MW5.Tools.Controls.Parameters
 
         private void OnAddAllClick(object sender, EventArgs e)
         {
-            if (!MessageService.Current.Ask("Generate items for each field?"))
+            if (!MessageService.Current.Ask("Generate group operations for all numeric fields?"))
             {
                 return;
             }
 
             _fields.Clear();
 
-            var list = _featureSet.Fields.Select(f => new FieldOperationGridAdapter(f) { GroupOperation = Api.Enums.GroupOperation.Min});
-            
-            foreach (var item in list)
+            var operations = new[] { GroupOperation.Sum, GroupOperation.Avg };
+            var list = _featureSet.Fields.Where(f => f.Type != AttributeType.String);
+                
+            foreach (var field in list)
             {
-                _fields.Add(item);
+                foreach (var op in operations)
+                {
+                    var item = new FieldOperationGridAdapter(field) { GroupOperation = op };
+                    _fields.Add(item);
+                }
             }
         }
     }

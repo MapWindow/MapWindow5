@@ -10,6 +10,7 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.Tools.Enums;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
@@ -68,16 +69,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         }
 
         /// <summary>
+        /// Is called on the UI thread before execution of the IGisTool.Run method.
+        /// </summary>
+        /// <returns></returns>
+        protected override bool BeforeRun()
+        {
+            if (!GroupOperations.ValidateWithMessage(Input.Datasource))
+            {
+                return false;
+            }
+
+            return base.BeforeRun();
+        }
+
+        /// <summary>
         /// Runs the tool.
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fields = GroupOperations;
+            Log.Info("Number of group operations specified: " + GroupOperations.Count);
 
-            Log.Info("Number of field group operations specified: " + fields.Count);
-
-            var fs = Input.Datasource;
-            Output.Result = fs.DissolveWithStats(FieldIndex, Input.SelectedOnly, fields);
+            Output.Result = Input.Datasource.DissolveWithStats(FieldIndex, Input.SelectedOnly, GroupOperations);
             return true;
         }
     }
