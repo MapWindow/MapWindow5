@@ -45,5 +45,10 @@ namespace MW5.Plugins.Enums
         /// Raster tools
         /// </summary>
         public const string Raster = "Raster";
+
+        /// <summary>
+        /// Tools that work with attributes values of vector layers.
+        /// </summary>
+        public const string Attributes = "Attributes";
     }
 }

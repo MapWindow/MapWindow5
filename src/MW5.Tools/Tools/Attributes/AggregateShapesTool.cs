@@ -7,16 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Helpers;
@@ -24,10 +19,10 @@ using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.Attributes
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
+    [GisTool(GroupKeys.Attributes, ToolIcon.Hammer)]
     public class AggregateShapesTool : GisTool
     {
         [Input("Input layer", 0)]

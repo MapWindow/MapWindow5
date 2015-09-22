@@ -149,6 +149,11 @@ namespace MW5.Api.Static
             return _utils.ConvertDistance((tkUnitsOfMeasure)sourceUnit, (tkUnitsOfMeasure)targetUnit, ref value);
         }
 
+        public double GeodesicArea(IGeometry polygonWgs84)
+        {
+            return _utils.GeodesicArea(polygonWgs84.InternalObject as Shape);
+        }
+
         public double GeodesicDistance(double lat1, double lng1, double lat2, double lng2)
         {
             return _utils.GeodesicDistance(lat1, lng1, lat2, lng2);

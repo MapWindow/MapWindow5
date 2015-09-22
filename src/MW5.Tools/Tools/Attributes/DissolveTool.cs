@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MW5.Api.Concrete;
+﻿using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
@@ -15,10 +10,10 @@ using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
-namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
+namespace MW5.Tools.Tools.Attributes
 {
     [CustomLayout]
-    [GisTool(GroupKeys.VectorGeometryTools)]
+    [GisTool(GroupKeys.Attributes)]
     public class DissolveTool: GisTool
     {
         [Input("Input datasource", 0)]
@@ -35,6 +30,9 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         [OutputLayer(@"{input}_dissolve.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
+        /// <summary>
+        /// Adds tool configuration which can be used for generation of the UI for tool.
+        /// </summary>
         protected override void Configure(IAppContext context, ToolConfiguration configuration)
         {
             base.Configure(context, configuration);

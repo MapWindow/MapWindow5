@@ -92,6 +92,9 @@ namespace MW5.Plugins.Toolbox
 
             group = groups.Add("Raster", GroupKeys.Raster, _plugin.Identity);
             group.Description = "Raster tools.";
+
+            group = groups.Add("Vector attributes", GroupKeys.Attributes, _plugin.Identity);
+            group.Description = "Tools to work with attributes of vector layers.";
         }
     }
 }

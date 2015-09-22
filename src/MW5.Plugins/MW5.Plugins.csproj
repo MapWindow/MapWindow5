@@ -115,6 +115,7 @@
     <Compile Include="Helpers\PluginIdentityHelper.cs" />
     <Compile Include="Helpers\ResourcePathHelper.cs" />
     <Compile Include="Helpers\UnitConversionHelper.cs" />
+    <Compile Include="Helpers\UnitsHelper.cs" />
     <Compile Include="Interfaces\IConfigPage.cs" />
     <Compile Include="Interfaces\IDockPanelView.cs" />
     <Compile Include="Interfaces\IAppView.cs" />

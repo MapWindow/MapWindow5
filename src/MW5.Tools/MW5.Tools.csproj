@@ -323,15 +323,16 @@
     <Compile Include="Tools\Fake\LongExecutionTool.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Tools\Attributes\CalculateAreaTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ConvertTo2DTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\AggregateShapesTool.cs">
+    <Compile Include="Tools\Attributes\AggregateShapesTool.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\BufferTool.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\CentroidTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\DissolveTool.cs" />
+    <Compile Include="Tools\Attributes\DissolveTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExplodeShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />

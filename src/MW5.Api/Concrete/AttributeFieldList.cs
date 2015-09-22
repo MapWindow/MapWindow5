@@ -99,6 +99,11 @@ namespace MW5.Api.Concrete
             return -1;
         }
 
+        public bool Exists(string fieldName)
+        {
+            return IndexByName(fieldName) != -1;
+        }
+
         public void Insert(int index, IAttributeField item)
         {
             _table.EditInsertField(item.GetInternal(), index);
