@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Enums;
+using MW5.Api.Events;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Helpers
@@ -103,6 +104,54 @@ namespace MW5.Api.Helpers
 
                 // need to reapply since it's likely that indices have changed
                 fs.Categories.ApplyExpressions();
+            }
+        }
+
+        /// <summary>
+        /// Changes selection of the feature set adding new shapes using the specified mode
+        /// </summary>
+        public static void UpdateSelection(this IFeatureSet fs, IEnumerable<int> indices, SelectionOperation mode)
+        {
+            if (fs == null || indices == null)
+            {
+                return;
+            }
+
+            if (mode == SelectionOperation.New)
+            {
+                fs.ClearSelection();
+            }
+
+            var sf = fs.GetInternal();
+
+            switch (mode)
+            {
+                case SelectionOperation.New:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = true;
+                    }
+                    break;
+                case SelectionOperation.Add:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = true;
+                    }
+
+                    break;
+                case SelectionOperation.Exclude:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = false;
+                    }
+
+                    break;
+                case SelectionOperation.Invert:
+                    foreach (var item in indices)
+                    {
+                        sf.ShapeSelected[item] = !sf.ShapeSelected[item];
+                    }
+                    break;
             }
         }
     }

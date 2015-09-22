@@ -249,49 +249,7 @@ namespace MW5.Api.Concrete
         /// </summary>
         public void UpdateSelection(IEnumerable<int> indices, SelectionOperation mode)
         {
-            var fs = FeatureSet;
-
-            if (fs == null || indices == null)
-            {
-                return;
-            }
-
-            if (mode == SelectionOperation.New)
-            {
-                fs.ClearSelection();
-            }
-
-            var sf = fs.GetInternal();
-
-            switch (mode)
-            {
-                case SelectionOperation.New:
-                    foreach (var item in indices)
-                    {
-                        sf.ShapeSelected[item] = true;
-                    }
-                    break;
-                case SelectionOperation.Add:
-                    foreach (var item in indices)
-                    {
-                        sf.ShapeSelected[item] = true;
-                    }
-
-                    break;
-                case SelectionOperation.Exclude:
-                    foreach (var item in indices)
-                    {
-                        sf.ShapeSelected[item] = false;
-                    }
-
-                    break;
-                case SelectionOperation.Invert:
-                    foreach (var item in indices)
-                    {
-                        sf.ShapeSelected[item] = !sf.ShapeSelected[item];
-                    }
-                    break;
-            }
+            FeatureSet.UpdateSelection(indices, mode);
 
             MapControl.FireSelectionChanged(MapControl, new SelectionChangedEventArgs(Handle, true));
         }

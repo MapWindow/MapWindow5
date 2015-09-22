@@ -18,10 +18,5 @@ namespace MW5.Tools.Model.Layers
             get { return base.Datasource as IFeatureSet; }
             set { base.Datasource = value; }
         }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether only selected features of the input layer should be processed.
-        /// </summary>
-        public bool SelectedOnly { get; set; }
     }
 }

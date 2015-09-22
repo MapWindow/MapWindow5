@@ -122,6 +122,14 @@ namespace MW5.Tools.Model.Layers
             }
         }
 
+        /// <summary>
+        /// Gets the layer handle of the input datasource. If datasource isn't added to the map -1 will be returned.
+        /// </summary>
+        public int LayerHandle 
+        {
+            get { return _layer.Handle; } 
+        }
+
         public bool SelectedOnly { get; set; }
 
         /// <summary>

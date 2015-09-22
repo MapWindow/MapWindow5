@@ -47,5 +47,10 @@ namespace MW5.Tools.Model.Layers
         /// Closes the input layer if CloseAfterRun flag was set.
         /// </summary>
         void Close();
+
+        /// <summary>
+        /// Gets the layer handle of the input datasource. If datasource isn't added to the map -1 will be returned.
+        /// </summary>
+        int LayerHandle { get; }
     }
 }

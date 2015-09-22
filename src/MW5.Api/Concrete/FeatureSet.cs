@@ -392,7 +392,7 @@ namespace MW5.Api.Concrete
             _shapefile.InvertSelection();
         }
 
-        public bool SelectByShapefile(IFeatureSet featureSet, SpatialRelation relation, bool selectedOnly, ref int[] result)
+        public bool SelectByShapefile(IFeatureSet featureSet, SpatialRelation relation, bool selectedOnly, out int[] result)
         {
             var sf = featureSet.GetInternal();
             object indices = null;
@@ -401,6 +401,8 @@ namespace MW5.Api.Concrete
                 result = indices as int[];
                 return true;
             }
+
+            result = null;
             return false;
         }
 

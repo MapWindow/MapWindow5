@@ -35,7 +35,7 @@ namespace MW5.Api.Interfaces
         void SelectAll();
         void ClearSelection();
         void InvertSelection();
-        bool SelectByShapefile(IFeatureSet sf, SpatialRelation relation, bool selectedOnly, ref int[] result);
+        bool SelectByShapefile(IFeatureSet sf, SpatialRelation relation, bool selectedOnly, out int[] result);
         bool SelectShapes(Envelope boundBox, ref object result, double tolerance = 0, MapSelectionMode selectionMode = MapSelectionMode.Intersection);
 
         CollisionMode CollisionMode { get; set; }

@@ -336,7 +336,7 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\InteractiveClippingTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\MergeShapefileTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\MergeShapefilesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\OverlayTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -345,6 +345,7 @@
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SimplifyLinesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SortShapefileTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SpatialQueryTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ValidateShapefileTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>

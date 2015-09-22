@@ -30,7 +30,7 @@ namespace MW5.Tools.Model
         private readonly ToolConfiguration _config = new ToolConfiguration();
         private readonly IToolLogger _logger = new ToolLogger();
         private IGlobalListener _callback;
-        private IAppContext _context;
+        protected IAppContext _context;
         private OutputManager _outputManager;
         private ParameterCollection _parameters;
 
