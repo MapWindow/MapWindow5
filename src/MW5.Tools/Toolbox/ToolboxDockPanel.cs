@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
@@ -163,7 +164,7 @@ namespace MW5.Tools.Toolbox
         {
             var groups = Groups;
 
-            foreach (var tool in tools)
+            foreach (var tool in tools.OrderBy(t => t.Name))
             {
                 string groupKey = tool.GetType().GetAttributeValue((GisToolAttribute att) => att.GroupKey);
 

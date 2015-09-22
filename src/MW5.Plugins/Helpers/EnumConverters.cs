@@ -346,4 +346,26 @@ namespace MW5.Plugins.Helpers
             return string.Empty;
         }
     }
+
+    public class ClipOperationConverter : IEnumConverter<ClipOperation>
+    {
+        public string GetString(ClipOperation value)
+        {
+            switch (value)
+            {
+                case ClipOperation.Difference:
+                    return "Difference";
+                case ClipOperation.Intersection:
+                    return "Intersection";
+                case ClipOperation.SymDifference:
+                    return "Symmetrical difference";
+                case ClipOperation.Union:
+                    return "Union";
+                case ClipOperation.Clip:
+                    return "Clip";
+                default:
+                    throw new ArgumentOutOfRangeException("value");
+            }
+        }
+    }
 }

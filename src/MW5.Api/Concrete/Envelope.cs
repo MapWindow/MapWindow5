@@ -167,5 +167,11 @@ namespace MW5.Api.Concrete
 
             SetBounds(Math.Min(env.MinX, MinX), Math.Max(env.MaxX, MaxX), Math.Min(env.MinY, MinY), Math.Max(env.MaxY, MaxY));
         }
+
+        public IGeometry ToGeometry()
+        {
+            var shape = _extents.ToShape();
+            return shape != null ? new Geometry(shape) : null;
+        }
     }
 }

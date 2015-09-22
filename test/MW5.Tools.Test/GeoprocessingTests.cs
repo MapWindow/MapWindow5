@@ -83,8 +83,9 @@ namespace MW5.Tools.Test
             var rivers = OpenFeatureSet(ShapefilePath + "rivers.shp");
             var roads = OpenFeatureSet(ShapefilePath + "roads.shp");
 
-            var tool = new IntersectionTool()
+            var tool = new OverlayTool()
                            {
+                               Operation = ClipOperation.Intersection,
                                InputLayer = new VectorInput(rivers),
                                InputLayer2 = new VectorInput(roads),
                                Output = new OutputLayerInfo() {  MemoryLayer = true }

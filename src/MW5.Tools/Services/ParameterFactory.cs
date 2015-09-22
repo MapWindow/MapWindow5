@@ -172,6 +172,11 @@ namespace MW5.Tools.Services
                 throw new IndexOutOfRangeException("No handler for parameter type: " + customType);
             }
 
+            if (type == typeof(IEnvelope))
+            {
+                return new ExtentsParameter();
+            }
+
             if (type == typeof(FieldOperationList))
             {
                 return new FieldOperationParameter();
@@ -232,7 +237,9 @@ namespace MW5.Tools.Services
                 return new OutputLayerParameter();
             }
 
-            throw new ApplicationException("Unexpected parameter type for the tool: " + type.Name);
+            string msg = "Unexpected parameter type for the tool: " + type.Name + ". ";
+            msg += "Consider using ControlHintAttribute.";
+            throw new ApplicationException(msg);
         }
     }
 }

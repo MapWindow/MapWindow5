@@ -185,6 +185,7 @@
     <Compile Include="Model\Layers\IVectorInput.cs" />
     <Compile Include="Model\Layers\DatasourceInput.cs" />
     <Compile Include="Model\OutputLayerAttribute.cs" />
+    <Compile Include="Model\Parameters\ExtentsParameter.cs" />
     <Compile Include="Model\Parameters\FilenameParameter.cs" />
     <Compile Include="Model\Parameters\FieldOperationParameter.cs" />
     <Compile Include="Model\Parameters\IInputParameter.cs" />
@@ -326,7 +327,8 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExplodeShapesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />
-    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\IntersectionTool.cs">
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\InteractiveClippingTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\OverlayTool.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\RandomPointsTool.cs">
