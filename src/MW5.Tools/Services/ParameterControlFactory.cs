@@ -8,7 +8,9 @@ using System;
 using MW5.Api.Enums;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Controls.Parameters.Input;
 using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
@@ -21,11 +23,14 @@ namespace MW5.Tools.Services
     public class ParameterControlFactory
     {
         private readonly IAppContext _context;
+        private readonly IFileDialogService _dialogService;
 
-        public ParameterControlFactory(IAppContext context)
+        public ParameterControlFactory(IAppContext context, IFileDialogService dialogService)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (dialogService == null) throw new ArgumentNullException("dialogService");
             _context = context;
+            _dialogService = dialogService;
         }
 
         /// <summary>
@@ -157,7 +162,7 @@ namespace MW5.Tools.Services
                 }
             }
 
-            input.Initialize(dataType);
+            input.Initialize(dataType, _dialogService);
 
             return input as ParameterControlBase;
         }

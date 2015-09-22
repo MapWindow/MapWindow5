@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Enums;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Controls.Parameters.Input;
 
 namespace MW5.Tools.Model.Parameters
 {

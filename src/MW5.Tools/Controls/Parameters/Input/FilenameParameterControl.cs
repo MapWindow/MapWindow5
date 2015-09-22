@@ -5,28 +5,23 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.Windows.Forms;
-using MW5.Plugins.Enums;
-using MW5.Plugins.Services;
-using MW5.Tools.Controls.Parameters.Interfaces;
+using MW5.Shared;
 
-namespace MW5.Tools.Controls.Parameters
+namespace MW5.Tools.Controls.Parameters.Input
 {
     /// <summary>
     /// Represents parameter control for filename selection.
     /// </summary>
-    public partial class FilenameParameterControl : ParameterControlBase, IInputParameterControl
+    [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<InputParameterControlBase, UserControl>))]
+    public partial class FilenameParameterControl : InputParameterControlBase
     {
-        private readonly IFileDialogService _dialogService;
-        private DataSourceType _dataType;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="FilenameParameterControl"/> class.
         /// </summary>
-        public FilenameParameterControl(IFileDialogService dialogService)
+        public FilenameParameterControl()
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
-            _dialogService = dialogService;
             InitializeComponent();
         }
 
@@ -56,18 +51,9 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// Initializes the control with specified datasource type.
-        /// </summary>
-        /// <param name="dataType">Type of the data.</param>
-        public void Initialize(DataSourceType dataType)
-        {
-            _dataType = dataType;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether control allows selection of multiple files (batch mode).
         /// </summary>
-        public bool BatchMode 
+        public override bool BatchMode 
         {
             get { return false;} 
         }

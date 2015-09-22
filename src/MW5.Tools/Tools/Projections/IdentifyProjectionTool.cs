@@ -19,8 +19,6 @@ namespace MW5.Tools.Tools.Projections
     [GisTool(GroupKeys.Projections)]
     public class IdentifyProjectionTool: ToolBase
     {
-        private IAppContext _context;
-
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -38,17 +36,6 @@ namespace MW5.Tools.Tools.Projections
         }
 
         /// <summary>
-        /// Runs the tool.
-        /// </summary>
-        public override bool Run()
-        {
-            using (var form = new IdentifyProjectionForm(_context))
-            {
-                return _context.View.ShowChildView(form);
-            }
-        }
-
-        /// <summary>
         /// Gets the identity of plugin that created this tool.
         /// </summary>
         public override PluginIdentity PluginIdentity
@@ -57,12 +44,14 @@ namespace MW5.Tools.Tools.Projections
         }
 
         /// <summary>
-        /// Initializes the tool.
+        /// Runs the tool.
         /// </summary>
-        public override void Initialize(IAppContext context)
+        public override bool Run()
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
+            using (var form = new IdentifyProjectionForm(_context))
+            {
+                return _context.View.ShowChildView(form);
+            }
         }
     }
 }

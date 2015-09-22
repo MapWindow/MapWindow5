@@ -15,5 +15,6 @@ namespace MW5.Api.Interfaces
         double GetMaxValue();
         void SetValue(double value);
         void SetRange(double min, double max);
+        int Index { get; }
     }
 }

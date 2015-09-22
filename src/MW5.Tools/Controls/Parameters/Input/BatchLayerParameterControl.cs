@@ -9,32 +9,28 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
-using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
-using MW5.Tools.Controls.Parameters.Interfaces;
+using MW5.Shared;
 using MW5.Tools.Model.Layers;
 using MW5.UI.Helpers;
 
-namespace MW5.Tools.Controls.Parameters
+namespace MW5.Tools.Controls.Parameters.Input
 {
     /// <summary>
     /// Represents listbox like control for selection of multiple datasource for batch mode processing.
     /// </summary>
-    internal partial class BatchLayerParameterControl : ParameterControlBase, IInputParameterControl
+    [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<InputParameterControlBase, UserControl>))]
+    internal partial class BatchLayerParameterControl : InputParameterControlBase 
     {
-        private readonly IFileDialogService _dialogService;
         private readonly ISelectLayerService _layerService;
         private readonly BindingList<InputLayerGridAdapter> _layers = new BindingList<InputLayerGridAdapter>();
-        private DataSourceType _layerType = DataSourceType.All;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchLayerParameterControl"/> class.
         /// </summary>
-        public BatchLayerParameterControl(IFileDialogService dialogService, ISelectLayerService layerService)
+        public BatchLayerParameterControl(ISelectLayerService layerService)
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
             if (layerService == null) throw new ArgumentNullException("layerService");
-            _dialogService = dialogService;
             _layerService = layerService;
 
             InitializeComponent();
@@ -78,18 +74,9 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// Initializes control with the specified data source type.
-        /// </summary>
-        /// <param name="dataSourceType">Type of the data source.</param>
-        public void Initialize(DataSourceType dataSourceType)
-        {
-            _layerType = dataSourceType;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether control allows selection of multiple files (batch mode).
         /// </summary>
-        public bool BatchMode 
+        public override bool BatchMode 
         {
             get { return true; } 
         }
@@ -123,7 +110,7 @@ namespace MW5.Tools.Controls.Parameters
 
         private void OnAddClick(object sender, EventArgs e)
         {
-            AddLayers(_layerService.Select(_layerType).Select(l => new InputLayerGridAdapter(l)));
+            AddLayers(_layerService.Select(_dataType).Select(l => new InputLayerGridAdapter(l)));
         }
 
         private void OnClearClick(object sender, EventArgs e)
@@ -138,7 +125,7 @@ namespace MW5.Tools.Controls.Parameters
         {
             string[] filenames;
 
-            if (_dialogService.OpenFiles(_layerType, out filenames))
+            if (_dialogService.OpenFiles(_dataType, out filenames))
             {
                 AddLayers(filenames.Select(f => new InputLayerGridAdapter(f)));
             }

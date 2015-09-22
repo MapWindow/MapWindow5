@@ -10,6 +10,7 @@ using System.Linq;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Controls.Parameters.Input;
 using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Model.Parameters.Layers

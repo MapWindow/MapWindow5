@@ -87,4 +87,23 @@ namespace MW5.Tools.Enums
         Centroid = 1,
         InteriorPoint = 2,
     }
+
+    public enum ValidationError
+    {
+        None = -1,
+        TopologyError = 0,        		    
+		RepeatedPoint = 1,
+		HoleLiesOutsideShell = 2,
+		HolesAreNested = 3,
+		InteriorIsDisconnected = 4,
+		RingSelfIntersection = 5,
+		SelfIntersection = 6,
+		NestedShells = 7,
+		DuplicateRings = 8,
+		TooFewPointsInGeometryComponent = 9,
+		InvalidCoordinate = 10,
+		RingIsNotClosed = 11,
+        PolygonMustBeClockWise = 12,
+        Unknown = 1000,
+    }
 }

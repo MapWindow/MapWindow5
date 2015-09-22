@@ -16,6 +16,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tools.Enums;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
 
@@ -124,8 +125,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         protected override bool BeforeRun()
         {
-            if (InputLayer.Datasource == InputLayer2.Datasource || 
-                InputLayer.Filename == InputLayer2.Filename)
+            if (InputHelper.InputsAreEqual(InputLayer, InputLayer2))
             {
                 string msg = "The same datasource is used for both input parameters.";
                 msg += "The operation is pointless.";

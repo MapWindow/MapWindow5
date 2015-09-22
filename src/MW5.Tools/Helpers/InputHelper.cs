@@ -46,5 +46,13 @@ namespace MW5.Tools.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// Returns true if both inputs hold the same datasource.
+        /// </summary>
+        public static bool InputsAreEqual(IVectorInput input1, IVectorInput input2)
+        {
+            return input1.Datasource == input2.Datasource || input1.Filename == input2.Filename;
+        }
     }
 }

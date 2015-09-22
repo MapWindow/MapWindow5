@@ -1,4 +1,4 @@
-﻿namespace MW5.Tools.Controls.Parameters
+﻿namespace MW5.Tools.Controls.Parameters.Input
 {
     partial class LayerParameterControl
     {

@@ -13,6 +13,8 @@ namespace MW5.Tools.Model
     /// </summary>
     public abstract class ToolBase: ITool
     {
+        protected IAppContext _context;
+
         /// <summary>
         /// The name of the tool.
         /// </summary>
@@ -36,7 +38,11 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Initializes the tool.
         /// </summary>
-        public abstract void Initialize(IAppContext context);
+        public virtual void Initialize(IAppContext context)
+        {
+            if (context == null) throw new ArgumentNullException("context");
+            _context = context;
+        }
 
         /// <summary>
         /// Returns true if a tool can be executed asynchronously using tasks.

@@ -109,8 +109,10 @@
     <Compile Include="Win32Api.cs" />
     <Compile Include="XmlSerializationHelper.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Content Include="Styles\GeosValidationErrors.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Styles\Icons\Events\abduction.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -6,33 +6,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
+using MW5.Shared;
 using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
-namespace MW5.Tools.Controls.Parameters
+namespace MW5.Tools.Controls.Parameters.Input
 {
     /// <summary>
     /// Represents combobox with a list of layers and a button to open datasource from disk.
     /// </summary>
-    internal partial class LayerParameterControl : ParameterControlBase, IInputParameterControl
+    [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<InputParameterControlBase, UserControl>))]
+    internal partial class LayerParameterControl : InputParameterControlBase
     {
-        private readonly IFileDialogService _dialogService;
-        private DataSourceType _dataSourceType;
         private List<InputLayerGridAdapter> _layers = new List<InputLayerGridAdapter>();
 
-        public LayerParameterControl(IFileDialogService dialogService)
+        public LayerParameterControl()
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
-
-            _dialogService = dialogService;
-
             InitializeComponent();
 
             SetNumSelected(0);
@@ -94,14 +91,15 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// Initializes control.
+        /// Initializes the control with specified datasource type.
         /// </summary>
-        /// <param name="dataSourceType">Type of the data source.</param>
-        public void Initialize(DataSourceType dataSourceType)
+        /// <param name="dataType">Type of the data.</param>
+        /// <param name="dialogService">File dialog service.</param>
+        public override void Initialize(DataSourceType dataType, IFileDialogService dialogService)
         {
-            _dataSourceType = dataSourceType;
+            base.Initialize(dataType, dialogService);
 
-            if (_dataSourceType == DataSourceType.Raster)
+            if (_dataType == DataSourceType.Raster)
             {
                 int height = panel1.Height;
                 panel1.Height = 0;
@@ -113,7 +111,7 @@ namespace MW5.Tools.Controls.Parameters
         /// <summary>
         /// Gets a value indicating whether control allows selection of multiple files (batch mode).
         /// </summary>
-        public bool BatchMode
+        public override bool BatchMode
         {
             get { return false; }
         }
@@ -183,7 +181,7 @@ namespace MW5.Tools.Controls.Parameters
         private void OpenClick(object sender, EventArgs e)
         {
             string filename;
-            if (_dialogService.OpenFile(_dataSourceType, out filename))
+            if (_dialogService.OpenFile(_dataType, out filename))
             {
                 var item = new InputLayerGridAdapter(filename);
                 _layers.Add(item);

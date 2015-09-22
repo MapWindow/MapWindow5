@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using MW5.Tools.Controls.Parameters;
+using MW5.Tools.Controls.Parameters.Input;
 using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Layers;
 

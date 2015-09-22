@@ -11,26 +11,24 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.Tools.Controls.Parameters.Interfaces;
 
-namespace MW5.Tools.Controls.Parameters
+namespace MW5.Tools.Controls.Parameters.Input
 {
     /// <summary>
     /// Represents listbox type control for multiple filename selection.
     /// </summary>
-    public partial class BatchFilenameParameterControl : ParameterControlBase, IInputParameterControl
+    [TypeDescriptionProvider(typeof(ReplaceControlDescripterProvider<InputParameterControlBase, UserControl>))]
+    public partial class BatchFilenameParameterControl : InputParameterControlBase
     {
-        private readonly IFileDialogService _dialogService;
         private readonly BindingList<InputFilenameGridAdapter> _filenames = new BindingList<InputFilenameGridAdapter>();
-        private DataSourceType _dataType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BatchFilenameParameterControl"/> class.
         /// </summary>
-        public BatchFilenameParameterControl(IFileDialogService dialogService)
+        public BatchFilenameParameterControl()
         {
-            if (dialogService == null) throw new ArgumentNullException("dialogService");
-            _dialogService = dialogService;
             InitializeComponent();
 
             inputFilenameGrid1.DataSource = _filenames;
@@ -70,17 +68,9 @@ namespace MW5.Tools.Controls.Parameters
         }
 
         /// <summary>
-        /// Initializes the control
-        /// </summary>
-        public void Initialize(DataSourceType dataType)
-        {
-            _dataType = dataType;
-        }
-
-        /// <summary>
         /// Gets a value indicating whether control allows selection of multiple files (batch mode).
         /// </summary>
-        public bool BatchMode
+        public override bool BatchMode
         {
             get { return true; }
         }

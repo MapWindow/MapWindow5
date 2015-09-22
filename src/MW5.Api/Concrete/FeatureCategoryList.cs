@@ -43,7 +43,7 @@ namespace MW5.Api.Concrete
             {
                 if (index >= 0 && index < _categories.Count)
                 {
-                    return new FeatureCategory(_categories.Item[index]);    
+                    return new FeatureCategory(_categories.Item[index], index);    
                 }
                 return null;
             }
@@ -55,7 +55,7 @@ namespace MW5.Api.Concrete
         {
             for (int i = 0; i < _categories.Count; i++)
             {
-                yield return new FeatureCategory(_categories.Item[i]);
+                yield return this[i];
             }
         }
 
@@ -67,7 +67,7 @@ namespace MW5.Api.Concrete
         public IFeatureCategory Add(string name)
         {
             var ct = _categories.Add(name);
-            return new FeatureCategory(ct);
+            return new FeatureCategory(ct, _categories.Count - 1);
         }
 
         public void Add(IFeatureCategory item)
@@ -83,15 +83,6 @@ namespace MW5.Api.Concrete
         public bool Contains(IFeatureCategory item)
         {
             return IndexOf(item) != -1;
-        }
-
-        public void CopyTo(IFeatureCategory[] array, int arrayIndex)
-        {
-            ArrayHelper.CheckCopyTo(array, arrayIndex, _categories.Count);
-            for (int i = 0; i < _categories.Count; i++)
-            {
-                array[arrayIndex + i] = new FeatureCategory(_categories.Item[i]);
-            }
         }
 
         public bool Remove(IFeatureCategory item)

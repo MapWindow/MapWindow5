@@ -6,6 +6,7 @@
 
 using System;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Services;
 
 namespace MW5.Tools.Controls.Parameters.Interfaces
 {
@@ -33,6 +34,7 @@ namespace MW5.Tools.Controls.Parameters.Interfaces
         /// Initializes the control with specified datasource type.
         /// </summary>
         /// <param name="dataType">Type of the data.</param>
-        void Initialize(DataSourceType dataType);
+        /// <param name="dialogService">File dialog service.</param>
+        void Initialize(DataSourceType dataType, IFileDialogService dialogService);
     }
 }

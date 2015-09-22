@@ -9,19 +9,26 @@ namespace MW5.Api.Concrete
     public class FeatureCategory : IFeatureCategory
     {
         private readonly ShapefileCategory _category;
+        private readonly int _index = -1;
 
         public FeatureCategory(string name)
         {
             _category = new ShapefileCategory {Name = name};
         }
 
-        internal FeatureCategory(ShapefileCategory category)
+        internal FeatureCategory(ShapefileCategory category, int index)
         {
             if (category == null)
             {
                 throw new NullReferenceException();
             }
             _category = category;
+            _index = index;
+        }
+
+        public int Index
+        {
+            get { return _index; }
         }
 
         public object InternalObject

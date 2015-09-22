@@ -1,0 +1,42 @@
+<ShapefileCategoriesClass>
+  <ShapefileCategoryClass Name="Topology Validation Error" Expression="[ErrorType] = 0">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointShapeRatio="0.000000" PointSize="10.000000" Rotation="45.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Repeated Point" Expression="[ErrorType] = 1">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="3919624" PointShapeRatio="0.000000" PointShapeType="3" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Hole lies outside shell" Expression="[ErrorType] = 2">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointShapeRatio="0.000000" PointSize="10.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Holes are nested" Expression="[ErrorType] = 3">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="3" PointSize="10.000000" Rotation="90.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Interior is disconnected" Expression="[ErrorType] = 4">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointShapeType="1" PointSize="10.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Ring Self-intersection" Expression="[ErrorType] = 5">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="6" PointShapeType="1" PointSize="11.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Self-intersection" Expression="[ErrorType] = 6">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointShapeRatio="0.300000" PointShapeType="1" PointSize="12.000000" Rotation="45.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Nested shells" Expression="[ErrorType] = 7">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="3" PointSize="10.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Duplicate Rings" Expression="[ErrorType] = 8">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="3919624" PointShapeRatio="0.000000" PointShapeType="5" PointSize="12.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Too few points in geometry component" Expression="[ErrorType] = 9">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="3919624" PointShapeRatio="0.000000" PointShapeType="4" PointSize="12.000000" Rotation="90.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Invalid Coordinate" Expression="[ErrorType] = 10">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Ring is not closed" Expression="[ErrorType] = 11">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="20" PointShapeRatio="0.100000" PointShapeType="4" PointSize="12.000000" Rotation="180.000000" />
+  </ShapefileCategoryClass>
+  <ShapefileCategoryClass Name="Polygon must be clockwise" Expression="[ErrorType] = 12">
+    <ShapeDrawingOptionsClass FillColor="1971946" LineColor="65535" PointNumSides="6" PointShapeType="1" PointSize="11.000000" />
+  </ShapefileCategoryClass>
+</ShapefileCategoriesClass>
+

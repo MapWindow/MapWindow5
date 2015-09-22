@@ -53,5 +53,57 @@ namespace MW5.Api.Helpers
             // while ultimatily it may be needed to choose source units explicitly in the UI
             return fs.Projection.IsGeographic ? LengthUnits.DecimalDegrees : LengthUnits.Meters;
         }
+
+        /// <summary>
+        /// Gets dictionary with number of features in each categories. Category index is used as a key.
+        /// </summary>
+        public static Dictionary<int, int> GetCategoryCounts(this IFeatureSet fs)
+        {
+            var dct = new Dictionary<int, int>();
+
+            foreach (var ft in fs.Features)
+            {
+                int category = ft.CategoryIndex;
+                if (dct.ContainsKey(category))
+                {
+                    dct[category] += 1;
+                }
+                else
+                {
+                    dct.Add(category, 1);
+                }
+            }
+
+            return dct;
+        }
+
+        /// <summary>
+        /// Removes categories without any features.
+        /// </summary>
+        public static void RemoveUnusedCategories(this IFeatureSet fs)
+        {
+            var dct = fs.GetCategoryCounts();
+
+            var list = new List<IFeatureCategory>();
+
+            foreach (var ct in fs.Categories)
+            {
+                if (!dct.ContainsKey(ct.Index))
+                {
+                    list.Add(ct);
+                }
+            }
+
+            if (list.Any())
+            {
+                foreach (var ct in list)
+                {
+                    fs.Categories.Remove(ct);
+                }
+
+                // need to reapply since it's likely that indices have changed
+                fs.Categories.ApplyExpressions();
+            }
+        }
     }
 }

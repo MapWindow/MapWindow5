@@ -89,7 +89,11 @@ namespace MW5.Api.Concrete
 
         public IFeatureCategory Category
         {
-            get { return new FeatureCategory(_shapefile.ShapeCategory3[_shapeIndex]); }
+            get
+            {
+                int index = CategoryIndex;
+                return new FeatureCategory(_shapefile.Categories.Item[index], index);
+            }
             set { _shapefile.ShapeCategory3[_shapeIndex] = value.GetInternal(); }
         }
 

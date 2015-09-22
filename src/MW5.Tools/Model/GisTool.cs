@@ -225,7 +225,7 @@ namespace MW5.Tools.Model
         /// Initializes the tool with application context.
         /// Can be overriden in derived classes to provide additional logic.
         /// </summary>
-        public virtual void Initialize(IAppContext context)
+        public void Initialize(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
             _context = context;

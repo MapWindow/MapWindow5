@@ -24,6 +24,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Interfaces;
@@ -444,20 +445,8 @@ namespace MW5.Plugins.Symbology.Forms
         {
             _shapefile.Categories.ApplyExpressions();
             
-            var values = new Dictionary<int, int>();  // id of category, count
+            var values = _shapefile.GetCategoryCounts(); // id of category, count
 
-            foreach(var ft in _shapefile.Features)
-            {
-                int category = ft.CategoryIndex;
-                if (values.ContainsKey(category))
-                {
-                    values[category] += 1;
-                }
-                else
-                {
-                    values.Add(category, 1);
-                }
-            }
             int count = _shapefile.Categories.Count;
 
             for (int i = 0; i < count; i++)
@@ -811,14 +800,6 @@ namespace MW5.Plugins.Symbology.Forms
             _context.Project.SetModified();
             _initState = _shapefile.Categories.Serialize();
             btnApply.Enabled = false;
-        }
-
-       /// <summary>
-        /// Changes the style of the selected category
-        /// </summary>
-        private void ChangeLabelCategoryStyle(int row)
-        {
-            
         }
 
         /// <summary>

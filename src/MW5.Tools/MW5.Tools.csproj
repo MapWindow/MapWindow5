@@ -93,16 +93,16 @@
       <DependentUpon>InputFilenameGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\InputFilenameGridAdapter.cs" />
-    <Compile Include="Controls\Parameters\BatchFilenameParameterControl.cs">
+    <Compile Include="Controls\Parameters\Input\BatchFilenameParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\BatchFilenameParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\Input\BatchFilenameParameterControl.Designer.cs">
       <DependentUpon>BatchFilenameParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\FilenameParameterControl.cs">
+    <Compile Include="Controls\Parameters\Input\FilenameParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\FilenameParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\Input\FilenameParameterControl.Designer.cs">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\FieldOperationParameterControl.cs">
@@ -110,6 +110,12 @@
     </Compile>
     <Compile Include="Controls\Parameters\FieldOperationParameterControl.Designer.cs">
       <DependentUpon>FieldOperationParameterControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Parameters\Input\InputParameterControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Parameters\Input\InputParameterControlBase.Designer.cs">
+      <DependentUpon>InputParameterControlBase.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\Interfaces\IInputListener.cs" />
     <Compile Include="Controls\Parameters\Interfaces\IInputParameterControl.cs" />
@@ -127,10 +133,10 @@
     <Compile Include="Controls\InputLayerGrid.Designer.cs">
       <DependentUpon>InputLayerGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\BatchLayerParameterControl.cs">
+    <Compile Include="Controls\Parameters\Input\BatchLayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\BatchLayerParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\Input\BatchLayerParameterControl.Designer.cs">
       <DependentUpon>BatchLayerParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\FieldParameterControl.cs">
@@ -175,6 +181,8 @@
     <Compile Include="Helpers\TemplateVariables.cs" />
     <Compile Include="Helpers\ToolConfigHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
+    <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Model\ErrorInfo.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\IGdalTool.cs" />
     <Compile Include="Model\IParametrizedTool.cs" />
@@ -264,10 +272,10 @@
     <Compile Include="Controls\Parameters\IntegerParameterControl.Designer.cs">
       <DependentUpon>IntegerParameterControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Parameters\LayerParameterControl.cs">
+    <Compile Include="Controls\Parameters\Input\LayerParameterControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\Parameters\LayerParameterControl.Designer.cs">
+    <Compile Include="Controls\Parameters\Input\LayerParameterControl.Designer.cs">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\Parameters\BatchOutputParameterControl.cs">
@@ -328,6 +336,7 @@
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ExportSelectionTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\FixShapefileTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\InteractiveClippingTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\MergeShapefileTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\OverlayTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -336,6 +345,7 @@
     </Compile>
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SimplifyLinesTool.cs" />
     <Compile Include="Tools\Geoprocessing\VectorGeometryTools\SortShapefileTool.cs" />
+    <Compile Include="Tools\Geoprocessing\VectorGeometryTools\ValidateShapefileTool.cs" />
     <Compile Include="Tools\Projections\IdentifyProjectionTool.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -422,7 +432,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Controls\Parameters\BatchLayerParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\Input\BatchLayerParameterControl.resx">
       <DependentUpon>BatchLayerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\BooleanParameterControl.resx">
@@ -434,10 +444,10 @@
     <EmbeddedResource Include="Controls\Parameters\DistanceParameterControl.resx">
       <DependentUpon>DistanceParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Parameters\BatchFilenameParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\Input\BatchFilenameParameterControl.resx">
       <DependentUpon>BatchFilenameParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Parameters\FilenameParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\Input\FilenameParameterControl.resx">
       <DependentUpon>FilenameParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\FieldOperationParameterControl.resx">
@@ -449,7 +459,7 @@
     <EmbeddedResource Include="Controls\Parameters\FieldParameterControl.resx">
       <DependentUpon>FieldParameterControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\Parameters\LayerParameterControl.resx">
+    <EmbeddedResource Include="Controls\Parameters\Input\LayerParameterControl.resx">
       <DependentUpon>LayerParameterControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Parameters\BatchOutputParameterControl.resx">
