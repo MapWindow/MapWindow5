@@ -103,9 +103,9 @@ namespace MW5.Api.Helpers
             return operations.InternalObject as FieldStatOperations;
         }
 
-        public static Grid GetInternal(this GridSource operations)
+        public static Grid GetInternal(this IGridSource grid)
         {
-            return operations.InternalObject as Grid;
+            return grid.InternalObject as Grid;
         }
 
         public static Table GetInternal(this IAttributeTable table)

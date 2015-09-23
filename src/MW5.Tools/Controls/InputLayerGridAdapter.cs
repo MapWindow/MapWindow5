@@ -5,6 +5,9 @@ using MW5.Tools.Model.Layers;
 
 namespace MW5.Tools.Controls
 {
+    /// <summary>
+    /// A wrapper class which exposes properties to display input layer or datasource in the UI via binding (in comboboxes and grids).
+    /// </summary>
     public class InputLayerGridAdapter
     {
         private readonly IDatasourceInput _source;

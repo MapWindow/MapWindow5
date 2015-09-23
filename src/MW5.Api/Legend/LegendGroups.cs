@@ -219,10 +219,10 @@ namespace MW5.Api.Legend
 
             _allGroups.RemoveAt(index);
 
+            UpdateGroupPositions();
+
             if (!batch)
             {
-                UpdateGroupPositions();
-
                 if (layerInGroupWasSelected)
                 {
                     _legend.UpdateSelectedLayer();

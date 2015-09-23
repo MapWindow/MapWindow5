@@ -353,6 +353,7 @@
     </Compile>
     <Compile Include="Tools\Projections\ReprojectTool.cs" />
     <Compile Include="Tools\Raster\CreateGridProxyTool.cs" />
+    <Compile Include="Tools\Raster\ZonalStatisticsTool.cs" />
     <Compile Include="Views\Custom\Abstract\ILongExecutionView.cs" />
     <Compile Include="Views\Custom\Abstract\IRandomPointsView.cs" />
     <Compile Include="Views\Custom\LongExecutionPresenter.cs" />

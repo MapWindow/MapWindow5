@@ -55,7 +55,7 @@ namespace MW5.Api.Static
             return _utils.RemoveColinearPoints(feature.GetInternal(), linearTolerance);
         }
 
-        public GridSource GridMerge(GridSource[] grids, string mergeFilename, bool inRam = true,
+        public IGridSource GridMerge(IGridSource[] grids, string mergeFilename, bool inRam = true,
                                             GridFormat format = GridFormat.UseExtension)
         {
             var grid = _utils.GridMerge(grids, mergeFilename, inRam, (GridFileType) format);
@@ -68,24 +68,24 @@ namespace MW5.Api.Static
             return shape != null ? new Geometry(shape) : null;
         }
 
-        public Image GridToImage(GridSource grid, RasterColorScheme scheme)
+        public Image GridToImage(IGridSource grid, RasterColorScheme scheme)
         {
             return _utils.GridToImage(grid.GetInternal(), scheme.GetInternal());
         }
 
-        public IFeatureSet GridToShapefile(GridSource grid, GridSource connectionGrid = null)
+        public IFeatureSet GridToShapefile(IGridSource grid, IGridSource connectionGrid = null)
         {
             var sf = _utils.GridToShapefile(grid.GetInternal(), connectionGrid.GetInternal());
             return sf != null ? new FeatureSet(sf) : null;
         }
 
-        public GridSource GridToGrid(GridSource grid, DataType outDataType)
+        public IGridSource GridToGrid(IGridSource grid, DataType outDataType)
         {
             var result = _utils.GridToGrid(grid.GetInternal(), (GridDataType)outDataType);
             return result != null ? new GridSource(result) : null;
         }
 
-        public IFeatureSet ShapeToShapeZ(IFeatureSet shapefile, GridSource grid)
+        public IFeatureSet ShapeToShapeZ(IFeatureSet shapefile, IGridSource grid)
         {
             var sf = _utils.ShapeToShapeZ(shapefile.GetInternal(), grid.GetInternal());
             return sf != null ? new FeatureSet(sf) : null;
@@ -127,12 +127,12 @@ namespace MW5.Api.Static
             return _utils.ClipGridWithPolygon(inputGridfile, poly.GetInternal(), resultGridfile, keepExtents);
         }
 
-        public bool ClipGridWithPolygon2(GridSource inputGrid, IGeometry poly, string resultGridfile, bool keepExtents)
+        public bool ClipGridWithPolygon2(IGridSource inputGrid, IGeometry poly, string resultGridfile, bool keepExtents)
         {
             return _utils.ClipGridWithPolygon2(inputGrid.GetInternal(), poly.GetInternal(), resultGridfile, keepExtents);
         }
 
-        public bool GridStatisticsToShapefile(GridSource grid, IFeatureSet sf, bool selectedOnly, bool overwriteFields)
+        public bool GridStatisticsToShapefile(IGridSource grid, IFeatureSet sf, bool selectedOnly, bool overwriteFields)
         {
             return _utils.GridStatisticsToShapefile(grid.GetInternal(), sf.GetInternal(), selectedOnly, overwriteFields);
         }
@@ -164,7 +164,7 @@ namespace MW5.Api.Static
             return _utils.MaskRaster(filename, newPerBandValue);
         }
 
-        public bool GridStatisticsForPolygon(GridSource grid, GridSourceHeader header, IEnvelope gridExtents, 
+        public bool GridStatisticsForPolygon(IGridSource grid, GridSourceHeader header, IEnvelope gridExtents, 
                 IGeometry polygon, double nodataValue, ref double meanValue, ref double minValue, ref double maxValue)
         {
             return _utils.GridStatisticsForPolygon(grid.GetInternal(), header.GetInternal(), gridExtents.GetInternal(),
@@ -176,7 +176,7 @@ namespace MW5.Api.Static
             return _utils.CopyNodataValues(sourceFilename, destFilename);
         }
 
-        public IImageSource GridToImage2(GridSource grid, RasterColorScheme scheme, GridProxyFormat imageFormat, 
+        public IImageSource GridToImage2(IGridSource grid, RasterColorScheme scheme, GridProxyFormat imageFormat, 
                 bool inRam)
         {
             var img = _utils.GridToImage2(grid.GetInternal(), scheme.GetInternal(), (tkGridProxyFormat)imageFormat, inRam, null);

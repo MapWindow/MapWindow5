@@ -17,7 +17,7 @@ namespace MW5.Tools.Model.Layers
     /// <summary>
     /// Darasource which serves as an input for a certain GIS tool.
     /// </summary>
-    public class DatasourceInput: IDatasourceInput, IVectorInput, IRasterInput
+    public class DatasourceInput: IVectorInput, IRasterInput
     {
         private string _filename = string.Empty;
 

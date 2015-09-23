@@ -49,7 +49,7 @@ namespace MW5.UI.Docking
 #if STYLE2010
             _dockingManager.VisualStyle = VisualStyle.Office2010;
 #else
-            _dockingManager.VisualStyle = VisualStyle.Metro;
+            _dockingManager.VisualStyle = VisualStyle.Default;
 #endif
 
             _dockingManager.DockTabAlignment = DockTabAlignmentStyle.Bottom;

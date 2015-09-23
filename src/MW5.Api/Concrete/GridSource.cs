@@ -7,7 +7,11 @@ using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
 {
-    public class GridSource: ILayerSource
+    /// <summary>
+    /// Represents grid datasource, providing operations to read and write the data. 
+    /// Isn't used for rendering (use IRasterSource instead).
+    /// </summary>
+    public class GridSource : IGridSource
     {
         private readonly Grid _grid;
 

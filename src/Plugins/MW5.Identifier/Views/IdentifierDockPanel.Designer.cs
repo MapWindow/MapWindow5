@@ -123,6 +123,7 @@ namespace MW5.Plugins.Identifier.Views
             // _treeView
             // 
             this._treeView.AutoAdjustMultiLineHeight = true;
+            treeNodeAdvStyleInfo1.ThemesEnabled = false;
             this._treeView.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
@@ -152,6 +153,7 @@ namespace MW5.Plugins.Identifier.Views
             this._treeView.Size = new System.Drawing.Size(268, 180);
             this._treeView.TabIndex = 46;
             this._treeView.Text = "infoTreeViewBase1";
+            this._treeView.ThemesEnabled = false;
             // 
             // 
             // 

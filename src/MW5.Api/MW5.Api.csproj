@@ -91,6 +91,7 @@
     <Compile Include="Helpers\GdalFormats.cs" />
     <Compile Include="Helpers\GdalHelper.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
+    <Compile Include="Interfaces\IGridSource.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
     <Compile Include="Interfaces\IRasterBandCollection.cs" />
     <Compile Include="Legend\ClickInfo.cs" />

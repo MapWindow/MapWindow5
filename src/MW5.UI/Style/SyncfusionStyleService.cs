@@ -217,7 +217,7 @@ namespace MW5.UI.Style
             var multiTreeView = control as MultiColumnTreeView;
             if (multiTreeView != null)
             {
-                multiTreeView.Style = MultiColumnVisualStyle.Metro;
+                multiTreeView.Style = MultiColumnVisualStyle.Default;
             }
         }
 
