@@ -34,32 +34,37 @@
                 <h1>Random points tool</h1>
                 If you need randomly generated point within a certain bounding box you can use this tool. Those points can, for example, be used to survey.<br />
 
-                <img class="img-responsive" style="float: left;" src="img/randompoints_required.png" alt="Required tab of the Random Points tool" width="577" height="473" />
-                <img class="img-responsive hidden-xs" style="float: right; margin-left: 5px;" src="img/randompoints_task.png" alt="Task of the Random Points tool" width="304" height="430" />
-                <br style="clear: left;" />
-                <p style="clear: both;">
-                    First determine the bounding box by selecting a layer.<br />
-                    Next select the number of points that should be created.<br />
-                    The output layer name is generated based on the input layer, but can be modified.<br />
-                    Check 'Overwrite' if you want to overwrite existing files. You'll be prompted otherwise if the output file already exists.<br />
-                    Check 'Memory layer' if you don't wan't to save the file to disk, but keep it only in memory.<br />
-                    'Add to map' is checked by default and will add the result to the map.<br />
-                    In the 'Tasks' panel you can see the progress of this task.
-                </p>
+                <figure>
+                    <img class="img-responsive" src="img/randompoints_required.png" alt="Required tab of the Random Points tool" width="577" height="473" />
+                    <figcaption>The required options for this tool.</figcaption>
+                </figure>
+                <ol>
+                    <li>Select the layer which bounding box will be used.</li>
+                    <li>Optionally select if only the selected shapes should be used for the bounding box.</li>
+                    <li>Select the number of points that should be created.</li>
+                    <li>The output layer name is generated based on the input layer, but can be modified.</li>
+                    <li>Check 'Overwrite' if you want to overwrite existing files. You'll be prompted otherwise if the output file already exists.</li>
+                    <li>Check 'Memory layer' if you don't want to save the file to disk, but make it only in memory.</li>
+                    <li>'Add to map' is checked by default and will add the result to the map.</li>
+                </ol>
+                <figure>
+                    <img class="img-responsive" src="img/randompoints_result.png" alt="The result of only using a selected state." width="971" height="844" />
+                    <figcaption>The result, only using a selected state.</figcaption>
+                </figure>
             </article>
         </div>
     </section>
 
     <section class="container">
         <div class="row" style="background-color: white">
-            <article class="col-md-4 hidden-xs">
+            <article class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <!-- 300x250 ad tag -->
                 <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial"></div>
             </article>
-            <article class="col-md-4 hidden-xs">
+            <article class="col-lg-4 col-md-6 col-sm-6 hidden-xs">
                 <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="open%2csource%2cdesktop%2cNET2cmicrosoft"></div>
             </article>
-            <article class="col-md-4 hidden-xs">
+            <article class="col-lg-4 hidden-md hidden-sm hidden-xs">
                 <div data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="300x250" data-tags="GIS%2csyncfusion%2cfree"></div>
             </article>
         </div>
@@ -67,7 +72,7 @@
         <hr>
 
         <footer>
-            <div class="footer-ad" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>            
+            <div class="footer-ad hidden-xs" data-type="ad" data-publisher="mapwindow.org" data-zone="ron" data-format="728x90" data-tags="GIS%2cMapping%2cMap%2cC%23%2cMaps%2cWMS%2cgeospatial">&nbsp;</div>            
             <p>&copy; MapWindow Developers Team 2015</p>
         </footer>
     </section> <!-- /container -->

@@ -59,7 +59,7 @@ table.googlesheet {
 
 div.row {
     border-radius: 20px;
-    background-color: gainsboro;
+    background-color: #8ec0e7;
     margin-bottom: 1em;
 }
 
@@ -84,3 +84,21 @@ article {
         box-shadow: 10px 10px 30px 0 #8688a3;
         box-shadow: 10px 10px 30px 0 rgba(134,136,163,1);
     }
+figure {
+    position: relative;
+    margin: 1.5em 0;
+    margin-right: 1em;
+    border-top: 1px dotted #029dcb;
+    border-bottom: 1px dotted #029dcb;
+}
+figure img {
+    margin: .75em auto;
+}
+figcaption {
+    clear: left;
+    margin: .75em 0;
+    text-align: center;
+    font-style: italic;
+    line-height: 1.5em;
+    font-weight: bold;
+}

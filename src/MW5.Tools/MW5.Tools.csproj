@@ -568,6 +568,7 @@
     <Content Include="Manuals\img\randompoints_required.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Manuals\img\randompoints_result.png" />
     <Content Include="Manuals\img\randompoints_task.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
