@@ -1,0 +1,70 @@
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="RepositoryItemHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
+using System.IO;
+using MW5.Api.Static;
+using MW5.Data.Enums;
+using MW5.Data.Repository;
+using MW5.Shared;
+
+namespace MW5.Data.Helpers
+{
+    /// <summary>
+    /// Extension methods for IRepositoryItem.
+    /// </summary>
+    public static class RepositoryItemHelper
+    {
+        /// <summary>
+        /// Gets the description of the item to be displayed in the UI.
+        /// </summary>
+        public static string GetDescription(this IRepositoryItem item)
+        {
+            switch (item.Type)
+            {
+                case RepositoryItemType.Image:
+                case RepositoryItemType.Vector:
+                    var fileItem = item as IFileItem;
+                    if (fileItem != null)
+                    {
+                        return GetDescription(fileItem.Filename);
+                    }
+                    break;
+                case RepositoryItemType.DatabaseLayer:
+                    var layerItem = item as IDatabaseLayerItem;
+                    return GetDescription(layerItem);
+            }
+
+            return string.Empty;
+        }
+
+        private static string GetDescription(IDatabaseLayerItem item)
+        {
+            if (item == null)
+            {
+                return string.Empty;
+            }
+
+            var s = "Geometry type: " + item.GeometryType.EnumToString() + Environment.NewLine;
+            s += "Number of features: " + item.NumFeatures + Environment.NewLine;
+            s += "Projection: " + item.Projection.ExportToProj4();
+            return s;
+        }
+
+        private static string GetDescription(string filename)
+        {
+            using (var ds = GeoSource.Open(filename))
+            {
+                if (ds != null)
+                {
+                    return ds.ToolTipText;
+                }
+            }
+
+            return string.Empty;
+        }
+    }
+}

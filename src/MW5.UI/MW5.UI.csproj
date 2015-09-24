@@ -208,6 +208,7 @@
     <Compile Include="Helpers\GenericHelper.cs" />
     <Compile Include="Helpers\GroupingGridHelper.cs" />
     <Compile Include="Helpers\OptionListHelper.cs" />
+    <Compile Include="Helpers\SplitContainerHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
     <Compile Include="Legacy\LayersDialog.cs">
       <SubType>Form</SubType>

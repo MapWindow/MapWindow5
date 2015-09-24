@@ -19,6 +19,11 @@ namespace MW5.Data.Repository
             get { return Get(_node.Parent); }
         }
 
+        public string DisplayName
+        {
+            get { return _node.Text; }
+        }
+
         public RepositoryItemType Type
         {
             get { return (RepositoryItemType)_node.Tag; }

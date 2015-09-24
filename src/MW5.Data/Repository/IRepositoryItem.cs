@@ -11,5 +11,6 @@ namespace MW5.Data.Repository
         void Refresh();
         bool Loaded { get; }
         IRepositoryItem Parent { get; }
+        string DisplayName { get; }
     }
 }

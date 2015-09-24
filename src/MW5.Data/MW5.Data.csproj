@@ -105,6 +105,7 @@
     <Compile Include="Db\SpatiaLiteConnection.cs" />
     <Compile Include="Enums\Converters.cs" />
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Helpers\RepositoryItemHelper.cs" />
     <Compile Include="Repository\IExpandableItem.cs" />
     <Compile Include="Repository\ILayerItem.cs" />
     <Compile Include="Repository\IServerItem.cs" />

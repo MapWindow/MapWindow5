@@ -1,57 +1,50 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="RepositoryDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+using System.ComponentModel;
 using System.Windows.Forms;
 using MW5.Data.Enums;
+using MW5.Data.Helpers;
 using MW5.Data.Repository;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Shared;
 using MW5.UI.Controls;
+using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Repository.Views
 {
+    /// <summary>
+    /// Represents dock panel which holds repository tree view, toolbar and description area.
+    /// </summary>
     public partial class RepositoryDockPanel : DockPanelControlBase, IMenuProvider
     {
-        public event EventHandler<RepositoryEventArgs> ItemDoubleClicked;
-
         public RepositoryDockPanel(IRepository repository)
         {
             if (repository == null) throw new ArgumentNullException("repository");
 
             InitializeComponent();
 
-            treeViewAdv1.InitRepository(repository);
-
-            treeViewAdv1.ItemSelected += treeViewAdv1_ItemSelected;
-            treeViewAdv1.DoubleClick += (s, e) => FireItemDoubleClicked();
+            InitTreeView(repository);
 
             contextMenuStripEx1.Opening += contextMenuStripEx1_Opening;
 
             toolRemoveFolder.Enabled = false;
 
-            treeViewAdv1.ShowToolTip = false;
+            Init();
         }
 
-        private void FireItemDoubleClicked()
-        {
-            var handler = ItemDoubleClicked;
-            if (handler != null)
-            {
-                var item = treeViewAdv1.SelectedItem;
-                if (item != null)
-                {
-                    handler(treeViewAdv1, new RepositoryEventArgs(item));
-                }
-            }
-        }
+        public event EventHandler<RepositoryEventArgs> ItemDoubleClicked;
 
         public IRepositoryView Tree
         {
             get { return treeViewAdv1; }
         }
-
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
@@ -67,15 +60,85 @@ namespace MW5.Plugins.Repository.Views
             get { yield break; }
         }
 
-        private void treeViewAdv1_ItemSelected(object sender, RepositoryEventArgs e)
+        private void FireItemDoubleClicked()
         {
-            var folder = e.Item as IFolderItem;
-            toolRemoveFolder.Enabled = folder != null && folder.Root;
+            var handler = ItemDoubleClicked;
+            if (handler != null)
+            {
+                var item = treeViewAdv1.SelectedItem;
+                if (item != null)
+                {
+                    handler(treeViewAdv1, new RepositoryEventArgs(item));
+                }
+            }
         }
 
-        #region Context menu
+        private void Init()
+        {
+            splitContainerAdv1.InitDockPanel(0.8);
 
-        private void contextMenuStripEx1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+            richTextBox1.InitDockPanelFooter();
+            richTextBox1.Text = "No datasource is selected.";
+        }
+
+        private void InitTreeView(IRepository repository)
+        {
+            treeViewAdv1.InitRepository(repository);
+
+            treeViewAdv1.ItemSelected += OnTreeViewItemSelected;
+            treeViewAdv1.DoubleClick += (s, e) => FireItemDoubleClicked();
+            treeViewAdv1.ShowToolTip = false;
+        }
+
+        private void SetDatabaseContextMenu()
+        {
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
+                                                   { mnuRemoveConnection, new ToolStripSeparator(), mnuRefresh });
+        }
+
+        private void SetDatabaseLayerContextMenu(IDatabaseLayerItem layer)
+        {
+            mnuAddToMap.Text = layer.AddedToMap ? "Remove from the map" : "Add to the map";
+
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
+                                                   { mnuAddToMap, new ToolStripSeparator(), mnuRemoveLayer });
+        }
+
+        private void SetDatabaseRootContextMenu()
+        {
+            contextMenuStripEx1.Items.Add(mnuAddConnection);
+        }
+
+        private void SetFileContextMenu(IFileItem file)
+        {
+            mnuAddToMap.Text = file.AddedToMap ? "Remove from the map" : "Add to the map";
+
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
+                                                   {
+                                                       mnuAddToMap, new ToolStripSeparator(), mnuGdalInfo, mnuOpenLocation,
+                                                       new ToolStripSeparator(), mnuRemoveFile
+                                                   });
+        }
+
+        private void SetFileSystemContextMenu()
+        {
+            contextMenuStripEx1.Items.Add(mnuAddFolder);
+        }
+
+        private void SetFolderContextMenu(IFolderItem folder)
+        {
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[] { mnuAddFolderToMap, new ToolStripSeparator() });
+
+            if (folder.Root)
+            {
+                contextMenuStripEx1.Items.Add(mnuRemoveFolder);
+            }
+
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
+                                                   { mnuOpenLocation, new ToolStripSeparator(), mnuRefresh });
+        }
+
+        private void contextMenuStripEx1_Opening(object sender, CancelEventArgs e)
         {
             var item = treeViewAdv1.SelectedItem;
             if (item == null)
@@ -112,77 +175,19 @@ namespace MW5.Plugins.Repository.Views
             e.Cancel = true;
         }
 
-        private void SetDatabaseLayerContextMenu(IDatabaseLayerItem layer)
+        private void OnTreeViewItemSelected(object sender, RepositoryEventArgs e)
         {
-            mnuAddToMap.Text = layer.AddedToMap ? "Remove from the map" : "Add to the map";
+            UpdateDescription(e.Item);
 
-            contextMenuStripEx1.Items.AddRange(
-            new ToolStripItem[]
-                {
-                    mnuAddToMap, 
-                    new ToolStripSeparator(), 
-                    mnuRemoveLayer, 
-                });
+            var folder = e.Item as IFolderItem;
+            toolRemoveFolder.Enabled = folder != null && folder.Root;
         }
 
-        private void SetDatabaseContextMenu()
+        private void UpdateDescription(IRepositoryItem item)
         {
-            contextMenuStripEx1.Items.AddRange(
-            new ToolStripItem[]
-                {
-                    mnuRemoveConnection, 
-                    new ToolStripSeparator(), 
-                    mnuRefresh, 
-                });
+            richTextBox1.Clear();
+            richTextBox1.Text = string.Format("{0}{2}{2}{1}", item.DisplayName, item.GetDescription(), Environment.NewLine);
+            richTextBox1.MakeFirstLineBold();
         }
-
-        private void SetDatabaseRootContextMenu()
-        {
-            contextMenuStripEx1.Items.Add(mnuAddConnection);
-        }
-
-        private void SetFileSystemContextMenu()
-        {
-            contextMenuStripEx1.Items.Add(mnuAddFolder);
-        }
-
-        private void SetFileContextMenu(IFileItem file)
-        {
-            mnuAddToMap.Text = file.AddedToMap ? "Remove from the map" : "Add to the map";
-
-            contextMenuStripEx1.Items.AddRange(
-            new ToolStripItem[]
-                {
-                    mnuAddToMap, 
-                    new ToolStripSeparator(), 
-                    mnuGdalInfo, 
-                    mnuOpenLocation,
-                    new ToolStripSeparator(), 
-                    mnuRemoveFile
-                });
-        }
-
-        private void SetFolderContextMenu(IFolderItem folder)
-        {
-            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
-            {
-                mnuAddFolderToMap, 
-                new ToolStripSeparator(), 
-            });
-
-            if (folder.Root)
-            {
-                contextMenuStripEx1.Items.Add(mnuRemoveFolder);
-            }
-
-            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
-            {
-                mnuOpenLocation,
-                new ToolStripSeparator(),
-                mnuRefresh
-            });
-        }
-
-        #endregion
     }
 }

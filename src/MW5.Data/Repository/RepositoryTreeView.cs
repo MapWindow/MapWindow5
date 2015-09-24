@@ -18,6 +18,9 @@ using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository
 {
+    /// <summary>
+    /// Represents tree view to display repository items.
+    /// </summary>
     public sealed class RepositoryTreeView: TreeViewBase, IRepositoryView
     {
         private HashSet<LayerIdentity> _layers;  // storing layers from the last update to be use on folder expansion
@@ -29,8 +32,6 @@ namespace MW5.Data.Repository
             BeforeExpand += TreeViewBeforeExpand;
 
             AfterSelect += RepositoryTreeView_AfterSelect;
-
-            PrepareToolTip += RepositoryTreeView_PrepareToolTip;
 
             LoadOnDemand = true;
 
@@ -234,58 +235,6 @@ namespace MW5.Data.Repository
                 var item = RepositoryItem.Get(node);
                 handler(this, new RepositoryEventArgs(item));
             }
-        }
-
-        private void RepositoryTreeView_PrepareToolTip(object sender, ToolTipEventArgs e)
-        {
-            var item = RepositoryItem.Get(SelectedNode);
-
-            switch (item.Type)
-            {
-                case RepositoryItemType.Image:
-                case RepositoryItemType.Vector:
-                    var fileItem = item as IFileItem;
-                    if (fileItem != null)
-                    {
-                        string filename = fileItem.Filename;
-                        if (!PopulateToolTip(e.ToolTip, filename))
-                        {
-                            e.Cancel = true;
-                        }
-                    }
-                    return;
-                case RepositoryItemType.DatabaseLayer:
-                    var layerItem = item as IDatabaseLayerItem;
-                    PopulateToolTip(e.ToolTip, layerItem);
-                    return;
-            }
-
-            e.Cancel = true;
-        }
-
-        private void PopulateToolTip(ToolTipInfo tooltip, IDatabaseLayerItem item)
-        {
-            tooltip.Header.Text = item.Name;
-
-            tooltip.Body.Text = "Geometry type: " + item.GeometryType.EnumToString() + Environment.NewLine;
-            tooltip.Body.Text += "Number of features: " +  item.NumFeatures + Environment.NewLine;
-            tooltip.Body.Text += "Projection: " + item.Projection.ExportToProj4();
-        }
-
-        private bool PopulateToolTip(ToolTipInfo tooltip, string filename)
-        {
-            tooltip.Header.Text = Path.GetFileName(filename);
-            
-            using (var ds = GeoSource.Open(filename))
-            {
-                if (ds != null)
-                {
-                    tooltip.Body.Text = ds.ToolTipText;
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         private void RepositoryTreeView_ItemDrag(object sender, ItemDragEventArgs e)

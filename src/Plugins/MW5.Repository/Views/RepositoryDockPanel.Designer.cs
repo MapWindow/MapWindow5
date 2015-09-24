@@ -51,9 +51,15 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveLayer = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
+            this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAdv1)).BeginInit();
+            this.splitContainerAdv1.Panel1.SuspendLayout();
+            this.splitContainerAdv1.Panel2.SuspendLayout();
+            this.splitContainerAdv1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripEx1
@@ -111,7 +117,7 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveLayer});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 268);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 246);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
@@ -184,7 +190,7 @@ namespace MW5.Plugins.Repository.Views
             // 
             this.treeViewAdv1.ApplyStyle = true;
             this.treeViewAdv1.BackColor = System.Drawing.Color.White;
-            this.treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(330, 635);
+            this.treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(330, 500);
             this.treeViewAdv1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
             this.treeViewAdv1.BorderSingle = System.Windows.Forms.ButtonBorderStyle.None;
             this.treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -199,15 +205,16 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1.HelpTextControl.Size = new System.Drawing.Size(51, 17);
             this.treeViewAdv1.HelpTextControl.TabIndex = 0;
             this.treeViewAdv1.HelpTextControl.Text = "help text";
+            this.treeViewAdv1.HideSelection = false;
             this.treeViewAdv1.ItemHeight = 18;
             this.treeViewAdv1.LoadOnDemand = true;
-            this.treeViewAdv1.Location = new System.Drawing.Point(0, 37);
+            this.treeViewAdv1.Location = new System.Drawing.Point(0, 0);
             this.treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.treeViewAdv1.Name = "treeViewAdv1";
             this.treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this.treeViewAdv1.ShowFocusRect = false;
-            this.treeViewAdv1.ShowSuperTooltip = true;
-            this.treeViewAdv1.Size = new System.Drawing.Size(330, 635);
+            this.treeViewAdv1.ShowSuperTooltip = false;
+            this.treeViewAdv1.Size = new System.Drawing.Size(330, 500);
             this.treeViewAdv1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this.treeViewAdv1.TabIndex = 0;
             this.treeViewAdv1.Text = "treeViewAdv1";
@@ -222,9 +229,39 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1.ToolTipControl.Text = "toolTip";
             this.treeViewAdv1.ToolTipDuration = 3000;
             // 
+            // splitContainerAdv1
+            // 
+            this.splitContainerAdv1.BeforeTouchSize = 7;
+            this.splitContainerAdv1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerAdv1.Location = new System.Drawing.Point(0, 37);
+            this.splitContainerAdv1.Name = "splitContainerAdv1";
+            this.splitContainerAdv1.Orientation = System.Windows.Forms.Orientation.Vertical;
+            // 
+            // splitContainerAdv1.Panel1
+            // 
+            this.splitContainerAdv1.Panel1.Controls.Add(this.treeViewAdv1);
+            // 
+            // splitContainerAdv1.Panel2
+            // 
+            this.splitContainerAdv1.Panel2.Controls.Add(this.richTextBox1);
+            this.splitContainerAdv1.Size = new System.Drawing.Size(330, 635);
+            this.splitContainerAdv1.SplitterDistance = 500;
+            this.splitContainerAdv1.TabIndex = 2;
+            this.splitContainerAdv1.Text = "splitContainerAdv1";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(330, 128);
+            this.richTextBox1.TabIndex = 0;
+            this.richTextBox1.Text = "";
+            // 
             // RepositoryDockPanel
             // 
-            this.Controls.Add(this.treeViewAdv1);
+            this.Controls.Add(this.splitContainerAdv1);
             this.Controls.Add(this.toolStripEx1);
             this.Name = "RepositoryDockPanel";
             this.Size = new System.Drawing.Size(330, 672);
@@ -232,6 +269,10 @@ namespace MW5.Plugins.Repository.Views
             this.toolStripEx1.PerformLayout();
             this.contextMenuStripEx1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).EndInit();
+            this.splitContainerAdv1.Panel1.ResumeLayout(false);
+            this.splitContainerAdv1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerAdv1)).EndInit();
+            this.splitContainerAdv1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,5 +296,7 @@ namespace MW5.Plugins.Repository.Views
         private ToolStripMenuItem mnuAddConnection;
         private ToolStripMenuItem mnuRemoveConnection;
         private ToolStripMenuItem mnuRemoveLayer;
+        private SplitContainerAdv splitContainerAdv1;
+        private RichTextBox richTextBox1;
     }
 }

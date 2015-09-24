@@ -8,8 +8,24 @@ using System.Windows.Forms;
 
 namespace MW5.Shared
 {
+    /// <summary>
+    /// Extension methods for RichTextBox control.
+    /// </summary>
     public static class RichTextBoxHelper
     {
+        /// <summary>
+        /// Sets text box content and makes the first line bold.
+        /// </summary>
+        public static void SetDescription(this RichTextBox box, string description)
+        {
+            box.Clear();
+            box.Text = description;
+            box.MakeFirstLineBold();
+        }
+
+        /// <summary>
+        /// Makes the first line bold.
+        /// </summary>
         public static void MakeFirstLineBold(this RichTextBox box)
         {
             var text = box.Text;
@@ -20,6 +36,18 @@ namespace MW5.Shared
                 box.Select(0, pos + 1);
                 box.SelectionFont = new Font(box.Font, FontStyle.Bold);
             }
+        }
+        
+        /// <summary>
+        /// Initializes the dock panel footer.
+        /// </summary>
+        public static void InitDockPanelFooter(this RichTextBox textbox)
+        {
+            textbox.BorderStyle = BorderStyle.None;
+            textbox.Dock = DockStyle.Fill;
+            textbox.ScrollBars = RichTextBoxScrollBars.None;
+            textbox.BackColor = Color.FromKnownColor(KnownColor.Control);
+            textbox.ReadOnly = true;
         }
     }
 }

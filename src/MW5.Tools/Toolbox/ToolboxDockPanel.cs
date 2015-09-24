@@ -19,6 +19,7 @@ using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Views;
 using MW5.UI.Controls;
+using MW5.UI.Helpers;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Tools.Toolbox
@@ -115,49 +116,20 @@ namespace MW5.Tools.Toolbox
 
         private void Init()
         {
-            splitContainerAdv1.Orientation = Orientation.Vertical;
-            splitContainerAdv1.BorderStyle = BorderStyle.None;
+            splitContainerAdv1.InitDockPanel(0.9);
 
-            splitContainerAdv1.Panel1MinSize = 0;
-
-            InitTextBox();
-
-            splitContainerAdv1.SplitterDistance = Convert.ToInt32(Height * 0.9);
-        }
-
-        private void InitTextBox()
-        {
-            _textbox.BorderStyle = BorderStyle.None;
-            _textbox.Dock = DockStyle.Fill;
-            _textbox.ScrollBars = RichTextBoxScrollBars.None;
-            _textbox.BackColor = Color.FromKnownColor(KnownColor.Control);
-            _textbox.ReadOnly = true;
+            _textbox.InitDockPanelFooter();
             _textbox.Text = "No tool is selected.";
-
-            splitContainerAdv1.Panel2MinSize = 0;
         }
-
+        
         private void OnGroupSelected(object sender, ToolboxGroupEventArgs e)
         {
-            var group = e.Group;
-
-            _textbox.Clear();
-            _textbox.Text = group.Name + Environment.NewLine + Environment.NewLine + group.Description;
-            _textbox.Select(0, group.Name.Length);
-            _textbox.SelectionFont = new Font(Font, FontStyle.Bold);
+            _textbox.SetDescription(e.Group.Name + Environment.NewLine + Environment.NewLine + e.Group.Description);
         }
 
         private void OnToolSelected(object sender, ToolboxToolEventArgs e)
         {
-            var tool = e.Tool;
-            _textbox.Clear();
-            _textbox.Text = tool.Name + Environment.NewLine + Environment.NewLine + tool.Description;
-
-            if (tool.Name.Length > 0)
-            {
-                _textbox.Select(0, tool.Name.Length);
-                _textbox.SelectionFont = new Font(Font, FontStyle.Bold);
-            }
+            _textbox.SetDescription(e.Tool.Name + Environment.NewLine + Environment.NewLine + e.Tool.Description);
         }
 
         public void AddTools(IEnumerable<ITool> tools)

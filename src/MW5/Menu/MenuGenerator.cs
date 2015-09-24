@@ -140,7 +140,12 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
             items.AddButton(_commands[MenuKeys.RemoveLayer]);
             items.AddButton(_commands[MenuKeys.Settings], true);
+            
+            #if DEBUG
+            
             items.AddButton(_commands[MenuKeys.Test], true);
+
+            #endif
             
             items.InsertBefore = items[items.Count - 2];    // before settings
 
