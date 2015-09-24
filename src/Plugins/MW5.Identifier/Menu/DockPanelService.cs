@@ -3,13 +3,12 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Identifier.Properties;
 using MW5.Plugins.Identifier.Views;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Docking;
 
 namespace MW5.Plugins.Identifier.Menu
 {
     public class DockPanelService
     {
-        private const string DockPanelKey = "IdentifierPluginDockPanel";
-
         public DockPanelService(IAppContext context, IdentifierPresenter presenter, IdentifierPlugin plugin)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -19,7 +18,7 @@ namespace MW5.Plugins.Identifier.Menu
             var panels = context.DockPanels;
 
             panels.Lock();
-            var panel = panels.Add(presenter.GetInternalObject(), DockPanelKey, plugin.Identity);
+            var panel = panels.Add(presenter.GetInternalObject(), DockPanelKeys.Identifier, plugin.Identity);
             panel.Caption = "Identifier";
             panel.SetIcon(Resources.ico_identify);
 

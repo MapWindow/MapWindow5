@@ -2,10 +2,12 @@
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Events;
+using MW5.Plugins.Enums;
 using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.UI.Docking;
 
 namespace MW5.Plugins.Identifier.Views
 {
@@ -115,7 +117,6 @@ namespace MW5.Plugins.Identifier.Views
                     _context.Map.Identifier.Mode = IdentifierMode.AllLayerStopOnFirst;
                     break;
                 case IdentifierPluginMode.AllLayers:
-                case IdentifierPluginMode.LayerSelection:
                     _context.Map.Identifier.Mode = IdentifierMode.AllLayers;
                     break;
             }
@@ -127,9 +128,20 @@ namespace MW5.Plugins.Identifier.Views
             View.UpdateView();
         }
 
-        public void ShapeIdentified(int layerHandle, int shapeIndex)
+        public void ShapeIdentified()
         {
             View.UpdateView();
+
+            ActivatePanel();
+        }
+
+        private void ActivatePanel()
+        {
+            var panel = _context.DockPanels.Find(DockPanelKeys.Identifier);
+            if (panel != null)
+            {
+                panel.Activate();
+            }
         }
 
         public override void RunCommand(IdentifierCommand command)

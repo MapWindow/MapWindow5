@@ -80,7 +80,7 @@ namespace MW5.Helpers
             }
 
             var locator = context.DockPanels.Add(locatorControl, DockPanelKeys.Preview, PluginIdentity.Default);
-            locator.Caption = "Locator";
+            locator.Caption = "Overview";
             locator.SetIcon(Resources.ico_zoom_to_layer);
             locator.DockTo(context.DockPanels.Legend, DockPanelState.Bottom, PanelSize);
 

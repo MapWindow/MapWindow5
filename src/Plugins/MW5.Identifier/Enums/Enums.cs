@@ -5,7 +5,6 @@
         CurrentLayer = 0,
         AllLayers = 1,
         TopDownStopOnFirst = 2,
-        LayerSelection = 3,
     }
 
     public enum IdentifierCommand
@@ -21,6 +20,7 @@
         Polygon = 2,
         Calculated = 3,
         Raster = 4,
+        Field = 5,
     }
 
     public enum IdentifierNodeType

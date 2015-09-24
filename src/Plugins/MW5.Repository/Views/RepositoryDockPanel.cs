@@ -82,7 +82,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void Init()
         {
-            splitContainerAdv1.InitDockPanel(0.8);
+            splitContainerAdv1.InitDockPanel(0.85);
 
             richTextBox1.InitDockPanelFooter();
             richTextBox1.Text = "No datasource is selected.";
@@ -192,13 +192,20 @@ namespace MW5.Plugins.Repository.Views
 
         private void UpdateDescription(IRepositoryItem item)
         {
-            richTextBox1.Clear();
-            richTextBox1.Text = "Loading...";         
+            richTextBox1.SetText("Loading...");         
 
             Task<string>.Factory.StartNew(item.GetDescription).ContinueWith(description =>
             {
-                string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result, Environment.NewLine);
-                richTextBox1.SetDescription(msg);         
+                try
+                {
+                    string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result, Environment.NewLine);
+                    richTextBox1.SetDescription(msg);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Error("Failed to load datasource description: {0}", ex, item.DisplayName);
+                    richTextBox1.SetText("Failed to load description.");
+                }
             }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }

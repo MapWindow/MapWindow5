@@ -15,8 +15,6 @@ namespace MW5.Plugins.Identifier.Enums
                     return "All layers";
                 case IdentifierPluginMode.TopDownStopOnFirst:
                     return "Top down stop on first";
-                case IdentifierPluginMode.LayerSelection:
-                    return "Layer selection";
             }
             throw new ApplicationException("Invalid IdentifierPluginMode mode");
         }

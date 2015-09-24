@@ -28,7 +28,7 @@ namespace MW5.Plugins.Identifier.Listeners
             _identifierPresenter = identifierPresenter;
             _configService = configService;
 
-            plugin.ShapeIdentified += _plugin_ShapeIdentified;
+            plugin.ShapeIdentified += plugin_ShapeIdentified;
             plugin.ProjectClosed += plugin_ProjectClosed;
             plugin.LayerRemoved += plugin_LayerRemoved;
             plugin.MouseMove += plugin_MouseMove;
@@ -57,9 +57,9 @@ namespace MW5.Plugins.Identifier.Listeners
             _identifierPresenter.RunCommand(IdentifierCommand.Clear);
         }
 
-        private void _plugin_ShapeIdentified(IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)
+        private void plugin_ShapeIdentified(IMuteMap map, Api.Events.ShapeIdentifiedEventArgs e)
         {
-            _identifierPresenter.ShapeIdentified(e.LayerHandle, e.ShapeIndex);
+            _identifierPresenter.ShapeIdentified();
         }
 
         /// <remarks>

@@ -15,6 +15,9 @@ using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 namespace MW5.Plugins.Identifier.Controls
 {
+    /// <summary>
+    /// Tree view with identified items, vector geometries or raster pixels.
+    /// </summary>
     public class IdentifierTreeView: TwoColumnTreeView
     {
         private const int LocalStatsRange = 2;
@@ -47,7 +50,8 @@ namespace MW5.Plugins.Identifier.Controls
                 Resources.img_line,
                 Resources.img_polygon,
                 Resources.img_calculator16,
-                Resources.img_raster
+                Resources.img_raster,
+                Resources.img_field16
             };
         }
 
@@ -127,7 +131,6 @@ namespace MW5.Plugins.Identifier.Controls
             var layerNode = new NodeData(layer.Name.ToUpper())
             {
                 ImageIndex = (int)IdentifierIcon.Raster,
-                LargerHeight = true
             };
 
             AddPixelNodes(layerNode, img, layer.Handle);
@@ -150,7 +153,6 @@ namespace MW5.Plugins.Identifier.Controls
             var layerNode = new NodeData(layer.Name.ToUpper())
             {
                 ImageIndex = (int)GetIconForFeatureSet(fs),
-                LargerHeight = true
             };
 
             AddShapeNodes(layerNode, fs, layer.Handle);
@@ -241,8 +243,6 @@ namespace MW5.Plugins.Identifier.Controls
         {
             double min, max, mean, stdDev;
             int count;
-
-            
 
             if (!band.ComputeLocalStatistics(pixel.RasterX, pixel.RasterY, LocalStatsRange, out min, out max, out mean, out stdDev,
                 out count))
@@ -346,18 +346,13 @@ namespace MW5.Plugins.Identifier.Controls
                             .Select(item => item.ShapeIndex)
                             .ToList();
 
-            int iconIndex = (int)GetIconForFeatureSet(fs);
-
             var geomTypeName = fs.GeometryType.EnumToString();
 
             bool geodesic = _context.Map.Measuring.IsUsingEllipsoid;
 
             foreach (var shapeIndex in shapes)
             {
-                var nodeShape = layerNode.AddSubItem(geomTypeName, shapeIndex.ToString());
-                nodeShape.ImageIndex = iconIndex;
-                nodeShape.Expanded = false;
-                nodeShape.LargerHeight = true;
+                var nodeShape = layerNode.AddSubItem(geomTypeName, "Shape id = " + shapeIndex);
 
                 DisplayAttributes(fs, nodeShape, shapeIndex, layerHandle, geodesic);
             }
@@ -373,6 +368,9 @@ namespace MW5.Plugins.Identifier.Controls
         {
             var fields = fs.Table.Fields;
 
+            var fieldsNode = nodeShape.AddSubItem("Fields", string.Empty);
+            //fieldsNode.ImageIndex = (int)IdentifierIcon.Field;
+
             for (int i = 0; i < fields.Count; i++)
             {
                 var fld = fields[i];
@@ -382,13 +380,12 @@ namespace MW5.Plugins.Identifier.Controls
                 }
 
                 var value = fs.Table.CellValue(i, shapeIndex);
-                nodeShape.AddSubItem(fld.DisplayName, value != null ? value.ToString() : "<null>");
+                fieldsNode.AddSubItem(fld.DisplayName, value != null ? value.ToString() : "<null>");
                 nodeShape.Metadata = new IdentifierNodeMetadata(layerHandle, shapeIndex);
             }
 
             var calcNode = nodeShape.AddSubItem("Calculated", string.Empty);
-            calcNode.ImageIndex = (int)IdentifierIcon.Calculated;
-            calcNode.LargerHeight = true;
+            //calcNode.ImageIndex = (int)IdentifierIcon.Calculated;
             GetCalculatedFields(calcNode, fs.Features[shapeIndex].Geometry, geodesic);
         }
 
@@ -408,18 +405,18 @@ namespace MW5.Plugins.Identifier.Controls
                     }
                     break;
                 case GeometryType.Polyline:
-                    root.AddSubItem("Number of parts", geometry.Parts.Count);
-                    root.AddSubItem("Number of points", geometry.Points.Count);
+                    root.AddSubItem("Parts", geometry.Parts.Count);
+                    root.AddSubItem("Points", geometry.Points.Count);
                     root.AddSubItem(geodesic ? "Length, m" : "Length", GetLength(geometry, geodesic));
                     break;
                 case GeometryType.Polygon:
-                    root.AddSubItem("Number of parts", geometry.Parts.Count);
-                    root.AddSubItem("Number of points", geometry.Points.Count);
+                    root.AddSubItem("Parts", geometry.Parts.Count);
+                    root.AddSubItem("Points", geometry.Points.Count);
                     root.AddSubItem(geodesic ? "Perimeter, m" : "Perimeter", GetLength(geometry, geodesic));
                     root.AddSubItem(geodesic ? "Area, sq.m" : "Area", GetArea(geometry, geodesic));
                     break;
                 case GeometryType.MultiPoint:
-                    root.AddSubItem("Number of parts", geometry.Parts.Count);
+                    root.AddSubItem("Parts", geometry.Parts.Count);
                     break;
             }
         }

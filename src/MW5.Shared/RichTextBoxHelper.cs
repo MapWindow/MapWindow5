@@ -24,6 +24,17 @@ namespace MW5.Shared
         }
 
         /// <summary>
+        /// Clears any previous styles and sets text box content.
+        /// </summary>
+        /// <param name="box">The box.</param>
+        /// <param name="text">The text.</param>
+        public static void SetText(this RichTextBox box, string text)
+        {
+            box.Clear();
+            box.Text = text;
+        }
+
+        /// <summary>
         /// Makes the first line bold.
         /// </summary>
         public static void MakeFirstLineBold(this RichTextBox box)

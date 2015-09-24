@@ -13,6 +13,7 @@ namespace MW5.UI.Docking
         public const string Toolbox = "DockPanelToolbox";
         public const string Repository = "DockPanelRepository";
         public const string TableEditor = "DockPanelTableEditor";
-        public const string Tasks = "DockPanelToolboxResults";
+        public const string Tasks = "DockPanelTasks";
+        public const string Identifier = "DockPanelIdentifier";
     }
 }

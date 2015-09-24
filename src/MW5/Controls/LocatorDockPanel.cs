@@ -1,39 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LocatorDockPanel.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Drawing;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Api;
-using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
-using MW5.Helpers;
-using MW5.Plugins;
-using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
-using MW5.Plugins.Services;
-using MW5.UI;
 using MW5.UI.Controls;
 
 namespace MW5.Controls
 {
     public partial class LocatorDockPanel : DockPanelControlBase
     {
-        private IEnvelope _extents;      // extents of the main map
         private readonly Color _locatorColor = Color.Red;
-        private bool _backgroundVisible = false;
-
-        public event Action UpdateFullExtents;
-        public event Action UpdateWithCurrentExtents;
-        public event EventHandler<ExtentsEventArgs> LocatorExtentsChanged;
+        private bool _backgroundVisible;
 
         private bool _dragging;
+        private IEnvelope _extents; // extents of the main map
         private int _initX;
         private int _initY;
 
@@ -48,7 +36,7 @@ namespace MW5.Controls
             btnClear.Click += (s, e) => Clear();
             btnDisplayBackground.Click += (s, e) => _backgroundVisible = !btnDisplayBackground.Checked;
             contextMenuStripEx1.Opening += (s, e) => btnDisplayBackground.Checked = _backgroundVisible;
-            
+
             mapControl1.MouseDown += MapMouseDown;
             mapControl1.MouseMove += MapMouseMove;
             mapControl1.MouseUp += MapMouseUp;
@@ -57,24 +45,20 @@ namespace MW5.Controls
             Resize += (s, e) => UpdateLocatorBox(_extents);
         }
 
-        private void InitLocatorMap()
-        {
-            mapControl1.ScalebarVisible = false;
-            mapControl1.ShowCoordinates = CoordinatesDisplay.None;
-            mapControl1.ZoomBar.Visible = false;
-            mapControl1.ZoomBehavior = ZoomBehavior.Default;
-            mapControl1.TileProvider = TileProvider.None;
-            mapControl1.MapCursor = MapCursor.None;
-            mapControl1.MouseWheelSpeed = 1.0;
-            mapControl1.FocusRectangle.FillTransparency = 64;
-            mapControl1.FocusRectangle.Color = Color.Red;
-            mapControl1.FocusRectangle.LineWidth = 1.0f;
-            mapControl1.ResizeBehavior = ResizeBehavior.Intuitive;
-        }
+        public event EventHandler<ExtentsEventArgs> LocatorExtentsChanged;
+
+        public event Action UpdateFullExtents;
+
+        public event Action UpdateWithCurrentExtents;
 
         internal bool BackgroundVisible
         {
             get { return _backgroundVisible; }
+        }
+
+        internal bool Empty
+        {
+            get { return !mapControl1.Layers.Any(); }
         }
 
         internal IImageSource Image
@@ -86,18 +70,11 @@ namespace MW5.Controls
             }
         }
 
-        internal bool Empty
-        {
-            get { return !mapControl1.Layers.Any(); }
-        }
-
         internal void Clear()
         {
             mapControl1.FocusRectangle.Visible = false;
             mapControl1.Layers.Clear();
         }
-
-        #region Drawing
 
         internal void UpdateImage(IImageSource imageSource)
         {
@@ -106,10 +83,12 @@ namespace MW5.Controls
             mapControl1.ExtentPad = 0;
             mapControl1.ZoomToMaxExtents();
         }
-        
+
         internal void UpdateLocatorBox(IEnvelope exts)
         {
-            return;
+            // update only in release mode, as it makes more difficult to debug MapWinGIS code
+            // when there are 2 map controls
+            #if !DEBUG
 
             if (exts == null || Empty)
             {
@@ -129,11 +108,52 @@ namespace MW5.Controls
             mapControl1.Redraw(RedrawType.Minimal);
 
             _extents = exts;
+
+#endif
         }
 
-        #endregion
+        private void FireExtentsChanged(IEnvelope ext)
+        {
+            var handler = LocatorExtentsChanged;
+            if (handler != null)
+            {
+                handler(this, new ExtentsEventArgs(ext));
+            }
+        }
 
-        #region Dragging
+        private IEnvelope GetNewExtents(int xScreen, int yScreen)
+        {
+            double x1, x2, y1, y2;
+            mapControl1.PixelToProj(_initX, _initY, out x1, out y1);
+            mapControl1.PixelToProj(xScreen, yScreen, out x2, out y2);
+            _initX = xScreen;
+            _initY = yScreen;
+            return _extents.Move(x2 - x1, y2 - y1);
+        }
+
+        private void InitLocatorMap()
+        {
+            mapControl1.ScalebarVisible = false;
+            mapControl1.ShowCoordinates = CoordinatesDisplay.None;
+            mapControl1.ZoomBar.Visible = false;
+            mapControl1.ZoomBehavior = ZoomBehavior.Default;
+            mapControl1.TileProvider = TileProvider.None;
+            mapControl1.MapCursor = MapCursor.None;
+            mapControl1.MouseWheelSpeed = 1.0;
+            mapControl1.FocusRectangle.FillTransparency = 64;
+            mapControl1.FocusRectangle.Color = Color.Red;
+            mapControl1.FocusRectangle.LineWidth = 1.0f;
+            mapControl1.ResizeBehavior = ResizeBehavior.Intuitive;
+        }
+
+        private void Invoke(Action action)
+        {
+            var handler = action;
+            if (action != null)
+            {
+                handler();
+            }
+        }
 
         private void MapMouseDown(object sender, MouseEventArgs e)
         {
@@ -147,7 +167,7 @@ namespace MW5.Controls
                 _dragging = false;
                 return;
             }
-            
+
             _initX = e.X;
             _initY = e.Y;
             _dragging = true;
@@ -161,7 +181,7 @@ namespace MW5.Controls
                 UpdateLocatorBox(ext);
                 return;
             }
-            
+
             mapControl1.SystemCursor = WithinBounds(e.X, e.Y) ? SystemCursor.SizeAll : SystemCursor.MapDefault;
         }
 
@@ -171,24 +191,14 @@ namespace MW5.Controls
             {
                 return;
             }
-            
-            if (_dragging) 
+
+            if (_dragging)
             {
                 var ext = GetNewExtents(e.X, e.Y);
                 FireExtentsChanged(ext);
             }
 
             _dragging = false;
-        }
-
-        private IEnvelope GetNewExtents(int xScreen, int yScreen)
-        {
-            double x1, x2, y1, y2;
-            mapControl1.PixelToProj(_initX, _initY, out x1, out y1);
-            mapControl1.PixelToProj( xScreen, yScreen, out x2, out y2);
-            _initX = xScreen;
-            _initY = yScreen;
-            return _extents.Move(x2 - x1, y2 - y1);
         }
 
         private bool WithinBounds(int xScreen, int yScreen)
@@ -206,26 +216,6 @@ namespace MW5.Controls
             }
 
             return _extents.PointWithin(xProj, yProj);
-        }
-
-        private void FireExtentsChanged(IEnvelope ext)
-        {
-            var handler = LocatorExtentsChanged;
-            if (handler != null)
-            {
-                handler(this, new ExtentsEventArgs(ext));
-            }
-        }
-
-        #endregion
-
-        private void Invoke(Action action)
-        {
-            var handler = action;
-            if (action != null)
-            {
-                handler();
-            }
         }
     }
 }
