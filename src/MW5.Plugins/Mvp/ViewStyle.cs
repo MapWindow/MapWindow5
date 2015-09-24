@@ -10,5 +10,16 @@ namespace MW5.Plugins.Mvp
     {
         public bool Modal { get; set; }
         public bool Sizable { get; set; }
+
+        public ViewStyle(bool sizable)
+        {
+            Modal = true;
+            Sizable = sizable;
+        }
+
+        public ViewStyle()
+        {
+            
+        }
     }
 }

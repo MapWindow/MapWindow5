@@ -17,6 +17,7 @@ namespace MW5.Data
         {
             container.RegisterView<IAddConnectionView, AddConnectionView>()
                 .RegisterView<IDriversView, DriversView>()
+                .RegisterView<IGdalInfoView, GdalInfoView>()
                 .RegisterSingleton<IRepository, DataRepository>()
                 .RegisterService<IGeoDatabaseService, GeoDatabaseService>()
                 .RegisterService<AddConnectionModel>()

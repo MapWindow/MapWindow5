@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="RepositoryPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
-using MW5.Api.Helpers;
-using MW5.Api.Legend.Abstract;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Repository;
@@ -16,7 +19,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Repository.Views
 {
-    public class RepositoryPresenter: CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelPresenter
+    public class RepositoryPresenter : CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
         private readonly IFileDialogService _fileDialogService;
@@ -24,8 +27,12 @@ namespace MW5.Plugins.Repository.Views
         private readonly IRepository _repository;
         private readonly RepositoryDockPanel _view;
 
-        public RepositoryPresenter(IAppContext context, RepositoryDockPanel view, 
-                IFileDialogService fileDialogService, ILayerService layerService, IRepository repository)
+        public RepositoryPresenter(
+            IAppContext context,
+            RepositoryDockPanel view,
+            IFileDialogService fileDialogService,
+            ILayerService layerService,
+            IRepository repository)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
@@ -40,6 +47,7 @@ namespace MW5.Plugins.Repository.Views
             _view = view;
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
+            _view.TreeViewKeyDown += OnTreeViewKeyDown;
         }
 
         public Control GetInternalObject()
@@ -89,151 +97,12 @@ namespace MW5.Plugins.Repository.Views
             _context.View.Update();
         }
 
-        private void RemoveDatabaseLayer()
+        private void AddConnection()
         {
-            var layer = GetSelectedItem<IDatabaseLayerItem>();
-            if (layer != null)
-            {
-                var db = layer.Parent as IDatabaseItem;
-                if (db != null)
-                {
-                    var ds = new VectorDatasource();
-                    if (ds.Open(db.Connection.ConnectionString))
-                    {
-                        int layerIndex = ds.LayerIndexByName(layer.Name);
-                        if (MessageService.Current.Ask("Do you want to remove database layer: " + layer.Name + "?"))
-                        {
-                            if (ds.DeleteLayer(layerIndex))
-                            {
-                                MessageService.Current.Info("Layer was removed: " + layer.Name);
-                            }
-                            else
-                            {
-                                MessageService.Current.Warn("Failed to remove layer.");
-                            }
-
-                            db.Refresh();
-                        }
-                    }
-                }
-            }
-        }
-
-        private void RemoveConnection()
-        {
-            var item = GetSelectedItem<IDatabaseItem>();
+            var item = GetSelectedItem<IRepositoryItem>() as IServerItem;
             if (item != null)
             {
-                _repository.RemoveConnection(item.Connection, false);
-            }
-        }
-
-        private void RemoveFolder()
-        {
-            var item = View.Tree.SelectedItem as IFolderItem;
-            if (item != null && item.Root)
-            {
-                _repository.RemoveFolderLink(item.GetPath(), false);
-            }
-        }
-
-        private void AddLayerToMap()
-        {
-            var layer = GetSelectedItem<ILayerItem>();
-            if (layer == null)
-            {
-                return;
-            }
-
-            if (layer.AddedToMap)
-            {
-                _layerService.RemoveLayer(layer.Identity);
-            }
-            else
-            {
-                if (_layerService.AddLayerIdentity(layer.Identity))
-                {
-                    int handle = _layerService.LastLayerHandle;
-                    _context.Map.ZoomToLayer(handle);
-                }
-            }
-        }
-
-        private void RemoveFile()
-        {
-            var item = GetSelectedItem<IFileItem>();
-
-            if (item == null)
-            {
-                MessageService.Current.Info("No filename is selected.");
-                return;
-            }
-
-            if (_context.Layers.Select(l => l.Identity).Contains(item.Identity))
-            {
-                MessageService.Current.Info("Can't remove datasource currently opened by the program.");
-                return;
-            }
-
-            if (MessageService.Current.Ask("Do you want to remove the datasource: " + Environment.NewLine + item.Filename + "?"))
-            {
-                try
-                {
-                    var folder = item.Folder;
-                    GeoSource.Remove(item.Filename);
-
-                    folder.Refresh();
-                }
-                catch (Exception ex)
-                {
-                    MessageService.Current.Warn("Failed to remove file: " + ex.Message);
-                }
-            }
-        }
-
-        private void OpenFileLocation()
-        {
-            var item = GetSelectedItem<IRepositoryItem>();
-            string path = string.Empty;
-            var folder = item as IFolderItem;
-            if (folder != null)
-            {
-                path = folder.GetPath();
-            }
-
-            var vector = item as IFileItem;
-            if (vector != null)
-            {
-                path = vector.Filename;
-            }
-
-            PathHelper.OpenFolderWithExplorer(path);
-        }
-
-        private void ShowGdalInfo()
-        {
-            var item = GetSelectedItem<IFileItem>();
-            if (item != null)
-            {
-                if (item.Type == RepositoryItemType.Image)
-                {
-                    string info = GdalUtils.Instance.GdalInfo(item.Filename, "");
-                    MessageService.Current.Info("GDAL info: \n\n" + info);
-                }
-                else if (item.Type == RepositoryItemType.Vector)
-                {
-                    string info = GdalUtils.Instance.OgrInfo(item.Filename, "", "");
-                    MessageService.Current.Info("OGR info: \n\n" + info);
-                }
-            }
-        }
-
-        private void RefreshItem()
-        {
-            var item = GetSelectedItem<IRepositoryItem>();
-            if (item is IFolderItem || item is IDatabaseItem)
-            {
-                item.Refresh();
+                _repository.AddConnectionWithPrompt(item.DatabaseType);
             }
         }
 
@@ -262,16 +131,29 @@ namespace MW5.Plugins.Repository.Views
             }
         }
 
-        private void AddConnection()
+        private void AddLayerToMap()
         {
-            var item = GetSelectedItem<IRepositoryItem>() as IServerItem;
-            if (item != null)
+            var layer = GetSelectedItem<ILayerItem>();
+            if (layer == null)
             {
-                _repository.AddConnectionWithPrompt(item.DatabaseType);
+                return;
+            }
+
+            if (layer.AddedToMap)
+            {
+                _layerService.RemoveLayer(layer.Identity);
+            }
+            else
+            {
+                if (_layerService.AddLayerIdentity(layer.Identity))
+                {
+                    int handle = _layerService.LastLayerHandle;
+                    _context.Map.ZoomToLayer(handle);
+                }
             }
         }
 
-        private T GetSelectedItem<T>() where T: class, IRepositoryItem
+        private T GetSelectedItem<T>() where T : class, IRepositoryItem
         {
             var item = _view.Tree.SelectedItem as T;
             if (item == null)
@@ -280,6 +162,154 @@ namespace MW5.Plugins.Repository.Views
             }
 
             return item;
+        }
+
+        private void OnTreeViewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                RemoveSelectedItem();
+            }
+        }
+
+        private void RemoveSelectedItem()
+        {
+            var item = _view.Tree.SelectedItem;
+            if (item != null)
+            {
+                if (item is IFileItem)
+                {
+                    RunCommand(RepositoryCommand.RemoveFile);
+                }
+                else if (item is IFolderItem)
+                {
+                    RunCommand(RepositoryCommand.RemoveFolder);
+                }
+                else if (item is IDatabaseItem)
+                {
+                    RunCommand(RepositoryCommand.RemoveConnection);
+                }
+                else if (item is IDatabaseLayerItem)
+                {
+                    RunCommand(RepositoryCommand.RemoveLayer);
+                }
+            }
+        }
+
+        private void OpenFileLocation()
+        {
+            var item = GetSelectedItem<IRepositoryItem>();
+            string path = string.Empty;
+            var folder = item as IFolderItem;
+            if (folder != null)
+            {
+                path = folder.GetPath();
+            }
+
+            var vector = item as IFileItem;
+            if (vector != null)
+            {
+                path = vector.Filename;
+            }
+
+            PathHelper.OpenFolderWithExplorer(path);
+        }
+
+        private void RefreshItem()
+        {
+            var item = GetSelectedItem<IRepositoryItem>();
+            if (item is IFolderItem || item is IDatabaseItem)
+            {
+                item.Refresh();
+            }
+        }
+
+        private void RemoveConnection()
+        {
+            var item = GetSelectedItem<IDatabaseItem>();
+            if (item != null)
+            {
+                _repository.RemoveConnection(item.Connection, false);
+            }
+        }
+
+        private void RemoveDatabaseLayer()
+        {
+            var layer = GetSelectedItem<IDatabaseLayerItem>();
+            if (layer != null)
+            {
+                var db = layer.Parent as IDatabaseItem;
+                if (db != null)
+                {
+                    var ds = new VectorDatasource();
+                    if (ds.Open(db.Connection.ConnectionString))
+                    {
+                        int layerIndex = ds.LayerIndexByName(layer.Name);
+                        if (MessageService.Current.Ask("Do you want to remove database layer: " + layer.Name + "?"))
+                        {
+                            if (!ds.DeleteLayer(layerIndex))
+                            {
+                                MessageService.Current.Warn("Failed to remove layer.");
+                            }
+
+                            db.Refresh();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RemoveFile()
+        {
+            var item = GetSelectedItem<IFileItem>();
+
+            if (item == null)
+            {
+                MessageService.Current.Info("No filename is selected.");
+                return;
+            }
+
+            if (_context.Layers.Select(l => l.Identity).Contains(item.Identity))
+            {
+                MessageService.Current.Info("Can't remove datasource currently opened by the program.");
+                return;
+            }
+
+            if (
+                MessageService.Current.Ask("Do you want to remove the datasource: " + Environment.NewLine +
+                                           item.Filename + "?"))
+            {
+                try
+                {
+                    var folder = item.Folder;
+                    GeoSource.Remove(item.Filename);
+
+                    folder.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    MessageService.Current.Warn("Failed to remove file: " + ex.Message);
+                }
+            }
+        }
+
+        private void RemoveFolder()
+        {
+            var item = View.Tree.SelectedItem as IFolderItem;
+            if (item != null && item.Root)
+            {
+                _repository.RemoveFolderLink(item.GetPath(), false);
+            }
+        }
+
+        private void ShowGdalInfo()
+        {
+            var item = GetSelectedItem<IFileItem>();
+            if (item != null)
+            {
+                var model = new GdalInfoModel(item);
+                _context.Container.Run<GdalInfoPresenter, GdalInfoModel>(model);
+            }
         }
 
         private void ViewItemDoubleClicked(object sender, RepositoryEventArgs e)

@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Data.Enums;
 using MW5.Data.Helpers;
@@ -40,6 +41,12 @@ namespace MW5.Plugins.Repository.Views
         }
 
         public event EventHandler<RepositoryEventArgs> ItemDoubleClicked;
+
+        public event KeyEventHandler TreeViewKeyDown
+        {
+            add { treeViewAdv1.KeyDown += value; }
+            remove { treeViewAdv1.KeyDown -= value; }
+        }
 
         public IRepositoryView Tree
         {
@@ -186,8 +193,13 @@ namespace MW5.Plugins.Repository.Views
         private void UpdateDescription(IRepositoryItem item)
         {
             richTextBox1.Clear();
-            richTextBox1.Text = string.Format("{0}{2}{2}{1}", item.DisplayName, item.GetDescription(), Environment.NewLine);
-            richTextBox1.MakeFirstLineBold();
+            richTextBox1.Text = "Loading...";         
+
+            Task<string>.Factory.StartNew(item.GetDescription).ContinueWith(description =>
+            {
+                string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result, Environment.NewLine);
+                richTextBox1.SetDescription(msg);         
+            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

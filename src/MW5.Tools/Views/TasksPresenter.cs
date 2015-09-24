@@ -216,7 +216,7 @@ namespace MW5.Tools.Views
             }
         }
 
-        public void ActivateToolbox()
+        private void ActivateToolbox()
         {
             if (!_tasks.Any())
             {

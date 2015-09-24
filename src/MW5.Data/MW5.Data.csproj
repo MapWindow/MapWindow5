@@ -145,6 +145,7 @@
     <Compile Include="Views\Abstract\IAddConnectionView.cs" />
     <Compile Include="Views\Abstract\IDatabaseLayersView.cs" />
     <Compile Include="Views\Abstract\IDriversView.cs" />
+    <Compile Include="Views\Abstract\IGdalInfoView.cs" />
     <Compile Include="Views\Abstract\IImportLayerView.cs" />
     <Compile Include="Views\AddConnectionModel.cs" />
     <Compile Include="Views\AddConnectionView.cs">
@@ -181,6 +182,14 @@
     <Compile Include="Views\DriversView.Designer.cs">
       <DependentUpon>DriversView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\GdalInfoModel.cs" />
+    <Compile Include="Views\GdalInfoPresenter.cs" />
+    <Compile Include="Views\GdalInfoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\GdalInfoView.Designer.cs">
+      <DependentUpon>GdalInfoView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportLayerPresenter.cs" />
     <Compile Include="Views\ImportLayerView.cs">
       <SubType>Form</SubType>
@@ -206,6 +215,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\DriversView.resx">
       <DependentUpon>DriversView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\GdalInfoView.resx">
+      <DependentUpon>GdalInfoView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ImportLayerView.resx">
       <DependentUpon>ImportLayerView.cs</DependentUpon>
