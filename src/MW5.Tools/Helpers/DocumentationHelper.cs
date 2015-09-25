@@ -82,7 +82,7 @@ namespace MW5.Tools.Helpers
         /// </summary>
         private static string GetUrl(ITool tool)
         {
-            return "http://www.mapwindow.org/Manuals/" + tool.GetType().Name + ".html";
+            return "http://www.mapwindow.org/Manuals/ToolBox/" + tool.GetType().Name + ".html?utm_source=MW5&utm_medium=cpc&utm_campaign=Manual";
         }
 
         /// <summary>

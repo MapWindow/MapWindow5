@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-        <meta name="description" content="MapWindow5 GIS Tool:">
-        <meta name="keywords" content="MapWindow, GIS, gis, open source, open-source, desktop, windows, manual">
+        <meta name="description" content="MapWindow5 GIS Tool: Buffer by distance tool">
+        <meta name="keywords" content="MapWindow, GIS, gis, open source, open-source, desktop, windows, manual, buffer, distance">
         <meta name="author" content="Paul Meems">
         <link rel="icon" href="favicon.ico">
 
-        <title>Template for MapWindow5 GIS Tool Manual</title>
+        <title>Buffer by distance tool</title>
 
         <!-- Latest compiled and minified CSS -->
         <link href="css/bootstrap-3.3.5.css" rel="stylesheet" />
@@ -32,12 +32,30 @@
         <section class="container">
             <div class="row">
                 <article class="col-md-12 col-xs-12">
-                    <h1>Name of tool</h1>
+                    <h1>Buffer by distance tool</h1>
                     <figure>
-                        <img class="img-responsive" src="img/randompoints_required.png" alt="Required tab of the Random Points tool" width="577" height="473" />
+                        <img class="img-responsive" src="img/bufferdistance_required.png" alt="Required tab of the Buffer by distance tool" width="577" height="473" />
                         <figcaption>The required options for this tool.</figcaption>
                     </figure>
-
+                    <ol>
+                        <li>Select the layer to perform the buffer action.</li>
+                        <li>Optionally select if only the selected shapes should be used.</li>
+                        <li>Select the buffer distance.</li>
+                        <li>Select the units of the distance.</li>
+                        <li>Merge the results.</li>
+                        <li>The output layer name is generated based on the input layer, but can be modified.</li>
+                        <li>Check 'Overwrite' if you want to overwrite existing files. You'll be prompted otherwise if the output file already exists.</li>
+                        <li>Check 'Memory layer' if you don't want to save the file to disk, but make it only in memory.</li>
+                        <li>'Add to map' is checked by default and will add the result to the map.</li>
+                        <li>Check if you want to run the process in the background, the progress can be monitored in the Task sidebar.</li>
+                    </ol>
+                    <figure>
+                        <img class="img-responsive" src="img/bufferdistance_optional.png" alt="Optional tab of the Buffer by distance tool" width="577" height="473" />
+                        <figcaption>The optional options for this tool.</figcaption>
+                    </figure>
+                    <p>
+                        The number of segments are used in creating corners. More segments create rounder corners.
+                    </p>
                 </article>
             </div>
         </section>
