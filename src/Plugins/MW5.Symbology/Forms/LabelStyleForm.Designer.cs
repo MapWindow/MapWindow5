@@ -16,6 +16,7 @@
 // Date            Changed By      Notes
 // ********************************************************************************************************
 
+using System.Windows.Forms;
 using MW5.Plugins.Symbology.Controls;
 using MW5.UI.Controls;
 using MW5.UI.Enums;
@@ -53,6 +54,17 @@ namespace MW5.Plugins.Symbology.Forms
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LabelStyleForm));
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabMain = new System.Windows.Forms.TabPage();
+            this.chkLogScaleForSize = new System.Windows.Forms.CheckBox();
+            this.chkUseVariableSize = new System.Windows.Forms.CheckBox();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.cboDecimalPlaces = new System.Windows.Forms.ComboBox();
+            this.chkSortAscending = new System.Windows.Forms.CheckBox();
+            this.cboSortField = new System.Windows.Forms.ComboBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.cboField = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.tabExpression = new System.Windows.Forms.TabPage();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
@@ -65,7 +77,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.txtExpression = new System.Windows.Forms.RichTextBox();
             this.tabFont = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cboTextRenderingHint = new System.Windows.Forms.ComboBox();
@@ -76,15 +88,12 @@ namespace MW5.Plugins.Symbology.Forms
             this.chkFontStrikeout = new System.Windows.Forms.CheckBox();
             this.chkFontUnderline = new System.Windows.Forms.CheckBox();
             this.chkFontItalic = new System.Windows.Forms.CheckBox();
-            this.clpFont1 = new Office2007ColorPicker(this.components);
+            this.clpFont1 = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkFontBold = new System.Windows.Forms.CheckBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.udShadowOffsetY = new NumericUpDownEx(this.components);
-            this.udShadowOffsetX = new NumericUpDownEx(this.components);
-            this.udHaloSize = new NumericUpDownEx(this.components);
-            this.clpShadow = new Office2007ColorPicker(this.components);
-            this.clpHalo = new Office2007ColorPicker(this.components);
+            this.clpShadow = new MW5.UI.Controls.Office2007ColorPicker(this.components);
+            this.clpHalo = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label12 = new System.Windows.Forms.Label();
             this.chkShadowVisible = new System.Windows.Forms.CheckBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -92,23 +101,21 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabFrameFill = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.udFramePaddingY = new NumericUpDownEx(this.components);
             this.label4 = new System.Windows.Forms.Label();
-            this.udFramePaddingX = new NumericUpDownEx(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.btnSetFrameGradient = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
-            this.icbFrameType = new ImageCombo();
-            this.clpFrame1 = new Office2007ColorPicker(this.components);
+            this.icbFrameType = new MW5.UI.Controls.ImageCombo();
+            this.clpFrame1 = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.chkUseFrame = new System.Windows.Forms.CheckBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.icbLineWidth = new ImageCombo();
-            this.icbLineType = new ImageCombo();
-            this.clpFrameBorder = new Office2007ColorPicker(this.components);
+            this.icbLineWidth = new MW5.UI.Controls.ImageCombo();
+            this.icbLineType = new MW5.UI.Controls.ImageCombo();
+            this.clpFrameBorder = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.tabPosition = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.btnSetCurrent = new System.Windows.Forms.Button();
@@ -121,9 +128,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.lblLabelVerticalPosition = new System.Windows.Forms.Label();
             this.cboLabelsVerticalPosition = new System.Windows.Forms.ComboBox();
             this.groupLabelAlignment = new System.Windows.Forms.GroupBox();
-            this.udLabelOffsetY = new NumericUpDownEx(this.components);
-            this.udLabelOffsetX = new NumericUpDownEx(this.components);
-            this.udLabelsBuffer = new NumericUpDownEx(this.components);
             this.label14 = new System.Windows.Forms.Label();
             this.optAlignBottomRight = new System.Windows.Forms.RadioButton();
             this.lblLabelsOffsetY = new System.Windows.Forms.Label();
@@ -176,15 +180,24 @@ namespace MW5.Plugins.Symbology.Forms
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.label36 = new System.Windows.Forms.Label();
             this.chkVisible = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.transparencyControl1 = new TransparencyControl();
-            this.udFontSize = new NumericUpDownEx(this.components);
+            this.transparencyControl1 = new MW5.UI.Controls.TransparencyControl();
             this.lblResult = new System.Windows.Forms.Label();
             this.btnApply = new System.Windows.Forms.Button();
-            this.cboDecimalPlaces = new System.Windows.Forms.ComboBox();
-            this.label18 = new System.Windows.Forms.Label();
+            this.udFontSize2 = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udFontSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udShadowOffsetY = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udShadowOffsetX = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udHaloSize = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udFramePaddingY = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udFramePaddingX = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udLabelOffsetY = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udLabelOffsetX = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
+            this.udLabelsBuffer = new MW5.Plugins.Symbology.Controls.NumericUpDownEx(this.components);
             this.tabControl1.SuspendLayout();
+            this.tabMain.SuspendLayout();
             this.tabExpression.SuspendLayout();
             this.groupBox10.SuspendLayout();
             this.groupBox9.SuspendLayout();
@@ -193,21 +206,13 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabFont.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udHaloSize)).BeginInit();
             this.tabFrameFill.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingX)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.tabPosition.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox20.SuspendLayout();
             this.groupLabelAlignment.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetY)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelsBuffer)).BeginInit();
             this.tabVisibility.SuspendLayout();
             this.groupBox13.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -217,11 +222,21 @@ namespace MW5.Plugins.Symbology.Forms
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udFontSize2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udHaloSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelsBuffer)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabMain);
             this.tabControl1.Controls.Add(this.tabExpression);
             this.tabControl1.Controls.Add(this.tabFont);
             this.tabControl1.Controls.Add(this.tabFrameFill);
@@ -233,10 +248,127 @@ namespace MW5.Plugins.Symbology.Forms
             this.tabControl1.Size = new System.Drawing.Size(406, 347);
             this.tabControl1.TabIndex = 8;
             // 
+            // tabMain
+            // 
+            this.tabMain.Controls.Add(this.chkLogScaleForSize);
+            this.tabMain.Controls.Add(this.chkUseVariableSize);
+            this.tabMain.Controls.Add(this.label33);
+            this.tabMain.Controls.Add(this.label18);
+            this.tabMain.Controls.Add(this.cboDecimalPlaces);
+            this.tabMain.Controls.Add(this.chkSortAscending);
+            this.tabMain.Controls.Add(this.cboSortField);
+            this.tabMain.Controls.Add(this.label24);
+            this.tabMain.Controls.Add(this.cboField);
+            this.tabMain.Controls.Add(this.label22);
+            this.tabMain.Location = new System.Drawing.Point(4, 22);
+            this.tabMain.Name = "tabMain";
+            this.tabMain.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMain.Size = new System.Drawing.Size(398, 321);
+            this.tabMain.TabIndex = 6;
+            this.tabMain.Text = "Main";
+            this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // chkLogScaleForSize
+            // 
+            this.chkLogScaleForSize.AutoSize = true;
+            this.chkLogScaleForSize.Location = new System.Drawing.Point(253, 128);
+            this.chkLogScaleForSize.Name = "chkLogScaleForSize";
+            this.chkLogScaleForSize.Size = new System.Drawing.Size(108, 17);
+            this.chkLogScaleForSize.TabIndex = 55;
+            this.chkLogScaleForSize.Text = "Logarithmic scale";
+            this.chkLogScaleForSize.UseVisualStyleBackColor = true;
+            this.chkLogScaleForSize.CheckedChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // chkUseVariableSize
+            // 
+            this.chkUseVariableSize.AutoSize = true;
+            this.chkUseVariableSize.Location = new System.Drawing.Point(134, 128);
+            this.chkUseVariableSize.Name = "chkUseVariableSize";
+            this.chkUseVariableSize.Size = new System.Drawing.Size(106, 17);
+            this.chkUseVariableSize.TabIndex = 54;
+            this.chkUseVariableSize.Text = "Use variable size";
+            this.chkUseVariableSize.UseVisualStyleBackColor = true;
+            this.chkUseVariableSize.CheckedChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Location = new System.Drawing.Point(21, 287);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(308, 13);
+            this.label33.TabIndex = 51;
+            this.label33.Text = "* To generate labels based on multiple fields use expression tab.";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(21, 163);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(140, 13);
+            this.label18.TabIndex = 50;
+            this.label18.Text = "Decimal places for numbers:";
+            // 
+            // cboDecimalPlaces
+            // 
+            this.cboDecimalPlaces.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboDecimalPlaces.FormattingEnabled = true;
+            this.cboDecimalPlaces.Location = new System.Drawing.Point(24, 179);
+            this.cboDecimalPlaces.Name = "cboDecimalPlaces";
+            this.cboDecimalPlaces.Size = new System.Drawing.Size(337, 21);
+            this.cboDecimalPlaces.TabIndex = 49;
+            this.cboDecimalPlaces.SelectedIndexChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // chkSortAscending
+            // 
+            this.chkSortAscending.AutoSize = true;
+            this.chkSortAscending.Location = new System.Drawing.Point(24, 128);
+            this.chkSortAscending.Name = "chkSortAscending";
+            this.chkSortAscending.Size = new System.Drawing.Size(97, 17);
+            this.chkSortAscending.TabIndex = 4;
+            this.chkSortAscending.Text = "Sort ascending";
+            this.chkSortAscending.UseVisualStyleBackColor = true;
+            this.chkSortAscending.CheckedChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // cboSortField
+            // 
+            this.cboSortField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSortField.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboSortField.Location = new System.Drawing.Point(24, 101);
+            this.cboSortField.Name = "cboSortField";
+            this.cboSortField.Size = new System.Drawing.Size(337, 21);
+            this.cboSortField.TabIndex = 3;
+            this.cboSortField.SelectedIndexChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(21, 85);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(51, 13);
+            this.label24.TabIndex = 2;
+            this.label24.Text = "Sort field:";
+            // 
+            // cboField
+            // 
+            this.cboField.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboField.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboField.Location = new System.Drawing.Point(24, 48);
+            this.cboField.Name = "cboField";
+            this.cboField.Size = new System.Drawing.Size(337, 21);
+            this.cboField.TabIndex = 1;
+            this.cboField.SelectedIndexChanged += new System.EventHandler(this.OnFieldChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(21, 32);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(58, 13);
+            this.label22.TabIndex = 0;
+            this.label22.Text = "Label field:";
+            // 
             // tabExpression
             // 
-            this.tabExpression.Controls.Add(this.label18);
-            this.tabExpression.Controls.Add(this.cboDecimalPlaces);
             this.tabExpression.Controls.Add(this.groupBox10);
             this.tabExpression.Controls.Add(this.groupBox9);
             this.tabExpression.Controls.Add(this.btnClear);
@@ -255,9 +387,9 @@ namespace MW5.Plugins.Symbology.Forms
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.label13);
-            this.groupBox10.Location = new System.Drawing.Point(227, 273);
+            this.groupBox10.Location = new System.Drawing.Point(227, 255);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(163, 34);
+            this.groupBox10.Size = new System.Drawing.Size(159, 52);
             this.groupBox10.TabIndex = 46;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Description";
@@ -267,16 +399,16 @@ namespace MW5.Plugins.Symbology.Forms
             this.label13.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label13.Location = new System.Drawing.Point(3, 16);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(157, 15);
+            this.label13.Size = new System.Drawing.Size(153, 33);
             this.label13.TabIndex = 0;
-            this.label13.Text = "[Area]  - field \"ha\" - constant";
+            this.label13.Text = "[Area], [Quant]  - fields, \"ha\", \"thnds.\" - string literals";
             // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.label11);
-            this.groupBox9.Location = new System.Drawing.Point(227, 215);
+            this.groupBox9.Location = new System.Drawing.Point(227, 197);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(163, 52);
+            this.groupBox9.Size = new System.Drawing.Size(159, 52);
             this.groupBox9.TabIndex = 45;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Example";
@@ -286,49 +418,49 @@ namespace MW5.Plugins.Symbology.Forms
             this.label11.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label11.Location = new System.Drawing.Point(3, 16);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(157, 33);
+            this.label11.Size = new System.Drawing.Size(153, 33);
             this.label11.TabIndex = 0;
             this.label11.Text = "[Area] + \"ha\" +                          [Quant]/1000 + \"thnds.\"";
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(315, 125);
+            this.btnClear.Location = new System.Drawing.Point(311, 129);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 25);
             this.btnClear.TabIndex = 44;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
-            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            this.btnClear.Click += new System.EventHandler(this.OnClearClick);
             // 
             // btnNewLine
             // 
-            this.btnNewLine.Location = new System.Drawing.Point(292, 156);
+            this.btnNewLine.Location = new System.Drawing.Point(288, 160);
             this.btnNewLine.Name = "btnNewLine";
             this.btnNewLine.Size = new System.Drawing.Size(97, 25);
             this.btnNewLine.TabIndex = 42;
             this.btnNewLine.Text = "New line";
             this.btnNewLine.UseVisualStyleBackColor = true;
-            this.btnNewLine.Click += new System.EventHandler(this.btnNewLine_Click);
+            this.btnNewLine.Click += new System.EventHandler(this.OnNewLineClick);
             // 
             // btnQuotes
             // 
-            this.btnQuotes.Location = new System.Drawing.Point(258, 156);
+            this.btnQuotes.Location = new System.Drawing.Point(256, 160);
             this.btnQuotes.Name = "btnQuotes";
             this.btnQuotes.Size = new System.Drawing.Size(28, 25);
             this.btnQuotes.TabIndex = 41;
             this.btnQuotes.Text = "\" \"";
             this.btnQuotes.UseVisualStyleBackColor = true;
-            this.btnQuotes.Click += new System.EventHandler(this.btnQuotes_Click);
+            this.btnQuotes.Click += new System.EventHandler(this.OnQuotesClick);
             // 
             // btnPlus
             // 
-            this.btnPlus.Location = new System.Drawing.Point(224, 156);
+            this.btnPlus.Location = new System.Drawing.Point(224, 160);
             this.btnPlus.Name = "btnPlus";
             this.btnPlus.Size = new System.Drawing.Size(28, 25);
             this.btnPlus.TabIndex = 40;
             this.btnPlus.Text = "+";
             this.btnPlus.UseVisualStyleBackColor = true;
-            this.btnPlus.Click += new System.EventHandler(this.btnPlus_Click);
+            this.btnPlus.Click += new System.EventHandler(this.OnPlusClick);
             // 
             // groupBox7
             // 
@@ -349,28 +481,28 @@ namespace MW5.Plugins.Symbology.Forms
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(194, 159);
             this.listBox1.TabIndex = 37;
-            this.listBox1.DoubleClick += new System.EventHandler(this.listBox1_DoubleClick_1);
+            this.listBox1.DoubleClick += new System.EventHandler(this.OnFieldListBoxDoubleClick);
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.richTextBox1);
+            this.groupBox8.Controls.Add(this.txtExpression);
             this.groupBox8.Location = new System.Drawing.Point(15, 20);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(377, 103);
+            this.groupBox8.Size = new System.Drawing.Size(371, 103);
             this.groupBox8.TabIndex = 38;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Expression";
             // 
-            // richTextBox1
+            // txtExpression
             // 
-            this.richTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(3, 16);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(371, 84);
-            this.richTextBox1.TabIndex = 15;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this.txtExpression.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txtExpression.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtExpression.Location = new System.Drawing.Point(3, 16);
+            this.txtExpression.Name = "txtExpression";
+            this.txtExpression.Size = new System.Drawing.Size(365, 84);
+            this.txtExpression.TabIndex = 15;
+            this.txtExpression.Text = "";
+            this.txtExpression.TextChanged += new System.EventHandler(this.OnExpressionChanged);
             // 
             // tabFont
             // 
@@ -545,30 +677,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.label9.TabIndex = 122;
             this.label9.Text = "Offset Y";
             // 
-            // udShadowOffsetY
-            // 
-            this.udShadowOffsetY.Location = new System.Drawing.Point(210, 106);
-            this.udShadowOffsetY.Name = "udShadowOffsetY";
-            this.udShadowOffsetY.Size = new System.Drawing.Size(52, 20);
-            this.udShadowOffsetY.TabIndex = 121;
-            this.udShadowOffsetY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
-            // udShadowOffsetX
-            // 
-            this.udShadowOffsetX.Location = new System.Drawing.Point(210, 71);
-            this.udShadowOffsetX.Name = "udShadowOffsetX";
-            this.udShadowOffsetX.Size = new System.Drawing.Size(52, 20);
-            this.udShadowOffsetX.TabIndex = 120;
-            this.udShadowOffsetX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
-            // udHaloSize
-            // 
-            this.udHaloSize.Location = new System.Drawing.Point(210, 29);
-            this.udHaloSize.Name = "udHaloSize";
-            this.udHaloSize.Size = new System.Drawing.Size(52, 20);
-            this.udHaloSize.TabIndex = 119;
-            this.udHaloSize.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
             // clpShadow
             // 
             this.clpShadow.Color = System.Drawing.Color.Black;
@@ -682,14 +790,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.label10.TabIndex = 135;
             this.label10.Text = "X:";
             // 
-            // udFramePaddingY
-            // 
-            this.udFramePaddingY.Location = new System.Drawing.Point(254, 100);
-            this.udFramePaddingY.Name = "udFramePaddingY";
-            this.udFramePaddingY.Size = new System.Drawing.Size(54, 20);
-            this.udFramePaddingY.TabIndex = 134;
-            this.udFramePaddingY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -698,14 +798,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.label4.Size = new System.Drawing.Size(59, 13);
             this.label4.TabIndex = 118;
             this.label4.Text = "Frame type";
-            // 
-            // udFramePaddingX
-            // 
-            this.udFramePaddingX.Location = new System.Drawing.Point(152, 100);
-            this.udFramePaddingX.Name = "udFramePaddingX";
-            this.udFramePaddingX.Size = new System.Drawing.Size(54, 20);
-            this.udFramePaddingX.TabIndex = 133;
-            this.udFramePaddingX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
             // 
             // label2
             // 
@@ -724,7 +816,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnSetFrameGradient.TabIndex = 117;
             this.btnSetFrameGradient.Text = "Gradient...";
             this.btnSetFrameGradient.UseVisualStyleBackColor = true;
-            this.btnSetFrameGradient.Click += new System.EventHandler(this.btnSetFrameGradient_Click);
+            this.btnSetFrameGradient.Click += new System.EventHandler(this.OnSetFrameGradientClick);
             // 
             // label1
             // 
@@ -748,7 +840,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbFrameType.Color1 = System.Drawing.Color.Blue;
             this.icbFrameType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbFrameType.ComboStyle = ImageComboStyle.Common;
+            this.icbFrameType.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbFrameType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbFrameType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbFrameType.FormattingEnabled = true;
@@ -832,7 +924,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbLineWidth.Color1 = System.Drawing.Color.Blue;
             this.icbLineWidth.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineWidth.ComboStyle = ImageComboStyle.Common;
+            this.icbLineWidth.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineWidth.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineWidth.FormattingEnabled = true;
@@ -847,7 +939,7 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             this.icbLineType.Color1 = System.Drawing.Color.Blue;
             this.icbLineType.Color2 = System.Drawing.Color.Honeydew;
-            this.icbLineType.ComboStyle = ImageComboStyle.Common;
+            this.icbLineType.ComboStyle = MW5.UI.Enums.ImageComboStyle.Common;
             this.icbLineType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.icbLineType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.icbLineType.FormattingEnabled = true;
@@ -906,7 +998,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnSetCurrent.TabIndex = 3;
             this.btnSetCurrent.Text = "Current";
             this.btnSetCurrent.UseVisualStyleBackColor = true;
-            this.btnSetCurrent.Click += new System.EventHandler(this.btnSetCurrent_Click);
+            this.btnSetCurrent.Click += new System.EventHandler(this.OnSetCurrentClick);
             // 
             // cboBasicScale
             // 
@@ -1012,60 +1104,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupLabelAlignment.TabIndex = 164;
             this.groupLabelAlignment.TabStop = false;
             this.groupLabelAlignment.Text = "Alignment";
-            // 
-            // udLabelOffsetY
-            // 
-            this.udLabelOffsetY.Location = new System.Drawing.Point(135, 53);
-            this.udLabelOffsetY.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udLabelOffsetY.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udLabelOffsetY.Name = "udLabelOffsetY";
-            this.udLabelOffsetY.Size = new System.Drawing.Size(54, 20);
-            this.udLabelOffsetY.TabIndex = 159;
-            this.udLabelOffsetY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
-            // udLabelOffsetX
-            // 
-            this.udLabelOffsetX.Location = new System.Drawing.Point(135, 22);
-            this.udLabelOffsetX.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.udLabelOffsetX.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udLabelOffsetX.Name = "udLabelOffsetX";
-            this.udLabelOffsetX.Size = new System.Drawing.Size(54, 20);
-            this.udLabelOffsetX.TabIndex = 158;
-            this.udLabelOffsetX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
-            // 
-            // udLabelsBuffer
-            // 
-            this.udLabelsBuffer.Increment = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
-            this.udLabelsBuffer.Location = new System.Drawing.Point(135, 82);
-            this.udLabelsBuffer.Minimum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            -2147483648});
-            this.udLabelsBuffer.Name = "udLabelsBuffer";
-            this.udLabelsBuffer.Size = new System.Drawing.Size(54, 20);
-            this.udLabelsBuffer.TabIndex = 157;
-            this.udLabelsBuffer.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
             // 
             // label14
             // 
@@ -1245,7 +1283,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnSetMaxScale.TabIndex = 5;
             this.btnSetMaxScale.Text = "Current";
             this.btnSetMaxScale.UseVisualStyleBackColor = true;
-            this.btnSetMaxScale.Click += new System.EventHandler(this.btnSetMaxScale_Click);
+            this.btnSetMaxScale.Click += new System.EventHandler(this.OnSetMaxScaleClick);
             // 
             // cboMaxScale
             // 
@@ -1264,7 +1302,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnSetMinScale.TabIndex = 6;
             this.btnSetMinScale.Text = "Current";
             this.btnSetMinScale.UseVisualStyleBackColor = true;
-            this.btnSetMinScale.Click += new System.EventHandler(this.btnSetMinScale_Click);
+            this.btnSetMinScale.Click += new System.EventHandler(this.OnSetMinScaleClick);
             // 
             // label20
             // 
@@ -1334,7 +1372,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnLabelExpression.TabIndex = 169;
             this.btnLabelExpression.Text = "Change...";
             this.btnLabelExpression.UseVisualStyleBackColor = true;
-            this.btnLabelExpression.Click += new System.EventHandler(this.btnLabelExpression_Click);
+            this.btnLabelExpression.Click += new System.EventHandler(this.OnLabelExpressionClick);
             // 
             // btnClearLabelsExpression
             // 
@@ -1344,16 +1382,16 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnClearLabelsExpression.TabIndex = 170;
             this.btnClearLabelsExpression.Text = "Clear";
             this.btnClearLabelsExpression.UseVisualStyleBackColor = true;
-            this.btnClearLabelsExpression.Click += new System.EventHandler(this.btnClearLabelsExpression_Click);
+            this.btnClearLabelsExpression.Click += new System.EventHandler(this.OnClearLabelsExpressionClick);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(79, 79);
+            this.label3.Location = new System.Drawing.Point(20, 80);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(49, 13);
+            this.label3.Size = new System.Drawing.Size(27, 13);
             this.label3.TabIndex = 59;
-            this.label3.Text = "Font size";
+            this.label3.Text = "Size";
             // 
             // btnOk
             // 
@@ -1363,7 +1401,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnOk.TabIndex = 0;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            this.btnOk.Click += new System.EventHandler(this.OnOkClick);
             // 
             // btnCancel
             // 
@@ -1571,6 +1609,8 @@ namespace MW5.Plugins.Symbology.Forms
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.label36);
+            this.groupBox6.Controls.Add(this.udFontSize2);
             this.groupBox6.Controls.Add(this.chkVisible);
             this.groupBox6.Controls.Add(this.label7);
             this.groupBox6.Controls.Add(this.transparencyControl1);
@@ -1581,6 +1621,15 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox6.Size = new System.Drawing.Size(189, 177);
             this.groupBox6.TabIndex = 134;
             this.groupBox6.TabStop = false;
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(109, 80);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(16, 13);
+            this.label36.TabIndex = 122;
+            this.label36.Text = "to";
             // 
             // chkVisible
             // 
@@ -1612,15 +1661,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.transparencyControl1.Size = new System.Drawing.Size(157, 32);
             this.transparencyControl1.TabIndex = 118;
             this.transparencyControl1.Value = ((byte)(255));
-            this.transparencyControl1.ValueChanged += new TransparencyControl.ValueChangedDeleg(this.transparencyControl1_ValueChanged);
-            // 
-            // udFontSize
-            // 
-            this.udFontSize.Location = new System.Drawing.Point(23, 77);
-            this.udFontSize.Name = "udFontSize";
-            this.udFontSize.Size = new System.Drawing.Size(50, 20);
-            this.udFontSize.TabIndex = 105;
-            this.udFontSize.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            this.transparencyControl1.ValueChanged += new MW5.UI.Controls.TransparencyControl.ValueChangedDeleg(this.OnTransparencyControlValueChanged);
             // 
             // lblResult
             // 
@@ -1639,26 +1680,117 @@ namespace MW5.Plugins.Symbology.Forms
             this.btnApply.TabIndex = 135;
             this.btnApply.Text = "Apply";
             this.btnApply.UseVisualStyleBackColor = true;
-            this.btnApply.Click += new System.EventHandler(this.btnApply_Click);
+            this.btnApply.Click += new System.EventHandler(this.OnApplyClick);
             // 
-            // cboDecimalPlaces
+            // udFontSize2
             // 
-            this.cboDecimalPlaces.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboDecimalPlaces.FormattingEnabled = true;
-            this.cboDecimalPlaces.Location = new System.Drawing.Point(318, 188);
-            this.cboDecimalPlaces.Name = "cboDecimalPlaces";
-            this.cboDecimalPlaces.Size = new System.Drawing.Size(69, 21);
-            this.cboDecimalPlaces.TabIndex = 47;
-            this.cboDecimalPlaces.SelectedIndexChanged += new System.EventHandler(this.Ui2LabelStyle);
+            this.udFontSize2.Location = new System.Drawing.Point(130, 78);
+            this.udFontSize2.Name = "udFontSize2";
+            this.udFontSize2.Size = new System.Drawing.Size(50, 20);
+            this.udFontSize2.TabIndex = 121;
+            this.udFontSize2.ValueChanged += new System.EventHandler(this.UpdateSize);
             // 
-            // label18
+            // udFontSize
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(230, 191);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(82, 13);
-            this.label18.TabIndex = 48;
-            this.label18.Text = "Decimal places:";
+            this.udFontSize.Location = new System.Drawing.Point(53, 78);
+            this.udFontSize.Name = "udFontSize";
+            this.udFontSize.Size = new System.Drawing.Size(50, 20);
+            this.udFontSize.TabIndex = 105;
+            this.udFontSize.ValueChanged += new System.EventHandler(this.UpdateSize);
+            // 
+            // udShadowOffsetY
+            // 
+            this.udShadowOffsetY.Location = new System.Drawing.Point(210, 106);
+            this.udShadowOffsetY.Name = "udShadowOffsetY";
+            this.udShadowOffsetY.Size = new System.Drawing.Size(52, 20);
+            this.udShadowOffsetY.TabIndex = 121;
+            this.udShadowOffsetY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udShadowOffsetX
+            // 
+            this.udShadowOffsetX.Location = new System.Drawing.Point(210, 71);
+            this.udShadowOffsetX.Name = "udShadowOffsetX";
+            this.udShadowOffsetX.Size = new System.Drawing.Size(52, 20);
+            this.udShadowOffsetX.TabIndex = 120;
+            this.udShadowOffsetX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udHaloSize
+            // 
+            this.udHaloSize.Location = new System.Drawing.Point(210, 29);
+            this.udHaloSize.Name = "udHaloSize";
+            this.udHaloSize.Size = new System.Drawing.Size(52, 20);
+            this.udHaloSize.TabIndex = 119;
+            this.udHaloSize.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udFramePaddingY
+            // 
+            this.udFramePaddingY.Location = new System.Drawing.Point(254, 100);
+            this.udFramePaddingY.Name = "udFramePaddingY";
+            this.udFramePaddingY.Size = new System.Drawing.Size(54, 20);
+            this.udFramePaddingY.TabIndex = 134;
+            this.udFramePaddingY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udFramePaddingX
+            // 
+            this.udFramePaddingX.Location = new System.Drawing.Point(152, 100);
+            this.udFramePaddingX.Name = "udFramePaddingX";
+            this.udFramePaddingX.Size = new System.Drawing.Size(54, 20);
+            this.udFramePaddingX.TabIndex = 133;
+            this.udFramePaddingX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udLabelOffsetY
+            // 
+            this.udLabelOffsetY.Location = new System.Drawing.Point(135, 53);
+            this.udLabelOffsetY.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udLabelOffsetY.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udLabelOffsetY.Name = "udLabelOffsetY";
+            this.udLabelOffsetY.Size = new System.Drawing.Size(54, 20);
+            this.udLabelOffsetY.TabIndex = 159;
+            this.udLabelOffsetY.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udLabelOffsetX
+            // 
+            this.udLabelOffsetX.Location = new System.Drawing.Point(135, 22);
+            this.udLabelOffsetX.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.udLabelOffsetX.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udLabelOffsetX.Name = "udLabelOffsetX";
+            this.udLabelOffsetX.Size = new System.Drawing.Size(54, 20);
+            this.udLabelOffsetX.TabIndex = 158;
+            this.udLabelOffsetX.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
+            // 
+            // udLabelsBuffer
+            // 
+            this.udLabelsBuffer.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.udLabelsBuffer.Location = new System.Drawing.Point(135, 82);
+            this.udLabelsBuffer.Minimum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            -2147483648});
+            this.udLabelsBuffer.Name = "udLabelsBuffer";
+            this.udLabelsBuffer.Size = new System.Drawing.Size(54, 20);
+            this.udLabelsBuffer.TabIndex = 157;
+            this.udLabelsBuffer.ValueChanged += new System.EventHandler(this.Ui2LabelStyle);
             // 
             // LabelStyleForm
             // 
@@ -1682,10 +1814,11 @@ namespace MW5.Plugins.Symbology.Forms
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Label style";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmLabelStyle_FormClosing);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.tabControl1.ResumeLayout(false);
+            this.tabMain.ResumeLayout(false);
+            this.tabMain.PerformLayout();
             this.tabExpression.ResumeLayout(false);
-            this.tabExpression.PerformLayout();
             this.groupBox10.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox7.ResumeLayout(false);
@@ -1695,15 +1828,10 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox5.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udHaloSize)).EndInit();
             this.tabFrameFill.ResumeLayout(false);
             this.tabFrameFill.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingX)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.tabPosition.ResumeLayout(false);
@@ -1713,9 +1841,6 @@ namespace MW5.Plugins.Symbology.Forms
             this.groupBox20.PerformLayout();
             this.groupLabelAlignment.ResumeLayout(false);
             this.groupLabelAlignment.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetY)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.udLabelsBuffer)).EndInit();
             this.tabVisibility.ResumeLayout(false);
             this.groupBox13.ResumeLayout(false);
             this.groupBox13.PerformLayout();
@@ -1729,7 +1854,16 @@ namespace MW5.Plugins.Symbology.Forms
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.udFontSize2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udFontSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udShadowOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udHaloSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udFramePaddingX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelOffsetX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udLabelsBuffer)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1814,7 +1948,7 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.RichTextBox txtExpression;
         private System.Windows.Forms.Label lblResult;
         private System.Windows.Forms.Button btnClear;
         private System.Windows.Forms.GroupBox groupBox10;
@@ -1866,8 +2000,19 @@ namespace MW5.Plugins.Symbology.Forms
         private System.Windows.Forms.ComboBox cboTextRenderingHint;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.TabPage tabMain;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cboDecimalPlaces;
+        private System.Windows.Forms.CheckBox chkSortAscending;
+        private ComboBox cboSortField;
+        private System.Windows.Forms.Label label24;
+        private ComboBox cboField;
+        private System.Windows.Forms.Label label22;
+        private Label label33;
+        private Label label36;
+        private NumericUpDownEx udFontSize2;
+        private CheckBox chkUseVariableSize;
+        private CheckBox chkLogScaleForSize;
 
     }
 }

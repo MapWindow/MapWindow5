@@ -106,6 +106,7 @@
     </Compile>
     <Compile Include="Helpers\ChartHelper.cs" />
     <Compile Include="Helpers\VectorInfoHelper.cs" />
+    <Compile Include="Model\FieldAdapter.cs" />
     <Compile Include="Model\SymbologyConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>

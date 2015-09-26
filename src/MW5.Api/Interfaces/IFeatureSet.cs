@@ -98,6 +98,10 @@ namespace MW5.Api.Interfaces
 
         int MinDrawingSize { get; set; }
 
+        string SortField { get; set; }
+        bool SortAscending { get; set; }
+        void UpdateSortField();
+
         #region Not implemented
 
         //int get_numPoints(int ShapeIndex);

@@ -127,6 +127,12 @@ namespace MW5.Api.Concrete
             set { _category.FontSize = value; }
         }
 
+        public int FontSize2
+        {
+            get { return _category.FontSize2; }
+            set { _category.FontSize2 = value; }
+        }
+
         public bool FontStrikeOut
         {
             get { return _category.FontStrikeOut; }

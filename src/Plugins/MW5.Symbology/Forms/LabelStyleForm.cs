@@ -1,79 +1,73 @@
-﻿// ********************************************************************************************************
-// <copyright file="MWLite.Symbology.cs" company="MapWindow.org">
-// Copyright (c) MapWindow.org. All rights reserved.
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="LabelStyleForm.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
 // </copyright>
-// The contents of this file are subject to the Mozilla Public License Version 1.1 (the "License"); 
-// you may not use this file except in compliance with the License. You may obtain a copy of the License at 
-// http:// Www.mozilla.org/MPL/ 
-// Software distributed under the License is distributed on an "AS IS" basis, WITHOUT WARRANTY OF 
-// ANY KIND, either express or implied. See the License for the specificlanguage governing rights and 
-// limitations under the License. 
-// 
-// The Initial Developer of this version of the Original Code is Sergei Leschinski
-// 
-// Contributor(s): (Open source contributors should list themselves and their modifications here). 
-// Change Log: 
-// Date            Changed By      Notes
-// ********************************************************************************************************
+// -------------------------------------------------------------------------------------------
 
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend;
+using MW5.Attributes.Model;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
+using MW5.Plugins.Symbology.Model;
+using MW5.Shared;
 using MW5.UI.Enums;
 using MW5.UI.Forms;
 
 namespace MW5.Plugins.Symbology.Forms
 {
     /// <summary>
-    /// GUI for setting options for Labels and LabelCategory classes
+    /// A dialog to generate labels and change their style.
     /// </summary>
     public partial class LabelStyleForm : MapWindowForm
     {
-        private static int tabNumber = 0;
-
-        private ILayer _layer;
-        private IFeatureSet _shapefile;
+        private const string NoExpression = "<no expression>";
+        private static int tabNumber;
         private readonly bool _categoryEdited;
-
         private ILabelStyle _category;
-        private bool _noEvents;
+        private IFeatureSet _featureSet;
         private string _initState = "";
+        private bool _fieldSelection;   // field was just selected in the main tab combo box
+        private ILayer _layer;
+        private bool _noEvents;
 
         /// <summary>
         /// Constructor for setting label expression and options
         /// </summary>
-        public LabelStyleForm(IAppContext context, ILayer layer):
-            base(context)
+        public LabelStyleForm(IAppContext context, ILayer layer)
+            : base(context)
         {
+            InitializeComponent();
+
             InitLayer(context, layer);
 
-            InitializeComponent();
-           
             // old-style labels not based on expression
-            if (_shapefile.Labels.Expression == "" && !_shapefile.Labels.Empty &&
-                _shapefile.Labels.Items[0].Text != "")
+            if (_featureSet.Labels.Expression == "" && !_featureSet.Labels.Empty &&
+                _featureSet.Labels.Items[0].Text != "")
             {
-                richTextBox1.Text = "<no expression>";
+                txtExpression.Text = NoExpression;
                 listBox1.Enabled = false;
                 btnPlus.Enabled = false;
                 btnQuotes.Enabled = false;
                 btnNewLine.Enabled = false;
-                richTextBox1.Enabled = false;
+                txtExpression.Enabled = false;
             }
             else
             {
-                richTextBox1.Text = LabelHelper.StripNewLineQuotes(_shapefile.Labels.Expression);
+                txtExpression.Text = LabelHelper.StripNewLineQuotes(_featureSet.Labels.Expression);
             }
 
-            Initialize(_shapefile.Labels.Style);
+            Initialize(_featureSet.Labels.Style);
 
             tabControl1.SelectedIndex = tabNumber;
         }
@@ -81,26 +75,216 @@ namespace MW5.Plugins.Symbology.Forms
         /// <summary>
         /// Constructor for editing single category
         /// </summary>
-        public LabelStyleForm(IAppContext context,  ILayer layer, ILabelStyle lb) 
+        public LabelStyleForm(IAppContext context, ILayer layer, ILabelStyle lb)
         {
+            InitializeComponent();
+
             InitLayer(context, layer);
 
             _categoryEdited = true;
-
-            InitializeComponent();
             Initialize(lb);
-           
+
             tabControl1.SelectedIndex = tabNumber;
-            
+
             // expression isn't available for the categories
             if (_categoryEdited)
             {
-                tabControl1.TabPages.Remove(tabControl1.TabPages[4]);   // visibility
-                tabControl1.TabPages.Remove(tabControl1.TabPages[3]);   // position
-                tabControl1.TabPages.Remove(tabControl1.TabPages[0]);   // expression
+                tabControl1.TabPages.Remove(tabControl1.TabPages[4]); // visibility
+                tabControl1.TabPages.Remove(tabControl1.TabPages[3]); // position
+                tabControl1.TabPages.Remove(tabControl1.TabPages[0]); // expression
             }
+
             lblResult.Visible = false;
             btnApply.Visible = false;
+        }
+
+        private IAttributeField SelectedField
+        {
+            get { return (cboField.SelectedItem as FieldAdapter).Field; }
+        }
+
+        /// <summary>
+        /// Applies the options and generates labels if needed.
+        /// </summary>
+        private bool ApplyOptions()
+        {
+            if (_categoryEdited)
+            {
+                return true;
+            }
+
+            bool hasExpression = !string.IsNullOrWhiteSpace(txtExpression.Text);
+            bool hasLabels = !_featureSet.Labels.Empty;
+
+            if (!hasExpression && hasLabels)
+            {
+                if (MessageService.Current.Ask("Expression is empty. Remove all the labels?"))
+                {
+                    _featureSet.Labels.Items.Clear();
+                    _featureSet.Labels.Expression = "";
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if ((!hasLabels || !_featureSet.Labels.Synchronized) && hasExpression)
+            {
+                GenerateLabels();
+            }
+            else if (!hasExpression && _featureSet.Labels.Empty)
+            {
+                MessageService.Current.Info("No expression was entered.");
+                return false;
+            }
+
+            ApplyStyle();
+
+            return true;
+        }
+
+        private void ApplyStyle()
+        {
+            _featureSet.Labels.Style = _category;
+
+            if (_featureSet.Labels.Expression != txtExpression.Text)
+            {
+                _featureSet.Labels.Expression = LabelHelper.FixExpression(txtExpression.Text);
+            }
+        }
+
+        private void ClearLabels()
+        {
+            var lb = _featureSet.Labels.Items;
+
+            for (int i = 0; i < lb.Count; i++)
+            {
+                for (int j = 0; j < lb.NumParts(i); j++)
+                {
+                    lb[i, j].Text = "";
+                }
+            }
+
+            listBox1.Enabled = true;
+            btnPlus.Enabled = true;
+            btnQuotes.Enabled = true;
+            btnNewLine.Enabled = true;
+            txtExpression.Enabled = true;
+            txtExpression.Text = "";
+
+            _featureSet.Labels.SavingMode = PersistenceType.XmlOverwrite;
+
+            //lb.Synchronized = true;
+            //if (!lb.Synchronized)
+            //{
+            //    lb.Clear();
+            //}
+        }
+
+        /// <summary>
+        /// Draws preview of the label
+        /// </summary>
+        private void DrawPreview()
+        {
+            RefreshControls();
+
+            if (_noEvents)
+            {
+                return;
+            }
+
+            if (_category.Visible)
+            {
+                string text = _categoryEdited ? _featureSet.Labels.Expression : txtExpression.Text;
+                LabelHelper.DrawPreview(_category, _featureSet, pctPreview, text, true);
+            }
+            else
+            {
+                var img = new Bitmap(pctPreview.ClientRectangle.Width, pctPreview.ClientRectangle.Height);
+                if (pctPreview.Image != null)
+                {
+                    pctPreview.Image.Dispose();
+                }
+                pctPreview.Image = img;
+            }
+        }
+
+        private bool GenerateLabels()
+        {
+            using (var form = new AddLabelsForm(_featureSet, _category.Alignment))
+            {
+                if (_context.View.ShowChildView(form, this))
+                {
+                    if (_featureSet.PointOrMultiPoint)
+                    {
+                        _category.Alignment = form.Alignment;
+                    }
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private string GetFloatFormat()
+        {
+            if (cboDecimalPlaces.SelectedIndex == 0) return "%g";
+            return string.Format("%.{0}f", cboDecimalPlaces.SelectedIndex);
+        }
+
+        private void InitAlignment(ILabelsLayer labels)
+        {
+            var alignment = labels.Style.Alignment;
+            optAlignBottomCenter.Checked = (alignment == LabelAlignment.BottomCenter);
+            optAlignBottomLeft.Checked = (alignment == LabelAlignment.BottomLeft);
+            optAlignBottomRight.Checked = (alignment == LabelAlignment.BottomRight);
+            optAlignCenter.Checked = (alignment == LabelAlignment.Center);
+            optAlignCenterLeft.Checked = (alignment == LabelAlignment.CenterLeft);
+            optAlignCenterRight.Checked = (alignment == LabelAlignment.CenterRight);
+            optAlignTopCenter.Checked = (alignment == LabelAlignment.TopCenter);
+            optAlignTopLeft.Checked = (alignment == LabelAlignment.TopLeft);
+            optAlignTopRight.Checked = (alignment == LabelAlignment.TopRight);
+        }
+
+        private void InitDecimalPlaces()
+        {
+            cboDecimalPlaces.Items.Add("Auto");
+
+            for (int i = 1; i <= 6; i++)
+            {
+                cboDecimalPlaces.Items.Add(i.ToString(CultureInfo.InvariantCulture));
+            }
+
+            cboDecimalPlaces.SelectedIndex = 0;
+        }
+
+        private void InitFields()
+        {
+            if (_categoryEdited) return;
+
+            var fields = _featureSet.Fields.Where(f => !f.Name.EqualsIgnoreCase(ShapefileHelper.MWShapeIdField)).ToList();
+
+            listBox1.DataSource = fields.ToList();
+
+            var wrappers = fields.Select(f => new FieldAdapter(f)).ToList();
+            wrappers.Add(new FieldAdapter("<expression>"));
+            cboField.DataSource = wrappers.ToList();
+
+            wrappers = fields.Where(f => f.Type != AttributeType.String).Select(f => new FieldAdapter(f)).ToList();
+            wrappers.Insert(0, new FieldAdapter("<none>"));
+            
+            cboSortField.DataSource = wrappers.ToList();
+        }
+
+        private void InitFonts()
+        {
+            cboFontName.Items.Clear();
+
+            foreach (var family in FontFamily.Families)
+            {
+                cboFontName.Items.Add(family.Name);
+            }
         }
 
         private void InitLayer(IAppContext context, ILayer layer)
@@ -113,7 +297,37 @@ namespace MW5.Plugins.Symbology.Forms
             }
 
             _layer = layer;
-            _shapefile = _layer.FeatureSet;
+            _featureSet = _layer.FeatureSet;
+
+            Text = "Label Style: " + layer.Name;
+        }
+
+        private void InitScales()
+        {
+            string[] scales =
+                {
+                    "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", "250000",
+                    "500000", "1000000", "10000000"
+                };
+
+            cboMinScale.Items.Clear();
+            cboMaxScale.Items.Clear();
+            cboBasicScale.Items.Clear();
+
+            foreach (string t in scales)
+            {
+                cboMinScale.Items.Add(t);
+                cboMaxScale.Items.Add(t);
+                cboBasicScale.Items.Add(t);
+            }
+        }
+
+        private void InitTextRendering()
+        {
+            var hints = EnumHelper.GetValues<TextRenderingHint>();
+            cboTextRenderingHint.DataSource = hints;
+            SetSelectedIndex(cboTextRenderingHint, (int)_featureSet.Labels.TextRenderingHint);
+            cboTextRenderingHint.SelectedIndexChanged += Ui2LabelStyle;
         }
 
         /// <summary>
@@ -124,16 +338,10 @@ namespace MW5.Plugins.Symbology.Forms
             _category = lb;
 
             _noEvents = true;
-            cboFontName.Items.Clear();
-            foreach (FontFamily family in FontFamily.Families)
-            {
-                cboFontName.Items.Add(family.Name);
-            }
 
-            cboDecimalPlaces.Items.Add("Auto");
-            for (int i = 1; i <= 6; i++)
-                cboDecimalPlaces.Items.Add(i.ToString());
-            cboDecimalPlaces.SelectedIndex = 0;
+            InitFonts();
+
+            InitDecimalPlaces();
 
             icbLineType.ComboStyle = ImageComboStyle.LineStyle;
             icbLineWidth.ComboStyle = ImageComboStyle.LineWidth;
@@ -142,34 +350,16 @@ namespace MW5.Plugins.Symbology.Forms
             icbFrameType.ComboStyle = ImageComboStyle.FrameType;
             icbFrameType.SelectedIndex = 0;
 
-            if (!_categoryEdited)
-            {
-                foreach (var fld in _shapefile.Fields)
-                {
-                    string name = fld.Name;
-                    if (name.ToLower() != "mwshapeid")
-                        listBox1.Items.Add(name);
-                }
-            }
+            InitFields();
 
-            string[] scales = { "1", "10", "100", "1000", "5000", "10000", "25000", "50000", "100000", 
-                                "250000", "500000", "1000000", "10000000" };
-            cboMinScale.Items.Clear();
-            cboMaxScale.Items.Clear();
-            cboBasicScale.Items.Clear();
-            foreach (string t in scales)
-            {
-                cboMinScale.Items.Add(t);
-                cboMaxScale.Items.Add(t);
-                cboBasicScale.Items.Add(t);
-            }
+            InitScales();
 
             // displaying options in the GUI
             LabelStyle2Ui(_category);
 
             TestExpression();
 
-            txtLabelExpression.Text = _shapefile.Labels.VisibilityExpression;
+            txtLabelExpression.Text = _featureSet.Labels.VisibilityExpression;
 
             // serialization
             if (_categoryEdited)
@@ -178,68 +368,88 @@ namespace MW5.Plugins.Symbology.Forms
             }
             else
             {
-                var mode = _shapefile.Labels.SavingMode;
-                _shapefile.Labels.SavingMode = PersistenceType.None;
-                _initState = _shapefile.Labels.Serialize();
-                _shapefile.Labels.SavingMode = mode;
+                var mode = _featureSet.Labels.SavingMode;
+                _featureSet.Labels.SavingMode = PersistenceType.None;
+                _initState = _featureSet.Labels.Serialize();
+                _featureSet.Labels.SavingMode = mode;
             }
 
             cboLabelsVerticalPosition.Items.Clear();
             cboLabelsVerticalPosition.Items.Add("Above layer");
             cboLabelsVerticalPosition.Items.Add("Above all layers");
-            
-            var labels = _shapefile.Labels;
+
+            var labels = _featureSet.Labels;
 
             cboLabelsVerticalPosition.SelectedIndex = (int)labels.VerticalPosition;
             chkLabelsRemoveDuplicates.Checked = labels.RemoveDuplicates;
             chkAviodCollisions.Checked = labels.AvoidCollisions;
             chkScaleLabels.Checked = labels.ScaleLabels;
-            cboBasicScale.Text = labels.BasicScale.ToString();
+            cboBasicScale.Text = labels.BasicScale.ToString(CultureInfo.InvariantCulture);
+
+            RestoreFields(labels);
 
             udLabelOffsetX.SetValue(labels.OffsetX);
             udLabelOffsetY.SetValue(labels.OffsetY);
             udLabelsBuffer.SetValue(labels.CollisionBuffer);
 
-            // alignment
-            var alignment = labels.Style.Alignment;
-            optAlignBottomCenter.Checked = (alignment == LabelAlignment.BottomCenter);
-            optAlignBottomLeft.Checked = (alignment == LabelAlignment.BottomLeft);
-            optAlignBottomRight.Checked = (alignment == LabelAlignment.BottomRight);
-            optAlignCenter.Checked = (alignment == LabelAlignment.Center);
-            optAlignCenterLeft.Checked = (alignment == LabelAlignment.CenterLeft);
-            optAlignCenterRight.Checked = (alignment == LabelAlignment.CenterRight);
-            optAlignTopCenter.Checked = (alignment == LabelAlignment.TopCenter);
-            optAlignTopLeft.Checked = (alignment == LabelAlignment.TopLeft);
-            optAlignTopRight.Checked = (alignment == LabelAlignment.TopRight);
+            InitAlignment(labels);
 
-            
-            optAlignCenter.Enabled = !_shapefile.PointOrMultiPoint;
+            optAlignCenter.Enabled = !_featureSet.PointOrMultiPoint;
 
-            btnApply.Enabled = (_shapefile.Labels.Expression != "" && _shapefile.Labels.Empty);
-            string[] list = {
-                                            "Default",
-                                            "SingleBitPerPixelGridFit",
-                                            "SingleBitPerPixel",
-                                            "AntiAliasGridFit",
-                                            "HintAntiAlias",
-                                            "ClearType"};
-            cboTextRenderingHint.DataSource = list;
-            SetSelectedIndex(cboTextRenderingHint, (int)_shapefile.Labels.TextRenderingHint);
-            cboTextRenderingHint.SelectedIndexChanged += Ui2LabelStyle;
+            btnApply.Enabled = !string.IsNullOrWhiteSpace(txtExpression.Text) && _featureSet.Labels.Empty;
+
+            InitTextRendering();
 
             _noEvents = false;
 
-            // initial drawing
             DrawPreview();
         }
 
-        /// <summary>
-        /// Sets selected index in the combo in case it's the valid one
-        /// </summary>
-        private static void SetSelectedIndex(ComboBox combo, int index)
+        private void RestoreFields(ILabelsLayer labels)
         {
-            if (index >= 0 && index < combo.Items.Count)
-                combo.SelectedIndex = index;
+            string name = GetLabelField(labels);
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                cboField.SelectedIndex = !string.IsNullOrWhiteSpace(labels.Expression) ? cboField.Items.Count - 1 : 0;
+            }
+            else
+            {
+                SetFieldValue(cboField, name);
+            }
+
+
+            if (_featureSet != null)
+            {
+                SetFieldValue(cboSortField, _featureSet.SortField);
+                chkSortAscending.Checked = _featureSet.SortAscending;
+            }
+
+            chkLogScaleForSize.Checked = labels.LogScaleForSize;
+            chkUseVariableSize.Checked = labels.UseVariableSize;
+        }
+
+        private string GetLabelField(ILabelsLayer labels)
+        {
+            var s = labels.Expression.Trim();
+            if (s.StartsWith("[") && s.EndsWith("]"))
+            {
+                return s.Substring(1, s.Length - 2);
+            }
+
+            return string.Empty;
+        }
+
+        private void SetFieldValue(ComboBox combo, string text)
+        {
+            foreach (var item in combo.Items)
+            {
+                if (item.ToString().EqualsIgnoreCase(text))
+                {
+                    combo.SelectedItem = item;
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -247,17 +457,15 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private bool LabelStyle2Ui(ILabelStyle lb)
         {
-            if (lb == null) 
-                return false;
+            if (lb == null) return false;
 
             chkVisible.Checked = _category.Visible;
 
             string fontName = lb.FontName;
             int j = 0;
-            foreach (FontFamily family in FontFamily.Families)
+            foreach (var family in FontFamily.Families)
             {
-                if (family.Name == fontName)
-                    cboFontName.SelectedIndex = j;
+                if (family.Name == fontName) cboFontName.SelectedIndex = j;
                 j++;
             }
             if (cboFontName.SelectedIndex == -1)
@@ -272,8 +480,9 @@ namespace MW5.Plugins.Symbology.Forms
             chkFontStrikeout.Checked = lb.FontStrikeOut;
 
             udFontSize.Value = lb.FontSize;
+            udFontSize2.Value = lb.FontSize2;
 
-            clpFont1.Color =  lb.FontColor;
+            clpFont1.Color = lb.FontColor;
 
             udFramePaddingX.SetValue(lb.FramePaddingX);
             udFramePaddingY.SetValue(lb.FramePaddingY);
@@ -282,8 +491,8 @@ namespace MW5.Plugins.Symbology.Forms
             chkHaloVisible.Checked = lb.HaloVisible;
             chkShadowVisible.Checked = lb.ShadowVisible;
 
-            clpShadow.Color =  lb.ShadowColor;
-            clpHalo.Color =  lb.HaloColor;
+            clpShadow.Color = lb.ShadowColor;
+            clpHalo.Color = lb.HaloColor;
 
             udHaloSize.SetValue(lb.HaloSize);
             udShadowOffsetX.SetValue(lb.ShadowOffsetX);
@@ -295,178 +504,258 @@ namespace MW5.Plugins.Symbology.Forms
 
             icbLineType.SelectedIndex = (int)lb.FrameOutlineStyle;
 
-            clpFrame1.Color =  lb.FrameBackColor;
-            clpFrameBorder.Color =  lb.FrameOutlineColor;
+            clpFrame1.Color = lb.FrameBackColor;
+            clpFrameBorder.Color = lb.FrameOutlineColor;
 
             udFramePaddingX.SetValue(lb.FramePaddingX);
             udFramePaddingY.SetValue(lb.FramePaddingY);
 
             if (lb.FrameOutlineWidth < 1) lb.FrameOutlineWidth = 1;
             if (lb.FrameOutlineWidth > icbLineWidth.Items.Count) lb.FrameOutlineWidth = icbLineWidth.Items.Count;
-            icbLineWidth.SelectedIndex = (int)lb.FrameOutlineWidth - 1;
+            icbLineWidth.SelectedIndex = lb.FrameOutlineWidth - 1;
 
-            transparencyControl1.Value = (byte)lb.FrameTransparency;
+            transparencyControl1.Value = lb.FrameTransparency;
 
-            cboMinScale.Text = _shapefile.Labels.MinVisibleScale.ToString();
-            cboMaxScale.Text = _shapefile.Labels.MaxVisibleScale.ToString();
-            chkDynamicVisibility.Checked = _shapefile.Labels.DynamicVisibility;
+            cboMinScale.Text = _featureSet.Labels.MinVisibleScale.ToString(CultureInfo.InvariantCulture);
+            cboMaxScale.Text = _featureSet.Labels.MaxVisibleScale.ToString(CultureInfo.InvariantCulture);
+            chkDynamicVisibility.Checked = _featureSet.Labels.DynamicVisibility;
 
             return true;
         }
 
         /// <summary>
-        /// Saves the options from the GUI to labels style class
+        /// Saves the options and updates the map without closing the form
         /// </summary>
-        private void Ui2LabelStyle(object sender, EventArgs e)
+        private void OnApplyClick(object sender, EventArgs e)
         {
-            if (_noEvents)
+            if (ApplyOptions())
             {
-                return;
+                //m_legend.FireLayerPropertiesChanged(m_handle);
+                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+
+                _initState = _featureSet.Labels.Serialize();
+
+                RefreshControls();
+
+                btnApply.Enabled = false;
             }
-           
-            var lb = _category;
-
-            lb.Visible = chkVisible.Checked;
-
-            // alignment
-            lb.FramePaddingX = (int)udFramePaddingX.Value;
-            lb.FramePaddingY = (int)udFramePaddingY.Value;
-
-            // font 
-            lb.FontBold = chkFontBold.Checked;
-            lb.FontItalic = chkFontItalic.Checked;
-            lb.FontUnderline = chkFontUnderline.Checked;
-            lb.FontStrikeOut = chkFontStrikeout.Checked;
-            lb.FontName = cboFontName.Text;
-            lb.FontColor = clpFont1.Color;
-            lb.FontSize = (int)udFontSize.Value;
-
-            // outline
-            lb.HaloVisible = chkHaloVisible.Checked;
-            lb.ShadowVisible = chkShadowVisible.Checked;
-
-            lb.HaloColor = clpHalo.Color;
-            lb.ShadowColor = clpShadow.Color;
-
-            lb.HaloSize = (int)udHaloSize.Value;
-            lb.ShadowOffsetX = (int)udShadowOffsetX.Value;
-            lb.ShadowOffsetY = (int)udShadowOffsetY.Value;
-            
-            // frame fill
-            lb.FrameBackColor = clpFrame1.Color;
-
-            if (tabControl1.SelectedTab.Name == "tabFrameFill")
-            {
-                lb.FrameVisible = chkUseFrame.Checked;
-                lb.FrameType = (FrameType)icbFrameType.SelectedIndex;
-            }
-
-            // frame outline
-            lb.FrameOutlineColor = clpFrameBorder.Color;
-            if (icbLineType.SelectedIndex >= 0)
-            {
-                lb.FrameOutlineStyle = (DashStyle)icbLineType.SelectedIndex;
-            }
-            lb.FrameOutlineWidth = (int)icbLineWidth.SelectedIndex + 1;
-
-            lb.FrameTransparency = transparencyControl1.Value;
-            lb.FontTransparency = transparencyControl1.Value;
-
-            // passed from the main form
-            var labels = _shapefile.Labels;
-            labels.RemoveDuplicates = chkLabelsRemoveDuplicates.Checked;
-            labels.AvoidCollisions = chkAviodCollisions.Checked;
-            labels.ScaleLabels = chkScaleLabels.Checked;
-            
-            double val;
-            labels.BasicScale = (double.TryParse(cboBasicScale.Text, out val)) ? val : 0.0;
-            labels.VerticalPosition = (VerticalPosition)cboLabelsVerticalPosition.SelectedIndex;
-
-            lb.OffsetX = (double)udLabelOffsetX.Value;
-            lb.OffsetY = (double)udLabelOffsetY.Value;
-            _shapefile.Labels.CollisionBuffer = (int)udLabelsBuffer.Value;
-
-            // alignment
-            if (optAlignBottomCenter.Checked) lb.Alignment = LabelAlignment.BottomCenter;
-            if (optAlignBottomLeft.Checked) lb.Alignment = LabelAlignment.BottomLeft;
-            if (optAlignBottomRight.Checked) lb.Alignment = LabelAlignment.BottomRight;
-            if (optAlignCenter.Checked) lb.Alignment = LabelAlignment.Center;
-            if (optAlignCenterLeft.Checked) lb.Alignment = LabelAlignment.CenterLeft;
-            if (optAlignCenterRight.Checked) lb.Alignment = LabelAlignment.CenterRight;
-            if (optAlignTopCenter.Checked) lb.Alignment = LabelAlignment.TopCenter;
-            if (optAlignTopLeft.Checked) lb.Alignment = LabelAlignment.TopLeft;
-            if (optAlignTopRight.Checked) lb.Alignment = LabelAlignment.TopRight;
-
-            // categories will have the same alignment
-            //if (!m_categoryEdited)
-            //{
-            //    for (int i = 0; i < m_shapefile.Labels.NumCategories; i++)
-            //    {
-            //        var cat = m_shapefile.Labels.Category[i];
-            //        cat.Alignment = lb.Alignment;
-            //        cat.OffsetX = lb.OffsetX;
-            //        cat.OffsetY = lb.OffsetY;
-            //    }
-            //}
-
-            if (double.TryParse(cboMinScale.Text, out val))
-            {
-                _shapefile.Labels.MinVisibleScale = val;
-            }
-
-            if (double.TryParse(cboMaxScale.Text, out val))
-            {
-                _shapefile.Labels.MaxVisibleScale = val;
-            }
-            _shapefile.Labels.DynamicVisibility = chkDynamicVisibility.Checked;
-
-            btnApply.Enabled = true;
-
-            _shapefile.Labels.TextRenderingHint = (TextRenderingHint)cboTextRenderingHint.SelectedIndex;
-
-            string format = _shapefile.Labels.FloatNumberFormat;
-            string newFormat = GetFloatFormat();
-            _shapefile.Labels.FloatNumberFormat = newFormat;
-            if (newFormat != format)
-            {
-                //m_shapefile.Labels.ForceRecalculateExpression();
-            }
-            DrawPreview();
-        }
-
-        private string GetFloatFormat()
-        {
-            if (cboDecimalPlaces.SelectedIndex == 0) return "%g";
-            return string.Format("%.{0}f", cboDecimalPlaces.SelectedIndex);
         }
 
         /// <summary>
-        /// Draws preview of the label
+        /// Clears the expression in the textbox
         /// </summary>
-        private void DrawPreview()
+        private void OnClearClick(object sender, EventArgs e)
         {
-            // this function is called after each change of state, therefore it makes sense to update availability of controls here
-            RefreshControls();
+            if (txtExpression.Text.ToLower() == NoExpression)
+            {
+                if (MessageService.Current.Ask("Remove labels?"))
+                {
+                    ClearLabels();
+                }
+            }
+            else
+            {
+                txtExpression.Text = "";
+            }
+        }
 
-            if (_noEvents)
+        /// <summary>
+        /// Clears gradient of the frame
+        /// </summary>
+        private void OnClearFrameGradientClick(object sender, EventArgs e)
+        {
+            _category.FrameGradientMode = LinearGradient.None;
+            DrawPreview();
+        }
+
+        /// <summary>
+        /// Clears the label expression
+        /// </summary>
+        private void OnClearLabelsExpressionClick(object sender, EventArgs e)
+        {
+            txtLabelExpression.Clear();
+            _featureSet.Labels.VisibilityExpression = "";
+        }
+
+        /// <summary>
+        /// Adds field to the expression
+        /// </summary>
+        private void OnFieldListBoxDoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem == null)
             {
                 return;
             }
 
-            if (_category.Visible)
+            txtExpression.SelectedText = "[" + listBox1.SelectedItem + "] ";
+        }
+
+        /// <summary>
+        /// Reverts the changes if cancel was hit
+        /// </summary>
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (DialogResult == DialogResult.Cancel)
             {
-                string text = _categoryEdited ? _shapefile.Labels.Expression : richTextBox1.Text;
-                LabelHelper.DrawPreview(_category, _shapefile, pctPreview, text, true);
+                if (_categoryEdited)
+                {
+                    _category.Deserialize(_initState);
+                }
+                else
+                {
+                    var mode = _featureSet.Labels.SavingMode;
+                    _featureSet.Labels.SavingMode = PersistenceType.None;
+                    _featureSet.Labels.Deserialize(_initState);
+                    _featureSet.Labels.SavingMode = mode;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Building labels visiblity expression
+        /// </summary>
+        private void OnLabelExpressionClick(object sender, EventArgs e)
+        {
+            string s = txtLabelExpression.Text;
+
+            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
+            {
+                if (txtLabelExpression.Text != s)
+                {
+                    txtLabelExpression.Text = s;
+                    _featureSet.Labels.VisibilityExpression = txtLabelExpression.Text;
+                    btnApply.Enabled = true;
+                }
+            }
+        }
+
+        private void OnFieldChanged(object sender, EventArgs e)
+        {
+            var fld = SelectedField;
+            if (fld != null)
+            {
+                // when another field is selected on the main tab, change the expression
+                _fieldSelection = true;
+                txtExpression.Text = "[" + fld.Name + "]";
+                OnExpressionChanged(null, null);
+                _fieldSelection = false;
             }
             else
             {
-                Bitmap img = new Bitmap((int)pctPreview.ClientRectangle.Width, (int)pctPreview.ClientRectangle.Height);
-                if (pctPreview.Image != null)
-                {
-                    pctPreview.Image.Dispose();
-                }
-                pctPreview.Image = img;
+                tabControl1.SelectedTab = tabExpression;
+                txtExpression.Focus();
             }
+        }
+
+        /// <summary>
+        /// Adds field to the expression
+        /// </summary>
+        private void OnListboxDoubleClick(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem == null) return;
+
+            var fld = listBox1.SelectedItem as IAttributeField;
+            if (fld != null)
+            {
+                txtExpression.SelectedText = "[" + fld.Name + "] ";
+            }
+        }
+
+        /// <summary>
+        ///  Saves the options, closes the form.
+        /// </summary>
+        private void OnOkClick(object sender, EventArgs e)
+        {
+            if (!ApplyOptions())
+            {
+                return;
+            }
+
+            tabNumber = tabControl1.SelectedIndex;
+
+            if (_featureSet.Labels.Serialize() != _initState)
+            {
+                //m_legend.FireLayerPropertiesChanged(m_handle);
+            }
+
+            DialogResult = DialogResult.OK;
+        }
+
+        /// <summary>
+        /// Sets current scale as basic one
+        /// </summary>
+        private void OnSetCurrentClick(object sender, EventArgs e)
+        {
+            var map = _context.Map;
+            if (map != null)
+            {
+                cboBasicScale.Text = map.CurrentScale.ToString("0.00");
+            }
+        }
+
+        /// <summary>
+        /// Sets gradient for the frame color
+        /// </summary>
+        private void OnSetFrameGradientClick(object sender, EventArgs e)
+        {
+            using (var form = new FontGradientForm(_category, false))
+            {
+                if (_context.View.ShowChildView(form, this))
+                {
+                    DrawPreview();
+                    clpFrame1.Color = _category.FrameBackColor;
+                    btnApply.Enabled = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets max visible scale to current scale
+        /// </summary>
+        private void OnSetMaxScaleClick(object sender, EventArgs e)
+        {
+            var map = _context.Map;
+            cboMaxScale.Text = map.CurrentScale.ToString("0.00");
+            btnApply.Enabled = true;
+        }
+
+        /// <summary>
+        /// Sets min visible scale to current scale
+        /// </summary>
+        private void OnSetMinScaleClick(object sender, EventArgs e)
+        {
+            cboMinScale.Text = _context.Map.CurrentScale.ToString("0.00");
+            btnApply.Enabled = true;
+        }
+
+        /// <summary>
+        /// Checks the expression during editing
+        /// </summary>
+        private void OnExpressionChanged(object sender, EventArgs e)
+        {
+            TestExpression();
+
+            if (!_noEvents)
+            {
+                LabelHelper.DrawPreview(_category, _featureSet, pctPreview, txtExpression.Text, true);
+                RefreshControls();
+            }
+
+            if (!_fieldSelection)
+            {
+                // it's user input, select the <expression> on the main tab
+                cboField.SelectedIndex = cboField.Items.Count - 1;
+            }
+
+            btnApply.Enabled = true;
+        }
+
+        /// <summary>
+        ///  Handles the change of transparency by user
+        /// </summary>
+        private void OnTransparencyControlValueChanged(object sender, byte value)
+        {
+            Ui2LabelStyle(sender, null);
         }
 
         /// <summary>
@@ -505,8 +794,13 @@ namespace MW5.Plugins.Symbology.Forms
             btnSetCurrent.Enabled = chkScaleLabels.Checked;
             lblScaleLabels.Enabled = chkScaleLabels.Checked;
 
-            bool noLabels = false;;
-            bool hasExpression = richTextBox1.Text.Length > 0;
+            bool hasSortField = cboSortField.SelectedIndex > 0;
+            udFontSize2.Enabled = chkUseVariableSize.Checked && hasSortField;
+            chkLogScaleForSize.Enabled = chkUseVariableSize.Checked && hasSortField;
+            chkUseVariableSize.Enabled = hasSortField;
+
+            bool noLabels = false;
+            bool hasExpression = txtExpression.Text.Length > 0;
             if (!_categoryEdited)
             {
                 noLabels = !hasExpression;
@@ -528,163 +822,26 @@ namespace MW5.Plugins.Symbology.Forms
 
             _noEvents = false;
         }
-        
-        /// <summary>
-        /// Sets gradient for the frame color
-        /// </summary>
-        private void btnSetFrameGradient_Click(object sender, EventArgs e)
-        {
-            using (var form = new FontGradientForm(_category, false))
-            {
-                if (_context.View.ShowChildView(form, this))
-                {
-                    DrawPreview();
-                    clpFrame1.Color = _category.FrameBackColor;
-                    btnApply.Enabled = true;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Clears gradient of the frame
-        /// </summary>
-        private void btnClearFrameGradient_Click(object sender, EventArgs e)
-        {
-            _category.FrameGradientMode = LinearGradient.None;
-            DrawPreview();
-        }
 
         /// <summary>
-        ///  Saves the options, closes the form.
+        /// Sets selected index in the combo in case it's the valid one
         /// </summary>
-        private void btnOk_Click(object sender, EventArgs e)
+        private static void SetSelectedIndex(ComboBox combo, int index)
         {
-            if (!ApplyOptions())
+            if (index >= 0 && index < combo.Items.Count)
             {
-                return;
+                combo.SelectedIndex = index;
             }
-
-            tabNumber = tabControl1.SelectedIndex;
-
-            if (_shapefile.Labels.Serialize() != _initState)
-            {
-                //m_legend.FireLayerPropertiesChanged(m_handle);
-            }
-
-            DialogResult = DialogResult.OK;
-        }
-
-        /// <summary>
-        /// Applies the options
-        /// </summary>
-        bool ApplyOptions()
-        {
-            if (_categoryEdited)
-            {
-                return true;
-            }
-
-            if (richTextBox1.Text == "" && !_shapefile.Labels.Empty)
-            {
-                if (MessageService.Current.Ask("Expression is empty. Remove all the labels?"))
-                {
-                    _shapefile.Labels.Items.Clear();
-                    _shapefile.Labels.Expression = "";
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else if ((!_shapefile.Labels.Synchronized  || _shapefile.Labels.Empty) && richTextBox1.Text != "")
-            {
-                // generate
-                using (var form = new AddLabelsForm(_shapefile, _category.Alignment))
-                {
-                    if (_context.View.ShowChildView(form, this))
-                    {
-                        if (_shapefile.PointOrMultiPoint)
-                        {
-                            _category.Alignment = form.Alignment;
-                        }
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-            }
-            else if (richTextBox1.Text == "" && _shapefile.Labels.Empty)
-            {
-                MessageService.Current.Info("No expression was entered.");
-                return false;
-            }
-
-            if (!_categoryEdited)
-            {
-                // in case of labels we are editing a copy of the LabelsCategory class, so options should be applied
-                _shapefile.Labels.Style = _category;
-
-                if (_shapefile.Labels.Expression != richTextBox1.Text )
-                {
-                    _shapefile.Labels.Expression = LabelHelper.FixExpression(richTextBox1.Text);
-                }
-            }
-
-            return true;
-        }
-
-        /// <summary>
-        ///  Handles the change of transparency by user
-        /// </summary>
-        private void transparencyControl1_ValueChanged(object sender, byte value)
-        {
-            Ui2LabelStyle(sender, null);
-        }
-
-        #region Expression
-        /// <summary>
-        /// Adds field to the expression
-        /// </summary>
-        private void listBox1_DoubleClick(object sender, EventArgs e)
-        {
-            if (listBox1.SelectedItem == null)
-                return;
-
-            richTextBox1.SelectedText = "[" + listBox1.SelectedItem + "] ";
-        }
-
-        private void btnPlus_Click(object sender, EventArgs e)
-        {
-            richTextBox1.SelectedText = "+ ";
-        }
-
-        private void btnQuotes_Click(object sender, EventArgs e)
-        {
-            richTextBox1.SelectedText = "\"\"";
-        }
-
-        private void btnNewLine_Click(object sender, EventArgs e)
-        {
-            richTextBox1.SelectedText = Environment.NewLine;
-        }
-
-        /// <summary>
-        /// Tests expression entered by user
-        /// </summary>
-        private void btnTest_Click(object sender, EventArgs e)
-        {
-            TestExpression();
         }
 
         private void TestExpression()
         {
-            if (richTextBox1.Text.ToLower() == "<no expression>")
+            if (txtExpression.Text.ToLower() == NoExpression)
             {
                 return;
             }
 
-            string expr = LabelHelper.FixExpression(richTextBox1.Text);
+            string expr = LabelHelper.FixExpression(txtExpression.Text);
             if (expr == String.Empty)
             {
                 lblResult.ForeColor = Color.Black;
@@ -693,7 +850,7 @@ namespace MW5.Plugins.Symbology.Forms
             else
             {
                 string err = "";
-                if (!_shapefile.Table.TestExpression(expr, TableValueType.String, out err))
+                if (!_featureSet.Table.TestExpression(expr, TableValueType.String, out err))
                 {
                     lblResult.ForeColor = Color.Red;
                     lblResult.Text = err;
@@ -707,167 +864,149 @@ namespace MW5.Plugins.Symbology.Forms
         }
 
         /// <summary>
-        /// Adds field to the expression
+        /// Saves the options from the GUI to labels style class
         /// </summary>
-        private void listBox1_DoubleClick_1(object sender, EventArgs e)
+        private void Ui2LabelStyle(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem == null)
+            if (_noEvents)
             {
                 return;
             }
 
-            richTextBox1.SelectedText = "[" + listBox1.SelectedItem + "] ";
-        }
-        #endregion
+            var lb = _category;
 
-        /// <summary>
-        /// Checks the expression during editing
-        /// </summary>
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-            TestExpression();
-            
-            if (!_noEvents)
+            lb.Visible = chkVisible.Checked;
+
+            // alignment
+            lb.FramePaddingX = (int)udFramePaddingX.Value;
+            lb.FramePaddingY = (int)udFramePaddingY.Value;
+
+            // font 
+            lb.FontBold = chkFontBold.Checked;
+            lb.FontItalic = chkFontItalic.Checked;
+            lb.FontUnderline = chkFontUnderline.Checked;
+            lb.FontStrikeOut = chkFontStrikeout.Checked;
+            lb.FontName = cboFontName.Text;
+            lb.FontColor = clpFont1.Color;
+            lb.FontSize = (int)udFontSize.Value;
+            lb.FontSize2 = (int)udFontSize2.Value;
+
+            // outline
+            lb.HaloVisible = chkHaloVisible.Checked;
+            lb.ShadowVisible = chkShadowVisible.Checked;
+
+            lb.HaloColor = clpHalo.Color;
+            lb.ShadowColor = clpShadow.Color;
+
+            lb.HaloSize = (int)udHaloSize.Value;
+            lb.ShadowOffsetX = (int)udShadowOffsetX.Value;
+            lb.ShadowOffsetY = (int)udShadowOffsetY.Value;
+
+            // frame fill
+            lb.FrameBackColor = clpFrame1.Color;
+
+            if (tabControl1.SelectedTab.Name == "tabFrameFill")
             {
-                LabelHelper.DrawPreview(_category, _shapefile, pctPreview, richTextBox1.Text, true);
-                RefreshControls();
+                lb.FrameVisible = chkUseFrame.Checked;
+                lb.FrameType = (FrameType)icbFrameType.SelectedIndex;
             }
+
+            // frame outline
+            lb.FrameOutlineColor = clpFrameBorder.Color;
+            if (icbLineType.SelectedIndex >= 0)
+            {
+                lb.FrameOutlineStyle = (DashStyle)icbLineType.SelectedIndex;
+            }
+            lb.FrameOutlineWidth = icbLineWidth.SelectedIndex + 1;
+
+            lb.FrameTransparency = transparencyControl1.Value;
+            lb.FontTransparency = transparencyControl1.Value;
+
+            // passed from the main form
+            var labels = _featureSet.Labels;
+            labels.RemoveDuplicates = chkLabelsRemoveDuplicates.Checked;
+            labels.AvoidCollisions = chkAviodCollisions.Checked;
+            labels.ScaleLabels = chkScaleLabels.Checked;
+
+            double val;
+            labels.BasicScale = (double.TryParse(cboBasicScale.Text, out val)) ? val : 0.0;
+            labels.VerticalPosition = (VerticalPosition)cboLabelsVerticalPosition.SelectedIndex;
+
+            var fld = cboSortField.SelectedItem as FieldAdapter;
+            labels.LogScaleForSize = chkLogScaleForSize.Checked;
+            labels.UseVariableSize = chkUseVariableSize.Checked;
+
+            if (_featureSet != null)
+            {
+                _featureSet.SortField = (fld != null && !fld.Empty) ? fld.Field.Name : string.Empty;
+                _featureSet.SortAscending = chkSortAscending.Checked;
+            }
+
+            lb.OffsetX = (double)udLabelOffsetX.Value;
+            lb.OffsetY = (double)udLabelOffsetY.Value;
+            _featureSet.Labels.CollisionBuffer = (int)udLabelsBuffer.Value;
+
+            // alignment
+            if (optAlignBottomCenter.Checked) lb.Alignment = LabelAlignment.BottomCenter;
+            if (optAlignBottomLeft.Checked) lb.Alignment = LabelAlignment.BottomLeft;
+            if (optAlignBottomRight.Checked) lb.Alignment = LabelAlignment.BottomRight;
+            if (optAlignCenter.Checked) lb.Alignment = LabelAlignment.Center;
+            if (optAlignCenterLeft.Checked) lb.Alignment = LabelAlignment.CenterLeft;
+            if (optAlignCenterRight.Checked) lb.Alignment = LabelAlignment.CenterRight;
+            if (optAlignTopCenter.Checked) lb.Alignment = LabelAlignment.TopCenter;
+            if (optAlignTopLeft.Checked) lb.Alignment = LabelAlignment.TopLeft;
+            if (optAlignTopRight.Checked) lb.Alignment = LabelAlignment.TopRight;
+
+            if (double.TryParse(cboMinScale.Text, out val))
+            {
+                _featureSet.Labels.MinVisibleScale = val;
+            }
+
+            if (double.TryParse(cboMaxScale.Text, out val))
+            {
+                _featureSet.Labels.MaxVisibleScale = val;
+            }
+            _featureSet.Labels.DynamicVisibility = chkDynamicVisibility.Checked;
 
             btnApply.Enabled = true;
-        }
 
-        /// <summary>
-        /// Clears the expression in the textbox
-        /// </summary>
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            if (richTextBox1.Text.ToLower() == "<no expression>")
+            _featureSet.Labels.TextRenderingHint = (TextRenderingHint)cboTextRenderingHint.SelectedIndex;
+
+            string format = _featureSet.Labels.FloatNumberFormat;
+            string newFormat = GetFloatFormat();
+            _featureSet.Labels.FloatNumberFormat = newFormat;
+
+            if (newFormat != format)
             {
-                if (MessageService.Current.Ask("Remove labels?"))
-                {
-                    var lb = _shapefile.Labels.Items;
-                    for (int i = 0; i < lb.Count; i++)
-                    {
-                        for (int j = 0; j < lb.NumParts(i); j++)
-                        {
-                            lb[i, j].Text = "";
-                        }
-                    }
-
-                    listBox1.Enabled = true;
-                    btnPlus.Enabled = true;
-                    btnQuotes.Enabled = true;
-                    btnNewLine.Enabled = true;
-                    richTextBox1.Enabled = true;
-                    richTextBox1.Text = "";
-
-                    _shapefile.Labels.SavingMode = PersistenceType.XmlOverwrite;
-                    //lb.Synchronized = true;
-                    //if (!lb.Synchronized)
-                    //{
-                    //    lb.Clear();
-                    //}
-                }
+                //m_shapefile.Labels.ForceRecalculateExpression();
             }
-            else
+
+            DrawPreview();
+        }
+
+        private void OnNewLineClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = Environment.NewLine;
+        }
+
+        private void OnPlusClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = "+ ";
+        }
+
+        private void OnQuotesClick(object sender, EventArgs e)
+        {
+            txtExpression.SelectedText = "\"\"";
+        }
+
+        private void UpdateSize(object sender, EventArgs e)
+        {
+            if (udFontSize2.Value < udFontSize.Value)
             {
-                richTextBox1.Text = "";
+                udFontSize2.Value = udFontSize.Value;
             }
-        }
-        
-        /// <summary>
-        /// Building labels visiblity expression
-        /// </summary>
-        private void btnLabelExpression_Click(object sender, EventArgs e)
-        {
-            string s = txtLabelExpression.Text;
 
-            if (FormHelper.ShowQueryBuilder(_context, _layer, this, ref s, false))
-            {
-                if (txtLabelExpression.Text != s)
-                {
-                    txtLabelExpression.Text = s;
-                    _shapefile.Labels.VisibilityExpression = txtLabelExpression.Text;
-                    btnApply.Enabled = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Clears the label expression
-        /// </summary>
-        private void btnClearLabelsExpression_Click(object sender, EventArgs e)
-        {
-            txtLabelExpression.Clear();
-            _shapefile.Labels.VisibilityExpression = "";
-        }
-
-        /// <summary>
-        /// Saves the options and updates the map without closing the form
-        /// </summary>
-        private void btnApply_Click(object sender, EventArgs e)
-        {
-            if (ApplyOptions())
-            {
-                //m_legend.FireLayerPropertiesChanged(m_handle);
-                _context.Legend.Redraw(LegendRedraw.LegendAndMap);
-
-                _initState = _shapefile.Labels.Serialize();
-                RefreshControls();
-                btnApply.Enabled = false;
-            }
-        }
-
-        /// <summary>
-        /// Reverts the changes if cancel was hit
-        /// </summary>
-        private void frmLabelStyle_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (DialogResult == DialogResult.Cancel)
-            {
-                if (_categoryEdited)
-                {
-                    _category.Deserialize(_initState);
-                }
-                else
-                {
-                    var mode = _shapefile.Labels.SavingMode;
-                    _shapefile.Labels.SavingMode = PersistenceType.None;
-                    _shapefile.Labels.Deserialize(_initState);
-                    _shapefile.Labels.SavingMode = mode;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Sets current scale as basic one
-        /// </summary>
-        private void btnSetCurrent_Click(object sender, EventArgs e)
-        {
-            var map = _context.Map;
-            if (map != null)
-            {
-                cboBasicScale.Text = map.CurrentScale.ToString("0.00");
-            }
-        }
-
-        /// <summary>
-        /// Sets max visible scale to current scale
-        /// </summary>
-        private void btnSetMaxScale_Click(object sender, EventArgs e)
-        {
-            var map = _context.Map;
-            cboMaxScale.Text = map.CurrentScale.ToString("0.00");
-            btnApply.Enabled = true;
-        }
-
-        /// <summary>
-        /// Sets min visible scale to current scale
-        /// </summary>
-        private void btnSetMinScale_Click(object sender, EventArgs e)
-        {
-            cboMinScale.Text = _context.Map.CurrentScale.ToString("0.00");
-            btnApply.Enabled = true;
+            Ui2LabelStyle(null, null);
         }
     }
 }

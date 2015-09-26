@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.ShapeEditor.Views.Abstract;
@@ -150,7 +151,7 @@ namespace MW5.Plugins.ShapeEditor.Views
                 control.Tag = i;
                 tableLayoutPanel1.Controls.Add(control, cmnIndex + 1, rowIndex);
 
-                control.Enabled = name.ToLower() != "mwshapeid" && name.ToLower() != OgrFidName.ToLower();
+                control.Enabled = name.ToLower() != ShapefileHelper.MWShapeIdField && name.ToLower() != OgrFidName.ToLower();
             }
         }
 

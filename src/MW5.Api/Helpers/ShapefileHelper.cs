@@ -10,6 +10,8 @@ namespace MW5.Api.Helpers
 {
     public static class ShapefileHelper
     {
+        public const string MWShapeIdField = "mwshapeid";
+
         public static string ErrorMessage(this Shapefile sf)
         {
             return sf.ErrorMsg[sf.LastErrorCode];

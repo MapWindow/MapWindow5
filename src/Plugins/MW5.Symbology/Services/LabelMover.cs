@@ -276,6 +276,7 @@ namespace MW5.Plugins.Symbology.Services
             r.Y = rect.Y;
             r.Width = rect.Width;
             r.Height = rect.Height;
+            r.FillTransparency = 150;
             _context.Map.Redraw(RedrawType.Minimal);
         }
     }

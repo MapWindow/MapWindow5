@@ -19,6 +19,7 @@ namespace MW5.Api.Interfaces
         bool FontOutlineVisible { get; set; }
         int FontOutlineWidth { get; set; }
         int FontSize { get; set; }
+        int FontSize2 { get; set; }
         bool FontStrikeOut { get; set; }
         byte FontTransparency { get; set; }
         bool FontUnderline { get; set; }

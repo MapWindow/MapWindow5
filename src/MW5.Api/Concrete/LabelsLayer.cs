@@ -198,6 +198,12 @@ namespace MW5.Api.Concrete
             set { _labels.MinDrawingSize = value; }
         }
 
+        public bool LogScaleForSize
+        {
+            get {return _labels.LogScaleForSize; }
+            set { _labels.LogScaleForSize = value; }
+        }
+
         public object InternalObject
         {
             get { return _labels; }
@@ -223,6 +229,17 @@ namespace MW5.Api.Concrete
         {
             _labels.Deserialize(state);
             return true;
+        }
+
+        public bool UseVariableSize
+        {
+            get {return _labels.UseVariableSize; }
+            set { _labels.UseVariableSize = value; }
+        }
+
+        public void UpdateSizeField()
+        {
+            _labels.UpdateSizeField();
         }
     }
 }

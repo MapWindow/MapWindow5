@@ -705,6 +705,23 @@ namespace MW5.Api.Concrete
             set { _shapefile.MinDrawingSize = value; }
         }
 
+        public string SortField
+        {
+            get { return _shapefile.SortField; }
+            set { _shapefile.SortField = value; }
+        }
+
+        public bool SortAscending
+        {
+            get { return _shapefile.SortAscending; }
+            set { _shapefile.SortAscending = value; }
+        }
+
+        public void UpdateSortField()
+        {
+            _shapefile.UpdateSortField();
+        }
+
         public IGlobalListener Callback
         {
             get { return NativeCallback.UnWrap(_shapefile.GlobalCallback); }
@@ -732,7 +749,5 @@ namespace MW5.Api.Concrete
         {
             return _shapefile.Move(xOffset, yOffset);
         }
-
-
     }
 }

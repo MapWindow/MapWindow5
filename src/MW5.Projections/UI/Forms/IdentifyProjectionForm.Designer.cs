@@ -58,7 +58,6 @@ namespace MW5.Projections.UI.Forms
             this.textBox1.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(419, 77);
             this.textBox1.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.textBox1.TabIndex = 0;

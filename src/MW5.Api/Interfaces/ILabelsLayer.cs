@@ -63,6 +63,14 @@ namespace MW5.Api.Interfaces
 
         int MinDrawingSize { get; set; }
 
+        
+
+        bool LogScaleForSize { get; set; }
+
+        bool UseVariableSize { get; set; }
+
+        void UpdateSizeField();
+
         //void ForceRecalculateExpression();
 
         //bool LoadFromDbf(bool loadText = false, bool loadCategory = false);

@@ -28,7 +28,7 @@ namespace MW5.Api.Helpers
             var fields = source.Fields;
             for (int i = 0; i < fields.Count; i++)
             {
-                if (fields[i].Name.ToLower() == "mwshapeid")
+                if (fields[i].Name.ToLower() == ShapefileHelper.MWShapeIdField)
                 {
                     continue;
                 }
