@@ -28,6 +28,7 @@ namespace MW5.Helpers
             map.ResizeBehavior = ResizeBehavior.KeepScale;
             map.Measuring.UndoButton = UndoShortcut.CtrlZ;
             map.ShowCoordinatesFormat = AngleFormat.Seconds;
+            map.ExtentHistory = 200;
         }
 
         public static void InitMapConfig()

@@ -595,7 +595,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// </summary>
         private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            if (DialogResult == DialogResult.Cancel)
+            if (DialogResult == DialogResult.Cancel && btnApply.Enabled)
             {
                 if (_categoryEdited)
                 {

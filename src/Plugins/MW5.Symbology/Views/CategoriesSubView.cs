@@ -338,6 +338,11 @@ namespace MW5.Plugins.Symbology.Views
         }
 
         #endregion
+
+        private void OnUseVariableSizeChanged(object sender, EventArgs e)
+        {
+            RefreshControls();
+        }
     }
 
     public class CategoriesSubViewBase : SubViewBase<CategoriesSubViewModel>
