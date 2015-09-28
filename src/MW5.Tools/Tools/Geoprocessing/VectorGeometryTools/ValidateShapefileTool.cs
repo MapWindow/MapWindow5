@@ -32,7 +32,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public IVectorInput Input { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_errors", LayerType.Shapefile)]
+        [OutputLayer("{input}_errors.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         [Output("Create output shapefile with errors", 1)]

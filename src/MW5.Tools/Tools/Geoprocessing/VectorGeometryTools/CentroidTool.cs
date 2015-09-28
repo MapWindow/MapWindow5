@@ -34,7 +34,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public bool AllParts { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_center", LayerType.Shapefile)]
+        [OutputLayer("{input}_center.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>

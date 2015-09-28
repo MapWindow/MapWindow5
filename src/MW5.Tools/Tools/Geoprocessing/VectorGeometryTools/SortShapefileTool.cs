@@ -27,7 +27,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public bool Ascending { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_sort", LayerType.Shapefile)]
+        [OutputLayer("{input}_sort.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>

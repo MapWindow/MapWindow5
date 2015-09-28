@@ -21,7 +21,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public IVectorInput Input { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_export", LayerType.Shapefile)]
+        [OutputLayer("{input}_export.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>

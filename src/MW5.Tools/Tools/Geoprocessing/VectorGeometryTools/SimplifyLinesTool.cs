@@ -26,7 +26,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public Distance Tolerance { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_simplify", LayerType.Shapefile)]
+        [OutputLayer("{input}_simplify.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>

@@ -24,7 +24,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public IEnvelope Extents { get; set; }
 
         [Output("Output layer", 0)]
-        [OutputLayer("{input}_clip", LayerType.Shapefile)]
+        [OutputLayer("{input}_clip.shp", LayerType.Shapefile)]
         public OutputLayerInfo Output { get; set; }
 
         /// <summary>
