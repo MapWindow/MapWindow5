@@ -11,7 +11,7 @@ using NUnit.Framework;
 namespace MW5.API.Test
 {
     // TODO: add verification conditions
-    //[TestFixture]
+    [TestFixture]
     public class Tests
     {
         [Test]

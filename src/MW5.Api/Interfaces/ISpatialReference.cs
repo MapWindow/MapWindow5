@@ -40,5 +40,7 @@ namespace MW5.Api.Interfaces
         bool Transform(ref double x, ref double y);
         bool TryAutoDetectEpsg(out int epsgCode);
         bool WriteToFile(string filename);
+        string ExportToEsri();
+        ISpatialReference MorphToEsri();
     }
 }

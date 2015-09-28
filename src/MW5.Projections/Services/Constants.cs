@@ -39,6 +39,7 @@ namespace MW5.Projections.Services
         public const string CmnCsAreaName = "AREA_OF_USE";
         public const string CmnCsRemarks = "REMARKS";
         public const string CmnCsProj4 = "Proj4";
+        public const string EsriName = "EsriName";
 
         // types of CS used
         public const string CsTypeGeographic_2D = "geographic 2D";

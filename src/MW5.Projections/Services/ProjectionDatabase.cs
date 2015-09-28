@@ -109,6 +109,11 @@ namespace MW5.Projections.Services
                 cs = GetCoordinateSystem(proj, searchType);
             }
 
+            if (cs == null && proj.ImportFromEsri(str))
+            {
+                cs = GetCoordinateSystem(proj, searchType);
+            }
+
             return cs;
         }
         
@@ -155,7 +160,7 @@ namespace MW5.Projections.Services
         }
 
         /// <summary>
-        /// Searches coordinate system
+        /// Searches for the coordinate system
         /// </summary>
         private ICoordinateSystem GetCoordinateSystemCore(ISpatialReference proj)
         {
@@ -166,14 +171,39 @@ namespace MW5.Projections.Services
                 return null;
             }
 
+            var projEsri = proj.MorphToEsri();
+            string esriName = projEsri != null ? projEsri.Name.ToLower() : string.Empty;
+
+            int epsg;
+            if (proj.TryAutoDetectEpsg(out epsg))
+            {
+                return GetCoordinateSystem(epsg);
+            }
+
             if (proj.IsGeographic)
             {
-                return _listGcs.FirstOrDefault(gcs => gcs.Name.ToLower() == name);
+                return GetCoordinateSystemCore(_listGcs, name, esriName);
             }
 
             if (proj.IsProjected)
             {
-                return _listPcs.FirstOrDefault(pcs => pcs.Name.ToLower() == name);
+                return GetCoordinateSystemCore(_listPcs, name, esriName);
+            }
+
+            return null;
+        }
+
+        private ICoordinateSystem GetCoordinateSystemCore(IEnumerable<ICoordinateSystem> list, string name, string esriName)
+        {
+            var cs = list.FirstOrDefault(item => item.Name.ToLower() == name);
+            if (cs != null)
+            {
+                return cs;
+            }
+
+            if (!string.IsNullOrWhiteSpace(esriName))
+            {
+                return list.FirstOrDefault(item => item.EsriName.ToLower() == esriName);
             }
 
             return null;
@@ -375,6 +405,11 @@ namespace MW5.Projections.Services
                 code = EpsgCodeByDialectString(proj.ExportToWkt());
             }
 
+            if (code == -1)
+            {
+                code = EpsgCodeByDialectString(proj.ExportToEsri());
+            }
+
             return code;
         }
         #endregion
@@ -473,7 +508,7 @@ namespace MW5.Projections.Services
                 }
                 else
                 {
-                    Logger.Current.Warn("Source geographic CS for projected CS wasn't found: " + pcs.Code);
+                    Logger.Current.Debug("Source geographic CS for projected CS wasn't found: " + pcs.Code);
                 }
             
             }
@@ -716,12 +751,14 @@ namespace MW5.Projections.Services
             int typeColumn = ColumnIndexByName(reader, Constants.CmnCsProjection);
             int localColumn = ColumnIndexByName(reader, Constants.CmnCsLocal);
             int proj4Column = ColumnIndexByName(reader, Constants.CmnCsProj4);
+            int esriNameColumn = ColumnIndexByName(reader, Constants.EsriName);
 
 
             if (codeColumn == -1 || nameColumn == -1 || sourceColumn == -1 ||
                 leftColumn == -1 || rightColumn == -1 || bottomColumn == -1 ||
                 topColumn == -1 || areaNameColumn == -1 || remarksColumn == -1 ||
-                scopeColumn == -1 || typeColumn == -1 || localColumn == -1 || proj4Column == -1)
+                scopeColumn == -1 || typeColumn == -1 || localColumn == -1 || proj4Column == -1 ||
+                esriNameColumn == -1 )
             {
                 MessageService.Current.Warn("The expected field isn't found in the [Coordinate Systems] table");
                 return false;
@@ -731,7 +768,7 @@ namespace MW5.Projections.Services
             {
                 while (reader.Read())
                 {
-                    ProjectedCs pcs = new ProjectedCs
+                    var pcs = new ProjectedCs
                     {
                         Code = reader.GetInt32(codeColumn),
                         Name = reader.GetString(nameColumn),
@@ -745,7 +782,8 @@ namespace MW5.Projections.Services
                         Proj4 = (!reader.IsDBNull(proj4Column)) ? reader.GetString(proj4Column) : "",
                         ProjectionType = (!reader.IsDBNull(typeColumn)) ? reader.GetString(typeColumn) : "",
                         Remarks = (!reader.IsDBNull(remarksColumn)) ? reader.GetString(remarksColumn) : "",
-                        Local = false
+                        Local = false,
+                        EsriName = (!reader.IsDBNull(esriNameColumn)) ? reader.GetString(esriNameColumn) : ""
                     };
 
                     if (!reader.IsDBNull(localColumn))
@@ -918,6 +956,7 @@ namespace MW5.Projections.Services
         #endregion
 
         #region UpdateProj4
+        
         /// <summary>
         /// Updates proj4 strings in the proj4 column of coordinate reference systems table
         /// Assumes that there is Coordinate Reference System table in the database (was removed from Sqlite).
@@ -925,13 +964,13 @@ namespace MW5.Projections.Services
         /// <returns></returns>
         public void UpdateProj4Strings(string dbName)
         {
-            DataSet ds = new DataSet();
+            var ds = new DataSet();
             DbDataAdapter adapter = _provider.CreateDataAdapter();
             DbConnection conn = _provider.CreateConnection(dbName);
 
             try
             {
-                DataTable dt = new DataTable();
+                var dt = new DataTable();
                 DbCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "SELECT [COORD_REF_SYS_CODE], [proj4] FROM [Coordinate Reference System]";
                 adapter.SelectCommand = cmd;
@@ -977,6 +1016,74 @@ namespace MW5.Projections.Services
                 ds.Clear();
             }
         }
+
+        public bool UpdateEsriName(string dbName)
+        {
+            int count = 0;
+
+            try
+            {
+                using (DbDataAdapter adapter = _provider.CreateDataAdapter())
+                {
+                    using (DbConnection conn = _provider.CreateConnection(dbName))
+                    {
+                        var dt = new DataTable();
+                        DbCommand cmd = conn.CreateCommand();
+                        cmd.CommandText = "SELECT [COORD_REF_SYS_CODE], [EsriName] FROM [Coordinate Systems]";
+                        adapter.SelectCommand = cmd;
+                        adapter.Fill(dt);
+
+                        DbCommand cmdUpdate = conn.CreateCommand();
+                        cmdUpdate.CommandText =
+                            "UPDATE [Coordinate Systems] SET EsriName = @esriName WHERE COORD_REF_SYS_CODE = @cs";
+
+                        DbParameter param = _provider.CreateParameter();
+                        param.ParameterName = "@esriName";
+                        param.DbType = DbType.String;
+                        param.Size = 100;
+                        param.SourceColumn = "esriName";
+                        cmdUpdate.Parameters.Add(param);
+
+                        param = _provider.CreateParameter();
+                        param.ParameterName = "@cs";
+                        param.DbType = DbType.Int32;
+                        param.Size = 10;
+                        param.SourceColumn = "COORD_REF_SYS_CODE";
+                        cmdUpdate.Parameters.Add(param);
+
+                        adapter.UpdateCommand = cmdUpdate;
+
+                        var proj = new SpatialReference();
+                        for (int i = 0; i < dt.Rows.Count; i++)
+                        {
+                            var code = (int)dt.Rows[i][0];
+                            if (proj.ImportFromEpsg(code))
+                            {
+                                var projEsri = proj.MorphToEsri();
+                                if (projEsri != null)
+                                {
+                                    dt.Rows[i][1] = projEsri.Name;
+                                    count++;
+                                }
+                            }
+                        }
+
+                        adapter.Update(dt);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = "Failed to update ESRI name for registered coordinate systems.";
+                Logger.Current.Error(msg, ex);
+                MessageService.Current.Warn(msg + ": " + ex.Message);
+                return false;
+            }
+
+            MessageService.Current.Info(string.Format("Records updated: {0}", count));
+            return true;
+        }
+
         #endregion
     }
 }

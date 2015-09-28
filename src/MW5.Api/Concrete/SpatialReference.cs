@@ -204,6 +204,18 @@ namespace MW5.Api.Concrete
             return _projection.WriteToFile(filename);
         }
 
+        public string ExportToEsri()
+        {
+            return _projection.ExportToEsri();
+        }
+
+        public ISpatialReference MorphToEsri()
+        {
+            string esri = ExportToEsri();
+            var proj2 = new SpatialReference();
+            return proj2.ImportFromWkt(esri) ? proj2 : null;
+        }
+
         public object InternalObject
         {
             get { return _projection; }

@@ -24,7 +24,7 @@ namespace MW5.Plugins.Interfaces.Projections
         ICoordinateSystem GetCoordinateSystem(ISpatialReference projection, ProjectionSearchType searchType);
 
         /// <summary>
-        /// Gets databass name
+        /// Gets database name
         /// </summary>
         string Name { get; }
 
@@ -112,5 +112,10 @@ namespace MW5.Plugins.Interfaces.Projections
         /// </summary>
         /// <returns></returns>
         void UpdateProj4Strings(string dbName);
+
+        /// <summary>
+        /// Updates ESRI names for projections.
+        /// </summary>
+        bool UpdateEsriName(string dbName);
     }
 }

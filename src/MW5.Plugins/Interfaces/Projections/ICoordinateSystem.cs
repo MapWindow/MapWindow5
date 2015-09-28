@@ -43,5 +43,10 @@ namespace MW5.Plugins.Interfaces.Projections
         /// Returns true if token should be filtered by particular token entered by user
         /// </summary>
         bool Filter(string token);
+
+        /// <summary>
+        /// Gets or sets ESRI name of the projected obtained by using SpatialReference.ExportToEsri.
+        /// </summary>
+        string EsriName { get; set; }
     }
 }

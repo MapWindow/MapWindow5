@@ -58,7 +58,7 @@ namespace MW5.Gdal.Model
 
             if (!mainOnly)
             {
-                sb.Append(@" " + AdditionalOptions);
+                sb.Append(@" " + AdditionalOptions + @" ");
             }
 
             return sb.ToString();

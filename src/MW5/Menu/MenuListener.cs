@@ -182,7 +182,7 @@ namespace MW5.Menu
             switch (itemKey)
             {
                 case MenuKeys.Test:
-                    Sandbox.TestLogger();
+                    //_context.Projections.UpdateEsriName(_context.Projections.Name);
                     return true;
                 case MenuKeys.NewMap:
                     _projectService.TryClose();

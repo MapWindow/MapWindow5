@@ -98,7 +98,7 @@ namespace MW5.Gdal.Tools
 
             var sb = new StringBuilder();
             
-            sb.AppendFormat("-f '{0}' ", OutputFormat.Name);
+            sb.AppendFormat("-f \"{0}\" ", OutputFormat.Name);
             sb.Append(s);
             sb.Append("-progress ");
 

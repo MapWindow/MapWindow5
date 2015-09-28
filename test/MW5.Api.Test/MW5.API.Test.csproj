@@ -74,6 +74,7 @@
     <Compile Include="CustomCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests.cs" />
+    <Compile Include="TestSpatialReference.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

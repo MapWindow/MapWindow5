@@ -72,5 +72,10 @@ namespace MW5.Projections.BL
 
             return Code.ToString().StartsWith(token) || Name.ContainsIgnoreCase(token);
         }
+
+        /// <summary>
+        /// Gets or sets ESRI name of the projected obtained by using SpatialReference.ExportToEsri.
+        /// </summary>
+        public string EsriName { get; set; }
     }
 }
