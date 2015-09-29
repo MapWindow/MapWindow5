@@ -1,5 +1,6 @@
 ﻿using MW5.Api.Interfaces;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Enums;
+using MW5.Projections.Forms;
 
 namespace MW5.Projections.Services.Abstract
 {

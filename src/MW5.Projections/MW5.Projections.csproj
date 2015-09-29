@@ -50,7 +50,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.Core, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -58,7 +58,13 @@
     <Reference Include="Syncfusion.Grid.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Syncfusion.Grid.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="Syncfusion.Shared.Base, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
@@ -91,7 +97,11 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="BL\ProjectionDialect.cs" />
     <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\DialectGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DL\IDataProvider.cs" />
     <Compile Include="DL\OleDbProvider.cs" />
     <Compile Include="DL\SqlCeProvider.cs" />
@@ -115,81 +125,76 @@
     <Compile Include="BL\ProjectedCs.cs" />
     <Compile Include="BL\Region.cs" />
     <Compile Include="BL\BoundingBox.cs" />
-    <Compile Include="UI\Controls\Constants.cs" />
-    <Compile Include="UI\Controls\CoordinateSystemEventArgs.cs" />
-    <Compile Include="UI\Controls\ProjectionMap.cs">
+    <Compile Include="Controls\TreeViewConstants.cs" />
+    <Compile Include="Controls\CoordinateSystemEventArgs.cs" />
+    <Compile Include="Controls\ProjectionMap.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Controls\ProjectionTextBox.cs">
+    <Compile Include="Controls\ProjectionTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="BL\Territory.cs" />
-    <Compile Include="Enums.cs" />
-    <Compile Include="UI\Controls\ProjectionTreeView.cs">
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Controls\ProjectionTreeView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI\Forms\AssignProjectionForm.cs">
+    <Compile Include="Forms\AssignProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\AssignProjectionForm.Designer.cs">
+    <Compile Include="Forms\AssignProjectionForm.Designer.cs">
       <DependentUpon>AssignProjectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ChooseProjectionForm.cs">
+    <Compile Include="Forms\ChooseProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ChooseProjectionForm.Designer.cs">
+    <Compile Include="Forms\ChooseProjectionForm.Designer.cs">
       <DependentUpon>ChooseProjectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\EnterProjectionForm.cs">
+    <Compile Include="Forms\EnterProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\EnterProjectionForm.Designer.cs">
+    <Compile Include="Forms\EnterProjectionForm.Designer.cs">
       <DependentUpon>EnterProjectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\IdentifyProjectionForm.cs">
+    <Compile Include="Forms\IdentifyProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\IdentifyProjectionForm.Designer.cs">
+    <Compile Include="Forms\IdentifyProjectionForm.Designer.cs">
       <DependentUpon>IdentifyProjectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\CompareProjectionForm.cs">
+    <Compile Include="Forms\CompareProjectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\CompareProjectionForm.Designer.cs">
+    <Compile Include="Forms\CompareProjectionForm.Designer.cs">
       <DependentUpon>CompareProjectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ProjectionManagerForm.cs">
+    <Compile Include="Forms\ProjectionManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ProjectionManagerForm.Designer.cs">
+    <Compile Include="Forms\ProjectionManagerForm.Designer.cs">
       <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ProjectionPropertiesForm.cs">
+    <Compile Include="Forms\ProjectionResultsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ProjectionPropertiesForm.Designer.cs">
-      <DependentUpon>ProjectionPropertiesForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\ProjectionResultsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\ProjectionResultsForm.Designer.cs">
+    <Compile Include="Forms\ProjectionResultsForm.Designer.cs">
       <DependentUpon>ProjectionResultsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\ReprojectForm.cs">
+    <Compile Include="Forms\ReprojectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\ReprojectForm.Designer.cs">
+    <Compile Include="Forms\ReprojectForm.Designer.cs">
       <DependentUpon>ReprojectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Forms\TesterReportForm.cs">
+    <Compile Include="Forms\TesterReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Forms\TesterReportForm.Designer.cs">
+    <Compile Include="Forms\TesterReportForm.Designer.cs">
       <DependentUpon>TesterReportForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Abstract\IProjectionMismatchView.cs" />
+    <Compile Include="Views\Abstract\IProjectionInfoView.cs" />
     <Compile Include="Views\ProjectionMismatchModel.cs" />
     <Compile Include="Views\ProjectionMismatchPresenter.cs" />
     <Compile Include="Views\ProjectionMismatchView.cs">
@@ -198,43 +203,47 @@
     <Compile Include="Views\ProjectionMismatchView.Designer.cs">
       <DependentUpon>ProjectionMismatchView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\ProjectionInfoModel.cs" />
+    <Compile Include="Views\ProjectionInfoPresenter.cs" />
+    <Compile Include="Views\ProjectionInfoView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ProjectionInfoView.Designer.cs">
+      <DependentUpon>ProjectionInfoView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\Controls\ProjectionTreeView.resx">
+    <EmbeddedResource Include="Controls\ProjectionTreeView.resx">
       <DependentUpon>ProjectionTreeView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\AssignProjectionForm.resx">
+    <EmbeddedResource Include="Forms\AssignProjectionForm.resx">
       <DependentUpon>AssignProjectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ChooseProjectionForm.resx">
+    <EmbeddedResource Include="Forms\ChooseProjectionForm.resx">
       <DependentUpon>ChooseProjectionForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\EnterProjectionForm.resx">
+    <EmbeddedResource Include="Forms\EnterProjectionForm.resx">
       <DependentUpon>EnterProjectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\IdentifyProjectionForm.resx">
+    <EmbeddedResource Include="Forms\IdentifyProjectionForm.resx">
       <DependentUpon>IdentifyProjectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\CompareProjectionForm.resx">
+    <EmbeddedResource Include="Forms\CompareProjectionForm.resx">
       <DependentUpon>CompareProjectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ProjectionManagerForm.resx">
+    <EmbeddedResource Include="Forms\ProjectionManagerForm.resx">
       <DependentUpon>ProjectionManagerForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ProjectionPropertiesForm.resx">
-      <DependentUpon>ProjectionPropertiesForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ProjectionResultsForm.resx">
+    <EmbeddedResource Include="Forms\ProjectionResultsForm.resx">
       <DependentUpon>ProjectionResultsForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\ReprojectForm.resx">
+    <EmbeddedResource Include="Forms\ReprojectForm.resx">
       <DependentUpon>ReprojectForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\TesterReportForm.resx">
+    <EmbeddedResource Include="Forms\TesterReportForm.resx">
       <DependentUpon>TesterReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -243,6 +252,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ProjectionMismatchView.resx">
       <DependentUpon>ProjectionMismatchView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ProjectionInfoView.resx">
+      <DependentUpon>ProjectionInfoView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -325,7 +337,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Projections\Projections.db3">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Resources\img_folder.png" />
   </ItemGroup>
@@ -355,6 +367,7 @@
     <None Include="Resources\img_map.png" />
     <None Include="Resources\img_globe.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.96.0\build\net45\System.Data.SQLite.Core.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Forms;
 using MW5.Shared;
 using MW5.Tools.Enums;
 using MW5.Tools.Model;

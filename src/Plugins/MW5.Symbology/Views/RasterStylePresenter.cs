@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -14,7 +15,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Views.Abstract;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Helpers;
 using MW5.Services.Serialization;
 using MW5.Shared;
 
@@ -50,10 +51,7 @@ namespace MW5.Plugins.Symbology.Views
                     }
                     break;
                 case RasterCommand.ProjectionDetails:
-                    using (var form = new ProjectionPropertiesForm(Model.Projection))
-                    {
-                        AppViewFactory.Instance.ShowChildView(form);
-                    }
+                    _context.ShowProjectionProperties(Model.Projection, View as IWin32Window);
                     break;
                 case RasterCommand.ClearColorAdjustments:
                     View.ClearColorAdjustments();

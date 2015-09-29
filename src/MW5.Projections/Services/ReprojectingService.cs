@@ -8,9 +8,10 @@ using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
 using MW5.Plugins.Services;
+using MW5.Projections.Enums;
+using MW5.Projections.Forms;
 using MW5.Projections.Helpers;
 using MW5.Projections.Services.Abstract;
-using MW5.Projections.UI.Forms;
 using MW5.Shared;
 
 namespace MW5.Projections.Services

@@ -15,7 +15,7 @@ using MW5.Plugins.Symbology.Controls.ImageCombo;
 using MW5.Plugins.Symbology.Forms;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Views.Abstract;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Helpers;
 using MW5.Services.Serialization;
 using MW5.Shared;
 
@@ -104,10 +104,7 @@ namespace MW5.Plugins.Symbology.Views
                     LayerSerializationHelper.RemoveSettings(Model, false);
                     break;
                 case VectorStyleCommand.ProjectionDetails:
-                    using (var form = new ProjectionPropertiesForm(Model.Projection))
-                    {
-                        _context.View.ShowChildView(form);
-                    }
+                    _context.ShowProjectionProperties(Model.Projection, View as IWin32Window);
                     break;
                 case VectorStyleCommand.ChartsEditColorScheme:
                     FormHelper.EditColorSchemes(_context, SchemeTarget.Charts, ViewAsParent);

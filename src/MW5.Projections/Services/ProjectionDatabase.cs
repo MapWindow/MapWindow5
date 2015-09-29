@@ -328,7 +328,7 @@ namespace MW5.Projections.Services
                         param.Value = cs.Code;
                         cmd.Parameters.Add(param);
                         DbDataReader reader = cmd.ExecuteReader();
-                        
+
                         if (reader.HasRows)
                         {
                             while (reader.Read())
@@ -338,6 +338,10 @@ namespace MW5.Projections.Services
                         }
                         cmd.Dispose();
                     }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Current.Warn("Failed to read projection dialects: " + cs.Name, ex);
                 }
                 finally
                 {

@@ -7,9 +7,10 @@ using MW5.Plugins;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
+using MW5.Projections.Enums;
+using MW5.Projections.Forms;
 using MW5.Projections.Helpers;
 using MW5.Projections.Services.Abstract;
-using MW5.Projections.UI.Forms;
 using MW5.Projections.Views;
 
 namespace MW5.Projections.Services

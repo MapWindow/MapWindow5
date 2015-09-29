@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -10,7 +11,8 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Interfaces.Projections;
 using MW5.Plugins.Services;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Forms;
+using MW5.Projections.Views;
 
 namespace MW5.Projections.Helpers
 {
@@ -92,23 +94,37 @@ namespace MW5.Projections.Helpers
         /// <summary>
         /// Displays properties of the current map projection.
         /// </summary>
-        public static void ShowProjectionProperties(this IAppContext context)
+        public static void ShowMapProjectionProperties(this IAppContext context)
         {
             var cs = context.Projections.GetCoordinateSystem(context.Map.Projection, ProjectionSearchType.UseDialects);
             if (cs != null)
             {
-                using (var form = new ProjectionPropertiesForm(cs, context.Projections))
-                {
-                    context.View.ShowChildView(form);
-                }
+                ShowProjectionProperties(context, cs);
             }
             else
             {
-                using (var form = new ProjectionPropertiesForm(context.Map.Projection))
-                {
-                    context.View.ShowChildView(form);
-                }
+                ShowProjectionProperties(context, context.Map.Projection);
             }
+        }
+
+        /// <summary>
+        /// Displays property dialog for specified projection.
+        /// </summary>
+        public static void ShowProjectionProperties(this IAppContext context, ISpatialReference projection, IWin32Window parent = null)
+        {
+            var model = new ProjectionInfoModel(projection);
+
+            context.Container.Run<ProjectionInfoPresenter, ProjectionInfoModel>(model, parent);
+        }
+
+        /// <summary>
+        /// Displays property dialog for specified coordinate system.
+        /// </summary>
+        public static void ShowProjectionProperties(this IAppContext context, ICoordinateSystem cs, IWin32Window parent = null)
+        {
+            var model = new ProjectionInfoModel(cs);
+
+            context.Container.Run<ProjectionInfoPresenter, ProjectionInfoModel>(model, parent);
         }
 
         public static bool IsDialectOf(this IProjectionDatabase projectionDatabase, ISpatialReference multiDefinedProj, ISpatialReference testProj)

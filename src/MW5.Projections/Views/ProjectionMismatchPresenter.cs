@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
-using MW5.Projections.UI.Forms;
+using MW5.Projections.Forms;
 using MW5.Projections.Views.Abstract;
 
 namespace MW5.Projections.Views

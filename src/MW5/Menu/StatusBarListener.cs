@@ -14,7 +14,6 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Projections.Helpers;
-using MW5.Projections.UI.Forms;
 using MW5.Properties;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -108,11 +107,11 @@ namespace MW5.Menu
                     }
                     else
                     {
-                        _context.ShowProjectionProperties();
+                        _context.ShowMapProjectionProperties();
                     }
                     break;
                 case StatusBarKeys.ProjectionProperties:
-                    _context.ShowProjectionProperties();
+                    _context.ShowMapProjectionProperties();
                     break;
                 case StatusBarKeys.ChooseProjection:
                     _context.ChangeProjection();

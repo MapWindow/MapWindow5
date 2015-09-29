@@ -9,7 +9,6 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Projections.Services;
 using MW5.Projections.Services.Abstract;
-using MW5.Projections.UI.Forms;
 using MW5.Projections.Views;
 using MW5.Projections.Views.Abstract;
 
@@ -22,7 +21,8 @@ namespace MW5.Projections
             container.RegisterSingleton<IProjectionDatabase, ProjectionDatabase>()
                 .RegisterService<IReprojectingService, ReprojectingService>()
                 .RegisterService<IProjectionMismatchService, ProjectionMismatchService>()
-                .RegisterView<IProjectionMismatchView, ProjectionMismatchView>();
+                .RegisterView<IProjectionMismatchView, ProjectionMismatchView>()
+                .RegisterView<IProjectionInfoView, ProjectionInfoView>();
         }
     }
 }

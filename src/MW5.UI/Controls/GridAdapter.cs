@@ -187,6 +187,19 @@ namespace MW5.UI.Controls
 
                 return _grid.Table.SelectedRecords[0].Record.GetData() as T;
             }
+            set
+            {
+                _grid.Table.SelectedRecords.Clear();
+
+                foreach (var r in _grid.Table.Records)
+                {
+                    if (r.GetData() == value)
+                    {
+                        Grid.Table.SelectedRecords.Add(r);
+                        break;
+                    }
+                }
+            }
         }
 
         public T this[int index]
@@ -302,6 +315,15 @@ namespace MW5.UI.Controls
             }
         }
 
+        public void ScrollToSelectedRow()
+        {
+            int index = GetSelectedRowIndex();
+            if (index != -1)
+            {
+                _grid.TableControl.ScrollCellInView(index, 0);
+            }
+        }
+
         public int GetSelectedRecordIndex()
         {
             if (_grid.Table.SelectedRecords.Count == 0)
@@ -312,7 +334,7 @@ namespace MW5.UI.Controls
             return _grid.Table.SelectedRecords[0].GetSourcePosition();
         }
 
-        private int GetSelectedRowIndex()
+        public int GetSelectedRowIndex()
         {
             var rec = GetSelectedRecord();
             if (rec != null)
