@@ -15,7 +15,7 @@ namespace MW5.Projections.BL
             Definition = proj;
 
             var projTest = new SpatialReference();
-            Format = projTest.ImportFromProj4(Definition) ? DialectFormat.Proj4 : DialectFormat.Wkt;
+            Format = projTest.ImportFromProj4(Definition) ? DialectFormat.Proj4 : DialectFormat.WKT;
         }
 
         public string Definition { get; set; }

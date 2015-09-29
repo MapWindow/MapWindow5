@@ -62,6 +62,10 @@ namespace MW5.Projections.Views
             this.btnRemoveDialect = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnAddDialect = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabEsriWkt = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnCopyClipboardEsri = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.gradientPanel2 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
+            this.projectionTextBoxEsri = new MW5.Projections.Controls.ProjectionTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabDescription.SuspendLayout();
@@ -77,6 +81,9 @@ namespace MW5.Projections.Views
             this.gradientPanel1.SuspendLayout();
             this.tabDialects.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).BeginInit();
+            this.tabEsriWkt.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).BeginInit();
+            this.gradientPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -88,7 +95,7 @@ namespace MW5.Projections.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(348, 488);
+            this.btnCancel.Location = new System.Drawing.Point(377, 511);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 37;
@@ -103,7 +110,7 @@ namespace MW5.Projections.Views
             this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(258, 488);
+            this.btnOk.Location = new System.Drawing.Point(287, 511);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 36;
@@ -115,17 +122,18 @@ namespace MW5.Projections.Views
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.BeforeTouchSize = new System.Drawing.Size(421, 470);
+            this.tabControl1.BeforeTouchSize = new System.Drawing.Size(450, 493);
             this.tabControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tabControl1.Controls.Add(this.tabDescription);
             this.tabControl1.Controls.Add(this.tabMap);
             this.tabControl1.Controls.Add(this.tabWkt);
+            this.tabControl1.Controls.Add(this.tabEsriWkt);
             this.tabControl1.Controls.Add(this.tabDialects);
             this.tabControl1.FixedSingleBorderColor = System.Drawing.Color.LightGray;
             this.tabControl1.FocusOnTabClick = false;
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
-            this.tabControl1.Size = new System.Drawing.Size(421, 470);
+            this.tabControl1.Size = new System.Drawing.Size(450, 493);
             this.tabControl1.TabIndex = 35;
             this.tabControl1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererMetro);
             // 
@@ -147,7 +155,7 @@ namespace MW5.Projections.Views
             this.tabDescription.Location = new System.Drawing.Point(1, 22);
             this.tabDescription.Name = "tabDescription";
             this.tabDescription.ShowCloseButton = true;
-            this.tabDescription.Size = new System.Drawing.Size(419, 447);
+            this.tabDescription.Size = new System.Drawing.Size(448, 470);
             this.tabDescription.TabIndex = 1;
             this.tabDescription.Text = "Description";
             this.tabDescription.ThemesEnabled = false;
@@ -167,13 +175,13 @@ namespace MW5.Projections.Views
             // 
             this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtName.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtName.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtName.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtName.Location = new System.Drawing.Point(77, 29);
             this.txtName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtName.Name = "txtName";
             this.txtName.ReadOnly = true;
-            this.txtName.Size = new System.Drawing.Size(324, 20);
+            this.txtName.Size = new System.Drawing.Size(353, 20);
             this.txtName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtName.TabIndex = 1;
             // 
@@ -181,14 +189,14 @@ namespace MW5.Projections.Views
             // 
             this.txtProj4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtProj4.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtProj4.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtProj4.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProj4.Location = new System.Drawing.Point(27, 221);
             this.txtProj4.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtProj4.Multiline = true;
             this.txtProj4.Name = "txtProj4";
             this.txtProj4.ReadOnly = true;
-            this.txtProj4.Size = new System.Drawing.Size(374, 70);
+            this.txtProj4.Size = new System.Drawing.Size(403, 70);
             this.txtProj4.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtProj4.TabIndex = 15;
             // 
@@ -205,14 +213,14 @@ namespace MW5.Projections.Views
             // 
             this.txtRemarks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtRemarks.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtRemarks.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtRemarks.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtRemarks.Location = new System.Drawing.Point(27, 323);
             this.txtRemarks.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtRemarks.Multiline = true;
             this.txtRemarks.Name = "txtRemarks";
             this.txtRemarks.ReadOnly = true;
-            this.txtRemarks.Size = new System.Drawing.Size(374, 107);
+            this.txtRemarks.Size = new System.Drawing.Size(403, 107);
             this.txtRemarks.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtRemarks.TabIndex = 16;
             // 
@@ -238,7 +246,7 @@ namespace MW5.Projections.Views
             // 
             // txtCode
             // 
-            this.txtCode.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtCode.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtCode.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtCode.Location = new System.Drawing.Point(77, 70);
             this.txtCode.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
@@ -274,14 +282,14 @@ namespace MW5.Projections.Views
             // 
             this.txtScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtScope.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtScope.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtScope.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtScope.Location = new System.Drawing.Point(27, 131);
             this.txtScope.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtScope.Multiline = true;
             this.txtScope.Name = "txtScope";
             this.txtScope.ReadOnly = true;
-            this.txtScope.Size = new System.Drawing.Size(374, 59);
+            this.txtScope.Size = new System.Drawing.Size(403, 59);
             this.txtScope.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtScope.TabIndex = 13;
             // 
@@ -295,7 +303,7 @@ namespace MW5.Projections.Views
             this.tabMap.Location = new System.Drawing.Point(1, 22);
             this.tabMap.Name = "tabMap";
             this.tabMap.ShowCloseButton = true;
-            this.tabMap.Size = new System.Drawing.Size(419, 447);
+            this.tabMap.Size = new System.Drawing.Size(448, 470);
             this.tabMap.TabIndex = 2;
             this.tabMap.Text = "Area of use";
             this.tabMap.ThemesEnabled = false;
@@ -308,7 +316,7 @@ namespace MW5.Projections.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._projectionMap1.BackgroundColor = System.Drawing.Color.White;
-            this._projectionMap1.CurrentScale = 27.769489044162647D;
+            this._projectionMap1.CurrentScale = 24.747421502357419D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
@@ -333,7 +341,7 @@ namespace MW5.Projections.Views
             this._projectionMap1.ShowCoordinatesFormat = MW5.Api.Enums.AngleFormat.Degrees;
             this._projectionMap1.ShowRedrawTime = false;
             this._projectionMap1.ShowVersionNumber = false;
-            this._projectionMap1.Size = new System.Drawing.Size(380, 196);
+            this._projectionMap1.Size = new System.Drawing.Size(409, 219);
             this._projectionMap1.SystemCursor = MW5.Api.Enums.SystemCursor.MapDefault;
             this._projectionMap1.TabIndex = 20;
             this._projectionMap1.Tag = "";
@@ -348,7 +356,7 @@ namespace MW5.Projections.Views
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 220);
+            this.label5.Location = new System.Drawing.Point(17, 243);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(86, 13);
             this.label5.TabIndex = 18;
@@ -358,14 +366,14 @@ namespace MW5.Projections.Views
             // 
             this.txtAreaName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtAreaName.BeforeTouchSize = new System.Drawing.Size(380, 186);
+            this.txtAreaName.BeforeTouchSize = new System.Drawing.Size(409, 186);
             this.txtAreaName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtAreaName.Location = new System.Drawing.Point(20, 236);
+            this.txtAreaName.Location = new System.Drawing.Point(20, 259);
             this.txtAreaName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtAreaName.Multiline = true;
             this.txtAreaName.Name = "txtAreaName";
             this.txtAreaName.ReadOnly = true;
-            this.txtAreaName.Size = new System.Drawing.Size(380, 186);
+            this.txtAreaName.Size = new System.Drawing.Size(409, 186);
             this.txtAreaName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtAreaName.TabIndex = 17;
             // 
@@ -378,9 +386,9 @@ namespace MW5.Projections.Views
             this.tabWkt.Location = new System.Drawing.Point(1, 22);
             this.tabWkt.Name = "tabWkt";
             this.tabWkt.ShowCloseButton = true;
-            this.tabWkt.Size = new System.Drawing.Size(419, 447);
+            this.tabWkt.Size = new System.Drawing.Size(448, 470);
             this.tabWkt.TabIndex = 3;
-            this.tabWkt.Text = "ESRI WKT";
+            this.tabWkt.Text = "WKT";
             this.tabWkt.ThemesEnabled = false;
             // 
             // btnCopyClipboard
@@ -388,7 +396,7 @@ namespace MW5.Projections.Views
             this.btnCopyClipboard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCopyClipboard.BeforeTouchSize = new System.Drawing.Size(110, 23);
             this.btnCopyClipboard.IsBackStageButton = false;
-            this.btnCopyClipboard.Location = new System.Drawing.Point(294, 409);
+            this.btnCopyClipboard.Location = new System.Drawing.Point(323, 432);
             this.btnCopyClipboard.Name = "btnCopyClipboard";
             this.btnCopyClipboard.Size = new System.Drawing.Size(110, 23);
             this.btnCopyClipboard.TabIndex = 4;
@@ -407,7 +415,7 @@ namespace MW5.Projections.Views
             this.gradientPanel1.Location = new System.Drawing.Point(18, 13);
             this.gradientPanel1.Name = "gradientPanel1";
             this.gradientPanel1.Padding = new System.Windows.Forms.Padding(5);
-            this.gradientPanel1.Size = new System.Drawing.Size(386, 390);
+            this.gradientPanel1.Size = new System.Drawing.Size(415, 413);
             this.gradientPanel1.TabIndex = 6;
             // 
             // projectionTextBox1
@@ -417,7 +425,7 @@ namespace MW5.Projections.Views
             this.projectionTextBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.projectionTextBox1.Location = new System.Drawing.Point(5, 5);
             this.projectionTextBox1.Name = "projectionTextBox1";
-            this.projectionTextBox1.Size = new System.Drawing.Size(374, 378);
+            this.projectionTextBox1.Size = new System.Drawing.Size(403, 401);
             this.projectionTextBox1.TabIndex = 0;
             this.projectionTextBox1.Text = "";
             // 
@@ -434,7 +442,7 @@ namespace MW5.Projections.Views
             this.tabDialects.Location = new System.Drawing.Point(1, 22);
             this.tabDialects.Name = "tabDialects";
             this.tabDialects.ShowCloseButton = true;
-            this.tabDialects.Size = new System.Drawing.Size(419, 447);
+            this.tabDialects.Size = new System.Drawing.Size(448, 470);
             this.tabDialects.TabIndex = 4;
             this.tabDialects.Text = "Dialects";
             this.tabDialects.ThemesEnabled = false;
@@ -453,7 +461,7 @@ namespace MW5.Projections.Views
             this.dialectGrid1.FreezeCaption = false;
             this.dialectGrid1.Location = new System.Drawing.Point(14, 42);
             this.dialectGrid1.Name = "dialectGrid1";
-            this.dialectGrid1.Size = new System.Drawing.Size(390, 363);
+            this.dialectGrid1.Size = new System.Drawing.Size(419, 386);
             this.dialectGrid1.TabIndex = 38;
             this.dialectGrid1.TableDescriptor.AllowEdit = false;
             this.dialectGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
@@ -478,7 +486,7 @@ namespace MW5.Projections.Views
             this.btnClearDialects.BeforeTouchSize = new System.Drawing.Size(69, 23);
             this.btnClearDialects.ForeColor = System.Drawing.Color.White;
             this.btnClearDialects.IsBackStageButton = false;
-            this.btnClearDialects.Location = new System.Drawing.Point(335, 411);
+            this.btnClearDialects.Location = new System.Drawing.Point(364, 434);
             this.btnClearDialects.Name = "btnClearDialects";
             this.btnClearDialects.Size = new System.Drawing.Size(69, 23);
             this.btnClearDialects.TabIndex = 38;
@@ -493,7 +501,7 @@ namespace MW5.Projections.Views
             this.btnEditDialect.BeforeTouchSize = new System.Drawing.Size(69, 23);
             this.btnEditDialect.ForeColor = System.Drawing.Color.White;
             this.btnEditDialect.IsBackStageButton = false;
-            this.btnEditDialect.Location = new System.Drawing.Point(184, 411);
+            this.btnEditDialect.Location = new System.Drawing.Point(213, 434);
             this.btnEditDialect.Name = "btnEditDialect";
             this.btnEditDialect.Size = new System.Drawing.Size(69, 23);
             this.btnEditDialect.TabIndex = 36;
@@ -508,7 +516,7 @@ namespace MW5.Projections.Views
             this.btnRemoveDialect.BeforeTouchSize = new System.Drawing.Size(69, 23);
             this.btnRemoveDialect.ForeColor = System.Drawing.Color.White;
             this.btnRemoveDialect.IsBackStageButton = false;
-            this.btnRemoveDialect.Location = new System.Drawing.Point(259, 411);
+            this.btnRemoveDialect.Location = new System.Drawing.Point(288, 434);
             this.btnRemoveDialect.Name = "btnRemoveDialect";
             this.btnRemoveDialect.Size = new System.Drawing.Size(69, 23);
             this.btnRemoveDialect.TabIndex = 35;
@@ -523,7 +531,7 @@ namespace MW5.Projections.Views
             this.btnAddDialect.BeforeTouchSize = new System.Drawing.Size(69, 23);
             this.btnAddDialect.ForeColor = System.Drawing.Color.White;
             this.btnAddDialect.IsBackStageButton = false;
-            this.btnAddDialect.Location = new System.Drawing.Point(109, 411);
+            this.btnAddDialect.Location = new System.Drawing.Point(138, 434);
             this.btnAddDialect.Name = "btnAddDialect";
             this.btnAddDialect.Size = new System.Drawing.Size(69, 23);
             this.btnAddDialect.TabIndex = 34;
@@ -536,16 +544,68 @@ namespace MW5.Projections.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.Location = new System.Drawing.Point(19, 9);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(350, 30);
+            this.label6.Size = new System.Drawing.Size(379, 30);
             this.label6.TabIndex = 4;
             this.label6.Text = "Dialects are alternative formulations of the projection. Add to this list any WKT" +
     " or proj4 strings that should be bound to the current EPSG code:\r\n";
+            // 
+            // tabEsriWkt
+            // 
+            this.tabEsriWkt.Controls.Add(this.btnCopyClipboardEsri);
+            this.tabEsriWkt.Controls.Add(this.gradientPanel2);
+            this.tabEsriWkt.Image = null;
+            this.tabEsriWkt.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabEsriWkt.Location = new System.Drawing.Point(1, 22);
+            this.tabEsriWkt.Name = "tabEsriWkt";
+            this.tabEsriWkt.ShowCloseButton = true;
+            this.tabEsriWkt.Size = new System.Drawing.Size(448, 470);
+            this.tabEsriWkt.TabIndex = 5;
+            this.tabEsriWkt.Text = "ESRI WKT";
+            this.tabEsriWkt.ThemesEnabled = false;
+            // 
+            // btnCopyClipboardEsri
+            // 
+            this.btnCopyClipboardEsri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyClipboardEsri.BeforeTouchSize = new System.Drawing.Size(110, 23);
+            this.btnCopyClipboardEsri.IsBackStageButton = false;
+            this.btnCopyClipboardEsri.Location = new System.Drawing.Point(322, 433);
+            this.btnCopyClipboardEsri.Name = "btnCopyClipboardEsri";
+            this.btnCopyClipboardEsri.Size = new System.Drawing.Size(110, 23);
+            this.btnCopyClipboardEsri.TabIndex = 7;
+            this.btnCopyClipboardEsri.Text = "Copy to clipboard";
+            this.btnCopyClipboardEsri.Click += new System.EventHandler(this.btnCopyClipboardEsri_Click);
+            // 
+            // gradientPanel2
+            // 
+            this.gradientPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gradientPanel2.BackgroundColor = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.White);
+            this.gradientPanel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.gradientPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel2.Controls.Add(this.projectionTextBoxEsri);
+            this.gradientPanel2.Location = new System.Drawing.Point(17, 14);
+            this.gradientPanel2.Name = "gradientPanel2";
+            this.gradientPanel2.Padding = new System.Windows.Forms.Padding(5);
+            this.gradientPanel2.Size = new System.Drawing.Size(415, 413);
+            this.gradientPanel2.TabIndex = 8;
+            // 
+            // projectionTextBoxEsri
+            // 
+            this.projectionTextBoxEsri.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.projectionTextBoxEsri.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.projectionTextBoxEsri.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.projectionTextBoxEsri.Location = new System.Drawing.Point(5, 5);
+            this.projectionTextBoxEsri.Name = "projectionTextBoxEsri";
+            this.projectionTextBoxEsri.Size = new System.Drawing.Size(403, 401);
+            this.projectionTextBoxEsri.TabIndex = 0;
+            this.projectionTextBoxEsri.Text = "";
             // 
             // ProjectionInfoView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(445, 525);
+            this.ClientSize = new System.Drawing.Size(474, 548);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.tabControl1);
@@ -568,6 +628,9 @@ namespace MW5.Projections.Views
             this.gradientPanel1.ResumeLayout(false);
             this.tabDialects.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).EndInit();
+            this.tabEsriWkt.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).EndInit();
+            this.gradientPanel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -604,6 +667,10 @@ namespace MW5.Projections.Views
         private Syncfusion.Windows.Forms.ButtonAdv btnAddDialect;
         private System.Windows.Forms.Label label6;
         private DialectGrid dialectGrid1;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabEsriWkt;
+        private Syncfusion.Windows.Forms.ButtonAdv btnCopyClipboardEsri;
+        private Syncfusion.Windows.Forms.Tools.GradientPanel gradientPanel2;
+        private ProjectionTextBox projectionTextBoxEsri;
 
     }
 }

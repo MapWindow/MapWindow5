@@ -36,7 +36,7 @@ namespace MW5.Plugins.Symbology.Views
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            MW5.Api.Concrete.SpatialReference spatialReference2 = new MW5.Api.Concrete.SpatialReference();
+            MW5.Api.Concrete.SpatialReference spatialReference1 = new MW5.Api.Concrete.SpatialReference();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VectorStyleView));
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -60,6 +60,7 @@ namespace MW5.Plugins.Symbology.Views
             this.label18 = new System.Windows.Forms.Label();
             this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnCopyInfo = new Syncfusion.Windows.Forms.ButtonAdv();
             this.infoGrid1 = new MW5.Plugins.Symbology.Controls.InfoGrid();
             this.tabDefault = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label5 = new System.Windows.Forms.Label();
@@ -124,7 +125,6 @@ namespace MW5.Plugins.Symbology.Views
             this.toolOpenLocation = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleControl2 = new MW5.Plugins.Symbology.Controls.ScaleControl();
             this.scaleControl1 = new MW5.Plugins.Symbology.Controls.ScaleControl();
-            this.btnCopyInfo = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -369,7 +369,7 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 76090165.294384554D;
+            this.axMap1.CurrentScale = 101016253.92530365D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -385,8 +385,8 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.MapUnits = MW5.Api.Enums.LengthUnits.Meters;
             this.axMap1.MouseWheelSpeed = 0.5D;
             this.axMap1.Name = "axMap1";
-            spatialReference2.Tag = "";
-            this.axMap1.Projection = spatialReference2;
+            spatialReference1.Tag = "";
+            this.axMap1.Projection = spatialReference1;
             this.axMap1.ResizeBehavior = MW5.Api.Enums.ResizeBehavior.Classic;
             this.axMap1.ReuseTileBuffer = true;
             this.axMap1.ScalebarUnits = MW5.Api.Enums.ScalebarUnits.GoogleStyle;
@@ -477,6 +477,17 @@ namespace MW5.Plugins.Symbology.Views
             this.tabInfo.TabIndex = 15;
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
+            // 
+            // btnCopyInfo
+            // 
+            this.btnCopyInfo.BeforeTouchSize = new System.Drawing.Size(75, 23);
+            this.btnCopyInfo.IsBackStageButton = false;
+            this.btnCopyInfo.Location = new System.Drawing.Point(15, 401);
+            this.btnCopyInfo.Name = "btnCopyInfo";
+            this.btnCopyInfo.Size = new System.Drawing.Size(75, 23);
+            this.btnCopyInfo.TabIndex = 5;
+            this.btnCopyInfo.Text = "Copy";
+            this.btnCopyInfo.Click += new System.EventHandler(this.btnCopyInfo_Click);
             // 
             // infoGrid1
             // 
@@ -586,6 +597,7 @@ namespace MW5.Plugins.Symbology.Views
             this.udMinDrawingSize.Name = "udMinDrawingSize";
             this.udMinDrawingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinDrawingSize.TabIndex = 176;
+            this.udMinDrawingSize.ValueChanged += new System.EventHandler(this.RefreshModel);
             // 
             // udMinLabelingSize
             // 
@@ -598,6 +610,7 @@ namespace MW5.Plugins.Symbology.Views
             this.udMinLabelingSize.Name = "udMinLabelingSize";
             this.udMinLabelingSize.Size = new System.Drawing.Size(53, 20);
             this.udMinLabelingSize.TabIndex = 178;
+            this.udMinLabelingSize.ValueChanged += new System.EventHandler(this.RefreshModel);
             // 
             // label6
             // 
@@ -1011,9 +1024,9 @@ namespace MW5.Plugins.Symbology.Views
             this.icbChartColorScheme.Location = new System.Drawing.Point(17, 83);
             this.icbChartColorScheme.Name = "icbChartColorScheme";
             this.icbChartColorScheme.OutlineColor = System.Drawing.Color.Black;
-            this.icbChartColorScheme.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbChartColorScheme.Size = new System.Drawing.Size(114, 21);
             this.icbChartColorScheme.TabIndex = 22;
+            this.icbChartColorScheme.Target = MW5.Plugins.Symbology.SchemeTarget.Vector;
             this.icbChartColorScheme.SelectedIndexChanged += new System.EventHandler(this.OnChartColorSchemeSelectedIndexChanged);
             // 
             // optChartBars
@@ -1230,17 +1243,6 @@ namespace MW5.Plugins.Symbology.Views
             this.scaleControl1.Size = new System.Drawing.Size(110, 273);
             this.scaleControl1.TabIndex = 162;
             this.scaleControl1.UseDynamicVisibility = false;
-            // 
-            // btnCopyInfo
-            // 
-            this.btnCopyInfo.BeforeTouchSize = new System.Drawing.Size(75, 23);
-            this.btnCopyInfo.IsBackStageButton = false;
-            this.btnCopyInfo.Location = new System.Drawing.Point(15, 401);
-            this.btnCopyInfo.Name = "btnCopyInfo";
-            this.btnCopyInfo.Size = new System.Drawing.Size(75, 23);
-            this.btnCopyInfo.TabIndex = 5;
-            this.btnCopyInfo.Text = "Copy";
-            this.btnCopyInfo.Click += new System.EventHandler(this.btnCopyInfo_Click);
             // 
             // VectorStyleView
             // 

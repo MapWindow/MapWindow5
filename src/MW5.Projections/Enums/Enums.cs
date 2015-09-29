@@ -80,6 +80,6 @@
     public enum DialectFormat
     {
         Proj4 = 0,
-        Wkt = 1
+        WKT = 1
     }
 }

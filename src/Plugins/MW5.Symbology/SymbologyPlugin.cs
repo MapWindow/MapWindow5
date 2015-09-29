@@ -29,7 +29,19 @@ namespace MW5.Plugins.Symbology
         internal static SymbologyMetadata GetMetadata(int layerHandle)
         {
             var service = _context.Container.Resolve<SymbologyMetadataService>();
-            return service.Get(layerHandle);
+            var metadata = service.Get(layerHandle);
+
+            if (!metadata.Initialized)
+            {
+                var layer = _context.Layers.ItemByHandle(layerHandle);
+                if (layer != null && layer.FeatureSet != null)
+                {
+                    metadata.ShowLayerPreview = layer.FeatureSet.NumFeatures < 5000;
+                    metadata.Initialized = true;
+                }
+            }
+
+            return metadata;
         }
 
         internal static void SaveMetadata(int layerHandle, SymbologyMetadata metadata)

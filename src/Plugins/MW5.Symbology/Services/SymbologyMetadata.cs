@@ -13,6 +13,8 @@ namespace MW5.Plugins.Symbology.Services
     [Serializable, XmlRoot("SymbologyMetadata")]
     public class SymbologyMetadata: LayerMetadataBase
     {
+        public bool Initialized { get; set; }
+
         #region Vector settings 
 
         [DefaultValue(Classification.NaturalBreaks)]

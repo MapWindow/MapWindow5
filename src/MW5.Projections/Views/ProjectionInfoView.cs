@@ -14,6 +14,7 @@ using MW5.Api.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Projections.BL;
+using MW5.Projections.Controls;
 using MW5.Projections.Views.Abstract;
 using MW5.Shared;
 using MW5.UI.Forms;
@@ -78,6 +79,7 @@ namespace MW5.Projections.Views
                 // those aren't avaialable for unidentified projection
                 tabControl1.TabPages.Remove(tabMap);
                 tabControl1.TabPages.Remove(tabDialects);
+                tabControl1.TabPages.Remove(tabEsriWkt);
             }
         }
 
@@ -161,9 +163,19 @@ namespace MW5.Projections.Views
 
         private void OnCopyClipboardClick(object sender, EventArgs e)
         {
-            projectionTextBox1.SelectAll();
-            projectionTextBox1.Copy();
-            projectionTextBox1.SelectionLength = 0;
+            CopyToClipboard(projectionTextBox1);
+        }
+
+        private void btnCopyClipboardEsri_Click(object sender, EventArgs e)
+        {
+            CopyToClipboard(projectionTextBoxEsri);
+        }
+
+        private void CopyToClipboard(ProjectionTextBox box)
+        {
+            box.SelectAll();
+            box.Copy();
+            box.SelectionLength = 0;
         }
 
         private void OnEpsgLinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -185,11 +197,12 @@ namespace MW5.Projections.Views
             var sr = new SpatialReference();
             if (!sr.ImportFromEpsg(cs.Code))
             {
-                // usupported projection
+                // unsupported projection
             }
             else
             {
                 projectionTextBox1.ShowProjection(sr.ExportToWkt());
+                projectionTextBoxEsri.ShowProjection(sr.ExportToEsri());
 
                 _projectionMap1.DrawCoordinateSystem(cs);
                 _projectionMap1.ZoomToCoordinateSystem(cs);
