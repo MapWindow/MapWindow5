@@ -150,8 +150,6 @@ namespace MW5.Data.Repository
                     return (int)RepositoryIcon.Sqlite;
                 case GeoDatabaseType.MsSql:
                     return (int) RepositoryIcon.MsSql;
-                case GeoDatabaseType.Oracle:
-                    return (int)RepositoryIcon.Oracle;
                 case GeoDatabaseType.MySql:
                     return (int)RepositoryIcon.MySql;
                 default:

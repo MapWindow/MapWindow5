@@ -64,12 +64,6 @@ namespace MW5.Data.Views
 
         private void TestConnection()
         {
-            if (View.DatabaseType == GeoDatabaseType.Oracle)
-            {
-                MessageService.Current.Info("Not implemented");
-                return;
-            }
-
             var info = View.GetConnection();
             if (!info.Validate())
             {

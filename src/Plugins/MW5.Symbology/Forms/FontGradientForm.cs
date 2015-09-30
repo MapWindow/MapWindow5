@@ -34,6 +34,7 @@ namespace MW5.Plugins.Symbology.Forms
         /// Initializes new instance of the FontGradientForm class
         /// </summary>
         /// <param name="labels">To set parameters for</param>
+        /// <param name="fontGradient"></param>
         public FontGradientForm(ILabelStyle labels, bool fontGradient)
         {
             InitializeComponent();
@@ -45,7 +46,7 @@ namespace MW5.Plugins.Symbology.Forms
             icbFontGradient.ComboStyle = ImageComboStyle.LinearGradient;
             icbFontGradient.SelectedIndex = 0;
 
-            this.Text = fontGradient ? "Font gradient" : "Frame gradient";
+            Text = fontGradient ? "Font gradient" : "Frame gradient";
             _noEvents = false;
 
             Settings2Ui();
@@ -98,13 +99,13 @@ namespace MW5.Plugins.Symbology.Forms
             {
                 _labels.FontColor =  clpFont1.Color;
                 _labels.FontColor2 =  clpFont2.Color;
-                _labels.FontGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
+                _labels.FontGradientMode = chkUseGradient.Checked ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
             else
             {
                 _labels.FrameBackColor = clpFont1.Color;
                 _labels.FrameBackColor2 =  clpFont2.Color;
-                _labels.FrameGradientMode = _fontGradient ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
+                _labels.FrameGradientMode = chkUseGradient.Checked ? (LinearGradient)icbFontGradient.SelectedIndex : LinearGradient.None;
             }
 
             Settings2Ui();

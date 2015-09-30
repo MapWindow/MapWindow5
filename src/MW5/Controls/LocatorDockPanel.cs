@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Events;
+using MW5.Shared;
 using MW5.UI.Controls;
 
 namespace MW5.Controls
@@ -86,9 +87,10 @@ namespace MW5.Controls
 
         internal void UpdateLocatorBox(IEnvelope exts)
         {
-            // update only in release mode, as it makes more difficult to debug MapWinGIS code
-            // when there are 2 map controls
-            #if !DEBUG
+            if (DebugHelper.HideAdditionalMapControls)
+            {
+                return;
+            }
 
             if (exts == null || Empty)
             {
@@ -108,8 +110,6 @@ namespace MW5.Controls
             mapControl1.Redraw(RedrawType.Minimal);
 
             _extents = exts;
-
-#endif
         }
 
         private void FireExtentsChanged(IEnvelope ext)

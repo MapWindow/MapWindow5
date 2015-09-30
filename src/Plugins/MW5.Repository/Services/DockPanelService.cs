@@ -24,7 +24,7 @@ namespace MW5.Plugins.Repository.Services
             {
                 var panel = panels.Add(presenter.GetInternalObject(), DockPanelKey, plugin.Identity);
                 panel.Caption = "Repository";
-                panel.SetIcon(Resources.ico_repository);
+                panel.SetIcon(Resources.ico_folder24);
                 panel.DockTo(panels.Toolbox, DockPanelState.Tabbed, 300);
             }
             finally

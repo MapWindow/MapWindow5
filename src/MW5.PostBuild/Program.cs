@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace MW5.PostBuild
 {
@@ -15,8 +16,15 @@ namespace MW5.PostBuild
 
         private static void RemoveOcx()
         {
-            File.Delete("mapwingis.ocx");
-            File.Delete("plugins\\mapwingis.ocx");
+            try
+            {
+                File.Delete("mapwingis.ocx");
+                File.Delete("plugins\\mapwingis.ocx");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to remove mapwingis.ocx: " + ex.Message);
+            }
         }
 
         private static void UpdateManifest()
@@ -25,11 +33,22 @@ namespace MW5.PostBuild
             const string oldFilename = "name=\"MapWinGIS.ocx\"";
             const string newFilename = "name=\"MapWinGis\\MapWinGIS.ocx\"";
 
-            var s = File.ReadAllText(path);
-            if (!string.IsNullOrWhiteSpace(s))
+            try
             {
-                File.WriteAllText(path, s.Replace(oldFilename, newFilename));
-                Console.WriteLine("Text was replaced");
+                var s = File.ReadAllText(path);
+                if (!string.IsNullOrWhiteSpace(s))
+                {
+                    var regex = new Regex(oldFilename, RegexOptions.IgnoreCase);
+                    var newText = regex.Replace(s, newFilename);
+
+                    File.WriteAllText(path, newText);
+
+                    Console.WriteLine("Text was replaced");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to update manifest: " + ex.Message);
             }
         }
     }

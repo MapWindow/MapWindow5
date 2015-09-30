@@ -58,8 +58,6 @@ namespace MW5.Data.Views
                     case 2:
                         return GeoDatabaseType.SpatiaLite;
                     case 3:
-                        return GeoDatabaseType.Oracle;
-                    case 4:
                         return GeoDatabaseType.MySql;
                 }
 
@@ -79,11 +77,8 @@ namespace MW5.Data.Views
                     case GeoDatabaseType.SpatiaLite:
                         tabControlAdv1.SelectedIndex = 2;
                         break;
-                    case GeoDatabaseType.Oracle:
-                        tabControlAdv1.SelectedIndex = 3;
-                        break;
                     case GeoDatabaseType.MySql:
-                        tabControlAdv1.SelectedIndex = 4;
+                        tabControlAdv1.SelectedIndex = 3;
                         break;
                 }
             }
@@ -110,8 +105,6 @@ namespace MW5.Data.Views
                     }
                     break;
                 case GeoDatabaseType.SpatiaLite:
-                    break;
-                case GeoDatabaseType.Oracle:
                     break;
                 case GeoDatabaseType.MsSql:
                     break;
@@ -146,8 +139,6 @@ namespace MW5.Data.Views
                     {
                         Filename = txtSpatiaLiteDatabase.Text
                     };
-                case GeoDatabaseType.Oracle:
-                    break;
                 case GeoDatabaseType.MsSql:
                     return new MssqlConnection()
                     {
@@ -210,8 +201,6 @@ namespace MW5.Data.Views
                     break;
                 case GeoDatabaseType.SpatiaLite:
                     break;
-                case GeoDatabaseType.Oracle:
-                    break;
                 case GeoDatabaseType.MsSql:
                     txtMssqlConnection.Text = cs;
                     break;
@@ -221,6 +210,11 @@ namespace MW5.Data.Views
         }
 
         private void optSqlAuthentication_CheckChanged(object sender, EventArgs e)
+        {
+           RefreshConnectionString();
+        }
+
+        private void RefreshConnectionString()
         {
             UpdateView();
             ParametersChanged(null, null);
@@ -232,6 +226,14 @@ namespace MW5.Data.Views
             if (_fileDialog.OpenFile(DataSourceType.SpatiaLite, out filename))
             {
                 txtSpatiaLiteDatabase.Text = filename;
+            }
+        }
+
+        private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControlAdv1.SelectedTab == tabMsSql)
+            {
+                RefreshConnectionString();
             }
         }
     }
