@@ -53,6 +53,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{95C7DCB0-AE75-43B7-9299-A9184E022EE5}"
 	ProjectSection(SolutionItems) = preProject
 		SolutionItems\MW5.TemplatePlugin.zip = SolutionItems\MW5.TemplatePlugin.zip
+		postbuild.bat = postbuild.bat
+		postbuild_x64.bat = postbuild_x64.bat
 		SolutionItems\SolutionInfoCore.cs = SolutionItems\SolutionInfoCore.cs
 		SolutionItems\SolutionInfoPlugins.cs = SolutionItems\SolutionInfoPlugins.cs
 		SolutionItems\Template-How-To.txt = SolutionItems\Template-How-To.txt

@@ -84,6 +84,18 @@ namespace MW5.Api.Concrete
             set { _labels.DynamicVisibility = value; }
         }
 
+        public int MinVisibleZoom
+        {
+            get { return _labels.MinVisibleZoom; }
+            set { _labels.MinVisibleZoom = value; }
+        }
+
+        public int MaxVisibleZoom
+        {
+            get { return _labels.MaxVisibleZoom; }
+            set { _labels.MaxVisibleZoom = value; }
+        }
+
         public string Expression
         {
             get { return _labels.Expression; }

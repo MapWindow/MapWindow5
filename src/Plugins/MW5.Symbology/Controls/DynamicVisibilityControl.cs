@@ -41,9 +41,6 @@ namespace MW5.Plugins.Symbology.Controls
             InitScales();
 
             InitZooms();
-
-            cboMinZoom.MakeSameSize(cboMinScale);
-            cboMaxZoom.MakeSameSize(cboMaxScale);
         }
 
         public void Initialize(IDynamicVisibilityTarget target, int currentZoom, double currentScale)
@@ -251,6 +248,9 @@ namespace MW5.Plugins.Symbology.Controls
             cboMaxZoom.Visible = mode == DynamicVisibilityMode.Zoom;
 
             panel1.Enabled = chkDynamicVisibility.Checked;
+
+            cboMinZoom.MakeSameSize(cboMinScale);
+            cboMaxZoom.MakeSameSize(cboMaxScale);
 
             if (mode == DynamicVisibilityMode.Scale)
             {

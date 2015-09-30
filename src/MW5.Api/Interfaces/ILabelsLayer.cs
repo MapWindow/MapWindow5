@@ -5,7 +5,7 @@ using MW5.Api.Enums;
 
 namespace MW5.Api.Interfaces
 {
-    public interface ILabelsLayer: ISerializableComWrapper
+    public interface ILabelsLayer: ISerializableComWrapper, IDynamicVisibilityTarget
     {
         bool Empty { get; }
 
@@ -27,15 +27,9 @@ namespace MW5.Api.Interfaces
 
         int CollisionBuffer { get; set; }
 
-        bool DynamicVisibility { get; set; }
-
         string Expression { get; set; }
 
         string FloatNumberFormat { get; set; }
-
-        double MaxVisibleScale { get; set; }
-
-        double MinVisibleScale { get; set; }
 
         double OffsetX { get; set; }
         
@@ -62,8 +56,6 @@ namespace MW5.Api.Interfaces
         IEnumerable<LabelInfo> Select(IEnvelope envelope, int tolerance = 0, MapSelectionMode selectMode = MapSelectionMode.Intersection);
 
         int MinDrawingSize { get; set; }
-
-        
 
         bool LogScaleForSize { get; set; }
 

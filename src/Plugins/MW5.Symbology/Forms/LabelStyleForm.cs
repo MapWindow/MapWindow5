@@ -67,9 +67,12 @@ namespace MW5.Plugins.Symbology.Forms
                 txtExpression.Text = LabelHelper.StripNewLineQuotes(_featureSet.Labels.Expression);
             }
 
+            dynamicVisibilityControl1.Initialize(_featureSet.Labels, _context.Map.CurrentZoom, _context.Map.CurrentScale);
+            dynamicVisibilityControl1.ValueChanged += (s, e) => { btnApply.Enabled = true; };
+
             Initialize(_featureSet.Labels.Style);
 
-            tabControl1.SelectedIndex = tabNumber;
+            tabControlAdv1.SelectedIndex = tabNumber;
         }
 
         /// <summary>
@@ -84,14 +87,14 @@ namespace MW5.Plugins.Symbology.Forms
             _categoryEdited = true;
             Initialize(lb);
 
-            tabControl1.SelectedIndex = tabNumber;
+            tabControlAdv1.SelectedIndex = tabNumber;
 
             // expression isn't available for the categories
             if (_categoryEdited)
             {
-                tabControl1.TabPages.Remove(tabControl1.TabPages[4]); // visibility
-                tabControl1.TabPages.Remove(tabControl1.TabPages[3]); // position
-                tabControl1.TabPages.Remove(tabControl1.TabPages[0]); // expression
+                tabControlAdv1.TabPages.Remove(tabVisibility);
+                tabControlAdv1.TabPages.Remove(tabPosition); 
+                tabControlAdv1.TabPages.Remove(tabExpression);
             }
 
             lblResult.Visible = false;
@@ -146,6 +149,8 @@ namespace MW5.Plugins.Symbology.Forms
         private void ApplyStyle()
         {
             _featureSet.Labels.Style = _category;
+
+            dynamicVisibilityControl1.ApplyChanges();
 
             if (_featureSet.Labels.Expression != txtExpression.Text)
             {
@@ -310,14 +315,10 @@ namespace MW5.Plugins.Symbology.Forms
                     "500000", "1000000", "10000000"
                 };
 
-            cboMinScale.Items.Clear();
-            cboMaxScale.Items.Clear();
             cboBasicScale.Items.Clear();
 
             foreach (string t in scales)
             {
-                cboMinScale.Items.Add(t);
-                cboMaxScale.Items.Add(t);
                 cboBasicScale.Items.Add(t);
             }
         }
@@ -516,10 +517,6 @@ namespace MW5.Plugins.Symbology.Forms
 
             transparencyControl1.Value = lb.FrameTransparency;
 
-            cboMinScale.Text = _featureSet.Labels.MinVisibleScale.ToString(CultureInfo.InvariantCulture);
-            cboMaxScale.Text = _featureSet.Labels.MaxVisibleScale.ToString(CultureInfo.InvariantCulture);
-            chkDynamicVisibility.Checked = _featureSet.Labels.DynamicVisibility;
-
             return true;
         }
 
@@ -642,7 +639,7 @@ namespace MW5.Plugins.Symbology.Forms
             }
             else
             {
-                tabControl1.SelectedTab = tabExpression;
+                tabControlAdv1.SelectedTab = tabExpression;
                 txtExpression.Focus();
             }
         }
@@ -671,7 +668,7 @@ namespace MW5.Plugins.Symbology.Forms
                 return;
             }
 
-            tabNumber = tabControl1.SelectedIndex;
+            tabNumber = tabControlAdv1.SelectedIndex;
 
             if (_featureSet.Labels.Serialize() != _initState)
             {
@@ -707,25 +704,6 @@ namespace MW5.Plugins.Symbology.Forms
                     btnApply.Enabled = true;
                 }
             }
-        }
-
-        /// <summary>
-        /// Sets max visible scale to current scale
-        /// </summary>
-        private void OnSetMaxScaleClick(object sender, EventArgs e)
-        {
-            var map = _context.Map;
-            cboMaxScale.Text = map.CurrentScale.ToString("0.00");
-            btnApply.Enabled = true;
-        }
-
-        /// <summary>
-        /// Sets min visible scale to current scale
-        /// </summary>
-        private void OnSetMinScaleClick(object sender, EventArgs e)
-        {
-            cboMinScale.Text = _context.Map.CurrentScale.ToString("0.00");
-            btnApply.Enabled = true;
         }
 
         /// <summary>
@@ -788,8 +766,6 @@ namespace MW5.Plugins.Symbology.Forms
             icbFrameType.Enabled = chkUseFrame.Checked;
             btnSetFrameGradient.Enabled = chkUseFrame.Checked;
 
-            panel1.Enabled = chkDynamicVisibility.Checked;
-
             cboBasicScale.Enabled = chkScaleLabels.Checked;
             btnSetCurrent.Enabled = chkScaleLabels.Checked;
             lblScaleLabels.Enabled = chkScaleLabels.Checked;
@@ -806,7 +782,6 @@ namespace MW5.Plugins.Symbology.Forms
                 noLabels = !hasExpression;
                 groupBox6.Enabled = hasExpression;
                 groupBox11.Enabled = hasExpression;
-                groupBox13.Enabled = hasExpression;
                 groupBox20.Enabled = hasExpression;
                 groupLabelAlignment.Enabled = hasExpression;
                 chkUseFrame.Enabled = hasExpression;
@@ -815,6 +790,7 @@ namespace MW5.Plugins.Symbology.Forms
                 groupBox4.Enabled = hasExpression;
                 groupBox5.Enabled = hasExpression;
                 chkScaleLabels.Enabled = hasExpression;
+                dynamicVisibilityControl1.Enabled = hasExpression;
             }
 
             groupBox4.Enabled = !noLabels && chkUseFrame.Checked;
@@ -905,7 +881,7 @@ namespace MW5.Plugins.Symbology.Forms
             // frame fill
             lb.FrameBackColor = clpFrame1.Color;
 
-            if (tabControl1.SelectedTab.Name == "tabFrameFill")
+            if (tabControlAdv1.SelectedTab == tabFrame)
             {
                 lb.FrameVisible = chkUseFrame.Checked;
                 lb.FrameType = (FrameType)icbFrameType.SelectedIndex;
@@ -956,17 +932,6 @@ namespace MW5.Plugins.Symbology.Forms
             if (optAlignTopCenter.Checked) lb.Alignment = LabelAlignment.TopCenter;
             if (optAlignTopLeft.Checked) lb.Alignment = LabelAlignment.TopLeft;
             if (optAlignTopRight.Checked) lb.Alignment = LabelAlignment.TopRight;
-
-            if (double.TryParse(cboMinScale.Text, out val))
-            {
-                _featureSet.Labels.MinVisibleScale = val;
-            }
-
-            if (double.TryParse(cboMaxScale.Text, out val))
-            {
-                _featureSet.Labels.MaxVisibleScale = val;
-            }
-            _featureSet.Labels.DynamicVisibility = chkDynamicVisibility.Checked;
 
             btnApply.Enabled = true;
 
