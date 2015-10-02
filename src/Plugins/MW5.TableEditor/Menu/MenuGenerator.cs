@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.TableEditor.Menu
@@ -32,7 +33,22 @@ namespace MW5.Plugins.TableEditor.Menu
         private void InitMenu()
         {
             var menu = _context.Menu.LayerMenu;
-            menu.SubItems.AddButton(_commands[MenuKeys.ShowTable]);
+
+            IMenuItem before = null;
+            foreach (IMenuItem subItem in menu.SubItems)
+            {
+                if (subItem.HasKey && subItem.Key == Plugins.Menu.MenuKeys.LayerProperties)
+                {
+                    before = subItem;
+                    break;
+                }
+            }
+            
+            menu.SubItems.InsertBefore = before;
+
+            menu.SubItems.AddButton(_commands[MenuKeys.ShowTable]).BeginGroup = true;
+
+            menu.Update();
         }
     }
 }

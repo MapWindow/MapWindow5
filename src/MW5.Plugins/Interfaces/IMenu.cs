@@ -21,6 +21,8 @@ namespace MW5.Plugins.Interfaces
 
         IDropDownMenuItem HelpMenu { get; }
 
+        IDropDownMenuItem MapMenu { get; }
+
         IMenuItem FindItem(string key, PluginIdentity identity);
 
         void RemoveItemsForPlugin(PluginIdentity identity);

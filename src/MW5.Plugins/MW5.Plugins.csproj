@@ -148,6 +148,7 @@
     <Compile Include="Interfaces\Projections\IRegion.cs" />
     <Compile Include="Interfaces\Projections\ITerritory.cs" />
     <Compile Include="Interfaces\IToolboxGroup.cs" />
+    <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Mvp\AppViewFactory.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
     <Compile Include="Mvp\CommandDispatcher.cs" />

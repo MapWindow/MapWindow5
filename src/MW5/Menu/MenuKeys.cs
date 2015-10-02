@@ -16,13 +16,7 @@
         public const string AddDatabaseLayer = "LayerAddDatabaseLayer";
         public const string RemoveLayer = "LayerRemoveLayer";
         public const string ClearLayers = "LayerClearLayers";
-
-        public const string AttributeTable = "LayerAttributeTable";
-        public const string Categories = "LayerCategories";
-        public const string BuildQuery = "LayerBuildQuery";
         public const string LayerClearSelection = "LayerClearSelection";
-        public const string LayerLabels = "LayerLabels";
-        public const string LayerProperties = "LayerProperties";
 
         public const string ViewToolbars = "ViewToolbars";
         public const string ViewWindows = "ViewWindows";

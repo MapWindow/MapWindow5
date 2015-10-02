@@ -46,8 +46,9 @@ namespace MW5.UI.Menu
         internal virtual void CreateDefaultItems()
         {
             Items.AddDropDown("File", MainMenuKeys.File, PluginIdentity.Default);
-            Items.AddDropDown("Layer", MainMenuKeys.Layer, PluginIdentity.Default);
             Items.AddDropDown("View", MainMenuKeys.View, PluginIdentity.Default);
+            Items.AddDropDown("Map", MainMenuKeys.Map, PluginIdentity.Default);
+            Items.AddDropDown("Layer", MainMenuKeys.Layer, PluginIdentity.Default);
             Items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
             Items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
             Items.AddDropDown("Help", MainMenuKeys.Help, PluginIdentity.Default);
@@ -61,6 +62,11 @@ namespace MW5.UI.Menu
         public IDropDownMenuItem LayerMenu
         {
             get { return GetDropDownItem(MainMenuKeys.Layer); }
+        }
+
+        public IDropDownMenuItem MapMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.Map); }
         }
 
         public IDropDownMenuItem ViewMenu

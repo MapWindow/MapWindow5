@@ -17,6 +17,7 @@ using MW5.UI.Menu;
 
 namespace MW5.Plugins.Symbology.Menu
 {
+    // TODO: split into generator and listener
     public class MenuService: MenuServiceBase
     {
         private readonly MenuCommands _commands;
@@ -65,9 +66,11 @@ namespace MW5.Plugins.Symbology.Menu
                 case MenuKeys.Charts:
                     FormHelper.ShowCharts(_context);
                     break;
-                case MenuKeys.LayerProperties:
-                    FormHelper.ShowLayerProperties(_context);
-                    break;
+            }
+
+            if (e.ItemKey == MenuKeys.LayerProperties)
+            {
+                FormHelper.ShowLayerProperties(_context);
             }
         }
 
@@ -78,10 +81,10 @@ namespace MW5.Plugins.Symbology.Menu
 
             items.InsertBefore = null;
 
-            items.AddButton(_commands[MenuKeys.QueryBuilder], true);
-            items.AddButton(_commands[MenuKeys.Categories]);
-            items.AddButton(_commands[MenuKeys.Labels]);
+            items.AddButton(_commands[MenuKeys.Labels], true);
             items.AddButton(_commands[MenuKeys.Charts]);
+            items.AddButton(_commands[MenuKeys.Categories]);
+            items.AddButton(_commands[MenuKeys.QueryBuilder]);
             items.AddButton(_commands[MenuKeys.LayerProperties], true);
 
             menu.Update();

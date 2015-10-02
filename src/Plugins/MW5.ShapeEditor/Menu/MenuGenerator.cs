@@ -68,7 +68,7 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private void InitMenu(IAppContext context, PluginIdentity identity)
         {
             var menu = context.Menu.Items;
-            menu.InsertBefore = context.Menu.LayerMenu;
+            menu.InsertBefore = context.Menu.ViewMenu;
 
             var bar = menu.AddDropDown("Edit", MenuKeys.MainMenuEditKey, identity);
 

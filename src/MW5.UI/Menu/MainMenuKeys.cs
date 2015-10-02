@@ -8,5 +8,6 @@
         public const string Help = "HelpDropDown";
         public const string View = "ViewDropDown";
         public const string Layer = "LayerDropDown";
+        public const string Map = "MapDropDown";
     }
 }

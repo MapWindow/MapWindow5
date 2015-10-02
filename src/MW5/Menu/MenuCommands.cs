@@ -107,7 +107,7 @@ namespace MW5.Menu
                 new MenuCommand("Clear Selection", MenuKeys.ClearSelection, Resources.icon_clear_selection,
                 "Clears selection from all the vector features."), 
 
-                new MenuCommand("Clear Layer Selection", MenuKeys.LayerClearSelection, Resources.icon_clear_selection,
+                new MenuCommand("Clear Selection", MenuKeys.LayerClearSelection, Resources.icon_clear_selection,
                 "Clears selection from all features on the current layer."), 
 
                 new MenuCommand("Clear Layers", MenuKeys.ClearLayers, Resources.icon_layer_clear,

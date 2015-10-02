@@ -184,6 +184,7 @@
     <Compile Include="Menu\ContextMenuView.Designer.cs">
       <DependentUpon>ContextMenuView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\StatusBarKeys.cs" />
     <Compile Include="Menu\StatusBarListener.cs" />
     <Compile Include="Views\AboutPresenter.cs" />
@@ -261,7 +262,6 @@
     <Compile Include="Views\SetProjectionPresenter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
