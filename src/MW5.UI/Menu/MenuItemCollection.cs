@@ -14,7 +14,7 @@ namespace MW5.UI.Menu
     {
         private const int TOOLBAR_ITEM_PADDING_X = 10;
         private const int TOOLBAR_ITEM_PADDING_Y = 5;
-        private readonly BarItems _items;
+        private new readonly BarItems _items;
 
         internal MenuItemCollection(BarItems items, IMenuIndex menuIndex):
             base(items, menuIndex)

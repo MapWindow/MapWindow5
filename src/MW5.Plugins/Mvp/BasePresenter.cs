@@ -45,13 +45,16 @@ namespace MW5.Plugins.Mvp
 
             OnClosed();
 
-            var form = View as Form;
-            if (form != null)
+            if (View.Style.Modal)
             {
-                // Some of the Syncfusion controls (TabControlAdv for example) attaches handlers 
-                // to the static events of other classes. This effectively prevents garbage collection 
-                // unless Dispose is called on the form explictily. So this call is a really necessity.
-                form.Dispose();
+                var form = View as Form;
+                if (form != null)
+                {
+                    // Some of the Syncfusion controls (TabControlAdv for example) attaches handlers 
+                    // to the static events of other classes. This effectively prevents garbage collection 
+                    // unless Dispose is called on the form explictily. So this call is a really necessity.
+                    form.Dispose();
+                }
             }
 
             return ReturnValue;

@@ -99,7 +99,7 @@ namespace MW5.UI.Menu
             set { _item.Visible = value; }
         }
 
-        internal protected virtual void DetachItemListeners()
+        protected virtual void DetachItemListeners()
         {
             EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
         }
@@ -108,8 +108,6 @@ namespace MW5.UI.Menu
         {
             return _item;
         }
-
-        public event EventHandler ItemSelected;
 
         public virtual event EventHandler<MenuItemEventArgs> ItemClicked
         {
@@ -121,6 +119,14 @@ namespace MW5.UI.Menu
             {
                 
             }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the item should be skipped during processing (e.g. separator).
+        /// </summary>
+        public bool Skip 
+        {
+            get { return false; } 
         }
     }
 }

@@ -246,7 +246,13 @@
     <Compile Include="Forms\MapWindowView.Designer.cs">
       <DependentUpon>MapWindowView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu\Classic\MenuStripDropDownItem.cs" />
+    <Compile Include="Menu\Classic\MenuStripItem.cs" />
+    <Compile Include="Menu\Classic\MenuStripItemCollection.cs" />
+    <Compile Include="Menu\Classic\MenuStripMenu.cs" />
+    <Compile Include="Menu\Classic\MenuStripSeparator.cs" />
     <Compile Include="Menu\ItemCollectionBase.cs" />
+    <Compile Include="Menu\MenuBase.cs" />
     <Compile Include="Menu\MenuFactory.cs" />
     <Compile Include="Menu\MenuIndex.cs" />
     <Compile Include="Forms\MapWindowForm.cs">

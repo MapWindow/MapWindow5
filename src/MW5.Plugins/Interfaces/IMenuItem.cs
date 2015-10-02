@@ -83,10 +83,6 @@ namespace MW5.Plugins.Interfaces
         /// </summary>
         string UniqueKey { get; }
 
-        /// <summary>
-        /// Occurs when user selects item with mouse or keyboard.
-        /// </summary>
-        event EventHandler ItemSelected;
 
         /// <summary>
         /// Occurs when certain properties of the menu item change.
@@ -97,5 +93,10 @@ namespace MW5.Plugins.Interfaces
         /// Occurs when user clicks the item with mouse.
         /// </summary>
         event EventHandler<MenuItemEventArgs> ItemClicked;
+
+        /// <summary>
+        /// Gets a value indicating whether the item should be skipped during processing (e.g. separator).
+        /// </summary>
+        bool Skip { get; }
     }
 }

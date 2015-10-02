@@ -17,7 +17,7 @@ namespace MW5.UI.Menu
     {
         private const int ItemPadding = 4;
 
-        private readonly ToolStripItemCollection _items;
+        private new readonly ToolStripItemCollection _items;
         private readonly IMenuIndex _menuIndex;
         private readonly bool _topLevel;
 
@@ -117,7 +117,7 @@ namespace MW5.UI.Menu
 
         protected IMenuItem AddItem(ToolStripItem item, PluginIdentity identity, string key, bool label)
         {
-            item.Tag = new MenuItemMetadata(identity, key);
+            item.Tag = new MenuItemMetadata(identity, key, false);
             return AddItemCore(item, key, label, true);
         }
 

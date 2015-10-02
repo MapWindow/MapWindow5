@@ -11,11 +11,12 @@ namespace MW5.UI.Menu
         private readonly PluginIdentity _identity;
         private readonly string _key;
 
-        public MenuItemMetadata(PluginIdentity identity, string key)
+        public MenuItemMetadata(PluginIdentity identity, string key, bool dropDown = false)
         {
             if (identity == null) throw new ArgumentNullException("identity");
             _identity = identity;
             _key = key;
+            DropDown = dropDown;
         }
 
         public PluginIdentity PluginIdentity
@@ -30,6 +31,8 @@ namespace MW5.UI.Menu
         public string Category { get; set; }
         
         public bool BeginGroup { get; set; }
+
+        public bool DropDown { get; private set; }
 
         public string Key
         {

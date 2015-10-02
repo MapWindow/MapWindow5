@@ -17,6 +17,9 @@ namespace MW5.UI.Menu
                 throw new ArgumentNullException("menuIndex");
             }
             _menuIndex = menuIndex;
+
+            item.Popup += (s, e) => FireDropDownOpening();
+            item.PopupClosed += (s, e) => FireDropDownClosed();
         }
 
         public IMenuItemCollection SubItems
@@ -37,29 +40,27 @@ namespace MW5.UI.Menu
             get { return _item as ParentBarItem; }
         }
 
-        public event EventHandler DropDownOpening
+        private void FireDropDownOpening()
         {
-            add
+            var handler = DropDownOpening;
+            if (handler != null)
             {
-                AsParent.Popup += (s, e) => value.Invoke(this, e);
-            }
-            remove
-            {
-                //AsParent.Popup -= value;        // the handler is removed in MenuItemCollection.Remove
+                handler(this, new EventArgs());
             }
         }
 
-        public event EventHandler DropDownClosed
+        private void FireDropDownClosed()
         {
-            add
+            var handler = DropDownClosed;
+            if (handler != null)
             {
-                AsParent.PopupClosed += (s, e) => value.Invoke(this, e);
-            }
-            remove
-            {
-                AsParent.PopupClosed -= value;
+                handler(this, new EventArgs());
             }
         }
+
+        public event EventHandler DropDownOpening;
+
+        public event EventHandler DropDownClosed;
 
         public void Update()
         {
@@ -83,6 +84,7 @@ namespace MW5.UI.Menu
         {
             base.DetachItemListeners();
             EventHelper.RemoveEventHandler(_item, "Popup");
+            EventHelper.RemoveEventHandler(_item, "PopupClosed");
         }
     }
 }

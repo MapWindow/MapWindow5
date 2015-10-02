@@ -23,7 +23,7 @@ namespace MW5.Plugins.Concrete
             
         }
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
 
         }

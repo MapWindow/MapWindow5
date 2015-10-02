@@ -69,13 +69,13 @@ namespace MW5.Menu
                 return;
             }
 
-            foreach (var item in menu.SubItems)
+            foreach (var item in menu.SubItems.Where(item => !item.Skip))
             {
                 item.Checked = false;
             }
 
             Func<IMenuItem, bool> predicate =
-                item => item.Tag != null && ((TileProvider)item.Tag == _map.TileProvider);
+                item => !item.Skip && item.Tag != null && ((TileProvider)item.Tag == _map.TileProvider);
 
             var selectedItem = menu.SubItems.FirstOrDefault(predicate);
             if (selectedItem != null)
@@ -95,7 +95,7 @@ namespace MW5.Menu
                     return;
                 }
 
-                TileProvider provider = (TileProvider)item.Tag;
+                var provider = (TileProvider)item.Tag;
                 switch (provider)
                 {
                     case TileProvider.BingSatellite:

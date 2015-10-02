@@ -18,7 +18,7 @@ namespace MW5.Plugins.TableEditor
         private ProjectListener _projectListener;
         private DockPanelService _dockPanelService;
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
@@ -33,11 +33,6 @@ namespace MW5.Plugins.TableEditor
             _mapListener = _context.Container.GetSingleton<MapListener>();
             _projectListener = _context.Container.GetSingleton<ProjectListener>();
             _dockPanelService = _context.Container.GetInstance<DockPanelService>();
-        }
-
-        public override void Terminate()
-        {
-            
         }
     }
 }

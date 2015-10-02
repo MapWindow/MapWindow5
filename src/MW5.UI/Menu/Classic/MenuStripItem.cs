@@ -1,33 +1,29 @@
-﻿
-using System;
-using System.ComponentModel;
-using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
-using Syncfusion.Windows.Forms.Tools.XPMenus;
 
-namespace MW5.UI.Menu
+namespace MW5.UI.Menu.Classic
 {
-    internal class MenuItem : MenuItemBase, IMenuItem
+    /// <summary>
+    /// Represents ToolStripMenuItem implementation of IMenuItem interface.
+    /// </summary>
+    internal class MenuStripItem : MenuItemBase, IMenuItem
     {
-        private const int IconSize = 24;
-        protected readonly BarItem _item;
+        protected readonly ToolStripMenuItem _item;
 
-        internal MenuItem(BarItem item)
+        public MenuStripItem(ToolStripMenuItem item)
         {
+            if (item == null) throw new ArgumentNullException("item");
             _item = item;
-            if (item == null)
-            {
-                throw new NullReferenceException("Bar item reference is null.");
-            }
-
-            item.ShowTooltip = false;
-            
-            Skip = false;
         }
-        
+
         public string Text
         {
             get { return _item.Text; }
@@ -38,18 +34,17 @@ namespace MW5.UI.Menu
             }
         }
 
+        /// <summary>
+        /// Gets/Sets the icon for the menu item
+        /// </summary>
         public IMenuIcon Icon
         {
-            get { return new MenuIcon(_item.Image.GetImage()); }
+            get { return new MenuIcon(_item.Image); }
             set
             {
                 if (value == null || value.Image == null) return;
-
-                _item.Image = new ImageExt(value.Image);
-                int width = value.UseNativeSize ? value.Image.Width : IconSize;
-                int height = value.UseNativeSize ? value.Image.Height : IconSize;
-
-                _item.ImageSize =  new Size(width, height);
+                _item.Image = value.Image;
+                _item.ImageScaling = ToolStripItemImageScaling.SizeToFit;
             }
         }
 
@@ -62,7 +57,13 @@ namespace MW5.UI.Menu
         public bool Checked
         {
             get { return _item.Checked; }
-            set { _item.Checked = value; }
+            set
+            {
+                _item.Checked = value;
+                _item.ImageScaling = Icon.Image == null
+                                         ? ToolStripItemImageScaling.None
+                                         : ToolStripItemImageScaling.SizeToFit;
+            }
         }
 
         public bool Enabled
@@ -76,42 +77,52 @@ namespace MW5.UI.Menu
             get { return _item.Tag is MenuItemMetadata; }
         }
 
-        protected override MenuItemMetadata Metadata
-        {
-            get
-            {
-                var data = _item.Tag as MenuItemMetadata;
-                if (data == null)
-                {
-                    throw new ApplicationException("Tag property of menu items must store an instance of MenuItemMetadata class.");
-                }
-                return data;
-            }
-        }
-
         public bool Visible
         {
             get { return _item.Visible; }
             set { _item.Visible = value; }
         }
 
-        internal protected virtual void DetachItemListeners()
-        {
-            EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
-            EventHelper.RemoveEventHandler(_item, "Selected");
-            EventHelper.RemoveEventHandler(this, "ItemChanged");
-        }
-
+        /// <summary>
+        /// Gets the internal object.
+        /// </summary>
         public object GetInternalObject()
         {
             return _item;
+        }
+
+        protected override MenuItemMetadata Metadata
+        {
+            get
+            {
+                var data = _item.Tag as MenuItemMetadata;
+
+                if (data == null)
+                {
+                    throw new ApplicationException("Tag property of menu items must store an instance of MenuItemMetadata class.");
+                }
+
+                return data;
+            }
+        }
+
+        internal protected virtual void DetachItemListeners()
+        {
+            EventHelper.RemoveEventHandler(_item, "Click");      // so it can be collected by GC
+            EventHelper.RemoveEventHandler(this, "ItemChanged");
         }
 
         public event EventHandler<MenuItemEventArgs> ItemClicked
         {
             add
             {
-                _item.Click += (s, e) => value.Invoke(this, new MenuItemEventArgs(Key));
+                _item.Click += (s, e) =>
+                    {
+                        if (!Metadata.DropDown)
+                        {
+                            value.Invoke(this, new MenuItemEventArgs(Key));
+                        }
+                    };
             }
             remove
             {
@@ -120,8 +131,17 @@ namespace MW5.UI.Menu
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the item should be skipped during processing (e.g. separator).
+        /// Gets a value indicating whether the item should be skipped during processing (e.g. separator).
         /// </summary>
-        public bool Skip { get; private set; }
+        public bool Skip
+        {
+            get { return false; }
+        }
     }
 }
+
+
+
+
+
+

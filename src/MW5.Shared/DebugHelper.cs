@@ -9,5 +9,6 @@ namespace MW5.Shared
     public static class DebugHelper
     {
         public static bool HideAdditionalMapControls = false;
+        public static bool SyncfusionMenu = false;
     }
 }

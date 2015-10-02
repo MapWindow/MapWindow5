@@ -9,13 +9,14 @@ using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
+using MW5.UI.Menu.Classic;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
     internal abstract class ItemCollectionBase: IMenuItemCollection
     {
-        private readonly IList _items;
+        protected readonly IList _items;
         protected readonly IMenuIndex MenuIndex;
 
         internal ItemCollectionBase(IList items, IMenuIndex menuIndex)
@@ -35,9 +36,10 @@ namespace MW5.UI.Menu
                 if (dropDownMenuItem != null)
                 {
                     RemoveItems(dropDownMenuItem.SubItems, identity);
+                    dropDownMenuItem.Update();
                 }
 
-                if (items[j].PluginIdentity == identity)
+                if (!items[j].Skip && items[j].PluginIdentity == identity)
                 {
                     items.Remove(j);
                 }
@@ -125,6 +127,13 @@ namespace MW5.UI.Menu
             {
                 menuItem.DetachItemListeners();
                 MenuIndex.Remove(menuItem.UniqueKey);
+            }
+
+            var menuStripItem = this[index] as MenuStripItem;
+            if (menuStripItem != null)
+            {
+                menuStripItem.DetachItemListeners();
+                MenuIndex.Remove(menuStripItem.UniqueKey);
             }
 
             _items.RemoveAt(index);

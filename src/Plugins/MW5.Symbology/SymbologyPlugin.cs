@@ -55,7 +55,7 @@ namespace MW5.Plugins.Symbology
             get { yield return _context.Container.GetSingleton<SymbologyConfigPage>(); }
         }
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
 
@@ -74,7 +74,7 @@ namespace MW5.Plugins.Symbology
 
         public override void Terminate()
         {
-            
+            _menuService.OnPluginUnloaded();
         }
     }
 }

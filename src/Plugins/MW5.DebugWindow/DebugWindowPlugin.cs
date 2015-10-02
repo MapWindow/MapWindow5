@@ -40,15 +40,9 @@ namespace MW5.Plugins.DebugWindow
         /// <summary>
         /// Set up container for dependency injection:
         /// </summary>
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
-        }
-
-        
-        public override void Terminate()
-        {
-            
         }
     }
 }

@@ -198,7 +198,8 @@ namespace MW5.UI.Docking
 
         public void RemoveItemsForPlugin(PluginIdentity identity)
         {
-            List<Control> controls = new List<Control>();
+            var controls = new List<Control>();
+
             foreach (var p in this)
             {
                 if (_dict[p.Control].Identity == identity)
@@ -206,12 +207,18 @@ namespace MW5.UI.Docking
                     controls.Add(p.Control);
                 }
             }
+
+            bool locked = _locked;
+            if (!_locked) Lock();
+
             foreach (var ctrl in controls)
             {
                 _dockingManager.SetEnableDocking(ctrl, false);
                 _dict.Remove(ctrl);
                 _mainForm.Controls.Remove(ctrl);
             }
+
+            if (!locked) Unlock();
         }
 
         public IDockPanel Find(string key)

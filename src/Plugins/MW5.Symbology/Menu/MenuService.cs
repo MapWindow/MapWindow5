@@ -12,13 +12,13 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Services;
+using MW5.Shared;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.Symbology.Menu
 {
     public class MenuService: MenuServiceBase
     {
-        private readonly SymbologyPlugin _plugin;
         private readonly MenuCommands _commands;
 
         public MenuService(IAppContext context, SymbologyPlugin plugin):
@@ -27,15 +27,23 @@ namespace MW5.Plugins.Symbology.Menu
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
 
-            _plugin = plugin;
             _commands = new MenuCommands(plugin.Identity);
 
             InitToolbar();
 
             InitMenu();
 
-            _plugin.ItemClicked += PluginItemClicked;
-            _plugin.ViewUpdating += (s,e) => UpdateItems(true);
+            plugin.ItemClicked += PluginItemClicked;
+            plugin.ViewUpdating += (s, e) => UpdateItems(true);
+        }
+
+        public void OnPluginUnloaded()
+        {
+            var menu = _context.Menu.LayerMenu;
+            
+            menu.Update();
+
+            menu.DropDownOpening -= MenuDropDownOpening;
         }
 
         private void PluginItemClicked(object sender, MenuItemEventArgs e)
@@ -78,7 +86,12 @@ namespace MW5.Plugins.Symbology.Menu
 
             menu.Update();
 
-            menu.DropDownOpening += (s, e) => UpdateItems(false);
+            menu.DropDownOpening += MenuDropDownOpening;
+        }
+
+        private void MenuDropDownOpening(object sender, EventArgs e)
+        {
+            UpdateItems(false);
         }
 
         private void UpdateItems(bool toolbar)

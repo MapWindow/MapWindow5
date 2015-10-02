@@ -101,12 +101,12 @@ namespace MW5.UI.Menu
             }
         }
 
-        internal protected override void DetachItemListeners()
+        protected override void DetachItemListeners()
         {
             base.DetachItemListeners();
+
             EventHelper.RemoveEventHandler(_item, "Popup");
             EventHelper.RemoveEventHandler(_item, "DropDownItemClicked");
-            EventHelper.RemoveEventHandler(_item, "Click");
         }
 
         public override event EventHandler<MenuItemEventArgs> ItemClicked

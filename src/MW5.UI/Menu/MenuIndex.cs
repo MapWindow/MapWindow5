@@ -86,8 +86,6 @@ namespace MW5.UI.Menu
                 return data;
             }
             return null;
-
-            
         }
 
         public bool NeedsToolTip

@@ -64,7 +64,7 @@ namespace MW5.Plugins.TemplatePlugin
         /// <summary>
         /// Set up container for dependency injection:
         /// </summary>
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
@@ -95,14 +95,6 @@ namespace MW5.Plugins.TemplatePlugin
 
             // adding all the available tools in the toolbox
             _context.Toolbox.AddTools(GetType().Assembly.GetTools());
-        }
-
-        /// <summary>
-        ///     For cleaning activity necessary during unloading of the plug-in
-        /// </summary>
-        public override void Terminate()
-        {
-            // menus & toolbars will be cleared automatically
         }
 
         #endregion

@@ -17,7 +17,7 @@ namespace MW5.Plugins.Identifier
         private MenuGenerator _menuGenerator;
         private MapListener _mapListener;
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
@@ -30,11 +30,6 @@ namespace MW5.Plugins.Identifier
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
             _dockPanelService = context.Container.GetInstance<DockPanelService>();
-        }
-        
-        public override void Terminate()
-        {
-
         }
     }
 }

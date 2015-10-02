@@ -71,9 +71,12 @@ namespace MW5.Plugins.Concrete
 
         public abstract void Initialize(IAppContext context);
 
-        public abstract void Terminate();
+        public virtual void Terminate()
+        {
+            // do nothing
+        }
 
-        public abstract void RegisterServices(IApplicationContainer container);
+        protected abstract void RegisterServices(IApplicationContainer container);
 
         internal void DoRegisterServices(IApplicationContainer container)
         {

@@ -21,7 +21,7 @@ namespace MW5.Plugins.ShapeEditor
         private ProjectListener _projectListener;
         private MenuUpdater _menuUpdater;
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
@@ -37,11 +37,6 @@ namespace MW5.Plugins.ShapeEditor
             _menuListener = container.GetInstance<MenuListener>();
             _projectListener = container.GetInstance<ProjectListener>();
             _menuUpdater = container.GetInstance<MenuUpdater>();
-        }
-
-        public override void Terminate()
-        {
-
         }
     }
 }

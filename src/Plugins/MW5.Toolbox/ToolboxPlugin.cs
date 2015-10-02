@@ -25,7 +25,7 @@ namespace MW5.Plugins.Toolbox
         private IAppContext _context;
         private ToolboxGenerator _generator;
 
-        public override void RegisterServices(IApplicationContainer container)
+        protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
         }
@@ -35,11 +35,6 @@ namespace MW5.Plugins.Toolbox
             _context = context;
 
             _generator = context.Container.GetInstance<ToolboxGenerator>();
-        }
-
-        public override void Terminate()
-        {
-         
         }
     }
 }
