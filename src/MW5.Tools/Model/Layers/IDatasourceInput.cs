@@ -13,9 +13,9 @@ namespace MW5.Tools.Model.Layers
     public interface IDatasourceInput: IDisposable
     {
         /// <summary>
-        /// Gets or sets a value indicating whether the datasource must be closed after the task is completed.
+        /// Gets a value indicating whether the datasource must be closed after the task is completed.
         /// </summary>
-        bool CloseAfterRun { get; set; }
+        bool CloseAfterRun { get; }
 
         /// <summary>
         /// Gets or sets the datasource serving as input for GIS task.

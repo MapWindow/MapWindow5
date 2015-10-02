@@ -42,8 +42,25 @@ namespace MW5.Plugins.Mvp
         public bool Run(IWin32Window parent = null)
         {
             View.ShowView(parent);
+
+            OnClosed();
+
+            var form = View as Form;
+            if (form != null)
+            {
+                // Some of the Syncfusion controls (TabControlAdv for example) attaches handlers 
+                // to the static events of other classes. This effectively prevents garbage collection 
+                // unless Dispose is called on the form explictily. So this call is a really necessity.
+                form.Dispose();
+            }
+
             return ReturnValue;
         }
+
+        /// <summary>
+        /// Called after the view was closed and presenter is about to return control flow to the external code.
+        /// </summary>
+        protected virtual void OnClosed() { }
 
         /// <summary>
         /// A handler for the IView.OkButton.Click event. 
@@ -104,9 +121,7 @@ namespace MW5.Plugins.Mvp
         {
             Init(argument);
 
-            View.ShowView(parent);
-
-            return ReturnValue;
+            return Run(parent);
         }
 
         /// <summary>

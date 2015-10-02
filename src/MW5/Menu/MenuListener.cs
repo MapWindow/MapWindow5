@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using MW5.Api;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Legend;
+using MW5.Api.Static;
 using MW5.Data.Views;
 using MW5.Helpers;
 using MW5.Plugins;
@@ -18,6 +20,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services;
 using MW5.Services.Serialization;
+using MW5.Shared;
 using MW5.Views;
 
 namespace MW5.Menu
@@ -152,6 +155,13 @@ namespace MW5.Menu
                     return true;
                 case MenuKeys.SupportedDrivers:
                     _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
+                    return true;
+                case MenuKeys.ComUsage:
+                    GcHelper.Collect();
+
+                    string report = GeoProcessing.Instance.GetComUsageReport();
+                    MessageService.Current.Info(report);
+
                     return true;
                 case MenuKeys.About:
                     _context.Container.Run<AboutPresenter>();

@@ -262,6 +262,8 @@ namespace MW5.Tools.Views
 
         private void OnCloseClick(object sender, EventArgs e)
         {
+            Model.Tool.CleanUp();
+
             Close();
         }
     }

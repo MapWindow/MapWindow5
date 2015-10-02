@@ -60,7 +60,6 @@ namespace MW5.Tools.Model.Layers
         public bool CloseAfterRun
         {
             get { return false; }
-            set { throw new NotSupportedException(""); }
         }
 
         public string Filename

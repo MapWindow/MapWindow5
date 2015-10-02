@@ -81,6 +81,7 @@ namespace MW5.Tools.Services
             bool result = SaveDatasource(ds, filename);
 
             ds.Dispose();
+            outputInfo.Result = null;
 
             if (!result)
             {
@@ -115,6 +116,15 @@ namespace MW5.Tools.Services
             if (result)
             {
                 outputInfo.DatasourcePointer = new DatasourcePointer(_layerService.LastLayerHandle, outputInfo.Name);
+                outputInfo.Result = null;
+            }
+            else
+            {
+                if (outputInfo.Result != null)
+                {
+                    outputInfo.Result.Dispose();
+                    outputInfo.Result = null;
+                }
             }
 
             // report failure if we haven't added datasource to the map

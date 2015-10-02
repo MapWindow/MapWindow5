@@ -68,6 +68,7 @@
     <Compile Include="ConvertibleBase.cs" />
     <Compile Include="CustomLayoutAttribute.cs" />
     <Compile Include="DebugHelper.cs" />
+    <Compile Include="GcHelper.cs" />
     <Compile Include="IMarshal.cs" />
     <Compile Include="ReplaceControlDescripterProvider.cs" />
     <Compile Include="ArrayHelper.cs" />

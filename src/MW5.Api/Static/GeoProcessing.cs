@@ -218,6 +218,11 @@ namespace MW5.Api.Static
             set { _utils.Key = value; }
         }
 
+        public string GetComUsageReport()
+        {
+            return _utils.ComUsageReport[true];
+        }
+
         #region Not implemented
 
         //public IGeometry ClipPolygon(PolygonOperation op, IGeometry subjectPolygon, IGeometry clipPolygon)

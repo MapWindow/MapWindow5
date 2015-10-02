@@ -68,6 +68,7 @@
     <Compile Include="..\..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="TransientReleasePolicy.cs" />
     <Compile Include="WindsorCastleContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

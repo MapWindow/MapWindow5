@@ -13,8 +13,14 @@ namespace MW5.DI.Castle
 {
     public class WindsorCastleContainer: IApplicationContainer
     {
-        private readonly WindsorContainer _container = new WindsorContainer();
-        
+        private readonly WindsorContainer _container;
+
+        public WindsorCastleContainer()
+        {
+            _container = new WindsorContainer();
+            _container.Kernel.ReleasePolicy = new TransientReleasePolicy(_container.Kernel);
+        }
+
         public IApplicationContainer RegisterView<TView, TImplementation>() 
             where TView : class, IView 
             where TImplementation : class, TView

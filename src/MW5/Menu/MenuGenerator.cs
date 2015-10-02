@@ -105,6 +105,7 @@ namespace MW5.Menu
             var items = _context.Menu.HelpMenu.SubItems;
             items.AddButton("Show Welcome Screen", MenuKeys.Welcome, PluginIdentity.Default);
             items.AddButton("Supported Drivers", MenuKeys.SupportedDrivers, PluginIdentity.Default);
+            items.AddButton("COM usage", MenuKeys.ComUsage, PluginIdentity.Default).BeginGroup = true;
             items.AddButton("About", MenuKeys.About, PluginIdentity.Default).BeginGroup = true;
 
             _context.Menu.HelpMenu.Update();

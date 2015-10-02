@@ -369,7 +369,7 @@ namespace MW5.Plugins.Symbology.Views
             this.axMap1.AllowDrop = true;
             this.axMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this.axMap1.BackgroundColor = System.Drawing.Color.White;
-            this.axMap1.CurrentScale = 101016253.92530365D;
+            this.axMap1.CurrentScale = 134107785.3835928D;
             this.axMap1.CurrentZoom = -1;
             this.axMap1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.axMap1.ExtentHistory = 20;
@@ -463,6 +463,7 @@ namespace MW5.Plugins.Symbology.Views
             this.dynamicVisibilityControl1.Size = new System.Drawing.Size(228, 210);
             this.dynamicVisibilityControl1.TabIndex = 171;
             this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
+            this.dynamicVisibilityControl1.ValueChanged += new System.EventHandler<System.EventArgs>(this.RefreshModel);
             // 
             // tabInfo
             // 

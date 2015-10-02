@@ -1691,6 +1691,7 @@ namespace MW5.Plugins.Symbology.Forms
             this.dynamicVisibilityControl1.Size = new System.Drawing.Size(355, 199);
             this.dynamicVisibilityControl1.TabIndex = 177;
             this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
+            this.dynamicVisibilityControl1.ValueChanged += new System.EventHandler<System.EventArgs>(this.Ui2LabelStyle);
             // 
             // tabFont
             // 

@@ -144,7 +144,7 @@ namespace MW5.Tools.Helpers
                 var source = GeoSource.OpenFromIdentity(identity) as ILayerSource;
                 if (source != null)
                 {
-                    return new DatasourceInput(source) { CloseAfterRun = true };
+                    return new DatasourceInput(source);
                 }
             }
 

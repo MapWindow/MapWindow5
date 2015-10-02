@@ -190,6 +190,9 @@ namespace MW5.Tools.Views
             return false;
         }
 
+        /// <summary>
+        /// Generates a new instance of tool for each of the inputs. Validates every new instance.
+        /// </summary>
         private IEnumerable<IGisTool> GenerateBatchTools(IParametrizedTool tool)
         {
             var tools = tool.GenerateBatchTools(_context);
@@ -213,5 +216,6 @@ namespace MW5.Tools.Views
             
             task.RunAsync();
         }
+
     }
 }

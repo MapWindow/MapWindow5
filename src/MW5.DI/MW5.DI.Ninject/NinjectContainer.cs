@@ -6,13 +6,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Mvp;
 using Ninject;
+using Ninject.Planning.Bindings.Resolvers;
 
 namespace MW5.DI.Ninject
 {
     public class NinjectContainer: IApplicationContainer
     {
-        private IKernel _kernel = new StandardKernel();
-        
+        private readonly IKernel _kernel = null;
+
+        public NinjectContainer()
+        {
+            // overriding default behavior: auto registering concrete types
+            // http ://stackoverflow.com/questions/14565380/disable-implicit-binding-injection-of-non-explicitly-bound-classes-in-ninject-2
+            _kernel = new StandardKernel();
+            _kernel.Components.RemoveAll<IMissingBindingResolver>();
+            _kernel.Components.Add<IMissingBindingResolver, DefaultValueBindingResolver>();
+        }
+
         public IApplicationContainer RegisterView<TView, TImplementation>() 
             where TView : class, IView where TImplementation : class, TView
         {

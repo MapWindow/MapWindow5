@@ -38,7 +38,10 @@ namespace MW5.Tools.Model.Layers
         /// <summary>
         /// Gets or sets a value indicating whether the datasource must be closed after the task is completed.
         /// </summary>
-        public bool CloseAfterRun { get; set; }
+        public bool CloseAfterRun
+        {
+            get {  return true; }
+        }
 
         /// <summary>
         /// Gets or sets the datasource serving as input for GIS task.

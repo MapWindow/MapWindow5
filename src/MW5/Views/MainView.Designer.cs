@@ -42,6 +42,17 @@ namespace MW5.Views
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             this._mapControl1 = new MW5.Api.Map.BoundMapControl();
             this._mainFrameBarManager1 = new Syncfusion.Windows.Forms.Tools.XPMenus.MainFrameBarManager(this);
+            this.commandBar1 = new Syncfusion.Windows.Forms.Tools.CommandBar();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem9 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.statusStripLabel5 = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.statusMapUnits = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
@@ -52,6 +63,8 @@ namespace MW5.Views
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).BeginInit();
             this.dockingClientPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._mainFrameBarManager1)).BeginInit();
+            this.commandBar1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // _dockingManager1
@@ -111,7 +124,7 @@ namespace MW5.Views
             this._mapControl1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._mapControl1.BackColor = System.Drawing.Color.White;
             this._mapControl1.BackgroundColor = System.Drawing.Color.White;
-            this._mapControl1.CurrentScale = 0.63344368502784842D;
+            this._mapControl1.CurrentScale = 0.31902886946251746D;
             this._mapControl1.CurrentZoom = -1;
             this._mapControl1.CustomCursor = null;
             this._mapControl1.ExtentHistory = 20;
@@ -156,12 +169,119 @@ namespace MW5.Views
             this._mainFrameBarManager1.AutoScale = true;
             this._mainFrameBarManager1.BarPositionInfo = ((System.IO.MemoryStream)(resources.GetObject("_mainFrameBarManager1.BarPositionInfo")));
             this._mainFrameBarManager1.CurrentBaseFormType = "MW5.UI.Forms.MapWindowView";
+            this._mainFrameBarManager1.DetachedCommandBars.Add(this.commandBar1);
             this._mainFrameBarManager1.EnableMenuMerge = true;
             this._mainFrameBarManager1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._mainFrameBarManager1.Form = this;
             this._mainFrameBarManager1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(67)))), ((int)(((byte)(201)))), ((int)(((byte)(232)))));
             this._mainFrameBarManager1.ResetCustomization = false;
             this._mainFrameBarManager1.UseBackwardCompatiblity = false;
+            // 
+            // commandBar1
+            // 
+            this.commandBar1.AlwaysLeadingEdge = true;
+            this.commandBar1.ChevronColor = System.Drawing.SystemColors.ControlText;
+            this.commandBar1.Controls.Add(this.menuStrip1);
+            this.commandBar1.DisableFloating = true;
+            this.commandBar1.DockState = Syncfusion.Windows.Forms.Tools.CommandBarDockState.Top;
+            this.commandBar1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.commandBar1.HideGripper = true;
+            this.commandBar1.MaxLength = 200;
+            this.commandBar1.MinHeight = 32;
+            this.commandBar1.MinLength = 50;
+            this.commandBar1.Name = "commandBar1";
+            this.commandBar1.OccupyFullRow = true;
+            this.commandBar1.RowIndex = 0;
+            this.commandBar1.RowOffset = 0;
+            this.commandBar1.TabIndex = 0;
+            this.commandBar1.TabStop = false;
+            this.commandBar1.Visible = false;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.White;
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5,
+            this.toolStripMenuItem7,
+            this.toolStripMenuItem10,
+            this.toolStripMenuItem8,
+            this.toolStripMenuItem9});
+            this.menuStrip1.Location = new System.Drawing.Point(2, 1);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip1.Size = new System.Drawing.Size(362, 24);
+            this.menuStrip1.TabIndex = 0;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(43, 20);
+            this.toolStripMenuItem1.Text = "File";
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Image = global::MW5.Properties.Resources.icon_crs_change;
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem2.Text = "toolStripMenuItem2";
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Image = global::MW5.Properties.Resources.icon_folder;
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem3.Text = "toolStripMenuItem3";
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(45, 20);
+            this.toolStripMenuItem4.Text = "Edit";
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(53, 20);
+            this.toolStripMenuItem5.Text = "Layer";
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(50, 20);
+            this.toolStripMenuItem7.Text = "View";
+            // 
+            // toolStripMenuItem10
+            // 
+            this.toolStripMenuItem10.Name = "toolStripMenuItem10";
+            this.toolStripMenuItem10.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(64, 20);
+            this.toolStripMenuItem10.Text = "Plugins";
+            // 
+            // toolStripMenuItem8
+            // 
+            this.toolStripMenuItem8.Name = "toolStripMenuItem8";
+            this.toolStripMenuItem8.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem8.Size = new System.Drawing.Size(49, 20);
+            this.toolStripMenuItem8.Text = "Tiles";
+            // 
+            // toolStripMenuItem9
+            // 
+            this.toolStripMenuItem9.Name = "toolStripMenuItem9";
+            this.toolStripMenuItem9.Padding = new System.Windows.Forms.Padding(7, 0, 7, 0);
+            this.toolStripMenuItem9.Size = new System.Drawing.Size(50, 20);
+            this.toolStripMenuItem9.Text = "Help";
             // 
             // statusStripEx1
             // 
@@ -222,12 +342,17 @@ namespace MW5.Views
             this.ClientSize = new System.Drawing.Size(796, 531);
             this.Controls.Add(this.dockingClientPanel1);
             this.Controls.Add(this.statusStripEx1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainView";
             this.Text = "MapWindow 5";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this._dockingManager1)).EndInit();
             this.dockingClientPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._mainFrameBarManager1)).EndInit();
+            this.commandBar1.ResumeLayout(false);
+            this.commandBar1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -248,6 +373,17 @@ namespace MW5.Views
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
         private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
         private Syncfusion.Windows.Forms.Tools.StatusStripEx statusStripEx1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private Syncfusion.Windows.Forms.Tools.CommandBar commandBar1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem9;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
 
     }
 }
