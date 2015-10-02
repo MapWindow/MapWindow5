@@ -71,6 +71,12 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.PluginsConfigure:
+                    var model = _context.Container.GetInstance<ConfigViewModel>();
+                    model.SelectedPage = ConfigPageType.Plugins;
+                    model.UseSelectedPage = true;
+                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
+                    break;
                 case MenuKeys.ZoomPrev:
                     _context.Map.ZoomToPrev();
                     break;

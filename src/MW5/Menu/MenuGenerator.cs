@@ -47,9 +47,9 @@ namespace MW5.Menu
 
             InitViewMenu();
 
-            PluginsMenuHelper.Init(_context, _pluginManager);
+            InitPluginsMenu();
 
-            TilesMenuHelper.Init(_context.Map, _context.Menu.TilesMenu);
+            InitTilesMenu();
 
             InitHelpMenu();
 
@@ -87,6 +87,19 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.LayerClearSelection], true);
 
             _context.Menu.LayerMenu.Update();
+        }
+
+        private void InitPluginsMenu()
+        {
+            var menu = _context.Menu.PluginsMenu;
+            menu.SubItems.AddButton("Configure plugins...", MenuKeys.PluginsConfigure, PluginIdentity.Default).BeginGroup = true;
+            
+            PluginsMenuHelper.Init(_context, _pluginManager);
+        }
+
+        private void InitTilesMenu()
+        {
+            TilesMenuHelper.Init(_context.Map, _context.Menu.TilesMenu);
         }
 
         private void InitViewMenu()

@@ -74,7 +74,7 @@
             this.configPanelControl2.Controls.Add(this.label3);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "Behavior";
-            this.configPanelControl2.Location = new System.Drawing.Point(10, 118);
+            this.configPanelControl2.Location = new System.Drawing.Point(10, 108);
             this.configPanelControl2.Name = "configPanelControl2";
             this.configPanelControl2.Size = new System.Drawing.Size(454, 256);
             this.configPanelControl2.TabIndex = 8;
@@ -193,7 +193,7 @@
             this.configPanelControl3.Controls.Add(this.label1);
             this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl3.HeaderText = "Appearance";
-            this.configPanelControl3.Location = new System.Drawing.Point(10, 10);
+            this.configPanelControl3.Location = new System.Drawing.Point(10, 0);
             this.configPanelControl3.Name = "configPanelControl3";
             this.configPanelControl3.Size = new System.Drawing.Size(454, 108);
             this.configPanelControl3.TabIndex = 17;
@@ -250,7 +250,7 @@
             this.Controls.Add(this.configPanelControl2);
             this.Controls.Add(this.configPanelControl3);
             this.Name = "MapConfigPage";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.Size = new System.Drawing.Size(474, 386);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);

@@ -18,8 +18,8 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MW5.DebugWindow")]
-[assembly: AssemblyProduct("Debug Window Plug-in")] // Used in the plug-ins menu
-[assembly: AssemblyDescription("Show a debug window that listens to all events.")]
+[assembly: AssemblyProduct("Debug Window")] // Used in the plug-ins menu
+[assembly: AssemblyDescription("Shows a debug window that listens to all events.")]
 [assembly: AssemblyCompany("MapWindow OSS Team - Paul Meems")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM

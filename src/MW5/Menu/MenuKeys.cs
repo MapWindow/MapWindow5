@@ -45,6 +45,8 @@
         public const string ZoomToSelected = "ZoomToSelected";
         public const string ClearSelection = "ClearSelection";
 
+        public const string PluginsConfigure = "PluginsConfigure";
+
         public const string About = "HelpAbout";
         public const string SupportedDrivers = "HelpSupportedDrivers";
         public const string ComUsage = "ComUsage";

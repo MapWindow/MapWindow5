@@ -18,7 +18,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MW5.TemplatePlugin")]
-[assembly: AssemblyProduct("Template Plugin")] // Used in the plug-ins menu
+[assembly: AssemblyProduct("Template Plug-in")] // Used in the plug-ins menu
 [assembly: AssemblyDescription("This is the template plug-in. Use it to jump-start the development of your own plug-in.")]
 [assembly: AssemblyCompany("MapWindow OSS Team")]
 

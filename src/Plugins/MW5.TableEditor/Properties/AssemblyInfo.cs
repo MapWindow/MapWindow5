@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("MW5.TableEditor")]
-[assembly: AssemblyProduct("Table editor")]
+[assembly: AssemblyProduct("Table Editor")]
 [assembly: AssemblyDescription("New mapWindow plug-in for editing shapefile attribute tables.")]
 [assembly: AssemblyCompany("MapWindow OSS Team")]
 

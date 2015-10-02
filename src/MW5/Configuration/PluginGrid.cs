@@ -13,7 +13,7 @@ namespace MW5.Configuration
     {
         public PluginGrid()
         {
-            Adapter.HotTracking = true;
+            Adapter.HotTracking = false;
             Adapter.ShowSuperTooltips = true;
             Adapter.ReadOnly = false;
             Adapter.AllowCurrentCell = false;

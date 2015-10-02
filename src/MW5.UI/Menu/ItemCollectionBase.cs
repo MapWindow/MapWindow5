@@ -174,7 +174,7 @@ namespace MW5.UI.Menu
             for (int i = 0; i < _items.Count; i++)
             {
                 var it = this[i];
-                if (it.UniqueKey == item.UniqueKey)
+                if (!it.Skip && it.UniqueKey == item.UniqueKey)
                 {
                     return i;
                 }

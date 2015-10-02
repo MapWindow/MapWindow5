@@ -30,10 +30,10 @@ namespace MW5.Configuration
         /// </summary>
         private void InitializeComponent()
         {
-            this.chkShowMenuToolTips = new System.Windows.Forms.CheckBox();
             this.configPanelControl3 = new MW5.UI.Controls.ConfigPanelControl();
             this.chkLocalDocumentation = new System.Windows.Forms.CheckBox();
             this.chkDynamicVisibilityWarnings = new System.Windows.Forms.CheckBox();
+            this.chkShowMenuToolTips = new System.Windows.Forms.CheckBox();
             this.chkShowPluginInToolTip = new System.Windows.Forms.CheckBox();
             this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,14 +51,6 @@ namespace MW5.Configuration
             this.configPanelControl2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // chkShowMenuToolTips
-            // 
-            this.chkShowMenuToolTips.Location = new System.Drawing.Point(15, 71);
-            this.chkShowMenuToolTips.Name = "chkShowMenuToolTips";
-            this.chkShowMenuToolTips.Size = new System.Drawing.Size(283, 21);
-            this.chkShowMenuToolTips.TabIndex = 5;
-            this.chkShowMenuToolTips.Text = "Show tooltips for menu items (needs app restart)";
-            // 
             // configPanelControl3
             // 
             this.configPanelControl3.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -68,7 +60,7 @@ namespace MW5.Configuration
             this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
             this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl3.HeaderText = "Various";
-            this.configPanelControl3.Location = new System.Drawing.Point(10, 228);
+            this.configPanelControl3.Location = new System.Drawing.Point(10, 218);
             this.configPanelControl3.Name = "configPanelControl3";
             this.configPanelControl3.Size = new System.Drawing.Size(370, 176);
             this.configPanelControl3.TabIndex = 10;
@@ -89,6 +81,14 @@ namespace MW5.Configuration
             this.chkDynamicVisibilityWarnings.TabIndex = 6;
             this.chkDynamicVisibilityWarnings.Text = "Display dynamic visibility warnings";
             // 
+            // chkShowMenuToolTips
+            // 
+            this.chkShowMenuToolTips.Location = new System.Drawing.Point(15, 71);
+            this.chkShowMenuToolTips.Name = "chkShowMenuToolTips";
+            this.chkShowMenuToolTips.Size = new System.Drawing.Size(283, 21);
+            this.chkShowMenuToolTips.TabIndex = 5;
+            this.chkShowMenuToolTips.Text = "Show tooltips for menu items (needs app restart)";
+            // 
             // chkShowPluginInToolTip
             // 
             this.chkShowPluginInToolTip.Location = new System.Drawing.Point(15, 37);
@@ -105,7 +105,7 @@ namespace MW5.Configuration
             this.configPanelControl1.Controls.Add(this.chkLoadSymbology);
             this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl1.HeaderText = "Symbology";
-            this.configPanelControl1.Location = new System.Drawing.Point(10, 114);
+            this.configPanelControl1.Location = new System.Drawing.Point(10, 104);
             this.configPanelControl1.Name = "configPanelControl1";
             this.configPanelControl1.Size = new System.Drawing.Size(370, 114);
             this.configPanelControl1.TabIndex = 9;
@@ -144,7 +144,7 @@ namespace MW5.Configuration
             this.configPanelControl2.Controls.Add(this.chkLoadLastProject);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "Startup";
-            this.configPanelControl2.Location = new System.Drawing.Point(10, 10);
+            this.configPanelControl2.Location = new System.Drawing.Point(10, 0);
             this.configPanelControl2.Name = "configPanelControl2";
             this.configPanelControl2.Size = new System.Drawing.Size(370, 104);
             this.configPanelControl2.TabIndex = 8;
@@ -174,7 +174,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.Size = new System.Drawing.Size(390, 404);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);

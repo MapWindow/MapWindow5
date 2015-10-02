@@ -10,6 +10,8 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
+using MW5.Shared;
+using MW5.UI.Helpers;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.Windows.Forms.Grid.Grouping;
@@ -32,40 +34,44 @@ namespace MW5.Configuration
 
             InitializeComponent();
 
-            chkSelectAll.CheckedChanged += chkSelectAll_CheckedChanged;
+            chkSelectAll.CheckedChanged += OnSelectAllCheckedChanged;
+
+            pluginGrid1.Adapter.SelectionChanged += OnPluginSelectionChanged;
+
+            KeyDown += OnPluginsConfigPageKeyDown;
+
+            richTextBox1.InitDockPanelFooter();
+            splitContainerAdv1.InitDockPanel(0.8);
 
             Initialize();
+        }
 
-            KeyDown += PluginsConfigPage_KeyDown;
-
-            pluginGrid1.Adapter.PrepareToolTip += ListControlPrepareToolTip;
+        private void OnPluginSelectionChanged(object sender, EventArgs e)
+        {
+            var plugin = pluginGrid1.Adapter.SelectedItem;
+            if (plugin != null)
+            {
+                string msg = string.Format("{0}{2}{2}{1}", plugin.Name, plugin.BasePlugin.Description, Environment.NewLine);
+                richTextBox1.SetDescription(msg);
+            }
         }
 
         public void Initialize()
         {
             _pluginProvider = new PluginProvider(_manager);
-            pluginGrid1.DataSource = _pluginProvider.ToList();
+            pluginGrid1.DataSource = _pluginProvider.OrderBy(p => p.Name).ToList();
+            pluginGrid1.Adapter.SelectFirstRecord();
 
             _ignoreEvents = true;
             chkSelectAll.Checked = _pluginProvider.Any(p => !p.Selected);
             _ignoreEvents = false;
         }
 
-        private void PluginsConfigPage_KeyDown(object sender, KeyEventArgs e)
+        private void OnPluginsConfigPageKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Space)
             {
                 pluginGrid1.Adapter.ToggleProperty(info => info.Selected);
-            }
-        }
-
-        private void ListControlPrepareToolTip(object sender, UI.Controls.ToolTipGridEventArgs e)
-        {
-            var info = pluginGrid1.Adapter[e.RecordIndex];
-            if (info != null)
-            {
-                e.ToolTip.Header.Text = info.Name;
-                e.ToolTip.Body.Text = info.BasePlugin.Description;
             }
         }
 
@@ -98,8 +104,8 @@ namespace MW5.Configuration
 
         public string Description
         {
-            get { return "Plugins checked in this list will become a permanent part of application, i.e." +
-                         "will be loaded in this list and won't listed in the plugins menu for unloading."; }
+            get { return "Plugins checked in this list will become a permanent part of application " +
+                         "and will not be listed in the plugins menu for unloading."; }
         }
 
         public bool VariableHeight
@@ -107,7 +113,7 @@ namespace MW5.Configuration
             get { return true; }
         }
 
-        private void chkSelectAll_CheckedChanged(object sender, EventArgs e)
+        private void OnSelectAllCheckedChanged(object sender, EventArgs e)
         {
             if (_ignoreEvents) return;
 

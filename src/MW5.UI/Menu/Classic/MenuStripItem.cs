@@ -74,7 +74,16 @@ namespace MW5.UI.Menu.Classic
 
         public override bool HasKey
         {
-            get { return _item.Tag is MenuItemMetadata; }
+            get
+            {
+                var meta = _item.Tag as MenuItemMetadata;
+                if (meta != null)
+                {
+                    return !string.IsNullOrWhiteSpace(meta.Key);
+                }
+
+                return false;
+            }
         }
 
         public bool Visible

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
@@ -23,38 +24,49 @@ namespace MW5.Menu
 
             var menuItem = context.Menu.PluginsMenu;
             menuItem.DropDownOpening += MenuDropDownOpening;
-            menuItem.DropDownClosed += MenuDropDownClosed;
-
-            AddDummyItem();
         }
 
-        private static void MenuDropDownClosed(object sender, EventArgs e)
+        private static void ClearPlugins()
         {
-            AddDummyItem();
-        }
+            var list = new List<IMenuItem>();
 
-        private static void AddDummyItem()
-        {
-            // otherwise it won't open, as plugin entries are added dynamically on opening
-            var item = _context.Menu.PluginsMenu;
-            item.SubItems.AddButton("__empty__", PluginIdentity.Default);
+            var menuItem = _context.Menu.PluginsMenu;
+
+            foreach (var item in menuItem.SubItems)
+            {
+                if (!item.Skip && !item.HasKey)
+                {
+                    list.Add(item);
+                }
+            }
+
+            foreach (var item in list)
+            {
+                menuItem.SubItems.Remove(item);
+            }
         }
 
         private static void MenuDropDownOpening(object sender, EventArgs e)
         {
+            ClearPlugins();
+
             var menuItem = _context.Menu.PluginsMenu;
-            menuItem.SubItems.Clear();
+            
+            var configureItem = _context.Menu.FindItem(MenuKeys.PluginsConfigure, PluginIdentity.Default);
+            menuItem.SubItems.InsertBefore = configureItem;
 
             foreach (var p in _manager.CustomPlugins)
             {
                 var item = menuItem.SubItems.AddButton(p.Identity.Name, PluginIdentity.Default);
                 item.Tag = p.Identity;
-                item.ItemClicked += item_Click;
+                item.ItemClicked += OnItemClick;
                 item.Checked = _manager.PluginActive(p.Identity);
             }
+
+            menuItem.Update();
         }
 
-        private static void item_Click(object sender, MenuItemEventArgs e)
+        private static void OnItemClick(object sender, MenuItemEventArgs e)
         {
             var item = sender as IMenuItem;
             if (item != null)
