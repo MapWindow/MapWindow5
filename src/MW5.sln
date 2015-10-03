@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Api", "MW5.Api\MW5.Api.csproj", "{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}"
 EndProject
@@ -155,7 +155,6 @@ Global
 		{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}.Debug|x86.ActiveCfg = Debug|x86
 		{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}.Debug|x86.Build.0 = Debug|x86
 		{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}.Release|x64.ActiveCfg = Release|x64
-		{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}.Release|x64.Build.0 = Release|x64
 		{EC2343F2-5130-48CA-B1A2-68E5B4E26EC5}.Release|x86.ActiveCfg = Release|x86
 		{B2B2BE95-1F16-4D90-8F0A-E736DA85D9FD}.Debug|x64.ActiveCfg = Debug|x64
 		{B2B2BE95-1F16-4D90-8F0A-E736DA85D9FD}.Debug|x64.Build.0 = Debug|x64
@@ -184,7 +183,6 @@ Global
 		{D48B6E30-3A26-4D99-8747-21F65C358D84}.Debug|x86.ActiveCfg = Debug|x86
 		{D48B6E30-3A26-4D99-8747-21F65C358D84}.Debug|x86.Build.0 = Debug|x86
 		{D48B6E30-3A26-4D99-8747-21F65C358D84}.Release|x64.ActiveCfg = Release|x64
-		{D48B6E30-3A26-4D99-8747-21F65C358D84}.Release|x64.Build.0 = Release|x64
 		{D48B6E30-3A26-4D99-8747-21F65C358D84}.Release|x86.ActiveCfg = Release|x86
 		{740CFD6A-F838-46EF-B6A8-8F9FE4FA991F}.Debug|x64.ActiveCfg = Debug|x64
 		{740CFD6A-F838-46EF-B6A8-8F9FE4FA991F}.Debug|x86.ActiveCfg = Debug|x86
@@ -205,7 +203,6 @@ Global
 		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Debug|x86.ActiveCfg = Debug|x86
 		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Debug|x86.Build.0 = Debug|x86
 		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Release|x64.ActiveCfg = Release|x64
-		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Release|x64.Build.0 = Release|x64
 		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Release|x86.ActiveCfg = Release|x86
 		{9D084FD3-2BA3-4ECF-891C-87772345D7E8}.Release|x86.Build.0 = Release|x86
 		{D6AD6FF4-56BC-4929-9AF7-256D0E5A5F0D}.Debug|x64.ActiveCfg = Debug|x64
