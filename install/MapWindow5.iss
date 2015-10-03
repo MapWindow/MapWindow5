@@ -2,6 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define ExeBinPath "..\bin\x86\Release"
+#define SamplePath "D:\dev\GIS-Data\"
 #define CPU "Win32"
 #define vcredist "vcredist_x86-2013.exe"
 #define SystemFlag "32bit"
@@ -68,7 +69,8 @@ ArchitecturesInstallIn64BitMode=x64
 #endif
 
 [Components]
-Name: "MapWindow"; Description: "MapWindow5 core component"; Types: full custom compact; Flags: fixed
+Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
+Name: "USASampleData"; Description: "USA Sample data"; Types: full
 
 [Files]
 ;; MapWinGIS
@@ -98,8 +100,12 @@ Source: "{#ExeBinPath}\MapWindow.exe.config"; DestDir: "{app}"; Flags: ignorever
 Source: "D:\dev\MapwinGIS\GIT\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\Licenses"; Flags: ignoreversion; Components: MapWindow
 Source: "{#ExeBinPath}\..\..\..\licenses\*"; DestDir: "{app}\Licenses"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 
+;; Sample data
+Source: "{#SamplePath}\MapWindow-Projects\UnitedStates\Shapefiles\*"; DestDir: "{code:GetDataDir}\USA"; Flags: confirmoverwrite recursesubdirs uninsneveruninstall; Components: USASampleData
+
 ;; VC++ files
-Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion {#SystemFlag};
+Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion {#SystemFlag}
+
 
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
@@ -114,12 +120,16 @@ Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Ch
 Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x86()
 #endif
 Filename: "{app}\MapWindow.exe"; Flags: shellexec runasoriginaluser postinstall nowait skipifsilent; Description: "Start MapWindow5 GIS?"
+Filename: "{code:GetDataDir}"; Flags: shellexec runasoriginaluser nowait skipifsilent; Description: "Open sample data folder"; Components: USASampleData
 
 [Icons]
 ;; In start menu:
 Name: "{group}\{#MyAppName}"; Filename: "{app}\MapWindow.exe"; WorkingDir: "{app}"; Comment: "Start MapWindow5 GIS"; Components: MapWindow
 ;; On desktop:
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\MapWindow.exe"; WorkingDir: "{app}"; Comment: "Start MapWindow5 GIS"; Components: MapWindow
+
+[Dirs]
+Name: {code:GetDataDir}; Check: not DataDirExists; Flags: uninsneveruninstall; Permissions: users-modify
 
 [Code]
 #IFDEF UNICODE
@@ -205,6 +215,51 @@ begin
   Result := Pos(';' + Param + ';', ';' + OrigPath + ';') = 0;
 end;
 
+// https://lindsaybradford.wordpress.com/2013/11/18/configurable-data-directories-via-inno-setup/
+var
+  DataDirPage: TInputDirWizardPage;
+ 
+function GetDataDir(Param: String): String;
+begin
+  { Return the selected DataDir }
+  Result := DataDirPage.Values[0];
+end;
+ 
+
+// custom wizard page setup, for data dir.
+procedure InitializeWizard;
+var
+  myLocalAppData: String;
+begin
+  DataDirPage := CreateInputDirPage(
+    wpSelectComponents,
+    '{#MyAppName} Data Directory',
+    '',
+    'Please select a directory to install {#MyAppName} sample data to.',
+    False,
+    '{#MyAppName}'
+  );
+  DataDirPage.Add('Sample data dir');
+ 
+  // Default data dir:
+  DataDirPage.Values[0] := ExpandConstant('{userdocs}\MapWindow5');
+end;
+
+function DataDirExists(): Boolean;
+begin
+  { Find out if data dir already exists }
+  Result := DirExists(GetDataDir(''));
+end;
+
+function ShouldSkipPage(PageID: Integer): Boolean;
+begin
+  // initialize result to not skip any page (not necessary, but safer)
+  Result := False;
+  // if the page that is asked to be skipped is your custom page, then...
+  if PageID = DataDirPage.ID then
+    // if the component is not selected, skip the page
+    Result := not IsComponentSelected('USASampleData');
+end;
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
