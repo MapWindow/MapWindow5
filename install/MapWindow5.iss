@@ -40,7 +40,7 @@ DefaultGroupName={#MyAppName}
 LicenseFile={#ExeBinPath}\..\..\..\licenses\MapWindow5License.rtf
 OutputDir=Output
 OutputBaseFilename=MapWindow-v{#MyAppVersion}-{#CPU}
-SetupIconFile=MapWindow.ico
+SetupIconFile=..\src\MW5\MW5.ico
 UninstallDisplayIcon={uninstallexe}
 Compression=lzma
 SolidCompression=yes
@@ -74,7 +74,7 @@ Name: "USASampleData"; Description: "USA Sample data"; Types: full
 
 [Files]
 ;; MapWinGIS
-Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
+Source: "{#ExeBinPath}\MapWinGIS\*.*"; DestDir: "{app}\MapWinGIS"; Flags: ignoreversion recursesubdirs createallsubdirs {#SystemFlag}; Components: MapWindow
 ;; MapWindow5 dlls
 Source: "{#ExeBinPath}\*.dll"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 Source: "{#ExeBinPath}\MapWindow.exe"; DestDir: "{app}"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
