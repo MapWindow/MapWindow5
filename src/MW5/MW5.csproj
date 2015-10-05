@@ -49,7 +49,7 @@
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>icon_mapwindow.ico</ApplicationIcon>
+    <ApplicationIcon>MW5.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -578,6 +578,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
+    <Content Include="MW5.ico" />
     <None Include="Resources\img_warning64.png" />
     <None Include="Resources\ico_tasks.ico" />
     <None Include="Resources\ico_results.ico" />
