@@ -727,6 +727,21 @@ namespace MW5.Api.Concrete
             _shapefile.UpdateSortField();
         }
 
+        public bool StartAppendMode()
+        {
+            return _shapefile.StartAppendMode();
+        }
+
+        public void StopAppendMode()
+        {
+            _shapefile.StopAppendMode();
+        }
+
+        public bool AppendMode
+        {
+            get { return _shapefile.AppendMode; }
+        }
+
         public IGlobalListener Callback
         {
             get { return NativeCallback.UnWrap(_shapefile.GlobalCallback); }
@@ -738,16 +753,20 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public bool FixUpShapes(out IFeatureSet result)
+        public IFeatureSet FixUpShapes()
         {
-            Shapefile sf = null;
+            Shapefile sf;
             if (_shapefile.FixUpShapes(out sf))
             {
-                result = WrapShapefile(sf);
-                return true;
+                return WrapShapefile(sf);
             }
-            result = null;
-            return false;
+            
+            return null;
+        }
+
+        public bool FixUpShapes(bool selectedOnly, IFeatureSet result)
+        {
+            return _shapefile.FixUpShapes2(selectedOnly, result.GetInternal());
         }
 
         public bool Move(double xOffset, double yOffset)

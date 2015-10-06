@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -67,16 +71,86 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            IFeatureSet fs = null;
-            bool result = Input.Datasource.FixUpShapes(out fs);
-            if (!result)
+            IFeatureSet result;
+
+            if (Output.MemoryLayer)
+            {
+                result = Input.Datasource.FixUpShapes();
+            }
+            else
+            {
+                var fs = CreateOutput();
+
+                if (Input.Datasource.FixUpShapes(Input.SelectedOnly, fs));
+                {
+                    result = fs;
+                }
+            }
+
+            if (result == null)
             {
                 Log.Info("Failed to fix shapefile.");
             }
 
-            Output.Result = fs;
+            Output.Result = result;
             
-            return result;
+            return Output.Result != null;
+        }
+        
+        private IFeatureSet CreateOutput()
+        {
+            // TODO: move to output manager
+            var fs = Input.Datasource.Clone();
+
+            if (File.Exists(Output.Filename))
+            {
+                if (Output.Overwrite)
+                {
+                    if (!GeoSource.Remove(Output.Filename))
+                    {
+                        Log.Info("Failed to overwrite.");
+                        return null;
+                    }
+                }
+                else
+                {
+                    Log.Info("Overwrite options isn't selected.");
+                    return null;
+                }
+            }
+
+            if (!fs.SaveAsEx(Output.Filename, true))
+            {
+                Log.Info("Failed to save resulting datasource: " + fs.LastError);
+                return null;
+            }
+
+            fs.StartAppendMode();
+
+            return fs;
+        }
+
+        public override bool AfterRun()
+        {
+            if (Output.MemoryLayer)
+            {
+                return base.AfterRun();
+            }
+            
+            var fs = Output.Result as IFeatureSet;
+            if (fs != null)
+            {
+                fs.StopAppendMode();
+                fs.Dispose();
+
+                if (Output.AddToMap)
+                {
+                    fs = new FeatureSet(Output.Filename);
+                    OutputManager.AddToMap(fs);
+                }
+            }
+
+            return true;
         }
     }
 }

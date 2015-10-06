@@ -72,7 +72,9 @@ namespace MW5.Api.Interfaces
         IFeatureSet Merge(bool selectedOnlyThis, IFeatureSet sf, bool selectedOnly);
         IFeatureSet Intersection(bool selectedOnlyOfThis, IFeatureSet sf, bool selectedOnly, GeometryType geometryType);
         IFeatureSet Reproject(ISpatialReference newProjection, out int reprojectedCount);
-        bool FixUpShapes(out IFeatureSet retVal);
+        IFeatureSet FixUpShapes();
+        bool FixUpShapes(bool selectedOnly, IFeatureSet result);
+
         bool Move(double xOffset, double yOffset);
         bool GetClosestVertex(double x, double y, double maxDistance, out int shapeIndex, out int pointIndex, out double distance);
         bool ReprojectInPlace(ISpatialReference newProjection, ref int reprojectedCount);
@@ -102,6 +104,10 @@ namespace MW5.Api.Interfaces
         string SortField { get; set; }
         bool SortAscending { get; set; }
         void UpdateSortField();
+
+        bool StartAppendMode();
+        void StopAppendMode();
+        bool AppendMode { get; }
 
         #region Not implemented
 
