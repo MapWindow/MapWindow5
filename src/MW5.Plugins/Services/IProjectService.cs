@@ -11,7 +11,7 @@ namespace MW5.Plugins.Services
         bool Save();
         void SaveAs();
         bool Open();
-        bool Open(string filename, bool silent = false);
+        bool Open(string filename, bool silent = true);
         void SetModified();
         bool Modified { get; }
     }
