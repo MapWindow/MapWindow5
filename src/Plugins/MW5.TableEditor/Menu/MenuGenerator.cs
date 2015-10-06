@@ -34,16 +34,8 @@ namespace MW5.Plugins.TableEditor.Menu
         {
             var menu = _context.Menu.LayerMenu;
 
-            IMenuItem before = null;
-            foreach (IMenuItem subItem in menu.SubItems)
-            {
-                if (subItem.HasKey && subItem.Key == Plugins.Menu.MenuKeys.LayerProperties)
-                {
-                    before = subItem;
-                    break;
-                }
-            }
-            
+            IMenuItem before = menu.SubItems.FirstOrDefault(subItem => subItem.HasKey && subItem.Key == Plugins.Menu.MenuKeys.LayerProperties);
+
             menu.SubItems.InsertBefore = before;
 
             menu.SubItems.AddButton(_commands[MenuKeys.ShowTable]).BeginGroup = true;

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
+using MW5.Api.Static;
 using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Concrete
@@ -26,6 +27,8 @@ namespace MW5.Plugins.Concrete
         public void SetDefaults()
         {
             AnimationOnZooming = AutoToggle.Auto;
+            CacheRenderingData = false;
+            CacheDbfRecords = false;
             CoordinateAngleFormat = AngleFormat.Seconds;
             CoordinatesDisplay = CoordinatesDisplay.Auto;
             CoordinatePrecision = 3;
@@ -120,6 +123,20 @@ namespace MW5.Plugins.Concrete
         {
             get { return _applicationPlugins ?? (_applicationPlugins = DefaultApplicationPlugins); }
             set { _applicationPlugins = value; }
+        }
+
+        [DataMember]
+        public bool CacheRenderingData
+        {
+            get { return MapConfig.CacheRenderingData;  }
+            set { MapConfig.CacheRenderingData = value; }
+        }
+
+        [DataMember]
+        public bool CacheDbfRecords
+        {
+            get { return MapConfig.CacheDbfRecords; }
+            set { MapConfig.CacheDbfRecords = value; }
         }
 
         [DataMember]

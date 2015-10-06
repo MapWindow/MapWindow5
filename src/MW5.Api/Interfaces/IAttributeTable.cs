@@ -55,5 +55,7 @@ namespace MW5.Api.Interfaces
         object get_MinValue(int fieldIndex);
         double get_MeanValue(int fieldIndex);
         double get_StandardDeviation(int fieldIndex);
+
+        void ClearCache();
     }
 }

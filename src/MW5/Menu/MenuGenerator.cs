@@ -8,6 +8,7 @@ using MW5.Services;
 using System.Linq;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
+using MW5.Shared;
 using MW5.UI.Menu;
 
 namespace MW5.Menu
@@ -137,7 +138,6 @@ namespace MW5.Menu
             items.AddButton("About", MenuKeys.About, PluginIdentity.Default).BeginGroup = true;
 
             _context.Menu.HelpMenu.Update();
-            
         }
 
         #endregion
@@ -171,8 +171,11 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.Settings], true);
             
             #if DEBUG
-            
-            items.AddButton(_commands[MenuKeys.Test], true);
+
+            if (DebugHelper.ShowDebugMenuElements)
+            {
+                items.AddButton(_commands[MenuKeys.Test], true);    
+            }
 
             #endif
             

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
@@ -33,7 +34,7 @@ namespace MW5.Api.Helpers
             var fs = ds as IFeatureSet;
             if (fs != null)
             {
-                return fs.SaveAs(filename);
+                return fs.SaveAsEx(filename, true);
             }
 
             var raster = ds as IRasterSource;

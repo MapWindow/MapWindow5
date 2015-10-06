@@ -29,7 +29,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override string Name
         {
-            get { return "Exports selection"; }
+            get { return "Export selection"; }
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override string Description
         {
-            get { return "Export selected features into new datasource."; }
+            get { return "Exports selected features into a new datasource."; }
         }
 
         /// <summary>

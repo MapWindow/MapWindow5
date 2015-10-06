@@ -191,7 +191,7 @@ namespace MW5.Plugins.ShapeEditor.Services
             {
                 var fs = new FeatureSet(view.GeometryType, view.ZValueType);
                 fs.Projection.CopyFrom(_context.Map.Projection);
-                fs.SaveAs(view.Filename);
+                fs.SaveAsEx(view.Filename, false);
                 fs.InteractiveEditing = true;
                 _context.Layers.Add(fs);
             }

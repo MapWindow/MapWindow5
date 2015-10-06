@@ -286,6 +286,11 @@ namespace MW5.Api.Concrete
             return _table.StandardDeviation[fieldIndex];
         }
 
+        public void ClearCache()
+        {
+            _table.ClearCache();
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>

@@ -151,11 +151,14 @@ namespace MW5.UI.Controls
 
         public bool SelectFirstRecord()
         {
-            var record = _grid.Table.Records[0];
-            if (record != null)
+            if (_grid.Table.Records.Count > 0)
             {
-                _grid.Table.SelectedRecords.Add(record);
-                return true;
+                var record = _grid.Table.Records[0];
+                if (record != null)
+                {
+                    _grid.Table.SelectedRecords.Add(record);
+                    return true;
+                }
             }
 
             return false;

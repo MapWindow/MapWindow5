@@ -711,7 +711,8 @@ namespace MW5.Projections.Services
                     Scope = (row[Constants.CmnCsScope]).ToString(),
                     AreaName = (row[Constants.CmnCsAreaName]).ToString(),
                     Remarks = (row[Constants.CmnCsRemarks]).ToString(),
-                    Proj4 = (row[Constants.CmnCsProj4]).ToString()
+                    Proj4 = (row[Constants.CmnCsProj4]).ToString(),
+                    EsriName = (row[Constants.EsriName]).ToString(),
                 };
 
                 // setting type of GCS
@@ -756,7 +757,6 @@ namespace MW5.Projections.Services
             int localColumn = ColumnIndexByName(reader, Constants.CmnCsLocal);
             int proj4Column = ColumnIndexByName(reader, Constants.CmnCsProj4);
             int esriNameColumn = ColumnIndexByName(reader, Constants.EsriName);
-
 
             if (codeColumn == -1 || nameColumn == -1 || sourceColumn == -1 ||
                 leftColumn == -1 || rightColumn == -1 || bottomColumn == -1 ||

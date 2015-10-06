@@ -27,6 +27,7 @@ namespace MW5.Api.Interfaces
         bool LoadDataFrom(string shapefileName);
         bool Save();
         bool SaveAs(string shapefileName);
+        bool SaveAsEx(string filename, bool stopEditMode, bool unboundFile = false);
         bool PointOrMultiPoint { get; }
         bool IsPolyline { get; }
         bool IsPolygon { get; }

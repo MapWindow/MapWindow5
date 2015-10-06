@@ -22,13 +22,11 @@ namespace MW5.Api.Concrete
         public double X
         {
             get { return _point.x; }
-            set { _point.x = value; }
         }
 
         public double Y
         {
             get { return _point.y; }
-            set { _point.y = value; }
         }
 
         public double Z

@@ -36,7 +36,7 @@ namespace MW5.UI.Menu.Classic
             {
                 BackColor = Color.White,
                 Dock = DockStyle.Fill,
-                ImageScalingSize = new Size(24, 24),
+                ImageScalingSize = new Size(20, 20),
                 RenderMode = ToolStripRenderMode.Professional,
             };
             

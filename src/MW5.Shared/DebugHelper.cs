@@ -10,5 +10,6 @@ namespace MW5.Shared
     {
         public static bool HideAdditionalMapControls = false;
         public static bool SyncfusionMenu = false;
+        public static bool ShowDebugMenuElements = false;
     }
 }

@@ -459,6 +459,11 @@ namespace MW5.Api.Concrete
             return _shapefile.SaveAs(shapefileName);
         }
 
+        public bool SaveAsEx(string filename, bool stopEditMode, bool unboundFile = false)
+        {
+            return _shapefile.SaveAsEx(filename, stopEditMode, unboundFile);
+        }
+
         public bool PointOrMultiPoint
         {
             get { return GeometryType == GeometryType.Point || GeometryType == GeometryType.MultiPoint; }

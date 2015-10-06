@@ -13,9 +13,9 @@ namespace MW5.Api.Interfaces
     {
         double M { get; set; }
 
-        double X { get; set; }
+        double X { get; }
 
-        double Y { get; set; }
+        double Y { get;}
 
         double Z { get; set; }
 

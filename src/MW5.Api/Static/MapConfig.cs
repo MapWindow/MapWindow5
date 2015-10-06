@@ -14,11 +14,19 @@ namespace MW5.Api.Static
         static MapConfig()
         {
             _settings.ApplicationCallback = new GlobalNativeCallback();
+
+            // default mode, don't expose it to API
+            _settings.ShapefileFastMode = true;    
         }
 
         internal static void Init()
         {
             // intentionally blank; just need to call any member to execute static constructor
+        }
+
+        public static bool ShapefileFastMode
+        {
+            get { return _settings.ShapefileFastMode;  }
         }
 
         public static bool OverrideLocalCallback
@@ -296,6 +304,18 @@ namespace MW5.Api.Static
         {
             get { return _settings.GridUseHistogram; }
             set { _settings.GridUseHistogram = value; }
+        }
+
+        public static bool CacheDbfRecords
+        {
+            get { return _settings.CacheDbfRecords;  }
+            set { _settings.CacheDbfRecords = value; }
+        }
+
+        public static bool CacheRenderingData
+        {
+            get { return _settings.CacheShapeRenderingData; }
+            set { _settings.CacheShapeRenderingData = value; }
         }
 
         #region Not implemented

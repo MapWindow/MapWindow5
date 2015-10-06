@@ -34,11 +34,13 @@ namespace MW5.Plugins.TableEditor.Helpers
             var fsNew = fs.ExportSelection();
             if (fsNew != null)
             {
-                if (!fsNew.SaveAs(filename))
+                if (!fsNew.SaveAsEx(filename, true))
                 {
                     MessageService.Current.Warn("Failed to save shapefile: " + filename + ".");
                     return;
                 }
+
+                fsNew.Dispose();
             }
             else
             {

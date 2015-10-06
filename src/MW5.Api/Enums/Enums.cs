@@ -1020,8 +1020,7 @@
         NoValidation = 0,
         TryFixProceedOnFailure = 1,
         TryFixSkipOnFailure = 2,
-        TryFixAbortOnFailure = 3,
-        AbortOnErrors = 4,
+        AbortOnErrors = 3,
     }
 
     public enum GdalDriverMetadata

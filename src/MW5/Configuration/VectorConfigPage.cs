@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
+using MW5.Api.Static;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -47,6 +48,10 @@ namespace MW5.Configuration
             chkCreateSpatialIndex.Checked = config.CreateSpatialIndexOnOpening;
             chkSpatialIndexDialog.Checked = config.ShowSpatialIndexDialog;
 
+            chkFastMode.Checked = MapConfig.ShapefileFastMode;
+            chkCacheDbfRecords.Checked = config.CacheDbfRecords;
+            chkCacheRenderingData.Checked = config.CacheRenderingData;
+
             udSpatialIndexCount.SetValue(config.SpatialIndexFeatureCount);
         }
 
@@ -61,6 +66,9 @@ namespace MW5.Configuration
 
             config.CreateSpatialIndexOnOpening = chkCreateSpatialIndex.Checked;
             config.ShowSpatialIndexDialog = chkSpatialIndexDialog.Checked;
+
+            config.CacheDbfRecords = chkCacheDbfRecords.Checked;
+            config.CacheRenderingData = chkCacheRenderingData.Checked;
 
             config.SpatialIndexFeatureCount = (int)udSpatialIndexCount.Value;
         }

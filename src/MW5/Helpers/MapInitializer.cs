@@ -42,6 +42,7 @@ namespace MW5.Helpers
             MapConfig.ReprojectLayersOnAdding = false;
             MapConfig.OgrLayerForceUpdateMode = true;
             MapConfig.LoadSymbologyOnAddLayer = true;
+            MapConfig.CacheDbfRecords = false;
             
             // It can be overridden in Grid.OpenAsImage,
             // but not proxy tricks by default
