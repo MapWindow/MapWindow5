@@ -591,7 +591,6 @@
     <Content Include="Manuals\js\mw5.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Manuals\index.html" />
     <Content Include="Manuals\BufferTool.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -213,7 +213,9 @@ namespace MW5.Services.Concrete
 
                     AppConfig.Instance.AddRecentProject(filename);
 
-                    MessageService.Current.Info("Project was saved: " + filename);
+                    // PM:
+                    // MessageService.Current.Info("Project was saved: " + filename);
+                    Logger.Current.Info("Project was saved: " + filename);
                 }
             }
             catch (Exception ex)
@@ -285,10 +287,10 @@ namespace MW5.Services.Concrete
 
                     if (!silent)
                     {
-                        MessageService.Current.Info("Project was loaded: " + result);
+                        MessageService.Current.Info("Legacy MapWindow 4 project was loaded: " + result);
                     }
 
-                    Logger.Current.Info("Project was loaded: " + result);
+                    Logger.Current.Info("Legacy MapWindow 4 project was loaded: " + result);
 
                     return true;
                 }
@@ -303,12 +305,15 @@ namespace MW5.Services.Concrete
             return false;
         }
 
-        public bool Open(string filename, bool silent = false)
+        public bool Open(string filename, bool silent = true)
         {
             if (!CheckProjectFilename(filename, silent))
             {
                 return false;
             }
+
+            // PM: Close current project first:
+            TryClose();
 
             using (var reader = new StreamReader(filename))
             {
