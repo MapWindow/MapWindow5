@@ -177,12 +177,8 @@ namespace MW5.Tools.Services
         /// <summary>
         /// Clones the input datasource, saves it to the disk and starts append mode.
         /// </summary>
-        public IFeatureSet CreateAppendModeFeatureSet(IFeatureSet cloneSource, OutputLayerInfo output, IToolLogger log)
+        public bool SaveAppendModeFeatureSet(IFeatureSet fs, OutputLayerInfo output, IToolLogger log)
         {
-            if (cloneSource == null) return null;
- 
-            var fs = cloneSource.Clone();
-
             if (File.Exists(output.Filename))
             {
                 if (output.Overwrite)
@@ -190,25 +186,25 @@ namespace MW5.Tools.Services
                     if (!GeoSource.Remove(output.Filename))
                     {
                         log.Info("Failed to overwrite.");
-                        return null;
+                        return false;
                     }
                 }
                 else
                 {
                     log.Info("Overwrite options isn't selected.");
-                    return null;
+                    return false;
                 }
             }
 
             if (!fs.SaveAsEx(output.Filename, true))
             {
                 log.Info("Failed to save resulting datasource: " + fs.LastError);
-                return null;
+                return false;
             }
 
             fs.StartAppendMode();
 
-            return fs;
+            return true;
         }
     }
 }

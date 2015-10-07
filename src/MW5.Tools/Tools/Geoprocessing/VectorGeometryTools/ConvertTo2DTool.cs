@@ -12,7 +12,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class ConvertTo2DTool: GisTool
+    public class ConvertTo2DTool: AppendModeGisTool
     {
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
@@ -68,6 +68,11 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
             var fsNew = fs.Clone(fs.GeometryType);
 
+            if (!TrySaveForAppendMode(Output, fsNew))
+            {
+                return false;
+            }
+
             int lastPercent = 0;
 
             var features = Input.Datasource.GetFeatures(Input.SelectedOnly);
@@ -78,7 +83,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 
                 var ft = features[i];
 
-                var gm = ft.Geometry.Clone(fs.GeometryType, ZValueType.None);
+                var gm = ft.Geometry.Clone(fs.GeometryType);
                 int shapeIndex = fsNew.Features.EditAdd(gm);
 
                 if (shapeIndex != -1)

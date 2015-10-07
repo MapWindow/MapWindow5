@@ -172,7 +172,7 @@ namespace MW5.Api.Concrete
             for (int i = 0; i < _shape.NumParts; i++)
             {
                 int pointIndex = _shape.Part[i];
-                shp.set_Part(i, pointIndex);
+                shp.InsertPart(i, ref pointIndex);
             }
 
             var g = new Geometry(shp);
