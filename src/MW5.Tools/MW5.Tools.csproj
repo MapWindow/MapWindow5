@@ -183,6 +183,7 @@
     <Compile Include="Helpers\ToolConfigHelper.cs" />
     <Compile Include="Helpers\ToolTipHelper.cs" />
     <Compile Include="Helpers\ValidationHelper.cs" />
+    <Compile Include="Model\AppendModeGisTool.cs" />
     <Compile Include="Model\ErrorInfo.cs" />
     <Compile Include="Model\FieldWrapper.cs" />
     <Compile Include="Model\IGdalTool.cs" />

@@ -72,8 +72,7 @@ namespace MW5.Api.Interfaces
         IFeatureSet Merge(bool selectedOnlyThis, IFeatureSet sf, bool selectedOnly);
         IFeatureSet Intersection(bool selectedOnlyOfThis, IFeatureSet sf, bool selectedOnly, GeometryType geometryType);
         IFeatureSet Reproject(ISpatialReference newProjection, out int reprojectedCount);
-        IFeatureSet FixUpShapes();
-        bool FixUpShapes(bool selectedOnly, IFeatureSet result);
+        IFeatureSet FixUpShapes(bool selectedOnly);
 
         bool Move(double xOffset, double yOffset);
         bool GetClosestVertex(double x, double y, double maxDistance, out int shapeIndex, out int pointIndex, out double distance);

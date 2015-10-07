@@ -753,20 +753,11 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public IFeatureSet FixUpShapes()
+        public IFeatureSet FixUpShapes(bool selectedOnly)
         {
             Shapefile sf;
-            if (_shapefile.FixUpShapes(out sf))
-            {
-                return WrapShapefile(sf);
-            }
-            
-            return null;
-        }
-
-        public bool FixUpShapes(bool selectedOnly, IFeatureSet result)
-        {
-            return _shapefile.FixUpShapes2(selectedOnly, result.GetInternal());
+            bool result = _shapefile.FixUpShapes2(selectedOnly, out sf);
+            return WrapShapefile(sf);
         }
 
         public bool Move(double xOffset, double yOffset)

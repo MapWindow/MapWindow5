@@ -223,6 +223,11 @@ namespace MW5.Api.Static
             return _utils.ComUsageReport[true];
         }
 
+        public bool FixUpShapes(IFeatureSet fs, bool selectedOnly, string outputFilename)
+        {
+            return _utils.FixUpShapes(fs.GetInternal(), selectedOnly, outputFilename);
+        }
+
         #region Not implemented
 
         //public IGeometry ClipPolygon(PolygonOperation op, IGeometry subjectPolygon, IGeometry clipPolygon)

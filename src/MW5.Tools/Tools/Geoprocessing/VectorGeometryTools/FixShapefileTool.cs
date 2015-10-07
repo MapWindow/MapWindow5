@@ -19,7 +19,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class FixShapefileTool: GisTool
+    public class FixShapefileTool : AppendModeGisTool
     {
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
@@ -71,86 +71,27 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            IFeatureSet result;
+            bool success = false;
 
             if (Output.MemoryLayer)
             {
-                result = Input.Datasource.FixUpShapes();
+                Output.Result = Input.Datasource.FixUpShapes(Input.SelectedOnly);
+                success = true;
             }
             else
             {
-                var fs = CreateOutput();
-
-                if (Input.Datasource.FixUpShapes(Input.SelectedOnly, fs));
+                if (GeoProcessing.Instance.FixUpShapes(Input.Datasource, Input.SelectedOnly, Output.Filename))
                 {
-                    result = fs;
+                    success = true;
                 }
             }
 
-            if (result == null)
+            if (!success)
             {
                 Log.Info("Failed to fix shapefile.");
             }
 
-            Output.Result = result;
-            
-            return Output.Result != null;
-        }
-        
-        private IFeatureSet CreateOutput()
-        {
-            // TODO: move to output manager
-            var fs = Input.Datasource.Clone();
-
-            if (File.Exists(Output.Filename))
-            {
-                if (Output.Overwrite)
-                {
-                    if (!GeoSource.Remove(Output.Filename))
-                    {
-                        Log.Info("Failed to overwrite.");
-                        return null;
-                    }
-                }
-                else
-                {
-                    Log.Info("Overwrite options isn't selected.");
-                    return null;
-                }
-            }
-
-            if (!fs.SaveAsEx(Output.Filename, true))
-            {
-                Log.Info("Failed to save resulting datasource: " + fs.LastError);
-                return null;
-            }
-
-            fs.StartAppendMode();
-
-            return fs;
-        }
-
-        public override bool AfterRun()
-        {
-            if (Output.MemoryLayer)
-            {
-                return base.AfterRun();
-            }
-            
-            var fs = Output.Result as IFeatureSet;
-            if (fs != null)
-            {
-                fs.StopAppendMode();
-                fs.Dispose();
-
-                if (Output.AddToMap)
-                {
-                    fs = new FeatureSet(Output.Filename);
-                    OutputManager.AddToMap(fs);
-                }
-            }
-
-            return true;
+            return success;
         }
     }
 }

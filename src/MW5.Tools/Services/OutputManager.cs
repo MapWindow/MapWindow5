@@ -8,11 +8,14 @@ using System.Threading.Tasks;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Services.Concrete;
 using MW5.Shared;
+using MW5.Tools.Helpers;
 using MW5.Tools.Model;
 using MW5.Tools.Model.Layers;
+using MW5.Tools.Model.Parameters.Layers;
 
 namespace MW5.Tools.Services
 {
@@ -152,6 +155,60 @@ namespace MW5.Tools.Services
 
             Logger.Current.Error("Failed to save datasource: " + ds.LastError);
             return false;
+        }
+
+        public bool DeleteOutputs(IParametrizedTool tool)
+        {
+            foreach (var output in tool.GetOutputs())
+            {
+                if (File.Exists(output.Filename) && output.Overwrite)
+                {
+                    if (!GeoSource.Remove(output.Filename))
+                    {
+                        MessageService.Current.Info("Failed to remove datasource: " + output.Filename);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Clones the input datasource, saves it to the disk and starts append mode.
+        /// </summary>
+        public IFeatureSet CreateAppendModeFeatureSet(IFeatureSet cloneSource, OutputLayerInfo output, IToolLogger log)
+        {
+            if (cloneSource == null) return null;
+ 
+            var fs = cloneSource.Clone();
+
+            if (File.Exists(output.Filename))
+            {
+                if (output.Overwrite)
+                {
+                    if (!GeoSource.Remove(output.Filename))
+                    {
+                        log.Info("Failed to overwrite.");
+                        return null;
+                    }
+                }
+                else
+                {
+                    log.Info("Overwrite options isn't selected.");
+                    return null;
+                }
+            }
+
+            if (!fs.SaveAsEx(output.Filename, true))
+            {
+                log.Info("Failed to save resulting datasource: " + fs.LastError);
+                return null;
+            }
+
+            fs.StartAppendMode();
+
+            return fs;
         }
     }
 }

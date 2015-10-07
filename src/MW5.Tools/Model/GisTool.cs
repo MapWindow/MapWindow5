@@ -5,11 +5,13 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
@@ -255,7 +257,7 @@ namespace MW5.Tools.Model
         /// <summary>
         /// Validates the values of parameters.
         /// </summary>
-        public bool Validate()
+        public virtual bool Validate()
         {
             if (!Parameters.Validate())
             {
