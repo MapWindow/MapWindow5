@@ -223,9 +223,26 @@ namespace MW5.Api.Static
             return _utils.ComUsageReport[true];
         }
 
-        public bool FixUpShapes(IFeatureSet fs, bool selectedOnly, string outputFilename)
+        public bool FixUpShapes(IFeatureSet fs, bool selectedOnly, string outputFilename, bool overwrite)
         {
-            return _utils.FixUpShapes(fs.GetInternal(), selectedOnly, outputFilename);
+            return _utils.FixUpShapes(fs.GetInternal(), selectedOnly, outputFilename, overwrite);
+        }
+
+        public bool BufferByDistance(IFeatureSet fs, bool selectedOnly, double distance, int numSegments, bool mergeResults, 
+                                    string outputFilename, bool overwrite)
+        {
+            return _utils.BufferByDistance(fs.GetInternal(), distance, numSegments, selectedOnly, mergeResults,
+                                outputFilename, overwrite);
+        }
+
+        public bool ExplodeShapes(IFeatureSet fs, bool selectedOnly, string outputFilename, bool overwrite)
+        {
+            return _utils.ExplodeShapes(fs.GetInternal(), selectedOnly, outputFilename, overwrite);
+        }
+
+        public bool ExportSelection(IFeatureSet fs, string outputFilename, bool overwrite)
+        {
+            return _utils.ExportSelection(fs.GetInternal(), outputFilename, overwrite);
         }
 
         #region Not implemented

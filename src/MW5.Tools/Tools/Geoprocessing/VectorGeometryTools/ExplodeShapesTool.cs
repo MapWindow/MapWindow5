@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -14,7 +15,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class ExplodeShapesTool: GisTool
+    public class ExplodeShapesTool: AppendModeGisTool
     {
         [Input("Input datasource", 0)]
         public IVectorInput Input { get; set; }
@@ -52,14 +53,26 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fs = Input.Datasource.ExplodeShapes(Input.SelectedOnly);
+            bool success = false;
 
-            Log.Info("Initial number of features: " + Input.Datasource.NumFeatures);
-            Log.Info("After exploding: " + fs.NumFeatures);
+            if (Output.MemoryLayer)
+            {
+                var fs = Input.Datasource.ExplodeShapes(Input.SelectedOnly);
 
-            Output.Result = fs;
+                if (fs != null)
+                {
+                    Log.Info("Initial number of features: " + Input.Datasource.NumFeatures);
+                    Log.Info("After exploding: " + fs.NumFeatures);
+                }
 
-            return true;
+                Output.Result = fs;
+            }
+            else
+            {
+                success = GeoProcessing.Instance.ExplodeShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
+            }
+
+            return Output.Result != null || success;
         }
     }
 }

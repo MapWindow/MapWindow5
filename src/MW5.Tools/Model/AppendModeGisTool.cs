@@ -14,20 +14,6 @@ namespace MW5.Tools.Model
     public abstract class AppendModeGisTool: GisTool
     {
         /// <summary>
-        /// Validates the values of parameters.
-        /// </summary>
-        public override bool Validate()
-        {
-            bool result = base.Validate();
-
-            // in append mode we have to create datasource before the run;
-            // the native methods return failure if the file already exists
-            OutputManager.DeleteOutputs(this);
-
-            return result;
-        }
-
-        /// <summary>
         /// A method called after the main IGisTool.Run method is successfully finished.
         /// Is executed on the UI thread. Typically used to save output datasources.
         /// Default implementation automatically handles values assigned to OutputLayerInfo.Result.

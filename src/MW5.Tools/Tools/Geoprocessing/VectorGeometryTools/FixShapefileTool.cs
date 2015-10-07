@@ -71,7 +71,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            bool success = false;
+            bool success;
 
             if (Output.MemoryLayer)
             {
@@ -80,10 +80,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             }
             else
             {
-                if (GeoProcessing.Instance.FixUpShapes(Input.Datasource, Input.SelectedOnly, Output.Filename))
-                {
-                    success = true;
-                }
+                success = GeoProcessing.Instance.FixUpShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
             }
 
             if (!success)

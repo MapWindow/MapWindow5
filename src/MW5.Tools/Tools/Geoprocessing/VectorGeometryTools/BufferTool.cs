@@ -6,6 +6,7 @@
 
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Helpers;
@@ -20,7 +21,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [CustomLayout]
     [GisTool(GroupKeys.VectorGeometryTools, ToolIcon.Hammer)]
-    public class BufferTool : GisTool
+    public class BufferTool : AppendModeGisTool
     {
         [Input("Input layer", 0)]
         public IVectorInput Input { get; set; }
@@ -83,12 +84,22 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         public override bool Run(ITaskHandle task)
         {
             var units = Input.Datasource.GetLengthUnits();
-            
+
             double bufferDistance = UnitConversionHelper.Convert(BufferDistance.Units, units, BufferDistance.Value);
 
-            Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
+            bool success = false;
 
-            return true;
+            if (Output.MemoryLayer)
+            {
+                Output.Result = Input.Datasource.BufferByDistance(bufferDistance, NumSegments, Input.SelectedOnly, MergeResults);
+            }
+            else
+            {
+                success = GeoProcessing.Instance.BufferByDistance(Input.Datasource, Input.SelectedOnly, bufferDistance, 
+                                                            NumSegments, MergeResults, Output.Filename, Output.Overwrite);
+            }
+
+            return Output.Result != null || success;
         }
     }
 }

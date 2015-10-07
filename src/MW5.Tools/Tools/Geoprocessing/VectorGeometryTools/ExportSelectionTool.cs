@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -14,7 +15,7 @@ using MW5.Tools.Model.Layers;
 namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
 {
     [GisTool(GroupKeys.VectorGeometryTools)]
-    public class ExportSelectionTool: GisTool
+    public class ExportSelectionTool: AppendModeGisTool
     {
         // TODO: disable the selected only flag in the UI
         [Input("Input datasource", 0)]
@@ -67,12 +68,25 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         /// </summary>
         public override bool Run(ITaskHandle task)
         {
-            var fs = Input.Datasource.ExportSelection();
+            bool success = false;
 
-            Log.Info("Number of features exported: " + fs.NumFeatures);
+            if (Output.MemoryLayer)
+            {
+                var fs = Input.Datasource.ExportSelection();
 
-            Output.Result = fs;
-            return true;
+                if (fs != null)
+                {
+                    Log.Info("Number of features exported: " + fs.NumFeatures);
+                }
+
+                Output.Result = fs;
+            }
+            else
+            {
+                success = GeoProcessing.Instance.ExportSelection(Input.Datasource, Output.Filename, Output.Overwrite);
+            }
+
+            return Output.Result != null || success;
         }
     }
 }
