@@ -463,6 +463,7 @@ namespace MW5.Plugins.Concrete
                     new Guid("894E958F-69DD-48DF-B35B-16871EC5D309"),   // Table editor
                     new Guid("70120ff9-1c6b-49a1-8949-dded8bcef499"),   // Shape editor
                     new Guid("F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0"),   // Debug window
+                    new Guid("F383FE43-0754-4EE2-951C-0066E87B28AB"),   // GIS Toolbox
                 };
             }
         }
