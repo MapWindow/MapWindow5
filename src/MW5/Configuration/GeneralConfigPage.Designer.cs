@@ -60,9 +60,9 @@ namespace MW5.Configuration
             this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
             this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl3.HeaderText = "Various";
-            this.configPanelControl3.Location = new System.Drawing.Point(10, 218);
+            this.configPanelControl3.Location = new System.Drawing.Point(0, 218);
             this.configPanelControl3.Name = "configPanelControl3";
-            this.configPanelControl3.Size = new System.Drawing.Size(370, 176);
+            this.configPanelControl3.Size = new System.Drawing.Size(380, 176);
             this.configPanelControl3.TabIndex = 10;
             // 
             // chkLocalDocumentation
@@ -105,9 +105,9 @@ namespace MW5.Configuration
             this.configPanelControl1.Controls.Add(this.chkLoadSymbology);
             this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl1.HeaderText = "Symbology";
-            this.configPanelControl1.Location = new System.Drawing.Point(10, 104);
+            this.configPanelControl1.Location = new System.Drawing.Point(0, 104);
             this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(370, 114);
+            this.configPanelControl1.Size = new System.Drawing.Size(380, 114);
             this.configPanelControl1.TabIndex = 9;
             // 
             // label1
@@ -144,9 +144,9 @@ namespace MW5.Configuration
             this.configPanelControl2.Controls.Add(this.chkLoadLastProject);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "Startup";
-            this.configPanelControl2.Location = new System.Drawing.Point(10, 0);
+            this.configPanelControl2.Location = new System.Drawing.Point(0, 0);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(370, 104);
+            this.configPanelControl2.Size = new System.Drawing.Size(380, 104);
             this.configPanelControl2.TabIndex = 8;
             // 
             // chkShowWelcomeDialog
@@ -174,7 +174,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl1);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
-            this.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
+            this.Padding = new System.Windows.Forms.Padding(0, 0, 10, 10);
             this.Size = new System.Drawing.Size(390, 404);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);

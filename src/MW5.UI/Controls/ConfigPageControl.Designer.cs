@@ -90,7 +90,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panelContent.Location = new System.Drawing.Point(0, 38);
             this.panelContent.Name = "panelContent";
-            this.panelContent.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.panelContent.Padding = new System.Windows.Forms.Padding(10, 10, 0, 0);
             this.panelContent.Size = new System.Drawing.Size(474, 213);
             this.panelContent.TabIndex = 15;
             // 

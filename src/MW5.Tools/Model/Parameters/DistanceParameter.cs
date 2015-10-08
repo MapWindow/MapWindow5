@@ -42,7 +42,7 @@ namespace MW5.Tools.Model.Parameters
             var distance = Value as Distance;
             if (distance != null)
             {
-                writer.WriteAttributeString("Value", distance.Value.ToInVariantString());
+                writer.WriteAttributeString("Value", distance.Value.ToInvariantString());
                 writer.WriteAttributeString("Units", distance.Units.ToString());
             }
         }

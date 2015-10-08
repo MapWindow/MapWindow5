@@ -34,7 +34,8 @@ namespace MW5.Services.Serialization
             Map = new XmlMap
             {
                 Projection = context.Map.Projection.ExportToWkt(),
-                Envelope = new XmlEnvelope(context.Map.Extents)
+                Envelope = new XmlEnvelope(context.Map.Extents),
+                TileProviderId = context.Map.Tiles.ProviderId
             };
 
             Settings = new XmlProjectSettings {SavedAsFilename = filename};

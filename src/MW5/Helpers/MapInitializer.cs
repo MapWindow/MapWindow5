@@ -8,6 +8,8 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Static;
+using MW5.Data.Helpers;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
 
 namespace MW5.Helpers
@@ -61,6 +63,7 @@ namespace MW5.Helpers
             MapConfig.DefaultColorSchemeForGrids = config.GridDefaultColorScheme;
             MapConfig.RandomColorSchemeForGrids = config.GridRandomColorScheme;
             MapConfig.GridUseHistogram = config.GridUseHistogram;
+            MapConfig.BingApiKey = config.BingApiKey;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;
@@ -79,7 +82,19 @@ namespace MW5.Helpers
 
             map.BackgroundColor = config.MapBackgroundColor;
 
-            var measuring = map.Measuring.Options;
+            UpdateMeasuringSettings(map.Measuring.Options, config);
+
+            ApplyMouseWheelDirection(map, config.MouseWheelDirection);
+
+            var tiles = map.Tiles;
+
+            ApplyTilesSettings(tiles, config);
+
+            ApplyTilesProxy(tiles, config);
+        }
+
+        private static void UpdateMeasuringSettings(IMeasuringSettings measuring, AppConfig config)
+        {
             measuring.AngleFormat = config.MeasuringAngleFormat;
             measuring.AnglePrecision = config.MeasuringAnglePrecision;
             measuring.AreaPrecision = config.MeasuringAreaPrecision;
@@ -97,8 +112,47 @@ namespace MW5.Helpers
             measuring.ShowBearing = config.MeasuringShowBearing;
             measuring.ShowLength = config.MeasuringShowLength;
             measuring.ShowTotalLength = config.MeasuringShowTotalLength;
+        }
 
-            ApplyMouseWheelDirection(map, config.MouseWheelDirection);
+        private static void ApplyTilesSettings(this TileManager tiles, AppConfig config)
+        {
+            tiles.set_MaxCacheSize(CacheType.Disk, config.TilesMaxDiskSize);
+            tiles.set_MaxCacheSize(CacheType.Ram, config.TilesMaxRamSize);
+            tiles.DiskCacheFilename = config.TilesDatabase;
+            tiles.set_IsCaching(CacheType.Disk, config.TilesUseDiskCache);
+            tiles.set_IsCaching(CacheType.Ram, config.TilesUseRamCache);
+
+            TileCacheHelper.InitDatabase(config.TilesDatabase, config.TilesMaxDiskAge);
+        }
+
+        private static void ApplyTilesProxy(this TileManager tiles, AppConfig config)
+        {
+            if (config.TilesUseProxy)
+            {
+                if (config.TilesAutoDetectProxy)
+                {
+                    tiles.AutodetectProxy();
+                }
+                else
+                {
+                    var parts = config.TilesProxyAddress.Split(':');
+                    if (parts.Length == 2)
+                    {
+                        int port;
+                        if (int.TryParse(parts[1], out port))
+                        {
+                            tiles.SetProxy(parts[0], port);
+                        }
+                    }
+                }
+
+                tiles.SetProxyAuthentication(config.TilesProxyUserName, config.TilesProxyPassword, string.Empty);
+            }
+            else
+            {
+                tiles.SetProxy(string.Empty, 80);
+                tiles.ClearProxyAuthorization();
+            }
         }
 
         private static void ApplyMouseWheelDirection(this IMuteMap map, MouseWheelDirection direction)

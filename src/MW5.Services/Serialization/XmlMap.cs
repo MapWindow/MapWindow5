@@ -15,5 +15,8 @@ namespace MW5.Services.Serialization
 
         [DataMember]
         public XmlEnvelope Envelope { get; set; }
+
+        [DataMember]
+        public int TileProviderId { get; set; }
     }
 }

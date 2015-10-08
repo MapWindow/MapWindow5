@@ -184,21 +184,22 @@ namespace MW5.Services.Concrete
             {
                 // OnProjectChanged();
             }
+
             return true;
         }
 
-        public void SaveAs()
+        public bool SaveAs()
         {
             string filename = _filename;
             if (!_fileService.SaveFile(ProjectFilter, ref filename))
             {
-                return;
+                return false;
             }
-            SaveProject(filename);
-            //OnProjectChanged();
+
+            return SaveProject(filename);
         }
 
-        private void SaveProject(string filename)
+        private bool SaveProject(string filename)
         {
             var state = SerializeMapState(filename);
 
@@ -217,11 +218,15 @@ namespace MW5.Services.Concrete
                     // MessageService.Current.Info("Project was saved: " + filename);
                     Logger.Current.Info("Project was saved: " + filename);
                 }
+
+                return true;
             }
             catch (Exception ex)
             {
                 MessageService.Current.Warn("Failed to save project: " + ex.Message);
             }
+
+            return false;
         }
 
         public bool Open()

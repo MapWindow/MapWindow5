@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using MW5.Api;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="MenuListener.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
-using MW5.Api.Legend;
 using MW5.Api.Static;
 using MW5.Data.Views;
-using MW5.Helpers;
-using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
-using MW5.Services;
-using MW5.Services.Serialization;
 using MW5.Shared;
 using MW5.Views;
 
@@ -28,12 +22,15 @@ namespace MW5.Menu
     public class MenuListener
     {
         private readonly IAppContext _context;
+        private readonly IGeoDatabaseService _databaseService;
         private readonly ILayerService _layerService;
         private readonly IProjectService _projectService;
-        private readonly IGeoDatabaseService _databaseService;
 
-        public MenuListener(IAppContext context, ILayerService layerService, IProjectService projectService, 
-                             IGeoDatabaseService databaseService)
+        public MenuListener(
+            IAppContext context,
+            ILayerService layerService,
+            IProjectService projectService,
+            IGeoDatabaseService databaseService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (layerService == null) throw new ArgumentNullException("layerService");
@@ -50,20 +47,15 @@ namespace MW5.Menu
             {
                 appContext.Broadcaster.MenuItemClicked += MenuItemClicked;
             }
-        }
 
-        private void MenuItemClicked(object sender, MenuItemEventArgs e)
-        {
-            RunCommand(e.ItemKey);
+            TilesMenuHelper.TileProviderSelected += OnTileProviderSelected;
+            TilesMenuHelper.ChooseActiveProvider += OnChooseActiveProvider;
         }
 
         public void RunCommand(string menuKey)
         {
-            if (HandleCursorChanged(menuKey) ||
-                HandleProjectCommand(menuKey) ||
-                HandleDialogs(menuKey) ||
-                HandleHelpMenu(menuKey) ||
-                HandleLayerMenu(menuKey))
+            if (HandleCursorChanged(menuKey) || HandleProjectCommand(menuKey) || HandleDialogs(menuKey) ||
+                HandleHelpMenu(menuKey) || HandleLayerMenu(menuKey))
             {
                 _context.View.Update();
                 return;
@@ -71,11 +63,24 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.BingApiKey:
+                    _context.Container.Run<BingApiPresenter>();
+                    break;
+                case MenuKeys.TilesConfigure:
+                    {
+                        var model = _context.Container.GetInstance<ConfigViewModel>();
+                        model.SelectedPage = ConfigPageType.Tiles;
+                        model.UseSelectedPage = true;
+                        _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
+                    }
+                    break;
                 case MenuKeys.PluginsConfigure:
-                    var model = _context.Container.GetInstance<ConfigViewModel>();
-                    model.SelectedPage = ConfigPageType.Plugins;
-                    model.UseSelectedPage = true;
-                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
+                    {
+                        var model = _context.Container.GetInstance<ConfigViewModel>();
+                        model.SelectedPage = ConfigPageType.Plugins;
+                        model.UseSelectedPage = true;
+                        _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
+                    }
                     break;
                 case MenuKeys.ZoomPrev:
                     _context.Map.ZoomToPrev();
@@ -104,6 +109,82 @@ namespace MW5.Menu
             }
 
             _context.View.Update();
+        }
+
+        private bool HandleCursorChanged(string itemKey)
+        {
+            // MapCursorChanged event is raised automatically; no need to update UI manually
+            switch (itemKey)
+            {
+                case MenuKeys.ZoomIn:
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
+                    return true;
+                case MenuKeys.ZoomOut:
+                    _context.Map.MapCursor = MapCursor.ZoomOut;
+                    return true;
+                case MenuKeys.Pan:
+                    _context.Map.MapCursor = MapCursor.Pan;
+                    return true;
+                case MenuKeys.SelectByPolygon:
+                    _context.Map.MapCursor = MapCursor.SelectByPolygon;
+                    return true;
+                case MenuKeys.SelectByRectangle:
+                    _context.Map.MapCursor = MapCursor.Selection;
+                    return true;
+                case MenuKeys.MeasureArea:
+                    _context.Map.Measuring.Type = MeasuringType.Area;
+                    _context.Map.MapCursor = MapCursor.Measure;
+                    return true;
+                case MenuKeys.MeasureDistance:
+                    _context.Map.Measuring.Type = MeasuringType.Distance;
+                    _context.Map.MapCursor = MapCursor.Measure;
+                    return true;
+                case MenuKeys.AttributesTool:
+                    _context.Map.MapCursor = MapCursor.Identify;
+                    return true;
+            }
+            return false;
+        }
+
+        private bool HandleDialogs(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.Settings:
+                    var model = _context.Container.GetInstance<ConfigViewModel>();
+                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
+                    return true;
+                case MenuKeys.SetProjection:
+                    _context.Container.Run<SetProjectionPresenter>();
+                    return true;
+            }
+            return false;
+        }
+
+        private bool HandleHelpMenu(string itemKey)
+        {
+            switch (itemKey)
+            {
+                case MenuKeys.Welcome:
+                    var model = new WelcomeViewModel(AppConfig.Instance.RecentProjects);
+                    _context.Container.Run<WelcomePresenter, WelcomeViewModel>(model);
+                    return true;
+                case MenuKeys.SupportedDrivers:
+                    _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
+                    return true;
+                case MenuKeys.ComUsage:
+                    GcHelper.Collect();
+
+                    string report = GeoProcessing.Instance.GetComUsageReport();
+                    MessageService.Current.Info(report);
+
+                    return true;
+                case MenuKeys.About:
+                    _context.Container.Run<AboutPresenter>();
+                    return true;
+            }
+
+            return false;
         }
 
         private bool HandleLayerMenu(string itemKey)
@@ -151,47 +232,6 @@ namespace MW5.Menu
             return false;
         }
 
-        private bool HandleHelpMenu(string itemKey)
-        {
-            switch (itemKey)
-            {
-                case MenuKeys.Welcome:
-                    var model = new WelcomeViewModel(AppConfig.Instance.RecentProjects);
-                    _context.Container.Run<WelcomePresenter, WelcomeViewModel>(model);
-                    return true;
-                case MenuKeys.SupportedDrivers:
-                    _context.Container.Run<DriversPresenter, DriverManager>(new DriverManager());
-                    return true;
-                case MenuKeys.ComUsage:
-                    GcHelper.Collect();
-
-                    string report = GeoProcessing.Instance.GetComUsageReport();
-                    MessageService.Current.Info(report);
-
-                    return true;
-                case MenuKeys.About:
-                    _context.Container.Run<AboutPresenter>();
-                    return true;
-            }
-            
-            return false;
-        }
-
-        private bool HandleDialogs(string itemKey)
-        {
-            switch (itemKey)
-            {
-                case MenuKeys.Settings:
-                    var model = _context.Container.GetInstance<ConfigViewModel>();
-                    _context.Container.Run<ConfigPresenter, ConfigViewModel>(model);
-                    return true;
-                case MenuKeys.SetProjection:
-                    _context.Container.Run<SetProjectionPresenter>();
-                    return true;
-            }
-            return false;
-        }
-
         private bool HandleProjectCommand(string itemKey)
         {
             switch (itemKey)
@@ -203,10 +243,16 @@ namespace MW5.Menu
                     _projectService.TryClose();
                     return true;
                 case MenuKeys.SaveProject:
-                    _projectService.Save();
+                    if (_projectService.Save())
+                    {
+                        ShowProjectSaved();
+                    }
                     return true;
                 case MenuKeys.SaveProjectAs:
-                    _projectService.SaveAs();
+                    if (_projectService.SaveAs())
+                    {
+                        ShowProjectSaved();
+                    }
                     return true;
                 case MenuKeys.OpenProject:
                     _projectService.Open();
@@ -222,39 +268,42 @@ namespace MW5.Menu
             return false;
         }
 
-        private bool HandleCursorChanged(string itemKey)
+        private void ShowProjectSaved()
         {
-            // MapCursorChanged event is raised automatically; no need to update UI manually
-            switch (itemKey)
+            MessageService.Current.Info("Project was saved: " + _projectService.Filename);
+        }
+
+        private void MenuItemClicked(object sender, MenuItemEventArgs e)
+        {
+            RunCommand(e.ItemKey);
+        }
+
+        private void OnChooseActiveProvider(object sender, TileProviderArgs e)
+        {
+            e.ProviderId = _context.Map.Tiles.ProviderId;
+        }
+
+        private void OnTileProviderSelected(object sender, TileProviderArgs e)
+        {
+            var manager = _context.Map.Tiles;
+
+            if (e.IsBingProvider)
             {
-                case MenuKeys.ZoomIn:
-                    _context.Map.MapCursor = MapCursor.ZoomIn;
-                    return true;
-                case MenuKeys.ZoomOut:
-                    _context.Map.MapCursor = MapCursor.ZoomOut;
-                    return true;
-                case MenuKeys.Pan:
-                    _context.Map.MapCursor = MapCursor.Pan;
-                    return true;
-                case MenuKeys.SelectByPolygon:
-                    _context.Map.MapCursor = MapCursor.SelectByPolygon;
-                    return true;
-                case MenuKeys.SelectByRectangle:
-                    _context.Map.MapCursor = MapCursor.Selection;
-                    return true;
-                case MenuKeys.MeasureArea:
-                    _context.Map.Measuring.Type = MeasuringType.Area;
-                    _context.Map.MapCursor = MapCursor.Measure;
-                    return true;
-                case MenuKeys.MeasureDistance:
-                    _context.Map.Measuring.Type = MeasuringType.Distance;
-                    _context.Map.MapCursor = MapCursor.Measure;
-                    return true;
-                case MenuKeys.AttributesTool:
-                    _context.Map.MapCursor = MapCursor.Identify;
-                    return true;
+                if (string.IsNullOrWhiteSpace(MapConfig.BingApiKey))
+                {
+                    if (!_context.Container.Run<BingApiPresenter>())
+                    {
+                        return;
+                    }
+                }
             }
-            return false;
+
+            manager.ProviderId = e.ProviderId;
+
+            // it's the easiest way to trigger reloading of tiles
+            // TODO: update API with something more intuitive
+            _context.Map.Lock();
+            _context.Map.Unlock();
         }
     }
 }

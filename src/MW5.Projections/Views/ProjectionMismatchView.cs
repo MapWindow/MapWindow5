@@ -37,7 +37,7 @@ namespace MW5.Projections.Views
             {
                 btnReproject.Text = "Assign";
                 Text = "Projection is missing";
-                lblMessage.Text = "Coordinate system and projection of the layer is unknown. Choose 'Assign' to assign coordinate system of the project to this layer (it may lead to incorrect display if coordinate system is wrong). Choose 'Ignore' to display layer without reprojection and 'Skip' to cancel the opening of this particular layer. 'Cancel' will stop the whole loading process.";
+                lblMessage.Text = "Coordinate system and projection of the layer are unknown. Choose 'Assign' to assign coordinate system of the project to this layer (it may lead to incorrect display if coordinate system is wrong). Choose 'Ignore' to display layer without reprojection and 'Skip' to cancel the opening of this particular layer. 'Cancel' will stop the whole loading process.";
             }
 
             btnDetails.Visible = Model.IsMismatch;

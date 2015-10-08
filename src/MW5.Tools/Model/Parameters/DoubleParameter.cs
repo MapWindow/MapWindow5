@@ -39,7 +39,7 @@ namespace MW5.Tools.Model.Parameters
 
         public virtual void WriteXml(XmlWriter writer)
         {
-            writer.WriteAttributeString("Value", ((double)Value).ToInVariantString());
+            writer.WriteAttributeString("Value", ((double)Value).ToInvariantString());
         }
     }
 }

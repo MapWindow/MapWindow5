@@ -32,4 +32,26 @@ namespace MW5.Plugins.Enums
             return string.Empty;
         }
     }
+
+    public class TilesMaxAgeConverter : IEnumConverter<TilesMaxAge>
+    {
+        public string GetString(TilesMaxAge value)
+        {
+            switch (value)
+            {
+                case TilesMaxAge.Never:
+                    return "Never";
+                case TilesMaxAge.Month:
+                    return "1 month";
+                case TilesMaxAge.Month3:
+                    return "3 month";
+                case TilesMaxAge.Month6:
+                    return "6 month";
+                case TilesMaxAge.Year:
+                    return "1 year";
+                default:
+                    throw new ArgumentOutOfRangeException("value");
+            }
+        }
+    }
 }

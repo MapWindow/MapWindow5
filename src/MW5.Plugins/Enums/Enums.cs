@@ -160,6 +160,7 @@
         Raster = 6,
         Measuring = 7,
         Symbology = 8,
+        Tiles = 9,
     }
 
     public enum SymbologyStorage
@@ -197,5 +198,14 @@
         Added = 0,
         StatusChanged = 1,
         Removed = 2
+    }
+
+    public enum TilesMaxAge
+    {
+        Never = 0,
+        Month = 1,
+        Month3 = 2,
+        Month6 = 3,
+        Year = 4,
     }
 }

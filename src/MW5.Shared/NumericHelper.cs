@@ -11,7 +11,7 @@ namespace MW5.Shared
     {
         private const double Tolerance = 1e-10;
 
-        public static string ToInVariantString(this double value)
+        public static string ToInvariantString(this double value)
         {
             return value.ToString(CultureInfo.InvariantCulture);
         }

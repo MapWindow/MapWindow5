@@ -63,8 +63,13 @@ namespace MW5.Projections.Services
 
                 return HandleProjectionMismatch(layer, mapProj, out newLayer);
             }
-            
-            return HandleEmptyLayerProjection(layer, mapProj);
+
+            if (!mapProj.IsEmpty)
+            {
+                return HandleEmptyLayerProjection(layer, mapProj);
+            }
+
+            return TestingResult.Ok;
         }
 
         /// <summary>

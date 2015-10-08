@@ -37,6 +37,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new GisTaskStatusConverter());
             EnumHelper.RegisterConverter(new GroupOperationConverter());
             EnumHelper.RegisterConverter(new ClipOperationConverter());
+            EnumHelper.RegisterConverter(new TilesMaxAgeConverter());
         }
     }
 }

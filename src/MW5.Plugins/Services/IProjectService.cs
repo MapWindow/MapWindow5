@@ -9,7 +9,7 @@ namespace MW5.Plugins.Services
         ProjectState GetState();
         bool TryClose();
         bool Save();
-        void SaveAs();
+        bool SaveAs();
         bool Open();
         bool Open(string filename, bool silent = true);
         void SetModified();

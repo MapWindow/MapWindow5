@@ -27,6 +27,7 @@ namespace MW5.Plugins.Concrete
         public void SetDefaults()
         {
             AnimationOnZooming = AutoToggle.Auto;
+            BingApiKey = string.Empty;
             CacheRenderingData = false;
             CacheDbfRecords = false;
             CoordinateAngleFormat = AngleFormat.Seconds;
@@ -100,6 +101,17 @@ namespace MW5.Plugins.Concrete
             TableEditorLayout = TableEditorLayout.Tabbed;
             TableEditorShowAliases = true;
             TaskRunInBackground = false;
+            TilesAutoDetectProxy = true;
+            TilesUseRamCache = true;
+            TilesMaxRamSize = 100.0;
+            TilesUseDiskCache = true;
+            TilesDatabase = string.Empty;
+            TilesMaxDiskSize = 300.0;
+            TilesMaxDiskAge = TilesMaxAge.Month3;
+            TilesProxyAddress = string.Empty;
+            TilesProxyPassword = string.Empty;
+            TilesProxyUserName = string.Empty;
+            TilesUseProxy = true;
             ToolOutputAddToMap = true;
             ToolOutputInMemory = true;
             ToolOutputOverwrite = false;
@@ -124,6 +136,9 @@ namespace MW5.Plugins.Concrete
             get { return _applicationPlugins ?? (_applicationPlugins = DefaultApplicationPlugins); }
             set { _applicationPlugins = value; }
         }
+
+        [DataMember]
+        public string BingApiKey { get; set; }
 
         [DataMember]
         public bool CacheRenderingData
@@ -381,6 +396,39 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public bool TableEditorShowAliases { get; set;}
+
+        [DataMember]
+        public bool TilesUseRamCache { get; set; }
+
+        [DataMember]
+        public double TilesMaxRamSize { get; set; }
+
+        [DataMember]
+        public bool TilesUseDiskCache { get; set; }
+
+        [DataMember]
+        public string TilesDatabase { get; set; }
+
+        [DataMember]
+        public double TilesMaxDiskSize { get; set; }
+
+        [DataMember]
+        public TilesMaxAge TilesMaxDiskAge { get; set; }
+
+        [DataMember]
+        public bool TilesAutoDetectProxy { get; set; }
+
+        [DataMember]
+        public bool TilesUseProxy { get; set; }
+
+        [DataMember]
+        public string TilesProxyAddress { get; set; }
+
+        [DataMember]
+        public string TilesProxyPassword { get; set; }
+
+        [DataMember]
+        public string TilesProxyUserName { get; set; }
 
         [DataMember]
         public bool ToolOutputAddToMap {get; set; }

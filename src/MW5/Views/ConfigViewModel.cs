@@ -40,6 +40,7 @@ namespace MW5.Views
             _pages.Add(new MeasuringConfigPage(_configeService));
             _pages.Add(new RasterConfigPage(_configeService));
             _pages.Add(new VectorConfigPage(_configeService));
+            _pages.Add(new TilesConfigPage(_configeService, _context.Map.Tiles));
             _pages.Add(new PluginsConfigPage(_pluginManager, _context));
 
             foreach (var p in _pluginManager.ActivePlugins)

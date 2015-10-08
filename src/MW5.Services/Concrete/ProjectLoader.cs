@@ -48,6 +48,8 @@ namespace MW5.Services.Concrete
             _context.Map.Lock();
             _context.Legend.Lock();
 
+            _context.Map.Tiles.ProviderId = project.Map.TileProviderId;
+
             try
             {
                 _layerService.BeginBatch();

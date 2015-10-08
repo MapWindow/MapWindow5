@@ -25,6 +25,7 @@ namespace MW5
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterView<ISpatialIndexView, SpatialIndexView>()
+                .RegisterView<IBingApiView, BingApiView>()
                 .RegisterSingleton<IAppView, AppView>()
                 .RegisterInstance<IApplicationContainer>(container)
                 .RegisterService<LegendPresenter>()

@@ -110,6 +110,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Configuration\TilesConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\TilesConfigPage.Designer.cs">
+      <DependentUpon>TilesConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\VectorConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -196,6 +202,7 @@
       <DependentUpon>AboutView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\IAboutView.cs" />
+    <Compile Include="Views\Abstract\IBingApiView.cs" />
     <Compile Include="Views\Abstract\ICreatePyramidsView.cs" />
     <Compile Include="Views\Abstract\ILegendGroupView.cs" />
     <Compile Include="Views\Abstract\IMeasuringView.cs" />
@@ -229,6 +236,13 @@
     <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Views\Abstract\ISpatialIndexView.cs" />
     <Compile Include="Views\Abstract\IWelcomeView.cs" />
+    <Compile Include="Views\BingApiPresenter.cs" />
+    <Compile Include="Views\BingApiView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\BingApiView.Designer.cs">
+      <DependentUpon>BingApiView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigCommand.cs" />
     <Compile Include="Views\ConfigPresenter.cs" />
     <Compile Include="Views\ConfigViewModel.cs" />
@@ -308,6 +322,9 @@
       <DependentUpon>WelcomeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomeViewModel.cs" />
+    <EmbeddedResource Include="Configuration\TilesConfigPage.resx">
+      <DependentUpon>TilesConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration\VectorConfigPage.resx">
       <DependentUpon>VectorConfigPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -349,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\AboutView.resx">
       <DependentUpon>AboutView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\BingApiView.resx">
+      <DependentUpon>BingApiView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ConfigView.resx">
       <DependentUpon>ConfigView.cs</DependentUpon>
@@ -579,6 +599,7 @@
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
     <Content Include="MW5.ico" />
+    <None Include="Resources\img_tiles32.png" />
     <None Include="Resources\img_warning64.png" />
     <None Include="Resources\ico_tasks.ico" />
     <None Include="Resources\ico_results.ico" />

@@ -41,6 +41,9 @@
 
         public const string PluginsConfigure = "PluginsConfigure";
 
+        public const string BingApiKey = "BingApiKey";
+        public const string TilesConfigure = "TilesConfigure";
+
         public const string About = "HelpAbout";
         public const string SupportedDrivers = "HelpSupportedDrivers";
         public const string ComUsage = "ComUsage";

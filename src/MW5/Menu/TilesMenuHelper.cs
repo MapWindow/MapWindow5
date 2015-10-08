@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Linq;
 using MW5.Api;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Api.Static;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Shared;
 using MW5.UI.Helpers;
@@ -12,28 +15,53 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.Menu
 {
-    // I leave it static, there is no need to inject it anywhere
+    /// <summary>
+    /// Generates menu items for tile providers and fires TileProviderSelected event when those items are selected.
+    /// </summary>
     internal static class TilesMenuHelper
     {
-        private const string NO_TILES_MENU_ITEM_CAPTION = "No tiles";
+        private const string NoTilesMenuItem = "No tiles";
+        private const int EmptyProviderId = -1;
 
-        private enum Commands
+        public static event EventHandler<TileProviderArgs> TileProviderSelected;
+        public static event EventHandler<TileProviderArgs> ChooseActiveProvider;
+
+        public static void Init(IAppContext context, IDropDownMenuItem root)
         {
-            SetBingApiKey = -2,
+            var tiles = context.Map.Tiles;
+            tiles.set_UseCache(CacheType.Disk, true);
+            tiles.set_UseCache(CacheType.Ram, true);
+
+            SetInsertPosition(context, root);
+
+            AddEmptyProvider(root);
+
+            AddDefaultProviders(root);
+            
+            root.Update();
+
+            root.DropDownOpening += OnTilesDropDownOpening;
         }
 
-        private static IMuteMap _map;
-
-        public static void Init(IMuteMap map, IDropDownMenuItem root)
+        private static void SetInsertPosition(IAppContext context, IDropDownMenuItem root)
         {
-            _map = map;
-            
-            root.SubItems.Clear();
+            var menuItem = context.Menu.FindItem(MenuKeys.BingApiKey, PluginIdentity.Default);
+            if (menuItem != null)
+            {
+                root.SubItems.InsertBefore = menuItem;
+            }
+        }
 
-            var item = root.SubItems.AddButton(NO_TILES_MENU_ITEM_CAPTION, PluginIdentity.Default);
-            item.Tag = -1;
-            item.ItemClicked += item_Click;
-            
+        private static void AddEmptyProvider(IDropDownMenuItem root)
+        {
+            var item = root.SubItems.AddButton(NoTilesMenuItem, PluginIdentity.Default);
+            item.Tag = EmptyProviderId;
+            item.ItemClicked += OnItemClick;
+            item.BeginGroup = true;
+        }
+
+        private static void AddDefaultProviders(IDropDownMenuItem root)
+        {
             var list = new[]
             {
                 TileProvider.OpenStreetMap, TileProvider.OpenTransportMap,
@@ -44,24 +72,15 @@ namespace MW5.Menu
 
             foreach (var p in list)
             {
-                item = root.SubItems.AddButton(p.EnumToString(), PluginIdentity.Default );
+                var item = root.SubItems.AddButton(p.EnumToString(), PluginIdentity.Default);
                 item.Tag = p;
-                item.ItemClicked += item_Click;
+                item.ItemClicked += OnItemClick;
             }
 
             root.SubItems[1].BeginGroup = true;
-            root.Update();
-
-            //item = root.DropDownItems.Add("Set Bing Maps API key");
-            //item.Click += item_Click;
-            //item.Tag = Commands.SetBingApiKey;
-
-            root.DropDownOpening += root_DropDownOpening;
-            _map.Tiles.set_IsCaching(CacheType.Disk, true);
-            _map.Tiles.set_UseCache(CacheType.Disk, true);
         }
 
-        private static void root_DropDownOpening(object sender, EventArgs e)
+        private static void OnTilesDropDownOpening(object sender, EventArgs e)
         {
             var menu = sender as IDropDownMenuItem;
             if (menu == null)
@@ -74,8 +93,10 @@ namespace MW5.Menu
                 item.Checked = false;
             }
 
+            int providerId = FireChooseActiveProvider();
+
             Func<IMenuItem, bool> predicate =
-                item => !item.Skip && item.Tag != null && ((TileProvider)item.Tag == _map.TileProvider);
+                item => !item.Skip && item.Tag != null && ((int)item.Tag == providerId);
 
             var selectedItem = menu.SubItems.FirstOrDefault(predicate);
             if (selectedItem != null)
@@ -84,49 +105,38 @@ namespace MW5.Menu
             }
         }
 
-        private static void item_Click(object sender, EventArgs e)
+        private static void OnItemClick(object sender, EventArgs e)
         {
             var item = sender as IMenuItem;
             if (item != null && item.Tag != null)
             {
-                if ((int)item.Tag == (int)Commands.SetBingApiKey)
-                {
-                    SetBingApiKey();
-                    return;
-                }
-
-                var provider = (TileProvider)item.Tag;
-                switch (provider)
-                {
-                    case TileProvider.BingSatellite:
-                    case TileProvider.BingMaps:
-                    case TileProvider.BingHybrid:
-                        //var gs = new GlobalSettings();
-                        //if (string.IsNullOrWhiteSpace(gs.BingApiKey))
-                        //{
-                        //    if (!string.IsNullOrWhiteSpace(AppSettings.Instance.BingApiKey))
-                        //    {
-                        //        gs.BingApiKey = AppSettings.Instance.BingApiKey;
-                        //    }
-                        //    else
-                        //    {
-                        //        if (!SetBingApiKey()) return;
-                        //    }
-                        //}
-                        break;
-                }
-                _map.TileProvider = (TileProvider)item.Tag;
-                _map.Redraw();
+                FireProviderSelected(item, (int)item.Tag);
             }
         }
 
-        private static bool SetBingApiKey()
+        private static int FireChooseActiveProvider()
         {
-            //using (var form = new BingApiKeyForm())
-            //{
-            //    if (form.ShowDialog(MainForm.Instance) != DialogResult.OK)
-            //        return false;
-            //}
+            var handler = ChooseActiveProvider;
+            if (handler != null)
+            {
+                var args = new TileProviderArgs(EmptyProviderId);
+                handler(null, args);
+                return args.ProviderId;
+            }
+
+            return EmptyProviderId;
+        }
+
+        private static bool FireProviderSelected(object item, int providerId)
+        {
+            var handler = TileProviderSelected;
+            if (handler != null)
+            {
+                var args = new TileProviderArgs(providerId);
+                handler(item, args);
+                return args.Cancel;
+            }
+
             return true;
         }
     }

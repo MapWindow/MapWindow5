@@ -108,14 +108,19 @@ namespace MW5.Menu
         private void InitPluginsMenu()
         {
             var menu = _context.Menu.PluginsMenu;
-            menu.SubItems.AddButton("Configure plugins...", MenuKeys.PluginsConfigure, PluginIdentity.Default).BeginGroup = true;
+            menu.SubItems.AddButton("Configure Plugins...", MenuKeys.PluginsConfigure, PluginIdentity.Default).BeginGroup = true;
             
             PluginsMenuHelper.Init(_context, _pluginManager);
         }
 
         private void InitTilesMenu()
         {
-            TilesMenuHelper.Init(_context.Map, _context.Menu.TilesMenu);
+            var menu = _context.Menu.TilesMenu;
+
+            menu.SubItems.AddButton("Set Bing API key", MenuKeys.BingApiKey, PluginIdentity.Default).BeginGroup = true;
+            menu.SubItems.AddButton("Configure Tiles...", MenuKeys.TilesConfigure, PluginIdentity.Default).BeginGroup = true;
+            
+            TilesMenuHelper.Init(_context, _context.Menu.TilesMenu);
         }
 
         private void InitViewMenu()
