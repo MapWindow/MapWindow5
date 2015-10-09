@@ -74,6 +74,9 @@ namespace MW5.Tools.Test
                 var result = tool.Output.Result as IFeatureSet;
                 Assert.IsNotNull(result);
 
+                // The envelop should be larger:
+                Assert.IsFalse(fs.Envelope.EqualsTo(result.Envelope, 1), "The resulting envelop is equal to the input envelop, this is unexpected");
+
                 // Check number of features:
                 Assert.IsTrue(result.NumFeatures > 0);
 
@@ -103,7 +106,10 @@ namespace MW5.Tools.Test
             // Check number of features:
             Assert.IsTrue(result.NumFeatures > 0);
 
-            // TODO: Check envelop:
+            // Check envelop:
+            Assert.IsTrue(fs.Envelope.EqualsTo(result.Envelope, 1), "The resulting envelop is not equal to the input envelop");
+            Debug.Write(" ..the resulting envelope is OK.. ");
+
             Debug.WriteLine(" Done!");
             Debug.WriteLine("NumFeatures: " + result.NumFeatures);
 
@@ -150,7 +156,7 @@ namespace MW5.Tools.Test
             var fs = OpenFeatureSet(UsaShapefilesPath + "cities.shp");
 
             // TODO: Test with selected shapes as well
-            const int NumPoints = 500000;
+            const int NumPoints = 5000;
             Debug.Write(string.Format("Creating {0} random points", NumPoints));
             var tool = new RandomPointsTool { NumPoints = NumPoints, InputLayer = new DatasourceInput(fs), OutputLayer = new OutputLayerInfo { MemoryLayer = true } };
 
@@ -163,7 +169,10 @@ namespace MW5.Tools.Test
             // Check number of features:
             Assert.AreEqual(result.NumFeatures, NumPoints);
 
-            // TODO: Check envelop:
+            // Check envelop:
+            Assert.IsTrue(fs.Envelope.EqualsTo(result.Envelope, 1), "The resulting envelop is not equal to the input envelop");
+            Debug.Write(" ..the resulting envelope is OK.. ");
+
             result.Dispose();
             Debug.WriteLine(" Done!");
             Debug.WriteLine("Elapsed time " + GetDateString(_timer.ElapsedMilliseconds));

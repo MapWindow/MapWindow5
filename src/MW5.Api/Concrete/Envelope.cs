@@ -1,4 +1,14 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Envelope.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015
+// </copyright>
+// <summary>
+//   Defines the Envelope type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using MapWinGIS;
 using MW5.Api.Helpers;
@@ -6,13 +16,18 @@ using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
-    public class Envelope: IEnvelope
+    /// <summary>
+    /// Defines a rectangular region of the coordinate plane. 
+    /// It is often used to represent the bounding box of a Geometry, e.g. the minimum and maximum x and y values of the Coordinates.
+    /// </summary>
+    [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
+    public class Envelope : IEnvelope
     {
         private readonly Extents _extents;
 
         public Envelope()
         {
-            _extents = new Extents();    // initialized with zeroes
+            _extents = new Extents(); // initialized with zeroes
         }
 
         public Envelope(double xMin, double xMax, double yMin, double yMax)
@@ -26,46 +41,81 @@ namespace MW5.Api.Concrete
             _extents = extents;
         }
 
-        public void SetBounds(double xMin, double xMax, double yMin, double yMax)
+        /// <summary>
+        /// Returns the difference between the maximum and minimum y values.
+        /// </summary>
+        public double Height
         {
-            _extents.SetBounds(xMin, yMin, 0.0, xMax, yMax, 0.0);
+            get { return MaxY - MinY; }
         }
 
+        /// <summary>
+        /// Returns the difference between the maximum and minimum x values.
+        /// </summary>
+        public double Width
+        {
+            get { return MaxX - MinX; }
+        }
+
+        /// <summary>
+        /// Returns the Envelopes minimum x-value.
+        /// </summary>
         public double MinX
         {
             get { return _extents.xMin; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes minimum y-value.
+        /// </summary>
         public double MinY
         {
             get { return _extents.yMin; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes minimum z-value.
+        /// </summary>
         public double MinZ
         {
             get { return _extents.zMin; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes minimum m-value.
+        /// </summary>
         public double MinM
         {
             get { return _extents.mMin; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes maximum x-value.
+        /// </summary>
         public double MaxX
         {
             get { return _extents.xMax; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes maximum y-value.
+        /// </summary>
         public double MaxY
         {
             get { return _extents.yMax; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes maximum z-value.
+        /// </summary>
         public double MaxZ
         {
             get { return _extents.zMax; }
         }
 
+        /// <summary>
+        /// Returns the Envelopes maximum m-value.
+        /// </summary>
         public double MaxM
         {
             get { return _extents.mMax; }
@@ -76,35 +126,56 @@ namespace MW5.Api.Concrete
             get { return _extents; }
         }
 
+        /// <summary>
+        /// Returns no error, it's not defined in ocx
+        /// </summary>
         public string LastError
         {
-            get { return ErrorHelper.NO_ERROR; }   // it's not defined in ocx
+            get { return ErrorHelper.NO_ERROR; } // it's not defined in ocx
         }
 
+        /// <summary>
+        /// Alwasy returns ""
+        /// </summary>
         public string Tag
         {
             get
             {
                 return "";
-                //throw new NotSupportedException(); 
+
+                // throw new NotSupportedException(); 
             }
+
             set
             {
-                //throw new NotSupportedException();
-
+                // throw new NotSupportedException();
             }
         }
 
-        public override string ToString()
+        /// <summary>
+        /// Gets the center of the envelope
+        /// </summary>
+        public ICoordinate Center
         {
-            return _extents.ToDebugString();
+            get { return new Coordinate(MinX + (Width / 2), MinY + (Height / 2)); }
+        }
+
+        public void SetBounds(double xMin, double xMax, double yMin, double yMax)
+        {
+            _extents.SetBounds(xMin, yMin, 0.0, xMax, yMax, 0.0);
         }
 
         public Rectangle ToRectangle()
         {
-            return new Rectangle((int) MinX, (int) MinY, (int) (MaxX - MinX), (int) (MaxY - MinY));
+            return new Rectangle((int)MinX, (int)MinY, (int)(MaxX - MinX), (int)(MaxY - MinY));
         }
 
+        /// <summary>
+        /// Moves the envelope by the specified offset
+        /// </summary>
+        /// <param name="dx">The x offset.</param>
+        /// <param name="dy">The y offset.</param>
+        /// <returns>A new envelope</returns>
         public IEnvelope Move(double dx, double dy)
         {
             double xMin, xMax, yMin, yMax, zMin, zMax;
@@ -112,24 +183,14 @@ namespace MW5.Api.Concrete
             return new Envelope(xMin + dx, xMax + dx, yMin + dy, yMax + dy);
         }
 
-        public double Width
-        {
-            get { return MaxX - MinX; }
-        }
-
-        public double Height
-        {
-            get { return MaxY - MinY; }
-        }
-
-        public ICoordinate Center
-        {
-            get { return new Coordinate(MinX + Width/2, MinY + Height/2); }
-        }
-
+        /// <summary>
+        /// Adjusts the envelope by the specified ratio.
+        /// </summary>
+        /// <param name="xyRatio">The xy ratio.</param>
+        /// <returns>A new envelope</returns>
         public IEnvelope Adjust(double xyRatio)
         {
-            double ratio = Width/Height;
+            double ratio = Width / Height;
 
             if (Math.Abs(ratio - xyRatio) < 10e-8)
             {
@@ -138,40 +199,104 @@ namespace MW5.Api.Concrete
 
             if (ratio > xyRatio)
             {
-                double height = Width/xyRatio;
-                return new Envelope(MinX, MaxX, Center.Y - height/2, Center.Y + height/2);
+                double height = Width / xyRatio;
+                return new Envelope(MinX, MaxX, Center.Y - (height / 2), Center.Y + (height / 2));
             }
-            else
-            {
-                double width = Height * xyRatio;
-                return new Envelope(Center.X - width / 2, Center.X + width / 2, MinY, MaxY);
-            }
+
+            double width = Height * xyRatio;
+            return new Envelope(Center.X - (width / 2), Center.X + (width / 2), MinY, MaxY);
         }
 
+        /// <summary>
+        /// Checks if the envelopes are equal
+        /// </summary>
+        /// <param name="env">The envelope to check with</param>
+        /// <param name="threshold">The maximum difference between the two envelopes.</param>
+        /// <returns></returns>
+        public bool EqualsTo(IEnvelope env, double threshold = 0.001)
+        {
+            if (env == null)
+            {
+                return false;
+            }
+
+            if (Math.Abs(env.MinX - MinX) > threshold)
+            {
+                return false;
+            }
+
+            if (Math.Abs(env.MaxX - MaxX) > threshold)
+            {
+                return false;
+            }
+
+            if (Math.Abs(env.MinY - MinY) > threshold)
+            {
+                return false;
+            }
+
+            if (Math.Abs(env.MaxY - MaxY) > threshold)
+            {
+                return false;
+            }
+
+            if (Math.Abs(env.Width - Width) > threshold)
+            {
+                return false;
+            }
+
+            return !(Math.Abs(env.Height - Height) > threshold);
+        }
+
+        /// <summary>
+        /// Is the Point the within the envelope
+        /// </summary>
+        /// <param name="x">The x coordinate</param>
+        /// <param name="y">The y coordinate</param>
+        /// <returns></returns>
         public bool PointWithin(double x, double y)
         {
-            return x >= MinX && 
-                   x <= MaxX && 
-                   y >= MinY && 
-                   y <= MaxY;
+            return x >= MinX && x <= MaxX && y >= MinY && y <= MaxY;
         }
 
+        /// <summary>
+        /// Inflates the envelope by the specified offset
+        /// </summary>
+        /// <param name="dx">The x offset.</param>
+        /// <param name="dy">The y offset.</param>
+        /// <returns></returns>
         public IEnvelope Inflate(double dx, double dy)
         {
-            return new Envelope(MinX - dx/2, MaxX + dx/2, MinY - dy/2, MaxY + dy/2);
+            return new Envelope(MinX - (dx / 2), MaxX + (dx / 2), MinY - (dy / 2), MaxY + (dy / 2));
         }
 
+        /// <summary>
+        /// Unions with the specified envelope
+        /// </summary>
+        /// <param name="env">The envelope</param>
         public void Union(IEnvelope env)
         {
-            if (env == null) return;
+            if (env == null)
+            {
+                return;
+            }
 
             SetBounds(Math.Min(env.MinX, MinX), Math.Max(env.MaxX, MaxX), Math.Min(env.MinY, MinY), Math.Max(env.MaxY, MaxY));
         }
 
+        /// <summary>
+        /// Convert to a geometry.
+        /// </summary>
+        /// <returns>The geometry</returns>
         public IGeometry ToGeometry()
         {
             var shape = _extents.ToShape();
             return shape != null ? new Geometry(shape) : null;
+        }
+
+        public override string ToString()
+        {
+            return _extents.ToDebugString();
         }
     }
 }
