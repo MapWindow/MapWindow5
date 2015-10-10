@@ -21,8 +21,9 @@ namespace MW5.Tiles
         /// <param name="container">The container.</param>
         public static void Compose(IApplicationContainer container)
         {
-            container.RegisterView<ITileProviderView, TileProviderView>()
+            container.RegisterView<ITmsProviderView, TmsProviderView>()
                      .RegisterView<IBingApiView, BingApiView>()
+                     .RegisterView<IWmsCapabilitiesView, WmsCapabilitiesView>()
                      .RegisterView<IProvidersView, TileProvidersView>();
         }
     }

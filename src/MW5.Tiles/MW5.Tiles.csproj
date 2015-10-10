@@ -49,6 +49,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BruTile">
+      <HintPath>..\packages\BruTile.0.13.0\lib\net40\BruTile.dll</HintPath>
+    </Reference>
     <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
@@ -82,13 +85,15 @@
       <DependentUpon>TileProviderGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Helpers\BrutileHelper.cs" />
     <Compile Include="Helpers\ProviderManager.cs" />
     <Compile Include="Model\TmsProvider.cs" />
     <Compile Include="Model\TmsProviderList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\Abstract\IBingApiView.cs" />
-    <Compile Include="Views\Abstract\ITileProviderView.cs" />
+    <Compile Include="Views\Abstract\ITmsProviderView.cs" />
     <Compile Include="Views\Abstract\IProvidersView.cs" />
+    <Compile Include="Views\Abstract\IWmsCapabilitiesView.cs" />
     <Compile Include="Views\BingApiPresenter.cs" />
     <Compile Include="Views\BingApiView.cs">
       <SubType>Form</SubType>
@@ -103,13 +108,21 @@
       <DependentUpon>TileProvidersView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TmsProviderPresenter.cs" />
-    <Compile Include="Views\TileProviderView.cs">
+    <Compile Include="Views\TmsProviderView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TileProviderView.Designer.cs">
-      <DependentUpon>TileProviderView.cs</DependentUpon>
+    <Compile Include="Views\TmsProviderView.Designer.cs">
+      <DependentUpon>TmsProviderView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TileProvidersPresenter.cs" />
+    <Compile Include="Views\WmsCapabilitiesModel.cs" />
+    <Compile Include="Views\WmsCapabilitiesPresenter.cs" />
+    <Compile Include="Views\WmsCapabilitiesView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WmsCapabilitiesView.Designer.cs">
+      <DependentUpon>WmsCapabilitiesView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">
@@ -136,9 +149,15 @@
     <EmbeddedResource Include="Views\TileProvidersView.resx">
       <DependentUpon>TileProvidersView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TileProviderView.resx">
-      <DependentUpon>TileProviderView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\TmsProviderView.resx">
+      <DependentUpon>TmsProviderView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\WmsCapabilitiesView.resx">
+      <DependentUpon>WmsCapabilitiesView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

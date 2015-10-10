@@ -8,7 +8,7 @@ using MW5.Tiles.Model;
 
 namespace MW5.Tiles.Views.Abstract
 {
-    internal interface ITileProviderView: IView<TmsProvider>
+    internal interface ITmsProviderView: IView<TmsProvider>
     {
     }
 }

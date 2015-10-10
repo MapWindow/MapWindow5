@@ -15,9 +15,9 @@ using MW5.UI.Helpers;
 
 namespace MW5.Tiles.Views
 {
-    internal partial class TileProviderView : TmsProviderViewBase, ITileProviderView
+    internal partial class TmsProviderView : TmsProviderViewBase, ITmsProviderView
     {
-        public TileProviderView()
+        public TmsProviderView()
         {
             InitializeComponent();
 

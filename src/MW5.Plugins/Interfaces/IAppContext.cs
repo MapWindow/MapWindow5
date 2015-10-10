@@ -1,7 +1,11 @@
-﻿using System.Threading;
-using System.Windows.Forms;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="IAppContext.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System.Threading;
 using MW5.Api.Interfaces;
-using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces.Projections;
@@ -11,24 +15,42 @@ namespace MW5.Plugins.Interfaces
 {
     public interface IAppContext
     {
-        IMenu Menu { get; }
-        IMuteMap Map { get; }
-        IAppView View { get; }
-        IProject Project { get; }
-        IMuteLegend Legend { get; }
-        IStatusBar StatusBar { get; }
-        IToolbarCollection Toolbars { get; }
+        AppConfig Config { get; }
+
         IApplicationContainer Container { get; }
-        ILayerCollection<ILayer> Layers { get; }
+
         IDockPanelCollection DockPanels { get; }
-        IProjectionDatabase Projections { get; }
-        AppConfig Config { get; }       // TODO: extract interface later
+
+        ILayerCollection<ILayer> Layers { get; }
+
+        IMuteLegend Legend { get; }
+
         ILocator Locator { get; }
-        IToolbox Toolbox { get; }
-        ITaskCollection Tasks { get; }
+
+        IMuteMap Map { get; }
+
+        IMenu Menu { get; }
+
+        IProject Project { get; }
+
+        IProjectionDatabase Projections { get; }
+
         IRepository Repository { get; }
+
+        IStatusBar StatusBar { get; }
+
         SynchronizationContext SynchronizationContext { get; }
-        void SetMapProjection(ISpatialReference projection);
+
+        ITaskCollection Tasks { get; }
+
+        IToolbarCollection Toolbars { get; }
+
+        IToolbox Toolbox { get; }
+
+        IAppView View { get; }
+
         bool Initialized { get; }
+
+        void SetMapProjection(ISpatialReference projection);
     }
 }

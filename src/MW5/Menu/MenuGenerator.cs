@@ -37,6 +37,7 @@ namespace MW5.Menu
             _commands = new MenuCommands(PluginIdentity.Default);
 
             InitToolbars();
+
             InitMenus();
         }
 
@@ -74,6 +75,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.AddVectorLayer], true);
             items.AddButton(_commands[MenuKeys.AddRasterLayer]);
             items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
+            items.AddButton(_commands[MenuKeys.AddWmsLayer]);
 
             items.AddButton(_commands[MenuKeys.OpenProject], true);
             items.AddButton(_commands[MenuKeys.SaveProject], true);
@@ -173,6 +175,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.AddVectorLayer]);
             items.AddButton(_commands[MenuKeys.AddRasterLayer]);
             items.AddButton(_commands[MenuKeys.AddDatabaseLayer]);
+            items.AddButton(_commands[MenuKeys.AddWmsLayer]);
             items.AddButton(_commands[MenuKeys.RemoveLayer]);
             items.AddButton(_commands[MenuKeys.Settings], true);
             

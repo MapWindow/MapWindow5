@@ -594,6 +594,7 @@
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
     <Content Include="MW5.ico" />
+    <None Include="Resources\img_wms_add24.png" />
     <None Include="Resources\img_tiles32.png" />
     <None Include="Resources\img_warning64.png" />
     <None Include="Resources\ico_tasks.ico" />

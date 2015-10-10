@@ -13,4 +13,13 @@ namespace MW5.Tiles.Enums
         Clear = 2,
         Edit = 3,
     }
+
+    public enum WmsCommand
+    {
+        Connect = 0,
+        Create = 1,
+        Edit = 2,
+        Delete = 3,
+        Add = 4,
+    }
 }

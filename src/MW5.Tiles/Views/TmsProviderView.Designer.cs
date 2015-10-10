@@ -1,6 +1,6 @@
 ﻿namespace MW5.Tiles.Views
 {
-    partial class TileProviderView
+    partial class TmsProviderView
     {
         /// <summary>
         /// Required designer variable.
@@ -155,7 +155,7 @@
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyle = false;
             // 
-            // TileProviderView
+            // TmsProviderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -171,7 +171,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label1);
-            this.Name = "TileProviderView";
+            this.Name = "TmsProviderView";
             this.Text = "Custom TMS provider";
             ((System.ComponentModel.ISupportInitialize)(this.txtId)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjection)).EndInit();

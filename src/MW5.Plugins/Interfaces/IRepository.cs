@@ -13,6 +13,10 @@ namespace MW5.Plugins.Interfaces
     {
         IEnumerable<string> Folders { get; }
         IEnumerable<DatabaseConnection> Connections { get; }
+
+        // TODO: introduce WmsService class
+        // TODO: introduce WmsService collection
+        IEnumerable<string> WmsServers { get; }    
         
         void AddFolderLink();
         void AddFolderLink(string path);

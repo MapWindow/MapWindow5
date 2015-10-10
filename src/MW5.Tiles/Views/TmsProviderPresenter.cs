@@ -9,9 +9,9 @@ using MW5.Tiles.Views.Abstract;
 
 namespace MW5.Tiles.Views
 {
-    internal class TmsProviderPresenter: BasePresenter<ITileProviderView, TmsProvider>
+    internal class TmsProviderPresenter: BasePresenter<ITmsProviderView, TmsProvider>
     {
-        public TmsProviderPresenter(ITileProviderView view)
+        public TmsProviderPresenter(ITmsProviderView view)
             : base(view)
         {
         }

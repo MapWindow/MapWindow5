@@ -36,6 +36,9 @@ namespace MW5.Menu
                 new MenuCommand("Add Raster Layer", MenuKeys.AddRasterLayer, Resources.icon_layer_raster_add,
                 "Adds raster layer from the file based datasource."),
 
+                new MenuCommand("Add WMS Layer", MenuKeys.AddWmsLayer, Resources.img_wms_add24,
+                "Adds WMS layer to the map."),
+
                 new MenuCommand("Add Database Layer", MenuKeys.AddDatabaseLayer, Resources.icon_layer_database_add,
                 "Adds a layer from geodatabase."),
 

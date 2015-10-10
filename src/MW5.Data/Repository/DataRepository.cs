@@ -21,8 +21,9 @@ namespace MW5.Data.Repository
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
         private readonly IApplicationContainer _container;
-        private readonly List<string> _folders;
-        private readonly List<DatabaseConnection> _connections;
+        private List<string> _folders;
+        private List<string> _wmsServers;
+        private List<DatabaseConnection> _connections;
 
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
@@ -37,8 +38,15 @@ namespace MW5.Data.Repository
             _databaseService = databaseService;
             _fileDialogService = fileDialogService;
             _container = container;
+
+            Init();
+        }
+
+        private void Init()
+        {
             _folders = new List<string>();
             _connections = new List<DatabaseConnection>();
+            _wmsServers = new List<string> { "http://demo.lizardtech.com/lizardtech/iserv/ows" };
         }
 
         public IEnumerable<string> Folders
@@ -49,6 +57,11 @@ namespace MW5.Data.Repository
         public IEnumerable<DatabaseConnection> Connections
         {
             get { return _connections; }
+        }
+
+        public IEnumerable<string> WmsServers
+        {
+            get { return _wmsServers; }
         }
 
         public void AddFolderLink()

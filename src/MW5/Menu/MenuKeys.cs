@@ -17,6 +17,7 @@
         public const string RemoveLayer = "LayerRemoveLayer";
         public const string ClearLayers = "LayerClearLayers";
         public const string LayerClearSelection = "LayerClearSelection";
+        public const string AddWmsLayer = "LayerAddWmsLayer";
 
         public const string ViewToolbars = "ViewToolbars";
         public const string ViewWindows = "ViewWindows";
