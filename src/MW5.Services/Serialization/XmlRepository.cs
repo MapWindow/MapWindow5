@@ -28,6 +28,6 @@ namespace MW5.Services.Serialization
         public List<DatabaseConnection> Connections { get; set; }
 
         [DataMember]
-        public List<string> WmsServers { get; set; }
+        public List<WmsServer> WmsServers { get; set; }
     }
 }

@@ -13,10 +13,7 @@ namespace MW5.Plugins.Interfaces
     {
         IEnumerable<string> Folders { get; }
         IEnumerable<DatabaseConnection> Connections { get; }
-
-        // TODO: introduce WmsService class
-        // TODO: introduce WmsService collection
-        IEnumerable<string> WmsServers { get; }    
+        IEnumerable<WmsServer> WmsServers { get; }    
         
         void AddFolderLink();
         void AddFolderLink(string path);
@@ -25,6 +22,9 @@ namespace MW5.Plugins.Interfaces
         void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null);
         void AddConnection(DatabaseConnection connection);
         void RemoveConnection(DatabaseConnection connection, bool silent);
+
+        void AddWmsServer(WmsServer server);
+        void RemoveWmsServer(WmsServer server);
 
         event EventHandler<FolderEventArgs> FolderAdded;
         event EventHandler<FolderEventArgs> FolderRemoved;

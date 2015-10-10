@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BruTile.Wms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
@@ -57,9 +58,9 @@ namespace MW5.Tiles.Views
             }
         }
 
-        public string ServerUrl
+        public WmsServer Server
         {
-            get { return cboServers.Text; }
+            get { return cboServers.SelectedItem as WmsServer; }
         }
 
         public void ShowHourglass()
@@ -72,6 +73,17 @@ namespace MW5.Tiles.Views
         {
             btnConnect.Enabled = true;
             Cursor = Cursors.Default;
+        }
+
+        public IEnumerable<Layer> SelectedLayers
+        {
+            get
+            {
+                foreach (TreeNodeAdv node in layersTreeView.SelectedNodes)
+                {
+                    yield return node.Tag as Layer;
+                }
+            }
         }
 
         public override void UpdateView()
@@ -103,7 +115,7 @@ namespace MW5.Tiles.Views
                 return null;
             }
 
-            var node = new TreeNodeAdv(layer.Title);
+            var node = new TreeNodeAdv(layer.Title) { Tag = layer };
             node.SubItems.Add(new TreeNodeAdvSubItem(string.Join(";", layer.SRS)));
             nodes.Add(node);
 

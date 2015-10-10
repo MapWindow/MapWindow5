@@ -20,24 +20,20 @@ namespace MW5.Data.Repository
     {
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
-        private readonly IApplicationContainer _container;
         private List<string> _folders;
-        private List<string> _wmsServers;
+        private List<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
-
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
         public event EventHandler<ConnectionEventArgs> ConnectionRemoved;
 
-        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService, IApplicationContainer container)
+        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
         {
             if (databaseService == null) throw new ArgumentNullException("databaseService");
-            if (container == null) throw new ArgumentNullException("container");
-
+        
             _databaseService = databaseService;
             _fileDialogService = fileDialogService;
-            _container = container;
 
             Init();
         }
@@ -45,8 +41,13 @@ namespace MW5.Data.Repository
         private void Init()
         {
             _folders = new List<string>();
+
             _connections = new List<DatabaseConnection>();
-            _wmsServers = new List<string> { "http://demo.lizardtech.com/lizardtech/iserv/ows" };
+
+            _wmsServers = new List<WmsServer>() 
+            { 
+                new WmsServer("Lizard Tech", "http://demo.lizardtech.com/lizardtech/iserv/ows") 
+            };
         }
 
         public IEnumerable<string> Folders
@@ -59,7 +60,7 @@ namespace MW5.Data.Repository
             get { return _connections; }
         }
 
-        public IEnumerable<string> WmsServers
+        public IEnumerable<WmsServer> WmsServers
         {
             get { return _wmsServers; }
         }
@@ -129,6 +130,23 @@ namespace MW5.Data.Repository
 
             _connections.Remove(connection);
             FireEvent(ConnectionRemoved, connection);
+        }
+
+        public void RemoveWmsServer(WmsServer server)
+        {
+            if (_wmsServers.Remove(server))
+            {
+                // TODO: fire event
+            }
+        }
+
+        public void AddWmsServer(WmsServer server)
+        {
+            if (server != null)
+            {
+                // TODO: fire event
+                _wmsServers.Add(server);
+            }
         }
 
         private bool HasFolder(string path)
