@@ -118,6 +118,7 @@ namespace MW5.Menu
             var menu = _context.Menu.TilesMenu;
 
             menu.SubItems.AddButton("Set Bing API key", MenuKeys.BingApiKey, PluginIdentity.Default).BeginGroup = true;
+            menu.SubItems.AddButton("Custom Providers...", MenuKeys.CustomProviders, PluginIdentity.Default).BeginGroup = true;
             menu.SubItems.AddButton("Configure Tiles...", MenuKeys.TilesConfigure, PluginIdentity.Default).BeginGroup = true;
             
             TilesMenuHelper.Init(_context, _context.Menu.TilesMenu);

@@ -1,18 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
-using MW5.Views.Abstract;
 
-namespace MW5.Views
+namespace MW5.Tiles.Views
 {
     public partial class BingApiView : MapWindowView, IBingApiView
     {

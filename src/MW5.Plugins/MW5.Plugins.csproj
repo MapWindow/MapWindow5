@@ -112,7 +112,6 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\AppContextHelper.cs" />
     <Compile Include="Helpers\ConfigPathHelper.cs" />
-    <Compile Include="Helpers\EnumConverters.cs" />
     <Compile Include="Helpers\LoadedAssemblyChecker.cs" />
     <Compile Include="Helpers\PluginIdentityHelper.cs" />
     <Compile Include="Helpers\ResourcePathHelper.cs" />

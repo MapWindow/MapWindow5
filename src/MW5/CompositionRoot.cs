@@ -2,6 +2,8 @@
 using MW5.Menu;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Tiles.Views;
+using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 using MW5.Views;
@@ -25,7 +27,7 @@ namespace MW5
                 .RegisterView<IConfigView, ConfigView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterView<ISpatialIndexView, SpatialIndexView>()
-                .RegisterView<IBingApiView, BingApiView>()
+                
                 .RegisterSingleton<IAppView, AppView>()
                 .RegisterInstance<IApplicationContainer>(container)
                 .RegisterService<LegendPresenter>()
@@ -41,6 +43,7 @@ namespace MW5
             Tools.CompositionRoot.Compose(container);
             Gdal.CompositionRoot.Compose(container);
             Attributes.CompositionRoot.Compose(container);
+            Tiles.CompositionRoot.Compose(container);
 
             CommandBarHelper.InitMenuColors();
 

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.Plugins.Mvp;
 
-namespace MW5.Views.Abstract
+namespace MW5.Tiles.Enums
 {
-    public interface IBingApiView: IView
+    public enum ProviderCommand
     {
-        string Key { get; }
+        Add = 0,
+        Remove = 1,
+        Clear = 2,
+        Edit = 3,
     }
 }

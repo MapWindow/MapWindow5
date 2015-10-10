@@ -1,4 +1,4 @@
-﻿namespace MW5.Views
+﻿namespace MW5.Tiles.Views
 {
     partial class BingApiView
     {
@@ -97,6 +97,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(490, 114);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);

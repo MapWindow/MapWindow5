@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Api", "MW5.Api\MW5.Api.csproj", "{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}"
 EndProject
@@ -93,6 +93,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Tools.Test", "..\test\MW5.Tools.Test\MW5.Tools.Test.csproj", "{48A39A36-1485-4FB9-A8F3-A7E68FAFC595}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Gdal", "MW5.Gdal\MW5.Gdal.csproj", "{ADEEF162-77EB-48ED-AF35-CB6A00C55B42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MW5.Tiles", "MW5.Tiles\MW5.Tiles.csproj", "{80AF2BDB-F74A-480F-84C3-913953BAAE67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -320,6 +322,14 @@ Global
 		{ADEEF162-77EB-48ED-AF35-CB6A00C55B42}.Release|x64.Build.0 = Release|x64
 		{ADEEF162-77EB-48ED-AF35-CB6A00C55B42}.Release|x86.ActiveCfg = Release|x86
 		{ADEEF162-77EB-48ED-AF35-CB6A00C55B42}.Release|x86.Build.0 = Release|x86
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Debug|x64.ActiveCfg = Debug|x64
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Debug|x64.Build.0 = Debug|x64
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Debug|x86.ActiveCfg = Debug|x86
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Debug|x86.Build.0 = Debug|x86
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Release|x64.ActiveCfg = Release|x64
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Release|x64.Build.0 = Release|x64
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Release|x86.ActiveCfg = Release|x86
+		{80AF2BDB-F74A-480F-84C3-913953BAAE67}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

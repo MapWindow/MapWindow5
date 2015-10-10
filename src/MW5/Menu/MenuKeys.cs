@@ -43,6 +43,7 @@
 
         public const string BingApiKey = "BingApiKey";
         public const string TilesConfigure = "TilesConfigure";
+        public const string CustomProviders = "CustomProviders";
 
         public const string About = "HelpAbout";
         public const string SupportedDrivers = "HelpSupportedDrivers";

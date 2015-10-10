@@ -15,6 +15,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tiles.Views;
 using MW5.Views;
 
 namespace MW5.Menu
@@ -63,6 +64,9 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.CustomProviders:
+                    _context.Container.Run<TileProvidersPresenter>();
+                    break;
                 case MenuKeys.BingApiKey:
                     _context.Container.Run<BingApiPresenter>();
                     break;
