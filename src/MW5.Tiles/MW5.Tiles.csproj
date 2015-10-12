@@ -87,6 +87,7 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\BrutileHelper.cs" />
     <Compile Include="Helpers\ProviderManager.cs" />
+    <Compile Include="Helpers\WmsCapabilitiesCache.cs" />
     <Compile Include="Model\TmsProvider.cs" />
     <Compile Include="Model\TmsProviderList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

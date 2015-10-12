@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using BruTile.Extensions;
 using BruTile.Wms;
 using MW5.Api.Concrete;
+using MW5.Api.Interfaces;
 using MW5.Shared;
+using Layer = BruTile.Wms.Layer;
 
 namespace MW5.Tiles.Helpers
 {
@@ -29,12 +31,17 @@ namespace MW5.Tiles.Helpers
 
         public static WmsCapabilities GetWmsCapabilities(string url)
         {
-            string requestUrl = GetRequestUrl(url);
-
-            using (var stream = GetRemoteXmlStream(new Uri(requestUrl)))
+            using (var stream = GetWmsCapabilitiesStream(url))
             {
                 return new WmsCapabilities(stream);
             }
+        }
+
+        public static Stream GetWmsCapabilitiesStream(string url)
+        {
+            string requestUrl = GetRequestUrl(url);
+
+            return GetRemoteXmlStream(new Uri(requestUrl));
         }
 
         /// <summary>
@@ -42,15 +49,69 @@ namespace MW5.Tiles.Helpers
         /// </summary>
         public static WmsProviderDef CreateProvider(
             this WmsCapabilities capabilities,
-            IEnumerable<BruTile.Wms.Layer> layers)
+            IEnumerable<Layer> layers, string serverUrl)
         {
-            string layersCsv = StringHelper.Join(layers.Select(l => l.Name), ",");
+            var layer = layers.FirstOrDefault();
+            if (layer == null)
+            {
+                return null;
+            }
             
-            // TODO: provide id and name in the UI
-            var provider = new WmsProviderDef(5000, "Custom WMS provider") { LayersCsv = layersCsv };
+            // TODO: provide id and name in the UI    
+            var provider = new WmsProviderDef(5000, "Custom WMS provider")
+            {
+                Layers = GetLayers(layers),
+                Projection = layer.GetEpsg(),
+                BoundingBox = layer.GetBoundingBox(),
+                BaseUrl = serverUrl,
+                Format = capabilities.GetFormat()
+            };
 
-            // TODO: add other parameters
             return provider;
+        }
+
+        private static string GetFormat(this WmsCapabilities capabilities)
+        {
+            var list = capabilities.Capability.Request.GetMap.Format;
+            if (list.Count > 2)
+            {
+                return list[2];
+            }
+
+            return list.FirstOrDefault();
+        }
+
+        private static string GetLayers(this IEnumerable<Layer> layers)
+        {
+            return StringHelper.Join(layers.Select(l => l.Name), ",");
+        }
+
+        private static IEnvelope GetBoundingBox(this Layer layer)
+        {
+            var box = layer.BoundingBox.FirstOrDefault();
+            if (box == null)
+            {
+                return null;
+            }
+
+            return new Envelope(box.MinX, box.MaxX, box.MinY, box.MaxY);
+        }
+
+        private static int GetEpsg(this Layer layer)
+        {
+            int epsg = -1;
+            var crs = layer.SRS.FirstOrDefault();
+
+            if (!string.IsNullOrWhiteSpace(crs) && crs.Length > 5)
+            {
+                crs = crs.Substring(5);
+                if (Int32.TryParse(crs, out epsg))
+                {
+                    return epsg;
+                }
+            }
+
+            return epsg;
         }
     }
 }

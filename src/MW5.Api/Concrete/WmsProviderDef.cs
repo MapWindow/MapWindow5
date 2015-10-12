@@ -60,13 +60,13 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public int CrsEpsg
+        public int Projection
         {
             get { return _provider.CrsEpsg; }
             set { _provider.CrsEpsg = value; }
         }
 
-        public string LayersCsv
+        public string Layers
         {
             get { return _provider.LayersCsv; }
             set { _provider.LayersCsv = value; }
@@ -82,6 +82,12 @@ namespace MW5.Api.Concrete
         {
             get { return _provider.Id; }
             set { _provider.Id = value; }
+        }
+
+        public string Format
+        {
+            get { return _provider.Format; }
+            set { _provider.Format = value; }
         }
     }
 }

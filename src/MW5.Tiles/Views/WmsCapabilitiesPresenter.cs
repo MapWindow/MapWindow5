@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using BruTile.Wms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -93,10 +95,13 @@ namespace MW5.Tiles.Views
                 MessageService.Current.Info("No layers are selected");
             }
 
-            var provider = Model.Capabilities.CreateProvider(layers);
+            var provider = Model.Capabilities.CreateProvider(layers, server.Url);
 
             var providers = _context.Map.Tiles.WmsProviders;
             providers.Add(provider);
+
+            _context.Map.Lock();
+            _context.Map.Unlock();
 
             Debug.Print("WMS providers count: " + providers.Count);
         }
@@ -109,25 +114,55 @@ namespace MW5.Tiles.Views
             var server = SelectedServer;
             if (server == null) return;
 
+            var capabilities = WmsCapabilitiesCache.Load(server.Name);
+            if (capabilities != null)
+            {
+                Model.Capabilities = capabilities;
+                View.UpdateView();
+                return;
+            }
+
             View.ShowHourglass();
 
-            Task<WmsCapabilities>.Factory.StartNew(() => BruTileHelper.GetWmsCapabilities(server.Url))
-                .ContinueWith(task =>
+            Task<Stream>.Factory
+                .StartNew(() => BruTileHelper.GetWmsCapabilitiesStream(server.Url))
+                .ContinueWith(ProcessWmsCapabilitiesResults, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        /// <summary>
+        /// Displayes and cached the results of GetCapabilities request.
+        /// </summary>
+        private void ProcessWmsCapabilitiesResults(Task<Stream> task)
+        {
+            var server = SelectedServer;
+
+            try
+            {
+                using (var stream = task.Result)
+                {
+                    if (WmsCapabilitiesCache.Save(server.Name, stream))
                     {
-                        try
-                        {
-                            Model.Capabilities = task.Result;
-                            View.UpdateView();
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Logger.Current.Warn("WMS server GetCapabilities request failed: {0}", ex, server.Url);
-                        }
-                        finally
-                        {
-                            View.HideHourglass();
-                        }
-                    }, TaskScheduler.FromCurrentSynchronizationContext());
+                        // ConnectStream returned by WebResponse doesn't support seek operation,
+                        // so we can't read it twice, therefore on successful saving to the disk 
+                        // we are rereading it from file
+                        Model.Capabilities = WmsCapabilitiesCache.Load(server.Name);
+                    }
+                    else
+                    {
+                        Model.Capabilities = new WmsCapabilities(stream);
+                    }
+
+                    View.UpdateView();
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Logger.Current.Warn("WMS server GetCapabilities request failed: {0}", ex, server.Url);
+            }
+            finally
+            {
+                View.HideHourglass();
+            }
         }
 
         /// <summary>

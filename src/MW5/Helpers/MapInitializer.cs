@@ -72,6 +72,7 @@ namespace MW5.Helpers
             map.ShowCoordinates = config.ShowCoordinates ? config.CoordinatesDisplay : CoordinatesDisplay.None;
             map.ShowCoordinatesFormat = config.CoordinateAngleFormat;
 
+            map.ReuseTileBuffer = config.ReuseTileBuffer;
             map.InertiaOnPanning = config.InnertiaOnPanning;
             map.AnimationOnZooming = config.AnimationOnZooming;
             map.ZoomBoxStyle = config.ZoomBoxStyle;
