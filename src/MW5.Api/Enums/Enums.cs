@@ -38,6 +38,7 @@
         Image = 1,
         VectorLayer = 2,
         Grid = 3,
+        WmsLayer = 4
     }
 
     public enum SpatialRelation

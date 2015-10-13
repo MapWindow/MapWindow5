@@ -18,11 +18,6 @@ namespace MW5.Api.Concrete
             }
         }
 
-        public WmsProviderCollection WmsProviders
-        {
-            get { return new WmsProviderCollection(_tiles.WmsProviders);  }
-        }
-
         public void ClearCache(CacheType cacheType)
         {
             _tiles.ClearCache((tkCacheType)cacheType);

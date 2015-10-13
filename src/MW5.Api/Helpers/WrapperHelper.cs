@@ -118,14 +118,9 @@ namespace MW5.Api.Helpers
             return mapControl.InternalObject as AxMap;
         }
 
-        public static WmsProvider GetInternal(this WmsProviderDef provider)
+        public static WmsLayer GetInternal(this WmsSource provider)
         {
-            return provider.InternalObject as WmsProvider;
-        }
-
-        public static WmsProviders GetInternal(this WmsProviderCollection providers)
-        {
-            return providers.InternalObject as WmsProviders;
+            return provider.InternalObject as WmsLayer;
         }
     }
 }

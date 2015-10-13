@@ -47,7 +47,7 @@ namespace MW5.Tiles.Helpers
         /// <summary>
         /// Creates MapWinGIS WMS provider based GetCapabilities definition and layers selected by user.
         /// </summary>
-        public static WmsProviderDef CreateProvider(
+        public static WmsSource CreateProvider(
             this WmsCapabilities capabilities,
             IEnumerable<Layer> layers, string serverUrl)
         {
@@ -58,10 +58,10 @@ namespace MW5.Tiles.Helpers
             }
             
             // TODO: provide id and name in the UI    
-            var provider = new WmsProviderDef(5000, "Custom WMS provider")
+            var provider = new WmsSource(5000, "Custom WMS provider")
             {
                 Layers = GetLayers(layers),
-                Projection = layer.GetEpsg(),
+                Epsg = layer.GetEpsg(),
                 BoundingBox = layer.GetBoundingBox(),
                 BaseUrl = serverUrl,
                 Format = capabilities.GetFormat()

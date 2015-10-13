@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using BruTile.Wms;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -25,15 +26,18 @@ namespace MW5.Tiles.Views
         : ComplexPresenter<IWmsCapabilitiesView, WmsCommand, WmsCapabilitiesModel>
     {
         private readonly IAppContext _context;
+        private readonly ILayerService _layerService;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WmsCapabilitiesPresenter"/> class.
         /// </summary>
-        public WmsCapabilitiesPresenter(IWmsCapabilitiesView view, IAppContext context)
+        public WmsCapabilitiesPresenter(IWmsCapabilitiesView view, IAppContext context, ILayerService layerService)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (layerService == null) throw new ArgumentNullException("layerService");
             _context = context;
+            _layerService = layerService;
         }
 
         /// <summary>
@@ -97,13 +101,7 @@ namespace MW5.Tiles.Views
 
             var provider = Model.Capabilities.CreateProvider(layers, server.Url);
 
-            var providers = _context.Map.Tiles.WmsProviders;
-            providers.Add(provider);
-
-            _context.Map.Lock();
-            _context.Map.Unlock();
-
-            Debug.Print("WMS providers count: " + providers.Count);
+            _layerService.AddDatasource(provider);
         }
 
         /// <summary>

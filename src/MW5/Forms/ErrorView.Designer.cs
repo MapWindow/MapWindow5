@@ -37,6 +37,7 @@
             this.btnContinue = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnReport = new Syncfusion.Windows.Forms.ButtonAdv();
             this.treeViewAdv1 = new Syncfusion.Windows.Forms.Tools.TreeViewAdv();
+            this.btnCopy = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.textBoxExt1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -161,7 +162,20 @@
             this.treeViewAdv1.ToolTipControl.Size = new System.Drawing.Size(41, 15);
             this.treeViewAdv1.ToolTipControl.TabIndex = 1;
             this.treeViewAdv1.ToolTipControl.Text = "toolTip";
-            this.treeViewAdv1.AfterSelect += new System.EventHandler(this.treeViewAdv1_AfterSelect);
+            this.treeViewAdv1.AfterSelect += new System.EventHandler(this.OntreeViewAdvAfterSelect);
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopy.BeforeTouchSize = new System.Drawing.Size(77, 26);
+            this.btnCopy.IsBackStageButton = false;
+            this.btnCopy.Location = new System.Drawing.Point(95, 254);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(77, 26);
+            this.btnCopy.TabIndex = 5;
+            this.btnCopy.Text = "Copy";
+            this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.OnCopyClick);
             // 
             // ErrorView
             // 
@@ -169,6 +183,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnContinue;
             this.ClientSize = new System.Drawing.Size(508, 292);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.treeViewAdv1);
             this.Controls.Add(this.btnReport);
             this.Controls.Add(this.btnQuit);
@@ -197,5 +212,6 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnContinue;
         private Syncfusion.Windows.Forms.ButtonAdv btnReport;
         private Syncfusion.Windows.Forms.Tools.TreeViewAdv treeViewAdv1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnCopy;
     }
 }
