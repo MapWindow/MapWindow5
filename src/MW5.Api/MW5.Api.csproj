@@ -112,6 +112,7 @@
     <Compile Include="Legend\Renderer\SymbologyRendererBase.cs" />
     <Compile Include="Legend\Renderer\VectorSymbologyRenderer.cs" />
     <Compile Include="Legend\Renderer\RasterSymbologyRenderer.cs" />
+    <Compile Include="Legend\Renderer\WmsSymbologyRenderer.cs" />
     <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

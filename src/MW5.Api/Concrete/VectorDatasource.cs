@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using MapWinGIS;
 using MW5.Api.Enums;
@@ -62,6 +63,10 @@ namespace MW5.Api.Concrete
             set { _datasource.Key = value; }
         }
 
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(Filename); }
+        }
 
         public string Filename
         {

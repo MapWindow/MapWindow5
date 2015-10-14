@@ -71,6 +71,11 @@ namespace MW5.Api.Legend.Renderer
                 var renderer = new VectorSymbologyRenderer(Legend);
                 renderer.Render(g, lyr, bounds, isSnapshot);
             }
+            else if (lyr.LayerType == Enums.LayerType.WmsLayer)
+            {
+                var renderer = new WmsSymbologyRenderer(Legend);
+                renderer.Render(g, lyr, bounds, isSnapshot);
+            }
             else
             {
                 var renderer = new RasterSymbologyRenderer(Legend);

@@ -152,6 +152,9 @@ namespace MW5.Plugins.Symbology.Helpers
                 case LayerType.Grid:
                     context.Container.Run<RasterStylePresenter, ILegendLayer>(layer);
                     return true;
+                case LayerType.WmsLayer:
+                    context.Container.Run<WmsStylePresenter, ILegendLayer>(layer);
+                    return true;
             }
 
             return false;

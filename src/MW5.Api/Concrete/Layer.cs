@@ -67,6 +67,11 @@ namespace MW5.Api.Concrete
                     return LayerType.Image;
                 }
 
+                if (Map.get_WmsLayer(LayerHandle) != null)
+                {
+                    return LayerType.WmsLayer;
+                }
+
                 return LayerType.Invalid;
             }
         }

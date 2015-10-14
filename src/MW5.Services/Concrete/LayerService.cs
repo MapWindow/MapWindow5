@@ -271,7 +271,7 @@ namespace MW5.Services.Concrete
                 if (layerHandle != -1)
                 {
                     var ll = layers.ItemByHandle(layerHandle);
-                    ll.Name = string.IsNullOrWhiteSpace(layerName) ? Path.GetFileNameWithoutExtension(ds.Filename) : layerName;
+                    ll.Name = string.IsNullOrWhiteSpace(layerName) ? ds.Name : layerName;
 
                     addedCount++;
                     _lastLayerHandle = layerHandle;

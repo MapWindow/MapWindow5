@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using BruTile.Wms;
 using MW5.Api.Interfaces;
+using MW5.Api.Legend;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
@@ -100,8 +101,11 @@ namespace MW5.Tiles.Views
             }
 
             var provider = Model.Capabilities.CreateProvider(layers, server.Url);
+            provider.Name = provider.Layers;
 
             _layerService.AddDatasource(provider);
+
+            _context.Legend.Redraw(LegendRedraw.LegendAndMap);
         }
 
         /// <summary>

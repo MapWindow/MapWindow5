@@ -21,6 +21,7 @@ namespace MW5.Plugins.Symbology
                 RegisterView<IRasterColorSchemeView, RasterColorSchemeView>().
                 RegisterView<IHistogramOptionsView, HistogramOptionsView>().
                 RegisterView<IVectorStyleView, VectorStyleView>().
+                RegisterView<IWmsStyleView, WmsStyleView>().
                 RegisterService<RasterRenderingSubView>().
                 RegisterService<RasterRenderingPresenter>().
                 RegisterService<CategoriesPresenter>().

@@ -96,14 +96,12 @@ namespace MW5.Api.Concrete
 
         public string Serialize()
         {
-            // TODO: implement
-            return string.Empty;
+            throw new NotImplementedException();
         }
 
         public bool Deserialize(string state)
         {
-            // TODO: implement
-            return true;
+            throw new NotImplementedException();
         }
 
         /// <summary>

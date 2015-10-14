@@ -25,7 +25,7 @@ namespace MW5.Api.Concrete
 
         public void ClearCache2(CacheType cacheType, TileProvider provider, int fromScale = 0, int toScale = 100)
         {
-            _tiles.ClearCache2((tkCacheType)cacheType, (tkTileProvider)provider, fromScale, toScale);
+            _tiles.ClearCache2((tkCacheType)cacheType, (int)provider, fromScale, toScale);
         }
 
         public bool SetProxy(string address, int port)
@@ -159,9 +159,13 @@ namespace MW5.Api.Concrete
             get { return _tiles.MinZoom; }
         }
 
-        public TileProjection ServerProjection
+        public ISpatialReference ServerProjection
         {
-            get { return (TileProjection)_tiles.ServerProjection; }
+            get
+            {
+                var gp = _tiles.ServerProjection; 
+                return gp != null ?  new SpatialReference(gp) : null;
+            }
         }
 
         public TileProjectionStatus ProjectionStatus
