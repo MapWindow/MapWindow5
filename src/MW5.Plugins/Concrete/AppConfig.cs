@@ -1,5 +1,15 @@
-﻿using System;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="AppConfig.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//   MapWindow OSS Team - 2015
+// </copyright>
+// <summary>
+//   Defines the AppConfig type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
@@ -9,123 +19,20 @@ using MW5.Plugins.Enums;
 
 namespace MW5.Plugins.Concrete
 {
-    [DataContract(Name="Settings")]
+    [DataContract(Name = "Settings")]
     public class AppConfig
     {
-        private List<string> _recentProjects;
-        private List<int> _favoriteProjections;
         private List<Guid> _applicationPlugins;
         private CoordinatesDisplay _coordinatesDisplay;
-
-        public static AppConfig Instance { get; internal set; }
+        private List<int> _favoriteProjections;
+        private List<string> _recentProjects;
 
         public AppConfig()
         {
             SetDefaults();
         }
 
-        public void SetDefaults()
-        {
-            AnimationOnZooming = AutoToggle.Auto;
-            BingApiKey = string.Empty;
-            CacheRenderingData = false;
-            CacheDbfRecords = false;
-            CoordinateAngleFormat = AngleFormat.Seconds;
-            CoordinatesDisplay = CoordinatesDisplay.Auto;
-            CoordinatePrecision = 3;
-            CreatePyramidsOnOpening = true;
-            CreateSpatialIndexOnOpening = true;
-            DisplayDynamicVisibilityWarnings = true;
-            FirstRun = true;
-            GridFavorGreyscale = true;
-            GridDefaultColorScheme = PredefinedColors.SummerMountains;
-            GridRandomColorScheme = true;
-            GridUseHistogram = true;
-            InnertiaOnPanning = AutoToggle.Auto;
-            LastProjectPath = "";
-            LoadLastProject = true;
-            LoadSymbology = true;
-            LocalDocumentation = false;
-            MapBackgroundColor = Color.White;
-            MeasurementsAreaFieldName = "Area";
-            MeasurementsAreaPrecision = 3;
-            MeasurementsAreaUnits = AreaUnits.SquareMeters;
-            MeasurementsAreaWidth = 14;
-            MeasurementsLengthFieldName = "Length";
-            MeasurementsLengthPrecision = 3;
-            MeasurementsLengthUnits = LengthUnits.Meters;
-            MeasurementsLengthWidth = 14;
-            MeasurementsPerimeterFieldName = "Perimeter";
-            MeasuringAngleFormat = AngleFormat.Degrees;
-            MeasuringAnglePrecision = 1;
-            MeasuringAreaPrecision = 1;
-            MeasuringAreaUnits = AreaDisplay.Metric;
-            MeasuringBearingType = BearingType.Absolute;
-            MeasuringFillColor = Color.Orange;
-            MeasuringFillTransparency = 100;
-            MeasuringLengthPrecision = 1;
-            MeasuringLengthUnits = LengthDisplay.Metric;
-            MeasuringLineColor = Color.Orange;
-            MeasuringLineStyle = DashStyle.Solid;
-            MeasuringLineWidth = 2;
-            MeasuringPointLabelsVisible = true;
-            MeasuringPointsVisible = true;
-            MeasuringShowBearing = true;
-            MeasuringShowLength = true;
-            MeasuringShowTotalLength = true;
-            MouseWheelDirection = MouseWheelDirection.Forward;
-            ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
-            ProjectionMismatch = ProjectionMismatch.Reproject;
-            ProjectionShowLoadingReport = true;
-            PyramidCompression = TiffCompression.Auto;
-            PyramidSampling = RasterOverviewSampling.Nearest;
-            RasterDownsamplingMode = InterpolationType.Bilinear;
-            RasterUpsamplingMode = InterpolationType.None;
-            ResizeBehavior = ResizeBehavior.KeepScale;
-            ReuseTileBuffer = true;
-            ScalebarUnits = ScalebarUnits.GoogleStyle;
-            ShowCoordinates = true;
-            ShowMenuToolTips = false;
-            ShowPluginInToolTip = false;        // perhaps some kind of debug mode will be enough
-            ShowProjectionAbsenceDialog = true;
-            ShowProjectionMismatchDialog = true;
-            ShowPyramidDialog = true;
-            ShowRedrawTime = false;
-            ShowScalebar = true;
-            ShowSpatialIndexDialog = false;
-            ShowValuesOnMouseMove = true;
-            ShowWelcomeDialog = true;
-            ShowZoombar = true;
-            SpatialIndexFeatureCount = 10000;
-            SymbolobyStorage = SymbologyStorage.Project;
-            TableEditorLayout = TableEditorLayout.Tabbed;
-            TableEditorShowAliases = true;
-            TaskRunInBackground = false;
-            TilesAutoDetectProxy = true;
-            TilesUseRamCache = true;
-            TilesMaxRamSize = 100.0;
-            TilesUseDiskCache = true;
-            TilesDatabase = string.Empty;
-            TilesMaxDiskSize = 300.0;
-            TilesMaxDiskAge = TilesMaxAge.Month3;
-            TilesProxyAddress = string.Empty;
-            TilesProxyPassword = string.Empty;
-            TilesProxyUserName = string.Empty;
-            TilesUseProxy = true;
-            ToolOutputAddToMap = true;
-            ToolOutputInMemory = true;
-            ToolOutputOverwrite = false;
-            ToolShowGdalOptionsDialog = true;
-            ZoomBarVerbosity = ZoomBarVerbosity.Full;
-            ZoomBehavior = ZoomBehavior.UseTileLevels;
-            ZoomBoxStyle = ZoomBoxStyle.Blue;
-        }
-
-        [OnDeserializing]
-        private void OnDeserializing(StreamingContext context)
-        {
-            SetDefaults();
-        }
+        public static AppConfig Instance { get; internal set; }
 
         [DataMember]
         public AutoToggle AnimationOnZooming { get; set; }
@@ -141,13 +48,6 @@ namespace MW5.Plugins.Concrete
         public string BingApiKey { get; set; }
 
         [DataMember]
-        public bool CacheRenderingData
-        {
-            get { return MapConfig.CacheRenderingData;  }
-            set { MapConfig.CacheRenderingData = value; }
-        }
-
-        [DataMember]
         public bool CacheDbfRecords
         {
             get { return MapConfig.CacheDbfRecords; }
@@ -155,29 +55,46 @@ namespace MW5.Plugins.Concrete
         }
 
         [DataMember]
+        public bool CacheRenderingData
+        {
+            get { return MapConfig.CacheRenderingData; }
+            set { MapConfig.CacheRenderingData = value; }
+        }
+
+        [DataMember]
         public AngleFormat CoordinateAngleFormat { get; set; }
+
+        [DataMember]
+        public int CoordinatePrecision { get; set; }
 
         [DataMember]
         public CoordinatesDisplay CoordinatesDisplay
         {
-            get
-            {
-                return _coordinatesDisplay == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : _coordinatesDisplay;
-            }
-            set
-            {
-                _coordinatesDisplay = value == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : value;
-            }
+            get { return _coordinatesDisplay == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : _coordinatesDisplay; }
+            set { _coordinatesDisplay = value == CoordinatesDisplay.None ? CoordinatesDisplay.Auto : value; }
         }
-
-        [DataMember]
-        public int CoordinatePrecision { get; set; }
 
         [DataMember]
         public bool CreatePyramidsOnOpening { get; set; }
 
         [DataMember]
         public bool CreateSpatialIndexOnOpening { get; set; }
+        
+        public List<Guid> DefaultApplicationPlugins
+        {
+            [SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1500:CurlyBracketsForMultiLineStatementsMustNotShareLine", Justification = "Reviewed. Suppression is OK here.")]
+            get
+            {
+                return new List<Guid> { new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7"), // Symbology
+                                        new Guid("F24E7086-1762-4A7C-8403-D1169309CBC6"), // Repository
+                                        new Guid("65beb2fd-eec2-461c-965e-f20a0cef2aa2"), // Identifier
+                                        new Guid("894E958F-69DD-48DF-B35B-16871EC5D309"), // Table editor
+                                        new Guid("70120ff9-1c6b-49a1-8949-dded8bcef499"), // Shape editor
+                                        new Guid("F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0"), // Debug window
+                                        new Guid("F383FE43-0754-4EE2-951C-0066E87B28AB"), // GIS Toolbox
+                                      };
+            }
+        }
 
         [DataMember]
         public bool DisplayDynamicVisibilityWarnings { get; set; }
@@ -196,10 +113,10 @@ namespace MW5.Plugins.Concrete
         public bool FirstRun { get; set; }
 
         [DataMember]
-        public bool GridFavorGreyscale { get; set; }
+        public PredefinedColors GridDefaultColorScheme { get; set; }
 
         [DataMember]
-        public PredefinedColors GridDefaultColorScheme { get; set; }
+        public bool GridFavorGreyscale { get; set; }
 
         [DataMember]
         public bool GridRandomColorScheme { get; set; }
@@ -227,9 +144,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public Color MapBackgroundColor { get; set; }
-        
+
         [DataMember]
-        public string MeasurementsAreaFieldName { get; set;}
+        public string MeasurementsAreaFieldName { get; set; }
 
         [DataMember]
         public int MeasurementsAreaPrecision { get; set; }
@@ -241,7 +158,7 @@ namespace MW5.Plugins.Concrete
         public int MeasurementsAreaWidth { get; set; }
 
         [DataMember]
-        public string MeasurementsLengthFieldName { get; set;}
+        public string MeasurementsLengthFieldName { get; set; }
 
         [DataMember]
         public int MeasurementsLengthPrecision { get; set; }
@@ -323,7 +240,7 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public RasterOverviewSampling PyramidSampling { get; set; }
-       
+
         [DataMember]
         public InterpolationType RasterDownsamplingMode { get; set; }
 
@@ -389,37 +306,28 @@ namespace MW5.Plugins.Concrete
         public SymbologyStorage SymbolobyStorage { get; set; }
 
         [DataMember]
-        public bool TaskRunInBackground { get; set; }
-
-        [DataMember]
         public TableEditorLayout TableEditorLayout { get; set; }
 
         [DataMember]
-        public bool TableEditorShowAliases { get; set;}
+        public bool TableEditorShowAliases { get; set; }
 
         [DataMember]
-        public bool TilesUseRamCache { get; set; }
-
-        [DataMember]
-        public double TilesMaxRamSize { get; set; }
-
-        [DataMember]
-        public bool TilesUseDiskCache { get; set; }
-
-        [DataMember]
-        public string TilesDatabase { get; set; }
-
-        [DataMember]
-        public double TilesMaxDiskSize { get; set; }
-
-        [DataMember]
-        public TilesMaxAge TilesMaxDiskAge { get; set; }
+        public bool TaskRunInBackground { get; set; }
 
         [DataMember]
         public bool TilesAutoDetectProxy { get; set; }
 
         [DataMember]
-        public bool TilesUseProxy { get; set; }
+        public string TilesDatabase { get; set; }
+
+        [DataMember]
+        public TilesMaxAge TilesMaxDiskAge { get; set; }
+
+        [DataMember]
+        public double TilesMaxDiskSize { get; set; }
+
+        [DataMember]
+        public double TilesMaxRamSize { get; set; }
 
         [DataMember]
         public string TilesProxyAddress { get; set; }
@@ -431,16 +339,37 @@ namespace MW5.Plugins.Concrete
         public string TilesProxyUserName { get; set; }
 
         [DataMember]
-        public bool ToolOutputAddToMap {get; set; }
+        public bool TilesUseDiskCache { get; set; }
 
         [DataMember]
-        public bool ToolOutputInMemory {get; set; }
+        public bool TilesUseProxy { get; set; }
 
         [DataMember]
-        public bool ToolOutputOverwrite {get; set; }
+        public bool TilesUseRamCache { get; set; }
+
+        [DataMember]
+        public bool ToolOutputAddToMap { get; set; }
+
+        [DataMember]
+        public bool ToolOutputInMemory { get; set; }
+
+        [DataMember]
+        public bool ToolOutputOverwrite { get; set; }
 
         [DataMember]
         public bool ToolShowGdalOptionsDialog { get; set; }
+
+        [DataMember]
+        public DateTime UpdaterLastChecked { get; set; }
+
+        [DataMember]
+        public bool UpdaterIsDownloading { get; set; }
+
+        [DataMember]
+        public bool UpdaterHasNewInstaller { get; set; }
+
+        [DataMember]
+        public string UpdaterInstallername { get; set; }
 
         [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }
@@ -450,23 +379,6 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public ZoomBoxStyle ZoomBoxStyle { get; set; }
-
-        public List<Guid> DefaultApplicationPlugins
-        {
-            get
-            {
-                return new List<Guid>()
-                {
-                    new Guid("7B9DF651-4B8B-4AA8-A4A9-C1463A35DAC7"),   // Symbology
-                    new Guid("F24E7086-1762-4A7C-8403-D1169309CBC6"),   // Repository
-                    new Guid("65beb2fd-eec2-461c-965e-f20a0cef2aa2"),   // Identifier
-                    new Guid("894E958F-69DD-48DF-B35B-16871EC5D309"),   // Table editor
-                    new Guid("70120ff9-1c6b-49a1-8949-dded8bcef499"),   // Shape editor
-                    new Guid("F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0"),   // Debug window
-                    new Guid("F383FE43-0754-4EE2-951C-0066E87B28AB"),   // GIS Toolbox
-                };
-            }
-        }
 
         public void AddRecentProject(string path)
         {
@@ -483,6 +395,112 @@ namespace MW5.Plugins.Concrete
             {
                 RecentProjects.RemoveAt(0);
             }
+        }
+
+        public void SetDefaults()
+        {
+            AnimationOnZooming = AutoToggle.Auto;
+            BingApiKey = string.Empty;
+            CacheRenderingData = false;
+            CacheDbfRecords = false;
+            CoordinateAngleFormat = AngleFormat.Seconds;
+            CoordinatesDisplay = CoordinatesDisplay.Auto;
+            CoordinatePrecision = 3;
+            CreatePyramidsOnOpening = true;
+            CreateSpatialIndexOnOpening = true;
+            DisplayDynamicVisibilityWarnings = true;
+            FirstRun = true;
+            GridFavorGreyscale = true;
+            GridDefaultColorScheme = PredefinedColors.SummerMountains;
+            GridRandomColorScheme = true;
+            GridUseHistogram = true;
+            InnertiaOnPanning = AutoToggle.Auto;
+            LastProjectPath = "";
+            LoadLastProject = true;
+            LoadSymbology = true;
+            LocalDocumentation = false;
+            MapBackgroundColor = Color.White;
+            MeasurementsAreaFieldName = "Area";
+            MeasurementsAreaPrecision = 3;
+            MeasurementsAreaUnits = AreaUnits.SquareMeters;
+            MeasurementsAreaWidth = 14;
+            MeasurementsLengthFieldName = "Length";
+            MeasurementsLengthPrecision = 3;
+            MeasurementsLengthUnits = LengthUnits.Meters;
+            MeasurementsLengthWidth = 14;
+            MeasurementsPerimeterFieldName = "Perimeter";
+            MeasuringAngleFormat = AngleFormat.Degrees;
+            MeasuringAnglePrecision = 1;
+            MeasuringAreaPrecision = 1;
+            MeasuringAreaUnits = AreaDisplay.Metric;
+            MeasuringBearingType = BearingType.Absolute;
+            MeasuringFillColor = Color.Orange;
+            MeasuringFillTransparency = 100;
+            MeasuringLengthPrecision = 1;
+            MeasuringLengthUnits = LengthDisplay.Metric;
+            MeasuringLineColor = Color.Orange;
+            MeasuringLineStyle = DashStyle.Solid;
+            MeasuringLineWidth = 2;
+            MeasuringPointLabelsVisible = true;
+            MeasuringPointsVisible = true;
+            MeasuringShowBearing = true;
+            MeasuringShowLength = true;
+            MeasuringShowTotalLength = true;
+            MouseWheelDirection = MouseWheelDirection.Forward;
+            ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
+            ProjectionMismatch = ProjectionMismatch.Reproject;
+            ProjectionShowLoadingReport = true;
+            PyramidCompression = TiffCompression.Auto;
+            PyramidSampling = RasterOverviewSampling.Nearest;
+            RasterDownsamplingMode = InterpolationType.Bilinear;
+            RasterUpsamplingMode = InterpolationType.None;
+            ResizeBehavior = ResizeBehavior.KeepScale;
+            ReuseTileBuffer = true;
+            ScalebarUnits = ScalebarUnits.GoogleStyle;
+            ShowCoordinates = true;
+            ShowMenuToolTips = false;
+            ShowPluginInToolTip = false; // perhaps some kind of debug mode will be enough
+            ShowProjectionAbsenceDialog = true;
+            ShowProjectionMismatchDialog = true;
+            ShowPyramidDialog = true;
+            ShowRedrawTime = false;
+            ShowScalebar = true;
+            ShowSpatialIndexDialog = false;
+            ShowValuesOnMouseMove = true;
+            ShowWelcomeDialog = true;
+            ShowZoombar = true;
+            SpatialIndexFeatureCount = 10000;
+            SymbolobyStorage = SymbologyStorage.Project;
+            TableEditorLayout = TableEditorLayout.Tabbed;
+            TableEditorShowAliases = true;
+            TaskRunInBackground = false;
+            TilesAutoDetectProxy = true;
+            TilesUseRamCache = true;
+            TilesMaxRamSize = 100.0;
+            TilesUseDiskCache = true;
+            TilesDatabase = string.Empty;
+            TilesMaxDiskSize = 300.0;
+            TilesMaxDiskAge = TilesMaxAge.Month3;
+            TilesProxyAddress = string.Empty;
+            TilesProxyPassword = string.Empty;
+            TilesProxyUserName = string.Empty;
+            TilesUseProxy = true;
+            ToolOutputAddToMap = true;
+            ToolOutputInMemory = true;
+            ToolOutputOverwrite = false;
+            ToolShowGdalOptionsDialog = true;
+            UpdaterHasNewInstaller = false;
+            UpdaterIsDownloading = false;
+            UpdaterLastChecked = new DateTime(2015, 1, 1);
+            ZoomBarVerbosity = ZoomBarVerbosity.Full;
+            ZoomBehavior = ZoomBehavior.UseTileLevels;
+            ZoomBoxStyle = ZoomBoxStyle.Blue;
+        }
+
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context)
+        {
+            SetDefaults();
         }
     }
 }

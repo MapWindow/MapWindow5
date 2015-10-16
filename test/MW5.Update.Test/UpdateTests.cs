@@ -6,21 +6,21 @@
 //   Test the update service
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Reflection;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+using Newtonsoft.Json;
+using MW5.Shared;
+
 namespace MW5.Update.Test
 {
-    #region
-
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Net;
-    using System.Reflection;
-
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-    using Newtonsoft.Json;
-
-    #endregion
 
     /// <summary>
     ///     Test the update service
@@ -68,7 +68,7 @@ namespace MW5.Update.Test
         {
             const string Json =
                 "{\"Stable\":{\"Versionnumber\":\"1.0.1.0\",\"Description\":\"New stable version with some cool new features\"},\"Beta\":{\"Versionnumber\":\"1.0.0.9\",\"Description\":\"Bugfixes and small enhancements\"}}";
-            var availableInstallers = JsonConvert.DeserializeObject<Dictionary<string, InstallerInfo>>(Json);
+            var availableInstallers = JsonConvert.DeserializeObject<Dictionary<string, UpdaterHelper.InstallerInfo>>(Json);
             Assert.AreEqual("1.0.1.0", availableInstallers["Stable"].Versionnumber);
             Assert.AreEqual("1.0.0.9", availableInstallers["Beta"].Versionnumber);
         }
@@ -137,8 +137,8 @@ namespace MW5.Update.Test
                     content = reader.ReadToEnd();
                     var serializer = new JsonSerializer();
                     var availableInstallers =
-                        (Dictionary<string, InstallerInfo>)
-                        serializer.Deserialize(reader, typeof(Dictionary<string, InstallerInfo>));
+                        (Dictionary<string, UpdaterHelper.InstallerInfo>)
+                        serializer.Deserialize(reader, typeof(Dictionary<string, UpdaterHelper.InstallerInfo>));
                     Assert.AreEqual("1.0.1.0", availableInstallers["Stable"].Versionnumber);
                     Assert.AreEqual("1.0.0.9", availableInstallers["Beta"].Versionnumber);
                     Debug.WriteLine("The online JSON file was correctly read.");
@@ -162,31 +162,33 @@ namespace MW5.Update.Test
         [TestMethod]
         public void MakeJsonfile()
         {
-            var installers = new Dictionary<string, InstallerInfo>
+            var installers = new Dictionary<string, UpdaterHelper.InstallerInfo>
                                  {
                                      {
-                                         "Stable", 
-                                         new InstallerInfo
+                                         "Stable-x64", 
+                                         new UpdaterHelper.InstallerInfo
                                              {
-                                                 Versionnumber = "1.0.1.0", 
-                                                 Description =
-                                                     "New stable version with some cool new features"
+                                                 Versionnumber = new Version(5,0,0), 
+                                                 Description = "New stable version with some cool new features",
+                                                 DownloadUrl = "https://mapwindow5.codeplex.com/downloads/get/1492837",
+                                                 Cpu = "x64"
                                              }
                                      }, 
                                      {
-                                         "Beta", 
-                                         new InstallerInfo
+                                         "Beta-x64", 
+                                         new UpdaterHelper.InstallerInfo
                                              {
-                                                 Versionnumber = "1.0.0.9", 
-                                                 Description =
-                                                     "Bugfixes and small enhancements"
+                                                 Versionnumber = new Version(5,0,1),
+                                                 Description = "Bugfixes and small enhancements",
+                                                 DownloadUrl = "https://mapwindow5.codeplex.com/downloads/get/1492837",
+                                                 Cpu = "x64"
                                              }
                                      }
                                  };
 
             var json = JsonConvert.SerializeObject(installers);
             Debug.WriteLine(json);
-            Assert.IsTrue(json.Contains("{\"Stable\":"));
+            Assert.IsTrue(json.Contains("{\"Stable"));
 
             // Write string to a file
             File.WriteAllText(@"d:\mw5-update.json", json);
@@ -195,26 +197,5 @@ namespace MW5.Update.Test
         }
 
         #endregion
-
-        /// <summary>
-        /// The installer info.
-        /// </summary>
-        public struct InstallerInfo
-        {
-            #region Public Properties
-
-            /// <summary>
-            /// Gets or sets the description.
-            /// </summary>
-            public string Description { get; set; }
-
-            /// <summary>
-            /// Gets or sets the versionnumber.
-            /// </summary>
-            public string Versionnumber { get; set; }
-
-            // TODO: Add additional properties like download url
-            #endregion
-        }
     }
 }
