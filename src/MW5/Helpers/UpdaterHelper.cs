@@ -27,9 +27,9 @@ namespace MW5.Helpers
         public static void GetLatestVersion()
         {
             // TODO: Add interval
-            if (AppConfig.Instance.UpdaterLastChecked.CompareTo(DateTime.Now) < 0)
+            if (AppConfig.Instance.UpdaterLastChecked.Date.CompareTo(DateTime.Now.Date) == 0)
             {
-                Logger.Current.Debug("Checked within the threshold. Will check next time again.");
+                Logger.Current.Debug("Already checked today. Will check next time again.");
                 AppConfig.Instance.UpdaterIsDownloading = false;
                 return;
             }
