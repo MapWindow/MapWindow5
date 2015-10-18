@@ -58,9 +58,20 @@ namespace MW5.Helpers
             out string installerName)
         {
             var key = isx64 ? type + "-x64" : type + "-x86";
-            var latestVersion = result[key].Versionnumber;
-            downloadUrl = result[key].DownloadUrl;
-            installerName = result[key].Name;
+            Version latestVersion;
+            try
+            {
+                latestVersion = result[key].Versionnumber;
+                downloadUrl = result[key].DownloadUrl;
+                installerName = result[key].Name;
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Debug("Warning in CheckVersions: " + ex.Message);
+                downloadUrl = string.Empty;
+                installerName = string.Empty;
+                return false;
+            }
 
             Logger.Current.Debug("Latest stable version: " + latestVersion);
             if (latestVersion.Major >= fileVersionInfo.ProductMajorPart && latestVersion.Minor >= fileVersionInfo.ProductMinorPart
