@@ -36,5 +36,7 @@ namespace MW5.Shared.Log
         DateTime TimeStamp { get; }
 
         string ToLine();
+
+        string GetCompleteDescription(bool innerExceptions);
     }
 }

@@ -96,7 +96,7 @@ namespace MW5.Tools.Views
                 var sb = new StringBuilder();
                 foreach (var item in log.Entries)
                 {
-                    sb.Append(item.DetailedMessage + Environment.NewLine);
+                    sb.Append(GetEntryLine(item));
                 }
 
                 textBoxExt1.Text = sb.ToString();
@@ -122,7 +122,7 @@ namespace MW5.Tools.Views
                     // before we start processing messages with DoEvents
                     lock (textBoxExt1)
                     {
-                        textBoxExt1.AppendText(e.Entry.DetailedMessage + Environment.NewLine);
+                        textBoxExt1.AppendText(GetEntryLine(e.Entry));
 
                         // make sure that we can still react to the user clicks if messages
                         // are reported too often (on each operation step)
@@ -134,6 +134,11 @@ namespace MW5.Tools.Views
             {
                 textBoxExt1.SafeInvoke(action);
             }
+        }
+
+        private string GetEntryLine(ILogEntry entry)
+        {
+            return entry.GetCompleteDescription(true) + Environment.NewLine;
         }
 
         private void OnTaskStatusChanged(object sender, TaskStatusChangedEventArgs e)

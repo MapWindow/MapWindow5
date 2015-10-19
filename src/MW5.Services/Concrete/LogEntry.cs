@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Threading;
+using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.Shared.Log;
 
@@ -54,17 +55,26 @@ namespace MW5.Services.Concrete
         [DisplayName("Message")]
         public string DetailedMessage
         {
-            get
-            {
-                string s = Message;
+            get { return GetCompleteDescription(false); }
+        }
 
-                if (Exception != null)
+        public string GetCompleteDescription(bool innerExceptions)
+        {
+            string s = Message;
+
+            if (Exception != null)
+            {
+                if (innerExceptions)
+                {
+                    s += Environment.NewLine + Environment.NewLine + Exception.ExceptionToLogString();
+                }
+                else
                 {
                     s += Environment.NewLine + Exception.Message + Environment.NewLine + Exception.StackTrace;
                 }
-
-                return s;
             }
+
+            return s;
         }
 
         public override string ToString()
