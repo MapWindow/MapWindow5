@@ -18,6 +18,7 @@ using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Shared.Log;
 using MW5.Tools.Helpers;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
 using MW5.Tools.Model.Parameters.Layers;
 using MW5.Tools.Services;
@@ -266,7 +267,14 @@ namespace MW5.Tools.Model
 
             Parameters.SaveControlValues();
 
-            return BeforeRun();
+            if (!BeforeRun())
+            {
+                return false;
+            }
+
+            Parameters.ExtractDatasources();
+
+            return true;
         }
 
         #endregion

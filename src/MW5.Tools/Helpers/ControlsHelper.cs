@@ -8,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MW5.Tools.Controls.Parameters;
 using MW5.Tools.Controls.Parameters.Interfaces;
+using MW5.Tools.Model.Layers;
 using MW5.Tools.Model.Parameters;
+using MW5.Tools.Model.Parameters.Layers;
 
 namespace MW5.Tools.Helpers
 {
@@ -17,6 +19,26 @@ namespace MW5.Tools.Helpers
     /// </summary>
     internal static class ControlsHelper
     {
+        /// <summary>
+        /// Substitutes each layer input with datasource input .
+        /// </summary>
+        /// <remarks>
+        /// Must be done immediately before the async execution when validation was passed.
+        /// Layer inputs can't be accessed from background thread, since they are bound to map control.</remarks>
+        public static void ExtractDatasources(this IEnumerable<BaseParameter> parameters)
+        {
+            foreach (var p in parameters.OfType<LayerParameterBase>())
+            {
+                var input = p.Value as LayerInput;
+                if (input != null)
+                {
+                    var dsInput = new DatasourceInput(input.Layer);
+                    p.SetToolValue(dsInput);
+                    input.Dispose();
+                }
+            }
+        }
+
         /// <summary>
         /// Copies values from controls to the properties of the tool.
         /// </summary>

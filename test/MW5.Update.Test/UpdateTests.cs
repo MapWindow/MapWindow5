@@ -17,7 +17,6 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Newtonsoft.Json;
-using MW5.Shared;
 
 namespace MW5.Update.Test
 {

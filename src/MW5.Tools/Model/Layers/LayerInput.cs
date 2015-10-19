@@ -131,6 +131,11 @@ namespace MW5.Tools.Model.Layers
 
         public bool SelectedOnly { get; set; }
 
+        public ILayer Layer
+        {
+            get { return _layer;  }
+        }
+
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>

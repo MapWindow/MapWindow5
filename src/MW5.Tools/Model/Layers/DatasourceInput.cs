@@ -20,6 +20,18 @@ namespace MW5.Tools.Model.Layers
     public class DatasourceInput: IVectorInput, IRasterInput
     {
         private string _filename = string.Empty;
+        private readonly bool _closeAfterRun = true;
+        private readonly int _layerHandle = -1;
+
+        public DatasourceInput(ILayer layer)
+        {
+            if (layer == null) throw new ArgumentNullException("layer");
+
+            _closeAfterRun = false;
+            _layerHandle = layer.Handle;
+
+            Datasource = layer.LayerSource;
+        }
 
         public DatasourceInput(ILayerSource source)
         {
@@ -40,7 +52,7 @@ namespace MW5.Tools.Model.Layers
         /// </summary>
         public bool CloseAfterRun
         {
-            get {  return true; }
+            get { return _closeAfterRun; }
         }
 
         /// <summary>
@@ -121,7 +133,7 @@ namespace MW5.Tools.Model.Layers
         /// </summary>
         public int LayerHandle 
         {
-            get { return -1; } 
+            get { return _layerHandle; } 
         }
 
         /// <summary>
