@@ -27,15 +27,11 @@ namespace MW5.Data.Services
         {
             var p = _context.Container.GetInstance<AddConnectionPresenter>();
 
-            AddConnectionModel model = null;
-            if (databaseType.HasValue)
-            {
-                model = new AddConnectionModel(databaseType.Value);
-            }
+            var model = new AddConnectionModel(databaseType);
 
             if (p.Run(model))
             {
-                return p.Connection;
+                return model.Connection;
             }
 
             return null;

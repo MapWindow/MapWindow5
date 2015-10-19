@@ -34,25 +34,23 @@ namespace MW5.Data.Views
             view.ConnectionChanged += OnConnectionChanged;
         }
 
-        public DatabaseConnection Connection
-        {
-            get
-            {
-                var param = View.GetConnection();
-                return new DatabaseConnection(View.DatabaseType, param.Name, param.GetConnection());
-            }
-        }
-
         public override bool ViewOkClicked()
         {
-            var param = View.GetConnection();
-            if (param == null)
+            var connection = View.GetConnection();
+            if (connection == null)
             {
                 MessageService.Current.Info("Failed to retrieve connection parameters");
                 return false;
             }
 
-            return param.Validate();
+            if (!connection.Validate())
+            {
+                return false;
+            }
+
+            Model.Connection = new DatabaseConnection(View.DatabaseType, connection.Name, connection.GetConnection());
+
+            return true;
         }
 
         private void OnConnectionChanged()

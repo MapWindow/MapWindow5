@@ -13,7 +13,7 @@ namespace MW5.Data.Views
     {
         private readonly IFileDialogService _fileDialog;
         private static int _lastTabPage = -1;
-        private Dictionary<GeoDatabaseType, bool> _ignoreList = new Dictionary<GeoDatabaseType, bool>();
+        private readonly Dictionary<GeoDatabaseType, bool> _ignoreList = new Dictionary<GeoDatabaseType, bool>();
 
         public event Action TestConnection;
         public event Action ConnectionChanged;
@@ -162,15 +162,13 @@ namespace MW5.Data.Views
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            return null;
         }
 
         public void Initialize()
         {
-            if (Model != null)
+            if (Model.DatabaseType.HasValue)
             {
-                DatabaseType = Model.DatabaseType;
+                DatabaseType = Model.DatabaseType.Value;
             }
         }
 
