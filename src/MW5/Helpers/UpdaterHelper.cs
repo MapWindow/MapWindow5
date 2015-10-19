@@ -26,17 +26,24 @@ namespace MW5.Helpers
         /// </summary>
         public static void GetLatestVersion()
         {
+            var config = AppConfig.Instance;
+
+            if (!config.UpdaterCheckNewVersion)
+            {
+                return;
+            }
+
             // TODO: Add interval
-            if (AppConfig.Instance.UpdaterLastChecked.Date.CompareTo(DateTime.Now.Date) == 0)
+            if (config.UpdaterLastChecked.Date.CompareTo(DateTime.Now.Date) == 0)
             {
                 Logger.Current.Debug("Already checked today. Will check next time again.");
-                AppConfig.Instance.UpdaterIsDownloading = false;
+                config.UpdaterIsDownloading = false;
                 return;
             }
 
             DownloadNewerVersion();
-            AppConfig.Instance.UpdaterLastChecked = DateTime.Now;
-            Logger.Current.Debug("New Last checked: " + AppConfig.Instance.UpdaterLastChecked);
+            config.UpdaterLastChecked = DateTime.Now;
+            Logger.Current.Debug("New Last checked: " + config.UpdaterLastChecked);
         }
 
         /// <summary>

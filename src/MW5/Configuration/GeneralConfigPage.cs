@@ -44,6 +44,7 @@ namespace MW5.Configuration
             chkShowMenuToolTips.Checked = config.ShowMenuToolTips;
             chkDynamicVisibilityWarnings.Checked = config.DisplayDynamicVisibilityWarnings;
             chkLocalDocumentation.Checked = config.LocalDocumentation;
+            chkNewVersion.Checked = config.UpdaterCheckNewVersion;
         }
 
         public string PageName
@@ -62,6 +63,7 @@ namespace MW5.Configuration
             config.DisplayDynamicVisibilityWarnings = chkDynamicVisibilityWarnings.Checked;
             config.SymbolobyStorage = cboSymbologyStorage.GetValue<SymbologyStorage>();
             config.LocalDocumentation = chkLocalDocumentation.Checked;
+            config.UpdaterCheckNewVersion = chkNewVersion.Checked;
         }
 
         public Bitmap Icon

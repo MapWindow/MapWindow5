@@ -372,6 +372,9 @@ namespace MW5.Plugins.Concrete
         public string UpdaterInstallername { get; set; }
 
         [DataMember]
+        public bool UpdaterCheckNewVersion { get; set; }
+
+        [DataMember]
         public ZoomBarVerbosity ZoomBarVerbosity { get; set; }
 
         [DataMember]
@@ -489,6 +492,7 @@ namespace MW5.Plugins.Concrete
             ToolOutputInMemory = true;
             ToolOutputOverwrite = false;
             ToolShowGdalOptionsDialog = true;
+            UpdaterCheckNewVersion = true;
             UpdaterHasNewInstaller = false;
             UpdaterIsDownloading = false;
             UpdaterLastChecked = new DateTime(2015, 1, 1);

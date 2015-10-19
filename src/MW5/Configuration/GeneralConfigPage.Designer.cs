@@ -40,6 +40,7 @@ namespace MW5.Configuration
             this.cboSymbologyStorage = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.chkLoadSymbology = new System.Windows.Forms.CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkNewVersion = new System.Windows.Forms.CheckBox();
             this.chkShowWelcomeDialog = new System.Windows.Forms.CheckBox();
             this.chkLoadLastProject = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
@@ -60,7 +61,7 @@ namespace MW5.Configuration
             this.configPanelControl3.Controls.Add(this.chkShowPluginInToolTip);
             this.configPanelControl3.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl3.HeaderText = "Various";
-            this.configPanelControl3.Location = new System.Drawing.Point(0, 218);
+            this.configPanelControl3.Location = new System.Drawing.Point(0, 246);
             this.configPanelControl3.Name = "configPanelControl3";
             this.configPanelControl3.Size = new System.Drawing.Size(380, 176);
             this.configPanelControl3.TabIndex = 10;
@@ -105,7 +106,7 @@ namespace MW5.Configuration
             this.configPanelControl1.Controls.Add(this.chkLoadSymbology);
             this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl1.HeaderText = "Symbology";
-            this.configPanelControl1.Location = new System.Drawing.Point(0, 104);
+            this.configPanelControl1.Location = new System.Drawing.Point(0, 132);
             this.configPanelControl1.Name = "configPanelControl1";
             this.configPanelControl1.Size = new System.Drawing.Size(380, 114);
             this.configPanelControl1.TabIndex = 9;
@@ -140,14 +141,23 @@ namespace MW5.Configuration
             // configPanelControl2
             // 
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl2.Controls.Add(this.chkNewVersion);
             this.configPanelControl2.Controls.Add(this.chkShowWelcomeDialog);
             this.configPanelControl2.Controls.Add(this.chkLoadLastProject);
             this.configPanelControl2.Dock = System.Windows.Forms.DockStyle.Top;
             this.configPanelControl2.HeaderText = "Startup";
             this.configPanelControl2.Location = new System.Drawing.Point(0, 0);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(380, 104);
+            this.configPanelControl2.Size = new System.Drawing.Size(380, 132);
             this.configPanelControl2.TabIndex = 8;
+            // 
+            // chkNewVersion
+            // 
+            this.chkNewVersion.Location = new System.Drawing.Point(15, 97);
+            this.chkNewVersion.Name = "chkNewVersion";
+            this.chkNewVersion.Size = new System.Drawing.Size(188, 21);
+            this.chkNewVersion.TabIndex = 5;
+            this.chkNewVersion.Text = "Check for updates";
             // 
             // chkShowWelcomeDialog
             // 
@@ -159,7 +169,7 @@ namespace MW5.Configuration
             // 
             // chkLoadLastProject
             // 
-            this.chkLoadLastProject.Location = new System.Drawing.Point(15, 64);
+            this.chkLoadLastProject.Location = new System.Drawing.Point(15, 67);
             this.chkLoadLastProject.Name = "chkLoadLastProject";
             this.chkLoadLastProject.Size = new System.Drawing.Size(188, 21);
             this.chkLoadLastProject.TabIndex = 3;
@@ -175,7 +185,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl2);
             this.Name = "GeneralConfigPage";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 10, 10);
-            this.Size = new System.Drawing.Size(390, 404);
+            this.Size = new System.Drawing.Size(390, 431);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
@@ -202,6 +212,7 @@ namespace MW5.Configuration
         private CheckBox chkShowMenuToolTips;
         private CheckBox chkDynamicVisibilityWarnings;
         private CheckBox chkLocalDocumentation;
+        private CheckBox chkNewVersion;
 
     }
 }
