@@ -69,6 +69,7 @@ namespace MW5.Tools.Views
             this.btnClose.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.Metro;
             this.btnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this.btnClose.BeforeTouchSize = new System.Drawing.Size(85, 26);
+            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnClose.ForeColor = System.Drawing.Color.White;
             this.btnClose.IsBackStageButton = false;
             this.btnClose.Location = new System.Drawing.Point(471, 408);
@@ -209,6 +210,7 @@ namespace MW5.Tools.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.btnClose;
             this.ClientSize = new System.Drawing.Size(565, 437);
             this.Controls.Add(this.chkBackground);
             this.Controls.Add(this.tabControlAdv1);
