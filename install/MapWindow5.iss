@@ -9,6 +9,7 @@
 #define MyAppName "MapWindow5"
 #define MyAppPublisher "MapWindow Open Source GIS Community"
 #define MyAppURL "http://www.mapwindow.org/documentation/mapwindow5/"
+
 #define x64BitVersion true
 
 #ifdef x64BitVersion
@@ -65,8 +66,9 @@ VersionInfoProductName={#MyAppName}
 VersionInfoProductVersion={#MyAppVersion}
 AlwaysShowComponentsList=false
 #ifdef x64BitVersion
+ArchitecturesAllowed=x64
 ArchitecturesInstallIn64BitMode=x64
-#endif
+#endif                  
 
 [Components]
 Name: "MapWindow"; Description: "MapWindow5 files"; Types: full custom compact; Flags: fixed
@@ -101,7 +103,7 @@ Source: "D:\dev\MapwinGIS\GIT\support\GDAL_SDK\licenses\*.rtf"; DestDir: "{app}\
 Source: "{#ExeBinPath}\..\..\..\licenses\*"; DestDir: "{app}\Licenses"; Flags: ignoreversion {#SystemFlag}; Components: MapWindow
 
 ;; Sample data
-Source: "{#SamplePath}\MapWindow-Projects\UnitedStates\Shapefiles\*"; DestDir: "{code:GetDataDir}\USA"; Flags: confirmoverwrite recursesubdirs uninsneveruninstall; Components: USASampleData
+Source: "{#SamplePath}\MapWindow-Projects\UnitedStates\Shapefiles\*"; DestDir: "{code:GetDataDir}\USA"; Flags: recursesubdirs uninsneveruninstall; Components: USASampleData
 
 ;; VC++ files
 Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion {#SystemFlag}
@@ -113,7 +115,7 @@ Source: "{#vcredist}"; DestDir: "{tmp}"; Flags: deleteafterinstall ignoreversion
 BeveledLabel={#MyAppName}
 
 [Run]
-; Install VC++ 2010 if needed:
+; Install VC++ 2013 if needed:
 #ifdef x64BitVersion
 Filename: "{tmp}\{#vcredist}"; Parameters: "/qb"; Flags: waituntilterminated; Check: VCRedistNeedsInstall_x64()
 #else
@@ -130,6 +132,10 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\MapWindow.exe"; WorkingDi
 
 [Dirs]
 Name: {code:GetDataDir}; Check: not DataDirExists; Flags: uninsneveruninstall; Permissions: users-modify
+Name: "{app}\Logs"; Flags: uninsalwaysuninstall; Components: MapWindow; Permissions: users-modify
+
+[UninstallDelete]
+Type: filesandordirs; Name: "{app}\Logs"; Components: MapWindow
 
 [Code]
 #IFDEF UNICODE
