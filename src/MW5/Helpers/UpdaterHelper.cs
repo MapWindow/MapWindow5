@@ -80,7 +80,7 @@ namespace MW5.Helpers
                 return false;
             }
 
-            Logger.Current.Debug("Latest stable version: " + latestVersion);
+            Logger.Current.Debug("Latest {0} version: {1}", type, latestVersion);
             if (latestVersion.Major >= fileVersionInfo.ProductMajorPart && latestVersion.Minor >= fileVersionInfo.ProductMinorPart
                 && latestVersion.Build >= fileVersionInfo.ProductBuildPart && latestVersion.Revision >= fileVersionInfo.ProductPrivatePart)
             {
@@ -99,7 +99,7 @@ namespace MW5.Helpers
             Logger.Current.Debug("Checking for new version");
             var assembly = Assembly.GetExecutingAssembly();
             var fileVersionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            Logger.Current.Debug("File version: ", fileVersionInfo.FileVersion);
+            Logger.Current.Debug("File version: {0}", fileVersionInfo.FileVersion);
             var processorArchitecture = assembly.GetName().ProcessorArchitecture;
             if (processorArchitecture == ProcessorArchitecture.Amd64 || processorArchitecture == ProcessorArchitecture.IA64)
             {
