@@ -102,16 +102,37 @@ namespace MW5.Tiles.Helpers
             int epsg = -1;
             var crs = layer.SRS.FirstOrDefault();
 
-            if (!string.IsNullOrWhiteSpace(crs) && crs.Length > 5)
+            if (ParseEpsg(crs, ref epsg))
             {
-                crs = crs.Substring(5);
-                if (Int32.TryParse(crs, out epsg))
+                return epsg;
+            }
+
+            var box = layer.BoundingBox.FirstOrDefault();
+            if (box != null)
+            {
+                if (ParseEpsg(box.CRS, ref epsg))
                 {
                     return epsg;
                 }
             }
 
             return epsg;
+        }
+
+        private static bool ParseEpsg(string crs, ref int epsg)
+        {
+            epsg = -1;
+
+            if (!string.IsNullOrWhiteSpace(crs) && crs.Length > 5)
+            {
+                crs = crs.Substring(5);
+                if (Int32.TryParse(crs, out epsg))
+                {
+                    return true;                    
+                }
+            }
+
+            return false;
         }
     }
 }

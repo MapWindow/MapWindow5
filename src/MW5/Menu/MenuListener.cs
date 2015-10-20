@@ -307,11 +307,8 @@ namespace MW5.Menu
             }
 
             manager.ProviderId = e.ProviderId;
-
-            // it's the easiest way to trigger reloading of tiles
-            // TODO: update API with something more intuitive
-            _context.Map.Lock();
-            _context.Map.Unlock();
+            _context.Map.Redraw(RedrawType.Minimal);
+            _context.View.Update();     //to update provider in status bar
         }
     }
 }

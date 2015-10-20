@@ -234,7 +234,7 @@ namespace MW5.Api.Legend
         /// <summary>
         /// Gets or sets the data type of the layer.
         /// </summary>
-        internal LegendLayerType Type
+        internal LegendLayerType LegendLayerType
         {
             get
             {
@@ -264,6 +264,10 @@ namespace MW5.Api.Legend
                     }
 
                     return raster.RenderingType == RasterRendering.Rgb ? LegendLayerType.Image : LegendLayerType.Grid;
+                }
+                else if (LayerType == LayerType.WmsLayer)
+                {
+                    return LegendLayerType.WmsLayer;
                 }
 
                 return LegendLayerType.Invalid;
@@ -417,13 +421,20 @@ namespace MW5.Api.Legend
 
             bool expanded = _expanded || useExpandedHeight;
 
-            if (Type == LegendLayerType.Grid || Type == LegendLayerType.Image)
+            if (LegendLayerType == LegendLayerType.Grid || LegendLayerType == LegendLayerType.Image)
             {
                 if (RasterSymbologyCount > 0 && expanded)
                 {
                     ret += Constants.CsItemHeightAndPad(); //!string.IsNullOrWhiteSpace(SymbologyCaption) ? Constants.CsItemHeightAndPad() : 0;
 
                     ret += RasterSymbologyCount * Constants.CsItemHeightAndPad();
+                }
+            }
+            else if (LegendLayerType == LegendLayerType.WmsLayer)
+            {
+                if (expanded)
+                {
+                    ret += Constants.CsItemHeightAndPad();
                 }
             }
             else
@@ -439,7 +450,7 @@ namespace MW5.Api.Legend
                         ret += Constants.CsItemHeight + Constants.VerticalPad; // caption
 
                         var categories = sf.Categories;
-                        if (Type == LegendLayerType.LineShapefile || Type == LegendLayerType.PolygonShapefile)
+                        if (LegendLayerType == LegendLayerType.LineShapefile || LegendLayerType == LegendLayerType.PolygonShapefile)
                         {
                             ret += sf.Categories.Count * (Constants.CsItemHeight + Constants.VerticalPad);
                         }
@@ -472,12 +483,12 @@ namespace MW5.Api.Legend
         /// </summary>
         protected internal int GetCategoryHeight(ShapeDrawingOptions options)
         {
-            if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
+            if (LegendLayerType == LegendLayerType.PolygonShapefile || LegendLayerType == LegendLayerType.LineShapefile)
             {
                 return Constants.CsItemHeight + 2;
             }
 
-            if (Type == LegendLayerType.PointShapefile)
+            if (LegendLayerType == LegendLayerType.PointShapefile)
             {
                 switch (options.PointType)
                 {
@@ -517,12 +528,12 @@ namespace MW5.Api.Legend
         protected internal int GetCategoryWidth(ShapeDrawingOptions options)
         {
             const int maxWidth = 100;
-            if (Type == LegendLayerType.PolygonShapefile || Type == LegendLayerType.LineShapefile)
+            if (LegendLayerType == LegendLayerType.PolygonShapefile || LegendLayerType == LegendLayerType.LineShapefile)
             {
                 return Constants.IconWidth;
             }
 
-            if (Type == LegendLayerType.PointShapefile)
+            if (LegendLayerType == LegendLayerType.PointShapefile)
             {
                 var width = 0;
                 switch (options.PointType)

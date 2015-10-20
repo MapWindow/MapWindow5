@@ -42,9 +42,9 @@ namespace MW5.Api.Legend
             this._vScrollBar.Name = "_vScrollBar";
             this._vScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.VScrollBarScroll);
             // 
-            // Icons
+            // _icons
             // 
-            this._icons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("Icons.ImageStream")));
+            this._icons.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("_icons.ImageStream")));
             this._icons.TransparentColor = System.Drawing.Color.Transparent;
             this._icons.Images.SetKeyName(0, "img_raster.png");
             this._icons.Images.SetKeyName(1, "");
@@ -58,11 +58,12 @@ namespace MW5.Api.Legend
             this._icons.Images.SetKeyName(9, "database5.png");
             this._icons.Images.SetKeyName(10, "img_folder_open.png");
             this._icons.Images.SetKeyName(11, "img_folder_open.png");
-            this._icons.Images.SetKeyName(12, "tag_gray.png");
-            this._icons.Images.SetKeyName(13, "tag_blue.png");
-            this._icons.Images.SetKeyName(14, "");
+            this._icons.Images.SetKeyName(12, "img_globe16.png");
+            this._icons.Images.SetKeyName(13, "tag_gray.png");
+            this._icons.Images.SetKeyName(14, "tag_blue.png");
+            this._icons.Images.SetKeyName(15, "");
             // 
-            // LegendControl
+            // LegendControlBase
             // 
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this._vScrollBar);
