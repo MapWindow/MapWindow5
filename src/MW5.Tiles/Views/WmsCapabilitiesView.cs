@@ -13,6 +13,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
+using Action = System.Action;
 
 namespace MW5.Tiles.Views
 {
@@ -21,6 +22,8 @@ namespace MW5.Tiles.Views
         public WmsCapabilitiesView()
         {
             InitializeComponent();
+
+            layersTreeView.NodeMouseDoubleClick += (s, e) => Invoke(LayerDoubleClicked);
         }
 
         /// <summary>
@@ -85,6 +88,8 @@ namespace MW5.Tiles.Views
                 }
             }
         }
+
+        public event Action LayerDoubleClicked;
 
         public override void UpdateView()
         {

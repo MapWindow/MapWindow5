@@ -13,83 +13,83 @@ namespace MW5.Api.Concrete
 {
     public class WmsSource: ILayerSource
     {
-        private readonly WmsLayer _provider;
+        private readonly WmsLayer _layer;
 
         public WmsSource(int id, string name)
         {
-            _provider = new WmsLayer() { Id = id, Name = name };
+            _layer = new WmsLayer() { Id = id, Name = name };
         }
 
         internal WmsSource(WmsLayer provider)
         {
             if (provider == null) throw new ArgumentNullException("provider");
-            _provider = provider;
+            _layer = provider;
         }
 
         public object InternalObject
         {
-            get { return _provider; }
+            get { return _layer; }
         }
 
         public string LastError
         {
-            get { return _provider.ErrorMsg[_provider.LastErrorCode]; }
+            get { return _layer.ErrorMsg[_layer.LastErrorCode]; }
         }
 
         public string Tag
         {
-            get { return _provider.Key;  }
-            set { _provider.Key = value; }
+            get { return _layer.Key;  }
+            set { _layer.Key = value; }
         }
 
         public string Name
         {
-            get { return _provider.Name; }
-            set { _provider.Name = value; }
+            get { return _layer.Name; }
+            set { _layer.Name = value; }
         }
 
         public IEnvelope BoundingBox
         {
             get
             {
-                return new Envelope(_provider.BoundingBox);
+                return new Envelope(_layer.BoundingBox);
             }
             set
             {
                 if (value == null) throw new ArgumentNullException("value");
                 var box = value.GetInternal();
-                _provider.BoundingBox = box;
+                _layer.BoundingBox = box;
             }
         }
 
         public int Epsg
         {
-            get { return _provider.Epsg; }
-            set { _provider.Epsg = value; }
+            get { return _layer.Epsg; }
+            set { _layer.Epsg = value; }
         }
 
         public string Layers
         {
-            get { return _provider.Layers; }
-            set { _provider.Layers = value; }
+            get { return _layer.Layers; }
+            set { _layer.Layers = value; }
         }
 
         public string BaseUrl
         {
-            get { return _provider.BaseUrl; }
-            set { _provider.BaseUrl = value; }
+            get { return _layer.BaseUrl; }
+            set { _layer.BaseUrl = value; }
         }
 
         public int Id
         {
-            get { return _provider.Id; }
-            set { _provider.Id = value; }
+            get { return _layer.Id; }
+            set { _layer.Id = value; }
         }
 
         public string Format
         {
-            get { return _provider.Format; }
-            set { _provider.Format = value; }
+            get { return _layer.Format; }
+            set { _layer.Format = value; }
         }
 
         #region ILayerSource members
@@ -119,7 +119,7 @@ namespace MW5.Api.Concrete
 
         public void Close()
         {
-            _provider.Close();
+            _layer.Close();
         }
 
         public string OpenDialogFilter
@@ -137,7 +137,7 @@ namespace MW5.Api.Concrete
             get
             {
                 var sb = new StringBuilder("Coordinate system: " + Projection);
-                sb.AppendLine("Bounds: " + _provider.BoundingBox.ToDebugString());
+                sb.AppendLine("Bounds: " + _layer.BoundingBox.ToDebugString());
                 return sb.ToString();
             }
         }
@@ -163,7 +163,7 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                var extents = _provider.MapExtents;
+                var extents = _layer.MapExtents;
                 return extents != null ? new Envelope(extents) : null;
             }
         }
@@ -172,22 +172,20 @@ namespace MW5.Api.Concrete
         {
             get
             {
-                if (_provider.Epsg > 0)
-                {
-                    var sr = new SpatialReference();
-                    if (sr.ImportFromEpsg(_provider.Epsg))
-                    {
-                        return sr;
-                    }
-                }
-
-                return null;
+                var gp = _layer.GeoProjection;
+                return gp != null ? new SpatialReference(gp) : null;
             }
+        }
+
+        public byte Opacity
+        {
+            get { return _layer.Opacity;  }
+            set { _layer.Opacity = value; }
         }
 
         public bool IsEmpty
         {
-            get { return _provider.IsEmpty; }
+            get { return _layer.IsEmpty; }
         }
 
         /// <summary>
@@ -195,7 +193,7 @@ namespace MW5.Api.Concrete
         /// </summary>
         public string SizeInfo 
         {
-            get { return "Bounds: " + _provider.BoundingBox.ToDebugString(); } 
+            get { return "Bounds: " + _layer.BoundingBox.ToDebugString(); } 
         }
 
         #endregion

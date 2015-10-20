@@ -145,7 +145,7 @@
             treeColumnAdv1.Highlighted = false;
             treeColumnAdv1.Text = "Name";
             treeColumnAdv1.Width = 200;
-            treeColumnAdv2.Highlighted = true;
+            treeColumnAdv2.Highlighted = false;
             treeColumnAdv2.Text = "Description";
             treeColumnAdv2.Width = 220;
             this.layersTreeView.Columns.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeColumnAdv[] {

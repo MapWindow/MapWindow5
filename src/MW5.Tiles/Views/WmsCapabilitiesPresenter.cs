@@ -39,6 +39,8 @@ namespace MW5.Tiles.Views
             if (layerService == null) throw new ArgumentNullException("layerService");
             _context = context;
             _layerService = layerService;
+
+            view.LayerDoubleClicked += () => RunCommand(WmsCommand.Add);
         }
 
         /// <summary>

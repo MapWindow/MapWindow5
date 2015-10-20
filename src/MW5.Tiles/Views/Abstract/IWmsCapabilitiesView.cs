@@ -19,5 +19,7 @@ namespace MW5.Tiles.Views.Abstract
         void HideHourglass();
 
         IEnumerable<Layer> SelectedLayers { get; }
+
+        event Action LayerDoubleClicked;
     }
 }
