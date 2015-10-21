@@ -13,5 +13,7 @@ namespace MW5.Plugins.Symbology.Views.Abstract
         bool ValidateInput();
 
         void ApplyChanges();
+
+        void ClearColorAdjustments();
     }
 }

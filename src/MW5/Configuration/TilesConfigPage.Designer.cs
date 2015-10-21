@@ -46,14 +46,6 @@ namespace MW5.Configuration
             this.cboMaxAge = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.btnClear = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label5 = new System.Windows.Forms.Label();
-            this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
-            this.panelRam = new System.Windows.Forms.Panel();
-            this.txtMaxRamSize = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtRamSize = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.chkUseRamCache = new System.Windows.Forms.CheckBox();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
             this.txtProxyUserName = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -63,17 +55,17 @@ namespace MW5.Configuration
             this.txtProxyAddress = new MW5.UI.Controls.WatermarkTextbox();
             this.label10 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.configPanelControl1 = new MW5.UI.Controls.ConfigPanelControl();
+            this.chkWmsCaching = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).BeginInit();
             this.configPanelControl3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxDiskSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxAge)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
-            this.configPanelControl1.SuspendLayout();
-            this.panelRam.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMaxRamSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtProxyAddress)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).BeginInit();
+            this.configPanelControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // configPanelControl3
@@ -244,98 +236,6 @@ namespace MW5.Configuration
             this.label5.TabIndex = 10;
             this.label5.Text = "from";
             // 
-            // configPanelControl1
-            // 
-            this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.configPanelControl1.Controls.Add(this.panelRam);
-            this.configPanelControl1.Controls.Add(this.chkUseRamCache);
-            this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.configPanelControl1.HeaderText = "RAM Cache";
-            this.configPanelControl1.Location = new System.Drawing.Point(0, 394);
-            this.configPanelControl1.Name = "configPanelControl1";
-            this.configPanelControl1.Size = new System.Drawing.Size(443, 26);
-            this.configPanelControl1.TabIndex = 20;
-            this.configPanelControl1.Visible = false;
-            // 
-            // panelRam
-            // 
-            this.panelRam.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelRam.Controls.Add(this.txtMaxRamSize);
-            this.panelRam.Controls.Add(this.label7);
-            this.panelRam.Controls.Add(this.label8);
-            this.panelRam.Controls.Add(this.txtRamSize);
-            this.panelRam.Controls.Add(this.label6);
-            this.panelRam.Location = new System.Drawing.Point(8, 65);
-            this.panelRam.Name = "panelRam";
-            this.panelRam.Size = new System.Drawing.Size(418, 29);
-            this.panelRam.TabIndex = 16;
-            // 
-            // txtMaxRamSize
-            // 
-            this.txtMaxRamSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtMaxRamSize.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.txtMaxRamSize.BeforeTouchSize = new System.Drawing.Size(301, 20);
-            this.txtMaxRamSize.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtMaxRamSize.DoubleValue = 1D;
-            this.txtMaxRamSize.Location = new System.Drawing.Point(313, 3);
-            this.txtMaxRamSize.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtMaxRamSize.Name = "txtMaxRamSize";
-            this.txtMaxRamSize.NullString = "";
-            this.txtMaxRamSize.NumberDecimalDigits = 1;
-            this.txtMaxRamSize.Size = new System.Drawing.Size(71, 20);
-            this.txtMaxRamSize.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtMaxRamSize.TabIndex = 16;
-            this.txtMaxRamSize.Text = "1.0";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(390, 6);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(23, 13);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "MB";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(14, 6);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(99, 13);
-            this.label8.TabIndex = 5;
-            this.label8.Text = "Maximum RAM size";
-            // 
-            // txtRamSize
-            // 
-            this.txtRamSize.Location = new System.Drawing.Point(135, 3);
-            this.txtRamSize.Name = "txtRamSize";
-            this.txtRamSize.ReadOnly = true;
-            this.txtRamSize.Size = new System.Drawing.Size(136, 20);
-            this.txtRamSize.TabIndex = 14;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(280, 6);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "from";
-            // 
-            // chkUseRamCache
-            // 
-            this.chkUseRamCache.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkUseRamCache.AutoSize = true;
-            this.chkUseRamCache.Location = new System.Drawing.Point(335, 32);
-            this.chkUseRamCache.Name = "chkUseRamCache";
-            this.chkUseRamCache.Size = new System.Drawing.Size(105, 17);
-            this.chkUseRamCache.TabIndex = 12;
-            this.chkUseRamCache.Text = "Use RAM cache";
-            this.chkUseRamCache.UseVisualStyleBackColor = true;
-            // 
             // configPanelControl2
             // 
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -436,6 +336,27 @@ namespace MW5.Configuration
             this.label1.TabIndex = 1;
             this.label1.Text = "Proxy address";
             // 
+            // configPanelControl1
+            // 
+            this.configPanelControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl1.Controls.Add(this.chkWmsCaching);
+            this.configPanelControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.configPanelControl1.HeaderText = "WMS layers";
+            this.configPanelControl1.Location = new System.Drawing.Point(0, 394);
+            this.configPanelControl1.Name = "configPanelControl1";
+            this.configPanelControl1.Size = new System.Drawing.Size(443, 68);
+            this.configPanelControl1.TabIndex = 19;
+            // 
+            // chkWmsCaching
+            // 
+            this.chkWmsCaching.AutoSize = true;
+            this.chkWmsCaching.Location = new System.Drawing.Point(25, 37);
+            this.chkWmsCaching.Name = "chkWmsCaching";
+            this.chkWmsCaching.Size = new System.Drawing.Size(136, 17);
+            this.chkWmsCaching.TabIndex = 1;
+            this.chkWmsCaching.Text = "Add data to disk cache";
+            this.chkWmsCaching.UseVisualStyleBackColor = true;
+            // 
             // TilesConfigPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -444,22 +365,19 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl3);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "TilesConfigPage";
-            this.Size = new System.Drawing.Size(443, 399);
+            this.Size = new System.Drawing.Size(443, 473);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);
             this.configPanelControl3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtMaxDiskSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxAge)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
-            this.configPanelControl1.ResumeLayout(false);
-            this.configPanelControl1.PerformLayout();
-            this.panelRam.ResumeLayout(false);
-            this.panelRam.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtMaxRamSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             this.configPanelControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtProxyAddress)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.configPanelControl1)).EndInit();
+            this.configPanelControl1.ResumeLayout(false);
+            this.configPanelControl1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -476,18 +394,10 @@ namespace MW5.Configuration
         private System.Windows.Forms.TextBox txtFilename;
         private UI.Controls.ConfigPanelControl configPanelControl3;
         private System.Windows.Forms.CheckBox chkUseDiskCache;
-        private UI.Controls.ConfigPanelControl configPanelControl1;
-        private System.Windows.Forms.CheckBox chkUseRamCache;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtRamSize;
         private ButtonAdv btnClear;
-        private System.Windows.Forms.Label label6;
         private DoubleTextBox txtMaxDiskSize;
-        private DoubleTextBox txtMaxRamSize;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panelRam;
         private UI.Controls.ConfigPanelControl configPanelControl2;
         private System.Windows.Forms.CheckBox chkAutodetectProxy;
         private System.Windows.Forms.CheckBox chkUseProxy;
@@ -497,5 +407,7 @@ namespace MW5.Configuration
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtProxyUserName;
         private System.Windows.Forms.Label label11;
+        private UI.Controls.ConfigPanelControl configPanelControl1;
+        private System.Windows.Forms.CheckBox chkWmsCaching;
     }
 }

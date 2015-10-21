@@ -35,7 +35,7 @@
             this.tabControl1 = new MW5.UI.Controls.TabPropertiesControl();
             this.tabGeneral = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnOpenLocation = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.txtBriefInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
             this.btnProjection = new Syncfusion.Windows.Forms.ButtonAdv();
             this.txtProjection = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -46,6 +46,28 @@
             this.txtLayerName = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.dynamicVisibilityControl1 = new MW5.Plugins.Symbology.Controls.DynamicVisibilityControl();
+            this.tabRendering = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbrTransparency = new System.Windows.Forms.TrackBar();
+            this.tbrHue = new System.Windows.Forms.TrackBar();
+            this.tbrSaturation = new System.Windows.Forms.TrackBar();
+            this.tbrGamma = new System.Windows.Forms.TrackBar();
+            this.tbrConstrast = new System.Windows.Forms.TrackBar();
+            this.tbrBrightness = new System.Windows.Forms.TrackBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tabConfig = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lblCacheId = new System.Windows.Forms.Label();
+            this.btnClearCache = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.lblCacheSize = new System.Windows.Forms.Label();
+            this.chkDoCaching = new System.Windows.Forms.CheckBox();
+            this.chkUseCache = new System.Windows.Forms.CheckBox();
             this.tabInfo = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnCopyInfo = new Syncfusion.Windows.Forms.ButtonAdv();
             this.infoGrid1 = new MW5.Plugins.Symbology.Controls.InfoGrid();
@@ -53,9 +75,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUrl)).BeginInit();
+            this.tabRendering.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrHue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrSaturation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrGamma)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrConstrast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrBrightness)).BeginInit();
+            this.tabConfig.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.tabInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).BeginInit();
@@ -66,7 +98,7 @@
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnApply.IsBackStageButton = false;
-            this.btnApply.Location = new System.Drawing.Point(360, 455);
+            this.btnApply.Location = new System.Drawing.Point(345, 456);
             this.btnApply.Name = "btnApply";
             this.btnApply.Size = new System.Drawing.Size(93, 26);
             this.btnApply.TabIndex = 137;
@@ -79,7 +111,7 @@
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(558, 455);
+            this.btnCancel.Location = new System.Drawing.Point(543, 456);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(93, 26);
             this.btnCancel.TabIndex = 136;
@@ -91,7 +123,7 @@
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(93, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(459, 455);
+            this.btnOk.Location = new System.Drawing.Point(444, 456);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(93, 26);
             this.btnOk.TabIndex = 135;
@@ -103,9 +135,11 @@
             this.tabControl1.ActiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
             this.tabControl1.ActiveTabFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.tabControl1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControl1.BeforeTouchSize = new System.Drawing.Size(639, 435);
+            this.tabControl1.BeforeTouchSize = new System.Drawing.Size(624, 435);
             this.tabControl1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tabControl1.Controls.Add(this.tabGeneral);
+            this.tabControl1.Controls.Add(this.tabRendering);
+            this.tabControl1.Controls.Add(this.tabConfig);
             this.tabControl1.Controls.Add(this.tabInfo);
             this.tabControl1.FocusOnTabClick = false;
             this.tabControl1.InactiveTabColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
@@ -115,7 +149,7 @@
             this.tabControl1.Padding = new System.Drawing.Point(5, 10);
             this.tabControl1.PersistTabState = true;
             this.tabControl1.RotateTextWhenVertical = true;
-            this.tabControl1.Size = new System.Drawing.Size(639, 435);
+            this.tabControl1.Size = new System.Drawing.Size(624, 435);
             this.tabControl1.TabGap = 10;
             this.tabControl1.TabIndex = 138;
             this.tabControl1.TabStyle = typeof(Syncfusion.Windows.Forms.Tools.TabRendererBlendLight);
@@ -124,7 +158,7 @@
             // tabGeneral
             // 
             this.tabGeneral.Controls.Add(this.btnOpenLocation);
-            this.tabGeneral.Controls.Add(this.txtBriefInfo);
+            this.tabGeneral.Controls.Add(this.txtInfo);
             this.tabGeneral.Controls.Add(this.label2);
             this.tabGeneral.Controls.Add(this.btnProjection);
             this.tabGeneral.Controls.Add(this.txtProjection);
@@ -140,7 +174,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(119, 0);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.ShowCloseButton = true;
-            this.tabGeneral.Size = new System.Drawing.Size(520, 435);
+            this.tabGeneral.Size = new System.Drawing.Size(505, 435);
             this.tabGeneral.TabIndex = 10;
             this.tabGeneral.Text = "General";
             this.tabGeneral.ThemesEnabled = false;
@@ -150,29 +184,29 @@
             this.btnOpenLocation.BeforeTouchSize = new System.Drawing.Size(63, 23);
             this.btnOpenLocation.Enabled = false;
             this.btnOpenLocation.IsBackStageButton = false;
-            this.btnOpenLocation.Location = new System.Drawing.Point(438, 68);
+            this.btnOpenLocation.Location = new System.Drawing.Point(427, 65);
             this.btnOpenLocation.Name = "btnOpenLocation";
             this.btnOpenLocation.Size = new System.Drawing.Size(63, 23);
             this.btnOpenLocation.TabIndex = 172;
             this.btnOpenLocation.Text = "Open";
             // 
-            // txtBriefInfo
+            // txtInfo
             // 
-            this.txtBriefInfo.BeforeTouchSize = new System.Drawing.Size(292, 20);
-            this.txtBriefInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtBriefInfo.Location = new System.Drawing.Point(137, 153);
-            this.txtBriefInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtBriefInfo.Name = "txtBriefInfo";
-            this.txtBriefInfo.ReadOnly = true;
-            this.txtBriefInfo.Size = new System.Drawing.Size(364, 20);
-            this.txtBriefInfo.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtBriefInfo.TabIndex = 170;
-            this.txtBriefInfo.Text = "<layers>";
+            this.txtInfo.BeforeTouchSize = new System.Drawing.Size(292, 20);
+            this.txtInfo.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtInfo.Location = new System.Drawing.Point(126, 150);
+            this.txtInfo.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtInfo.Name = "txtInfo";
+            this.txtInfo.ReadOnly = true;
+            this.txtInfo.Size = new System.Drawing.Size(364, 20);
+            this.txtInfo.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtInfo.TabIndex = 170;
+            this.txtInfo.Text = "<layers>";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 156);
+            this.label2.Location = new System.Drawing.Point(17, 153);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 169;
@@ -182,7 +216,7 @@
             // 
             this.btnProjection.BeforeTouchSize = new System.Drawing.Size(63, 23);
             this.btnProjection.IsBackStageButton = false;
-            this.btnProjection.Location = new System.Drawing.Point(438, 109);
+            this.btnProjection.Location = new System.Drawing.Point(427, 106);
             this.btnProjection.Name = "btnProjection";
             this.btnProjection.Size = new System.Drawing.Size(63, 23);
             this.btnProjection.TabIndex = 168;
@@ -192,7 +226,7 @@
             // 
             this.txtProjection.BeforeTouchSize = new System.Drawing.Size(292, 20);
             this.txtProjection.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtProjection.Location = new System.Drawing.Point(137, 112);
+            this.txtProjection.Location = new System.Drawing.Point(126, 109);
             this.txtProjection.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtProjection.Name = "txtProjection";
             this.txtProjection.ReadOnly = true;
@@ -203,7 +237,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 116);
+            this.label3.Location = new System.Drawing.Point(17, 113);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(93, 13);
             this.label3.TabIndex = 166;
@@ -213,7 +247,7 @@
             // 
             this.txtUrl.BeforeTouchSize = new System.Drawing.Size(292, 20);
             this.txtUrl.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtUrl.Location = new System.Drawing.Point(137, 71);
+            this.txtUrl.Location = new System.Drawing.Point(126, 68);
             this.txtUrl.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtUrl.Name = "txtUrl";
             this.txtUrl.ReadOnly = true;
@@ -224,7 +258,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(28, 74);
+            this.label8.Location = new System.Drawing.Point(17, 71);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 164;
@@ -233,7 +267,7 @@
             // chkLayerVisible
             // 
             this.chkLayerVisible.AutoSize = true;
-            this.chkLayerVisible.Location = new System.Drawing.Point(438, 35);
+            this.chkLayerVisible.Location = new System.Drawing.Point(427, 32);
             this.chkLayerVisible.Name = "chkLayerVisible";
             this.chkLayerVisible.Size = new System.Drawing.Size(56, 17);
             this.chkLayerVisible.TabIndex = 160;
@@ -243,7 +277,7 @@
             // txtLayerName
             // 
             this.txtLayerName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.txtLayerName.Location = new System.Drawing.Point(137, 33);
+            this.txtLayerName.Location = new System.Drawing.Point(126, 30);
             this.txtLayerName.Name = "txtLayerName";
             this.txtLayerName.Size = new System.Drawing.Size(291, 20);
             this.txtLayerName.TabIndex = 39;
@@ -251,7 +285,7 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(29, 36);
+            this.label18.Location = new System.Drawing.Point(18, 33);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(62, 13);
             this.label18.TabIndex = 21;
@@ -261,7 +295,7 @@
             // 
             this.dynamicVisibilityControl1.CurrentScale = 0D;
             this.dynamicVisibilityControl1.CurrentZoom = 0;
-            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(21, 203);
+            this.dynamicVisibilityControl1.Location = new System.Drawing.Point(20, 203);
             this.dynamicVisibilityControl1.MaxScale = 1000000D;
             this.dynamicVisibilityControl1.MaxZoom = 24;
             this.dynamicVisibilityControl1.MinScale = 100D;
@@ -272,6 +306,253 @@
             this.dynamicVisibilityControl1.TabIndex = 171;
             this.dynamicVisibilityControl1.UseDynamicVisiblity = false;
             // 
+            // tabRendering
+            // 
+            this.tabRendering.Controls.Add(this.btnClearColorAdjustments);
+            this.tabRendering.Controls.Add(this.groupBox3);
+            this.tabRendering.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_contrast24;
+            this.tabRendering.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabRendering.Location = new System.Drawing.Point(119, 0);
+            this.tabRendering.Name = "tabRendering";
+            this.tabRendering.ShowCloseButton = true;
+            this.tabRendering.Size = new System.Drawing.Size(505, 435);
+            this.tabRendering.TabIndex = 16;
+            this.tabRendering.Text = "Rendering";
+            this.tabRendering.ThemesEnabled = false;
+            // 
+            // btnClearColorAdjustments
+            // 
+            this.btnClearColorAdjustments.BeforeTouchSize = new System.Drawing.Size(82, 23);
+            this.btnClearColorAdjustments.IsBackStageButton = false;
+            this.btnClearColorAdjustments.Location = new System.Drawing.Point(408, 220);
+            this.btnClearColorAdjustments.Name = "btnClearColorAdjustments";
+            this.btnClearColorAdjustments.Size = new System.Drawing.Size(82, 23);
+            this.btnClearColorAdjustments.TabIndex = 66;
+            this.btnClearColorAdjustments.Text = "Set defaults";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.tbrTransparency);
+            this.groupBox3.Controls.Add(this.tbrHue);
+            this.groupBox3.Controls.Add(this.tbrSaturation);
+            this.groupBox3.Controls.Add(this.tbrGamma);
+            this.groupBox3.Controls.Add(this.tbrConstrast);
+            this.groupBox3.Controls.Add(this.tbrBrightness);
+            this.groupBox3.Controls.Add(this.label1);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Location = new System.Drawing.Point(21, 18);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(469, 196);
+            this.groupBox3.TabIndex = 65;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Adjustments";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(248, 133);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 13);
+            this.label6.TabIndex = 63;
+            this.label6.Text = "Transparency";
+            // 
+            // tbrTransparency
+            // 
+            this.tbrTransparency.AutoSize = false;
+            this.tbrTransparency.Location = new System.Drawing.Point(243, 149);
+            this.tbrTransparency.Maximum = 255;
+            this.tbrTransparency.Name = "tbrTransparency";
+            this.tbrTransparency.Size = new System.Drawing.Size(209, 24);
+            this.tbrTransparency.SmallChange = 10;
+            this.tbrTransparency.TabIndex = 62;
+            this.tbrTransparency.TickFrequency = 15;
+            // 
+            // tbrHue
+            // 
+            this.tbrHue.AutoSize = false;
+            this.tbrHue.Location = new System.Drawing.Point(19, 149);
+            this.tbrHue.Maximum = 180;
+            this.tbrHue.Minimum = -180;
+            this.tbrHue.Name = "tbrHue";
+            this.tbrHue.Size = new System.Drawing.Size(209, 24);
+            this.tbrHue.SmallChange = 10;
+            this.tbrHue.TabIndex = 61;
+            this.tbrHue.TickFrequency = 20;
+            // 
+            // tbrSaturation
+            // 
+            this.tbrSaturation.AutoSize = false;
+            this.tbrSaturation.Location = new System.Drawing.Point(243, 97);
+            this.tbrSaturation.Maximum = 60;
+            this.tbrSaturation.Name = "tbrSaturation";
+            this.tbrSaturation.Size = new System.Drawing.Size(209, 24);
+            this.tbrSaturation.SmallChange = 10;
+            this.tbrSaturation.TabIndex = 60;
+            this.tbrSaturation.TickFrequency = 4;
+            this.tbrSaturation.Value = 20;
+            // 
+            // tbrGamma
+            // 
+            this.tbrGamma.AutoSize = false;
+            this.tbrGamma.Location = new System.Drawing.Point(19, 97);
+            this.tbrGamma.Maximum = 80;
+            this.tbrGamma.Minimum = 4;
+            this.tbrGamma.Name = "tbrGamma";
+            this.tbrGamma.Size = new System.Drawing.Size(209, 24);
+            this.tbrGamma.SmallChange = 10;
+            this.tbrGamma.TabIndex = 59;
+            this.tbrGamma.TickFrequency = 4;
+            this.tbrGamma.Value = 20;
+            // 
+            // tbrConstrast
+            // 
+            this.tbrConstrast.AutoSize = false;
+            this.tbrConstrast.Location = new System.Drawing.Point(243, 43);
+            this.tbrConstrast.Maximum = 80;
+            this.tbrConstrast.Minimum = 4;
+            this.tbrConstrast.Name = "tbrConstrast";
+            this.tbrConstrast.Size = new System.Drawing.Size(209, 24);
+            this.tbrConstrast.SmallChange = 10;
+            this.tbrConstrast.TabIndex = 58;
+            this.tbrConstrast.TickFrequency = 4;
+            this.tbrConstrast.Value = 20;
+            // 
+            // tbrBrightness
+            // 
+            this.tbrBrightness.AutoSize = false;
+            this.tbrBrightness.Location = new System.Drawing.Point(19, 43);
+            this.tbrBrightness.Maximum = 20;
+            this.tbrBrightness.Minimum = -20;
+            this.tbrBrightness.Name = "tbrBrightness";
+            this.tbrBrightness.Size = new System.Drawing.Size(209, 24);
+            this.tbrBrightness.SmallChange = 10;
+            this.tbrBrightness.TabIndex = 57;
+            this.tbrBrightness.TickFrequency = 2;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(24, 27);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.TabIndex = 49;
+            this.label1.Text = "Brightness";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(246, 27);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 13);
+            this.label7.TabIndex = 50;
+            this.label7.Text = "Contrast";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(246, 81);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(55, 13);
+            this.label13.TabIndex = 51;
+            this.label13.Text = "Saturation";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(24, 81);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 55;
+            this.label15.Text = "Gamma";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(24, 133);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(27, 13);
+            this.label14.TabIndex = 53;
+            this.label14.Text = "Hue";
+            // 
+            // tabConfig
+            // 
+            this.tabConfig.Controls.Add(this.groupBox1);
+            this.tabConfig.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_tools24;
+            this.tabConfig.ImageSize = new System.Drawing.Size(24, 24);
+            this.tabConfig.Location = new System.Drawing.Point(119, 0);
+            this.tabConfig.Name = "tabConfig";
+            this.tabConfig.ShowCloseButton = true;
+            this.tabConfig.Size = new System.Drawing.Size(505, 435);
+            this.tabConfig.TabIndex = 17;
+            this.tabConfig.Text = "Configuration";
+            this.tabConfig.ThemesEnabled = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lblCacheId);
+            this.groupBox1.Controls.Add(this.btnClearCache);
+            this.groupBox1.Controls.Add(this.lblCacheSize);
+            this.groupBox1.Controls.Add(this.chkDoCaching);
+            this.groupBox1.Controls.Add(this.chkUseCache);
+            this.groupBox1.Location = new System.Drawing.Point(16, 17);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(470, 113);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Caching";
+            // 
+            // lblCacheId
+            // 
+            this.lblCacheId.AutoSize = true;
+            this.lblCacheId.Location = new System.Drawing.Point(23, 70);
+            this.lblCacheId.Name = "lblCacheId";
+            this.lblCacheId.Size = new System.Drawing.Size(112, 13);
+            this.lblCacheId.TabIndex = 3;
+            this.lblCacheId.Text = "Cache ID: 234203948";
+            // 
+            // btnClearCache
+            // 
+            this.btnClearCache.BeforeTouchSize = new System.Drawing.Size(107, 23);
+            this.btnClearCache.IsBackStageButton = false;
+            this.btnClearCache.Location = new System.Drawing.Point(330, 65);
+            this.btnClearCache.Name = "btnClearCache";
+            this.btnClearCache.Size = new System.Drawing.Size(107, 23);
+            this.btnClearCache.TabIndex = 2;
+            this.btnClearCache.Text = "Clear disk cache";
+            // 
+            // lblCacheSize
+            // 
+            this.lblCacheSize.AutoSize = true;
+            this.lblCacheSize.Location = new System.Drawing.Point(155, 70);
+            this.lblCacheSize.Name = "lblCacheSize";
+            this.lblCacheSize.Size = new System.Drawing.Size(132, 13);
+            this.lblCacheSize.TabIndex = 1;
+            this.lblCacheSize.Text = "Curent cache size: 1.5 MB";
+            // 
+            // chkDoCaching
+            // 
+            this.chkDoCaching.AutoSize = true;
+            this.chkDoCaching.Location = new System.Drawing.Point(158, 33);
+            this.chkDoCaching.Name = "chkDoCaching";
+            this.chkDoCaching.Size = new System.Drawing.Size(112, 17);
+            this.chkDoCaching.TabIndex = 1;
+            this.chkDoCaching.Text = "Add to disk cache";
+            this.chkDoCaching.UseVisualStyleBackColor = true;
+            // 
+            // chkUseCache
+            // 
+            this.chkUseCache.AutoSize = true;
+            this.chkUseCache.Location = new System.Drawing.Point(26, 33);
+            this.chkUseCache.Name = "chkUseCache";
+            this.chkUseCache.Size = new System.Drawing.Size(100, 17);
+            this.chkUseCache.TabIndex = 0;
+            this.chkUseCache.Text = "Use disk cache";
+            this.chkUseCache.UseVisualStyleBackColor = true;
+            // 
             // tabInfo
             // 
             this.tabInfo.Controls.Add(this.btnCopyInfo);
@@ -281,7 +562,7 @@
             this.tabInfo.Location = new System.Drawing.Point(119, 0);
             this.tabInfo.Name = "tabInfo";
             this.tabInfo.ShowCloseButton = true;
-            this.tabInfo.Size = new System.Drawing.Size(520, 435);
+            this.tabInfo.Size = new System.Drawing.Size(505, 435);
             this.tabInfo.TabIndex = 15;
             this.tabInfo.Text = "Info";
             this.tabInfo.ThemesEnabled = false;
@@ -295,6 +576,7 @@
             this.btnCopyInfo.Size = new System.Drawing.Size(75, 23);
             this.btnCopyInfo.TabIndex = 5;
             this.btnCopyInfo.Text = "Copy";
+            this.btnCopyInfo.Visible = false;
             // 
             // infoGrid1
             // 
@@ -338,7 +620,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(657, 484);
+            this.ClientSize = new System.Drawing.Size(642, 485);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnApply);
             this.Controls.Add(this.btnCancel);
@@ -349,9 +631,21 @@
             this.tabControl1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
             this.tabGeneral.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtUrl)).EndInit();
+            this.tabRendering.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrTransparency)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrHue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrSaturation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrGamma)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrConstrast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbrBrightness)).EndInit();
+            this.tabConfig.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.tabInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).EndInit();
@@ -367,7 +661,7 @@
         private UI.Controls.TabPropertiesControl tabControl1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabGeneral;
         private Syncfusion.Windows.Forms.ButtonAdv btnOpenLocation;
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt txtBriefInfo;
+        private Syncfusion.Windows.Forms.Tools.TextBoxExt txtInfo;
         private System.Windows.Forms.Label label2;
         private Syncfusion.Windows.Forms.ButtonAdv btnProjection;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtProjection;
@@ -382,5 +676,27 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnCopyInfo;
         private Controls.InfoGrid infoGrid1;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboCollisionMode;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabRendering;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabConfig;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TrackBar tbrTransparency;
+        private System.Windows.Forms.TrackBar tbrHue;
+        private System.Windows.Forms.TrackBar tbrSaturation;
+        private System.Windows.Forms.TrackBar tbrGamma;
+        private System.Windows.Forms.TrackBar tbrConstrast;
+        private System.Windows.Forms.TrackBar tbrBrightness;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label lblCacheId;
+        private Syncfusion.Windows.Forms.ButtonAdv btnClearCache;
+        private System.Windows.Forms.Label lblCacheSize;
+        private System.Windows.Forms.CheckBox chkDoCaching;
+        private System.Windows.Forms.CheckBox chkUseCache;
+        private Syncfusion.Windows.Forms.ButtonAdv btnClearColorAdjustments;
     }
 }

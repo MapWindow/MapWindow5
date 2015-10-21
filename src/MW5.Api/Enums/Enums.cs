@@ -925,7 +925,6 @@
     {
         Ram = 0,
         Disk = 1,
-        Both = 2,
     }
 
     public enum TileProjection

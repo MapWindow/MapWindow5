@@ -64,6 +64,7 @@ namespace MW5.Helpers
             MapConfig.RandomColorSchemeForGrids = config.GridRandomColorScheme;
             MapConfig.GridUseHistogram = config.GridUseHistogram;
             MapConfig.BingApiKey = config.BingApiKey;
+            MapConfig.WmsDiskCaching = config.WmsDiskCaching;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;

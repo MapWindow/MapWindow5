@@ -100,16 +100,14 @@ namespace MW5.Api.Concrete
             set { _layer.Format = value; }
         }
 
-        #region ILayerSource members
-
         public string Serialize()
         {
-            throw new NotImplementedException();
+            return _layer.Serialize();
         }
 
         public bool Deserialize(string state)
         {
-            throw new NotImplementedException();
+            return _layer.Deserialize(state);
         }
 
         /// <summary>
@@ -220,6 +218,46 @@ namespace MW5.Api.Concrete
             Id = (BaseUrl + Layers).GetHashCode();
         }
 
-        #endregion
+        public float Brightness
+        {
+            get { return _layer.Brightness; }
+            set { _layer.Brightness = value; }
+        }
+
+        public float Contrast
+        {
+            get { return _layer.Contrast; }
+            set { _layer.Contrast = value; }
+        }
+
+        public float Hue
+        {
+            get { return _layer.Hue; }
+            set { _layer.Hue = value; }
+        }
+
+        public float Saturation
+        {
+            get { return _layer.Saturation; }
+            set { _layer.Saturation = value; }
+        }
+
+        public float Gamma
+        {
+            get { return _layer.Gamma; }
+            set { _layer.Gamma = value; }
+        }
+
+        public bool UseCache
+        {
+            get { return _layer.UseCache; }
+            set { _layer.UseCache = value;  }
+        }
+
+        public bool DoCaching
+        {
+            get { return _layer.DoCaching; }
+            set { _layer.DoCaching = value; }
+        }
     }
 }

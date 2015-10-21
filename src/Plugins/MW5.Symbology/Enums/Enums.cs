@@ -70,6 +70,8 @@
     {
         Projection = 0,
         Apply = 1,
+        ClearCache = 2,
+        ClearColorAdjustments = 3,
     }
 }
 
