@@ -23,6 +23,7 @@ namespace MW5.Tiles
         {
             container.RegisterView<ITmsProviderView, TmsProviderView>()
                      .RegisterView<IBingApiView, BingApiView>()
+                     .RegisterView<IWmsServerView, WmsServerView>()
                      .RegisterView<IWmsCapabilitiesView, WmsCapabilitiesView>()
                      .RegisterView<IProvidersView, TileProvidersView>();
         }

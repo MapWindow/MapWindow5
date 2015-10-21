@@ -13,6 +13,13 @@ namespace MW5.Plugins.Concrete
     [DataContract]
     public class WmsServer
     {
+        public WmsServer()
+        {
+            Name = string.Empty;
+
+            Url = string.Empty;
+        }
+
         public WmsServer(string name, string url)
         {
             Name = name;

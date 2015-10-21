@@ -25,6 +25,8 @@ namespace MW5.Plugins.Interfaces
 
         void AddWmsServer(WmsServer server);
         void RemoveWmsServer(WmsServer server);
+        void UpdateWmsServer(WmsServer server);
+        void ClearWmsServers();
 
         event EventHandler<FolderEventArgs> FolderAdded;
         event EventHandler<FolderEventArgs> FolderRemoved;

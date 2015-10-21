@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using MW5.Data.Views;
@@ -21,8 +22,11 @@ namespace MW5.Data.Repository
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
         private List<string> _folders;
-        private List<WmsServer> _wmsServers;
+        private BindingList<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
+
+        
+
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
@@ -44,7 +48,7 @@ namespace MW5.Data.Repository
 
             _connections = new List<DatabaseConnection>();
 
-            _wmsServers = new List<WmsServer>() 
+            _wmsServers = new BindingList<WmsServer>() 
             { 
                 new WmsServer("Lizard Tech", "http://demo.lizardtech.com/lizardtech/iserv/ows") 
             };
@@ -147,6 +151,20 @@ namespace MW5.Data.Repository
                 // TODO: fire event
                 _wmsServers.Add(server);
             }
+        }
+
+        public void UpdateWmsServer(WmsServer server)
+        {
+            int index = _wmsServers.IndexOf(server);
+            if (index != -1)
+            {
+                _wmsServers[index] = server;
+            }
+        }
+
+        public void ClearWmsServers()
+        {
+            _wmsServers.Clear();
         }
 
         private bool HasFolder(string path)

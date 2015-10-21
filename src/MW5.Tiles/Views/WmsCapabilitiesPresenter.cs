@@ -54,10 +54,40 @@ namespace MW5.Tiles.Views
                     ConnectServer();
                     break;
                 case WmsCommand.Create:
+                    {
+                        var server = new WmsServer();
+                        if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
+                        {
+                            Model.Repository.AddWmsServer(server);
+                            View.UpdateView();
+                            View.Server = server;
+                        }
+                    }
                     break;
                 case WmsCommand.Edit:
+                    {
+                        var server = View.Server;
+                        if (server != null)
+                        {
+                            if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
+                            {
+                                Model.Repository.UpdateWmsServer(server);
+                                View.UpdateView();
+                                View.Server = server;
+                            }
+                        }
+                    }
                     break;
                 case WmsCommand.Delete:
+                    if (View.Server != null)
+                    {
+                        string msg = "Do you want to remove the selected WMS server from the list: " + View.Server.Name + "?";
+                        if (MessageService.Current.Ask(msg))
+                        {
+                            Model.Repository.RemoveWmsServer(View.Server);
+                            View.UpdateView();
+                        }
+                    }
                     break;
                 case WmsCommand.Add:
                     AddProvider();

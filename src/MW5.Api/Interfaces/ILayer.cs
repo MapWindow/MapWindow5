@@ -19,6 +19,7 @@ namespace MW5.Api.Interfaces
         bool IsRaster { get; }
         LayerIdentity Identity { get; }
 
+        WmsSource WmsSource { get; }
         IFeatureSet FeatureSet { get ; }
         IImageSource ImageSource { get; }
         IRasterSource Raster { get; }

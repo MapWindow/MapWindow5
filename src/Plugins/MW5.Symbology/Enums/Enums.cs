@@ -65,5 +65,11 @@
         ChangeVisibilityExpression = 9,
         ClearVisibilityExpression = 10,
     }
+
+    public enum WmsStyleCommand
+    {
+        Projection = 0,
+        Apply = 1,
+    }
 }
 

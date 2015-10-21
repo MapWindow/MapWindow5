@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using BruTile.Wms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Tiles.Properties;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
@@ -31,7 +32,35 @@ namespace MW5.Tiles.Views
         /// </summary>
         public void Initialize()
         {
-            cboServers.DataSource = Model.Repository.WmsServers;
+            PopulateImageList();
+
+            // icons aren't displayed when binding is on
+            //cboServers.DataSource = Model.Repository.WmsServers;
+
+            RefreshServerList();
+        }
+
+        private void RefreshServerList()
+        {
+            var server = cboServers.SelectedItem as WmsServer;
+
+            cboServers.Items.Clear();
+
+            foreach (var s in Model.Repository.WmsServers)
+            {
+                cboServers.Items.Add(s);
+            }
+
+            RefreshComboBoxImages();
+
+            if (server != null)
+            {
+                cboServers.SelectedItem = server;
+            }
+            else if(cboServers.Items.Count > 0)
+            {
+                cboServers.SelectedIndex = 0;
+            }
         }
 
         public override Plugins.Mvp.ViewStyle Style
@@ -64,6 +93,7 @@ namespace MW5.Tiles.Views
         public WmsServer Server
         {
             get { return cboServers.SelectedItem as WmsServer; }
+            set { cboServers.SelectedItem = value; }
         }
 
         public void ShowHourglass()
@@ -92,6 +122,13 @@ namespace MW5.Tiles.Views
         public event Action LayerDoubleClicked;
 
         public override void UpdateView()
+        {
+            RefreshServerList();
+
+            UpdateLayers();
+        }
+
+        private void UpdateLayers()
         {
             layersTreeView.Nodes.Clear();
 
@@ -130,6 +167,23 @@ namespace MW5.Tiles.Views
             }
 
             return node;
+        }
+
+        private void PopulateImageList()
+        {
+            var list = new ImageList { ColorDepth = ColorDepth.Depth32Bit, ImageSize = new Size(16, 16) };
+            list.Images.Add(Resources.img_globe16);
+            cboServers.ShowImageInTextBox = true;
+            cboServers.ShowImagesInComboListBox = true;
+            cboServers.ImageList = list;
+        }
+
+        private void RefreshComboBoxImages()
+        {
+            for (int i = 0; i < cboServers.Items.Count; i++)
+            {
+                cboServers.ImageIndexes[i] = 0;
+            }
         }
     }
 

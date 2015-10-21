@@ -12,7 +12,7 @@ namespace MW5.Tiles.Views.Abstract
 {
     internal interface IWmsCapabilitiesView : IComplexView<WmsCapabilitiesModel>
     {
-        WmsServer Server { get; }
+        WmsServer Server { get; set; }
 
         void ShowHourglass();
 

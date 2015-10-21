@@ -61,18 +61,27 @@ namespace MW5.Api.Helpers
             {
                 return new FeatureSet(source as Shapefile);
             }
+
             if (source is Image)
             {
                 return BitmapSource.Wrap(source as Image);
             }
+
             if (source is OgrLayer)
             {
                 return new VectorLayer(source as OgrLayer);
             }
+
             if (source is Grid)
             {
                 return new GridSource(source as Grid);
             }
+
+            if (source is WmsLayer)
+            {
+                return new WmsSource(source as WmsLayer);
+            }
+
             return null;
         }
 

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MW5.Api.Legend.Abstract;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
 
-namespace MW5.Plugins.Symbology.Views.Abstract
+namespace MW5.Tiles.Views.Abstract
 {
-    internal interface IWmsStyleView: IComplexView<ILegendLayer>
+    internal interface IWmsServerView: IView<WmsServer>
     {
         bool ValidateInput();
 

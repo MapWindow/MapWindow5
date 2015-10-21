@@ -37,10 +37,10 @@
             this.btnOpenLocation = new Syncfusion.Windows.Forms.ButtonAdv();
             this.txtBriefInfo = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label2 = new System.Windows.Forms.Label();
-            this.btnProjectionDetails = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnProjection = new Syncfusion.Windows.Forms.ButtonAdv();
             this.txtProjection = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtDatasourceName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
+            this.txtUrl = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             this.label8 = new System.Windows.Forms.Label();
             this.chkLayerVisible = new System.Windows.Forms.CheckBox();
             this.txtLayerName = new System.Windows.Forms.TextBox();
@@ -55,7 +55,7 @@
             this.tabGeneral.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUrl)).BeginInit();
             this.tabInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).BeginInit();
@@ -65,7 +65,6 @@
             // 
             this.btnApply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnApply.BeforeTouchSize = new System.Drawing.Size(93, 26);
-            this.btnApply.Enabled = false;
             this.btnApply.IsBackStageButton = false;
             this.btnApply.Location = new System.Drawing.Point(360, 455);
             this.btnApply.Name = "btnApply";
@@ -91,7 +90,6 @@
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(93, 26);
-            this.btnOk.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOk.IsBackStageButton = false;
             this.btnOk.Location = new System.Drawing.Point(459, 455);
             this.btnOk.Name = "btnOk";
@@ -128,10 +126,10 @@
             this.tabGeneral.Controls.Add(this.btnOpenLocation);
             this.tabGeneral.Controls.Add(this.txtBriefInfo);
             this.tabGeneral.Controls.Add(this.label2);
-            this.tabGeneral.Controls.Add(this.btnProjectionDetails);
+            this.tabGeneral.Controls.Add(this.btnProjection);
             this.tabGeneral.Controls.Add(this.txtProjection);
             this.tabGeneral.Controls.Add(this.label3);
-            this.tabGeneral.Controls.Add(this.txtDatasourceName);
+            this.tabGeneral.Controls.Add(this.txtUrl);
             this.tabGeneral.Controls.Add(this.label8);
             this.tabGeneral.Controls.Add(this.chkLayerVisible);
             this.tabGeneral.Controls.Add(this.txtLayerName);
@@ -150,6 +148,7 @@
             // btnOpenLocation
             // 
             this.btnOpenLocation.BeforeTouchSize = new System.Drawing.Size(63, 23);
+            this.btnOpenLocation.Enabled = false;
             this.btnOpenLocation.IsBackStageButton = false;
             this.btnOpenLocation.Location = new System.Drawing.Point(438, 68);
             this.btnOpenLocation.Name = "btnOpenLocation";
@@ -168,7 +167,7 @@
             this.txtBriefInfo.Size = new System.Drawing.Size(364, 20);
             this.txtBriefInfo.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtBriefInfo.TabIndex = 170;
-            this.txtBriefInfo.Text = "<tbd>";
+            this.txtBriefInfo.Text = "<layers>";
             // 
             // label2
             // 
@@ -179,15 +178,15 @@
             this.label2.TabIndex = 169;
             this.label2.Text = "Information";
             // 
-            // btnProjectionDetails
+            // btnProjection
             // 
-            this.btnProjectionDetails.BeforeTouchSize = new System.Drawing.Size(63, 23);
-            this.btnProjectionDetails.IsBackStageButton = false;
-            this.btnProjectionDetails.Location = new System.Drawing.Point(438, 109);
-            this.btnProjectionDetails.Name = "btnProjectionDetails";
-            this.btnProjectionDetails.Size = new System.Drawing.Size(63, 23);
-            this.btnProjectionDetails.TabIndex = 168;
-            this.btnProjectionDetails.Text = "Details";
+            this.btnProjection.BeforeTouchSize = new System.Drawing.Size(63, 23);
+            this.btnProjection.IsBackStageButton = false;
+            this.btnProjection.Location = new System.Drawing.Point(438, 109);
+            this.btnProjection.Name = "btnProjection";
+            this.btnProjection.Size = new System.Drawing.Size(63, 23);
+            this.btnProjection.TabIndex = 168;
+            this.btnProjection.Text = "Details";
             // 
             // txtProjection
             // 
@@ -210,26 +209,26 @@
             this.label3.TabIndex = 166;
             this.label3.Text = "Coordinate system";
             // 
-            // txtDatasourceName
+            // txtUrl
             // 
-            this.txtDatasourceName.BeforeTouchSize = new System.Drawing.Size(292, 20);
-            this.txtDatasourceName.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.txtDatasourceName.Location = new System.Drawing.Point(137, 71);
-            this.txtDatasourceName.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.txtDatasourceName.Name = "txtDatasourceName";
-            this.txtDatasourceName.ReadOnly = true;
-            this.txtDatasourceName.Size = new System.Drawing.Size(292, 20);
-            this.txtDatasourceName.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
-            this.txtDatasourceName.TabIndex = 165;
+            this.txtUrl.BeforeTouchSize = new System.Drawing.Size(292, 20);
+            this.txtUrl.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtUrl.Location = new System.Drawing.Point(137, 71);
+            this.txtUrl.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtUrl.Name = "txtUrl";
+            this.txtUrl.ReadOnly = true;
+            this.txtUrl.Size = new System.Drawing.Size(292, 20);
+            this.txtUrl.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtUrl.TabIndex = 165;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(28, 74);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(91, 13);
+            this.label8.Size = new System.Drawing.Size(29, 13);
             this.label8.TabIndex = 164;
-            this.label8.Text = "Datasource name";
+            this.label8.Text = "URL";
             // 
             // chkLayerVisible
             // 
@@ -352,7 +351,7 @@
             this.tabGeneral.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtBriefInfo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtProjection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.txtDatasourceName)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtUrl)).EndInit();
             this.tabInfo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboCollisionMode)).EndInit();
@@ -370,10 +369,10 @@
         private Syncfusion.Windows.Forms.ButtonAdv btnOpenLocation;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtBriefInfo;
         private System.Windows.Forms.Label label2;
-        private Syncfusion.Windows.Forms.ButtonAdv btnProjectionDetails;
+        private Syncfusion.Windows.Forms.ButtonAdv btnProjection;
         private Syncfusion.Windows.Forms.Tools.TextBoxExt txtProjection;
         private System.Windows.Forms.Label label3;
-        private Syncfusion.Windows.Forms.Tools.TextBoxExt txtDatasourceName;
+        private Syncfusion.Windows.Forms.Tools.TextBoxExt txtUrl;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.CheckBox chkLayerVisible;
         private System.Windows.Forms.TextBox txtLayerName;

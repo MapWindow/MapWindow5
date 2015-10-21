@@ -131,7 +131,7 @@ namespace MW5.Api.Concrete
                 return new LayerIdentity(Filename);
             }
         }
-      
+
         public int Position
         {
             get { return Map.get_LayerPosition(LayerHandle); }
@@ -173,6 +173,15 @@ namespace MW5.Api.Concrete
         public bool IsVector
         {
             get { return LayerType == LayerType.Shapefile || LayerType == LayerType.VectorLayer; }
+        }
+
+        public WmsSource WmsSource
+        {
+            get
+            {
+                var wms = Map.get_WmsLayer(LayerHandle);
+                return wms != null ? new WmsSource(wms) : null;
+            }
         }
 
         public IFeatureSet FeatureSet

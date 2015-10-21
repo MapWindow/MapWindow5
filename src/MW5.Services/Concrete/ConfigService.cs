@@ -132,6 +132,16 @@ namespace MW5.Services.Concrete
                         _repository.AddConnection(item);
                     }
                 }
+
+                if (xmlConfig.Repository.WmsServers != null)
+                {
+                    _repository.ClearWmsServers();
+
+                    foreach (var item in xmlConfig.Repository.WmsServers)
+                    {
+                        _repository.AddWmsServer(item);
+                    }
+                }
             }
         }
     }

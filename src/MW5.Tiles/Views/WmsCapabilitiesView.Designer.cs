@@ -84,6 +84,8 @@
             this.cboServers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboServers.Location = new System.Drawing.Point(15, 27);
             this.cboServers.Name = "cboServers";
+            this.cboServers.ShowImageInTextBox = true;
+            this.cboServers.ShowImagesInComboListBox = true;
             this.cboServers.Size = new System.Drawing.Size(361, 21);
             this.cboServers.TabIndex = 2;
             // 
