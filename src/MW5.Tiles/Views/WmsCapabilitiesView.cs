@@ -1,15 +1,15 @@
-﻿using System;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="WmsCapabilitiesView.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using BruTile.Wms;
 using MW5.Plugins.Concrete;
-using MW5.Plugins.Interfaces;
+using MW5.Plugins.Mvp;
 using MW5.Tiles.Properties;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
@@ -25,6 +25,8 @@ namespace MW5.Tiles.Views
             InitializeComponent();
 
             layersTreeView.NodeMouseDoubleClick += (s, e) => Invoke(LayerDoubleClicked);
+
+            cboServers.SelectedIndexChanged += (s, e) => Invoke(SelectedServerChanged);
         }
 
         /// <summary>
@@ -40,32 +42,9 @@ namespace MW5.Tiles.Views
             RefreshServerList();
         }
 
-        private void RefreshServerList()
+        public override ViewStyle Style
         {
-            var server = cboServers.SelectedItem as WmsServer;
-
-            cboServers.Items.Clear();
-
-            foreach (var s in Model.Repository.WmsServers)
-            {
-                cboServers.Items.Add(s);
-            }
-
-            RefreshComboBoxImages();
-
-            if (server != null)
-            {
-                cboServers.SelectedItem = server;
-            }
-            else if(cboServers.Items.Count > 0)
-            {
-                cboServers.SelectedIndex = 0;
-            }
-        }
-
-        public override Plugins.Mvp.ViewStyle Style
-        {
-            get { return new Plugins.Mvp.ViewStyle(true); }
+            get { return new ViewStyle(true); }
         }
 
         public ButtonBase OkButton
@@ -75,7 +54,7 @@ namespace MW5.Tiles.Views
 
         public IEnumerable<ToolStripItemCollection> ToolStrips
         {
-            get  { yield break; }
+            get { yield break; }
         }
 
         public IEnumerable<Control> Buttons
@@ -121,31 +100,20 @@ namespace MW5.Tiles.Views
 
         public event Action LayerDoubleClicked;
 
-        public override void UpdateView()
-        {
-            RefreshServerList();
+        public event Action SelectedServerChanged;
 
+        public void UpdateCapabilities()
+        {
             UpdateLayers();
         }
 
-        private void UpdateLayers()
+        public void UpdateServer(WmsServer server = null)
         {
-            layersTreeView.Nodes.Clear();
+            RefreshServerList();
 
-            if (Model.Capabilities == null)
+            if (server != null)
             {
-                return;
-            }
-
-            var layer = Model.Capabilities.Capability.Layer;
-
-            var node = CreateNode(layer, layersTreeView.Nodes);
-
-            if (node != null)
-            {
-                node.Expand();
-
-                layersTreeView.SelectedNode = node;
+                Server = server;
             }
         }
 
@@ -185,7 +153,42 @@ namespace MW5.Tiles.Views
                 cboServers.ImageIndexes[i] = 0;
             }
         }
+
+        private void RefreshServerList()
+        {
+            cboServers.Items.Clear();
+
+            foreach (var s in Model.Repository.WmsServers)
+            {
+                cboServers.Items.Add(s);
+            }
+
+            RefreshComboBoxImages();
+        }
+
+        private void UpdateLayers()
+        {
+            layersTreeView.Nodes.Clear();
+
+            if (Model.Capabilities == null)
+            {
+                return;
+            }
+
+            var layer = Model.Capabilities.Capability.Layer;
+
+            var node = CreateNode(layer, layersTreeView.Nodes);
+
+            if (node != null)
+            {
+                node.Expand();
+
+                layersTreeView.SelectedNode = node;
+            }
+        }
     }
 
-    internal class WmsCapabilitiesViewBase : MapWindowView<WmsCapabilitiesModel> { }
+    internal class WmsCapabilitiesViewBase : MapWindowView<WmsCapabilitiesModel>
+    {
+    }
 }

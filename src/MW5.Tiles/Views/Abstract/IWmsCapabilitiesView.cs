@@ -21,5 +21,11 @@ namespace MW5.Tiles.Views.Abstract
         IEnumerable<Layer> SelectedLayers { get; }
 
         event Action LayerDoubleClicked;
+
+        event Action SelectedServerChanged;
+
+        void UpdateCapabilities();
+
+        void UpdateServer(WmsServer server = null);
     }
 }

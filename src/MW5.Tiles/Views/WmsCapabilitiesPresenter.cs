@@ -1,13 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿// -------------------------------------------------------------------------------------------
+// <copyright file="WmsCapabilitiesPresenter.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
+// </copyright>
+// -------------------------------------------------------------------------------------------
+
+using System;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using BruTile.Wms;
-using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -17,14 +18,14 @@ using MW5.Shared;
 using MW5.Tiles.Enums;
 using MW5.Tiles.Helpers;
 using MW5.Tiles.Views.Abstract;
+using Exception = System.Exception;
 
 namespace MW5.Tiles.Views
 {
     /// <summary>
     /// Displays layers advertised by WMS server via GetCapabilities request.
     /// </summary>
-    internal class WmsCapabilitiesPresenter 
-        : ComplexPresenter<IWmsCapabilitiesView, WmsCommand, WmsCapabilitiesModel>
+    internal class WmsCapabilitiesPresenter : ComplexPresenter<IWmsCapabilitiesView, WmsCommand, WmsCapabilitiesModel>
     {
         private readonly IAppContext _context;
         private readonly ILayerService _layerService;
@@ -41,60 +42,13 @@ namespace MW5.Tiles.Views
             _layerService = layerService;
 
             view.LayerDoubleClicked += () => RunCommand(WmsCommand.Add);
-        }
-
-        /// <summary>
-        /// Runs the command.
-        /// </summary>
-        public override void RunCommand(WmsCommand command)
-        {
-            switch (command)
-            {
-                case WmsCommand.Connect:
-                    ConnectServer();
-                    break;
-                case WmsCommand.Create:
+            view.SelectedServerChanged += () =>
+                {
+                    if (!LoadCachedCapabilities(View.Server))
                     {
-                        var server = new WmsServer();
-                        if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
-                        {
-                            Model.Repository.AddWmsServer(server);
-                            View.UpdateView();
-                            View.Server = server;
-                        }
+                        DisplayServerCapabilities(null);
                     }
-                    break;
-                case WmsCommand.Edit:
-                    {
-                        var server = View.Server;
-                        if (server != null)
-                        {
-                            if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
-                            {
-                                Model.Repository.UpdateWmsServer(server);
-                                View.UpdateView();
-                                View.Server = server;
-                            }
-                        }
-                    }
-                    break;
-                case WmsCommand.Delete:
-                    if (View.Server != null)
-                    {
-                        string msg = "Do you want to remove the selected WMS server from the list: " + View.Server.Name + "?";
-                        if (MessageService.Current.Ask(msg))
-                        {
-                            Model.Repository.RemoveWmsServer(View.Server);
-                            View.UpdateView();
-                        }
-                    }
-                    break;
-                case WmsCommand.Add:
-                    AddProvider();
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException("command");
-            }
+                };
         }
 
         /// <summary>
@@ -116,6 +70,86 @@ namespace MW5.Tiles.Views
         }
 
         /// <summary>
+        /// Runs the command.
+        /// </summary>
+        public override void RunCommand(WmsCommand command)
+        {
+            switch (command)
+            {
+                case WmsCommand.Connect:
+                    ConnectServer();
+                    break;
+                case WmsCommand.Create:
+                    {
+                        var server = new WmsServer();
+                        if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
+                        {
+                            Model.Repository.AddWmsServer(server);
+                            View.UpdateServer(server);
+                        }
+                    }
+                    break;
+                case WmsCommand.Edit:
+                    {
+                        var server = View.Server;
+                        if (server != null)
+                        {
+                            if (_context.Container.Run<WmsServerPresenter, WmsServer>(server))
+                            {
+                                Model.Repository.UpdateWmsServer(server);
+                                View.UpdateServer(server);
+                                LoadCachedCapabilities(server);
+                            }
+                        }
+                    }
+                    break;
+                case WmsCommand.Delete:
+                    if (View.Server != null)
+                    {
+                        string msg = "Do you want to remove the selected WMS server from the list: " + View.Server.Name + "?";
+
+                        if (MessageService.Current.Ask(msg))
+                        {
+                            Model.Repository.RemoveWmsServer(View.Server);
+                            View.UpdateServer(Model.Repository.WmsServers.FirstOrDefault());
+                        }
+                    }
+                    break;
+                case WmsCommand.Add:
+                    AddProvider();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("command");
+            }
+        }
+
+        /// <summary>
+        /// A handler for the IView.OkButton.Click event. 
+        /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
+        /// If the method return false, no actions are taken, so View.Close, presenter.ReturnValue
+        /// should be called / set manually.
+        /// </summary>
+        public override bool ViewOkClicked()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// Is called after Presenter.Model is set. Should be overridden to provide any model specific initialization.
+        /// </summary>
+        protected override void Initialize()
+        {
+            var servers = Model.Repository.WmsServers.ToList();
+
+            var server = servers.FirstOrDefault(s => s.Url.EqualsIgnoreCase(AppConfig.Instance.WmsLastServer)) ?? servers.FirstOrDefault();
+
+            if (server != null)
+            {
+                View.Server = server;
+            }
+        }
+
+        /// <summary>
         /// Adds selected server to the map.
         /// </summary>
         private void AddProvider()
@@ -132,7 +166,7 @@ namespace MW5.Tiles.Views
                 MessageService.Current.Info("No layers are selected");
             }
 
-            var provider = Model.Capabilities.CreateProvider(layers, server.Url);
+            var provider = Model.Capabilities.CreateWmsLayer(layers, server.Url);
             provider.Name = provider.Layers;
 
             _layerService.AddDatasource(provider);
@@ -148,19 +182,44 @@ namespace MW5.Tiles.Views
             var server = SelectedServer;
             if (server == null) return;
 
-            var capabilities = WmsCapabilitiesCache.Load(server.Name);
-            if (capabilities != null)
+            if (LoadCachedCapabilities(server))
             {
-                Model.Capabilities = capabilities;
-                View.UpdateView();
                 return;
             }
 
             View.ShowHourglass();
 
-            Task<Stream>.Factory
-                .StartNew(() => BruTileHelper.GetWmsCapabilitiesStream(server.Url))
+            Task<Stream>.Factory.StartNew(() => BruTileHelper.GetWmsCapabilitiesStream(server.Url))
                 .ContinueWith(ProcessWmsCapabilitiesResults, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
+        /// <summary>
+        /// Displays capabilities (list of layers for the server).
+        /// </summary>
+        private void DisplayServerCapabilities(WmsCapabilities capabilities)
+        {
+            var server = View.Server;
+            if (server != null)
+            {
+                Model.Capabilities = capabilities;
+                View.UpdateCapabilities();
+                AppConfig.Instance.WmsLastServer = server.Url;
+            }
+        }
+
+        /// <summary>
+        /// Loads and displayes the cached capabilities for the server.
+        /// </summary>
+        private bool LoadCachedCapabilities(WmsServer server)
+        {
+            var capabilities = WmsCapabilitiesCache.Load(server.Url);
+            if (capabilities != null)
+            {
+                DisplayServerCapabilities(capabilities);
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -170,44 +229,41 @@ namespace MW5.Tiles.Views
         {
             var server = SelectedServer;
 
+            const string msg = "WMS server GetCapabilities request failed: ";
+
             try
             {
                 using (var stream = task.Result)
                 {
-                    if (WmsCapabilitiesCache.Save(server.Name, stream))
+                    WmsCapabilities capabilities;
+
+                    if (WmsCapabilitiesCache.Save(server.Url, stream))
                     {
                         // ConnectStream returned by WebResponse doesn't support seek operation,
                         // so we can't read it twice, therefore on successful saving to the disk 
                         // we are rereading it from file
-                        Model.Capabilities = WmsCapabilitiesCache.Load(server.Name);
+                        capabilities = WmsCapabilitiesCache.Load(server.Url);
                     }
                     else
                     {
-                        Model.Capabilities = new WmsCapabilities(stream);
+                        capabilities = new WmsCapabilities(stream);
                     }
 
-                    View.UpdateView();
+                    DisplayServerCapabilities(capabilities);
                 }
             }
-            catch (System.Exception ex)
+            catch (AggregateException ex)
             {
-                Logger.Current.Warn("WMS server GetCapabilities request failed: {0}", ex, server.Url);
+                MessageService.Current.Warn(msg + ex.InnerException.Message);
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn(msg + server.Name, ex);
             }
             finally
             {
                 View.HideHourglass();
             }
-        }
-
-        /// <summary>
-        /// A handler for the IView.OkButton.Click event. 
-        /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
-        /// If the method return false, no actions are taken, so View.Close, presenter.ReturnValue
-        /// should be called / set manually.
-        /// </summary>
-        public override bool ViewOkClicked()
-        {
-            return true;
         }
     }
 }

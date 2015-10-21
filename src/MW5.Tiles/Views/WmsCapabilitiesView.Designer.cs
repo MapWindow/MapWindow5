@@ -136,7 +136,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.layersTreeView.AutoAdjustMultiLineHeight = true;
-            treeNodeAdvStyleInfo1.ShowCheckBox = true;
             this.layersTreeView.BaseStylePairs.AddRange(new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair[] {
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard", treeNodeAdvStyleInfo1),
             new Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.StyleNamePair("Standard - SubItem", treeNodeAdvSubItemStyleInfo1),
@@ -144,7 +143,7 @@
             this.layersTreeView.BeforeTouchSize = new System.Drawing.Size(449, 273);
             this.layersTreeView.BorderColor = System.Drawing.Color.LightGray;
             this.layersTreeView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            treeColumnAdv1.Highlighted = false;
+            treeColumnAdv1.Highlighted = true;
             treeColumnAdv1.Text = "Name";
             treeColumnAdv1.Width = 200;
             treeColumnAdv2.Highlighted = false;
@@ -169,7 +168,6 @@
             this.layersTreeView.Name = "layersTreeView";
             this.layersTreeView.NodeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.layersTreeView.SelectionMode = Syncfusion.Windows.Forms.Tools.MultiColumnTreeView.TreeSelectionMode.MultiSelectAll;
-            this.layersTreeView.ShowCheckBoxes = true;
             this.layersTreeView.Size = new System.Drawing.Size(449, 273);
             this.layersTreeView.TabIndex = 7;
             this.layersTreeView.Text = "multiColumnTreeView1";

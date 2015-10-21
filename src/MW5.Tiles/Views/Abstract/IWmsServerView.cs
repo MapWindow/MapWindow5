@@ -10,8 +10,8 @@ namespace MW5.Tiles.Views.Abstract
 {
     internal interface IWmsServerView: IView<WmsServer>
     {
-        bool ValidateInput();
+        string ServerName { get; }
 
-        void ApplyChanges();
+        string Url { get; }
     }
 }

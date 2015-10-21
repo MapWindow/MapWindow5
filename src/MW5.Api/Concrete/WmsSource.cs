@@ -15,9 +15,9 @@ namespace MW5.Api.Concrete
     {
         private readonly WmsLayer _layer;
 
-        public WmsSource(int id, string name)
+        public WmsSource(string name)
         {
-            _layer = new WmsLayer() { Id = id, Name = name };
+            _layer = new WmsLayer() { Name = name };
         }
 
         internal WmsSource(WmsLayer provider)
@@ -71,13 +71,21 @@ namespace MW5.Api.Concrete
         public string Layers
         {
             get { return _layer.Layers; }
-            set { _layer.Layers = value; }
+            set
+            {
+                _layer.Layers = value;
+                UpdateId();
+            }
         }
 
         public string BaseUrl
         {
             get { return _layer.BaseUrl; }
-            set { _layer.BaseUrl = value; }
+            set
+            {
+                _layer.BaseUrl = value;
+                UpdateId();
+            }
         }
 
         public int Id
@@ -194,6 +202,22 @@ namespace MW5.Api.Concrete
         public string SizeInfo 
         {
             get { return "Bounds: " + _layer.BoundingBox.ToDebugString(); } 
+        }
+
+        /// <summary>
+        /// Generates Id for the provider.
+        /// </summary>
+        /// <remarks>The primary use of Id is for caching (both RAM and disk cache).</remarks>
+        private void UpdateId()
+        {
+            // TODO: there is a slim chance to get duplicated Id for different providers
+            // therefore adding some additional safeguards maybe necessary.
+            // Storing a list which maps Ids to particular servers may be a good thing too,
+            // to be able to find out what tiles in disk cache belong to particular server.
+            // There is no way to do it by id only.
+
+            // TODO: add any other properties that make cache invalid (tile size for example)
+            Id = (BaseUrl + Layers).GetHashCode();
         }
 
         #endregion

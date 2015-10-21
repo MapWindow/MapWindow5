@@ -30,27 +30,24 @@ namespace MW5.Tiles.Views
             txtUrl.Text = Model.Url;
         }
 
-        public bool ValidateInput()
+        public string ServerName
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                MessageService.Current.Info("Server name is empty.");
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtUrl.Text))
-            {
-                MessageService.Current.Info("URL is empty.");
-                return false;
-            }
-
-            return true;
+            get { return txtName.Text; }
         }
 
-        public void ApplyChanges()
+        public string Url
         {
-            Model.Name = txtName.Text;
-            Model.Url = txtUrl.Text;
+            get
+            {
+                string s = txtUrl.Text.Trim().ToLower();
+
+                if (!s.StartsWith("http://"))
+                {
+                    s = "http://" + s;
+                }
+
+                return s;
+            }
         }
 
         public ButtonBase OkButton

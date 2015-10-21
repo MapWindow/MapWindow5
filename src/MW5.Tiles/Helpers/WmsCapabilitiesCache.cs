@@ -15,14 +15,15 @@ namespace MW5.Tiles.Helpers
     /// </summary>
     internal static class WmsCapabilitiesCache
     {
-        private static string GetXmlPath(string serverName)
+        private static string GetXmlPath(string url)
         {
-            return ConfigPathHelper.GetWmsCachePath() + serverName + ".xml";
+            url = url.Replace('/', '_').Replace(':', '_');
+            return ConfigPathHelper.GetWmsCachePath() + url + ".xml";
         }
 
-        public static bool Save(string serverName, Stream stream)
+        public static bool Save(string url, Stream stream)
         {
-            string path = GetXmlPath(serverName);
+            string path = GetXmlPath(url);
 
             try
             {
@@ -43,9 +44,9 @@ namespace MW5.Tiles.Helpers
             return false;
         }
 
-        public static WmsCapabilities Load(string serverName)
+        public static WmsCapabilities Load(string url)
         {
-            string path = GetXmlPath(serverName);
+            string path = GetXmlPath(url);
 
             if (File.Exists(path))
             {

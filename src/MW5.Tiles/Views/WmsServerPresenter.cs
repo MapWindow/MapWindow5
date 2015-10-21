@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Services;
 using MW5.Tiles.Views.Abstract;
 
 namespace MW5.Tiles.Views
@@ -16,6 +17,35 @@ namespace MW5.Tiles.Views
         {
         }
 
+        private bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(View.ServerName))
+            {
+                MessageService.Current.Info("Server name is empty.");
+                return false;
+            }
+
+            string url = View.Url;
+
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                MessageService.Current.Info("URL is empty.");
+                return false;
+            }
+
+            try
+            {
+                var uri = new Uri(url);
+            }
+            catch
+            {
+                MessageService.Current.Info("Invalid URL.");
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// A handler for the IView.OkButton.Click event. 
         /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
@@ -24,12 +54,13 @@ namespace MW5.Tiles.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            if (!View.ValidateInput())
+            if (!Validate())
             {
                 return false;
             }
 
-            View.ApplyChanges();
+            Model.Name = View.ServerName;
+            Model.Url = View.Url;
 
             return true;
         }
