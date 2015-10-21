@@ -188,10 +188,29 @@ namespace MW5.Services.Concrete
                     return AddLayersFromFilenameCore(identity.Filename);
                 case LayerIdentityType.OgrDatasource:
                     return AddDatabaseLayer(identity.Connection, identity.Query, identity.GeometryType);
+                case LayerIdentityType.Wms:
+                    return AddWmsLayer(identity);
                 default:
                     Logger.Current.Warn("Unexpected layer identity");
                     return false;
             }
+        }
+
+        private bool AddWmsLayer(LayerIdentity identity)
+        {
+            if (identity.IdentityType == LayerIdentityType.Wms)
+            {
+                var wms = new WmsSource("") { BaseUrl = identity.Connection, Layers = identity.Query };
+
+                int layerHandle = _context.Map.Layers.Add(wms);
+                if (layerHandle != -1)
+                {
+                    _lastLayerHandle = layerHandle;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool AddDatabaseLayer(string connection, string layerName, GeometryType multiGeometryType = GeometryType.None)

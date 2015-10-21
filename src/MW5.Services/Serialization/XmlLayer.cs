@@ -86,6 +86,7 @@ namespace MW5.Services.Serialization
 
             RestoreCustomObjects(layer);
 
+            layer.Name = Name;
             layer.Expanded = Expanded;
             layer.HideFromLegend = HideFromLegend;
             layer.SymbologyCaption = ColorSchemeCaption;

@@ -41,7 +41,7 @@ namespace MW5.Tiles.Views
             {
                 string s = txtUrl.Text.Trim().ToLower();
 
-                if (!s.StartsWith("http://"))
+                if (!s.StartsWith("http"))
                 {
                     s = "http://" + s;
                 }

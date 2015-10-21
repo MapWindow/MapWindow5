@@ -35,6 +35,13 @@ namespace MW5.Api.Concrete
             GeometryType = geometryType;
         }
 
+        public LayerIdentity(WmsSource wms)
+        {
+            IdentityType = LayerIdentityType.Wms;
+            Connection = wms.BaseUrl;
+            Query = wms.Layers;
+        }
+
         [DataMember]
         public GeometryType GeometryType { get; set; }
 

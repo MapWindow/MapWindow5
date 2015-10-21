@@ -1415,7 +1415,8 @@
     public enum LayerIdentityType
     {
         File = 0,
-        OgrDatasource,
+        OgrDatasource = 1,
+        Wms = 2,
     }
 
     public enum AngleFormat
