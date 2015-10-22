@@ -84,6 +84,12 @@
     <Compile Include="Controls\TileProviderGrid.Designer.cs">
       <DependentUpon>TileProviderGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WmsTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\WmsTreeView.Designer.cs">
+      <DependentUpon>WmsTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\BrutileHelper.cs" />
     <Compile Include="Helpers\ProviderManager.cs" />
@@ -157,6 +163,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\WmsTreeView.resx">
+      <DependentUpon>WmsTreeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -182,6 +191,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_globe16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_folder_open.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_raster.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

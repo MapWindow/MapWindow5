@@ -24,7 +24,7 @@ namespace MW5.Tiles.Views
         {
             InitializeComponent();
 
-            layersTreeView.NodeMouseDoubleClick += (s, e) => Invoke(LayerDoubleClicked);
+            wmsTreeView1.NodeMouseDoubleClick += (s, e) => Invoke(LayerDoubleClicked);
 
             cboServers.SelectedIndexChanged += (s, e) => Invoke(SelectedServerChanged);
         }
@@ -91,10 +91,7 @@ namespace MW5.Tiles.Views
         {
             get
             {
-                foreach (TreeNodeAdv node in layersTreeView.SelectedNodes)
-                {
-                    yield return node.Tag as Layer;
-                }
+                yield return wmsTreeView1.SelectedLayer;
             }
         }
 
@@ -126,7 +123,8 @@ namespace MW5.Tiles.Views
             }
 
             var node = new TreeNodeAdv(layer.Title) { Tag = layer };
-            node.SubItems.Add(new TreeNodeAdvSubItem(string.Join(";", layer.SRS)));
+            node.SubItems.Add(new TreeNodeAdvSubItem(layer.Title));
+            node.SubItems.Add(new TreeNodeAdvSubItem(layer.Abstract));
             nodes.Add(node);
 
             foreach (var l in layer.ChildLayers)
@@ -168,7 +166,7 @@ namespace MW5.Tiles.Views
 
         private void UpdateLayers()
         {
-            layersTreeView.Nodes.Clear();
+            wmsTreeView1.Nodes.Clear();
 
             if (Model.Capabilities == null)
             {
@@ -176,15 +174,7 @@ namespace MW5.Tiles.Views
             }
 
             var layer = Model.Capabilities.Capability.Layer;
-
-            var node = CreateNode(layer, layersTreeView.Nodes);
-
-            if (node != null)
-            {
-                node.Expand();
-
-                layersTreeView.SelectedNode = node;
-            }
+            wmsTreeView1.DisplayLayers(layer);
         }
     }
 

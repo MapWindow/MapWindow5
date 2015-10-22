@@ -63,9 +63,29 @@ namespace MW5.Tiles.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_folder_open {
+            get {
+                object obj = ResourceManager.GetObject("img_folder_open", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_globe16 {
             get {
                 object obj = ResourceManager.GetObject("img_globe16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_raster {
+            get {
+                object obj = ResourceManager.GetObject("img_raster", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
