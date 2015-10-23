@@ -419,6 +419,7 @@ namespace MW5.Projections.Services
         #endregion
 
         #region Reading
+
         /// <summary>
         /// Reads the database
         /// </summary>
@@ -426,31 +427,42 @@ namespace MW5.Projections.Services
         /// <returns></returns>
         public bool ReadFromExecutablePath(string executablePath)
         {
-            string path = Path.GetDirectoryName(executablePath) + @"\Projections\";
-            if (!Directory.Exists(path))
+            try
             {
-                MessageService.Current.Info("Projections folder isn't found: " + path);
-                return false;
-            }
+                string path = Path.GetDirectoryName(executablePath) + @"\Projections\";
+                if (!Directory.Exists(path))
+                {
+                    MessageService.Current.Info("Projections folder isn't found: " + path);
+                    return false;
+                }
 
-            string extension = "";    
-                    
-            #if SQLITE_DATABASE
+                string extension = "";
+
+#if SQLITE_DATABASE
                 extension = "*.db3";
-            #else
+#else
                 extension = "*.mdb";
             #endif
 
-            string[] files = Directory.GetFiles(path, extension);
-            if (files.Length != 1)
-            {
-                string msg = "A single database is expected. " + files.Length + " databases are found." +
-                             Environment.NewLine + "Path : " + path + Environment.NewLine;
+                string[] files = Directory.GetFiles(path, extension);
+                if (files.Length != 1)
+                {
+                    string msg = "A single database is expected. " + files.Length + " databases are found." +
+                                 Environment.NewLine + "Path : " + path + Environment.NewLine;
 
-                MessageService.Current.Info(msg);
-                return false;
+                    MessageService.Current.Info(msg);
+                    return false;
+                }
+
+                return Read(files[0]);
             }
-            return Read(files[0]);
+            catch (Exception ex)
+            {
+                Logger.Current.Warn(
+                    "Failed to read projection database. Identification of projections may not work correctly.", ex);
+            }
+
+            return true;
         }
         
         /// <summary>
