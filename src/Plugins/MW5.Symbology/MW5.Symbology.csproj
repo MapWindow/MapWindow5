@@ -118,6 +118,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\Abstract\IVectorStyleView.cs" />
+    <Compile Include="Views\Abstract\IWmsStyleView.cs" />
     <Compile Include="Views\CategoriesPresenter.cs" />
     <Compile Include="Views\CategoriesSubView.cs">
       <SubType>UserControl</SubType>
@@ -413,6 +414,13 @@
     <Compile Include="Views\RasterStyleView.Designer.cs">
       <DependentUpon>RasterStyleView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\WmsStylePresenter.cs" />
+    <Compile Include="Views\WmsStyleView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\WmsStyleView.Designer.cs">
+      <DependentUpon>WmsStyleView.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
@@ -577,6 +585,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\RasterStyleView.resx">
       <DependentUpon>RasterStyleView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\WmsStyleView.resx">
+      <DependentUpon>WmsStyleView.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

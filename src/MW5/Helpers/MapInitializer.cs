@@ -64,6 +64,7 @@ namespace MW5.Helpers
             MapConfig.RandomColorSchemeForGrids = config.GridRandomColorScheme;
             MapConfig.GridUseHistogram = config.GridUseHistogram;
             MapConfig.BingApiKey = config.BingApiKey;
+            MapConfig.WmsDiskCaching = config.WmsDiskCaching;
 
             map.ShowRedrawTime = config.ShowRedrawTime;
             map.ZoomBar.Visible = config.ShowZoombar;
@@ -72,6 +73,7 @@ namespace MW5.Helpers
             map.ShowCoordinates = config.ShowCoordinates ? config.CoordinatesDisplay : CoordinatesDisplay.None;
             map.ShowCoordinatesFormat = config.CoordinateAngleFormat;
 
+            map.ReuseTileBuffer = config.ReuseTileBuffer;
             map.InertiaOnPanning = config.InnertiaOnPanning;
             map.AnimationOnZooming = config.AnimationOnZooming;
             map.ZoomBoxStyle = config.ZoomBoxStyle;

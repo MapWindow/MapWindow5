@@ -43,6 +43,17 @@ namespace MW5.Api.Concrete
             return null;
         }
 
+        public WmsSource GetWmsLayer(int layerHandle)
+        {
+            var wms = _axMap.get_WmsLayer(layerHandle);
+            if (wms != null)
+            {
+                return new WmsSource(wms);
+            }
+
+            return null;
+        }
+
         public IVectorLayer GetVectorLayer(int layerHandle)
         {
             var ogr = _axMap.get_OgrLayer(layerHandle);

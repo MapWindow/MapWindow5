@@ -55,6 +55,10 @@ namespace MW5.Projections.Views
             this.btnCopyClipboard = new Syncfusion.Windows.Forms.ButtonAdv();
             this.gradientPanel1 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
             this.projectionTextBox1 = new MW5.Projections.Controls.ProjectionTextBox();
+            this.tabEsriWkt = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnCopyClipboardEsri = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.gradientPanel2 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
+            this.projectionTextBoxEsri = new MW5.Projections.Controls.ProjectionTextBox();
             this.tabDialects = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.dialectGrid1 = new MW5.Projections.Controls.DialectGrid();
             this.btnClearDialects = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -62,10 +66,6 @@ namespace MW5.Projections.Views
             this.btnRemoveDialect = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnAddDialect = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label6 = new System.Windows.Forms.Label();
-            this.tabEsriWkt = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.btnCopyClipboardEsri = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.gradientPanel2 = new Syncfusion.Windows.Forms.Tools.GradientPanel();
-            this.projectionTextBoxEsri = new MW5.Projections.Controls.ProjectionTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.tabControl1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabDescription.SuspendLayout();
@@ -79,11 +79,11 @@ namespace MW5.Projections.Views
             this.tabWkt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).BeginInit();
             this.gradientPanel1.SuspendLayout();
-            this.tabDialects.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).BeginInit();
             this.tabEsriWkt.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).BeginInit();
             this.gradientPanel2.SuspendLayout();
+            this.tabDialects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -261,7 +261,7 @@ namespace MW5.Projections.Views
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 112);
+            this.label2.Location = new System.Drawing.Point(24, 115);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(41, 13);
             this.label2.TabIndex = 14;
@@ -316,7 +316,7 @@ namespace MW5.Projections.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this._projectionMap1.AnimationOnZooming = MW5.Api.Enums.AutoToggle.Auto;
             this._projectionMap1.BackgroundColor = System.Drawing.Color.White;
-            this._projectionMap1.CurrentScale = 24.747421502357419D;
+            this._projectionMap1.CurrentScale = 21.24436183764016D;
             this._projectionMap1.CurrentZoom = -1;
             this._projectionMap1.ExtentHistory = 20;
             this._projectionMap1.ExtentPad = 0.02D;
@@ -428,6 +428,58 @@ namespace MW5.Projections.Views
             this.projectionTextBox1.Size = new System.Drawing.Size(403, 401);
             this.projectionTextBox1.TabIndex = 0;
             this.projectionTextBox1.Text = "";
+            // 
+            // tabEsriWkt
+            // 
+            this.tabEsriWkt.Controls.Add(this.btnCopyClipboardEsri);
+            this.tabEsriWkt.Controls.Add(this.gradientPanel2);
+            this.tabEsriWkt.Image = null;
+            this.tabEsriWkt.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabEsriWkt.Location = new System.Drawing.Point(1, 22);
+            this.tabEsriWkt.Name = "tabEsriWkt";
+            this.tabEsriWkt.ShowCloseButton = true;
+            this.tabEsriWkt.Size = new System.Drawing.Size(448, 470);
+            this.tabEsriWkt.TabIndex = 5;
+            this.tabEsriWkt.Text = "ESRI WKT";
+            this.tabEsriWkt.ThemesEnabled = false;
+            // 
+            // btnCopyClipboardEsri
+            // 
+            this.btnCopyClipboardEsri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyClipboardEsri.BeforeTouchSize = new System.Drawing.Size(110, 23);
+            this.btnCopyClipboardEsri.IsBackStageButton = false;
+            this.btnCopyClipboardEsri.Location = new System.Drawing.Point(322, 433);
+            this.btnCopyClipboardEsri.Name = "btnCopyClipboardEsri";
+            this.btnCopyClipboardEsri.Size = new System.Drawing.Size(110, 23);
+            this.btnCopyClipboardEsri.TabIndex = 7;
+            this.btnCopyClipboardEsri.Text = "Copy to clipboard";
+            this.btnCopyClipboardEsri.Click += new System.EventHandler(this.btnCopyClipboardEsri_Click);
+            // 
+            // gradientPanel2
+            // 
+            this.gradientPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gradientPanel2.BackgroundColor = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.White);
+            this.gradientPanel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.gradientPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gradientPanel2.Controls.Add(this.projectionTextBoxEsri);
+            this.gradientPanel2.Location = new System.Drawing.Point(17, 14);
+            this.gradientPanel2.Name = "gradientPanel2";
+            this.gradientPanel2.Padding = new System.Windows.Forms.Padding(5);
+            this.gradientPanel2.Size = new System.Drawing.Size(415, 413);
+            this.gradientPanel2.TabIndex = 8;
+            // 
+            // projectionTextBoxEsri
+            // 
+            this.projectionTextBoxEsri.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.projectionTextBoxEsri.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.projectionTextBoxEsri.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.projectionTextBoxEsri.Location = new System.Drawing.Point(5, 5);
+            this.projectionTextBoxEsri.Name = "projectionTextBoxEsri";
+            this.projectionTextBoxEsri.Size = new System.Drawing.Size(403, 401);
+            this.projectionTextBoxEsri.TabIndex = 0;
+            this.projectionTextBoxEsri.Text = "";
             // 
             // tabDialects
             // 
@@ -549,58 +601,6 @@ namespace MW5.Projections.Views
             this.label6.Text = "Dialects are alternative formulations of the projection. Add to this list any WKT" +
     " or proj4 strings that should be bound to the current EPSG code:\r\n";
             // 
-            // tabEsriWkt
-            // 
-            this.tabEsriWkt.Controls.Add(this.btnCopyClipboardEsri);
-            this.tabEsriWkt.Controls.Add(this.gradientPanel2);
-            this.tabEsriWkt.Image = null;
-            this.tabEsriWkt.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabEsriWkt.Location = new System.Drawing.Point(1, 22);
-            this.tabEsriWkt.Name = "tabEsriWkt";
-            this.tabEsriWkt.ShowCloseButton = true;
-            this.tabEsriWkt.Size = new System.Drawing.Size(448, 470);
-            this.tabEsriWkt.TabIndex = 5;
-            this.tabEsriWkt.Text = "ESRI WKT";
-            this.tabEsriWkt.ThemesEnabled = false;
-            // 
-            // btnCopyClipboardEsri
-            // 
-            this.btnCopyClipboardEsri.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCopyClipboardEsri.BeforeTouchSize = new System.Drawing.Size(110, 23);
-            this.btnCopyClipboardEsri.IsBackStageButton = false;
-            this.btnCopyClipboardEsri.Location = new System.Drawing.Point(322, 433);
-            this.btnCopyClipboardEsri.Name = "btnCopyClipboardEsri";
-            this.btnCopyClipboardEsri.Size = new System.Drawing.Size(110, 23);
-            this.btnCopyClipboardEsri.TabIndex = 7;
-            this.btnCopyClipboardEsri.Text = "Copy to clipboard";
-            this.btnCopyClipboardEsri.Click += new System.EventHandler(this.btnCopyClipboardEsri_Click);
-            // 
-            // gradientPanel2
-            // 
-            this.gradientPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gradientPanel2.BackgroundColor = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.White);
-            this.gradientPanel2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
-            this.gradientPanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gradientPanel2.Controls.Add(this.projectionTextBoxEsri);
-            this.gradientPanel2.Location = new System.Drawing.Point(17, 14);
-            this.gradientPanel2.Name = "gradientPanel2";
-            this.gradientPanel2.Padding = new System.Windows.Forms.Padding(5);
-            this.gradientPanel2.Size = new System.Drawing.Size(415, 413);
-            this.gradientPanel2.TabIndex = 8;
-            // 
-            // projectionTextBoxEsri
-            // 
-            this.projectionTextBoxEsri.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.projectionTextBoxEsri.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.projectionTextBoxEsri.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.projectionTextBoxEsri.Location = new System.Drawing.Point(5, 5);
-            this.projectionTextBoxEsri.Name = "projectionTextBoxEsri";
-            this.projectionTextBoxEsri.Size = new System.Drawing.Size(403, 401);
-            this.projectionTextBoxEsri.TabIndex = 0;
-            this.projectionTextBoxEsri.Text = "";
-            // 
             // ProjectionInfoView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -626,11 +626,11 @@ namespace MW5.Projections.Views
             this.tabWkt.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel1)).EndInit();
             this.gradientPanel1.ResumeLayout(false);
-            this.tabDialects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).EndInit();
             this.tabEsriWkt.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gradientPanel2)).EndInit();
             this.gradientPanel2.ResumeLayout(false);
+            this.tabDialects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dialectGrid1)).EndInit();
             this.ResumeLayout(false);
 
         }

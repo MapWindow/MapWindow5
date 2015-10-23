@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
@@ -78,6 +80,11 @@ namespace MW5.Api.Concrete
             get { return (DataType)_grid.DataType; }
         }
 
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(Filename); }
+        }
+        
         public string Filename
         {
             get { return _grid.Filename; }

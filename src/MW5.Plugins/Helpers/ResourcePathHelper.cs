@@ -22,6 +22,10 @@ namespace MW5.Plugins.Helpers
             return GetStylesPath() + @"Textures\";
         }
 
+        /// <summary>
+        /// Gets path of the styles folder.
+        /// </summary>
+        /// <returns></returns>
         public static string GetStylesPath()
         {
             return AssemblyHelper.GetAppFolder() + @"\Styles\";

@@ -15,6 +15,7 @@ using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tiles.Views;
 using MW5.Views;
 
 namespace MW5.Menu
@@ -63,6 +64,9 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.CustomProviders:
+                    _context.Container.Run<TileProvidersPresenter>();
+                    break;
                 case MenuKeys.BingApiKey:
                     _context.Container.Run<BingApiPresenter>();
                     break;
@@ -191,6 +195,10 @@ namespace MW5.Menu
         {
             switch (itemKey)
             {
+                case MenuKeys.AddWmsLayer:
+                    var model = new WmsCapabilitiesModel(_context.Repository);
+                    _context.Container.Run<WmsCapabilitiesPresenter, WmsCapabilitiesModel>(model);
+                    return true;
                 case MenuKeys.AddDatabaseLayer:
                     var connection = _databaseService.PromptUserForConnection();
                     if (connection != null)
@@ -299,11 +307,8 @@ namespace MW5.Menu
             }
 
             manager.ProviderId = e.ProviderId;
-
-            // it's the easiest way to trigger reloading of tiles
-            // TODO: update API with something more intuitive
-            _context.Map.Lock();
-            _context.Map.Unlock();
+            _context.Map.Redraw(RedrawType.Minimal);
+            _context.View.Update();     //to update provider in status bar
         }
     }
 }

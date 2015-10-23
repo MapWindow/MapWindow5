@@ -84,11 +84,8 @@ namespace MW5.Configuration
             var config = _configService.Config;
 
             chkUseDiskCache.Checked = config.TilesUseDiskCache;
-            chkUseRamCache.Checked = config.TilesUseRamCache;
-            txtMaxRamSize.DoubleValue = config.TilesMaxRamSize;
             txtMaxDiskSize.DoubleValue = config.TilesMaxDiskSize;
             cboMaxAge.SetValue(config.TilesMaxDiskAge);
-            txtRamSize.Text = _tileManager.get_CacheSize(CacheType.Ram).ToString("f2");
             txtDiskSize.Text = _tileManager.get_CacheSize(CacheType.Disk).ToString("f2");
             txtFilename.Text = _tileManager.DiskCacheFilename;
             chkUseProxy.Checked = config.TilesUseProxy;
@@ -96,6 +93,7 @@ namespace MW5.Configuration
             txtProxyAddress.Text = config.TilesProxyAddress;
             txtProxyPassword.Text = config.TilesProxyPassword;
             txtProxyUserName.Text = config.TilesProxyUserName;
+            chkWmsCaching.Checked = config.WmsDiskCaching;
         }
 
         public void Save()
@@ -103,8 +101,6 @@ namespace MW5.Configuration
             var config = _configService.Config;
 
             config.TilesUseDiskCache = chkUseDiskCache.Checked;
-            config.TilesUseRamCache = chkUseRamCache.Checked;
-            config.TilesMaxRamSize = txtMaxRamSize.DoubleValue;
             config.TilesMaxDiskSize = txtMaxDiskSize.DoubleValue;
             config.TilesMaxDiskAge = cboMaxAge.GetValue<TilesMaxAge>();
             config.TilesDatabase = txtFilename.Text;
@@ -113,12 +109,11 @@ namespace MW5.Configuration
             config.TilesProxyAddress = txtProxyAddress.Text;
             config.TilesProxyPassword = txtProxyPassword.Text;
             config.TilesProxyUserName = txtProxyUserName.Text;
+            config.WmsDiskCaching = chkWmsCaching.Checked;
         }
 
         private void RefreshControls(object sender, EventArgs e)
         {
-            panelRam.Enabled = chkUseRamCache.Checked;
-
             txtProxyUserName.Enabled = chkUseProxy.Checked && !chkAutodetectProxy.Checked;
             txtProxyPassword.Enabled = chkUseProxy.Checked && !chkAutodetectProxy.Checked;
             txtProxyAddress.Enabled = chkUseProxy.Checked;

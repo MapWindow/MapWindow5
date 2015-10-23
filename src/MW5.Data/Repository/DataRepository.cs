@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using MW5.Data.Views;
@@ -20,25 +21,37 @@ namespace MW5.Data.Repository
     {
         private readonly IGeoDatabaseService _databaseService;
         private readonly IFileDialogService _fileDialogService;
-        private readonly IApplicationContainer _container;
-        private readonly List<string> _folders;
-        private readonly List<DatabaseConnection> _connections;
+        private List<string> _folders;
+        private BindingList<WmsServer> _wmsServers;
+        private List<DatabaseConnection> _connections;
+
+        
 
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
         public event EventHandler<ConnectionEventArgs> ConnectionAdded;
         public event EventHandler<ConnectionEventArgs> ConnectionRemoved;
 
-        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService, IApplicationContainer container)
+        public DataRepository(IGeoDatabaseService databaseService, IFileDialogService fileDialogService)
         {
             if (databaseService == null) throw new ArgumentNullException("databaseService");
-            if (container == null) throw new ArgumentNullException("container");
-
+        
             _databaseService = databaseService;
             _fileDialogService = fileDialogService;
-            _container = container;
+
+            Init();
+        }
+
+        private void Init()
+        {
             _folders = new List<string>();
+
             _connections = new List<DatabaseConnection>();
+
+            _wmsServers = new BindingList<WmsServer>() 
+            { 
+                new WmsServer("Lizard Tech", "http://demo.lizardtech.com/lizardtech/iserv/ows") 
+            };
         }
 
         public IEnumerable<string> Folders
@@ -49,6 +62,11 @@ namespace MW5.Data.Repository
         public IEnumerable<DatabaseConnection> Connections
         {
             get { return _connections; }
+        }
+
+        public IEnumerable<WmsServer> WmsServers
+        {
+            get { return _wmsServers; }
         }
 
         public void AddFolderLink()
@@ -116,6 +134,37 @@ namespace MW5.Data.Repository
 
             _connections.Remove(connection);
             FireEvent(ConnectionRemoved, connection);
+        }
+
+        public void RemoveWmsServer(WmsServer server)
+        {
+            if (_wmsServers.Remove(server))
+            {
+                // TODO: fire event
+            }
+        }
+
+        public void AddWmsServer(WmsServer server)
+        {
+            if (server != null)
+            {
+                // TODO: fire event
+                _wmsServers.Add(server);
+            }
+        }
+
+        public void UpdateWmsServer(WmsServer server)
+        {
+            int index = _wmsServers.IndexOf(server);
+            if (index != -1)
+            {
+                _wmsServers[index] = server;
+            }
+        }
+
+        public void ClearWmsServers()
+        {
+            _wmsServers.Clear();
         }
 
         private bool HasFolder(string path)

@@ -44,7 +44,7 @@ namespace MW5.Services.Helpers
                 msg += Environment.NewLine + Environment.NewLine;
             }
 
-            msg += "Description: " + ex.Message.ToUpper() + Environment.NewLine + Environment.NewLine;
+            msg += "Description: " + ex.Message + Environment.NewLine + Environment.NewLine;
             msg += "Stack trace: " + Environment.NewLine + ex.StackTrace;
 
             if (ex.InnerException != null)

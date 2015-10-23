@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.IO;
 using MapWinGIS;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -250,6 +251,11 @@ namespace MW5.Api.Concrete
         public IEnvelope Envelope
         {
             get { return new Envelope(_image.Extents); }
+        }
+
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(Filename); }
         }
 
         public string Filename

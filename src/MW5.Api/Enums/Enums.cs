@@ -38,6 +38,7 @@
         Image = 1,
         VectorLayer = 2,
         Grid = 3,
+        WmsLayer = 4
     }
 
     public enum SpatialRelation
@@ -924,7 +925,6 @@
     {
         Ram = 0,
         Disk = 1,
-        Both = 2,
     }
 
     public enum TileProjection
@@ -1414,7 +1414,8 @@
     public enum LayerIdentityType
     {
         File = 0,
-        OgrDatasource,
+        OgrDatasource = 1,
+        Wms = 2,
     }
 
     public enum AngleFormat

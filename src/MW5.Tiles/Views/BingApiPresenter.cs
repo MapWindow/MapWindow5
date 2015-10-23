@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MW5.Api.Static;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
-using MW5.Views.Abstract;
+using MW5.Tiles.Views.Abstract;
 
-namespace MW5.Views
+namespace MW5.Tiles.Views
 {
     internal class BingApiPresenter: BasePresenter<IBingApiView>
     {

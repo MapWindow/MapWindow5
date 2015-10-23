@@ -18,6 +18,7 @@ namespace MW5.Services.Serialization
 
             Folders = repository.Folders.ToList();
             Connections = repository.Connections.ToList();
+            WmsServers = repository.WmsServers.ToList();
         }
 
         [DataMember]
@@ -25,5 +26,8 @@ namespace MW5.Services.Serialization
 
         [DataMember]
         public List<DatabaseConnection> Connections { get; set; }
+
+        [DataMember]
+        public List<WmsServer> WmsServers { get; set; }
     }
 }

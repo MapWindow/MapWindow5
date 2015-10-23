@@ -13,6 +13,7 @@ namespace MW5.Plugins.Interfaces
     {
         IEnumerable<string> Folders { get; }
         IEnumerable<DatabaseConnection> Connections { get; }
+        IEnumerable<WmsServer> WmsServers { get; }    
         
         void AddFolderLink();
         void AddFolderLink(string path);
@@ -21,6 +22,11 @@ namespace MW5.Plugins.Interfaces
         void AddConnectionWithPrompt(GeoDatabaseType? databaseType = null);
         void AddConnection(DatabaseConnection connection);
         void RemoveConnection(DatabaseConnection connection, bool silent);
+
+        void AddWmsServer(WmsServer server);
+        void RemoveWmsServer(WmsServer server);
+        void UpdateWmsServer(WmsServer server);
+        void ClearWmsServers();
 
         event EventHandler<FolderEventArgs> FolderAdded;
         event EventHandler<FolderEventArgs> FolderRemoved;

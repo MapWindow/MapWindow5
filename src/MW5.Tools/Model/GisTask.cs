@@ -73,6 +73,14 @@ namespace MW5.Tools.Model
         public int ThreadId { get; private set; }
 
         /// <summary>
+        /// Gets a value indicating whether this callback is a main application logger.
+        /// </summary>
+        public bool MainLogger
+        {
+            get {return false;}
+        }
+
+        /// <summary>
         /// Occurs when status of the task changed.
         /// </summary>
         public event EventHandler<TaskStatusChangedEventArgs> StatusChanged;

@@ -41,12 +41,17 @@ namespace MW5.Plugins.Helpers
 
         public static string GetToolsConfigPath()
         {
-            return GetConfigPath() + @"\Config\Tools\";
+            return GetConfigPath() + @"\Tools\";
         }
 
         public static string GetDriversConfigPath()
         {
-            return GetConfigPath() + @"\Config\Drivers\";
+            return GetConfigPath() + @"\Drivers\";
+        }
+
+        public static string GetWmsCachePath()
+        {
+            return GetConfigPath() + @"\WMS\";
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Text;
 using System.Windows.Forms;
+using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.UI.Forms;
@@ -16,14 +18,7 @@ namespace MW5.Forms
         {
             InitializeComponent();
 
-            if (needClose)
-            {
-                Text = "Ooops, we are down";
-            }
-            else
-            {
-                Text = "Something went wrong";
-            }
+            Text = needClose ? "Ooops, we are down" : "Something went wrong";
 
             _exception = ex;
 
@@ -80,10 +75,10 @@ namespace MW5.Forms
         {
             var node = new TreeNodeAdv
             {
-                Text = ex.Message, 
+                Text = ex.Message,
                 MultiLine = true, 
                 Tag = ex, 
-                Expanded = true
+                Expanded = true,
             };
 
             parent.Nodes.Add(node);
@@ -96,12 +91,18 @@ namespace MW5.Forms
 
         private void btnReport_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(_exception.ExceptionToString());
-
-            PathHelper.OpenUrl(ReportIssueUrl);
+            try
+            {
+                Clipboard.SetText(_exception.ExceptionToString());
+                PathHelper.OpenUrl(ReportIssueUrl);
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Sorry, failed to do this either.");
+            }
         }
 
-        private void treeViewAdv1_AfterSelect(object sender, EventArgs e)
+        private void OntreeViewAdvAfterSelect(object sender, EventArgs e)
         {
             var node = treeViewAdv1.SelectedNode;
             if (node != null)
@@ -111,6 +112,18 @@ namespace MW5.Forms
                 {
                     textBoxExt1.Text = ex.StackTrace;
                 }
+            }
+        }
+
+        private void OnCopyClick(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetText(_exception.ExceptionToString());
+            }
+            catch (Exception ex)
+            {
+                MessageService.Current.Info("Sorry, failed to do this either.");
             }
         }
     }

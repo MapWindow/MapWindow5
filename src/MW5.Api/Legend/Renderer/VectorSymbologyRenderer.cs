@@ -270,7 +270,7 @@ namespace MW5.Api.Legend.Renderer
                 left -= (categoryWidth - Constants.IconWidth) / 2;
             }
 
-            switch (_layer.Type)
+            switch (_layer.LegendLayerType)
             {
                 case LegendLayerType.PointShapefile:
                     options.DrawPoint(hdc, left, top, categoryWidth + 1, categoryHeight + 1, backColor);
@@ -331,7 +331,7 @@ namespace MW5.Api.Legend.Renderer
         private void RenderCore()
         {
             var maxWidth = Constants.IconWidth;
-            if (_layer.Type == LegendLayerType.PointShapefile)
+            if (_layer.LegendLayerType == LegendLayerType.PointShapefile)
             {
                 maxWidth = _layer.get_MaxIconWidth(_sf);
             }

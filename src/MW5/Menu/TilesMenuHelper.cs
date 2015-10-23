@@ -57,7 +57,6 @@ namespace MW5.Menu
             var item = root.SubItems.AddButton(NoTilesMenuItem, PluginIdentity.Default);
             item.Tag = EmptyProviderId;
             item.ItemClicked += OnItemClick;
-            item.BeginGroup = true;
         }
 
         private static void AddDefaultProviders(IDropDownMenuItem root)

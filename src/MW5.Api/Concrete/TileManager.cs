@@ -23,9 +23,9 @@ namespace MW5.Api.Concrete
             _tiles.ClearCache((tkCacheType)cacheType);
         }
 
-        public void ClearCache2(CacheType cacheType, TileProvider provider, int fromScale = 0, int toScale = 100)
+        public void ClearCache2(CacheType cacheType, int provider, int fromScale = 0, int toScale = 100)
         {
-            _tiles.ClearCache2((tkCacheType)cacheType, (tkTileProvider)provider, fromScale, toScale);
+            _tiles.ClearCache2((tkCacheType)cacheType, provider, fromScale, toScale);
         }
 
         public bool SetProxy(string address, int port)
@@ -112,9 +112,9 @@ namespace MW5.Api.Concrete
             _tiles.MaxCacheSize[(tkCacheType)cacheType] = maxSize;
         }
 
-        public double get_CacheSize(CacheType cacheType, TileProvider provider = TileProvider.None, int scale = -1)
+        public double get_CacheSize(CacheType cacheType, int provider = -1, int scale = -1)
         {
-            return _tiles.CacheSize2[(tkCacheType) cacheType, (tkTileProvider)provider, scale];
+            return _tiles.CacheSize2[(tkCacheType) cacheType, provider, scale];
         }
 
         public string Proxy
@@ -159,9 +159,13 @@ namespace MW5.Api.Concrete
             get { return _tiles.MinZoom; }
         }
 
-        public TileProjection ServerProjection
+        public ISpatialReference ServerProjection
         {
-            get { return (TileProjection)_tiles.ServerProjection; }
+            get
+            {
+                var gp = _tiles.ServerProjection; 
+                return gp != null ?  new SpatialReference(gp) : null;
+            }
         }
 
         public TileProjectionStatus ProjectionStatus

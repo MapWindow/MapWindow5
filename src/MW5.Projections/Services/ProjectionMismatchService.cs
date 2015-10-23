@@ -128,6 +128,11 @@ namespace MW5.Projections.Services
         {
             newLayer = null;
 
+            if (layer.LayerType == Api.Enums.LayerType.WmsLayer)
+            {
+                return TestingResult.Ok;
+            }
+
             // user should be prompted
             if (!_usePreviousAnswerMismatch && _context.Config.ShowProjectionMismatchDialog)
             {
@@ -173,7 +178,7 @@ namespace MW5.Projections.Services
         }
 
         /// <summary>
-        /// Handles the empty layer projection by implementing selected projection absense behavior.
+        /// Handles the empty layer projection by implementing selected projection absence behavior.
         /// </summary>
         private TestingResult HandleEmptyLayerProjection(ILayerSource layer, ISpatialReference mapProj)
         {

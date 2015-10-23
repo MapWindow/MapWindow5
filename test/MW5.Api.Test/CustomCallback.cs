@@ -26,10 +26,17 @@ namespace MW5.API.Test
             return false;
         }
 
-
         public int ThreadId
         {
             get { return -1; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this callback is a main application logger.
+        /// </summary>
+        public bool MainLogger
+        {
+            get{ return false;}
         }
     }
 }

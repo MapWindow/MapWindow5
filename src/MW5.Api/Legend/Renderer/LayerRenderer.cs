@@ -7,6 +7,7 @@
 using System;
 using System.Drawing;
 using MapWinGIS;
+using MW5.Api.Enums;
 using MW5.Api.Legend.Events;
 using Image = System.Drawing.Image;
 using Point = System.Drawing.Point;
@@ -69,6 +70,11 @@ namespace MW5.Api.Legend.Renderer
             if (lyr.IsVector)
             {
                 var renderer = new VectorSymbologyRenderer(Legend);
+                renderer.Render(g, lyr, bounds, isSnapshot);
+            }
+            else if (lyr.LayerType == Enums.LayerType.WmsLayer)
+            {
+                var renderer = new WmsSymbologyRenderer(Legend);
                 renderer.Render(g, lyr, bounds, isSnapshot);
             }
             else
@@ -184,22 +190,27 @@ namespace MW5.Api.Legend.Renderer
             var left = bounds.Right - 36;
             Image icon;
 
-            var ogrLayer = lyr.VectorSource;
-            if (ogrLayer != null)
+
+            if (lyr.LayerType == LayerType.VectorLayer)
             {
                 icon = GetIcon(LegendIcon.Database);
+                DrawPicture(g, left, textLocation.Y, Constants.IconSize, Constants.IconSize, icon);
+            }
+            else if (lyr.LegendLayerType == LegendLayerType.WmsLayer)
+            {
+                icon = GetIcon(LegendIcon.WmsLayer);
                 DrawPicture(g, left, textLocation.Y, Constants.IconSize, Constants.IconSize, icon);
             }
             else if (lyr.Icon != null)
             {
                 DrawPicture(g, left, textLocation.Y, Constants.IconSize, Constants.IconSize, lyr.Icon);
             }
-            else if (lyr.Type == LegendLayerType.Image)
+            else if (lyr.LegendLayerType == LegendLayerType.Image)
             {
                 icon = GetIcon(LegendIcon.Image);
                 DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
             }
-            else if (lyr.Type == LegendLayerType.Grid)
+            else if (lyr.LegendLayerType == LegendLayerType.Grid)
             {
                 icon = GetIcon(LegendIcon.Grid);
                 DrawPicture(g, left, top, Constants.IconSize, Constants.IconSize, icon);
@@ -268,7 +279,7 @@ namespace MW5.Api.Legend.Renderer
 
             if (sf != null)
             {
-                if (lyr.Type == LegendLayerType.PointShapefile)
+                if (lyr.LegendLayerType == LegendLayerType.PointShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawPoint(
                         hdc,
@@ -278,7 +289,7 @@ namespace MW5.Api.Legend.Renderer
                         Constants.IconSize,
                         backColor);
                 }
-                else if (lyr.Type == LegendLayerType.LineShapefile)
+                else if (lyr.LegendLayerType == LegendLayerType.LineShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawLine(
                         hdc,
@@ -291,7 +302,7 @@ namespace MW5.Api.Legend.Renderer
                         Constants.IconSize,
                         backColor);
                 }
-                else if (lyr.Type == LegendLayerType.PolygonShapefile)
+                else if (lyr.LegendLayerType == LegendLayerType.PolygonShapefile)
                 {
                     sf.DefaultDrawingOptions.DrawRectangle(
                         hdc,

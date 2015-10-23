@@ -83,6 +83,7 @@
     <Compile Include="Concrete\RasterBand.cs" />
     <Compile Include="Concrete\ImageBandCollection.cs" />
     <Compile Include="Concrete\RasterHistogram.cs" />
+    <Compile Include="Concrete\WmsSource.cs" />
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Legend\Renderer\SymbologyRendererBase.cs" />
     <Compile Include="Legend\Renderer\VectorSymbologyRenderer.cs" />
     <Compile Include="Legend\Renderer\RasterSymbologyRenderer.cs" />
+    <Compile Include="Legend\Renderer\WmsSymbologyRenderer.cs" />
     <Compile Include="Map\BoundMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

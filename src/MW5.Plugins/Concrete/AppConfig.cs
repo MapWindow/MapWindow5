@@ -372,6 +372,12 @@ namespace MW5.Plugins.Concrete
         public string UpdaterInstallername { get; set; }
 
         [DataMember]
+        public bool WmsDiskCaching { get; set; }
+
+        [DataMember]
+        public string WmsLastServer { get; set; }
+
+        [DataMember]
         public bool UpdaterCheckNewVersion { get; set; }
 
         [DataMember]
@@ -496,6 +502,8 @@ namespace MW5.Plugins.Concrete
             UpdaterHasNewInstaller = false;
             UpdaterIsDownloading = false;
             UpdaterLastChecked = new DateTime(2015, 1, 1);
+            WmsDiskCaching = true;
+            WmsLastServer = string.Empty;
             ZoomBarVerbosity = ZoomBarVerbosity.Full;
             ZoomBehavior = ZoomBehavior.UseTileLevels;
             ZoomBoxStyle = ZoomBoxStyle.Blue;

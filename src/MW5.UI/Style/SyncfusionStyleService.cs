@@ -218,6 +218,8 @@ namespace MW5.UI.Style
             if (multiTreeView != null)
             {
                 multiTreeView.Style = MultiColumnVisualStyle.Default;
+                multiTreeView.HideSelection = false;
+                multiTreeView.NodeHoverColor = Color.FromArgb(224, 224, 224);
             }
         }
 

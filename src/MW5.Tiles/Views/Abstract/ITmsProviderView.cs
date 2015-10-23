@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Mvp;
+using MW5.Tiles.Model;
 
-namespace MW5.Views.Abstract
+namespace MW5.Tiles.Views.Abstract
 {
-    public interface IBingApiView: IView
+    internal interface ITmsProviderView: IView<TmsProvider>
     {
-        string Key { get; }
     }
 }

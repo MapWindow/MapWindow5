@@ -8,6 +8,7 @@ using MW5.Shared.Log;
 
 namespace MW5.Api.Static
 {
+    // TODO: rename to GisUtils
     public class GeoProcessing
     {
         private static readonly GeoProcessing _staticUilts = new GeoProcessing();

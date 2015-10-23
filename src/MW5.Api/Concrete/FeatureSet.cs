@@ -106,6 +106,11 @@ namespace MW5.Api.Concrete
             get { return new Envelope(_shapefile.Extents); }
         }
 
+        public string Name
+        {
+            get { return Path.GetFileNameWithoutExtension(Filename);  }
+        }
+
         public string Filename
         {
             get { return _shapefile.Filename; }

@@ -36,6 +36,9 @@ namespace MW5.Menu
                 new MenuCommand("Add Raster Layer", MenuKeys.AddRasterLayer, Resources.icon_layer_raster_add,
                 "Adds raster layer from the file based datasource."),
 
+                new MenuCommand("Add WMS Layer", MenuKeys.AddWmsLayer, Resources.img_wms_add24,
+                "Adds WMS layer to the map."),
+
                 new MenuCommand("Add Database Layer", MenuKeys.AddDatabaseLayer, Resources.icon_layer_database_add,
                 "Adds a layer from geodatabase."),
 
@@ -45,7 +48,7 @@ namespace MW5.Menu
                 new MenuCommand("Save Project", MenuKeys.SaveProject, Resources.icon_save,
                 "Saves the current project under the same name or requests for the name if it wasn't yet specified."),
 
-                new MenuCommand("Save project as", MenuKeys.SaveProjectAs, Resources.icon_save_as,
+                new MenuCommand("Save Project As", MenuKeys.SaveProjectAs, Resources.icon_save_as,
                 "Saves the current project under new name."),
 
                 new MenuCommand("Quit", MenuKeys.Quit, Resources.icon_quit, 

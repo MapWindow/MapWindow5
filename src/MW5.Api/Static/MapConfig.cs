@@ -318,6 +318,12 @@ namespace MW5.Api.Static
             set { _settings.CacheShapeRenderingData = value; }
         }
 
+        public static bool WmsDiskCaching
+        {
+            get { return _settings.WmsDiskCaching; }
+            set { _settings.WmsDiskCaching = value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

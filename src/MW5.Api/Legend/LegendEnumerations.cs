@@ -33,7 +33,12 @@
         /// <summary>
         /// Grid layer
         /// </summary>
-        Grid = 4
+        Grid = 4,
+
+        /// <summary>
+        /// WMS layer
+        /// </summary>
+        WmsLayer = 5,
     }
 
 
@@ -72,6 +77,7 @@
         Database = 9,
         Folder = 10,
         FolderOpened = 11,
+        WmsLayer = 12,
     }
 
     /// <summary>

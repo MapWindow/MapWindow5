@@ -38,6 +38,7 @@ namespace MW5.Plugins
             EnumHelper.RegisterConverter(new GroupOperationConverter());
             EnumHelper.RegisterConverter(new ClipOperationConverter());
             EnumHelper.RegisterConverter(new TilesMaxAgeConverter());
+            EnumHelper.RegisterConverter(new TileProjectionConverter());
         }
     }
 }
