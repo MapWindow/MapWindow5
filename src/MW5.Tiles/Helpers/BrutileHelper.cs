@@ -9,6 +9,7 @@ using BruTile.Extensions;
 using BruTile.Wms;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Services;
 using MW5.Shared;
 using Layer = BruTile.Wms.Layer;
 
@@ -54,12 +55,26 @@ namespace MW5.Tiles.Helpers
             {
                 return null;
             }
+
+            var box = layer.GetBoundingBox();
+            if (box == null)
+            {
+                MessageService.Current.Info("No bounding box is specified for the layer.");
+                return null;
+            }
+
+            int epsg = layer.GetEpsg();
+            if (epsg <= 0)
+            {
+                MessageService.Current.Info("Failed to determine coordinate system for the layer.");
+                return null;
+            }
             
             var provider = new WmsSource("WMS provider")
             {
                 Layers = GetLayers(layers),
-                Epsg = layer.GetEpsg(),
-                BoundingBox = layer.GetBoundingBox(),
+                Epsg = epsg,
+                BoundingBox = box,
                 BaseUrl = serverUrl,
                 Format = capabilities.GetFormat()
             };

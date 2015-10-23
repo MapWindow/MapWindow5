@@ -77,6 +77,14 @@ namespace MW5.Services.Concrete
 
         public int ThreadId { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this callback is a main application logger.
+        /// </summary>
+        public bool MainLogger 
+        {
+            get { return true; } 
+        }
+
         public IReadOnlyList<ILogEntry> Entries
         {
             get { return _entries; }

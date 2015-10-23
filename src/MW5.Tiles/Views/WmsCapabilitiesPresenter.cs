@@ -167,6 +167,8 @@ namespace MW5.Tiles.Views
             }
 
             var provider = Model.Capabilities.CreateWmsLayer(layers, server.Url);
+            if (provider == null) return;
+
             provider.Name = provider.Layers;
 
             _layerService.AddDatasource(provider);

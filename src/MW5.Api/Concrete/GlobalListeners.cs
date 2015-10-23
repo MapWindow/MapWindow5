@@ -31,7 +31,17 @@ namespace MW5.Api.Concrete
             get
             {
                 int threadId = Thread.CurrentThread.ManagedThreadId;
-                return _list.Where(cb => cb.ThreadId == threadId).ToList();
+                var callbacks = _list.Where(cb => cb.ThreadId == threadId).ToList();
+
+                if (callbacks.Count == 0)
+                {
+                    // if error message are reported by background thread in MapWinGIS,
+                    // there will be no thread specific callback, redirect them to logger
+                    // explicitly
+                    return _list.Where(cb => cb.MainLogger);
+                }
+
+                return callbacks;
             }
         }
 

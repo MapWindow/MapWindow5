@@ -31,5 +31,10 @@
         /// </summary>
         /// <remarks>Notifications are passed only to listeners with the same thread id.</remarks>
         int ThreadId { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether this callback is a main application logger.
+        /// </summary>
+        bool MainLogger { get; }
     }
 }
