@@ -129,6 +129,7 @@ namespace MW5.Api.Legend
                 {
                     var lyr = _legend.CreateLayer(mapLayerHandle, newLayer);
                     lyr.HideFromLegend = !legendVisible;
+
                     if (positionInGroup == -1)
                     {
                         grp.AddLayer(lyr);
@@ -174,33 +175,6 @@ namespace MW5.Api.Legend
         public override int Add(ILayerSource newLayer, bool visible = true)
         {
             return Add(newLayer, visible, true, -1);
-        }
-
-        /// <summary>
-        /// Adds a layer to the map, optionally placing it above the currently selected layer (otherwise at top of layer list).
-        /// </summary>
-        /// <param name="newLayer"> The object to add (must be a supported Layer type) </param>
-        /// <param name="visible"> Whether or not the layer is visible upon adding it </param>
-        /// <param name="placeAboveCurrentlySelected"> Whether the layer should be placed above currently selected layer, or at top of layer list. </param>
-        /// <returns> layerHandle of the newly added layer, -1 on failure </returns>
-        public int Add(ILayerSource newLayer, bool visible, bool placeAboveCurrentlySelected)
-        {
-            var mapLayerHandle = Add(newLayer, visible);
-
-            if (!placeAboveCurrentlySelected)
-            {
-                return mapLayerHandle;
-            }
-
-            int selectedLayer = _legend.SelectedLayerHandle;
-            if (_legend.SelectedLayerHandle != -1)
-            {
-                var addPos = PositionInGroup(selectedLayer) + 1;
-                var addGrp = GroupOf(selectedLayer);
-                MoveLayer(mapLayerHandle, addGrp, addPos);
-            }
-
-            return mapLayerHandle;
         }
 
         public override bool Remove(int layerHandle)

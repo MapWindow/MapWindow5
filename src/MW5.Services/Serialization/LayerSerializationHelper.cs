@@ -146,15 +146,9 @@ namespace MW5.Services.Serialization
             return false;
         }
 
-        private static bool CheckFilename(string filename)
+        public static bool CheckFilename(string filename)
         {
-            if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
-            {
-                Logger.Current.Info("Can't save settings for non disk-based layer");
-                return false;
-            }
-
-            return true;
+            return !string.IsNullOrWhiteSpace(filename) && File.Exists(filename);
         }
     }
 }

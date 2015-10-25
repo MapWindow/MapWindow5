@@ -110,16 +110,35 @@ namespace MW5.Controls
                     break;
                 case LegendCommand.SaveStyle:
                     {
-                        //_layerService.SaveStyle();
                         var layer = Legend.Layers.Current;
-                        LayerSerializationHelper.SaveSettings(layer);
+
+                        if (layer != null)
+                        {
+                            if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                            {
+                                MessageService.Current.Info("Can not save settings for a non-disk based layer.");
+                                return;
+                            }
+
+                            LayerSerializationHelper.SaveSettings(layer);
+                        }
                         break;
                     }
                 case LegendCommand.LoadStyle:
                     {
-                        //_layerService.LoadStyle();
                         var layer = Legend.Layers.Current;
-                        LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
+
+                        if (layer != null)
+                        {
+                            if (!LayerSerializationHelper.CheckFilename(layer.Filename))
+                            {
+                                MessageService.Current.Info("Can not load settings for a non-disk based layer.");
+                                return;
+                            }
+
+                            LayerSerializationHelper.LoadSettings(layer, _broadcaster, false);
+                        }
+                        
                         _context.Legend.Redraw(LegendRedraw.LegendAndMap);
                     }
                     break;

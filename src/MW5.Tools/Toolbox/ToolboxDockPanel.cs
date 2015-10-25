@@ -138,6 +138,11 @@ namespace MW5.Tools.Toolbox
 
             foreach (var tool in tools.OrderBy(t => t.Name))
             {
+                if (!AttributeHelper.HasAttribute<GisToolAttribute>(tool.GetType()))
+                {
+                    continue;
+                }
+
                 string groupKey = tool.GetType().GetAttributeValue((GisToolAttribute att) => att.GroupKey);
 
                 if (string.IsNullOrWhiteSpace(groupKey))

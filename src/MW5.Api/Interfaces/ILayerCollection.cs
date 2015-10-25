@@ -71,15 +71,6 @@ namespace MW5.Api.Interfaces
         int Add(ILayerSource newLayer, bool visible, int targetGroupHandle);
 
         /// <summary>
-        /// Adds a layer to the map, optionally placing it above the currently selected layer (otherwise at top of layer list).
-        /// </summary>
-        /// <param name="newLayer"> The object to add (must be a supported Layer type) </param>
-        /// <param name="visible"> Whether or not the layer is visible upon adding it </param>
-        /// <param name="placeAboveCurrentlySelected"> Whether the layer should be placed above currently selected layer, or at top of layer list. </param>
-        /// <returns> layerHandle of the newly added layer, -1 on failure </returns>
-        int Add(ILayerSource newLayer, bool visible, bool placeAboveCurrentlySelected);
-
-        /// <summary>
         /// Gets the selected layer.
         /// </summary>
         T Current { get; }

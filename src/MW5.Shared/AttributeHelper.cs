@@ -40,5 +40,11 @@ namespace MW5.Shared
         {
             return Attribute.GetCustomAttribute(type, typeof(T)) as T;
         }
+
+        public static bool HasAttribute<T>(Type type)
+            where T : Attribute
+        {
+            return GetAttribute<T>(type) != null;
+        }
     }
 }

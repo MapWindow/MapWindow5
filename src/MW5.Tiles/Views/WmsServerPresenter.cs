@@ -33,6 +33,12 @@ namespace MW5.Tiles.Views
                 return false;
             }
 
+            if (url.ToLower().StartsWith("https"))
+            {
+                MessageService.Current.Info("HTTPS protocol is not supported.");
+                return false;
+            }
+
             try
             {
                 var uri = new Uri(url);

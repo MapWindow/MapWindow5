@@ -173,7 +173,28 @@ namespace MW5.Tiles.Views
 
             _layerService.AddDatasource(provider);
 
+             AdjustLayerPosition();
+
             _context.Legend.Redraw(LegendRedraw.LegendAndMap);
+        }
+
+        /// <summary>
+        /// Places WMS layer above data layers.
+        /// </summary>
+        private void AdjustLayerPosition()
+        {
+            int layerHandle = _layerService.LastLayerHandle;
+            if (layerHandle == -1) return;
+
+            var group = _context.Legend.Groups.GroupByLayerHandle(layerHandle);
+            if (group != null)
+            {
+                var beforeLayer = _context.Legend.Layers.FirstOrDefault(l => l.LayerType != Api.Enums.LayerType.WmsLayer);
+                if (beforeLayer != null)
+                {
+                    _context.Legend.Layers.MoveLayer(layerHandle, group.Handle, beforeLayer.Position);    
+                }
+            }
         }
 
         /// <summary>

@@ -288,10 +288,6 @@ namespace MW5.Api.Legend
         /// <returns>A Group object allowing you to read/change properties, null (nothing) on failure</returns>
         public ILegendGroup ItemByHandle(int handle)
         {
-            if (!IsValidHandle(handle))
-            {
-                throw new IndexOutOfRangeException("Invalid group handle.");
-            }
             return this[_positions[handle]];
         }
 
@@ -306,6 +302,7 @@ namespace MW5.Api.Legend
             {
                 throw new IndexOutOfRangeException("Invalid group handle.");
             }
+
             return _positions[groupHandle];   
         }
 

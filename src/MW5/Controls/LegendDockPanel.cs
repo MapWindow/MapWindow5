@@ -49,6 +49,12 @@ namespace MW5.Controls
             {
                 Legend.SelectedLayerHandle = e.LayerHandle;
 
+                var group = Legend.Groups.GroupByLayerHandle(e.LayerHandle);
+                if (group != null)
+                {
+                    SelectedGroupHandle = group.Handle;
+                }
+
                 var pnt = PointToClient(Cursor.Position);
                 contextMenuLayer.Show(this, pnt);
             }
