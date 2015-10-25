@@ -39,7 +39,7 @@
             this._map.Enabled = true;
             this._map.Location = new System.Drawing.Point(0, 0);
             this._map.Name = "_map";
-            this._map.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("_map.OcxState")));
+            //this._map.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("_map.OcxState")));
             this._map.Size = new System.Drawing.Size(308, 188);
             this._map.TabIndex = 0;
             // 

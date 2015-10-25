@@ -324,6 +324,12 @@ namespace MW5.Api.Static
             set { _settings.WmsDiskCaching = value; }
         }
 
+        public static CallbackVerbosity CallbackVerbosity
+        {
+            get { return (CallbackVerbosity)_settings.CallbackVerbosity; }
+            set { _settings.CallbackVerbosity = (tkCallbackVerbosity)value; }
+        }
+
         #region Not implemented
         /*
         public static double MinPolygonArea

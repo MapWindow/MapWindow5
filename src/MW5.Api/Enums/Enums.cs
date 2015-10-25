@@ -1490,4 +1490,10 @@
         Branching = 3,
         Conversion = 4,
     }
+
+    public enum CallbackVerbosity
+    {
+        All = 0,
+        Limited = 1,
+    }
 }
