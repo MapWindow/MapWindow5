@@ -117,7 +117,7 @@ namespace MW5.Projections.Services
                 }
             }
 
-            _context.Map.Projection = layerProj;
+            _context.Map.Projection = layerProj.Clone();
             return TestingResult.Ok;
         }
 

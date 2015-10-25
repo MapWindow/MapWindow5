@@ -112,7 +112,7 @@ namespace MW5.Projections.Controls
         /// <param name="ext">Bounding box to search CS</param>
         public void DrawSelectedBounds(Envelope ext)
         {
-            Layers.Remove(_handleBounds);
+            RemoveLayer(_handleBounds);
 
             var sf = new FeatureSet(GeometryType.Polygon);
 
@@ -184,7 +184,7 @@ namespace MW5.Projections.Controls
         /// <param name="cs">The territory (coordinate system or country) to draw</param>
         public void DrawCoordinateSystem(ITerritory cs)
         {
-            Layers.Remove(_handleCs);
+            RemoveLayer(_handleCs);
 
             var sf = new FeatureSet(GeometryType.Polygon);
             var shp = new Geometry(GeometryType.Polygon);
@@ -237,7 +237,7 @@ namespace MW5.Projections.Controls
         /// </summary>
         public void ClearCoordinateSystem()
         {
-            Layers.Remove(_handleCs);
+            RemoveLayer(_handleCs);
         }
 
         /// <summary>
@@ -245,7 +245,15 @@ namespace MW5.Projections.Controls
         /// </summary>
         public void ClearBounds()
         {
-            Layers.Remove(_handleBounds);
+            RemoveLayer(_handleBounds);
+        }
+
+        private void RemoveLayer(int layerHandle)
+        {
+            if (layerHandle != -1)
+            {
+                Layers.Remove(layerHandle);
+            }
         }
     }
 }

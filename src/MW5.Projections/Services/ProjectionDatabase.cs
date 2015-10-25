@@ -128,6 +128,11 @@ namespace MW5.Projections.Services
                 return null;
             }
 
+            if (projection == null || projection.IsEmpty)
+            {
+                return null;
+            }
+
             // standard
             var cs = GetCoordinateSystemCore(projection);
             if (searchType == ProjectionSearchType.Standard || cs != null)
@@ -447,10 +452,11 @@ namespace MW5.Projections.Services
                 string[] files = Directory.GetFiles(path, extension);
                 if (files.Length != 1)
                 {
-                    string msg = "A single database is expected. " + files.Length + " databases are found." +
-                                 Environment.NewLine + "Path : " + path + Environment.NewLine;
+                    string msg = "Failed to load projection database. A single database is expected. Databases found: " + files.Length + "." + Environment.NewLine + 
+                                 "Path: " + path + Environment.NewLine;
 
-                    MessageService.Current.Info(msg);
+                    Logger.Current.Warn(msg);
+                    
                     return false;
                 }
 

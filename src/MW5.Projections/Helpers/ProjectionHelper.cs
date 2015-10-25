@@ -96,7 +96,14 @@ namespace MW5.Projections.Helpers
         /// </summary>
         public static void ShowMapProjectionProperties(this IAppContext context)
         {
-            var cs = context.Projections.GetCoordinateSystem(context.Map.Projection, ProjectionSearchType.UseDialects);
+            var gp = context.Map.Projection;
+            if (gp == null || gp.IsEmpty)
+            {
+                MessageService.Current.Info("Map projection is not set.");
+                return;
+            }
+
+            var cs = context.Projections.GetCoordinateSystem(gp, ProjectionSearchType.UseDialects);
             if (cs != null)
             {
                 ShowProjectionProperties(context, cs);
@@ -112,7 +119,9 @@ namespace MW5.Projections.Helpers
         /// </summary>
         public static void ShowProjectionProperties(this IAppContext context, ISpatialReference projection, IWin32Window parent = null)
         {
-            var model = new ProjectionInfoModel(projection);
+            var cs = context.Projections.GetCoordinateSystem(projection, ProjectionSearchType.UseDialects);
+
+            var model = cs != null ? new ProjectionInfoModel(cs) : new ProjectionInfoModel(projection);
 
             context.Container.Run<ProjectionInfoPresenter, ProjectionInfoModel>(model, parent);
         }
