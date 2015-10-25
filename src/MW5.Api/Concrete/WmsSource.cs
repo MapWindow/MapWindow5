@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MapWinGIS;
+using MW5.Shared;
 using MW5.Shared.Log;
 
 namespace MW5.Api.Concrete
@@ -258,6 +260,30 @@ namespace MW5.Api.Concrete
         {
             get { return _layer.DoCaching; }
             set { _layer.DoCaching = value; }
+        }
+
+        public Color TransparentColor
+        {
+            get { return ColorHelper.UintToColor(_layer.TransparentColor); }
+            set { _layer.TransparentColor = ColorHelper.ColorToUInt(value); }
+        }
+
+        public bool UseTransparentColor
+        {
+            get { return _layer.UseTransparentColor; }
+            set { _layer.UseTransparentColor = value; }
+        }
+
+        public WmsVersion Version
+        {
+            get { return (WmsVersion)_layer.Version; }
+            set { _layer.Version = (tkWmsVersion)value; }
+        }
+
+        public string Styles
+        {
+            get { return _layer.Styles; }
+            set { _layer.Styles = value; }
         }
     }
 }

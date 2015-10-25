@@ -49,7 +49,9 @@
             this.tabRendering = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.btnClearColorAdjustments = new Syncfusion.Windows.Forms.ButtonAdv();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.clpTransparent = new MW5.UI.Controls.Office2007ColorPicker(this.components);
             this.label6 = new System.Windows.Forms.Label();
+            this.chkUseTransparentColor = new System.Windows.Forms.CheckBox();
             this.tbrTransparency = new System.Windows.Forms.TrackBar();
             this.tbrHue = new System.Windows.Forms.TrackBar();
             this.tbrSaturation = new System.Windows.Forms.TrackBar();
@@ -62,6 +64,19 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.tabConfig = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.cboCrs = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cboStyles = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.cboLayers = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cboSize = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label10 = new System.Windows.Forms.Label();
+            this.cboFormat = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.cboVersion = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblCacheId = new System.Windows.Forms.Label();
             this.btnClearCache = new Syncfusion.Windows.Forms.ButtonAdv();
@@ -87,6 +102,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbrConstrast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrBrightness)).BeginInit();
             this.tabConfig.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboCrs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboStyles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboLayers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboFormat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboVersion)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.infoGrid1)).BeginInit();
@@ -324,7 +346,7 @@
             // 
             this.btnClearColorAdjustments.BeforeTouchSize = new System.Drawing.Size(82, 23);
             this.btnClearColorAdjustments.IsBackStageButton = false;
-            this.btnClearColorAdjustments.Location = new System.Drawing.Point(408, 220);
+            this.btnClearColorAdjustments.Location = new System.Drawing.Point(408, 257);
             this.btnClearColorAdjustments.Name = "btnClearColorAdjustments";
             this.btnClearColorAdjustments.Size = new System.Drawing.Size(82, 23);
             this.btnClearColorAdjustments.TabIndex = 66;
@@ -332,7 +354,9 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.clpTransparent);
             this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.chkUseTransparentColor);
             this.groupBox3.Controls.Add(this.tbrTransparency);
             this.groupBox3.Controls.Add(this.tbrHue);
             this.groupBox3.Controls.Add(this.tbrSaturation);
@@ -346,10 +370,25 @@
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Location = new System.Drawing.Point(21, 18);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(469, 196);
+            this.groupBox3.Size = new System.Drawing.Size(469, 233);
             this.groupBox3.TabIndex = 65;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Adjustments";
+            // 
+            // clpTransparent
+            // 
+            this.clpTransparent.Color = System.Drawing.Color.Black;
+            this.clpTransparent.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.clpTransparent.DropDownHeight = 1;
+            this.clpTransparent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.clpTransparent.FormattingEnabled = true;
+            this.clpTransparent.IntegralHeight = false;
+            this.clpTransparent.Items.AddRange(new object[] {
+            "Color"});
+            this.clpTransparent.Location = new System.Drawing.Point(170, 193);
+            this.clpTransparent.Name = "clpTransparent";
+            this.clpTransparent.Size = new System.Drawing.Size(73, 21);
+            this.clpTransparent.TabIndex = 68;
             // 
             // label6
             // 
@@ -359,6 +398,14 @@
             this.label6.Size = new System.Drawing.Size(72, 13);
             this.label6.TabIndex = 63;
             this.label6.Text = "Transparency";
+            // 
+            // chkUseTransparentColor
+            // 
+            this.chkUseTransparentColor.Location = new System.Drawing.Point(27, 193);
+            this.chkUseTransparentColor.Name = "chkUseTransparentColor";
+            this.chkUseTransparentColor.Size = new System.Drawing.Size(137, 21);
+            this.chkUseTransparentColor.TabIndex = 67;
+            this.chkUseTransparentColor.Text = "Transparent color";
             // 
             // tbrTransparency
             // 
@@ -480,6 +527,7 @@
             // 
             // tabConfig
             // 
+            this.tabConfig.Controls.Add(this.groupBox2);
             this.tabConfig.Controls.Add(this.groupBox1);
             this.tabConfig.Image = global::MW5.Plugins.Symbology.Properties.Resources.img_tools24;
             this.tabConfig.ImageSize = new System.Drawing.Size(24, 24);
@@ -491,6 +539,141 @@
             this.tabConfig.Text = "Configuration";
             this.tabConfig.ThemesEnabled = false;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.cboCrs);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.cboStyles);
+            this.groupBox2.Controls.Add(this.cboLayers);
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.cboSize);
+            this.groupBox2.Controls.Add(this.label10);
+            this.groupBox2.Controls.Add(this.cboFormat);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.label5);
+            this.groupBox2.Controls.Add(this.cboVersion);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Location = new System.Drawing.Point(16, 21);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(470, 157);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Request parameters";
+            // 
+            // cboCrs
+            // 
+            this.cboCrs.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboCrs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboCrs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboCrs.Location = new System.Drawing.Point(308, 111);
+            this.cboCrs.Name = "cboCrs";
+            this.cboCrs.Size = new System.Drawing.Size(140, 21);
+            this.cboCrs.TabIndex = 15;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(254, 115);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(29, 13);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "CRS";
+            // 
+            // cboStyles
+            // 
+            this.cboStyles.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboStyles.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboStyles.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboStyles.Location = new System.Drawing.Point(83, 111);
+            this.cboStyles.Name = "cboStyles";
+            this.cboStyles.Size = new System.Drawing.Size(140, 21);
+            this.cboStyles.TabIndex = 13;
+            // 
+            // cboLayers
+            // 
+            this.cboLayers.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboLayers.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboLayers.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboLayers.Location = new System.Drawing.Point(308, 37);
+            this.cboLayers.Name = "cboLayers";
+            this.cboLayers.Size = new System.Drawing.Size(140, 21);
+            this.cboLayers.TabIndex = 12;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(254, 40);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(38, 13);
+            this.label11.TabIndex = 11;
+            this.label11.Text = "Layers";
+            // 
+            // cboSize
+            // 
+            this.cboSize.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboSize.Location = new System.Drawing.Point(308, 74);
+            this.cboSize.Name = "cboSize";
+            this.cboSize.Size = new System.Drawing.Size(140, 21);
+            this.cboSize.TabIndex = 10;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(254, 78);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(27, 13);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "Size";
+            // 
+            // cboFormat
+            // 
+            this.cboFormat.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboFormat.Location = new System.Drawing.Point(83, 74);
+            this.cboFormat.Name = "cboFormat";
+            this.cboFormat.Size = new System.Drawing.Size(140, 21);
+            this.cboFormat.TabIndex = 8;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(25, 78);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(39, 13);
+            this.label9.TabIndex = 7;
+            this.label9.Text = "Format";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(25, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 5;
+            this.label5.Text = "Styles";
+            // 
+            // cboVersion
+            // 
+            this.cboVersion.BeforeTouchSize = new System.Drawing.Size(140, 21);
+            this.cboVersion.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cboVersion.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.cboVersion.Location = new System.Drawing.Point(83, 37);
+            this.cboVersion.Name = "cboVersion";
+            this.cboVersion.Size = new System.Drawing.Size(140, 21);
+            this.cboVersion.TabIndex = 3;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(25, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(42, 13);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "Version";
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblCacheId);
@@ -498,7 +681,7 @@
             this.groupBox1.Controls.Add(this.lblCacheSize);
             this.groupBox1.Controls.Add(this.chkDoCaching);
             this.groupBox1.Controls.Add(this.chkUseCache);
-            this.groupBox1.Location = new System.Drawing.Point(16, 17);
+            this.groupBox1.Location = new System.Drawing.Point(16, 195);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(470, 113);
             this.groupBox1.TabIndex = 0;
@@ -644,6 +827,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.tbrConstrast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbrBrightness)).EndInit();
             this.tabConfig.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cboCrs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboStyles)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboLayers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboFormat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cboVersion)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabInfo.ResumeLayout(false);
@@ -698,5 +889,20 @@
         private System.Windows.Forms.CheckBox chkDoCaching;
         private System.Windows.Forms.CheckBox chkUseCache;
         private Syncfusion.Windows.Forms.ButtonAdv btnClearColorAdjustments;
+        private UI.Controls.Office2007ColorPicker clpTransparent;
+        private System.Windows.Forms.CheckBox chkUseTransparentColor;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboStyles;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboLayers;
+        private System.Windows.Forms.Label label11;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboSize;
+        private System.Windows.Forms.Label label10;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboFormat;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label5;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboVersion;
+        private System.Windows.Forms.Label label4;
+        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboCrs;
+        private System.Windows.Forms.Label label12;
     }
 }

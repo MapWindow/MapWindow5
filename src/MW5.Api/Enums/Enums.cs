@@ -1496,4 +1496,14 @@
         All = 0,
         Limited = 1,
     }
+
+    public enum WmsVersion
+    {
+        Empty = 0,
+        Auto = 1,
+        v100 = 2,
+        v110 = 3,
+        v111 = 4,
+        v13 = 5,
+    }
 }
