@@ -48,7 +48,7 @@ namespace MW5.Tiles.Helpers
         /// <summary>
         /// Creates MapWinGIS WMS provider based GetCapabilities definition and layers selected by user.
         /// </summary>
-        public static WmsSource CreateWmsLayer(this WmsCapabilities capabilities, IEnumerable<Layer> layers, string serverUrl)
+        public static WmsSource CreateWmsLayer(this WmsCapabilities capabilities, IEnumerable<Layer> layers, string serverUrl, ISpatialReference mapProjection)
         {
             var layer = layers.FirstOrDefault();
             if (layer == null)
@@ -56,25 +56,25 @@ namespace MW5.Tiles.Helpers
                 return null;
             }
 
-            var box = layer.GetBoundingBox();
+            var box = layer.ChooseBoundingBox(mapProjection);
             if (box == null)
             {
-                MessageService.Current.Info("No bounding box is specified for the layer.");
+                MessageService.Current.Info("Failed to determine bounds of the layer.");
                 return null;
             }
 
-            int epsg = layer.GetEpsg();
-            if (epsg <= 0)
+            int epsg = -1;
+            if (!ParseEpsg(box.CRS, ref epsg))
             {
                 MessageService.Current.Info("Failed to determine coordinate system for the layer.");
                 return null;
             }
-            
+
             var provider = new WmsSource("WMS provider")
             {
                 Layers = GetLayers(layers),
                 Epsg = epsg,
-                BoundingBox = box,
+                BoundingBox = new Envelope(box.MinX, box.MaxX, box.MinY, box.MaxY),
                 BaseUrl = serverUrl,
                 Format = capabilities.GetFormat()
             };
@@ -98,37 +98,47 @@ namespace MW5.Tiles.Helpers
             return StringHelper.Join(layers.Select(l => l.Name), ",");
         }
 
-        private static IEnvelope GetBoundingBox(this Layer layer)
+        private static BoundingBox ChooseBoundingBox(this Layer layer, ISpatialReference mapProjection)
         {
-            var box = layer.BoundingBox.FirstOrDefault();
-            if (box == null)
+            // can be used to double check, but there is little use of it we don't have bounds in particular projection
+            //foreach (var crs in layer.SRS)
+            //{
+            //    if (ParseEpsg(crs, ref epsg))
+            //    {
+            //        yield return epsg;
+            //    }
+            //}
+
+            if (mapProjection != null)
             {
-                return null;
-            }
-
-            return new Envelope(box.MinX, box.MaxX, box.MinY, box.MaxY);
-        }
-
-        private static int GetEpsg(this Layer layer)
-        {
-            int epsg = -1;
-            var crs = layer.SRS.FirstOrDefault();
-
-            if (ParseEpsg(crs, ref epsg))
-            {
-                return epsg;
-            }
-
-            var box = layer.BoundingBox.FirstOrDefault();
-            if (box != null)
-            {
-                if (ParseEpsg(box.CRS, ref epsg))
+                foreach (var box in layer.BoundingBox)
                 {
-                    return epsg;
+                    if (IsSameProjection(box, mapProjection))
+                    {
+                        return box;
+                    }
                 }
             }
 
-            return epsg;
+            return layer.BoundingBox.FirstOrDefault();
+        }
+
+        private static bool IsSameProjection(BoundingBox box, ISpatialReference mapProjection)
+        {
+            int epsg = -1;
+            if (ParseEpsg(box.CRS, ref epsg))
+            {
+                var sr = new SpatialReference();
+                if (sr.ImportFromEpsg(epsg))
+                {
+                    if (sr.IsSame(mapProjection))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         private static bool ParseEpsg(string crs, ref int epsg)

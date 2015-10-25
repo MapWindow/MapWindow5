@@ -166,7 +166,7 @@ namespace MW5.Tiles.Views
                 MessageService.Current.Info("No layers are selected");
             }
 
-            var provider = Model.Capabilities.CreateWmsLayer(layers, server.Url);
+            var provider = Model.Capabilities.CreateWmsLayer(layers, server.Url, _context.Map.Projection);
             if (provider == null) return;
 
             provider.Name = provider.Layers;

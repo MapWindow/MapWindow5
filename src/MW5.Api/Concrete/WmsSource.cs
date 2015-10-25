@@ -67,7 +67,11 @@ namespace MW5.Api.Concrete
         public int Epsg
         {
             get { return _layer.Epsg; }
-            set { _layer.Epsg = value; }
+            set
+            {
+                _layer.Epsg = value;
+                UpdateId();
+            }
         }
 
         public string Layers
@@ -217,7 +221,7 @@ namespace MW5.Api.Concrete
             // There is no way to do it by id only.
 
             // TODO: add any other properties that make cache invalid (tile size for example)
-            Id = (BaseUrl + Layers).GetHashCode();
+            Id = (BaseUrl + Layers + Epsg).GetHashCode();
         }
 
         public float Brightness
