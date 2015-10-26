@@ -37,7 +37,7 @@ namespace MW5.Gdal.Tools
 
         [Input("Output type", 0, GroupOutput)]
         [ControlHint(ControlHint.Combo)]
-        public string OutputType { get; set; }
+        public override string OutputType { get; set; }
 
         [Input("Resampling method", 1, GroupOutput)]
         [ControlHint(ControlHint.Combo)]

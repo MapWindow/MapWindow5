@@ -179,7 +179,7 @@ namespace MW5.Menu
                 case MenuKeys.ComUsage:
                     GcHelper.Collect();
 
-                    string report = GeoProcessing.Instance.GetComUsageReport();
+                    string report = GisUtils.Instance.GetComUsageReport();
                     MessageService.Current.Info(report);
 
                     return true;

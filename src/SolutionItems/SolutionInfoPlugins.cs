@@ -1,11 +1,8 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="SolutionInfo.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//   MapWindow OSS Team - 2015
+// -------------------------------------------------------------------------------------------
+// <copyright file="SolutionInfoPlugins.cs" company="MapWindow OSS Team - www.mapwindow.org">
+//  MapWindow OSS Team - 2015
 // </copyright>
-// <summary>
-//   SolutionInfo.cs
-// </summary>
-// --------------------------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 #region
 
@@ -21,4 +18,5 @@ using System.Runtime.InteropServices;
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
+
 [assembly: ComVisible(false)]

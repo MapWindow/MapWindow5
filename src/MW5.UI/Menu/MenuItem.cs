@@ -28,7 +28,7 @@ namespace MW5.UI.Menu
             Skip = false;
         }
         
-        public string Text
+        public virtual string Text
         {
             get { return _item.Text; }
             set

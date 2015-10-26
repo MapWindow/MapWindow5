@@ -32,6 +32,11 @@ namespace MW5.UI.Menu
             _topLevel = topLevel;
         }
 
+        public override IComboBoxMenuItem AddComboBox(string text, string key, PluginIdentity identity)
+        {
+            throw new NotSupportedException();
+        }
+
         public override IMenuItem this[int index]
         {
             get

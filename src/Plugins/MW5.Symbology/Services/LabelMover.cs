@@ -16,6 +16,7 @@ using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Properties;
+using MW5.Shared;
 
 namespace MW5.Plugins.Symbology.Services
 {

@@ -1,5 +1,6 @@
 ﻿using System;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Static;
 
 namespace MW5.Plugins.Helpers
@@ -50,7 +51,7 @@ namespace MW5.Plugins.Helpers
                 return value;
             }
 
-            GeoProcessing.Instance.ConvertDistance(from, to, ref value);
+            GeodesicUtils.ConvertDistance(from, to, ref value);
 
             return value;
         }

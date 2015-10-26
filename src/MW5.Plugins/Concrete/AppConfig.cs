@@ -13,6 +13,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.Serialization;
+using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Plugins.Enums;
@@ -92,6 +93,7 @@ namespace MW5.Plugins.Concrete
                                         new Guid("70120ff9-1c6b-49a1-8949-dded8bcef499"), // Shape editor
                                         new Guid("F0CDF80F-5F74-48F6-8C8D-75F9B505EEE0"), // Debug window
                                         new Guid("F383FE43-0754-4EE2-951C-0066E87B28AB"), // GIS Toolbox
+                                        new Guid("16479551-5754-46A1-9243-A3DF788E7406"), // GIS Toolbox
                                       };
             }
         }
@@ -225,6 +227,18 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public MouseWheelDirection MouseWheelDirection { get; set; }
+
+        [DataMember]
+        public Orientation PrintingOrientation { get; set; }
+
+        [DataMember]
+        public string PrintingPaperFormat { get; set; }
+
+        [DataMember]
+        public int PrintingScale { get; set; }
+
+        [DataMember]
+        public string PrintingTemplate { get; set; }
 
         [DataMember]
         public ProjectionAbsence ProjectionAbsence { get; set; }
@@ -456,6 +470,10 @@ namespace MW5.Plugins.Concrete
             MeasuringShowLength = true;
             MeasuringShowTotalLength = true;
             MouseWheelDirection = MouseWheelDirection.Forward;
+            PrintingOrientation = Orientation.Vertical;
+            PrintingPaperFormat = "A4";
+            PrintingScale = 25000;
+            PrintingTemplate = "";
             ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
             ProjectionMismatch = ProjectionMismatch.Reproject;
             ProjectionShowLoadingReport = true;

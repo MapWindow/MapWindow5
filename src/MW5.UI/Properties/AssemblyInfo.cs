@@ -26,6 +26,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("MW5.Tools")]
 [assembly: InternalsVisibleTo("MW5.TableEditor")]
 [assembly: InternalsVisibleTo("MW5.Identifier")]
+[assembly: InternalsVisibleTo("MW5.Printing")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("cb0c93b9-4c77-45ca-8f16-09cee099e70b")]

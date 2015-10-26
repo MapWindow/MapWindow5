@@ -33,9 +33,12 @@ namespace MW5.Data.Helpers
 
             if (File.Exists(filename))
             {
-                RemoveOutdatatedTiles(filename, maxAge);
+                if (DebugHelper.CleanTileCache)
+                {
+                    RemoveOutdatatedTiles(filename, maxAge);
 
-                Vacuum(filename);
+                    Vacuum(filename);
+                }
 
                 _initialized = true;
             }

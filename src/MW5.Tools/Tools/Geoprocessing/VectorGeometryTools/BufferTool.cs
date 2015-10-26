@@ -95,7 +95,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             }
             else
             {
-                success = GeoProcessing.Instance.BufferByDistance(Input.Datasource, Input.SelectedOnly, bufferDistance, 
+                success = GisUtils.Instance.BufferByDistance(Input.Datasource, Input.SelectedOnly, bufferDistance, 
                                                             NumSegments, MergeResults, Output.Filename, Output.Overwrite);
             }
 

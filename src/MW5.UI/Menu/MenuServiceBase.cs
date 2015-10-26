@@ -12,8 +12,8 @@ namespace MW5.UI.Menu
     {
         protected readonly IAppContext _context;
         protected readonly PluginIdentity _identity;
-        protected IToolbarCollection _toolbars;
-        protected IMenu _menu;
+        protected IToolbarCollectionBase _toolbars;
+        protected IMenuBase _menu;
 
         public MenuServiceBase(IAppContext context, PluginIdentity identity)
         {

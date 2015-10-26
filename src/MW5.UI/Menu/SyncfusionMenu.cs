@@ -8,17 +8,19 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
-    internal class Menu: MenuBase
+    internal class SyncfusionMenu: MenuBase
     {
         private readonly MainFrameBarManager _menuManager;
 
-        internal Menu(object menuManager, MenuIndex menuIndex)
+        internal SyncfusionMenu(object menuManager, MenuIndex menuIndex)
         {
             _menuIndex = menuIndex;
             _menuManager = menuManager as MainFrameBarManager;
             
             if (menuIndex == null) throw new ArgumentNullException("menuIndex");
             if (_menuManager == null) throw new ApplicationException("Invalid type of menu manager");
+
+            CreateMenuBar();
         }
 
         internal void CreateMenuBar()
@@ -56,10 +58,7 @@ namespace MW5.UI.Menu
 
         public override IMenuItemCollection Items
         {
-            get
-            {
-                return new MenuItemCollection(MenuBar.Items, _menuIndex);
-            }
+            get { return new MenuItemCollection(MenuBar.Items, _menuIndex); }
         }
 
         private CommandBar CommandBar

@@ -20,5 +20,23 @@ namespace MW5.Shared
                 target.Invoke(action, null);
             }
         }
+
+        public static void FireEvent<T>(object sender, EventHandler<T> eventHandler, T args) where T : EventArgs
+        {
+            var handler = eventHandler;
+            if (handler != null)
+            {
+                handler(sender, args);
+            }
+        }
+
+        public static void FireEvent(object sender, EventHandler eventHandler)
+        {
+            var handler = eventHandler;
+            if (handler != null)
+            {
+                handler(sender, new EventArgs());
+            }
+        }
     }
 }

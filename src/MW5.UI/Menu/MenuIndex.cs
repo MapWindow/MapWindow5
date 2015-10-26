@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.UI.Enums;
 using MW5.UI.Helpers;
@@ -18,10 +19,13 @@ namespace MW5.UI.Menu
         private readonly Dictionary<string, IMenuItem> _items = new Dictionary<string, IMenuItem>();
         private readonly Dictionary<object, MenuItemCollectionMetadata> _collectionMetadata = new Dictionary<object, MenuItemCollectionMetadata>();
         private readonly MenuIndexType _indexType;
+        private readonly bool _mainMenu;
+        public event EventHandler<MenuItemEventArgs> ItemClicked;
 
-        public MenuIndex(MenuIndexType indexType)
+        public MenuIndex(MenuIndexType indexType, bool mainMenu = true)
         {
             _indexType = indexType;
+            _mainMenu = mainMenu;
         }
 
         public void AddItem(string key, IMenuItem item)
@@ -33,6 +37,11 @@ namespace MW5.UI.Menu
 
             item.ItemChanged += (s, e) => ToolTipHelper.UpdateTooltip(item);
             _items.Add(key, item);
+        }
+
+        public bool IsMainMenu
+        {
+            get { return _mainMenu; }
         }
 
         public void Remove(string key)
@@ -109,6 +118,16 @@ namespace MW5.UI.Menu
         public MenuIndexType ToolbarType
         {
             get { return _indexType; }
+        }
+
+
+        public void FireItemClicked(object sender, MenuItemEventArgs e)
+        {
+            var handler = ItemClicked;
+            if (handler != null)
+            {
+                handler(sender, e);
+            }
         }
     }
 }

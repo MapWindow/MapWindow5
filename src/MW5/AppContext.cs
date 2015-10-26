@@ -108,8 +108,8 @@ namespace MW5
             Legend.Lock();
 
             _dockPanelCollection = new DockPanelCollection(mainView.DockingManager, mainView as Form, _broadcaster, _styleService);
-            _menu = MenuFactory.CreateInstance(mainView.MenuManager);
-            _toolbars = MenuFactory.CreateToolbars(mainView.MenuManager);
+            _menu = MenuFactory.CreateMainMenu(mainView.MenuManager);
+            _toolbars = MenuFactory.CreateMainToolbars(mainView.MenuManager);
             _statusBar = MenuFactory.CreateStatusBar(mainView.StatusBar, PluginIdentity.Default);
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);

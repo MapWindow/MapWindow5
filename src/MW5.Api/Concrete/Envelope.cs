@@ -139,17 +139,8 @@ namespace MW5.Api.Concrete
         /// </summary>
         public string Tag
         {
-            get
-            {
-                return "";
-
-                // throw new NotSupportedException(); 
-            }
-
-            set
-            {
-                // throw new NotSupportedException();
-            }
+            get { throw new NotSupportedException(); }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -163,6 +154,11 @@ namespace MW5.Api.Concrete
         public void SetBounds(double xMin, double xMax, double yMin, double yMax)
         {
             _extents.SetBounds(xMin, yMin, 0.0, xMax, yMax, 0.0);
+        }
+
+        public void SetBounds(ICoordinate center, double width, double height)
+        {
+            SetBounds(center.X - width / 2.0, center.X + width / 2.0, center.Y - height / 2.0, center.Y + height / 2.0);
         }
 
         public Rectangle ToRectangle()
@@ -284,10 +280,22 @@ namespace MW5.Api.Concrete
             SetBounds(Math.Min(env.MinX, MinX), Math.Max(env.MaxX, MaxX), Math.Min(env.MinY, MinY), Math.Max(env.MaxY, MaxY));
         }
 
+        public void MoveCenterTo(double xCenter, double yCenter)
+        {
+            double w = Width;
+            double h = Height;
+
+            SetBounds(xCenter - w / 2.0, xCenter + w / 2.0, yCenter - h / 2.0, yCenter + h / 2.0);
+        }
+
+        public IEnvelope Clone()
+        {
+            return new Envelope(MinX, MaxX, MinY, MaxY);
+        }
+
         /// <summary>
-        /// Convert to a geometry.
+        /// ConvertS to a geometry.
         /// </summary>
-        /// <returns>The geometry</returns>
         public IGeometry ToGeometry()
         {
             var shape = _extents.ToShape();

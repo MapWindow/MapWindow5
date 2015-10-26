@@ -88,7 +88,7 @@ namespace MW5.Tools.Tools.Raster
                 }
             }
 
-            return GeoProcessing.Instance.Polygonize(GridFilename, Output.Filename, BandIndex, false, null, GdalFormats.Shapefile);
+            return GisUtils.Instance.Polygonize(GridFilename, Output.Filename, BandIndex, false, null, GdalFormats.Shapefile);
         }
 
         /// <summary>

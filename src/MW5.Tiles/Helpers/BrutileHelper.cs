@@ -25,7 +25,7 @@ namespace MW5.Tiles.Helpers
         private static Stream GetRemoteXmlStream(Uri uri)
         {
             var myRequest = (HttpWebRequest)WebRequest.Create(uri);
-            var myResponse = myRequest.GetSyncResponse(30000);
+            var myResponse = myRequest.GetResponse();
             var stream = myResponse.GetResponseStream();
             return stream;
         }

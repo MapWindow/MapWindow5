@@ -29,7 +29,8 @@ namespace MW5.Plugins.ShapeEditor.Menu
         private void InitToolbar(IAppContext context, PluginIdentity identity)
         {
             var items = context.Toolbars.FileToolbar.Items;
-            items.AddButton(_commands[MenuKeys.CreateLayer]);
+            items.AddButton(_commands[MenuKeys.CreateLayer]).BeginGroup = true;
+            context.Toolbars.FileToolbar.Update();
 
             var bar = context.Toolbars.Add(ShapeEditorToolbar, identity);
             bar.DockState = ToolbarDockState.Top;

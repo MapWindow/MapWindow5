@@ -41,7 +41,19 @@ namespace MW5.Shared
         /// <returns></returns>
         public static bool Equal(double val1, double val2)
         {
-            return Math.Abs(val2 - val1) <= Tolerance;
+            return Equal(val1, val2, Tolerance);
+        }
+
+        /// <summary>
+        /// Returns true if to values are equal within tolerance.
+        /// </summary>
+        /// <param name="val1">The val1.</param>
+        /// <param name="val2">The val2.</param>
+        /// <param name="tolerance">Tolerance.</param>
+        /// <returns></returns>
+        public static bool Equal(double val1, double val2, double tolerance)
+        {
+            return Math.Abs(val2 - val1) <= tolerance;
         }
 
         public static double Parse(string value, double defaultValue)

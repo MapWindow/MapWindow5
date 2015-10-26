@@ -252,7 +252,7 @@ namespace MW5.Tiles.Views
         {
             var server = SelectedServer;
 
-            const string msg = "WMS server GetCapabilities request failed: ";
+            string msg = "WMS server GetCapabilities request failed: " + Environment.NewLine;
 
             try
             {

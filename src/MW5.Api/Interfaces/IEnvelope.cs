@@ -47,10 +47,16 @@ namespace MW5.Api.Interfaces
 
         void SetBounds(double xMin, double xMax, double yMin, double yMax);
 
+        void SetBounds(ICoordinate center, double width, double height);
+
         IGeometry ToGeometry();
 
         Rectangle ToRectangle();
 
         void Union(IEnvelope env);
+
+        void MoveCenterTo(double xCenter, double yCenter);
+
+        IEnvelope Clone();
     }
 }

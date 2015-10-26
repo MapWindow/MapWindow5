@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -94,6 +95,20 @@ namespace MW5.Api.Map
                     MapCursor = MapCursor.None;
                 }
             }
+        }
+
+        public bool SnapShotToDC2(
+            IntPtr hDC,
+            IEnvelope extents,
+            int width,
+            float offsetX,
+            float offsetY,
+            float clipX,
+            float clipY,
+            float clipWidth,
+            float clipHeight)
+        {
+            return _map.SnapShotToDC2(hDC, extents.GetInternal(), width, offsetX, offsetY, clipX, clipY, clipWidth, clipHeight);
         }
 
         [Browsable(false)]

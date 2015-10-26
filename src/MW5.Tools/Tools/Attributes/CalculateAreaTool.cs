@@ -165,7 +165,7 @@ namespace MW5.Tools.Tools.Attributes
 
                 var ft = features[i];
 
-                double area = GeoProcessing.Instance.GeodesicArea(ft.Geometry);
+                double area = GeodesicUtils.GeodesicArea(ft.Geometry);
 
                 area = UnitConversionHelper.Convert(AreaUnits.SquareMeters, Units, area);
 

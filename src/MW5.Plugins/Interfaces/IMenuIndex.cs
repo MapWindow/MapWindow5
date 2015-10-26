@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Events;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -20,5 +21,8 @@ namespace MW5.Plugins.Interfaces
         MenuItemCollectionMetadata LoadMetadata(object key);
         MenuIndexType ToolbarType { get; }
         bool NeedsToolTip { get; }
+        bool IsMainMenu { get; }
+        event EventHandler<MenuItemEventArgs> ItemClicked;
+        void FireItemClicked(object sender, MenuItemEventArgs e);
     }
 }

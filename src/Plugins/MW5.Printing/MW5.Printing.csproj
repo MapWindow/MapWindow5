@@ -1,0 +1,463 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{01A845C6-D391-4258-81B0-C6ABF23D3364}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MW5.Plugins.Printing</RootNamespace>
+    <AssemblyName>MW5.Printing</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <OutputPath>..\..\..\bin\$(Platform)\$(Configuration)\Plugins\</OutputPath>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <Optimize>true</Optimize>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <DefineConstants>TRACE</DefineConstants>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Syncfusion.Core, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Grid.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Shared.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Syncfusion.Tools.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SolutionItems\SolutionInfoPlugins.cs">
+      <Link>Properties\SolutionInfoPlugins.cs</Link>
+    </Compile>
+    <Compile Include="CompositionRoot.cs" />
+    <Compile Include="Controls\LayoutListBox.Designer.cs">
+      <DependentUpon>LayoutListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Layout\ZoomableLayoutControl.Designer.cs">
+      <DependentUpon>ZoomableLayoutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Layout\ScreenAwareLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Layout\LayoutControlBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Layout\LayoutControlBase.Designer.cs">
+      <DependentUpon>LayoutControlBase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PropertyGrid\CategoryExAttribute.cs" />
+    <Compile Include="Controls\PropertyGrid\DisplayNameExAttribute.cs" />
+    <Compile Include="Helpers\GdiPlusHelper.cs" />
+    <Compile Include="Helpers\LayoutScaleHelper.cs" />
+    <Compile Include="Model\Elements\LayoutLegend.cs" />
+    <Compile Include="Model\LayoutElementEventArgs.cs" />
+    <Compile Include="Model\LayoutPage.cs" />
+    <Compile Include="Controls\Layout\MouseAwareLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Layout\ContentAwareLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Helpers\FileDialogHelper.cs" />
+    <Compile Include="Helpers\LayoutElementsHelper.cs" />
+    <Compile Include="Helpers\LayoutHelper.cs" />
+    <Compile Include="Helpers\LayoutPrint.cs" />
+    <Compile Include="Helpers\PaperSizesCache.cs" />
+    <Compile Include="Helpers\ScreenHelper.cs" />
+    <Compile Include="Model\LayoutElementCollection.cs" />
+    <Compile Include="Model\LegendItem.cs" />
+    <Compile Include="Model\PageSelectionEventArgs.cs" />
+    <Compile Include="Model\PaperSizeAdapter.cs" />
+    <Compile Include="Model\Table\Column.cs" />
+    <Compile Include="Model\Table\RowData.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\TileLoadingService.cs" />
+    <Compile Include="Views\Abstract\ICreateTableView.cs" />
+    <Compile Include="Views\Abstract\IPageSetupView.cs" />
+    <Compile Include="Views\Abstract\ITableView.cs" />
+    <Compile Include="Views\Abstract\ITemplateView.cs" />
+    <Compile Include="Views\CreateTableModel.cs" />
+    <Compile Include="Views\CreateTablePresenter.cs" />
+    <Compile Include="Views\CreateTableView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\CreateTableView.Designer.cs">
+      <DependentUpon>CreateTableView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\ElementsDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\Panels\ElementsDockPanel.Designer.cs">
+      <DependentUpon>ElementsDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\ElementsPresenter.cs" />
+    <Compile Include="Views\LayoutMenuCommands.cs" />
+    <Compile Include="Views\LayoutMenuGenerator.cs" />
+    <Compile Include="Views\LayoutMenuKeys.cs" />
+    <Compile Include="Menu\MenuCommands.cs" />
+    <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Menu\MenuListener.cs" />
+    <Compile Include="Helpers\PrinterManager.cs" />
+    <Compile Include="Controls\LayoutListBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Services\LayoutSerializer.cs" />
+    <Compile Include="Helpers\PrintingConstants.cs" />
+    <Compile Include="Properties\Strings.Designer.cs">
+      <DependentUpon>Strings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Model\TileLoadingTask.cs" />
+    <Compile Include="PrintingPlugin.cs" />
+    <Compile Include="Services\GeneralTypeConverter.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Elements\LayoutBitmap.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\PropertyGrid\LayoutGroupEditor.cs" />
+    <Compile Include="Controls\Layout\ZoomableLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Helpers\ConversionUtils.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Model\LayoutPages.cs" />
+    <Compile Include="Model\Elements\LayoutTable.cs" />
+    <Compile Include="Controls\Layout\LayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Model\Elements\LayoutElement.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Services\LayoutMapEditor.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\PropertyGrid\LayoutLayerEditor.cs" />
+    <Compile Include="Model\Elements\LayoutMap.cs" />
+    <Compile Include="Model\Elements\LayoutNorthArrow.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\Panels\PropertiesDockPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Model\Elements\LayoutRectangle.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Elements\LayoutScaleBar.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Elements\LayoutText.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Model\Table\TableData.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Abstract\ILayoutView.cs" />
+    <Compile Include="Views\LayoutMenuListener.cs" />
+    <Compile Include="Views\LayoutPresenter.cs" />
+    <Compile Include="Views\LayoutView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\LayoutView.Designer.cs">
+      <DependentUpon>LayoutView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PageSetupPresenter.cs" />
+    <Compile Include="Views\PageSetupView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\PageSetupView.Designer.cs">
+      <DependentUpon>PageSetupView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Panels\PropertiesDockPanel.Designer.cs">
+      <DependentUpon>PropertiesDockPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TablePresenter.cs" />
+    <Compile Include="Views\TableView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TableView.Designer.cs">
+      <DependentUpon>TableView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TableViewModel.cs" />
+    <Compile Include="Views\TemplatePresenter.cs" />
+    <Compile Include="Views\TemplateView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\TemplateView.Designer.cs">
+      <DependentUpon>TemplateView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TemplateModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Controls\Layout\LayoutControlBase.resx">
+      <DependentUpon>LayoutControlBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\CreateTableView.resx">
+      <DependentUpon>CreateTableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Panels\ElementsDockPanel.resx">
+      <DependentUpon>ElementsDockPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\LayoutView.resx">
+      <DependentUpon>LayoutView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\PageSetupView.resx">
+      <DependentUpon>PageSetupView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TableView.resx">
+      <DependentUpon>TableView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TemplateView.resx">
+      <DependentUpon>TemplateView.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EmbeddedResource Include="Controls\Layout\LayoutControl.resx">
+      <DependentUpon>LayoutControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LayoutListBox.resx">
+      <DependentUpon>LayoutListBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Layout\ZoomableLayoutControl.resx">
+      <DependentUpon>ZoomableLayoutControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Panels\PropertiesDockPanel.resx">
+      <DependentUpon>PropertiesDockPanel.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MW5.Api\MW5.Api.csproj">
+      <Project>{8AAD34B3-8EF3-485F-A04D-ED2C07D8F1DF}</Project>
+      <Name>MW5.Api</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Plugins\MW5.Plugins.csproj">
+      <Project>{76644cdf-5165-428d-8419-93c1e978db1b}</Project>
+      <Name>MW5.Plugins</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
+      <Project>{79400594-de0d-4ffd-b115-af2aeac79cd9}</Project>
+      <Name>MW5.Shared</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
+      <Project>{784A24F2-9A57-46EE-8945-D87869595216}</Project>
+      <Name>MW5.UI</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_compass24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_create24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_compass24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_legend24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_map24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_picture24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_table24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_insert_text24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_zoom_in24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_zoom_max24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_zoom_out24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_open24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_page_setup24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_pan24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_printer24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_rectangle24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_save24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_scalebar24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_zoom_in24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_zoom_layer24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_zoom_max24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_zoom_out24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ico_pan16.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\anim_loading.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_map_pan24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_save_as24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_down24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_remove24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_up24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_group24.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

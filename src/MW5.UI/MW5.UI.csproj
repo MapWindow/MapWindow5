@@ -49,9 +49,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=12.4450.0.24, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -97,6 +94,9 @@
     <Compile Include="Controls\LinkLabelCellModelEx.cs" />
     <Compile Include="Controls\LinkLabelCellRendererEx.cs" />
     <Compile Include="Controls\LinkLabelEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ListBoxEx.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\MultiColumnTreeViewFixed.cs">
@@ -249,19 +249,23 @@
     <Compile Include="Forms\MapWindowView.Designer.cs">
       <DependentUpon>MapWindowView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menu\Classic\MainMenuStripMenu.cs" />
     <Compile Include="Menu\Classic\MenuStripDropDownItem.cs" />
     <Compile Include="Menu\Classic\MenuStripItem.cs" />
     <Compile Include="Menu\Classic\MenuStripItemCollection.cs" />
     <Compile Include="Menu\Classic\MenuStripMenu.cs" />
+    <Compile Include="Menu\Classic\MenuStripMenuMute.cs" />
     <Compile Include="Menu\Classic\MenuStripSeparator.cs" />
+    <Compile Include="Menu\ComboBoxMenuItem.cs" />
     <Compile Include="Menu\ItemCollectionBase.cs" />
+    <Compile Include="Menu\MainSyncfusionMenu.cs" />
     <Compile Include="Menu\MenuBase.cs" />
     <Compile Include="Menu\MenuFactory.cs" />
     <Compile Include="Menu\MenuIndex.cs" />
     <Compile Include="Forms\MapWindowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menu\Menu.cs" />
+    <Compile Include="Menu\SyncfusionMenu.cs" />
     <Compile Include="Menu\MenuItem.cs" />
     <Compile Include="Menu\MenuItemBase.cs" />
     <Compile Include="Menu\MenuItemCollection.cs" />
@@ -274,6 +278,8 @@
     <Compile Include="Menu\StatusBarDropDown.cs" />
     <Compile Include="Menu\StatusBarItem.cs" />
     <Compile Include="Menu\StatusItemCollection.cs" />
+    <Compile Include="Menu\ToolbarCollectionMain.cs" />
+    <Compile Include="Menu\ToolbarCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -284,7 +290,7 @@
     <Compile Include="Style\StyleSettings.cs" />
     <Compile Include="Style\SyncfusionStyleService.cs" />
     <Compile Include="Menu\Toolbar.cs" />
-    <Compile Include="Menu\ToolbarsCollection.cs" />
+    <Compile Include="Menu\ToolbarCollectionBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MW5.Api\MW5.Api.csproj">

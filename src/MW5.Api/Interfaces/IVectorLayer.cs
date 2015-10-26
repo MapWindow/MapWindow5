@@ -5,7 +5,6 @@ namespace MW5.Api.Interfaces
 {
     public interface IVectorLayer: ILayerSource
     {
-        string Name { get; }
         GeometryType GeometryType { get; }
         bool DataIsReprojected { get; }
         string FidColumnName { get; }

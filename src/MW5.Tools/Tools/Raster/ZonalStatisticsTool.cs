@@ -78,7 +78,7 @@ namespace MW5.Tools.Tools.Raster
 
             try
             {
-                result = GeoProcessing.Instance.GridStatisticsToShapefile(grid, Vector.Datasource, Vector.SelectedOnly,
+                result = GisUtils.Instance.GridStatisticsToShapefile(grid, Vector.Datasource, Vector.SelectedOnly,
                     OverwriteFields);
             }
             catch (Exception ex)

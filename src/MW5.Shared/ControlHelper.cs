@@ -22,5 +22,13 @@ namespace MW5.Shared
             target.Left = source.Left;
             target.Top = source.Top;
         }
+
+        public static float GetScreenDpi(this Control control)
+        {
+            using (var g = control.CreateGraphics())
+            {
+                return g.DpiX;
+            }
+        }
     }
 }

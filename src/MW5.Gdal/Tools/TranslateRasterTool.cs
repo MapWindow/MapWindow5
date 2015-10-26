@@ -29,7 +29,7 @@ namespace MW5.Gdal.Tools
     {
         [Input("Output type", 1, true)]
         [ControlHint(ControlHint.Combo)]
-        public string OutputType { get; set; }
+        public override string OutputType { get; set; }
 
         [Input("No data value", 3, true)]
         public string NoData { get; set; }

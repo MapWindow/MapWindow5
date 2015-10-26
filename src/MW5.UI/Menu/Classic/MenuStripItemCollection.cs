@@ -26,6 +26,11 @@ namespace MW5.UI.Menu.Classic
             get { return _items as ToolStripItemCollection; }
         }
 
+        public override IComboBoxMenuItem AddComboBox(string text, string key, PluginIdentity identity)
+        {
+            throw new NotSupportedException("Combo boxes are not supported in the main menu.");
+        }
+
         public override IMenuItem this[int index]
         {
             get 

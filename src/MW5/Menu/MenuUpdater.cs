@@ -15,14 +15,12 @@ namespace MW5.Menu
 {
     internal class MenuUpdater: MenuServiceBase
     {
-        private readonly IAppContext _context;
         private readonly IMuteMap _map;
         private readonly IMuteLegend _legend;
 
-        public MenuUpdater(IAppContext context, PluginIdentity identity) : base(context, identity)
+        public MenuUpdater(IAppContext context, PluginIdentity identity) 
+            : base(context, identity)
         {
-            if (context == null) throw new ArgumentNullException("context");
-            _context = context;
             _map = context.Map;
             _legend = context.Legend;
         }

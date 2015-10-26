@@ -154,11 +154,11 @@ namespace MW5.Menu
 
         private void InitToolbars()
         {
-            var bar = _context.Toolbars.Add(FileToolbarNane, ToolbarsCollection.FILE_TOOLBAR_KEY, PluginIdentity.Default);
+            var bar = _context.Toolbars.Add(FileToolbarNane, ToolbarCollectionBase.FILE_TOOLBAR_KEY, PluginIdentity.Default);
             InitFileToolbar(bar);
             bar.DockState = ToolbarDockState.Left;
 
-            bar = _context.Toolbars.Add(MapToolbarName, ToolbarsCollection.MAP_TOOLBAR_KEY, PluginIdentity.Default);
+            bar = _context.Toolbars.Add(MapToolbarName, ToolbarCollectionBase.MAP_TOOLBAR_KEY, PluginIdentity.Default);
             InitMapToolbar(bar);
             bar.DockState = ToolbarDockState.Top;
         }

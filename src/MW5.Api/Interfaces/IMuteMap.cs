@@ -7,11 +7,20 @@ using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
+using MW5.Api.Map;
 
 namespace MW5.Api.Interfaces
 {
-    public interface IMuteMap: IComWrapper
+    public interface IMuteMap: IComWrapper, IPrintableMap
     {
+        // TODO: revisit
+        //ISpatialReference Projection { get; set; }
+        //IEnvelope Extents { get; }
+        //bool ScalebarVisible { get; set; }
+        //void Lock();
+        //bool Unlock();
+        //bool SnapShotToDC2(IntPtr hDC, IEnvelope extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
+
         IShapesList IdentifiedShapes { get; }
         IFeatureSet SelectedFeatureSet { get; }
         IImageSource SelectedImage { get; }
@@ -21,10 +30,8 @@ namespace MW5.Api.Interfaces
         MapProjection MapProjection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }
-        bool ScalebarVisible { get; set; }
         double CurrentScale { get; set; }
         int CurrentZoom { get; set; }
-        ISpatialReference Projection { get; set; }
         KnownExtents KnownExtents { get; set; }
         float Latitude { get; set; }
         float Longitude { get; set; }
@@ -35,8 +42,6 @@ namespace MW5.Api.Interfaces
         IFeatureSet GetFeatureSet(int layerHandle);
         IImageSource GetImage(int layerHandle);
         AngleFormat ShowCoordinatesFormat { get; set; }
-
-        IEnvelope Extents { get; }
         IEnvelope GeographicExtents { get; }
         bool SetGeographicExtents(IEnvelope pVal);
         bool SetGeographicExtents2(double xLongitude, double yLatitude, double widthKilometers);
@@ -93,8 +98,7 @@ namespace MW5.Api.Interfaces
         string VersionNumber { get; }
         IEnvelope GetKnownExtents(KnownExtents extents);
 
-        void Lock();
-        bool Unlock();
+     
         void Redraw(RedrawType redrawType = RedrawType.All);
         void Clear();
         void Undo();
@@ -158,7 +162,6 @@ namespace MW5.Api.Interfaces
         // bool DeserializeMapState(string state, bool loadLayers, string basePath);
         //bool TrapRMouseDown { get; set; }
         // bool SnapShotToDC(IntPtr hDC, Extents extents, int width);
-        // bool SnapShotToDC2(IntPtr hDC, Extents extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
         //tkZoomBoxStyle ZoomBoxStyle { get; set; }
 
         #endregion

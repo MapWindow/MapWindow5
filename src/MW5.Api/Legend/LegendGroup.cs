@@ -27,7 +27,7 @@ namespace MW5.Api.Legend
         /// </summary>
         internal LegendGroup(LegendControl leg, int handle)
         {
-            _legend = leg;      // must be first in the constructor
+            _legend = leg;
             _layers = new List<LegendLayer>();
             _icon = null;
             _recalcHeight = true;
@@ -132,7 +132,7 @@ namespace MW5.Api.Legend
         {
             get
             {
-                return Visible == Visibility.AllHidden;
+                return Visible == Visibility.AllVisible;
             }
             set
             {

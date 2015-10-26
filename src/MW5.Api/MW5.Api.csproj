@@ -74,6 +74,7 @@
     <Compile Include="Concrete\ExpressionFunction.cs" />
     <Compile Include="Concrete\ExpressionEvaluator.cs" />
     <Compile Include="Concrete\GeoAngle.cs" />
+    <Compile Include="Concrete\GeoSize.cs" />
     <Compile Include="Concrete\GridBandCollection.cs" />
     <Compile Include="Concrete\LayerIdentity.cs" />
     <Compile Include="Concrete\NativeCallback.cs" />
@@ -87,9 +88,11 @@
     <Compile Include="Events\LockedEventArgs.cs" />
     <Compile Include="Events\UpdateJoinEventArgs.cs" />
     <Compile Include="Helpers\AttributeTableHelper.cs" />
+    <Compile Include="Helpers\EnvelopeHelper.cs" />
     <Compile Include="Helpers\FeatureSetHelper.cs" />
     <Compile Include="Helpers\GdalFormats.cs" />
     <Compile Include="Helpers\GdalHelper.cs" />
+    <Compile Include="Helpers\GeodesicUtils.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IGridSource.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />
@@ -184,7 +187,8 @@
     <Compile Include="Legend\LegendHelper.cs" />
     <Compile Include="Legend\LegendLayer.cs" />
     <Compile Include="Legend\LayerCollection.cs" />
-    <Compile Include="Static\GeoProcessing.cs" />
+    <Compile Include="Map\IPrintableMap.cs" />
+    <Compile Include="Static\GisUtils.cs" />
     <Compile Include="Static\GeoSource.cs" />
     <Compile Include="Concrete\RasterInterval.cs" />
     <Compile Include="Concrete\RasterColorScheme.cs" />

@@ -22,6 +22,8 @@ namespace MW5.UI.Menu.Classic
             if (menuIndex == null) throw new ArgumentNullException("menuIndex");
             _menuIndex = menuIndex;
 
+            // TODO: add handlers only when external handlers are attached,
+            // otherwise it will preven GC of this wrapper
             item.DropDownOpening += (s, e) => FireDropDownOpening();
             item.DropDownClosed += (s, e) => FireDropDownClosed();
         }

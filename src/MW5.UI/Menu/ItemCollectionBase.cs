@@ -46,6 +46,8 @@ namespace MW5.UI.Menu
             }
         }
 
+        public abstract IComboBoxMenuItem AddComboBox(string text, string key, PluginIdentity identity);
+
         public abstract IMenuItem this[int menuItemIndex] { get; }
 
         protected abstract IDropDownMenuItem AddDropDown(string text, string key, Bitmap icon, PluginIdentity identity);
@@ -229,13 +231,22 @@ namespace MW5.UI.Menu
             {
                 if (!label)
                 {
-                    if (statusBar)
+                    // if it's main application menu, we want to dispatch all to plugins;
+                    // for menus in other forms, just to the control itself
+                    if (MenuIndex.IsMainMenu)
                     {
-                        menuItem.ItemClicked += PluginBroadcaster.Instance.FireStatusItemClicked;    
+                        if (statusBar)
+                        {
+                            menuItem.ItemClicked += PluginBroadcaster.Instance.FireStatusItemClicked;
+                        }
+                        else
+                        {
+                            menuItem.ItemClicked += PluginBroadcaster.Instance.FireItemClicked;
+                        }
                     }
                     else
                     {
-                        menuItem.ItemClicked += PluginBroadcaster.Instance.FireItemClicked;    
+                        menuItem.ItemClicked += MenuIndex.FireItemClicked;
                     }
                 }
 

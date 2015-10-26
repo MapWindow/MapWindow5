@@ -8,8 +8,9 @@ namespace MW5.Shared
 {
     public static class DebugHelper
     {
-        public static bool HideAdditionalMapControls = true;
+        public static bool HideAdditionalMapControls = false;
         public static bool SyncfusionMenu = false;
         public static bool ShowDebugMenuElements = false;
+        public static bool CleanTileCache = false;
     }
 }

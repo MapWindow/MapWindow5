@@ -83,7 +83,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             }
             else
             {
-                success = GeoProcessing.Instance.ExportSelection(Input.Datasource, Output.Filename, Output.Overwrite);
+                success = GisUtils.Instance.ExportSelection(Input.Datasource, Output.Filename, Output.Overwrite);
             }
 
             return Output.Result != null || success;

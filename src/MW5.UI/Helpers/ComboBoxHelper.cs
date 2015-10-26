@@ -72,6 +72,18 @@ namespace MW5.UI.Helpers
              }
         }
 
+        public static void SetValue(this ComboBoxAdv box, string value)
+        {
+            foreach (var item in box.Items)
+            {
+                if (item.ToString().EqualsIgnoreCase(value))
+                {
+                    box.SelectedItem = item;
+                    break;
+                }
+            }
+        }
+
         public static void SetSelectedIndexSafe(this ComboBoxAdv comboBox, int selectedIndex)
         {
             if (selectedIndex >= 0 && selectedIndex < comboBox.Items.Count)

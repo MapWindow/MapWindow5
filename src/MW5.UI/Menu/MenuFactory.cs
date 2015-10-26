@@ -14,48 +14,32 @@ namespace MW5.UI.Menu
     {
         private static IMenu _instance;
 
-        internal static IMenu CreateInstance(object menuManager)
+        internal static IMenu CreateMainMenu(object menuManager)
         {
             if (_instance == null)
             {
+                var menuIndex = new MenuIndex(MenuIndexType.MainMenu);
+
                 if (DebugHelper.SyncfusionMenu)
                 {
-                    CreateSyncfusionMenu(menuManager);
+                    _instance = new MainSyncfusionMenu(menuManager, menuIndex);
                 }
                 else
                 {
-                    CreateMenuStripMenu(menuManager);
+                    _instance = new MainMenuStripMenu(menuManager, menuIndex);
                 }
+
+                CreateDefaultMenuItems(_instance);
             }
 
             return _instance;
         }
 
-        private static void CreateMenuStripMenu(object menuManager)
+        internal static IMenuEx CreateMenu(object menuManager)
         {
-            var manager = menuManager as MainFrameBarManager;
-            if (manager == null)
-            {
-                throw new InvalidCastException("Menu manager must be an instance of MainFrameBarManager.");
-            }
+            var menuIndex = new MenuIndex(MenuIndexType.MainMenu, false);
 
-            var menuIndex = new MenuIndex(MenuIndexType.MainMenu);
-
-            var menu = new MenuStripMenu(menuManager, menuIndex);
-
-            menu.CreateMenuBar();
-            menu.CreateDefaultItems();
-
-            _instance = menu;
-        }
-
-        private static void CreateSyncfusionMenu(object menuManager)
-        {
-            var menuIndex = new MenuIndex(MenuIndexType.MainMenu);
-            var menu = new Menu(menuManager, menuIndex);
-            menu.CreateMenuBar();
-            menu.CreateDefaultItems();
-            _instance = menu;
+            return new MenuStripMenu(menuManager, menuIndex);
         }
 
         internal static IStatusBar CreateStatusBar(object bar, PluginIdentity identity)
@@ -65,11 +49,31 @@ namespace MW5.UI.Menu
             return statusBar;
         }
 
-        internal static IToolbarCollection CreateToolbars(object menuManager)
+        internal static IToolbarCollection CreateMainToolbars(object menuManager)
         {
             var menuIndex = new MenuIndex(MenuIndexType.Toolbar);
-            var collection = new ToolbarsCollection(menuManager, menuIndex);
-            return collection;
+            return new ToolbarCollectionMain(menuManager, menuIndex);
+        }
+
+        internal static IToolbarCollectionEx CreateToolbars(object menuManager)
+        {
+            var menuIndex = new MenuIndex(MenuIndexType.Toolbar, false);
+            return new ToolbarCollection(menuManager, menuIndex);
+        }
+
+        private static void CreateDefaultMenuItems(IMenuBase menu)
+        {
+            var items = menu.Items;
+
+            items.AddDropDown("File", MainMenuKeys.File, PluginIdentity.Default);
+            items.AddDropDown("View", MainMenuKeys.View, PluginIdentity.Default);
+            items.AddDropDown("Map", MainMenuKeys.Map, PluginIdentity.Default);
+            items.AddDropDown("Layer", MainMenuKeys.Layer, PluginIdentity.Default);
+            items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
+            items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
+            items.AddDropDown("Help", MainMenuKeys.Help, PluginIdentity.Default);
+
+            menu.Update();
         }
     }
 }

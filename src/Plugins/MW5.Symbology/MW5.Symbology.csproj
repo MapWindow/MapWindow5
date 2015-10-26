@@ -215,7 +215,6 @@
     <Compile Include="Controls\RealIndexComboItem.cs" />
     <Compile Include="Helpers\ColorBlendHelper.cs" />
     <Compile Include="Helpers\RasterComboBoxHelper.cs" />
-    <Compile Include="Helpers\RectangleHelper.cs" />
     <Compile Include="Helpers\TrackbarHelper.cs" />
     <Compile Include="Services\EnumConverters.cs" />
     <Compile Include="Services\LabelMoveData.cs" />

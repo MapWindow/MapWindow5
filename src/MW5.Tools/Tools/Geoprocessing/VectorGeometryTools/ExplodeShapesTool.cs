@@ -69,7 +69,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             }
             else
             {
-                success = GeoProcessing.Instance.ExplodeShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
+                success = GisUtils.Instance.ExplodeShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
             }
 
             return Output.Result != null || success;

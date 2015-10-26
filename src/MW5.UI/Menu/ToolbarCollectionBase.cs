@@ -9,21 +9,21 @@ using Syncfusion.Windows.Forms.Tools.XPMenus;
 
 namespace MW5.UI.Menu
 {
-    internal class ToolbarsCollection: IToolbarCollection
+    internal class ToolbarCollectionBase: IToolbarCollectionBase
     {
-        private readonly IMenuIndex _menuIndex;
+        protected readonly IMenuIndex _menuIndex;
         private readonly MainFrameBarManager _manager;
         internal const string FILE_TOOLBAR_KEY = "FileToolbar";
         internal const string MAP_TOOLBAR_KEY = "MapToolbar";
         
-        internal ToolbarsCollection(object menuManager, IMenuIndex menuIndex)
+        internal ToolbarCollectionBase(object menuManager, IMenuIndex menuIndex)
         {
             _menuIndex = menuIndex;
             _manager = menuManager as MainFrameBarManager;
             if (menuIndex == null) throw new ArgumentNullException("menuIndex");
             if (_manager == null)
             {
-                throw new NullReferenceException("ToolbarsCollection: instance of menu manager is not provided.");
+                throw new NullReferenceException("ToolbarCollectionBase: instance of menu manager is not provided.");
             }
 
 #if STYLE2010
@@ -81,15 +81,7 @@ namespace MW5.UI.Menu
             return _menuIndex.ItemsForPlugin(identity);
         }
 
-        public IToolbar MapToolbar
-        {
-            get { return this.FirstOrDefault(t => t.Key == MAP_TOOLBAR_KEY); }
-        }
-
-        public IToolbar FileToolbar
-        {
-            get { return this.FirstOrDefault(t => t.Key == FILE_TOOLBAR_KEY); }
-        }
+      
 
         public IToolbar Add(string name, PluginIdentity identity)
         {

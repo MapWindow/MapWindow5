@@ -3,6 +3,7 @@ using MapWinGIS;
 using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
+using MW5.Api.Static;
 
 namespace MW5.Api.Helpers
 {
@@ -121,6 +122,11 @@ namespace MW5.Api.Helpers
         public static WmsLayer GetInternal(this WmsSource provider)
         {
             return provider.InternalObject as WmsLayer;
+        }
+
+        public static Utils GetInternal(this GisUtils utils)
+        {
+            return utils.InternalObject as Utils;
         }
     }
 }

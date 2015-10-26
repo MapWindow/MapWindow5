@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Windows.Forms;
 using MW5.Plugins;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
@@ -41,8 +42,26 @@ namespace MW5.UI.Menu
                     return new DropDownMenuItem(item as ParentBarItem, MenuIndex);
                 }
 
+                if (item is ComboBoxBarItem)
+                {
+                    return new ComboBoxMenuItem(item as ComboBoxBarItem);
+                }
+
                 return new MenuItem(item);
             }
+        }
+
+        public override IComboBoxMenuItem AddComboBox(string text, string key, PluginIdentity identity)
+        {
+            var item = new ComboBoxBarItem() { Padding = new Point(TOOLBAR_ITEM_PADDING_X, TOOLBAR_ITEM_PADDING_Y) };
+            var menuItem = AddItem(item, identity, key) as IComboBoxMenuItem;
+
+            if (menuItem != null)
+            {
+                menuItem.Text = text;
+            }
+
+            return menuItem;
         }
 
         public override IMenuItem AddLabel(string text, string key, PluginIdentity identity)

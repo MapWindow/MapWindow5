@@ -80,7 +80,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             }
             else
             {
-                success = GeoProcessing.Instance.FixUpShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
+                success = GisUtils.Instance.FixUpShapes(Input.Datasource, Input.SelectedOnly, Output.Filename, Output.Overwrite);
             }
 
             if (!success)

@@ -18,6 +18,8 @@ namespace MW5.UI.Menu
             }
             _menuIndex = menuIndex;
 
+            // TODO: add handlers only when external handlers are attached,
+            // otherwise it will preven GC of this wrapper
             item.Popup += (s, e) => FireDropDownOpening();
             item.PopupClosed += (s, e) => FireDropDownClosed();
         }

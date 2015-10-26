@@ -8,17 +8,16 @@ using MW5.Shared.Log;
 
 namespace MW5.Api.Static
 {
-    // TODO: rename to GisUtils
-    public class GeoProcessing
+    public class GisUtils: IComWrapper
     {
-        private static readonly GeoProcessing _staticUilts = new GeoProcessing();
-        private readonly Utils _utils = new Utils();
+         private static readonly GisUtils _staticUilts = new GisUtils();
+         private readonly Utils _utils = new Utils();
 
         /// <summary>
         /// Static instance of MapWinGIS.Utils class. 
         /// Use whenever there is no need to share callback in multithreading scenario.
         /// </summary>
-        public static GeoProcessing Instance
+        public static GisUtils Instance
         {
             get { return _staticUilts; }
         }
@@ -145,21 +144,6 @@ namespace MW5.Api.Static
             return _utils.Polygonize(pszSrcFilename, pszDstFilename, iSrcBand, noMask, pszMaskFilename, pszOgrFormat, pszDstLayerName, pszPixValFieldName);
         }
 
-        public bool ConvertDistance(LengthUnits sourceUnit, LengthUnits targetUnit, ref double value)
-        {
-            return _utils.ConvertDistance((tkUnitsOfMeasure)sourceUnit, (tkUnitsOfMeasure)targetUnit, ref value);
-        }
-
-        public double GeodesicArea(IGeometry polygonWgs84)
-        {
-            return _utils.GeodesicArea(polygonWgs84.InternalObject as Shape);
-        }
-
-        public double GeodesicDistance(double lat1, double lng1, double lat2, double lng2)
-        {
-            return _utils.GeodesicDistance(lat1, lng1, lat2, lng2);
-        }
-
         public bool MaskRaster(string filename, byte newPerBandValue)
         {
             return _utils.MaskRaster(filename, newPerBandValue);
@@ -284,5 +268,21 @@ namespace MW5.Api.Static
         //}
 
         #endregion
+
+        public object InternalObject
+        {
+            get { return _utils; }
+        }
+
+        string IComWrapper.LastError
+        {
+            get { return _utils.ErrorMsg[_utils.LastErrorCode]; }
+        }
+
+        public string Tag
+        {
+            get { return _utils.Key;  }
+            set { _utils.Key = value; }
+        }
     }
 }
