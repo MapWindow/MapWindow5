@@ -106,12 +106,37 @@ namespace MW5.Test
                                          "Beta-x64",
                                          new UpdaterHelper.InstallerInfo
                                              {
-                                                 Versionnumber = new Version(5, 0, 2, 0),
+                                                 Versionnumber = new Version(5, 0, 1, 1),
                                                  Description = "Bugfixes and small enhancements",
                                                  DownloadUrl =
                                                      "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=mapwindow5&DownloadId=1492837&FileTime=130885516303300000&Build=21031",
                                                  Name = "MapWindow-v5.0.1.1.exe",
                                                  Cpu = "x64"
+                                             }
+                                     },
+                                     {
+                                         "Stable-x86",
+                                         new UpdaterHelper.InstallerInfo
+                                             {
+                                                 Versionnumber = new Version(5, 0, 0, 0),
+                                                 Description =
+                                                     "New stable version with some cool new features",
+                                                 DownloadUrl =
+                                                     "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=mapwindow5&DownloadId=1492837&FileTime=130885516303300000&Build=21031",
+                                                 Name = "MapWindow-v5.0.1.0.exe",
+                                                 Cpu = "x86"
+                                             }
+                                     },
+                                     {
+                                         "Beta-x86",
+                                         new UpdaterHelper.InstallerInfo
+                                             {
+                                                 Versionnumber = new Version(5, 0, 1, 1),
+                                                 Description = "Bugfixes and small enhancements",
+                                                 DownloadUrl =
+                                                     "http://download-codeplex.sec.s-msft.com/Download/Release?ProjectName=mapwindow5&DownloadId=1492837&FileTime=130885516303300000&Build=21031",
+                                                 Name = "MapWindow-v5.0.1.1.exe",
+                                                 Cpu = "x86"
                                              }
                                      }
                                  };
