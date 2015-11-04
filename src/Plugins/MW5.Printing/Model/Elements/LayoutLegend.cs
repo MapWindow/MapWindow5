@@ -13,6 +13,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
@@ -28,19 +29,20 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// Represents MapWindow legend on the printing layout
     /// </summary>
+    [DataContract]
     public class LayoutLegend : LayoutElement
     {
-        private readonly IMuteLegend _legend;
+        private LayoutControl _layoutControl;
+        private LayoutMap _layoutMap;
+        private IMuteLegend _legend;
+        private List<int> _groupHandles;
+        private List<int> _layerHandles;
         private readonly Pen _penOutline = new Pen(Color.Black);
         private readonly Brush _textBrush = new SolidBrush(Color.Black);
         private readonly TextRenderingHint _textHint = TextRenderingHint.SystemDefault;
         private readonly Color backColor = Color.White;
         private Bitmap _buffer;
         private bool _fillHeader;
-        private List<int> _groupHandles;
-        private List<int> _layerHandles;
-        private LayoutControl _layoutControl;
-        private LayoutMap _layoutMap;
         private int _numCol;
         private int _thumbnailHeight;
         private int _thumbnailWidth;
@@ -49,14 +51,8 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
         /// </summary>
-        public LayoutLegend(LayoutControl layoutControl, IMuteLegend legend)
+        public LayoutLegend()
         {
-            if (layoutControl == null) throw new ArgumentNullException("layoutControl");
-            if (legend == null) throw new ArgumentNullException("legend");
-
-            _layoutControl = layoutControl;
-            _legend = legend;
-
             Name = "Legend";
 
             _font = new Font("Arial", 10);
@@ -66,6 +62,15 @@ namespace MW5.Plugins.Printing.Model.Elements
             _textHint = TextRenderingHint.AntiAliasGridFit;
             _thumbnailHeight = 20;
             _thumbnailWidth = 40;
+        }
+
+        public void Initialize(LayoutControl layoutControl, IMuteLegend legend)
+        {
+            if (layoutControl == null) throw new ArgumentNullException("layoutControl");
+            if (legend == null) throw new ArgumentNullException("legend");
+
+            _layoutControl = layoutControl;
+            _legend = legend;
 
             InitLayers();
         }

@@ -11,6 +11,7 @@ using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
+using System.Runtime.Serialization;
 using MW5.Api.Enums;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Printing.Controls.Layout;
@@ -25,6 +26,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// A scale bar control that can be linked to a map and provide a dynamic scale bar for the print layout
     /// </summary>
+    [DataContract]
     public class LayoutScaleBar : LayoutElement
     {
         private bool _breakBeforeZero;

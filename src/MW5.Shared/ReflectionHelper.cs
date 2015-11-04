@@ -15,5 +15,10 @@ namespace MW5.Shared
             FieldInfo field = instance.GetType().GetField(fieldName, bindFlags);
             return field != null ? field.GetValue(instance) : null;
         }
+
+        public static IEnumerable<Type> GetDerivedTypes(this Assembly assembly, Type type)
+        {
+            return assembly.GetTypes().Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract);
+        }
     }
 }

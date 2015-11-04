@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Shared;
@@ -19,7 +20,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// The interface for all elements that can be added to the layout control
     /// </summary>
-    [Serializable]
+    [DataContract]
     public abstract class LayoutElement
     {
         protected Font _font;
@@ -85,6 +86,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the location of the top left corner of the control in 1/100 of an inch paper coordinats
         /// </summary>
         [Browsable(false)]
+        [DataMember]
         public PointF LocationF
         {
             get { return _location; }
@@ -100,6 +102,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_layout")]
+        [DataMember]
         [DisplayNameEx(@"prop_name")]
         public String Name
         {
@@ -172,6 +175,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the size of the element in 1/100 of an inch paper coordinats
         /// </summary>
         [Browsable(false)]
+        [DataMember]
         public SizeF Size
         {
             get { return new SizeF(_size.Width, _size.Height); }
@@ -220,6 +224,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         [Browsable(true)]
         [DefaultValue(true)]
         [CategoryEx(@"cat_layout")]
+        [DataMember]
         public bool Visible { get; set; }
 
         [Browsable(false)]

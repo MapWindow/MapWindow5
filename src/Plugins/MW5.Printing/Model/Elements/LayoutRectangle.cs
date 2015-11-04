@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System.Drawing;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Enums;
 
 namespace MW5.Plugins.Printing.Model.Elements
@@ -12,6 +13,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// A control that draws a standard colored rectangle to the print layout
     /// </summary>
+    [DataContract]
     public class LayoutRectangle : LayoutElement
     {
         /// <summary>

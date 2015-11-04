@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Legacy;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Properties;
@@ -98,23 +99,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Prepapres the layoutcontrol for closing, prompts the user to save if needed
-        /// </summary>
-        public void CloseLayout()
-        {
-            if (_layoutElements.Count <= 0) return;
-
-            if (MessageService.Current.Ask(Strings.LayoutSaveFirst))
-            {
-                SaveLayout(true);
-            }
-        }
-
-        /// <summary>
         /// Converts all of the selected layout elements to bitmaps
         /// </summary>
         public virtual void ConvertSelectedToBitmap()
         {
+            // TODO: extact from control
             foreach (var le in _selectedLayoutElements.ToArray())
             {
                 if (le is LayoutBitmap) continue;
@@ -132,6 +121,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         public void DeleteSelected()
         {
+            // TODO: extract prompt from control
             if (MessageService.Current.Ask("Remove selected elements: " + _selectedLayoutElements.Count + "?"))
             {
                 foreach (var le in _selectedLayoutElements.ToArray())
@@ -154,31 +144,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.InsertRange(0, unselected);
             OnSelectionChanged(null);
             Invalidate();
-        }
-
-        /// <summary>
-        /// Loads the layout.
-        /// </summary>
-        public virtual void LoadLayout(bool promptSave, bool loadPaperSettings, bool promptPaperMismatch)
-        {
-            if (_layoutElements.Count > 0 && promptSave)
-            {
-                var dr = MessageService.Current.AskWithCancel(Strings.LayoutSaveFirst);
-                if (dr == DialogResult.Cancel)
-                {
-                    return;
-                }
-                if (dr == DialogResult.Yes)
-                {
-                    SaveLayout(true);
-                }
-            }
-
-            string filename = LayoutHelper.ChooseLayoutFile(this);
-            if (!string.IsNullOrWhiteSpace(filename))
-            {
-                LoadLayout(filename, loadPaperSettings, promptPaperMismatch);
-            }
         }
 
         /// <summary>
@@ -240,30 +205,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Creates a new blank layout
-        /// </summary>
-        /// <param name="promptSave">Prompts the user if they want to save first</param>
-        public void NewLayout(bool promptSave)
-        {
-            if (_layoutElements.Count > 0 && promptSave)
-            {
-                var dr = MessageService.Current.AskWithCancel(Strings.LayoutSaveFirst);
-
-                switch (dr)
-                {
-                    case DialogResult.Cancel:
-                        return;
-                    case DialogResult.Yes:
-                        SaveLayout(true);
-                        break;
-                }
-            }
-
-            ClearLayout();
-            Filename = string.Empty;
-        }
-
-        /// <summary>
         /// Refreshes all of the elements in the layout
         /// </summary>
         public void RefreshElements()
@@ -281,21 +222,13 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Shows a save dialog box and prompts the user to save a layout file
-        /// </summary>
-        public void SaveLayout(bool promptSaveAs)
-        {
-            LayoutHelper.SaveLayout(promptSaveAs, ref _filename, _printerSettings, _pages.TotalWidth, _pages.TotalHeight,
-                this, _layoutElements);
-        }
-
-        /// <summary>
         /// Selects All the elements in the layout
         /// </summary>
         public void SelectAll()
         {
             _selectedLayoutElements.Clear();
             _selectedLayoutElements.InsertRange(0, _layoutElements);
+
             OnSelectionChanged(null);
             Invalidate();
         }
@@ -331,41 +264,13 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
-        protected virtual void LoadLayout(string fileName, bool loadPaperSettings, bool promptPaperMismatch)
-        {
-            try
-            {
-                if (!File.Exists(fileName))
-                {
-                    MessageService.Current.Info("Layout file was not found: " + fileName);
-                    return;
-                }
-
-                var loadList = LayoutSerializer.LoadLayout(fileName, loadPaperSettings, promptPaperMismatch,
-                    this as LayoutControl /* TODO: redesign */, _printerSettings);
-
-                _layoutElements.Clear();
-                _selectedLayoutElements.Clear();
-                _layoutElements.InsertRange(0, loadList);
-
-                Filename = fileName;
-
-                Invalidate();
-                FireElementsChanged();
-            }
-            catch (Exception ex)
-            {
-                MessageService.Current.Warn("Failed to load layout file: " + ex.Message);
-            }
-        }
-
         /// <summary>
         /// Call this to indicate the selection has changed
         /// </summary>
         /// <param name="e"></param>
         protected void OnSelectionChanged(EventArgs e)
         {
-            // TODO: implemented
+            // TODO: implement
 
             //if (_layoutMapToolStrip != null)
             //{
@@ -488,6 +393,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
         private void SetUniqueElementName(LayoutElement le)
         {
+            // TODO: extract
             string leName = le.Name + " 1";
             int i = 2;
 

@@ -10,9 +10,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Globalization;
+using System.Runtime.Serialization;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 using MapWinGIS;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
+using MW5.Shared;
 
 namespace MW5.Api.Concrete
 {
@@ -21,7 +27,7 @@ namespace MW5.Api.Concrete
     /// It is often used to represent the bounding box of a Geometry, e.g. the minimum and maximum x and y values of the Coordinates.
     /// </summary>
     [SuppressMessage("StyleCop.CSharp.NamingRules", "SA1305:FieldNamesMustNotUseHungarianNotation", Justification = "Reviewed. Suppression is OK here.")]
-    public class Envelope : IEnvelope
+    public class Envelope : IEnvelope, IXmlSerializable
     {
         private readonly Extents _extents;
 
@@ -305,6 +311,32 @@ namespace MW5.Api.Concrete
         public override string ToString()
         {
             return _extents.ToDebugString();
+        }
+
+        public XmlSchema GetSchema()
+        {
+            return null;
+        }
+
+        public void ReadXml(XmlReader reader)
+        {
+            double minX, minY, maxX, maxY;
+
+            if (reader.GetAttribute("MinX").ParseDoubleInvariant(out minX) &&
+                reader.GetAttribute("MinY").ParseDoubleInvariant(out minY) &&
+                reader.GetAttribute("MaxX").ParseDoubleInvariant(out maxX) &&
+                reader.GetAttribute("MaxY").ParseDoubleInvariant(out maxY))
+            {
+                SetBounds(minX, maxX, minY, maxY);
+            }
+        }
+
+        public void WriteXml(XmlWriter writer)
+        {
+            writer.WriteAttributeString("MinX", MinX.ToInvariantString());
+            writer.WriteAttributeString("MinY", MinY.ToInvariantString());
+            writer.WriteAttributeString("MaxX", MaxX.ToInvariantString());
+            writer.WriteAttributeString("MaxY", MaxY.ToInvariantString());
         }
     }
 }

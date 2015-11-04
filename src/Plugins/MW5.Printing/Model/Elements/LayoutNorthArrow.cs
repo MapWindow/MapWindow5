@@ -7,14 +7,16 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 
 namespace MW5.Plugins.Printing.Model.Elements
 {
     /// <summary>
-    /// North Arrow control for the Layout
+    /// North arrow control for the Layout
     /// </summary>
+    [DataContract]
     public class LayoutNorthArrow : LayoutElement
     {
         private Color _color;

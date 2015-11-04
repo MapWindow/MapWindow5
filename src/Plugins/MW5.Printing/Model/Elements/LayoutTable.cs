@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
@@ -18,6 +19,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// Handles visualization of table data
     /// </summary>
+    [DataContract]
     public class LayoutTable : LayoutElement
     {
         private const TextRenderingHint _textHint = TextRenderingHint.AntiAliasGridFit;

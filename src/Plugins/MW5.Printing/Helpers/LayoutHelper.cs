@@ -11,31 +11,19 @@ using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
+using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Enums;
+using MW5.Plugins.Printing.Legacy;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Properties;
 using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Helpers
 {
     internal static class LayoutHelper
     {
-        /// <summary>
-        /// Shows a load dialog box and prompts the user to open a layout file
-        /// </summary>
-        public static string ChooseLayoutFile(IWin32Window parent)
-        {
-            var ofd = new OpenFileDialog
-                          {
-                              Title = Strings.LayoutLoadDialogTitle,
-                              CheckFileExists = true,
-                              Multiselect = false
-                          };
-
-            return ofd.ShowDialog(parent) == DialogResult.OK ? ofd.FileName : string.Empty;
-        }
-
         public static LayoutBitmap ConvertElementToBitmap(LayoutElement le, string filename)
         {
             if (le is LayoutBitmap) return null;
@@ -76,89 +64,6 @@ namespace MW5.Plugins.Printing.Helpers
             if (ptRect.IntersectsWith(new RectangleF(screen.X, screen.Y + screen.Height, screen.Width, 1F))) return Edge.Bottom;
             if (ptRect.IntersectsWith(new RectangleF(screen.X + screen.Width, screen.Y, 1F, screen.Height))) return Edge.Right;
             return Edge.None;
-        }
-
-        /// <summary>
-        /// Shows a save dialog box and prompts the user to save a layout file
-        /// </summary>
-        public static void SaveLayout(
-            bool promptSaveAs,
-            ref string filename,
-            PrinterSettings printerSettings,
-            int paperWidth,
-            int paperHeight,
-            IWin32Window parent,
-            List<LayoutElement> elements)
-        {
-            if (string.IsNullOrWhiteSpace(filename) || promptSaveAs)
-            {
-                string initPath = Path.GetDirectoryName(Application.ExecutablePath) + @"\Templates\";
-
-                try
-                {
-                    if (!Directory.Exists(initPath))
-                    {
-                        Directory.CreateDirectory(initPath);
-                    }
-                }
-                catch
-                {
-                }
-
-                var sfd = new SaveFileDialog
-                              {
-                                  Title = Strings.LayoutSaveDialogTitle,
-                                  AddExtension = true,
-                                  OverwritePrompt = true,
-                                  InitialDirectory = initPath
-                              };
-
-                if (sfd.ShowDialog(parent) == DialogResult.OK)
-                {
-                    string tempFilename = sfd.FileName;
-                    switch (sfd.FilterIndex)
-                    {
-                        case 1:
-                            try
-                            {
-                                if (!LayoutSerializer.SaveLayout(tempFilename, printerSettings, elements)) return;
-
-                                filename = tempFilename;
-                                MessageService.Current.Info("Layout is saved: " + filename);
-                            }
-                            catch (Exception e)
-                            {
-                                MessageService.Current.Warn(Strings.LayoutErrorSave + e.Message);
-                            }
-                            break;
-                        case 2:
-                            var outputBitmap = new Bitmap(paperWidth, paperHeight);
-                            var g = Graphics.FromImage(outputBitmap);
-                            var paperRect = new RectangleF(0F, 0F, paperWidth, paperHeight);
-                            g.FillRectangle(Brushes.White, paperRect.X, paperRect.Y, paperRect.Width, paperRect.Height);
-                            g.DrawRectangle(Pens.Black, paperRect.X, paperRect.Y, paperRect.Width - 1,
-                                paperRect.Height - 1);
-                            outputBitmap.Save(sfd.FileName);
-                            g.Dispose();
-                            outputBitmap.Dispose();
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                try
-                {
-                    if (LayoutSerializer.SaveLayout(filename, printerSettings, elements))
-                    {
-                        MessageService.Current.Info("Layout is saved: " + filename);
-                    }
-                }
-                catch (Exception e)
-                {
-                    MessageService.Current.Warn(Strings.LayoutErrorSave + e.Message);
-                }
-            }
         }
     }
 }

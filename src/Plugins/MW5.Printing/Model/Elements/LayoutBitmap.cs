@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 
@@ -18,6 +19,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// The layout bitmap provides the ability to add any custom image to the layout
     /// </summary>
+    [DataContract]
     public class LayoutBitmap : LayoutElement, IDisposable
     {
         private Bitmap _bitmap;

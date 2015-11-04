@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Text;
+using System.Runtime.Serialization;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
@@ -17,6 +18,7 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// Text element.
     /// </summary>
+    [DataContract]
     public class LayoutText : LayoutElement
     {
         private Color _color;

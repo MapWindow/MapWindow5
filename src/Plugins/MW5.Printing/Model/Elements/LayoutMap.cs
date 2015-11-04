@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Runtime.Serialization;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
@@ -25,9 +26,10 @@ namespace MW5.Plugins.Printing.Model.Elements
     /// <summary>
     /// Represents a map element in the layout.
     /// </summary>
+    [DataContract]
     public class LayoutMap : LayoutElement
     {
-        private readonly IPrintableMap _map;
+        private IPrintableMap _map;
         private Bitmap _buffer;
         private bool _drawTiles;
         private bool _extentChanged;
@@ -41,11 +43,8 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
         /// </summary>
-        public LayoutMap(IPrintableMap map)
+        public LayoutMap()
         {
-            if (map == null) throw new ArgumentNullException("map");
-            _map = map;
-
             _extentChanged = false;
             _mainMap = true;
             _updateMapArea = true;
@@ -58,6 +57,12 @@ namespace MW5.Plugins.Printing.Model.Elements
             _initializing = true;
         }
 
+        public void Initialize(IPrintableMap map)
+        {
+            if (map == null) throw new ArgumentNullException("map");
+            _map = map;
+        }
+
         /// <summary>
         /// Indicates to the layout engine that vector based rendering should be used
         /// </summary>
@@ -65,6 +70,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         [DefaultValue(true)]
         [CategoryEx(@"cat_map")]
         [DisplayNameEx(@"prop_drawtiles")]
+        [DataMember]
         public bool DrawTiles
         {
             get { return _drawTiles; }
@@ -79,6 +85,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Sets a new extent for the map on calls invalidation of the control
         /// </summary>
         [Browsable(false)]
+        [DataMember]
         public IEnvelope Envelope
         {
             get { return _extents; }
@@ -119,6 +126,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or set the quality of the final print out
         /// </summary>
         [Browsable(false)]
+        [DataMember]
         public PrintQuality PrintQuality { get; set; }
 
         /// <summary>
@@ -172,6 +180,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         [DefaultValue(TileProvider.OpenStreetMap)]
         [CategoryEx(@"cat_map")]
         [DisplayNameEx(@"prop_provider")]
+        [DataMember]
         public TileProvider TileProvider
         {
             get { return _tileProvider; }

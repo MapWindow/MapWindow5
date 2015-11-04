@@ -140,15 +140,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             base.Dispose(disposing);
         }
 
-        /// <summary>
-        /// Loads layout from the specified XML file
-        /// </summary>
-        protected override void LoadLayout(string fileName, bool loadPaperSettings, bool promptPaperMismatch)
-        {
-            base.LoadLayout(fileName, loadPaperSettings, promptPaperMismatch);
-            UpdateLayout();
-        }
-
         ///// <summary>
         ///// Handles Tiles loaded event
         ///// </summary>
@@ -197,7 +188,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             // TODO: extract to LayoutView
 
-            var mapElement = new LayoutMap(_map);
+            var mapElement = new LayoutMap();
+            mapElement.Initialize(_map);
 
             const int offset = 10;
             mapElement.Location = new Point(offset, offset); // default location

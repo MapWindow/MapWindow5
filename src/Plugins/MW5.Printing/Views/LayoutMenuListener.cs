@@ -14,8 +14,11 @@ using MW5.Api.Map;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Controls.Layout;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
+using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views.Abstract;
+using MW5.Plugins.Services;
 
 namespace MW5.Plugins.Printing.Views
 {
@@ -53,16 +56,18 @@ namespace MW5.Plugins.Printing.Views
                     _layoutControl.ShowPageNumbers = !_layoutControl.ShowPageNumbers;
                     break;
                 case LayoutMenuKeys.NewLayout:
-                    _layoutControl.NewLayout(true);
+                    // TODO: ask about saving of previous layout
+                    _layoutControl.Filename = string.Empty;
+                    _layoutControl.ClearLayout();
                     break;
                 case LayoutMenuKeys.SaveLayout:
-                    _layoutControl.SaveLayout(false);
+                    SaveLayout(false);
                     break;
                 case LayoutMenuKeys.SaveLayoutAs:
-                    _layoutControl.SaveLayout(true);
+                    SaveLayout(true);
                     break;
                 case LayoutMenuKeys.LoadLayout:
-                    _layoutControl.LoadLayout(true, true, true);
+                    LoadLayout();
                     break;
                 case LayoutMenuKeys.Print:
                     _layoutControl.Print();
@@ -161,6 +166,84 @@ namespace MW5.Plugins.Printing.Views
             }
         }
 
+        private void LoadLayout()
+        {
+            string filename = GetLoadFilename();
+            if (string.IsNullOrWhiteSpace(filename)) return;
+
+            var serializer = new LayoutSerializer();
+            if (serializer.LoadLayout(_layoutControl, filename))
+            {
+                InitializeElements();
+
+                MessageService.Current.Info("Layout was loaded successfully.");
+            }
+        }
+
+        private void InitializeElements()
+        {
+            foreach (var el in _layoutControl.LayoutElements)
+            {
+                switch (el.Type)
+                {
+                    case Enums.ElementType.Legend:
+                        (el as LayoutLegend).Initialize(_layoutControl, _context.Legend);
+                        break;
+                    case Enums.ElementType.Map:
+                        (el as LayoutMap).Initialize(_context.Map);
+                        break;
+                }
+            }
+        }
+
+        private void SaveLayout(bool saveAs)
+        {
+            string filename = _layoutControl.Filename;
+
+            if (saveAs || string.IsNullOrWhiteSpace(filename))
+            {
+                filename = GetSaveFilename();
+            }
+
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                return;
+            }
+            
+            var serializer = new LayoutSerializer();
+            if (serializer.SaveLayout(_layoutControl, _layoutControl.PrinterSettings, filename))
+            {
+                MessageService.Current.Info("Layout was saved successfully.");
+            }
+        }
+
+        private string GetLoadFilename()
+        {
+            using (var dlg = new OpenFileDialog { Filter = @"*.xml|*.xml" })
+            {
+                if (dlg.ShowDialog(_view as IWin32Window) == DialogResult.OK)
+                {
+                    return dlg.FileName;
+                }
+            }
+
+            return string.Empty;
+        }
+
+        private string GetSaveFilename()
+        {
+            // TODO: use service
+            using (var dlg = new SaveFileDialog { Filter = @"*.xml|*.xml" })
+            {
+                if (dlg.ShowDialog(_view as IWin32Window) == DialogResult.OK)
+                {
+                    return dlg.FileName;
+                }
+            }
+
+            return string.Empty;
+        }
+
         private void AddBitmap()
         {
             // TODO: use service
@@ -181,20 +264,25 @@ namespace MW5.Plugins.Printing.Views
 
         private void AddLegend()
         {
-            var lsb = new LayoutLegend(_layoutControl, _context.Legend);
+            var legend = new LayoutLegend();
+            legend.Initialize(_layoutControl, _context.Legend);
 
             var mapElements = _layoutControl.LayoutElements.FindAll(o => (o is LayoutMap));
             if (mapElements.Count > 0)
             {
-                lsb.Map = mapElements[0] as LayoutMap;
+                legend.Map = mapElements[0] as LayoutMap;
             }
 
-            _layoutControl.AddElementWithMouse(lsb);
+            _layoutControl.AddElementWithMouse(legend);
         }
 
         private void AddMap()
         {
-            var map = new LayoutMap(_map) { Envelope = _view.Model.Extents };
+            var map = new LayoutMap();
+
+            map.Initialize(_map);
+            map.Envelope = _view.Model.Extents;
+
             _layoutControl.AddElementWithMouse(map);
         }
 
