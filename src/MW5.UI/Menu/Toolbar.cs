@@ -112,5 +112,20 @@ namespace MW5.UI.Menu
         {
             get { return Metadata.PluginIdentity; }
         }
+
+        public bool Enabled
+        {
+            get
+            {
+                return Items.Any(item => item.Enabled);
+            }
+            set
+            {
+                foreach (var item in Items)
+                {
+                    item.Enabled = value;
+                }
+            }
+        }
     }
 }

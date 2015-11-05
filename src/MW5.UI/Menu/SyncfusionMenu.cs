@@ -77,5 +77,8 @@ namespace MW5.UI.Menu
             get { return CommandBar.Tag; }
             set { CommandBar.Tag = value; }
         }
+
+        // don't do anything
+        public override bool Enabled { get; set; }
     }
 }

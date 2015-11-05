@@ -105,7 +105,7 @@ namespace MW5.Plugins.Printing.Views
         private void InitToolbars()
         {
             // insert
-            var bar = _toolbars.Add("Insert", "LayoutInsertToolbar", _plugin.Identity);
+            var bar = _toolbars.Add("Insert", LayoutMenuKeys.InsertToolbar, _plugin.Identity);
             bar.DockState = ToolbarDockState.Left;
             bar.Items.AddButton(_commands[LayoutMenuKeys.AddMap]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.AddLegend]);
@@ -117,7 +117,7 @@ namespace MW5.Plugins.Printing.Views
             bar.Items.AddButton(_commands[LayoutMenuKeys.AddBitmap]);
 
             // map
-            bar = _toolbars.Add("Map", "LayoutMapToolbar", _plugin.Identity);
+            bar = _toolbars.Add("Map", LayoutMenuKeys.MapToolbar, _plugin.Identity);
             bar.DockState = ToolbarDockState.Left;
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapZoomIn]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapZoomOut]);
@@ -125,17 +125,18 @@ namespace MW5.Plugins.Printing.Views
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapPan]);
 
             // main
-            bar = _toolbars.Add("Main", "LayoutMainToolbar", _plugin.Identity);
+            bar = _toolbars.Add("Main", LayoutMenuKeys.MainToolbar, _plugin.Identity);
             bar.Items.AddButton(_commands[LayoutMenuKeys.NewLayout]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.LoadLayout]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.SaveLayout]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.SaveLayoutAs]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.PageSetup]).BeginGroup = true;
-            bar.Items.AddButton(_commands[LayoutMenuKeys.Print]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.AdjustPages]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.Print]).BeginGroup = true;;
             bar.Update();
 
             // zoom
-            bar = _toolbars.Add("Zoom", "LayoutZoomToolbar", _plugin.Identity);
+            bar = _toolbars.Add("Zoom", LayoutMenuKeys.ZoomToolbar, _plugin.Identity);
             bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomIn]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomOut]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomMax]);

@@ -6,6 +6,7 @@
 
 using System;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
@@ -13,6 +14,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Printing.Views.Panels;
 using MW5.Plugins.Services;
@@ -96,7 +98,19 @@ namespace MW5.Plugins.Printing.Views
         {
             Shown += OnLayoutViewShown;
             layoutControl1.ZoomChanged += OnlayoutControlZoomChanged;
-            layoutControl1.SelectionChanged += (s, e) => _elements.UpdateSelectionFromMap();
+            layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
+        }
+
+        private void OnSelectionChanged()
+        {
+            _elements.UpdateSelectionFromMap();
+
+            var toolbar = _menuGenerator.Toolbars.FirstOrDefault(t => t.Key == LayoutMenuKeys.MapToolbar);
+            if (toolbar != null)
+            {
+                var list = layoutControl1.SelectedLayoutElements;
+                toolbar.Enabled = list.Count == 1 && list[0] is LayoutMap;
+            }
         }
 
         private void InitControls()

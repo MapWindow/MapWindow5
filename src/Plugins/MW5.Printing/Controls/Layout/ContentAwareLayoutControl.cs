@@ -101,29 +101,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Converts all of the selected layout elements to bitmaps
-        /// </summary>
-        public virtual void ConvertSelectedToBitmap()
-        {
-            // TODO: extact from control
-            foreach (var le in _selectedLayoutElements.ToArray())
-            {
-                if (le is LayoutBitmap) continue;
-
-                string filename = FileDialogHelper.GetBitmapFilename(le.Name, this);
-                if (!string.IsNullOrWhiteSpace(filename))
-                {
-                    ConvertElementToBitmap(le, filename);
-                }
-            }
-        }
-
-        /// <summary>
         /// Deletes all of the selected elements from the model
         /// </summary>
         public void DeleteSelected()
         {
-            // TODO: extract prompt from control
             if (MessageService.Current.Ask("Remove selected elements: " + _selectedLayoutElements.Count + "?"))
             {
                 foreach (var le in _selectedLayoutElements.ToArray())
@@ -132,7 +113,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 }
 
                 Invalidate();
-                OnSelectionChanged(null);
+                FireSelectionChanged();
             }
         }
 
@@ -144,7 +125,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             var unselected = _layoutElements.FindAll(o => !_selectedLayoutElements.Contains(o));
             _selectedLayoutElements.Clear();
             _selectedLayoutElements.InsertRange(0, unselected);
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             Invalidate();
         }
 
@@ -176,7 +157,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _layoutElements.Insert(indexArray[i] + 1, _selectedLayoutElements[i]);
             }
 
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             Invalidate();
         }
 
@@ -202,7 +183,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _layoutElements.Insert(index - 1, le);
             }
 
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             Invalidate();
         }
 
@@ -231,7 +212,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Clear();
             _selectedLayoutElements.InsertRange(0, _layoutElements);
 
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             Invalidate();
         }
 
@@ -239,7 +220,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// Converts a selected layout element into a bitmap and saves it a the specified 
         /// location removing the old element and replacing it
         /// </summary>
-        protected virtual void ConvertElementToBitmap(LayoutElement le, string fileName)
+        public void ConvertElementToBitmap(LayoutElement le, string fileName)
         {
             var newLb = LayoutHelper.ConvertElementToBitmap(le, fileName);
             if (newLb == null) return;
@@ -250,7 +231,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Insert(_selectedLayoutElements.IndexOf(le), newLb);
             _selectedLayoutElements.Remove(le);
 
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             Invalidate();
         }
 
@@ -259,41 +240,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         protected void FireElementsChanged()
         {
-            var handler = ElementsChanged;
-            if (handler != null)
-            {
-                ElementsChanged(this, new EventArgs());
-            }
+            DelegateHelper.FireEvent(this, ElementsChanged);
         }
 
-        /// <summary>
-        /// Call this to indicate the selection has changed
-        /// </summary>
-        /// <param name="e"></param>
-        protected void OnSelectionChanged(EventArgs e)
+        protected void FireSelectionChanged()
         {
-            // TODO: implement
-
-            //if (_layoutMapToolStrip != null)
-            //{
-            //    if (_selectedLayoutElements.Count == 1 && _selectedLayoutElements[0] is LayoutMap)
-            //    {
-            //        _layoutMapToolStrip.Enabled = true;
-            //    }
-            //    else
-            //    {
-            //        _layoutMapToolStrip.Enabled = false;
-
-            //        if (_mouseMode == MouseMode.StartPanMap || _mouseMode == MouseMode.PanMap)
-            //        {
-            //            _mouseMode = MouseMode.Default;
-            //        }
-            //    }
-            //}
-
-            //_layoutListBox.UpdateSelectionFromMap();
-
-            if (SelectionChanged != null) SelectionChanged(this, e);
+            DelegateHelper.FireEvent(this, SelectionChanged);
         }
 
         /// <summary>
@@ -303,7 +255,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             _selectedLayoutElements.Add(le);
             Invalidate(new Region(PaperToScreen(le.Rectangle)));
-            OnSelectionChanged(null);
+            FireSelectionChanged();
         }
 
         /// <summary>
@@ -313,7 +265,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             _selectedLayoutElements.AddRange(le);
             Invalidate();
-            OnSelectionChanged(null);
+            FireSelectionChanged();
         }
 
         /// <summary>
@@ -323,7 +275,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             DisposeElements();
             _selectedLayoutElements.Clear();
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             _layoutElements.Clear();
             FireElementsChanged();
             Invalidate();
@@ -336,7 +288,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             _selectedLayoutElements.Clear();
             Invalidate();
-            OnSelectionChanged(null);
+            FireSelectionChanged();
         }
 
         internal void ExportToBitmap()
@@ -360,7 +312,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             _selectedLayoutElements.Remove(le);
             Invalidate(new Region(PaperToScreen(le.Rectangle)));
-            OnSelectionChanged(null);
+            FireSelectionChanged();
         }
 
         private void DisposeElements()
@@ -387,7 +339,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private void RemoveFromLayout(LayoutElement le)
         {
             _selectedLayoutElements.Remove(le);
-            OnSelectionChanged(null);
+            FireSelectionChanged();
             _layoutElements.Remove(le);
             FireElementsChanged();
             Invalidate(new Region(PaperToScreen(le.Rectangle)));

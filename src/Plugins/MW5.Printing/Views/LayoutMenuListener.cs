@@ -50,6 +50,30 @@ namespace MW5.Plugins.Printing.Views
         {
             switch (e.ItemKey)
             {
+                case LayoutMenuKeys.AdjustPages:
+                    _layoutControl.UpdateLayout();
+                    break;
+                case LayoutMenuKeys.SelectAll:
+                    _layoutControl.SelectAll();
+                    break;
+                case LayoutMenuKeys.SelectNone:
+                    _layoutControl.ClearSelection();
+                    break;
+                case LayoutMenuKeys.InvertSelection:
+                    _layoutControl.InvertSelection();
+                    break;
+                case LayoutMenuKeys.ConvertToBitmap:
+                    ConvertElementToBitmap();
+                    break;
+                case LayoutMenuKeys.MoveUp:
+                    _layoutControl.MoveSelectionUp();
+                    break;
+                case LayoutMenuKeys.MoveDown:
+                    _layoutControl.MoveSelectionDown();
+                    break;
+                case LayoutMenuKeys.DeleteElement:
+                    _layoutControl.DeleteSelected();
+                    break;
                 case LayoutMenuKeys.ShowMargins:
                     _layoutControl.ShowMargins = !_layoutControl.ShowMargins;
                     break;
@@ -165,6 +189,29 @@ namespace MW5.Plugins.Printing.Views
                         //_btnPan.Checked = true;
                     }
                     break;
+            }
+        }
+
+        private void ConvertElementToBitmap()
+        {
+            if (_layoutControl.SelectedLayoutElements.Count == 0)
+            {
+                MessageService.Current.Info("No elements are selected.");
+                return;
+            }
+
+            var el = _layoutControl.SelectedLayoutElements[0];
+            if (el is LayoutBitmap)
+            {
+                MessageService.Current.Info("Selected element is bitmap. No conersion is needed.");
+                return;
+            }
+
+            string filename = FileDialogHelper.GetBitmapFilename(el.Name, _view as IWin32Window);
+
+            if (!string.IsNullOrWhiteSpace(filename))
+            {
+                _layoutControl.ConvertElementToBitmap(el, filename);
             }
         }
 

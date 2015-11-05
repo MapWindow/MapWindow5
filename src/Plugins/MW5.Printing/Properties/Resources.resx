@@ -124,6 +124,9 @@
   <data name="ico_pan16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ico_pan16.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="img_close24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_close24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="img_compass24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_compass24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -132,6 +135,9 @@
   </data>
   <data name="img_down24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_down24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_export24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_export24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="img_group24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_group24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -177,6 +183,9 @@
   </data>
   <data name="img_rectangle24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_rectangle24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="img_refresh24" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\img_refresh24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="img_remove24" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\img_remove24.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

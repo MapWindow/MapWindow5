@@ -382,7 +382,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
                                 }
                             }
                         }
-                        OnSelectionChanged(null);
+
+                        FireSelectionChanged();
                         _mouseMode = MouseMode.Default;
                         Invalidate();
                         break;

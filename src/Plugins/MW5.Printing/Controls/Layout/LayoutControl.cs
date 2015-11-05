@@ -50,7 +50,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Add or removes pages to accomodate all the currently added elements 
+        /// Adds or removes pages to accomodate all the currently added elements.
         /// </summary>
         public void UpdateLayout()
         {

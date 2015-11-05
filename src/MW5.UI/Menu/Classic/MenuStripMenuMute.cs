@@ -81,6 +81,9 @@ namespace MW5.UI.Menu.Classic
             set { _menuStrip.Tag = value; }
         }
 
+        // don't do anything
+        public override bool Enabled { get; set; }
+
         public override void Update()
         {
             base.Update();

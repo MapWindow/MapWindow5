@@ -83,6 +83,16 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_close24 {
+            get {
+                object obj = ResourceManager.GetObject("img_close24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_compass24 {
             get {
                 object obj = ResourceManager.GetObject("img_compass24", resourceCulture);
@@ -106,6 +116,16 @@ namespace MW5.Plugins.Printing.Properties {
         internal static System.Drawing.Bitmap img_down24 {
             get {
                 object obj = ResourceManager.GetObject("img_down24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_export24 {
+            get {
+                object obj = ResourceManager.GetObject("img_export24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -256,6 +276,16 @@ namespace MW5.Plugins.Printing.Properties {
         internal static System.Drawing.Bitmap img_rectangle24 {
             get {
                 object obj = ResourceManager.GetObject("img_rectangle24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_refresh24 {
+            get {
+                object obj = ResourceManager.GetObject("img_refresh24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -113,6 +113,9 @@ namespace MW5.UI.Menu
             get { return Metadata.PluginIdentity; }
         }
 
+        // don't do anything
+        public bool Enabled { get; set; }
+
         public void Update()
         {
             for (int i = 0; i < Items.Count; i++)

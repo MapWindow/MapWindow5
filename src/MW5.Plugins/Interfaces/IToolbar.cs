@@ -18,6 +18,7 @@ namespace MW5.Plugins.Interfaces
         string Key { get; }
         ToolbarDockState DockState { get; set; }
         PluginIdentity PluginIdentity { get; }
+        bool Enabled { get; set; }
         void Update();
     }
 }

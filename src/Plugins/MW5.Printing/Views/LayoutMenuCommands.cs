@@ -35,8 +35,9 @@ namespace MW5.Plugins.Printing.Views
                            new MenuCommand("Page Setup...", LayoutMenuKeys.PageSetup,
                                Resources.img_page_setup24),
                            new MenuCommand("Export to Bitmap", LayoutMenuKeys.ExportToBitmap,
-                               Resources.img_insert_picture24), // TODO: add icon
-                           new MenuCommand("Close", LayoutMenuKeys.Close, null), // TODO: add icon
+                               Resources.img_export24),
+                           new MenuCommand("Close", LayoutMenuKeys.Close, Resources.img_close24),
+                           new MenuCommand("Adjust Layout", LayoutMenuKeys.AdjustPages, Resources.img_refresh24),
 
                            // zooming
                            new MenuCommand("Zoom In", LayoutMenuKeys.ZoomIn, Resources.img_zoom_in24),

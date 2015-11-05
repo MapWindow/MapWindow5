@@ -38,6 +38,8 @@ namespace MW5.UI.Menu
             get { return PluginIdentity.Default; }
         }
 
+        public abstract bool Enabled { get; set; }
+
         public virtual void Update()
         {
             // do nothing; no separators are needed here

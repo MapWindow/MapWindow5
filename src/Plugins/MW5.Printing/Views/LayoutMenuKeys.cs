@@ -17,6 +17,7 @@ namespace MW5.Plugins.Printing.Views
         public const string PageSetup = "lt_PageSettings";
         public const string ExportToBitmap = "lt_ExportToBitmap";
         public const string Close = "lt_Close";
+        public const string AdjustPages = "lt_AdjustPages";
 
         public const string ZoomIn = "lt_ZoomIn";
         public const string ZoomOut = "lt_ZoomOut";
@@ -47,5 +48,10 @@ namespace MW5.Plugins.Printing.Views
         public const string MapZoomOut = "lt_MapZoomOut";
         public const string MapZoomMax = "lt_MapZoomMax";
         public const string MapPan = "lt_MapPan";
+
+        public const string InsertToolbar = "LayoutInsertToolbar";
+        public const string MapToolbar = "LayoutMapToolbar";
+        public const string MainToolbar = "LayoutMainToolbar";
+        public const string ZoomToolbar = "LayoutZoomToolbar";
     }
 }
