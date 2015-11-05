@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Map;
 using MW5.Plugins.Events;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Helpers;
@@ -56,9 +57,11 @@ namespace MW5.Plugins.Printing.Views
                     _layoutControl.ShowPageNumbers = !_layoutControl.ShowPageNumbers;
                     break;
                 case LayoutMenuKeys.NewLayout:
-                    // TODO: ask about saving of previous layout
-                    _layoutControl.Filename = string.Empty;
-                    _layoutControl.ClearLayout();
+                    if (PromptSaveExistingLayout())
+                    {
+                        _layoutControl.Filename = string.Empty;
+                        _layoutControl.ClearLayout();
+                    }
                     break;
                 case LayoutMenuKeys.SaveLayout:
                     SaveLayout(false);
@@ -135,7 +138,6 @@ namespace MW5.Plugins.Printing.Views
                         if (map != null)
                         {
                             _layoutControl.ZoomFullExtentMap(map);
-                            //LayoutControl.ZoomFullViewExtentMap(map);
                         }
                     }
                     break;
@@ -166,8 +168,30 @@ namespace MW5.Plugins.Printing.Views
             }
         }
 
+        private bool PromptSaveExistingLayout()
+        {
+            if (_layoutControl.LayoutElements.Count > 0)
+            {
+                var result = MessageService.Current.AskWithCancel("Save changes to the current layout?");
+
+                switch (result)
+                {
+                    case DialogResult.Cancel:
+                        return false;
+                    case DialogResult.No:
+                        return true;
+                    case DialogResult.Yes:
+                        return SaveLayout(false, true);
+                }
+            }
+        
+            return true;            
+        }
+
         private void LoadLayout()
         {
+            if (!PromptSaveExistingLayout()) return;
+
             string filename = GetLoadFilename();
             if (string.IsNullOrWhiteSpace(filename)) return;
 
@@ -180,7 +204,7 @@ namespace MW5.Plugins.Printing.Views
             }
         }
 
-        private void SaveLayout(bool saveAs)
+        private bool SaveLayout(bool saveAs, bool silent = false)
         {
             string filename = _layoutControl.Filename;
 
@@ -191,14 +215,21 @@ namespace MW5.Plugins.Printing.Views
 
             if (string.IsNullOrWhiteSpace(filename))
             {
-                return;
+                return false;
             }
             
             var serializer = new LayoutSerializer();
             if (serializer.SaveLayout(_layoutControl, _layoutControl.PrinterSettings, filename))
             {
-                MessageService.Current.Info("Layout was saved successfully.");
+                if (!silent)
+                {
+                    MessageService.Current.Info("Layout was saved successfully.");
+                }
+
+                return true;
             }
+
+            return false;
         }
 
         private string GetLoadFilename()
@@ -219,6 +250,8 @@ namespace MW5.Plugins.Printing.Views
             // TODO: use service
             using (var dlg = new SaveFileDialog { Filter = @"*.xml|*.xml" })
             {
+                dlg.InitialDirectory = ConfigPathHelper.GetLayoutPath();
+
                 if (dlg.ShowDialog(_view as IWin32Window) == DialogResult.OK)
                 {
                     return dlg.FileName;
