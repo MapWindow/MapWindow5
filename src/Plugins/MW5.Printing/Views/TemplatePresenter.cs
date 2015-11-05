@@ -6,13 +6,16 @@
 
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Plugins.Concrete;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Services;
 
@@ -30,7 +33,7 @@ namespace MW5.Plugins.Printing.Views
 
             View.LayoutSizeChanged += () =>
                 {
-                    ValidateSize();
+                    Validate();
                     View.UpdateView();
                 };
         }
@@ -43,21 +46,36 @@ namespace MW5.Plugins.Printing.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            if (!ValidateSize())
+            if (!Validate())
             {
-                MessageService.Current.Info("Invalid layout size.");
+                string msg = View.IsNewLayout ? "Invalid layout size." : "No template is selected.";
+                MessageService.Current.Info(msg);
                 return false;
             }
 
             Model.PaperFormat = View.PaperFormat;
             Model.PaperOrientation = View.Orientation;
-            Model.TemplateName = View.TemplateName;
+            Model.TemplateName = TemplateFilename;
             Model.Extents = View.MapExtents;
             Model.Scale = View.MapScale;
 
             SaveConfig();
 
             return true;
+        }
+
+        private string TemplateFilename
+        {
+            get
+            {
+                if (View.IsNewLayout)
+                {
+                    return string.Empty;
+                }
+
+                var template = View.Template;
+                return template != null ? template.Filename : string.Empty;
+            }
         }
 
         /// <summary>
@@ -110,25 +128,30 @@ namespace MW5.Plugins.Printing.Views
             config.PrintingOrientation = View.Orientation;
             config.PrintingPaperFormat = View.PaperFormat;
             config.PrintingScale = View.MapScale;
-            config.PrintingTemplate = View.TemplateName;
+            config.PrintingTemplate = TemplateFilename;
         }
 
         /// <summary>
         /// Calculates canvas size and returns true if it's within limits.
         /// </summary>
-        private bool ValidateSize()
+        private bool Validate()
         {
-            SizeF size;
-            if (!CalculateCanvasSize(out size))
+            if (View.IsNewLayout)
             {
-                return false;
+                SizeF size;
+                if (!CalculateCanvasSize(out size))
+                {
+                    return false;
+                }
+
+                Model.Valid = size.Width * size.Height / 10000 <= Math.Pow(MaxSizeInches, 2.0);
+
+                CalculatePageCount(size);
+
+                return Model.Valid;
             }
 
-            Model.Valid = size.Width * size.Height / 10000 <= Math.Pow(MaxSizeInches, 2.0);
-
-            CalculatePageCount(size);
-
-            return Model.Valid;
+            return View.Template != null;
         }
     }
 }

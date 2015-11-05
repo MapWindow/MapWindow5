@@ -19,6 +19,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
+    [ToolboxItem(false)]
     public class MouseAwareLayoutControl : ContentAwareLayoutControl
     {
         private const float _inflate = 5F;

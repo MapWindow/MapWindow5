@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
+    [ToolboxItem(false)]
     public partial class LayoutControlBase : UserControl
     {
         private const int OFFSET = 50;

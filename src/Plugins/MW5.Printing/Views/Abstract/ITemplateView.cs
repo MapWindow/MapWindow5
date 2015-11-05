@@ -8,6 +8,7 @@ using System;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Printing.Model;
 
 namespace MW5.Plugins.Printing.Views.Abstract
 {
@@ -23,6 +24,8 @@ namespace MW5.Plugins.Printing.Views.Abstract
 
         string PaperFormat { get; }
 
-        string TemplateName { get; }
+        LayoutTemplate Template { get; }
+
+        bool IsNewLayout { get; }
     }
 }

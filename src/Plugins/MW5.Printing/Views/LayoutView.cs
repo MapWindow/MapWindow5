@@ -69,11 +69,7 @@ namespace MW5.Plugins.Printing.Views
         /// </summary>
         public void Initialize()
         {
-            InitDockPanels();
-
-            InitMenus();
-
-            InitLayoutControl();
+            // initialized in presenter
         }
 
         public override ViewStyle Style
@@ -110,6 +106,14 @@ namespace MW5.Plugins.Printing.Views
             _elements.SetLayoutControl(layoutControl1);
 
             layoutPropertyGrid1.BorderStyle = BorderStyle.None;
+
+            layoutControl1.PageSettingsChanged += OnPageSettingsChanged;
+
+            layoutControl1.Dock = DockStyle.Fill;
+
+            InitDockPanels();
+
+            InitMenus();
         }
 
         private void InitDockPanels()
@@ -127,23 +131,6 @@ namespace MW5.Plugins.Printing.Views
             //panel2.SetIcon(Resources.ico_properties);
         }
 
-        private void InitLayoutControl()
-        {
-            layoutControl1.PageSettingsChanged += OnPageSettingsChanged;
-
-            layoutControl1.Dock = DockStyle.Fill;
-
-            var settings = InitPrinterSettings();
-
-            // TODO: load template
-            layoutControl1.Initialize(settings, _context.Map);
-
-            layoutControl1.AddMapElement(Model.Scale, Model.Extents);
-
-            // TODO: trigger from control
-            OnPageSettingsChanged(null, null);
-        }
-
         private void InitMenus()
         {
             // we want the same instance of view in the service, but another 
@@ -151,20 +138,11 @@ namespace MW5.Plugins.Printing.Views
             _menuListener = new LayoutMenuListener(_context, this);
             _menuGenerator = new LayoutMenuGenerator(_plugin, this, _menuListener);
 
-            _zoomCombo =
-                _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.ZoomCombo, _plugin.Identity) as IComboBoxMenuItem;
+            _zoomCombo = _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.ZoomCombo, _plugin.Identity) as IComboBoxMenuItem;
             if (_zoomCombo != null)
             {
                 _zoomCombo.ValueChanged += OnZoomComboValueChanged;
             }
-        }
-
-        private PrinterSettings InitPrinterSettings()
-        {
-            var settings = PrinterManager.PrinterSettings;
-            settings.DefaultPageSettings.Landscape = Model.PaperOrientation == Orientation.Horizontal;
-            settings.DefaultPageSettings.PaperSize = PaperSizes.PaperSizeByFormatName(Model.PaperFormat, settings);
-            return settings;
         }
 
         private void OnLayoutViewShown(object sender, EventArgs e)

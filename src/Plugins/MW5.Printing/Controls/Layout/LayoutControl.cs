@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
@@ -13,7 +14,6 @@ using MW5.Api.Concrete;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
-using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
 
@@ -29,46 +29,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             {
                 ZoomFitToScreen();
             }
-        }
-
-        /// <summary>
-        /// Adds map element to the template
-        /// </summary>
-        public void AddMapElement(int mapScale, IEnvelope extents)
-        {
-            ClearSelection();
-
-            if (!LayoutElements.OfType<LayoutMap>().Any())
-            {
-                AddNewMapElement(mapScale, extents);
-            }
-            else
-            {
-                UpdateMapElement();
-
-                SelectMap();
-            }
-
-            ZoomFitToScreen();
-        }
-
-        /// <summary>
-        /// Adjusts extent
-        /// </summary>
-        public double AutoChooseScale(IEnvelope ext)
-        {
-            // TODO: use for single page layout
-            var mapEl = GetElement<LayoutMap>(ElementType.Map);
-            if (mapEl != null)
-            {
-                GeoSize size;
-                if (_map.GetGeodesicSize(ext, out size))
-                {
-                    return LayoutScaleHelper.CalcMapScale(size, mapEl.Size);
-                }
-            }
-
-            return 0.0;
         }
 
         public void Initialize(PrinterSettings printerSettings, IPrintableMap map)
@@ -87,22 +47,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             UpdateScrollBars();
 
             Invalidate();
-
-            //_templateName = template;
-
-            //axMap.TilesLoaded -= MapTilesLoaded;
-            //axMap.TilesLoaded += MapTilesLoaded;
-
-            //var size = PaperSizesCache.PaperSizeByFormatName(paperFormat, _printerSettings);
-            //if (size != null)
-            //{
-            //    _printerSettings.DefaultPageSettings.PaperSize = size;
-            //}
-
-            //if (!string.IsNullOrEmpty(_templateName))
-            //{
-            //    LoadLayout(_templateName, true, false);
-            //}
         }
 
         /// <summary>
@@ -133,6 +77,24 @@ namespace MW5.Plugins.Printing.Controls.Layout
             ZoomFitToScreen();
         }
 
+        /// <summary>
+        /// Updates the extents of the map element taking into account its size of screen and scale.
+        /// </summary>
+        public void UpdateMapElement(IEnvelope extents)
+        {
+            var maps = LayoutElements.OfType<LayoutMap>().ToList();
+
+            var map = maps.FirstOrDefault(m => m.MainMap);
+            if (map != null)
+            {
+                map.Envelope = extents;
+                map.Initialized = true;
+
+                ClearSelection();
+                AddToSelection(map);
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             //_axMap.TilesLoaded -= MapTilesLoaded;
@@ -140,51 +102,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             base.Dispose(disposing);
         }
 
-        ///// <summary>
-        ///// Handles Tiles loaded event
-        ///// </summary>
-        //private void MapTilesLoaded(object sender, AxMapWinGIS._DMapEvents_TilesLoadedEvent e)
-        //{
-        //    Debug.Print("Tiles loaded: " + e.key);
-
-        //    if (e.key.EndsWith("print"))
-        //    {
-        //        Thread.Sleep(50); // make sure that the wait was started
-        //        LayoutPrint.autoEvent.Set();
-        //    }
-        //    else
-        //    {
-        //        foreach (var el in LayoutElements)
-        //        {
-        //            var map = (el as LayoutMap);
-        //            if (map != null)
-        //            {
-        //                if (map.Guid == e.key)
-        //                {
-        //                    (el as LayoutMap).TilesLoaded = true;
-        //                    (el as LayoutMap).RefreshElement();
-        //                    Invalidate();
-        //                    Debug.Print("Tiles loaded. Map update triggered: " + e.key);
-        //                    RunQueue(true);
-        //                }
-        //            }
-        //        }
-        //        Util.FireEvent(this, TileLoadingEnd, new EventArgs());
-        //    }
-        //}
-
-        internal static void CancelPrinting()
-        {
-            LayoutPrint.Cancelled = true;
-            LayoutPrint.autoEvent.Set();
-        }
-
-        internal void Print()
-        {
-            LayoutPrint.Print(_pages, _printerSettings, LayoutElements, _pages.PageWidth, _pages.PageHeight);
-        }
-
-        private void AddNewMapElement(int mapScale, IEnvelope extents)
+        public void AddMapElement(int mapScale, IEnvelope extents)
         {
             // TODO: extract to LayoutView
 
@@ -210,60 +128,21 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 mapElement.Initialized = true;
 
                 AddToLayout(mapElement);
-                AddToSelection(new List<LayoutElement> { mapElement });
+
+                AddToSelection(mapElement);
             }
         }
 
-        /// <summary>
-        /// Selects map element.
-        /// </summary>
-        private void SelectMap()
+        private void SelectFirstElement()
         {
-            var maps = LayoutElements.OfType<LayoutMap>().ToList();
-            LayoutElement selectedElement = maps.FirstOrDefault(m => m.MainMap);
+            ClearSelection();
 
-            if (!SelectedLayoutElements.Any() && selectedElement == null)
+            var el = LayoutElements.OfType<LayoutMap>().FirstOrDefault() ?? LayoutElements.FirstOrDefault();
+
+            if (el != null)
             {
-                selectedElement = LayoutElements.OfType<LayoutMap>().Any()
-                                      ? LayoutElements.OfType<LayoutMap>().FirstOrDefault()
-                                      : LayoutElements.FirstOrDefault();
+                AddToSelection(new List<LayoutElement> { el });
             }
-
-            if (selectedElement != null)
-            {
-                AddToSelection(new List<LayoutElement> { selectedElement });
-            }
-        }
-
-        /// <summary>
-        /// Updates the extents of the map element taking into account its size of screen and scale.
-        /// </summary>
-        private void UpdateMapElement()
-        {
-            var maps = LayoutElements.OfType<LayoutMap>().ToList();
-
-            // substitute map in template
-            var map = maps.FirstOrDefault(m => m.MainMap);
-            if (map != null)
-            {
-                map.Scale = map.Scale;
-                map.Initialized = true;
-            }
-
-            // other maps
-            //var center = _extents.Center;
-
-            //foreach (var submap in maps.Where(m => !m.MainMap))
-            //{
-            //    if (submap.UpdateMapArea)
-            //    {
-            //        int scale = submap.Scale;
-            //        var env = submap.Envelope;
-            //        env.MoveCenterTo(center.X, center.Y);
-            //        submap.Envelope = env;
-            //        submap.Scale = scale;
-            //    }
-            //}
         }
     }
 }

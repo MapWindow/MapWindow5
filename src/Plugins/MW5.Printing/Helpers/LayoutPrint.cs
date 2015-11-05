@@ -170,19 +170,14 @@ namespace MW5.Plugins.Printing.Helpers
         /// <summary>
         /// Runs printing including printer selection
         /// </summary>
-        internal static void Print(
-            LayoutPages pages,
-            PrinterSettings printerSettings,
-            List<LayoutElement> elements,
-            int pageWidth,
-            int pageHeight)
+        internal static void Print(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements)
         {
             var pd = CreatePrintDialog(pages, printerSettings);
 
             _pages = pages;
             _elements = elements;
-            _pageWidth = pageWidth;
-            _pageHeight = pageHeight;
+            _pageWidth = pages.PageWidth;
+            _pageHeight = pages.PageHeight;
 
             if (pd.ShowDialog() != DialogResult.OK)
             {

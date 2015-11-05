@@ -5,12 +5,15 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Model.Elements;
+using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views.Abstract;
 
 namespace MW5.Plugins.Printing.Views
@@ -38,6 +41,31 @@ namespace MW5.Plugins.Printing.Views
         public override bool ViewOkClicked()
         {
             return true;
+        }
+
+        protected override void Initialize()
+        {
+            var settings = InitPrinterSettings();
+
+            View.LayoutControl.Initialize(settings, _context.Map);
+
+            if (Model.HasTemplate)
+            {
+                var serializer = new LayoutSerializer();
+                serializer.LoadLayout(_context, View.LayoutControl, Model.TemplateName, Model.Extents);
+            }
+            else
+            {
+                View.LayoutControl.AddMapElement(Model.Scale, Model.Extents);
+            }
+        }
+
+        private PrinterSettings InitPrinterSettings()
+        {
+            var settings = PrinterManager.PrinterSettings;
+            settings.DefaultPageSettings.Landscape = Model.PaperOrientation == Orientation.Horizontal;
+            settings.DefaultPageSettings.PaperSize = PaperSizes.PaperSizeByFormatName(Model.PaperFormat, settings);
+            return settings;
         }
 
         /// <summary>

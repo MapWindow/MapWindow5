@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using MW5.Plugins.Printing.Enums;
@@ -15,9 +16,7 @@ using MW5.Plugins.Printing.Model.Elements;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
-    ///<summary>
-    /// The base layout control.
-    ///</summary>
+    [ToolboxItem(false)]
     public partial class ZoomableLayoutControl : LayoutControlBase
     {
         protected readonly List<LayoutElement> _layoutElements = new List<LayoutElement>();

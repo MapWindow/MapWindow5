@@ -70,7 +70,7 @@ namespace MW5.Plugins.Printing.Views
                     LoadLayout();
                     break;
                 case LayoutMenuKeys.Print:
-                    _layoutControl.Print();
+                    LayoutPrint.Print(_layoutControl.Pages, _layoutControl.PrinterSettings, _layoutControl.LayoutElements);
                     break;
                 case LayoutMenuKeys.PrinterSetup:
                     using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
@@ -172,53 +172,11 @@ namespace MW5.Plugins.Printing.Views
             if (string.IsNullOrWhiteSpace(filename)) return;
 
             var serializer = new LayoutSerializer();
-            if (serializer.LoadLayout(_layoutControl, filename))
-            {
-                InitializeElements();
 
+            // TODO: choose extents
+            if (serializer.LoadLayout(_context, _layoutControl, filename, null))
+            {
                 MessageService.Current.Info("Layout was loaded successfully.");
-            }
-        }
-
-        private void InitializeElements()
-        {
-            // TODO: choose particular map element
-            var mapEl = _layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault();
-
-            foreach (var el in _layoutControl.LayoutElements)
-            {
-                switch (el.Type)
-                {
-                    case Enums.ElementType.Map:
-                        var map = el as LayoutMap;
-                        if (map != null)
-                        {
-                            map.Initialize(_context.Map);
-                        }
-                        break;
-                    case Enums.ElementType.Legend:
-                        var legend = el as LayoutLegend;
-                        if (legend != null)
-                        {
-                            legend.Initialize(_layoutControl, _context.Legend);
-                            legend.Map = mapEl;
-                        }
-                        break;
-
-                    case Enums.ElementType.ScaleBar:
-                        var scaleBar = el as LayoutScaleBar;
-                        if (scaleBar != null)
-                        {
-                            scaleBar.LayoutControl = _layoutControl;
-                            scaleBar.Map = mapEl;
-                        }
-                        break;
-                }
-            }
-
-            foreach (var el in _layoutControl.LayoutElements)
-            {
-                el.Initialized = true;
             }
         }
 

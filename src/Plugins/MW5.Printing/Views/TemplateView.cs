@@ -12,6 +12,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Enums;
+using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -21,6 +22,7 @@ namespace MW5.Plugins.Printing.Views
     internal partial class TemplateView : TemplateViewBase, ITemplateView
     {
         private readonly IAppContext _context;
+        private static int _selectedTab;
 
         public TemplateView(IAppContext context)
         {
@@ -31,9 +33,13 @@ namespace MW5.Plugins.Printing.Views
 
             InitControls();
 
-            tabControlAdv1.SelectedIndex = 1;
-
             AttachHandlers();
+
+            tabControlAdv1.SelectedIndex = _selectedTab;
+
+            FormClosed += (s, e) => _selectedTab = tabControlAdv1.SelectedIndex;
+
+            UpdateAreaControls();
         }
 
         private PrintArea PrintArea
@@ -102,6 +108,16 @@ namespace MW5.Plugins.Printing.Views
             cboScale.SetValue(scale);
 
             cboFormat.SetValue(AppConfig.Instance.PrintingPaperFormat);
+
+            LoadTemplates();
+        }
+
+        private void LoadTemplates()
+        {
+            string path = ConfigPathHelper.GetLayoutPath();
+            Model.LoadTemplates(path);
+            templateGrid1.DataSource = Model.Templates;
+            templateGrid1.Adapter.SelectFirstRecord();
         }
 
         public ButtonBase OkButton
@@ -114,18 +130,22 @@ namespace MW5.Plugins.Printing.Views
             get { return cboFormat.Text; }
         }
 
-        public string TemplateName
+        public LayoutTemplate Template
         {
             get
             {
-                if (tabControlAdv1.SelectedTab == tabMultiPage)
+                if (tabControlAdv1.SelectedTab == tabTemplates)
                 {
-                    return cboTemplate.Text;
+                    return templateGrid1.Adapter.SelectedItem;
                 }
 
-                // TODO: return single page template as well
-                return string.Empty;
+                return null;
             }
+        }
+
+        public bool IsNewLayout
+        {
+            get { return tabControlAdv1.SelectedTab == tabNewLayout; }
         }
 
         public override void UpdateView()
@@ -184,6 +204,19 @@ namespace MW5.Plugins.Printing.Views
             {
                 cboScale.Items.Add("1:" + scale);
             }
+        }
+
+        private void OnTabChanged(object sender, EventArgs e)
+        {
+            UpdateAreaControls();
+        }
+
+        private void UpdateAreaControls()
+        {
+            var tab = tabControlAdv1.SelectedTab;
+            tab.Controls.Add(cboArea);
+            tab.Controls.Add(lblMapArea);
+            tab.Controls.Add(lblArea);
         }
     }
 

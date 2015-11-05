@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -17,6 +18,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
+    [ToolboxItem(false)]
     public class ScreenAwareLayoutControl : ZoomableLayoutControl
     {
         private readonly SolidBrush _selectionBrush;

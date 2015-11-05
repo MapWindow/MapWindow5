@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
+    [ToolboxItem(false)]
     public class ContentAwareLayoutControl : ScreenAwareLayoutControl
     {
         private string _filename;

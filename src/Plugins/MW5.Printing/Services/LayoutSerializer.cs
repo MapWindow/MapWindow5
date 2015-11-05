@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Interfaces;
+using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Shared;
@@ -43,7 +45,7 @@ namespace MW5.Plugins.Printing.Services
             return false;
         }
 
-        public bool LoadLayout(LayoutControl layoutControl, string filename)
+        public bool LoadLayout(IAppContext context, LayoutControl layoutControl, string filename, IEnvelope extents)
         {
             var layout = ReadLayout(filename);
 
@@ -51,9 +53,58 @@ namespace MW5.Plugins.Printing.Services
 
             ApplyLayout(layoutControl, layout);
 
+            InitializeElements(context, layoutControl);
+
+            if (extents != null)    
+            {
+                layoutControl.UpdateMapElement(extents);
+            }
+
             layoutControl.Filename = filename;
 
             return true;
+        }
+
+        private void InitializeElements(IAppContext context, LayoutControl layoutControl)
+        {
+            // TODO: choose particular map element
+            var mapEl = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault();
+
+            foreach (var el in layoutControl.LayoutElements)
+            {
+                switch (el.Type)
+                {
+                    case Enums.ElementType.Map:
+                        var map = el as LayoutMap;
+                        if (map != null)
+                        {
+                            map.Initialize(context.Map);
+                        }
+                        break;
+                    case Enums.ElementType.Legend:
+                        var legend = el as LayoutLegend;
+                        if (legend != null)
+                        {
+                            legend.Initialize(layoutControl, context.Legend);
+                            legend.Map = mapEl;
+                        }
+                        break;
+
+                    case Enums.ElementType.ScaleBar:
+                        var scaleBar = el as LayoutScaleBar;
+                        if (scaleBar != null)
+                        {
+                            scaleBar.LayoutControl = layoutControl;
+                            scaleBar.Map = mapEl;
+                        }
+                        break;
+                }
+            }
+
+            foreach (var el in layoutControl.LayoutElements)
+            {
+                el.Initialized = true;
+            }
         }
 
         private void ApplyLayout(LayoutControl layoutControl, XmlLayout layout)

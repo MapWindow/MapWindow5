@@ -30,33 +30,31 @@
         {
             this.components = new System.ComponentModel.Container();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
-            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.tabMultiPage = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.tabNewLayout = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.lblArea = new System.Windows.Forms.Label();
             this.lblWarning = new System.Windows.Forms.Label();
             this.lblPages = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cboArea = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboFormat = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.label7 = new System.Windows.Forms.Label();
-            this.cboTemplate = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.label5 = new System.Windows.Forms.Label();
+            this.lblMapArea = new System.Windows.Forms.Label();
             this.cboScale = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label4 = new System.Windows.Forms.Label();
             this.cboOrientation = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label3 = new System.Windows.Forms.Label();
+            this.tabTemplates = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.templateGrid1 = new MW5.Plugins.Printing.Controls.TemplateGrid();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
-            this.tabPageAdv1.SuspendLayout();
-            this.tabMultiPage.SuspendLayout();
+            this.tabNewLayout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboArea)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboFormat)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboTemplate)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboScale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOrientation)).BeginInit();
+            this.tabTemplates.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.templateGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControlAdv1
@@ -65,72 +63,41 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(460, 288);
-            this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
-            this.tabControlAdv1.Controls.Add(this.tabMultiPage);
+            this.tabControlAdv1.Controls.Add(this.tabNewLayout);
+            this.tabControlAdv1.Controls.Add(this.tabTemplates);
             this.tabControlAdv1.Location = new System.Drawing.Point(8, 5);
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.Size = new System.Drawing.Size(460, 288);
             this.tabControlAdv1.TabIndex = 4;
+            this.tabControlAdv1.SelectedIndexChanged += new System.EventHandler(this.OnTabChanged);
             // 
-            // tabPageAdv1
+            // tabNewLayout
             // 
-            this.tabPageAdv1.Controls.Add(this.listBox1);
-            this.tabPageAdv1.Image = null;
-            this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabPageAdv1.Location = new System.Drawing.Point(1, 25);
-            this.tabPageAdv1.Name = "tabPageAdv1";
-            this.tabPageAdv1.ShowCloseButton = true;
-            this.tabPageAdv1.Size = new System.Drawing.Size(457, 261);
-            this.tabPageAdv1.TabIndex = 1;
-            this.tabPageAdv1.Text = "Single page";
-            this.tabPageAdv1.ThemesEnabled = false;
-            // 
-            // listBox1
-            // 
-            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Items.AddRange(new object[] {
-            "Template 1 [Horizontal]",
-            "Template 2 [Vertical]",
-            "Template 3 [Horizontal]",
-            "Template 4 [Vertical]",
-            "Template 5 [Vertical]",
-            "Template 6 [Horizontal]",
-            "Template 7 [Vertical]"});
-            this.listBox1.Location = new System.Drawing.Point(27, 112);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(403, 130);
-            this.listBox1.TabIndex = 0;
-            // 
-            // tabMultiPage
-            // 
-            this.tabMultiPage.Controls.Add(this.lblArea);
-            this.tabMultiPage.Controls.Add(this.lblWarning);
-            this.tabMultiPage.Controls.Add(this.lblPages);
-            this.tabMultiPage.Controls.Add(this.label2);
-            this.tabMultiPage.Controls.Add(this.cboArea);
-            this.tabMultiPage.Controls.Add(this.cboFormat);
-            this.tabMultiPage.Controls.Add(this.label7);
-            this.tabMultiPage.Controls.Add(this.cboTemplate);
-            this.tabMultiPage.Controls.Add(this.label5);
-            this.tabMultiPage.Controls.Add(this.cboScale);
-            this.tabMultiPage.Controls.Add(this.label4);
-            this.tabMultiPage.Controls.Add(this.cboOrientation);
-            this.tabMultiPage.Controls.Add(this.label3);
-            this.tabMultiPage.Image = null;
-            this.tabMultiPage.ImageSize = new System.Drawing.Size(16, 16);
-            this.tabMultiPage.Location = new System.Drawing.Point(1, 25);
-            this.tabMultiPage.Name = "tabMultiPage";
-            this.tabMultiPage.ShowCloseButton = true;
-            this.tabMultiPage.Size = new System.Drawing.Size(457, 261);
-            this.tabMultiPage.TabIndex = 2;
-            this.tabMultiPage.Text = "Multipage";
-            this.tabMultiPage.ThemesEnabled = false;
+            this.tabNewLayout.Controls.Add(this.lblArea);
+            this.tabNewLayout.Controls.Add(this.lblWarning);
+            this.tabNewLayout.Controls.Add(this.lblPages);
+            this.tabNewLayout.Controls.Add(this.label2);
+            this.tabNewLayout.Controls.Add(this.cboArea);
+            this.tabNewLayout.Controls.Add(this.cboFormat);
+            this.tabNewLayout.Controls.Add(this.lblMapArea);
+            this.tabNewLayout.Controls.Add(this.cboScale);
+            this.tabNewLayout.Controls.Add(this.label4);
+            this.tabNewLayout.Controls.Add(this.cboOrientation);
+            this.tabNewLayout.Controls.Add(this.label3);
+            this.tabNewLayout.Image = null;
+            this.tabNewLayout.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabNewLayout.Location = new System.Drawing.Point(1, 25);
+            this.tabNewLayout.Name = "tabNewLayout";
+            this.tabNewLayout.ShowCloseButton = true;
+            this.tabNewLayout.Size = new System.Drawing.Size(457, 261);
+            this.tabNewLayout.TabIndex = 2;
+            this.tabNewLayout.Text = "New Layout";
+            this.tabNewLayout.ThemesEnabled = false;
             // 
             // lblArea
             // 
             this.lblArea.AutoSize = true;
-            this.lblArea.Location = new System.Drawing.Point(347, 34);
+            this.lblArea.Location = new System.Drawing.Point(341, 30);
             this.lblArea.Name = "lblArea";
             this.lblArea.Size = new System.Drawing.Size(84, 13);
             this.lblArea.TabIndex = 15;
@@ -140,7 +107,7 @@
             // 
             this.lblWarning.AutoSize = true;
             this.lblWarning.ForeColor = System.Drawing.Color.Red;
-            this.lblWarning.Location = new System.Drawing.Point(28, 221);
+            this.lblWarning.Location = new System.Drawing.Point(22, 189);
             this.lblWarning.Name = "lblWarning";
             this.lblWarning.Size = new System.Drawing.Size(350, 13);
             this.lblWarning.TabIndex = 14;
@@ -150,7 +117,7 @@
             // lblPages
             // 
             this.lblPages.AutoSize = true;
-            this.lblPages.Location = new System.Drawing.Point(347, 73);
+            this.lblPages.Location = new System.Drawing.Point(341, 69);
             this.lblPages.Name = "lblPages";
             this.lblPages.Size = new System.Drawing.Size(67, 13);
             this.lblPages.TabIndex = 13;
@@ -159,7 +126,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 73);
+            this.label2.Location = new System.Drawing.Point(22, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 12;
@@ -172,7 +139,7 @@
             this.cboArea.BeforeTouchSize = new System.Drawing.Size(226, 21);
             this.cboArea.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboArea.Location = new System.Drawing.Point(115, 26);
+            this.cboArea.Location = new System.Drawing.Point(109, 26);
             this.cboArea.Name = "cboArea";
             this.cboArea.Size = new System.Drawing.Size(226, 21);
             this.cboArea.TabIndex = 10;
@@ -183,49 +150,26 @@
             this.cboFormat.BeforeTouchSize = new System.Drawing.Size(226, 21);
             this.cboFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboFormat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboFormat.Location = new System.Drawing.Point(115, 66);
+            this.cboFormat.Location = new System.Drawing.Point(109, 66);
             this.cboFormat.Name = "cboFormat";
             this.cboFormat.Size = new System.Drawing.Size(226, 21);
             this.cboFormat.TabIndex = 11;
             // 
-            // label7
+            // lblMapArea
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(28, 34);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(52, 13);
-            this.label7.TabIndex = 9;
-            this.label7.Text = "Map area";
-            // 
-            // cboTemplate
-            // 
-            this.cboTemplate.BeforeTouchSize = new System.Drawing.Size(316, 21);
-            this.cboTemplate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboTemplate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboTemplate.Items.AddRange(new object[] {
-            "Default"});
-            this.cboTemplate.ItemsImageIndexes.Add(new Syncfusion.Windows.Forms.Tools.ComboBoxAdv.ImageIndexItem(this.cboTemplate, "Default"));
-            this.cboTemplate.Location = new System.Drawing.Point(115, 180);
-            this.cboTemplate.Name = "cboTemplate";
-            this.cboTemplate.Size = new System.Drawing.Size(316, 21);
-            this.cboTemplate.TabIndex = 8;
-            this.cboTemplate.Text = "Default";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 186);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(51, 13);
-            this.label5.TabIndex = 7;
-            this.label5.Text = "Template";
+            this.lblMapArea.AutoSize = true;
+            this.lblMapArea.Location = new System.Drawing.Point(22, 30);
+            this.lblMapArea.Name = "lblMapArea";
+            this.lblMapArea.Size = new System.Drawing.Size(52, 13);
+            this.lblMapArea.TabIndex = 9;
+            this.lblMapArea.Text = "Map area";
             // 
             // cboScale
             // 
             this.cboScale.BeforeTouchSize = new System.Drawing.Size(316, 21);
             this.cboScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboScale.Location = new System.Drawing.Point(115, 142);
+            this.cboScale.Location = new System.Drawing.Point(109, 142);
             this.cboScale.Name = "cboScale";
             this.cboScale.Size = new System.Drawing.Size(316, 21);
             this.cboScale.TabIndex = 6;
@@ -233,7 +177,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(28, 149);
+            this.label4.Location = new System.Drawing.Point(22, 146);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(34, 13);
             this.label4.TabIndex = 5;
@@ -244,7 +188,7 @@
             this.cboOrientation.BeforeTouchSize = new System.Drawing.Size(316, 21);
             this.cboOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboOrientation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboOrientation.Location = new System.Drawing.Point(115, 104);
+            this.cboOrientation.Location = new System.Drawing.Point(109, 104);
             this.cboOrientation.Name = "cboOrientation";
             this.cboOrientation.Size = new System.Drawing.Size(316, 21);
             this.cboOrientation.TabIndex = 4;
@@ -252,11 +196,51 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 112);
+            this.label3.Location = new System.Drawing.Point(22, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(58, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Orientation";
+            // 
+            // tabTemplates
+            // 
+            this.tabTemplates.Controls.Add(this.templateGrid1);
+            this.tabTemplates.Image = null;
+            this.tabTemplates.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabTemplates.Location = new System.Drawing.Point(1, 25);
+            this.tabTemplates.Name = "tabTemplates";
+            this.tabTemplates.ShowCloseButton = true;
+            this.tabTemplates.Size = new System.Drawing.Size(457, 261);
+            this.tabTemplates.TabIndex = 1;
+            this.tabTemplates.Text = "Templates";
+            this.tabTemplates.ThemesEnabled = false;
+            // 
+            // templateGrid1
+            // 
+            this.templateGrid1.Appearance.AnyCell.Borders.Bottom = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.templateGrid1.Appearance.AnyCell.Borders.Left = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.templateGrid1.Appearance.AnyCell.Borders.Right = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.templateGrid1.Appearance.AnyCell.Borders.Top = new Syncfusion.Windows.Forms.Grid.GridBorder(Syncfusion.Windows.Forms.Grid.GridBorderStyle.None);
+            this.templateGrid1.Appearance.AnyCell.VerticalAlignment = Syncfusion.Windows.Forms.Grid.GridVerticalAlignment.Middle;
+            this.templateGrid1.BackColor = System.Drawing.SystemColors.Window;
+            this.templateGrid1.FreezeCaption = false;
+            this.templateGrid1.Location = new System.Drawing.Point(6, 71);
+            this.templateGrid1.Name = "templateGrid1";
+            this.templateGrid1.Size = new System.Drawing.Size(445, 184);
+            this.templateGrid1.TabIndex = 19;
+            this.templateGrid1.TableDescriptor.TableOptions.ListBoxSelectionCurrentCellOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionCurrentCellOptions.None;
+            this.templateGrid1.TableOptions.AllowDropDownCell = false;
+            this.templateGrid1.TableOptions.AllowSelection = Syncfusion.Windows.Forms.Grid.GridSelectionFlags.None;
+            this.templateGrid1.TableOptions.ListBoxSelectionColorOptions = Syncfusion.Windows.Forms.Grid.Grouping.GridListBoxSelectionColorOptions.ApplySelectionColor;
+            this.templateGrid1.TableOptions.ListBoxSelectionMode = System.Windows.Forms.SelectionMode.One;
+            this.templateGrid1.TableOptions.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(51)))), ((int)(((byte)(153)))), ((int)(((byte)(255)))));
+            this.templateGrid1.TableOptions.SelectionTextColor = System.Drawing.Color.Black;
+            this.templateGrid1.Text = "templateGrid1";
+            this.templateGrid1.TopLevelGroupOptions.ShowAddNewRecordBeforeDetails = false;
+            this.templateGrid1.TopLevelGroupOptions.ShowCaption = false;
+            this.templateGrid1.TopLevelGroupOptions.ShowColumnHeaders = true;
+            this.templateGrid1.VersionInfo = "0.0.1.0";
+            this.templateGrid1.WrapWithPanel = true;
             // 
             // btnCancel
             // 
@@ -297,17 +281,17 @@
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.tabControlAdv1);
             this.Name = "TemplateView";
-            this.Text = "Layout Templates";
+            this.Text = "Choose Layout";
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).EndInit();
             this.tabControlAdv1.ResumeLayout(false);
-            this.tabPageAdv1.ResumeLayout(false);
-            this.tabMultiPage.ResumeLayout(false);
-            this.tabMultiPage.PerformLayout();
+            this.tabNewLayout.ResumeLayout(false);
+            this.tabNewLayout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboArea)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboFormat)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboTemplate)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboScale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboOrientation)).EndInit();
+            this.tabTemplates.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.templateGrid1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -315,11 +299,8 @@
         #endregion
 
         private Syncfusion.Windows.Forms.Tools.TabControlAdv tabControlAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
-        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabMultiPage;
-        private System.Windows.Forms.ListBox listBox1;
-        private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboTemplate;
-        private System.Windows.Forms.Label label5;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabTemplates;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabNewLayout;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboScale;
         private System.Windows.Forms.Label label4;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboOrientation;
@@ -329,9 +310,10 @@
         private System.Windows.Forms.Label label2;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboArea;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboFormat;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblMapArea;
         private System.Windows.Forms.Label lblWarning;
         private System.Windows.Forms.Label lblPages;
         private System.Windows.Forms.Label lblArea;
+        private Controls.TemplateGrid templateGrid1;
     }
 }

@@ -53,5 +53,10 @@ namespace MW5.Plugins.Helpers
         {
             return GetConfigPath() + @"\WMS\";
         }
+
+        public static string GetLayoutPath()
+        {
+            return GetConfigPath() + @"\Layout\";
+        }
     }
 }
