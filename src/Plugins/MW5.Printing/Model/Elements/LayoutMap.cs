@@ -19,6 +19,7 @@ using MW5.Api.Map;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Services;
 using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Model.Elements
@@ -34,7 +35,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         private bool _drawTiles;
         private bool _extentChanged;
         private IEnvelope _extents;
-        private bool _initializing;
         private bool _mainMap;
         private RectangleF _oldRectangle;
         private TileProvider _tileProvider = TileProvider.OpenStreetMap;
@@ -45,6 +45,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public LayoutMap()
         {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
             _extentChanged = false;
             _mainMap = true;
             _updateMapArea = true;
@@ -54,7 +62,6 @@ namespace MW5.Plugins.Printing.Model.Elements
             TilesLoaded = false;
             Guid = System.Guid.NewGuid().ToString();
             ResizeStyle = ResizeStyle.NoScaling;
-            _initializing = true;
         }
 
         public void Initialize(IPrintableMap map)
@@ -85,7 +92,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Sets a new extent for the map on calls invalidation of the control
         /// </summary>
         [Browsable(false)]
-        [DataMember]
         public IEnvelope Envelope
         {
             get { return _extents; }
@@ -96,14 +102,28 @@ namespace MW5.Plugins.Printing.Model.Elements
             }
         }
 
+        /// <summary>
+        /// Performs serialization of map bounds without binding serializer to Envelope implementation.
+        /// </summary>
         [Browsable(false)]
-        public string Guid { get; set; }
+        [DataMember]
+        private XmlEnvelope Bounds
+        {
+            get
+            {
+                var box = Envelope;
+                return new XmlEnvelope() { MinX = box.MinX, MinY = box.MinY, MaxX = box.MaxX, MaxY = box.MaxY };
+            }
+
+            set
+            {
+                if (value == null) return;
+                Envelope = new Envelope(value.MinX, value.MaxX, value.MinY, value.MaxY);
+            }
+        }
 
         [Browsable(false)]
-        public bool Initializing
-        {
-            get { return _initializing; }
-        }
+        public string Guid { get; set; }
 
         /// <summary>
         /// Indicates to the layout engine that vector based rendering should be used
@@ -273,11 +293,6 @@ namespace MW5.Plugins.Printing.Model.Elements
             return false;
         }
 
-        public void MarkInitialized()
-        {
-            _initializing = false;
-        }
-
         public void PanMap(double x, double y)
         {
             Envelope = Envelope.Move(x, y);
@@ -287,7 +302,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             _extentChanged = true;
 
-            OnInvalidate();
+            FireInvalidated();
         }
 
         /// <summary>
@@ -320,8 +335,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         protected override void Draw(Graphics g, bool printing, bool export, int x, int y)
         {
-            if (Initializing) return;
-
             // printing goes on even if no tiles were loaded
             if (!TilesLoaded && DrawTiles && _extentChanged)
             {

@@ -29,25 +29,16 @@ namespace MW5.Plugins.Printing.Model.Elements
         private string _filename;
         private bool _preserveAspectRatio;
 
-        /// <summary>
-        /// Constructor
-        /// </summary>
         public LayoutBitmap()
         {
-            Name = "Bitmap";
-            ResizeStyle = ResizeStyle.HandledInternally;
-            ResizeStyle = ResizeStyle.StretchToFit;
-            _preserveAspectRatio = true;
-            _draft = true;
-            _filename = string.Empty;
-            _brightness = 0;
-            _contrast = 0;
+            SetDefaults();
         }
 
         /// <summary>
         /// Modifies the brightness of the bitmap relative to its original brightness +/- 255 Doesn't modify original bitmap
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(0)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_brightness")]
@@ -67,6 +58,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Modifies the contrast of the bitmap relative to its original contrast +/- 255 Doesn't modify original bitmap
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(0)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_contrast")]
@@ -116,6 +108,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the string fileName of the bitmap to use
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue("")]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_filename")]
@@ -127,16 +120,14 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(value))
-                    {
-                        _filename = "";
-                        RecycleBitmap();
-                        return;
-                    }
-
-                    _filename = value;
                     RecycleBitmap();
-                    _bitmap = new Bitmap(_filename);
+
+                    _filename = string.IsNullOrWhiteSpace(value) ? string.Empty : value;
+
+                    if (_filename != string.Empty)
+                    {
+                        _bitmap = new Bitmap(_filename);
+                    }
                 }
                 catch
                 {
@@ -153,6 +144,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// the bitmap to occur
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(true)]
         [CategoryEx(@"cat_behavior")]
         [DisplayNameEx(@"prop_ratio")]
@@ -179,10 +171,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             RecycleBitmap();
         }
 
-        /// <summary>
-        /// This gets called to instruct the element to draw itself in the appropriate spot of the graphics object
-        /// </summary>
-        protected override void Draw(Graphics g, bool printing, bool export, int x, int y)
+        private ImageAttributes CreateImageAttributes()
         {
             //This color matrix is used to adjust how the image is drawn to the graphics object
             float bright = _brightness / 255.0F;
@@ -197,67 +186,102 @@ namespace MW5.Plugins.Printing.Model.Elements
             var imgAttrib = new ImageAttributes();
             imgAttrib.SetColorMatrix(cm);
 
-            //Defines a parallelgram where the image is to be drawn
-            PointF[] destPoints = { new PointF(x, y), new PointF(x + Size.Width, y), new PointF(x, y + Size.Height) };
+            return imgAttrib;
+        }
+
+        /// <summary>
+        /// Modifies the parallelogram if we are preserving aspect ratio
+        /// </summary>
+        private void AjustDestinationBounds(Bitmap bitmap, float x, float y, ref PointF[] destPoints)
+        {
+            if (_preserveAspectRatio)
+            {
+                if (Size.Width / bitmap.Width < Size.Height / bitmap.Height)
+                {
+                    destPoints[2] = new PointF(x, y + (Size.Width * bitmap.Height / bitmap.Width));
+                }
+                else
+                {
+                    destPoints[1] = new PointF(x + (Size.Height * bitmap.Width / bitmap.Height), y);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
+            Name = "Bitmap";
+            ResizeStyle = ResizeStyle.HandledInternally;
+            ResizeStyle = ResizeStyle.StretchToFit;
+            _preserveAspectRatio = true;
+            _draft = true;
+            _filename = string.Empty;
+            _brightness = 0;
+            _contrast = 0;
+        }
+
+        /// <summary>
+        /// This gets called to instruct the element to draw itself in the appropriate spot of the graphics object
+        /// </summary>
+        protected override void Draw(Graphics g, bool printing, bool export, int x, int y)
+        {
+            var attr = CreateImageAttributes();
+
+            PointF[] destPoints =
+                {
+                    new PointF(x, y), 
+                    new PointF(x + Size.Width, y), 
+                    new PointF(x, y + Size.Height)
+                };
+
             Rectangle srcRect;
 
-            //When printing we use this code
             if (printing)
             {
-                //Open the original and gets its rectangle
-                var original = new Bitmap(_filename);
-                srcRect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
-
-                //Modifies the parallelogram if we are preserving aspect ratio
-                if (_preserveAspectRatio)
+                using (var original = new Bitmap(_filename))
                 {
-                    if (Size.Width / original.Width < Size.Height / original.Height) destPoints[2] = new PointF(x, y + (Size.Width * original.Height / original.Width));
-                    else destPoints[1] = new PointF(x + (Size.Height * original.Width / original.Height), y);
+                    srcRect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
+
+                    AjustDestinationBounds(original, x, y, ref destPoints);
+
+                    g.DrawImage(_bitmap, destPoints, srcRect, GraphicsUnit.Pixel, attr);
                 }
-
-                //Draws the bitmap
-                g.DrawImage(_bitmap, destPoints, srcRect, GraphicsUnit.Pixel, imgAttrib);
-
-                //Clean up and return
-                imgAttrib.Dispose();
-                original.Dispose();
             }
             else
             {
-                if (!Resizing && Draft)
+                if (!Resizing && Draft && File.Exists(_filename))
                 {
-                    if (File.Exists(_filename))
-                    {
-                        if ((_bitmap == null) || (_bitmap != null && _bitmap.Width != Convert.ToInt32(Size.Width)))
-                        {
-                            var original = new Bitmap(_filename);
-                            if (_bitmap != null) _bitmap.Dispose();
-                            _bitmap = new Bitmap(Convert.ToInt32(Size.Width),
-                                Convert.ToInt32(Size.Width * original.Height / original.Width),
-                                PixelFormat.Format32bppArgb);
-                            var graph = Graphics.FromImage(_bitmap);
-                            graph.DrawImage(original, 0, 0, _bitmap.Width, _bitmap.Height);
-                            original.Dispose();
-                            graph.Dispose();
-                        }
-                    }
+                    PopulateBufferBitmap();
                 }
+
                 if (_bitmap == null) return;
 
-                //Modifies the parallelogram if we are preserving aspect ratio
-                if (_preserveAspectRatio)
-                {
-                    if ((Size.Width / _bitmap.Width) < (Size.Height / _bitmap.Height))
-                        destPoints[2] = new PointF(LocationF.X,
-                            LocationF.Y + (Size.Width * _bitmap.Height / _bitmap.Width));
-                    else
-                        destPoints[1] = new PointF(LocationF.X + (Size.Height * _bitmap.Width / _bitmap.Height),
-                            LocationF.Y);
-                }
+                AjustDestinationBounds(_bitmap, LocationF.X, LocationF.Y, ref destPoints);
 
-                //Draws the bitmap to the screen
                 srcRect = new Rectangle(0, 0, _bitmap.Width, _bitmap.Height);
-                g.DrawImage(_bitmap, destPoints, srcRect, GraphicsUnit.Pixel, imgAttrib);
+                g.DrawImage(_bitmap, destPoints, srcRect, GraphicsUnit.Pixel, attr);
+            }
+        }
+
+        private void PopulateBufferBitmap()
+        {
+            if ((_bitmap == null) || (_bitmap != null && _bitmap.Width != Convert.ToInt32(Size.Width)))
+            {
+                using (var original = new Bitmap(_filename))
+                {
+                    RecycleBitmap();
+
+                    _bitmap = new Bitmap(Convert.ToInt32(Size.Width),
+                        Convert.ToInt32(Size.Width * original.Height / original.Width),
+                        PixelFormat.Format32bppArgb);
+
+                    using (var graph = Graphics.FromImage(_bitmap))
+                    {
+                        graph.DrawImage(original, 0, 0, _bitmap.Width, _bitmap.Height);
+                    }
+                }
             }
         }
 

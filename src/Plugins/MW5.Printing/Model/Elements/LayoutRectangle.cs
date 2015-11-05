@@ -21,6 +21,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public LayoutRectangle()
         {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
             Name = "Rectangle";
             ResizeStyle = ResizeStyle.HandledInternally;
         }

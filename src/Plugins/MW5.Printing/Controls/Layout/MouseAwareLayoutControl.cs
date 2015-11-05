@@ -181,7 +181,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                                                 ScreenHelper.LogicToScreenDpi * _zoom);
                                             graph.TranslateTransform(-_selectedLayoutElements[0].Rectangle.X,
                                                 -_selectedLayoutElements[0].Rectangle.Y);
-                                            LayoutElement.DrawElement(_selectedLayoutElements[0], graph, false, false);
+                                            _selectedLayoutElements[0].DrawElement(graph, false, false);
                                         }
                                     }
                                 }

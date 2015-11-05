@@ -37,10 +37,10 @@ namespace MW5.Plugins.Printing.Model.Elements
         private IMuteLegend _legend;
         private List<int> _groupHandles;
         private List<int> _layerHandles;
-        private readonly Pen _penOutline = new Pen(Color.Black);
-        private readonly Brush _textBrush = new SolidBrush(Color.Black);
-        private readonly TextRenderingHint _textHint = TextRenderingHint.SystemDefault;
-        private readonly Color backColor = Color.White;
+        private Pen _penOutline;
+        private Brush _textBrush;
+        private TextRenderingHint _textHint;
+        private Color _backColor;
         private Bitmap _buffer;
         private bool _fillHeader;
         private int _numCol;
@@ -53,6 +53,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public LayoutLegend()
         {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
             Name = "Legend";
 
             _font = new Font("Arial", 10);
@@ -62,6 +70,11 @@ namespace MW5.Plugins.Printing.Model.Elements
             _textHint = TextRenderingHint.AntiAliasGridFit;
             _thumbnailHeight = 20;
             _thumbnailWidth = 40;
+
+            _penOutline = new Pen(Color.Black);
+            _textBrush = new SolidBrush(Color.Black);
+            _textHint = TextRenderingHint.SystemDefault;
+            _backColor = Color.White;
         }
 
         public void Initialize(LayoutControl layoutControl, IMuteLegend legend)
@@ -76,6 +89,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(typeof(Color), "0xFFFFFF")]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_color")]
@@ -86,6 +100,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DefaultValue(false)]
         [Browsable(true)]
         public bool FillHeader
@@ -99,6 +114,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_font")]
         public Font Font
@@ -112,6 +128,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_groupfont")]
         public Font GroupFont
@@ -129,6 +146,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_map")]
+        [DataMember]
         [DisplayNameEx(@"prop_groups")]
         [Editor(typeof(LayoutGroupEditor), typeof(UITypeEditor))]
         public List<int> Groups
@@ -146,6 +164,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_map")]
+        [DataMember]
         [DisplayNameEx(@"prop_layers")]
         [Editor(typeof(LayoutLayerEditor), typeof(UITypeEditor))]
         public List<int> Layers
@@ -186,6 +205,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(1)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_numcol")]
@@ -201,10 +221,12 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         [Browsable(false)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_alias")]
         public TextRenderingHint TextHint { get; set; }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(20)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_thumbnail_height")]
@@ -222,6 +244,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(40)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_thumbnail_width")]
@@ -258,6 +281,8 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             get { return _font2; }
         }
+
+        
 
         public override void RefreshElement()
         {
@@ -540,15 +565,15 @@ namespace MW5.Plugins.Printing.Model.Elements
 
             if (fs.PointOrMultiPoint)
             {
-                options.DrawPoint(hdc, left, top, width, height, backColor);
+                options.DrawPoint(hdc, left, top, width, height, _backColor);
             }
             else if (fs.IsPolyline)
             {
-                options.DrawLine(hdc, left, top, width, height, false, width, height, backColor);
+                options.DrawLine(hdc, left, top, width, height, false, width, height, _backColor);
             }
             else if (fs.IsPolygon)
             {
-                options.DrawRectangle(hdc, left, top, width - 1, height - 1, false, width + 1, height + 1, backColor);
+                options.DrawRectangle(hdc, left, top, width - 1, height - 1, false, width + 1, height + 1, _backColor);
             }
 
             g.ReleaseHdc(hdc);

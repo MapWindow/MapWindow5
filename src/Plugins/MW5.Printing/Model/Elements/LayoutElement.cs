@@ -11,14 +11,16 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.Runtime.Serialization;
+using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Model.Elements
 {
     /// <summary>
-    /// The interface for all elements that can be added to the layout control
+    /// Base class for all elements that can be added to the layout control
     /// </summary>
     [DataContract]
     public abstract class LayoutElement
@@ -27,14 +29,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         protected Font _font2;
         private PointF _location;
         private String _name;
-        private ResizeStyle _resizeStyle;
-        private bool _resizing;
         internal SizeF _size;
         private Bitmap _thumbnail;
+        private bool _initialized;
 
         public LayoutElement()
         {
             Visible = true;
+            Initialized = true;
         }
 
         /// <summary>
@@ -51,6 +53,22 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Fires when the preview thumbnail for this element has been updated
         /// </summary>
         public event EventHandler ThumbnailChanged;
+
+        /// <summary>
+        /// Rendering of elements is allowed only after it set to true. 
+        /// </summary>
+        internal bool Initialized
+        {
+            get { return _initialized; }
+            set
+            {
+                if (value && !_initialized)
+                {
+                    _initialized = true;
+                    RefreshElement();
+                }
+            }
+        }
 
         [Browsable(false)]
         [DefaultValue(0)]
@@ -78,7 +96,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             set
             {
                 _location = new PointF(value.X, value.Y);
-                OnInvalidate();
+                FireInvalidated();
             }
         }
 
@@ -93,7 +111,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             set
             {
                 _location = value;
-                OnInvalidate();
+                FireInvalidated();
             }
         }
 
@@ -110,7 +128,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             set
             {
                 _name = value;
-                OnInvalidate();
+                FireInvalidated();
             }
         }
 
@@ -146,7 +164,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 _size = value.Size;
 
                 OnSizeChanged();
-                OnInvalidate();
+                FireInvalidated();
                 UpdateThumbnail();
             }
         }
@@ -155,21 +173,13 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Indicates if this element can handle redraw events on resize
         /// </summary>
         [Browsable(false)]
-        public ResizeStyle ResizeStyle
-        {
-            get { return _resizeStyle; }
-            set { _resizeStyle = value; }
-        }
+        public ResizeStyle ResizeStyle { get; set; }
 
         /// <summary>
         /// Disables updating redraw when resizing.
         /// </summary>
         [Browsable(false)]
-        public bool Resizing
-        {
-            get { return _resizing; }
-            set { _resizing = value; }
-        }
+        public bool Resizing { get; set; }
 
         /// <summary>
         /// Gets or sets the size of the element in 1/100 of an inch paper coordinats
@@ -187,7 +197,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 _size = value;
 
                 OnSizeChanged();
-                OnInvalidate();
+                FireInvalidated();
                 UpdateThumbnail();
             }
         }
@@ -240,6 +250,17 @@ namespace MW5.Plugins.Printing.Model.Elements
             }
         }
 
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected abstract void SetDefaults();
+
+        [OnDeserializing]
+        private void OnDeserializing(StreamingContext context)
+        {
+            SetDefaults();
+        }
+
         public bool ClickWithin(int x, int y)
         {
             return !(x < Location.X || x > Location.X + Size.Width || y < Location.Y || y > Location.Y + Size.Height);
@@ -248,29 +269,28 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Draws element. LayoutElement.Draw must be called through this method only
         /// </summary>
-        public static void DrawElement(LayoutElement el, Graphics g, bool printing, bool export)
+        public void DrawElement(Graphics g, bool printing, bool export)
         {
-            if (!el.Visible)
+            if (!Visible || !Initialized)
             {
                 return;
             }
 
-            var font = el._font;
-            var font2 = el._font2;
+            float scaleRatio = printing ? ScreenHelper.LogicTo96Dpi : 1 / ScreenHelper.LogicToScreenDpi;
 
-            //el._font = printing ? Util.ScaleFont(el._font, ZoomableLayoutControl.LogicTo96Dpi) :
-            //                      Util.ScaleFont(el._font, 1/ZoomableLayoutControl.LogicToScreenDpi);
+            var font = _font;
+            var font2 = _font2;
 
-            //el._font2 = printing ? Util.ScaleFont(el._font2, ZoomableLayoutControl.LogicTo96Dpi) :
-            //                      Util.ScaleFont(el._font2, 1/ZoomableLayoutControl.LogicToScreenDpi);
+            _font = FontHelper.ScaleFont(_font, scaleRatio);
+            _font2 = FontHelper.ScaleFont(_font2, scaleRatio);
 
-            int x = printing ? 0 : el.Location.X;
-            int y = printing ? 0 : el.Location.Y;
+            int x = printing ? 0 : Location.X;
+            int y = printing ? 0 : Location.Y;
 
-            el.Draw(g, printing, export, x, y);
+            Draw(g, printing, export, x, y);
 
-            el._font = font;
-            el._font2 = font2;
+            _font = font;
+            _font2 = font2;
         }
 
         /// <summary>
@@ -294,9 +314,12 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public virtual void RefreshElement()
         {
-            OnSizeChanged();
-            OnInvalidate();
-            UpdateThumbnail();
+            if (_initialized)
+            {
+                OnSizeChanged();
+                FireInvalidated();
+                UpdateThumbnail();
+            }
         }
 
         /// <summary>
@@ -315,9 +338,9 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Call this when it needs to updated
         /// </summary>
-        protected void OnInvalidate()
+        protected void FireInvalidated()
         {
-            if (Invalidated != null) Invalidated(this, null);
+            DelegateHelper.FireEvent(this, Invalidated);
         }
 
         /// <summary>
@@ -325,7 +348,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         protected virtual void OnSizeChanged()
         {
-            if (SizeChanged != null) SizeChanged(this, null);
+            DelegateHelper.FireEvent(this, SizeChanged);
         }
 
         /// <summary>
@@ -354,7 +377,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 }
 
                 graph.Clip = new Region(Rectangle);
-                DrawElement(this, graph, false, false);
+                DrawElement(graph, false, false);
             }
 
             Thumbnail = tempThumbnail;
@@ -374,7 +397,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             if (Height < 10) Height = 10;
 
             OnSizeChanged();
-            OnInvalidate();
+            FireInvalidated();
             UpdateThumbnail();
         }
     }

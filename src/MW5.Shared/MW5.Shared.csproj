@@ -75,6 +75,7 @@
     <Compile Include="CustomLayoutAttribute.cs" />
     <Compile Include="DebugHelper.cs" />
     <Compile Include="DownloadHelper.cs" />
+    <Compile Include="FontHelper.cs" />
     <Compile Include="GcHelper.cs" />
     <Compile Include="IMarshal.cs" />
     <Compile Include="RectangleHelper.cs" />

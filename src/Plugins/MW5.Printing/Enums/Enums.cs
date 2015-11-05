@@ -162,7 +162,7 @@ namespace MW5.Plugins.Printing.Enums
         Label = 1,
         Legend = 2,
         NorthArrow = 3,
-        Scale = 4,
+        ScaleBar = 4,
         Table = 5,
         Bitmap = 6,
         Rectangle = 7

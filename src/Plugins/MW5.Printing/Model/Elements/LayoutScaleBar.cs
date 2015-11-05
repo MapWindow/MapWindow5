@@ -41,9 +41,17 @@ namespace MW5.Plugins.Printing.Model.Elements
         private LengthUnits _unit;
 
         /// <summary>
-        /// Constructor
+        /// Initializes a new instance of the <see cref="LayoutScaleBar"/> class.
         /// </summary>
         public LayoutScaleBar()
+        {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
         {
             Name = "Scale Bar";
             _font = new Font("Arial", 10);
@@ -59,6 +67,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets a property indicating is break should be present before the 0
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(false)]
         [CategoryEx(@"cat_scale")]
         [DisplayNameEx(@"prop_breakzero")]
@@ -76,6 +85,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the color of the text
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(0)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_color")]
@@ -94,6 +104,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_font")]
         public Font Font
         {
@@ -140,6 +151,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the number of breaks the scale bar should have
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(4)]
         [CategoryEx(@"cat_scale")]
         [DisplayNameEx(@"prop_breakcount")]
@@ -157,6 +169,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets a property indicating is break should be present before the 0
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(true)]
         [CategoryEx(@"cat_scale")]
         [DisplayNameEx(@"prop_showscale")]
@@ -174,6 +187,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the hinting used to draw the text
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(TextRenderingHint.AntiAliasGridFit)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_alias")]
@@ -189,13 +203,14 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         public override ElementType Type
         {
-            get { return ElementType.Scale; }
+            get { return ElementType.ScaleBar; }
         }
 
         /// <summary>
         /// Gets or sets the unit to use for the scale bar
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(LengthUnits.Kilometers)]
         [CategoryEx(@"cat_scale")]
         [DisplayNameEx(@"prop_unit")]
@@ -226,7 +241,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             if (_layoutMap == null || _layoutMap.Scale == 0) return;
 
-            var activeFont = Font; // printing ? Util.ScaleFont(Font, ZoomableLayoutControl.LogicToScreenDpi) : Font;
+            var activeFont = printing ? FontHelper.ScaleFont(Font, ScreenHelper.LogicToScreenDpi) : Font;
 
             double geoBreakWidth = GetGeoBreakWidth(g, activeFont);
             if (NumericHelper.Equal(geoBreakWidth, 0.0))

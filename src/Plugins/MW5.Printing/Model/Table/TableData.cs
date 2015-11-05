@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Linq;
 using MW5.Plugins.Printing.Enums;
@@ -18,30 +19,13 @@ namespace MW5.Plugins.Printing.Model.Table
     /// <summary>
     /// Holds data for the table
     /// </summary>
+    [DataContract]
     public class TableData : IEnumerable<RowData>
     {
-        private readonly List<RowData> _rows = new List<RowData>();
+        private const char LineSeparator = '\n';
+        private const char CellSeparator = '\t';
+        private List<RowData> _rows = new List<RowData>();
         private List<Column> _columns = new List<Column>();
-
-        public TableData()
-        {
-        }
-
-        /// <summary>
-        /// Constructor. Fill the table from tabulated string
-        /// </summary>
-        public TableData(string data)
-        {
-            DeserializeData(data);
-
-            if (RowCount > 0)
-            {
-                for (int i = 0; i < this[0].Count; i++)
-                {
-                    _columns.Add(new Column("Column " + i));
-                }
-            }
-        }
 
         /// <summary>
         /// Gets the list of columns.
@@ -98,6 +82,28 @@ namespace MW5.Plugins.Printing.Model.Table
             _rows.Add(row);
         }
 
+        [DataMember]
+        private string XmlColumns 
+        {
+            get { return SerializeColumns(); }
+            set
+            {
+                _columns = new List<Column>();
+                DeserializeColumns(value);
+            }
+        }
+
+        [DataMember]
+        private string XmlData
+        {
+            get { return SerializeData(); }
+            set
+            {
+                _rows = new List<RowData>();
+                DeserializeData(value);
+            }
+        }
+
         /// <summary>
         /// Clears all the data including columns.
         /// </summary>
@@ -141,13 +147,13 @@ namespace MW5.Plugins.Printing.Model.Table
         {
             ClearRows();
 
-            var rows = data.Split(new[] { "\r\n" }, StringSplitOptions.None);
+            var rows = data.Split(new[] { LineSeparator }, StringSplitOptions.None);
 
             foreach (var row in rows)
             {
                 if (!string.IsNullOrEmpty(row))
                 {
-                    var values = row.Split('\t');
+                    var values = row.Split(CellSeparator);
                     AddRow(new RowData(values));
 
                     string s = "";
@@ -217,13 +223,13 @@ namespace MW5.Plugins.Printing.Model.Table
 
                     if (j < item.Count - 1)
                     {
-                        b.Append('\t');
+                        b.Append(CellSeparator);
                     }
                 }
 
                 if (i < count - 1)
                 {
-                    b.Append("\r\n");
+                    b.Append(LineSeparator);
                 }
             }
 
@@ -242,9 +248,9 @@ namespace MW5.Plugins.Printing.Model.Table
                 foreach (var value in row)
                 {
                     result.Append(value);
-                    result.Append('\t');
+                    result.Append(CellSeparator);
                 }
-                result.Append('\n');
+                result.Append(LineSeparator);
             }
 
             return result.ToString();

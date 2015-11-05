@@ -98,9 +98,14 @@ namespace MW5.Plugins.Printing.Services
 
         private IEnumerable<Type> GetKnownTypes()
         {
-            var types = Assembly.GetAssembly(GetType()).GetDerivedTypes(typeof(LayoutElement)).ToList();
-            types.Add(typeof(Envelope));
-            return types;
+            var list = Assembly.GetAssembly(GetType()).GetDerivedTypes(typeof(LayoutElement)).ToList();
+
+            // DataContract serializer doesn't automatically include types for properties of
+            // nested classes like Font, therefore we do it manually
+            list.Add(typeof(System.Drawing.FontStyle));
+            list.Add(typeof(System.Drawing.GraphicsUnit));
+
+            return list;
         }
     }
 }

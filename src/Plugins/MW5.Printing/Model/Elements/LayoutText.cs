@@ -31,6 +31,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public LayoutText()
         {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
             Name = "Text";
             _font = new Font("Arial", 10);
             _color = Color.Black;
@@ -45,6 +53,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_color")]
         public Color Color
         {
@@ -60,6 +69,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the content alignment
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(ContentAlignment.TopLeft)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_align")]
@@ -78,6 +88,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_font")]
         public Font Font
         {
@@ -94,6 +105,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_text")]
         [Editor("System.ComponentModel.Design.MultilineStringEditor, System.Design", typeof(UITypeEditor))]
         public string Text
@@ -110,6 +122,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the hinting used to draw the text
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(TextRenderingHint.AntiAliasGridFit)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_alias")]

@@ -22,46 +22,51 @@ namespace MW5.Plugins.Printing.Model.Elements
     [DataContract]
     public class LayoutTable : LayoutElement
     {
-        private const TextRenderingHint _textHint = TextRenderingHint.AntiAliasGridFit;
-        private readonly SolidBrush _brush = new SolidBrush(Color.Black);
-        private readonly TableData _data;
-
-        private readonly StringFormat _format = new StringFormat
-                                                    {
-                                                        LineAlignment = StringAlignment.Center,
-                                                        Alignment = StringAlignment.Far
-                                                    };
-
-        private readonly SolidBrush _headerBrush = new SolidBrush(Color.Transparent);
-        private readonly Pen _pen = new Pen(Color.Black);
-        private Color _color = Color.Transparent;
-
+        private TableData _data;
+        private TextRenderingHint _textHint;
+        private SolidBrush _brush;
+        private StringFormat _format;
+        private SolidBrush _headerBrush;
+        private Pen _pen;
+        private Color _color;
         private bool _displayHeader = true;
         private int _horizontalPadding = 3;
         private int _minRowHeight;
 
-        internal LayoutTable()
+        public LayoutTable()
+        {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
         {
             Name = "Table";
             _data = new TableData();
             _font2 = new Font("Arial", 12f);
             _font = new Font("Arial", 10f);
             _displayHeader = true;
-        }
 
-        public LayoutTable(string data)
-            : this()
-        {
-            _data = new TableData(data);
+            _format = new StringFormat { LineAlignment = StringAlignment.Center };
+            _textHint = TextRenderingHint.AntiAliasGridFit;
+            _brush = new SolidBrush(Color.Black);
+            _headerBrush = new SolidBrush(Color.Transparent);
+            _pen = new Pen(Color.Black);
+            _color = Color.Transparent;
         }
 
         [Browsable(false)]
+        [DataMember]
         public TableData Data
         {
             get { return _data; }
+            set { _data = value; }
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(true)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_displayheader")]
@@ -77,6 +82,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_font")]
         public Font Font
         {
@@ -90,6 +96,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_headerfont")]
         public Font HeaderFont
         {
@@ -102,6 +109,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(4)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_horizontalpadding")]
@@ -116,6 +124,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(3)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_minrowheight")]
@@ -136,6 +145,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_header_fill_color")]
         protected Color FillColor
         {
@@ -169,6 +179,9 @@ namespace MW5.Plugins.Printing.Model.Elements
             }
         }
 
+        /// <summary>
+        /// This gets called to instruct the element to draw itself in the appropriate spot of the graphics object
+        /// </summary>
         protected override void Draw(Graphics g, bool printing, bool export, int x, int y)
         {
             g.TextRenderingHint = _textHint;
@@ -177,92 +190,156 @@ namespace MW5.Plugins.Printing.Model.Elements
 
             if (Data.RowCount <= 0) return;
 
-            float width = Data.Columns.Sum(item => item.ActualWidth);
-            if (Size.Width < width) width = Size.Width;
+            float width = CalcWidth();
 
-            // drawing rows
-            float left;
-            float top = y;
-
-            for (int j = 0; j < Data.RowCount; j++)
-            {
-                var row = Data[j];
-                bool skip = j == 0 || j == Data.RowCount - 1;
-
-                float maxHeight = 0f;
-                for (int i = 0; i < row.Count; i++)
-                {
-                    int maxWidth = (int)_data.Columns[i].ActualWidth - _horizontalPadding * 2;
-                    float height = g.MeasureString(row[i], GetFont(j), maxWidth).Height;
-
-                    if (height > maxHeight)
-                    {
-                        maxHeight = height;
-                    }
-                }
-
-                if (maxHeight < MinRowHeight)
-                {
-                    maxHeight = MinRowHeight;
-                }
-
-                _headerBrush.Color = FillColor;
-                left = x;
-
-                for (int i = 0; i < row.Count; i++)
-                {
-                    var cmn = _data.Columns[i];
-                    _format.Alignment = cmn.Alignment;
-
-                    float cmnWidth = cmn.ActualWidth;
-                    float adjTop = (cmn.HalfCellOffset && !skip) ? top + maxHeight / 2 : top;
-
-                    if (cmn.HalfCellOffset && !skip && j == 1)
-                    {
-                        adjTop = top + maxHeight / 4;
-                    }
-
-                    var rectText = new RectangleF
-                                       {
-                                           X = left + _horizontalPadding,
-                                           Y = adjTop,
-                                           Width = cmnWidth - _horizontalPadding * 2,
-                                           Height = maxHeight
-                                       };
-                    if (j == 0)
-                    {
-                        var rectTemp = new RectangleF(left, adjTop, cmnWidth, maxHeight);
-                        g.FillRectangle(_headerBrush, rectTemp);
-                    }
-
-                    g.DrawString(row[i], GetFont(j), _brush, rectText, j == 0 ? GdiPlusHelper.CenterFormat : _format);
-                    left += cmnWidth;
-                }
-
-                top += maxHeight;
-                float dx = x;
-
-                for (int i = 0; i < row.Count; i++)
-                {
-                    float cmnWidth = _data.Columns[i].ActualWidth;
-                    float adjTop = (_data.Columns[i].HalfCellOffset && !skip) ? top + maxHeight / 2 : top;
-                    if (_data.Columns[i].HalfCellOffset && !skip && j == 1) adjTop = top + maxHeight / 4;
-                    g.DrawLine(_pen, dx, adjTop, dx + cmnWidth, adjTop); // drawing bottom line
-                    dx += cmnWidth;
-                }
-            }
+            // top vertical line
             g.DrawLine(_pen, x, y, x + width, y);
 
-            // drawing columns
-            left = x;
+            float top = y;
+            DrawRows(g, x, ref top);
+
+            DrawColumns(g, x, y, top);
+
+            if (!printing && !export)
+            {
+                _size = new SizeF(width, top - y);
+            }
+        }
+
+        /// <summary>
+        /// Calculates the width of the table in scrren coordinates.
+        /// </summary>
+        private float CalcWidth()
+        {
+            float width = Data.Columns.Sum(item => item.ActualWidth);
+            if (Size.Width < width)
+            {
+                width = Size.Width;
+            }
+
+            return width;
+        }
+
+        /// <summary>
+        /// Draws the columns.
+        /// </summary>
+        private void DrawColumns(Graphics g, int x, int y, float top)
+        {
+            float left = x;
             g.DrawLine(_pen, left, y, left, top);
+
             foreach (var cmn in Data.Columns)
             {
                 left += cmn.ActualWidth;
                 g.DrawLine(_pen, left, y, left, top);
             }
+        }
 
-            if (!printing && !export) _size = new SizeF(width, top - y);
+        /// <summary>
+        /// Calculates the maximum height of the row.
+        /// </summary>
+        private float CalcMaxRowHeight(Graphics g, RowData row, int rowIndex)
+        {
+            float maxHeight = 0f;
+            for (int i = 0; i < row.Count; i++)
+            {
+                int maxWidth = (int)_data.Columns[i].ActualWidth - _horizontalPadding * 2;
+                float height = g.MeasureString(row[i], GetFont(rowIndex), maxWidth).Height;
+
+                if (height > maxHeight)
+                {
+                    maxHeight = height;
+                }
+            }
+
+            if (maxHeight < MinRowHeight)
+            {
+                maxHeight = MinRowHeight;
+            }
+
+            return maxHeight;
+        }
+
+        /// <summary>
+        /// Draws the rows and cell data.
+        /// </summary>
+        private void DrawRows(Graphics g, int x, ref float top)
+        {
+            for (int j = 0; j < Data.RowCount; j++)
+            {
+                var row = Data[j];
+                bool skip = j == 0 || j == Data.RowCount - 1;
+
+                float maxHeight = CalcMaxRowHeight(g, row, j);
+
+                _headerBrush.Color = FillColor;
+
+                DrawRowData(g, row, skip, maxHeight, top, j, x);
+
+                top += maxHeight;
+
+                DrawRowBottomLine(g, row, x, skip, top, maxHeight, j);
+            }
+        }
+
+        /// <summary>
+        /// Draws the content of cells
+        /// </summary>
+        private void DrawRowData(Graphics g, RowData row, bool skip, float maxHeight, float top, int rowIndex, float left)
+        {
+            for (int i = 0; i < row.Count; i++)
+            {
+                var cmn = _data.Columns[i];
+                _format.Alignment = cmn.Alignment;
+
+                float cmnWidth = cmn.ActualWidth;
+                float adjTop = (cmn.HalfCellOffset && !skip) ? top + maxHeight / 2 : top;
+
+                if (cmn.HalfCellOffset && !skip && rowIndex == 1)
+                {
+                    adjTop = top + maxHeight / 4;
+                }
+
+                var rectText = new RectangleF
+                {
+                    X = left + _horizontalPadding,
+                    Y = adjTop,
+                    Width = cmnWidth - _horizontalPadding * 2,
+                    Height = maxHeight
+                };
+
+                if (rowIndex == 0)
+                {
+                    var rectTemp = new RectangleF(left, adjTop, cmnWidth, maxHeight);
+                    g.FillRectangle(_headerBrush, rectTemp);
+                }
+
+                var format = rowIndex == 0 ? GdiPlusHelper.CenterFormat : _format;
+                g.DrawString(row[i], GetFont(rowIndex), _brush, rectText, format);
+
+                left += cmnWidth;
+            }
+        }
+
+        /// <summary>
+        /// Draws the bottom line of each row.
+        /// </summary>
+        private void DrawRowBottomLine(Graphics g, RowData row, float dx, bool skip, float top, float maxHeight, int rowIndex)
+        {
+            for (int i = 0; i < row.Count; i++)
+            {
+                float cmnWidth = _data.Columns[i].ActualWidth;
+
+                float adjTop = (_data.Columns[i].HalfCellOffset && !skip) ? top + maxHeight / 2 : top;
+
+                if (_data.Columns[i].HalfCellOffset && !skip && rowIndex == 1)
+                {
+                    adjTop = top + maxHeight / 4;
+                }
+
+                g.DrawLine(_pen, dx, adjTop, dx + cmnWidth, adjTop); // drawing bottom line
+                dx += cmnWidth;
+            }
         }
 
         private Font GetFont(int rowIndex)
@@ -272,6 +349,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         private float GetScreenWidth(bool exporting)
         {
+            // TODO: consider extracting
             return exporting ? Width * 96 / 100 : Width;
         }
 

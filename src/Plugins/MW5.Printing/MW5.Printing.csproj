@@ -166,6 +166,7 @@
     </Compile>
     <Compile Include="Services\LayoutSerializer.cs" />
     <Compile Include="Services\TileLoadingService.cs" />
+    <Compile Include="Services\XmlEnvelope.cs" />
     <Compile Include="Services\XmlLayout.cs" />
     <Compile Include="Services\XmlPaperFormat.cs" />
     <Compile Include="Views\Abstract\ICreateTableView.cs" />

@@ -207,7 +207,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                 mapElement.Envelope = extents.Clone();
                 mapElement.Scale = mapScale;
-                mapElement.MarkInitialized();
+                mapElement.Initialized = true;
 
                 AddToLayout(mapElement);
                 AddToSelection(new List<LayoutElement> { mapElement });
@@ -247,7 +247,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             if (map != null)
             {
                 map.Scale = map.Scale;
-                map.MarkInitialized();
+                map.Initialized = true;
             }
 
             // other maps

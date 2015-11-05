@@ -56,8 +56,10 @@ namespace MW5.Plugins.Printing.Helpers
 
                     g.TranslateTransform(rectNew.X, rectNew.Y);
 
-                    //if (PrintingConstants.ELEMENT_CLIPPING)
-                    g.SetClip(new RectangleF(0.0f, 0.0f, rectNew.Width + 1.0f, rectNew.Height + 1.0f));
+                    if (_useElementClipping)
+                    {
+                        g.SetClip(new RectangleF(0.0f, 0.0f, rectNew.Width + 1.0f, rectNew.Height + 1.0f));
+                    }
 
                     // wait for the response from tilesLoaded and perform drawing
                     var mapEl = el as LayoutMap;
@@ -89,8 +91,9 @@ namespace MW5.Plugins.Printing.Helpers
                         g.SetClip(new RectangleF(0.0f, 0.0f, rectNew.Width + 1.0f, rectNew.Height + 1.0f));
                     }
 
-                    LayoutElement.DrawElement(el, g, true, true);
+                    el.DrawElement(g, true, true);
                 }
+
                 g.ResetClip();
                 g.Transform = matrix;
             }
@@ -151,6 +154,19 @@ namespace MW5.Plugins.Printing.Helpers
             }
         }
 
+        private static PrintDialog CreatePrintDialog(LayoutPages pages, PrinterSettings printerSettings)
+        {
+            var pd = new PrintDialog();
+            bool hasSelection = pages.SelectedCount > 0;
+            pd.AllowSelection = hasSelection;
+            pd.AllowSomePages = true;
+            pd.PrinterSettings = printerSettings;
+            pd.PrinterSettings.FromPage = 1;
+            pd.PrinterSettings.ToPage = 1;
+            pd.PrinterSettings.PrintRange = hasSelection ? PrintRange.Selection : PrintRange.AllPages;
+            return pd;
+        }
+
         /// <summary>
         /// Runs printing including printer selection
         /// </summary>
@@ -161,50 +177,51 @@ namespace MW5.Plugins.Printing.Helpers
             int pageWidth,
             int pageHeight)
         {
-            var pd = new PrintDialog();
-            bool hasSelection = pages.SelectedCount > 0;
-            pd.AllowSelection = hasSelection;
-            pd.AllowSomePages = true;
-            pd.PrinterSettings = printerSettings;
-            pd.PrinterSettings.FromPage = 1;
-            pd.PrinterSettings.ToPage = 1;
-            pd.PrinterSettings.PrintRange = hasSelection ? PrintRange.Selection : PrintRange.AllPages;
+            var pd = CreatePrintDialog(pages, printerSettings);
+
             _pages = pages;
             _elements = elements;
             _pageWidth = pageWidth;
             _pageHeight = pageHeight;
 
-            if (pd.ShowDialog() == DialogResult.OK)
+            if (pd.ShowDialog() != DialogResult.OK)
             {
-                pages.MarkUnprinted();
-                switch (pd.PrinterSettings.PrintRange)
-                {
-                    case PrintRange.AllPages:
-                        foreach (var page in pages)
-                        {
-                            page.Scheduled = true;
-                        }
-                        break;
-                    case PrintRange.Selection:
-                        foreach (var page in pages)
-                        {
-                            page.Scheduled = page.Selected;
-                        }
-                        break;
-                    case PrintRange.SomePages:
-                        foreach (var page in pages)
-                        {
-                            var index = pages.PageIndex(page);
-                            page.Scheduled = (index >= pd.PrinterSettings.FromPage && index <= pd.PrinterSettings.ToPage);
-                        }
-                        break;
-                }
+                return;
+            }
 
-                var doc = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
-                doc.PrintPage += PrintNextPage;
-                doc.PrintController = new StandardPrintController();
+            SchedulePages(pages, pd);
 
-                doc.Print();
+            var doc = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
+            doc.PrintPage += PrintNextPage;
+            doc.PrintController = new StandardPrintController();
+
+            doc.Print();
+        }
+
+        private static void SchedulePages(LayoutPages pages, PrintDialog pd)
+        {
+            pages.MarkUnprinted();
+            switch (pd.PrinterSettings.PrintRange)
+            {
+                case PrintRange.AllPages:
+                    foreach (var page in pages)
+                    {
+                        page.Scheduled = true;
+                    }
+                    break;
+                case PrintRange.Selection:
+                    foreach (var page in pages)
+                    {
+                        page.Scheduled = page.Selected;
+                    }
+                    break;
+                case PrintRange.SomePages:
+                    foreach (var page in pages)
+                    {
+                        var index = pages.PageIndex(page);
+                        page.Scheduled = (index >= pd.PrinterSettings.FromPage && index <= pd.PrinterSettings.ToPage);
+                    }
+                    break;
             }
         }
 
@@ -286,14 +303,18 @@ namespace MW5.Plugins.Printing.Helpers
                     offsetY = offsetY > 0 ? 0f : -offsetY;
 
                     g.ResetClip();
-                    //if (PrintingConstants.ELEMENT_CLIPPING)
-                    g.SetClip(new RectangleF(offsetX, offsetY, clip.Width, clip.Height));
 
-                    LayoutElement.DrawElement(el, g, true, false);
+                    if (_useElementClipping)
+                    {
+                        g.SetClip(new RectangleF(offsetX, offsetY, clip.Width, clip.Height));
+                    }
+
+                    el.DrawElement(g, true, false);
                     g.ResetTransform();
                 }
                 g.Transform = matrix;
             }
+
             _pages.GetPage(pageX, pageY).Printed = true;
         }
     }

@@ -28,6 +28,14 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         public LayoutNorthArrow()
         {
+            SetDefaults();
+        }
+
+        /// <summary>
+        /// Should initialize all private data members which aren't set by deserialization.
+        /// </summary>
+        protected override void SetDefaults()
+        {
             _color = Color.Black;
             _northArrowStyle = NorthArrowStyle.Default;
             Name = "North arrow";
@@ -38,6 +46,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_symbol")]
+        [DataMember]
         [DisplayNameEx(@"prop_color")]
         public Color Color
         {
@@ -53,6 +62,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the style of the north arrow to draw
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(NorthArrowStyle.Default)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_arrow_style")]
@@ -70,6 +80,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// Gets or sets the rotations of the north arrow
         /// </summary>
         [Browsable(true)]
+        [DataMember]
         [DefaultValue(0)]
         [CategoryEx(@"cat_symbol")]
         [DisplayNameEx(@"prop_rotation")]
@@ -123,7 +134,6 @@ namespace MW5.Plugins.Printing.Model.Elements
             switch (_northArrowStyle)
             {
                 case NorthArrowStyle.ArrowNS:
-                    // TODO: do we need it?
                     var thinPen = new Pen(_color, 1F);
                     gp.AddLine(0, 10, 5, 0);
                     gp.StartFigure();

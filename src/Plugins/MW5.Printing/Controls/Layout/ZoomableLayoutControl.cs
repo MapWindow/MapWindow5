@@ -294,7 +294,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             var map = GetElement<LayoutMap>(ElementType.Map);
             if (map != null)
             {
-                var text = GetElement<LayoutText>(ElementType.Scale);
+                var text = GetElement<LayoutText>(ElementType.ScaleBar);
                 if (text != null)
                 {
                     text.Text = "Scale 1:" + map.Scale;

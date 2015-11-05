@@ -182,17 +182,43 @@ namespace MW5.Plugins.Printing.Views
 
         private void InitializeElements()
         {
+            // TODO: choose particular map element
+            var mapEl = _layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault();
+
             foreach (var el in _layoutControl.LayoutElements)
             {
                 switch (el.Type)
                 {
-                    case Enums.ElementType.Legend:
-                        (el as LayoutLegend).Initialize(_layoutControl, _context.Legend);
-                        break;
                     case Enums.ElementType.Map:
-                        (el as LayoutMap).Initialize(_context.Map);
+                        var map = el as LayoutMap;
+                        if (map != null)
+                        {
+                            map.Initialize(_context.Map);
+                        }
+                        break;
+                    case Enums.ElementType.Legend:
+                        var legend = el as LayoutLegend;
+                        if (legend != null)
+                        {
+                            legend.Initialize(_layoutControl, _context.Legend);
+                            legend.Map = mapEl;
+                        }
+                        break;
+
+                    case Enums.ElementType.ScaleBar:
+                        var scaleBar = el as LayoutScaleBar;
+                        if (scaleBar != null)
+                        {
+                            scaleBar.LayoutControl = _layoutControl;
+                            scaleBar.Map = mapEl;
+                        }
                         break;
                 }
+            }
+
+            foreach (var el in _layoutControl.LayoutElements)
+            {
+                el.Initialized = true;
             }
         }
 

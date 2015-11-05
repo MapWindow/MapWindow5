@@ -37,7 +37,7 @@ namespace MW5.Plugins.Printing.Helpers
             g.PageUnit = GraphicsUnit.Pixel;
             g.ScaleTransform(300F / 100F, 300F / 100F);
             g.TranslateTransform(-le.LocationF.X, -le.LocationF.Y);
-            LayoutElement.DrawElement(le, g, false, false);
+            le.DrawElement(g, false, false);
             g.Dispose();
             temp.SetResolution(300, 300);
             temp.Save(filename);

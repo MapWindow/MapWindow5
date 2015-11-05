@@ -170,7 +170,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             graph.TranslateTransform(x, y);
             graph.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
 
-            LayoutElement.DrawElement(le, graph, false, false);
+            le.DrawElement(graph, false, false);
 
             graph.ResetTransform();
             graph.TranslateTransform(-invalRect.X, -invalRect.Y);

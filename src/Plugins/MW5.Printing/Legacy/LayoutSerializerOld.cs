@@ -66,12 +66,10 @@ namespace MW5.Plugins.Printing.Legacy
                                 newLe = new LayoutBitmap();
                                 break;
                             case "Legend":
-                                // TODO: implement
-                                //newLe = new LayoutLegend();
+                                newLe = new LayoutLegend();
                                 break;
                             case "Map":
-                                // TODO: implement
-                                //newLe = new LayoutMap();
+                                newLe = new LayoutMap();
                                 break;
                             case "NorthArrow":
                                 newLe = new LayoutNorthArrow();
@@ -270,7 +268,7 @@ namespace MW5.Plugins.Printing.Legacy
                                     (bool)
                                     TypeDescriptor.GetConverter(typeof(bool)).ConvertFromInvariantString(attr.Value);
 
-                            lm.MarkInitialized();
+                            lm.Initialized = true;
                         }
                         else if (loadList[i] is LayoutNorthArrow)
                         {
