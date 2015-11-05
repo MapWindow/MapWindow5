@@ -181,7 +181,7 @@
     <Compile Include="Services\TileLoadingService.cs" />
     <Compile Include="Services\XmlEnvelope.cs" />
     <Compile Include="Services\XmlLayout.cs" />
-    <Compile Include="Services\XmlPaperFormat.cs" />
+    <Compile Include="Services\XmlPaper.cs" />
     <Compile Include="Views\Abstract\ICreateTableView.cs" />
     <Compile Include="Views\Abstract\IPageSetupView.cs" />
     <Compile Include="Views\Abstract\ITableView.cs" />

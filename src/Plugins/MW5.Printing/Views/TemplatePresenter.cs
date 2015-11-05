@@ -36,6 +36,24 @@ namespace MW5.Plugins.Printing.Views
                     Validate();
                     View.UpdateView();
                 };
+
+            View.FitToPage += OnFitToPageClicked;
+        }
+
+        /// <summary>
+        /// Called when [fit to page clicked].
+        /// </summary>
+        private void OnFitToPageClicked()
+        {
+            GeoSize geoSize;
+            if (_context.Map.GetGeodesicSize(View.MapExtents, out geoSize))
+            {
+                // TODO: choose depending on selected format
+                var size = new SizeF(700, 700);   // 7 by 7 inches
+                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size);
+
+                View.PopulateScales(Convert.ToInt32(scale));
+            }
         }
 
         /// <summary>

@@ -13,6 +13,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Controls.Layout;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Shared;
 
@@ -112,8 +113,11 @@ namespace MW5.Plugins.Printing.Services
             layoutControl.ClearLayout();
             layoutControl.LayoutElements.AddRange(layout.Elements);
 
-            // TODO: apply paper size
-            var page = layoutControl.PrinterSettings.DefaultPageSettings;        
+            var settings = PrinterManager.PrinterSettings;
+            layout.Paper.UpdatePageSettings(settings);
+            layoutControl.PrinterSettings = settings;
+
+            layoutControl.Pages.Resize(layout.Paper.PageCountX, layout.Paper.PageCountY);
         }
 
         private XmlLayout ReadLayout(string filename)
@@ -135,7 +139,7 @@ namespace MW5.Plugins.Printing.Services
         {
             var xml = new XmlLayout();
 
-            xml.PaperFormat.PaperName = settings.DefaultPageSettings.PaperSize.PaperName;
+            xml.Paper = new XmlPaper(settings.DefaultPageSettings, layout.Pages);
 
             xml.Elements.AddRange(layout.LayoutElements);
 
@@ -145,6 +149,11 @@ namespace MW5.Plugins.Printing.Services
         private XmlLayout Deserialize(string xml)
         {
             return xml.Deserialize(typeof(XmlLayout), GetKnownTypes()) as XmlLayout;
+        }
+
+        public static XmlLayoutBase DeserializeLite(string xml)
+        {
+            return xml.Deserialize(typeof(XmlLayoutBase), null) as XmlLayoutBase;
         }
 
         private IEnumerable<Type> GetKnownTypes()

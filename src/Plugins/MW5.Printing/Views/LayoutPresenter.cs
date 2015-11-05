@@ -45,28 +45,26 @@ namespace MW5.Plugins.Printing.Views
 
         protected override void Initialize()
         {
-            var settings = InitPrinterSettings();
-
-            View.LayoutControl.Initialize(settings, _context.Map);
-
             if (Model.HasTemplate)
             {
                 var serializer = new LayoutSerializer();
                 serializer.LoadLayout(_context, View.LayoutControl, Model.TemplateName, Model.Extents);
+
+                View.LayoutControl.Initialize(_context.Map);
             }
             else
             {
+                var settings = Model.CreatePrinterSettings();
+
+                View.LayoutControl.PrinterSettings = settings;
+
+                View.LayoutControl.Initialize(_context.Map);
+
                 View.LayoutControl.AddMapElement(Model.Scale, Model.Extents);
             }
         }
 
-        private PrinterSettings InitPrinterSettings()
-        {
-            var settings = PrinterManager.PrinterSettings;
-            settings.DefaultPageSettings.Landscape = Model.PaperOrientation == Orientation.Horizontal;
-            settings.DefaultPageSettings.PaperSize = PaperSizes.PaperSizeByFormatName(Model.PaperFormat, settings);
-            return settings;
-        }
+
 
         /// <summary>
         /// Edits the table.

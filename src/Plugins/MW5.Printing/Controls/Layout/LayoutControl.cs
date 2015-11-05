@@ -31,12 +31,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
-        public void Initialize(PrinterSettings printerSettings, IPrintableMap map)
+        public void Initialize(IPrintableMap map)
         {
             if (map == null) throw new ArgumentNullException("map");
-            if (printerSettings == null) throw new ArgumentNullException("printerSettings");
-
-            PrinterSettings = printerSettings;
 
             _map = map;
 

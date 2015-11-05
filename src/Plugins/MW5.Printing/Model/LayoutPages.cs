@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Model
 {
@@ -94,6 +95,23 @@ namespace MW5.Plugins.Printing.Model
                 _pageCountY = value;
                 UpdatePages();
             }
+        }
+
+        /// <summary>
+        /// Changes the number of pages in the layout.
+        /// </summary>
+        public void Resize(int pageCountX, int pageCountY)
+        {
+            if (pageCountX <= 0 || PageCountY <= 0 || pageCountX > 20 || pageCountY > 20)
+            {
+                Logger.Current.Warn("Unable to resize layout. Invalid number of pages: {0} × {1}.");
+                return;
+            }
+
+            _pageCountX = pageCountX;
+            _pageCountY = pageCountY;
+
+            UpdatePages();
         }
 
         /// <summary>

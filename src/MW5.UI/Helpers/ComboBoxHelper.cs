@@ -72,16 +72,18 @@ namespace MW5.UI.Helpers
              }
         }
 
-        public static void SetValue(this ComboBoxAdv box, string value)
+        public static bool SetValue(this ComboBoxAdv box, string value)
         {
             foreach (var item in box.Items)
             {
                 if (item.ToString().EqualsIgnoreCase(value))
                 {
                     box.SelectedItem = item;
-                    break;
+                    return true;
                 }
             }
+
+            return false;
         }
 
         public static void SetSelectedIndexSafe(this ComboBoxAdv comboBox, int selectedIndex)

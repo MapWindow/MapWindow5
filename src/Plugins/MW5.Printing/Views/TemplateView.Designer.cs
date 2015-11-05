@@ -46,6 +46,7 @@
             this.templateGrid1 = new MW5.Plugins.Printing.Controls.TemplateGrid();
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
+            this.btnFitToPage = new Syncfusion.Windows.Forms.ButtonAdv();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
             this.tabControlAdv1.SuspendLayout();
             this.tabNewLayout.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             // tabNewLayout
             // 
+            this.tabNewLayout.Controls.Add(this.btnFitToPage);
             this.tabNewLayout.Controls.Add(this.lblArea);
             this.tabNewLayout.Controls.Add(this.lblWarning);
             this.tabNewLayout.Controls.Add(this.lblPages);
@@ -166,12 +168,12 @@
             // 
             // cboScale
             // 
-            this.cboScale.BeforeTouchSize = new System.Drawing.Size(316, 21);
+            this.cboScale.BeforeTouchSize = new System.Drawing.Size(226, 21);
             this.cboScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboScale.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboScale.Location = new System.Drawing.Point(109, 142);
             this.cboScale.Name = "cboScale";
-            this.cboScale.Size = new System.Drawing.Size(316, 21);
+            this.cboScale.Size = new System.Drawing.Size(226, 21);
             this.cboScale.TabIndex = 6;
             // 
             // label4
@@ -271,6 +273,16 @@
             this.btnOk.TabIndex = 5;
             this.btnOk.Text = "Ok";
             // 
+            // btnFitToPage
+            // 
+            this.btnFitToPage.BeforeTouchSize = new System.Drawing.Size(78, 23);
+            this.btnFitToPage.IsBackStageButton = false;
+            this.btnFitToPage.Location = new System.Drawing.Point(347, 140);
+            this.btnFitToPage.Name = "btnFitToPage";
+            this.btnFitToPage.Size = new System.Drawing.Size(78, 23);
+            this.btnFitToPage.TabIndex = 7;
+            this.btnFitToPage.Text = "Fit to Page";
+            // 
             // TemplateView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,5 +327,6 @@
         private System.Windows.Forms.Label lblPages;
         private System.Windows.Forms.Label lblArea;
         private Controls.TemplateGrid templateGrid1;
+        private Syncfusion.Windows.Forms.ButtonAdv btnFitToPage;
     }
 }

@@ -54,6 +54,8 @@ namespace MW5.Plugins.Printing.Views
 
         public event Action LayoutSizeChanged;
 
+        public event Action FitToPage;
+
         public IEnvelope MapExtents
         {
             get
@@ -104,8 +106,12 @@ namespace MW5.Plugins.Printing.Views
             cboArea.SetValue(Model.PrintArea);
             cboOrientation.SetValue(AppConfig.Instance.PrintingOrientation);
 
+            // TODO: perhaps would be better to call fit to page automatically
             string scale = "1:" + AppConfig.Instance.PrintingScale;
-            cboScale.SetValue(scale);
+            if (!cboScale.SetValue(scale))
+            {
+                cboScale.SetValue("1:25000");
+            }
 
             cboFormat.SetValue(AppConfig.Instance.PrintingPaperFormat);
 
@@ -170,6 +176,7 @@ namespace MW5.Plugins.Printing.Views
             cboFormat.SelectedIndexChanged += (s, e) => Invoke(LayoutSizeChanged);
             cboOrientation.SelectedIndexChanged += (s, e) => Invoke(LayoutSizeChanged);
             cboScale.SelectedIndexChanged += (s, e) => Invoke(LayoutSizeChanged);
+            btnFitToPage.Click += (s, e) => Invoke(FitToPage);
         }
 
         private void InitControls()
@@ -194,15 +201,23 @@ namespace MW5.Plugins.Printing.Views
                 UnitsHelper.FormatDistance(units, ext.MaxY - ext.MinY));
         }
 
-        private void PopulateScales()
+        public void PopulateScales(int customScale = 0)
         {
-            var list = new[] { 100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000 };
+            var list = new[] { 100, 500, 1000, 5000, 10000, 25000, 50000, 100000, 250000, 500000, 1000000, customScale };
 
             cboScale.Items.Clear();
 
             foreach (var scale in list)
             {
-                cboScale.Items.Add("1:" + scale);
+                if (scale >= 1)
+                {
+                    cboScale.Items.Add("1:" + scale);
+                }
+            }
+
+            if (customScale != 0)
+            {
+                cboScale.SelectedIndex = cboScale.Items.Count - 1;
             }
         }
 

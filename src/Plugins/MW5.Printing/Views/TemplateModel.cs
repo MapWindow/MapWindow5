@@ -6,11 +6,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Printing.Enums;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Shared;
 
@@ -81,6 +83,17 @@ namespace MW5.Plugins.Printing.Views
             {
                 Logger.Current.Warn("Failed to load layout templates: " + path, ex);
             }
+        }
+
+        public PrinterSettings CreatePrinterSettings()
+        {
+            var settings = PrinterManager.PrinterSettings;
+            var page = settings.DefaultPageSettings;
+
+            page.Landscape = PaperOrientation == Orientation.Horizontal;
+            page.PaperSize = PaperSizes.PaperSizeByFormatName(PaperFormat, settings);
+
+            return settings;
         }
     }
 }
