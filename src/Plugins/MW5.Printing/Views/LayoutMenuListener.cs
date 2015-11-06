@@ -7,7 +7,10 @@
 using System;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Map;
@@ -20,6 +23,9 @@ using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Services;
+using MW5.Shared;
+using Syncfusion.Pdf;
+using Syncfusion.XPS;
 
 namespace MW5.Plugins.Printing.Views
 {
@@ -29,14 +35,18 @@ namespace MW5.Plugins.Printing.Views
         private readonly LayoutControl _layoutControl;
         private readonly IPrintableMap _map;
         private readonly ILayoutView _view;
+        private readonly PdfExportService _pdfService;
+        private readonly ITempFileService _fileService;
 
-        public LayoutMenuListener(IAppContext context, ILayoutView view)
+        public LayoutMenuListener(IAppContext context, ILayoutView view, PdfExportService pdfService)
         {
             if (context == null) throw new ArgumentNullException("context");
             if (view == null) throw new ArgumentNullException("view");
+            if (pdfService == null) throw new ArgumentNullException("pdfService");
 
             _context = context;
             _view = view;
+            _pdfService = pdfService;
             _map = context.Map;
             _layoutControl = view.LayoutControl;
         }
@@ -97,7 +107,11 @@ namespace MW5.Plugins.Printing.Views
                     LoadLayout();
                     break;
                 case LayoutMenuKeys.Print:
-                    PrintingHelper.Print(_layoutControl.Pages, _layoutControl.PrinterSettings, _layoutControl.LayoutElements);
+                    {
+                        var service = new PrintingService();
+                        service.Print(_layoutControl.Pages, _layoutControl.PrinterSettings,
+                            _layoutControl.LayoutElements);
+                    }
                     break;
                 case LayoutMenuKeys.PrinterSetup:
                     using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
@@ -119,6 +133,9 @@ namespace MW5.Plugins.Printing.Views
                         _layoutControl.PrinterSettings = model;
                         _layoutControl.Invalidate();
                     }
+                    break;
+                case LayoutMenuKeys.ExportToPdf:
+                    _pdfService.ExportToPdf(_layoutControl, _view as IWin32Window);
                     break;
                 case LayoutMenuKeys.ExportToBitmap:
                     ExportHelper.ExportToBitmap(_layoutControl.Pages, _layoutControl.LayoutElements);

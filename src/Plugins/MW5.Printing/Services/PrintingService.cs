@@ -1,56 +1,87 @@
 ﻿// -------------------------------------------------------------------------------------------
-// <copyright file="PrintingHelper.cs" company="MapWindow OSS Team - www.mapwindow.org">
+// <copyright file="PrintingService.cs" company="MapWindow OSS Team - www.mapwindow.org">
 //  MapWindow OSS Team - 2015
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Services;
 using MW5.Shared;
 
-namespace MW5.Plugins.Printing.Helpers
+namespace MW5.Plugins.Printing.Services
 {
-    internal static class PrintingHelper
+    internal class PrintingService: IDisposable
     {
-        private static LayoutPages _pages;
-        private static List<LayoutElement> _elements;
+        private LayoutPages _pages;
+        private List<LayoutElement> _elements;
+        public event EventHandler<PrintEventArgs> EndPrint;
 
         /// <summary>
         /// Runs printing including printer selection
         /// </summary>
-        public static void Print(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements)
+        public void Print(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements)
         {
-            var pd = CreatePrintDialog(pages, printerSettings);
+            var pd = CreateAndShowPrintDialog(pages, printerSettings);
 
-            _pages = pages;
-            _elements = elements;
-
-            if (pd.ShowDialog() != DialogResult.OK)
+            if (pd == null)
             {
                 return;
             }
 
+            _pages = pages;
+            _elements = elements;
+
             SchedulePages(pages, pd);
 
-            var doc = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
-            doc.PrintPage += PrintNextPage;
-            doc.PrintController = new StandardPrintController();
+            var _printDocument = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
+            _printDocument.PrintPage += PrintNextPage;
+            _printDocument.EndPrint += (s, e) => DelegateHelper.FireEvent(this, EndPrint, e);
+            _printDocument.PrintController = new StandardPrintController();
 
-            doc.Print();
+            _printDocument.Print();
+        }
+
+        /// <summary>
+        /// Prints to XPS file.
+        /// </summary>
+        public bool PrintToXpsFile(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements, string filename)
+        {
+            _pages = pages;
+            _elements = elements;
+
+            const string printer = "Microsoft XPS Document Writer";
+            if (!PrinterSettings.InstalledPrinters.OfType<string>().Contains(printer))
+            {
+                MessageService.Current.Info("Failed to find \"Microsoft XPS Document Writer\" which is used for PDF conversion.");
+                return false;
+            }
+
+            printerSettings.PrinterName = printer;
+            printerSettings.PrintFileName = filename;
+            printerSettings.PrintToFile = true;
+
+            var _printDocument = new PrintDocument { OriginAtMargins = true, PrinterSettings = printerSettings };
+            _printDocument.PrintPage += PrintNextPage;
+            _printDocument.EndPrint += (s, e) => DelegateHelper.FireEvent(this, EndPrint, e);
+            _printDocument.PrintController = new StandardPrintController();
+
+            _printDocument.Print();
+
+            return true;
         }
 
         /// <summary>
         /// Creates the print dialog.
         /// </summary>
-        private static PrintDialog CreatePrintDialog(LayoutPages pages, PrinterSettings printerSettings)
+        private PrintDialog CreateAndShowPrintDialog(LayoutPages pages, PrinterSettings printerSettings)
         {
             var pd = new PrintDialog();
             bool hasSelection = pages.SelectedCount > 0;
@@ -60,13 +91,14 @@ namespace MW5.Plugins.Printing.Helpers
             pd.PrinterSettings.FromPage = 1;
             pd.PrinterSettings.ToPage = 1;
             pd.PrinterSettings.PrintRange = hasSelection ? PrintRange.Selection : PrintRange.AllPages;
-            return pd;
+
+            return pd.ShowDialog() != DialogResult.OK ? pd : null;
         }
 
         /// <summary>
         /// Gets elements within certai page.
         /// </summary>
-        private static IEnumerable<LayoutElement> GetElementsWithinPage(int pageX, int pageY)
+        private IEnumerable<LayoutElement> GetElementsWithinPage(int pageX, int pageY)
         {
             var page = _pages.GetPageRectange(pageX, pageY);
 
@@ -82,7 +114,7 @@ namespace MW5.Plugins.Printing.Helpers
         /// <summary>
         /// This event handler is fired by the print document when it prints and draws the layout to the print document
         /// </summary>
-        private static void PrintNextPage(object sender, PrintPageEventArgs e)
+        private void PrintNextPage(object sender, PrintPageEventArgs e)
         {
             var page = _pages.FirstOrDefault(p => (p.Scheduled || !_pages.HasScheduled) && !p.Printed);
             if (page != null)
@@ -96,7 +128,7 @@ namespace MW5.Plugins.Printing.Helpers
         /// <summary>
         /// Renders a page to the specified graphics object
         /// </summary>
-        private static void PrintPage(int pageX, int pageY, Graphics g)
+        private void PrintPage(int pageX, int pageY, Graphics g)
         {
             var page = _pages.GetPageRectange(pageX, pageY);
 
@@ -151,7 +183,7 @@ namespace MW5.Plugins.Printing.Helpers
         /// <summary>
         /// Schedules which pages should be rendered depending on print dialog.
         /// </summary>
-        private static void SchedulePages(LayoutPages pages, PrintDialog pd)
+        private void SchedulePages(LayoutPages pages, PrintDialog pd)
         {
             pages.MarkUnprinted();
 
@@ -177,6 +209,14 @@ namespace MW5.Plugins.Printing.Helpers
                     }
                     break;
             }
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            //_printDocument.Dispose();
         }
     }
 }

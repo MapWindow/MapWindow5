@@ -15,6 +15,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
+using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Printing.Views.Panels;
 using MW5.Plugins.Services;
@@ -30,6 +31,7 @@ namespace MW5.Plugins.Printing.Views
         private readonly IBroadcasterService _broadcaster;
         private readonly IAppContext _context;
         private readonly ElementsPresenter _elements;
+        private readonly PdfExportService _pdfService;
         private readonly PrintingPlugin _plugin;
         private readonly IStyleService _styleService;
         private IDockPanelCollection _dockPanels;
@@ -42,19 +44,23 @@ namespace MW5.Plugins.Printing.Views
             PrintingPlugin plugin,
             IBroadcasterService broadcaster,
             IStyleService styleService,
-            ElementsPresenter elements)
+            ElementsPresenter elements,
+            PdfExportService pdfService
+            )
         {
             if (context == null) throw new ArgumentNullException("context");
             if (plugin == null) throw new ArgumentNullException("plugin");
             if (broadcaster == null) throw new ArgumentNullException("broadcaster");
             if (styleService == null) throw new ArgumentNullException("styleService");
             if (elements == null) throw new ArgumentNullException("elements");
+            if (pdfService == null) throw new ArgumentNullException("pdfService");
 
             _context = context;
             _plugin = plugin;
             _broadcaster = broadcaster;
             _styleService = styleService;
             _elements = elements;
+            _pdfService = pdfService;
 
             InitializeComponent();
 
@@ -149,7 +155,7 @@ namespace MW5.Plugins.Printing.Views
         {
             // we want the same instance of view in the service, but another 
             // instance on showing presenter the next time, so better not to use DI
-            _menuListener = new LayoutMenuListener(_context, this);
+            _menuListener = new LayoutMenuListener(_context, this, _pdfService);
             _menuGenerator = new LayoutMenuGenerator(_plugin, this, _menuListener);
 
             _zoomCombo = _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.ZoomCombo, _plugin.Identity) as IComboBoxMenuItem;

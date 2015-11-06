@@ -96,6 +96,9 @@
     <Reference Include="Syncfusion.Grouping.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="Syncfusion.Shared.Base, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -151,6 +154,7 @@
     <Compile Include="Helpers\ExportHelper.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Helpers\LayoutScaleHelper.cs" />
+    <Compile Include="Services\PdfExportService.cs" />
     <Compile Include="Model\Elements\LayoutLegend.cs" />
     <Compile Include="Model\LayoutElementEventArgs.cs" />
     <Compile Include="Model\LayoutPage.cs" />
@@ -163,7 +167,7 @@
     <Compile Include="Helpers\FileDialogHelper.cs" />
     <Compile Include="Helpers\LayoutElementsHelper.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
-    <Compile Include="Helpers\PrintingHelper.cs" />
+    <Compile Include="Services\PrintingService.cs" />
     <Compile Include="Helpers\PaperSizesCache.cs" />
     <Compile Include="Helpers\ScreenHelper.cs" />
     <Compile Include="Model\LayoutElementCollection.cs" />
@@ -478,6 +482,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_export24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_export_pdf24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

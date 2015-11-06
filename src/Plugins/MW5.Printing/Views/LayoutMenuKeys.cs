@@ -16,6 +16,7 @@ namespace MW5.Plugins.Printing.Views
         public const string PrinterSetup = "lt_PrinterSetup";
         public const string PageSetup = "lt_PageSettings";
         public const string ExportToBitmap = "lt_ExportToBitmap";
+        public const string ExportToPdf = "lt_ExportToPdf";
         public const string Close = "lt_Close";
         public const string AdjustPages = "lt_AdjustPages";
 

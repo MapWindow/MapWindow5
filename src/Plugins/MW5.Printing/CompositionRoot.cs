@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Printing.Views.Panels;
@@ -20,6 +21,7 @@ namespace MW5.Plugins.Printing
                 .RegisterView<ITemplateView, TemplateView>()
                 .RegisterView<ITableView, TableView>()
                 .RegisterView<ICreateTableView, CreateTableView>()
+                .RegisterService<PdfExportService>()
                 .RegisterService<ElementsDockPanel>()
                 .RegisterService<ElementsPresenter>();
         }

@@ -132,7 +132,9 @@ namespace MW5.Plugins.Printing.Views
             bar.Items.AddButton(_commands[LayoutMenuKeys.SaveLayoutAs]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.PageSetup]).BeginGroup = true;
             bar.Items.AddButton(_commands[LayoutMenuKeys.AdjustPages]);
-            bar.Items.AddButton(_commands[LayoutMenuKeys.Print]).BeginGroup = true;;
+            bar.Items.AddButton(_commands[LayoutMenuKeys.Print]).BeginGroup = true;
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ExportToBitmap]).BeginGroup = true;
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ExportToPdf]);
             bar.Update();
 
             // zoom

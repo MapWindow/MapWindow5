@@ -123,6 +123,16 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_export_pdf24 {
+            get {
+                object obj = ResourceManager.GetObject("img_export_pdf24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_export24 {
             get {
                 object obj = ResourceManager.GetObject("img_export24", resourceCulture);

@@ -36,6 +36,8 @@ namespace MW5.Plugins.Printing.Views
                                Resources.img_page_setup24),
                            new MenuCommand("Export to Bitmap", LayoutMenuKeys.ExportToBitmap,
                                Resources.img_export24),
+                               new MenuCommand("Export to PDF", LayoutMenuKeys.ExportToPdf,
+                               Resources.img_export_pdf24),
                            new MenuCommand("Close", LayoutMenuKeys.Close, Resources.img_close24),
                            new MenuCommand("Adjust Layout", LayoutMenuKeys.AdjustPages, Resources.img_refresh24),
 
