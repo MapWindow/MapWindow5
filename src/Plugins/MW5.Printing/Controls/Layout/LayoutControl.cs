@@ -43,7 +43,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             UpdateScrollBars();
 
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>

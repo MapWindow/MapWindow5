@@ -39,10 +39,12 @@ namespace MW5.Plugins.Printing.Views
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.panel1 = new System.Windows.Forms.Panel();
             this.layoutControl1 = new MW5.Plugins.Printing.Controls.Layout.LayoutControl();
-            this.layoutPropertyGrid1 = new PropertiesDockPanel();
+            this.layoutPropertyGrid1 = new MW5.Plugins.Printing.Views.Panels.PropertiesDockPanel();
             this.statusStripEx1 = new Syncfusion.Windows.Forms.Tools.StatusStripEx();
             this.lblPageCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblPageSize = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lblSelected = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.lblPosition = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
             ((System.ComponentModel.ISupportInitialize)(this.mainFrameBarManager1)).BeginInit();
@@ -96,6 +98,8 @@ namespace MW5.Plugins.Printing.Views
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.PanMode = false;
             this.layoutControl1.PrinterSettings = ((System.Drawing.Printing.PrinterSettings)(resources.GetObject("layoutControl1.PrinterSettings")));
+            this.layoutControl1.SelectionColor = System.Drawing.Color.Orange;
+            this.layoutControl1.ShowMargins = true;
             this.layoutControl1.ShowPageNumbers = false;
             this.layoutControl1.Size = new System.Drawing.Size(321, 263);
             this.layoutControl1.TabIndex = 0;
@@ -103,6 +107,7 @@ namespace MW5.Plugins.Printing.Views
             // 
             // layoutPropertyGrid1
             // 
+            this.layoutPropertyGrid1.LayoutControl = null;
             this.layoutPropertyGrid1.Location = new System.Drawing.Point(443, 169);
             this.layoutPropertyGrid1.Name = "layoutPropertyGrid1";
             this.layoutPropertyGrid1.Size = new System.Drawing.Size(155, 135);
@@ -115,7 +120,9 @@ namespace MW5.Plugins.Printing.Views
             this.statusStripEx1.Dock = Syncfusion.Windows.Forms.Tools.DockStyleEx.Bottom;
             this.statusStripEx1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblPageCount,
-            this.lblPageSize});
+            this.lblPageSize,
+            this.lblSelected,
+            this.lblPosition});
             this.statusStripEx1.Location = new System.Drawing.Point(0, 392);
             this.statusStripEx1.MetroColor = System.Drawing.Color.SandyBrown;
             this.statusStripEx1.Name = "statusStripEx1";
@@ -135,6 +142,21 @@ namespace MW5.Plugins.Printing.Views
             this.lblPageSize.Name = "lblPageSize";
             this.lblPageSize.Size = new System.Drawing.Size(21, 15);
             this.lblPageSize.Text = "A4";
+            // 
+            // lblSelected
+            // 
+            this.lblSelected.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.lblSelected.Name = "lblSelected";
+            this.lblSelected.Padding = new System.Windows.Forms.Padding(10, 0, 10, 0);
+            this.lblSelected.Size = new System.Drawing.Size(114, 15);
+            this.lblSelected.Text = "Items selected: 0";
+            // 
+            // lblPosition
+            // 
+            this.lblPosition.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
+            this.lblPosition.Name = "lblPosition";
+            this.lblPosition.Size = new System.Drawing.Size(91, 15);
+            this.lblPosition.Text = "X = 212; Y = 414";
             // 
             // dockingManager1
             // 
@@ -194,5 +216,7 @@ namespace MW5.Plugins.Printing.Views
         private PropertiesDockPanel layoutPropertyGrid1;
         private Syncfusion.Windows.Forms.Tools.DockingManager dockingManager1;
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel lblSelected;
+        private Syncfusion.Windows.Forms.Tools.StatusStripLabel lblPosition;
     }
 }

@@ -239,4 +239,10 @@ namespace MW5.Plugins.Printing.Enums
         Fixed = 1,
         Relative = 2,
     }
+
+    public enum LayoutInvalidateType
+    {
+        All = 0,
+        Rulers = 1,
+    }
 }

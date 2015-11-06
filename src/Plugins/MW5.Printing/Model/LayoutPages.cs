@@ -22,7 +22,6 @@ namespace MW5.Plugins.Printing.Model
         private int _pageCountY;
         private int _pageHeight;
         private int _pageWidth;
-        private bool _showMargins = false;
 
         public LayoutPages()
         {
@@ -30,8 +29,6 @@ namespace MW5.Plugins.Printing.Model
             PageCountY = 1;
 
             MarkPageSizeDirty();
-
-            ShowMargins = false;
         }
 
         public bool HasScheduled
@@ -149,29 +146,6 @@ namespace MW5.Plugins.Printing.Model
         public int SelectedCount
         {
             get { return this.Count(p => p.Selected); }
-        }
-
-        public bool ShowMargins
-        {
-            get
-            {
-                // We can't display margins when there is more than one page,
-                // since it will break WYSIWYG principle if some element 
-                // covers more than one page. In principle this can be dealed 
-                // by rendering element as a number of disjointed parts, but
-                // it's a bit complicated.
-                return _showMargins && Count == 1;
-            }
-            set
-            {
-                // TODO: currently always false
-
-                //if (value != _showMargins)
-                //{
-                //    _showMargins = value;
-                //    MarkPageSizeDirty();
-                //}
-            }
         }
 
         /// <summary>
@@ -320,11 +294,6 @@ namespace MW5.Plugins.Printing.Model
             {
                 var sett = PageSettings;
 
-                if (ShowMargins)
-                {
-                    return sett.PaperSize.Height;
-                }
-
                 return sett.PaperSize.Height - sett.Margins.Top - sett.Margins.Bottom;
             }
             catch (InvalidPrinterException)
@@ -338,11 +307,6 @@ namespace MW5.Plugins.Printing.Model
             try
             {
                 var sett = PageSettings;
-
-                if (ShowMargins)
-                {
-                    return sett.PaperSize.Width;
-                }
 
                 return sett.PaperSize.Width - sett.Margins.Left - sett.Margins.Right;
             }

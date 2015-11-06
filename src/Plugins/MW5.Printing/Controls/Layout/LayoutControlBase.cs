@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Shared;
@@ -28,6 +29,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         protected bool _suppressScrollbarUpdate = false;
         private VScrollBar _vScrollBar;
         protected float _zoom; //The zoom of the paper
+        protected bool _fullRedraw = true;
 
         protected LayoutControlBase()
         {
@@ -167,7 +169,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private void HScrollBarScroll(object sender, ScrollEventArgs e)
         {
             _paperLocation.X = _paperLocation.X + (e.OldValue - e.NewValue);
-            Invalidate();
+            DoInvalidate();
         }
 
         private void InitPrinterSettings()
@@ -208,7 +210,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             UpdateScrollBars();
 
             //Invalidate the whole thing since we are moving this around
-            // Invalidate();
+            // DoInvalidate();
         }
 
         private void UpdateScrollbarPosition()
@@ -265,6 +267,26 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private void VScrollBarScroll(object sender, ScrollEventArgs e)
         {
             _paperLocation.Y = _paperLocation.Y + (e.OldValue - e.NewValue);
+            DoInvalidate();
+        }
+
+        protected void DoInvalidate(Region region, LayoutInvalidateType type = LayoutInvalidateType.All)
+        {
+            if (type == LayoutInvalidateType.All)
+            {
+                _fullRedraw = true;
+            }
+
+            Invalidate(region);
+        }
+
+        protected void DoInvalidate(LayoutInvalidateType type = LayoutInvalidateType.All)
+        {
+            if (type == LayoutInvalidateType.All)
+            {
+                _fullRedraw = true;
+            }
+
             Invalidate();
         }
     }

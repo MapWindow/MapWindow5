@@ -244,7 +244,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             float diffY = paperCenterOnScreen.Y - UsableHeight / 2F;
             _paperLocation.Y = _paperLocation.Y - diffY;
             UpdateScrollBars();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -256,7 +256,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             float diffX = paperCenterOnScreen.X - UsableWidth / 2F;
             _paperLocation.X = _paperLocation.X - diffX;
             UpdateScrollBars();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _paperLocation.Y = _paperLocation.Y - diffY;
 
             UpdateScrollBars();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>

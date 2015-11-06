@@ -105,6 +105,14 @@ namespace MW5.Plugins.Printing.Views
             Shown += OnLayoutViewShown;
             layoutControl1.ZoomChanged += OnlayoutControlZoomChanged;
             layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
+            layoutControl1.MouseMove += OnLayoutMouseMove;
+        }
+
+        private void OnLayoutMouseMove(object sender, MouseEventArgs e)
+        {
+            var pnt = layoutControl1.ScreenToPaper(e.Location);
+            lblPosition.Text = string.Format("X={0:f1}; Y={1:f1}", pnt.X, pnt.Y);
+            statusStripEx1.Refresh();
         }
 
         private void OnSelectionChanged()
@@ -117,6 +125,8 @@ namespace MW5.Plugins.Printing.Views
                 var list = layoutControl1.SelectedLayoutElements;
                 toolbar.Enabled = list.Count == 1 && list[0] is LayoutMap;
             }
+
+            lblSelected.Text = "Items selected: " + layoutControl1.SelectedLayoutElements.Count;
         }
 
         private void InitControls()

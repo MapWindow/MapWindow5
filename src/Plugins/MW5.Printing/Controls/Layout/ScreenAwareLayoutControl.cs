@@ -30,6 +30,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
         protected Bitmap _resizeTempBitmap;
         protected bool _showPageNumbers;
         private bool _showMargins;
+        private Bitmap _screenBuffer;
+        private Bitmap _tempBuffer;
+        protected Point _mousePosition;
+        private const int _rulerWidth = 18;
 
         protected ScreenAwareLayoutControl()
         {
@@ -51,7 +55,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             set
             {
                 _selectionPen.Color = value;
-                Invalidate();
+                DoInvalidate();
             }
         }
 
@@ -74,7 +78,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             set
             {
                 _showMargins = value;
-                Invalidate();
+                DoInvalidate();
             }
         }
 
@@ -87,7 +91,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             set
             {
                 _showPageNumbers = value;
-                Invalidate();
+                DoInvalidate();
             }
         }
 
@@ -112,10 +116,40 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             e.Graphics.SmoothingMode = SmoothingMode.None;
 
-            DrawControl(e.Graphics, e.ClipRectangle);
+            // running full redraw
+            if (_fullRedraw || _screenBuffer == null)
+            {
+                _fullRedraw = false;
+                DrawControl(e.Graphics, e.ClipRectangle);
 
-            //resets the cursor cuz some times it get jammed
+                e.Graphics.SmoothingMode = DrawingQuality;
+            }
+
+            if (_screenBuffer != null)
+            { 
+                if (_tempBuffer == null || _tempBuffer.Width != _screenBuffer.Width || _tempBuffer.Height != _screenBuffer.Height)
+                {
+                    _tempBuffer = new Bitmap(_screenBuffer.Width, _screenBuffer.Height, _screenBuffer.PixelFormat);
+                }
+
+                // adding guides
+                using (var g = Graphics.FromImage(_tempBuffer))
+                {
+                    g.DrawImage(_screenBuffer, 0, 0);
+                    DrawGuides(g);
+                }
+
+                // drawing buffer on the screen
+                e.Graphics.DrawImage(_tempBuffer, 0, 0);
+            }
+
             Cursor = oldCursor;
+        }
+
+        private void DrawGuides(Graphics g)
+        {
+            g.DrawLine(Pens.Red, _mousePosition.X, 0, _mousePosition.X, _rulerWidth);
+            g.DrawLine(Pens.Red, 0, _mousePosition.Y, _rulerWidth, _mousePosition.Y);
         }
 
         /// <summary>
@@ -123,6 +157,15 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         protected override void OnPaintBackground(PaintEventArgs e)
         {
+        }
+
+        private void RecycleScreenBuffer()
+        {
+            if (_screenBuffer != null)
+            {
+                _screenBuffer.Dispose();
+                _screenBuffer = null;
+            }
         }
 
         /// <summary>
@@ -136,43 +179,36 @@ namespace MW5.Plugins.Printing.Controls.Layout
             if (invalRect.X < 0) invalRect.X = 0;
             if (invalRect.Y < 0) invalRect.Y = 0;
 
+            RecycleScreenBuffer();
+
             //We paint to a temporary buffer to avoid flickering
-            using (var tempBuffer = new Bitmap(invalRect.Width, invalRect.Height, PixelFormat.Format24bppRgb))
+            _screenBuffer = new Bitmap(invalRect.Width, invalRect.Height, PixelFormat.Format24bppRgb);
+            
+            using (var graph = Graphics.FromImage(_screenBuffer))
             {
-                using (var graph = Graphics.FromImage(tempBuffer))
+                graph.TranslateTransform(-invalRect.X, -invalRect.Y);
+                graph.SmoothingMode = DrawingQuality;
+
+                graph.FillRectangle(Brushes.DarkGray, invalRect);
+
+                DrawPages(graph);
+
+                for (int i = LayoutElements.Count - 1; i >= 0; i--)
                 {
-                    graph.TranslateTransform(-invalRect.X, -invalRect.Y);
-                    graph.SmoothingMode = DrawingQuality;
-
-                    graph.FillRectangle(Brushes.DarkGray, invalRect);
-
-                    DrawPages(graph);
-
-                    for (int i = LayoutElements.Count - 1; i >= 0; i--)
-                    {
-                        DrawElement(graph, LayoutElements[i], invalRect, i);
-                    }
-
-                    DrawSelectionRectangles(graph);
-
-                    DrawMainMap(graph);
-
-                    DrawPageNumbers(graph);
-
-                    DrawRubberBand(graph);
-
-                    DrawRulers(graph);
-
-                    g.SmoothingMode = DrawingQuality;
-
-                    // draws buffer on the screen
-                    var r = new RectangleF(0f, 0f, invalRect.Width, invalRect.Height);
-                    g.DrawImage(tempBuffer, invalRect, r, GraphicsUnit.Pixel);
+                    DrawElement(graph, LayoutElements[i], invalRect, i);
                 }
+
+                DrawSelectionRectangles(graph);
+
+                DrawMainMap(graph);
+
+                DrawPageNumbers(graph);
+
+                DrawRubberBand(graph);
+
+                DrawRulers(graph);
             }
         }
-
-
 
         private void DrawRulersFrame(Graphics g, Pen pen, int rulerWidth)
         {
@@ -191,26 +227,24 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         private void DrawRulers(Graphics g)
         {
-            const int rulerWidth = 18;
-
             var pen = Pens.Gray;
 
-            DrawRulersFrame(g, pen, rulerWidth);
+            DrawRulersFrame(g, pen, _rulerWidth );
 
             int step = ChooseRulerStep();
 
-            var originPaper = ScreenToPaper(rulerWidth, rulerWidth);
+            var originPaper = ScreenToPaper(_rulerWidth, _rulerWidth);
             originPaper = new PointF((float)(Math.Floor(originPaper.X / step) * step), (float)(Math.Floor(originPaper.Y / step) * step));
 
             var start = PaperToScreen(originPaper);
 
-            DrawRuler(g, pen, Convert.ToInt32(originPaper.X), start.X, Width, rulerWidth, step, false);
+            DrawRuler(g, pen, Convert.ToInt32(originPaper.X), start.X, Width, _rulerWidth, step, false);
             
             // let's reuse the same rendering code for vertical ruler
             g.RotateTransform(90f);
-            g.TranslateTransform(rulerWidth, 0f, MatrixOrder.Append);
+            g.TranslateTransform(_rulerWidth, 0f, MatrixOrder.Append);
 
-            DrawRuler(g, pen, Convert.ToInt32(originPaper.Y), start.Y, Height, rulerWidth, step, true);
+            DrawRuler(g, pen, Convert.ToInt32(originPaper.Y), start.Y, Height, _rulerWidth, step, true);
 
             g.ResetTransform();
         }

@@ -103,7 +103,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                     if (!args.Cancel)
                     {
-                        Invalidate();
+                        DoInvalidate();
                     }
 
                     break;
@@ -153,7 +153,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         }
 
                         FirePageSelectionChanged();
-                        Invalidate();
+                        DoInvalidate();
                     }
                 }
                 else
@@ -250,12 +250,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
             {
                 case MouseMode.InsertNewElement:
                 case MouseMode.CreateSelection:
-                    Invalidate(new Region(_mouseBox));
+                    DoInvalidate(new Region(_mouseBox));
                     _mouseBox.Width = Math.Abs(_mouseStartPoint.X - e.X);
                     _mouseBox.Height = Math.Abs(_mouseStartPoint.Y - e.Y);
                     _mouseBox.X = Math.Min(_mouseStartPoint.X, e.X);
                     _mouseBox.Y = Math.Min(_mouseStartPoint.Y, e.Y);
-                    Invalidate(new Region(_mouseBox));
+                    DoInvalidate(new Region(_mouseBox));
                     break;
 
                     //Deals with moving the selection
@@ -265,12 +265,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     {
                         var invalRect = PaperToScreen(le.Rectangle);
                         invalRect.Inflate(_inflate, _inflate);
-                        Invalidate(new Region(invalRect));
+                        DoInvalidate(new Region(invalRect));
                         var elementLocScreen = PaperToScreen(le.LocationF);
                         le.LocationF = ScreenToPaper(elementLocScreen.X - deltaX, elementLocScreen.Y - deltaY);
                         invalRect = PaperToScreen(le.Rectangle);
                         invalRect.Inflate(_inflate, _inflate);
-                        Invalidate(new Region(invalRect));
+                        DoInvalidate(new Region(invalRect));
                         Update();
                     }
                     _suppressElementInvalidation = false;
@@ -293,12 +293,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 case MouseMode.PanMap:
                     _mouseBox.Width = e.X - _mouseStartPoint.X;
                     _mouseBox.Height = e.Y - _mouseStartPoint.Y;
-                    Invalidate(new Region(PaperToScreen(_selectedLayoutElements[0].Rectangle)));
+                    DoInvalidate(new Region(PaperToScreen(_selectedLayoutElements[0].Rectangle)));
                     break;
 
                 case MouseMode.Default:
 
-                    //If theres only one element selected and were on its edge change the cursor to the resize cursor
+                    //If theres only one element selected and we're on its edge change the cursor to the resize cursor
                     if (_selectedLayoutElements.Count == 1)
                     {
                         var edge = LayoutHelper.IntersectElementEdge(
@@ -335,6 +335,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     }
                     break;
             }
+
+            _mousePosition = e.Location;
+            DoInvalidate(LayoutInvalidateType.Rulers);
         }
 
         private void LayoutControlMouseUp(object sender, MouseEventArgs e)
@@ -385,7 +388,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                         FireSelectionChanged();
                         _mouseMode = MouseMode.Default;
-                        Invalidate();
+                        DoInvalidate();
                         break;
 
                         //Stops moving the selection
@@ -404,7 +407,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         {
                             _selectedLayoutElements[0].Resizing = false;
                             _selectedLayoutElements[0].SizeF = _selectedLayoutElements[0].SizeF;
-                            Invalidate(new Region(PaperToScreen(_selectedLayoutElements[0].Rectangle)));
+                            DoInvalidate(new Region(PaperToScreen(_selectedLayoutElements[0].Rectangle)));
                         }
                         break;
 
@@ -433,7 +436,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                         _elementToAddWithMouse = null;
                         _mouseMode = MouseMode.Default;
-                        Invalidate();
+                        DoInvalidate();
                         break;
 
                     case MouseMode.PanMap:
@@ -473,6 +476,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         break;
                 }
             }
+
+            
         }
 
         private void ResizeSelected(float deltaX, float deltaY)
@@ -482,7 +487,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             var oldScreenRect = PaperToScreen(_selectedLayoutElements[0].Rectangle);
             oldScreenRect.Inflate(_inflate, _inflate);
 
-            Invalidate(new Region(oldScreenRect));
+            DoInvalidate(new Region(oldScreenRect));
 
             oldScreenRect = PaperToScreen(_selectedLayoutElements[0].Rectangle);
 
@@ -526,7 +531,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements[0].Rectangle = ScreenToPaper(oldScreenRect);
             oldScreenRect.Inflate(_inflate, _inflate);
 
-            Invalidate(new Region(oldScreenRect));
+            DoInvalidate(new Region(oldScreenRect));
 
             Update();
 

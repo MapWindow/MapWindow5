@@ -95,7 +95,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             FireElementsChanged();
 
             le.Invalidated += LeInvalidated;
-            Invalidate(new Region(PaperToScreen(le.Rectangle)));
+            DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
 
             return true;
         }
@@ -112,7 +112,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     RemoveFromLayout(le);
                 }
 
-                Invalidate();
+                DoInvalidate();
                 FireSelectionChanged();
             }
         }
@@ -126,7 +126,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Clear();
             _selectedLayoutElements.InsertRange(0, unselected);
             FireSelectionChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
 
             FireSelectionChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -184,7 +184,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
 
             FireSelectionChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             _suppressElementInvalidation = false;
 
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.InsertRange(0, _layoutElements);
 
             FireSelectionChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Remove(le);
 
             FireSelectionChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -254,7 +254,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void AddToSelection(LayoutElement le)
         {
             _selectedLayoutElements.Add(le);
-            Invalidate(new Region(PaperToScreen(le.Rectangle)));
+            DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
             FireSelectionChanged();
         }
 
@@ -264,7 +264,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void AddToSelection(List<LayoutElement> le)
         {
             _selectedLayoutElements.AddRange(le);
-            Invalidate();
+            DoInvalidate();
             FireSelectionChanged();
         }
 
@@ -278,7 +278,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             FireSelectionChanged();
             _layoutElements.Clear();
             FireElementsChanged();
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -287,7 +287,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void ClearSelection()
         {
             _selectedLayoutElements.Clear();
-            Invalidate();
+            DoInvalidate();
             FireSelectionChanged();
         }
 
@@ -297,7 +297,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void LeInvalidated(object sender, EventArgs e)
         {
             if (_suppressElementInvalidation) return;
-            Invalidate();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void RemoveFromSelection(LayoutElement le)
         {
             _selectedLayoutElements.Remove(le);
-            Invalidate(new Region(PaperToScreen(le.Rectangle)));
+            DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
             FireSelectionChanged();
         }
 
@@ -337,7 +337,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             FireSelectionChanged();
             _layoutElements.Remove(le);
             FireElementsChanged();
-            Invalidate(new Region(PaperToScreen(le.Rectangle)));
+            DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
         }
 
         private void SetUniqueElementName(LayoutElement le)
