@@ -20,6 +20,9 @@ namespace MW5.Plugins.Printing.Services
     {
         private readonly ITempFileService _fileService;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PdfExportService"/> class.
+        /// </summary>
         public PdfExportService(ITempFileService fileService)
         {
             if (fileService == null) throw new ArgumentNullException("fileService");
@@ -52,21 +55,22 @@ namespace MW5.Plugins.Printing.Services
             }
         }
 
+        /// <summary>
+        /// Converts XPS file to PDF.
+        /// </summary>
         private void ConvertToPdf(string xpsFilename, string pdfFilename)
         {
+            if (!File.Exists(xpsFilename)) return;
+
+            // wait until file is released
+            GcHelper.Collect(1000);
+
             try
             {
-                if (!File.Exists(xpsFilename)) return;
-
-                // wait until file is released
-                GcHelper.Collect(1000);
-
                 var converter = new XPSToPdfConverter();
 
-                // Convert XPS document into PDF document.
                 var document = converter.Convert(xpsFilename);
 
-                // Save & close the pdf file.
                 document.Save(pdfFilename);
                 document.Close(true);
             }
@@ -76,10 +80,17 @@ namespace MW5.Plugins.Printing.Services
                 return;
             }
 
+            OpenPdfResult(pdfFilename);
+        }
+
+        /// <summary>
+        /// Opens the PDF result.
+        /// </summary>
+        private void OpenPdfResult(string pdfFilename)
+        {
             try
             {
-                if (
-                    MessageService.Current.Ask(
+                if (MessageService.Current.Ask(
                         "Exported to PDF successfully. Do you want to open the reasulting document?"))
                 {
                     Process.Start(pdfFilename);
@@ -91,6 +102,9 @@ namespace MW5.Plugins.Printing.Services
             }
         }
 
+        /// <summary>
+        /// Gets the PDF filename.
+        /// </summary>
         private string GetPdfFilename(IWin32Window parent)
         {
             using (var dlg = new SaveFileDialog { Filter = @"PDF documents (*.pdf)|*.pdf" })

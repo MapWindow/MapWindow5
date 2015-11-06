@@ -17,7 +17,7 @@ namespace MW5.Plugins.Printing.Helpers
 
         public static float LogicTo96Dpi
         {
-            get { return 96 / LogicDpi; } // 96 /100
+            get { return 96 / LogicDpi; }
         }
 
         public static float LogicToScreenDpi

@@ -4,6 +4,7 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -22,16 +23,20 @@ namespace MW5.Plugins.Printing.Controls.Layout
     public class ScreenAwareLayoutControl : ZoomableLayoutControl
     {
         private readonly SolidBrush _selectionBrush;
+        private readonly SolidBrush _marginBrush;
         private readonly Pen _selectionPen;
         protected RectangleF _mouseBox;
         protected MouseMode _mouseMode;
         protected Bitmap _resizeTempBitmap;
         protected bool _showPageNumbers;
+        private bool _showMargins;
 
         protected ScreenAwareLayoutControl()
         {
             _selectionBrush = new SolidBrush(Color.Transparent);
             _selectionPen = new Pen(Color.Orange, 2f);
+            _marginBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
+            _showMargins = true;
             DrawingQuality = SmoothingMode.HighQuality;
         }
 
@@ -39,6 +44,16 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// Gets or sets the smoothing mode to use to draw the map
         /// </summary>
         public SmoothingMode DrawingQuality { get; set; }
+
+        public Color SelectionColor
+        {
+            get { return _selectionPen.Color; }
+            set
+            {
+                _selectionPen.Color = value;
+                Invalidate();
+            }
+        }
 
         public LayoutMap MainMap
         {
@@ -55,10 +70,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         public bool ShowMargins
         {
-            get { return Pages.ShowMargins; }
+            get { return _showMargins; }
             set
             {
-                Pages.ShowMargins = value;
+                _showMargins = value;
                 Invalidate();
             }
         }
@@ -117,6 +132,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             //Updates the invalidation rectangle to be a bit bigger to deal with overlaps
             var invalRect = Rectangle.Inflate(clipRectangle, 5, 5);
+
             if (invalRect.X < 0) invalRect.X = 0;
             if (invalRect.Y < 0) invalRect.Y = 0;
 
@@ -145,23 +161,131 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                     DrawRubberBand(graph);
 
-                    // draws buffer on the screen
+                    DrawRulers(graph);
+
                     g.SmoothingMode = DrawingQuality;
-                    g.DrawImage(tempBuffer, invalRect, new RectangleF(0f, 0f, invalRect.Width, invalRect.Height),
-                        GraphicsUnit.Pixel);
+
+                    // draws buffer on the screen
+                    var r = new RectangleF(0f, 0f, invalRect.Width, invalRect.Height);
+                    g.DrawImage(tempBuffer, invalRect, r, GraphicsUnit.Pixel);
                 }
+            }
+        }
+
+
+
+        private void DrawRulersFrame(Graphics g, Pen pen, int rulerWidth)
+        {
+            var brush = new SolidBrush(Color.WhiteSmoke);
+            g.FillRectangle(brush, 0, 0, Width, rulerWidth);
+            g.FillRectangle(brush, 0, 0, rulerWidth, Height);
+
+            g.DrawLine(pen, 0, 0, 0, Height);
+            g.DrawLine(pen, 0, 0, Width, 0);
+            g.DrawLine(pen, rulerWidth, rulerWidth, rulerWidth, Height);
+            g.DrawLine(pen, rulerWidth, rulerWidth, Width, rulerWidth);
+        }
+
+        /// <summary>
+        /// Draws horizontal and verical rulers with paper size.
+        /// </summary>
+        private void DrawRulers(Graphics g)
+        {
+            const int rulerWidth = 18;
+
+            var pen = Pens.Gray;
+
+            DrawRulersFrame(g, pen, rulerWidth);
+
+            int step = ChooseRulerStep();
+
+            var originPaper = ScreenToPaper(rulerWidth, rulerWidth);
+            originPaper = new PointF((float)(Math.Floor(originPaper.X / step) * step), (float)(Math.Floor(originPaper.Y / step) * step));
+
+            var start = PaperToScreen(originPaper);
+
+            DrawRuler(g, pen, Convert.ToInt32(originPaper.X), start.X, Width, rulerWidth, step, false);
+            
+            // let's reuse the same rendering code for vertical ruler
+            g.RotateTransform(90f);
+            g.TranslateTransform(rulerWidth, 0f, MatrixOrder.Append);
+
+            DrawRuler(g, pen, Convert.ToInt32(originPaper.Y), start.Y, Height, rulerWidth, step, true);
+
+            g.ResetTransform();
+        }
+
+        /// <summary>
+        /// Returns ruler step in 1/100 of an inch
+        /// </summary>
+        private int ChooseRulerStep()
+        {
+            float ratio = PixelsPerDot();
+            double step = 1;
+
+            int byTwo = 0;
+            while (ratio * step < 70f)
+            {
+                step = byTwo < 2 ? step * 2 : step * 2.5;
+                byTwo++;
+                if (byTwo == 3) byTwo = 0;
+            }
+
+            return Convert.ToInt32(step);
+        }
+
+        /// <summary>
+        /// Draws the ruler, eithe horizontal or vertical.
+        /// </summary>
+        private void DrawRuler(Graphics g, Pen pen, int paperStart, float screenStart, float screenEnd, float rulerWidth, int step, bool vertical)
+        {
+            float ratio = PixelsPerDot();
+            float screenStep = step * ratio / 10f;
+
+            var textBrush = Brushes.Black;
+
+            float val = screenStart;
+            while (val < screenEnd)
+            {
+                if (val > rulerWidth)
+                {
+                    g.DrawLine(pen, Convert.ToInt32(val), 0, Convert.ToInt32(val), rulerWidth);
+                    g.DrawString(paperStart.ToString(CultureInfo.InvariantCulture), Font, textBrush, val + 1, vertical ? rulerWidth * 0.25f : 0);
+                }
+
+                for (int i = 0; i < 10; i++)
+                {
+                    int valTemp = Convert.ToInt32(val + screenStep * i);
+
+                    if (valTemp < rulerWidth)
+                    {
+                        continue;
+                    }
+
+                    float size = Convert.ToInt32((i == 5) ? rulerWidth / 2f : rulerWidth * 0.75f);
+
+                    if (vertical)
+                    {
+                        size = rulerWidth - size;
+                    }
+
+                    g.DrawLine(pen, valTemp, size, valTemp, (vertical ? 0f : rulerWidth));
+                }
+
+                val += screenStep * 10;
+                paperStart += step;
             }
         }
 
         /// <summary>
         /// Draws a single element of the layout.
         /// </summary>
-        private void DrawElement(Graphics graph, LayoutElement le, Rectangle invalRect, int index)
+        private void DrawElement(Graphics g, LayoutElement le, Rectangle invalRect, int index)
         {
             bool panning = _mouseMode == MouseMode.PanMap && IsSelected(index) && le is LayoutMap &&
                            _selectedLayoutElements.Count == 1;
 
-            if (!panning && DrawMapResizing(index, graph))
+            if (!panning && DrawMapResizing(index, g))
             {
                 return;
             }
@@ -169,13 +293,13 @@ namespace MW5.Plugins.Printing.Controls.Layout
             float x = panning ? _paperLocation.X + _mouseBox.Width : _paperLocation.X;
             float y = panning ? _paperLocation.Y + _mouseBox.Height : _paperLocation.Y;
 
-            graph.TranslateTransform(x, y);
-            graph.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
+            g.TranslateTransform(x, y);
+            g.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
 
-            le.DrawElement(graph, false, false);
+            le.DrawElement(g, false, false);
 
-            graph.ResetTransform();
-            graph.TranslateTransform(-invalRect.X, -invalRect.Y);
+            g.ResetTransform();
+            g.TranslateTransform(-invalRect.X, -invalRect.Y);
         }
 
         /// <summary>
@@ -282,18 +406,27 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
+        private RectangleF GetPaperBoundsWithMargins()
+        {
+            var page = PrinterSettings.DefaultPageSettings;
+
+            float width = _pages.TotalWidth + page.Margins.Left + page.Margins.Right;
+            float height = _pages.TotalHeight + page.Margins.Top + page.Margins.Bottom;
+
+            return PaperToScreen(-page.Margins.Left, -page.Margins.Top, width, height);
+        }
+
         /// <summary>
         /// Draws pages of the layout control
         /// </summary>
         private void DrawPages(Graphics g)
         {
-            var pen = new Pen(Color.Black) { DashStyle = DashStyle.Dash };
+            var pen = new Pen(Color.Gray) { DashStyle = DashStyle.Dash };
 
-            // TODO: display margins
-
-            // the background of pages
             var rect = PaperToScreen(0, 0, _pages.TotalWidth, _pages.TotalHeight);
-            g.FillRectangle(Brushes.White, rect);
+            var bounds = GetPaperBoundsWithMargins();
+
+            g.FillRectangle(Brushes.White, ShowMargins ? bounds : rect);
 
             for (int i = 0; i < _pages.PageCountX; i++)
             {
@@ -306,23 +439,18 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                     g.DrawLine(pen, paperRect.Left, paperRect.Top, paperRect.Left + paperRect.Width, paperRect.Top);
                     g.DrawLine(pen, paperRect.Left, paperRect.Top, paperRect.Left, paperRect.Top + paperRect.Height);
-
-                    // margin
-                    if (ShowMargins)
-                    {
-                        var margins = _printerSettings.DefaultPageSettings.Margins;
-
-                        paperRect = PaperToScreen(x + margins.Left, y + margins.Top,
-                            _pages.PageWidth - margins.Left - margins.Right,
-                            _pages.PageHeight - margins.Top - margins.Bottom);
-
-                        g.DrawRectangle(Pens.LightGray, paperRect.X, paperRect.Y, paperRect.Width, paperRect.Height);
-                    }
                 }
             }
 
             // outside border
-            g.DrawRectangle(Pens.Black, rect.X, rect.Y, rect.Width, rect.Height);
+            var r = _showMargins ? bounds: rect;
+            g.DrawRectangle(Pens.Black, r.X, r.Y, r.Width, r.Height);
+
+            if (ShowMargins)
+            {
+                g.DrawLine(pen, rect.Right, rect.Top, rect.Right, rect.Bottom);
+                g.DrawLine(pen, rect.Left, rect.Bottom, rect.Right, rect.Bottom);
+            }
         }
 
         private void DrawRubberBand(Graphics g)

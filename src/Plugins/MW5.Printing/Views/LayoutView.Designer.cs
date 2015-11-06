@@ -96,7 +96,6 @@ namespace MW5.Plugins.Printing.Views
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.PanMode = false;
             this.layoutControl1.PrinterSettings = ((System.Drawing.Printing.PrinterSettings)(resources.GetObject("layoutControl1.PrinterSettings")));
-            this.layoutControl1.ShowMargins = false;
             this.layoutControl1.ShowPageNumbers = false;
             this.layoutControl1.Size = new System.Drawing.Size(321, 263);
             this.layoutControl1.TabIndex = 0;

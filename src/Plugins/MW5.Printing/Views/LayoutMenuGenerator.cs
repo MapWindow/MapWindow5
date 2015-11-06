@@ -73,7 +73,7 @@ namespace MW5.Plugins.Printing.Views
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomOut]);
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomMax]);
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowPageNumbers]).BeginGroup = true;
-            //dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowMargins]);
+            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowMargins]);
             dropDown.Update();
 
             // selection

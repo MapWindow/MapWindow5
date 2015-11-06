@@ -117,6 +117,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
             return (new PointF(screenX, screenY));
         }
 
+        protected float PixelsPerDot()
+        {
+            return _zoom * ScreenHelper.LogicToScreenDpi;
+        }
+
         /// <summary>
         /// Converts between a rectangle in paper coordinats in 1/100th of an inch to screen coordinats
         /// </summary>
