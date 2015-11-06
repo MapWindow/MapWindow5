@@ -212,9 +212,9 @@ namespace MW5.Plugins.Printing.Model.Elements
         private float CalcWidth()
         {
             float width = Data.Columns.Sum(item => item.ActualWidth);
-            if (Size.Width < width)
+            if (SizeF.Width < width)
             {
-                width = Size.Width;
+                width = SizeF.Width;
             }
 
             return width;

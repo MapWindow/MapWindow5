@@ -97,7 +97,7 @@ namespace MW5.Plugins.Printing.Views
                     LoadLayout();
                     break;
                 case LayoutMenuKeys.Print:
-                    LayoutPrint.Print(_layoutControl.Pages, _layoutControl.PrinterSettings, _layoutControl.LayoutElements);
+                    PrintingHelper.Print(_layoutControl.Pages, _layoutControl.PrinterSettings, _layoutControl.LayoutElements);
                     break;
                 case LayoutMenuKeys.PrinterSetup:
                     using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
@@ -121,7 +121,7 @@ namespace MW5.Plugins.Printing.Views
                     }
                     break;
                 case LayoutMenuKeys.ExportToBitmap:
-                    _layoutControl.ExportToBitmap();
+                    ExportHelper.ExportToBitmap(_layoutControl.Pages, _layoutControl.LayoutElements);
                     break;
                 case LayoutMenuKeys.ZoomIn:
                     _layoutControl.ZoomIn();
@@ -321,7 +321,7 @@ namespace MW5.Plugins.Printing.Views
 
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                var newBitmap = new LayoutBitmap { Size = new SizeF(100, 100), Filename = ofd.FileName };
+                var newBitmap = new LayoutBitmap { SizeF = new SizeF(100, 100), Filename = ofd.FileName };
                 _layoutControl.AddElementWithMouse(newBitmap);
             }
         }

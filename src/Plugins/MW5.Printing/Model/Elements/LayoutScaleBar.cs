@@ -314,7 +314,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         private double GetGeoBreakWidth(Graphics g, Font activeFont)
         {
             float unitLegnth = g.MeasureString(UnitText, activeFont).Width * 2;
-            double geoBreakWidth = (Size.Width - unitLegnth) / 100.0 / _unit.GetConversionFactor() * _layoutMap.Scale /
+            double geoBreakWidth = (SizeF.Width - unitLegnth) / 100.0 / _unit.GetConversionFactor() * _layoutMap.Scale /
                                    _numBreaks;
             double n = Math.Pow(10, Math.Floor(Math.Log10(geoBreakWidth)));
             return Math.Floor(geoBreakWidth / n) * n;

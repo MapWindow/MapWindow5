@@ -28,7 +28,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         protected Bitmap _resizeTempBitmap;
         protected bool _showPageNumbers;
 
-        public ScreenAwareLayoutControl()
+        protected ScreenAwareLayoutControl()
         {
             _selectionBrush = new SolidBrush(Color.Transparent);
             _selectionPen = new Pen(Color.Orange, 2f);

@@ -54,7 +54,7 @@ namespace MW5.Plugins.Printing.Helpers
                         float rightMost = paperWidth - printerSettings.DefaultPageSettings.Margins.Right;
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(rightMost - le.Size.Width, le.LocationF.Y);
+                            le.LocationF = new PointF(rightMost - le.SizeF.Width, le.LocationF.Y);
                         }
                     }
                     else
@@ -62,11 +62,11 @@ namespace MW5.Plugins.Printing.Helpers
                         float rightMost = float.MinValue;
                         foreach (var le in elements)
                         {
-                            if (le.LocationF.X + le.Size.Width > rightMost) rightMost = le.LocationF.X + le.Size.Width;
+                            if (le.LocationF.X + le.SizeF.Width > rightMost) rightMost = le.LocationF.X + le.SizeF.Width;
                         }
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(rightMost - le.Size.Width, le.LocationF.Y);
+                            le.LocationF = new PointF(rightMost - le.SizeF.Width, le.LocationF.Y);
                         }
                     }
                     break;
@@ -97,7 +97,7 @@ namespace MW5.Plugins.Printing.Helpers
                         float bottomMost = paperHeight - printerSettings.DefaultPageSettings.Margins.Bottom;
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(le.LocationF.X, bottomMost - le.Size.Height);
+                            le.LocationF = new PointF(le.LocationF.X, bottomMost - le.SizeF.Height);
                         }
                     }
                     else
@@ -105,11 +105,11 @@ namespace MW5.Plugins.Printing.Helpers
                         float bottomMost = float.MinValue;
                         foreach (var le in elements)
                         {
-                            if (le.LocationF.Y + le.Size.Height > bottomMost) bottomMost = le.LocationF.Y + le.Size.Height;
+                            if (le.LocationF.Y + le.SizeF.Height > bottomMost) bottomMost = le.LocationF.Y + le.SizeF.Height;
                         }
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(le.LocationF.X, bottomMost - le.Size.Height);
+                            le.LocationF = new PointF(le.LocationF.X, bottomMost - le.SizeF.Height);
                         }
                     }
                     break;
@@ -120,7 +120,7 @@ namespace MW5.Plugins.Printing.Helpers
                         float centerHor = paperWidth / 2F;
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(centerHor - (le.Size.Width / 2F), le.LocationF.Y);
+                            le.LocationF = new PointF(centerHor - (le.SizeF.Width / 2F), le.LocationF.Y);
                         }
                     }
                     else
@@ -129,15 +129,15 @@ namespace MW5.Plugins.Printing.Helpers
                         float widest = 0;
                         foreach (var le in elements)
                         {
-                            if (le.Size.Width > widest)
+                            if (le.SizeF.Width > widest)
                             {
-                                widest = le.Size.Width;
+                                widest = le.SizeF.Width;
                                 centerHor = le.LocationF.X + (widest / 2F);
                             }
                         }
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(centerHor - (le.Size.Width / 2F), le.LocationF.Y);
+                            le.LocationF = new PointF(centerHor - (le.SizeF.Width / 2F), le.LocationF.Y);
                         }
                     }
                     break;
@@ -147,7 +147,7 @@ namespace MW5.Plugins.Printing.Helpers
                         float centerVer = paperHeight / 2F;
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(le.LocationF.X, centerVer - (le.Size.Height / 2F));
+                            le.LocationF = new PointF(le.LocationF.X, centerVer - (le.SizeF.Height / 2F));
                         }
                     }
                     else
@@ -156,15 +156,15 @@ namespace MW5.Plugins.Printing.Helpers
                         float tallest = 0;
                         foreach (var le in elements)
                         {
-                            if (le.Size.Height > tallest)
+                            if (le.SizeF.Height > tallest)
                             {
-                                tallest = le.Size.Height;
+                                tallest = le.SizeF.Height;
                                 centerVer = le.LocationF.Y + (tallest / 2F);
                             }
                         }
                         foreach (var le in elements)
                         {
-                            le.LocationF = new PointF(le.LocationF.X, centerVer - (le.Size.Height / 2F));
+                            le.LocationF = new PointF(le.LocationF.X, centerVer - (le.SizeF.Height / 2F));
                         }
                     }
                     break;
@@ -190,7 +190,7 @@ namespace MW5.Plugins.Printing.Helpers
                                      printerSettings.DefaultPageSettings.Margins.Right;
                     foreach (var le in elements)
                     {
-                        le.Size = new SizeF(newWidth, le.Size.Height);
+                        le.SizeF = new SizeF(newWidth, le.SizeF.Height);
                     }
                 }
                 else
@@ -198,11 +198,11 @@ namespace MW5.Plugins.Printing.Helpers
                     float newWidth = 0;
                     foreach (var le in elements)
                     {
-                        if (le.Size.Width > newWidth) newWidth = le.Size.Width;
+                        if (le.SizeF.Width > newWidth) newWidth = le.SizeF.Width;
                     }
                     foreach (var le in elements)
                     {
-                        le.Size = new SizeF(newWidth, le.Size.Height);
+                        le.SizeF = new SizeF(newWidth, le.SizeF.Height);
                     }
                 }
             }
@@ -214,7 +214,7 @@ namespace MW5.Plugins.Printing.Helpers
                                       printerSettings.DefaultPageSettings.Margins.Bottom;
                     foreach (var le in elements)
                     {
-                        le.Size = new SizeF(le.Size.Width, newHeight);
+                        le.SizeF = new SizeF(le.SizeF.Width, newHeight);
                     }
                 }
                 else
@@ -222,11 +222,11 @@ namespace MW5.Plugins.Printing.Helpers
                     float newHeight = 0;
                     foreach (var le in elements)
                     {
-                        if (le.Size.Height > newHeight) newHeight = le.Size.Height;
+                        if (le.SizeF.Height > newHeight) newHeight = le.SizeF.Height;
                     }
                     foreach (var le in elements)
                     {
-                        le.Size = new SizeF(le.Size.Width, newHeight);
+                        le.SizeF = new SizeF(le.SizeF.Width, newHeight);
                     }
                 }
             }

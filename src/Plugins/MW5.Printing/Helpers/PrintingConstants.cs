@@ -12,7 +12,7 @@ namespace MW5.Plugins.Printing.Helpers
             "Images (*.png)|*.png|Images (*.tif)|*.tif|Images (*.jpg)|*.jpg|Images (*.bmp)|*.bmp";
 
         internal const int DEADLOCK_TIMEOUT_MILLISECONDS = 60000; //  60 seconds;
-        internal const bool ELEMENT_CLIPPING = false;
+        internal static bool UseElementClipping = false;
         internal const float EXPORT_BASE_DPI = 100f;
     }
 }

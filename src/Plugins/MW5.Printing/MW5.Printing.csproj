@@ -148,6 +148,7 @@
     <Compile Include="Controls\TemplateGrid.Designer.cs">
       <DependentUpon>TemplateGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExportHelper.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Helpers\LayoutScaleHelper.cs" />
     <Compile Include="Model\Elements\LayoutLegend.cs" />
@@ -162,7 +163,7 @@
     <Compile Include="Helpers\FileDialogHelper.cs" />
     <Compile Include="Helpers\LayoutElementsHelper.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
-    <Compile Include="Helpers\LayoutPrint.cs" />
+    <Compile Include="Helpers\PrintingHelper.cs" />
     <Compile Include="Helpers\PaperSizesCache.cs" />
     <Compile Include="Helpers\ScreenHelper.cs" />
     <Compile Include="Model\LayoutElementCollection.cs" />

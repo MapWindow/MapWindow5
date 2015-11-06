@@ -196,13 +196,13 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             if (_preserveAspectRatio)
             {
-                if (Size.Width / bitmap.Width < Size.Height / bitmap.Height)
+                if (SizeF.Width / bitmap.Width < SizeF.Height / bitmap.Height)
                 {
-                    destPoints[2] = new PointF(x, y + (Size.Width * bitmap.Height / bitmap.Width));
+                    destPoints[2] = new PointF(x, y + (SizeF.Width * bitmap.Height / bitmap.Width));
                 }
                 else
                 {
-                    destPoints[1] = new PointF(x + (Size.Height * bitmap.Width / bitmap.Height), y);
+                    destPoints[1] = new PointF(x + (SizeF.Height * bitmap.Width / bitmap.Height), y);
                 }
             }
         }
@@ -232,8 +232,8 @@ namespace MW5.Plugins.Printing.Model.Elements
             PointF[] destPoints =
                 {
                     new PointF(x, y), 
-                    new PointF(x + Size.Width, y), 
-                    new PointF(x, y + Size.Height)
+                    new PointF(x + SizeF.Width, y), 
+                    new PointF(x, y + SizeF.Height)
                 };
 
             Rectangle srcRect;
@@ -267,14 +267,14 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         private void PopulateBufferBitmap()
         {
-            if ((_bitmap == null) || (_bitmap != null && _bitmap.Width != Convert.ToInt32(Size.Width)))
+            if ((_bitmap == null) || (_bitmap != null && _bitmap.Width != Convert.ToInt32(SizeF.Width)))
             {
                 using (var original = new Bitmap(_filename))
                 {
                     RecycleBitmap();
 
-                    _bitmap = new Bitmap(Convert.ToInt32(Size.Width),
-                        Convert.ToInt32(Size.Width * original.Height / original.Width),
+                    _bitmap = new Bitmap(Convert.ToInt32(SizeF.Width),
+                        Convert.ToInt32(SizeF.Width * original.Height / original.Width),
                         PixelFormat.Format32bppArgb);
 
                     using (var graph = Graphics.FromImage(_bitmap))

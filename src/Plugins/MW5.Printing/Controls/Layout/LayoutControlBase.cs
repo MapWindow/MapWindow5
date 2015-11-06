@@ -29,7 +29,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private VScrollBar _vScrollBar;
         protected float _zoom; //The zoom of the paper
 
-        public LayoutControlBase()
+        protected LayoutControlBase()
         {
             _pages = new LayoutPages();
 

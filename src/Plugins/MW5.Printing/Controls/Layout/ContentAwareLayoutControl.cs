@@ -28,7 +28,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private string _filename;
         protected bool _suppressElementInvalidation;
 
-        public ContentAwareLayoutControl()
+        protected ContentAwareLayoutControl()
         {
             _filename = string.Empty;
             _suppressElementInvalidation = false;
@@ -78,7 +78,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Adds a layout element to the layout
         /// </summary>
-        public bool AddToLayout(LayoutElement le)
+        protected bool AddToLayout(LayoutElement le)
         {
             SetUniqueElementName(le);
 
@@ -289,11 +289,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Clear();
             Invalidate();
             FireSelectionChanged();
-        }
-
-        internal void ExportToBitmap()
-        {
-            LayoutPrint.ExportToBitmap(_pages, _pages.PageWidth, _pages.PageHeight, LayoutElements);
         }
 
         /// <summary>

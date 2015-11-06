@@ -115,7 +115,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             int width = custom ? 30 : 100;
             int height = custom ? 250 : 100;
 
-            var m = new Matrix(Size.Width / width, 0F, 0F, Size.Height / height, x, y);
+            var m = new Matrix(SizeF.Width / width, 0F, 0F, SizeF.Height / height, x, y);
             m.RotateAt(_rotation, new PointF(width / 2f, height / 2f), MatrixOrder.Prepend);
 
             if (_northArrowStyle == NorthArrowStyle.ArrowNS)
@@ -143,24 +143,24 @@ namespace MW5.Plugins.Printing.Model.Elements
                     gp.StartFigure();
                     gp.AddLine(6, 10, 10, 10);
                     gp.StartFigure();
-                    gp.AddLine(4, 10, 4, Size.Height - 65);
+                    gp.AddLine(4, 10, 4, SizeF.Height - 65);
                     gp.StartFigure();
-                    gp.AddLine(6, 10, 6, Size.Height - 65);
-                    gp.StartFigure();
-
-                    gp.AddLine(4, Size.Height - 65, 2, Size.Height - 60);
-                    gp.StartFigure();
-                    gp.AddLine(6, Size.Height - 65, 8, Size.Height - 60);
+                    gp.AddLine(6, 10, 6, SizeF.Height - 65);
                     gp.StartFigure();
 
-                    gp.AddLine(2, Size.Height - 60, 2, Size.Height - 50);
+                    gp.AddLine(4, SizeF.Height - 65, 2, SizeF.Height - 60);
                     gp.StartFigure();
-                    gp.AddLine(8, Size.Height - 60, 8, Size.Height - 50);
+                    gp.AddLine(6, SizeF.Height - 65, 8, SizeF.Height - 60);
                     gp.StartFigure();
 
-                    gp.AddLine(2, Size.Height - 50, 5, Size.Height - 53);
+                    gp.AddLine(2, SizeF.Height - 60, 2, SizeF.Height - 50);
                     gp.StartFigure();
-                    gp.AddLine(5, Size.Height - 53, 8, Size.Height - 50);
+                    gp.AddLine(8, SizeF.Height - 60, 8, SizeF.Height - 50);
+                    gp.StartFigure();
+
+                    gp.AddLine(2, SizeF.Height - 50, 5, SizeF.Height - 53);
+                    gp.StartFigure();
+                    gp.AddLine(5, SizeF.Height - 53, 8, SizeF.Height - 50);
                     gp.StartFigure();
 
                     m.Translate(2, 14);
@@ -173,7 +173,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                     gp.AddString("N", FontFamily.GenericSansSerif, (int)FontStyle.Regular, 12.0f,
                         new Point { X = 0, Y = 0 }, StringFormat.GenericDefault);
                     gp.AddString("S", FontFamily.GenericSansSerif, (int)FontStyle.Regular, 12.0f,
-                        new Point { X = 0, Y = (int)(Size.Height - 36) }, StringFormat.GenericDefault);
+                        new Point { X = 0, Y = (int)(SizeF.Height - 36) }, StringFormat.GenericDefault);
 
                     m.Translate(-2, -14);
                     gp.Transform(m);
@@ -202,7 +202,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                     gp.AddLine(60, 80, 60, 45);
                     gp.StartFigure();
                     mypen.Color = Color.White;
-                    mypen.Width = Size.Width / 20;
+                    mypen.Width = SizeF.Width / 20;
                     gp.Transform(m);
                     g.DrawPath(mypen, gp);
                     break;

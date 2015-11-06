@@ -114,11 +114,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
             GeoSize size;
             if (_map.GetGeodesicSize(extents, out size))
             {
-                mapElement.Size = LayoutScaleHelper.CalcMapSize(mapScale, size);
+                mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size);
 
                 // set the number of pages
-                _pages.PageCountX = (int)Math.Ceiling((mapElement.Size.Width + offset) / _pages.PageWidth);
-                _pages.PageCountY = (int)Math.Ceiling((mapElement.Size.Height + offset) / _pages.PageHeight);
+                _pages.PageCountX = (int)Math.Ceiling((mapElement.SizeF.Width + offset) / _pages.PageWidth);
+                _pages.PageCountY = (int)Math.Ceiling((mapElement.SizeF.Height + offset) / _pages.PageHeight);
 
                 mapElement.Envelope = extents.Clone();
                 mapElement.Scale = mapScale;

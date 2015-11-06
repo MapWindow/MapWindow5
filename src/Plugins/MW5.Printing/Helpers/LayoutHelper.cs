@@ -29,8 +29,8 @@ namespace MW5.Plugins.Printing.Helpers
             if (le is LayoutBitmap) return null;
             int padding = le is LayoutLegend ? 10 : 0;
 
-            var temp = new Bitmap(Convert.ToInt32(le.Size.Width * 3 + 0.5) + padding,
-                Convert.ToInt32(le.Size.Height * 3 + 0.5), PixelFormat.Format32bppArgb);
+            var temp = new Bitmap(Convert.ToInt32(le.SizeF.Width * 3 + 0.5) + padding,
+                Convert.ToInt32(le.SizeF.Height * 3 + 0.5), PixelFormat.Format32bppArgb);
             temp.SetResolution(96, 96);
             temp.MakeTransparent();
             var g = Graphics.FromImage(temp);

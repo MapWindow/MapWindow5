@@ -403,7 +403,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         if (_selectedLayoutElements.Count > 0)
                         {
                             _selectedLayoutElements[0].Resizing = false;
-                            _selectedLayoutElements[0].Size = _selectedLayoutElements[0].Size;
+                            _selectedLayoutElements[0].SizeF = _selectedLayoutElements[0].SizeF;
                             Invalidate(new Region(PaperToScreen(_selectedLayoutElements[0].Rectangle)));
                         }
                         break;

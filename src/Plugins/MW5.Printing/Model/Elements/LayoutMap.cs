@@ -97,7 +97,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             get { return _extents; }
             set
             {
-                _extents = EnvelopeHelper.SetBoundsWithXYRatio(value, Size);
+                _extents = EnvelopeHelper.SetBoundsWithXYRatio(value, SizeF);
                 RefreshElement();
             }
         }
@@ -166,7 +166,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                     GeoSize geoSize;
                     if (_map.GetGeodesicSize(_extents, out geoSize))
                     {
-                        scale = LayoutScaleHelper.CalcMapScale(geoSize, Size);
+                        scale = LayoutScaleHelper.CalcMapScale(geoSize, SizeF);
                     }
 
                     if (double.IsNaN(scale) || scale > Int32.MaxValue || scale <= 0)
@@ -181,7 +181,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 if (value <= 1) return;
 
-                var size = LayoutScaleHelper.CalcMapGeoSize(value, Size);
+                var size = LayoutScaleHelper.CalcMapGeoSize(value, SizeF);
 
                 var extents = LayoutScaleHelper.CalcNewExtents(_map, _extents, size);
 
@@ -237,33 +237,30 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Draws part of the map (belonging to a certain page). FOR PRINTING AND EXPORT ONLY
         /// </summary>
-        public bool Draw(Graphics g, RectangleF rect, bool export)
+        public bool Print(Graphics g, RectangleF rect, bool export)
         {
-            throw new NotImplementedException();
+            var ext = ExtentsWithinPaperRectange(rect);
 
-            //bool result = false;
+            float dpi = export ? g.DpiX : ScreenHelper.ScreenDpi;
 
-            //var ext = ExtentsWithinPaperRectange(rect);
-
-            //float dpi = export ? g.DpiX : ScreenHelper.ScreenDpi;
-
-            //float bitmapDpi = export ? PrintingConstants.EXPORT_BASE_DPI : 96.0f;
-            //var bmpWidth = export ? rect.Width : (int)(rect.Width * dpi / bitmapDpi);
-            //var bmpHeight = export ? rect.Height : (int)(rect.Height * dpi / bitmapDpi);
-
+            float bitmapDpi = export ? PrintingConstants.EXPORT_BASE_DPI : 96.0f;
+            var bmpWidth = export ? rect.Width : rect.Width * dpi / bitmapDpi;
+            var bmpHeight = export ? rect.Height : rect.Height * dpi / bitmapDpi;
+            float scale = export ? dpi / bitmapDpi : 1.0f;
+            
             //var tiles = _layoutControl.AxMap.Tiles;
             //bool tilesVisible = tiles.Visible;
             //TileProvider provider = tiles.Provider;
-
             //tiles.Visible = _drawTiles;
             //tiles.Provider = tileProvider;
-
-            //bool result = RenderMap(_layoutControl.AxMap, ext, new Size(bmpWidth, bmpHeight), g, export ? dpi / bitmapDpi : 1.0f);
+            
+            var size = new Size(Convert.ToInt32(bmpWidth), Convert.ToInt32(bmpHeight));
+            bool result = RenderMap(ext, size, g, scale);
 
             //tiles.Visible = tilesVisible;
             //tiles.Provider = provider;
 
-            //return result;
+            return result;
         }
 
         /// <summary>
@@ -343,10 +340,10 @@ namespace MW5.Plugins.Printing.Model.Elements
             }
 
             // regular control rendering
-            if (Convert.ToInt32(Size.Width) <= 0 || Convert.ToInt32(Size.Height) <= 0) return;
+            if (Convert.ToInt32(SizeF.Width) <= 0 || Convert.ToInt32(SizeF.Height) <= 0) return;
 
-            int width = Convert.ToInt32(Size.Width * ScreenHelper.LogicToScreenDpi);
-            int height = Convert.ToInt32(Size.Height * ScreenHelper.LogicToScreenDpi);
+            int width = Convert.ToInt32(SizeF.Width * ScreenHelper.LogicToScreenDpi);
+            int height = Convert.ToInt32(SizeF.Height * ScreenHelper.LogicToScreenDpi);
 
             ValidateScreenBuffer(width, height);
 
@@ -396,12 +393,12 @@ namespace MW5.Plugins.Printing.Model.Elements
             newEnv.Inflate(plusX, plusY);
             Envelope = newEnv;
 
-            _oldRectangle = new RectangleF(LocationF, Size);
+            _oldRectangle = new RectangleF(LocationF, SizeF);
         }
 
         protected override void UpdateThumbnail()
         {
-            if (Resizing || NumericHelper.Equal(Size.Width, 0.0) || NumericHelper.Equal(Size.Height, 0.0)) return;
+            if (Resizing || NumericHelper.Equal(SizeF.Width, 0.0) || NumericHelper.Equal(SizeF.Height, 0.0)) return;
 
             var tempThumbnail = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
 
@@ -429,12 +426,12 @@ namespace MW5.Plugins.Printing.Model.Elements
             double y1 = (rect.Y - Rectangle.Y) / Rectangle.Height;
             double y2 = (rect.Bottom - Rectangle.Y) / Rectangle.Height;
 
-            double width = (_extents.MaxX - _extents.MinX);
-            double height = (_extents.MaxY - _extents.MinY);
-
             var ext = new Envelope();
-            ext.SetBounds(_extents.MinX + width * x1, _extents.MaxY - height * y1, _extents.MinX + width * x2,
-                _extents.MaxY - height * y2);
+
+            ext.SetBounds(_extents.MinX + _extents.Width * x1,
+                          _extents.MinX + _extents.Width * x2,
+                          _extents.MaxY - _extents.Height * y1,
+                          _extents.MaxY - _extents.Height * y2);
 
             return ext;
         }
@@ -463,6 +460,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             //axMap.MapCursor = tkCursor.crsrWait;
             //bool state = axMap.ScalebarVisible;
             //axMap.ScalebarVisible = false;
+
             g.Clear(Color.White);
 
             float dx = g.Transform.OffsetX;
@@ -470,8 +468,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             var clip = g.ClipBounds;
             var dcPtr = g.GetHdc();
 
-            bool result = _map.SnapShotToDC2(dcPtr, mapExtent, bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width,
-                clip.Height);
+            bool result = _map.SnapShotToDC2(dcPtr, mapExtent, bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width, clip.Height);
             g.ReleaseHdc(dcPtr);
 
             // restore settings

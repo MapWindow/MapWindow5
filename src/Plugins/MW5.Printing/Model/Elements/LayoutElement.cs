@@ -186,7 +186,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         [Browsable(false)]
         [DataMember]
-        public SizeF Size
+        public SizeF SizeF
         {
             get { return new SizeF(_size.Width, _size.Height); }
             set
@@ -205,10 +205,10 @@ namespace MW5.Plugins.Printing.Model.Elements
         [Browsable(true)]
         [CategoryEx(@"cat_layout")]
         [DisplayNameEx(@"prop_size")]
-        public Size SizeInt
+        public Size Size
         {
             get { return new Size((int)_size.Width, (int)_size.Height); }
-            set { Size = value; }
+            set { SizeF = value; }
         }
 
         /// <summary>
@@ -263,7 +263,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         public bool ClickWithin(int x, int y)
         {
-            return !(x < Location.X || x > Location.X + Size.Width || y < Location.Y || y > Location.Y + Size.Height);
+            return !(x < Location.X || x > Location.X + SizeF.Width || y < Location.Y || y > Location.Y + SizeF.Height);
         }
 
         /// <summary>
@@ -276,6 +276,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 return;
             }
 
+            // TODO: revisit
             float scaleRatio = printing ? ScreenHelper.LogicTo96Dpi : 1 / ScreenHelper.LogicToScreenDpi;
 
             var font = _font;
@@ -291,22 +292,6 @@ namespace MW5.Plugins.Printing.Model.Elements
 
             _font = font;
             _font2 = font2;
-        }
-
-        /// <summary>
-        /// Returns true if the point in paper coordinats intersects with the rectangle of the element
-        /// </summary>
-        public bool IntersectsWith(PointF paperPoint)
-        {
-            return IntersectsWith(new RectangleF(paperPoint.X, paperPoint.Y, 0F, 0F));
-        }
-
-        /// <summary>
-        /// Returns true if the rectangle in paper coordinats intersects with the rectangle of the the element
-        /// </summary>
-        public bool IntersectsWith(RectangleF paperRectangle)
-        {
-            return new RectangleF(LocationF, Size).IntersectsWith(paperRectangle);
         }
 
         /// <summary>
@@ -356,7 +341,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         protected virtual void UpdateThumbnail()
         {
-            if (Resizing || Size.Width < 1 || Size.Height < 1) return;
+            if (Resizing || SizeF.Width < 1 || SizeF.Height < 1) return;
 
             var tempThumbnail = new Bitmap(32, 32, PixelFormat.Format32bppArgb);
 
@@ -365,14 +350,14 @@ namespace MW5.Plugins.Printing.Model.Elements
                 graph.SmoothingMode = SmoothingMode.AntiAlias;
                 graph.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 
-                if ((Size.Width / tempThumbnail.Width) > (Size.Height / tempThumbnail.Height))
+                if ((SizeF.Width / tempThumbnail.Width) > (SizeF.Height / tempThumbnail.Height))
                 {
-                    graph.ScaleTransform(32F / Size.Width, 32F / Size.Width);
+                    graph.ScaleTransform(32F / SizeF.Width, 32F / SizeF.Width);
                     graph.TranslateTransform(-LocationF.X, -LocationF.Y);
                 }
                 else
                 {
-                    graph.ScaleTransform(32F / Size.Height, 32F / Size.Height);
+                    graph.ScaleTransform(32F / SizeF.Height, 32F / SizeF.Height);
                     graph.TranslateTransform(-LocationF.X, -LocationF.Y);
                 }
 
@@ -399,6 +384,38 @@ namespace MW5.Plugins.Printing.Model.Elements
             OnSizeChanged();
             FireInvalidated();
             UpdateThumbnail();
+        }
+
+        /// <summary>
+        /// Returns true if the point in paper coordinats intersects with the rectangle of the element
+        /// </summary>
+        public bool IntersectsWith(PointF paperPoint)
+        {
+            return IntersectsWith(new RectangleF(paperPoint.X, paperPoint.Y, 0F, 0F));
+        }
+
+        /// <summary>
+        /// Returns true if the rectangle in paper coordinats intersects with the rectangle of the the element
+        /// </summary>
+        public bool IntersectsWith(RectangleF paperRectangle)
+        {
+            return new RectangleF(LocationF, SizeF).IntersectsWith(paperRectangle);
+        }
+
+        /// <summary>
+        /// Returns true if element intersects a certain rectangle in screen coordinates.
+        /// </summary>
+        public bool IntrersectsWith(Rectangle page)
+        {
+            return new Rectangle(Location, Size).IntersectsWith(page);
+
+            // previous implementation
+            //bool outside = (Location.X + Size.Width < page.X) || 
+            //               (Location.X > page.X + page.Width) ||
+            //               (Location.Y + Size.Height < page.Y) || 
+            //               (Location.Y > page.Y + page.Height);
+
+            //return !outside;
         }
     }
 }

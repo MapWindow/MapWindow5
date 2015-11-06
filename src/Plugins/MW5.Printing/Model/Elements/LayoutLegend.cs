@@ -706,7 +706,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             int maxGroupCount = Legend.Groups.Max(group => group.Layers.Count);
             int minWidth = Math.Min(maxGroupCount, _numCol) * Constants.MIN_CMN_WIDTH;
-            float width = Size.Width;
+            float width = SizeF.Width;
             var val = Math.Max(minWidth, width);
             return (int)Math.Ceiling(val);
         }
