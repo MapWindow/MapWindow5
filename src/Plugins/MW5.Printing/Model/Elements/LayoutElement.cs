@@ -32,11 +32,12 @@ namespace MW5.Plugins.Printing.Model.Elements
         internal SizeF _size;
         private Bitmap _thumbnail;
         private bool _initialized;
+        private bool _visible;
 
         public LayoutElement()
         {
             Visible = true;
-            Initialized = true;
+            Initialized = false;
         }
 
         /// <summary>
@@ -220,7 +221,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             get { return _thumbnail; }
             protected set
             {
-                if (_thumbnail != null) _thumbnail.Dispose();
+                RecycleThumbnail();
                 _thumbnail = value;
                 FireThumbnailChanged();
             }
@@ -235,7 +236,15 @@ namespace MW5.Plugins.Printing.Model.Elements
         [DefaultValue(true)]
         [CategoryEx(@"cat_layout")]
         [DataMember]
-        public bool Visible { get; set; }
+        public bool Visible
+        {
+            get { return _visible; }
+            set
+            {
+                _visible = value;
+                RefreshElement();
+            }
+        }
 
         [Browsable(false)]
         [CategoryEx(@"cat_layout")]
@@ -247,6 +256,15 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 _size.Width = value;
                 SetSize();
+            }
+        }
+
+        private void RecycleThumbnail()
+        {
+            if (_thumbnail != null)
+            {
+                _thumbnail.Dispose();
+                _thumbnail = null;
             }
         }
 

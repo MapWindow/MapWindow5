@@ -182,7 +182,8 @@ namespace MW5.Plugins.Printing.Views
 
         private void OnLayoutViewShown(object sender, EventArgs e)
         {
-            layoutControl1.ZoomFitToScreen();
+            // TODO: remove after testing
+            //layoutControl1.ZoomFitToScreen();
         }
 
         private void OnPageSettingsChanged(object sender, EventArgs e)

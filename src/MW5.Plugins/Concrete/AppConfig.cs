@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
 using System.Runtime.Serialization;
 using System.Windows.Forms;
 using MW5.Api.Enums;
@@ -227,6 +228,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public MouseWheelDirection MouseWheelDirection { get; set; }
+
+        [DataMember]
+        public Margins PrintingMargins { get; set; }
 
         [DataMember]
         public Orientation PrintingOrientation { get; set; }
@@ -474,6 +478,7 @@ namespace MW5.Plugins.Concrete
             PrintingPaperFormat = "A4";
             PrintingScale = 25000;
             PrintingTemplate = "";
+            PrintingMargins = new Margins(25, 25, 50, 50);
             ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;
             ProjectionMismatch = ProjectionMismatch.Reproject;
             ProjectionShowLoadingReport = true;

@@ -7,6 +7,7 @@
 using System;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Views.Abstract;
 
@@ -35,6 +36,8 @@ namespace MW5.Plugins.Printing.Views
             page.Margins.Bottom = ConvertMargin(View.BottomMargin);
             page.Margins.Right = ConvertMargin(View.RightMargin);
             page.Landscape = View.Orientation == Orientation.Horizontal;
+
+            AppConfig.Instance.PrintingMargins = page.Margins;
 
             return true;
         }

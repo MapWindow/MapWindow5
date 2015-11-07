@@ -180,12 +180,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
             var printerSettings = PrinterManager.PrinterSettings;
             printerSettings.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
 
-            // TODO: use service / helper for the conversion
-            const double centimetersPerInch = 2.54;
-            int width = Convert.ToInt32(1.0 / centimetersPerInch * 100 + 0.5);
-            int height = Convert.ToInt32(0.5 / centimetersPerInch * 100 + 0.5);
-
-            printerSettings.DefaultPageSettings.Margins = new Margins(width, width, height, height);
+            // let's set some default for designer support
+            // settings from app config will be applied in MVP part
+            printerSettings.DefaultPageSettings.Margins = new Margins(25, 25, 50, 50);
 
             PrinterSettings = printerSettings;
         }
@@ -301,12 +298,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
-        protected void Lock()
+        public void Lock()
         {
             _lockCount++;
         }
 
-        protected void Unlock()
+        public void Unlock()
         {
             if (_lockCount == 0) return;
 

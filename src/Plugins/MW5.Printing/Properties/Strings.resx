@@ -935,4 +935,7 @@
   <data name="prop_role" xml:space="preserve">
     <value>Role</value>
   </data>
+  <data name="prop_borderwidth" xml:space="preserve">
+    <value>Border Width</value>
+  </data>
 </root>

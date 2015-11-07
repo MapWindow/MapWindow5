@@ -5,8 +5,12 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
+using MW5.Api.Concrete;
+using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Enums;
@@ -45,6 +49,8 @@ namespace MW5.Plugins.Printing.Views
 
         protected override void Initialize()
         {
+            View.LayoutControl.Lock();
+
             if (Model.HasTemplate)
             {
                 var serializer = new LayoutSerializer();
@@ -60,11 +66,46 @@ namespace MW5.Plugins.Printing.Views
 
                 View.LayoutControl.Initialize(_context.Map);
 
-                View.LayoutControl.AddMapElement(Model.Scale, Model.Extents);
+                AddMapElement(Model.Scale, Model.Extents);
             }
+
+            View.LayoutControl.Unlock();
         }
 
+        /// <summary>
+        /// Adds map element to the new layout.
+        /// </summary>
+        /// <param name="mapScale">The map scale.</param>
+        /// <param name="extents">The extents.</param>
+        private void AddMapElement(int mapScale, IEnvelope extents)
+        {
+            var map = _context.Map;
 
+            var mapElement = new LayoutMap();
+            mapElement.Initialize(map);
+
+            const int offset = 5;
+            mapElement.Location = new Point(offset, offset); // default location
+            //mapElement.DrawTiles = AxMap.Tiles.Visible;
+
+            // calc the necessary size in paper coordinates
+            GeoSize size;
+            if (map.GetGeodesicSize(extents, out size))
+            {
+                mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size);
+
+                // set the number of pages
+                var pages = View.LayoutControl.Pages;
+                pages.PageCountX = (int)Math.Ceiling((mapElement.SizeF.Width + offset) / pages.PageWidth);
+                pages.PageCountY = (int)Math.Ceiling((mapElement.SizeF.Height + offset) / pages.PageHeight);
+
+                mapElement.Envelope = extents.Clone();
+                mapElement.Scale = mapScale;
+                mapElement.Initialized = true;
+
+                View.LayoutControl.AddToLayout(mapElement);
+            }
+        }
 
         /// <summary>
         /// Edits the table.

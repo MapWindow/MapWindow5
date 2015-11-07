@@ -21,6 +21,7 @@ namespace MW5.Plugins.Printing.Services
             Height = settings.PaperSize.Height;
             PageCountX = pages.PageCountX;
             PageCountY = pages.PageCountY;
+            Margins = settings.Margins;
         }
 
         [DataMember]
@@ -41,13 +42,14 @@ namespace MW5.Plugins.Printing.Services
         [DataMember]
         public int PageCountY { get; set; }
 
+        [DataMember]
+        public Margins Margins { get; set; }
+
         /// <summary>
         /// Updates the instance of printer settings according to properties of the XmlPaper.
         /// </summary>
         public void UpdatePageSettings(PrinterSettings settings)
         {
-            settings.DefaultPageSettings.Landscape = Landscape;
-
             var size = PaperSizes.PaperSizeByFormatName(PaperName, settings);
 
             if (size == null)
@@ -56,7 +58,11 @@ namespace MW5.Plugins.Printing.Services
                 size = new PaperSize { Width = Width, Height = Height, PaperName = PaperName };
             }
 
-            settings.DefaultPageSettings.PaperSize = size;
+            var page = settings.DefaultPageSettings;
+
+            page.Landscape = Landscape;
+            page.PaperSize = size;
+            page.Margins = Margins;
         }
     }
 }

@@ -44,15 +44,18 @@ namespace MW5.Plugins.Printing.Views
             this.Label4 = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.cboPaperSizes = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
-            this.label2 = new System.Windows.Forms.Label();
-            this.cboOrientation = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.optPortrait = new System.Windows.Forms.RadioButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.optLandscape = new System.Windows.Forms.RadioButton();
             this.GroupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginBottom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginTop)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPaperSizes)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboOrientation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCancel
@@ -64,7 +67,7 @@ namespace MW5.Plugins.Printing.Views
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(283, 232);
+            this.btnCancel.Location = new System.Drawing.Point(242, 231);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(81, 26);
             this.btnCancel.TabIndex = 8;
@@ -78,7 +81,7 @@ namespace MW5.Plugins.Printing.Views
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(84, 26);
             this.btnOk.ForeColor = System.Drawing.Color.White;
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(193, 232);
+            this.btnOk.Location = new System.Drawing.Point(154, 231);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(84, 26);
             this.btnOk.TabIndex = 7;
@@ -94,9 +97,9 @@ namespace MW5.Plugins.Printing.Views
             this.GroupBox1.Controls.Add(this.Label3);
             this.GroupBox1.Controls.Add(this.Label6);
             this.GroupBox1.Controls.Add(this.Label4);
-            this.GroupBox1.Location = new System.Drawing.Point(19, 103);
+            this.GroupBox1.Location = new System.Drawing.Point(19, 97);
             this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(341, 119);
+            this.GroupBox1.Size = new System.Drawing.Size(304, 119);
             this.GroupBox1.TabIndex = 25;
             this.GroupBox1.TabStop = false;
             this.GroupBox1.Text = "Margins";
@@ -107,7 +110,7 @@ namespace MW5.Plugins.Printing.Views
             this.txtMarginRight.BeforeTouchSize = new System.Drawing.Size(62, 20);
             this.txtMarginRight.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMarginRight.DoubleValue = 1D;
-            this.txtMarginRight.Location = new System.Drawing.Point(242, 72);
+            this.txtMarginRight.Location = new System.Drawing.Point(225, 72);
             this.txtMarginRight.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMarginRight.Name = "txtMarginRight";
             this.txtMarginRight.NullString = "";
@@ -122,7 +125,7 @@ namespace MW5.Plugins.Printing.Views
             this.txtMarginBottom.BeforeTouchSize = new System.Drawing.Size(62, 20);
             this.txtMarginBottom.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMarginBottom.DoubleValue = 1D;
-            this.txtMarginBottom.Location = new System.Drawing.Point(92, 72);
+            this.txtMarginBottom.Location = new System.Drawing.Point(81, 72);
             this.txtMarginBottom.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMarginBottom.Name = "txtMarginBottom";
             this.txtMarginBottom.NullString = "";
@@ -137,7 +140,7 @@ namespace MW5.Plugins.Printing.Views
             this.txtMarginLeft.BeforeTouchSize = new System.Drawing.Size(62, 20);
             this.txtMarginLeft.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMarginLeft.DoubleValue = 1D;
-            this.txtMarginLeft.Location = new System.Drawing.Point(242, 32);
+            this.txtMarginLeft.Location = new System.Drawing.Point(225, 32);
             this.txtMarginLeft.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMarginLeft.Name = "txtMarginLeft";
             this.txtMarginLeft.NullString = "";
@@ -152,7 +155,7 @@ namespace MW5.Plugins.Printing.Views
             this.txtMarginTop.BeforeTouchSize = new System.Drawing.Size(62, 20);
             this.txtMarginTop.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMarginTop.DoubleValue = 1D;
-            this.txtMarginTop.Location = new System.Drawing.Point(92, 32);
+            this.txtMarginTop.Location = new System.Drawing.Point(81, 32);
             this.txtMarginTop.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtMarginTop.Name = "txtMarginTop";
             this.txtMarginTop.NullString = "";
@@ -164,7 +167,7 @@ namespace MW5.Plugins.Printing.Views
             // Label5
             // 
             this.Label5.AutoSize = true;
-            this.Label5.Location = new System.Drawing.Point(191, 75);
+            this.Label5.Location = new System.Drawing.Point(174, 75);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(32, 13);
             this.Label5.TabIndex = 7;
@@ -173,7 +176,7 @@ namespace MW5.Plugins.Printing.Views
             // Label3
             // 
             this.Label3.AutoSize = true;
-            this.Label3.Location = new System.Drawing.Point(191, 35);
+            this.Label3.Location = new System.Drawing.Point(174, 35);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(25, 13);
             this.Label3.TabIndex = 5;
@@ -182,7 +185,7 @@ namespace MW5.Plugins.Printing.Views
             // Label6
             // 
             this.Label6.AutoSize = true;
-            this.Label6.Location = new System.Drawing.Point(37, 75);
+            this.Label6.Location = new System.Drawing.Point(26, 75);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(40, 13);
             this.Label6.TabIndex = 8;
@@ -191,7 +194,7 @@ namespace MW5.Plugins.Printing.Views
             // Label4
             // 
             this.Label4.AutoSize = true;
-            this.Label4.Location = new System.Drawing.Point(37, 35);
+            this.Label4.Location = new System.Drawing.Point(26, 35);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(26, 13);
             this.Label4.TabIndex = 6;
@@ -208,41 +211,66 @@ namespace MW5.Plugins.Printing.Views
             // 
             // cboPaperSizes
             // 
-            this.cboPaperSizes.BeforeTouchSize = new System.Drawing.Size(260, 21);
+            this.cboPaperSizes.BeforeTouchSize = new System.Drawing.Size(223, 21);
             this.cboPaperSizes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboPaperSizes.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboPaperSizes.Location = new System.Drawing.Point(100, 23);
             this.cboPaperSizes.Name = "cboPaperSizes";
-            this.cboPaperSizes.Size = new System.Drawing.Size(260, 21);
+            this.cboPaperSizes.Size = new System.Drawing.Size(223, 21);
             this.cboPaperSizes.TabIndex = 23;
             // 
-            // label2
+            // optPortrait
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(61, 13);
-            this.label2.TabIndex = 30;
-            this.label2.Text = "Orientation:";
+            this.optPortrait.AutoSize = true;
+            this.optPortrait.Location = new System.Drawing.Point(258, 61);
+            this.optPortrait.Name = "optPortrait";
+            this.optPortrait.Size = new System.Drawing.Size(58, 17);
+            this.optPortrait.TabIndex = 13;
+            this.optPortrait.Text = "Portrait";
+            this.optPortrait.UseVisualStyleBackColor = true;
             // 
-            // cboOrientation
+            // pictureBox1
             // 
-            this.cboOrientation.BeforeTouchSize = new System.Drawing.Size(260, 21);
-            this.cboOrientation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboOrientation.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.cboOrientation.Location = new System.Drawing.Point(100, 62);
-            this.cboOrientation.Name = "cboOrientation";
-            this.cboOrientation.Size = new System.Drawing.Size(260, 21);
-            this.cboOrientation.TabIndex = 29;
+            this.pictureBox1.Image = global::MW5.Plugins.Printing.Properties.Resources.img_landscape32;
+            this.pictureBox1.Location = new System.Drawing.Point(100, 56);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 32;
+            this.pictureBox1.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = global::MW5.Plugins.Printing.Properties.Resources.img_portrait32;
+            this.pictureBox2.Location = new System.Drawing.Point(224, 56);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 33;
+            this.pictureBox2.TabStop = false;
+            // 
+            // optLandscape
+            // 
+            this.optLandscape.AutoSize = true;
+            this.optLandscape.Checked = true;
+            this.optLandscape.Location = new System.Drawing.Point(130, 61);
+            this.optLandscape.Name = "optLandscape";
+            this.optLandscape.Size = new System.Drawing.Size(78, 17);
+            this.optLandscape.TabIndex = 34;
+            this.optLandscape.TabStop = true;
+            this.optLandscape.Text = "Landscape";
+            this.optLandscape.UseVisualStyleBackColor = true;
             // 
             // PageSetupView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(376, 265);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.cboOrientation);
+            this.ClientSize = new System.Drawing.Size(339, 264);
+            this.Controls.Add(this.optLandscape);
+            this.Controls.Add(this.pictureBox2);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.optPortrait);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.Label1);
             this.Controls.Add(this.cboPaperSizes);
@@ -257,7 +285,8 @@ namespace MW5.Plugins.Printing.Views
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtMarginTop)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboPaperSizes)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cboOrientation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -274,11 +303,13 @@ namespace MW5.Plugins.Printing.Views
         internal System.Windows.Forms.Label Label4;
         internal System.Windows.Forms.Label Label1;
         internal ComboBoxAdv cboPaperSizes;
-        internal System.Windows.Forms.Label label2;
-        internal ComboBoxAdv cboOrientation;
         private DoubleTextBox txtMarginRight;
         private DoubleTextBox txtMarginBottom;
         private DoubleTextBox txtMarginLeft;
         private DoubleTextBox txtMarginTop;
+        private System.Windows.Forms.RadioButton optPortrait;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.RadioButton optLandscape;
     }
 }

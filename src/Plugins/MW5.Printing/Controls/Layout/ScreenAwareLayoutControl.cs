@@ -423,22 +423,19 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         private void DrawPageNumber(Graphics g, RectangleF paperRect, int pageX, int pageY)
         {
-            float fontSize = _pages.PageWidth > _pages.PageHeight
-                                 ? _pages.PageWidth /* looks suspicios */
-                                 : (float)_pages.PageHeight / 10 * _zoom;
+            float fontSize = Math.Max(_pages.PageWidth, _pages.PageHeight);
+            fontSize = fontSize / 10 * _zoom;
 
             var font = new Font(Font.FontFamily, fontSize);
 
-            var numbersColor = Color.Gray;
-            var color = _pages.GetPage(pageX, pageY).Selected ? Color.Orange : numbersColor;
+            var color = _pages.GetPage(pageX, pageY).Selected ? Color.Orange : Color.Gray;
 
             var brush = new SolidBrush(color);
-            var ellipsePen = new Pen(color) { Width = 40 * _zoom };
+            var ellipsePen = new Pen(color) { Width = 40 * Math.Min(_zoom, 0.7f) };
 
             int pageId = pageY * _pages.PageCountX + pageX + 1;
 
-            g.DrawString(pageId.ToString(CultureInfo.InvariantCulture), font, brush, paperRect,
-                GdiPlusHelper.CenterFormat);
+            g.DrawString(pageId.ToString(CultureInfo.InvariantCulture), font, brush, paperRect, GdiPlusHelper.CenterFormat);
 
             var size = (int)(fontSize * 3.0);
 
@@ -502,7 +499,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     float x = _pages.GetPagePositionX(i);
                     float y = _pages.GetPagePositionY(j);
 
-                    var paperRect = PaperToScreen(x, y, _pages.PageWidth, _pages.PageHeight);
+                    var paperRect = PaperToScreen(x, y, _pages.PageWidth, _pages.PageHeight).ConvertToInt();
 
                     g.DrawLine(pen, paperRect.Left, paperRect.Top, paperRect.Left + paperRect.Width, paperRect.Top);
                     g.DrawLine(pen, paperRect.Left, paperRect.Top, paperRect.Left, paperRect.Top + paperRect.Height);
@@ -515,8 +512,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             if (ShowMargins)
             {
-                g.DrawLine(pen, rect.Right, rect.Top, rect.Right, rect.Bottom);
-                g.DrawLine(pen, rect.Left, rect.Bottom, rect.Right, rect.Bottom);
+                var rint = rect.ConvertToInt();
+                g.DrawLine(pen, rint.Right, rint.Top, rint.Right, rint.Bottom);
+                g.DrawLine(pen, rint.Left, rint.Bottom, rint.Right, rint.Bottom);
             }
         }
 

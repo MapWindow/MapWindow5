@@ -429,10 +429,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                         _elementToAddWithMouse.Rectangle = ScreenToPaper(_mouseBox);
 
-                        if (AddToLayout(_elementToAddWithMouse))
-                        {
-                            AddToSelection(_elementToAddWithMouse);
-                        }
+                        AddToLayout(_elementToAddWithMouse);
 
                         _elementToAddWithMouse = null;
                         _mouseMode = MouseMode.Default;

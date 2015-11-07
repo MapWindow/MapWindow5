@@ -121,16 +121,14 @@ namespace MW5.Plugins.Printing.Views
             var paperSize = PaperSizes.PaperSizeByFormatName(View.PaperFormat, PrinterManager.PrinterSettings);
             if (paperSize != null)
             {
-                // TODO: subtract margins
-                //float width = paperSize.Width - LayoutControl.DefaultMarginWidth * 2;
-                //float height = paperSize.Height - LayoutControl.DefaultMarginHeight * 2;
+                var margins = AppConfig.Instance.PrintingMargins;
+                float width = paperSize.Width - margins.Left - margins.Right;
+                float height = paperSize.Height - margins.Top - margins.Bottom;
 
-                bool swap = View.Orientation == Orientation.Vertical;
-                float width = swap ? paperSize.Height : paperSize.Width;
-                float height = swap ? paperSize.Width : paperSize.Height;
+                bool swap = View.Orientation != Orientation.Vertical;
 
-                Model.PageCountX = (int)Math.Ceiling(size.Width / width);
-                Model.PageCountY = (int)Math.Ceiling(size.Height / height);
+                Model.PageCountX = (int)Math.Ceiling(size.Width / (swap ? height : width));
+                Model.PageCountY = (int)Math.Ceiling(size.Height / (swap ? width : height));
             }
             else
             {

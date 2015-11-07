@@ -21,6 +21,7 @@ using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Properties;
 using MW5.Plugins.Printing.Services;
 using MW5.Shared;
 
@@ -437,14 +438,28 @@ namespace MW5.Plugins.Printing.Model.Elements
                         string name = item.Name + ": " + ct.Name;
                         yield return new LegendItem { Layer = item, Options = ct.Style, Name = name };
                     }
-                }
-                else
-                {
-                    // TODO: add grid color scheme
 
+                    continue;
+                }
+                
+                if (item.Raster != null)
+                {
                     // it's an image
                     yield return new LegendItem { Layer = item, Options = null, Name = item.Name };
+
+                    var scheme = item.Raster.ActiveColorScheme;
+                    if (scheme != null)
+                    {
+                        foreach (var ct in scheme)
+                        {
+                            yield return new LegendItem { Layer = item, RasterBreak = ct, Name = ct.Range };
+                        }
+                    }
+
+                    continue;
                 }
+
+                yield return new LegendItem { Layer = item, Name = item.Name };
             }
         }
 
@@ -618,7 +633,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
                 float tempTop = top + maxHeight + (calcHeight - iconHeight) / 2.0f + 0.5f;
 
-                DrawLayerIcon(item.Layer, item.LegendItem.Options, g, tempLeft, tempTop);
+                DrawLegendItem(g, item.LegendItem, tempLeft, tempTop);
 
                 g.DrawRectangle(_penOutline, left, top + maxHeight, item.Size.Width + Constants.PAD_X * 2, calcHeight);
 
@@ -627,6 +642,36 @@ namespace MW5.Plugins.Printing.Model.Elements
 
             top += maxHeight;
             top += calcHeight;
+        }
+
+        private void DrawLegendItem(Graphics g, LegendItem item, float left, float top)
+        {
+            if (item.Options != null)
+            {
+                DrawLayerIcon(item.Layer, item.Options, g, left, top);
+            }
+            else if (item.RasterBreak != null)
+            {
+                var r = new Rectangle(Convert.ToInt32(left), Convert.ToInt32(top), _thumbnailWidth, _thumbnailHeight);
+                g.DrawRectangle(Pens.Gray, r);
+                
+                Brush brush;
+                if (item.RasterBreak.LowColor != item.RasterBreak.HighColor)
+                {
+                    brush = new LinearGradientBrush(r, item.RasterBreak.LowColor, item.RasterBreak.HighColor, 0.0f);
+                }
+                else
+                {
+                    brush = new SolidBrush(item.RasterBreak.LowColor);
+                }
+
+                g.FillRectangle(brush, r);
+            }
+            else
+            {
+                var r = new Rectangle(Convert.ToInt32(left), Convert.ToInt32(top), _thumbnailWidth, _thumbnailHeight);
+                g.DrawImage(Resources.img_raster, r);
+            }
         }
 
         /// <summary>
@@ -652,7 +697,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             var tempTop = (int)(top + (maxHeight - iconHeight) / 2.0f + 0.5f);
             var left = (int)(leftOrigin + (groupIconWidth - iconWidth) / 2.0f + 0.5f);
 
-            DrawLayerIcon(legendItem.Layer, legendItem.Options, g, left, tempTop);
+            DrawLegendItem(g, legendItem, left, tempTop);
 
             // thumbnail
             g.DrawRectangle(_penOutline, leftOrigin, top, groupIconWidth, maxHeight);

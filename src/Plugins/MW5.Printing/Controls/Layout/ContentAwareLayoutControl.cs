@@ -97,9 +97,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Adds a layout element to the layout
         /// </summary>
-        protected bool AddToLayout(LayoutElement le)
+        public bool AddToLayout(LayoutElement le)
         {
             SetUniqueElementName(le);
+
+            Lock();
 
             var args = new LayoutElementEventArgs(le) { Cancel = false };
             DelegateHelper.FireEvent(this, NewElement, args);
@@ -114,7 +116,15 @@ namespace MW5.Plugins.Printing.Controls.Layout
             FireElementsChanged();
 
             le.Invalidated += LeInvalidated;
-            DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
+
+            AddToSelection(le);
+
+            le.Initialized = true;
+
+            Unlock();
+
+            // TODO: can be optimized: unlock triggers invalidate for all control,
+            //DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
 
             return true;
         }
@@ -327,6 +337,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         internal void LeInvalidated(object sender, EventArgs e)
         {
+            // TODO: revisit
             if (_suppressElementInvalidation) return;
             DoInvalidate();
         }

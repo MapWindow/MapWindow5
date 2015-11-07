@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
@@ -245,9 +246,9 @@ namespace MW5.Plugins.Printing.Model.Elements
             var activeFont = printing ? FontHelper.ScaleFont(Font, ScreenHelper.LogicToScreenDpi) : Font;
 
             double geoBreakWidth = GetGeoBreakWidth(g, activeFont);
-            if (NumericHelper.Equal(geoBreakWidth, 0.0))
+            if (NumericHelper.Equal(geoBreakWidth, 0.0) || Double.IsNaN(geoBreakWidth))
             {
-                // TODO: write message about invalid scale
+                g.DrawString(@"#Scale Error#", activeFont, Brushes.Black, x, y);
                 return;
             }
 
@@ -315,9 +316,19 @@ namespace MW5.Plugins.Printing.Model.Elements
         private double GetGeoBreakWidth(Graphics g, Font activeFont)
         {
             float unitLength = g.MeasureString(UnitText, activeFont).Width * 2;
-            double geoBreakWidth = (SizeF.Width - unitLength) / 100.0 / _unit.GetConversionFactor() * _layoutMap.Scale /
-                                   _numBreaks;
+
+            double size = (SizeF.Width - unitLength) / 100.0; // size in inches
+            if (size <= 0 || size / _numBreaks < 0.3)
+            {
+                // it's too small to display anything meaningful
+                return 0.0;
+            }
+
+            double geoBreakWidth = size / _unit.GetConversionFactor() * _layoutMap.Scale / _numBreaks;
+
+            // TODO: can choose 20s, 50s as well
             double n = Math.Pow(10, Math.Floor(Math.Log10(geoBreakWidth)));
+
             return Math.Floor(geoBreakWidth / n) * n;
         }
 

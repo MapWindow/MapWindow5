@@ -88,6 +88,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             _zoom = xZoom < yZoom ? xZoom : yZoom;
 
+            if (_zoom > 1)
+            {
+                _zoom = 1f;
+            }
+
             CenterPaperOnPoint(new PointF(_pages.TotalWidth / 2F, _pages.TotalHeight / 2F));
 
             FireZoomChanged(null);
@@ -290,6 +295,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
         private void UpdateScale()
         {
+            // TODO: scale bar can linked to another instance of LayoutMap
             var map = GetElement<LayoutMap>(ElementType.Map);
             if (map != null)
             {

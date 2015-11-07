@@ -154,6 +154,11 @@
     <Compile Include="Helpers\ExportHelper.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Helpers\LayoutScaleHelper.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\PdfExportService.cs" />
     <Compile Include="Model\Elements\LayoutLegend.cs" />
     <Compile Include="Model\LayoutElementEventArgs.cs" />
@@ -177,11 +182,6 @@
     <Compile Include="Model\PaperSizeAdapter.cs" />
     <Compile Include="Model\Table\Column.cs" />
     <Compile Include="Model\Table\RowData.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\LayoutSerializer.cs" />
     <Compile Include="Services\TileLoadingService.cs" />
     <Compile Include="Services\XmlEnvelope.cs" />
@@ -494,6 +494,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_page_number24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_raster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_landscape32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_portrait32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

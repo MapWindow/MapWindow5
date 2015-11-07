@@ -213,6 +213,16 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_landscape32 {
+            get {
+                object obj = ResourceManager.GetObject("img_landscape32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_map_zoom_in24 {
             get {
                 object obj = ResourceManager.GetObject("img_map_zoom_in24", resourceCulture);
@@ -283,9 +293,29 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_portrait32 {
+            get {
+                object obj = ResourceManager.GetObject("img_portrait32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_printer24 {
             get {
                 object obj = ResourceManager.GetObject("img_printer24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_raster {
+            get {
+                object obj = ResourceManager.GetObject("img_raster", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

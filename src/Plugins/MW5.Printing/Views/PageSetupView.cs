@@ -22,8 +22,6 @@ namespace MW5.Plugins.Printing.Views
         public PageSetupView()
         {
             InitializeComponent();
-
-            InitControls();
         }
 
         /// <summary>
@@ -32,7 +30,9 @@ namespace MW5.Plugins.Printing.Views
         public void Initialize()
         {
             var orientation = Model.DefaultPageSettings.Landscape ? Orientation.Horizontal : Orientation.Vertical;
-            cboOrientation.SetValue(orientation);
+
+            optPortrait.Checked = orientation == Orientation.Vertical;
+            optLandscape.Checked = orientation == Orientation.Horizontal;
 
             InitPaperSizes();
 
@@ -78,7 +78,7 @@ namespace MW5.Plugins.Printing.Views
 
         public Orientation Orientation
         {
-            get { return cboOrientation.GetValue<Orientation>(); }
+            get { return optLandscape.Checked ? Orientation.Horizontal : Orientation.Vertical; }
         }
 
         public double CentimetersPerInch
@@ -95,11 +95,6 @@ namespace MW5.Plugins.Printing.Views
         {
             // TODO: implement as a service
             return margin / 100.0 * CentimetersPerInch;
-        }
-
-        private void InitControls()
-        {
-            cboOrientation.AddItemsFromEnum<Orientation>();
         }
 
         private void InitPaperSizes()

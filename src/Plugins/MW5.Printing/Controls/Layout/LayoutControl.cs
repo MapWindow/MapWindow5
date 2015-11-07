@@ -42,8 +42,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             ZoomFitToScreen();
 
             UpdateScrollBars();
-
-            DoInvalidate();
         }
 
         /// <summary>
@@ -97,37 +95,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             //_axMap.TilesLoaded -= MapTilesLoaded;
 
             base.Dispose(disposing);
-        }
-
-        public void AddMapElement(int mapScale, IEnvelope extents)
-        {
-            // TODO: extract to LayoutView
-
-            var mapElement = new LayoutMap();
-            mapElement.Initialize(_map);
-
-            const int offset = 10;
-            mapElement.Location = new Point(offset, offset); // default location
-            //mapElement.DrawTiles = AxMap.Tiles.Visible;
-
-            // calc the necessary size in paper coordinates
-            GeoSize size;
-            if (_map.GetGeodesicSize(extents, out size))
-            {
-                mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size);
-
-                // set the number of pages
-                _pages.PageCountX = (int)Math.Ceiling((mapElement.SizeF.Width + offset) / _pages.PageWidth);
-                _pages.PageCountY = (int)Math.Ceiling((mapElement.SizeF.Height + offset) / _pages.PageHeight);
-
-                mapElement.Envelope = extents.Clone();
-                mapElement.Scale = mapScale;
-                mapElement.Initialized = true;
-
-                AddToLayout(mapElement);
-
-                AddToSelection(mapElement);
-            }
         }
 
         private void SelectFirstElement()

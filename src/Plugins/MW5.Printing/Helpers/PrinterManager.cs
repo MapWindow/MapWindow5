@@ -34,6 +34,7 @@ namespace MW5.Plugins.Printing.Helpers
         /// </summary>
         public static PrinterSettings PrinterSettings
         {
+            // TODO: don't use singleton
             get
             {
                 if (_printingSettings == null)

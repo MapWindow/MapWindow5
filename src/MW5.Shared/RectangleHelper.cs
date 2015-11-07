@@ -25,6 +25,11 @@ namespace MW5.Shared
             return new RectangleF(r.X, r.Y, r.Width, r.Height);
         }
 
+        public static Rectangle ConvertToInt(this RectangleF r)
+        {
+            return new Rectangle(Convert.ToInt32(r.X), Convert.ToInt32(r.Y), Convert.ToInt32(r.Width), Convert.ToInt32(r.Height));
+        }
+
         public static RectangleF GetIntersection(Rectangle page, RectangleF r)
         {
             var result = new RectangleF();

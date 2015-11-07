@@ -1969,6 +1969,15 @@ namespace MW5.Plugins.Printing.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Border Width.
+        /// </summary>
+        internal static string prop_borderwidth {
+            get {
+                return ResourceManager.GetString("prop_borderwidth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Breaks.
         /// </summary>
         internal static string prop_breakcount {

@@ -10,6 +10,7 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
@@ -92,6 +93,8 @@ namespace MW5.Plugins.Printing.Views
 
             page.Landscape = PaperOrientation == Orientation.Horizontal;
             page.PaperSize = PaperSizes.PaperSizeByFormatName(PaperFormat, settings);
+
+            page.Margins = AppConfig.Instance.PrintingMargins;
 
             return settings;
         }
