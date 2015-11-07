@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Windows.Forms;
@@ -84,26 +85,24 @@ namespace MW5.Plugins.Printing.Views
             var mapElement = new LayoutMap();
             mapElement.Initialize(map);
 
-            const int offset = 5;
-            mapElement.Location = new Point(offset, offset); // default location
-            //mapElement.DrawTiles = AxMap.Tiles.Visible;
+            const int offset = 5;  // default location
+            mapElement.Location = new Point(offset, offset); 
+            mapElement.DrawTiles = map.Tiles.Visible;
 
             // calc the necessary size in paper coordinates
             GeoSize size;
-            if (map.GetGeodesicSize(extents, out size))
+            if (map.GetGeodesicSize(extents, true, out size))
             {
-                mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size);
-
-                // set the number of pages
-                var pages = View.LayoutControl.Pages;
-                pages.PageCountX = (int)Math.Ceiling((mapElement.SizeF.Width + offset) / pages.PageWidth);
-                pages.PageCountY = (int)Math.Ceiling((mapElement.SizeF.Height + offset) / pages.PageHeight);
+                mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size, extents.Width / extents.Height);
 
                 mapElement.Envelope = extents.Clone();
-                mapElement.Scale = mapScale;
                 mapElement.Initialized = true;
 
                 View.LayoutControl.AddToLayout(mapElement);
+
+                View.LayoutControl.UpdateLayout();
+
+                View.LayoutControl.ZoomFitToScreen();
             }
         }
 

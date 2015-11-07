@@ -1,9 +1,7 @@
 ﻿using System;
 using MW5.Api.Enums;
-using MW5.Api.Helpers;
-using MW5.Api.Static;
 
-namespace MW5.Plugins.Helpers
+namespace MW5.Api.Helpers
 {
     public static class UnitConversionHelper
     {

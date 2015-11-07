@@ -20,5 +20,6 @@ namespace MW5.Plugins.Interfaces
         PluginIdentity PluginIdentity { get; }
         bool Enabled { get; set; }
         void Update();
+        void Refresh();
     }
 }

@@ -397,5 +397,45 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             le.Name = leName;
         }
+
+        private void SelectFirstElement()
+        {
+            ClearSelection();
+
+            var el = LayoutElements.OfType<LayoutMap>().FirstOrDefault() ?? LayoutElements.FirstOrDefault();
+
+            if (el != null)
+            {
+                AddToSelection(new List<LayoutElement> { el });
+            }
+        }
+
+        /// <summary>
+        /// Adds or removes pages to accomodate all the currently added elements.
+        /// </summary>
+        public void UpdateLayout()
+        {
+            float xMax = 0;
+            float yMax = 0;
+
+            foreach (var el in LayoutElements)
+            {
+                if (el.Rectangle.X + el.Rectangle.Width > xMax)
+                {
+                    xMax = el.Rectangle.X + el.Rectangle.Width;
+                }
+
+                if (el.Rectangle.Y + el.Rectangle.Height > yMax)
+                {
+                    yMax = el.Rectangle.Y + el.Rectangle.Height;
+                }
+            }
+
+            // set the number of pages
+            Pages.PageCountX = (int)Math.Ceiling(xMax / Pages.PageWidth);
+            Pages.PageCountY = (int)Math.Ceiling(yMax / Pages.PageHeight);
+
+            ZoomFitToScreen();
+        }
     }
 }

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Attributes.Helpers;
 using MW5.Plugins.Helpers;

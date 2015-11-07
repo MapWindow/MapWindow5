@@ -20,6 +20,7 @@ namespace MW5.Api.Interfaces
         //void Lock();
         //bool Unlock();
         //bool SnapShotToDC2(IntPtr hDC, IEnvelope extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
+        //LengthUnits MapUnits { get; set; }
 
         IShapesList IdentifiedShapes { get; }
         IFeatureSet SelectedFeatureSet { get; }
@@ -82,7 +83,6 @@ namespace MW5.Api.Interfaces
         AutoToggle InertiaOnPanning { get; set; }
         bool IsLocked { get; }
         ResizeBehavior ResizeBehavior { get; set; }
-        LengthUnits MapUnits { get; set; }
         IEnvelope MaxExtents { get; }
         double MouseWheelSpeed { get; set; }
         bool ReuseTileBuffer { get; set; }

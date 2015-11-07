@@ -76,6 +76,11 @@ namespace MW5.UI.Menu
             UpdateSeparators();
         }
 
+        public void Refresh()
+        {
+            _commandBar.Refresh();
+        }
+
         private void UpdateSeparators()
         {
             _bar.SeparatorIndices.Clear();

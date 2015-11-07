@@ -139,6 +139,11 @@ namespace MW5.UI.Menu
             }
         }
 
+        public void Refresh()
+        {
+            _bar.Refresh();
+        }
+
         private bool FindProgressBar()
         {
             if (_progressMessage != null && _progressBar != null)

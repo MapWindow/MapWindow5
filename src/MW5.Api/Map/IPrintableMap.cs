@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 
 namespace MW5.Api.Map
 {
     public interface IPrintableMap
     {
+        LengthUnits MapUnits { get; set; }
         ISpatialReference Projection { get; set; }
         IEnvelope Extents { get; }
         bool ScalebarVisible { get; set; }

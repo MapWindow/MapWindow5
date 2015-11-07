@@ -18,6 +18,7 @@ using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Views
 {
@@ -46,7 +47,7 @@ namespace MW5.Plugins.Printing.Views
         private void OnFitToPageClicked()
         {
             GeoSize geoSize;
-            if (_context.Map.GetGeodesicSize(View.MapExtents, out geoSize))
+            if (_context.Map.GetGeodesicSize(View.MapExtents, true, out geoSize))
             {
                 // TODO: choose depending on selected format
                 var size = new SizeF(700, 700);   // 7 by 7 inches
@@ -103,13 +104,19 @@ namespace MW5.Plugins.Printing.Views
         {
             size = default(SizeF);
 
+            var extents = View.MapExtents;
+
             GeoSize geoSize;
-            if (!_context.Map.GetGeodesicSize(View.MapExtents, out geoSize))
+            if (!_context.Map.GetGeodesicSize(extents, true, out geoSize))
             {
                 return false;
             }
 
-            size = LayoutScaleHelper.CalcMapSize(View.MapScale, geoSize);
+            if (!NumericHelper.Equal(View.MapScale, 0.0))
+            {
+                size = LayoutScaleHelper.CalcMapSize(View.MapScale, geoSize, extents.Width / extents.Height);
+            }
+
             return true;
         }
 

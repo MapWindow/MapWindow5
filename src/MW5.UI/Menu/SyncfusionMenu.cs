@@ -80,5 +80,10 @@ namespace MW5.UI.Menu
 
         // don't do anything
         public override bool Enabled { get; set; }
+
+        public override void Refresh()
+        {
+            // do nothing
+        }
     }
 }

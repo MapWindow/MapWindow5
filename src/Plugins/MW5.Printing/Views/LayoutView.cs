@@ -182,8 +182,9 @@ namespace MW5.Plugins.Printing.Views
 
         private void OnLayoutViewShown(object sender, EventArgs e)
         {
-            // TODO: remove after testing
-            //layoutControl1.ZoomFitToScreen();
+            // timely update of control may not occur if user moves mouse over layout control 
+            // (it triggers immediate update of status bar with Refresh);
+            Refresh();
         }
 
         private void OnPageSettingsChanged(object sender, EventArgs e)

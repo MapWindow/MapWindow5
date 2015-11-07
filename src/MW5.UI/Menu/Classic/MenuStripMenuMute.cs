@@ -97,5 +97,10 @@ namespace MW5.UI.Menu.Classic
                 }
             }
         }
+
+        public override void Refresh()
+        {
+            _menuStrip.Refresh();
+        }
     }
 }

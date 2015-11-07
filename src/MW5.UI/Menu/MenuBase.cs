@@ -45,6 +45,8 @@ namespace MW5.UI.Menu
             // do nothing; no separators are needed here
         }
 
+        public abstract void Refresh();
+        
         protected IDropDownMenuItem GetDropDownItem(string key)
         {
             return FindItem(key, PluginIdentity.Default) as IDropDownMenuItem;

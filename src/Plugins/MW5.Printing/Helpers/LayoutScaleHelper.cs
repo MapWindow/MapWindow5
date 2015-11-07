@@ -45,7 +45,7 @@ namespace MW5.Plugins.Printing.Helpers
             double cf = LengthUnits.Meters.GetConversionFactor();
             double scaleX = geoSize.Width / (mapSize.Width / 100.0 / cf);
             double scaleY = geoSize.Height / (mapSize.Height / 100.0 / cf);
-            return Math.Max(scaleX, scaleY);
+            return (scaleX + scaleY) / 2.0;
         }
 
         /// <summary>
@@ -53,13 +53,27 @@ namespace MW5.Plugins.Printing.Helpers
         /// </summary>
         /// <param name="mapScale">Map scale.</param>
         /// <param name="geoSize">Geodesic size of the map area in meters.</param>
+        /// <param name="xyRatio">The X / Y ratio for the extents in original coordinate system.</param>
         /// <returns>Size of the map on the screen in 1/100 of an inch.</returns>
-        public static SizeF CalcMapSize(int mapScale, GeoSize geoSize)
+        public static SizeF CalcMapSize(int mapScale, GeoSize geoSize, double xyRatio)
         {
             double cf = LengthUnits.Meters.GetConversionFactor();
-            var widthInches = (float)(geoSize.Width * cf / mapScale);
-            var heightInches = (float)(geoSize.Height * cf / mapScale);
-            return new SizeF(widthInches * 100f, heightInches * 100f);
+            var widthInches = geoSize.Width * cf / mapScale;
+            var heightInches = geoSize.Height * cf / mapScale;
+
+            // The distortion introduced be orginal map coordinate system may be different along X and Y axes,
+            // so paper size rectangle may no longer have the same X / Y side ratio as original extents.
+            // This will result in adjustment of extents in map projection according to this ratio, which is undesirable.
+            // Let's instead adjust resulting paper size to orignal X / Y ratio.
+            double newRatio = widthInches / heightInches;
+            if (!NumericHelper.Equal(newRatio, xyRatio, 1e-6))
+            {
+                double correction = Math.Sqrt(newRatio / xyRatio);
+                heightInches *= correction;
+                widthInches /= correction;
+            }
+
+            return new SizeF((float)(widthInches * 100.0), (float)(heightInches * 100.0));
         }
 
         /// <summary>
@@ -87,7 +101,7 @@ namespace MW5.Plugins.Printing.Helpers
             depth++;
 
             GeoSize oldSize;
-            if (map.GetGeodesicSize(oldExtents, out oldSize))
+            if (map.GetGeodesicSize(oldExtents, true, out oldSize))
             {
                 // TODO: tolerance can be different depending on map units
                 const int maxDepth = 5;

@@ -58,12 +58,31 @@ namespace MW5.Plugins.Printing.Services
 
             if (extents != null)    
             {
-                layoutControl.UpdateMapElement(extents);
+                UpdateMapElement(layoutControl, extents);
             }
 
             layoutControl.Filename = filename;
 
+            layoutControl.ZoomFitToScreen();
+
             return true;
+        }
+
+        /// <summary>
+        /// Updates the extents of the map element taking into account its size of screen and scale.
+        /// </summary>
+        private void UpdateMapElement(LayoutControl layoutControl, IEnvelope extents)
+        {
+            var map = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault(m => m.MainMap);
+            
+            if (map != null)
+            {
+                map.Envelope = extents;
+                map.Initialized = true;
+
+                layoutControl.ClearSelection();
+                layoutControl.AddToSelection(map);
+            }
         }
 
         private void InitializeElements(IAppContext context, LayoutControl layoutControl)
