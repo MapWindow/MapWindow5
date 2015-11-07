@@ -22,10 +22,12 @@ namespace MW5.Plugins.Printing.Views
 
         public const string ZoomIn = "lt_ZoomIn";
         public const string ZoomOut = "lt_ZoomOut";
-        public const string ZoomMax = "lt_ZoomMax";
+        public const string ZoomFitScreen = "lt_ZoomMax";
+        public const string ZoomOriginal = "lt_ZoomOriginal";
         public const string ZoomCombo = "lt_ZoomCombo";
         public const string ZoomComboLabel = "lt_ZoomComboLabel";
         public const string ShowPageNumbers = "lt_ShowPageNumbers";
+        public const string ShowRulers = "lt_ShowRulers";
         public const string ShowMargins = "lt_ShowMargins";
 
         public const string SelectAll = "lt_SelectAll";

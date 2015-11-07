@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Shared;
@@ -64,7 +65,7 @@ namespace MW5.Plugins.Printing.Views.Panels
 
             //If there is no selection get the layoutControls properties otherwise show the selected elements properties
             object[] objects = _layoutControl.SelectedLayoutElements.ToArray();
-            _propertyGrid.SelectedObjects = _layoutControl.SelectedLayoutElements.Count > 0 ? objects : null;
+            _propertyGrid.SelectedObjects = _layoutControl.SelectedLayoutElements.Any() ? objects : null;
         }
 
         private void LayoutPropertyGridKeyUp(object sender, KeyEventArgs e)

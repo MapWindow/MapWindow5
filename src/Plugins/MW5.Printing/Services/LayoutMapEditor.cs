@@ -7,6 +7,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using MW5.Plugins.Printing.Controls.Layout;
@@ -54,7 +55,7 @@ namespace MW5.Plugins.Printing.Services
             var lb = new ListBox();
             if (lc != null)
             {
-                foreach (var le in lc.LayoutElements.FindAll(o => (o is LayoutMap)))
+                foreach (var le in lc.LayoutElements.Where(o => (o is LayoutMap)))
                 {
                     lb.Items.Add(le);
                 }

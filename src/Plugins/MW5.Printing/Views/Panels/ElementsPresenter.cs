@@ -33,15 +33,12 @@ namespace MW5.Plugins.Printing.Views.Panels
             {
                 case ElementsCommand.MoveUp:
                     _layoutControl.MoveSelectionUp();
-                    UpdateSelectionFromMap();
                     break;
                 case ElementsCommand.MoveDown:
                     _layoutControl.MoveSelectionDown();
-                    UpdateSelectionFromMap();
                     break;
                 case ElementsCommand.Remove:
                     _layoutControl.DeleteSelected();
-                    UpdateSelectionFromMap();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("command");
@@ -52,11 +49,6 @@ namespace MW5.Plugins.Printing.Views.Panels
         {
             View.layoutListBox1.LayoutControl = layoutControl;
             _layoutControl = layoutControl;
-        }
-
-        public void UpdateSelectionFromMap()
-        {
-            View.layoutListBox1.UpdateSelectionFromMap();
         }
     }
 }

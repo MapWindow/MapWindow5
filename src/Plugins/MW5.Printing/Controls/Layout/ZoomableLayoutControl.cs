@@ -37,7 +37,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Gets the list of layoutElements currently loaded in the project
         /// </summary>
-        public List<LayoutElement> LayoutElements
+        public IEnumerable<LayoutElement> LayoutElements
         {
             get { return _layoutElements; }
         }
@@ -170,7 +170,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         protected bool IsSelected(int elementIndex)
         {
-            return _selectedLayoutElements.Contains(LayoutElements[elementIndex]);
+            return _selectedLayoutElements.Contains(_layoutElements[elementIndex]);
         }
 
         /// <summary>

@@ -253,6 +253,16 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_page_number24 {
+            get {
+                object obj = ResourceManager.GetObject("img_page_number24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_page_setup24 {
             get {
                 object obj = ResourceManager.GetObject("img_page_setup24", resourceCulture);
@@ -383,9 +393,29 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_original24 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_original24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_zoom_out24 {
             get {
                 object obj = ResourceManager.GetObject("img_zoom_out24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_zoom_region24 {
+            get {
+                object obj = ResourceManager.GetObject("img_zoom_region24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

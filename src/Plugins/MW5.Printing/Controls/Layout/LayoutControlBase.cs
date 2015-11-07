@@ -23,16 +23,19 @@ namespace MW5.Plugins.Printing.Controls.Layout
         protected readonly LayoutPages _pages;
         private HScrollBar _hScrollBar;
         private Panel _hScrollBarPanel;
-        protected bool _initialized = false;
+        protected bool _initialized;
         protected PointF _paperLocation; //The location of the paper within the screen coordinates
-        protected PrinterSettings _printerSettings;
-        protected bool _suppressScrollbarUpdate = false;
+        private PrinterSettings _printerSettings;
+        protected bool _suppressScrollbarUpdate;
         private VScrollBar _vScrollBar;
         protected float _zoom; //The zoom of the paper
-        protected bool _fullRedraw = true;
+        protected bool _fullRedraw;
+        private int _lockCount;
 
         protected LayoutControlBase()
         {
+            _fullRedraw = true;
+
             _pages = new LayoutPages();
 
             InitPrinterSettings();
@@ -278,6 +281,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
 
             Invalidate(region);
+
+            if (_lockCount == 0)
+            {
+                Invalidate();
+            }
         }
 
         protected void DoInvalidate(LayoutInvalidateType type = LayoutInvalidateType.All)
@@ -287,7 +295,27 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _fullRedraw = true;
             }
 
-            Invalidate();
+            if (_lockCount == 0)
+            {
+                Invalidate();
+            }
+        }
+
+        protected void Lock()
+        {
+            _lockCount++;
+        }
+
+        protected void Unlock()
+        {
+            if (_lockCount == 0) return;
+
+            _lockCount--;
+
+            if (_lockCount == 0)
+            {
+                DoInvalidate();
+            }
         }
     }
 }

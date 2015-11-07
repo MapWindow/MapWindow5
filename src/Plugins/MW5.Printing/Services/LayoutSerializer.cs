@@ -111,7 +111,7 @@ namespace MW5.Plugins.Printing.Services
         private void ApplyLayout(LayoutControl layoutControl, XmlLayout layout)
         {
             layoutControl.ClearLayout();
-            layoutControl.LayoutElements.AddRange(layout.Elements);
+            layoutControl.AddToLayout(layout.Elements);
 
             var settings = PrinterManager.PrinterSettings;
             layout.Paper.UpdatePageSettings(settings);

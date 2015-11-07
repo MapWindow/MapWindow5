@@ -6,13 +6,19 @@
 
 namespace MW5.Plugins.Printing.Helpers
 {
-    public static class ScreenHelper
+    internal static class ScreenHelper
     {
         private static float _screenDpi = 96f;
 
         public static float LogicDpi
         {
             get { return 100f; }
+        }
+
+        public static float ScreenDpi
+        {
+            get { return _screenDpi; }
+            set { _screenDpi = value; }
         }
 
         public static float LogicTo96Dpi
@@ -23,12 +29,6 @@ namespace MW5.Plugins.Printing.Helpers
         public static float LogicToScreenDpi
         {
             get { return ScreenDpi / LogicDpi; }
-        }
-
-        public static float ScreenDpi
-        {
-            get { return _screenDpi; }
-            set { _screenDpi = value; }
         }
 
         public static float ScreenToLogicDpi

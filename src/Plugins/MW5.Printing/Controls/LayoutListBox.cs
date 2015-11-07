@@ -47,17 +47,18 @@ namespace MW5.Plugins.Printing.Controls
             get { return _layoutControl; }
             set
             {
-                if (value == null) return;
-                _layoutControl = value;
-                _layoutControl.ElementsChanged += (s, e) => UpdateSelectionFromMap();
-                RefreshList();
+                if (value != null)
+                {
+                    _layoutControl = value;
+                    RefreshList();
+                }
             }
         }
 
         /// <summary>
         /// Refreshes the items in the list to accuratly reflect the current collection
         /// </summary>
-        public void RefreshList()
+        private void RefreshList()
         {
             _listbox.SuspendLayout();
 
@@ -66,7 +67,9 @@ namespace MW5.Plugins.Printing.Controls
             foreach (var le in _layoutControl.LayoutElements.ToArray())
             {
                 _listbox.Items.Add(le);
-                le.ThumbnailChanged += LeThumbnailChanged; // TODO: the handler isn't removed
+
+                // the handler is removed on removing the element from layout control
+                le.ThumbnailChanged += LeThumbnailChanged;
             }
 
             foreach (var le in _layoutControl.SelectedLayoutElements.ToArray())

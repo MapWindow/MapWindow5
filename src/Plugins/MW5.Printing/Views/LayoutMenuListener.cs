@@ -36,7 +36,6 @@ namespace MW5.Plugins.Printing.Views
         private readonly IPrintableMap _map;
         private readonly ILayoutView _view;
         private readonly PdfExportService _pdfService;
-        private readonly ITempFileService _fileService;
 
         public LayoutMenuListener(IAppContext context, ILayoutView view, PdfExportService pdfService)
         {
@@ -56,10 +55,17 @@ namespace MW5.Plugins.Printing.Views
             get { return _layoutControl.SelectedLayoutElements.FirstOrDefault() as LayoutMap; }
         }
 
+
+
         public void OnItemClicked(object sender, MenuItemEventArgs e)
         {
+            _layoutControl.PanMode = false;
+
             switch (e.ItemKey)
             {
+                case LayoutMenuKeys.ShowRulers:
+                    _layoutControl.ShowRulers = !_layoutControl.ShowRulers;
+                    break;
                 case LayoutMenuKeys.AdjustPages:
                     _layoutControl.UpdateLayout();
                     break;
@@ -116,7 +122,7 @@ namespace MW5.Plugins.Printing.Views
                 case LayoutMenuKeys.PrinterSetup:
                     using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
                     {
-                        if (pd.ShowDialog(_view as IWin32Window) == DialogResult.OK)
+                        if (pd.ShowDialog(ParentView) == DialogResult.OK)
                         {
                             _layoutControl.Invalidate();
                         }
@@ -135,7 +141,7 @@ namespace MW5.Plugins.Printing.Views
                     }
                     break;
                 case LayoutMenuKeys.ExportToPdf:
-                    _pdfService.ExportToPdf(_layoutControl, _view as IWin32Window);
+                    _pdfService.ExportToPdf(_layoutControl, ParentView);
                     break;
                 case LayoutMenuKeys.ExportToBitmap:
                     ExportHelper.ExportToBitmap(_layoutControl.Pages, _layoutControl.LayoutElements);
@@ -146,8 +152,11 @@ namespace MW5.Plugins.Printing.Views
                 case LayoutMenuKeys.ZoomOut:
                     _layoutControl.ZoomOut();
                     break;
-                case LayoutMenuKeys.ZoomMax:
+                case LayoutMenuKeys.ZoomFitScreen:
                     _layoutControl.ZoomFitToScreen();
+                    break;
+                case LayoutMenuKeys.ZoomOriginal:
+                    _layoutControl.Zoom = 1;
                     break;
                 case LayoutMenuKeys.AddMap:
                     AddMap();
@@ -203,28 +212,30 @@ namespace MW5.Plugins.Printing.Views
                 case LayoutMenuKeys.MapPan:
                     {
                         _layoutControl.PanMode = true;
-                        //_btnPan.Checked = true;
                     }
                     break;
             }
+
+            _view.UpdateView();
         }
 
         private void ConvertElementToBitmap()
         {
-            if (_layoutControl.SelectedLayoutElements.Count == 0)
+            if (!_layoutControl.SelectedLayoutElements.Any())
             {
                 MessageService.Current.Info("No elements are selected.");
                 return;
             }
 
-            var el = _layoutControl.SelectedLayoutElements[0];
+            var el = _layoutControl.SelectedLayoutElements.FirstOrDefault();
+
             if (el is LayoutBitmap)
             {
                 MessageService.Current.Info("Selected element is bitmap. No conersion is needed.");
                 return;
             }
 
-            string filename = FileDialogHelper.GetBitmapFilename(el.Name, _view as IWin32Window);
+            string filename = FileDialogHelper.GetBitmapFilename(el.Name, ParentView);
 
             if (!string.IsNullOrWhiteSpace(filename))
             {
@@ -234,7 +245,7 @@ namespace MW5.Plugins.Printing.Views
 
         private bool PromptSaveExistingLayout()
         {
-            if (_layoutControl.LayoutElements.Count > 0)
+            if (_layoutControl.LayoutElements.Any())
             {
                 var result = MessageService.Current.AskWithCancel("Save changes to the current layout?");
 
@@ -300,7 +311,7 @@ namespace MW5.Plugins.Printing.Views
         {
             using (var dlg = new OpenFileDialog { Filter = @"*.xml|*.xml" })
             {
-                if (dlg.ShowDialog(_view as IWin32Window) == DialogResult.OK)
+                if (dlg.ShowDialog(ParentView) == DialogResult.OK)
                 {
                     return dlg.FileName;
                 }
@@ -316,7 +327,7 @@ namespace MW5.Plugins.Printing.Views
             {
                 dlg.InitialDirectory = ConfigPathHelper.GetLayoutPath();
 
-                if (dlg.ShowDialog(_view as IWin32Window) == DialogResult.OK)
+                if (dlg.ShowDialog(ParentView) == DialogResult.OK)
                 {
                     return dlg.FileName;
                 }
@@ -348,11 +359,9 @@ namespace MW5.Plugins.Printing.Views
             var legend = new LayoutLegend();
             legend.Initialize(_layoutControl, _context.Legend);
 
-            var mapElements = _layoutControl.LayoutElements.FindAll(o => (o is LayoutMap));
-            if (mapElements.Count > 0)
-            {
-                legend.Map = mapElements[0] as LayoutMap;
-            }
+            var map = _layoutControl.LayoutElements.FirstOrDefault(o => (o is LayoutMap));
+            
+            legend.Map = map as LayoutMap;
 
             _layoutControl.AddElementWithMouse(legend);
         }
@@ -371,18 +380,14 @@ namespace MW5.Plugins.Printing.Views
         {
             var scaleBar = new LayoutScaleBar();
 
-            var mapElements = _layoutControl.LayoutElements.FindAll(o => o is LayoutMap);
+            var map = _layoutControl.LayoutElements.FirstOrDefault(o => o is LayoutMap) as LayoutMap;
 
-            if (mapElements.Count > 0)
+            if (map != null)
             {
-                var map = mapElements[0] as LayoutMap;
-                if (map != null)
-                {
-                    scaleBar.Map = map;
-                    bool km = map.Envelope.Width > 3000;
-                    scaleBar.Unit = km ? LengthUnits.Kilometers : LengthUnits.Meters;
-                        //TODO: allow American units as well
-                }
+                scaleBar.Map = map;
+                bool km = map.Envelope.Width > 3000;
+                scaleBar.Unit = km ? LengthUnits.Kilometers : LengthUnits.Meters;
+                //TODO: allow American units as well
             }
 
             scaleBar.LayoutControl = _layoutControl;
@@ -393,6 +398,11 @@ namespace MW5.Plugins.Printing.Views
         {
             var tbl = new LayoutTable();
             _layoutControl.AddElementWithMouse(tbl);
+        }
+
+        private IWin32Window ParentView
+        {
+            get { return _view as IWin32Window; }
         }
     }
 }

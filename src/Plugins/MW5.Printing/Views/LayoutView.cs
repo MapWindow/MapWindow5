@@ -70,6 +70,8 @@ namespace MW5.Plugins.Printing.Views
             InitControls();
 
             AttachEventHandlers();
+
+            UpdateView();
         }
 
         /// <summary>
@@ -106,6 +108,7 @@ namespace MW5.Plugins.Printing.Views
             layoutControl1.ZoomChanged += OnlayoutControlZoomChanged;
             layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
             layoutControl1.MouseMove += OnLayoutMouseMove;
+            layoutControl1.ElementsChanged += (s, e) => _elements.View.UpdateSelectionFromMap();
         }
 
         private void OnLayoutMouseMove(object sender, MouseEventArgs e)
@@ -117,16 +120,17 @@ namespace MW5.Plugins.Printing.Views
 
         private void OnSelectionChanged()
         {
-            _elements.UpdateSelectionFromMap();
+            _elements.View.UpdateSelectionFromMap();
 
+            // enabling disabling map toolbar
             var toolbar = _menuGenerator.Toolbars.FirstOrDefault(t => t.Key == LayoutMenuKeys.MapToolbar);
             if (toolbar != null)
             {
-                var list = layoutControl1.SelectedLayoutElements;
-                toolbar.Enabled = list.Count == 1 && list[0] is LayoutMap;
+                var map = layoutControl1.SelectedLayoutElements.FirstOrDefault() as LayoutMap;
+                toolbar.Enabled = map != null;
             }
 
-            lblSelected.Text = "Items selected: " + layoutControl1.SelectedLayoutElements.Count;
+            lblSelected.Text = @"Items selected: " + layoutControl1.SelectedLayoutElements.Count();
         }
 
         private void InitControls()
@@ -165,6 +169,7 @@ namespace MW5.Plugins.Printing.Views
         {
             // we want the same instance of view in the service, but another 
             // instance on showing presenter the next time, so better not to use DI
+            // TODO: try to use singletons instead
             _menuListener = new LayoutMenuListener(_context, this, _pdfService);
             _menuGenerator = new LayoutMenuGenerator(_plugin, this, _menuListener);
 
@@ -199,6 +204,24 @@ namespace MW5.Plugins.Printing.Views
         private void OnlayoutControlZoomChanged(object sender, EventArgs e)
         {
             _zoomCombo.Text = String.Format("{0:0}", layoutControl1.Zoom * 100) + "%";
+        }
+
+        public override void UpdateView()
+        {
+            var btn = _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.ShowPageNumbers, _plugin.Identity);
+            btn.Checked = layoutControl1.ShowPageNumbers;
+
+            btn = _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.MapPan, _plugin.Identity);
+            btn.Checked = layoutControl1.PanMode;
+
+            btn = _menuGenerator.Menu.FindItem(LayoutMenuKeys.ShowPageNumbers, _plugin.Identity);
+            btn.Checked = layoutControl1.ShowPageNumbers;
+
+            btn = _menuGenerator.Menu.FindItem(LayoutMenuKeys.ShowMargins, _plugin.Identity);
+            btn.Checked = layoutControl1.ShowMargins;
+
+            btn = _menuGenerator.Menu.FindItem(LayoutMenuKeys.ShowRulers, _plugin.Identity);
+            btn.Checked = layoutControl1.ShowRulers;
         }
     }
 

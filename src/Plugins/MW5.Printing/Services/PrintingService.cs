@@ -21,13 +21,13 @@ namespace MW5.Plugins.Printing.Services
     internal class PrintingService: IDisposable
     {
         private LayoutPages _pages;
-        private List<LayoutElement> _elements;
+        private IEnumerable<LayoutElement> _elements;
         public event EventHandler<PrintEventArgs> EndPrint;
 
         /// <summary>
         /// Runs printing including printer selection
         /// </summary>
-        public void Print(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements)
+        public void Print(LayoutPages pages, PrinterSettings printerSettings, IEnumerable<LayoutElement> elements)
         {
             var pd = CreateAndShowPrintDialog(pages, printerSettings);
 
@@ -52,7 +52,7 @@ namespace MW5.Plugins.Printing.Services
         /// <summary>
         /// Prints to XPS file.
         /// </summary>
-        public bool PrintToXpsFile(LayoutPages pages, PrinterSettings printerSettings, List<LayoutElement> elements, string filename)
+        public bool PrintToXpsFile(LayoutPages pages, PrinterSettings printerSettings, IEnumerable<LayoutElement> elements, string filename)
         {
             _pages = pages;
             _elements = elements;

@@ -182,7 +182,7 @@ namespace MW5.Plugins.Printing.Views
         private void InitControls()
         {
             // TODO: display selection when it was selected
-            var areas = new List<PrintArea> { PrintArea.WholeMap, PrintArea.CurrentScreen, };
+            var areas = new List<PrintArea> { PrintArea.WholeMap, PrintArea.CurrentScreen };
 
             cboArea.AddItemsFromEnum(areas);
 

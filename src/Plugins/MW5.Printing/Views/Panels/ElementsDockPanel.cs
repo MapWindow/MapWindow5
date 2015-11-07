@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Mvp;
 using MW5.UI.Controls;
@@ -26,6 +27,16 @@ namespace MW5.Plugins.Printing.Views.Panels
         public IEnumerable<Control> Buttons
         {
             get { yield break; }
+        }
+
+        public void UpdateSelectionFromMap()
+        {
+            layoutListBox1.UpdateSelectionFromMap();
+
+            bool hasSelection = layoutListBox1.LayoutControl.SelectedLayoutElements.Any();
+            toolRemove.Enabled = hasSelection;
+            toolMoveUp.Enabled = hasSelection;
+            toolMoveDown.Enabled = hasSelection;
         }
     }
 }

@@ -222,7 +222,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 if (_thumbnail != null) _thumbnail.Dispose();
                 _thumbnail = value;
-                OnThumbnailChanged();
+                FireThumbnailChanged();
             }
         }
 
@@ -371,9 +371,9 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Fires when the thumbnail gets modified
         /// </summary>
-        private void OnThumbnailChanged()
+        private void FireThumbnailChanged()
         {
-            if (ThumbnailChanged != null) ThumbnailChanged(this, null);
+            DelegateHelper.FireEvent(this, ThumbnailChanged);
         }
 
         private void SetSize()

@@ -34,6 +34,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private Bitmap _tempBuffer;
         protected Point _mousePosition;
         private const int _rulerWidth = 18;
+        private bool _showRulers;
 
         protected ScreenAwareLayoutControl()
         {
@@ -41,6 +42,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectionPen = new Pen(Color.Orange, 2f);
             _marginBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
             _showMargins = true;
+            _showRulers = true;
             DrawingQuality = SmoothingMode.HighQuality;
         }
 
@@ -48,6 +50,16 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// Gets or sets the smoothing mode to use to draw the map
         /// </summary>
         public SmoothingMode DrawingQuality { get; set; }
+
+        public bool ShowRulers
+        {
+            get { return _showRulers; }
+            set
+            {
+                _showRulers = value;
+                DoInvalidate();
+            }
+        }
 
         public Color SelectionColor
         {
@@ -126,24 +138,42 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
 
             if (_screenBuffer != null)
-            { 
-                if (_tempBuffer == null || _tempBuffer.Width != _screenBuffer.Width || _tempBuffer.Height != _screenBuffer.Height)
+            {
+                if (_showRulers)
                 {
-                    _tempBuffer = new Bitmap(_screenBuffer.Width, _screenBuffer.Height, _screenBuffer.PixelFormat);
-                }
+                    if (_tempBuffer == null || _tempBuffer.Width != _screenBuffer.Width ||
+                        _tempBuffer.Height != _screenBuffer.Height)
+                    {
+                        _tempBuffer = new Bitmap(_screenBuffer.Width, _screenBuffer.Height, _screenBuffer.PixelFormat);
+                    }
 
-                // adding guides
-                using (var g = Graphics.FromImage(_tempBuffer))
+                    // adding guides
+                    using (var g = Graphics.FromImage(_tempBuffer))
+                    {
+                        g.DrawImage(_screenBuffer, 0, 0);
+                        DrawGuides(g);
+                    }
+
+                    // drawing buffer on the screen
+                    e.Graphics.DrawImage(_tempBuffer, 0, 0);
+                }
+                else
                 {
-                    g.DrawImage(_screenBuffer, 0, 0);
-                    DrawGuides(g);
+                    RecycleTempBuffer();
+                    e.Graphics.DrawImage(_screenBuffer, 0, 0);
                 }
-
-                // drawing buffer on the screen
-                e.Graphics.DrawImage(_tempBuffer, 0, 0);
             }
 
             Cursor = oldCursor;
+        }
+
+        private void RecycleTempBuffer()
+        {
+            if (_tempBuffer != null)
+            {
+                _tempBuffer.Dispose();
+                _tempBuffer = null;
+            }
         }
 
         private void DrawGuides(Graphics g)
@@ -193,9 +223,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                 DrawPages(graph);
 
-                for (int i = LayoutElements.Count - 1; i >= 0; i--)
+                for (int i = _layoutElements.Count - 1; i >= 0; i--)
                 {
-                    DrawElement(graph, LayoutElements[i], invalRect, i);
+                    DrawElement(graph, _layoutElements[i], invalRect, i);
                 }
 
                 DrawSelectionRectangles(graph);
@@ -206,7 +236,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                 DrawRubberBand(graph);
 
-                DrawRulers(graph);
+                if (_showRulers)
+                {
+                    DrawRulers(graph);
+                }
             }
         }
 

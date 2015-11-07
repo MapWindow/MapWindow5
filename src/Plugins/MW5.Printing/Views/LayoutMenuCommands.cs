@@ -45,10 +45,12 @@ namespace MW5.Plugins.Printing.Views
                            new MenuCommand("Zoom In", LayoutMenuKeys.ZoomIn, Resources.img_zoom_in24),
                            new MenuCommand("Zoom Out", LayoutMenuKeys.ZoomOut,
                                Resources.img_zoom_out24),
-                           new MenuCommand("Zoom Max", LayoutMenuKeys.ZoomMax,
-                               Resources.img_zoom_max24),
-                           new MenuCommand("Show Page Numbers", LayoutMenuKeys.ShowPageNumbers, null),
+                           new MenuCommand("Zoom to Fit Screen", LayoutMenuKeys.ZoomFitScreen,
+                               Resources.img_zoom_region24),
+                               new MenuCommand("Zoom to Original Scale", LayoutMenuKeys.ZoomOriginal, Resources.img_zoom_original24),
+                           new MenuCommand("Show Page Numbers", LayoutMenuKeys.ShowPageNumbers, Resources.img_page_number24),
                            new MenuCommand("Show Margins", LayoutMenuKeys.ShowMargins, null),
+                           new MenuCommand("Show Rulers", LayoutMenuKeys.ShowRulers, null),
 
                            // selection
                            new MenuCommand("Select All", LayoutMenuKeys.SelectAll, null),

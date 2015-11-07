@@ -349,8 +349,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         private float GetScreenWidth(bool exporting)
         {
-            // TODO: consider extracting
-            return exporting ? Width * 96 / 100 : Width;
+            return exporting ? Width * ScreenHelper.LogicToScreenDpi : Width;
         }
 
         /// <summary>

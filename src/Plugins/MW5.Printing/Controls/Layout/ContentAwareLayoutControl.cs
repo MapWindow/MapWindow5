@@ -70,9 +70,28 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Gets the list of layoutElements currently selected in the project
         /// </summary>
-        internal List<LayoutElement> SelectedLayoutElements
+        internal IEnumerable<LayoutElement> SelectedLayoutElements
         {
             get { return _selectedLayoutElements; }
+        }
+
+        /// <summary>
+        /// Adds elements to layout on deserialization
+        /// </summary>
+        public void AddToLayout(IEnumerable<LayoutElement> elements)
+        {
+            var list = elements.ToList();
+
+            _layoutElements.AddRange(list);
+
+            foreach (var el in list)
+            {
+                el.Invalidated += LeInvalidated;
+            }
+
+            FireElementsChanged();
+
+            DoInvalidate();
         }
 
         /// <summary>
@@ -171,7 +190,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             foreach (var le in _selectedLayoutElements)
             {
-                if (index > _layoutElements.IndexOf(le)) index = _layoutElements.IndexOf(le);
+                if (index > _layoutElements.IndexOf(le))
+                {
+                    index = _layoutElements.IndexOf(le);
+                }
             }
 
             if (index == 0) return;
@@ -273,12 +295,21 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         internal void ClearLayout()
         {
+            Lock();
+            
+            ClearSelection();
+
+            foreach (var el in _layoutElements)
+            {
+                EventHelper.RemoveAllEventHandlers(el);
+            }
+
             DisposeElements();
-            _selectedLayoutElements.Clear();
-            FireSelectionChanged();
+
             _layoutElements.Clear();
             FireElementsChanged();
-            DoInvalidate();
+
+            Unlock();
         }
 
         /// <summary>
@@ -287,8 +318,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
         internal void ClearSelection()
         {
             _selectedLayoutElements.Clear();
-            DoInvalidate();
             FireSelectionChanged();
+            DoInvalidate();
         }
 
         /// <summary>
@@ -336,6 +367,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectedLayoutElements.Remove(le);
             FireSelectionChanged();
             _layoutElements.Remove(le);
+            EventHelper.RemoveAllEventHandlers(le);
             FireElementsChanged();
             DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
         }

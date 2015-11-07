@@ -71,9 +71,11 @@ namespace MW5.Plugins.Printing.Views
             dropDown.SubItems.AddDropDown("Windows", null as Bitmap, _plugin.Identity);
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomIn]).BeginGroup = true;
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomOut]);
-            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomMax]);
+            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomFitScreen]);
+            
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowPageNumbers]).BeginGroup = true;
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowMargins]);
+            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowRulers]);
             dropDown.Update();
 
             // selection
@@ -131,6 +133,7 @@ namespace MW5.Plugins.Printing.Views
             bar.Items.AddButton(_commands[LayoutMenuKeys.SaveLayout]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.SaveLayoutAs]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.PageSetup]).BeginGroup = true;
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ShowPageNumbers]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.AdjustPages]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.Print]).BeginGroup = true;
             bar.Items.AddButton(_commands[LayoutMenuKeys.ExportToBitmap]).BeginGroup = true;
@@ -141,12 +144,14 @@ namespace MW5.Plugins.Printing.Views
             bar = _toolbars.Add("Zoom", LayoutMenuKeys.ZoomToolbar, _plugin.Identity);
             bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomIn]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomOut]);
-            bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomMax]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomOriginal]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomFitScreen]);
 
             bar.Items.AddLabel("Zoom:", LayoutMenuKeys.ZoomComboLabel, _plugin.Identity).BeginGroup = true;
             var combo = bar.Items.AddComboBox("75%", LayoutMenuKeys.ZoomCombo, _plugin.Identity);
             combo.DataSource.AddRange(new[] { "50%", "75%", "100%", "150%", "200%", "300%" });
             combo.Width = 75;
+            
             bar.Update();
         }
     }

@@ -11,6 +11,7 @@ using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
 using MW5.Plugins.Helpers;
