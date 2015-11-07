@@ -91,7 +91,7 @@ namespace MW5.Plugins.Printing.Views
 
             // calc the necessary size in paper coordinates
             GeoSize size;
-            if (map.GetGeodesicSize(extents, true, out size))
+            if (map.GetGeodesicSize(extents, out size))
             {
                 mapElement.SizeF = LayoutScaleHelper.CalcMapSize(mapScale, size, extents.Width / extents.Height);
 

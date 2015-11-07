@@ -164,7 +164,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 if (!Resizing)
                 {
                     GeoSize geoSize;
-                    if (_map.GetGeodesicSize(_extents, true, out geoSize))
+                    if (_map.GetGeodesicSize(_extents, out geoSize))
                     {
                         scale = LayoutScaleHelper.CalcMapScale(geoSize, SizeF);
                     }

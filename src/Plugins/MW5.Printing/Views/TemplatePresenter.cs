@@ -47,7 +47,7 @@ namespace MW5.Plugins.Printing.Views
         private void OnFitToPageClicked()
         {
             GeoSize geoSize;
-            if (_context.Map.GetGeodesicSize(View.MapExtents, true, out geoSize))
+            if (_context.Map.GetGeodesicSize(View.MapExtents, out geoSize))
             {
                 // TODO: choose depending on selected format
                 var size = new SizeF(700, 700);   // 7 by 7 inches
@@ -107,7 +107,7 @@ namespace MW5.Plugins.Printing.Views
             var extents = View.MapExtents;
 
             GeoSize geoSize;
-            if (!_context.Map.GetGeodesicSize(extents, true, out geoSize))
+            if (!_context.Map.GetGeodesicSize(extents, out geoSize))
             {
                 return false;
             }

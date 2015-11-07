@@ -32,15 +32,45 @@ namespace MW5.Api.Helpers
         /// <summary>
         /// Calculates the size of currently selected map extents in meters
         /// </summary>
-        public static bool GetGeodesicSize(this IPrintableMap map, bool allowEmptyProjection, out GeoSize size)
+        public static bool GetGeodesicSize(this IPrintableMap map, out GeoSize size)
         {
-            return GetGeodesicSize(map, map.Extents, allowEmptyProjection, out size);
+            return GetGeodesicSize(map, map.Extents, out size);
         }
 
         /// <summary>
         /// Calculates the size of specified map extents in meters.
         /// </summary>
-        public static bool GetGeodesicSize(this IPrintableMap map, IEnvelope extents, bool allowEmptyProjection, out GeoSize size)
+        public static bool GetGeodesicSize(this IPrintableMap map, IEnvelope extents, out GeoSize size)
+        {
+            size = null;
+            double width, height;
+
+            // for geographic coordinate systems distortions are too high
+            // to be meaningful in scale calculations
+            if (!map.Projection.IsEmpty && !map.Projection.IsGeographic)
+            {
+                if (map.Projection.HasTransformation)
+                {
+                    // the projection supports coordinate tranformation to WGS84
+                    if (CalculateExtentsWidth(map, extents, out width) &&
+                        CalculateExtentsHeight(map, extents, out height))
+                    {
+                        size = new GeoSize(width, height);
+                        return true;
+                    }
+                }
+            }
+
+            // we have nothing better but return width and height of the extents in original
+            // coordinate system; only let's convert them to meters (geodesic size is always in meters)
+            width = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Width);
+            height = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Height);
+
+            size = new GeoSize(width, height);
+            return true;
+        }
+
+        public static bool GetGeodesicSizePrecise(this IPrintableMap map, IEnvelope extents, out GeoSize size)
         {
             size = null;
             double width, height;
@@ -48,7 +78,8 @@ namespace MW5.Api.Helpers
             if (map.Projection.HasTransformation)
             {
                 // the projection supports coordinate tranformation to WGS84
-                if (CalculateExtentsWidth(map, extents, out width) && CalculateExtentsHeight(map, extents, out height))
+                if (CalculateExtentsWidth(map, extents, out width) &&
+                    CalculateExtentsHeight(map, extents, out height))
                 {
                     size = new GeoSize(width, height);
                     return true;
@@ -68,20 +99,7 @@ namespace MW5.Api.Helpers
                 return true;
             }
 
-            // we can't return geodesic size, still if client wants it, we can give a reasonable approximation
-            // based on extents size and map units (with all the distortions that projection may introduce)
-            if (!allowEmptyProjection)
-            {
-                return false;
-            }
-
-            // we have nothing better but return width and height of the extents in original
-            // coordinate system; only let's convert them to meters (geodesic size is always in meters)
-            width = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Width);
-            height = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Height);
-
-            size = new GeoSize(width, height);
-            return true;
+            return false;
         }
 
         private static bool CalculateExtentsWidth(this IPrintableMap map, IEnvelope extents, out double width)
