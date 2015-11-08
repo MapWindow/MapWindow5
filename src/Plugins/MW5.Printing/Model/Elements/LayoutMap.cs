@@ -183,7 +183,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
                 var size = LayoutScaleHelper.CalcMapGeoSize(value, SizeF);
 
-                var extents = LayoutScaleHelper.CalcNewExtents(_map, _extents, size);
+                var extents = LayoutScaleHelper.CalcNewExtents(_map, _extents, size, SizeF);
 
                 _extents = extents;
 

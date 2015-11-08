@@ -82,11 +82,12 @@ namespace MW5.Plugins.Printing.Helpers
         /// <param name="map">The map.</param>
         /// <param name="oldExtents">The extents.</param>
         /// <param name="newSize">The new size.</param>
+        /// <param name="paperSize"></param>
         /// <returns>New extents</returns>
-        public static IEnvelope CalcNewExtents(IPrintableMap map, IEnvelope oldExtents, GeoSize newSize)
+        public static IEnvelope CalcNewExtents(IPrintableMap map, IEnvelope oldExtents, GeoSize newSize, SizeF paperSize)
         {
             int depth = 0;
-            return CalcNewExtentsCore(map, oldExtents, newSize, ref depth);
+            return CalcNewExtentsCore(map, oldExtents, newSize, paperSize, ref depth);
         }
 
         /// <summary>
@@ -96,6 +97,7 @@ namespace MW5.Plugins.Printing.Helpers
             IPrintableMap map,
             IEnvelope oldExtents,
             GeoSize newSize,
+            SizeF paperSize,
             ref int depth)
         {
             depth++;
@@ -105,17 +107,21 @@ namespace MW5.Plugins.Printing.Helpers
             {
                 // TODO: tolerance can be different depending on map units
                 const int maxDepth = 5;
-                if (NumericHelper.Equal(newSize.Product, oldSize.Product, 1e-6) || depth > maxDepth)
+
+                double newScale = CalcMapScale(newSize, paperSize);
+                double oldScale = CalcMapScale(oldSize, paperSize);
+
+                if (NumericHelper.Equal(newScale, oldScale, 1e-6) || depth > maxDepth)
                 {
                     return oldExtents;
                 }
 
-                double ratio = Math.Sqrt(newSize.Product / oldSize.Product) - 1;
+                double ratio = newScale / oldScale - 1;
                 double dx = oldExtents.Width * ratio;
                 double dy = oldExtents.Height * ratio;
                 var extents = oldExtents.Inflate(dx, dy);
 
-                return CalcNewExtentsCore(map, extents, newSize, ref depth);
+                return CalcNewExtentsCore(map, extents, newSize, paperSize, ref depth);
             }
 
             return null;

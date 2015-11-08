@@ -42,29 +42,16 @@ namespace MW5.Api.Helpers
         /// </summary>
         public static bool GetGeodesicSize(this IPrintableMap map, IEnvelope extents, out GeoSize size)
         {
-            size = null;
-            double width, height;
-
-            // for geographic coordinate systems distortions are too high
-            // to be meaningful in scale calculations
-            if (!map.Projection.IsEmpty && !map.Projection.IsGeographic)
+            bool result = GetGeodesicSizePrecise(map, extents, out size);
+            if (result)
             {
-                if (map.Projection.HasTransformation)
-                {
-                    // the projection supports coordinate tranformation to WGS84
-                    if (CalculateExtentsWidth(map, extents, out width) &&
-                        CalculateExtentsHeight(map, extents, out height))
-                    {
-                        size = new GeoSize(width, height);
-                        return true;
-                    }
-                }
+                return true;
             }
 
             // we have nothing better but return width and height of the extents in original
             // coordinate system; only let's convert them to meters (geodesic size is always in meters)
-            width = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Width);
-            height = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Height);
+            double width = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Width);
+            double height = UnitConversionHelper.Convert(map.MapUnits, LengthUnits.Meters, extents.Height);
 
             size = new GeoSize(width, height);
             return true;
