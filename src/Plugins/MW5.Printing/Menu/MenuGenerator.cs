@@ -30,6 +30,7 @@ namespace MW5.Plugins.Printing.Menu
             var items = context.Toolbars.FileToolbar.Items;
 
             items.AddButton(_commands[MenuKeys.Print]).BeginGroup = true;
+            items.AddButton(_commands[MenuKeys.SelectPrintArea]);
 
             context.Toolbars.FileToolbar.Update();
         }

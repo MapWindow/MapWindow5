@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 using AxMapWinGIS;
+using MW5.Api.Concrete;
 using MW5.Api.Events;
 using MW5.Shared;
 
@@ -107,7 +109,15 @@ namespace MW5.Api.Map
 
         private void MapSelectBoxFinal(object sender, _DMapEvents_SelectBoxFinalEvent e)
         {
-            Invoke(sender, SelectBoxFinal, new SelectBoxFinalEventArgs(e));
+            double x, y, x2, y2;
+            PixelToProj(e.left, e.top, out x, out y);
+            PixelToProj(e.right, e.bottom, out x2, out y2);
+
+            var box = new Envelope(x, x2, y, y2);
+
+            var r = new Rectangle(e.left, e.top, e.right - e.left, e.bottom - e.top);
+
+            Invoke(sender, SelectBoxFinal, new SelectBoxFinalEventArgs(r, box, _selectionModeClientId));
         }
 
         private void MapProjectionMismatch(object sender, _DMapEvents_ProjectionMismatchEvent e)

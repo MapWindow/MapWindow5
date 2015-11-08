@@ -6,10 +6,12 @@
 
 using System;
 using System.Linq;
+using MW5.Api.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
+using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views;
 using MW5.UI.Menu;
 
@@ -25,33 +27,22 @@ namespace MW5.Plugins.Printing.Menu
             if (plugin == null) throw new ArgumentNullException("plugin");
             _plugin = plugin;
 
-            plugin.ItemClicked += plugin_ItemClicked;
+            plugin.ItemClicked += OnItemClicked;
             plugin.ViewUpdating += ViewUpdating;
         }
 
-        private void InitPaperSize()
-        {
-            var ps = PrinterManager.PrinterSettings;
-            PaperSizes.AddPaperSizes(ps);
 
-            // TODO: improve conversion from PaperFormat to PaperSize
-            var paperSizes = PaperSizes.GetPaperSizes(ps);
-            var paperSize = paperSizes.FirstOrDefault(p => p.PaperName == PaperFormat.A4.ToString());
-
-            var pgs = PrinterManager.PageSettings;
-            pgs.PaperSize = paperSize;
-        }
 
         private void ViewUpdating(object sender, EventArgs e)
         {
-            //var item = _context.Toolbars.FindItem(MenuKeys.Print, _plugin.Identity);
-            //if (item != null)
-            //{
-            //    item.Checked = _context.Map.MapCursor == MapCursor.Identify;
-            //}
+            var item = _context.Toolbars.FindItem(MenuKeys.SelectPrintArea, _plugin.Identity);
+            if (item != null)
+            {
+                item.Checked = _context.Map.GetIsCustomSelectionMode(_plugin.Identity.Guid);
+            }
         }
 
-        private void plugin_ItemClicked(object sender, MenuItemEventArgs e)
+        private void OnItemClicked(object sender, MenuItemEventArgs e)
         {
             switch (e.ItemKey)
             {
@@ -60,10 +51,12 @@ namespace MW5.Plugins.Printing.Menu
 
                     if (_context.Container.Run<TemplatePresenter, TemplateModel>(model))
                     {
-                        InitPaperSize();
-
                         _context.Container.Run<LayoutPresenter, TemplateModel>(model);
                     }
+                    break;
+                case MenuKeys.SelectPrintArea:
+                    _context.Map.MapCursor = MapCursor.Selection;
+                    _context.Map.StartCustomSelectionMode(_plugin.Identity.Guid);
                     break;
             }
         }

@@ -133,6 +133,14 @@ namespace MW5.Api.Interfaces
 
         void ClearExtentHistory();
 
+        void StartCustomSelectionMode(Guid clientId);
+
+        void StopCustomSelectionMode();
+
+        bool IsCustomSelectionMode { get; }
+
+        bool GetIsCustomSelectionMode(Guid clientId);
+
         #region Not implemented
 
         //event _DMapEvents_SelectBoxDragEventHandler SelectBoxDrag;

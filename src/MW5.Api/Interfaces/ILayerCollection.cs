@@ -59,7 +59,7 @@ namespace MW5.Api.Interfaces
         /// <param name="targetGroupHandle"> layerHandle of the group into which this layer should be added </param>
         /// <param name="positionInGroup"> Position in group new layer should be inserted at </param>
         /// <returns> layerHandle to the Layer on success, -1 on failure </returns>
-        int Add(ILayerSource layerSource, bool visible, bool legendVisible, int targetGroupHandle, int positionInGroup = -1);
+        int Add(ILayerSource layerSource, bool visible, bool legendVisible, int targetGroupHandle = -1, int positionInGroup = -1);
 
         /// <summary>
         /// Adds a layer to the topmost Group

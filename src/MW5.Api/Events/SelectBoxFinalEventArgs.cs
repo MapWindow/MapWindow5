@@ -1,46 +1,38 @@
 ﻿using System;
 using System.Drawing;
 using AxMapWinGIS;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Events
 {
     public class SelectBoxFinalEventArgs: EventArgs
     {
-        private readonly _DMapEvents_SelectBoxFinalEvent _args;
+        private Rectangle _bounds;
+        private IEnvelope _projectedBounds;
+        private readonly Guid _cliendId;
 
-        internal SelectBoxFinalEventArgs(_DMapEvents_SelectBoxFinalEvent args)
+        internal SelectBoxFinalEventArgs(Rectangle bounds, IEnvelope projectedBounds, Guid clientId)
         {
-            _args = args;
-            if (args == null)
-            {
-                throw new NullReferenceException("Internal reference is null.");
-            }
-        }
+            if (projectedBounds == null) throw new ArgumentNullException("projectedBounds");
 
-        public int Bottom
-        {
-            get { return _args.bottom; }
-        }
-
-        public int Left
-        {
-            get { return _args.left; }
-        }
-
-        public int Right
-        {
-            get { return _args.right; }
-        }
-
-        public int Top
-        {
-            get { return _args.top; }
+            _bounds = bounds;
+            _projectedBounds = projectedBounds;
+            _cliendId = clientId;
         }
 
         public Rectangle Bounds
         {
-            // TODO: check if top / bottom is correct
-            get { return new Rectangle(_args.left, _args.top, _args.right - _args.left, _args.top - _args.bottom); }
+            get { return _bounds; }
+        }
+
+        public IEnvelope ProjectedBounds
+        {
+            get { return _projectedBounds;  }
+        }
+
+        public Guid ClientId
+        {
+            get { return _cliendId; }
         }
     }
 }

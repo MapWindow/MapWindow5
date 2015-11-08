@@ -93,7 +93,9 @@
     <Compile Include="Helpers\GdalFormats.cs" />
     <Compile Include="Helpers\GdalHelper.cs" />
     <Compile Include="Helpers\GeodesicUtils.cs" />
+    <Compile Include="Helpers\MapHelper.cs" />
     <Compile Include="Helpers\UnitConversionHelper.cs" />
+    <Compile Include="Helpers\UnitsHelper.cs" />
     <Compile Include="Interfaces\IDynamicVisibilityTarget.cs" />
     <Compile Include="Interfaces\IGridSource.cs" />
     <Compile Include="Interfaces\IMeasuringSettings.cs" />

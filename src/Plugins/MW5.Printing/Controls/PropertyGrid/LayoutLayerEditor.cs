@@ -51,7 +51,7 @@ namespace MW5.Plugins.Printing.Controls.PropertyGrid
 
                 var values = (List<int>)value;
 
-                foreach (var layer in layers.Reverse())
+                foreach (var layer in layers.Where(l => !l.HideFromLegend).Reverse())
                 {
                     clb.Items.Add(layer.Name, values.Contains(layer.Handle));
                 }

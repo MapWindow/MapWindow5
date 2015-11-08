@@ -13,7 +13,7 @@ namespace MW5.Api.Map
     public class BoundMapControl : MapControl, IMap
     {
         private ILayerCollection<ILayer> _layers;
-        private CustomCursor _customCursor = null;
+        private CustomCursor _customCursor;
 
         public BoundMapControl()
         {
@@ -25,7 +25,7 @@ namespace MW5.Api.Map
             if (MapCursor != MapCursor.None)
             {
                 _customCursor = null;
-                _map.MapCursor = MapWinGIS.tkCursor.crsrMapDefault;
+                _map.MapCursor = tkCursor.crsrMapDefault;
             }
         }
 
@@ -81,17 +81,19 @@ namespace MW5.Api.Map
             set
             {
                 _customCursor = value;
+
                 if (value != null && value.Guid != default(Guid))
                 {
                     if (_customCursor.Cursor == null)
                     {
-                        _map.MapCursor = MapWinGIS.tkCursor.crsrArrow;
+                        _map.MapCursor = tkCursor.crsrArrow;
                     }
                     else
                     {
                         _map.UDCursorHandle = (int)_customCursor.Cursor.Handle;
-                        _map.MapCursor = MapWinGIS.tkCursor.crsrUserDefined;
+                        _map.MapCursor = tkCursor.crsrUserDefined;
                     }
+
                     MapCursor = MapCursor.None;
                 }
             }

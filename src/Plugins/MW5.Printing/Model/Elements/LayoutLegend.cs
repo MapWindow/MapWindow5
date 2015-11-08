@@ -283,8 +283,6 @@ namespace MW5.Plugins.Printing.Model.Elements
             get { return _font2; }
         }
 
-        
-
         public override void RefreshElement()
         {
             _buffer = null;
@@ -424,7 +422,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             var layers = group.Layers.Where(item => _layerHandles.Contains(item.Handle)).ToList();
 
-            foreach (var item in layers)
+            foreach (var item in layers.Where(l => !l.HideFromLegend))
             {
                 var fs = item.FeatureSet;
                 if (fs != null)

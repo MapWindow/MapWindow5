@@ -80,6 +80,8 @@ namespace MW5.Plugins.Printing.Views
 
             SaveConfig();
 
+            PrinterManager.InitPaperSize();
+
             return true;
         }
 

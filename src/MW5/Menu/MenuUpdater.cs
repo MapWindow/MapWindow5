@@ -50,11 +50,11 @@ namespace MW5.Menu
             FindToolbarItem(MenuKeys.ZoomPrev).Enabled = _map.ExtentHistoryUndoCount > 0;
             FindToolbarItem(MenuKeys.ZoomNext).Enabled = _map.ExtentHistoryRedoCount > 0;
 
-            FindToolbarItem(MenuKeys.SelectByRectangle).Checked = _map.MapCursor == MapCursor.Selection;
+            bool selection = _map.MapCursor == MapCursor.Selection && !_map.IsCustomSelectionMode;
+            FindToolbarItem(MenuKeys.SelectByRectangle).Checked = selection;
             FindToolbarItem(MenuKeys.SelectByPolygon).Checked = _map.MapCursor == MapCursor.SelectByPolygon;
 
-            bool selectionCursor = _map.MapCursor == MapCursor.Selection ||
-                                   _map.MapCursor == MapCursor.SelectByPolygon;
+            bool selectionCursor = selection || _map.MapCursor == MapCursor.SelectByPolygon;
             FindToolbarItem(MenuKeys.SelectDropDown).Checked = selectionCursor;
 
             bool distance = _map.Measuring.Type == MeasuringType.Distance;

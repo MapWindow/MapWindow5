@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
@@ -14,6 +15,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
+using MW5.Shared;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
@@ -103,7 +105,18 @@ namespace MW5.Plugins.Printing.Views
         /// </summary>
         public void Initialize()
         {
-            cboArea.SetValue(Model.PrintArea);
+            if (Model.Extents != null)
+            {
+                cboArea.Items.Clear();
+                var areas = new List<PrintArea>() { PrintArea.Selection };
+                cboArea.AddItemsFromEnum(areas);
+                cboArea.SelectedIndex = 0;
+            }
+            else
+            {
+                cboArea.SetValue(Model.PrintArea);
+            }
+
             cboOrientation.SetValue(AppConfig.Instance.PrintingOrientation);
 
             // TODO: perhaps would be better to call fit to page automatically

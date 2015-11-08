@@ -9,5 +9,6 @@ namespace MW5.Plugins.Printing.Menu
     internal class MenuKeys
     {
         public const string Print = "ppPrint";
+        public const string SelectPrintArea = "ppSelectPrintArea";
     }
 }

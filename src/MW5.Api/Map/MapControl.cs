@@ -21,6 +21,8 @@ namespace MW5.Api.Map
     [ToolboxBitmap(typeof (MapControl), "Resources.Map.bmp")]
     public partial class MapControl : UserControl
     {
+        private Guid _selectionModeClientId;
+
         public MapControl()
         {
             InitializeComponent();
@@ -458,9 +460,33 @@ namespace MW5.Api.Map
             set
             {
                 _map.CursorMode = (tkCursorMode) value;
-                // TODO: perhaps fire it from within MapWinGIS                
+                StopCustomSelectionMode();
                 FireMapCursorChanged(this, new EventArgs());
             }
+        }
+
+        public void StartCustomSelectionMode(Guid clientId)
+        {
+            _selectionModeClientId = clientId;
+            FireMapCursorChanged(this, new EventArgs());
+        }
+
+        public void StopCustomSelectionMode()
+        {
+            _selectionModeClientId = default(Guid);
+        }
+
+        public bool IsCustomSelectionMode
+        {
+            get
+            {
+                return _selectionModeClientId != default(Guid) && MapCursor == MapCursor.Selection;
+            }
+        }
+
+        public bool GetIsCustomSelectionMode(Guid clientId)
+        {
+            return IsCustomSelectionMode && clientId == _selectionModeClientId;
         }
 
         public TileProvider TileProvider

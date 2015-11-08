@@ -5,6 +5,8 @@
 // -------------------------------------------------------------------------------------------
 
 using System.Drawing.Printing;
+using System.Linq;
+using MW5.Plugins.Printing.Enums;
 
 namespace MW5.Plugins.Printing.Helpers
 {
@@ -49,6 +51,19 @@ namespace MW5.Plugins.Printing.Helpers
 
                 return _printingSettings;
             }
+        }
+
+        public static void InitPaperSize()
+        {
+            var ps = PrinterSettings;
+            PaperSizes.AddPaperSizes(ps);
+
+            // TODO: improve conversion from PaperFormat to PaperSize
+            var paperSizes = PaperSizes.GetPaperSizes(ps);
+            var paperSize = paperSizes.FirstOrDefault(p => p.PaperName == PaperFormat.A4.ToString());
+
+            var pgs = PageSettings;
+            pgs.PaperSize = paperSize;
         }
     }
 }

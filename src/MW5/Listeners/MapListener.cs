@@ -60,6 +60,7 @@ namespace MW5.Listeners
             _map.MouseMove += MapMouseMove;
             _map.MouseDoubleClick += MapMouseDoubleClick;
             _map.SelectionChanged += MapSelectionChanged;
+            _map.SelectBoxFinal += MapSelectBoxFinal;
             _map.ShapeIdentified += MapShapeIdentified;
             _map.ShapeValidationFailed += MapShapeValidationFailed;
             _map.ValidateShape += MapValidateShape;
@@ -69,6 +70,11 @@ namespace MW5.Listeners
             {
                 mapControl.PreviewKeyDown += MapListener_PreviewKeyDown;
             }
+        }
+
+        private void MapSelectBoxFinal(object sender, SelectBoxFinalEventArgs e)
+        {
+            _broadcaster.BroadcastEvent(p => p.SelectBoxFinal_, sender as IMuteMap, e);
         }
         
         private void MapAfterShapeEdit(object sender, AfterShapeEditEventArgs e)
@@ -114,8 +120,15 @@ namespace MW5.Listeners
 
         private void MapChooseLayer(object sender, ChooseLayerEventArgs e)
         {
+            if (_context.Map.IsCustomSelectionMode)
+            {
+                // someone wants to override default selection box behavior, let's not interfere
+                return;
+            }
+            
             e.LayerHandle = _context.Map.Layers.Current.Handle;
             _broadcaster.BroadcastEvent(p => p.ChooseLayer_, sender as IMuteMap, e);
+            
         }
 
         private void MapCursorChanged(object sender, EventArgs e)

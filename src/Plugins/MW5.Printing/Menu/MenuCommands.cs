@@ -19,7 +19,11 @@ namespace MW5.Plugins.Printing.Menu
 
         public override IEnumerable<MenuCommand> GetCommands()
         {
-            return new List<MenuCommand> { new MenuCommand("Print", MenuKeys.Print, Resources.img_printer24) };
+            return new List<MenuCommand>
+                       {
+                           new MenuCommand("Print", MenuKeys.Print, Resources.img_printer24),
+                           new MenuCommand("Select Print Area", MenuKeys.SelectPrintArea, Resources.img_select_print_area24)
+                       };
         }
     }
 }

@@ -259,6 +259,7 @@ namespace MW5.Plugins.Concrete
         internal MapEventHandler<ShapeValidationFailedEventArgs> ShapeValidationFailed_;
         internal MapEventHandler<ValidateShapeEventArgs> ValidateShape_;
         internal MapEventHandler<LockedEventArgs> MapLocked_;
+        internal MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal_;
 
         // public events
         public event MapEventHandler<AfterShapeEditEventArgs> AfterShapeEdit
@@ -332,7 +333,17 @@ namespace MW5.Plugins.Concrete
             add { MouseUp_ += value; }
             remove { MouseUp_ -= value; }
         }
-        
+
+        /// <summary>
+        /// Occurs when MapControl.MapCursor set to MapCursor.Selection, MapControl.CustomCursor is not null and
+        /// user selects a rectangle on map.
+        /// </summary>
+        public event MapEventHandler<SelectBoxFinalEventArgs> SelectBoxFinal
+        {
+            add { SelectBoxFinal_ += value; }
+            remove { SelectBoxFinal_ -= value; }
+        }
+
         public event MapEventHandler<SelectionChangedEventArgs> SelectionChanged
         {
             add { SelectionChanged_ += value; }

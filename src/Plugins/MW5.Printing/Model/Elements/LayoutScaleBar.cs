@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
