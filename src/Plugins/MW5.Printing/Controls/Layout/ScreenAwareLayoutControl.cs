@@ -40,6 +40,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
         {
             _selectionBrush = new SolidBrush(Color.Transparent);
             _selectionPen = new Pen(Color.Orange, 2f);
+            _selectionPen.DashStyle = DashStyle.Dash;
+
             _marginBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
             _showMargins = true;
             _showRulers = true;

@@ -20,6 +20,7 @@ namespace MW5.Plugins.Printing
                 .RegisterView<IPageSetupView, PageSetupView>()
                 .RegisterView<ITemplateView, TemplateView>()
                 .RegisterView<ITableView, TableView>()
+                .RegisterView<IChooseDpiView, ChooseDpiView>()
                 .RegisterView<ICreateTableView, CreateTableView>()
                 .RegisterService<PdfExportService>()
                 .RegisterService<ElementsDockPanel>()

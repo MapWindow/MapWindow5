@@ -151,7 +151,7 @@
     <Compile Include="Controls\TemplateGrid.Designer.cs">
       <DependentUpon>TemplateGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ExportHelper.cs" />
+    <Compile Include="Services\ExportService.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Helpers\LayoutScaleHelper.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -188,10 +188,19 @@
     <Compile Include="Services\XmlEnvelope.cs" />
     <Compile Include="Services\XmlLayout.cs" />
     <Compile Include="Services\XmlPaper.cs" />
+    <Compile Include="Views\Abstract\IChooseDpiView.cs" />
     <Compile Include="Views\Abstract\ICreateTableView.cs" />
     <Compile Include="Views\Abstract\IPageSetupView.cs" />
     <Compile Include="Views\Abstract\ITableView.cs" />
     <Compile Include="Views\Abstract\ITemplateView.cs" />
+    <Compile Include="Views\ChooseDpiModel.cs" />
+    <Compile Include="Views\ChooseDpiPresenter.cs" />
+    <Compile Include="Views\ChooseDpiView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\ChooseDpiView.Designer.cs">
+      <DependentUpon>ChooseDpiView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateTableModel.cs" />
     <Compile Include="Views\CreateTablePresenter.cs" />
     <Compile Include="Views\CreateTableView.cs">
@@ -313,6 +322,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\Layout\LayoutControlBase.resx">
       <DependentUpon>LayoutControlBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\ChooseDpiView.resx">
+      <DependentUpon>ChooseDpiView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\CreateTableView.resx">
       <DependentUpon>CreateTableView.cs</DependentUpon>

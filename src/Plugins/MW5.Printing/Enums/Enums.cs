@@ -252,4 +252,12 @@ namespace MW5.Plugins.Printing.Enums
         Smallest = 1,
         Largest = 2,
     }
+
+    public enum ImageExportFormat
+    {
+        Png = 1,
+        Tiff = 2,
+        Jpg = 3,
+        Bmp = 4,
+    }
 }

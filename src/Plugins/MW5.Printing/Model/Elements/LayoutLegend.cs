@@ -487,7 +487,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 // because we used paper size in GetBitmapWidth 
                 _buffer.SetResolution(100f, 100f);
 
-                topClip = topClip / 100f * PrintingConstants.EXPORT_BASE_DPI;
+                //topClip = topClip / 100f * PrintingConstants.EXPORT_BASE_DPI;
             }
 
             var clipRect = new RectangleF { X = x, Y = y, Width = bitmapWidth + 3, Height = topClip };

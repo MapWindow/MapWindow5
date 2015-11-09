@@ -244,18 +244,18 @@ namespace MW5.Plugins.Printing.Model.Elements
         {
             if (_layoutMap == null || _layoutMap.Scale == 0) return;
 
-            var activeFont = printing ? FontHelper.ScaleFont(Font, ScreenHelper.LogicToScreenDpi) : Font;
+            var font = Font;
 
-            double geoBreakWidth = GetGeoBreakWidth(g, activeFont);
+            double geoBreakWidth = GetGeoBreakWidth(g, font);
             if (NumericHelper.Equal(geoBreakWidth, 0.0) || Double.IsNaN(geoBreakWidth))
             {
-                g.DrawString(@"#Scale Error#", activeFont, Brushes.Black, x, y);
+                g.DrawString(@"#Scale Error#", font, Brushes.Black, x, y);
                 return;
             }
 
             int breakWidth = GetBreakScreenWidth(geoBreakWidth);
 
-            var fontSize = MeasureString(g, geoBreakWidth, activeFont);
+            var fontSize = MeasureString(g, geoBreakWidth, font);
             float leftStart = fontSize.Width / 2F;
 
             StartDrawing(g, x, y);
@@ -276,8 +276,8 @@ namespace MW5.Plugins.Printing.Model.Elements
                 // displaying scale at bottom left
                 if (ShowScale)
                 {
-                    var width = MeasureString(g, geoBreakWidth * startBreak, activeFont).Width / 2;
-                    g.DrawString("1 : " + Map.Scale, activeFont, scaleBrush, leftStart - width, fontSize.Height * 2.5F);
+                    var width = MeasureString(g, geoBreakWidth * startBreak, font).Width / 2;
+                    g.DrawString("1 : " + Map.Scale, font, scaleBrush, leftStart - width, fontSize.Height * 2.5F);
                 }
 
                 // vertical marks
@@ -285,15 +285,15 @@ namespace MW5.Plugins.Printing.Model.Elements
                 {
                     g.DrawLine(scalePen, leftStart, yTop, leftStart, fontSize.Height + yTop);
 
-                    var width = MeasureString(g, geoBreakWidth * i, activeFont).Width / 2f;
+                    var width = MeasureString(g, geoBreakWidth * i, font).Width / 2f;
                     string s = Math.Abs(geoBreakWidth * i).ToString(CultureInfo.InvariantCulture);
-                    g.DrawString(s, activeFont, scaleBrush, leftStart - width, 0);
+                    g.DrawString(s, font, scaleBrush, leftStart - width, 0);
 
                     leftStart = leftStart + breakWidth;
                 }
 
                 // units
-                g.DrawString(UnitText, activeFont, scaleBrush, leftStart - breakWidth + (fontSize.Height / 2f), yTop);
+                g.DrawString(UnitText, font, scaleBrush, leftStart - breakWidth + (fontSize.Height / 2f), yTop);
             }
             finally
             {

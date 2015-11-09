@@ -226,7 +226,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         [DisplayNameEx(@"prop_updatemaparea")]
         public bool UpdateMapArea
         {
-            get { return this.MainMap || _updateMapArea; }
+            get { return MainMap || _updateMapArea; }
             set
             {
                 _updateMapArea = value;
@@ -235,27 +235,33 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         /// <summary>
-        /// Draws part of the map (belonging to a certain page). FOR PRINTING AND EXPORT ONLY
+        /// Draws part of the map (belonging to a certain page). For printing and export to bitmap only.
         /// </summary>
-        public bool Print(Graphics g, RectangleF rect, bool export)
+        public bool Print(Graphics g, RectangleF paperRect, bool export)
         {
-            var ext = ExtentsWithinPaperRectange(rect);
+            var ext = ExtentsWithinPaperRectange(paperRect);
 
-            float dpi = export ? g.DpiX : ScreenHelper.ScreenDpi;
+            Size size;
 
-            float bitmapDpi = export ? PrintingConstants.EXPORT_BASE_DPI : 96.0f;
-            var bmpWidth = export ? rect.Width : rect.Width * dpi / bitmapDpi;
-            var bmpHeight = export ? rect.Height : rect.Height * dpi / bitmapDpi;
-            float scale = export ? dpi / bitmapDpi : 1.0f;
-            
+            if (export)
+            {
+                float dpiRatio = g.DpiX / 100f;
+                var point = new PointF(paperRect.Width * dpiRatio, paperRect.Height * dpiRatio);
+                size = new Size(Convert.ToInt32(point.X), Convert.ToInt32(point.Y));
+            }
+            else
+            {
+                size = new Size((int)paperRect.Width, (int)paperRect.Height);
+            }
+
             //var tiles = _layoutControl.AxMap.Tiles;
             //bool tilesVisible = tiles.Visible;
             //TileProvider provider = tiles.Provider;
             //tiles.Visible = _drawTiles;
             //tiles.Provider = tileProvider;
-            
-            var size = new Size(Convert.ToInt32(bmpWidth), Convert.ToInt32(bmpHeight));
-            bool result = RenderMap(ext, size, g, scale);
+            //float scale = export ? dpi / bitmapDpi : 1.0f;
+
+            bool result = RenderMap(ext, size, g);
 
             //tiles.Visible = tilesVisible;
             //tiles.Provider = provider;
@@ -266,7 +272,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Loads tiles for particular rectangle, or all the element if none is specified
         /// </summary>
-        public bool LoadTiles(int dpi, RectangleF rect)
+        public bool LoadTiles(float dpi, RectangleF rect)
         {
             //float inchesWidth = rect == default(RectangleF) ? Size.Width : rect.Width;
             //int width = Convert.ToInt32(inchesWidth * dpi / 100);
@@ -350,6 +356,8 @@ namespace MW5.Plugins.Printing.Model.Elements
             if (_buffer == null)
             {
                 _buffer = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                
+                // TODO: don't we use a real screen DPI here?
                 _buffer.SetResolution(96, 96);
 
                 using (var graph = Graphics.FromImage(_buffer))
@@ -361,7 +369,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                     //tiles.Visible = _drawTiles;
                     //tiles.Provider = tileProvider;
 
-                    RenderMap(_extents, new Size(_buffer.Width, _buffer.Height), graph, 1.0f);
+                    RenderMap(_extents, new Size(_buffer.Width, _buffer.Height), graph);
 
                     //tiles.Visible = tilesVisible;
                     //tiles.Provider = provider;
@@ -448,32 +456,30 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// <summary>
         /// Actual rendering of map
         /// </summary>
-        private bool RenderMap(IEnvelope extent, Size bitmapSize, Graphics g, float scale)
+        private bool RenderMap(IEnvelope extent, Size bitmapSize, Graphics g)
         {
             if (bitmapSize.Width < 1 | bitmapSize.Height < 1) return false;
 
-            var mapExtent = extent.Clone();
-
             _map.Lock();
 
-            //var startupCursor = axMap.MapCursor;
-            //axMap.MapCursor = tkCursor.crsrWait;
-            //bool state = axMap.ScalebarVisible;
-            //axMap.ScalebarVisible = false;
-
-            g.Clear(Color.White);
+            // save settings
+            bool state = _map.ScalebarVisible;
+            _map.ScalebarVisible = false;
 
             float dx = g.Transform.OffsetX;
             float dy = g.Transform.OffsetY;
             var clip = g.ClipBounds;
+
+            // rendering
+            g.Clear(Color.White);
             var dcPtr = g.GetHdc();
 
-            bool result = _map.SnapShotToDC2(dcPtr, mapExtent, bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width, clip.Height);
+            bool result = _map.SnapShotToDC2(dcPtr, extent.Clone(), bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width, clip.Height);
+
             g.ReleaseHdc(dcPtr);
 
             // restore settings
-            //axMap.ScalebarVisible = state;
-            //axMap.MapCursor = startupCursor;
+            _map.ScalebarVisible = state;
 
             _map.Unlock();
 

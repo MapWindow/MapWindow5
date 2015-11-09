@@ -92,7 +92,7 @@ namespace MW5.Plugins.Printing.Services
             pd.PrinterSettings.ToPage = 1;
             pd.PrinterSettings.PrintRange = hasSelection ? PrintRange.Selection : PrintRange.AllPages;
 
-            return pd.ShowDialog() != DialogResult.OK ? pd : null;
+            return pd.ShowDialog() == DialogResult.OK ? pd : null;
         }
 
         /// <summary>

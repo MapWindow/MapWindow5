@@ -120,31 +120,16 @@ namespace MW5.Plugins.Printing.Views
                     }
                     break;
                 case LayoutMenuKeys.PrinterSetup:
-                    using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
-                    {
-                        if (pd.ShowDialog(ParentView) == DialogResult.OK)
-                        {
-                            _layoutControl.Invalidate();
-                        }
-                    }
+                    RunPrinterSetup();
                     break;
                 case LayoutMenuKeys.PageSetup:
-                    var model = _layoutControl.PrinterSettings;
-                    if (_context.Container.Run<PageSetupPresenter, PrinterSettings>(model))
-                    {
-                        _layoutControl.Pages.MarkPageSizeDirty();
-                        _layoutControl.UpdateLayout();
-
-                        // TODO: trigger in some other way
-                        _layoutControl.PrinterSettings = model;
-                        _layoutControl.Invalidate();
-                    }
+                    RunPageSetup();
                     break;
                 case LayoutMenuKeys.ExportToPdf:
                     _pdfService.ExportToPdf(_layoutControl, ParentView);
                     break;
                 case LayoutMenuKeys.ExportToBitmap:
-                    ExportHelper.ExportToBitmap(_layoutControl.Pages, _layoutControl.LayoutElements);
+                    ExportToBitmap();
                     break;
                 case LayoutMenuKeys.ZoomIn:
                     _layoutControl.ZoomIn();
@@ -217,6 +202,49 @@ namespace MW5.Plugins.Printing.Views
             }
 
             _view.UpdateView();
+        }
+
+        private void RunPrinterSetup()
+        {
+            using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
+            {
+                if (pd.ShowDialog(ParentView) == DialogResult.OK)
+                {
+                    _layoutControl.Invalidate();
+                }
+            }
+        }
+
+        private void RunPageSetup()
+        {
+            var model = _layoutControl.PrinterSettings;
+            if (_context.Container.Run<PageSetupPresenter, PrinterSettings>(model))
+            {
+                _layoutControl.Pages.MarkPageSizeDirty();
+                _layoutControl.UpdateLayout();
+
+                // TODO: trigger in some other way
+                _layoutControl.PrinterSettings = model;
+                _layoutControl.Invalidate();
+            }
+        }
+
+        private void ExportToBitmap()
+        {
+            var exportService = new ExportService();
+            
+            var paperSize = new Size(_layoutControl.Pages.TotalWidth, _layoutControl.Pages.TotalHeight);
+
+            var bitmapSize = exportService.GetBitmapSize(paperSize, 96);
+
+            var model = new ChooseDpiModel(bitmapSize);
+
+            if (!_context.Container.Run<ChooseDpiPresenter, ChooseDpiModel>(model))
+            {
+                return;
+            }
+
+            exportService.ExportToBitmap(paperSize, _layoutControl.LayoutElements, model.Dpi);
         }
 
         private void ConvertElementToBitmap()
