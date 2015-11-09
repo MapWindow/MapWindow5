@@ -446,35 +446,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         break;
                 }
             }
-            else if (e.Button == MouseButtons.Right)
-            {
-                switch (_mouseMode)
-                {
-                    case MouseMode.Default:
-                        if (_selectedLayoutElements.Count < 1)
-                        {
-                            for (int i = 0; i < _contextMenuRight.MenuItems.Count; i++)
-                            {
-                                _contextMenuRight.MenuItems[i].Enabled = false;
-                            }
-                        }
-                        else if (_selectedLayoutElements.Count == 1)
-                        {
-                            _cMnuSelAli.Enabled = false;
-                            _cMnuSelFit.Enabled = false;
-                        }
-
-                        _contextMenuRight.Show(this, e.Location);
-
-                        for (int i = 0; i < _contextMenuRight.MenuItems.Count; i++)
-                        {
-                            _contextMenuRight.MenuItems[i].Enabled = true;
-                        }
-                        break;
-                }
-            }
-
-            
         }
 
         private void ResizeSelected(float deltaX, float deltaY)

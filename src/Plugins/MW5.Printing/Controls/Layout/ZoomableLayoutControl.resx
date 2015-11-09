@@ -152,20 +152,11 @@
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ZoomableLayoutControl</value>
   </data>
-  <data name="&gt;&gt;_cMnuMoveDown.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="&gt;&gt;_cMnuSelAli.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;_cMnuSelHor.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_vScrollBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>16, 394</value>
-  </data>
-  <data name="&gt;&gt;_hScrollBar.Type" xml:space="preserve">
-    <value>System.Windows.Forms.HScrollBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_cMnuMargVert.Name" xml:space="preserve">
     <value>_cMnuMargVert</value>
@@ -215,6 +206,9 @@
   <data name="&gt;&gt;_cMnuSelFit.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;_cMnuMargHor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="_hScrollBarPanel.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -222,8 +216,8 @@
   <data name="&gt;&gt;_hScrollBar.Parent" xml:space="preserve">
     <value>_hScrollBarPanel</value>
   </data>
-  <data name="&gt;&gt;_menuItem2.Name" xml:space="preserve">
-    <value>_menuItem2</value>
+  <data name="_vScrollBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>408, 0</value>
   </data>
   <data name="&gt;&gt;_hScrollBarPanel.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -267,6 +261,9 @@
   <data name="&gt;&gt;_cMnuMargBottom.Name" xml:space="preserve">
     <value>_cMnuMargBottom</value>
   </data>
+  <data name="&gt;&gt;_vScrollBar.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
   <data name="&gt;&gt;_hScrollBar.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
@@ -301,6 +298,9 @@
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_cMnuMargRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;_cMnuSelLeft.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_cMnuMargTop.Type" xml:space="preserve">
@@ -342,23 +342,23 @@
   <data name="&gt;&gt;_cMnuMarAli.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;_vScrollBar.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="&gt;&gt;_cMnuSelHor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="_hScrollBar.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;_cMnuSelLeft.Type" xml:space="preserve">
+  <data name="&gt;&gt;_cMnuMoveDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>MW5.Plugins.Printing.Controls.Layout.LayoutControlBase, MW5.Printing, Version=0.0.1.36817, Culture=neutral, PublicKeyToken=null</value>
   </data>
-  <data name="&gt;&gt;_cMnuMargHor.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;_menuItem2.Name" xml:space="preserve">
+    <value>_menuItem2</value>
   </data>
-  <data name="_vScrollBar.Location" type="System.Drawing.Point, System.Drawing">
-    <value>408, 0</value>
+  <data name="&gt;&gt;_hScrollBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.HScrollBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;_contextMenuRight.Type" xml:space="preserve">
     <value>System.Windows.Forms.ContextMenu, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

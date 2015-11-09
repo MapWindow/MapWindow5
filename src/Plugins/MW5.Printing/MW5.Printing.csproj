@@ -171,7 +171,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Helpers\FileDialogHelper.cs" />
-    <Compile Include="Helpers\LayoutElementsHelper.cs" />
+    <Compile Include="Helpers\AlignHelper.cs" />
     <Compile Include="Helpers\LayoutHelper.cs" />
     <Compile Include="Services\PrintingService.cs" />
     <Compile Include="Helpers\PaperSizesCache.cs" />
@@ -322,6 +322,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Controls\Layout\LayoutControlBase.resx">
       <DependentUpon>LayoutControlBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Layout\ZoomableLayoutControl.zh-CN.resx">
+      <DependentUpon>ZoomableLayoutControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ChooseDpiView.resx">
       <DependentUpon>ChooseDpiView.cs</DependentUpon>
@@ -525,6 +528,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ico_properties24.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_bottom24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_center24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_left24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_right24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_top24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_align_vertical24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_fit_height24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_fit_width24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_fit24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

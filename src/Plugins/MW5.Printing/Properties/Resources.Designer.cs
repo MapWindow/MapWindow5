@@ -103,6 +103,66 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_align_bottom24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_bottom24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_align_center24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_center24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_align_left24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_left24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_align_right24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_right24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_align_top24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_top24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_align_vertical24 {
+            get {
+                object obj = ResourceManager.GetObject("img_align_vertical24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_close24 {
             get {
                 object obj = ResourceManager.GetObject("img_close24", resourceCulture);
@@ -156,6 +216,36 @@ namespace MW5.Plugins.Printing.Properties {
         internal static System.Drawing.Bitmap img_export24 {
             get {
                 object obj = ResourceManager.GetObject("img_export24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_fit_height24 {
+            get {
+                object obj = ResourceManager.GetObject("img_fit_height24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_fit_width24 {
+            get {
+                object obj = ResourceManager.GetObject("img_fit_width24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_fit24 {
+            get {
+                object obj = ResourceManager.GetObject("img_fit24", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

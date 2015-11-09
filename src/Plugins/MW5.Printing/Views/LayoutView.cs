@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
@@ -118,6 +119,31 @@ namespace MW5.Plugins.Printing.Views
             layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
             layoutControl1.MouseMove += OnLayoutMouseMove;
             layoutControl1.ElementsChanged += (s, e) => _elements.View.UpdateSelectionFromMap();
+            contextMenuStripEx1.Opening += ContextMenuOpening;
+        }
+
+        private void UpdateContextMenu(bool enable)
+        {
+            for (int i = 0; i < contextMenuStripEx1.Items.Count; i++)
+            {
+                contextMenuStripEx1.Items[i].Enabled = enable;
+            }
+        }
+
+        private void ContextMenuOpening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            UpdateContextMenu(true);
+
+            int count = layoutControl1.SelectedLayoutElements.Count();
+            if (count == 0)
+            {
+                UpdateContextMenu(false);
+            }
+            else if (count == 1)
+            {
+                toolAlign.Enabled = false;
+                toolMakeSameSize.Enabled = false;
+            }
         }
 
         private void OnLayoutMouseMove(object sender, MouseEventArgs e)
@@ -230,6 +256,16 @@ namespace MW5.Plugins.Printing.Views
             lblPageSize.Text = "Format: " + layoutControl1.PrinterSettings.DefaultPageSettings.PaperSize.PaperName;
             lblPageCount.Text = string.Format("Number of pages: {0} × {1}", layoutControl1.Pages.PageCountX,
                 layoutControl1.Pages.PageCountY);
+        }
+
+        public IEnumerable<ToolStripItemCollection> ToolStrips
+        {
+            get { yield return contextMenuStripEx1.Items; }
+        }
+
+        public IEnumerable<Control> Buttons
+        {
+            get { yield break; }
         }
     }
 

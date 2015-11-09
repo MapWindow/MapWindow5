@@ -260,4 +260,29 @@ namespace MW5.Plugins.Printing.Enums
         Jpg = 3,
         Bmp = 4,
     }
+
+    public enum LayoutCommand
+    {
+        MoveUp = 0,
+        MoveDown = 1,
+        Delete = 2,
+        AlignLeft = 3,
+        AlignRight = 4,
+        AlignTop = 5,
+        AlignBottom = 6,
+        AlignHorizontal = 7,
+        AlignVertical = 8,
+        PageAlignLeft = 9,
+        PageAlignRight = 10,
+        PageAlignTop = 11,
+        PageAlignBottom = 12,
+        PageAlignHorizontal = 13,
+        PageAlignVertical = 14,
+        FitWidth = 15,
+        FitHeight = 16,
+        FitBoth = 17,
+        SameWidth = 18,
+        SameHeight = 19,
+        SameBoth = 20,
+    }
 }

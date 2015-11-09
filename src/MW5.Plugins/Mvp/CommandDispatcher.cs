@@ -63,12 +63,14 @@ namespace MW5.Plugins.Mvp
                     continue;
                 }
 
-                if (item.Tag == null)
+                var menuItem = item as ToolStripDropDownItem;
+                bool hasChildren = menuItem != null && menuItem.DropDownItems.Count > 0;
+                
+                if (item.Tag == null && !hasChildren)
                 {
                     item.Click += ItemClick;
                 }
-
-                var menuItem = item as ToolStripDropDownItem;
+                
                 if (menuItem != null)
                 {
                     InitMenu(menuItem.DropDownItems);

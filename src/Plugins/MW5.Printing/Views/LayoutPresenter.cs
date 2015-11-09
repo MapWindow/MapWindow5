@@ -8,6 +8,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -23,7 +24,7 @@ using MW5.Plugins.Printing.Views.Abstract;
 
 namespace MW5.Plugins.Printing.Views
 {
-    internal class LayoutPresenter : BasePresenter<ILayoutView, TemplateModel>
+    internal class LayoutPresenter : ComplexPresenter<ILayoutView, LayoutCommand, TemplateModel>
     {
         private readonly IAppContext _context;
 
@@ -175,6 +176,89 @@ namespace MW5.Plugins.Printing.Views
             }
 
             return false;
+        }
+
+        public override void RunCommand(LayoutCommand command)
+        {
+            var width = View.LayoutControl.Pages.TotalWidth;
+            var height = View.LayoutControl.Pages.TotalHeight;
+            var list = View.LayoutControl.SelectedLayoutElements.ToList();
+
+            switch (command)
+            {
+                case LayoutCommand.MoveUp:
+                    View.LayoutControl.MoveSelectionUp();
+                    break;
+                case LayoutCommand.MoveDown:
+                    View.LayoutControl.MoveSelectionDown();
+                    break;
+                case LayoutCommand.Delete:
+                    View.LayoutControl.DeleteSelected();
+                    break;
+                case LayoutCommand.AlignLeft:
+                    list.Align(Alignment.Left);
+                    break;
+                case LayoutCommand.AlignRight:
+                    list.Align(Alignment.Right);
+                    break;
+                case LayoutCommand.AlignTop:
+                    list.Align(Alignment.Top);
+                    break;
+                case LayoutCommand.AlignBottom:
+                    list.Align(Alignment.Bottom);
+                    break;
+                case LayoutCommand.AlignHorizontal:
+                    list.Align(Alignment.Horizontal);
+                    break;
+                case LayoutCommand.AlignVertical:
+                    list.Align(Alignment.Vertical);
+                    break;
+                case LayoutCommand.PageAlignLeft:
+                    list.AlignByPageSide(Alignment.Left, width, height);
+                    break;
+                case LayoutCommand.PageAlignRight:
+                    list.AlignByPageSide(Alignment.Right, width, height);
+                    break;
+                case LayoutCommand.PageAlignTop:
+                    list.AlignByPageSide(Alignment.Top, width, height);
+                    break;
+                case LayoutCommand.PageAlignBottom:
+                    list.AlignByPageSide(Alignment.Bottom, width, height);
+                    break;
+                case LayoutCommand.PageAlignHorizontal:
+                    list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    break;
+                case LayoutCommand.PageAlignVertical:
+                    list.AlignByPageSide(Alignment.Vertical, width, height);
+                    break;
+                case LayoutCommand.FitWidth:
+                    list.FitToPage(Fit.Width, new Size(width, height));
+                    list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    break;
+                case LayoutCommand.FitHeight:
+                    list.FitToPage(Fit.Height, new Size(width, height));
+                    list.AlignByPageSide(Alignment.Vertical, width, height);
+                    break;
+                case LayoutCommand.FitBoth:
+                    var size = new Size(width, height);
+                    list.FitToPage(Fit.Width, size);
+                    list.FitToPage(Fit.Height, size);
+                    list.AlignByPageSide(Alignment.Vertical, width, height);
+                    list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    break;
+                case LayoutCommand.SameWidth:
+                    list.MakeSameSize(Fit.Width);
+                    break;
+                case LayoutCommand.SameHeight:
+                    list.MakeSameSize(Fit.Height);
+                    break;
+                case LayoutCommand.SameBoth:
+                    list.MakeSameSize(Fit.Width);
+                    list.MakeSameSize(Fit.Height);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("command");
+            }
         }
     }
 }

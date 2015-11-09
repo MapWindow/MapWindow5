@@ -10,7 +10,7 @@ using MW5.Plugins.Printing.Controls.Layout;
 
 namespace MW5.Plugins.Printing.Views.Abstract
 {
-    internal interface ILayoutView : IView<TemplateModel>
+    internal interface ILayoutView : IComplexView<TemplateModel>
     {
         LayoutControl LayoutControl { get; }
 
