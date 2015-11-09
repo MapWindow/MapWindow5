@@ -8,8 +8,10 @@ using MW5.Services;
 using System.Linq;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
+using MW5.Services.Helpers;
 using MW5.Shared;
 using MW5.UI.Menu;
+using ViewMenuHelper = MW5.UI.Helpers.ViewMenuHelper;
 
 namespace MW5.Menu
 {
@@ -130,11 +132,11 @@ namespace MW5.Menu
         {
             var items = _context.Menu.ViewMenu.SubItems;
 
-            items.AddDropDown("Toolbars", MenuKeys.ViewToolbars, PluginIdentity.Default);
-            items.AddDropDown("Windows", MenuKeys.ViewWindows, PluginIdentity.Default);
-            items.AddDropDown("Skins", MenuKeys.ViewSkins, PluginIdentity.Default);
+            items.AddDropDown("Toolbars", Plugins.Menu.MenuKeys.ViewToolbars, PluginIdentity.Default);
+            items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
+            items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
 
-            ViewMenuHelper.Init(_context, _menuManager, _dockingManager);
+            ViewMenuHelper.Init(_menuManager, _dockingManager, _context.Menu, _context.DockPanels, PluginIdentity.Default);
         }
 
         private void InitHelpMenu()

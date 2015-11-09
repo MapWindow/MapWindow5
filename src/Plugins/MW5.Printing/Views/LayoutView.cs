@@ -15,6 +15,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
+using MW5.Plugins.Printing.Properties;
 using MW5.Plugins.Printing.Services;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.Plugins.Printing.Views.Panels;
@@ -64,14 +65,12 @@ namespace MW5.Plugins.Printing.Views
 
             InitializeComponent();
 
-            // TODO: revisit
+            // there is no way to get it other than in context of some Control
             ScreenHelper.ScreenDpi = layoutControl1.GetScreenDpi();
 
             InitControls();
 
             AttachEventHandlers();
-
-            UpdateView();
         }
 
         /// <summary>
@@ -95,6 +94,16 @@ namespace MW5.Plugins.Printing.Views
         public object MenuManager
         {
             get { return mainFrameBarManager1; }
+        }
+
+        public object DockingManager
+        {
+            get { return dockingManager1; }
+        }
+
+        public IDockPanelCollection DockPanels
+        {
+            get { return _dockPanels; }
         }
 
         public LayoutControl LayoutControl
@@ -141,7 +150,7 @@ namespace MW5.Plugins.Printing.Views
 
             layoutPropertyGrid1.BorderStyle = BorderStyle.None;
 
-            layoutControl1.PageSettingsChanged += OnPageSettingsChanged;
+            layoutControl1.PageSettingsChanged += (s, e) => UpdateView();
 
             layoutControl1.Dock = DockStyle.Fill;
 
@@ -157,12 +166,12 @@ namespace MW5.Plugins.Printing.Views
             var panel = _dockPanels.Add(_elements.GetInternalObject(), "LayoutListBox", _plugin.Identity);
             panel.DockTo(DockPanelState.Right, 300);
             panel.Caption = "Elements";
-            //panel.SetIcon(Resources.ico_elements);
+            panel.SetIcon(Resources.ico_legend24);
 
             var panel2 = _dockPanels.Add(layoutPropertyGrid1, "PropertiesDockPanel", _plugin.Identity);
-            panel2.DockTo(panel, DockPanelState.Bottom, 400);
+            panel2.DockTo(panel, DockPanelState.Bottom, 500);
             panel2.Caption = "Properties";
-            //panel2.SetIcon(Resources.ico_properties);
+            panel2.SetIcon(Resources.ico_properties24);
         }
 
         private void InitMenus()
@@ -171,7 +180,7 @@ namespace MW5.Plugins.Printing.Views
             // instance on showing presenter the next time, so better not to use DI
             // TODO: try to use singletons instead
             _menuListener = new LayoutMenuListener(_context, this, _pdfService);
-            _menuGenerator = new LayoutMenuGenerator(_plugin, this, _menuListener);
+            _menuGenerator = new LayoutMenuGenerator(_context, _plugin, this, _menuListener);
 
             _zoomCombo = _menuGenerator.Toolbars.FindItem(LayoutMenuKeys.ZoomCombo, _plugin.Identity) as IComboBoxMenuItem;
             if (_zoomCombo != null)
@@ -185,13 +194,6 @@ namespace MW5.Plugins.Printing.Views
             // timely update of control may not occur if user moves mouse over layout control 
             // (it triggers immediate update of status bar with Refresh);
             Refresh();
-        }
-
-        private void OnPageSettingsChanged(object sender, EventArgs e)
-        {
-            lblPageSize.Text = "Format: " + layoutControl1.PrinterSettings.DefaultPageSettings.PaperSize.PaperName;
-            lblPageCount.Text = string.Format("Number of pages: {0} × {1}", layoutControl1.Pages.PageCountX,
-                layoutControl1.Pages.PageCountY);
         }
 
         private void OnZoomComboValueChanged(object sender, StringValueChangedEventArgs e)
@@ -224,6 +226,10 @@ namespace MW5.Plugins.Printing.Views
 
             btn = _menuGenerator.Menu.FindItem(LayoutMenuKeys.ShowRulers, _plugin.Identity);
             btn.Checked = layoutControl1.ShowRulers;
+
+            lblPageSize.Text = "Format: " + layoutControl1.PrinterSettings.DefaultPageSettings.PaperSize.PaperName;
+            lblPageCount.Text = string.Format("Number of pages: {0} × {1}", layoutControl1.Pages.PageCountX,
+                layoutControl1.Pages.PageCountY);
         }
     }
 

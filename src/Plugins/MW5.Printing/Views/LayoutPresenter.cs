@@ -71,6 +71,8 @@ namespace MW5.Plugins.Printing.Views
             }
 
             View.LayoutControl.Unlock();
+
+            View.UpdateView();
         }
 
         /// <summary>

@@ -73,9 +73,29 @@ namespace MW5.Plugins.Printing.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
+        internal static System.Drawing.Icon ico_legend24 {
+            get {
+                object obj = ResourceManager.GetObject("ico_legend24", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
         internal static System.Drawing.Icon ico_pan16 {
             get {
                 object obj = ResourceManager.GetObject("ico_pan16", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon ico_properties24 {
+            get {
+                object obj = ResourceManager.GetObject("ico_properties24", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

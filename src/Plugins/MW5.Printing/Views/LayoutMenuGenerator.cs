@@ -9,6 +9,7 @@ using System.Drawing;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Views.Abstract;
+using MW5.UI.Helpers;
 using MW5.UI.Menu;
 
 namespace MW5.Plugins.Printing.Views
@@ -20,7 +21,7 @@ namespace MW5.Plugins.Printing.Views
         private readonly PrintingPlugin _plugin;
         private readonly IToolbarCollectionEx _toolbars;
 
-        public LayoutMenuGenerator(PrintingPlugin plugin, ILayoutView view, LayoutMenuListener listener)
+        public LayoutMenuGenerator(IAppContext context, PrintingPlugin plugin, ILayoutView view, LayoutMenuListener listener)
         {
             if (plugin == null) throw new ArgumentNullException("plugin");
             if (view == null) throw new ArgumentNullException("view");
@@ -34,6 +35,8 @@ namespace MW5.Plugins.Printing.Views
             _toolbars = MenuFactory.CreateToolbars(view.MenuManager);
 
             InitMenu();
+
+            ViewMenuHelper.Init(view.MenuManager, view.DockingManager, _menu, view.DockPanels, _plugin.Identity);
 
             InitToolbars();
 
@@ -67,8 +70,9 @@ namespace MW5.Plugins.Printing.Views
 
             // view
             dropDown = _menu.Items.AddDropDown("View", "LayoutViewDropDown", _plugin.Identity);
-            dropDown.SubItems.AddDropDown("Toolbars", null as Bitmap, _plugin.Identity);
-            dropDown.SubItems.AddDropDown("Windows", null as Bitmap, _plugin.Identity);
+            dropDown.SubItems.AddDropDown("Toolbars", Plugins.Menu.MenuKeys.ViewToolbars, _plugin.Identity);
+            dropDown.SubItems.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, _plugin.Identity);
+
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomIn]).BeginGroup = true;
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomOut]);
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ZoomFitScreen]);
@@ -107,7 +111,7 @@ namespace MW5.Plugins.Printing.Views
         private void InitToolbars()
         {
             // insert
-            var bar = _toolbars.Add("Insert", LayoutMenuKeys.InsertToolbar, _plugin.Identity);
+            var bar = _toolbars.Add("Insert Element", LayoutMenuKeys.InsertToolbar, _plugin.Identity);
             bar.DockState = ToolbarDockState.Left;
             bar.Items.AddButton(_commands[LayoutMenuKeys.AddMap]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.AddLegend]);

@@ -1,36 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
-using MW5.UI.Helpers;
-using MW5.UI.Menu;
+using MW5.Plugins.Menu;
 using Syncfusion.Windows.Forms.Tools;
 using Syncfusion.Windows.Forms.Tools.XPMenus;
 
-namespace MW5.Menu
+namespace MW5.UI.Helpers
 {
     internal static class ViewMenuHelper
     {
-        private static IAppContext _context;
         private static MainFrameBarManager _menuManager;
         private static DockingManager _dockingManager;
+        private static IMenuBase _menu;
+        private static IDockPanelCollection _dockPanels;
+        private static PluginIdentity _pluginIdentity;
 
-        public static void Init(IAppContext context, object menuManager, object dockingManager)
+        public static void Init(object menuManager, object dockingManager, 
+                                IMenuBase menuBase, IDockPanelCollection dockPanels, PluginIdentity pluginIdentity)
         {
-            _context = context;
             _menuManager = menuManager as MainFrameBarManager;
             _dockingManager = dockingManager as DockingManager;
+            _menu = menuBase;
+            _dockPanels = dockPanels;
+            _pluginIdentity = pluginIdentity;
 
-            if (_context == null) throw new ArgumentNullException("context");
             if (_menuManager == null) throw new ArgumentNullException("menuManager");
             if (_dockingManager == null) throw new ArgumentNullException("dockingManager");
+            if (_menu == null) throw new ArgumentNullException("menuBase");
+            if (_dockPanels == null) throw new ArgumentNullException("menuBase");
+            if (pluginIdentity == null) throw new ArgumentNullException("pluginIdentity");
 
             InitToolbars();
 
@@ -43,7 +43,7 @@ namespace MW5.Menu
 
         private static void InitSkins()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewSkins, PluginIdentity.Default) as IDropDownMenuItem;
+            var item = _menu.FindItem(MenuKeys.ViewSkins, PluginIdentity.Default) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("Default", PluginIdentity.Default);
@@ -56,7 +56,7 @@ namespace MW5.Menu
 
         private static void InitWindows()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewWindows, PluginIdentity.Default) as IDropDownMenuItem;
+            var item = _menu.FindItem(MenuKeys.ViewWindows, _pluginIdentity) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("-", PluginIdentity.Default);
@@ -74,7 +74,7 @@ namespace MW5.Menu
             
             var items = menu.SubItems;
 
-            foreach (var panel in _context.DockPanels.OrderBy(p => p.Caption))
+            foreach (var panel in _dockPanels.OrderBy(p => p.Caption))
             {
                 var btn = items.AddButton(panel.Caption, PluginIdentity.Default);
                 btn.ItemClicked += DockWindowsVisibilityClicked;
@@ -104,7 +104,7 @@ namespace MW5.Menu
 
         private static void InitToolbars()
         {
-            var item = _context.Menu.FindItem(MenuKeys.ViewToolbars, PluginIdentity.Default) as IDropDownMenuItem;
+            var item = _menu.FindItem(MenuKeys.ViewToolbars, _pluginIdentity) as IDropDownMenuItem;
             if (item != null)
             {
                 item.SubItems.AddButton("-", PluginIdentity.Default);   // dummy to make it open and start dynamic population

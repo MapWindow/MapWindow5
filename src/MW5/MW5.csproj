@@ -235,7 +235,6 @@
     <Compile Include="Menu\MenuListener.cs" />
     <Compile Include="Menu\MenuUpdater.cs" />
     <Compile Include="Menu\PluginsMenuHelper.cs" />
-    <Compile Include="Menu\ViewMenuHelper.cs" />
     <Compile Include="Views\Abstract\ISpatialIndexView.cs" />
     <Compile Include="Views\Abstract\IWelcomeView.cs" />
     <Compile Include="Views\ConfigCommand.cs" />

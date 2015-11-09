@@ -47,6 +47,7 @@ namespace MW5.Plugins.Printing.Views
             this.lblPosition = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainFrameBarManager1)).BeginInit();
             this.statusStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dockingManager1)).BeginInit();
@@ -101,6 +102,7 @@ namespace MW5.Plugins.Printing.Views
             this.layoutControl1.SelectionColor = System.Drawing.Color.Orange;
             this.layoutControl1.ShowMargins = true;
             this.layoutControl1.ShowPageNumbers = false;
+            this.layoutControl1.ShowRulers = true;
             this.layoutControl1.Size = new System.Drawing.Size(321, 263);
             this.layoutControl1.TabIndex = 0;
             this.layoutControl1.Zoom = 0.2955806F;
@@ -161,9 +163,12 @@ namespace MW5.Plugins.Printing.Views
             // dockingManager1
             // 
             this.dockingManager1.ActiveCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
+            this.dockingManager1.AutoHideTabFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.dockingManager1.DockLayoutStream = ((System.IO.MemoryStream)(resources.GetObject("dockingManager1.DockLayoutStream")));
+            this.dockingManager1.DockTabFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.dockingManager1.EnableAutoAdjustCaption = true;
             this.dockingManager1.HostControl = this;
+            this.dockingManager1.ImageList = this.imageList1;
             this.dockingManager1.InActiveCaptionFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.World);
             this.dockingManager1.MetroButtonColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.dockingManager1.MetroCaptionColor = System.Drawing.Color.White;
@@ -183,6 +188,12 @@ namespace MW5.Plugins.Printing.Views
             this.dockingClientPanel1.Name = "dockingClientPanel1";
             this.dockingClientPanel1.Size = new System.Drawing.Size(321, 263);
             this.dockingClientPanel1.TabIndex = 1;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
+            this.imageList1.ImageSize = new System.Drawing.Size(20, 20);
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // LayoutView
             // 
@@ -218,5 +229,6 @@ namespace MW5.Plugins.Printing.Views
         private Syncfusion.Windows.Forms.Tools.DockingClientPanel dockingClientPanel1;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel lblSelected;
         private Syncfusion.Windows.Forms.Tools.StatusStripLabel lblPosition;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
