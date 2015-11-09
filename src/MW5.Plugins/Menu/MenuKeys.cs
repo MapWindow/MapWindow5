@@ -12,5 +12,6 @@ namespace MW5.Plugins.Menu
     public static class MenuKeys
     {
         public const string LayerProperties = "sy_LayerProperties";
+        public const string Quit = "FileQuit";
     }
 }

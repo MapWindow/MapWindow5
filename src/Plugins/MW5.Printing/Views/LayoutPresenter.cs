@@ -85,8 +85,8 @@ namespace MW5.Plugins.Printing.Views
             var mapElement = new LayoutMap();
             mapElement.Initialize(map);
 
-            const int offset = 5;  // default location
-            mapElement.Location = new Point(offset, offset); 
+
+            mapElement.Location = new Point(PrintingConstants.DefaultMapOffset, PrintingConstants.DefaultMapOffset); 
             mapElement.DrawTiles = map.Tiles.Visible;
 
             // calc the necessary size in paper coordinates

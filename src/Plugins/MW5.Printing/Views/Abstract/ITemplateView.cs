@@ -18,6 +18,8 @@ namespace MW5.Plugins.Printing.Views.Abstract
 
         event Action FitToPage;
 
+        event Action ViewShown;
+
         IEnvelope MapExtents { get; }
 
         int MapScale { get; }
@@ -31,5 +33,7 @@ namespace MW5.Plugins.Printing.Views.Abstract
         bool IsNewLayout { get; }
 
         void PopulateScales(int customScale = 0);
+
+        bool IsFitToPage { get; }
     }
 }

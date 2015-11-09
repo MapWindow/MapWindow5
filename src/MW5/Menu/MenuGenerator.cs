@@ -81,7 +81,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.SaveProject], true);
             items.AddButton(_commands[MenuKeys.SaveProjectAs]);
 
-            items.AddButton(_commands[MenuKeys.Quit], true);
+            items.AddButton(_commands[Plugins.Menu.MenuKeys.Quit], true);
 
             _context.Menu.FileMenu.Update();
         }

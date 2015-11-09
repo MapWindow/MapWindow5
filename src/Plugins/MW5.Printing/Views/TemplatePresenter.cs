@@ -24,7 +24,7 @@ namespace MW5.Plugins.Printing.Views
 {
     internal class TemplatePresenter : BasePresenter<ITemplateView, TemplateModel>
     {
-        private const int MaxSizeInches = 75; // maximum size of layout (either width or height) in inches
+        
         private readonly IAppContext _context;
 
         public TemplatePresenter(ITemplateView view, IAppContext context)
@@ -32,26 +32,37 @@ namespace MW5.Plugins.Printing.Views
         {
             _context = context;
 
-            View.LayoutSizeChanged += () =>
-                {
-                    Validate();
-                    View.UpdateView();
-                };
+            View.LayoutSizeChanged += OnLayoutSizeChanged;
 
-            View.FitToPage += OnFitToPageClicked;
+            View.FitToPage += FitToPage;
+            View.ViewShown += FitToPage;
+        }
+
+        private void OnLayoutSizeChanged()
+        {
+            Validate();
+
+            View.UpdateView();
         }
 
         /// <summary>
-        /// Called when [fit to page clicked].
+        /// Called when fit to page is clicked.
         /// </summary>
-        private void OnFitToPageClicked()
+        private void FitToPage()
         {
             GeoSize geoSize;
             if (_context.Map.GetGeodesicSize(View.MapExtents, out geoSize))
             {
-                // TODO: choose depending on selected format
-                var size = new SizeF(700, 700);   // 7 by 7 inches
-                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size);
+                var size = GetUsablePaperSize();
+                if (size == default(SizeF))
+                {
+                    return;
+                }
+
+                size.Width -= PrintingConstants.DefaultMapOffset * 2;
+                size.Height -= PrintingConstants.DefaultMapOffset * 2;
+
+                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size, Enums.ScaleType.Smallest);
 
                 View.PopulateScales(Convert.ToInt32(scale));
             }
@@ -122,10 +133,7 @@ namespace MW5.Plugins.Printing.Views
             return true;
         }
 
-        /// <summary>
-        /// Calculates the number of pages
-        /// </summary>
-        private void CalculatePageCount(SizeF size)
+        private SizeF GetUsablePaperSize()
         {
             var paperSize = PaperSizes.PaperSizeByFormatName(View.PaperFormat, PrinterManager.PrinterSettings);
             if (paperSize != null)
@@ -136,14 +144,28 @@ namespace MW5.Plugins.Printing.Views
 
                 bool swap = View.Orientation != Orientation.Vertical;
 
-                Model.PageCountX = (int)Math.Ceiling(size.Width / (swap ? height : width));
-                Model.PageCountY = (int)Math.Ceiling(size.Height / (swap ? width : height));
+                return new SizeF(swap ? height : width, swap ? width : height);
             }
-            else
+
+            Logger.Current.Warn("Failed to find specified paper format: " + View.PaperFormat);
+            return default(SizeF);
+        }
+
+        /// <summary>
+        /// Calculates the number of pages
+        /// </summary>
+        private void CalculatePageCount(SizeF size)
+        {
+            var usableSize = GetUsablePaperSize();
+            if (usableSize == default(SizeF))
             {
                 Model.PageCountX = -1;
                 Model.PageCountY = -1;
+                return;
             }
+
+            Model.PageCountX = (int)Math.Ceiling(size.Width / usableSize.Width);
+            Model.PageCountY = (int)Math.Ceiling(size.Height / usableSize.Height);
         }
 
         private void SaveConfig()
@@ -152,7 +174,6 @@ namespace MW5.Plugins.Printing.Views
 
             config.PrintingOrientation = View.Orientation;
             config.PrintingPaperFormat = View.PaperFormat;
-            config.PrintingScale = View.MapScale;
             config.PrintingTemplate = TemplateFilename;
         }
 
@@ -169,7 +190,7 @@ namespace MW5.Plugins.Printing.Views
                     return false;
                 }
 
-                Model.Valid = size.Width * size.Height / 10000 <= Math.Pow(MaxSizeInches, 2.0);
+                Model.Valid = size.Width * size.Height / 10000 <= Math.Pow(PrintingConstants.MaxSizeInches, 2.0);
 
                 CalculatePageCount(size);
 

@@ -239,9 +239,6 @@ namespace MW5.Plugins.Concrete
         public string PrintingPaperFormat { get; set; }
 
         [DataMember]
-        public int PrintingScale { get; set; }
-
-        [DataMember]
         public string PrintingTemplate { get; set; }
 
         [DataMember]
@@ -476,7 +473,6 @@ namespace MW5.Plugins.Concrete
             MouseWheelDirection = MouseWheelDirection.Forward;
             PrintingOrientation = Orientation.Vertical;
             PrintingPaperFormat = "A4";
-            PrintingScale = 25000;
             PrintingTemplate = "";
             PrintingMargins = new Margins(25, 25, 50, 50);
             ProjectionAbsence = ProjectionAbsence.IgnoreAbsence;

@@ -51,7 +51,7 @@ namespace MW5.Menu
                 new MenuCommand("Save Project As", MenuKeys.SaveProjectAs, Resources.icon_save_as,
                 "Saves the current project under new name."),
 
-                new MenuCommand("Quit", MenuKeys.Quit, Resources.icon_quit, 
+                new MenuCommand("Quit", Plugins.Menu.MenuKeys.Quit, Resources.icon_quit, 
                 "Quits the application"),
 
                 new MenuCommand("Test", MenuKeys.Test, Resources.img_test24, 

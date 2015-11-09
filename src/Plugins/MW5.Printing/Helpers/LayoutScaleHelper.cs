@@ -11,6 +11,7 @@ using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
+using MW5.Plugins.Printing.Enums;
 using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Helpers
@@ -39,13 +40,25 @@ namespace MW5.Plugins.Printing.Helpers
         /// </summary>
         /// <param name="geoSize">Geodesic size of mapped area in meters.</param>
         /// <param name="mapSize">Size of the map on the screen (1/100 of inch).</param>
+        /// <param name="scaleType">The X and Y scale are often different, this parameter tells how to choose the return value from 2 values available.</param>
         /// <returns>Scale of the map.</returns>
-        public static double CalcMapScale(GeoSize geoSize, SizeF mapSize)
+        public static double CalcMapScale(GeoSize geoSize, SizeF mapSize, ScaleType scaleType = ScaleType.Average)
         {
             double cf = LengthUnits.Meters.GetConversionFactor();
             double scaleX = geoSize.Width / (mapSize.Width / 100.0 / cf);
             double scaleY = geoSize.Height / (mapSize.Height / 100.0 / cf);
-            return (scaleX + scaleY) / 2.0;
+
+            switch (scaleType)
+            {
+                case ScaleType.Average:
+                    return (scaleX + scaleY) / 2.0;
+                case ScaleType.Smallest:
+                    return Math.Max(scaleX, scaleY);
+                case ScaleType.Largest:
+                    return Math.Min(scaleX, scaleY);
+                default:
+                    throw new ArgumentOutOfRangeException("scaleType");
+            }
         }
 
         /// <summary>

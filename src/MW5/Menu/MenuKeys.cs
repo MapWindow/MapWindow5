@@ -2,7 +2,6 @@
 {
     internal class MenuKeys
     {
-        public const string Quit = "FileQuit";
         public const string NewMap = "FileNewMap";
         public const string OpenProject = "FileOpenProject";
         public const string SaveProject = "FileSaveProject";

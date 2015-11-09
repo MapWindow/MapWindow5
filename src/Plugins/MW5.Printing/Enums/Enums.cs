@@ -245,4 +245,11 @@ namespace MW5.Plugins.Printing.Enums
         All = 0,
         Rulers = 1,
     }
+
+    public enum ScaleType
+    {
+        Average = 0,
+        Smallest = 1,
+        Largest = 2,
+    }
 }

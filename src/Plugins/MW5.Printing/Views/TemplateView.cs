@@ -41,6 +41,8 @@ namespace MW5.Plugins.Printing.Views
 
             FormClosed += (s, e) => _selectedTab = tabControlAdv1.SelectedIndex;
 
+            Shown += (s, e) => Invoke(ViewShown);
+
             UpdateAreaControls();
         }
 
@@ -57,6 +59,8 @@ namespace MW5.Plugins.Printing.Views
         public event Action LayoutSizeChanged;
 
         public event Action FitToPage;
+
+        public event Action ViewShown;
 
         public IEnvelope MapExtents
         {
@@ -118,13 +122,6 @@ namespace MW5.Plugins.Printing.Views
             }
 
             cboOrientation.SetValue(AppConfig.Instance.PrintingOrientation);
-
-            // TODO: perhaps would be better to call fit to page automatically
-            string scale = "1:" + AppConfig.Instance.PrintingScale;
-            if (!cboScale.SetValue(scale))
-            {
-                cboScale.SetValue("1:25000");
-            }
 
             cboFormat.SetValue(AppConfig.Instance.PrintingPaperFormat);
 
@@ -232,6 +229,11 @@ namespace MW5.Plugins.Printing.Views
             {
                 cboScale.SelectedIndex = cboScale.Items.Count - 1;
             }
+        }
+
+        public bool IsFitToPage
+        {
+            get { return cboScale.SelectedIndex == cboScale.Items.Count - 1; }
         }
 
         private void OnTabChanged(object sender, EventArgs e)

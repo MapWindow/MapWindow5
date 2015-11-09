@@ -265,7 +265,7 @@ namespace MW5.Menu
                 case MenuKeys.OpenProject:
                     _projectService.Open();
                     return true;
-                case MenuKeys.Quit:
+                case Plugins.Menu.MenuKeys.Quit:
                     var appContext = _context as AppContext;
                     if (appContext != null)
                     {

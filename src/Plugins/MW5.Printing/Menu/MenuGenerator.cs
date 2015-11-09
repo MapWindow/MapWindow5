@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 
 namespace MW5.Plugins.Printing.Menu
@@ -13,6 +14,7 @@ namespace MW5.Plugins.Printing.Menu
     {
         private readonly MenuCommands _commands;
         private readonly IAppContext _context;
+        private readonly PrintingPlugin _plugin;
 
         public MenuGenerator(IAppContext context, PrintingPlugin plugin)
         {
@@ -21,18 +23,31 @@ namespace MW5.Plugins.Printing.Menu
 
             _commands = new MenuCommands(plugin.Identity);
             _context = context;
+            _plugin = plugin;
 
-            InitToolbar(context);
+            InitMenu();
+
+            InitToolbar();
         }
 
-        private void InitToolbar(IAppContext context)
+        private void InitMenu()
         {
-            var items = context.Toolbars.FileToolbar.Items;
+            var items = _context.Menu.FileMenu.SubItems;
+            items.InsertBefore = _context.Menu.FindItem(Plugins.Menu.MenuKeys.Quit, PluginIdentity.Default);
+
+            items.AddButton(_commands[MenuKeys.Print]).BeginGroup = true;
+
+            _context.Menu.FileMenu.Update();
+        }
+
+        private void InitToolbar()
+        {
+            var items = _context.Toolbars.FileToolbar.Items;
 
             items.AddButton(_commands[MenuKeys.Print]).BeginGroup = true;
             items.AddButton(_commands[MenuKeys.SelectPrintArea]);
 
-            context.Toolbars.FileToolbar.Update();
+            _context.Toolbars.FileToolbar.Update();
         }
     }
 }
