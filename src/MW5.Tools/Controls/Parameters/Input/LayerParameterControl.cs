@@ -123,7 +123,35 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// </summary>
         public void SetLayers(IEnumerable<ILayer> layers)
         {
-            _layers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
+            // Only add the layers of the correct type:
+            var allLayers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
+            switch (_dataType)
+            {
+                case DataSourceType.Vector:
+                    foreach (var inputLayerGridAdapter in allLayers.Where(inputLayerGridAdapter => inputLayerGridAdapter.Source.Datasource.IsVector))
+                    {
+                        // Only vector layers
+                        _layers.Add(inputLayerGridAdapter);
+                    }
+
+                    break;
+                case DataSourceType.Raster:
+                    foreach (var inputLayerGridAdapter in allLayers.Where(inputLayerGridAdapter => inputLayerGridAdapter.Source.Datasource.IsRaster))
+                    {
+                        // Only raster layers
+                        _layers.Add(inputLayerGridAdapter);
+                    }
+
+                    break;
+                default:
+                    foreach (var inputLayerGridAdapter in allLayers)
+                    {
+                        // All layers
+                        _layers.Add(inputLayerGridAdapter);
+                    }
+
+                    break;
+            }
 
             UpdateComboBox();
 
