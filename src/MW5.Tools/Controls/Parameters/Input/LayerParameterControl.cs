@@ -124,34 +124,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         public void SetLayers(IEnumerable<ILayer> layers)
         {
             // Only add the layers of the correct type:
-            var allLayers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
-            switch (_dataType)
-            {
-                case DataSourceType.Vector:
-                    foreach (var inputLayerGridAdapter in allLayers.Where(inputLayerGridAdapter => inputLayerGridAdapter.Source.Datasource.IsVector))
-                    {
-                        // Only vector layers
-                        _layers.Add(inputLayerGridAdapter);
-                    }
-
-                    break;
-                case DataSourceType.Raster:
-                    foreach (var inputLayerGridAdapter in allLayers.Where(inputLayerGridAdapter => inputLayerGridAdapter.Source.Datasource.IsRaster))
-                    {
-                        // Only raster layers
-                        _layers.Add(inputLayerGridAdapter);
-                    }
-
-                    break;
-                default:
-                    foreach (var inputLayerGridAdapter in allLayers)
-                    {
-                        // All layers
-                        _layers.Add(inputLayerGridAdapter);
-                    }
-
-                    break;
-            }
+            _layers = layers.Where(CheckLayerType).Select(l => new InputLayerGridAdapter(l)).ToList();
 
             UpdateComboBox();
 
@@ -159,6 +132,36 @@ namespace MW5.Tools.Controls.Parameters.Input
             {
                 comboBoxAdv1.SelectedIndex = 0;
             }
+        }
+
+        /// <summary>
+        /// Checks the type of the layer.
+        /// </summary>
+        /// <param name="layer">The layer.</param>
+        /// <returns>True when it is the correct type</returns>
+        private bool CheckLayerType(ILayer layer)
+        {
+            switch (_dataType)
+            {
+                case DataSourceType.Vector:
+                    if (layer.IsVector)
+                    {
+                        return true;
+                    }
+
+                    break;
+                case DataSourceType.Raster:
+                    if (layer.IsRaster)
+                    {
+                        return true;
+                    }
+
+                    break;
+                case DataSourceType.All:
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -170,6 +173,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         {
             throw new NotSupportedException("SetValue method isn't supported.");
         }
+
 
         /// <summary>
         /// Fires the selected layer changed event.
