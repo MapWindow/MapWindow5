@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -62,7 +63,20 @@ namespace MW5.Plugins.Printing.Views
                 size.Width -= PrintingConstants.DefaultMapOffset * 2;
                 size.Height -= PrintingConstants.DefaultMapOffset * 2;
 
-                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size, Enums.ScaleType.Smallest);
+                // let's adjust the size according to XY ratio, 
+                // since geodesic scale may differ along the axis
+                double ratio = size.Width / size.Height;
+                double ratio2 = View.MapExtents.Width / View.MapExtents.Height;
+                if (ratio > ratio2)
+                {
+                    size.Width /= (float)(ratio / ratio2);
+                }
+                else if (ratio < ratio2)
+                {
+                    size.Height /= (float)(ratio2 / ratio);
+                }
+
+                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size, Enums.ScaleType.Average);
 
                 View.PopulateScales(Convert.ToInt32(scale));
             }

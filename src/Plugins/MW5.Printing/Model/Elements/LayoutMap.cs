@@ -42,6 +42,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         private bool _isMain;
         private TileProvider _tileProvider = TileProvider.OpenStreetMap;
         private RectangleF _oldRectangle;
+        private int _lastScale;
 
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
@@ -63,6 +64,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             TilesLoaded = false;
             Guid = Guid.NewGuid();
             ResizeStyle = ResizeStyle.NoScaling;
+            _lastScale = -1;
         }
 
         public void Initialize(IPrintableMap map, LayoutControl lc)
@@ -180,21 +182,25 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 double scale = -1.0;
 
-                if (!Resizing)
+                if (Resizing)
                 {
-                    GeoSize geoSize;
-                    if (_map.GetGeodesicSize(_extents, out geoSize))
-                    {
-                        scale = LayoutScaleHelper.CalcMapScale(geoSize, SizeF);
-                    }
-
-                    if (double.IsNaN(scale) || scale > Int32.MaxValue || scale <= 0)
-                    {
-                        scale = -1.0;
-                    }
+                    return _lastScale;
+                }
+                
+                GeoSize geoSize;
+                if (_map.GetGeodesicSize(_extents, out geoSize))
+                {
+                    scale = LayoutScaleHelper.CalcMapScale(geoSize, SizeF);
                 }
 
-                return Convert.ToInt32(scale);
+                if (double.IsNaN(scale) || scale > Int32.MaxValue || scale <= 0)
+                {
+                    scale = -1.0;
+                }
+
+                _lastScale = Convert.ToInt32(scale);
+
+                return _lastScale;
             }
             set
             {
