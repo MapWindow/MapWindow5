@@ -382,9 +382,6 @@ namespace MW5.Plugins.Printing.Model.Elements
             {
                 _buffer = new Bitmap(width, height, PixelFormat.Format32bppArgb);
                 
-                // TODO: don't we use a real screen DPI here?
-                _buffer.SetResolution(96, 96);
-
                 using (var graph = Graphics.FromImage(_buffer))
                 {
                     //var tiles = _layoutControl.AxMap.Tiles;
@@ -401,7 +398,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 }
             }
 
-            g.DrawImage(_buffer, Rectangle.FloatRectangleToInt());
+            g.DrawImageUnscaled(_buffer, 0, 0);
 
             TilesLoaded = false;
 

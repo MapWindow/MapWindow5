@@ -115,12 +115,23 @@ namespace MW5.Plugins.Printing.Views
         private void AttachEventHandlers()
         {
             Shown += OnLayoutViewShown;
+            layoutControl1.KeyDown += OnKeyDown;
             layoutControl1.ZoomChanged += OnlayoutControlZoomChanged;
             layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
             layoutControl1.MouseMove += OnLayoutMouseMove;
             layoutControl1.ElementsChanged += (s, e) => _elements.View.UpdateSelectionFromMap();
             layoutControl1.MouseWheel += OnMouseWheel;
             contextMenuStripEx1.Opening += ContextMenuOpening;
+        }
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                layoutControl1.Cursor = Cursors.Default;
+                layoutControl1.PanMode = false;
+                UpdateView();
+            }
         }
 
         private void OnMouseWheel(object sender, MouseEventArgs e)

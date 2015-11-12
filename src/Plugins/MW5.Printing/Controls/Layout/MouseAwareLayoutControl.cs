@@ -22,7 +22,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
     [ToolboxItem(false)]
     public class MouseAwareLayoutControl : ContentAwareLayoutControl
     {
-        private const float _inflate = 5F;
         private LayoutElement _elementToAddWithMouse;
         private PointF _lastMousePoint;
         private LayoutPage _lastPage;
@@ -168,19 +167,20 @@ namespace MW5.Plugins.Printing.Controls.Layout
                                 _mouseMode = MouseMode.ResizeSelected;
                                 if (_selectedLayoutElements.Count > 0)
                                 {
-                                    _selectedLayoutElements[0].Resizing = true;
-                                    if (_selectedLayoutElements[0].ResizeStyle != ResizeStyle.HandledInternally)
+                                    var el = _selectedLayoutElements[0];
+                                    el.Resizing = true;
+
+                                    if (el.ResizeStyle != ResizeStyle.HandledInternally)
                                     {
-                                        var selecteScreenRect = PaperToScreen(_selectedLayoutElements[0].Rectangle);
+                                        var selecteScreenRect = PaperToScreen(el.Rectangle);
                                         _resizeTempBitmap = new Bitmap(Convert.ToInt32(selecteScreenRect.Width),
                                             Convert.ToInt32(selecteScreenRect.Height), PixelFormat.Format32bppArgb);
 
                                         using (var graph = Graphics.FromImage(_resizeTempBitmap))
                                         {
                                             graph.SmoothingMode = DrawingQuality;
-                                            graph.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
-                                            graph.TranslateTransform(-_selectedLayoutElements[0].Rectangle.X, -_selectedLayoutElements[0].Rectangle.Y);
-                                            _selectedLayoutElements[0].DrawElement(graph, false, false);
+                                            graph.ScaleTransform(_zoom, _zoom);
+                                            el.DrawElement(graph, false, false);
                                         }
                                     }
                                 }
@@ -259,19 +259,13 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     //Deals with moving the selection
                 case MouseMode.MoveSelection:
                     _suppressElementInvalidation = true;
+
                     foreach (var le in _selectedLayoutElements)
                     {
-                        var invalRect = PaperToScreen(le.Rectangle);
-                        invalRect.Inflate(_inflate, _inflate);
-
-                        DoInvalidate(new Region(invalRect));
-                        
                         var elementLocScreen = PaperToScreen(le.LocationF);
                         le.LocationF = ScreenToPaper(elementLocScreen.X - deltaX, elementLocScreen.Y - deltaY);
-                        invalRect = PaperToScreen(le.Rectangle);
-                        invalRect.Inflate(_inflate, _inflate);
-                        
-                        DoInvalidate(new Region(invalRect));
+
+                        DoInvalidate();
                         Update();
                     }
                     _suppressElementInvalidation = false;

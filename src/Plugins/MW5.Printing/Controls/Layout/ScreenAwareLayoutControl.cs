@@ -24,7 +24,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
     public class ScreenAwareLayoutControl : ZoomableLayoutControl
     {
         private readonly SolidBrush _selectionBrush;
-        private readonly SolidBrush _marginBrush;
         private readonly Pen _selectionPen;
         protected RectangleF _mouseBox;
         protected MouseMode _mouseMode;
@@ -42,7 +41,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             _selectionPen = new Pen(Color.Orange, 2f);
             _selectionPen.DashStyle = DashStyle.Dash;
 
-            _marginBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
             _showMargins = true;
             _showRulers = true;
             DrawingQuality = SmoothingMode.HighQuality;
@@ -367,16 +365,38 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 return;
             }
 
-            float x = panning ? _paperLocation.X + _mouseBox.Width : _paperLocation.X;
-            float y = panning ? _paperLocation.Y + _mouseBox.Height : _paperLocation.Y;
+            if (le is LayoutMap)
+            {
+                var pnt = PaperToScreen(le.LocationF);
 
-            g.TranslateTransform(x, y);
+                g.TranslateTransform(Convert.ToInt32(pnt.X), Convert.ToInt32(pnt.Y));
+                
+                if (panning)
+                {
+                    // setting clip to the original rectangle
+                    var r = PaperToScreen(le.Rectangle);
+                    g.SetClip(new RectangleF(0f, 0f, r.Width, r.Height));
 
+                    pnt.X += _mouseBox.Width;
+                    pnt.Y += _mouseBox.Height;
 
-            g.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
+                    // translating to new origin of buffer
+                    g.ResetTransform();
+                    g.TranslateTransform(Convert.ToInt32(pnt.X), Convert.ToInt32(pnt.Y));    
+                }
+
+                g.ScaleTransform(_zoom, _zoom);
+            }
+            else
+            {
+                g.TranslateTransform(_paperLocation.X, _paperLocation.Y);
+
+                g.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);    
+            }
             
             le.DrawElement(g, false, false);
 
+            g.ResetClip();
             g.ResetTransform();
             g.TranslateTransform(-invalRect.X, -invalRect.Y);
         }

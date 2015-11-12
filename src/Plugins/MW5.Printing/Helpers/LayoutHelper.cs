@@ -29,20 +29,46 @@ namespace MW5.Plugins.Printing.Helpers
             if (le is LayoutBitmap) return null;
             int padding = le is LayoutLegend ? 10 : 0;
 
-            var temp = new Bitmap(Convert.ToInt32(le.SizeF.Width * 3 + 0.5) + padding,
-                Convert.ToInt32(le.SizeF.Height * 3 + 0.5), PixelFormat.Format32bppArgb);
-            temp.SetResolution(96, 96);
-            temp.MakeTransparent();
-            var g = Graphics.FromImage(temp);
-            g.PageUnit = GraphicsUnit.Pixel;
-            g.ScaleTransform(300F / 100F, 300F / 100F);
-            g.TranslateTransform(-le.LocationF.X, -le.LocationF.Y);
-            le.DrawElement(g, false, false);
-            g.Dispose();
-            temp.SetResolution(300, 300);
-            temp.Save(filename);
-            temp.Dispose();
-            return new LayoutBitmap { Rectangle = le.Rectangle, Name = le.Name, Filename = filename };
+            int width = Convert.ToInt32(le.SizeF.Width * 3 + 0.5) + padding;
+            int height = Convert.ToInt32(le.SizeF.Height *  3 + 0.5);
+
+            if (le is LayoutMap)
+            {
+                width = Convert.ToInt32(width * ScreenHelper.LogicToScreenDpi);
+                height = Convert.ToInt32(height * ScreenHelper.LogicToScreenDpi);
+            }
+            
+            using (var temp = new Bitmap(width, height, PixelFormat.Format32bppArgb))
+            { 
+                temp.SetResolution(96, 96);
+                temp.MakeTransparent();
+
+                using (var g = Graphics.FromImage(temp))
+                {
+                    g.PageUnit = GraphicsUnit.Pixel;
+                    g.ScaleTransform(300F / 100F, 300F / 100F);
+
+                    if (!(le is LayoutMap))
+                    {
+                        g.TranslateTransform(-le.LocationF.X, -le.LocationF.Y);
+                    }
+
+                    le.DrawElement(g, false, false);
+                }
+
+                temp.SetResolution(300, 300);
+                temp.Save(filename);
+            }
+            
+            var bmp = new LayoutBitmap
+                          {
+                              Rectangle = le.Rectangle,
+                              Name = le.Name,
+                              Filename = filename,
+                              Initialized = true
+                          };
+
+            return bmp;
         }
 
         /// <summary>
