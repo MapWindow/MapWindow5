@@ -1,8 +1,11 @@
-﻿// -------------------------------------------------------------------------------------------
+﻿// --------------------------------------------------------------------------------------------------------------------
 // <copyright file="LayerParameterControl.cs" company="MapWindow OSS Team - www.mapwindow.org">
-//  MapWindow OSS Team - 2015
+//   MapWindow OSS Team - 2015
 // </copyright>
-// -------------------------------------------------------------------------------------------
+// <summary>
+//   Represents combobox with a list of layers and a button to open datasource from disk.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +17,6 @@ using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Shared;
-using MW5.Tools.Controls.Parameters.Interfaces;
 using MW5.Tools.Model.Layers;
 using MW5.Tools.Services;
 
@@ -41,6 +43,14 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// Occurs when the layer is selected.
         /// </summary>
         public event EventHandler<InputLayerEventArgs> SelectedLayerChanged;
+
+        /// <summary>
+        /// Gets a value indicating whether control allows selection of multiple files (batch mode).
+        /// </summary>
+        public override bool BatchMode
+        {
+            get { return false; }
+        }
 
         /// <summary>
         /// Gets or sets control caption.
@@ -109,19 +119,12 @@ namespace MW5.Tools.Controls.Parameters.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether control allows selection of multiple files (batch mode).
-        /// </summary>
-        public override bool BatchMode
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         /// Sets the list of layers.
         /// </summary>
         public void SetLayers(IEnumerable<ILayer> layers)
         {
-            _layers = layers.Select(l => new InputLayerGridAdapter(l)).ToList();
+            // Only add the layers of the correct type:
+            _layers = layers.Where(CheckLayerType).Select(l => new InputLayerGridAdapter(l)).ToList();
 
             UpdateComboBox();
 
@@ -129,6 +132,36 @@ namespace MW5.Tools.Controls.Parameters.Input
             {
                 comboBoxAdv1.SelectedIndex = 0;
             }
+        }
+
+        /// <summary>
+        /// Checks the type of the layer.
+        /// </summary>
+        /// <param name="layer">The layer.</param>
+        /// <returns>True when it is the correct type</returns>
+        private bool CheckLayerType(ILayer layer)
+        {
+            switch (_dataType)
+            {
+                case DataSourceType.Vector:
+                    if (layer.IsVector)
+                    {
+                        return true;
+                    }
+
+                    break;
+                case DataSourceType.Raster:
+                    if (layer.IsRaster)
+                    {
+                        return true;
+                    }
+
+                    break;
+                case DataSourceType.All:
+                    return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -140,6 +173,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         {
             throw new NotSupportedException("SetValue method isn't supported.");
         }
+
 
         /// <summary>
         /// Fires the selected layer changed event.
@@ -168,7 +202,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         {
             var layer = SelectedLayer as IVectorInput;
 
-            SetNumSelected(layer != null ? layer.Datasource.NumSelected : 0);
+            SetNumSelected(layer != null && layer.Datasource != null ? layer.Datasource.NumSelected : 0);
 
             FireSelectedLayerChanged();
 
@@ -220,7 +254,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// </summary>
         private void SetNumSelected(int count)
         {
-            lblNumSelected.Text = "Number of selected: " + count;
+            lblNumSelected.Text = @"Number of selected: " + count;
             chkSelectedOnly.Enabled = count > 0;
         }
 
@@ -230,8 +264,7 @@ namespace MW5.Tools.Controls.Parameters.Input
         private void UpdateComboBox()
         {
             // image list doesn't work when binding is on
-            //comboBoxAdv1.DataSource = _layers;
-
+            // comboBoxAdv1.DataSource = _layers;
             comboBoxAdv1.Items.Clear();
 
             foreach (var item in _layers)
