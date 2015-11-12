@@ -14,7 +14,7 @@ namespace MW5.Plugins.Printing.Views
 {
     internal partial class ChooseDpiView : ChooseDpiViewBase, IChooseDpiView
     {
-        private string _lastDpi = string.Empty;
+        private static string _lastDpi = string.Empty;
 
         public ChooseDpiView()
         {
@@ -62,7 +62,7 @@ namespace MW5.Plugins.Printing.Views
             cboDpi.Items.Add("300");
             cboDpi.SelectedIndex = 0;
 
-            if (string.IsNullOrWhiteSpace(_lastDpi))
+            if (!string.IsNullOrWhiteSpace(_lastDpi))
             {
                 cboDpi.Text = _lastDpi;
             }

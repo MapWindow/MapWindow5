@@ -248,6 +248,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 float dpiRatio = g.DpiX / 100f;
                 var point = new PointF(paperRect.Width * dpiRatio, paperRect.Height * dpiRatio);
                 size = new Size(Convert.ToInt32(point.X), Convert.ToInt32(point.Y));
+                ScalePointsAndFonts(dpiRatio);
             }
             else
             {
@@ -263,10 +264,33 @@ namespace MW5.Plugins.Printing.Model.Elements
 
             bool result = RenderMap(ext, size, g);
 
+            if (export)
+            {
+                float dpiRatio = g.DpiX / 100f;
+                ScalePointsAndFonts(1 / dpiRatio);
+            }
+
             //tiles.Visible = tilesVisible;
             //tiles.Provider = provider;
 
             return result;
+        }
+
+        private void ScalePointsAndFonts(float dpiRatio)
+        {
+            foreach (var layer in _map.Layers)
+            {
+                var style = layer.Labels.Style;
+                style.FontSize = Convert.ToInt32(style.FontSize * dpiRatio);
+                style.FontSize2 = Convert.ToInt32(style.FontSize2 * dpiRatio);
+                layer.Labels.UpdateSizeField();
+
+                var fs = layer.FeatureSet;
+                if (fs != null)
+                {
+                    fs.Style.Marker.Size *= dpiRatio;
+                }
+            }
         }
 
         /// <summary>

@@ -21,13 +21,13 @@ namespace MW5.Api.Interfaces
         //bool Unlock();
         //bool SnapShotToDC2(IntPtr hDC, IEnvelope extents, int width, float offsetX, float offsetY, float clipX, float clipY, float clipWidth, float clipHeight);
         //LengthUnits MapUnits { get; set; }
+        //ILayerCollection<ILayer> Layers { get; }
 
         IShapesList IdentifiedShapes { get; }
         IFeatureSet SelectedFeatureSet { get; }
         IImageSource SelectedImage { get; }
         IVectorLayer SelectedVectorLayer { get; }
         IMuteLegend Legend { get; set; }
-        ILayerCollection<ILayer> Layers { get; }
         MapProjection MapProjection { get; set; }
         ZoomBarSettings ZoomBar { get;  }
         ScalebarUnits ScalebarUnits { get; set; }

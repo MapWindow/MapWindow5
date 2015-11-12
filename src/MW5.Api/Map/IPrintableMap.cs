@@ -10,6 +10,7 @@ namespace MW5.Api.Map
 {
     public interface IPrintableMap
     {
+        ILayerCollection<ILayer> Layers { get; }
         LengthUnits MapUnits { get; set; }
         ISpatialReference Projection { get; set; }
         IEnvelope Extents { get; }
