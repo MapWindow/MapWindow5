@@ -161,6 +161,7 @@
         Measuring = 7,
         Symbology = 8,
         Tiles = 9,
+        Printing = 10,
     }
 
     public enum SymbologyStorage

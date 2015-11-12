@@ -149,7 +149,14 @@ namespace MW5.Plugins.Printing.Views
         private void OnLayoutMouseMove(object sender, MouseEventArgs e)
         {
             var pnt = layoutControl1.ScreenToPaper(e.Location);
-            lblPosition.Text = string.Format("X={0:f1}; Y={1:f1}", pnt.X, pnt.Y);
+
+            var ratio = ConfigHelper.GetUnitsConversionRatio();
+            string units = ConfigHelper.GetUnitShortString();
+            int decimals = ConfigHelper.GetDecimalDigitsForUnits();
+
+            string format = "X: {0:f" + decimals + "} {2}; Y: {1:f" + decimals + "} {2}";
+            lblPosition.Text = string.Format(format, pnt.X * ratio, pnt.Y * ratio, units);
+
             statusStripEx1.Refresh();
         }
 

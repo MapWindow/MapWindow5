@@ -143,6 +143,12 @@
     <Compile Include="Controls\Layout\LayoutControlBase.Designer.cs">
       <DependentUpon>LayoutControlBase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PrintingConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PrintingConfigPage.Designer.cs">
+      <DependentUpon>PrintingConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\PropertyGrid\CategoryExAttribute.cs" />
     <Compile Include="Controls\PropertyGrid\DisplayNameExAttribute.cs" />
     <Compile Include="Controls\TemplateGrid.cs">
@@ -151,6 +157,7 @@
     <Compile Include="Controls\TemplateGrid.Designer.cs">
       <DependentUpon>TemplateGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ConfigHelper.cs" />
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Helpers\GdiPlusHelper.cs" />
     <Compile Include="Helpers\LayoutScaleHelper.cs" />
@@ -325,6 +332,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Layout\ZoomableLayoutControl.zh-CN.resx">
       <DependentUpon>ZoomableLayoutControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PrintingConfigPage.resx">
+      <DependentUpon>PrintingConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\ChooseDpiView.resx">
       <DependentUpon>ChooseDpiView.cs</DependentUpon>
@@ -555,6 +565,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_fit24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\img_printer32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

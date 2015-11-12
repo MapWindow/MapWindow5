@@ -9,6 +9,7 @@ using System.Drawing.Printing;
 using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Views.Abstract;
 
 namespace MW5.Plugins.Printing.Views
@@ -31,20 +32,13 @@ namespace MW5.Plugins.Printing.Views
             var page = Model.DefaultPageSettings;
 
             page.PaperSize = View.PaperSize;
-            page.Margins.Left = ConvertMargin(View.LeftMargin);
-            page.Margins.Top = ConvertMargin(View.TopMargin);
-            page.Margins.Bottom = ConvertMargin(View.BottomMargin);
-            page.Margins.Right = ConvertMargin(View.RightMargin);
             page.Landscape = View.Orientation == Orientation.Horizontal;
+
+            ConfigHelper.SaveMargins(page, View.LeftMargin, View.RightMargin, View.TopMargin, View.BottomMargin);
 
             AppConfig.Instance.PrintingMargins = page.Margins;
 
             return true;
-        }
-
-        private int ConvertMargin(double value)
-        {
-            return Convert.ToInt32(value * 100.0 / View.CentimetersPerInch + 0.5);
         }
     }
 }

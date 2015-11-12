@@ -4,10 +4,15 @@
 // </copyright>
 // -------------------------------------------------------------------------------------------
 
+using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
+using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
+using MW5.Plugins.Printing.Enums;
+using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
 using MW5.UI.Forms;
@@ -29,22 +34,42 @@ namespace MW5.Plugins.Printing.Views
         /// </summary>
         public void Initialize()
         {
-            var orientation = Model.DefaultPageSettings.Landscape ? Orientation.Horizontal : Orientation.Vertical;
+            var ps = Model.DefaultPageSettings;
+
+            var orientation = ps.Landscape ? Orientation.Horizontal : Orientation.Vertical;
 
             optPortrait.Checked = orientation == Orientation.Vertical;
             optLandscape.Checked = orientation == Orientation.Horizontal;
 
             InitPaperSizes();
 
-            var size = _sizes.FirstOrDefault(s => s.PaperName == Model.DefaultPageSettings.PaperSize.PaperName);
+            var size = _sizes.FirstOrDefault(s => s.PaperName == ps.PaperSize.PaperName);
             cboPaperSizes.SelectedItem = size;
 
-            // TODO: add support for American units
-            var margins = Model.DefaultPageSettings.Margins;
-            txtMarginLeft.DoubleValue = ConvertMargin(margins.Left);
-            txtMarginTop.DoubleValue = ConvertMargin(margins.Top);
-            txtMarginBottom.DoubleValue = ConvertMargin(margins.Bottom);
-            txtMarginRight.DoubleValue = ConvertMargin(margins.Right);
+           InitializeUnits();
+        }
+
+        private void InitializeUnits()
+        {
+            double left, right, top, bottom;
+            ConfigHelper.GetMargins(Model.DefaultPageSettings, out left, out right, out top, out bottom);
+
+            txtMarginLeft.DoubleValue = left;
+            txtMarginRight.DoubleValue = right;
+            txtMarginTop.DoubleValue = top;
+            txtMarginBottom.DoubleValue = bottom;
+
+            string units = ConfigHelper.GetUnitShortString();
+            lblBottomUnit.Text = units;
+            lblTopUnit.Text = units;
+            lblLeftUnit.Text = units;
+            lblRightUnit.Text = units;
+
+            var decimals = ConfigHelper.GetDecimalDigitsForUnits();
+            txtMarginLeft.NumberDecimalDigits = decimals;
+            txtMarginRight.NumberDecimalDigits = decimals;
+            txtMarginTop.NumberDecimalDigits = decimals;
+            txtMarginBottom.NumberDecimalDigits = decimals;
         }
 
         public PaperSize PaperSize
@@ -81,20 +106,9 @@ namespace MW5.Plugins.Printing.Views
             get { return optLandscape.Checked ? Orientation.Horizontal : Orientation.Vertical; }
         }
 
-        public double CentimetersPerInch
-        {
-            get { return 2.54; }
-        }
-
         public ButtonBase OkButton
         {
             get { return btnOk; }
-        }
-
-        private double ConvertMargin(int margin)
-        {
-            // TODO: implement as a service
-            return margin / 100.0 * CentimetersPerInch;
         }
 
         private void InitPaperSizes()

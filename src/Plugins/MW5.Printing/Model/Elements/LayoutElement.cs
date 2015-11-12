@@ -86,17 +86,22 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         /// <summary>
-        /// Gets or sets the location of the top left corner of the control in 1/100 of an inch paper coordinats
+        /// FOR PROPERTY GRID ONLY!!! Gets or sets the location of the top left corner of the element (in 1/100 of an inch or millimeters depending on config value).
         /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_layout")]
         [DisplayNameEx(@"prop_location")]
-        public Point Location
+        public Point LocationUI
         {
-            get { return new Point(Convert.ToInt32(_location.X), Convert.ToInt32(_location.Y)); }
+            get
+            {
+                double ratio = ConfigHelper.GetUnitsConversionRatio(false);
+                return new Point(Convert.ToInt32(_location.X * ratio), Convert.ToInt32(_location.Y * ratio));
+            }
             set
             {
-                _location = new PointF(value.X, value.Y);
+                double ratio = ConfigHelper.GetUnitsConversionRatio(false);
+                _location = new PointF((float)(value.X / ratio), (float)(value.Y / ratio));
                 FireInvalidated();
             }
         }
@@ -203,13 +208,24 @@ namespace MW5.Plugins.Printing.Model.Elements
             }
         }
 
+        /// <summary>
+        /// !!!FOR PROPERTY GRID ONLY!!! Gets or sets the size of the element (in 1/100 of an inch or millimeters depending on config value).
+        /// </summary>
         [Browsable(true)]
         [CategoryEx(@"cat_layout")]
         [DisplayNameEx(@"prop_size")]
-        public Size Size
+        public Size SizeUI
         {
-            get { return new Size((int)_size.Width, (int)_size.Height); }
-            set { SizeF = value; }
+            get
+            {
+                double ratio = ConfigHelper.GetUnitsConversionRatio(false);
+                return new Size(Convert.ToInt32(_size.Width * ratio), Convert.ToInt32(_size.Height * ratio));
+            }
+            set
+            {
+                double ratio = ConfigHelper.GetUnitsConversionRatio(false);
+                SizeF = new SizeF((float)(value.Width / ratio), (float)(value.Height / ratio));
+            }
         }
 
         /// <summary>
@@ -281,7 +297,7 @@ namespace MW5.Plugins.Printing.Model.Elements
 
         public bool ClickWithin(int x, int y)
         {
-            return !(x < Location.X || x > Location.X + SizeF.Width || y < Location.Y || y > Location.Y + SizeF.Height);
+            return !(x < LocationF.X || x > LocationF.X + SizeF.Width || y < LocationF.Y || y > LocationF.Y + SizeF.Height);
         }
 
         /// <summary>
@@ -303,10 +319,10 @@ namespace MW5.Plugins.Printing.Model.Elements
             _font = FontHelper.ScaleFont(_font, scaleRatio);
             _font2 = FontHelper.ScaleFont(_font2, scaleRatio);
 
-            int x = printing ? 0 : Location.X;
-            int y = printing ? 0 : Location.Y;
+            var x = printing ? 0 : LocationF.X;
+            var y = printing ? 0 : LocationF.Y;
 
-            Draw(g, printing, export, x, y);
+            Draw(g, printing, export, Convert.ToInt32(x), Convert.ToInt32(y));
 
             _font = font;
             _font2 = font2;
@@ -418,22 +434,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         public bool IntersectsWith(RectangleF paperRectangle)
         {
             return new RectangleF(LocationF, SizeF).IntersectsWith(paperRectangle);
-        }
-
-        /// <summary>
-        /// Returns true if element intersects a certain rectangle in screen coordinates.
-        /// </summary>
-        public bool IntrersectsWith(Rectangle page)
-        {
-            return new Rectangle(Location, Size).IntersectsWith(page);
-
-            // previous implementation
-            //bool outside = (Location.X + Size.Width < page.X) || 
-            //               (Location.X > page.X + page.Width) ||
-            //               (Location.Y + Size.Height < page.Y) || 
-            //               (Location.Y > page.Y + page.Height);
-
-            //return !outside;
         }
     }
 }

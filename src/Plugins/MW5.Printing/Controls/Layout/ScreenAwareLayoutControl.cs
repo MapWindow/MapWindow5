@@ -268,18 +268,25 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             int step = ChooseRulerStep();
 
-            var originPaper = ScreenToPaper(_rulerWidth, _rulerWidth);
-            originPaper = new PointF((float)(Math.Floor(originPaper.X / step) * step), (float)(Math.Floor(originPaper.Y / step) * step));
+            var origin = ScreenToPaper(_rulerWidth, _rulerWidth);
+            
+            double ratio = ConfigHelper.GetUnitsConversionRatio(false);
+            double x = origin.X * ratio;
+            double y = origin.Y * ratio;
+
+            origin = new PointF((float)(Math.Floor(x / step) * step), (float)(Math.Floor(y / step) * step));
+
+            var originPaper = new PointF((float)(origin.X / ratio), (float)(origin.Y / ratio));
 
             var start = PaperToScreen(originPaper);
 
-            DrawRuler(g, pen, Convert.ToInt32(originPaper.X), start.X, Width, _rulerWidth, step, false);
+            DrawRuler(g, pen, Convert.ToInt32(origin.X), start.X, Width, _rulerWidth, step, false);
             
             // let's reuse the same rendering code for vertical ruler
             g.RotateTransform(90f);
             g.TranslateTransform(_rulerWidth, 0f, MatrixOrder.Append);
 
-            DrawRuler(g, pen, Convert.ToInt32(originPaper.Y), start.Y, Height, _rulerWidth, step, true);
+            DrawRuler(g, pen, Convert.ToInt32(origin.Y), start.Y, Height, _rulerWidth, step, true);
 
             g.ResetTransform();
         }
@@ -293,7 +300,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             double step = 1;
 
             int byTwo = 0;
-            while (ratio * step < 70f)
+            while (ratio * step < 60f)
             {
                 step = byTwo < 2 ? step * 2 : step * 2.5;
                 byTwo++;
@@ -313,6 +320,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             var textBrush = Brushes.Black;
 
+          
             float val = screenStart;
             while (val < screenEnd)
             {

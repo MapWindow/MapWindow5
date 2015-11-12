@@ -52,7 +52,7 @@ namespace MW5.Plugins.Symbology
 
         public override IEnumerable<IConfigPage> ConfigPages
         {
-            get { yield return _context.Container.GetSingleton<SymbologyConfigPage>(); }
+            get { yield return _context.Container.GetInstance<SymbologyConfigPage>(); }
         }
 
         protected override void RegisterServices(IApplicationContainer container)

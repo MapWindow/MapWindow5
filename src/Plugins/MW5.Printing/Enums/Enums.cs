@@ -285,4 +285,10 @@ namespace MW5.Plugins.Printing.Enums
         SameHeight = 19,
         SameBoth = 20,
     }
+
+    public enum LayoutUnit
+    {
+        Inch = 0,
+        Millimeter = 1,
+    }
 }

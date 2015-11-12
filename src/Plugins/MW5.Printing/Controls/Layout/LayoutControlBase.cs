@@ -124,7 +124,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
         protected float PixelsPerDot()
         {
-            return _zoom * ScreenHelper.LogicToScreenDpi;
+            return _zoom * ScreenHelper.LogicToScreenDpi / (float)ConfigHelper.GetUnitsConversionRatio(false);
         }
 
         /// <summary>

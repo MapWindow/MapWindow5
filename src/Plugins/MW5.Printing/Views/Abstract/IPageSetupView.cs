@@ -14,8 +14,6 @@ namespace MW5.Plugins.Printing.Views.Abstract
     {
         double BottomMargin { get; }
 
-        double CentimetersPerInch { get; }
-
         double LeftMargin { get; }
 
         Orientation Orientation { get; }

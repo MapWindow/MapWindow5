@@ -5,10 +5,12 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Collections.Generic;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Printing.Controls;
 using MW5.Plugins.Printing.Menu;
 using MW5.Plugins.Printing.Services;
 
@@ -20,9 +22,13 @@ namespace MW5.Plugins.Printing
         private MenuGenerator _menuGenerator;
         private MenuListener _menuListener;
         private MapListener _mapListener;
+        private IAppContext _context;
 
         public override void Initialize(IAppContext context)
         {
+            if (context == null) throw new ArgumentNullException("context");
+
+            _context = context;
             _menuGenerator = context.Container.GetInstance<MenuGenerator>();
             _menuListener = context.Container.GetInstance<MenuListener>();
             _mapListener = context.Container.GetInstance<MapListener>();
@@ -31,6 +37,11 @@ namespace MW5.Plugins.Printing
         protected override void RegisterServices(IApplicationContainer container)
         {
             CompositionRoot.Compose(container);
+        }
+
+        public override IEnumerable<IConfigPage> ConfigPages
+        {
+            get { yield return _context.Container.GetInstance<PrintingConfigPage>(); }
         }
     }
 }
