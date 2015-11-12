@@ -42,6 +42,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         private bool _showScale;
         private TextRenderingHint _textHint;
         private LengthUnits _unit;
+        private Guid _guid;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LayoutScaleBar"/> class.
@@ -64,6 +65,14 @@ namespace MW5.Plugins.Printing.Model.Elements
             _textHint = TextRenderingHint.AntiAliasGridFit;
             _showScale = true;
             ResizeStyle = ResizeStyle.HandledInternally;
+        }
+
+        [Browsable(false)]
+        [DataMember()]
+        public Guid MapGuid
+        {
+            get { return _layoutMap != null ? _layoutMap.Guid : _guid; }
+            set { _guid = value; }
         }
 
         /// <summary>

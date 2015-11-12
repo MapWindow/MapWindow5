@@ -14,10 +14,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Map;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Controls.Layout;
+using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Services;
@@ -398,10 +400,21 @@ namespace MW5.Plugins.Printing.Views
         {
             var map = new LayoutMap();
 
-            map.Initialize(_map);
+            map.Initialize(_map, _layoutControl);
             map.Envelope = _view.Model.Extents;
 
             _layoutControl.AddElementWithMouse(map);
+        }
+
+        private bool IsMetricUnits()
+        {
+            switch (ConfigHelper.GetUnits())
+            {
+                case LayoutUnit.Inch:
+                    return false;
+                default:
+                    return true;
+            }
         }
 
         private void AddScaleBar()
@@ -413,9 +426,17 @@ namespace MW5.Plugins.Printing.Views
             if (map != null)
             {
                 scaleBar.Map = map;
-                bool km = map.Envelope.Width > 3000;
-                scaleBar.Unit = km ? LengthUnits.Kilometers : LengthUnits.Meters;
-                //TODO: allow American units as well
+
+                if (IsMetricUnits())
+                {
+                    bool km = map.Envelope.Width > 3000;
+                    scaleBar.Unit = km ? LengthUnits.Kilometers : LengthUnits.Meters;
+                }
+                else
+                {
+                    bool km = map.Envelope.Width > 5000;
+                    scaleBar.Unit = km ? LengthUnits.Miles : LengthUnits.Feet;
+                }
             }
 
             scaleBar.LayoutControl = _layoutControl;

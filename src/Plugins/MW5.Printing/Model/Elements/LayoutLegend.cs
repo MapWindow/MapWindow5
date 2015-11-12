@@ -48,6 +48,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         private int _thumbnailHeight;
         private int _thumbnailWidth;
         private Color color;
+        private Guid _guid;
 
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
@@ -87,6 +88,14 @@ namespace MW5.Plugins.Printing.Model.Elements
             _legend = legend;
 
             InitLayers();
+        }
+
+        [Browsable(false)]
+        [DataMember()]
+        public Guid MapGuid
+        {
+            get { return _layoutMap != null ? _layoutMap.Guid : _guid; }
+            set { _guid = value; }
         }
 
         [Browsable(true)]

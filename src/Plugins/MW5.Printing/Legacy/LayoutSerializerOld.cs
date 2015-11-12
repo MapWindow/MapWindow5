@@ -256,15 +256,10 @@ namespace MW5.Plugins.Printing.Legacy
                                     (bool)
                                     TypeDescriptor.GetConverter(typeof(bool)).ConvertFromInvariantString(attr.Value);
 
-                            attr = innerChild.Attributes["UpdateMapArea"];
-                            if (attr != null)
-                                lm.UpdateMapArea =
-                                    (bool)
-                                    TypeDescriptor.GetConverter(typeof(bool)).ConvertFromInvariantString(attr.Value);
 
-                            attr = innerChild.Attributes["MainMap"];
+                            attr = innerChild.Attributes["IsMain"];
                             if (attr != null)
-                                lm.MainMap =
+                                lm.IsMain =
                                     (bool)
                                     TypeDescriptor.GetConverter(typeof(bool)).ConvertFromInvariantString(attr.Value);
 
@@ -514,10 +509,8 @@ namespace MW5.Plugins.Printing.Legacy
                         TypeDescriptor.GetConverter(typeof(double)).ConvertToInvariantString(lm.Envelope.MaxY));
                     map.SetAttribute("DrawTiles",
                         TypeDescriptor.GetConverter(typeof(bool)).ConvertToInvariantString(lm.DrawTiles));
-                    map.SetAttribute("MainMap",
-                        TypeDescriptor.GetConverter(typeof(bool)).ConvertToInvariantString(lm.MainMap));
-                    map.SetAttribute("UpdateMapArea",
-                        TypeDescriptor.GetConverter(typeof(bool)).ConvertToInvariantString(lm.UpdateMapArea));
+                    map.SetAttribute("IsMain",
+                        TypeDescriptor.GetConverter(typeof(bool)).ConvertToInvariantString(lm.IsMain));
                     element.AppendChild(map);
                 }
                 else if (le is LayoutNorthArrow)

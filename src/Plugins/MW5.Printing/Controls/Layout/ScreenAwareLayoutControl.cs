@@ -71,16 +71,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
-        public LayoutMap MainMap
-        {
-            get { return _layoutElements.OfType<LayoutMap>().FirstOrDefault(map => map.MainMap); }
-        }
-
-        public bool MutipleMaps
-        {
-            get { return _layoutElements.OfType<LayoutMap>().Count() > 1; }
-        }
-
         /// <summary>
         /// Sets a boolean flag indicating if margins should be shown.
         /// </summary>
@@ -230,7 +220,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                 DrawSelectionRectangles(graph);
 
-                DrawMainMap(graph);
+                DrawMainMapLabel(graph);
 
                 DrawPageNumbers(graph);
 
@@ -404,12 +394,11 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Draws a tag for the main map.
         /// </summary>
-        private void DrawMainMap(Graphics g)
+        private void DrawMainMapLabel(Graphics g)
         {
-            bool multipleMaps = MutipleMaps;
-            if (multipleMaps)
+            if (_layoutElements.OfType<LayoutMap>().Count() > 1)
             {
-                var mainMap = MainMap;
+                var mainMap = _layoutElements.OfType<LayoutMap>().FirstOrDefault(map => map.IsMain);
                 if (mainMap != null)
                 {
                     var leRect = PaperToScreen(mainMap.Rectangle);

@@ -73,7 +73,7 @@ namespace MW5.Plugins.Printing.Services
         /// </summary>
         private void UpdateMapElement(LayoutControl layoutControl, IEnvelope extents)
         {
-            var map = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault(m => m.MainMap);
+            var map = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault(m => m.IsMain);
             
             if (map != null)
             {
@@ -85,11 +85,13 @@ namespace MW5.Plugins.Printing.Services
             }
         }
 
+        private LayoutMap GetMapByGuid(LayoutControl layoutControl, Guid guid)
+        {
+            return layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault(item => item.Guid == guid);
+        }
+
         private void InitializeElements(IAppContext context, LayoutControl layoutControl)
         {
-            // TODO: choose particular map element
-            var mapEl = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault();
-
             foreach (var el in layoutControl.LayoutElements)
             {
                 switch (el.Type)
@@ -98,7 +100,7 @@ namespace MW5.Plugins.Printing.Services
                         var map = el as LayoutMap;
                         if (map != null)
                         {
-                            map.Initialize(context.Map);
+                            map.Initialize(context.Map, layoutControl);
                         }
                         break;
                     case Enums.ElementType.Legend:
@@ -106,16 +108,15 @@ namespace MW5.Plugins.Printing.Services
                         if (legend != null)
                         {
                             legend.Initialize(layoutControl, context.Legend);
-                            legend.Map = mapEl;
+                            legend.Map = GetMapByGuid(layoutControl, legend.MapGuid);
                         }
                         break;
-
                     case Enums.ElementType.ScaleBar:
                         var scaleBar = el as LayoutScaleBar;
                         if (scaleBar != null)
                         {
                             scaleBar.LayoutControl = layoutControl;
-                            scaleBar.Map = mapEl;
+                            scaleBar.Map = GetMapByGuid(layoutControl, scaleBar.MapGuid);
                         }
                         break;
                 }

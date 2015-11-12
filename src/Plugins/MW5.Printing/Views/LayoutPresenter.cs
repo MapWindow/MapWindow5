@@ -86,7 +86,8 @@ namespace MW5.Plugins.Printing.Views
             var map = _context.Map;
 
             var mapElement = new LayoutMap();
-            mapElement.Initialize(map);
+            mapElement.Initialize(map, View.LayoutControl);
+            mapElement.IsMain = true;
 
             mapElement.LocationF = new PointF(PrintingConstants.DefaultMapOffset, PrintingConstants.DefaultMapOffset); 
             mapElement.DrawTiles = map.Tiles.Visible;

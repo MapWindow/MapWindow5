@@ -11,12 +11,14 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.Linq;
 using System.Runtime.Serialization;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Api.Map;
+using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Controls.PropertyGrid;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
@@ -31,14 +33,14 @@ namespace MW5.Plugins.Printing.Model.Elements
     [DataContract]
     public class LayoutMap : LayoutElement
     {
+        private LayoutControl _layoutControl;
         private IPrintableMap _map;
         private Bitmap _buffer;
         private bool _drawTiles;
         private bool _extentChanged;
         private IEnvelope _extents;
-        private bool _mainMap;
+        private bool _isMain;
         private TileProvider _tileProvider = TileProvider.OpenStreetMap;
-        private bool _updateMapArea;
         private RectangleF _oldRectangle;
 
         /// <summary>
@@ -55,19 +57,19 @@ namespace MW5.Plugins.Printing.Model.Elements
         protected override void SetDefaults()
         {
             _extentChanged = false;
-            _mainMap = true;
-            _updateMapArea = true;
-
+            _isMain = false;
             Name = "Map";
             PrintQuality = PrintQuality.High;
             TilesLoaded = false;
-            Guid = System.Guid.NewGuid().ToString();
+            Guid = Guid.NewGuid();
             ResizeStyle = ResizeStyle.NoScaling;
         }
 
-        public void Initialize(IPrintableMap map)
+        public void Initialize(IPrintableMap map, LayoutControl lc)
         {
             if (map == null) throw new ArgumentNullException("map");
+            if (lc == null) throw new ArgumentNullException("lc");
+            _layoutControl = lc;
             _map = map;
         }
 
@@ -124,7 +126,8 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         [Browsable(false)]
-        public string Guid { get; set; }
+        [DataMember]
+        public Guid Guid { get; set; }
 
         /// <summary>
         /// Indicates to the layout engine that vector based rendering should be used
@@ -133,13 +136,28 @@ namespace MW5.Plugins.Printing.Model.Elements
         [DefaultValue(true)]
         [CategoryEx(@"cat_map")]
         [DisplayNameEx(@"prop_mainmap")]
-        public bool MainMap
+        public bool IsMain
         {
-            get { return _mainMap; }
+            get { return _isMain; }
             set
             {
-                _mainMap = value;
+                _isMain = value;
+
+                if (value)
+                {
+                    DisableOtherMaps();
+                }
+
                 RefreshElement();
+            }
+        }
+
+        private void DisableOtherMaps()
+        {
+            // set property to false for all other map elements
+            foreach (var map in _layoutControl.LayoutElements.OfType<LayoutMap>().Where(m => m != this))
+            {
+                map.IsMain = false;
             }
         }
 
@@ -219,20 +237,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         public override ElementType Type
         {
             get { return ElementType.Map; }
-        }
-
-        [Browsable(true)]
-        [DefaultValue(true)]
-        [CategoryEx(@"cat_map")]
-        [DisplayNameEx(@"prop_updatemaparea")]
-        public bool UpdateMapArea
-        {
-            get { return MainMap || _updateMapArea; }
-            set
-            {
-                _updateMapArea = value;
-                RefreshElement();
-            }
         }
 
         /// <summary>
@@ -420,20 +424,21 @@ namespace MW5.Plugins.Printing.Model.Elements
                 return;
             }
 
-            double dx = _oldRectangle.Width / Envelope.Width;
-            double dy = _oldRectangle.Height / Envelope.Height;
+            if (!NumericHelper.Equal(_oldRectangle.Width, 0.0) && 
+                !NumericHelper.Equal(_oldRectangle.Height, 0.0))
+            {
+                double dx = _oldRectangle.Width / Envelope.Width;
+                double dy = _oldRectangle.Height / Envelope.Height;
 
-            var newEnv = Envelope.Clone();
+                var newEnv = Envelope.Clone();
 
-            double plusX = (Rectangle.Width - _oldRectangle.Width) / dx;
-            double plusY = (Rectangle.Height - _oldRectangle.Height) / dy;
+                double plusX = (Rectangle.Width - _oldRectangle.Width) / dx;
+                double plusY = (Rectangle.Height - _oldRectangle.Height) / dy;
 
-            newEnv.SetBounds(newEnv.MinX,
-                             newEnv.MaxX + plusX,
-                             newEnv.MinY - plusY,
-                             newEnv.MaxY);
-            
-            Envelope = newEnv;
+                newEnv.SetBounds(newEnv.MinX, newEnv.MaxX + plusX, newEnv.MinY - plusY, newEnv.MaxY);
+
+                Envelope = newEnv;
+            }
 
             _oldRectangle = Rectangle;
         }
