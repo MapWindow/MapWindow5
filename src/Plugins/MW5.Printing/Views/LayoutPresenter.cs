@@ -231,19 +231,31 @@ namespace MW5.Plugins.Printing.Views
                     list.AlignByPageSide(Alignment.Vertical, width, height);
                     break;
                 case LayoutCommand.FitWidth:
-                    list.FitToPage(Fit.Width, new Size(width, height));
-                    list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    {
+                        int pageWidth = View.LayoutControl.Pages.PageWidth;
+                        int pageHeight = View.LayoutControl.Pages.PageHeight;
+                        list.FitToPage(Fit.Width, new Size(pageWidth, pageHeight));
+                        list.AlignByPageSide(Alignment.Horizontal, pageWidth, pageHeight);
+                    }
                     break;
                 case LayoutCommand.FitHeight:
-                    list.FitToPage(Fit.Height, new Size(width, height));
-                    list.AlignByPageSide(Alignment.Vertical, width, height);
+                    {
+                        int pageWidth = View.LayoutControl.Pages.PageWidth;
+                        int pageHeight = View.LayoutControl.Pages.PageHeight;
+                        list.FitToPage(Fit.Height, new Size(pageWidth, pageHeight));
+                        list.AlignByPageSide(Alignment.Vertical, pageWidth, pageHeight);
+                    }
                     break;
                 case LayoutCommand.FitBoth:
-                    var size = new Size(width, height);
-                    list.FitToPage(Fit.Width, size);
-                    list.FitToPage(Fit.Height, size);
-                    list.AlignByPageSide(Alignment.Vertical, width, height);
-                    list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    {
+                        int pageWidth = View.LayoutControl.Pages.PageWidth;
+                        int pageHeight = View.LayoutControl.Pages.PageHeight;
+                        var size = new Size(pageWidth, pageHeight);
+                        list.FitToPage(Fit.Width, size);
+                        list.FitToPage(Fit.Height, size);
+                        list.AlignByPageSide(Alignment.Vertical, width, height);
+                        list.AlignByPageSide(Alignment.Horizontal, width, height);
+                    }
                     break;
                 case LayoutCommand.SameWidth:
                     list.MakeSameSize(Fit.Width);

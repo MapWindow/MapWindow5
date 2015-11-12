@@ -119,7 +119,20 @@ namespace MW5.Plugins.Printing.Views
             layoutControl1.SelectionChanged += (s, e) => OnSelectionChanged();
             layoutControl1.MouseMove += OnLayoutMouseMove;
             layoutControl1.ElementsChanged += (s, e) => _elements.View.UpdateSelectionFromMap();
+            layoutControl1.MouseWheel += OnMouseWheel;
             contextMenuStripEx1.Opening += ContextMenuOpening;
+        }
+
+        private void OnMouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                layoutControl1.ZoomIn();
+            }
+            else
+            {
+                layoutControl1.ZoomOut();
+            }
         }
 
         private void UpdateContextMenu(bool enable)

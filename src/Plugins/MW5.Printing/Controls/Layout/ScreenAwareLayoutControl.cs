@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -29,7 +30,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         protected MouseMode _mouseMode;
         protected Bitmap _resizeTempBitmap;
         protected bool _showPageNumbers;
-        private bool _showMargins;
         private Bitmap _screenBuffer;
         private Bitmap _tempBuffer;
         protected Point _mousePosition;
@@ -134,7 +134,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             if (_fullRedraw || _screenBuffer == null)
             {
                 _fullRedraw = false;
-                DrawControl(e.Graphics, e.ClipRectangle);
+                DrawControl(e.ClipRectangle);
 
                 e.Graphics.SmoothingMode = DrawingQuality;
             }
@@ -203,7 +203,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// Main rendring routine, uses double buffering.
         /// </summary>
-        private void DrawControl(Graphics g, Rectangle clipRectangle)
+        private void DrawControl(Rectangle clipRectangle)
         {
             //Updates the invalidation rectangle to be a bit bigger to deal with overlaps
             var invalRect = Rectangle.Inflate(clipRectangle, 5, 5);
@@ -215,7 +215,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             //We paint to a temporary buffer to avoid flickering
             _screenBuffer = new Bitmap(invalRect.Width, invalRect.Height, PixelFormat.Format24bppRgb);
-            
+
             using (var graph = Graphics.FromImage(_screenBuffer))
             {
                 graph.TranslateTransform(-invalRect.X, -invalRect.Y);
@@ -371,8 +371,10 @@ namespace MW5.Plugins.Printing.Controls.Layout
             float y = panning ? _paperLocation.Y + _mouseBox.Height : _paperLocation.Y;
 
             g.TranslateTransform(x, y);
-            g.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
 
+
+            g.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
+            
             le.DrawElement(g, false, false);
 
             g.ResetTransform();
@@ -412,6 +414,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 var papRect = PaperToScreen(el.Rectangle);
                 var clipRect = papRect.FloatRectangleToInt();
 
+                graph.SetClip(clipRect);
+
                 switch (el.ResizeStyle)
                 {
                     case ResizeStyle.StretchToFit:
@@ -421,6 +425,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
                         graph.DrawImageUnscaled(_resizeTempBitmap, clipRect);
                         break;
                 }
+
+                graph.ResetClip();
 
                 return true;
             }

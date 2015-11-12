@@ -147,24 +147,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             get { return new RectangleF(_location, _size); }
             set
             {
-                if (value.Width < 10)
-                {
-                    value.Width = 10;
-                    if (!NumericHelper.Equal(value.X, _location.X))
-                    {
-                        value.X = _location.X + _size.Width - 10;
-                    }
-                }
-
-                if (value.Height < 10)
-                {
-                    value.Height = 10;
-
-                    if (!NumericHelper.Equal(value.Y, _location.Y))
-                    {
-                        value.Y = _location.Y + _size.Height - 10;
-                    }
-                }
+                AdjustMinRectSize(ref value);
 
                 _location = value.Location;
                 _size = value.Size;
@@ -172,6 +155,28 @@ namespace MW5.Plugins.Printing.Model.Elements
                 OnSizeChanged();
                 FireInvalidated();
                 UpdateThumbnail();
+            }
+        }
+
+        private void AdjustMinRectSize(ref RectangleF value)
+        {
+            if (value.Width < 10)
+            {
+                value.Width = 10;
+                if (!NumericHelper.Equal(value.X, _location.X))
+                {
+                    value.X = _location.X + _size.Width - 10;
+                }
+            }
+
+            if (value.Height < 10)
+            {
+                value.Height = 10;
+
+                if (!NumericHelper.Equal(value.Y, _location.Y))
+                {
+                    value.Y = _location.Y + _size.Height - 10;
+                }
             }
         }
 

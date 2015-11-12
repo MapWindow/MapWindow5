@@ -6,6 +6,7 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -36,9 +37,9 @@ namespace MW5.Plugins.Printing.Model.Elements
         private bool _extentChanged;
         private IEnvelope _extents;
         private bool _mainMap;
-        private RectangleF _oldRectangle;
         private TileProvider _tileProvider = TileProvider.OpenStreetMap;
         private bool _updateMapArea;
+        private RectangleF _oldRectangle;
 
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
@@ -400,16 +401,24 @@ namespace MW5.Plugins.Printing.Model.Elements
                 }
             }
 
-            g.DrawImage(_buffer, Rectangle);
+            g.DrawImage(_buffer, Rectangle.FloatRectangleToInt());
 
-            if (TilesLoaded) TilesLoaded = false;
+            TilesLoaded = false;
 
             UpdateThumbnail();
         }
 
         protected override void OnSizeChanged()
         {
-            if (Resizing || Envelope == null)
+            base.OnSizeChanged();
+
+            if (Envelope == null)
+            {
+                _oldRectangle = Rectangle;
+                return;
+            }
+
+            if (Resizing)
             {
                 return;
             }
@@ -422,10 +431,14 @@ namespace MW5.Plugins.Printing.Model.Elements
             double plusX = (Rectangle.Width - _oldRectangle.Width) / dx;
             double plusY = (Rectangle.Height - _oldRectangle.Height) / dy;
 
-            newEnv.Inflate(plusX, plusY);
+            newEnv.SetBounds(newEnv.MinX,
+                             newEnv.MaxX + plusX,
+                             newEnv.MinY - plusY,
+                             newEnv.MaxY);
+            
             Envelope = newEnv;
 
-            _oldRectangle = new RectangleF(LocationF, SizeF);
+            _oldRectangle = Rectangle;
         }
 
         protected override void UpdateThumbnail()

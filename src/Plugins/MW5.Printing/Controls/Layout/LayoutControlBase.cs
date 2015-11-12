@@ -152,13 +152,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         internal void UpdateScrollBars()
         {
-            //if (Math.Abs(_zoom) < 1e-10)
-            //{
-            //    // zoom can be zero on older printer drivers don't divide by 0
-            //    Logger.Current.Warn("Invalid zoom in ZoomableLayoutControl.UpdateScrollBars.");
-            //    _zoom = 100;
-            //}
-
             if (!Initialized || _suppressScrollbarUpdate)
             {
                 return;
@@ -277,11 +270,9 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _fullRedraw = true;
             }
 
-            Invalidate(region);
-
             if (_lockCount == 0)
             {
-                Invalidate();
+                Invalidate(region);
             }
         }
 

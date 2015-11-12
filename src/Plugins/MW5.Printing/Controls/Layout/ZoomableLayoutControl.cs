@@ -21,6 +21,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
     {
         protected readonly List<LayoutElement> _layoutElements = new List<LayoutElement>();
         protected readonly List<LayoutElement> _selectedLayoutElements = new List<LayoutElement>();
+        protected bool _showMargins;
 
         /// <summary>
         /// Creates a new instance of ZoomableLayoutControl
@@ -93,7 +94,18 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _zoom = 1f;
             }
 
-            CenterPaperOnPoint(new PointF(_pages.TotalWidth / 2F, _pages.TotalHeight / 2F));
+            var margins = PrinterSettings.DefaultPageSettings.Margins;
+
+            float width = _pages.TotalWidth;
+            float height = _pages.TotalHeight;
+
+            if (_showMargins)
+            {
+                width -= margins.Left - margins.Right;
+                height -= margins.Top - margins.Bottom;
+            }
+
+            CenterPaperOnPoint(new PointF(width / 2f, height / 2F));
 
             FireZoomChanged(null);
 
@@ -271,6 +283,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private void CenterPaperOnPoint(PointF centerPoint)
         {
             var paperCenterOnScreen = PaperToScreen(centerPoint);
+
             float diffX = paperCenterOnScreen.X - UsableWidth / 2F;
             float diffY = paperCenterOnScreen.Y - UsableHeight / 2F;
 

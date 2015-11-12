@@ -178,10 +178,8 @@ namespace MW5.Plugins.Printing.Controls.Layout
                                         using (var graph = Graphics.FromImage(_resizeTempBitmap))
                                         {
                                             graph.SmoothingMode = DrawingQuality;
-                                            graph.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom,
-                                                ScreenHelper.LogicToScreenDpi * _zoom);
-                                            graph.TranslateTransform(-_selectedLayoutElements[0].Rectangle.X,
-                                                -_selectedLayoutElements[0].Rectangle.Y);
+                                            graph.ScaleTransform(ScreenHelper.LogicToScreenDpi * _zoom, ScreenHelper.LogicToScreenDpi * _zoom);
+                                            graph.TranslateTransform(-_selectedLayoutElements[0].Rectangle.X, -_selectedLayoutElements[0].Rectangle.Y);
                                             _selectedLayoutElements[0].DrawElement(graph, false, false);
                                         }
                                     }
@@ -265,11 +263,14 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     {
                         var invalRect = PaperToScreen(le.Rectangle);
                         invalRect.Inflate(_inflate, _inflate);
+
                         DoInvalidate(new Region(invalRect));
+                        
                         var elementLocScreen = PaperToScreen(le.LocationF);
                         le.LocationF = ScreenToPaper(elementLocScreen.X - deltaX, elementLocScreen.Y - deltaY);
                         invalRect = PaperToScreen(le.Rectangle);
                         invalRect.Inflate(_inflate, _inflate);
+                        
                         DoInvalidate(new Region(invalRect));
                         Update();
                     }
@@ -399,8 +400,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
                         //Turns of resize
                     case MouseMode.ResizeSelected:
-                        if (_resizeTempBitmap != null) _resizeTempBitmap.Dispose();
-                        _resizeTempBitmap = null;
+                        RecycleResizeBitmap();
                         _mouseMode = MouseMode.Default;
                         Cursor = Cursors.Default;
                         if (_selectedLayoutElements.Count > 0)
@@ -448,17 +448,38 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
+        private void RecycleResizeBitmap()
+        {
+            if (_resizeTempBitmap != null)
+            {
+                _resizeTempBitmap.Dispose();
+                _resizeTempBitmap = null;
+            }
+        }
+
         private void ResizeSelected(float deltaX, float deltaY)
         {
+            if (NumericHelper.Equal(deltaX, 0f) && NumericHelper.Equal(deltaY, 0f)) return;
+
             _suppressElementInvalidation = true;
 
-            var oldScreenRect = PaperToScreen(_selectedLayoutElements[0].Rectangle);
-            oldScreenRect.Inflate(_inflate, _inflate);
+            var el = _selectedLayoutElements[0];
 
-            DoInvalidate(new Region(oldScreenRect));
+            var oldScreenRect = PaperToScreen(el.Rectangle);
 
-            oldScreenRect = PaperToScreen(_selectedLayoutElements[0].Rectangle);
+            AdjustRectangle(ref oldScreenRect, deltaX, deltaY);
 
+            el.Rectangle = ScreenToPaper(oldScreenRect);
+            
+            DoInvalidate();
+
+            Update();
+
+            _suppressElementInvalidation = false;
+        }
+
+        private void AdjustRectangle(ref RectangleF oldScreenRect, float deltaX, float deltaY)
+        {
             switch (_resizeSelectedEdge)
             {
                 case Edge.TopLeft:
@@ -496,14 +517,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
                     oldScreenRect.Width = oldScreenRect.Width + deltaX;
                     break;
             }
-            _selectedLayoutElements[0].Rectangle = ScreenToPaper(oldScreenRect);
-            oldScreenRect.Inflate(_inflate, _inflate);
-
-            DoInvalidate(new Region(oldScreenRect));
-
-            Update();
-
-            _suppressElementInvalidation = false;
         }
     }
 }
