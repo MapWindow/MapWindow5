@@ -1,4 +1,5 @@
 ﻿using System;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 using MW5.Tools.Controls.Parameters.Interfaces;
@@ -20,7 +21,8 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// </summary>
         /// <param name="dataSourceType">Type of the data source.</param>
         /// <param name="dialogService"></param>
-        public virtual void Initialize(DataSourceType dataSourceType, IFileDialogService dialogService)
+        /// <param name="current"></param>
+        public virtual void Initialize(DataSourceType dataSourceType, IFileDialogService dialogService, ILayer current)
         {
             if (dialogService == null) throw new ArgumentNullException("dialogService");
             _dataType = dataSourceType;

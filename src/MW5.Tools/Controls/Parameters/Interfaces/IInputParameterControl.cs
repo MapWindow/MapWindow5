@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Services;
 
@@ -35,6 +36,7 @@ namespace MW5.Tools.Controls.Parameters.Interfaces
         /// </summary>
         /// <param name="dataType">Type of the data.</param>
         /// <param name="dialogService">File dialog service.</param>
-        void Initialize(DataSourceType dataType, IFileDialogService dialogService);
+        /// <param name="current">The current layer</param>
+        void Initialize(DataSourceType dataType, IFileDialogService dialogService, ILayer current);
     }
 }

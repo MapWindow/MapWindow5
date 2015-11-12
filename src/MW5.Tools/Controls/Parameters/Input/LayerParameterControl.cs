@@ -29,6 +29,7 @@ namespace MW5.Tools.Controls.Parameters.Input
     internal partial class LayerParameterControl : InputParameterControlBase
     {
         private List<InputLayerGridAdapter> _layers = new List<InputLayerGridAdapter>();
+        private ILayer _currentLayer;
 
         public LayerParameterControl()
         {
@@ -105,13 +106,16 @@ namespace MW5.Tools.Controls.Parameters.Input
         /// </summary>
         /// <param name="dataType">Type of the data.</param>
         /// <param name="dialogService">File dialog service.</param>
-        public override void Initialize(DataSourceType dataType, IFileDialogService dialogService)
+        /// <param name="currentLayer">The current layer</param>
+        public override void Initialize(DataSourceType dataType, IFileDialogService dialogService, ILayer currentLayer)
         {
-            base.Initialize(dataType, dialogService);
+            base.Initialize(dataType, dialogService, currentLayer);
+
+            _currentLayer = currentLayer;
 
             if (_dataType == DataSourceType.Raster)
             {
-                int height = panel1.Height;
+                var height = panel1.Height;
                 panel1.Height = 0;
                 panel1.Visible = false;
                 Height -= height;
@@ -128,9 +132,24 @@ namespace MW5.Tools.Controls.Parameters.Input
 
             UpdateComboBox();
 
+            SetSelectionComboBox();
+        }
+
+        private void SetSelectionComboBox()
+        {
             if (comboBoxAdv1.Items.Count > 0)
             {
                 comboBoxAdv1.SelectedIndex = 0;
+            }
+
+            // Make current selected layer the selected option in the combobox
+            // It is possible the selected layer is not on the combobox:
+            for (var i = 0; i < this.comboBoxAdv1.Items.Count; i++)
+            {
+                var layerItem = (InputLayerGridAdapter)this.comboBoxAdv1.Items[i];
+                if (layerItem.Source.LayerHandle != _currentLayer.Handle) continue;
+                this.comboBoxAdv1.SelectedIndex = i;
+                break;
             }
         }
 
@@ -173,7 +192,6 @@ namespace MW5.Tools.Controls.Parameters.Input
         {
             throw new NotSupportedException("SetValue method isn't supported.");
         }
-
 
         /// <summary>
         /// Fires the selected layer changed event.

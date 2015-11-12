@@ -162,9 +162,9 @@ namespace MW5.Tools.Services
                 }
             }
 
-            input.Initialize(dataType, _dialogService);
+            input.Initialize(dataType, _dialogService, _context.Layers.Current);
 
-            return input as ParameterControlBase;
+            return (ParameterControlBase)input;
         }
     }
 }
