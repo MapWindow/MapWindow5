@@ -7,7 +7,9 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
 using MW5.Api.Helpers;
@@ -15,6 +17,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
+using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Views.Abstract;
@@ -25,7 +28,6 @@ namespace MW5.Plugins.Printing.Views
 {
     internal class TemplatePresenter : BasePresenter<ITemplateView, TemplateModel>
     {
-
         private readonly IAppContext _context;
 
         public TemplatePresenter(ITemplateView view, IAppContext context)
@@ -118,9 +120,20 @@ namespace MW5.Plugins.Printing.Views
 
             SaveConfig();
 
-            PrinterManager.InitPaperSize();
+            InitPaperSize();
 
             return true;
+        }
+
+        private void InitPaperSize()
+        {
+            var ps = Model.PrinterSettings;
+
+            // TODO: improve conversion from PaperFormat to PaperSize
+            var paperSizes = PaperSizes.GetPaperSizes(ps);
+            var paperSize = paperSizes.FirstOrDefault(p => p.PaperName == PaperFormat.A4.ToString());
+
+            ps.DefaultPageSettings.PaperSize = paperSize;
         }
 
         private string TemplateFilename
@@ -162,7 +175,7 @@ namespace MW5.Plugins.Printing.Views
 
         private SizeF GetUsablePaperSize()
         {
-            var paperSize = PaperSizes.PaperSizeByFormatName(View.PaperFormat, PrinterManager.PrinterSettings);
+            var paperSize = PaperSizes.PaperSizeByFormatName(View.PaperFormat, Model.PrinterSettings);
             if (paperSize != null)
             {
                 var margins = AppConfig.Instance.PrintingMargins;

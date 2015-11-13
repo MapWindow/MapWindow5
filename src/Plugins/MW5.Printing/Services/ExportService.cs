@@ -128,7 +128,7 @@ namespace MW5.Plugins.Printing.Services
             filterIndex = -1;
             filename = string.Empty;
 
-            using (var dlg = new SaveFileDialog { Filter = PrintingConstants.EXPORT_FILTER })
+            using (var dlg = new SaveFileDialog { Filter = PrintingConstants.BitmapFilter })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

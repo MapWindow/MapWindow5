@@ -25,7 +25,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         private Panel _hScrollBarPanel;
         protected bool _initialized;
         protected PointF _paperLocation; //The location of the paper within the screen coordinates
-        private PrinterSettings _printerSettings;
+        protected PrinterSettings _printerSettings;
         protected bool _suppressScrollbarUpdate;
         private VScrollBar _vScrollBar;
         protected float _zoom; //The zoom of the paper
@@ -54,14 +54,20 @@ namespace MW5.Plugins.Printing.Controls.Layout
             get { return _pages; }
         }
 
+        public void UpdatePageSettings()
+        {
+            _pages.MarkPageSizeDirty();
+            DelegateHelper.FireEvent(this, PageSettingsChanged);
+        }
+
         public PrinterSettings PrinterSettings
         {
             get { return _printerSettings; }
             set
             {
+                _pages.Initialize(value);
                 _printerSettings = value;
-                _pages.MarkPageSizeDirty();
-                DelegateHelper.FireEvent(this, PageSettingsChanged);
+                UpdatePageSettings();
             }
         }
 
@@ -170,7 +176,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
         private void InitPrinterSettings()
         {
-            var printerSettings = PrinterManager.PrinterSettings;
+            var printerSettings = new PrinterSettings();
             printerSettings.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
 
             // let's set some default for designer support

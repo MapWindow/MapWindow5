@@ -30,9 +30,7 @@ namespace MW5.Plugins.Printing.Menu
             plugin.ItemClicked += OnItemClicked;
             plugin.ViewUpdating += ViewUpdating;
         }
-
-
-
+        
         private void ViewUpdating(object sender, EventArgs e)
         {
             var item = _context.Toolbars.FindItem(MenuKeys.SelectPrintArea, _plugin.Identity);
@@ -47,7 +45,7 @@ namespace MW5.Plugins.Printing.Menu
             switch (e.ItemKey)
             {
                 case MenuKeys.Print:
-                    var model = new TemplateModel(PrintArea.CurrentScreen);
+                    var model = new TemplateModel(PrintArea.CurrentScreen, _plugin.PrinterSettings);
 
                     if (_context.Container.Run<TemplatePresenter, TemplateModel>(model))
                     {

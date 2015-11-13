@@ -21,21 +21,26 @@ namespace MW5.Plugins.Printing.Views
 {
     internal class TemplateModel
     {
-        private TemplateModel()
+        private readonly PrinterSettings _printerSettings;
+
+        private TemplateModel(PrinterSettings settings)
         {
+            if (settings == null) throw new ArgumentNullException("settings");
             Valid = true;
             Templates = new List<LayoutTemplate>();
+            _printerSettings = settings;
         }
 
-        public TemplateModel(PrintArea area)
-            : this()
+        public TemplateModel(PrintArea area, PrinterSettings settings)
+            : this(settings)
         {
             PrintArea = area;
             Extents = null;
+            
         }
 
-        public TemplateModel(IEnvelope extents)
-            : this()
+        public TemplateModel(IEnvelope extents, PrinterSettings settings)
+            : this(settings)
         {
             if (extents == null) throw new ArgumentNullException("extents");
             Extents = extents;
@@ -86,17 +91,23 @@ namespace MW5.Plugins.Printing.Views
             }
         }
 
-        public PrinterSettings CreatePrinterSettings()
+        public PrinterSettings PrinterSettings
         {
-            var settings = PrinterManager.PrinterSettings;
-            var page = settings.DefaultPageSettings;
+            get
+            {
+                var page = _printerSettings.DefaultPageSettings;
 
-            page.Landscape = PaperOrientation == Orientation.Horizontal;
-            page.PaperSize = PaperSizes.PaperSizeByFormatName(PaperFormat, settings);
+                page.Landscape = PaperOrientation == Orientation.Horizontal;
 
-            page.Margins = AppConfig.Instance.PrintingMargins;
+                if (!string.IsNullOrWhiteSpace(PaperFormat))
+                {
+                    page.PaperSize = PaperSizes.PaperSizeByFormatName(PaperFormat, _printerSettings);
+                }
 
-            return settings;
+                page.Margins = AppConfig.Instance.PrintingMargins;
+
+                return _printerSettings;
+            }
         }
     }
 }

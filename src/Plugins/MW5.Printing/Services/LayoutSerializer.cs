@@ -46,13 +46,13 @@ namespace MW5.Plugins.Printing.Services
             return false;
         }
 
-        public bool LoadLayout(IAppContext context, LayoutControl layoutControl, string filename, IEnvelope extents)
+        public bool LoadLayout(IAppContext context, LayoutControl layoutControl, string filename, IEnvelope extents, PrinterSettings settings)
         {
             var layout = ReadLayout(filename);
 
             if (layout == null) return false;
 
-            ApplyLayout(layoutControl, layout);
+            ApplyLayout(layoutControl, layout, settings);
 
             InitializeElements(context, layoutControl);
 
@@ -128,14 +128,13 @@ namespace MW5.Plugins.Printing.Services
             }
         }
 
-        private void ApplyLayout(LayoutControl layoutControl, XmlLayout layout)
+        private void ApplyLayout(LayoutControl layoutControl, XmlLayout layout, PrinterSettings settings)
         {
             layoutControl.ClearLayout();
             layoutControl.AddToLayout(layout.Elements);
 
-            var settings = PrinterManager.PrinterSettings;
             layout.Paper.UpdatePageSettings(settings);
-            layoutControl.PrinterSettings = settings;
+            layoutControl.UpdatePageSettings();
 
             layoutControl.Pages.Resize(layout.Paper.PageCountX, layout.Paper.PageCountY);
         }

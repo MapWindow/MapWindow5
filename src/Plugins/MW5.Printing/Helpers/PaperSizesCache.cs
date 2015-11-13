@@ -28,27 +28,29 @@ namespace MW5.Plugins.Printing.Helpers
             }
         }
 
-        public static List<PaperSize> GetPaperSizes(PrinterSettings settings)
+        public static IEnumerable<PaperSize> GetPaperSizes(PrinterSettings settings)
         {
-            if (!_printers.ContainsKey(settings.PrinterName))
-            {
-                AddPaperSizes(settings);
-            }
+            CheckPaperSizes(settings);
 
             return _printers[settings.PrinterName];
         }
 
         public static PaperSize PaperSizeByFormatName(string formatName, PrinterSettings settings)
         {
-            if (!_printers.ContainsKey(settings.PrinterName))
-            {
-                AddPaperSizes(settings);
-            }
+            CheckPaperSizes(settings);
 
             var list = _printers[settings.PrinterName];
             var result = list.FirstOrDefault(size => size.PaperName.ToUpper() == formatName.ToUpper());
 
             return result;
+        }
+
+        private static void CheckPaperSizes(PrinterSettings settings)
+        {
+            if (!_printers.ContainsKey(settings.PrinterName))
+            {
+                AddPaperSizes(settings);
+            }
         }
     }
 }

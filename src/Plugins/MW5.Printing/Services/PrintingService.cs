@@ -20,9 +20,15 @@ namespace MW5.Plugins.Printing.Services
 {
     internal class PrintingService: IDisposable
     {
+        private readonly bool _useElementClipping;
         private LayoutPages _pages;
         private IEnumerable<LayoutElement> _elements;
         public event EventHandler<PrintEventArgs> EndPrint;
+
+        public PrintingService()
+        {
+            _useElementClipping = false;
+        }
 
         /// <summary>
         /// Runs printing including printer selection
@@ -162,7 +168,7 @@ namespace MW5.Plugins.Printing.Services
                 else
                 {
                     // origin is beginning of element (even if lies outside current page)
-                    if (PrintingConstants.UseElementClipping)
+                    if (_useElementClipping)
                     {
                         offsetX = offsetX > 0 ? 0f : -offsetX;
                         offsetY = offsetY > 0 ? 0f : -offsetY;

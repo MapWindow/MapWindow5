@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mef;
@@ -23,6 +24,12 @@ namespace MW5.Plugins.Printing
         private MenuListener _menuListener;
         private MapListener _mapListener;
         private IAppContext _context;
+        private PrinterSettings _printerSettings;
+
+        public PrinterSettings PrinterSettings
+        {
+            get { return _printerSettings ?? (_printerSettings = new PrinterSettings()); }
+        }
 
         public override void Initialize(IAppContext context)
         {

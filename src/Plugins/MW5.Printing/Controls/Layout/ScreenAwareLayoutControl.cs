@@ -497,7 +497,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
         private RectangleF GetPaperBoundsWithMargins()
         {
-            var page = PrinterSettings.DefaultPageSettings;
+            var page = _printerSettings.DefaultPageSettings;
 
             float width = _pages.TotalWidth + page.Margins.Left + page.Margins.Right;
             float height = _pages.TotalHeight + page.Margins.Top + page.Margins.Bottom;

@@ -235,11 +235,8 @@ namespace MW5.Plugins.Printing.Views
             var model = _layoutControl.PrinterSettings;
             if (_context.Container.Run<PageSetupPresenter, PrinterSettings>(model))
             {
-                _layoutControl.Pages.MarkPageSizeDirty();
+                _layoutControl.UpdatePageSettings();
                 _layoutControl.UpdateLayout();
-
-                // TODO: trigger in some other way
-                _layoutControl.PrinterSettings = model;
                 _layoutControl.Invalidate();
             }
         }
@@ -315,8 +312,13 @@ namespace MW5.Plugins.Printing.Views
 
             var serializer = new LayoutSerializer();
 
-            if (serializer.LoadLayout(_context, _layoutControl, filename, _view.Model.Extents))
+            var settings = _view.LayoutControl.PrinterSettings;
+
+            if (serializer.LoadLayout(_context, _layoutControl, filename, 
+                                      _view.Model.Extents, settings))
             {
+                
+
                 MessageService.Current.Info("Layout was loaded successfully.");
             }
         }
@@ -351,7 +353,7 @@ namespace MW5.Plugins.Printing.Views
 
         private string GetLoadFilename()
         {
-            using (var dlg = new OpenFileDialog { Filter = @"*.xml|*.xml" })
+            using (var dlg = new OpenFileDialog { Filter = PrintingConstants.TemplateFilter })
             {
                 if (dlg.ShowDialog(ParentView) == DialogResult.OK)
                 {
@@ -364,7 +366,7 @@ namespace MW5.Plugins.Printing.Views
 
         private string GetSaveFilename()
         {
-            using (var dlg = new SaveFileDialog { Filter = @"*.xml|*.xml" })
+            using (var dlg = new SaveFileDialog { Filter = PrintingConstants.TemplateFilter })
             {
                 dlg.InitialDirectory = ConfigPathHelper.GetLayoutPath();
 
@@ -381,8 +383,7 @@ namespace MW5.Plugins.Printing.Views
         {
             var ofd = new OpenFileDialog
                           {
-                              Filter =
-                                  "Images (*.png, *.jpg, *.bmp, *.gif, *.tif)|*.png;*.jpg;*.bmp;*.gif;*.tif",
+                              Filter = PrintingConstants.BitmapFilter,
                               FilterIndex = 1,
                               CheckFileExists = true
                           };

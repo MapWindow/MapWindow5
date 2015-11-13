@@ -78,20 +78,18 @@ namespace MW5.Plugins.Printing.Views
             if (Model.HasTemplate)
             {
                 var serializer = new LayoutSerializer();
-                serializer.LoadLayout(_context, View.LayoutControl, Model.TemplateName, Model.Extents);
-
-                View.LayoutControl.Initialize(_context.Map, _loadingService);
+                serializer.LoadLayout(_context, View.LayoutControl, Model.TemplateName, Model.Extents, Model.PrinterSettings);
             }
-            else
+
+            View.LayoutControl.PrinterSettings = Model.PrinterSettings;
+
+            View.LayoutControl.Initialize(_context.Map, _loadingService);
+
+            if (!Model.HasTemplate)
             {
-                var settings = Model.CreatePrinterSettings();
-
-                View.LayoutControl.PrinterSettings = settings;
-
-                View.LayoutControl.Initialize(_context.Map, _loadingService);
-
                 AddMapElement(Model.Scale, Model.Extents);
             }
+
 
             View.LayoutControl.Unlock();
 

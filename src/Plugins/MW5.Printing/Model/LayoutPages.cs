@@ -18,6 +18,7 @@ namespace MW5.Plugins.Printing.Model
 {
     public class LayoutPages : List<LayoutPage>
     {
+        private PrinterSettings _settings;
         private int _pageCountX;
         private int _pageCountY;
         private int _pageHeight;
@@ -29,6 +30,12 @@ namespace MW5.Plugins.Printing.Model
             PageCountY = 1;
 
             MarkPageSizeDirty();
+        }
+
+        public void Initialize(PrinterSettings settings)
+        {
+            if (settings == null) throw new NullReferenceException("settings");
+            _settings = settings;
         }
 
         public bool HasScheduled
@@ -166,7 +173,7 @@ namespace MW5.Plugins.Printing.Model
 
         private PageSettings PageSettings
         {
-            get { return PrinterManager.PageSettings; }
+            get { return _settings.DefaultPageSettings; }
         }
 
         public LayoutPage GetPage(int pageIndexX, int pageIndexY)

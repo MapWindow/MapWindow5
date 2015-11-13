@@ -37,7 +37,7 @@ namespace MW5.Plugins.Printing.Services
 
                 Application.DoEvents();
 
-                var model = new TemplateModel(e.ProjectedBounds);
+                var model = new TemplateModel(e.ProjectedBounds, _plugin.PrinterSettings);
                 if (_context.Container.Run<TemplatePresenter, TemplateModel>(model))
                 {
                     // remove selection before we are drawing the layout

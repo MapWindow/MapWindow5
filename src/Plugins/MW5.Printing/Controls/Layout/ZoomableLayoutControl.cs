@@ -94,7 +94,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
                 _zoom = 1f;
             }
 
-            var margins = PrinterSettings.DefaultPageSettings.Margins;
+            var margins = _printerSettings.DefaultPageSettings.Margins;
 
             float width = _pages.TotalWidth;
             float height = _pages.TotalHeight;

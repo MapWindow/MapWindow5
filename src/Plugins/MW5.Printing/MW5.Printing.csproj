@@ -229,7 +229,6 @@
     <Compile Include="Menu\MenuCommands.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
     <Compile Include="Menu\MenuListener.cs" />
-    <Compile Include="Helpers\PrinterManager.cs" />
     <Compile Include="Controls\LayoutListBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
