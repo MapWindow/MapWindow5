@@ -213,6 +213,8 @@
     <Compile Include="Helpers\GroupingGridHelper.cs" />
     <Compile Include="Helpers\OptionListHelper.cs" />
     <Compile Include="Helpers\SplitContainerHelper.cs" />
+    <Compile Include="Helpers\SyncfusionSerializationHelper.cs" />
+    <Compile Include="Helpers\ToolbarHelper.cs" />
     <Compile Include="Helpers\ViewMenuHelper.cs" />
     <Compile Include="Legacy\GeometryRowStyle.cs" />
     <Compile Include="Legacy\LayersDialog.cs">

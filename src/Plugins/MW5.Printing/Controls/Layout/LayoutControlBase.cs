@@ -203,7 +203,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             UpdateScrollBars();
 
             //Invalidate the whole thing since we are moving this around
-            // DoInvalidate();
+            DoInvalidate();
         }
 
         private void UpdateScrollbarPosition()

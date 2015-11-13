@@ -12,7 +12,7 @@ namespace MW5.Shared
 {
     public static class PathHelper
     {
-        public static void CreateFolder(string filename)
+        public static bool CreateFolder(string filename)
         {
             string path = Path.GetDirectoryName(filename);
 
@@ -25,8 +25,11 @@ namespace MW5.Shared
                 catch (Exception ex)
                 {
                     Logger.Current.Warn("Failed to create directory: " + path, ex);
+                    return false;
                 }
             }
+
+            return true;
         }
 
         public static string GetAbsolutePath(string name, string basePath)

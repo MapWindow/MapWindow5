@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -23,13 +25,16 @@ using MW5.Plugins.Printing.Views.Panels;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.UI.Docking;
+using MW5.UI.Enums;
 using MW5.UI.Forms;
+using MW5.UI.Helpers;
 using MW5.UI.Style;
 
 namespace MW5.Plugins.Printing.Views
 {
     internal partial class LayoutView : LayoutViewBase, ILayoutView
     {
+        private const string SerializationKey = "_layout";
         private readonly IBroadcasterService _broadcaster;
         private readonly IAppContext _context;
         private readonly ElementsPresenter _elements;
@@ -72,6 +77,20 @@ namespace MW5.Plugins.Printing.Views
             InitControls();
 
             AttachEventHandlers();
+
+            InitDockPanels();
+
+            InitMenus();
+
+            RestorePreviousState();
+
+            FormClosing += LayoutViewFormClosing;
+        }
+
+        private void LayoutViewFormClosing(object sender, FormClosingEventArgs e)
+        {
+            dockingManager1.SaveLayout(SerializationKey, false);
+            mainFrameBarManager1.SaveLayout(SerializationKey, false);
         }
 
         /// <summary>
@@ -210,10 +229,6 @@ namespace MW5.Plugins.Printing.Views
             layoutControl1.PageSettingsChanged += (s, e) => UpdateView();
 
             layoutControl1.Dock = DockStyle.Fill;
-
-            InitDockPanels();
-
-            InitMenus();
         }
 
         private void InitDockPanels()
@@ -244,6 +259,28 @@ namespace MW5.Plugins.Printing.Views
             {
                 _zoomCombo.ValueChanged += OnZoomComboValueChanged;
             }
+        }
+
+        public void RestorePanels()
+        {
+            dockingManager1.RestoreLayout(SerializationKey, true);
+
+            // there was an occasional glitch on restoring panels 
+            // (client dock area not filling the whole available space)
+            // not sure if I was able to fix it
+            layoutControl1.Refresh();
+        }
+
+        public void RestoreToolbars()
+        {
+            mainFrameBarManager1.RestoreLayout(SerializationKey, true);
+            layoutControl1.Refresh();
+        }
+
+        private void RestorePreviousState()
+        {
+            dockingManager1.TryRestoreLayout(SerializationKey);
+            mainFrameBarManager1.TryRestoreLayout(SerializationKey);
         }
 
         private void OnLayoutViewShown(object sender, EventArgs e)

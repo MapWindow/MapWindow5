@@ -13,6 +13,7 @@ using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Services.Helpers;
 using MW5.Shared;
+using MW5.UI.Helpers;
 using MW5.UI.Style;
 using MW5.Views.Abstract;
 using Syncfusion.Windows.Forms.Tools;
@@ -59,7 +60,7 @@ namespace MW5.Views
                         var manager = view.MenuManager as MainFrameBarManager;
                         if (manager != null)
                         {
-                            manager.RestoreLayout(true);
+                            manager.RestoreLayout(MainView.SerializationKey, true);
                         }
                     }
                     break;
@@ -111,7 +112,7 @@ namespace MW5.Views
                 // restoring layout
                 var view = _context.Container.Resolve<IMainView>();
                 var manager = view.DockingManager as DockingManager;
-                manager.RestoreLayout(true);
+                manager.RestoreLayout(MainView.SerializationKey, true);
             }
             catch (Exception ex)
             {

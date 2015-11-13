@@ -13,6 +13,7 @@ using MW5.Plugins.Mvp;
 using MW5.Shared;
 using MW5.UI;
 using MW5.UI.Docking;
+using MW5.UI.Enums;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
 
@@ -23,9 +24,10 @@ namespace MW5.Views
     /// </summary>
     public partial class MainView : MapWindowView, IMainView
     {
+        public const string SerializationKey = "";     // intentionally empty
         private const string WindowTitle = "MapWindow 5";
         private readonly IAppContext _context;
-        private bool _rendered = false;
+        private bool _rendered;
 
         public MainView(IAppContext context)
         {
@@ -87,8 +89,8 @@ namespace MW5.Views
             }
             else
             {
-                _dockingManager1.SaveLayout(false);
-                _mainFrameBarManager1.SaveLayout(false);
+                _dockingManager1.SaveLayout(SerializationKey, false);
+                _mainFrameBarManager1.SaveLayout(SerializationKey, false);
             }
         }
 
@@ -132,19 +134,15 @@ namespace MW5.Views
 
         #region IView implementation
 
+        private void RestorePreviousState()
+        {
+            _dockingManager1.TryRestoreLayout(SerializationKey);
+            _mainFrameBarManager1.TryRestoreLayout(SerializationKey);
+        }
+
         public override void ShowView(IWin32Window parent = null)
         {
-            if (AppConfig.Instance.FirstRun)
-            {
-                _dockingManager1.SaveLayout(true);
-                _mainFrameBarManager1.SaveLayout(true);
-                AppConfig.Instance.FirstRun = false;
-            }
-            else
-            {
-                _dockingManager1.RestoreLayout(false);
-                _mainFrameBarManager1.RestoreLayout(false);
-            }
+            RestorePreviousState();
 
             DockPanelHelper.CloseTableEditor(_context);
 
@@ -160,6 +158,8 @@ namespace MW5.Views
             _mapControl1.Dock = DockStyle.Fill;
 
             Invoke(BeforeShow);
+
+            AppConfig.Instance.FirstRun = false;
 
             Application.Run(this);
         }

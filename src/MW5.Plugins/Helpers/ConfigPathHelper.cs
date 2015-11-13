@@ -31,12 +31,12 @@ namespace MW5.Plugins.Helpers
 
         public static string GetDockingConfigPath()
         {
-            return GetConfigPath() + @"\dockstate";
+            return GetConfigPath() + @"\Toolbars\dockstate";
         }
 
         public static string GetToolbarConfigPath()
         {
-            return GetConfigPath() + @"\toolbars";
+            return GetConfigPath() + @"\Toolbars\toolbars";
         }
 
         public static string GetToolsConfigPath()

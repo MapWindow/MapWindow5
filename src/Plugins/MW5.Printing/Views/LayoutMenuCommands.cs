@@ -51,6 +51,8 @@ namespace MW5.Plugins.Printing.Views
                            new MenuCommand("Show Page Numbers", LayoutMenuKeys.ShowPageNumbers, Resources.img_page_number24),
                            new MenuCommand("Show Margins", LayoutMenuKeys.ShowMargins, null),
                            new MenuCommand("Show Rulers", LayoutMenuKeys.ShowRulers, null),
+                           new MenuCommand("Restore Panels", LayoutMenuKeys.RestorePanels, null),
+                           new MenuCommand("Restore Toolbars", LayoutMenuKeys.RestoreToolbars, null),
 
                            // selection
                            new MenuCommand("Select All", LayoutMenuKeys.SelectAll, null),

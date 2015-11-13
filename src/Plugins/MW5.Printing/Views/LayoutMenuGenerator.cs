@@ -80,6 +80,10 @@ namespace MW5.Plugins.Printing.Views
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowPageNumbers]).BeginGroup = true;
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowMargins]);
             dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.ShowRulers]);
+
+            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.RestorePanels]).BeginGroup = true;
+            dropDown.SubItems.AddButton(_commands[LayoutMenuKeys.RestoreToolbars]);
+
             dropDown.Update();
 
             // selection

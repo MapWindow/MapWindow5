@@ -19,5 +19,9 @@ namespace MW5.Plugins.Printing.Views.Abstract
         object DockingManager { get; }
 
         IDockPanelCollection DockPanels { get; }
+
+        void RestorePanels();
+
+        void RestoreToolbars();
     }
 }

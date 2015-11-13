@@ -16,6 +16,7 @@ using MW5.Services.Serialization;
 using MW5.Shared;
 using MW5.Tools.Views;
 using MW5.UI.Docking;
+using MW5.UI.Helpers;
 using Syncfusion.Runtime.Serialization;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -86,49 +87,6 @@ namespace MW5.Helpers
 
             var size = locator.Size;
             locator.Size = new Size(size.Width, 250);
-        }
-
-        public static void SaveLayout(this DockingManager dockingManager, bool startup)
-        {
-            var sr = GetSerializer(startup);
-            dockingManager.SaveDockState(sr);
-            sr.PersistNow();
-        }
-
-        public static void RestoreLayout(this DockingManager dockingManager, bool startup)
-        {
-            var sr = GetSerializer(startup);
-
-            string path = sr.GetPath();
-
-            if (startup && !File.Exists(path))
-            {
-                MessageService.Current.Warn("File with initial state of panels wasn't found: " + path);
-                return;
-            }
-
-            if (!dockingManager.LoadDockState(sr))
-            {
-                const string msg = "Failed to restore the state of dock panels.";
-                Logger.Current.Warn(msg);
-
-                if (startup)
-                {
-                    MessageService.Current.Info(msg);
-                }
-            }
-        }
-
-        private static AppStateSerializer GetSerializer(bool startup)
-        {
-            string path = ConfigPathHelper.GetDockingConfigPath();
-
-            if (startup)
-            {
-                path += "_startup";
-            }
-
-            return new AppStateSerializer(SerializeMode.XMLFile, path);
         }
 
         public static void CloseTableEditor(IAppContext context)

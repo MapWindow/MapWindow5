@@ -182,8 +182,6 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="ExceptionHandler.cs" />
     <Compile Include="Helpers\Sandbox.cs" />
-    <Compile Include="Helpers\SyncfusionSerializationHelper.cs" />
-    <Compile Include="Helpers\ToolbarHelper.cs" />
     <Compile Include="Helpers\UpdaterHelper.cs" />
     <Compile Include="Listeners\MainPluginListener.cs" />
     <Compile Include="Menu\ContextMenuCommand.cs" />

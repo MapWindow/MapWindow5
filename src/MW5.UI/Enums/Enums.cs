@@ -20,4 +20,10 @@ namespace MW5.UI.Enums
         HatchStyle = 6,
         HatchStyleWithNone = 9,
     }
+
+    public enum SyncfusionSerializationType
+    {
+        DockPanel = 0,
+        ToolBar = 1,
+    }
 }

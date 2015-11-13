@@ -29,6 +29,8 @@ namespace MW5.Plugins.Printing.Views
         public const string ShowPageNumbers = "lt_ShowPageNumbers";
         public const string ShowRulers = "lt_ShowRulers";
         public const string ShowMargins = "lt_ShowMargins";
+        public const string RestorePanels = "lt_RestorePanels";
+        public const string RestoreToolbars = "lt_RestoreToolbars";
 
         public const string SelectAll = "lt_SelectAll";
         public const string SelectNone = "lt_SelectNone";

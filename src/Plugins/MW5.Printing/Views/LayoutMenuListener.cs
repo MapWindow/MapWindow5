@@ -57,14 +57,18 @@ namespace MW5.Plugins.Printing.Views
             get { return _layoutControl.SelectedLayoutElements.FirstOrDefault() as LayoutMap; }
         }
 
-
-
         public void OnItemClicked(object sender, MenuItemEventArgs e)
         {
             _layoutControl.PanMode = false;
 
             switch (e.ItemKey)
             {
+                case LayoutMenuKeys.RestoreToolbars:
+                    _view.RestoreToolbars();
+                    break;
+                case LayoutMenuKeys.RestorePanels:
+                    _view.RestorePanels();
+                    break;
                 case LayoutMenuKeys.ShowRulers:
                     _layoutControl.ShowRulers = !_layoutControl.ShowRulers;
                     break;
