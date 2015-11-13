@@ -456,6 +456,7 @@ namespace MW5.Plugins.Printing.Views
             this.lblLoadingTiles.Name = "lblLoadingTiles";
             this.lblLoadingTiles.Size = new System.Drawing.Size(74, 15);
             this.lblLoadingTiles.Text = "Loading tiles";
+            this.lblLoadingTiles.Visible = false;
             // 
             // toolStripProgressBar1
             // 
