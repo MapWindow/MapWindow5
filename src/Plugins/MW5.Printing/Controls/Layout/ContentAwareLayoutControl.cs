@@ -98,7 +98,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// </summary>
         public bool AddToLayout(LayoutElement le)
         {
-            SetUniqueElementName(le);
+            LayoutHelper.SetUniqueElementName(LayoutElements, le);
 
             Lock();
 
@@ -379,22 +379,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
             FireElementsChanged();
             DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
         }
-
-        private void SetUniqueElementName(LayoutElement le)
-        {
-            // TODO: extract
-            string leName = le.Name + " 1";
-            int i = 2;
-
-            while (_layoutElements.FindAll(o => o.Name == leName).Count > 0)
-            {
-                leName = le.Name + " " + i;
-                i++;
-            }
-
-            le.Name = leName;
-        }
-
+        
         private void SelectFirstElement()
         {
             ClearSelection();

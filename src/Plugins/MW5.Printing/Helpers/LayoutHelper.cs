@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.Drawing.Printing;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Enums;
@@ -23,6 +24,22 @@ namespace MW5.Plugins.Printing.Helpers
 {
     internal static class LayoutHelper
     {
+        public static void SetUniqueElementName(IEnumerable<LayoutElement> elements, LayoutElement le)
+        {
+            var list = elements.ToList();
+
+            string leName = le.Name + " 1";
+            int i = 2;
+
+            while (list.Any(o => o.Name == leName))
+            {
+                leName = le.Name + " " + i;
+                i++;
+            }
+
+            le.Name = leName;
+        }
+
         public static LayoutBitmap ConvertElementToBitmap(LayoutElement le, string filename)
         {
             if (le is LayoutBitmap) return null;

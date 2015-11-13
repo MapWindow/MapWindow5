@@ -254,7 +254,6 @@ namespace MW5.Plugins.Printing.Views
         {
             // we want the same instance of view in the service, but another 
             // instance on showing presenter the next time, so better not to use DI
-            // TODO: try to use singletons instead
             _menuListener = new LayoutMenuListener(_context, this, _pdfService);
             _menuGenerator = new LayoutMenuGenerator(_context, _plugin, this, _menuListener);
 

@@ -18,7 +18,7 @@ using MW5.Shared;
 
 namespace MW5.Plugins.Printing.Services
 {
-    public class TileLoadingService
+    public class TileLoadingService: IDisposable
     {
         private const int TimeOut = 30000;
         private readonly object _lock = new object();
@@ -138,6 +138,16 @@ namespace MW5.Plugins.Printing.Services
             }
 
             DelegateHelper.FireEvent(_layoutControl, End);
+        }
+
+        /// <summary>
+        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
+        public void Dispose()
+        {
+            _timer.Stop();
+            _timer.Elapsed -= OnTimerElapsed;
+            _map.TilesLoaded -= TilesLoaded;
         }
     }
 }

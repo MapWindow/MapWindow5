@@ -118,7 +118,6 @@ namespace MW5.Plugins.Printing.Helpers
             GeoSize oldSize;
             if (map.GetGeodesicSize(oldExtents, out oldSize))
             {
-                // TODO: tolerance can be different depending on map units
                 const int maxDepth = 5;
 
                 double newScale = CalcMapScale(newSize, paperSize);

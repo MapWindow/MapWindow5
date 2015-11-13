@@ -30,14 +30,6 @@ namespace MW5.Services.Helpers
                     return "Bing Satellite";
                 case TileProvider.BingHybrid:
                     return "Bing Hybrid";
-                case TileProvider.GoogleMaps:
-                    return "Google Map";
-                case TileProvider.GoogleSatellite:
-                    return "Google Satellite";
-                case TileProvider.GoogleHybrid:
-                    return "Google Hybrid";
-                case TileProvider.GoogleTerrain:
-                    return "Google Terrain";
                 case TileProvider.HereMaps:
                     return "Here Maps";
                 case TileProvider.HereSatellite:

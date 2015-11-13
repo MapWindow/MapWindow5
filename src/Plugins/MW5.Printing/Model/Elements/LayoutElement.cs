@@ -315,7 +315,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 return;
             }
 
-            // TODO: LogicTo96Dpi: why is it needed?
+            // LogicTo96Dpi: why is it needed?
             float scaleRatio = printing ? ScreenHelper.LogicTo96Dpi : ScreenHelper.ScreenToLogicDpi;
 
             var font = _font;

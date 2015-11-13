@@ -364,7 +364,6 @@ namespace MW5.Plugins.Printing.Views
 
         private string GetSaveFilename()
         {
-            // TODO: use service
             using (var dlg = new SaveFileDialog { Filter = @"*.xml|*.xml" })
             {
                 dlg.InitialDirectory = ConfigPathHelper.GetLayoutPath();
@@ -380,7 +379,6 @@ namespace MW5.Plugins.Printing.Views
 
         private void AddBitmap()
         {
-            // TODO: use service
             var ofd = new OpenFileDialog
                           {
                               Filter =

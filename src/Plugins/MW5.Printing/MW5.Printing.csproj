@@ -171,7 +171,7 @@
     <Compile Include="Model\Elements\LayoutLegend.cs" />
     <Compile Include="Model\LayoutElementEventArgs.cs" />
     <Compile Include="Model\LayoutPage.cs" />
-    <Compile Include="Controls\Layout\MouseAwareLayoutControl.cs">
+    <Compile Include="Controls\Layout\LayoutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\Layout\ContentAwareLayoutControl.cs">
@@ -255,9 +255,6 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Model\LayoutPages.cs" />
     <Compile Include="Model\Elements\LayoutTable.cs" />
-    <Compile Include="Controls\Layout\LayoutControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Model\Elements\LayoutElement.cs">
       <SubType>Code</SubType>
@@ -361,10 +358,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <EmbeddedResource Include="Controls\Layout\LayoutControl.resx">
-      <DependentUpon>LayoutControl.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\LayoutListBox.resx">
       <DependentUpon>LayoutListBox.cs</DependentUpon>
     </EmbeddedResource>
