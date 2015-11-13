@@ -43,10 +43,6 @@ namespace MW5.Plugins.Printing.Helpers
                 {
                     _printingSettings = new PrinterSettings();
                     PaperSizes.AddPaperSizes(_printingSettings);
-
-                    // TODO: optimization, consider restoring
-                    //var tempForm = new PageSetupForm(_printingSettings);
-                    //tempForm.OkButtonClick(null, null);
                 }
 
                 return _printingSettings;

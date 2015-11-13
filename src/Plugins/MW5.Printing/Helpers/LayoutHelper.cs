@@ -13,7 +13,6 @@ using System.IO;
 using System.Windows.Forms;
 using MW5.Plugins.Printing.Controls.Layout;
 using MW5.Plugins.Printing.Enums;
-using MW5.Plugins.Printing.Legacy;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Properties;
 using MW5.Plugins.Printing.Services;

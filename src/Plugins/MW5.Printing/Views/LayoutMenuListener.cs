@@ -173,12 +173,21 @@ namespace MW5.Plugins.Printing.Views
                 case LayoutMenuKeys.AddBitmap:
                     AddBitmap();
                     break;
-                case LayoutMenuKeys.MapZoomMax:
+                case LayoutMenuKeys.ZoomToMaximum:
                     {
                         var map = SelectedMapElement;
                         if (map != null)
                         {
-                            _layoutControl.ZoomFullExtentMap(map);
+                            map.ZoomToMaxExtents();
+                        }
+                    }
+                    break;
+                case LayoutMenuKeys.ZoomToOriginalExtents:
+                    {
+                        var map = SelectedMapElement;
+                        if (map != null)
+                        {
+                            map.ZooomToOriginalExtents();
                         }
                     }
                     break;
@@ -306,8 +315,7 @@ namespace MW5.Plugins.Printing.Views
 
             var serializer = new LayoutSerializer();
 
-            // TODO: choose extents
-            if (serializer.LoadLayout(_context, _layoutControl, filename, null))
+            if (serializer.LoadLayout(_context, _layoutControl, filename, _view.Model.Extents))
             {
                 MessageService.Current.Info("Layout was loaded successfully.");
             }

@@ -51,7 +51,8 @@ namespace MW5.Plugins.Printing.Views
 
         public const string MapZoomIn = "lt_MapZoomIn";
         public const string MapZoomOut = "lt_MapZoomOut";
-        public const string MapZoomMax = "lt_MapZoomMax";
+        public const string ZoomToOriginalExtents = "lt_MapZoomOriginal";
+        public const string ZoomToMaximum = "lt_MaxZoomMax";
         public const string MapPan = "lt_MapPan";
 
         public const string InsertToolbar = "LayoutInsertToolbar";

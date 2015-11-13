@@ -12,7 +12,6 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Plugins.Printing.Helpers;
-using MW5.Plugins.Printing.Legacy;
 using MW5.Plugins.Printing.Model;
 using MW5.Plugins.Printing.Model.Elements;
 using MW5.Plugins.Printing.Properties;
@@ -86,7 +85,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             foreach (var el in list)
             {
-                el.Invalidated += LeInvalidated;
+                el.Invalidated += OnElementInvalidated;
             }
 
             FireElementsChanged();
@@ -115,16 +114,13 @@ namespace MW5.Plugins.Printing.Controls.Layout
 
             FireElementsChanged();
 
-            le.Invalidated += LeInvalidated;
+            le.Invalidated += OnElementInvalidated;
 
             AddToSelection(le);
 
             le.Initialized = true;
 
             Unlock();
-
-            // TODO: can be optimized: unlock triggers invalidate for all control,
-            //DoInvalidate(new Region(PaperToScreen(le.Rectangle)));
 
             return true;
         }
@@ -335,11 +331,12 @@ namespace MW5.Plugins.Printing.Controls.Layout
         /// <summary>
         /// This gets fired when one of the layoutElements gets invalidated
         /// </summary>
-        internal void LeInvalidated(object sender, EventArgs e)
+        internal void OnElementInvalidated(object sender, EventArgs e)
         {
-            // TODO: revisit
-            if (_suppressElementInvalidation) return;
-            DoInvalidate();
+            if (!_suppressElementInvalidation)
+            {
+                DoInvalidate();
+            }
         }
 
         /// <summary>
@@ -436,6 +433,18 @@ namespace MW5.Plugins.Printing.Controls.Layout
             Pages.PageCountY = (int)Math.Ceiling(yMax / Pages.PageHeight);
 
             ZoomFitToScreen();
+        }
+
+        public LayoutMap GetMainMap()
+        {
+            var maps = LayoutElements.OfType<LayoutMap>().ToList();
+
+            if (maps.Count() > 1 && maps.Any(m => m.IsMain))
+            {
+                return maps.FirstOrDefault(m => m.IsMain);
+            }
+            
+            return maps.FirstOrDefault();
         }
     }
 }

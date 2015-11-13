@@ -66,7 +66,9 @@ namespace MW5.Plugins.Printing.Views
                            // map
                            new MenuCommand("Zoom map in", LayoutMenuKeys.MapZoomIn,
                                Resources.img_map_zoom_in24),
-                           new MenuCommand("Zoom map to max extents", LayoutMenuKeys.MapZoomMax,
+                           new MenuCommand("Zoom map to original extents", LayoutMenuKeys.ZoomToOriginalExtents,
+                               Resources.img_zoom_layer24),
+                           new MenuCommand("Zoom map to maximum extents", LayoutMenuKeys.ZoomToMaximum,
                                Resources.img_map_zoom_max24),
                            new MenuCommand("Zoom map out", LayoutMenuKeys.MapZoomOut,
                                Resources.img_map_zoom_out24),

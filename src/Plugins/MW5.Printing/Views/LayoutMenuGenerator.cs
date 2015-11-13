@@ -131,7 +131,8 @@ namespace MW5.Plugins.Printing.Views
             bar.DockState = ToolbarDockState.Left;
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapZoomIn]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapZoomOut]);
-            bar.Items.AddButton(_commands[LayoutMenuKeys.MapZoomMax]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomToOriginalExtents]);
+            bar.Items.AddButton(_commands[LayoutMenuKeys.ZoomToMaximum]);
             bar.Items.AddButton(_commands[LayoutMenuKeys.MapPan]);
 
             // main

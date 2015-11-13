@@ -233,7 +233,6 @@
     <Compile Include="Controls\LayoutListBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Legacy\LayoutSerializerOld.cs" />
     <Compile Include="Helpers\PrintingConstants.cs" />
     <Compile Include="Properties\Strings.Designer.cs">
       <DependentUpon>Strings.resx</DependentUpon>

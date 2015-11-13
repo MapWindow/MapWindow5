@@ -73,7 +73,7 @@ namespace MW5.Plugins.Printing.Services
         /// </summary>
         private void UpdateMapElement(LayoutControl layoutControl, IEnvelope extents)
         {
-            var map = layoutControl.LayoutElements.OfType<LayoutMap>().FirstOrDefault(m => m.IsMain);
+            var map = layoutControl.GetMainMap();
             
             if (map != null)
             {

@@ -113,25 +113,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         }
 
         /// <summary>
-        /// Zooms the specified map element to the full extent of its layers
-        /// </summary>
-        public void ZoomFullExtentMap(LayoutMap lm)
-        {
-            lm.ZoomToFullExtent();
-            UpdateScale();
-        }
-
-        /// <summary>
-        /// Zoom the specified map to the extent of the data view
-        /// </summary>
-        public void ZoomFullViewExtentMap(LayoutMap lm)
-        {
-            throw new NotImplementedException();
-            //lm.ZoomViewExtent();
-            //UpdateScale();
-        }
-
-        /// <summary>
         /// Zooms into the paper
         /// </summary>
         public void ZoomIn()
@@ -145,7 +126,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         public void ZoomInMap(LayoutMap lm)
         {
             lm.ZoomInMap();
-            UpdateScale();
         }
 
         /// <summary>
@@ -162,7 +142,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
         public void ZoomOutMap(LayoutMap lm)
         {
             lm.ZoomOutMap();
-            UpdateScale();
         }
 
         protected void FirePageSelectionChanged()
@@ -303,20 +282,6 @@ namespace MW5.Plugins.Printing.Controls.Layout
             if (handler != null)
             {
                 handler(this, e);
-            }
-        }
-
-        private void UpdateScale()
-        {
-            // TODO: scale bar can linked to another instance of LayoutMap
-            var map = GetElement<LayoutMap>(ElementType.Map);
-            if (map != null)
-            {
-                var text = GetElement<LayoutText>(ElementType.ScaleBar);
-                if (text != null)
-                {
-                    text.Text = "Scale 1:" + map.Scale;
-                }
             }
         }
     }

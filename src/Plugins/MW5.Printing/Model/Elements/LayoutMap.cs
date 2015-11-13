@@ -39,6 +39,7 @@ namespace MW5.Plugins.Printing.Model.Elements
         private bool _drawTiles;
         private bool _extentChanged;
         private IEnvelope _extents;
+        private IEnvelope _extentsOriginal;
         private bool _isMain;
         private TileProvider _tileProvider = TileProvider.OpenStreetMap;
         private RectangleF _oldRectangle;
@@ -102,8 +103,18 @@ namespace MW5.Plugins.Printing.Model.Elements
             get { return _extents; }
             set
             {
-                _extents = EnvelopeHelper.SetBoundsWithXYRatio(value, SizeF);
+                SetNewExtents(EnvelopeHelper.SetBoundsWithXYRatio(value, SizeF));
                 RefreshElement();
+            }
+        }
+
+        private void SetNewExtents(IEnvelope box)
+        {
+            _extents = box;
+            
+            if (_extentsOriginal == null && box != null)
+            {
+                _extentsOriginal = box.Clone();
             }
         }
 
@@ -210,10 +221,10 @@ namespace MW5.Plugins.Printing.Model.Elements
 
                 var extents = LayoutScaleHelper.CalcNewExtents(_map, _extents, size, SizeF);
 
-                _extents = extents;
-
                 RecycleScreenBuffer();
 
+                SetNewExtents(extents);
+                
                 RefreshElement();
             }
         }
@@ -363,7 +374,15 @@ namespace MW5.Plugins.Printing.Model.Elements
             Envelope = envl;
         }
 
-        public virtual void ZoomToFullExtent()
+        public void ZooomToOriginalExtents()
+        {
+            if (_extentsOriginal != null)
+            {
+                Envelope = _extentsOriginal.Clone();
+            }
+        }
+
+        public virtual void ZoomToMaxExtents()
         {
             Envelope = _map.Extents.Clone();
         }
@@ -373,7 +392,6 @@ namespace MW5.Plugins.Printing.Model.Elements
         /// </summary>
         protected override void Draw(Graphics g, bool printing, bool export, int x, int y)
         {
-            // printing goes on even if no tiles were loaded
             if (!TilesLoaded && DrawTiles && _extentChanged)
             {
                 // default rectangle - to mark that no extents change is needed
