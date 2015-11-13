@@ -25,7 +25,7 @@ namespace MW5.Plugins.Printing.Views
 {
     internal class TemplatePresenter : BasePresenter<ITemplateView, TemplateModel>
     {
-        
+
         private readonly IAppContext _context;
 
         public TemplatePresenter(ITemplateView view, IAppContext context)
@@ -76,9 +76,16 @@ namespace MW5.Plugins.Printing.Views
                     size.Height /= (float)(ratio2 / ratio);
                 }
 
-                double scale = LayoutScaleHelper.CalcMapScale(geoSize, size, Enums.ScaleType.Average);
+                double val = LayoutScaleHelper.CalcMapScale(geoSize, size, Enums.ScaleType.Average);
 
-                View.PopulateScales(Convert.ToInt32(scale));
+                int scale = Convert.ToInt32(val);
+                if (scale == 0)
+                {
+                    // it's probably an empty map, but let's display something all the same
+                    scale = 1;
+                }
+
+                View.PopulateScales(scale);
             }
         }
 
@@ -90,6 +97,12 @@ namespace MW5.Plugins.Printing.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
+            if (View.MapScale == 0)
+            {
+                MessageService.Current.Info("Map scale is not defined.");
+                return false;
+            }
+
             if (!Validate())
             {
                 string msg = View.IsNewLayout ? "Invalid layout size." : "No template is selected.";
