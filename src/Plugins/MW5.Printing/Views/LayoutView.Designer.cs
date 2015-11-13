@@ -78,6 +78,8 @@ namespace MW5.Plugins.Printing.Views
             this.lblPageSize = new System.Windows.Forms.ToolStripStatusLabel();
             this.lblSelected = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
             this.lblPosition = new Syncfusion.Windows.Forms.Tools.StatusStripLabel();
+            this.lblLoadingTiles = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.dockingManager1 = new Syncfusion.Windows.Forms.Tools.DockingManager(this.components);
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.dockingClientPanel1 = new Syncfusion.Windows.Forms.Tools.DockingClientPanel();
@@ -323,25 +325,25 @@ namespace MW5.Plugins.Printing.Views
             // 
             this.toolFitWidth.Image = global::MW5.Plugins.Printing.Properties.Resources.img_fit_width24;
             this.toolFitWidth.Name = "toolFitWidth";
-            this.toolFitWidth.Size = new System.Drawing.Size(152, 22);
+            this.toolFitWidth.Size = new System.Drawing.Size(110, 22);
             this.toolFitWidth.Text = "Width";
             // 
             // toolFitHeight
             // 
             this.toolFitHeight.Image = global::MW5.Plugins.Printing.Properties.Resources.img_fit_height24;
             this.toolFitHeight.Name = "toolFitHeight";
-            this.toolFitHeight.Size = new System.Drawing.Size(152, 22);
+            this.toolFitHeight.Size = new System.Drawing.Size(110, 22);
             this.toolFitHeight.Text = "Height";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(107, 6);
             // 
             // toolFitBoth
             // 
             this.toolFitBoth.Name = "toolFitBoth";
-            this.toolFitBoth.Size = new System.Drawing.Size(152, 22);
+            this.toolFitBoth.Size = new System.Drawing.Size(110, 22);
             this.toolFitBoth.Text = "Both";
             // 
             // toolMakeSameSize
@@ -409,7 +411,9 @@ namespace MW5.Plugins.Printing.Views
             this.lblPageCount,
             this.lblPageSize,
             this.lblSelected,
-            this.lblPosition});
+            this.lblPosition,
+            this.lblLoadingTiles,
+            this.toolStripProgressBar1});
             this.statusStripEx1.Location = new System.Drawing.Point(0, 392);
             this.statusStripEx1.MetroColor = System.Drawing.Color.SandyBrown;
             this.statusStripEx1.Name = "statusStripEx1";
@@ -426,8 +430,9 @@ namespace MW5.Plugins.Printing.Views
             // 
             // lblPageSize
             // 
+            this.lblPageSize.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.lblPageSize.Name = "lblPageSize";
-            this.lblPageSize.Size = new System.Drawing.Size(21, 15);
+            this.lblPageSize.Size = new System.Drawing.Size(25, 19);
             this.lblPageSize.Text = "A4";
             // 
             // lblSelected
@@ -442,8 +447,23 @@ namespace MW5.Plugins.Printing.Views
             // 
             this.lblPosition.Margin = new System.Windows.Forms.Padding(0, 4, 0, 2);
             this.lblPosition.Name = "lblPosition";
-            this.lblPosition.Size = new System.Drawing.Size(91, 15);
+            this.lblPosition.Padding = new System.Windows.Forms.Padding(0, 0, 10, 0);
+            this.lblPosition.Size = new System.Drawing.Size(101, 15);
             this.lblPosition.Text = "X = 212; Y = 414";
+            // 
+            // lblLoadingTiles
+            // 
+            this.lblLoadingTiles.Name = "lblLoadingTiles";
+            this.lblLoadingTiles.Size = new System.Drawing.Size(74, 15);
+            this.lblLoadingTiles.Text = "Loading tiles";
+            // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 15);
+            this.toolStripProgressBar1.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.toolStripProgressBar1.Value = 100;
+            this.toolStripProgressBar1.Visible = false;
             // 
             // dockingManager1
             // 
@@ -549,5 +569,7 @@ namespace MW5.Plugins.Printing.Views
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripStatusLabel lblLoadingTiles;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }

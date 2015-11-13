@@ -27,15 +27,37 @@ namespace MW5.Plugins.Printing.Views
     internal class LayoutPresenter : ComplexPresenter<ILayoutView, LayoutCommand, TemplateModel>
     {
         private readonly IAppContext _context;
+        private readonly TileLoadingService _loadingService;
 
-        public LayoutPresenter(IAppContext context, ILayoutView view)
+        public LayoutPresenter(IAppContext context, ILayoutView view, TileLoadingService loadingService)
             : base(view)
         {
             _context = context;
+            _loadingService = loadingService;
             if (context == null) throw new ArgumentNullException("context");
+            if (loadingService == null) throw new ArgumentNullException("loadingService");
 
             View.LayoutControl.NewElement += OnNewElement;
             View.LayoutControl.ElementDoubleClicked += OnElementDoubleClicked;
+
+            _loadingService.Start += OnLoadingServiceStart;
+            _loadingService.End += OnLoadingServiceEnd;
+        }
+
+        private void OnLoadingServiceEnd(object sender, EventArgs e)
+        {
+            if (View.Visible)
+            {
+                View.TilesLoadingVisible = false;
+            }
+        }
+
+        private void OnLoadingServiceStart(object sender, EventArgs e)
+        {
+            if (View.Visible)
+            {
+                View.TilesLoadingVisible = true;
+            }
         }
 
         /// <summary>
@@ -58,7 +80,7 @@ namespace MW5.Plugins.Printing.Views
                 var serializer = new LayoutSerializer();
                 serializer.LoadLayout(_context, View.LayoutControl, Model.TemplateName, Model.Extents);
 
-                View.LayoutControl.Initialize(_context.Map);
+                View.LayoutControl.Initialize(_context.Map, _loadingService);
             }
             else
             {
@@ -66,7 +88,7 @@ namespace MW5.Plugins.Printing.Views
 
                 View.LayoutControl.PrinterSettings = settings;
 
-                View.LayoutControl.Initialize(_context.Map);
+                View.LayoutControl.Initialize(_context.Map, _loadingService);
 
                 AddMapElement(Model.Scale, Model.Extents);
             }

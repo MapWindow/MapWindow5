@@ -41,9 +41,12 @@ namespace MW5.Plugins.Printing.Model.Elements
         private IEnvelope _extents;
         private IEnvelope _extentsOriginal;
         private bool _isMain;
-        private TileProvider _tileProvider = TileProvider.OpenStreetMap;
+        private TileProvider _tileProvider;
         private RectangleF _oldRectangle;
         private int _lastScale;
+
+        private bool _oldTilesVisible;
+        private TileProvider _oldTileProvider;
 
         /// <summary>
         /// Creates a new instance of the map element based on the ocx in the IMapWin interface
@@ -66,6 +69,8 @@ namespace MW5.Plugins.Printing.Model.Elements
             Guid = Guid.NewGuid();
             ResizeStyle = ResizeStyle.NoScaling;
             _lastScale = -1;
+            _tileProvider = TileProvider.OpenStreetMap;
+            _oldTileProvider = TileProvider.OpenStreetMap;
         }
 
         public void Initialize(IPrintableMap map, LayoutControl lc)
@@ -277,13 +282,6 @@ namespace MW5.Plugins.Printing.Model.Elements
                 size = new Size((int)paperRect.Width, (int)paperRect.Height);
             }
 
-            //var tiles = _layoutControl.AxMap.Tiles;
-            //bool tilesVisible = tiles.Visible;
-            //TileProvider provider = tiles.Provider;
-            //tiles.Visible = _drawTiles;
-            //tiles.Provider = tileProvider;
-            //float scale = export ? dpi / bitmapDpi : 1.0f;
-
             bool result = RenderMap(ext, size, g);
 
             if (export)
@@ -292,10 +290,26 @@ namespace MW5.Plugins.Printing.Model.Elements
                 ScalePointsAndFonts(1 / dpiRatio);
             }
 
-            //tiles.Visible = tilesVisible;
-            //tiles.Provider = provider;
-
             return result;
+        }
+
+        private void PrepareTiles()
+        {
+            var tiles = _map.Tiles;
+            _oldTilesVisible = tiles.Visible;
+            _oldTileProvider = tiles.Provider;
+
+            tiles.UseServer = false;
+            tiles.Visible = _drawTiles;
+            tiles.Provider = _tileProvider;
+        }
+
+        private void RestoreTiles()
+        {
+            var tiles = _map.Tiles;
+            tiles.UseServer = true;
+            tiles.Visible = _oldTilesVisible;
+            tiles.Provider = _oldTileProvider;
         }
 
         private void ScalePointsAndFonts(float dpiRatio)
@@ -316,30 +330,26 @@ namespace MW5.Plugins.Printing.Model.Elements
         }
 
         /// <summary>
-        /// Loads tiles for particular rectangle, or all the element if none is specified
+        /// Loads tiles for current map extents.
         /// </summary>
-        public bool LoadTiles(float dpi, RectangleF rect)
+        private void LoadTiles(float dpi)
         {
-            //float inchesWidth = rect == default(RectangleF) ? Size.Width : rect.Width;
-            //int width = Convert.ToInt32(inchesWidth * dpi / 100);
-            //var map = _layoutControl.AxMap;
+            if (TileProvider == TileProvider.None || !DrawTiles)
+            {
+                return;
+            }
 
-            //int result = map.TilesAreInCache(_extent, width, tileProvider);
-            //if (result == 1) return true;
+            int width = Convert.ToInt32(SizeF.Width * dpi / 100);
+            
+            var task = new TileLoadingTask()
+                           {
+                               Extents = Envelope.Clone(), 
+                               Guid = Guid.ToString(), 
+                               TileProvider = (int)TileProvider, 
+                               Width = width
+                           };
 
-            //if (rect == default(RectangleF))
-            //{
-            //    var ext = new Envelope();
-            //    ext.SetBounds(_extent.MinX, _extent.MinY, _extent.MaxX, _extent.MaxY);
-            //    var task = new TileLoadingTask() { Extents = ext, Guid = Guid, TileProvider = tileProvider, Width = width};
-            //    _layoutControl.EnqueLoadingTask(task);
-            //}
-            //else
-            //{
-            //    // part of it on particular page
-            //    map.LoadTilesForSnapshot(ExtentsWithinRectange(rect), width, Guid + "print", tileProvider);
-            //}
-            return false;
+            _layoutControl.TileLoader.EnqueTask(task);
         }
 
         public void PanMap(double x, double y)
@@ -395,7 +405,7 @@ namespace MW5.Plugins.Printing.Model.Elements
             if (!TilesLoaded && DrawTiles && _extentChanged)
             {
                 // default rectangle - to mark that no extents change is needed
-                LoadTiles((int)g.DpiX, default(RectangleF));
+                LoadTiles((int)g.DpiX);
             }
 
             // regular control rendering
@@ -412,17 +422,7 @@ namespace MW5.Plugins.Printing.Model.Elements
                 
                 using (var graph = Graphics.FromImage(_buffer))
                 {
-                    //var tiles = _layoutControl.AxMap.Tiles;
-                    //bool tilesVisible = tiles.Visible;
-                    //TileProvider provider = tiles.Provider;
-
-                    //tiles.Visible = _drawTiles;
-                    //tiles.Provider = tileProvider;
-
                     RenderMap(_extents, new Size(_buffer.Width, _buffer.Height), graph);
-
-                    //tiles.Visible = tilesVisible;
-                    //tiles.Provider = provider;
                 }
             }
 
@@ -537,7 +537,18 @@ namespace MW5.Plugins.Printing.Model.Elements
             g.Clear(Color.White);
             var dcPtr = g.GetHdc();
 
-            bool result = _map.SnapShotToDC2(dcPtr, extent.Clone(), bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width, clip.Height);
+            bool result;
+
+            // several map elements may set different tile providers,
+            // mutually exclusive excess is needed to avoid interference
+            lock (_layoutControl.TileLoader.Lock)
+            {
+                PrepareTiles();
+
+                result = _map.SnapShotToDC2(dcPtr, extent.Clone(), bitmapSize.Width, dx, dy, clip.X, clip.Y, clip.Width, clip.Height);
+
+                RestoreTiles();
+            }
 
             g.ReleaseHdc(dcPtr);
 

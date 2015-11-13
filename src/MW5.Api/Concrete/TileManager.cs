@@ -294,7 +294,7 @@ namespace MW5.Api.Concrete
         //    set { throw new NotImplementedException(); }
         //}
 
-        // void LoadTilesForSnapshot(Extents extents, int width, string key, tkTileProvider provider);
+        
         // int TilesAreInCache(Extents extents, int width, tkTileProvider provider);
         #endregion
     }

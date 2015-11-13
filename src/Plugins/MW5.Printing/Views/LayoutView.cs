@@ -200,6 +200,10 @@ namespace MW5.Plugins.Printing.Views
             string format = "X: {0:f" + decimals + "} {2}; Y: {1:f" + decimals + "} {2}";
             lblPosition.Text = string.Format(format, pnt.X * ratio, pnt.Y * ratio, units);
 
+            // TODO: this also invalidates progress bar for tile loading 
+            // thus increasing marquee speed, but I haven't found a way 
+            // to refresh a single lblPosition item; ToolStripItem is not Control
+            // so doesn't have handle or Refresh method
             statusStripEx1.Refresh();
         }
 
@@ -275,6 +279,21 @@ namespace MW5.Plugins.Printing.Views
         {
             mainFrameBarManager1.RestoreLayout(SerializationKey, true);
             layoutControl1.Refresh();
+        }
+
+        public bool TilesLoadingVisible
+        {
+            get { return toolStripProgressBar1.Visible; }
+            set
+            {
+                Action action = () =>
+                    {
+                        toolStripProgressBar1.Visible = value;
+                        lblLoadingTiles.Visible = value;
+                    };
+
+                statusStripEx1.SafeInvoke(action);
+            }
         }
 
         private void RestorePreviousState()

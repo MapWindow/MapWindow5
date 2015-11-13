@@ -15,7 +15,7 @@ namespace MW5.Plugins.Printing.Model
 
         public string Guid { get; set; }
 
-        public TileProvider TileProvider { get; set; }
+        public int TileProvider { get; set; }
 
         public int Width { get; set; }
     }

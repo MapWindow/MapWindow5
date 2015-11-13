@@ -25,5 +25,10 @@ namespace MW5.Api.Events
         {
             get { return _args.snapShot; }
         }
+
+        public bool FromCache
+        {
+            get { return _args.fromCache;  }
+        }
     }
 }

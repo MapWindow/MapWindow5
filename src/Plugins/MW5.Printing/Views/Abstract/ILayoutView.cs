@@ -23,5 +23,7 @@ namespace MW5.Plugins.Printing.Views.Abstract
         void RestorePanels();
 
         void RestoreToolbars();
+
+        bool TilesLoadingVisible { get; set; }
     }
 }

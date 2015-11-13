@@ -720,6 +720,11 @@ namespace MW5.Api.Map
         {
             _map.ClearExtentHistory();
         }
+
+        public bool LoadTilesForSnapshot(IEnvelope envelope, int width, string key)
+        {
+            return _map.LoadTilesForSnapshot(envelope.GetInternal(), width, key);
+        }
     }
 }
 

@@ -24,6 +24,7 @@ namespace MW5.Plugins.Printing
                 .RegisterView<ICreateTableView, CreateTableView>()
                 .RegisterService<PdfExportService>()
                 .RegisterService<ElementsDockPanel>()
+                .RegisterService<TileLoadingService>()
                 .RegisterService<ElementsPresenter>();
         }
     }

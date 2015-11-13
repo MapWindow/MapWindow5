@@ -16,6 +16,7 @@ using MW5.Api.Interfaces;
 using MW5.Api.Map;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Model.Elements;
+using MW5.Plugins.Printing.Services;
 
 namespace MW5.Plugins.Printing.Controls.Layout
 {
@@ -23,6 +24,7 @@ namespace MW5.Plugins.Printing.Controls.Layout
     public class LayoutControl : MouseAwareLayoutControl
     {
         private IPrintableMap _map;
+        private TileLoadingService _loadingService;
 
         public LayoutControl()
         {
@@ -32,12 +34,20 @@ namespace MW5.Plugins.Printing.Controls.Layout
             }
         }
 
-        public void Initialize(IPrintableMap map)
+        public TileLoadingService TileLoader
+        {
+            get { return _loadingService; }
+        }
+
+        public void Initialize(IPrintableMap map, TileLoadingService loadingService)
         {
             // TODO: assign page settings explicitly
             if (map == null) throw new ArgumentNullException("map");
+            if (loadingService == null) throw new ArgumentNullException("loadingService");
 
             _map = map;
+            _loadingService = loadingService;
+            _loadingService.Initialize(_map, this);
 
             _initialized = true;
 
