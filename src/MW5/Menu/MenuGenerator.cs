@@ -104,7 +104,7 @@ namespace MW5.Menu
         {
             var items = _context.Menu.LayerMenu.SubItems;
             
-            items.AddButton(_commands[MenuKeys.LayerClearSelection], true);
+            items.AddButton(_commands[MenuKeys.LayerClearSelection]);
 
             _context.Menu.LayerMenu.Update();
         }

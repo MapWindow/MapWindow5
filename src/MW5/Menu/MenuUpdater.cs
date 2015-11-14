@@ -38,6 +38,7 @@ namespace MW5.Menu
             FindMenuItem(MenuKeys.RemoveLayer).Enabled = layer != null;
             FindMenuItem(MenuKeys.LayerClearSelection).Enabled = layer != null && layer.IsVector;
             FindMenuItem(MenuKeys.ClearLayers).Enabled = _map.Layers.Any();
+            FindMenuItem(MenuKeys.ClearSelection).Enabled = _map.Layers.Any();
         }
 
         private void UpdateToolbars(bool rendered)

@@ -338,14 +338,13 @@ namespace MW5.Services.Concrete
 
         public void ClearSelection()
         {
-            var fs = _context.Map.Layers.Current.FeatureSet;
-            if (fs != null)
+            foreach (var layer in _context.Map.Layers.Where(l => l.IsVector))
             {
-                fs.ClearSelection();
-                _context.Map.Redraw();
+                layer.FeatureSet.ClearSelection();
             }
-        }
 
+            _context.Map.Redraw();
+        }
 
         public int LastLayerHandle
         {
