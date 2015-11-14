@@ -32,7 +32,8 @@ namespace MW5.Tools.Helpers
                 var input = p.Value as LayerInput;
                 if (input != null)
                 {
-                    var dsInput = new DatasourceInput(input.Layer);
+                    var dsInput = new DatasourceInput(input.Layer) { SelectedOnly = input.SelectedOnly };
+
                     p.SetToolValue(dsInput);
                     input.Dispose();
                 }

@@ -10,6 +10,7 @@
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -71,20 +72,17 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             Log.Debug("Creating {0} random points", NumPoints);
 
-            var vector = InputLayer as IVectorInput;
-            if (vector == null)
-            {
-                throw new NullReferenceException(@"The input layer is empty or invalid.");
-            }
-
-            var selectedOnly = vector.SelectedOnly;
-            var ds = vector.Datasource;
+            IEnvelope extents = InputLayer.Datasource.Envelope;
 
             var fs = new FeatureSet(GeometryType.Point);
-            fs.Projection.CopyFrom(ds.Projection);
+            fs.Projection.CopyFrom(InputLayer.Datasource.Projection);
 
-            // Get the extent, taking into account selected shapes:
-            var envelop = selectedOnly ? ds.GetSelectedExtents() : ds.Envelope;
+            var vector = InputLayer as IVectorInput;
+            if (vector != null && vector.SelectedOnly)
+            {
+                // Get the extent, taking into account selected shapes:
+                extents = vector.Datasource.GetSelectedExtents();
+            }
 
             var random = new Random();
             var lastPercent = 0;
@@ -92,8 +90,8 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
             for (int i = 0; i < NumPoints; i++)
             {
                 task.CheckPauseAndCancel();
-                var x = envelop.MinX + (envelop.Width * random.NextDouble());
-                var y = envelop.MinY + (envelop.Height * random.NextDouble());
+                var x = extents.MinX + (extents.Width * random.NextDouble());
+                var y = extents.MinY + (extents.Height * random.NextDouble());
                 var feature = new Geometry(GeometryType.Point);
                 feature.Points.Add(new Coordinate(x, y));
                 fs.Features.EditAdd(feature);
