@@ -41,6 +41,7 @@ namespace MW5.Plugins.Symbology.Views
         private bool _lockUpdate;
         private SymbologyMetadata _metadata;
         private bool _stateChanged;
+        private int _previewLayerHandle = -1;
 
         public VectorStyleView(IAppContext context, CategoriesPresenter categoriesPresenter)
         {
@@ -363,9 +364,13 @@ namespace MW5.Plugins.Symbology.Views
 
             int numFeatures = _featureSet.Features.Count;
             var type = _featureSet.GeometryType.EnumToString().ToLower();
-            txtBriefInfo.Text = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
-
             
+            string msg = string.Format("Feature count: {0}; geometry type: {1}", numFeatures, type);
+
+            if (_featureSet.ZValueType != ZValueType.None)
+            {
+                txtBriefInfo.Text = msg + "; subtype: " + _featureSet.ZValueType;
+            }
         }
 
         /// <summary>
@@ -555,7 +560,10 @@ namespace MW5.Plugins.Symbology.Views
                 _metadata.ShowLayerPreview = chkLayerPreview.Checked;
                 _metadata.Comments = txtComments.Text;
 
-                axMap1.Layers.RemoveWithoutClosing(0);
+                if (_previewLayerHandle != -1)
+                {
+                    axMap1.Layers.RemoveWithoutClosing(_previewLayerHandle);
+                }
             }
         }
 
@@ -794,8 +802,8 @@ namespace MW5.Plugins.Symbology.Views
             axMap1.MapCursor = MapCursor.None;
             axMap1.MouseWheelSpeed = 1.0;
             axMap1.ZoomBehavior = ZoomBehavior.Default;
-            int handle = axMap1.Layers.Add(_featureSet, true);
-            axMap1.ZoomToLayer(handle);
+            _previewLayerHandle = axMap1.Layers.Add(_featureSet, true);
+            axMap1.ZoomToLayer(_previewLayerHandle);
 
             MapConfig.LoadSymbologyOnAddLayer = val;
         }
