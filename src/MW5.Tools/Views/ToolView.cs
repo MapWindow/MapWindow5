@@ -229,7 +229,10 @@ namespace MW5.Tools.Views
                 superToolTip1.SetToolTip(btnRun, null);
             }
 
-            LoadDocumentation();
+            if (DebugHelper.LoadToolDocumentation)
+            {
+                LoadDocumentation();
+            }
         }
 
         private async void LoadDocumentation()

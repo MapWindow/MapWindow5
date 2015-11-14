@@ -78,7 +78,7 @@ namespace MW5.Tools.Model
                     }
                 }
 
-                var layerParameter = p as GenericLayerParameter;
+                var layerParameter = p as LayerParameterBase;
                 if (layerParameter != null)
                 {
                     if (layerParameter.Datasource == null)
