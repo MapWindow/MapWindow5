@@ -89,6 +89,13 @@ namespace MW5.Plugins.Printing.Views
 
         private void LayoutViewFormClosing(object sender, FormClosingEventArgs e)
         {
+            var ls = new LayoutSerializer();
+            if (!ls.PromptToSaveChanges(layoutControl1, this))
+            {
+                e.Cancel = true;
+                return;
+            }
+
             dockingManager1.SaveLayout(SerializationKey, false);
             mainFrameBarManager1.SaveLayout(SerializationKey, false);
         }

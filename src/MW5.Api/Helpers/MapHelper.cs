@@ -22,6 +22,9 @@ namespace MW5.Api.Helpers
             var g = ext.ToGeometry();
             sf.Features.EditAdd(g);
             
+            // will be displayed above labels of other layers
+            sf.Volatile = true;
+            
             int handle = map.Layers.Add(sf, true, false);
 
             var fill = sf.Style.Fill;

@@ -116,7 +116,8 @@ namespace MW5.Plugins.Printing.Views
                     SaveLayout(true);
                     break;
                 case LayoutMenuKeys.LoadLayout:
-                    LoadLayout();
+                    var ls = new LayoutSerializer();
+                    ls.LoadNewLayout(_layoutControl, _context, _view.Model.Extents, _view as IWin32Window);
                     break;
                 case LayoutMenuKeys.Print:
                     {
@@ -219,6 +220,12 @@ namespace MW5.Plugins.Printing.Views
             _view.UpdateView();
         }
 
+        private void SaveLayout(bool saveAs)
+        {
+            var ls = new LayoutSerializer();
+            ls.SaveLayout(_layoutControl, saveAs, _view as IWin32Window);
+        }
+
         private void RunPrinterSetup()
         {
             using (var pd = new PrintDialog { PrinterSettings = _layoutControl.PrinterSettings })
@@ -261,13 +268,13 @@ namespace MW5.Plugins.Printing.Views
 
         private void ConvertElementToBitmap()
         {
-            if (!_layoutControl.SelectedLayoutElements.Any())
+            var el = _layoutControl.SelectedLayoutElements.FirstOrDefault();
+
+            if (el == null)
             {
                 MessageService.Current.Info("No elements are selected.");
                 return;
             }
-
-            var el = _layoutControl.SelectedLayoutElements.FirstOrDefault();
 
             if (el is LayoutBitmap)
             {
@@ -285,98 +292,8 @@ namespace MW5.Plugins.Printing.Views
 
         private bool PromptSaveExistingLayout()
         {
-            if (_layoutControl.LayoutElements.Any())
-            {
-                var result = MessageService.Current.AskWithCancel("Save changes to the current layout?");
-
-                switch (result)
-                {
-                    case DialogResult.Cancel:
-                        return false;
-                    case DialogResult.No:
-                        return true;
-                    case DialogResult.Yes:
-                        return SaveLayout(false, true);
-                }
-            }
-        
-            return true;            
-        }
-
-        private void LoadLayout()
-        {
-            if (!PromptSaveExistingLayout()) return;
-
-            string filename = GetLoadFilename();
-            if (string.IsNullOrWhiteSpace(filename)) return;
-
-            var serializer = new LayoutSerializer();
-
-            var settings = _view.LayoutControl.PrinterSettings;
-
-            if (serializer.LoadLayout(_context, _layoutControl, filename, 
-                                      _view.Model.Extents, settings))
-            {
-                
-
-                MessageService.Current.Info("Layout was loaded successfully.");
-            }
-        }
-
-        private bool SaveLayout(bool saveAs, bool silent = false)
-        {
-            string filename = _layoutControl.Filename;
-
-            if (saveAs || string.IsNullOrWhiteSpace(filename))
-            {
-                filename = GetSaveFilename();
-            }
-
-            if (string.IsNullOrWhiteSpace(filename))
-            {
-                return false;
-            }
-            
-            var serializer = new LayoutSerializer();
-            if (serializer.SaveLayout(_layoutControl, _layoutControl.PrinterSettings, filename))
-            {
-                if (!silent)
-                {
-                    MessageService.Current.Info("Layout was saved successfully.");
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private string GetLoadFilename()
-        {
-            using (var dlg = new OpenFileDialog { Filter = PrintingConstants.TemplateFilter })
-            {
-                if (dlg.ShowDialog(ParentView) == DialogResult.OK)
-                {
-                    return dlg.FileName;
-                }
-            }
-
-            return string.Empty;
-        }
-
-        private string GetSaveFilename()
-        {
-            using (var dlg = new SaveFileDialog { Filter = PrintingConstants.TemplateFilter })
-            {
-                dlg.InitialDirectory = ConfigPathHelper.GetLayoutPath();
-
-                if (dlg.ShowDialog(ParentView) == DialogResult.OK)
-                {
-                    return dlg.FileName;
-                }
-            }
-
-            return string.Empty;
+            var ls = new LayoutSerializer();
+            return ls.PromptToSaveChanges(_layoutControl, _view as IWin32Window);
         }
 
         private void AddBitmap()
