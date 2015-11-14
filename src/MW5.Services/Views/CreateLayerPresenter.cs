@@ -9,11 +9,10 @@ using MW5.Services.Views.Abstract;
 
 namespace MW5.Services.Views
 {
-    public class CreateLayerPresenter: BasePresenter<ICreateLayerView>
+    public class CreateLayerPresenter: BasePresenter<ICreateLayerView, CreateLayerModel>
     {
         private readonly ICreateLayerView _view;
         private readonly IFileDialogService _fileDialogService;
-        private string _filename = string.Empty;
 
         public CreateLayerPresenter(ICreateLayerView view, IFileDialogService fileDialogService) : base(view)
         {
@@ -24,26 +23,6 @@ namespace MW5.Services.Views
             _fileDialogService = fileDialogService;
         }
         
-        public string Filename
-        {
-            get { return _filename; }
-        }
-
-        public GeometryType GeometryType
-        {
-            get { return _view.GeometryType; }
-        }
-
-        public ZValueType ZValueType
-        {
-            get { return _view.ZValueType; }
-        }
-
-        public string LayerName
-        {
-            get { return _view.LayerName; }
-        }
-
         public override bool ViewOkClicked()
         {
             string layerName = _view.LayerName;
@@ -53,27 +32,39 @@ namespace MW5.Services.Views
                 return false;
             }
 
-            // TODO: pass parent window handle in some unobtrusive way
-            string path = Directory.GetDirectoryRoot(Assembly.GetExecutingAssembly().Location);
-            if (_fileDialogService.ChooseFolder(path, out path))
+            if (!View.MemoryLayer)
             {
-                if (ValidateName(path))
+                string path = Directory.GetDirectoryRoot(Assembly.GetExecutingAssembly().Location);
+                if (!_fileDialogService.ChooseFolder(path, out path))
                 {
-                    return true;
+                    return false;
                 }
+
+                Model.Filename = GetFilename(path);
+            }
+            else
+            {
+                Model.Filename = View.LayerName;
             }
 
-            return false;
+            Model.GeometryType = View.GeometryType;
+            Model.ZValueType = View.ZValueType;
+            Model.MemoryLayer = View.MemoryLayer;
+
+            return true;
         }
 
-        private bool ValidateName(string path)
+        private string GetFilename(string path)
         {
-            _filename = path + LayerName.ToLower();
-            if (!_filename.EndsWith(".shp"))
+            const string shpExt = ".shp";
+
+            string filename = path + _view.LayerName.ToLower();
+            if (!filename.EndsWith(shpExt))
             {
-                _filename += ".shp";
+                filename += shpExt;
             }
-            return true;
+
+            return filename;
         }
     }
 }

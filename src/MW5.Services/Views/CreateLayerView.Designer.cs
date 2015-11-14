@@ -38,6 +38,7 @@
             this.opt2D = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
             this.optZ = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
             this.optM = new Syncfusion.Windows.Forms.Tools.RadioButtonAdv();
+            this.chkMemoryLayer = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this._layerNameTextbox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._layerTypeComboBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.opt2D)).BeginInit();
@@ -48,7 +49,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Location = new System.Drawing.Point(12, 36);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(62, 13);
             this.label1.TabIndex = 0;
@@ -56,19 +57,19 @@
             // 
             // _layerNameTextbox
             // 
-            this._layerNameTextbox.BeforeTouchSize = new System.Drawing.Size(100, 20);
+            this._layerNameTextbox.BeforeTouchSize = new System.Drawing.Size(292, 20);
             this._layerNameTextbox.Cursor = System.Windows.Forms.Cursors.IBeam;
             this._layerNameTextbox.Location = new System.Drawing.Point(103, 33);
             this._layerNameTextbox.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this._layerNameTextbox.Name = "_layerNameTextbox";
-            this._layerNameTextbox.Size = new System.Drawing.Size(261, 20);
+            this._layerNameTextbox.Size = new System.Drawing.Size(292, 20);
             this._layerNameTextbox.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this._layerNameTextbox.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 83);
+            this.label2.Location = new System.Drawing.Point(12, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 2;
@@ -76,12 +77,12 @@
             // 
             // _layerTypeComboBox
             // 
-            this._layerTypeComboBox.BeforeTouchSize = new System.Drawing.Size(261, 21);
+            this._layerTypeComboBox.BeforeTouchSize = new System.Drawing.Size(292, 21);
             this._layerTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._layerTypeComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this._layerTypeComboBox.Location = new System.Drawing.Point(103, 75);
+            this._layerTypeComboBox.Location = new System.Drawing.Point(103, 91);
             this._layerTypeComboBox.Name = "_layerTypeComboBox";
-            this._layerTypeComboBox.Size = new System.Drawing.Size(261, 21);
+            this._layerTypeComboBox.Size = new System.Drawing.Size(292, 21);
             this._layerTypeComboBox.TabIndex = 4;
             // 
             // _okButton
@@ -91,7 +92,7 @@
             this._okButton.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this._okButton.ForeColor = System.Drawing.Color.White;
             this._okButton.IsBackStageButton = false;
-            this._okButton.Location = new System.Drawing.Point(256, 143);
+            this._okButton.Location = new System.Drawing.Point(239, 164);
             this._okButton.Name = "_okButton";
             this._okButton.Size = new System.Drawing.Size(75, 23);
             this._okButton.TabIndex = 6;
@@ -103,7 +104,7 @@
             this._cancelButton.BeforeTouchSize = new System.Drawing.Size(75, 23);
             this._cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this._cancelButton.IsBackStageButton = false;
-            this._cancelButton.Location = new System.Drawing.Point(337, 143);
+            this._cancelButton.Location = new System.Drawing.Point(320, 164);
             this._cancelButton.Name = "_cancelButton";
             this._cancelButton.Size = new System.Drawing.Size(75, 23);
             this._cancelButton.TabIndex = 7;
@@ -113,7 +114,7 @@
             // 
             this.opt2D.BeforeTouchSize = new System.Drawing.Size(92, 21);
             this.opt2D.Checked = true;
-            this.opt2D.Location = new System.Drawing.Point(103, 102);
+            this.opt2D.Location = new System.Drawing.Point(103, 118);
             this.opt2D.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.opt2D.Name = "opt2D";
             this.opt2D.Size = new System.Drawing.Size(92, 21);
@@ -124,7 +125,7 @@
             // optZ
             // 
             this.optZ.BeforeTouchSize = new System.Drawing.Size(48, 21);
-            this.optZ.Location = new System.Drawing.Point(201, 102);
+            this.optZ.Location = new System.Drawing.Point(201, 118);
             this.optZ.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.optZ.Name = "optZ";
             this.optZ.Size = new System.Drawing.Size(48, 21);
@@ -136,7 +137,7 @@
             // optM
             // 
             this.optM.BeforeTouchSize = new System.Drawing.Size(48, 21);
-            this.optM.Location = new System.Drawing.Point(283, 102);
+            this.optM.Location = new System.Drawing.Point(283, 118);
             this.optM.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(89)))), ((int)(((byte)(91)))));
             this.optM.Name = "optM";
             this.optM.Size = new System.Drawing.Size(48, 21);
@@ -145,12 +146,23 @@
             this.optM.Text = "M";
             this.optM.ThemesEnabled = false;
             // 
+            // chkMemoryLayer
+            // 
+            this.chkMemoryLayer.AutoSize = true;
+            this.chkMemoryLayer.Location = new System.Drawing.Point(303, 59);
+            this.chkMemoryLayer.Name = "chkMemoryLayer";
+            this.chkMemoryLayer.Size = new System.Drawing.Size(92, 17);
+            this.chkMemoryLayer.TabIndex = 11;
+            this.chkMemoryLayer.Text = "Memory Layer";
+            this.chkMemoryLayer.UseVisualStyleBackColor = true;
+            // 
             // CreateLayerView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this._cancelButton;
-            this.ClientSize = new System.Drawing.Size(424, 178);
+            this.ClientSize = new System.Drawing.Size(417, 199);
+            this.Controls.Add(this.chkMemoryLayer);
             this.Controls.Add(this.optM);
             this.Controls.Add(this.optZ);
             this.Controls.Add(this.opt2D);
@@ -183,5 +195,6 @@
         private Syncfusion.Windows.Forms.Tools.RadioButtonAdv opt2D;
         private Syncfusion.Windows.Forms.Tools.RadioButtonAdv optZ;
         private Syncfusion.Windows.Forms.Tools.RadioButtonAdv optM;
+        private System.Windows.Forms.CheckBox chkMemoryLayer;
     }
 }

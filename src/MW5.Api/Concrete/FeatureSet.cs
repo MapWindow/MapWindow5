@@ -169,7 +169,12 @@ namespace MW5.Api.Concrete
             Dispose();
         }
 
-        public string OpenDialogFilter
+        string IDatasource.OpenDialogFilter
+        {
+            get { return OpenDialogFilter; }
+        }
+
+        public static string OpenDialogFilter
         {
             get { return "ESRI Shapefiles (*.shp)|*.shp"; }
         }

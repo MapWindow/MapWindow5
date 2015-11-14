@@ -17,11 +17,18 @@ namespace MW5.Plugins.ShapeEditor.Services
     public class LayerEditingService: ILayerEditingService
     {
         private readonly IAppContext _context;
+        private readonly ILayerService _layerService;
+        private readonly IFileDialogService _dialogService;
 
-        public LayerEditingService(IAppContext context)
+        public LayerEditingService(IAppContext context, ILayerService layerService, IFileDialogService dialogService)
         {
             if (context == null) throw new ArgumentNullException("context");
+            if (layerService == null) throw new ArgumentNullException("layerService");
+            if (dialogService == null) throw new ArgumentNullException("dialogService");
+
             _context = context;
+            _layerService = layerService;
+            _dialogService = dialogService;
         }
 
         /// <summary>
@@ -91,40 +98,52 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// </summary>
         private bool SaveChangesCore(int layerHandle)
         {
-            var sf = _context.Layers.GetFeatureSet(layerHandle);
-            var ogrLayer = _context.Layers.GetVectorLayer(layerHandle);
+            var layer = _context.Layers.ItemByHandle(layerHandle);
+            var ogrLayer = layer.VectorSource;
 
-            //string xmlState = sf.Serialize();
-
-            bool success;
-
-            if (ogrLayer != null)
-            {
-                int savedCount;
-                SaveResult saveResult = ogrLayer.SaveChanges(out savedCount);
-                success = saveResult == SaveResult.AllSaved || saveResult == SaveResult.NoChanges;
-                
-                if (!success)
-                {
-                    Logger.Current.Warn("Failed to save OGR layer changes: " + ogrLayer.Filename);
-                    DisplayOgrErrors(ogrLayer);
-                }
-
-                string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
-                MessageService.Current.Info(msg);
-            }
-            else
-            {
-                success = sf.StopEditingShapes();
-            }
-
-            // TODO: do we need it?
-            //sf.Deserialize(xmlState);
+            bool success = ogrLayer != null ? SaveOgrLayer(ogrLayer) : SaveFeatureSet(layer);
 
             if (success)
             {
                 CloseEditing(layerHandle);
             }
+
+            return success;
+        }
+
+        private bool SaveFeatureSet(ILayer layer)
+        {
+            var fs = layer.FeatureSet;
+
+            if (fs.SourceType == FeatureSourceType.InMemory)
+            {
+                string filename = layer.Name;
+                if (_dialogService.SaveFile(FeatureSet.OpenDialogFilter, ref filename))
+                {
+                    return fs.SaveAsEx(filename, true);
+                }
+
+                return false;
+            }
+
+            return fs.StopEditingShapes();
+        }
+
+        private bool SaveOgrLayer(VectorLayer ogrLayer)
+        {
+            int savedCount;
+            SaveResult saveResult = ogrLayer.SaveChanges(out savedCount);
+            bool success = saveResult == SaveResult.AllSaved || saveResult == SaveResult.NoChanges;
+
+            if (!success)
+            {
+                Logger.Current.Warn("Failed to save OGR layer changes: " + ogrLayer.Filename);
+                DisplayOgrErrors(ogrLayer);
+            }
+
+            // TODO: do we need to show message in case of success?
+            string msg = string.Format("{0}: {1}; features: {2}", saveResult.EnumToString(), ogrLayer.Name, savedCount);
+            MessageService.Current.Info(msg);
 
             return success;
         }
@@ -186,14 +205,21 @@ namespace MW5.Plugins.ShapeEditor.Services
 
         public void CreateLayer()
         {
-            var view = _context.Container.GetSingleton<CreateLayerPresenter>();
-            if (view.Run())
+            var model = new CreateLayerModel();
+
+            if (_context.Container.Run<CreateLayerPresenter, CreateLayerModel>(model))
             {
-                var fs = new FeatureSet(view.GeometryType, view.ZValueType);
+                var fs = new FeatureSet(model.GeometryType, model.ZValueType);
                 fs.Projection.CopyFrom(_context.Map.Projection);
-                fs.SaveAsEx(view.Filename, false);
+
+                if (!model.MemoryLayer)
+                {
+                    fs.SaveAsEx(model.Filename, false);
+                }
+
                 fs.InteractiveEditing = true;
-                _context.Layers.Add(fs);
+
+                _layerService.AddDatasource(fs, model.LayerName);
             }
         }
     }

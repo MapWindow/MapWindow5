@@ -20,25 +20,56 @@ using Syncfusion.Windows.Forms;
 
 namespace MW5.Services.Views
 {
-    public partial class CreateLayerView : MapWindowView, ICreateLayerView
+    public partial class CreateLayerView : CreateLayerViewBase, ICreateLayerView
     {
+        private static GeometryType _lastGeometryType = GeometryType.Point;
+        private static ZValueType _lastZValue = ZValueType.None;
+        private static bool _lastMemoryLayer = false;
+
         public CreateLayerView()
         {
             InitializeComponent();
 
-            var items = ComboBoxHelper.GetComboItems(new[]
-            {
-                GeometryType.Point,
-                GeometryType.Polyline,
-                GeometryType.Polygon,
-                GeometryType.MultiPoint,
-            });
+            InitControls();
 
-            foreach (var item in items)
+            FormClosing += OnFormClosing;
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            _lastGeometryType = GeometryType;
+            _lastZValue = ZValueType;
+            _lastMemoryLayer = chkMemoryLayer.Checked;
+        }
+
+        private void InitControls()
+        {
+            var list = new[] { GeometryType.Point, GeometryType.Polyline, GeometryType.Polygon, GeometryType.MultiPoint, };
+
+            _layerTypeComboBox.AddItemsFromEnum(list);
+        }
+
+        /// <summary>
+        /// Called before view is shown. Allows to initialize UI from this.Model property.
+        /// </summary>
+        public void Initialize()
+        {
+            _layerTypeComboBox.SetValue(_lastGeometryType);
+
+            chkMemoryLayer.Checked = _lastMemoryLayer;
+
+            switch (_lastZValue)
             {
-                _layerTypeComboBox.Items.Add(item);
+                case ZValueType.None:
+                    opt2D.Checked = true;
+                    break;
+                case ZValueType.M:
+                    optM.Checked = true;
+                    break;
+                case ZValueType.Z:
+                    optZ.Checked = true;
+                    break;
             }
-            _layerTypeComboBox.SetValue(GeometryType.Point);
         }
 
         public ButtonBase OkButton
@@ -46,9 +77,9 @@ namespace MW5.Services.Views
             get { return _okButton; }
         }
 
-        public void Initialize(object param)
+        public bool MemoryLayer
         {
-            
+            get { return chkMemoryLayer.Checked; }
         }
 
         public string LayerName
@@ -95,5 +126,5 @@ namespace MW5.Services.Views
         }
     }
 
-
+    public class CreateLayerViewBase : MapWindowView<CreateLayerModel> { }
 }

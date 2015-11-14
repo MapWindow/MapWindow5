@@ -4,10 +4,11 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Services.Views.Abstract
 {
-    public interface ICreateLayerView : IView
+    public interface ICreateLayerView : IView<CreateLayerModel>
     {
-        string LayerName { get; set; }
-        GeometryType GeometryType { get; set; }
-        ZValueType ZValueType { get; set; }
+        string LayerName { get; }
+        GeometryType GeometryType { get; }
+        ZValueType ZValueType { get; }
+        bool MemoryLayer { get; }
     }
 }

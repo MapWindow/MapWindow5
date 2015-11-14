@@ -37,18 +37,11 @@ namespace MW5.UI.Controls
         protected override void OnButtonClicked(int rowIndex, int colIndex, int button)
         {
             base.OnButtonClicked(rowIndex, colIndex, button);
+
             try
             {
-                try
-                {
-                    string s = Grid.Model[rowIndex, colIndex].Text;
-                    string path = Path.GetDirectoryName(s);
-                    _dialog.InitialDirectory = path;
-                    _dialog.FileName = Path.GetFileName(s);
-                    string filter = "*" + Path.GetExtension(s);
-                    _dialog.Filter = filter + "|" + filter;
-                }
-                catch {}   // ignore
+                string s = Grid.Model[rowIndex, colIndex].Text;
+                InitDialog(s);
 
                 if (_dialog.ShowDialog() == DialogResult.OK)
                 {
@@ -61,6 +54,25 @@ namespace MW5.UI.Controls
             {
                 Logger.Current.Warn("OpenFileDialogCellRenderer: failed to edit datasource path.", ex);
             }
+        }
+
+        private void InitDialog(string filename)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(filename))
+                {
+                    string path = Path.GetDirectoryName(filename);
+                    _dialog.InitialDirectory = path;
+                    _dialog.FileName = Path.GetFileName(filename);
+                    string filter = "*" + Path.GetExtension(filename);
+                    _dialog.Filter = filter + "|" + filter;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to open file selection dialog.", ex);
+            }  
         }
 
         protected override Rectangle OnLayout(int rowIndex, int colIndex, GridStyleInfo style, Rectangle innerBounds, Rectangle[] buttonsBounds)
