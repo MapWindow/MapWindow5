@@ -127,13 +127,23 @@ namespace MW5.Data.Repository
             node.ExpandedOnce = true;
             node.Text = Path.GetFileName(filename);
 
+            AssignCustomFileIcons(node, filename, itemType);
+
+            return AddNode(node) as IFileItem;
+        }
+
+        private void AssignCustomFileIcons(TreeNodeAdv node, string filename, RepositoryItemType itemType)
+        {
+            if (filename.ToLower().EndsWith(".sqlite"))
+            {
+                node.LeftImageIndices = new[] { (int)RepositoryIcon.Sqlite };
+            }
+
             if (itemType == RepositoryItemType.Vector && filename.ToLower().EndsWith(".shp"))
             {
                 var type = ShapefileHelper.GetGeometryType(filename);
                 node.LeftImageIndices = new[] { GetVectorIcon(type) };
             }
-
-            return AddNode(node) as IFileItem;
         }
 
         private static TreeNodeAdv CreateNode(RepositoryItemType type)
