@@ -53,6 +53,9 @@ namespace MW5.Plugins.Repository.Views
             this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
             this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.toolAddTms = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolRemoveTms = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -114,76 +117,79 @@ namespace MW5.Plugins.Repository.Views
             this.mnuOpenLocation,
             this.mnuAddConnection,
             this.mnuRemoveConnection,
-            this.mnuRemoveLayer});
+            this.mnuRemoveLayer,
+            this.toolAddTms,
+            this.toolRemoveTms,
+            this.toolProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(182, 246);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(192, 312);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
             // 
             this.mnuAddFolder.Name = "mnuAddFolder";
-            this.mnuAddFolder.Size = new System.Drawing.Size(181, 22);
+            this.mnuAddFolder.Size = new System.Drawing.Size(191, 22);
             this.mnuAddFolder.Text = "Add folder link";
             // 
             // mnuRemoveFolder
             // 
             this.mnuRemoveFolder.Name = "mnuRemoveFolder";
-            this.mnuRemoveFolder.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveFolder.Size = new System.Drawing.Size(191, 22);
             this.mnuRemoveFolder.Text = "Remove folder link";
             // 
             // mnuAddFolderToMap
             // 
             this.mnuAddFolderToMap.Name = "mnuAddFolderToMap";
-            this.mnuAddFolderToMap.Size = new System.Drawing.Size(181, 22);
+            this.mnuAddFolderToMap.Size = new System.Drawing.Size(191, 22);
             this.mnuAddFolderToMap.Text = "Add files to the map";
             // 
             // mnuAddToMap
             // 
             this.mnuAddToMap.Name = "mnuAddToMap";
-            this.mnuAddToMap.Size = new System.Drawing.Size(181, 22);
+            this.mnuAddToMap.Size = new System.Drawing.Size(191, 22);
             this.mnuAddToMap.Text = "Add to the map";
             // 
             // mnuRemoveFile
             // 
             this.mnuRemoveFile.Name = "mnuRemoveFile";
-            this.mnuRemoveFile.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveFile.Size = new System.Drawing.Size(191, 22);
             this.mnuRemoveFile.Text = "Remove file";
             // 
             // mnuGdalInfo
             // 
             this.mnuGdalInfo.Name = "mnuGdalInfo";
-            this.mnuGdalInfo.Size = new System.Drawing.Size(181, 22);
+            this.mnuGdalInfo.Size = new System.Drawing.Size(191, 22);
             this.mnuGdalInfo.Text = "GDAL info";
             // 
             // mnuRefresh
             // 
             this.mnuRefresh.Name = "mnuRefresh";
-            this.mnuRefresh.Size = new System.Drawing.Size(181, 22);
+            this.mnuRefresh.Size = new System.Drawing.Size(191, 22);
             this.mnuRefresh.Text = "Refresh";
             // 
             // mnuOpenLocation
             // 
             this.mnuOpenLocation.Name = "mnuOpenLocation";
-            this.mnuOpenLocation.Size = new System.Drawing.Size(181, 22);
+            this.mnuOpenLocation.Size = new System.Drawing.Size(191, 22);
             this.mnuOpenLocation.Text = "Open file location";
             // 
             // mnuAddConnection
             // 
             this.mnuAddConnection.Name = "mnuAddConnection";
-            this.mnuAddConnection.Size = new System.Drawing.Size(181, 22);
+            this.mnuAddConnection.Size = new System.Drawing.Size(191, 22);
             this.mnuAddConnection.Text = "Add connection";
             // 
             // mnuRemoveConnection
             // 
             this.mnuRemoveConnection.Name = "mnuRemoveConnection";
-            this.mnuRemoveConnection.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveConnection.Size = new System.Drawing.Size(191, 22);
             this.mnuRemoveConnection.Text = "Remove connection";
             // 
             // mnuRemoveLayer
             // 
             this.mnuRemoveLayer.Name = "mnuRemoveLayer";
-            this.mnuRemoveLayer.Size = new System.Drawing.Size(181, 22);
+            this.mnuRemoveLayer.Size = new System.Drawing.Size(191, 22);
             this.mnuRemoveLayer.Text = "Remove layer";
             // 
             // treeViewAdv1
@@ -259,6 +265,24 @@ namespace MW5.Plugins.Repository.Views
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
+            // toolAddTms
+            // 
+            this.toolAddTms.Name = "toolAddTms";
+            this.toolAddTms.Size = new System.Drawing.Size(191, 22);
+            this.toolAddTms.Text = "Add TMS Provider";
+            // 
+            // toolRemoveTms
+            // 
+            this.toolRemoveTms.Name = "toolRemoveTms";
+            this.toolRemoveTms.Size = new System.Drawing.Size(191, 22);
+            this.toolRemoveTms.Text = "Remove TMS Provider";
+            // 
+            // toolProperties
+            // 
+            this.toolProperties.Name = "toolProperties";
+            this.toolProperties.Size = new System.Drawing.Size(191, 22);
+            this.toolProperties.Text = "Properties";
+            // 
             // RepositoryDockPanel
             // 
             this.Controls.Add(this.splitContainerAdv1);
@@ -298,5 +322,8 @@ namespace MW5.Plugins.Repository.Views
         private ToolStripMenuItem mnuRemoveLayer;
         private SplitContainerAdv splitContainerAdv1;
         private RichTextBox richTextBox1;
+        private ToolStripMenuItem toolAddTms;
+        private ToolStripMenuItem toolRemoveTms;
+        private ToolStripMenuItem toolProperties;
     }
 }

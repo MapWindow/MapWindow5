@@ -9,7 +9,7 @@ using MW5.Plugins.Mvp;
 
 namespace MW5.Tiles.Views.Abstract
 {
-    internal interface ITmsProviderView: IView<TmsProvider>
+    public interface ITmsProviderView: IView<TmsProvider>
     {
         int Id { get; }
         string Url { get; }

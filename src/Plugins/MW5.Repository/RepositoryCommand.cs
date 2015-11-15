@@ -13,5 +13,8 @@
         AddConnection = 8,
         RemoveConnection = 9,
         RemoveLayer = 10,
+        RemoveTms = 11,
+        AddTms = 12,
+        Properties = 13,
     }
 }

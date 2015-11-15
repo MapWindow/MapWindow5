@@ -16,6 +16,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tiles.Views;
 
 namespace MW5.Plugins.Repository.Views
 {
@@ -59,6 +60,15 @@ namespace MW5.Plugins.Repository.Views
         {
             switch (command)
             {
+                case RepositoryCommand.AddTms:
+                    AddTmsProvider();
+                    break;
+                case RepositoryCommand.RemoveTms:
+                    RemoveTmsProvider();
+                    break;
+                case RepositoryCommand.Properties:
+                    EditTmsProvider();
+                    break;
                 case RepositoryCommand.AddFolder:
                     _repository.AddFolderLink();
                     break;
@@ -66,7 +76,7 @@ namespace MW5.Plugins.Repository.Views
                     RemoveFolder();
                     break;
                 case RepositoryCommand.AddToMap:
-                    AddLayerToMap();
+                    AddToMap();
                     break;
                 case RepositoryCommand.RemoveFile:
                     RemoveFile();
@@ -95,6 +105,45 @@ namespace MW5.Plugins.Repository.Views
             }
 
             _context.View.Update();
+        }
+
+        private void EditTmsProvider()
+        {
+            var item = GetSelectedItem<ITmsItem>();
+            if (item != null)
+            {
+                var provider = item.Provider;
+                if (_context.Container.Run<TmsProviderPresenter, Model.TmsProvider>(provider))
+                {
+                    _repository.TmsProviders.Update(provider);
+                }
+            }
+        }
+
+        private void AddTmsProvider()
+        {
+            var item = GetSelectedItem<IRepositoryItem>();
+            if (item != null && item.Type == RepositoryItemType.TmsRoot)
+            {
+                var provider = new Model.TmsProvider();
+                if (_context.Container.Run<TmsProviderPresenter, Model.TmsProvider>(provider))
+                {
+                    _repository.TmsProviders.Add(provider);
+                }
+            }
+        }
+
+        private void RemoveTmsProvider()
+        {
+            var item = GetSelectedItem<ITmsItem>();
+            if (item == null) return;
+
+            string msg = string.Format("Do you want to remove TMS provider: {0}?", item.Provider.Name);
+            
+            if (MessageService.Current.Ask(msg))
+            {
+                _repository.TmsProviders.Remove(item.Provider);
+            }
         }
 
         private void AddConnection()
@@ -131,14 +180,29 @@ namespace MW5.Plugins.Repository.Views
             }
         }
 
-        private void AddLayerToMap()
+        private void AddToMap()
         {
-            var layer = GetSelectedItem<ILayerItem>();
-            if (layer == null)
+            var item = GetSelectedItem<IRepositoryItem>();
+
+            if (item is ILayerItem)
             {
+                AddLayerToMap(item as ILayerItem);
                 return;
             }
 
+            if (item is ITmsItem)
+            {
+                AddTmsProviderToMap();
+            }
+        }
+
+        private void AddTmsProviderToMap()
+        {
+            MessageService.Current.Info("Not implemented.");
+        }
+
+        private void AddLayerToMap(ILayerItem layer)
+        {
             if (layer.AddedToMap)
             {
                 _layerService.RemoveLayer(layer.Identity);
@@ -227,7 +291,7 @@ namespace MW5.Plugins.Repository.Views
         private void RemoveConnection()
         {
             var item = GetSelectedItem<IDatabaseItem>();
-            if (item != null)
+            if (item != null && MessageService.Current.Ask("Do you want to remove connection?"))
             {
                 _repository.RemoveConnection(item.Connection, false);
             }

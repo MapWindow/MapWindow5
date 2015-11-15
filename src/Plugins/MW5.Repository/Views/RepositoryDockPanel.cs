@@ -98,6 +98,14 @@ namespace MW5.Plugins.Repository.Views
             treeViewAdv1.ShowToolTip = false;
         }
 
+        private void OnTreeViewItemSelected(object sender, RepositoryEventArgs e)
+        {
+            UpdateDescription(e.Item);
+
+            var folder = e.Item as IFolderItem;
+            toolRemoveFolder.Enabled = folder != null && folder.Root;
+        }
+
         private void SetDatabaseContextMenu()
         {
             contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
@@ -146,6 +154,43 @@ namespace MW5.Plugins.Repository.Views
                                                    { mnuOpenLocation, new ToolStripSeparator(), mnuRefresh });
         }
 
+        private void SetTmsProviderContextMenu()
+        {
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[]
+                                                   {
+                                                        mnuAddToMap,
+                                                        new ToolStripSeparator(),
+                                                        toolRemoveTms,
+                                                        new ToolStripSeparator(),
+                                                        toolProperties,
+                                                   });
+        }
+
+        private void SetTmsRootContextMenu()
+        {
+            contextMenuStripEx1.Items.Add(toolAddTms);
+        }
+
+        private void UpdateDescription(IRepositoryItem item)
+        {
+            richTextBox1.SetText("Loading...");
+
+            Task<string>.Factory.StartNew(item.GetDescription).ContinueWith(description =>
+                {
+                    try
+                    {
+                        string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result,
+                            Environment.NewLine);
+                        richTextBox1.SetDescription(msg);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.Current.Error("Failed to load datasource description: {0}", ex, item.DisplayName);
+                        richTextBox1.SetText("Failed to load description.");
+                    }
+                }, TaskScheduler.FromCurrentSynchronizationContext());
+        }
+
         private void contextMenuStripEx1_Opening(object sender, CancelEventArgs e)
         {
             var item = treeViewAdv1.SelectedItem;
@@ -159,6 +204,12 @@ namespace MW5.Plugins.Repository.Views
 
             switch (item.Type)
             {
+                case RepositoryItemType.TmsRoot:
+                    SetTmsRootContextMenu();
+                    return;
+                case RepositoryItemType.TmsSource:
+                    SetTmsProviderContextMenu();
+                    return;
                 case RepositoryItemType.FileSystem:
                     SetFileSystemContextMenu();
                     return;
@@ -181,33 +232,6 @@ namespace MW5.Plugins.Repository.Views
             }
 
             e.Cancel = true;
-        }
-
-        private void OnTreeViewItemSelected(object sender, RepositoryEventArgs e)
-        {
-            UpdateDescription(e.Item);
-
-            var folder = e.Item as IFolderItem;
-            toolRemoveFolder.Enabled = folder != null && folder.Root;
-        }
-
-        private void UpdateDescription(IRepositoryItem item)
-        {
-            richTextBox1.SetText("Loading...");         
-
-            Task<string>.Factory.StartNew(item.GetDescription).ContinueWith(description =>
-            {
-                try
-                {
-                    string msg = string.Format("{0}{2}{2}{1}", item.DisplayName, description.Result, Environment.NewLine);
-                    richTextBox1.SetDescription(msg);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Current.Error("Failed to load datasource description: {0}", ex, item.DisplayName);
-                    richTextBox1.SetText("Failed to load description.");
-                }
-            }, TaskScheduler.FromCurrentSynchronizationContext());
         }
     }
 }

@@ -11,7 +11,7 @@
     <AssemblyName>MW5.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-	<OutputPath>..\..\..\bin\$(Platform)\$(Configuration)\Plugins\</OutputPath>
+    <OutputPath>..\..\..\bin\$(Platform)\$(Configuration)\Plugins\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -106,6 +106,11 @@
     <ProjectReference Include="..\..\MW5.Shared\MW5.Shared.csproj">
       <Project>{79400594-DE0D-4FFD-B115-AF2AEAC79CD9}</Project>
       <Name>MW5.Shared</Name>
+      <Private>False</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MW5.Tiles\MW5.Tiles.csproj">
+      <Project>{80AF2BDB-F74A-480F-84C3-913953BAAE67}</Project>
+      <Name>MW5.Tiles</Name>
       <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\MW5.UI\MW5.UI.csproj">
