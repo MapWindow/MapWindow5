@@ -10,10 +10,13 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
+using System.Threading;
 using Moq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
 using MW5.Api.Interfaces;
 using MW5.Plugins.Interfaces;
 using MW5.Tools.Model;
@@ -21,6 +24,7 @@ using MW5.Tools.Model.Layers;
 using MW5.Tools.Test.Properties;
 using MW5.Tools.Tools.Geoprocessing.VectorGeometryTools;
 using NUnit.Framework;
+using NUnit.Framework.Constraints;
 
 namespace MW5.Tools.Test
 {
@@ -33,17 +37,26 @@ namespace MW5.Tools.Test
 
         private static string NlShapefilesPath
         {
-            get { return Settings.Default.GisDataPath + @"MapWindow-Projects\TheNetherlands\"; }
+            get { return Path.Combine(Settings.Default.GisDataPath, @"MapWindow-Projects\TheNetherlands\"); }
         }
 
         private static string UsaShapefilesPath
         {
-            get { return Settings.Default.GisDataPath + @"MapWindow-Projects\UnitedStates\Shapefiles\"; }
+            get { return Path.Combine(Settings.Default.GisDataPath, @"MapWindow-Projects\UnitedStates\Shapefiles\"); }
+        }
+
+        private static string WorldProjectPath
+        {
+            get { return Path.Combine(Settings.Default.GisDataPath, @"MapWindow-Projects\World\"); }
         }
 
         [SetUp]
         public void Setup()
         {
+            // To get English error messages:
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-us");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
+
             _taskHandle = new Mock<ITaskHandle>();
             _taskProgress = new Mock<ITaskProgress>();
             _taskHandle.SetupGet(t => t.Progress).Returns(_taskProgress.Object);
@@ -90,11 +103,11 @@ namespace MW5.Tools.Test
         public void TestFixShapefile()
         {
             _timer.Restart();
-            var fs = OpenFeatureSet(NlShapefilesPath + "Cropfields2015.shp");
+            var fs = OpenFeatureSet(Path.Combine(NlShapefilesPath, "Buurtkaart.shp"));
             var outputFilename = Path.ChangeExtension(fs.Filename, ".fixed.shp");
             DeleteShapefile(outputFilename);
 
-            Debug.Write(string.Format("Fix shapefile"));
+            Debug.Write("Fix shapefile");
             var tool = new FixShapefileTool { Input = new DatasourceInput(fs), Output = new OutputLayerInfo { Filename = outputFilename, MemoryLayer = false, Overwrite = true } };
 
             RunTool(tool);
@@ -125,8 +138,8 @@ namespace MW5.Tools.Test
             _timer.Restart();
 
             // TODO: Test other shapefile type combinations as well:
-            var rivers = OpenFeatureSet(UsaShapefilesPath + "rivers.shp");
-            var roads = OpenFeatureSet(UsaShapefilesPath + "roads.shp");
+            var rivers = OpenFeatureSet(Path.Combine(UsaShapefilesPath, "rivers.shp"));
+            var roads = OpenFeatureSet(Path.Combine(UsaShapefilesPath, "roads.shp"));
 
             Debug.Write("Intersecting rivers with roads");
             var tool = new OverlayTool
@@ -149,13 +162,13 @@ namespace MW5.Tools.Test
             Debug.WriteLine("Elapsed time " + GetDateString(_timer.ElapsedMilliseconds));
         }
 
+#region RandomPointsTool
         [Test]
-        public void TestRandomPoints()
+        public void TestRandomPointsVector()
         {
             _timer.Restart();
-            var fs = OpenFeatureSet(UsaShapefilesPath + "cities.shp");
+            var fs = OpenFeatureSet(Path.Combine(UsaShapefilesPath, "cities.shp"));
 
-            // TODO: Test with selected shapes as well
             const int NumPoints = 5000;
             Debug.Write(string.Format("Creating {0} random points", NumPoints));
             var tool = new RandomPointsTool { NumPoints = NumPoints, InputLayer = new DatasourceInput(fs), OutputLayer = new OutputLayerInfo { MemoryLayer = true } };
@@ -178,6 +191,69 @@ namespace MW5.Tools.Test
             Debug.WriteLine("Elapsed time " + GetDateString(_timer.ElapsedMilliseconds));
         }
 
+        [Test]
+        public void TestRandomPointsVectorSelected()
+        {
+            _timer.Restart();
+            var fs = OpenFeatureSet(Path.Combine(UsaShapefilesPath, "cities.shp"));
+            // Create Vector layer:
+            var vector = new DatasourceInput(fs) as IVectorInput;
+            vector.SelectedOnly = true;
+            // Select first feature:
+            vector.Datasource.Features[0].Selected = true;
+
+            const int NumPoints = 5000;
+            Debug.Write(string.Format("Creating {0} random points", NumPoints));
+            var tool = new RandomPointsTool { NumPoints = NumPoints, InputLayer = vector, OutputLayer = new OutputLayerInfo { MemoryLayer = true } };
+
+            RunTool(tool);
+
+            Debug.Write(" ... ");
+            var result = tool.OutputLayer.Result as IFeatureSet;
+            Assert.IsNotNull(result);
+
+            // Check number of features:
+            Assert.AreEqual(result.NumFeatures, NumPoints);
+
+            // Check envelop:
+            Assert.IsTrue(vector.Datasource.GetSelectedExtents().EqualsTo(result.Envelope, 1), "The resulting envelop is not equal to the input envelop");
+            Debug.Write(" ..the resulting envelope is OK.. ");
+
+            result.Dispose();
+            Debug.WriteLine(" Done!");
+            Debug.WriteLine("Elapsed time " + GetDateString(_timer.ElapsedMilliseconds));
+        }
+
+        [Test]
+        public void TestRandomPointsRaster()
+        {
+            _timer.Restart();
+
+            var ds = OpenDatasource(Path.Combine(WorldProjectPath, "Raster", "NE2_50M_SR.jpg"));
+
+            const int NumPoints = 5000;
+            Debug.Write(string.Format("Creating {0} random points", NumPoints));
+            var tool = new RandomPointsTool { NumPoints = NumPoints, InputLayer = ds, OutputLayer = new OutputLayerInfo { MemoryLayer = true } };
+
+            RunTool(tool);
+
+            Debug.Write(" ... ");
+            var result = tool.OutputLayer.Result as IFeatureSet;
+            Assert.IsNotNull(result);
+
+            // Check number of features:
+            Assert.AreEqual(result.NumFeatures, NumPoints);
+
+            // Check envelop:
+            Assert.IsTrue(ds.Datasource.Envelope.EqualsTo(result.Envelope, 1), "The resulting envelop is not equal to the input envelop");
+            Debug.Write(" ..the resulting envelope is OK.. ");
+
+            result.Dispose();
+            Debug.WriteLine(" Done!");
+            Debug.WriteLine("Elapsed time " + GetDateString(_timer.ElapsedMilliseconds));
+        }
+
+#endregion
         private static void DeleteShapefile(string filename)
         {
             var folder = Path.GetDirectoryName(filename);
@@ -208,6 +284,18 @@ namespace MW5.Tools.Test
 
             return new FeatureSet(filename);
         }
+
+        private static IDatasourceInput OpenDatasource(string filename)
+        {
+            if (!File.Exists(filename))
+            {
+                throw new FileNotFoundException("Datasource file doesn't exists.", filename);
+            }
+
+            return new DatasourceInput(filename);
+        }
+
+
 
         private void RunTool(IGisTool tool)
         {
