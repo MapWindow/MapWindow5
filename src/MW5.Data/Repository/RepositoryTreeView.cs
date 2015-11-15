@@ -301,6 +301,8 @@ namespace MW5.Data.Repository
             {
                 DoDragDrop(layerItem.Identity.Serialize(), DragDropEffects.Copy);
             }
+
+            // TODO: add drag & drop support for TMS providers
         }
 
         public void UpdateState(HashSet<LayerIdentity> layers)

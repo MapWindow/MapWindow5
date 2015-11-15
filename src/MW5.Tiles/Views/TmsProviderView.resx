@@ -117,4 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>{switch:a,b,c}      - selection one of the folowing values;
+{zoom}                 - zoom level;
+{x}, {y}                 - x, y coordinates of the tile at current zoom.
+
+Examples:
+
+a) default OpenStreetMap provider:
+http://{switch:a,b,c}.tile.openstreetmap.org/{zoom}/{x}/{y}.png
+</value>
+  </data>
 </root>

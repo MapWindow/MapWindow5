@@ -198,7 +198,24 @@ namespace MW5.Plugins.Repository.Views
 
         private void AddTmsProviderToMap()
         {
-            MessageService.Current.Info("Not implemented.");
+            var tms = GetSelectedItem<ITmsItem>();
+            if (tms == null) return;
+
+            var provider = tms.Provider;
+
+            var providers = _context.Map.Tiles.Providers;
+            providers.Clear(false);
+            if (!providers.AddCustom(provider.Id, provider.Name, provider.Url, provider.Projection, provider.MinZoom, provider.MaxZoom))
+            {
+                MessageService.Current.Info("Failed to add custom TMS provider.");    
+                return;
+            }
+
+            _context.Map.Tiles.ProviderId = provider.Id;
+            _context.Map.Redraw();
+
+            MessageService.Current.Info("TMS provider was added to the map as a base layer: " +
+                                        Environment.NewLine + provider.Name);
         }
 
         private void AddLayerToMap(ILayerItem layer)
@@ -378,7 +395,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void ViewItemDoubleClicked(object sender, RepositoryEventArgs e)
         {
-            if (e.Item is IFileItem || e.Item is IDatabaseLayerItem)
+            if (e.Item is IFileItem || e.Item is IDatabaseLayerItem || e.Item is ITmsItem)
             {
                 RunCommand(RepositoryCommand.AddToMap);
             }

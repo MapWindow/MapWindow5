@@ -15,6 +15,12 @@ namespace MW5.Tiles.Views
         public TmsProviderPresenter(ITmsProviderView view)
             : base(view)
         {
+            View.ChooseProjection += OnChooseProjection;
+        }
+
+        private void OnChooseProjection()
+        {
+            MessageService.Current.Info("Not implemented");
         }
 
         private bool Validate()
@@ -31,7 +37,25 @@ namespace MW5.Tiles.Views
                 return false;
             }
 
-            // TODO: make sure that Id is unique (maybe better to use hash of URL)
+            if (View.MinZoom == -1 || View.MaxZoom == -1)
+            {
+                MessageService.Current.Info("Minimum or maximum zoom is not defined.");
+                return false;
+            }
+
+            if (View.MinZoom > View.MaxZoom)
+            {
+                MessageService.Current.Info("Maximum zoom must be larger or equal than minimum.");
+                return false;
+            }
+
+            if (View.Id == -1)
+            {
+                // TODO: make sure that Id is unique (maybe better to use hash of URL)
+                MessageService.Current.Info("Id is not defined.");
+                return false;
+            }
+            
             return true;
         }
 
@@ -52,6 +76,8 @@ namespace MW5.Tiles.Views
             Model.Name = View.ProviderName;
             Model.Projection = View.Projection;
             Model.Url = View.Url;
+            Model.MinZoom = View.MinZoom;
+            Model.MaxZoom = View.MaxZoom;
 
             return true;
         }

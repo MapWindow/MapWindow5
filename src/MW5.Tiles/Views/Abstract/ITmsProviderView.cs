@@ -15,5 +15,8 @@ namespace MW5.Tiles.Views.Abstract
         string Url { get; }
         string ProviderName { get; }
         TileProjection Projection { get; }
+        int MinZoom { get; }
+        int MaxZoom { get; }
+        event Action ChooseProjection;
     }
 }

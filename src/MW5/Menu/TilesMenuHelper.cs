@@ -20,7 +20,7 @@ namespace MW5.Menu
     /// </summary>
     internal static class TilesMenuHelper
     {
-        private const string NoTilesMenuItem = "No tiles";
+        private const string NoTilesMenuItem = "No Tiles";
         private const int EmptyProviderId = -1;
 
         public static event EventHandler<TileProviderArgs> TileProviderSelected;
