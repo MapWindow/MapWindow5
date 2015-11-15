@@ -290,7 +290,7 @@ namespace MW5.Services.Concrete
                 if (layerHandle != -1)
                 {
                     var ll = layers.ItemByHandle(layerHandle);
-                    ll.Name = string.IsNullOrWhiteSpace(layerName) ? ds.Name : layerName;
+                    ll.Name = string.IsNullOrWhiteSpace(layerName) ? layer.Name : layerName;
 
                     addedCount++;
                     _lastLayerHandle = layerHandle;
