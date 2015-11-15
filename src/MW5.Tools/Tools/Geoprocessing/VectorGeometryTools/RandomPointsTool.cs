@@ -10,7 +10,6 @@
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Helpers;
-using MW5.Api.Interfaces;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Interfaces;
@@ -72,7 +71,7 @@ namespace MW5.Tools.Tools.Geoprocessing.VectorGeometryTools
         {
             Log.Debug("Creating {0} random points", NumPoints);
 
-            IEnvelope extents = InputLayer.Datasource.Envelope;
+            var extents = InputLayer.Datasource.Envelope;
 
             var fs = new FeatureSet(GeometryType.Point);
             fs.Projection.CopyFrom(InputLayer.Datasource.Projection);
