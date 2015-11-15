@@ -105,6 +105,7 @@
     <Compile Include="Concrete\PluginIdentity.cs" />
     <Compile Include="Events\ProgressEventArgs.cs" />
     <Compile Include="Events\RenderedEventArgs.cs" />
+    <Compile Include="Events\RepositoryListEventArgs.cs" />
     <Compile Include="Events\StringValueChangedEventArgs.cs" />
     <Compile Include="Events\TaskStatusChangedEventArgs.cs" />
     <Compile Include="Events\TaskEventArgs.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Interfaces\IMenu.cs" />
     <Compile Include="Interfaces\IMenuEx.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\RepositoryListBase.cs" />
     <Compile Include="Interfaces\ITaskHandle.cs" />
     <Compile Include="Interfaces\IToolbarCollectionEx.cs" />
     <Compile Include="Interfaces\IToolbarCollection.cs" />
@@ -154,6 +156,8 @@
     <Compile Include="Interfaces\Projections\ITerritory.cs" />
     <Compile Include="Interfaces\IToolboxGroup.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Model\TmsProvider.cs" />
+    <Compile Include="Model\TmsProviderList.cs" />
     <Compile Include="Mvp\AppViewFactory.cs" />
     <Compile Include="Mvp\BasePresenter.cs" />
     <Compile Include="Mvp\CommandDispatcher.cs" />

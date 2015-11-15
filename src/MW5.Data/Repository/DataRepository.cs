@@ -8,6 +8,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
@@ -24,8 +25,7 @@ namespace MW5.Data.Repository
         private List<string> _folders;
         private BindingList<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
-
-        
+        private TmsProviderList _tmsProviders;
 
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
@@ -52,6 +52,8 @@ namespace MW5.Data.Repository
             { 
                 new WmsServer("Lizard Tech", "http://demo.lizardtech.com/lizardtech/iserv/ows") 
             };
+
+            _tmsProviders = new TmsProviderList();
         }
 
         public IEnumerable<string> Folders
@@ -67,6 +69,11 @@ namespace MW5.Data.Repository
         public IEnumerable<WmsServer> WmsServers
         {
             get { return _wmsServers; }
+        }
+
+        public TmsProviderList TmsProviders
+        {
+            get { return _tmsProviders; }
         }
 
         public void AddFolderLink()

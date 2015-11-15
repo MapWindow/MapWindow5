@@ -3,12 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
-using MW5.Tiles.Model;
 
 namespace MW5.Tiles.Views.Abstract
 {
     internal interface ITmsProviderView: IView<TmsProvider>
     {
+        int Id { get; }
+        string Url { get; }
+        string ProviderName { get; }
+        TileProjection Projection { get; }
     }
 }

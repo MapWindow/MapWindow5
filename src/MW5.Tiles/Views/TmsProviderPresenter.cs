@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
-using MW5.Tiles.Model;
+using MW5.Plugins.Services;
 using MW5.Tiles.Views.Abstract;
 
 namespace MW5.Tiles.Views
@@ -16,6 +17,24 @@ namespace MW5.Tiles.Views
         {
         }
 
+        private bool Validate()
+        {
+            if (string.IsNullOrWhiteSpace(View.ProviderName))
+            {
+                MessageService.Current.Info("The name of the provider is empty.");
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(View.Url))
+            {
+                MessageService.Current.Info("URL of the provider is empty.");
+                return false;
+            }
+
+            // TODO: make sure that Id is unique (maybe better to use hash of URL)
+            return true;
+        }
+
         /// <summary>
         /// A handler for the IView.OkButton.Click event. 
         /// If the method returns true, View will be closed and presenter.ReturnValue set to true.
@@ -24,7 +43,15 @@ namespace MW5.Tiles.Views
         /// </summary>
         public override bool ViewOkClicked()
         {
-            // TODO: save settings
+            if (!Validate())
+            {
+                return false;
+            }
+
+            Model.Id = View.Id;
+            Model.Name = View.ProviderName;
+            Model.Projection = View.Projection;
+            Model.Url = View.Url;
 
             return true;
         }

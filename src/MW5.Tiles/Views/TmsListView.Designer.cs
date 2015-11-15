@@ -1,6 +1,6 @@
 ﻿namespace MW5.Tiles.Views
 {
-    partial class TileProvidersView
+    partial class TmsListView
     {
         /// <summary>
         /// Required designer variable.
@@ -114,7 +114,7 @@
             this.tileProviderGrid1.TopLevelGroupOptions.ShowColumnHeaders = true;
             this.tileProviderGrid1.WrapWithPanel = true;
             // 
-            // TileProvidersView
+            // TmsListView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -125,7 +125,7 @@
             this.Controls.Add(this.btnRemove);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.tileProviderGrid1);
-            this.Name = "TileProvidersView";
+            this.Name = "TmsListView";
             this.Text = "Custom Tile Providers";
             ((System.ComponentModel.ISupportInitialize)(this.tileProviderGrid1)).EndInit();
             this.ResumeLayout(false);

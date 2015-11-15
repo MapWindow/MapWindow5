@@ -58,7 +58,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(82, 70);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(484, 20);
+            this.txtName.Size = new System.Drawing.Size(403, 20);
             this.txtName.TabIndex = 1;
             // 
             // label2
@@ -75,14 +75,14 @@
             this.txtId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtId.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.txtId.BeforeTouchSize = new System.Drawing.Size(484, 20);
+            this.txtId.BeforeTouchSize = new System.Drawing.Size(403, 20);
             this.txtId.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtId.IntegerValue = ((long)(1));
             this.txtId.Location = new System.Drawing.Point(82, 30);
             this.txtId.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtId.Name = "txtId";
             this.txtId.NullString = "";
-            this.txtId.Size = new System.Drawing.Size(484, 20);
+            this.txtId.Size = new System.Drawing.Size(403, 20);
             this.txtId.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtId.TabIndex = 3;
             this.txtId.Text = "1";
@@ -100,13 +100,13 @@
             // 
             this.cboProjection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboProjection.BeforeTouchSize = new System.Drawing.Size(482, 21);
+            this.cboProjection.BeforeTouchSize = new System.Drawing.Size(401, 21);
+            this.cboProjection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProjection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboProjection.Location = new System.Drawing.Point(84, 115);
             this.cboProjection.Name = "cboProjection";
-            this.cboProjection.Size = new System.Drawing.Size(482, 21);
+            this.cboProjection.Size = new System.Drawing.Size(401, 21);
             this.cboProjection.TabIndex = 6;
-            this.cboProjection.Text = "comboBoxAdv1";
             // 
             // txtUrl
             // 
@@ -114,7 +114,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUrl.Location = new System.Drawing.Point(84, 156);
             this.txtUrl.Name = "txtUrl";
-            this.txtUrl.Size = new System.Drawing.Size(484, 20);
+            this.txtUrl.Size = new System.Drawing.Size(403, 20);
             this.txtUrl.TabIndex = 7;
             // 
             // label4
@@ -134,7 +134,7 @@
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(483, 199);
+            this.btnCancel.Location = new System.Drawing.Point(402, 199);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 17;
@@ -148,7 +148,7 @@
             this.btnOk.BackColor = System.Drawing.Color.White;
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(392, 199);
+            this.btnOk.Location = new System.Drawing.Point(311, 199);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 16;
@@ -160,7 +160,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(591, 237);
+            this.ClientSize = new System.Drawing.Size(510, 237);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.label4);

@@ -142,6 +142,13 @@ namespace MW5.Services.Concrete
                         _repository.AddWmsServer(item);
                     }
                 }
+
+                if (xmlConfig.Repository.TmsProviders != null)
+                {
+                    _repository.TmsProviders.Clear();
+
+                    _repository.TmsProviders.AddRange(xmlConfig.Repository.TmsProviders);
+                }
             }
         }
     }

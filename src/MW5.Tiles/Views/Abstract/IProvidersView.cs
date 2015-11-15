@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
-using MW5.Tiles.Model;
 
 namespace MW5.Tiles.Views.Abstract
 {

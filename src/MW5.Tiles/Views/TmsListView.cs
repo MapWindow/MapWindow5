@@ -7,16 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
-using MW5.Tiles.Model;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
 
 namespace MW5.Tiles.Views
 {
-    internal partial class TileProvidersView : ProvidersViewBase, IProvidersView
+    internal partial class TmsListView : ProvidersViewBase, IProvidersView
     {
-        public TileProvidersView()
+        public TmsListView()
         {
             InitializeComponent();
         }
@@ -26,7 +26,7 @@ namespace MW5.Tiles.Views
         /// </summary>
         public void Initialize()
         {
-            // TODO: initialize
+            tileProviderGrid1.DataSource = Model.DataSource;
         }
 
         public override ViewStyle Style

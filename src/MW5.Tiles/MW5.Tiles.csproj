@@ -110,8 +110,6 @@
     <Compile Include="Helpers\BrutileHelper.cs" />
     <Compile Include="Helpers\ProviderManager.cs" />
     <Compile Include="Helpers\WmsCapabilitiesCache.cs" />
-    <Compile Include="Model\TmsProvider.cs" />
-    <Compile Include="Model\TmsProviderList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -130,11 +128,11 @@
     <Compile Include="Views\BingApiView.Designer.cs">
       <DependentUpon>BingApiView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TileProvidersView.cs">
+    <Compile Include="Views\TmsListView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\TileProvidersView.Designer.cs">
-      <DependentUpon>TileProvidersView.cs</DependentUpon>
+    <Compile Include="Views\TmsListView.Designer.cs">
+      <DependentUpon>TmsListView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\TmsProviderPresenter.cs" />
     <Compile Include="Views\TmsProviderView.cs">
@@ -143,7 +141,7 @@
     <Compile Include="Views\TmsProviderView.Designer.cs">
       <DependentUpon>TmsProviderView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\TileProvidersPresenter.cs" />
+    <Compile Include="Views\TmsListPresenter.cs" />
     <Compile Include="Views\WmsCapabilitiesModel.cs" />
     <Compile Include="Views\WmsCapabilitiesPresenter.cs" />
     <Compile Include="Views\WmsCapabilitiesView.cs">
@@ -189,8 +187,8 @@
     <EmbeddedResource Include="Views\BingApiView.resx">
       <DependentUpon>BingApiView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\TileProvidersView.resx">
-      <DependentUpon>TileProvidersView.cs</DependentUpon>
+    <EmbeddedResource Include="Views\TmsListView.resx">
+      <DependentUpon>TmsListView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\TmsProviderView.resx">
       <DependentUpon>TmsProviderView.cs</DependentUpon>
@@ -213,6 +211,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\img_raster.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

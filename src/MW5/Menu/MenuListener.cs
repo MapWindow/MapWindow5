@@ -13,6 +13,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 using MW5.Plugins.Services;
 using MW5.Shared;
 using MW5.Tiles.Views;
@@ -65,7 +66,13 @@ namespace MW5.Menu
             switch (menuKey)
             {
                 case MenuKeys.CustomProviders:
-                    _context.Container.Run<TileProvidersPresenter>();
+                    {
+                        var model = _context.Repository.TmsProviders;
+                        if (_context.Container.Run<TmsListPresenter, TmsProviderList>(model))
+                        {
+                            // TODO: update repository
+                        }
+                    }
                     break;
                 case MenuKeys.BingApiKey:
                     _context.Container.Run<BingApiPresenter>();

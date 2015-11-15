@@ -1,20 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 using MW5.Api.Enums;
 
-namespace MW5.Tiles.Model
+namespace MW5.Plugins.Model
 {
-    internal class TmsProvider
+    [DataContract]
+    public class TmsProvider
     {
+        [DataMember]
         public int Id { get; set; }
 
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         public TileProjection Projection { get; set; }
 
+        [DataMember]
         public string Url { get; set; }
     }
 }

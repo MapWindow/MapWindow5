@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 
 namespace MW5.Services.Serialization
 {
@@ -19,6 +20,7 @@ namespace MW5.Services.Serialization
             Folders = repository.Folders.ToList();
             Connections = repository.Connections.ToList();
             WmsServers = repository.WmsServers.ToList();
+            TmsProviders = repository.TmsProviders.ToList();
         }
 
         [DataMember]
@@ -29,5 +31,8 @@ namespace MW5.Services.Serialization
 
         [DataMember]
         public List<WmsServer> WmsServers { get; set; }
+
+        [DataMember]
+        public List<TmsProvider> TmsProviders { get; set; }
     }
 }

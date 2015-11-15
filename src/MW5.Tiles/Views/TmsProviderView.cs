@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MW5.Api.Enums;
-using MW5.Tiles.Model;
+using MW5.Plugins.Model;
 using MW5.Tiles.Views.Abstract;
 using MW5.UI.Forms;
 using MW5.UI.Helpers;
@@ -42,7 +42,27 @@ namespace MW5.Tiles.Views
 
         public ButtonBase OkButton
         {
-            get { return null; }
+            get { return btnOk; }
+        }
+
+        public int Id
+        {
+            get { return (int)txtId.IntegerValue; }
+        }
+
+        public string Url
+        {
+            get { return txtUrl.Text; }
+        }
+
+        public string ProviderName
+        {
+            get { return txtName.Text; }
+        }
+
+        public TileProjection Projection
+        {
+            get { return cboProjection.GetValue<TileProjection>(); }
         }
     }
 

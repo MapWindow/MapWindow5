@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MW5.Tiles.Model;
+using MW5.Plugins.Model;
 using MW5.UI.Controls;
 
 namespace MW5.Tiles.Controls
@@ -29,6 +29,8 @@ namespace MW5.Tiles.Controls
             Adapter.ShowColumn(p => p.Name);
             Adapter.ShowColumn(p => p.Projection);
             Adapter.ShowColumn(p => p.Url);
+
+            Adapter.GetColumn(p => p.Url).Width = 200;
         }
     }
 }

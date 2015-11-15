@@ -25,7 +25,7 @@ namespace MW5.Tiles
                      .RegisterView<IBingApiView, BingApiView>()
                      .RegisterView<IWmsServerView, WmsServerView>()
                      .RegisterView<IWmsCapabilitiesView, WmsCapabilitiesView>()
-                     .RegisterView<IProvidersView, TileProvidersView>();
+                     .RegisterView<IProvidersView, TmsListView>();
         }
     }
 }

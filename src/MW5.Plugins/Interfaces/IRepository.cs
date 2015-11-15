@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
+using MW5.Plugins.Model;
 
 namespace MW5.Plugins.Interfaces
 {
@@ -13,7 +14,8 @@ namespace MW5.Plugins.Interfaces
     {
         IEnumerable<string> Folders { get; }
         IEnumerable<DatabaseConnection> Connections { get; }
-        IEnumerable<WmsServer> WmsServers { get; }    
+        IEnumerable<WmsServer> WmsServers { get; }
+        TmsProviderList TmsProviders { get;}
         
         void AddFolderLink();
         void AddFolderLink(string path);
