@@ -121,6 +121,7 @@ namespace MW5.Services.Concrete
             _context.Legend.Groups.Clear();
             _context.Legend.Layers.Clear();
             _context.Map.SetDefaultExtents();
+            _context.Map.MapCursor = Api.Enums.MapCursor.ZoomIn;
 
             if (_context.Locator != null)
             {
@@ -234,16 +235,11 @@ namespace MW5.Services.Concrete
             string filename;
             if (_fileService.Open(ProjectFilter, out filename, ProjectFilterIndex))
             {
-                if (!TryClose())
-                {
-                    return false;
-                }
-
                 if (filename.ToLower().EndsWith(".mwproj"))
                 {
                     return Open(filename);
                 }
-                
+
                 return OpenLegacyProject(filename);
             }
 
@@ -273,6 +269,11 @@ namespace MW5.Services.Concrete
         public bool OpenLegacyProject(string filename, bool silent = false)
         {
             if (!CheckProjectFilename(filename, silent))
+            {
+                return false;
+            }
+
+            if (!TryClose())
             {
                 return false;
             }
@@ -318,7 +319,10 @@ namespace MW5.Services.Concrete
             }
 
             // PM: Close current project first:
-            TryClose();
+            if (!TryClose())
+            {
+                return false;
+            }
 
             using (var reader = new StreamReader(filename))
             {

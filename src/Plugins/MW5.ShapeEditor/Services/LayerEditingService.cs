@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using MW5.Api;
 using MW5.Api.Concrete;
@@ -75,6 +76,22 @@ namespace MW5.Plugins.ShapeEditor.Services
         /// Saves changes for the layer with specified handle.
         /// </summary>
         public bool SaveLayerChanges(int layerHandle)
+        {
+            bool success = SaveLayerChangesCore(layerHandle);
+
+            if (success)
+            {
+                // clear the current editing tool if there are no more layers in edit mode
+                if (!_context.Layers.Any(l => l.IsVector && l.FeatureSet.InteractiveEditing))
+                {
+                    _context.Map.MapCursor = MapCursor.ZoomIn;
+                }
+            }
+
+            return success;
+        }
+
+        private bool SaveLayerChangesCore(int layerHandle)
         {
             string layerName = _context.Layers.ItemByHandle(layerHandle).Name;
 
