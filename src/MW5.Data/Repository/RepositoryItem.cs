@@ -52,6 +52,7 @@ namespace MW5.Data.Repository
             {
                 case RepositoryItemType.FileSystem:
                 case RepositoryItemType.Databases:
+                case RepositoryItemType.TmsRoot:
                     return new RepositoryItem(node);
                 case RepositoryItemType.Server:
                     return new ServerItem(node);
@@ -64,6 +65,8 @@ namespace MW5.Data.Repository
                     return new DatabaseItem(node);
                 case RepositoryItemType.DatabaseLayer:
                     return new DatabaseLayerItem(node);
+                case RepositoryItemType.TmsSource:
+                    return new TmsItem(node);
             }
 
             throw new ApplicationException("Invalid repository item type.");

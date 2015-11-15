@@ -6,9 +6,11 @@
 
 using System;
 using System.IO;
+using System.Text;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Repository;
+using MW5.Plugins.Model;
 using MW5.Shared;
 
 namespace MW5.Data.Helpers
@@ -25,6 +27,9 @@ namespace MW5.Data.Helpers
         {
             switch (item.Type)
             {
+                case RepositoryItemType.TmsSource:
+                    var tmsItem = item as ITmsItem;
+                    return GetDescription(tmsItem);
                 case RepositoryItemType.Image:
                 case RepositoryItemType.Vector:
                     var fileItem = item as IFileItem;
@@ -39,6 +44,19 @@ namespace MW5.Data.Helpers
             }
 
             return string.Empty;
+        }
+
+        private static string GetDescription(ITmsItem tms)
+        {
+            if (tms == null || tms.Provider == null) return string.Empty;
+
+            var provider = tms.Provider;
+
+            var sb = new StringBuilder();
+            sb.AppendLine("Url: " + provider.Url);
+            sb.AppendLine("Projection: " + provider.Projection);
+
+            return sb.ToString();
         }
 
         private static string GetDescription(IDatabaseLayerItem item)

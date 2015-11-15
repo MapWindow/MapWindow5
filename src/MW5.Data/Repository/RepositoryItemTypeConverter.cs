@@ -23,6 +23,10 @@ namespace MW5.Data.Repository
                     return "Server";
                 case RepositoryItemType.Database:
                     return "Database";
+                case RepositoryItemType.TmsRoot:
+                    return "TMS Servers";
+                case RepositoryItemType.TmsSource:
+                    return "TMS Provider";
                 default:
                     throw new ArgumentOutOfRangeException("value");
             }

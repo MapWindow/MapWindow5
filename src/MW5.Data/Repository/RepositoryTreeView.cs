@@ -56,21 +56,42 @@ namespace MW5.Data.Repository
 
             PopulateTree();
 
-            _repository.FolderAdded += RepositoryFolderAdded;
-            _repository.FolderRemoved += RepositoryFolderRemoved;
-            _repository.ConnectionAdded += RepositoryConnectionAdded;
-            _repository.ConnectionRemoved += RepositoryConnectionRemoved;
+            AttachEvents();
 
             AfterExpand += RepositoryTreeView_AfterExpand;
 
             _initialized = true;
         }
 
+        private void AttachEvents()
+        {
+            _repository.FolderAdded += RepositoryFolderAdded;
+            _repository.FolderRemoved += RepositoryFolderRemoved;
+            _repository.ConnectionAdded += RepositoryConnectionAdded;
+            _repository.ConnectionRemoved += RepositoryConnectionRemoved;
+            _repository.TmsProviders.ItemAdded += OnTmsProviderAdded;
+            _repository.TmsProviders.ItemRemoved += OnTmsProviderRemoved;
+        }
+
         private void PopulateTree()
         {
             PopulateDatabases();
 
+            PopulateTms();
+
             PopulateFileSystem();
+        }
+
+        private void PopulateTms()
+        {
+            var root = Items.AddItem(RepositoryItemType.TmsRoot);
+
+            foreach (var item in _repository.TmsProviders)
+            {
+                root.SubItems.AddTmsProvider(item);
+            }
+
+            root.Expand();
         }
 
         private void PopulateFileSystem()
@@ -111,6 +132,28 @@ namespace MW5.Data.Repository
             foreach (var item in dbs.SubItems)
             {
                 item.Expand();
+            }
+        }
+
+        private void OnTmsProviderAdded(object sender, RepositoryListEventArgs<Plugins.Model.TmsProvider> e)
+        {
+            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+            if (root != null)
+            {
+                root.SubItems.AddTmsProvider(e.Item);
+            }
+        }
+
+        private void OnTmsProviderRemoved(object sender, RepositoryListEventArgs<Plugins.Model.TmsProvider> e)
+        {
+            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+            if (root != null)
+            {
+                var item = root.SubItems.OfType<ITmsItem>().FirstOrDefault(tms => tms.Provider == e.Item);
+                if (item != null)
+                {
+                    root.SubItems.Remove(item);
+                }
             }
         }
 
@@ -163,6 +206,8 @@ namespace MW5.Data.Repository
                 Resources.img_sqlite16,
                 Resources.img_oracle16,
                 Resources.img_mysql16,
+                Resources.img_tms16,
+                Resources.img_map16,
             };
         }
 

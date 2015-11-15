@@ -86,6 +86,7 @@ namespace MW5.Plugins.Repository.Views
 
             richTextBox1.InitDockPanelFooter();
             richTextBox1.Text = "No datasource is selected.";
+            richTextBox1.DetectUrls = false;
         }
 
         private void InitTreeView(IRepository repository)

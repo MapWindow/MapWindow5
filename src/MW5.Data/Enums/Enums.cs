@@ -16,6 +16,8 @@ namespace MW5.Data.Enums
         Database = 5,
         Image = 6,
         DatabaseLayer = 7,
+        TmsRoot = 8,
+        TmsSource = 9,
     }
 
     public enum RepositoryIcon
@@ -34,6 +36,8 @@ namespace MW5.Data.Enums
         Sqlite = 11,
         Oracle = 12,
         MySql = 13,
+        TmsRoot = 14,
+        TmsItem = 15,
     }
 
     public enum FormatType

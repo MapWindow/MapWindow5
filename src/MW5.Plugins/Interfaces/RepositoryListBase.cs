@@ -88,10 +88,8 @@ namespace MW5.Plugins.Interfaces
         {
             foreach (var item in range)
             {
-                _list.Add(item);
+                Add(item);
             }
-
-            // TODO: consider if we need event firing for this (it's largely for deserialization)
         }
     }
 }

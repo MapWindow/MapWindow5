@@ -10,6 +10,7 @@ using MW5.Api.Interfaces;
 using MW5.Data.Enums;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Model;
 using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
@@ -72,6 +73,15 @@ namespace MW5.Data.Repository
             node.Text = root ? path : info.Name;
             node.TagObject = new FolderItemMetadata(path, root);
             return AddNode(node) as IFolderItem;
+        }
+
+        public ITmsItem AddTmsProvider(TmsProvider provider)
+        {
+            var node = CreateNode(RepositoryItemType.TmsSource);
+            node.Text = provider.Name;
+            node.TagObject = new TmsItemMetadata(provider);
+            node.ExpandedOnce = true;
+            return AddNode(node) as ITmsItem;
         }
 
         public IDatabaseItem AddDatabase(DatabaseConnection connection)
@@ -178,6 +188,10 @@ namespace MW5.Data.Repository
         {
             switch (type)
             {
+                case RepositoryItemType.TmsRoot:
+                    return (int)RepositoryIcon.TmsRoot;
+                case RepositoryItemType.TmsSource:
+                    return (int)RepositoryIcon.TmsItem;
                 case RepositoryItemType.FileSystem:
                     return (int)RepositoryIcon.FileSystem;
                 case RepositoryItemType.Folder:
