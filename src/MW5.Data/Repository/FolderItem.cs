@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Data.Enums;
+using MW5.Shared;
 using Syncfusion.Windows.Forms.Tools;
 
 namespace MW5.Data.Repository
@@ -53,17 +54,47 @@ namespace MW5.Data.Repository
             
             string root = GetPath();
             var items = SubItems;
-            
-            foreach (var path in Directory.EnumerateDirectories(root))
+
+            try
             {
-                items.AddFolder(path, false);
+                EnumerateFolders(root, items);
+
+                EnumerateFiles(root, items);
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to enumerate contents of the folder in the repository: " + root, ex);
             }
 
+            _node.ExpandedOnce = true;
+        }
+
+        private void EnumerateFolders(string root, RepositoryItemCollection items)
+        {
+            foreach (var path in Directory.EnumerateDirectories(root))
+            {
+                var info = new DirectoryInfo(path);
+
+                if (!info.Attributes.HasFlag(FileAttributes.Hidden))
+                {
+                    items.AddFolder(path, false);
+                }
+            }
+        }
+
+        private void EnumerateFiles(string root, RepositoryItemCollection items)
+        {
             var pattern = new Regex(GetSearchRegex(FormatType.All), RegexOptions.IgnoreCase);
             var files = Directory.EnumerateFiles(root).Where(f => pattern.IsMatch(f));
 
             foreach (var f in files)
             {
+                var info = new FileInfo(f);
+                if (info.Attributes.HasFlag(FileAttributes.Hidden))
+                {
+                    continue;
+                }
+
                 if (VectorRegex.IsMatch(f))
                 {
                     items.AddFileVector(f);
@@ -72,8 +103,6 @@ namespace MW5.Data.Repository
 
                 items.AddFileImage(f);
             }
-
-            _node.ExpandedOnce = true;
         }
 
         private static string GetExtensionList(FormatType format)
