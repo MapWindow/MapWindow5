@@ -44,6 +44,8 @@ namespace MW5.Tiles.Views
             txtMaxLat.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
             txtMinLng.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
             txtMaxLng.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
+
+            ToolTipHelper.SetStyle(superToolTip1);
         }
 
         private void InitZoomCombo(ComboBoxAdv combo)
@@ -161,6 +163,11 @@ namespace MW5.Tiles.Views
             }
 
             return -1;
+        }
+
+        private void OnGenerateClick(object sender, EventArgs e)
+        {
+            txtId.Text = TmsProvider.GenerateId(txtUrl.Text).ToString(CultureInfo.InvariantCulture);
         }
     }
 

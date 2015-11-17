@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Globalization;
+using System.Runtime.Serialization;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
@@ -8,6 +10,19 @@ namespace MW5.Plugins.Model
     [DataContract]
     public class TmsProvider
     {
+        public const int MinId = 1000;
+
+        public static int GenerateId(string url)
+        {
+            int value = Math.Abs(url.GetHashCode());
+            if (value < TmsProvider.MinId)
+            {
+                value += TmsProvider.MinId;
+            }
+
+            return value;
+        }
+
         public TmsProvider()
         {
             SetDefaults();

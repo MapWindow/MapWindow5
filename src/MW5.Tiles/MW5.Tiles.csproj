@@ -110,12 +110,14 @@
     <Compile Include="Helpers\BrutileHelper.cs" />
     <Compile Include="Helpers\ProviderManager.cs" />
     <Compile Include="Helpers\WmsCapabilitiesCache.cs" />
+    <Compile Include="Model\Josm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\TmsImporter.cs" />
     <Compile Include="Views\Abstract\IBingApiView.cs" />
     <Compile Include="Views\Abstract\ITmsProviderView.cs" />
     <Compile Include="Views\Abstract\IProvidersView.cs" />
@@ -212,8 +214,9 @@
   <ItemGroup>
     <None Include="Resources\img_raster.png" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Model\" />
+    <None Include="Resources\img_calculate24.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

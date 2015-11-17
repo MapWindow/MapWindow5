@@ -31,6 +31,11 @@ namespace MW5.Data.Repository
             _nodes.Remove(item.GetInternalObject());
         }
 
+        public void Clear()
+        {
+            _nodes.Clear();
+        }
+
         public IEnumerator<IRepositoryItem> GetEnumerator()
         {
             foreach (TreeNodeAdv node in _nodes)

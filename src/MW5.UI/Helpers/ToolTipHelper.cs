@@ -21,6 +21,13 @@ namespace MW5.UI.Helpers
             _toolTipManager = toolTipManager;
         }
 
+        public static void SetStyle(SuperToolTip tooltip)
+        {
+            tooltip.VisualStyle = SuperToolTip.Appearance.Default;
+            tooltip.MetroColor = Color.White;
+            tooltip.UseFading = SuperToolTip.FadingType.System;
+        }
+
         public static void UpdateTooltip(object sender)
         {
             if (_toolTipManager == null)

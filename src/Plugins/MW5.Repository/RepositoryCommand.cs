@@ -16,5 +16,7 @@
         RemoveTms = 11,
         AddTms = 12,
         Properties = 13,
+        ImportTms = 14,
+        ClearTms = 15,
     }
 }

@@ -168,7 +168,7 @@ namespace MW5.Plugins.Repository.Views
 
         private void SetTmsRootContextMenu()
         {
-            contextMenuStripEx1.Items.Add(toolAddTms);
+            contextMenuStripEx1.Items.AddRange(new ToolStripItem[] { toolAddTms, toolImportTms, toolClearTms });
         }
 
         private void UpdateDescription(IRepositoryItem item)

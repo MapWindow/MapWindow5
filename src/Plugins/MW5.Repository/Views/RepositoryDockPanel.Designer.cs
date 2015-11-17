@@ -53,9 +53,11 @@ namespace MW5.Plugins.Repository.Views
             this.toolAddTms = new System.Windows.Forms.ToolStripMenuItem();
             this.toolRemoveTms = new System.Windows.Forms.ToolStripMenuItem();
             this.toolProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolImportTms = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
             this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.toolClearTms = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -120,10 +122,12 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveLayer,
             this.toolAddTms,
             this.toolRemoveTms,
-            this.toolProperties});
+            this.toolProperties,
+            this.toolImportTms,
+            this.toolClearTms});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(192, 334);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(192, 378);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
@@ -210,6 +214,12 @@ namespace MW5.Plugins.Repository.Views
             this.toolProperties.Size = new System.Drawing.Size(191, 22);
             this.toolProperties.Text = "Properties";
             // 
+            // toolImportTms
+            // 
+            this.toolImportTms.Name = "toolImportTms";
+            this.toolImportTms.Size = new System.Drawing.Size(191, 22);
+            this.toolImportTms.Text = "Import TMS";
+            // 
             // treeViewAdv1
             // 
             this.treeViewAdv1.ApplyStyle = true;
@@ -283,6 +293,12 @@ namespace MW5.Plugins.Repository.Views
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
+            // toolClearTms
+            // 
+            this.toolClearTms.Name = "toolClearTms";
+            this.toolClearTms.Size = new System.Drawing.Size(191, 22);
+            this.toolClearTms.Text = "Clear TMS";
+            // 
             // RepositoryDockPanel
             // 
             this.Controls.Add(this.splitContainerAdv1);
@@ -325,5 +341,7 @@ namespace MW5.Plugins.Repository.Views
         private ToolStripMenuItem toolAddTms;
         private ToolStripMenuItem toolRemoveTms;
         private ToolStripMenuItem toolProperties;
+        private ToolStripMenuItem toolImportTms;
+        private ToolStripMenuItem toolClearTms;
     }
 }

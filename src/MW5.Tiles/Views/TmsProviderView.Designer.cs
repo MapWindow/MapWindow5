@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            Syncfusion.Windows.Forms.Tools.ToolTipInfo toolTipInfo1 = new Syncfusion.Windows.Forms.Tools.ToolTipInfo();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TmsProviderView));
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -42,6 +43,7 @@
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabDefinition = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.btnGenerate = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboMaxZoom = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -65,6 +67,7 @@
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label6 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.superToolTip1 = new Syncfusion.Windows.Forms.Tools.SuperToolTip(this);
             ((System.ComponentModel.ISupportInitialize)(this.txtId)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboProjection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabControlAdv1)).BeginInit();
@@ -98,13 +101,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtName.Location = new System.Drawing.Point(96, 37);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(199, 20);
+            this.txtName.Size = new System.Drawing.Size(189, 20);
             this.txtName.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(318, 40);
+            this.label2.Location = new System.Drawing.Point(305, 40);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(16, 13);
             this.label2.TabIndex = 2;
@@ -118,13 +121,13 @@
             this.txtId.BeforeTouchSize = new System.Drawing.Size(467, 199);
             this.txtId.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtId.IntegerValue = ((long)(0));
-            this.txtId.Location = new System.Drawing.Point(343, 37);
+            this.txtId.Location = new System.Drawing.Point(327, 37);
             this.txtId.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
             this.txtId.Name = "txtId";
             this.txtId.NegativeColor = System.Drawing.Color.Black;
             this.txtId.NullString = "";
             this.txtId.NumberGroupSeparator = "";
-            this.txtId.Size = new System.Drawing.Size(133, 20);
+            this.txtId.Size = new System.Drawing.Size(107, 20);
             this.txtId.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtId.TabIndex = 3;
             this.txtId.Text = "0";
@@ -216,6 +219,7 @@
             // 
             // tabDefinition
             // 
+            this.tabDefinition.Controls.Add(this.btnGenerate);
             this.tabDefinition.Controls.Add(this.label8);
             this.tabDefinition.Controls.Add(this.label7);
             this.tabDefinition.Controls.Add(this.cboMaxZoom);
@@ -238,6 +242,28 @@
             this.tabDefinition.TabIndex = 1;
             this.tabDefinition.Text = "Definition";
             this.tabDefinition.ThemesEnabled = false;
+            // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Appearance = Syncfusion.Windows.Forms.ButtonAppearance.OfficeXP;
+            this.btnGenerate.BackColor = System.Drawing.Color.White;
+            this.btnGenerate.BeforeTouchSize = new System.Drawing.Size(36, 26);
+            this.btnGenerate.Image = global::MW5.Tiles.Properties.Resources.img_calculate24;
+            this.btnGenerate.IsBackStageButton = false;
+            this.btnGenerate.Location = new System.Drawing.Point(440, 33);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(36, 26);
+            this.btnGenerate.TabIndex = 18;
+            toolTipInfo1.BackColor = System.Drawing.Color.White;
+            toolTipInfo1.Body.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Body.Text = "Generate unique ID based on URL.";
+            toolTipInfo1.Footer.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Header.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            toolTipInfo1.Header.Size = new System.Drawing.Size(20, 20);
+            toolTipInfo1.Header.Text = "Generate ID";
+            this.superToolTip1.SetToolTip(this.btnGenerate, toolTipInfo1);
+            this.btnGenerate.UseVisualStyle = false;
+            this.btnGenerate.Click += new System.EventHandler(this.OnGenerateClick);
             // 
             // label8
             // 
@@ -528,6 +554,10 @@
             this.richTextBox1.TabIndex = 20;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
+            // superToolTip1
+            // 
+            this.superToolTip1.Style = Syncfusion.Windows.Forms.Tools.SuperToolTip.SuperToolTipStyle.Office2013Style;
+            // 
             // TmsProviderView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -600,5 +630,7 @@
         private System.Windows.Forms.Label label13;
         private UI.Controls.WatermarkTextbox txtDescription;
         private System.Windows.Forms.Label label14;
+        private Syncfusion.Windows.Forms.ButtonAdv btnGenerate;
+        private Syncfusion.Windows.Forms.Tools.SuperToolTip superToolTip1;
     }
 }

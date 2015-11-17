@@ -56,10 +56,9 @@ namespace MW5.Tiles.Views
                 MessageService.Current.Info("Invalid bounding box. Minimum value is larger than maximum.");
             }
 
-            if (View.Id == -1)
+            if (View.Id < TmsProvider.MinId)
             {
-                // TODO: make sure that Id is unique (maybe better to use hash of URL)
-                MessageService.Current.Info("Id is not defined.");
+                MessageService.Current.Info("Invalid provider ID. Only values larger than 1000 are accepted.");
                 return false;
             }
             

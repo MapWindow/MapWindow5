@@ -71,7 +71,10 @@ namespace MW5.Data.Repository
             _repository.ConnectionRemoved += RepositoryConnectionRemoved;
             _repository.TmsProviders.ItemAdded += OnTmsProviderAdded;
             _repository.TmsProviders.ItemRemoved += OnTmsProviderRemoved;
+            _repository.TmsProviders.ItemsCleared += TmsProvidersCleared;
         }
+
+        
 
         private void PopulateTree()
         {
@@ -141,6 +144,15 @@ namespace MW5.Data.Repository
             if (root != null)
             {
                 root.SubItems.AddTmsProvider(e.Item);
+            }
+        }
+
+        private void TmsProvidersCleared(object sender, EventArgs e)
+        {
+            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+            if (root != null)
+            {
+                root.SubItems.Clear();
             }
         }
 

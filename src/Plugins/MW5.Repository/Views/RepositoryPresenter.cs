@@ -5,6 +5,8 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
@@ -18,6 +20,7 @@ using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
+using MW5.Tiles.Services;
 using MW5.Tiles.Views;
 
 namespace MW5.Plugins.Repository.Views
@@ -25,29 +28,29 @@ namespace MW5.Plugins.Repository.Views
     public class RepositoryPresenter : CommandDispatcher<RepositoryDockPanel, RepositoryCommand>, IDockPanelPresenter
     {
         private readonly IAppContext _context;
-        private readonly IFileDialogService _fileDialogService;
         private readonly ILayerService _layerService;
         private readonly IRepository _repository;
         private readonly RepositoryDockPanel _view;
+        private readonly TmsImporter _tmsImporter;
 
         public RepositoryPresenter(
             IAppContext context,
             RepositoryDockPanel view,
-            IFileDialogService fileDialogService,
+            TmsImporter tmsImporter,
             ILayerService layerService,
             IRepository repository)
             : base(view)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (fileDialogService == null) throw new ArgumentNullException("fileDialogService");
+            if (tmsImporter == null) throw new ArgumentNullException("tmsImporter");
             if (layerService == null) throw new ArgumentNullException("layerService");
             if (repository == null) throw new ArgumentNullException("repository");
 
             _context = context;
-            _fileDialogService = fileDialogService;
             _layerService = layerService;
             _repository = repository;
             _view = view;
+            _tmsImporter = tmsImporter;
 
             _view.ItemDoubleClicked += ViewItemDoubleClicked;
             _view.TreeViewKeyDown += OnTreeViewKeyDown;
@@ -62,6 +65,15 @@ namespace MW5.Plugins.Repository.Views
         {
             switch (command)
             {
+                case RepositoryCommand.ClearTms:
+                    if (MessageService.Current.Ask("Remove all custom TMS providers?"))
+                    {
+                        _repository.TmsProviders.Clear();
+                    }
+                    break;
+                case RepositoryCommand.ImportTms:
+                    _tmsImporter.ImportTms();
+                    break;
                 case RepositoryCommand.AddTms:
                     AddTmsProvider();
                     break;
@@ -218,6 +230,13 @@ namespace MW5.Plugins.Repository.Views
             {
                 MessageService.Current.Info("Failed to add custom TMS provider.");    
                 return;
+            }
+
+            if (_context.Map.Projection.IsEmpty)
+            {
+                var sr = new SpatialReference();
+                sr.SetGoogleMercator();
+                _context.Map.Projection = sr;
             }
 
             UpdateTmsBounds(provider, update);
