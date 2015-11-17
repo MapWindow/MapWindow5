@@ -79,6 +79,9 @@ namespace MW5.Menu
                 "Opens dialogs with application and plugin settings."),
 
                 // map toolbar
+                new MenuCommand("Zoom to Base Layer", MenuKeys.ZoomToBaseLayer, Resources.icon_zoom_to_layer,
+                "Zooms map to the bounds of the base TMS layer."),
+
                 new MenuCommand("Zoom In", MenuKeys.ZoomIn, Resources.icon_zoom_in,
                 "Zooms in the map."),
 

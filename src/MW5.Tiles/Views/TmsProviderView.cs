@@ -21,13 +21,17 @@ namespace MW5.Tiles.Views
 {
     internal partial class TmsProviderView : TmsProviderViewBase, ITmsProviderView
     {
+        private static int _lastTabIndex = -1;
+
         public TmsProviderView()
         {
             InitializeComponent();
 
             InitControls();
 
-            btnChooseProjection.Click += (s, e) => Invoke(ChooseProjection);
+            tabControlAdv1.SelectedIndex = _lastTabIndex;
+
+            FormClosing += (s, e) => _lastTabIndex = tabControlAdv1.SelectedIndex;
         }
 
         private void InitControls()
@@ -35,6 +39,11 @@ namespace MW5.Tiles.Views
             cboProjection.AddItemsFromEnum<TileProjection>();
             InitZoomCombo(cboMinZoom);
             InitZoomCombo(cboMaxZoom);
+
+            txtMinLat.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
+            txtMaxLat.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
+            txtMinLng.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
+            txtMaxLng.DataBindings.Add("Enabled", chkBoundingBox, "Checked");
         }
 
         private void InitZoomCombo(ComboBoxAdv combo)
@@ -60,6 +69,15 @@ namespace MW5.Tiles.Views
             txtId.IntegerValue = Model.Id;
             txtName.Text = Model.Name;
             txtUrl.Text = Model.Url;
+
+            chkBoundingBox.Checked = Model.UseBounds;
+
+            txtMinLat.DoubleValue = Model.Bounds.MinY;
+            txtMaxLat.DoubleValue = Model.Bounds.MaxY;
+            txtMinLng.DoubleValue = Model.Bounds.MinX;
+            txtMaxLng.DoubleValue = Model.Bounds.MaxX;
+
+            txtDescription.Text = Model.Description;
 
             cboMinZoom.SetValue(Model.MinZoom.ToString(CultureInfo.InvariantCulture));
             cboMaxZoom.SetValue(Model.MaxZoom.ToString(CultureInfo.InvariantCulture));
@@ -100,6 +118,36 @@ namespace MW5.Tiles.Views
         public int MaxZoom
         {
             get { return GetZoom(cboMaxZoom); }
+        }
+
+        public bool UseBounds
+        {
+            get { return chkBoundingBox.Checked; }
+        }
+
+        public double MinLat
+        {
+            get { return txtMinLat.DoubleValue; }
+        }
+
+        public double MaxLat
+        {
+            get { return txtMaxLat.DoubleValue; }
+        }
+
+        public double MinLng
+        {
+            get { return txtMinLng.DoubleValue; }
+        }
+
+        public double MaxLng
+        {
+            get { return txtMaxLng.DoubleValue; }
+        }
+
+        public string Description
+        {
+            get { return txtDescription.Text; }
         }
 
         public event Action ChooseProjection;

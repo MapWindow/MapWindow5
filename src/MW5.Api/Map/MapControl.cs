@@ -293,6 +293,11 @@ namespace MW5.Api.Map
             _map.Redraw2((tkRedrawType) redrawType);
         }
 
+        public void Redraw(RedrawType redrawType, bool reloadTiles)
+        {
+            _map.Redraw3((tkRedrawType)redrawType, reloadTiles);
+        }
+
         public void Clear()
         {
             _map.Clear();

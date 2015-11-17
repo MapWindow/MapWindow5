@@ -50,12 +50,12 @@ namespace MW5.Plugins.Repository.Views
             this.mnuAddConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuRemoveLayer = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
-            this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolAddTms = new System.Windows.Forms.ToolStripMenuItem();
             this.toolRemoveTms = new System.Windows.Forms.ToolStripMenuItem();
             this.toolProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeViewAdv1 = new MW5.Data.Repository.RepositoryTreeView();
+            this.splitContainerAdv1 = new Syncfusion.Windows.Forms.Tools.SplitContainerAdv();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.toolStripEx1.SuspendLayout();
             this.contextMenuStripEx1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.treeViewAdv1)).BeginInit();
@@ -123,7 +123,7 @@ namespace MW5.Plugins.Repository.Views
             this.toolProperties});
             this.contextMenuStripEx1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(236)))), ((int)(((byte)(249)))));
             this.contextMenuStripEx1.Name = "contextMenuStripEx1";
-            this.contextMenuStripEx1.Size = new System.Drawing.Size(192, 312);
+            this.contextMenuStripEx1.Size = new System.Drawing.Size(192, 334);
             this.contextMenuStripEx1.Style = Syncfusion.Windows.Forms.Tools.ContextMenuStripEx.ContextMenuStyle.Metro;
             // 
             // mnuAddFolder
@@ -191,6 +191,24 @@ namespace MW5.Plugins.Repository.Views
             this.mnuRemoveLayer.Name = "mnuRemoveLayer";
             this.mnuRemoveLayer.Size = new System.Drawing.Size(191, 22);
             this.mnuRemoveLayer.Text = "Remove layer";
+            // 
+            // toolAddTms
+            // 
+            this.toolAddTms.Name = "toolAddTms";
+            this.toolAddTms.Size = new System.Drawing.Size(191, 22);
+            this.toolAddTms.Text = "Add TMS Provider";
+            // 
+            // toolRemoveTms
+            // 
+            this.toolRemoveTms.Name = "toolRemoveTms";
+            this.toolRemoveTms.Size = new System.Drawing.Size(191, 22);
+            this.toolRemoveTms.Text = "Remove TMS Provider";
+            // 
+            // toolProperties
+            // 
+            this.toolProperties.Name = "toolProperties";
+            this.toolProperties.Size = new System.Drawing.Size(191, 22);
+            this.toolProperties.Text = "Properties";
             // 
             // treeViewAdv1
             // 
@@ -264,24 +282,6 @@ namespace MW5.Plugins.Repository.Views
             this.richTextBox1.Size = new System.Drawing.Size(330, 128);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
-            // 
-            // toolAddTms
-            // 
-            this.toolAddTms.Name = "toolAddTms";
-            this.toolAddTms.Size = new System.Drawing.Size(191, 22);
-            this.toolAddTms.Text = "Add TMS Provider";
-            // 
-            // toolRemoveTms
-            // 
-            this.toolRemoveTms.Name = "toolRemoveTms";
-            this.toolRemoveTms.Size = new System.Drawing.Size(191, 22);
-            this.toolRemoveTms.Text = "Remove TMS Provider";
-            // 
-            // toolProperties
-            // 
-            this.toolProperties.Name = "toolProperties";
-            this.toolProperties.Size = new System.Drawing.Size(191, 22);
-            this.toolProperties.Text = "Properties";
             // 
             // RepositoryDockPanel
             // 

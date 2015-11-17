@@ -27,8 +27,7 @@ namespace MW5.Tiles.Helpers
         /// <param name="tiles">Reference to the tiles class</param>
         public static void Read(TileManager tiles)
         {
-            if (tiles == null)
-                throw new ArgumentNullException("Reference to the tiles wasn't passed");
+            if (tiles == null) throw new ArgumentNullException("tiles");
 
             XElement root = XElement.Load(GetFilename());
             string ns = root.GetDefaultNamespace().NamespaceName;
@@ -72,7 +71,7 @@ namespace MW5.Tiles.Helpers
 
             try
             {
-                Dictionary<string, bool> state = new Dictionary<string, bool>();
+                var state = new Dictionary<string, bool>();
 
                 TreeNode node = tree.Nodes[0];
                 foreach (TreeNode g in node.Nodes)

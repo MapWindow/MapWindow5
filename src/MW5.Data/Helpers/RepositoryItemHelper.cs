@@ -56,6 +56,14 @@ namespace MW5.Data.Helpers
             sb.AppendLine("Url: " + provider.Url);
             sb.AppendLine("Projection: " + provider.Projection);
 
+            if (!string.IsNullOrWhiteSpace(provider.Description))
+            {
+                sb.AppendLine("Description: " + provider.Description);
+            }
+
+            sb.AppendFormat("Latitude: {0} to {1}" + Environment.NewLine, provider.MinY, provider.MaxY);
+            sb.AppendFormat("Longitude: {0} to {1}" + Environment.NewLine, provider.MinX, provider.MaxX);
+
             return sb.ToString();
         }
 

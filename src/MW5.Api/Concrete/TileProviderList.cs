@@ -90,10 +90,5 @@ namespace MW5.Api.Concrete
         {
             return _providers.IndexByProvider[(tkTileProvider)provider];
         }
-
-        public int get_IndexByProviderId(int providerId)
-        {
-            return _providers.IndexByProviderId[providerId];
-        }
     }
 }

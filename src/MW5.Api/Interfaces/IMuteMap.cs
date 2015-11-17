@@ -100,6 +100,7 @@ namespace MW5.Api.Interfaces
 
      
         void Redraw(RedrawType redrawType = RedrawType.All);
+        void Redraw(RedrawType redrawType, bool reloadTiles);
         void Clear();
         void Undo();
         bool FindSnapPoint(double tolerance, double xScreen, double yScreen, ref double xFound, ref double yFound);

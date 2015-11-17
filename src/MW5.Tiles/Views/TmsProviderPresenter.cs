@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Concrete;
 using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -16,6 +17,7 @@ namespace MW5.Tiles.Views
             : base(view)
         {
             View.ChooseProjection += OnChooseProjection;
+
         }
 
         private void OnChooseProjection()
@@ -49,6 +51,11 @@ namespace MW5.Tiles.Views
                 return false;
             }
 
+            if (View.MinLat > View.MaxLat || View.MinLng > View.MaxLng)
+            {
+                MessageService.Current.Info("Invalid bounding box. Minimum value is larger than maximum.");
+            }
+
             if (View.Id == -1)
             {
                 // TODO: make sure that Id is unique (maybe better to use hash of URL)
@@ -78,6 +85,9 @@ namespace MW5.Tiles.Views
             Model.Url = View.Url;
             Model.MinZoom = View.MinZoom;
             Model.MaxZoom = View.MaxZoom;
+            Model.Bounds = new Envelope(View.MinLng, View.MaxLng, View.MinLat, View.MaxLat);
+            Model.UseBounds = View.UseBounds;
+            Model.Description = View.Description;
 
             return true;
         }

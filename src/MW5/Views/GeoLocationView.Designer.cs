@@ -72,7 +72,7 @@ namespace MW5.Views
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lblLicense.Location = new System.Drawing.Point(28, 74);
             this.lblLicense.Name = "lblLicense";
-            this.lblLicense.Size = new System.Drawing.Size(300, 19);
+            this.lblLicense.Size = new System.Drawing.Size(329, 19);
             this.lblLicense.TabIndex = 13;
             this.lblLicense.Text = "Data © OpenStreetMap contributors, ODbL 1.0.";
             this.lblLicense.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

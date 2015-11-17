@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MW5.Api.Enums;
+using MW5.Api.Interfaces;
 using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
 
@@ -17,6 +18,12 @@ namespace MW5.Tiles.Views.Abstract
         TileProjection Projection { get; }
         int MinZoom { get; }
         int MaxZoom { get; }
+        bool UseBounds { get; }
+        double MinLat { get; }
+        double MaxLat { get; }
+        double MinLng { get; }
+        double MaxLng { get; }
+        string Description { get; }
         event Action ChooseProjection;
     }
 }

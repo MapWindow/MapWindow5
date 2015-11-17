@@ -139,6 +139,10 @@ namespace MW5.Menu
             items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
             items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
 
+            items.AddButton(_commands[MenuKeys.ZoomToBaseLayer], true);
+
+            _context.Menu.ViewMenu.Update();
+
             ViewMenuHelper.Init(_menuManager, _dockingManager, _context.Menu, _context.DockPanels, PluginIdentity.Default);
         }
 

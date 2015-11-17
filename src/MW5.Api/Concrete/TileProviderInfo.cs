@@ -1,6 +1,8 @@
 ﻿using System;
 using MapWinGIS;
 using MW5.Api.Enums;
+using MW5.Api.Helpers;
+using MW5.Api.Interfaces;
 
 namespace MW5.Api.Concrete
 {
@@ -69,6 +71,21 @@ namespace MW5.Api.Concrete
         public bool Custom
         {
             get { return _providers.IsCustom[_index]; }
+        }
+
+        public IEnvelope GeographicBounds
+        {
+            get
+            {
+                var box = _providers.GeographicBounds[_index];
+                return box != null ? new Envelope(box) : null;
+            }
+
+            set
+            {
+                if (value == null) throw new ArgumentNullException("value");
+                _providers.GeographicBounds[_index] = value.GetInternal();
+            }
         }
     }
 }

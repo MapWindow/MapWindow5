@@ -18,6 +18,7 @@
         public const string LayerClearSelection = "LayerClearSelection";
         public const string AddWmsLayer = "LayerAddWmsLayer";
 
+        public const string ZoomToBaseLayer = "ViewZoomToBaseLayer";
         public const string ZoomIn = "ViewZoomIn";
         public const string ZoomOut = "ZoomOut";
         public const string ZoomMax = "ZoomMax";

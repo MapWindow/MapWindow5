@@ -39,6 +39,7 @@ namespace MW5.Menu
             FindMenuItem(MenuKeys.LayerClearSelection).Enabled = layer != null && layer.IsVector;
             FindMenuItem(MenuKeys.ClearLayers).Enabled = _map.Layers.Any();
             FindMenuItem(MenuKeys.ClearSelection).Enabled = _map.Layers.Any();
+            FindMenuItem(MenuKeys.ZoomToBaseLayer).Enabled = !_map.Projection.IsEmpty && _map.Tiles.Visible;
         }
 
         private void UpdateToolbars(bool rendered)

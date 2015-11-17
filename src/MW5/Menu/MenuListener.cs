@@ -5,6 +5,7 @@
 // -------------------------------------------------------------------------------------------
 
 using System;
+using System.Linq;
 using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
@@ -65,6 +66,9 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.ZoomToBaseLayer:
+                    ZoomToBaseLayer();
+                    break;
                 case MenuKeys.FindLocation:
                     _context.Container.Run<GeoLocationPresenter>();
                     break;
@@ -281,6 +285,28 @@ namespace MW5.Menu
                     return true;
             }
             return false;
+        }
+
+        private void ZoomToBaseLayer()
+        {
+            if (_context.Map.Projection.IsEmpty)
+            {
+                MessageService.Current.Info("Failed to zoom to layer. Map projection is not set.");
+            }
+            else
+            {
+                var tiles = _context.Map.Tiles;
+                var provider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == tiles.ProviderId);
+
+                if (!tiles.Visible || provider == null)
+                {
+                    MessageService.Current.Info("Failed to get extents of base layer.");
+                }
+                else
+                {
+                    _context.Map.SetGeographicExtents(provider.GeographicBounds);
+                }
+            }
         }
 
         private void ShowProjectSaved()

@@ -42,12 +42,26 @@
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.tabControlAdv1 = new Syncfusion.Windows.Forms.Tools.TabControlAdv();
             this.tabDefinition = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            this.btnChooseProjection = new Syncfusion.Windows.Forms.ButtonAdv();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.cboMaxZoom = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.cboMinZoom = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label5 = new System.Windows.Forms.Label();
+            this.tabBounds = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtMaxLat = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
+            this.chkBoundingBox = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtMinLat = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtMinLng = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.txtMaxLng = new Syncfusion.Windows.Forms.Tools.DoubleTextBox();
+            this.tabPageAdv1 = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            this.label14 = new System.Windows.Forms.Label();
+            this.txtDescription = new MW5.UI.Controls.WatermarkTextbox();
             this.tabHelp = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             this.label6 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
@@ -58,6 +72,14 @@
             this.tabDefinition.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinZoom)).BeginInit();
+            this.tabBounds.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxLat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinLat)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinLng)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxLng)).BeginInit();
+            this.tabPageAdv1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).BeginInit();
             this.tabHelp.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -93,7 +115,7 @@
             this.txtId.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtId.BackGroundColor = System.Drawing.SystemColors.Window;
-            this.txtId.BeforeTouchSize = new System.Drawing.Size(133, 20);
+            this.txtId.BeforeTouchSize = new System.Drawing.Size(467, 199);
             this.txtId.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtId.IntegerValue = ((long)(0));
             this.txtId.Location = new System.Drawing.Point(343, 37);
@@ -120,12 +142,12 @@
             // 
             this.cboProjection.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.cboProjection.BeforeTouchSize = new System.Drawing.Size(345, 21);
+            this.cboProjection.BeforeTouchSize = new System.Drawing.Size(380, 21);
             this.cboProjection.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboProjection.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.cboProjection.Location = new System.Drawing.Point(96, 128);
             this.cboProjection.Name = "cboProjection";
-            this.cboProjection.Size = new System.Drawing.Size(345, 21);
+            this.cboProjection.Size = new System.Drawing.Size(380, 21);
             this.cboProjection.TabIndex = 6;
             // 
             // txtUrl
@@ -154,7 +176,7 @@
             this.btnCancel.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.IsBackStageButton = false;
-            this.btnCancel.Location = new System.Drawing.Point(431, 296);
+            this.btnCancel.Location = new System.Drawing.Point(431, 291);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(85, 26);
             this.btnCancel.TabIndex = 17;
@@ -168,7 +190,7 @@
             this.btnOk.BackColor = System.Drawing.Color.White;
             this.btnOk.BeforeTouchSize = new System.Drawing.Size(85, 26);
             this.btnOk.IsBackStageButton = false;
-            this.btnOk.Location = new System.Drawing.Point(340, 296);
+            this.btnOk.Location = new System.Drawing.Point(340, 291);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(85, 26);
             this.btnOk.TabIndex = 16;
@@ -180,19 +202,20 @@
             this.tabControlAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(504, 283);
+            this.tabControlAdv1.BeforeTouchSize = new System.Drawing.Size(504, 278);
             this.tabControlAdv1.Controls.Add(this.tabDefinition);
+            this.tabControlAdv1.Controls.Add(this.tabBounds);
+            this.tabControlAdv1.Controls.Add(this.tabPageAdv1);
             this.tabControlAdv1.Controls.Add(this.tabHelp);
             this.tabControlAdv1.ItemSize = new System.Drawing.Size(120, 25);
             this.tabControlAdv1.Location = new System.Drawing.Point(12, 7);
             this.tabControlAdv1.Name = "tabControlAdv1";
             this.tabControlAdv1.RotateTextWhenVertical = true;
-            this.tabControlAdv1.Size = new System.Drawing.Size(504, 283);
+            this.tabControlAdv1.Size = new System.Drawing.Size(504, 278);
             this.tabControlAdv1.TabIndex = 20;
             // 
             // tabDefinition
             // 
-            this.tabDefinition.Controls.Add(this.btnChooseProjection);
             this.tabDefinition.Controls.Add(this.label8);
             this.tabDefinition.Controls.Add(this.label7);
             this.tabDefinition.Controls.Add(this.cboMaxZoom);
@@ -211,21 +234,10 @@
             this.tabDefinition.Location = new System.Drawing.Point(1, 28);
             this.tabDefinition.Name = "tabDefinition";
             this.tabDefinition.ShowCloseButton = true;
-            this.tabDefinition.Size = new System.Drawing.Size(501, 253);
+            this.tabDefinition.Size = new System.Drawing.Size(501, 248);
             this.tabDefinition.TabIndex = 1;
             this.tabDefinition.Text = "Definition";
             this.tabDefinition.ThemesEnabled = false;
-            // 
-            // btnChooseProjection
-            // 
-            this.btnChooseProjection.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnChooseProjection.BeforeTouchSize = new System.Drawing.Size(29, 23);
-            this.btnChooseProjection.IsBackStageButton = false;
-            this.btnChooseProjection.Location = new System.Drawing.Point(447, 126);
-            this.btnChooseProjection.Name = "btnChooseProjection";
-            this.btnChooseProjection.Size = new System.Drawing.Size(29, 23);
-            this.btnChooseProjection.TabIndex = 15;
-            this.btnChooseProjection.Text = "...";
             // 
             // label8
             // 
@@ -276,6 +288,207 @@
             this.label5.TabIndex = 9;
             this.label5.Text = "Zoom";
             // 
+            // tabBounds
+            // 
+            this.tabBounds.Controls.Add(this.groupBox1);
+            this.tabBounds.Image = null;
+            this.tabBounds.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabBounds.Location = new System.Drawing.Point(1, 28);
+            this.tabBounds.Name = "tabBounds";
+            this.tabBounds.ShowCloseButton = true;
+            this.tabBounds.Size = new System.Drawing.Size(501, 248);
+            this.tabBounds.TabIndex = 3;
+            this.tabBounds.Text = "Bounding Box";
+            this.tabBounds.ThemesEnabled = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.txtMaxLat);
+            this.groupBox1.Controls.Add(this.chkBoundingBox);
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.txtMinLat);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.txtMinLng);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.txtMaxLng);
+            this.groupBox1.Location = new System.Drawing.Point(17, 18);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(471, 195);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            // 
+            // label13
+            // 
+            this.label13.Location = new System.Drawing.Point(29, 136);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(418, 38);
+            this.label13.TabIndex = 15;
+            this.label13.Text = "Tiles outside these bounds will not be loaded. Map will be zoomed to this bounds " +
+    "automatically on adding provider to the map if no data layers exist.";
+            // 
+            // txtMaxLat
+            // 
+            this.txtMaxLat.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMaxLat.BeforeTouchSize = new System.Drawing.Size(467, 199);
+            this.txtMaxLat.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMaxLat.DoubleValue = 90D;
+            this.txtMaxLat.Location = new System.Drawing.Point(278, 42);
+            this.txtMaxLat.MaxValue = 90D;
+            this.txtMaxLat.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMaxLat.MinValue = -90D;
+            this.txtMaxLat.Name = "txtMaxLat";
+            this.txtMaxLat.NegativeColor = System.Drawing.Color.Black;
+            this.txtMaxLat.NullString = "";
+            this.txtMaxLat.NumberDecimalDigits = 7;
+            this.txtMaxLat.Size = new System.Drawing.Size(98, 20);
+            this.txtMaxLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMaxLat.TabIndex = 2;
+            this.txtMaxLat.Text = "90.0000000";
+            // 
+            // chkBoundingBox
+            // 
+            this.chkBoundingBox.AutoSize = true;
+            this.chkBoundingBox.Location = new System.Drawing.Point(16, 0);
+            this.chkBoundingBox.Name = "chkBoundingBox";
+            this.chkBoundingBox.Size = new System.Drawing.Size(115, 17);
+            this.chkBoundingBox.TabIndex = 0;
+            this.chkBoundingBox.Text = "Use bounding box:";
+            this.chkBoundingBox.UseVisualStyleBackColor = true;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(241, 92);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(16, 13);
+            this.label12.TabIndex = 14;
+            this.label12.Text = "to";
+            // 
+            // txtMinLat
+            // 
+            this.txtMinLat.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMinLat.BeforeTouchSize = new System.Drawing.Size(467, 199);
+            this.txtMinLat.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMinLat.DoubleValue = -90D;
+            this.txtMinLat.ForeColor = System.Drawing.Color.Black;
+            this.txtMinLat.Location = new System.Drawing.Point(124, 42);
+            this.txtMinLat.MaxValue = 90D;
+            this.txtMinLat.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMinLat.MinValue = -90D;
+            this.txtMinLat.Name = "txtMinLat";
+            this.txtMinLat.NegativeColor = System.Drawing.Color.Black;
+            this.txtMinLat.NullString = "";
+            this.txtMinLat.NumberDecimalDigits = 7;
+            this.txtMinLat.Size = new System.Drawing.Size(98, 20);
+            this.txtMinLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMinLat.TabIndex = 1;
+            this.txtMinLat.Text = "-90.0000000";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(241, 45);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(16, 13);
+            this.label11.TabIndex = 13;
+            this.label11.Text = "to";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(34, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(72, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Latitude, deg.";
+            // 
+            // txtMinLng
+            // 
+            this.txtMinLng.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMinLng.BeforeTouchSize = new System.Drawing.Size(467, 199);
+            this.txtMinLng.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMinLng.DoubleValue = -180D;
+            this.txtMinLng.ForeColor = System.Drawing.Color.Black;
+            this.txtMinLng.Location = new System.Drawing.Point(124, 89);
+            this.txtMinLng.MaxValue = 180D;
+            this.txtMinLng.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMinLng.MinValue = -180D;
+            this.txtMinLng.Name = "txtMinLng";
+            this.txtMinLng.NegativeColor = System.Drawing.Color.Black;
+            this.txtMinLng.NullString = "";
+            this.txtMinLng.NumberDecimalDigits = 7;
+            this.txtMinLng.Size = new System.Drawing.Size(98, 20);
+            this.txtMinLng.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMinLng.TabIndex = 3;
+            this.txtMinLng.Text = "-180.0000000";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(34, 92);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(81, 13);
+            this.label10.TabIndex = 6;
+            this.label10.Text = "Longitude, deg.";
+            // 
+            // txtMaxLng
+            // 
+            this.txtMaxLng.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMaxLng.BeforeTouchSize = new System.Drawing.Size(467, 199);
+            this.txtMaxLng.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMaxLng.DoubleValue = 180D;
+            this.txtMaxLng.Location = new System.Drawing.Point(278, 89);
+            this.txtMaxLng.MaxValue = 180D;
+            this.txtMaxLng.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMaxLng.MinValue = -180D;
+            this.txtMaxLng.Name = "txtMaxLng";
+            this.txtMaxLng.NegativeColor = System.Drawing.Color.Black;
+            this.txtMaxLng.NullString = "";
+            this.txtMaxLng.NumberDecimalDigits = 7;
+            this.txtMaxLng.Size = new System.Drawing.Size(98, 20);
+            this.txtMaxLng.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMaxLng.TabIndex = 4;
+            this.txtMaxLng.Text = "180.0000000";
+            // 
+            // tabPageAdv1
+            // 
+            this.tabPageAdv1.Controls.Add(this.label14);
+            this.tabPageAdv1.Controls.Add(this.txtDescription);
+            this.tabPageAdv1.Image = null;
+            this.tabPageAdv1.ImageSize = new System.Drawing.Size(16, 16);
+            this.tabPageAdv1.Location = new System.Drawing.Point(1, 28);
+            this.tabPageAdv1.Name = "tabPageAdv1";
+            this.tabPageAdv1.ShowCloseButton = true;
+            this.tabPageAdv1.Size = new System.Drawing.Size(501, 248);
+            this.tabPageAdv1.TabIndex = 4;
+            this.tabPageAdv1.Text = "Description";
+            this.tabPageAdv1.ThemesEnabled = false;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(15, 17);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(134, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Description of the provider:";
+            // 
+            // txtDescription
+            // 
+            this.txtDescription.BeforeTouchSize = new System.Drawing.Size(467, 199);
+            this.txtDescription.Cue = "Enter description";
+            this.txtDescription.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtDescription.Location = new System.Drawing.Point(18, 33);
+            this.txtDescription.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtDescription.Multiline = true;
+            this.txtDescription.Name = "txtDescription";
+            this.txtDescription.ShowClearButton = false;
+            this.txtDescription.Size = new System.Drawing.Size(467, 199);
+            this.txtDescription.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtDescription.TabIndex = 1;
+            // 
             // tabHelp
             // 
             this.tabHelp.Controls.Add(this.label6);
@@ -286,7 +499,7 @@
             this.tabHelp.Name = "tabHelp";
             this.tabHelp.Padding = new System.Windows.Forms.Padding(20);
             this.tabHelp.ShowCloseButton = true;
-            this.tabHelp.Size = new System.Drawing.Size(501, 253);
+            this.tabHelp.Size = new System.Drawing.Size(501, 248);
             this.tabHelp.TabIndex = 2;
             this.tabHelp.Text = "Help";
             this.tabHelp.ThemesEnabled = false;
@@ -311,7 +524,7 @@
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(10);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(338, 283);
+            this.richTextBox1.Size = new System.Drawing.Size(451, 169);
             this.richTextBox1.TabIndex = 20;
             this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
             // 
@@ -320,7 +533,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(528, 331);
+            this.ClientSize = new System.Drawing.Size(528, 326);
             this.Controls.Add(this.tabControlAdv1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -334,6 +547,16 @@
             this.tabDefinition.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cboMaxZoom)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMinZoom)).EndInit();
+            this.tabBounds.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxLat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinLat)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMinLng)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMaxLng)).EndInit();
+            this.tabPageAdv1.ResumeLayout(false);
+            this.tabPageAdv1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtDescription)).EndInit();
             this.tabHelp.ResumeLayout(false);
             this.tabHelp.PerformLayout();
             this.ResumeLayout(false);
@@ -358,10 +581,24 @@
         private Syncfusion.Windows.Forms.Tools.TabPageAdv tabHelp;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.RichTextBox richTextBox1;
-        private Syncfusion.Windows.Forms.ButtonAdv btnChooseProjection;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboMaxZoom;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboMinZoom;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabBounds;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaxLat;
+        private System.Windows.Forms.CheckBox chkBoundingBox;
+        private System.Windows.Forms.Label label12;
+        private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMinLat;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label9;
+        private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMinLng;
+        private System.Windows.Forms.Label label10;
+        private Syncfusion.Windows.Forms.Tools.DoubleTextBox txtMaxLng;
+        private Syncfusion.Windows.Forms.Tools.TabPageAdv tabPageAdv1;
+        private System.Windows.Forms.Label label13;
+        private UI.Controls.WatermarkTextbox txtDescription;
+        private System.Windows.Forms.Label label14;
     }
 }

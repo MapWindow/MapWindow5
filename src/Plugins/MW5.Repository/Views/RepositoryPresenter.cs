@@ -8,11 +8,13 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Concrete;
+using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Data.Enums;
 using MW5.Data.Repository;
 using MW5.Data.Views;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
 using MW5.Shared;
@@ -110,12 +112,19 @@ namespace MW5.Plugins.Repository.Views
         private void EditTmsProvider()
         {
             var item = GetSelectedItem<ITmsItem>();
-            if (item != null)
+            if (item == null) return;
+
+            var provider = item.Provider;
+
+            // it's currently displayed, so let's update it
+            bool needUpdate = _context.Map.Tiles.ProviderId == item.Provider.Id;
+
+            if (_context.Container.Run<TmsProviderPresenter, TmsProvider>(provider))
             {
-                var provider = item.Provider;
-                if (_context.Container.Run<TmsProviderPresenter, Model.TmsProvider>(provider))
+                _repository.TmsProviders.Update(provider);
+                if (needUpdate)
                 {
-                    _repository.TmsProviders.Update(provider);
+                    AddTmsProviderToMap(true);
                 }
             }
         }
@@ -125,8 +134,8 @@ namespace MW5.Plugins.Repository.Views
             var item = GetSelectedItem<IRepositoryItem>();
             if (item != null && item.Type == RepositoryItemType.TmsRoot)
             {
-                var provider = new Model.TmsProvider();
-                if (_context.Container.Run<TmsProviderPresenter, Model.TmsProvider>(provider))
+                var provider = new TmsProvider();
+                if (_context.Container.Run<TmsProviderPresenter, TmsProvider>(provider))
                 {
                     _repository.TmsProviders.Add(provider);
                 }
@@ -192,11 +201,11 @@ namespace MW5.Plugins.Repository.Views
 
             if (item is ITmsItem)
             {
-                AddTmsProviderToMap();
+                AddTmsProviderToMap(false);
             }
         }
 
-        private void AddTmsProviderToMap()
+        private void AddTmsProviderToMap(bool update)
         {
             var tms = GetSelectedItem<ITmsItem>();
             if (tms == null) return;
@@ -211,11 +220,32 @@ namespace MW5.Plugins.Repository.Views
                 return;
             }
 
-            _context.Map.Tiles.ProviderId = provider.Id;
-            _context.Map.Redraw();
+            UpdateTmsBounds(provider, update);
 
-            MessageService.Current.Info("TMS provider was added to the map as a base layer: " +
-                                        Environment.NewLine + provider.Name);
+            _context.Map.Tiles.GridLinesVisible = true;   // temporary
+            _context.Map.Tiles.ProviderId = provider.Id;
+
+            _context.Map.Redraw(RedrawType.Minimal, true);
+
+            if (!update)
+            {
+                MessageService.Current.Info("TMS provider was added to the map as a base layer: " + Environment.NewLine +
+                                            provider.Name);
+            }
+        }
+
+        private void UpdateTmsBounds(TmsProvider provider, bool update)
+        {
+            var mapProvider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == provider.Id);
+            if (mapProvider != null)
+            {
+                mapProvider.GeographicBounds = provider.UseBounds ? provider.Bounds : TmsProvider.DefaultBounds;
+
+                if (!update && !_context.Map.Layers.Any())
+                {
+                    _context.Map.SetGeographicExtents(mapProvider.GeographicBounds);
+                }
+            }
         }
 
         private void AddLayerToMap(ILayerItem layer)

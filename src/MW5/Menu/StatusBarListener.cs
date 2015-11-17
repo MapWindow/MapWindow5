@@ -24,15 +24,12 @@ namespace MW5.Menu
     public class StatusBarListener
     {
         private readonly IAppContext _context;
-        private readonly IConfigService _configService;
 
-        public StatusBarListener(IAppContext context, IConfigService configService)
+        public StatusBarListener(IAppContext context)
         {
             if (context == null) throw new ArgumentNullException("context");
-            if (configService == null) throw new ArgumentNullException("configService");
             
             _context = context;
-            _configService = configService;
 
             InitStatusBar();
 
@@ -141,7 +138,37 @@ namespace MW5.Menu
         public void Update()
         {
             var bar = _context.StatusBar;
-            var statusSelected = bar.FindItem(StatusBarKeys.SelectedCount, Identity);
+
+            UpdateSelectionMessage();
+
+            var statusUnits = bar.FindItem(StatusBarKeys.MapUnits, Identity);
+            statusUnits.Text = "Units: " + _context.Map.MapUnits.EnumToString().ToLower();
+
+            UpdateTmsProvider();
+        }
+
+        private void UpdateTmsProvider()
+        {
+            string msg = "Base Layer: ";
+
+            if (_context.Map.TileProvider == Api.Enums.TileProvider.ProviderCustom)
+            {
+                var tiles = _context.Map.Tiles;
+                var provider = tiles.Providers.FirstOrDefault(p => p.Id == tiles.ProviderId);
+                msg += provider != null ? provider.Name : "Not defined";
+            }
+            else
+            {
+                msg += _context.Map.TileProvider.EnumToString();
+            }
+
+            var statusProvider = _context.StatusBar.FindItem(StatusBarKeys.TileProvider, Identity);
+            statusProvider.Text = msg;
+        }
+
+        private void UpdateSelectionMessage()
+        {
+            var statusSelected = _context.StatusBar.FindItem(StatusBarKeys.SelectedCount, Identity);
 
             if (_context.Map.Layers.Current == null)
             {
@@ -164,12 +191,6 @@ namespace MW5.Menu
                     }
                 }
             }
-
-            var statusUnits = bar.FindItem(StatusBarKeys.MapUnits, Identity);
-            statusUnits.Text = "Units: " + _context.Map.MapUnits.EnumToString().ToLower();
-
-            var statusProvider = bar.FindItem(StatusBarKeys.TileProvider, Identity);
-            statusProvider.Text = _context.Map.TileProvider.EnumToString();
         }
 
         private void MapProjectionChanged(object sender, EventArgs e)

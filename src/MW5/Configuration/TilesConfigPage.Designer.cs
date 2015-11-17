@@ -365,7 +365,7 @@ namespace MW5.Configuration
             this.Controls.Add(this.configPanelControl3);
             this.Controls.Add(this.configPanelControl2);
             this.Name = "TilesConfigPage";
-            this.Size = new System.Drawing.Size(443, 473);
+            this.Size = new System.Drawing.Size(443, 477);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl3)).EndInit();
             this.configPanelControl3.ResumeLayout(false);
             this.configPanelControl3.PerformLayout();
