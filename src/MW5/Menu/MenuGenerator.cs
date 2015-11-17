@@ -207,6 +207,7 @@ namespace MW5.Menu
             items.AddButton(_commands[MenuKeys.ZoomToLayer]);
             items.AddButton(_commands[MenuKeys.Pan]);
             items.AddButton(_commands[MenuKeys.SetProjection], true);
+            items.AddButton(_commands[MenuKeys.FindLocation]);
 
             items.AddButton(_commands[MenuKeys.MeasureDistance], true);
             items.AddButton(_commands[MenuKeys.MeasureArea]);

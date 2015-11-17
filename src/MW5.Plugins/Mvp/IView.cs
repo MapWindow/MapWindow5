@@ -8,6 +8,10 @@ namespace MW5.Plugins.Mvp
     public interface IView : IViewInternal
     {
         ButtonBase OkButton { get; }
+
+        void StartWait();
+
+        void StopWait();
     }
 
     public interface IView<TModel> : IView, IViewInternal<TModel>

@@ -60,6 +60,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -75,6 +76,7 @@
     <Compile Include="CustomLayoutAttribute.cs" />
     <Compile Include="DebugHelper.cs" />
     <Compile Include="DownloadHelper.cs" />
+    <Compile Include="DynamicJsonConverter.cs" />
     <Compile Include="FontHelper.cs" />
     <Compile Include="GcHelper.cs" />
     <Compile Include="IMarshal.cs" />

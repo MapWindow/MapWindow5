@@ -71,6 +71,8 @@ namespace MW5.Menu
                     : "It's not allowed to change projection when layers are already added to the map.";
             }
 
+            FindToolbarItem(MenuKeys.FindLocation).Enabled = !_map.Projection.IsEmpty;
+
             bool hasFeatureSet = false;
 
             bool hasLayer = _context.Legend.SelectedLayerHandle != -1;

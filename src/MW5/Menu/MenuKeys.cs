@@ -26,6 +26,7 @@
         public const string ZoomToLayer = "ZoomToLayer";
         public const string Pan = "Pan";
         public const string SetProjection = "SetProjection";
+        public const string FindLocation = "FindLocation";
         public const string MeasureDistance = "MeasureDistance";
         public const string MeasureArea = "MeasureArea";
         public const string SelectDropDown = "SelectDropDown";

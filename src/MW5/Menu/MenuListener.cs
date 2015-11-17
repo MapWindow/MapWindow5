@@ -65,13 +65,13 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.FindLocation:
+                    _context.Container.Run<GeoLocationPresenter>();
+                    break;
                 case MenuKeys.CustomProviders:
                     {
                         var model = _context.Repository.TmsProviders;
-                        if (_context.Container.Run<TmsListPresenter, TmsProviderList>(model))
-                        {
-                            // TODO: update repository
-                        }
+                        _context.Container.Run<TmsListPresenter, TmsProviderList>(model);
                     }
                     break;
                 case MenuKeys.BingApiKey:

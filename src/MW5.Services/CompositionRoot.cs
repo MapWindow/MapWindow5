@@ -17,6 +17,7 @@ namespace MW5.Services
             container.RegisterService<IFileDialogService, FileDialogService>()
                 .RegisterService<IMessageService, MessageService>() // FlexibleMessageService
                 .RegisterSingleton<ILayerService, LayerService>()
+                .RegisterSingleton<IGeoLocationService, NominatimGeoLocationService>()
                 .RegisterSingleton<ILoggingService, LoggingService>()
                 .RegisterSingleton<ISelectLayerService, SelectLayerService>()
                 .RegisterSingleton<IProjectService, ProjectService>()

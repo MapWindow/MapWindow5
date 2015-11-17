@@ -25,6 +25,7 @@ namespace MW5
                 .RegisterView<IAboutView, AboutView>()
                 .RegisterView<IWelcomeView, WelcomeView>()
                 .RegisterView<IConfigView, ConfigView>()
+                .RegisterView<IGeoLocationView, GeoLocationView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterView<ISpatialIndexView, SpatialIndexView>()
                 

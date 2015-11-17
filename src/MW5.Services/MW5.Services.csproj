@@ -52,6 +52,7 @@
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Syncfusion.Grid.Grouping.Windows, Version=13.1450.0.21, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -71,6 +72,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -85,6 +87,7 @@
     <Compile Include="Concrete\FlexibleMessageBox.cs" />
     <Compile Include="Concrete\FlexibleMessageService.cs" />
     <Compile Include="Concrete\BaseLogger.cs" />
+    <Compile Include="Concrete\NominatimGeoLocationService.cs" />
     <Compile Include="Concrete\SelectLayerService.cs" />
     <Compile Include="Concrete\LogLevelConverter.cs" />
     <Compile Include="Concrete\ProjectLoaderLegacy.cs" />

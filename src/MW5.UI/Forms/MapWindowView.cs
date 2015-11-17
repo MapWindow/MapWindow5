@@ -67,5 +67,31 @@ namespace MW5.UI.Forms
         {
             Invoke(OkClicked);
         }
+
+        public void StartWait()
+        {
+            Cursor = Cursors.WaitCursor;
+
+            EnableControls(false);
+
+            Application.DoEvents();
+        }
+
+        public void StopWait()
+        {
+            Cursor = Cursors.Default;
+
+            EnableControls(true);
+
+            Application.DoEvents();
+        }
+
+        private void EnableControls(bool state)
+        {
+            foreach (Control ctrl in Controls)
+            {
+                ctrl.Enabled = state;
+            }
+        }
     }
 }
