@@ -46,7 +46,7 @@ namespace MW5.Plugins.Model
             get
             {
                 var box = new Envelope();
-                box.SetBounds(-180.0, 180.0, -90.0, 90.0);
+                box.SetBounds(-180.0, 180.0, -85.05112878, 85.05112878);
                 return box;
             }
         }

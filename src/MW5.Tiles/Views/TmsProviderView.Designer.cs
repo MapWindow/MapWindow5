@@ -371,7 +371,7 @@
             this.txtMaxLat.Size = new System.Drawing.Size(98, 20);
             this.txtMaxLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtMaxLat.TabIndex = 2;
-            this.txtMaxLat.Text = "90.0000000";
+            this.txtMaxLat.Text = "85.05112878";
             // 
             // chkBoundingBox
             // 
@@ -410,7 +410,7 @@
             this.txtMinLat.Size = new System.Drawing.Size(98, 20);
             this.txtMinLat.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
             this.txtMinLat.TabIndex = 1;
-            this.txtMinLat.Text = "-90.0000000";
+            this.txtMinLat.Text = "-85.05112878";
             // 
             // label11
             // 

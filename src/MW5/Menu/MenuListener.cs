@@ -304,7 +304,10 @@ namespace MW5.Menu
                 }
                 else
                 {
-                    _context.Map.SetGeographicExtents(provider.GeographicBounds);
+                    if (!_context.Map.SetGeographicExtents(provider.GeographicBounds))
+                    {
+                        Logger.Current.Warn("Zoom to base layer: failed to set geographic extents.");
+                    }
                 }
             }
         }

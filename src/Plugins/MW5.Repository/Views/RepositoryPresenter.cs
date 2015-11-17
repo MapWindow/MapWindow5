@@ -232,12 +232,7 @@ namespace MW5.Plugins.Repository.Views
                 return;
             }
 
-            if (_context.Map.Projection.IsEmpty)
-            {
-                var sr = new SpatialReference();
-                sr.SetGoogleMercator();
-                _context.Map.Projection = sr;
-            }
+           
 
             UpdateTmsBounds(provider, update);
 
@@ -254,12 +249,21 @@ namespace MW5.Plugins.Repository.Views
 
         private void UpdateTmsBounds(TmsProvider provider, bool update)
         {
+            bool projectionIsEmpty = _context.Map.Projection.IsEmpty; 
+
+            if (projectionIsEmpty)
+            {
+                var sr = new SpatialReference();
+                sr.SetGoogleMercator();
+                _context.Map.Projection = sr;
+            }
+
             var mapProvider = _context.Map.Tiles.Providers.FirstOrDefault(p => p.Id == provider.Id);
             if (mapProvider != null)
             {
                 mapProvider.GeographicBounds = provider.UseBounds ? provider.Bounds : TmsProvider.DefaultBounds;
 
-                if (!update && !_context.Map.Layers.Any())
+                if (!update && !_context.Map.Layers.Any() && (provider.UseBounds || projectionIsEmpty))
                 {
                     _context.Map.SetGeographicExtents(mapProvider.GeographicBounds);
                 }
