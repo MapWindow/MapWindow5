@@ -137,19 +137,22 @@ namespace MW5.Tools.Controls.Parameters.Input
 
         private void SetSelectionComboBox()
         {
+            if (_currentLayer != null)
+            {
+                // Make current selected layer the selected option in the combobox
+                // It is possible the selected layer is not on the combobox:
+                var layer = _layers.FirstOrDefault(l => l.Source.LayerHandle == _currentLayer.Handle);
+                if (layer != null)
+                {
+                    comboBoxAdv1.SelectedItem = layer;
+                    return;
+                }
+            }
+
+            // Default value:
             if (comboBoxAdv1.Items.Count > 0)
             {
                 comboBoxAdv1.SelectedIndex = 0;
-            }
-
-            // Make current selected layer the selected option in the combobox
-            // It is possible the selected layer is not on the combobox:
-            for (var i = 0; i < this.comboBoxAdv1.Items.Count; i++)
-            {
-                var layerItem = (InputLayerGridAdapter)this.comboBoxAdv1.Items[i];
-                if (layerItem.Source.LayerHandle != _currentLayer.Handle) continue;
-                this.comboBoxAdv1.SelectedIndex = i;
-                break;
             }
         }
 
