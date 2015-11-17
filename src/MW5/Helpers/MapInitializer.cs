@@ -11,6 +11,7 @@ using MW5.Api.Static;
 using MW5.Data.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Services;
+using MW5.Shared;
 
 namespace MW5.Helpers
 {
@@ -90,6 +91,8 @@ namespace MW5.Helpers
             ApplyMouseWheelDirection(map, config.MouseWheelDirection);
 
             var tiles = map.Tiles;
+
+            tiles.GridLinesVisible = DebugHelper.DrawTilesGrid;
 
             ApplyTilesSettings(tiles, config);
 

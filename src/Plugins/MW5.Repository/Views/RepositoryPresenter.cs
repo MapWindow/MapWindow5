@@ -222,7 +222,6 @@ namespace MW5.Plugins.Repository.Views
 
             UpdateTmsBounds(provider, update);
 
-            _context.Map.Tiles.GridLinesVisible = true;   // temporary
             _context.Map.Tiles.ProviderId = provider.Id;
 
             _context.Map.Redraw(RedrawType.Minimal, true);
