@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Interfaces;
 using MW5.Properties;
@@ -17,6 +18,19 @@ namespace MW5.Menu
         public MenuCommands(PluginIdentity identity)
             : base(identity)
         {
+        }
+
+        protected override void AssignShortcutKeys()
+        {
+            Commands[MenuKeys.FindLocation].ShortcutKeys = Keys.Control | Keys.F;
+
+            Commands[MenuKeys.NewMap].ShortcutKeys = Keys.Control | Keys.N;
+
+            Commands[MenuKeys.SaveProject].ShortcutKeys = Keys.Control | Keys.S;
+
+            Commands[MenuKeys.OpenProject].ShortcutKeys = Keys.Control | Keys.O;
+
+            Commands[MenuKeys.AddLayer].ShortcutKeys = Keys.Control | Keys.L;
         }
 
         public override IEnumerable<MenuCommand> GetCommands()

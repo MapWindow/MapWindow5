@@ -92,10 +92,13 @@ namespace MW5.Menu
         {
             var items = _context.Menu.MapMenu.SubItems;
 
-            items.AddButton(_commands[MenuKeys.RemoveLayer]);
+            items.AddButton(_commands[MenuKeys.FindLocation]);
+
+            items.AddButton(_commands[MenuKeys.RemoveLayer], true);
             items.AddButton(_commands[MenuKeys.ClearLayers]);
 
             items.AddButton(_commands[MenuKeys.ClearSelection], true);
+            
 
             _context.Menu.MapMenu.Update();
         }

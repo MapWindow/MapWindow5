@@ -67,6 +67,8 @@ namespace MW5.UI.Menu
                 item.Description = command.Description;
             }
 
+            item.ShortcutKeys = command.ShortcutKeys;
+
             if (beginGroup)
             {
                 item.BeginGroup = true;

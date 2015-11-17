@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
@@ -123,5 +124,10 @@ namespace MW5.UI.Menu
         /// Gets or sets a value indicating whether the item should be skipped during processing (e.g. separator).
         /// </summary>
         public bool Skip { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the shortcut keys.
+        /// </summary>
+        public Keys ShortcutKeys { get; set; }
     }
 }

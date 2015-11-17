@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 
@@ -98,5 +99,10 @@ namespace MW5.Plugins.Interfaces
         /// Gets a value indicating whether the item should be skipped during processing (e.g. separator).
         /// </summary>
         bool Skip { get; }
+
+        /// <summary>
+        /// Gets or sets the shortcut keys.
+        /// </summary>
+        Keys ShortcutKeys { get; set; }
     }
 }

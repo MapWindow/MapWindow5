@@ -128,5 +128,10 @@ namespace MW5.UI.Menu
         {
             get { return false; } 
         }
+
+        /// <summary>
+        /// Gets or sets the shortcut keys.
+        /// </summary>
+        public Keys ShortcutKeys { get; set; }
     }
 }

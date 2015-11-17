@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace MW5.Plugins.Concrete
 {
@@ -14,16 +15,13 @@ namespace MW5.Plugins.Concrete
         private readonly Bitmap _icon;
         private readonly string _description;
 
-        public MenuCommand(string text, string key, Bitmap icon) : this(text, key, icon, null)
+        public MenuCommand(string text, string key, Bitmap icon) 
+            : this(text, key, icon, string.Empty, null, Keys.None)
         {
         }
 
-        public MenuCommand(string text, string key, Bitmap icon, string description)
-            : this(text, key, icon, description, null)
-        {
-        }
-
-        public MenuCommand(string text, string key, Bitmap icon, string description, PluginIdentity identity)
+        public MenuCommand(string text, string key, Bitmap icon, string description, PluginIdentity identity = null, 
+                Keys shortcutKeys = Keys.None)
         {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException("key");
 
@@ -37,7 +35,9 @@ namespace MW5.Plugins.Concrete
             _icon = icon;
             _description = description;
             PluginIdentity = identity;
+            ShortcutKeys = shortcutKeys;
         }
+
 
         public string Description
         {
@@ -58,6 +58,8 @@ namespace MW5.Plugins.Concrete
         {
             get { return _text; }
         }
+
+        public Keys ShortcutKeys { get; set; }
 
         public PluginIdentity PluginIdentity { get; internal set; }
     }

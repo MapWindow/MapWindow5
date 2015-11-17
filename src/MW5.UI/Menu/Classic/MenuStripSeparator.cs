@@ -89,6 +89,11 @@ namespace MW5.UI.Menu.Classic
             get { return true; }
         }
 
+        /// <summary>
+        /// Gets or sets the shortcut keys.
+        /// </summary>
+        public Keys ShortcutKeys { get; set; }
+
         protected override MenuItemMetadata Metadata
         {
             get { return null; }

@@ -12,7 +12,7 @@ namespace MW5.Plugins.Concrete
     /// </summary>
     public abstract class CommandProviderBase
     {
-        protected Dictionary<string, MenuCommand> Commands = new Dictionary<string, MenuCommand>();
+        protected readonly Dictionary<string, MenuCommand> Commands = new Dictionary<string, MenuCommand>();
 
         protected CommandProviderBase(PluginIdentity identity)
         {
@@ -25,6 +25,13 @@ namespace MW5.Plugins.Concrete
                 cmd.PluginIdentity = identity;
                 Commands.Add(cmd.Key, cmd);
             }
+
+            AssignShortcutKeys();
+        }
+
+        protected virtual void AssignShortcutKeys()
+        {
+            // override in derived class
         }
 
         /// <summary>
