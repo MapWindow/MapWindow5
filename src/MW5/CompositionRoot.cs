@@ -28,6 +28,7 @@ namespace MW5
                 .RegisterView<IGeoLocationView, GeoLocationView>()
                 .RegisterView<ICreatePyramidsView, CreatePyramidsView>()
                 .RegisterView<ISpatialIndexView, SpatialIndexView>()
+                .RegisterView<ISetScaleView, SetScaleView>()
                 
                 .RegisterSingleton<IAppView, AppView>()
                 .RegisterInstance<IApplicationContainer>(container)

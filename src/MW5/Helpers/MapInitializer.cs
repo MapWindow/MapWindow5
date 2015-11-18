@@ -55,8 +55,11 @@ namespace MW5.Helpers
 
         public static void ApplyConfig(this IMuteMap map, IConfigService configService)
         {
-            var config = configService.Config;
-            
+            ApplyConfig(map, configService.Config);
+        }
+
+        public static void ApplyConfig(this IMuteMap map, AppConfig config)
+        {
             MapConfig.LoadSymbologyOnAddLayer = config.LoadSymbology;
             MapConfig.ImageDownsamplingMode = config.RasterDownsamplingMode;
             MapConfig.ImageUpsamplingMode = config.RasterUpsamplingMode;

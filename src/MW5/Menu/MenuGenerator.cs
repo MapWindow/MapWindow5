@@ -57,6 +57,8 @@ namespace MW5.Menu
 
             InitTilesMenu();
 
+            InitToolsMenu();
+
             InitHelpMenu();
 
             var items = _context.Menu.Items;
@@ -66,6 +68,15 @@ namespace MW5.Menu
         }
 
         #region Menus
+
+        private void InitToolsMenu()
+        {
+            var items = _context.Menu.ToolsMenu.SubItems;
+
+            items.AddButton(_commands[MenuKeys.Settings]);
+
+            _context.Menu.ToolsMenu.Update();
+        }
 
         private void InitFileMenu()
         {
@@ -94,11 +105,12 @@ namespace MW5.Menu
 
             items.AddButton(_commands[MenuKeys.FindLocation]);
 
+            items.AddButton(_commands[MenuKeys.SetScale], true);
+
             items.AddButton(_commands[MenuKeys.RemoveLayer], true);
             items.AddButton(_commands[MenuKeys.ClearLayers]);
 
             items.AddButton(_commands[MenuKeys.ClearSelection], true);
-            
 
             _context.Menu.MapMenu.Update();
         }
@@ -139,7 +151,16 @@ namespace MW5.Menu
             items.AddDropDown("Windows", Plugins.Menu.MenuKeys.ViewWindows, PluginIdentity.Default);
             items.AddDropDown("Skins", Plugins.Menu.MenuKeys.ViewSkins, PluginIdentity.Default);
 
-            items.AddButton(_commands[MenuKeys.ZoomToBaseLayer], true);
+            items.AddButton(_commands[MenuKeys.ShowZoombar], true);
+            items.AddButton(_commands[MenuKeys.ShowScalebar]);
+            items.AddButton(_commands[MenuKeys.ShowCoordinates]);
+            items.AddButton(_commands[MenuKeys.ShowRedrawTime]);
+
+            items.AddButton(_commands[MenuKeys.ZoomIn], true);
+            items.AddButton(_commands[MenuKeys.ZoomOut]);
+            items.AddButton(_commands[MenuKeys.ZoomMax]);
+            items.AddButton(_commands[MenuKeys.ZoomToLayer], true);
+            items.AddButton(_commands[MenuKeys.ZoomToBaseLayer]);
 
             _context.Menu.ViewMenu.Update();
 
@@ -151,7 +172,7 @@ namespace MW5.Menu
             var items = _context.Menu.HelpMenu.SubItems;
             items.AddButton("Show Welcome Screen", MenuKeys.Welcome, PluginIdentity.Default);
             items.AddButton("Supported Drivers", MenuKeys.SupportedDrivers, PluginIdentity.Default);
-            items.AddButton("COM usage", MenuKeys.ComUsage, PluginIdentity.Default).BeginGroup = true;
+            items.AddButton("COM Usage", MenuKeys.ComUsage, PluginIdentity.Default).BeginGroup = true;
             items.AddButton("About", MenuKeys.About, PluginIdentity.Default).BeginGroup = true;
 
             _context.Menu.HelpMenu.Update();

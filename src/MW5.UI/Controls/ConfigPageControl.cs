@@ -34,6 +34,8 @@ namespace MW5.UI.Controls
             get { return panelContent.Controls.Count > 0 ? panelContent.Controls[0] : null; }
             set
             {
+                panelContent.Width = Width - 20;
+
                 panelContent.Controls.Clear();
                 if (value != null)
                 {
@@ -49,8 +51,6 @@ namespace MW5.UI.Controls
 
                     panelContent.Controls.Add(value);
                 }
-
-                panelContent.Width = Width - 20;
             }
         }
 

@@ -149,6 +149,7 @@ namespace MW5.Configuration
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMaxDiskSize.BackGroundColor = System.Drawing.SystemColors.Window;
             this.txtMaxDiskSize.BeforeTouchSize = new System.Drawing.Size(301, 20);
+            this.txtMaxDiskSize.BorderColor = System.Drawing.Color.LightGray;
             this.txtMaxDiskSize.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtMaxDiskSize.DoubleValue = 1D;
             this.txtMaxDiskSize.Location = new System.Drawing.Point(321, 133);
@@ -308,6 +309,7 @@ namespace MW5.Configuration
             this.txtProxyAddress.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtProxyAddress.BeforeTouchSize = new System.Drawing.Size(301, 20);
+            this.txtProxyAddress.BorderColor = System.Drawing.Color.LightGray;
             this.txtProxyAddress.Cue = "127.0.0.1:8080";
             this.txtProxyAddress.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.txtProxyAddress.Location = new System.Drawing.Point(120, 45);

@@ -713,6 +713,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_scale24 {
+            get {
+                object obj = ResourceManager.GetObject("img_scale24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_test24 {
             get {
                 object obj = ResourceManager.GetObject("img_test24", resourceCulture);

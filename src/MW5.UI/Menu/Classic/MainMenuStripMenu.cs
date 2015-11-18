@@ -46,6 +46,11 @@ namespace MW5.UI.Menu.Classic
             get { return GetDropDownItem(MainMenuKeys.Tiles); }
         }
 
+        public IDropDownMenuItem ToolsMenu
+        {
+            get { return GetDropDownItem(MainMenuKeys.Tools); }
+        }
+
         public IDropDownMenuItem HelpMenu
         {
             get { return GetDropDownItem(MainMenuKeys.Help); }

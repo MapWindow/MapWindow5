@@ -18,6 +18,8 @@ namespace MW5.Plugins.Interfaces
 
         IDropDownMenuItem TilesMenu { get; }
 
+        IDropDownMenuItem ToolsMenu { get; }
+
         IDropDownMenuItem HelpMenu { get; }
 
         IDropDownMenuItem MapMenu { get; }

@@ -9,5 +9,6 @@
         public const string View = "ViewDropDown";
         public const string Layer = "LayerDropDown";
         public const string Map = "MapDropDown";
+        public const string Tools = "ToolsDropDown";
     }
 }

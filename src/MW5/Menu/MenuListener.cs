@@ -10,6 +10,7 @@ using MW5.Api.Concrete;
 using MW5.Api.Enums;
 using MW5.Api.Static;
 using MW5.Data.Views;
+using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
@@ -58,7 +59,7 @@ namespace MW5.Menu
         public void RunCommand(string menuKey)
         {
             if (HandleCursorChanged(menuKey) || HandleProjectCommand(menuKey) || HandleDialogs(menuKey) ||
-                HandleHelpMenu(menuKey) || HandleLayerMenu(menuKey))
+                HandleHelpMenu(menuKey) || HandleLayerMenu(menuKey) || HandleConfigChanged(menuKey))
             {
                 _context.View.Update();
                 return;
@@ -66,6 +67,9 @@ namespace MW5.Menu
 
             switch (menuKey)
             {
+                case MenuKeys.SetScale:
+                    _context.Container.Run<SetScalePresenter>();
+                    break;
                 case MenuKeys.ZoomToBaseLayer:
                     ZoomToBaseLayer();
                     break;
@@ -124,6 +128,37 @@ namespace MW5.Menu
             }
 
             _context.View.Update();
+        }
+
+        private bool HandleConfigChanged(string itemKey)
+        {
+            var config = AppConfig.Instance;
+
+            switch (itemKey)
+            {
+                 case MenuKeys.ShowZoombar:
+                    config.ShowZoombar = !AppConfig.Instance.ShowZoombar;
+                    _context.Map.ApplyConfig(config);
+                    _context.Map.Redraw(RedrawType.SkipAllLayers);
+                    return true;
+                case MenuKeys.ShowScalebar:
+                    AppConfig.Instance.ShowScalebar = !AppConfig.Instance.ShowScalebar;
+                    _context.Map.ApplyConfig(config);
+                    _context.Map.Redraw(RedrawType.SkipAllLayers);
+                    return true;
+                case MenuKeys.ShowCoordinates:
+                    AppConfig.Instance.ShowCoordinates = !AppConfig.Instance.ShowCoordinates;
+                    _context.Map.ApplyConfig(config);
+                    _context.Map.Redraw(RedrawType.SkipAllLayers);
+                    return true;
+                case MenuKeys.ShowRedrawTime:
+                    AppConfig.Instance.ShowRedrawTime = !AppConfig.Instance.ShowRedrawTime;
+                    _context.Map.ApplyConfig(config);
+                    _context.Map.Redraw(RedrawType.SkipAllLayers);
+                    return true;
+            }
+
+            return false;
         }
 
         private bool HandleCursorChanged(string itemKey)

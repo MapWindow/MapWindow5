@@ -203,7 +203,9 @@ namespace MW5.Menu
         private void map_ExtentsChanged(object sender, EventArgs e)
         {
             var item = _context.StatusBar.FindItem(StatusBarKeys.MapScale, Identity);
-            item.Text = string.Format("1:{0}", Convert.ToInt32(_context.Map.CurrentScale));
+            double scale = _context.Map.CurrentScale;
+            string format = scale <= Int32.MaxValue ? "f0" : "e4";
+            item.Text = string.Format("1:{0}", scale.ToString(format));
         }
     }
 }

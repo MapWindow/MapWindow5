@@ -36,6 +36,12 @@
         public const string AttributesTool = "AttributesTool";
         public const string ZoomToSelected = "ZoomToSelected";
         public const string ClearSelection = "ClearSelection";
+        public const string SetScale = "SetScale";
+
+        public const string ShowZoombar = "ShowZoombar";
+        public const string ShowScalebar = "ShowScalebar";
+        public const string ShowCoordinates = "ShowCoordinates";
+        public const string ShowRedrawTime = "ShowRedrawTime";
 
         public const string PluginsConfigure = "PluginsConfigure";
 

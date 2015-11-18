@@ -103,6 +103,16 @@ namespace MW5.Menu
                 new MenuCommand("Pan", MenuKeys.Pan, Resources.icon_pan,
                 "Pans the map, i.e. allows user to move it around with mouse."),
 
+                new MenuCommand("Show Zoom Bar", MenuKeys.ShowZoombar, null, ""),
+
+                new MenuCommand("Show Scale Bar", MenuKeys.ShowScalebar, null, ""),
+
+                new MenuCommand("Show Coordinates", MenuKeys.ShowCoordinates, null, ""),
+
+                new MenuCommand("Show Redraw Time", MenuKeys.ShowRedrawTime, null, ""),
+
+                new MenuCommand("Set Scale", MenuKeys.SetScale, Resources.img_scale24, ""),
+
                 new MenuCommand("Set Coordinate System", MenuKeys.SetProjection, Resources.icon_crs_change,
                 "Allows to choose coordinate system and projection (deprecated)."),
 

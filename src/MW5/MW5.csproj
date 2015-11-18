@@ -234,6 +234,7 @@
     <Compile Include="Menu\MenuUpdater.cs" />
     <Compile Include="Menu\PluginsMenuHelper.cs" />
     <Compile Include="Views\Abstract\IGeoLocationView.cs" />
+    <Compile Include="Views\Abstract\ISetScaleView.cs" />
     <Compile Include="Views\Abstract\ISpatialIndexView.cs" />
     <Compile Include="Views\Abstract\IWelcomeView.cs" />
     <Compile Include="Views\ConfigCommand.cs" />
@@ -306,6 +307,13 @@
     </Compile>
     <Compile Include="Forms\SplashView.Designer.cs">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SetScalePresenter.cs" />
+    <Compile Include="Views\SetScaleView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\SetScaleView.Designer.cs">
+      <DependentUpon>SetScaleView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\SpatialIndexPresenter.cs" />
     <Compile Include="Views\SpatialIndexView.cs">
@@ -395,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SplashView.resx">
       <DependentUpon>SplashView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\SetScaleView.resx">
+      <DependentUpon>SetScaleView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SpatialIndexView.resx">
       <DependentUpon>SpatialIndexView.cs</DependentUpon>
@@ -603,6 +614,7 @@
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
     <Content Include="MW5.ico" />
+    <None Include="Resources\img_scale24.png" />
     <None Include="Resources\img_wms_add24.png" />
     <None Include="Resources\img_tiles32.png" />
     <None Include="Resources\img_warning64.png" />

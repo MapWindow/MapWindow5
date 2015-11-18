@@ -39,7 +39,14 @@ namespace MW5.Menu
             FindMenuItem(MenuKeys.LayerClearSelection).Enabled = layer != null && layer.IsVector;
             FindMenuItem(MenuKeys.ClearLayers).Enabled = _map.Layers.Any();
             FindMenuItem(MenuKeys.ClearSelection).Enabled = _map.Layers.Any();
+            FindMenuItem(MenuKeys.ZoomToLayer).Enabled = _map.Layers.Any();
             FindMenuItem(MenuKeys.ZoomToBaseLayer).Enabled = !_map.Projection.IsEmpty && _map.Tiles.Visible;
+
+            var config = AppConfig.Instance;
+            FindMenuItem(MenuKeys.ShowCoordinates).Checked = config.ShowCoordinates;
+            FindMenuItem(MenuKeys.ShowScalebar).Checked = config.ShowScalebar;
+            FindMenuItem(MenuKeys.ShowZoombar).Checked = config.ShowZoombar;
+            FindMenuItem(MenuKeys.ShowRedrawTime).Checked = config.ShowRedrawTime;
         }
 
         private void UpdateToolbars(bool rendered)

@@ -71,6 +71,7 @@ namespace MW5.UI.Menu
             items.AddDropDown("Layer", MainMenuKeys.Layer, PluginIdentity.Default);
             items.AddDropDown("Plugins", MainMenuKeys.Plugins, PluginIdentity.Default);
             items.AddDropDown("Tiles", MainMenuKeys.Tiles, PluginIdentity.Default);
+            items.AddDropDown("Tools", MainMenuKeys.Tools, PluginIdentity.Default);
             items.AddDropDown("Help", MainMenuKeys.Help, PluginIdentity.Default);
 
             menu.Update();
