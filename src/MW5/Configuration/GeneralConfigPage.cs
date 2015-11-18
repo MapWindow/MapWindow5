@@ -8,11 +8,12 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
-    public partial class GeneralConfigPage : UserControl, IConfigPage
+    public partial class GeneralConfigPage : ConfigPageBase, IConfigPage
     {
         private readonly IConfigService _configService;
 
@@ -68,12 +69,7 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_options; }
-        }
-
-        public bool PluginPage
-        {
-            get { return false; }
+            get { return Resources.img_component32; }
         }
 
         public ConfigPageType PageType

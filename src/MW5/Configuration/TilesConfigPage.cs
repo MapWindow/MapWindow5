@@ -16,6 +16,7 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Shared;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 
 namespace MW5.Configuration
@@ -23,7 +24,7 @@ namespace MW5.Configuration
     /// <summary>
     /// UI for tiles configuration settings.
     /// </summary>
-    public partial class TilesConfigPage : UserControl, IConfigPage
+    public partial class TilesConfigPage : ConfigPageBase, IConfigPage
     {
         public const string TilesDatabaseFilter = "MapWinGIS tile cache (*.db3)|*.db3";
         private readonly IConfigService _configService;
@@ -58,17 +59,17 @@ namespace MW5.Configuration
 
         public string PageName
         {
-            get { return "Tiles"; }
+            get { return "TMS"; }
+        }
+
+        public override ConfigPageType ParentPage
+        {
+            get { return ConfigPageType.DataFormats; }
         }
 
         public ConfigPageType PageType
         {
             get { return ConfigPageType.Tiles; }
-        }
-
-        public bool PluginPage
-        {
-            get { return false; }
         }
 
         /// <summary>

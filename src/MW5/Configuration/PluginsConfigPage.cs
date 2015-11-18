@@ -11,6 +11,7 @@ using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
 using MW5.Shared;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 using Syncfusion.Grouping;
 using Syncfusion.Windows.Forms.Grid;
@@ -18,7 +19,7 @@ using Syncfusion.Windows.Forms.Grid.Grouping;
 
 namespace MW5.Configuration
 {
-    internal partial class PluginsConfigPage : UserControl, IConfigPage
+    internal partial class PluginsConfigPage : ConfigPageBase, IConfigPage
     {
         private readonly IPluginManager _manager;
         private readonly IAppContext _context;
@@ -90,11 +91,6 @@ namespace MW5.Configuration
         public Bitmap Icon
         {
             get { return Resources.img_plugin32; }
-        }
-
-        public bool PluginPage
-        {
-            get { return false; }
         }
 
         public ConfigPageType PageType

@@ -16,10 +16,7 @@ namespace MW5.Views
             View.ButtonClicked += OnButtonClicked;
         }
 
-        public bool DontShowAgain
-        {
-            get { return View.DontShowAgain; }
-        }
+        public bool DontShowAgain { get; set;}
 
         public DialogResult Result
         {
@@ -33,6 +30,7 @@ namespace MW5.Views
         private void OnButtonClicked()
         {
             ReturnValue = Result != DialogResult.Cancel;
+            DontShowAgain = View.DontShowAgain;
             View.Close();
         }
 

@@ -31,6 +31,8 @@ namespace MW5.Menu
             Commands[MenuKeys.OpenProject].ShortcutKeys = Keys.Control | Keys.O;
 
             Commands[MenuKeys.AddLayer].ShortcutKeys = Keys.Control | Keys.L;
+
+            Commands[MenuKeys.Settings].ShortcutKeys = Keys.Shift | Keys.Alt | Keys.S;
         }
 
         public override IEnumerable<MenuCommand> GetCommands()

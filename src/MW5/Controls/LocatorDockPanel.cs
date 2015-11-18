@@ -10,6 +10,7 @@ using System.Linq;
 using System.Windows.Forms;
 using MW5.Api.Enums;
 using MW5.Api.Interfaces;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
 using MW5.Shared;
 using MW5.UI.Controls;
@@ -19,7 +20,6 @@ namespace MW5.Controls
     public partial class LocatorDockPanel : DockPanelControlBase
     {
         private readonly Color _locatorColor = Color.Red;
-        private bool _backgroundVisible;
 
         private bool _dragging;
         private IEnvelope _extents; // extents of the main map
@@ -32,11 +32,20 @@ namespace MW5.Controls
 
             InitLocatorMap();
 
+            AttachHandlers();
+        }
+
+        private void AttachHandlers()
+        {
             btnUpdateCurrent.Click += (s, e) => Invoke(UpdateWithCurrentExtents);
             btnUpdateFull.Click += (s, e) => Invoke(UpdateFullExtents);
             btnClear.Click += (s, e) => Clear();
-            btnDisplayBackground.Click += (s, e) => _backgroundVisible = !btnDisplayBackground.Checked;
-            contextMenuStripEx1.Opening += (s, e) => btnDisplayBackground.Checked = _backgroundVisible;
+            btnDisplayBackground.Click += (s, e) =>
+            {
+                AppConfig.Instance.OverviewBackgroundVisible = !btnDisplayBackground.Checked;
+            };
+
+            contextMenuStripEx1.Opening += (s, e) => btnDisplayBackground.Checked = AppConfig.Instance.OverviewBackgroundVisible;
 
             mapControl1.MouseDown += MapMouseDown;
             mapControl1.MouseMove += MapMouseMove;
@@ -54,7 +63,7 @@ namespace MW5.Controls
 
         internal bool BackgroundVisible
         {
-            get { return _backgroundVisible; }
+            get { return AppConfig.Instance.OverviewBackgroundVisible; }
         }
 
         internal bool Empty

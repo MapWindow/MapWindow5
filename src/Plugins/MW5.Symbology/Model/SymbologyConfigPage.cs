@@ -15,10 +15,11 @@ using MW5.Plugins.Symbology.Helpers;
 using MW5.Plugins.Symbology.Properties;
 using MW5.Services.Config;
 using MW5.Shared;
+using MW5.UI.Controls;
 
 namespace MW5.Plugins.Symbology.Model
 {
-    internal partial class SymbologyConfigPage : UserControl, IConfigPage
+    internal partial class SymbologyConfigPage : ConfigPageBase, IConfigPage
     {
         private readonly IAppContext _context;
 
@@ -48,14 +49,14 @@ namespace MW5.Plugins.Symbology.Model
             get { return "Symbology"; }
         }
 
+        public override ConfigPageType ParentPage
+        {
+            get { return ConfigPageType.Plugins; }
+        }
+
         public ConfigPageType PageType
         {
             get { return ConfigPageType.Symbology; }
-        }
-
-        public bool PluginPage
-        {
-            get { return true; }
         }
 
         /// <summary>

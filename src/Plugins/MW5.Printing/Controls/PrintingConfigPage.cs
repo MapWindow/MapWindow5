@@ -13,11 +13,12 @@ using MW5.Plugins.Interfaces;
 using MW5.Plugins.Printing.Enums;
 using MW5.Plugins.Printing.Helpers;
 using MW5.Plugins.Printing.Properties;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 
 namespace MW5.Plugins.Printing.Controls
 {
-    public partial class PrintingConfigPage : UserControl, IConfigPage
+    public partial class PrintingConfigPage : ConfigPageBase, IConfigPage
     {
         public PrintingConfigPage()
         {
@@ -53,9 +54,9 @@ namespace MW5.Plugins.Printing.Controls
             get { return ConfigPageType.Printing; }
         }
 
-        public bool PluginPage
+        public override ConfigPageType ParentPage
         {
-            get { return true; }
+            get { return ConfigPageType.Plugins; }
         }
 
         /// <summary>

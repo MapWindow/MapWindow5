@@ -112,6 +112,18 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ToolsConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\ToolsConfigPage.Designer.cs">
+      <DependentUpon>ToolsConfigPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Configuration\DataFormatsConfigPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Configuration\DataFormatsConfigPage.Designer.cs">
+      <DependentUpon>DataFormatsConfigPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Configuration\TilesConfigPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -330,8 +342,14 @@
       <DependentUpon>WelcomeView.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\WelcomeViewModel.cs" />
+    <EmbeddedResource Include="Configuration\DataFormatsConfigPage.resx">
+      <DependentUpon>DataFormatsConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration\TilesConfigPage.resx">
       <DependentUpon>TilesConfigPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Configuration\ToolsConfigPage.resx">
+      <DependentUpon>ToolsConfigPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Configuration\VectorConfigPage.resx">
       <DependentUpon>VectorConfigPage.cs</DependentUpon>
@@ -614,6 +632,13 @@
   <ItemGroup>
     <Content Include="icon_mapwindow.ico" />
     <Content Include="MW5.ico" />
+    <None Include="Resources\img_coordinates32.png" />
+    <None Include="Resources\img_vector32_1.png" />
+    <None Include="Resources\img_eye32.png" />
+    <None Include="Resources\img_tools32.png" />
+    <None Include="Resources\img_measure32.png" />
+    <None Include="Resources\img_layers32.png" />
+    <None Include="Resources\img_server32.png" />
     <None Include="Resources\img_scale24.png" />
     <None Include="Resources\img_wms_add24.png" />
     <None Include="Resources\img_tiles32.png" />
@@ -621,7 +646,6 @@
     <None Include="Resources\ico_tasks.ico" />
     <None Include="Resources\ico_results.ico" />
     <None Include="Resources\img_widgets32.png" />
-    <None Include="Resources\img_measure32.png" />
     <None Include="Resources\img_vector32.png" />
     <None Include="Resources\img_picture32.png" />
     <None Include="Resources\img_world_grid32.png" />

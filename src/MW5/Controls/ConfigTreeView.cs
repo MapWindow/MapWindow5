@@ -18,6 +18,24 @@ namespace MW5.Controls
     {
         private ConfigViewModel _model;
 
+        public ConfigTreeView()
+        {
+            AfterExpand += ConfigTreeView_AfterExpand;
+        }
+
+        private void ConfigTreeView_AfterExpand(object sender, TreeViewAdvNodeEventArgs e)
+        {
+            foreach (TreeNodeAdv node in Nodes)
+            {
+                if (node != e.Node)
+                {
+                    node.Expanded = false;
+                }
+            }
+
+            SelectedNode = e.Node;
+        }
+
         public void Initialize(ConfigViewModel model)
         {
             if (model == null) throw new ArgumentNullException("model");
@@ -29,26 +47,29 @@ namespace MW5.Controls
             // usual call from constructor won't work here since list of icons is generated dynamically
             CreateImageList();
 
-            int iconCount = 0;
+            AddAllPages();
+        }
 
-            AddPages(Nodes, ref iconCount, false);
+        private void AddAllPages()
+        {
+            AddPages(Nodes, ConfigPageType.None);
 
-            var node = NodeForPage(_model.GetPage(ConfigPageType.Plugins));
-            if (node != null)
+            foreach (var page in _model.Pages.Where(p => p.ParentPage == ConfigPageType.None))
             {
-                AddPages(node.Nodes, ref iconCount, true);
-                node.Expanded = true;
+                var node = NodeForPage(page);
+                AddPages(node.Nodes, page.PageType);
             }
         }
 
-        private void AddPages(TreeNodeAdvCollection nodes, ref int iconCount, bool plugin)
+        private void AddPages(TreeNodeAdvCollection nodes, ConfigPageType parent)
         {
             foreach(var page in _model.Pages)
             {
-                if (page.PluginPage != plugin) continue;
+                if (page.ParentPage != parent) continue;
 
-                var node = CreateNodeForPage(page, iconCount++);
+                var node = CreateNodeForPage(page);
                 page.Tag = node;
+                node.Expanded = false;
                 nodes.Add(node);
             }
         }
@@ -60,8 +81,11 @@ namespace MW5.Controls
                 yield break;
             }
 
-            foreach (var p in _model.Pages)
+            var pages = _model.Pages.ToList();
+            for (int i = 0; i < pages.Count(); i++)
             {
+                var p = pages[i];
+                p.ImageIndex = i;
                 yield return p.Icon;
             }
         }
@@ -101,6 +125,12 @@ namespace MW5.Controls
                     if (node != null)
                     {
                         selectedNode = node;
+                        if (selectedNode.Parent != null)
+                        {
+                            selectedNode.Parent.Expand();
+                        }
+
+                        break;
                     }
                 }
             }
@@ -113,12 +143,12 @@ namespace MW5.Controls
             return page.Tag as TreeNodeAdv;
         }
 
-        private TreeNodeAdv CreateNodeForPage(IConfigPage page, int index)
+        private TreeNodeAdv CreateNodeForPage(IConfigPage page)
         {
             return new TreeNodeAdv(page.PageName)
             {
                 Tag = page,
-                LeftImageIndices = new[] { index }
+                LeftImageIndices = new[] { page.ImageIndex }
             };
         }
     }

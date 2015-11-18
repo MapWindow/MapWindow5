@@ -10,11 +10,12 @@ using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
 using MW5.Shared;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
-    public partial class MapConfigPage : UserControl, IConfigPage
+    public partial class MapConfigPage : ConfigPageBase, IConfigPage
     {
         private readonly IConfigService _configService;
 
@@ -86,9 +87,9 @@ namespace MW5.Configuration
             get { return Resources.img_globe32; }
         }
 
-        public bool PluginPage
+        public override ConfigPageType ParentPage
         {
-            get { return false; }
+            get { return ConfigPageType.General; }
         }
 
         public ConfigPageType PageType

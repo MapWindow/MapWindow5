@@ -523,6 +523,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_coordinates32 {
+            get {
+                object obj = ResourceManager.GetObject("img_coordinates32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_default24 {
             get {
                 object obj = ResourceManager.GetObject("img_default24", resourceCulture);
@@ -563,6 +573,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_eye32 {
+            get {
+                object obj = ResourceManager.GetObject("img_eye32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_folder_open32 {
             get {
                 object obj = ResourceManager.GetObject("img_folder_open32", resourceCulture);
@@ -586,6 +606,16 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap img_globe32 {
             get {
                 object obj = ResourceManager.GetObject("img_globe32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_layers32 {
+            get {
+                object obj = ResourceManager.GetObject("img_layers32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -723,6 +753,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_server32 {
+            get {
+                object obj = ResourceManager.GetObject("img_server32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_test24 {
             get {
                 object obj = ResourceManager.GetObject("img_test24", resourceCulture);
@@ -743,6 +783,16 @@ namespace MW5.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap img_tools32 {
+            get {
+                object obj = ResourceManager.GetObject("img_tools32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap img_tune32 {
             get {
                 object obj = ResourceManager.GetObject("img_tune32", resourceCulture);
@@ -756,6 +806,16 @@ namespace MW5.Properties {
         internal static System.Drawing.Bitmap img_vector32 {
             get {
                 object obj = ResourceManager.GetObject("img_vector32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_vector32_1 {
+            get {
+                object obj = ResourceManager.GetObject("img_vector32_1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

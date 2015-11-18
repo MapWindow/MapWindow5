@@ -78,6 +78,12 @@
     <Compile Include="..\SolutionItems\SolutionInfoCore.cs">
       <Link>Properties\SolutionInfoCore.cs</Link>
     </Compile>
+    <Compile Include="Controls\ConfigPageBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ConfigPageBase.Designer.cs">
+      <DependentUpon>ConfigPageBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\ConfigPageControl.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -19,7 +19,7 @@ namespace MW5.Plugins.Interfaces
 
         ConfigPageType PageType { get; }
 
-        bool PluginPage { get; }
+        ConfigPageType ParentPage { get; }
 
         object Tag { get; set; }
 
@@ -31,5 +31,9 @@ namespace MW5.Plugins.Interfaces
         void Initialize();
 
         void Save();
+
+        int ImageIndex { get; set; }
+
+        Size OriginalSize { get; set; }
     }
 }

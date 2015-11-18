@@ -11,6 +11,7 @@ using MW5.Shared;
 using MW5.UI.Forms;
 using MW5.Views;
 using MW5.Views.Abstract;
+using Syncfusion.Drawing;
 
 namespace MW5.Views
 {
@@ -30,6 +31,14 @@ namespace MW5.Views
             btnSave.Click += (s, e) => Invoke(SaveClicked);
 
             FormClosed += ConfigView_FormClosed;
+
+            InitTreeViewStyle();
+        }
+
+        private void InitTreeViewStyle()
+        {
+            _treeViewAdv1.SelectedNodeBackground = new BrushInfo(Color.FromKnownColor(KnownColor.Control));
+            _treeViewAdv1.FullRowSelect = true;
         }
 
         public bool PreFilterMessage(ref Message m)
@@ -92,17 +101,24 @@ namespace MW5.Views
 
         private void DisplaySelectedPage()
         {
-            var page = SelectedPage as Control;
-            if (page != null)
-            {
-                page.Dock = DockStyle.Fill;
-                configPageControl1.Description = SelectedPage.Description;
-                configPageControl1.Icon = SelectedPage.Icon;
-                configPageControl1.ConfigPage = page;
+            var page = SelectedPage;
+            var ctrl = page as Control;
+            if (page == null || ctrl == null) return;
 
-                page.BringToFront();
-                Invoke(PageShown);
+            if (page.OriginalSize == default(Size))
+            {
+                page.OriginalSize = ctrl.Size;
             }
+
+            configPageControl1.Description = SelectedPage.Description;
+            configPageControl1.Icon = SelectedPage.Icon;
+            configPageControl1.ConfigPage = ctrl;
+            ctrl.Dock = DockStyle.Fill;
+            ctrl.BringToFront();
+
+            Invoke(PageShown);
+
+            _treeViewAdv1.SelectedNode.Expand();
         }
 
         public ButtonBase OkButton

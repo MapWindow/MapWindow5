@@ -115,7 +115,7 @@ namespace MW5.Listeners
                 }
 
                 config.ShowSpatialIndexDialog = !presenter.DontShowAgain;
-                config.CreateSpatialIndexOnOpening = presenter.Result == DialogResult.Yes;
+                config.CreateSpatialIndexOnOpening = presenter.ReturnValue;
             }
 
             if (config.CreateSpatialIndexOnOpening)

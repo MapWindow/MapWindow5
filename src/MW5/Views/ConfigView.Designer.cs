@@ -37,7 +37,7 @@ namespace MW5.Views
             this.btnCancel = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnOk = new Syncfusion.Windows.Forms.ButtonAdv();
             this.btnSave = new Syncfusion.Windows.Forms.ButtonAdv();
-            this.configPageControl1 = new ConfigPageControl();
+            this.configPageControl1 = new MW5.UI.Controls.ConfigPageControl();
             this.toolStripEx1 = new Syncfusion.Windows.Forms.Tools.ToolStripEx();
             this.toolOptions = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolOpenFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,15 +55,15 @@ namespace MW5.Views
             this._treeViewAdv1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this._treeViewAdv1.ApplyStyle = true;
-            this._treeViewAdv1.BackColor = System.Drawing.Color.Gray;
+            this._treeViewAdv1.BackColor = System.Drawing.Color.White;
             this._treeViewAdv1.BackgroundColor = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.Gray);
             this._treeViewAdv1.BeforeTouchSize = new System.Drawing.Size(174, 473);
+            this._treeViewAdv1.Border3DStyle = System.Windows.Forms.Border3DStyle.Flat;
             this._treeViewAdv1.BorderColor = System.Drawing.Color.DarkGray;
             this._treeViewAdv1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this._treeViewAdv1.CanSelectDisabledNode = false;
             this._treeViewAdv1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this._treeViewAdv1.ForeColor = System.Drawing.Color.Black;
-            this._treeViewAdv1.FullRowSelect = true;
             this._treeViewAdv1.GutterSpace = 15;
             // 
             // 
@@ -77,15 +77,17 @@ namespace MW5.Views
             this._treeViewAdv1.HideSelection = false;
             this._treeViewAdv1.InactiveSelectedNodeForeColor = System.Drawing.Color.Black;
             this._treeViewAdv1.ItemHeight = 30;
+            this._treeViewAdv1.LineColor = System.Drawing.Color.DarkGray;
             this._treeViewAdv1.Location = new System.Drawing.Point(3, 12);
             this._treeViewAdv1.MetroColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220)))));
             this._treeViewAdv1.Name = "_treeViewAdv1";
-            this._treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.SystemColors.Control);
+            this._treeViewAdv1.SelectedNodeBackground = new Syncfusion.Drawing.BrushInfo(System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(165)))), ((int)(((byte)(220))))));
             this._treeViewAdv1.SelectedNodeForeColor = System.Drawing.Color.Black;
             this._treeViewAdv1.ShowFocusRect = false;
-            this._treeViewAdv1.ShowRootLines = false;
+            this._treeViewAdv1.ShowLines = false;
             this._treeViewAdv1.ShowSuperTooltip = false;
             this._treeViewAdv1.Size = new System.Drawing.Size(174, 473);
+            this._treeViewAdv1.Style = Syncfusion.Windows.Forms.Tools.TreeStyle.Metro;
             this._treeViewAdv1.TabIndex = 0;
             this._treeViewAdv1.Text = "treeViewAdv1";
             this._treeViewAdv1.ThemesEnabled = false;
@@ -233,9 +235,9 @@ namespace MW5.Views
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(708, 523);
+            this.Controls.Add(this._treeViewAdv1);
             this.Controls.Add(this.toolStripEx1);
             this.Controls.Add(this.configPageControl1);
-            this.Controls.Add(this._treeViewAdv1);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);

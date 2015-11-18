@@ -15,11 +15,12 @@ using MW5.Plugins.Services;
 using MW5.Properties;
 using MW5.Services.Config;
 using MW5.Shared;
+using MW5.UI.Controls;
 using MW5.UI.Helpers;
 
 namespace MW5.Configuration
 {
-    public partial class WidgetsConfigPage : UserControl, IConfigPage
+    public partial class WidgetsConfigPage : ConfigPageBase, IConfigPage
     {
         private readonly IConfigService _configService;
 
@@ -69,7 +70,7 @@ namespace MW5.Configuration
 
         public string PageName
         {
-            get { return "Tools"; }
+            get { return "View"; }
         }
 
         public void Save()
@@ -90,12 +91,12 @@ namespace MW5.Configuration
 
         public Bitmap Icon
         {
-            get { return Resources.img_widgets32; }
+            get { return Resources.img_eye32; }
         }
 
-        public bool PluginPage
+        public override ConfigPageType ParentPage
         {
-            get { return false; }
+            get { return ConfigPageType.General; }
         }
 
         public ConfigPageType PageType

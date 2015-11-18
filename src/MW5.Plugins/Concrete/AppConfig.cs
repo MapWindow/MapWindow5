@@ -230,6 +230,9 @@ namespace MW5.Plugins.Concrete
         public MouseWheelDirection MouseWheelDirection { get; set; }
 
         [DataMember]
+        public bool OverviewBackgroundVisible { get; set; }
+
+        [DataMember]
         public int PrintingUnits { get; set; }
 
         [DataMember]
@@ -474,6 +477,7 @@ namespace MW5.Plugins.Concrete
             MeasuringShowLength = true;
             MeasuringShowTotalLength = true;
             MouseWheelDirection = MouseWheelDirection.Forward;
+            OverviewBackgroundVisible = true;
             PrintingUnits = 0;
             PrintingMargins = new Margins(25, 25, 50, 50);
             PrintingOrientation = Orientation.Vertical;

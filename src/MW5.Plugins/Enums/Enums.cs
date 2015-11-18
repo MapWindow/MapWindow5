@@ -151,6 +151,7 @@
 
     public enum ConfigPageType
     {
+        None = -1,
         General = 0,
         Map = 1,
         Plugins = 2,
@@ -162,6 +163,8 @@
         Symbology = 8,
         Tiles = 9,
         Printing = 10,
+        DataFormats = 11,
+        Tools = 12,
     }
 
     public enum SymbologyStorage
