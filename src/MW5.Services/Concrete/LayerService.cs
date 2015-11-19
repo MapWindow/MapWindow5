@@ -60,6 +60,12 @@ namespace MW5.Services.Concrete
         {
             var layer = _context.Map.GetLayer(layerHandle);
 
+            if (layer == null)
+            {
+                Logger.Current.Warn("LayerService.RemoveLayer: attempting to remove layer with invalid handle.");
+                return false;
+            }
+
             if (!silent)
             {
                 if (!MessageService.Current.Ask(string.Format("Do you want to remove the layer: {0}?", layer.Name)))

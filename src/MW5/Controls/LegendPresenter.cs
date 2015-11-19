@@ -9,7 +9,9 @@ using MW5.Api.Interfaces;
 using MW5.Api.Legend;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
+using MW5.Api.Static;
 using MW5.Plugins.Enums;
+using MW5.Plugins.Helpers;
 using MW5.Plugins.Interfaces;
 using MW5.Plugins.Mvp;
 using MW5.Plugins.Services;
@@ -39,6 +41,16 @@ namespace MW5.Controls
             _layerService = layerService;
             _broadcaster = broadcaster;
             _legendDockPanel = legendDockPanel;
+
+            View.LegendKeyDown += OnLegendKeyDown;
+        }
+
+        private void OnLegendKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete && _legendDockPanel.Legend.SelectedLayer != null)
+            {
+                RunCommand(LegendCommand.RemoveLayer);
+            }
         }
 
         public IMuteLegend Legend

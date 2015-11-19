@@ -26,6 +26,12 @@ namespace MW5.Controls
             legendControl1.LegendClick += OnLegendClick;
         }
 
+        public event KeyEventHandler LegendKeyDown
+        {
+            add { legendControl1.KeyDown += value; }
+            remove { legendControl1.KeyDown -= value; }
+        }
+
         public int SelectedGroupHandle { get; private set; }
 
         public IMuteLegend Legend
