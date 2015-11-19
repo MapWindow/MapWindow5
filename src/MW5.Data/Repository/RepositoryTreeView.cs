@@ -74,8 +74,6 @@ namespace MW5.Data.Repository
             _repository.TmsProviders.ItemsCleared += TmsProvidersCleared;
         }
 
-        
-
         private void PopulateTree()
         {
             PopulateDatabases();
@@ -88,6 +86,11 @@ namespace MW5.Data.Repository
         private void PopulateTms()
         {
             var root = Items.AddItem(RepositoryItemType.TmsRoot);
+
+            foreach (var p in _repository.DefaultTmsProviders)
+            {
+                root.SubItems.AddTmsProvider(p);
+            }
 
             foreach (var item in _repository.TmsProviders)
             {

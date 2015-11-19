@@ -15,9 +15,9 @@ namespace MW5.Plugins.Model
         public static int GenerateId(string url)
         {
             int value = Math.Abs(url.GetHashCode());
-            if (value < TmsProvider.MinId)
+            if (value < MinId)
             {
-                value += TmsProvider.MinId;
+                value += MinId;
             }
 
             return value;
@@ -91,6 +91,8 @@ namespace MW5.Plugins.Model
                 MaxY = bounds.MaxY;
             }
         }
+
+        public bool Editable { get; set; }
 
         [DataMember]
         public double MinX { get; set; }

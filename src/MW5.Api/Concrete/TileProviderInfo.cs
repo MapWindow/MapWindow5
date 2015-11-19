@@ -36,7 +36,7 @@ namespace MW5.Api.Concrete
             set { _providers.Name[_index] = value; }
         }
 
-        public string UrlPattern
+        public string Url
         {
             get { return _providers.UrlPattern[_index]; }
         }

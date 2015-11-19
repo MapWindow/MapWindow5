@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,10 @@ namespace MW5.Plugins.Interfaces
         IEnumerable<DatabaseConnection> Connections { get; }
         IEnumerable<WmsServer> WmsServers { get; }
         TmsProviderList TmsProviders { get;}
-        
+        IEnumerable<TmsProvider> DefaultTmsProviders { get; }
+
+        void Initialize(IAppContext context);
+
         void AddFolderLink();
         void AddFolderLink(string path);
         void RemoveFolderLink(string path, bool silent);

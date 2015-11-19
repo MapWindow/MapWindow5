@@ -114,6 +114,8 @@ namespace MW5
 
             _projectionDatabase.ReadFromExecutablePath(Application.ExecutablePath);
 
+            _repository.Initialize(this);
+
 			// comment this line to prevent locator loading            
 			// may be useful for ocx debugging to not create additional 
 			// instance of map

@@ -25,6 +25,7 @@ namespace MW5.Data.Repository
         private List<string> _folders;
         private BindingList<WmsServer> _wmsServers;
         private List<DatabaseConnection> _connections;
+        private List<TmsProvider> _defaultTmsProviders;
         private TmsProviderList _tmsProviders;
 
         public event EventHandler<FolderEventArgs> FolderAdded;
@@ -54,6 +55,27 @@ namespace MW5.Data.Repository
             };
 
             _tmsProviders = new TmsProviderList();
+
+            _defaultTmsProviders = new List<TmsProvider>();
+        }
+
+        public void Initialize(IAppContext context)
+        {
+            foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
+            {
+                var provider = new TmsProvider
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    MinZoom = p.MinZoom,
+                    MaxZoom = p.MaxZoom,
+                    Bounds = p.GeographicBounds,
+                    Editable = false,
+                    Url = p.Url
+                };
+
+                _defaultTmsProviders.Add(provider);
+            }
         }
 
         public IEnumerable<string> Folders
@@ -74,6 +96,11 @@ namespace MW5.Data.Repository
         public TmsProviderList TmsProviders
         {
             get { return _tmsProviders; }
+        }
+
+        public IEnumerable<TmsProvider> DefaultTmsProviders
+        {
+            get { return _defaultTmsProviders; }
         }
 
         public void AddFolderLink()

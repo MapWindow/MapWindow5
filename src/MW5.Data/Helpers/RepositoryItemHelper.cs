@@ -61,8 +61,9 @@ namespace MW5.Data.Helpers
                 sb.AppendLine("Description: " + provider.Description);
             }
 
-            sb.AppendFormat("Latitude: {0} to {1}" + Environment.NewLine, provider.MinY, provider.MaxY);
-            sb.AppendFormat("Longitude: {0} to {1}" + Environment.NewLine, provider.MinX, provider.MaxX);
+            var bounds = provider.Bounds;
+            sb.AppendFormat("Latitude: {0} to {1}" + Environment.NewLine, bounds.MinY, bounds.MaxY);
+            sb.AppendFormat("Longitude: {0} to {1}" + Environment.NewLine, bounds.MinX, bounds.MaxX);
 
             return sb.ToString();
         }
