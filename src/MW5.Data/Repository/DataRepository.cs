@@ -27,6 +27,7 @@ namespace MW5.Data.Repository
         private List<DatabaseConnection> _connections;
         private List<TmsProvider> _defaultTmsProviders;
         private TmsProviderList _tmsProviders;
+        private RepositoryGroupList _tmsGroups;
 
         public event EventHandler<FolderEventArgs> FolderAdded;
         public event EventHandler<FolderEventArgs> FolderRemoved;
@@ -57,6 +58,12 @@ namespace MW5.Data.Repository
             _tmsProviders = new TmsProviderList();
 
             _defaultTmsProviders = new List<TmsProvider>();
+
+            _tmsGroups = new RepositoryGroupList
+                             {
+                                 new RepositoryGroup(TmsProvider.DefaultGroupId, "Default"),
+                                 new RepositoryGroup(TmsProvider.CustomGroupId, "Custom")
+                             };
         }
 
         public void Initialize(IAppContext context)
@@ -76,6 +83,11 @@ namespace MW5.Data.Repository
 
                 _defaultTmsProviders.Add(provider);
             }
+        }
+
+        public RepositoryGroupList TmsGroups
+        {
+            get { return _tmsGroups; }
         }
 
         public IEnumerable<string> Folders

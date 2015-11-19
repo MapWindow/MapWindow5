@@ -50,6 +50,8 @@ namespace MW5.Data.Repository
 
             switch (type)
             {
+                case RepositoryItemType.Group:
+                    return new GroupItem(node);
                 case RepositoryItemType.FileSystem:
                 case RepositoryItemType.Databases:
                 case RepositoryItemType.TmsRoot:

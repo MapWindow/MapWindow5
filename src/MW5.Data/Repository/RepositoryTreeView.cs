@@ -12,6 +12,7 @@ using MW5.Plugins.Concrete;
 using MW5.Plugins.Enums;
 using MW5.Plugins.Events;
 using MW5.Plugins.Interfaces;
+using MW5.Plugins.Model;
 using MW5.Shared;
 using MW5.UI.Controls;
 using Syncfusion.Windows.Forms.Tools;
@@ -87,14 +88,27 @@ namespace MW5.Data.Repository
         {
             var root = Items.AddItem(RepositoryItemType.TmsRoot);
 
-            foreach (var p in _repository.DefaultTmsProviders)
+            foreach (var g in _repository.TmsGroups)
             {
-                root.SubItems.AddTmsProvider(p);
+                root.SubItems.AddGroup(g);
             }
 
-            foreach (var item in _repository.TmsProviders)
+            var group = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.DefaultGroupId);
+            if (group != null)
             {
-                root.SubItems.AddTmsProvider(item);
+                foreach (var p in _repository.DefaultTmsProviders)
+                {
+                    group.SubItems.AddTmsProvider(p);
+                }
+            }
+
+            group = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.CustomGroupId);
+            if (group != null)
+            {
+                foreach (var item in _repository.TmsProviders)
+                {
+                    group.SubItems.AddTmsProvider(item);
+                }
             }
 
             root.Expand();
@@ -141,27 +155,27 @@ namespace MW5.Data.Repository
             }
         }
 
-        private void OnTmsProviderAdded(object sender, RepositoryListEventArgs<Plugins.Model.TmsProvider> e)
+        private void OnTmsProviderAdded(object sender, RepositoryListEventArgs<TmsProvider> e)
         {
-            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
-            if (root != null)
+            var group = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.CustomGroupId);
+            if (group != null)
             {
-                root.SubItems.AddTmsProvider(e.Item);
+                group.SubItems.AddTmsProvider(e.Item);
             }
         }
 
         private void TmsProvidersCleared(object sender, EventArgs e)
         {
-            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+            var root = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.CustomGroupId);
             if (root != null)
             {
                 root.SubItems.Clear();
             }
         }
 
-        private void OnTmsProviderRemoved(object sender, RepositoryListEventArgs<Plugins.Model.TmsProvider> e)
+        private void OnTmsProviderRemoved(object sender, RepositoryListEventArgs<TmsProvider> e)
         {
-            var root = GetSpecialItem(RepositoryItemType.TmsRoot);
+            var root = GetGroup(RepositoryItemType.TmsRoot, TmsProvider.CustomGroupId);
             if (root != null)
             {
                 var item = root.SubItems.OfType<ITmsItem>().FirstOrDefault(tms => tms.Provider == e.Item);
@@ -235,6 +249,13 @@ namespace MW5.Data.Repository
         {
             var item = GetSpecialItem(RepositoryItemType.Databases);
             return item.SubItems.OfType<IServerItem>().FirstOrDefault(db => db.DatabaseType == databaseType);
+        }
+
+        public IGroupItem GetGroup(RepositoryItemType rootType, Guid groupId)
+        {
+            var root = GetSpecialItem(rootType);
+            if (root == null) return null;
+            return root.SubItems.OfType<IGroupItem>().FirstOrDefault(g => g.Group.Guid == groupId);
         }
 
         public IRepositoryItem GetSpecialItem(RepositoryItemType type)

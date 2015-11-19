@@ -156,6 +156,8 @@
     <Compile Include="Interfaces\Projections\ITerritory.cs" />
     <Compile Include="Interfaces\IToolboxGroup.cs" />
     <Compile Include="Menu\MenuKeys.cs" />
+    <Compile Include="Model\RepositoryGroup.cs" />
+    <Compile Include="Model\RepositoryGroupList.cs" />
     <Compile Include="Model\TmsProvider.cs" />
     <Compile Include="Model\TmsProviderList.cs" />
     <Compile Include="Mvp\AppViewFactory.cs" />

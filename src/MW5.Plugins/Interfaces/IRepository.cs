@@ -17,6 +17,7 @@ namespace MW5.Plugins.Interfaces
         IEnumerable<DatabaseConnection> Connections { get; }
         IEnumerable<WmsServer> WmsServers { get; }
         TmsProviderList TmsProviders { get;}
+        RepositoryGroupList TmsGroups { get; }
         IEnumerable<TmsProvider> DefaultTmsProviders { get; }
 
         void Initialize(IAppContext context);

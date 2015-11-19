@@ -113,7 +113,10 @@
     <Compile Include="Enums\Enums.cs" />
     <Compile Include="Helpers\RepositoryItemHelper.cs" />
     <Compile Include="Helpers\TileCacheHelper.cs" />
+    <Compile Include="Repository\GroupItem.cs" />
+    <Compile Include="Repository\GroupItemMetadata.cs" />
     <Compile Include="Repository\IExpandableItem.cs" />
+    <Compile Include="Repository\IGroupItem.cs" />
     <Compile Include="Repository\ILayerItem.cs" />
     <Compile Include="Repository\IServerItem.cs" />
     <Compile Include="Repository\ITmsItem.cs" />

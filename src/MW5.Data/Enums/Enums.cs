@@ -18,6 +18,7 @@ namespace MW5.Data.Enums
         DatabaseLayer = 7,
         TmsRoot = 8,
         TmsSource = 9,
+        Group = 10,
     }
 
     public enum RepositoryIcon

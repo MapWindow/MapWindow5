@@ -11,6 +11,8 @@ namespace MW5.Plugins.Model
     public class TmsProvider
     {
         public const int MinId = 1000;
+        public static Guid DefaultGroupId = new Guid("104229EC-8F3E-4C19-A15B-C871109B61FE");
+        public static Guid CustomGroupId = new Guid("6932A104-7644-4964-AEDC-DCCB2E7BB72A");
 
         public static int GenerateId(string url)
         {

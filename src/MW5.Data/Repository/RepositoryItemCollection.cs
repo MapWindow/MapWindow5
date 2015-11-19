@@ -89,6 +89,14 @@ namespace MW5.Data.Repository
             return AddNode(node) as ITmsItem;
         }
 
+        public IGroupItem AddGroup(RepositoryGroup group)
+        {
+            var node = CreateNode(RepositoryItemType.Group);
+            node.Text = group.Name;
+            node.TagObject = new GroupItemMetadata(group);
+            return AddNode(node) as IGroupItem;
+        }
+
         public IDatabaseItem AddDatabase(DatabaseConnection connection)
         {
             var node = CreateNode(RepositoryItemType.Database);
@@ -210,6 +218,7 @@ namespace MW5.Data.Repository
                 case RepositoryItemType.FileSystem:
                     return (int)RepositoryIcon.FileSystem;
                 case RepositoryItemType.Folder:
+                case RepositoryItemType.Group:
                     return (int)RepositoryIcon.Folder;
                 case RepositoryItemType.Vector:
                 case RepositoryItemType.DatabaseLayer:

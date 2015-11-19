@@ -144,13 +144,13 @@ namespace MW5.Plugins.Repository.Views
         private void AddTmsProvider()
         {
             var item = GetSelectedItem<IRepositoryItem>();
-            if (item != null && item.Type == RepositoryItemType.TmsRoot)
+
+            if (item == null || item.Type != RepositoryItemType.TmsRoot) return;
+
+            var provider = new TmsProvider();
+            if (_context.Container.Run<TmsProviderPresenter, TmsProvider>(provider))
             {
-                var provider = new TmsProvider();
-                if (_context.Container.Run<TmsProviderPresenter, TmsProvider>(provider))
-                {
-                    _repository.TmsProviders.Add(provider);
-                }
+                _repository.TmsProviders.Add(provider);
             }
         }
 

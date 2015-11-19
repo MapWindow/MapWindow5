@@ -115,40 +115,46 @@ namespace MW5.Services.Concrete
             AppConfig.Instance = xmlConfig.Settings;
             AppConfig.Instance.ApplicationPlugins = xmlConfig.ApplicationPlugins.Select(p => p.Guid).ToList();
 
-            if (xmlConfig.Repository != null)
+            if (xmlConfig.Repository == null) return;
+
+            if (xmlConfig.Repository.Folders != null)
             {
-                if (xmlConfig.Repository.Folders != null)
+                foreach (var item in xmlConfig.Repository.Folders)
                 {
-                    foreach (var item in xmlConfig.Repository.Folders)
-                    {
-                        _repository.AddFolderLink(item);
-                    }
+                    _repository.AddFolderLink(item);
                 }
+            }
 
-                if (xmlConfig.Repository.Connections != null)
+            if (xmlConfig.Repository.Connections != null)
+            {
+                foreach (var item in xmlConfig.Repository.Connections)
                 {
-                    foreach (var item in xmlConfig.Repository.Connections)
-                    {
-                        _repository.AddConnection(item);
-                    }
+                    _repository.AddConnection(item);
                 }
+            }
 
-                if (xmlConfig.Repository.WmsServers != null)
+            if (xmlConfig.Repository.WmsServers != null)
+            {
+                _repository.ClearWmsServers();
+
+                foreach (var item in xmlConfig.Repository.WmsServers)
                 {
-                    _repository.ClearWmsServers();
-
-                    foreach (var item in xmlConfig.Repository.WmsServers)
-                    {
-                        _repository.AddWmsServer(item);
-                    }
+                    _repository.AddWmsServer(item);
                 }
+            }
 
-                if (xmlConfig.Repository.TmsProviders != null)
-                {
-                    _repository.TmsProviders.Clear();
+            if (xmlConfig.Repository.TmsProviders != null)
+            {
+                _repository.TmsProviders.Clear();
 
-                    _repository.TmsProviders.AddRange(xmlConfig.Repository.TmsProviders);
-                }
+                _repository.TmsProviders.AddRange(xmlConfig.Repository.TmsProviders);
+            }
+
+            if (xmlConfig.Repository.TmsGroups != null)
+            {
+                _repository.TmsGroups.Clear();
+
+                _repository.TmsGroups.AddRange(xmlConfig.Repository.TmsGroups);
             }
         }
     }

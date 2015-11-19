@@ -9,6 +9,7 @@ namespace MW5.Data.Repository
     {
         RepositoryItemCollection Items { get; }
         IRepositoryItem GetSpecialItem(RepositoryItemType type);
+        IGroupItem GetGroup(RepositoryItemType rootType, Guid groupId);
         IRepositoryItem SelectedItem { get; }
         event EventHandler<RepositoryEventArgs> ItemSelected;
         void UpdateState(HashSet<LayerIdentity> layers);

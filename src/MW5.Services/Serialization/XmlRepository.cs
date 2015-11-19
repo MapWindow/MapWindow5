@@ -21,7 +21,10 @@ namespace MW5.Services.Serialization
             Connections = repository.Connections.ToList();
             WmsServers = repository.WmsServers.ToList();
             TmsProviders = repository.TmsProviders.ToList();
+            TmsGroups = repository.TmsGroups.ToList();
         }
+
+        public List<RepositoryGroup> TmsGroups { get; set; }
 
         [DataMember]
         public List<string> Folders { get; set; }
