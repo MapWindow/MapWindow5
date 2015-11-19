@@ -367,8 +367,14 @@ namespace MW5.Plugins.Repository.Views
             var item = GetSelectedItem<IRepositoryItem>();
             if (item is IFolderItem || item is IDatabaseItem)
             {
-                item.Refresh();
+                RefreshItem(item);
             }
+        }
+
+        private void RefreshItem(IRepositoryItem item)
+        {
+            item.Refresh();
+            View.Tree.UpdateState(item);
         }
 
         private void RemoveConnection()
@@ -399,7 +405,7 @@ namespace MW5.Plugins.Repository.Views
                                 MessageService.Current.Warn("Failed to remove layer.");
                             }
 
-                            db.Refresh();
+                            RefreshItem(db);
                         }
                     }
                 }
@@ -430,8 +436,7 @@ namespace MW5.Plugins.Repository.Views
                 {
                     var folder = item.Folder;
                     GeoSource.Remove(item.Filename);
-
-                    folder.Refresh();
+                    RefreshItem(folder);
                 }
                 catch (Exception ex)
                 {

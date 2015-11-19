@@ -66,7 +66,32 @@ namespace MW5.Data.Repository
                              };
         }
 
+        private void AddRootFolders()
+        {
+            try
+            {
+                foreach (var d in DriveInfo.GetDrives())
+                {
+                    AddFolderLink(d.RootDirectory.FullName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.Current.Warn("Failed to enumerate virtual drives on the machine.", ex);
+            }
+        }
+
         public void Initialize(IAppContext context)
+        {
+            AddDefautlTmsProviders(context);
+
+            if (AppConfig.Instance.FirstRun)
+            {
+                AddRootFolders();
+            }
+        }
+
+        private void AddDefautlTmsProviders(IAppContext context)
         {
             foreach (var p in context.Map.Tiles.Providers.Where(p => !p.Custom))
             {

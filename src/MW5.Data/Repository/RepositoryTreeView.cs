@@ -395,13 +395,18 @@ namespace MW5.Data.Repository
             }
         }
 
-        private void RepositoryTreeView_AfterExpand(object sender, TreeViewAdvNodeEventArgs e)
+        public void UpdateState(IRepositoryItem item)
         {
-            var item = RepositoryItem.Get(e.Node);
             if (item != null && _layers != null)
             {
                 item.SubItems.UpdateState(_layers);
             }
+        }
+
+        private void RepositoryTreeView_AfterExpand(object sender, TreeViewAdvNodeEventArgs e)
+        {
+            var item = RepositoryItem.Get(e.Node);
+            UpdateState(item);
 
             SaveExpandedState(e.Node);
         }

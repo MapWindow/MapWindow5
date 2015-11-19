@@ -13,6 +13,7 @@ namespace MW5.Data.Repository
         IRepositoryItem SelectedItem { get; }
         event EventHandler<RepositoryEventArgs> ItemSelected;
         void UpdateState(HashSet<LayerIdentity> layers);
+        void UpdateState(IRepositoryItem item);
         void UpdateTmsState(int providerId);
     }
 }
