@@ -128,6 +128,9 @@ namespace MW5.Plugins.Concrete
         public bool GridUseHistogram { get; set; }
 
         [DataMember]
+        public IdentifierMode IdentifierMode { get; set; }
+
+        [DataMember]
         public AutoToggle InnertiaOnPanning { get; set; }
 
         [DataMember]
@@ -228,6 +231,9 @@ namespace MW5.Plugins.Concrete
 
         [DataMember]
         public MouseWheelDirection MouseWheelDirection { get; set; }
+
+        [DataMember]
+        public int MouseTolerance { get; set; }
 
         [DataMember]
         public bool OverviewBackgroundVisible { get; set; }
@@ -444,6 +450,7 @@ namespace MW5.Plugins.Concrete
             GridDefaultColorScheme = PredefinedColors.SummerMountains;
             GridRandomColorScheme = true;
             GridUseHistogram = true;
+            IdentifierMode = IdentifierMode.AllLayersStopOnFirst;
             InnertiaOnPanning = AutoToggle.Auto;
             LastProjectPath = "";
             LoadLastProject = true;
@@ -476,6 +483,7 @@ namespace MW5.Plugins.Concrete
             MeasuringShowBearing = true;
             MeasuringShowLength = true;
             MeasuringShowTotalLength = true;
+            MouseTolerance = 10;
             MouseWheelDirection = MouseWheelDirection.Forward;
             OverviewBackgroundVisible = true;
             PrintingUnits = 0;

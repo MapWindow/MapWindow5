@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MW5.Api.Enums;
 using MW5.Api.Events;
 using MW5.Api.Legend.Events;
 using MW5.Plugins.Identifier.Controls;
@@ -13,7 +14,7 @@ namespace MW5.Plugins.Identifier.Views
 {
     public interface IIdentifierView : IMenuProvider
     {
-        IdentifierPluginMode Mode { get; }
+        IdentifierMode Mode { get; }
         bool ZoomToShape { get; }
         void Clear();
         event Action ModeChanged;

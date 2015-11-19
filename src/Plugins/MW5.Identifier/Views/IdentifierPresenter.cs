@@ -108,18 +108,7 @@ namespace MW5.Plugins.Identifier.Views
 
         private void OnIdentifierModeChanged()
         {
-            switch (View.Mode)
-            {
-                case IdentifierPluginMode.CurrentLayer:
-                    _context.Map.Identifier.Mode = IdentifierMode.SingleLayer;
-                    break;
-                case IdentifierPluginMode.TopDownStopOnFirst:
-                    _context.Map.Identifier.Mode = IdentifierMode.AllLayerStopOnFirst;
-                    break;
-                case IdentifierPluginMode.AllLayers:
-                    _context.Map.Identifier.Mode = IdentifierMode.AllLayers;
-                    break;
-            }
+            _context.Map.Identifier.Mode = View.Mode;
         }
 
         public void RemoveLayer(int layerHandle)
@@ -140,6 +129,7 @@ namespace MW5.Plugins.Identifier.Views
             var panel = _context.DockPanels.Find(DockPanelKeys.Identifier);
             if (panel != null)
             {
+                panel.Visible = true;
                 panel.Activate();
             }
         }

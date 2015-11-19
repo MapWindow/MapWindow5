@@ -30,11 +30,13 @@
         {
             this.components = new System.ComponentModel.Container();
             this.configPanelControl2 = new MW5.UI.Controls.ConfigPanelControl();
+            this.txtMouseTolerance = new Syncfusion.Windows.Forms.Tools.IntegerTextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.cboInertiaOnPanning = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
+            this.chkReuseTileBuffer = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
             this.cboMouseWheelDirection = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label8 = new System.Windows.Forms.Label();
-            this.chkReuseTileBuffer = new System.Windows.Forms.CheckBox();
             this.cboAnimationOnZooming = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
             this.label6 = new System.Windows.Forms.Label();
             this.cboZoomBehavior = new Syncfusion.Windows.Forms.Tools.ComboBoxAdv();
@@ -48,6 +50,7 @@
             this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).BeginInit();
             this.configPanelControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMouseTolerance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboInertiaOnPanning)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMouseWheelDirection)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAnimationOnZooming)).BeginInit();
@@ -61,11 +64,13 @@
             // configPanelControl2
             // 
             this.configPanelControl2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.configPanelControl2.Controls.Add(this.txtMouseTolerance);
+            this.configPanelControl2.Controls.Add(this.label2);
             this.configPanelControl2.Controls.Add(this.cboInertiaOnPanning);
+            this.configPanelControl2.Controls.Add(this.chkReuseTileBuffer);
             this.configPanelControl2.Controls.Add(this.label9);
             this.configPanelControl2.Controls.Add(this.cboMouseWheelDirection);
             this.configPanelControl2.Controls.Add(this.label8);
-            this.configPanelControl2.Controls.Add(this.chkReuseTileBuffer);
             this.configPanelControl2.Controls.Add(this.cboAnimationOnZooming);
             this.configPanelControl2.Controls.Add(this.label6);
             this.configPanelControl2.Controls.Add(this.cboZoomBehavior);
@@ -76,8 +81,36 @@
             this.configPanelControl2.HeaderText = "Behavior";
             this.configPanelControl2.Location = new System.Drawing.Point(0, 108);
             this.configPanelControl2.Name = "configPanelControl2";
-            this.configPanelControl2.Size = new System.Drawing.Size(464, 256);
+            this.configPanelControl2.Size = new System.Drawing.Size(464, 297);
             this.configPanelControl2.TabIndex = 8;
+            // 
+            // txtMouseTolerance
+            // 
+            this.txtMouseTolerance.BackGroundColor = System.Drawing.SystemColors.Window;
+            this.txtMouseTolerance.BeforeTouchSize = new System.Drawing.Size(210, 20);
+            this.txtMouseTolerance.BorderColor = System.Drawing.Color.LightGray;
+            this.txtMouseTolerance.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txtMouseTolerance.IntegerValue = ((long)(1));
+            this.txtMouseTolerance.Location = new System.Drawing.Point(145, 226);
+            this.txtMouseTolerance.MaxValue = ((long)(100));
+            this.txtMouseTolerance.Metrocolor = System.Drawing.Color.FromArgb(((int)(((byte)(209)))), ((int)(((byte)(211)))), ((int)(((byte)(212)))));
+            this.txtMouseTolerance.MinValue = ((long)(1));
+            this.txtMouseTolerance.Name = "txtMouseTolerance";
+            this.txtMouseTolerance.NegativeColor = System.Drawing.Color.Black;
+            this.txtMouseTolerance.NullString = "";
+            this.txtMouseTolerance.Size = new System.Drawing.Size(210, 20);
+            this.txtMouseTolerance.Style = Syncfusion.Windows.Forms.Tools.TextBoxExt.theme.Default;
+            this.txtMouseTolerance.TabIndex = 28;
+            this.txtMouseTolerance.Text = "1";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(10, 229);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.TabIndex = 27;
+            this.label2.Text = "Mouse tolerance";
             // 
             // cboInertiaOnPanning
             // 
@@ -88,6 +121,16 @@
             this.cboInertiaOnPanning.Name = "cboInertiaOnPanning";
             this.cboInertiaOnPanning.Size = new System.Drawing.Size(210, 21);
             this.cboInertiaOnPanning.TabIndex = 26;
+            // 
+            // chkReuseTileBuffer
+            // 
+            this.chkReuseTileBuffer.AutoSize = true;
+            this.chkReuseTileBuffer.Location = new System.Drawing.Point(13, 267);
+            this.chkReuseTileBuffer.Name = "chkReuseTileBuffer";
+            this.chkReuseTileBuffer.Size = new System.Drawing.Size(103, 17);
+            this.chkReuseTileBuffer.TabIndex = 22;
+            this.chkReuseTileBuffer.Text = "Reuse tile buffer";
+            this.chkReuseTileBuffer.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -116,16 +159,6 @@
             this.label8.Size = new System.Drawing.Size(113, 13);
             this.label8.TabIndex = 23;
             this.label8.Text = "Mouse wheel direction";
-            // 
-            // chkReuseTileBuffer
-            // 
-            this.chkReuseTileBuffer.AutoSize = true;
-            this.chkReuseTileBuffer.Location = new System.Drawing.Point(13, 227);
-            this.chkReuseTileBuffer.Name = "chkReuseTileBuffer";
-            this.chkReuseTileBuffer.Size = new System.Drawing.Size(103, 17);
-            this.chkReuseTileBuffer.TabIndex = 22;
-            this.chkReuseTileBuffer.Text = "Reuse tile buffer";
-            this.chkReuseTileBuffer.UseVisualStyleBackColor = true;
             // 
             // cboAnimationOnZooming
             // 
@@ -251,10 +284,11 @@
             this.Controls.Add(this.configPanelControl3);
             this.Name = "MapConfigPage";
             this.Padding = new System.Windows.Forms.Padding(0, 0, 10, 10);
-            this.Size = new System.Drawing.Size(474, 386);
+            this.Size = new System.Drawing.Size(474, 414);
             ((System.ComponentModel.ISupportInitialize)(this.configPanelControl2)).EndInit();
             this.configPanelControl2.ResumeLayout(false);
             this.configPanelControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtMouseTolerance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboInertiaOnPanning)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboMouseWheelDirection)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cboAnimationOnZooming)).EndInit();
@@ -287,6 +321,8 @@
         private System.Windows.Forms.Label label8;
         private Syncfusion.Windows.Forms.Tools.ComboBoxAdv cboInertiaOnPanning;
         private System.Windows.Forms.Label label9;
+        private Syncfusion.Windows.Forms.Tools.IntegerTextBox txtMouseTolerance;
+        private System.Windows.Forms.Label label2;
 
     }
 }

@@ -112,6 +112,7 @@
         /// Update using full exents.
         /// </summary>
         FullExtents = 0,
+
         /// <summary>
         /// Update using current map view.
         /// </summary>
@@ -165,6 +166,7 @@
         Printing = 10,
         DataFormats = 11,
         Tools = 12,
+        Identifier = 13,
     }
 
     public enum SymbologyStorage

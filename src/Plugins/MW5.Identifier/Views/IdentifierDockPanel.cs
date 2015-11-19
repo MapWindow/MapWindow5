@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using MW5.Api.Enums;
+using MW5.Plugins.Concrete;
 using MW5.Plugins.Identifier.Controls;
 using MW5.Plugins.Identifier.Enums;
 using MW5.Plugins.Interfaces;
@@ -45,9 +47,14 @@ namespace MW5.Plugins.Identifier.Views
         
         private void InitModeCombo()
         {
-            _cboIdentifierMode.AddItemsFromEnum<IdentifierPluginMode>();
-            _cboIdentifierMode.SetValue(IdentifierPluginMode.CurrentLayer);
-            _cboIdentifierMode.SelectedIndexChanged += (s, e) => FireModeChanged();
+            _cboIdentifierMode.AddItemsFromEnum<IdentifierMode>();
+            _cboIdentifierMode.SetValue(AppConfig.Instance.IdentifierMode);
+
+            _cboIdentifierMode.SelectedIndexChanged += (s, e) =>
+                {
+                    AppConfig.Instance.IdentifierMode = Mode;
+                    FireModeChanged();
+                };
         }
 
         public void UpdateView()
@@ -67,9 +74,9 @@ namespace MW5.Plugins.Identifier.Views
             get { return _treeView.SelectedNodeMetadata; }
         }
 
-        public IdentifierPluginMode Mode
+        public IdentifierMode Mode
         {
-            get { return _cboIdentifierMode.GetValue<IdentifierPluginMode>(); }
+            get { return _cboIdentifierMode.GetValue<IdentifierMode>(); }
         }
 
         public bool ZoomToShape

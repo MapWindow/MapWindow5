@@ -1,12 +1,5 @@
 ﻿namespace MW5.Plugins.Identifier.Enums
 {
-    public enum IdentifierPluginMode
-    {
-        CurrentLayer = 0,
-        AllLayers = 1,
-        TopDownStopOnFirst = 2,
-    }
-
     public enum IdentifierCommand
     {
         Clear = 0,

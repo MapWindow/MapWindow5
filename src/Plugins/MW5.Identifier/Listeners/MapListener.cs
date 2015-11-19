@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using MW5.Api.Enums;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
 using MW5.Api.Legend.Events;
@@ -41,7 +42,7 @@ namespace MW5.Plugins.Identifier.Listeners
                 return;
             }
 
-            if (_identifierPresenter.View.Mode == IdentifierPluginMode.CurrentLayer /*&& _configService.Config.ShowValuesOnMouseMove*/)
+            if (_identifierPresenter.View.Mode == IdentifierMode.CurrentLayer /*&& _configService.Config.ShowValuesOnMouseMove*/)
             {
                 DisplayCurrentPixelValue(map, e.X, e.Y);
             }

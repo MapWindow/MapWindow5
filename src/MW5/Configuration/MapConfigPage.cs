@@ -54,6 +54,7 @@ namespace MW5.Configuration
             cboInertiaOnPanning.SetValue(config.InnertiaOnPanning);
             cboZoomBehavior.SetValue(config.ZoomBehavior);
             cboMouseWheelDirection.SetValue(config.MouseWheelDirection);
+            txtMouseTolerance.IntegerValue = config.MouseTolerance;
 
             chkReuseTileBuffer.Checked = config.ReuseTileBuffer;
 
@@ -80,6 +81,7 @@ namespace MW5.Configuration
             config.ReuseTileBuffer = chkReuseTileBuffer.Checked;
 
             config.MapBackgroundColor = clpBackground.Color;
+            config.MouseTolerance = Convert.ToInt32(txtMouseTolerance.IntegerValue);
         }
 
         public Bitmap Icon

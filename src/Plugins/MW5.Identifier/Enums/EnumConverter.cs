@@ -1,22 +1,23 @@
 ﻿using System;
+using MW5.Api.Enums;
 using MW5.Shared;
 
 namespace MW5.Plugins.Identifier.Enums
 {
-    internal class IdentifierModeConverter : IEnumConverter<IdentifierPluginMode>
+    internal class IdentifierModeConverter : IEnumConverter<IdentifierMode>
     {
-        public string GetString(IdentifierPluginMode value)
+        public string GetString(IdentifierMode value)
         {
             switch (value)
             {
-                case IdentifierPluginMode.CurrentLayer:
+                case IdentifierMode.CurrentLayer:
                     return "Current layer";
-                case IdentifierPluginMode.AllLayers:
+                case IdentifierMode.AllLayers:
                     return "All layers";
-                case IdentifierPluginMode.TopDownStopOnFirst:
+                case IdentifierMode.AllLayersStopOnFirst:
                     return "Top down stop on first";
             }
-            throw new ApplicationException("Invalid IdentifierPluginMode mode");
+            throw new ApplicationException("Invalid IdentifierMode mode");
         }
     }
 }
