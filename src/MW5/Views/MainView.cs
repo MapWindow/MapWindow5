@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using MW5.Api.Interfaces;
 using MW5.Api.Legend.Abstract;
+using MW5.Forms;
 using MW5.Helpers;
 using MW5.Plugins.Concrete;
 using MW5.Plugins.Events;
@@ -46,7 +47,7 @@ namespace MW5.Views
             // it seems it's a bug in Syncfusion's XpMenus
             Shown += (s, e) =>
             {
-                _rendered = true;
+               _rendered = true;
 
                 UpdateView();
 
@@ -160,6 +161,10 @@ namespace MW5.Views
             Invoke(BeforeShow);
 
             AppConfig.Instance.FirstRun = false;
+
+            Show();
+
+            Activate();
 
             Application.Run(this);
         }

@@ -83,5 +83,43 @@ namespace MW5.Shared
         }
 
         #endregion
+
+        #region Flash window
+
+        public struct FLASHWINFO
+        {
+            public UInt32 cbSize;
+            public IntPtr hwnd;
+            public UInt32 dwFlags;
+            public UInt32 uCount;
+            public UInt32 dwTimeout;
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool FlashWindowEx(ref FLASHWINFO pwfi);
+
+        private const UInt32 FLASHW_STOP = 0;
+        private const UInt32 FLASHW_CAPTION = 1;
+        private const UInt32 FLASHW_TRAY = 2;
+        private const UInt32 FLASHW_ALL = 3;
+        private const UInt32 FLASHW_TIMER = 4;
+        private const UInt32 FLASHW_TIMERNOFG = 12;
+
+        public static void FlashForm(ref Form thisForm)
+        {
+            var flash = new FLASHWINFO();
+            flash.cbSize = Convert.ToUInt32(Marshal.SizeOf(flash));
+            flash.hwnd = thisForm.Handle;
+            //flash.dwFlags = FLASHW_TRAY | FLASHW_TIMERNOFG | FLASHW_ALL;
+            flash.dwFlags = FLASHW_ALL;
+            flash.uCount = 3;
+
+            //Leaving out .dwCount seems to work just fine for me, the uCount above keeps it from flashing
+
+            FlashWindowEx(ref flash);
+        }
+
+        #endregion
     }
 }
